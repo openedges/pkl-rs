@@ -23,6 +23,7 @@ pub(crate) struct ModuleUnit {
     pub template: usize,
     pub entry: usize,
     pub initial_members: Vec<Member>,
+    pub(super) import_order: Vec<uri_resolution::PreparationStep>,
     pub class_id: usize,
     pub mode: ModuleMode,
     pub modifiers: u32,
@@ -45,7 +46,7 @@ impl ImportSpec {
     ) -> Result<Self, RuntimeError> {
         let (absolute, original) = crate::host::resources::prepare_module_uri(
             &authored,
-            identity.map(|key| key.original_uri.as_ref()),
+            identity.map(|m| m.original_uri.as_ref()),
         )
         .map_err(|e| e.at(span))?;
         Ok(Self {
@@ -55,6 +56,15 @@ impl ImportSpec {
             absolute_uri: absolute.into(),
             original_uri: original.into(),
         })
+    }
+    pub(super) fn authored(authored: Arc<str>, span: Span, unit: UnitId) -> Self {
+        Self {
+            absolute_uri: authored.clone(),
+            original_uri: authored.clone(),
+            authored,
+            span,
+            unit,
+        }
     }
 }
 
@@ -73,20 +83,6 @@ impl Program {
         unit.name = source.module_name.clone();
         unit.identity = Some(identity.clone());
         self.module_name = source.module_name.clone();
-        for block in &mut self.blocks {
-            for instruction in block {
-                if let Instruction::ImportModule(spec) = instruction
-                    && spec.unit == UnitId(0)
-                {
-                    *spec = ImportSpec::new(
-                        spec.authored.clone(),
-                        spec.span,
-                        spec.unit,
-                        Some(&identity),
-                    )?;
-                }
-            }
-        }
         Ok(())
     }
 }
@@ -160,7 +156,7 @@ impl Vm {
         self.wait_module(request)
     }
 
-    fn wait_module(&mut self, kind: ModuleRequestKind) -> Result<(), RuntimeError> {
+    pub(super) fn wait_module(&mut self, kind: ModuleRequestKind) -> Result<(), RuntimeError> {
         let id = self.next_request;
         self.next_request = id
             .checked_add(1)
@@ -181,6 +177,12 @@ impl Vm {
             || !matches!(
                 (&request.kind, &completion),
                 (
+                    ModuleRequestKind::Capabilities { .. },
+                    ModuleCompletion::Capabilities(_)
+                ) | (
+                    ModuleRequestKind::HasElement { .. },
+                    ModuleCompletion::HasElement(_)
+                ) | (
                     ModuleRequestKind::Resolve { .. },
                     ModuleCompletion::Resolved(_)
                 ) | (
@@ -202,7 +204,20 @@ impl Vm {
                 "SecurityManagerException is only supported for module resolution.",
             ));
         }
+        if matches!(
+            &completion,
+            ModuleCompletion::Capabilities(Err(
+                crate::modules::ModuleHostError::SecurityManagerException { .. }
+            ))
+        ) {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "SecurityManagerException is not supported for ModuleKey capability getters.",
+            ));
+        }
         let result = match completion {
+            ModuleCompletion::Capabilities(result) => self.resolved_capabilities(result),
+            ModuleCompletion::HasElement(result) => self.resolved_element(result),
             ModuleCompletion::Resolved(result) => self.resolved_module(result),
             ModuleCompletion::Source(result) => self.loaded_module(result),
         };
@@ -280,13 +295,12 @@ impl Vm {
                 }),
         )
         .concat(frame.diagnostic_member.as_ref().unwrap_or(&metadata.member));
-        let parsed = crate::parser::parse_module(&input.text)
+        let parsed = crate::parser::parse_module_for_evaluation(&input.text)
             .map_err(|error| imported_diagnostic(error, source.clone(), member.clone()))?;
         if let Some(name) = parsed.declaration.as_ref().and_then(|d| d.name.as_ref()) {
             Arc::make_mut(&mut source).module_name = name.join(".").into();
         }
-        let resolved_ast = crate::resolver::resolve_module(&parsed)
-            .map_err(|error| imported_diagnostic(error, source.clone(), member))?;
+        let resolved_ast = crate::resolver::resolve_module_for_evaluation(&parsed);
         // The evaluator owns one append-only code arena. Clone only while an
         // external prepared-program snapshot shares it; subsequent modules
         // append in place. Failed compilation retracts only its uncommitted tail.
@@ -347,6 +361,7 @@ impl Vm {
             callsite_hidden: false,
             builders: Vec::new(),
             module_load: None,
+            uri_resolution: None,
             module_receiver: receiver,
         });
     }
@@ -374,7 +389,7 @@ fn stale_module() -> RuntimeError {
     RuntimeError::new(ErrorKind::Host, "stale or unexpected Host completion")
 }
 
-fn imported_diagnostic(
+pub(super) fn imported_diagnostic(
     diagnostic: crate::diagnostic::Diagnostic,
     source: Arc<RuntimeSource>,
     member: PklString,

@@ -9,6 +9,9 @@ pub(crate) fn default_result(request: &ReadRequest) -> Result<Value, RuntimeErro
 }
 
 pub(crate) fn resolved_uri(request: &ReadRequest) -> Result<String, RuntimeError> {
+    if let Some(uri) = &request.resolved_uri {
+        return Ok(uri.to_string());
+    }
     Ok(ResourceUri::from_authored(&request.uri)?
         .resolve(request.module_uri.as_deref())?
         .normalize()
@@ -20,9 +23,24 @@ pub(crate) fn configured_result(
     properties: &[(String, String)],
     environment: &[(String, String)],
 ) -> Result<Value, RuntimeError> {
-    let uri = ResourceUri::from_authored(&request.uri)?
-        .resolve(request.module_uri.as_deref())?
-        .normalize();
+    match configured_read(request, properties, environment)? {
+        crate::resources::ReadResult::Text(value) => Ok(Value::String(value)),
+        crate::resources::ReadResult::Missing if request.nullable => Ok(Value::Null),
+        crate::resources::ReadResult::Missing => Err(missing(&request.uri)),
+        crate::resources::ReadResult::Resource(_) => unreachable!("configured scalar readers"),
+    }
+}
+
+pub(crate) fn missing(authored: &str) -> RuntimeError {
+    RuntimeError::host_language(format!("Cannot find resource `{authored}`."))
+}
+
+pub(crate) fn configured_read(
+    request: &ReadRequest,
+    properties: &[(String, String)],
+    environment: &[(String, String)],
+) -> Result<crate::resources::ReadResult, RuntimeError> {
+    let uri = ResourceUri::parse(&resolved_uri(request)?).expect("resolved resource URI");
     let scheme = uri.scheme.as_deref().expect("resolved URI is absolute");
     if matches!(scheme, "http" | "https") && !uri.has_supported_http_authority() {
         // These registered readers construct HttpRequest before checking policy.
@@ -64,27 +82,259 @@ pub(crate) fn configured_result(
                 index += 1;
             }
         }
-        let key = String::from_utf8_lossy(&bytes);
+        let key = crate::resources::decode_utf8(&bytes);
         let entries = if scheme == "prop" {
             properties
         } else {
             environment
         };
-        if let Some((_, value)) = entries.iter().rev().find(|(name, _)| name == key.as_ref()) {
-            return Ok(Value::string(value.as_str()));
+        if let Some((_, value)) = entries
+            .iter()
+            .rev()
+            .find(|(name, _)| Some(name.as_str()) == key.as_str())
+        {
+            return Ok(crate::resources::ReadResult::Text(value.as_str().into()));
         }
-        if request.nullable {
-            return Ok(Value::Null);
-        }
-        return Err(RuntimeError::host_language(format!(
-            "Cannot find resource `{}`.",
-            request.uri
-        )));
+        return Ok(crate::resources::ReadResult::Missing);
     }
     Err(unsupported(format!(
         "The default resource Host does not yet implement allowed `{scheme}` reads (`{}`).",
         uri.text
     )))
+}
+
+/// Java URI equality is distinct from the spelling passed to a resource reader.
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub(crate) struct CacheKey {
+    scheme: Option<String>,
+    opaque: bool,
+    authority: Option<AuthorityKey>,
+    path: String,
+    query: Option<String>,
+    fragment: Option<String>,
+}
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+enum AuthorityKey {
+    Registry(String),
+    Server {
+        user_info: Option<String>,
+        host: String,
+        port: Option<i32>,
+    },
+}
+
+pub(crate) fn cache_key(uri: &str) -> CacheKey {
+    let parsed = ResourceUri::parse(uri).expect("resolved resource URI was parsed");
+    CacheKey {
+        scheme: parsed.scheme.map(|scheme| scheme.to_ascii_lowercase()),
+        opaque: parsed.opaque,
+        authority: parsed.authority.filter(|a| !a.is_empty()).map(|authority| {
+            server_authority(&authority)
+                .unwrap_or_else(|| AuthorityKey::Registry(fold_escapes(&authority)))
+        }),
+        path: fold_escapes(&parsed.path),
+        query: parsed.query.map(|part| fold_escapes(&part)),
+        fragment: parsed.fragment.map(|part| fold_escapes(&part)),
+    }
+}
+
+fn fold_escapes(text: &str) -> String {
+    let mut bytes = text.as_bytes().to_vec();
+    let mut index = 0;
+    while index < bytes.len() {
+        if bytes[index] == b'%' {
+            bytes[index + 1].make_ascii_uppercase();
+            bytes[index + 2].make_ascii_uppercase();
+            index += 3;
+        } else {
+            index += 1;
+        }
+    }
+    String::from_utf8(bytes).expect("ASCII case folding preserves UTF-8")
+}
+
+fn server_authority(authority: &str) -> Option<AuthorityKey> {
+    let (user_info, host_port) = match authority.split_once('@') {
+        Some((user, host)) if !host.contains('@') => (Some(fold_escapes(user)), host),
+        Some(_) => return None,
+        None => (None, authority),
+    };
+    let (host, port) = if host_port.starts_with('[') {
+        let end = host_port.find(']')?;
+        let host = &host_port[..=end];
+        host[1..end].parse::<std::net::Ipv6Addr>().ok()?;
+        let suffix = &host_port[end + 1..];
+        (
+            host,
+            if suffix.is_empty() {
+                None
+            } else {
+                Some(suffix.strip_prefix(':')?)
+            },
+        )
+    } else {
+        let (host, port) = host_port
+            .split_once(':')
+            .map_or((host_port, None), |(host, port)| (host, Some(port)));
+        if !server_hostname(host) {
+            return None;
+        }
+        (host, port)
+    };
+    let port = match port {
+        None | Some("") => None,
+        Some(port) if port.bytes().all(|byte| byte.is_ascii_digit()) => {
+            Some(port.parse::<i32>().ok()?)
+        }
+        Some(_) => return None,
+    };
+    Some(AuthorityKey::Server {
+        user_info,
+        host: host.to_ascii_lowercase(),
+        port,
+    })
+}
+
+fn server_hostname(host: &str) -> bool {
+    // URI first attempts a four-part decimal IPv4 address. In particular,
+    // leading zeroes are allowed; host spelling is still significant in equals.
+    let parts = host.split('.').collect::<Vec<_>>();
+    if parts.len() == 4
+        && parts.iter().all(|part| {
+            !part.is_empty()
+                && part.bytes().all(|c| c.is_ascii_digit())
+                && part.parse::<u8>().is_ok()
+        })
+    {
+        return true;
+    }
+    let host = host.strip_suffix('.').unwrap_or(host);
+    let labels = host.split('.').collect::<Vec<_>>();
+    !host.is_empty()
+        && labels.iter().all(|label| {
+            !label.is_empty()
+                && label.as_bytes()[0].is_ascii_alphanumeric()
+                && label.as_bytes()[label.len() - 1].is_ascii_alphanumeric()
+                && label
+                    .bytes()
+                    .all(|c| c.is_ascii_alphanumeric() || c == b'-')
+        })
+        && (labels.len() == 1 || labels.last().unwrap().as_bytes()[0].is_ascii_alphabetic())
+}
+
+/// Return an authored triple-dot path. Parsing happens before ModuleKey I/O.
+pub(crate) fn read_triple_path(authored: &str) -> Result<Option<String>, RuntimeError> {
+    triple_path(&ResourceUri::from_authored(authored)?, authored, "Resource")
+}
+
+pub(crate) fn import_triple_path(authored: &str) -> Result<Option<String>, RuntimeError> {
+    let text = if is_uri_like(authored) {
+        authored.to_owned()
+    } else {
+        quote_path(authored)
+    };
+    let parsed = ResourceUri::parse(&text)
+        .map_err(|_| unsupported("Import URI must be parsed before preparation."))?;
+    triple_path(&parsed, authored, "Module")
+}
+
+fn decode_escapes(text: &str) -> String {
+    let mut bytes = Vec::new();
+    let mut index = 0;
+    while index < text.len() {
+        if text.as_bytes()[index] == b'%' {
+            bytes.push(
+                u8::from_str_radix(&text[index + 1..index + 3], 16).expect("validated escape"),
+            );
+            index += 3;
+        } else {
+            bytes.push(text.as_bytes()[index]);
+            index += 1;
+        }
+    }
+    crate::resources::decode_utf8(&bytes)
+        .as_str()
+        .expect("UTF8 decoder produces scalars")
+        .to_owned()
+}
+
+fn triple_path(
+    uri: &ResourceUri,
+    authored: &str,
+    kind: &str,
+) -> Result<Option<String>, RuntimeError> {
+    if uri.scheme.is_some() {
+        return Ok(None);
+    }
+    let ssp = decode_escapes(uri.text.split('#').next().unwrap());
+    if !ssp.starts_with("...") {
+        return Ok(None);
+    }
+    if ssp == "..." {
+        return Ok(Some(String::new()));
+    }
+    if let Some(path) = ssp.strip_prefix(".../").filter(|path| !path.is_empty()) {
+        return Ok(Some(path.to_owned()));
+    }
+    let mut error =
+        RuntimeError::host_language(format!("{kind} URI `{authored}` has invalid syntax."));
+    error.hint = Some("expected `...` or `.../path/to/my_module.pkl`".into());
+    Err(error)
+}
+
+/// Candidate order belongs to the shared engine. The Host performs only the
+/// original ModuleKey's `hasElement`/security operation for each candidate.
+pub(crate) fn triple_candidates(
+    module: &str,
+    path: &str,
+    capabilities: crate::modules::ModuleCapabilities,
+) -> Result<Vec<String>, RuntimeError> {
+    if !capabilities.local || !capabilities.hierarchical {
+        let mut error = RuntimeError::host_language(format!(
+            "Cannot resolve a triple-dot import from module URI `{module}`."
+        ));
+        error.hint = Some("Triple-dot imports may only be resolved by module schemes that are considered local, and have hierarchical URIs.".into());
+        // IoUtils constructs this VmException without a node/source section.
+        error.unavailable_origin = true;
+        return Err(error);
+    }
+    let base = ResourceUri::parse(module)
+        .map_err(|_| unsupported("Unsupported triple-dot declaration URI."))?;
+    let current = decode_escapes(if capabilities.fragment_paths {
+        base.fragment
+            .as_deref()
+            .ok_or_else(|| unsupported("Fragment-path ModuleKey has no fragment."))?
+    } else {
+        &base.path
+    });
+    let effective = if path.is_empty() {
+        current.rsplit('/').next().unwrap()
+    } else {
+        path
+    };
+    let mut index = current
+        .rfind('/')
+        .and_then(|last| current[..last].rfind('/'));
+    let mut paths = Vec::new();
+    while let Some(at) = index.filter(|at| *at > 0) {
+        paths.push(format!("{}{effective}", &current[..=at]));
+        index = current[..at].rfind('/');
+    }
+    paths.push(format!("/{effective}"));
+    let mut result = Vec::new();
+    for candidate in paths.into_iter().filter(|candidate| candidate != &current) {
+        let mut uri = base.clone();
+        if capabilities.fragment_paths {
+            uri.fragment = Some(quote_path(&normalize_path(&candidate)));
+        } else {
+            uri.path = quote_path(&normalize_path(&candidate));
+            uri.query = None;
+            uri.fragment = None;
+        }
+        uri.rebuild();
+        result.push(uri.text);
+    }
+    Ok(result)
 }
 
 /// Shared URI grammar for module imports. Preparation is eager; Host resolution
@@ -107,7 +357,12 @@ pub(crate) fn prepare_module_uri(
         }
         ParseError::Unsupported(reason) => unsupported(reason),
     })?;
-    if parsed.path == "..." || parsed.path.starts_with(".../") || parsed.path.starts_with('@') {
+    if triple_path(&parsed, authored, "Module")?.is_some() {
+        // Module AST preparation resolves these with the original ModuleKey
+        // before guest initialization, including unforced import expressions.
+        return Ok((parsed.text.clone(), parsed.text));
+    }
+    if parsed.path.starts_with('@') {
         return Err(unsupported(
             "Module dependency and triple-dot resolution is not implemented.",
         ));
@@ -411,15 +666,27 @@ fn validate(text: &str, component: Component) -> Result<(), ParseError> {
 
 fn validate_authority(text: &str) -> Result<(), ParseError> {
     if text.contains('[') {
+        // Validate user-info before parsing an authority key. Escape folding
+        // assumes syntactically complete percent pairs, including on failures.
+        if let Some((user_info, _)) = text.split_once('@') {
+            validate(user_info, Component::Authority)?;
+        }
         if !text.contains(']') {
             return Err(ParseError::Syntax(
                 "Expected closing bracket for IPv6 address",
             ));
         }
-        // Do not authorize bracketed addresses without Java's IPv6/zone/port parser.
-        return Err(ParseError::Unsupported(
-            "IPv6 resource URI authority parsing is not implemented.",
-        ));
+        // Scoped IPv6 address grammar has separate Java compatibility rules.
+        // Keep it explicit until those rules are supported, rather than treating
+        // a bracketed address as a case-sensitive registry authority.
+        if server_authority(text).is_none() {
+            return Err(ParseError::Unsupported(
+                "This IPv6 resource URI authority is not implemented.",
+            ));
+        }
+        let start = text.find('[').unwrap();
+        validate(&text[..start], Component::Authority)?;
+        return Ok(());
     }
     validate(text, Component::Authority)
 }

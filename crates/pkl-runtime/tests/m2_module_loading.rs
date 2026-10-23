@@ -53,6 +53,9 @@ fn original_three_import_sources_use_actual_output_and_shared_imported_scope() {
             },
             &ModuleEvalOptions::default(),
             |request| match &request.kind {
+                ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
+                    panic!("unexpected ModuleKey preparation in this fixture")
+                }
                 ModuleRequestKind::Resolve { original_uri, .. } => {
                     assert_eq!(original_uri.as_ref(), "file:///corpus/basic/imported.pkl");
                     resolves += 1;
@@ -121,6 +124,9 @@ fn canonical_alias_hit_does_not_add_an_original_alias_and_cache_roots_survive_gc
     let mut loads = 0;
     session.start_path(0, 0, None).unwrap();
     let value = settle(&mut session, &mut |request| match &request.kind {
+        ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
+            panic!("unexpected ModuleKey preparation in this fixture")
+        }
         ModuleRequestKind::Resolve { .. } => {
             resolves += 1;
             resolve(request, Some("file:///loader/canonical.pkl"))
@@ -150,6 +156,9 @@ fn resolution_failures_retry_but_source_and_frontend_failures_replay_the_first_e
         for index in [0, 1, 0] {
             session.start_path(index, 0, None).unwrap();
             let error = settle(&mut session, &mut |request| match &request.kind {
+                ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
+                    panic!("unexpected ModuleKey preparation in this fixture")
+                }
                 ModuleRequestKind::Resolve { .. } => {
                     resolves += 1;
                     if failure == 0 {
@@ -230,6 +239,9 @@ fn appended_units_preserve_self_identity_and_distinguish_same_offset_declaration
         },
         &ModuleEvalOptions::default(),
         |request| match &request.kind {
+            ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
+                panic!("unexpected ModuleKey preparation in this fixture")
+            }
             ModuleRequestKind::Resolve { .. } => resolve(request, None),
             ModuleRequestKind::LoadSource { .. } => {
                 loads += 1;
@@ -283,6 +295,9 @@ fn source_callback_publication_survives_outer_failure_while_fresh_import_replays
     let mut child_resolves = 0;
     let mut child_loads = 0;
     let child = settle(&mut session, &mut |request| match request.kind {
+        ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
+            panic!("unexpected ModuleKey preparation in this fixture")
+        }
         ModuleRequestKind::Resolve { .. } => {
             child_resolves += 1;
             resolve(request, None)
@@ -382,6 +397,9 @@ fn failed_append_keeps_existing_closures(bad_source: &str, kind: pkl_runtime::va
         &["first", "bad", "last"],
     );
     let mut host = |request: &ModuleRequest| match &request.kind {
+        ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
+            panic!("unexpected ModuleKey preparation in this fixture")
+        }
         ModuleRequestKind::Resolve { .. } => resolve(request, None),
         ModuleRequestKind::LoadSource { resolved } => {
             if resolved.original_uri.ends_with("bad.pkl") {
@@ -443,6 +461,7 @@ fn failed_self_superclass_preserves_the_original_followup_method_error() {
     ] {
         session.start_path(0, 0, None).unwrap();
         let failure = settle(&mut session, &mut |request| match request.kind {
+            ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => panic!("unexpected ModuleKey preparation in this fixture"),
             ModuleRequestKind::Resolve { .. } => resolve(request, None),
             ModuleRequestKind::LoadSource { .. } => panic!("primary source already exists"),
         })
@@ -459,6 +478,9 @@ fn imported_error_keeps_declared_module_and_original_display_source() {
     let mut session = session("first=import(\"alias.pkl\").value\n", &["first"]);
     session.start_path(0, 0, None).unwrap();
     let error = settle(&mut session, &mut |request| match &request.kind {
+        ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
+            panic!("unexpected ModuleKey preparation in this fixture")
+        }
         ModuleRequestKind::Resolve { original_uri, .. } => {
             ModuleCompletion::Resolved(Ok(ResolvedModule {
                 original_uri: original_uri.clone(),
@@ -527,6 +549,9 @@ fn outer_source_success_replaces_callback_source_failure() {
     let (outer, _) = next_module(&mut session);
     session.reenter_path(&outer, 0, 0, None).unwrap();
     let error = settle(&mut session, &mut |request| match request.kind {
+        ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
+            panic!("unexpected ModuleKey preparation in this fixture")
+        }
         ModuleRequestKind::Resolve { .. } => resolve(request, None),
         ModuleRequestKind::LoadSource { .. } => {
             ModuleCompletion::Source(Err(ModuleHostError::Io("inner source failed".into())))

@@ -52,12 +52,20 @@ impl From<Arc<str>> for IoFailure {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ReadFailure {
     Io(IoFailure),
+    /// Typed policy exception from ResourceManager's resource security check.
+    /// This does not grant guest provenance to an arbitrary Host rejection.
+    SecurityManagerException {
+        message: Option<PklString>,
+    },
 }
 
 impl ReadFailure {
     pub(crate) fn into_runtime(self, uri: &str) -> RuntimeError {
         match self {
             Self::Io(failure) => failure.into_runtime("reading resource", uri),
+            Self::SecurityManagerException { message } => RuntimeError::host_language(
+                message.unwrap_or_else(|| "None (cause has no message)".into()),
+            ),
         }
     }
 }

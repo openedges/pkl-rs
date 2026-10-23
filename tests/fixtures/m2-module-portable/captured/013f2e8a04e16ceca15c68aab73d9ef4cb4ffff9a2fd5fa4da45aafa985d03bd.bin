@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Refusing to read resource `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-triple-dot-oracle-01/workspace/file-tree-deny-resource-read/tree/a/resource.txt` because it does not match any entry in the resource allowlist (`--allowed-resources`).
+
+1 | normalRead = read("resource.txt")
+                 ^^^^^^^^^^^^^^^^^^^^
+at shared#normalRead (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-triple-dot-oracle-01/workspace/file-tree-deny-resource-read/tree/a/shared.pkl)
+
+5 | sharedRead = shared.normalRead.text
+                 ^^^^^^^^^^^^^^^^^
+at main#sharedRead (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-triple-dot-oracle-01/workspace/file-tree-deny-resource-read/tree/a/b/main.pkl)
+
+1 | sharedRead
+    ^^^^^^^^^^
+at  (repl:text)

@@ -213,7 +213,7 @@ fn compile_program_text(
     expression: &str,
     options: EvaluationOptions,
 ) -> Result<(std::sync::Arc<crate::vm::Program>, String), PklString> {
-    let module = crate::parser::parse_module(source.text()).map_err(|error| {
+    let module = crate::parser::parse_module_for_evaluation(source.text()).map_err(|error| {
         let name = error.module_name.as_deref().unwrap_or(name);
         let member = error.member.as_ref().map_or_else(
             || name.into(),
@@ -237,23 +237,7 @@ fn compile_program_text(
         .and_then(|header| header.name.as_ref())
         .map(|parts| parts.join("."));
     let name = declared_name.as_deref().unwrap_or(name);
-    let resolved = crate::resolver::resolve_module(&module).map_err(|error| {
-        let member = error.member.as_ref().map_or_else(
-            || name.into(),
-            |suffix| PklString::from(format!("{name}#")).concat(suffix),
-        );
-        render_error_text(
-            &error.message,
-            &[RenderFrame {
-                source,
-                uri,
-                member: &member,
-                span: error.span,
-                highlight_length_utf16: error.highlight_length_utf16,
-            }],
-            error.hint(),
-        )
-    })?;
+    let resolved = crate::resolver::resolve_module_for_evaluation(&module);
     let mut program = if options.power_assertions {
         crate::vm::compile_module_with_power_assertions(&resolved)
     } else {

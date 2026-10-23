@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Resource URI `...x` has invalid syntax.
+
+14 | invalidBare = read("...x").toString()
+                   ^^^^^^^^^^^^
+at main#invalidBare (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-triple-dot-oracle-01/workspace/file-tree-deny-resource-read/tree/a/b/main.pkl)
+
+expected `...` or `.../path/to/my_module.pkl`
+
+1 | invalidBare
+    ^^^^^^^^^^^
+at  (repl:text)

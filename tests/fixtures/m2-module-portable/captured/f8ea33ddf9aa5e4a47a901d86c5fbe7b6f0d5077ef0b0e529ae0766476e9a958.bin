@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Resource URI `.../` has invalid syntax.
+
+13 | invalidSlash = read(".../").toString()
+                    ^^^^^^^^^^^^
+at main#invalidSlash (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-triple-dot-oracle-01/workspace/file-tree-deny-module-hasElement/tree/a/b/main.pkl)
+
+expected `...` or `.../path/to/my_module.pkl`
+
+1 | invalidSlash
+    ^^^^^^^^^^^^
+at  (repl:text)

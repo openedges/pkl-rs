@@ -378,10 +378,36 @@ impl Compiler<'_> {
                                 .function_names
                                 .entry(expression.span)
                                 .or_insert_with(|| {
-                                    let count =
-                                        self.function_counts.entry(previous.clone()).or_default();
-                                    *count += 1;
-                                    previous.concat(&format!(".<function#{count}>").into())
+                                    if let Some(owner) =
+                                        self.resolved.function_owners.get(&expression.span)
+                                    {
+                                        let nested_root =
+                                            owner.encode_utf16().next() == Some(u16::from(b'.'));
+                                        let prefix =
+                                            if self.identity.as_ref().is_some_and(|identity| {
+                                                identity.original_uri.as_ref() == "repl:text"
+                                            }) {
+                                                if nested_root {
+                                                    "repl:text"
+                                                } else {
+                                                    "repl:text."
+                                                }
+                                            } else if nested_root {
+                                                ""
+                                            } else if self.module_annotation {
+                                                "."
+                                            } else {
+                                                "#"
+                                            };
+                                        PklString::from(prefix).concat(owner)
+                                    } else {
+                                        let count = self
+                                            .function_counts
+                                            .entry(previous.clone())
+                                            .or_default();
+                                        *count += 1;
+                                        previous.concat(&format!(".<function#{count}>").into())
+                                    }
                                 })
                                 .clone();
                         }
@@ -984,12 +1010,18 @@ impl Compiler<'_> {
                         work,
                     )?;
                 } else {
-                    self.class_expression(
+                    if let Err(error) = self.class_expression(
                         ty,
                         output,
                         self.type_scopes.len(),
                         &mut BTreeSet::new(),
-                    )?;
+                    ) {
+                        // Selecting an actual class is evaluation of the parent
+                        // type node, after all AST construction effects.
+                        let span = error.span.unwrap_or(ty.span);
+                        output.push_at(Instruction::Fail(error), span);
+                        return Ok(());
+                    }
                     self.instance_body(members, ty.span, output)?;
                 }
             }
@@ -1055,6 +1087,16 @@ impl Compiler<'_> {
             }
             ExprKind::ReadResource(value) => {
                 work.push(Work::Emit(Instruction::ReadResource, None));
+                work.push(Work::Visit(value));
+            }
+            ExprKind::ReadResourceGlob(value) => {
+                work.push(Work::Emit(
+                    Instruction::Fail(RuntimeError::new(
+                        ErrorKind::Unsupported,
+                        "Glob resource expansion is not implemented.",
+                    )),
+                    None,
+                ));
                 work.push(Work::Visit(value));
             }
             ExprKind::TypeCheck { value, ty } | ExprKind::TypeCast { value, ty } => {

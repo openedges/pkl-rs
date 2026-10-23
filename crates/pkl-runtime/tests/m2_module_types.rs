@@ -49,6 +49,9 @@ fn evaluate_original(name: &str, expected: &[u8]) -> Vec<String> {
         },
         &ModuleEvalOptions::default(),
         |request| match &request.kind {
+            ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
+                panic!("unexpected ModuleKey preparation in this fixture")
+            }
             ModuleRequestKind::Resolve { original_uri, .. } => {
                 ModuleCompletion::Resolved(Ok(ResolvedModule {
                     original_uri: original_uri.clone(),

@@ -110,6 +110,7 @@ fn request(uri: &str) -> ReadRequest {
     ReadRequest {
         id: 1,
         uri: uri.into(),
+        resolved_uri: None,
         module_uri: Some("file:///test/module.pkl".into()),
         nullable: false,
     }

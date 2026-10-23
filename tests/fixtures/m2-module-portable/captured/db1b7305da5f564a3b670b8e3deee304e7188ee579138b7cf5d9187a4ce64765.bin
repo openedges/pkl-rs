@@ -1,0 +1,2078 @@
+{
+  "scope": "Focused pinned Java triple-dot actual FileModuleKey/shared read+import/allowlist order observations only;not native compatibility. Original whole input remains separate unchanged. Same-evaluator secondModuleSource and fresh-evaluator sessions are separate;explicitGC request does not establish observed collection.",
+  "freshJvmCount": 10,
+  "evaluatorSessions": 20,
+  "apiCalls": 60,
+  "counts": {
+    "success\n": 36,
+    "error\n": 24
+  },
+  "records": [
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-lambda-positive/0/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-lambda-positive/0/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "TripleProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-lambda-positive",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/duplicate-lambda-positive/0/calls",
+        "allow"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-lambda-positive",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-lambda-positive/0/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-lambda-positive/0/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-lambda-positive/0/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-lambda-positive/0/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792749555598619000,
+      "finishedUnixNs": 1792749556471936000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 873299583,
+        "sha256": {
+          "stdout": "7f875a1e748e129bc227c0e61551462fcb19000e468ed546e3c3f23bc77e5dde",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "duplicate-lambda-positive",
+      "repeat": 0,
+      "workspaceBefore": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "bb30b32c40a785b366293c457f85df843ca0576d71531f891e97d06a00841302"
+        }
+      },
+      "workspaceAfter": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "bb30b32c40a785b366293c457f85df843ca0576d71531f891e97d06a00841302"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-lambda-positive/1/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-lambda-positive/1/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "TripleProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-lambda-positive",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/duplicate-lambda-positive/1/calls",
+        "allow"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-lambda-positive",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-lambda-positive/1/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-lambda-positive/1/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-lambda-positive/1/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-lambda-positive/1/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792749556504240000,
+      "finishedUnixNs": 1792749557167752000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 663492666,
+        "sha256": {
+          "stdout": "7f875a1e748e129bc227c0e61551462fcb19000e468ed546e3c3f23bc77e5dde",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "duplicate-lambda-positive",
+      "repeat": 1,
+      "workspaceBefore": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "bb30b32c40a785b366293c457f85df843ca0576d71531f891e97d06a00841302"
+        }
+      },
+      "workspaceAfter": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "bb30b32c40a785b366293c457f85df843ca0576d71531f891e97d06a00841302"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-method-positive/0/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-method-positive/0/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "TripleProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-method-positive",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/duplicate-method-positive/0/calls",
+        "allow"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-method-positive",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-method-positive/0/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-method-positive/0/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-method-positive/0/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-method-positive/0/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792749557197011000,
+      "finishedUnixNs": 1792749557821085000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 624055375,
+        "sha256": {
+          "stdout": "e1b0c793134f8a75a78678224d765509e746a62cc5ddb2138bc3ebbdbae26597",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "duplicate-method-positive",
+      "repeat": 0,
+      "workspaceBefore": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "e87ba498a1425f0e57dedb27dcd84b6eef3f4245fd6d72129634d26bc41e15e7"
+        }
+      },
+      "workspaceAfter": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "e87ba498a1425f0e57dedb27dcd84b6eef3f4245fd6d72129634d26bc41e15e7"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-method-positive/1/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-method-positive/1/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "TripleProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-method-positive",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/duplicate-method-positive/1/calls",
+        "allow"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-method-positive",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-method-positive/1/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-method-positive/1/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-method-positive/1/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/duplicate-method-positive/1/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792749557847109000,
+      "finishedUnixNs": 1792749558493434000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 646307000,
+        "sha256": {
+          "stdout": "e1b0c793134f8a75a78678224d765509e746a62cc5ddb2138bc3ebbdbae26597",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "duplicate-method-positive",
+      "repeat": 1,
+      "workspaceBefore": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "e87ba498a1425f0e57dedb27dcd84b6eef3f4245fd6d72129634d26bc41e15e7"
+        }
+      },
+      "workspaceAfter": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "e87ba498a1425f0e57dedb27dcd84b6eef3f4245fd6d72129634d26bc41e15e7"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/and-right-module/0/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/and-right-module/0/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "TripleProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/and-right-module",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/and-right-module/0/calls",
+        "allow"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/and-right-module",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/and-right-module/0/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/and-right-module/0/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/and-right-module/0/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/and-right-module/0/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792749558533999000,
+      "finishedUnixNs": 1792749559199099000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 665082417,
+        "sha256": {
+          "stdout": "e7c2e91c121976312dfef93ec0ffb735be7ccc32f7c0bcc59282a4129004bbb3",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "and-right-module",
+      "repeat": 0,
+      "workspaceBefore": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "3c54cc7f2378c01d918099c98bc2e438f7b47eccbf5baa3ef307530df0ae853e"
+        }
+      },
+      "workspaceAfter": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "3c54cc7f2378c01d918099c98bc2e438f7b47eccbf5baa3ef307530df0ae853e"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/and-right-module/1/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/and-right-module/1/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "TripleProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/and-right-module",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/and-right-module/1/calls",
+        "allow"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/and-right-module",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/and-right-module/1/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/and-right-module/1/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/and-right-module/1/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/and-right-module/1/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792749559233599000,
+      "finishedUnixNs": 1792749559898924000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 665301416,
+        "sha256": {
+          "stdout": "e7c2e91c121976312dfef93ec0ffb735be7ccc32f7c0bcc59282a4129004bbb3",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "and-right-module",
+      "repeat": 1,
+      "workspaceBefore": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "3c54cc7f2378c01d918099c98bc2e438f7b47eccbf5baa3ef307530df0ae853e"
+        }
+      },
+      "workspaceAfter": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "3c54cc7f2378c01d918099c98bc2e438f7b47eccbf5baa3ef307530df0ae853e"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/or-right-module/0/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/or-right-module/0/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "TripleProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/or-right-module",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/or-right-module/0/calls",
+        "allow"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/or-right-module",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/or-right-module/0/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/or-right-module/0/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/or-right-module/0/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/or-right-module/0/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792749559932333000,
+      "finishedUnixNs": 1792749560587124000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 654771959,
+        "sha256": {
+          "stdout": "74efbd1f519b4b965ed91bfdd5c0e5c9d7d5412148eb639815b092ec6915da38",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "or-right-module",
+      "repeat": 0,
+      "workspaceBefore": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "f713e20d9c5acd8aecbfc33c4ab0a3b5625ad1d07790c01de30464b37ed044d5"
+        }
+      },
+      "workspaceAfter": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "f713e20d9c5acd8aecbfc33c4ab0a3b5625ad1d07790c01de30464b37ed044d5"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/or-right-module/1/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/or-right-module/1/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "TripleProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/or-right-module",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/or-right-module/1/calls",
+        "allow"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/or-right-module",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/or-right-module/1/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/or-right-module/1/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/or-right-module/1/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/or-right-module/1/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792749560616913000,
+      "finishedUnixNs": 1792749561269947000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 653015500,
+        "sha256": {
+          "stdout": "74efbd1f519b4b965ed91bfdd5c0e5c9d7d5412148eb639815b092ec6915da38",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "or-right-module",
+      "repeat": 1,
+      "workspaceBefore": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "f713e20d9c5acd8aecbfc33c4ab0a3b5625ad1d07790c01de30464b37ed044d5"
+        }
+      },
+      "workspaceAfter": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "f713e20d9c5acd8aecbfc33c4ab0a3b5625ad1d07790c01de30464b37ed044d5"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/coalesce-lambda-owner/0/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/coalesce-lambda-owner/0/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "TripleProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/coalesce-lambda-owner",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls",
+        "allow"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/coalesce-lambda-owner",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/coalesce-lambda-owner/0/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/coalesce-lambda-owner/0/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/coalesce-lambda-owner/0/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/coalesce-lambda-owner/0/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792749561300743000,
+      "finishedUnixNs": 1792749561966140000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 665376792,
+        "sha256": {
+          "stdout": "6170012ff21bfcff38f758c696d281733630df3d91b6d9c705ddac295afa3133",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "coalesce-lambda-owner",
+      "repeat": 0,
+      "workspaceBefore": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "e73382520ec8c686448eb40f9fe8d4ef2792da9bdb25df4c31ac957adde13d55"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "a9b1e279097c5f2f83b9adff80237f8db0beb7f7036316c9b917e7654f89fcad"
+        }
+      },
+      "workspaceAfter": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "e73382520ec8c686448eb40f9fe8d4ef2792da9bdb25df4c31ac957adde13d55"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "a9b1e279097c5f2f83b9adff80237f8db0beb7f7036316c9b917e7654f89fcad"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/coalesce-lambda-owner/1/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/coalesce-lambda-owner/1/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "TripleProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/coalesce-lambda-owner",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls",
+        "allow"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/coalesce-lambda-owner",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/coalesce-lambda-owner/1/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/coalesce-lambda-owner/1/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/coalesce-lambda-owner/1/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/runtime-private/coalesce-lambda-owner/1/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792749561996556000,
+      "finishedUnixNs": 1792749562650401000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 653822875,
+        "sha256": {
+          "stdout": "6170012ff21bfcff38f758c696d281733630df3d91b6d9c705ddac295afa3133",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "coalesce-lambda-owner",
+      "repeat": 1,
+      "workspaceBefore": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "e73382520ec8c686448eb40f9fe8d4ef2792da9bdb25df4c31ac957adde13d55"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "a9b1e279097c5f2f83b9adff80237f8db0beb7f7036316c9b917e7654f89fcad"
+        }
+      },
+      "workspaceAfter": {
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "e73382520ec8c686448eb40f9fe8d4ef2792da9bdb25df4c31ac957adde13d55"
+        },
+        "tree": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/b": {
+          "kind": "directory",
+          "sha256": null
+        },
+        "tree/a/present.pkl": {
+          "kind": "file",
+          "sha256": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886"
+        },
+        "tree/a/b/main.pkl": {
+          "kind": "file",
+          "sha256": "a9b1e279097c5f2f83b9adff80237f8db0beb7f7036316c9b917e7654f89fcad"
+        }
+      }
+    }
+  ],
+  "observations": [
+    {
+      "case": "duplicate-lambda-positive",
+      "repeat": 0,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-lambda-positive/0/calls/session-0/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-lambda-positive/0/calls/session-0/outer-1",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-lambda-positive/0/calls/session-0/outer-2",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n",
+          "countersAfter": "resolve=5\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=9\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-lambda-positive/0/calls/session-1/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-lambda-positive/0/calls/session-1/outer-1",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-lambda-positive/0/calls/session-1/outer-2",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n",
+          "countersAfter": "resolve=5\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=9\n"
+        }
+      ]
+    },
+    {
+      "case": "duplicate-lambda-positive",
+      "repeat": 1,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-lambda-positive/1/calls/session-0/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-lambda-positive/1/calls/session-0/outer-1",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-lambda-positive/1/calls/session-0/outer-2",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n",
+          "countersAfter": "resolve=5\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=9\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-lambda-positive/1/calls/session-1/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-lambda-positive/1/calls/session-1/outer-1",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-lambda-positive/1/calls/session-1/outer-2",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n",
+          "countersAfter": "resolve=5\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=9\n"
+        }
+      ]
+    },
+    {
+      "case": "duplicate-method-positive",
+      "repeat": 0,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-method-positive/0/calls/session-0/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-method-positive/0/calls/session-0/outer-1",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-method-positive/0/calls/session-0/outer-2",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n",
+          "countersAfter": "resolve=5\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=9\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-method-positive/0/calls/session-1/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-method-positive/0/calls/session-1/outer-1",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-method-positive/0/calls/session-1/outer-2",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n",
+          "countersAfter": "resolve=5\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=9\n"
+        }
+      ]
+    },
+    {
+      "case": "duplicate-method-positive",
+      "repeat": 1,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-method-positive/1/calls/session-0/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-method-positive/1/calls/session-0/outer-1",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-method-positive/1/calls/session-0/outer-2",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n",
+          "countersAfter": "resolve=5\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=9\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-method-positive/1/calls/session-1/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-method-positive/1/calls/session-1/outer-1",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/duplicate-method-positive/1/calls/session-1/outer-2",
+          "utf8Sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "utf16BESha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c",
+          "utf8Hex": "31",
+          "utf16BEHex": "0031",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n",
+          "countersAfter": "resolve=5\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=9\n"
+        }
+      ]
+    },
+    {
+      "case": "and-right-module",
+      "repeat": 0,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/and-right-module/0/calls/session-0/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/and-right-module/0/calls/session-0/outer-1",
+          "utf8Sha256": "5be300fe34b1b539ab09443d8efad24940b6b3c53c2aae8a4496f9237df23dd2",
+          "utf16BESha256": "2443e8e9d05ac24b82ce61a6d0bda44d3136f7561ba2576d49c9756fa178b195",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f722060262660206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a20747275650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d207472756520262620696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f616e642d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f0072002000600026002600600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a00200074007200750065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d0020007400720075006500200026002600200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0061006e0064002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n",
+          "countersAfter": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/and-right-module/0/calls/session-0/outer-2",
+          "utf8Sha256": "5be300fe34b1b539ab09443d8efad24940b6b3c53c2aae8a4496f9237df23dd2",
+          "utf16BESha256": "2443e8e9d05ac24b82ce61a6d0bda44d3136f7561ba2576d49c9756fa178b195",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f722060262660206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a20747275650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d207472756520262620696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f616e642d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f0072002000600026002600600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a00200074007200750065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d0020007400720075006500200026002600200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0061006e0064002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n",
+          "countersAfter": "resolve=8\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=14\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/and-right-module/0/calls/session-1/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/and-right-module/0/calls/session-1/outer-1",
+          "utf8Sha256": "5be300fe34b1b539ab09443d8efad24940b6b3c53c2aae8a4496f9237df23dd2",
+          "utf16BESha256": "2443e8e9d05ac24b82ce61a6d0bda44d3136f7561ba2576d49c9756fa178b195",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f722060262660206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a20747275650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d207472756520262620696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f616e642d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f0072002000600026002600600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a00200074007200750065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d0020007400720075006500200026002600200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0061006e0064002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n",
+          "countersAfter": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/and-right-module/0/calls/session-1/outer-2",
+          "utf8Sha256": "5be300fe34b1b539ab09443d8efad24940b6b3c53c2aae8a4496f9237df23dd2",
+          "utf16BESha256": "2443e8e9d05ac24b82ce61a6d0bda44d3136f7561ba2576d49c9756fa178b195",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f722060262660206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a20747275650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d207472756520262620696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f616e642d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f0072002000600026002600600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a00200074007200750065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d0020007400720075006500200026002600200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0061006e0064002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n",
+          "countersAfter": "resolve=8\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=14\n"
+        }
+      ]
+    },
+    {
+      "case": "and-right-module",
+      "repeat": 1,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/and-right-module/1/calls/session-0/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/and-right-module/1/calls/session-0/outer-1",
+          "utf8Sha256": "5be300fe34b1b539ab09443d8efad24940b6b3c53c2aae8a4496f9237df23dd2",
+          "utf16BESha256": "2443e8e9d05ac24b82ce61a6d0bda44d3136f7561ba2576d49c9756fa178b195",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f722060262660206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a20747275650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d207472756520262620696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f616e642d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f0072002000600026002600600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a00200074007200750065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d0020007400720075006500200026002600200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0061006e0064002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n",
+          "countersAfter": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/and-right-module/1/calls/session-0/outer-2",
+          "utf8Sha256": "5be300fe34b1b539ab09443d8efad24940b6b3c53c2aae8a4496f9237df23dd2",
+          "utf16BESha256": "2443e8e9d05ac24b82ce61a6d0bda44d3136f7561ba2576d49c9756fa178b195",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f722060262660206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a20747275650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d207472756520262620696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f616e642d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f0072002000600026002600600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a00200074007200750065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d0020007400720075006500200026002600200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0061006e0064002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n",
+          "countersAfter": "resolve=8\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=14\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/and-right-module/1/calls/session-1/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/and-right-module/1/calls/session-1/outer-1",
+          "utf8Sha256": "5be300fe34b1b539ab09443d8efad24940b6b3c53c2aae8a4496f9237df23dd2",
+          "utf16BESha256": "2443e8e9d05ac24b82ce61a6d0bda44d3136f7561ba2576d49c9756fa178b195",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f722060262660206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a20747275650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d207472756520262620696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f616e642d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f0072002000600026002600600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a00200074007200750065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d0020007400720075006500200026002600200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0061006e0064002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n",
+          "countersAfter": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/and-right-module/1/calls/session-1/outer-2",
+          "utf8Sha256": "5be300fe34b1b539ab09443d8efad24940b6b3c53c2aae8a4496f9237df23dd2",
+          "utf16BESha256": "2443e8e9d05ac24b82ce61a6d0bda44d3136f7561ba2576d49c9756fa178b195",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f722060262660206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a20747275650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d207472756520262620696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f616e642d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f0072002000600026002600600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a00200074007200750065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d0020007400720075006500200026002600200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0061006e0064002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n",
+          "countersAfter": "resolve=8\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=14\n"
+        }
+      ]
+    },
+    {
+      "case": "or-right-module",
+      "repeat": 0,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/or-right-module/0/calls/session-0/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/or-right-module/0/calls/session-0/outer-1",
+          "utf8Sha256": "3a3d160b1bd335822bba770c821d08f9a93afd112dd25d3335ca5936b8771d2b",
+          "utf16BESha256": "dede04bb47c015e0e809ddb5fae45e5a89d56a215f2c84799e13cb090f7c9ada",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f7220607c7c60206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a2066616c73650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d2066616c7365207c7c20696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f6f722d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f007200200060007c007c00600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a002000660061006c00730065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d002000660061006c007300650020007c007c00200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f006f0072002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n",
+          "countersAfter": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/or-right-module/0/calls/session-0/outer-2",
+          "utf8Sha256": "3a3d160b1bd335822bba770c821d08f9a93afd112dd25d3335ca5936b8771d2b",
+          "utf16BESha256": "dede04bb47c015e0e809ddb5fae45e5a89d56a215f2c84799e13cb090f7c9ada",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f7220607c7c60206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a2066616c73650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d2066616c7365207c7c20696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f6f722d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f007200200060007c007c00600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a002000660061006c00730065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d002000660061006c007300650020007c007c00200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f006f0072002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n",
+          "countersAfter": "resolve=8\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=14\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/or-right-module/0/calls/session-1/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/or-right-module/0/calls/session-1/outer-1",
+          "utf8Sha256": "3a3d160b1bd335822bba770c821d08f9a93afd112dd25d3335ca5936b8771d2b",
+          "utf16BESha256": "dede04bb47c015e0e809ddb5fae45e5a89d56a215f2c84799e13cb090f7c9ada",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f7220607c7c60206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a2066616c73650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d2066616c7365207c7c20696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f6f722d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f007200200060007c007c00600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a002000660061006c00730065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d002000660061006c007300650020007c007c00200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f006f0072002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n",
+          "countersAfter": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/or-right-module/0/calls/session-1/outer-2",
+          "utf8Sha256": "3a3d160b1bd335822bba770c821d08f9a93afd112dd25d3335ca5936b8771d2b",
+          "utf16BESha256": "dede04bb47c015e0e809ddb5fae45e5a89d56a215f2c84799e13cb090f7c9ada",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f7220607c7c60206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a2066616c73650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d2066616c7365207c7c20696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f6f722d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f007200200060007c007c00600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a002000660061006c00730065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d002000660061006c007300650020007c007c00200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f006f0072002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n",
+          "countersAfter": "resolve=8\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=14\n"
+        }
+      ]
+    },
+    {
+      "case": "or-right-module",
+      "repeat": 1,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/or-right-module/1/calls/session-0/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/or-right-module/1/calls/session-0/outer-1",
+          "utf8Sha256": "3a3d160b1bd335822bba770c821d08f9a93afd112dd25d3335ca5936b8771d2b",
+          "utf16BESha256": "dede04bb47c015e0e809ddb5fae45e5a89d56a215f2c84799e13cb090f7c9ada",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f7220607c7c60206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a2066616c73650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d2066616c7365207c7c20696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f6f722d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f007200200060007c007c00600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a002000660061006c00730065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d002000660061006c007300650020007c007c00200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f006f0072002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n",
+          "countersAfter": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/or-right-module/1/calls/session-0/outer-2",
+          "utf8Sha256": "3a3d160b1bd335822bba770c821d08f9a93afd112dd25d3335ca5936b8771d2b",
+          "utf16BESha256": "dede04bb47c015e0e809ddb5fae45e5a89d56a215f2c84799e13cb090f7c9ada",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f7220607c7c60206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a2066616c73650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d2066616c7365207c7c20696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f6f722d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f007200200060007c007c00600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a002000660061006c00730065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d002000660061006c007300650020007c007c00200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f006f0072002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n",
+          "countersAfter": "resolve=8\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=14\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/or-right-module/1/calls/session-1/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/or-right-module/1/calls/session-1/outer-1",
+          "utf8Sha256": "3a3d160b1bd335822bba770c821d08f9a93afd112dd25d3335ca5936b8771d2b",
+          "utf16BESha256": "dede04bb47c015e0e809ddb5fae45e5a89d56a215f2c84799e13cb090f7c9ada",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f7220607c7c60206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a2066616c73650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d2066616c7365207c7c20696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f6f722d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f007200200060007c007c00600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a002000660061006c00730065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d002000660061006c007300650020007c007c00200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f006f0072002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=6\n",
+          "countersAfter": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "a",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/or-right-module/1/calls/session-1/outer-2",
+          "utf8Sha256": "3a3d160b1bd335822bba770c821d08f9a93afd112dd25d3335ca5936b8771d2b",
+          "utf16BESha256": "dede04bb47c015e0e809ddb5fae45e5a89d56a215f2c84799e13cb090f7c9ada",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f7220607c7c60206973206e6f7420646566696e656420666f72206f706572616e642074797065732060426f6f6c65616e6020616e64206070726573656e74602e0a4c656674206f706572616e64203a2066616c73650a5269676874206f706572616e643a206e6577204d6f64756c65436c617373207b2076616c7565203d203f207d0a0a31207c2061203d2066616c7365207c7c20696d706f727428222e2e2e2f70726573656e742e706b6c22290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2361202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f6f722d72696768742d6d6f64756c652f747265652f612f622f6d61696e2e706b6c290a0a31207c20610a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f007200200060007c007c00600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600042006f006f006c00650061006e006000200061006e00640020006000700072006500730065006e00740060002e000a004c0065006600740020006f0070006500720061006e00640020003a002000660061006c00730065000a005200690067006800740020006f0070006500720061006e0064003a0020006e006500770020004d006f00640075006c00650043006c0061007300730020007b002000760061006c007500650020003d0020003f0020007d000a000a00310020007c002000610020003d002000660061006c007300650020007c007c00200069006d0070006f0072007400280022002e002e002e002f00700072006500730065006e0074002e0070006b006c00220029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300610020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f006f0072002d00720069006700680074002d006d006f00640075006c0065002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200061000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=7\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=12\n",
+          "countersAfter": "resolve=8\nimport=1\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=2\ndenied=0\nevent=14\n"
+        }
+      ]
+    },
+    {
+      "case": "coalesce-lambda-owner",
+      "repeat": 0,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/coalesce-lambda-owner/0/calls/session-0/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "p",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/coalesce-lambda-owner/0/calls/session-0/outer-1",
+          "utf8Sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+          "utf16BESha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a6c6566740a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a2020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e23702e3c66756e6374696f6e23323e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2370202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c20700a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a006c006500660074000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e00230070002e003c00660075006e006300740069006f006e00230032003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300700020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200070000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "p",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/coalesce-lambda-owner/0/calls/session-0/outer-2",
+          "utf8Sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+          "utf16BESha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a6c6566740a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a2020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e23702e3c66756e6374696f6e23323e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2370202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c20700a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a006c006500660074000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e00230070002e003c00660075006e006300740069006f006e00230032003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300700020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200070000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n",
+          "countersAfter": "resolve=5\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=9\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/coalesce-lambda-owner/0/calls/session-1/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "p",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/coalesce-lambda-owner/0/calls/session-1/outer-1",
+          "utf8Sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+          "utf16BESha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a6c6566740a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a2020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e23702e3c66756e6374696f6e23323e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2370202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c20700a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a006c006500660074000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e00230070002e003c00660075006e006300740069006f006e00230032003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300700020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200070000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "p",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/coalesce-lambda-owner/0/calls/session-1/outer-2",
+          "utf8Sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+          "utf16BESha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a6c6566740a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a2020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e23702e3c66756e6374696f6e23323e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2370202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c20700a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a006c006500660074000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e00230070002e003c00660075006e006300740069006f006e00230032003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300700020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200070000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n",
+          "countersAfter": "resolve=5\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=9\n"
+        }
+      ]
+    },
+    {
+      "case": "coalesce-lambda-owner",
+      "repeat": 1,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/coalesce-lambda-owner/1/calls/session-0/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "p",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/coalesce-lambda-owner/1/calls/session-0/outer-1",
+          "utf8Sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+          "utf16BESha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a6c6566740a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a2020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e23702e3c66756e6374696f6e23323e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2370202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c20700a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a006c006500660074000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e00230070002e003c00660075006e006300740069006f006e00230032003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300700020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200070000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "p",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/coalesce-lambda-owner/1/calls/session-0/outer-2",
+          "utf8Sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+          "utf16BESha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a6c6566740a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a2020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e23702e3c66756e6374696f6e23323e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2370202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c20700a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a006c006500660074000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e00230070002e003c00660075006e006300740069006f006e00230032003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300700020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200070000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n",
+          "countersAfter": "resolve=5\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=9\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "tree/a/b/main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/coalesce-lambda-owner/1/calls/session-1/outer-0",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "tree/a/b/main.pkl",
+          "expression": "p",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/coalesce-lambda-owner/1/calls/session-1/outer-1",
+          "utf8Sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+          "utf16BESha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a6c6566740a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a2020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e23702e3c66756e6374696f6e23323e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2370202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c20700a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a006c006500660074000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e00230070002e003c00660075006e006300740069006f006e00230032003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300700020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200070000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "tree/a/b/main.pkl",
+          "expression": "p",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/coalesce-lambda-owner/1/calls/session-1/outer-2",
+          "utf8Sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+          "utf16BESha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a6c6566740a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a2020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e23702e3c66756e6374696f6e23323e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c2070203d20282829202d3e207468726f7728226c6566742229292e6170706c792829203f3f20282829202d3e2031292e6170706c7928290a20202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e2370202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534362f7461726765742f6d322f737461676534362d6c6f676963616c2d62696e64696e672d6f7261636c652d30312f776f726b73706163652f636f616c657363652d6c616d6264612d6f776e65722f747265652f612f622f6d61696e2e706b6c290a0a31207c20700a202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a006c006500660074000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e00230070002e003c00660075006e006300740069006f006e00230032003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c002000700020003d00200028002800290020002d003e0020007400680072006f007700280022006c006500660074002200290029002e006100700070006c0079002800290020003f003f00200028002800290020002d003e002000310029002e006100700070006c007900280029000a00200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e002300700020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340036002f007400610072006700650074002f006d0032002f0073007400610067006500340036002d006c006f0067006900630061006c002d00620069006e00640069006e0067002d006f007200610063006c0065002d00300031002f0077006f0072006b00730070006100630065002f0063006f0061006c0065007300630065002d006c0061006d006200640061002d006f0077006e00650072002f0074007200650065002f0061002f0062002f006d00610069006e002e0070006b006c0029000a000a00310020007c00200070000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "countersBefore": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=7\n",
+          "countersAfter": "resolve=5\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=1\ndenied=0\nevent=9\n"
+        }
+      ]
+    }
+  ],
+  "repeatDifferences": [
+    {
+      "case": "duplicate-lambda-positive",
+      "rawPathDifferences": []
+    },
+    {
+      "case": "duplicate-method-positive",
+      "rawPathDifferences": []
+    },
+    {
+      "case": "and-right-module",
+      "rawPathDifferences": []
+    },
+    {
+      "case": "or-right-module",
+      "rawPathDifferences": []
+    },
+    {
+      "case": "coalesce-lambda-owner",
+      "rawPathDifferences": []
+    }
+  ],
+  "inputHashes": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/TripleProbe.java": "5ec4b3ce990d7326de6a38da934373ddf7ab1e1247d0b2dcb3f5c7f274580108",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/run.py": "31d509dac12fd2af31c2f94587f7bc04c51b166b9e6ab59b5b45ba19f05c0851",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases.json": "d552bac4894403d3bc383cde90f5a925fb6623dcd6f6031e69a517c275969dd4",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/profile.json": "6842664b8a2a2fab3ba3ede557743552ce94237112a7efdc47314e178bf37da8",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes/TripleProbe$1.class": "5c919260120c172704c7880c234a277f3371222143004098eb9f34f992d26495",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes/TripleProbe.class": "399368ca0f591a9c7cff1f584b4ecb294acd2f80d4054c9f4d11a997c4d6b501",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/classes/TripleProbe$2.class": "315b299bb3d7faf617a3974efc2c6ae101502da67fb0cc4d91fc4335d875c098",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/runtime/ResourceManager.java": "28aebd541df89e229c20a9f1909dd972062a89188a569678c5834989c12aa6bd",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/resource/Resource.java": "d819074e333a69b73bdebe7840132df080b9a705f8c2c026c0cccfabdde322f2",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/resource/ResourceReaders.java": "e14a41e5c5f84e0395709a04f3dabdc4b6ecc584504d65f758476454dd9e8c06",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/SecurityManagers.java": "18d813d8c34fc9837883ca4d8916d3266ec4113a6142f20f6d53d0ad4c4dff15",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/ast/expression/unary/AbstractReadNode.java": "3f5406962ed0a29673b8563234818cdc41af1edbc3f6beb58a6b96779c05f0fe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/util/IoUtils.java": "e0d14b69e64185c9ef4b771648173d5584b9ab910e717244a6ec889ca43c9e10",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKeys.java": "137c1635b1bbc0894f30171355c50719a6c0c15b40e92aa44b51104f20103a05",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java": "e423325b3cef4b7410d7a01c3e9c776b7c1e5993f93f7bec02e0852d5d5fd7d8",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/upstream/stdlib/base.pkl": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/tool-sources/tools/compat.py": "fa40a0daee29eb078c7b9cb814fc3779556ceaacc2634657c96e3f7810aa5edc",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/tool-sources/tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/tool-sources/references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/tool-sources/oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-lambda-positive/operations.tsv": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-lambda-positive/tree/a/present.pkl": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-lambda-positive/tree/a/b/main.pkl": "bb30b32c40a785b366293c457f85df843ca0576d71531f891e97d06a00841302",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-method-positive/operations.tsv": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-method-positive/tree/a/present.pkl": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-method-positive/tree/a/b/main.pkl": "e87ba498a1425f0e57dedb27dcd84b6eef3f4245fd6d72129634d26bc41e15e7",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/and-right-module/operations.tsv": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/and-right-module/tree/a/present.pkl": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/and-right-module/tree/a/b/main.pkl": "3c54cc7f2378c01d918099c98bc2e438f7b47eccbf5baa3ef307530df0ae853e",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/or-right-module/operations.tsv": "9d207e2016cdf9847f8a21ce26b8c15ed6c1525a5d396aefc5243dcd200ca3dd",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/or-right-module/tree/a/present.pkl": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/or-right-module/tree/a/b/main.pkl": "f713e20d9c5acd8aecbfc33c4ab0a3b5625ad1d07790c01de30464b37ed044d5",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/coalesce-lambda-owner/operations.tsv": "e73382520ec8c686448eb40f9fe8d4ef2792da9bdb25df4c31ac957adde13d55",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/coalesce-lambda-owner/tree/a/present.pkl": "585c93666fcb046b7b264d3fa73202aa2a38254ae82a4b3ba19e873c2d5a9886",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/coalesce-lambda-owner/tree/a/b/main.pkl": "a9b1e279097c5f2f83b9adff80237f8db0beb7f7036316c9b917e7654f89fcad"
+  },
+  "inputChanges": [],
+  "workspacesUnchanged": true,
+  "jarStable": true,
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O"
+}

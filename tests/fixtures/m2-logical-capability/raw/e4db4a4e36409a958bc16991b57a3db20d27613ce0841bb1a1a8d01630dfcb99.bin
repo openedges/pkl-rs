@@ -1,0 +1,14 @@
+–– Pkl Error ––
+left
+
+1 | p = (() -> throw("left")).apply() ?? (() -> 1).apply()
+               ^^^^^^^^^^^^^
+at main#p.<function#2> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/coalesce-lambda-owner/tree/a/b/main.pkl)
+
+1 | p = (() -> throw("left")).apply() ?? (() -> 1).apply()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#p (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/coalesce-lambda-owner/tree/a/b/main.pkl)
+
+1 | p
+    ^
+at  (repl:text)

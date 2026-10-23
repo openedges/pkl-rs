@@ -52,8 +52,23 @@ pub struct ModuleRequest {
     pub kind: ModuleRequestKind,
 }
 
+/// Capabilities of the declaration's original ModuleKey, not a resource reader.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct ModuleCapabilities {
+    pub local: bool,
+    pub hierarchical: bool,
+    pub fragment_paths: bool,
+}
+
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ModuleRequestKind {
+    Capabilities {
+        module: ModuleIdentity,
+    },
+    HasElement {
+        module: ModuleIdentity,
+        element_uri: Arc<str>,
+    },
     Resolve {
         importer: ModuleIdentity,
         import_uri: Arc<str>,
@@ -96,6 +111,8 @@ impl ModuleHostError {
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ModuleCompletion {
+    Capabilities(Result<ModuleCapabilities, ModuleHostError>),
+    HasElement(Result<bool, ModuleHostError>),
     Resolved(Result<ResolvedModule, ModuleHostError>),
     Source(Result<ModuleSource, ModuleHostError>),
 }
@@ -116,6 +133,8 @@ pub fn unsupported_completion(request: &ModuleRequest) -> ModuleCompletion {
     let error =
         ModuleHostError::Unsupported("No module resolver/source reader is configured.".into());
     match request.kind {
+        ModuleRequestKind::Capabilities { .. } => ModuleCompletion::Capabilities(Err(error)),
+        ModuleRequestKind::HasElement { .. } => ModuleCompletion::HasElement(Err(error)),
         ModuleRequestKind::Resolve { .. } => ModuleCompletion::Resolved(Err(error)),
         ModuleRequestKind::LoadSource { .. } => ModuleCompletion::Source(Err(error)),
     }

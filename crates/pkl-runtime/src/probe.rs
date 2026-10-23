@@ -241,6 +241,29 @@ impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
     fn from(request: crate::modules::ModuleRequest) -> Self {
         use crate::modules::ModuleRequestKind;
         match request.kind {
+            ModuleRequestKind::Capabilities { module } => Self {
+                id: request.id.to_string(),
+                kind: "capabilities",
+                importer_original_uri: Some(module.original_uri.to_string()),
+                importer_resolved_uri: Some(module.resolved_uri.to_string()),
+                import_uri: None,
+                original_uri: module.original_uri.to_string(),
+                resolved_uri: None,
+                source_uri: None,
+            },
+            ModuleRequestKind::HasElement {
+                module,
+                element_uri,
+            } => Self {
+                id: request.id.to_string(),
+                kind: "has-element",
+                importer_original_uri: Some(module.original_uri.to_string()),
+                importer_resolved_uri: Some(module.resolved_uri.to_string()),
+                import_uri: None,
+                original_uri: element_uri.to_string(),
+                resolved_uri: None,
+                source_uri: None,
+            },
             ModuleRequestKind::Resolve {
                 importer,
                 import_uri,
@@ -598,6 +621,69 @@ impl SourceProbe {
         self.session
             .resume_default_read(token, &self.properties, &self.environment, now.into())
     }
+    pub fn complete_read(
+        &mut self,
+        token: &str,
+        result: Result<crate::resources::ReadResult, crate::host::ReadFailure>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.session.complete_read(token, result, now.into())
+    }
+    pub fn complete_read_missing(&mut self, token: &str, now: u32) -> Result<(), RuntimeError> {
+        self.complete_read(token, Ok(crate::resources::ReadResult::Missing), now)
+    }
+    pub fn complete_read_text(
+        &mut self,
+        token: &str,
+        value: crate::value::PklString,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.complete_read(token, Ok(crate::resources::ReadResult::Text(value)), now)
+    }
+    pub fn complete_read_resource(
+        &mut self,
+        token: &str,
+        uri: crate::value::PklString,
+        bytes: Vec<u8>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.complete_read(
+            token,
+            Ok(crate::resources::ReadResult::Resource(
+                crate::resources::Resource {
+                    uri,
+                    bytes: bytes.into(),
+                },
+            )),
+            now,
+        )
+    }
+    pub fn reject_read_security_manager(
+        &mut self,
+        token: &str,
+        message: Option<crate::value::PklString>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.complete_read(
+            token,
+            Err(crate::host::ReadFailure::SecurityManagerException { message }),
+            now,
+        )
+    }
+    /// URI delivered to a typed reader, distinct from the legacy event's
+    /// authored operand. Parsing and resolution stay in the shared runtime.
+    pub fn resolved_read_uri(&self, token: &str) -> Result<String, RuntimeError> {
+        crate::host::resources::resolved_uri(&self.session.read_request(token)?)
+    }
+    pub fn module_request(
+        &self,
+        token: &str,
+    ) -> Result<crate::modules::ModuleRequest, RuntimeError> {
+        self.session.module_request(token)
+    }
+    pub fn read_request(&self, token: &str) -> Result<crate::vm::ReadRequest, RuntimeError> {
+        self.session.read_request(token)
+    }
     pub fn complete_module(
         &mut self,
         token: &str,
@@ -605,6 +691,38 @@ impl SourceProbe {
         now: u32,
     ) -> Result<(), RuntimeError> {
         self.session.complete_module(token, completion, now.into())
+    }
+    pub fn complete_module_capabilities(
+        &mut self,
+        token: &str,
+        local: bool,
+        hierarchical: bool,
+        fragment_paths: bool,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.complete_module(
+            token,
+            crate::modules::ModuleCompletion::Capabilities(Ok(
+                crate::modules::ModuleCapabilities {
+                    local,
+                    hierarchical,
+                    fragment_paths,
+                },
+            )),
+            now,
+        )
+    }
+    pub fn complete_module_has_element(
+        &mut self,
+        token: &str,
+        exists: bool,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.complete_module(
+            token,
+            crate::modules::ModuleCompletion::HasElement(Ok(exists)),
+            now,
+        )
     }
     pub fn complete_module_resolution(
         &mut self,
@@ -659,8 +777,24 @@ impl SourceProbe {
         message: Option<crate::value::PklString>,
         now: u32,
     ) -> Result<(), RuntimeError> {
-        use crate::modules::{ModuleCompletion, ModuleHostError};
-        let failure = match kind {
+        use crate::modules::ModuleCompletion;
+        let failure = Self::module_failure(kind, message)?;
+        self.complete_module(
+            token,
+            if loading_source {
+                ModuleCompletion::Source(Err(failure))
+            } else {
+                ModuleCompletion::Resolved(Err(failure))
+            },
+            now,
+        )
+    }
+    fn module_failure(
+        kind: &str,
+        message: Option<crate::value::PklString>,
+    ) -> Result<crate::modules::ModuleHostError, RuntimeError> {
+        use crate::modules::ModuleHostError;
+        Ok(match kind {
             "not-found" => ModuleHostError::NotFound,
             "io" => ModuleHostError::Io(crate::host::IoFailure::new(message)),
             "security-manager-exception" => ModuleHostError::SecurityManagerException { message },
@@ -680,13 +814,23 @@ impl SourceProbe {
                     "unknown module Host error kind",
                 ));
             }
-        };
+        })
+    }
+    pub fn reject_module_preparation_text(
+        &mut self,
+        token: &str,
+        has_element: bool,
+        kind: &str,
+        message: Option<crate::value::PklString>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        let failure = Self::module_failure(kind, message)?;
         self.complete_module(
             token,
-            if loading_source {
-                ModuleCompletion::Source(Err(failure))
+            if has_element {
+                crate::modules::ModuleCompletion::HasElement(Err(failure))
             } else {
-                ModuleCompletion::Resolved(Err(failure))
+                crate::modules::ModuleCompletion::Capabilities(Err(failure))
             },
             now,
         )

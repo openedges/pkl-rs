@@ -1,0 +1,107 @@
+[
+  {
+    "id": "duplicate-lambda-positive",
+    "mode": "allow",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-lambda-positive",
+    "operations": [
+      [
+        "tree/a/b/main.pkl",
+        "stable"
+      ],
+      [
+        "tree/a/b/main.pkl",
+        "a"
+      ],
+      [
+        "tree/a/b/main.pkl",
+        "a"
+      ]
+    ],
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-lambda-positive/tree/a/b/main.pkl",
+    "scope": "Root-authorized positive duplicate parameter / right logical module operand / logical lambda owner; actual pinned Java only, no preclaimed output."
+  },
+  {
+    "id": "duplicate-method-positive",
+    "mode": "allow",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-method-positive",
+    "operations": [
+      [
+        "tree/a/b/main.pkl",
+        "stable"
+      ],
+      [
+        "tree/a/b/main.pkl",
+        "a"
+      ],
+      [
+        "tree/a/b/main.pkl",
+        "a"
+      ]
+    ],
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/duplicate-method-positive/tree/a/b/main.pkl",
+    "scope": "Root-authorized positive duplicate parameter / right logical module operand / logical lambda owner; actual pinned Java only, no preclaimed output."
+  },
+  {
+    "id": "and-right-module",
+    "mode": "allow",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/and-right-module",
+    "operations": [
+      [
+        "tree/a/b/main.pkl",
+        "stable"
+      ],
+      [
+        "tree/a/b/main.pkl",
+        "a"
+      ],
+      [
+        "tree/a/b/main.pkl",
+        "a"
+      ]
+    ],
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/and-right-module/tree/a/b/main.pkl",
+    "scope": "Root-authorized positive duplicate parameter / right logical module operand / logical lambda owner; actual pinned Java only, no preclaimed output."
+  },
+  {
+    "id": "or-right-module",
+    "mode": "allow",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/or-right-module",
+    "operations": [
+      [
+        "tree/a/b/main.pkl",
+        "stable"
+      ],
+      [
+        "tree/a/b/main.pkl",
+        "a"
+      ],
+      [
+        "tree/a/b/main.pkl",
+        "a"
+      ]
+    ],
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/or-right-module/tree/a/b/main.pkl",
+    "scope": "Root-authorized positive duplicate parameter / right logical module operand / logical lambda owner; actual pinned Java only, no preclaimed output."
+  },
+  {
+    "id": "coalesce-lambda-owner",
+    "mode": "allow",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/coalesce-lambda-owner",
+    "operations": [
+      [
+        "tree/a/b/main.pkl",
+        "stable"
+      ],
+      [
+        "tree/a/b/main.pkl",
+        "p"
+      ],
+      [
+        "tree/a/b/main.pkl",
+        "p"
+      ]
+    ],
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/coalesce-lambda-owner/tree/a/b/main.pkl",
+    "scope": "Root-authorized positive duplicate parameter / right logical module operand / logical lambda owner; actual pinned Java only, no preclaimed output."
+  }
+]

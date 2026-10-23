@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Refusing to load module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-triple-dot-oracle-01/workspace/file-tree-deny-module-hasElement/tree/a/resource.txt` because it does not match any entry in the module allowlist (`--allowed-modules`).
+
+2 | nearAgain = read?(".../resource.txt").text
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#nearAgain (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-triple-dot-oracle-01/workspace/file-tree-deny-module-hasElement/tree/a/b/main.pkl)
+
+1 | nearAgain
+    ^^^^^^^^^
+at  (repl:text)

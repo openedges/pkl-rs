@@ -64,6 +64,7 @@ impl Parser<'_> {
                 values.push(Parsed {
                     ty: Type {
                         parenthesized: false,
+                        unparenthesized_span: None,
                         kind: TypeKind::Constrained {
                             base: Box::new(request.base.ty),
                             constraints,
@@ -157,6 +158,7 @@ impl Parser<'_> {
                     values.push(Parsed {
                         ty: Type {
                             parenthesized: false,
+                            unparenthesized_span: None,
                             kind: TypeKind::Union {
                                 types: union.types,
                                 default: union.default,
@@ -250,6 +252,7 @@ impl Parser<'_> {
                 values.push(Parsed {
                     ty: Type {
                         parenthesized: false,
+                        unparenthesized_span: None,
                         kind,
                         span: Span::new(start, self.previous_end),
                     },
@@ -275,6 +278,7 @@ impl Parser<'_> {
                 values.push(Parsed {
                     ty: Type {
                         parenthesized: false,
+                        unparenthesized_span: None,
                         kind: TypeKind::Named {
                             path: named.path,
                             name_spans: named.name_spans,
@@ -314,6 +318,7 @@ impl Parser<'_> {
                         return Err(self.unexpected(Some("->")));
                     }
                     let mut ty = parameters.parameters.pop().unwrap();
+                    ty.unparenthesized_span.get_or_insert(ty.span);
                     ty.span = Span::new(parameters.start, self.previous_end);
                     ty.parenthesized = true;
                     values.push(Parsed {
@@ -331,6 +336,7 @@ impl Parser<'_> {
                 values.push(Parsed {
                     ty: Type {
                         parenthesized: false,
+                        unparenthesized_span: None,
                         kind: TypeKind::Function {
                             parameters: parameters.parameters,
                             return_type: Box::new(value.ty),
@@ -352,6 +358,7 @@ impl Parser<'_> {
                         value = Parsed {
                             ty: Type {
                                 parenthesized: false,
+                                unparenthesized_span: None,
                                 kind: TypeKind::Nullable(Box::new(value.ty)),
                                 span: Span::new(start, end),
                             },

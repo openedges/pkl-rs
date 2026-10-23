@@ -163,12 +163,12 @@ export async function compareModuleLoader(args){
     const helper=url.pathname==='/module-loader-session.mjs';
     const path=helper?resolve(dirname(script),'module-loader-session.mjs'):resolve(wasm,'.'+decodeURIComponent(url.pathname));
     if(!helper&&!path.startsWith(wasm+sep))throw Error('invalid Wasm path');
-    response.writeHead(200,{'Content-Type':extname(path)==='.wasm'?'application/wasm':'text/javascript'});response.end(await readFile(path));
-  }catch{response.writeHead(404);response.end();}});
+    const assetBytes = await readFile(path); response.writeHead(200,{'Content-Type':extname(path)==='.wasm'?'application/wasm':'text/javascript'});response.end(assetBytes);
+  }catch{if (!response.headersSent) { response.writeHead(404); response.end(); } else response.destroy();}});
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));let browser;
   try{
     const executable=chromium.executablePath();report.browserExecutable=executable;report.browserExecutableSha256=hash(await readFile(executable));
-    browser=await chromium.launch({headless:true});report.browser=browser.version();const page=await browser.newPage();
+    report.browserLaunchOptions={headless:true,executablePath:executable};browser=await chromium.launch(report.browserLaunchOptions);report.browser=browser.version();const page=await browser.newPage();
     page.on('pageerror',error=>report.browserErrors.push({message:error.message,stack:error.stack}));await page.goto(`http://127.0.0.1:${server.address().port}`);
     const rows=await page.evaluate(async fixtures=>{const api=await import('/pkl_wasm.js');await api.default();const {runModuleLoaderCase}=await import('/module-loader-session.mjs');
       return fixtures.flatMap(fixture=>[0,1].map(repeat=>({...runModuleLoaderCase(api,fixture),repeat})));},fixtures);

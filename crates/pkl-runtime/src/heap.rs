@@ -174,6 +174,9 @@ pub struct CacheSlot {
 
 #[derive(Clone, Debug, Default)]
 pub struct Object {
+    /// Reader payload has no heap edges. Factory property nodes read their
+    /// declaration owner's payload, including when inherited by an amendment.
+    pub resource: Option<Arc<crate::resources::Resource>>,
     /// Recursive force publishes this mark before traversing children.
     pub forced: bool,
     /// Evaluator-owned canonical identity, populated only after key hashing succeeds.

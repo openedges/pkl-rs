@@ -93,7 +93,8 @@ impl<'a> Parser<'a> {
                             machine.current = Some(self.primary()?);
                         }
                     }
-                    ExpressionFlow::Done(expression) => {
+                    ExpressionFlow::Done => {
+                        let expression = machine.current.take().expect("completed expression");
                         if frames.is_empty() {
                             return Ok(expression);
                         }

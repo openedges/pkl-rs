@@ -17,7 +17,7 @@ pub fn compile_session_expression(
     options: CompileOptions,
     power_assertions: bool,
 ) -> Result<usize, SessionExpressionError> {
-    let parsed = crate::parser::parse_expression_with_metadata(expression_source)
+    let parsed = crate::parser::parse_expression_for_evaluation(expression_source)
         .map_err(|error| SessionExpressionError::Frontend(Box::new(error)))?;
     let resolved = crate::resolver::resolve_session_expression(module, expression_source, &parsed)
         .map_err(|error| SessionExpressionError::Frontend(Box::new(error)))?;
@@ -25,19 +25,38 @@ pub fn compile_session_expression(
         original_uri: "repl:text".into(),
         resolved_uri: "repl:text".into(),
     };
-    let checkpoint = modules::ArenaCheckpoint::new(program);
-    let result = append(
+    append_guarded(
         program,
         &resolved,
         &parsed.expression,
         &identity,
         options,
         power_assertions,
+    )
+    .map_err(|error| SessionExpressionError::Runtime(Box::new(error)))
+}
+
+fn append_guarded(
+    program: &mut Program,
+    resolved: &crate::resolver::ResolvedModule,
+    expression: &crate::syntax::Expr,
+    identity: &crate::modules::ModuleIdentity,
+    options: CompileOptions,
+    power_assertions: bool,
+) -> Result<usize, RuntimeError> {
+    let checkpoint = modules::ArenaCheckpoint::new(program);
+    let result = append(
+        program,
+        resolved,
+        expression,
+        identity,
+        options,
+        power_assertions,
     );
     if result.is_err() {
         checkpoint.rollback(program);
     }
-    result.map_err(|error| SessionExpressionError::Runtime(Box::new(error)))
+    result
 }
 
 fn append(
@@ -100,7 +119,10 @@ fn append(
         instrument,
     };
     let mut code = Code::default();
-    compiler.expression(expression, &mut code)?;
+    code.push(Instruction::PrepareModuleImports(unit));
+    if resolved.preparation_failure.is_none() {
+        compiler.expression(expression, &mut code)?;
+    }
     code.push(Instruction::ToString);
     code.push(Instruction::Return);
     let entry = compiler.block(code, None);
@@ -122,6 +144,7 @@ fn append(
         template: primary.template,
         entry: usize::MAX,
         initial_members: Vec::new(),
+        import_order: uri_resolution::module_import_order(resolved),
         class_id: primary.class_id,
         mode: modules::ModuleMode::Plain,
         modifiers: 0,
@@ -146,10 +169,19 @@ mod tests {
             false,
         )
         .unwrap();
-        let expression = "let (f=(x:remote.Person)->x) import(\"child.pkl\")";
+        let expression = "let (f=(x:remote.Person)->x) missing";
         let parsed = crate::parser::parse_expression_with_metadata(expression).unwrap();
-        let resolved_expression =
+        let mut resolved_expression =
             crate::resolver::resolve_session_expression(&module, expression, &parsed).unwrap();
+        // Imports now prepare in the VM. Inject an invalid binding after a valid
+        // lambda to exercise rollback after partial compilation deterministically.
+        let crate::syntax::ExprKind::Let { body, .. } = &parsed.expression.kind else {
+            unreachable!()
+        };
+        resolved_expression.names.insert(
+            body.span,
+            crate::resolver::Binding::Lexical { depth: 0, slot: 1 },
+        );
         let identity = crate::modules::ModuleIdentity {
             original_uri: "repl:text".into(),
             resolved_uri: "repl:text".into(),
@@ -166,7 +198,7 @@ mod tests {
             false,
         )
         .unwrap_err();
-        assert_eq!(error.kind, ErrorKind::Unsupported);
+        assert_eq!(error.kind, ErrorKind::InvalidBytecode);
         assert!(unguarded.blocks.len() > program.blocks.len());
         assert!(unguarded.metadata.len() > program.metadata.len());
         assert!(unguarded.type_recipes.len() > program.type_recipes.len());
@@ -184,16 +216,17 @@ mod tests {
                 .copied()
                 .collect::<Vec<_>>(),
         );
-        assert!(matches!(
-            compile_session_expression(
+        assert!(
+            append_guarded(
                 &mut program,
-                &module,
-                expression,
+                &resolved_expression,
+                &parsed.expression,
+                &identity,
                 CompileOptions::default(),
                 false
-            ),
-            Err(SessionExpressionError::Runtime(_))
-        ));
+            )
+            .is_err()
+        );
         assert_eq!(
             before,
             (

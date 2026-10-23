@@ -108,6 +108,22 @@ python3 tools/resource_fixtures.py --fixtures tests/fixtures/m2-resource-portabl
 python3 -W error::ResourceWarning -m unittest discover -s tools/tests -p 'test_resource_portable_fixtures.py' -v
 ```
 
+The [module preparation platform contract](docs/m2-module-preparation-platforms.md)
+adds exact provider-input lookup and ordered Java-observable policy comparisons.
+Its 252 selected calls distinguish resource policy denial from a counted reader
+callback and retain the 48 unselected API boundaries. Run its offline checks with:
+
+```sh
+python3 tools/module_portable_fixtures.py --fixtures tests/fixtures/m2-module-portable
+python3 -W error::ResourceWarning -m unittest discover -s tools/tests -p 'test_module_portable_fixtures.py' -v
+node --test tools/platform/resource-session.test.mjs tools/platform/module-preparation-session.test.mjs
+```
+
+Actual Node/Chromium results require the separately documented driver and frozen
+binding artifacts. New browser acquisitions explicitly launch the executable
+whose identity is recorded. Historical default-headless captures do not establish
+that their recorded Chromium installation path was the executed binary.
+
 M2 language implementation and verification are in progress. The
 [M2 contract](docs/m2-language.md) separates whole-language requirement accounting
 from the executable selection:

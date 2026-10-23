@@ -19,6 +19,7 @@ mod power_assertions;
 pub mod probe;
 pub mod regex;
 pub mod resolver;
+pub mod resources;
 pub mod source;
 mod stdlib_sources;
 mod string_case;

@@ -262,8 +262,38 @@ impl HostSession {
         if request.id != id {
             return Err(stale());
         }
-        let result = resources::configured_result(&request, properties, environment);
-        self.vm.resume(id, result)
+        let result = resources::configured_read(&request, properties, environment);
+        self.vm.complete_read(id, result)
+    }
+
+    /// Complete a typed ResourceReader result. Absence and successful values
+    /// enter the evaluator cache; raw `resume` callbacks retain their contract.
+    pub fn complete_read(
+        &mut self,
+        token: &str,
+        result: Result<crate::resources::ReadResult, ReadFailure>,
+        now_ms: u64,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        self.clock(now_ms)?;
+        if self.expire(now_ms) {
+            return Err(self.terminal.clone().unwrap());
+        }
+        let request = self.read_request(token)?;
+        let result = result.map_err(|error| match resources::resolved_uri(&request) {
+            Ok(uri) => error.into_runtime(&uri),
+            Err(error) => error,
+        });
+        self.vm.complete_read(request.id, result)
+    }
+
+    pub fn read_request(&self, token: &str) -> Result<crate::vm::ReadRequest, RuntimeError> {
+        self.open()?;
+        let id = self.request_id(token)?;
+        match self.vm.pending_requests().pop() {
+            Some(Some(PendingRequest::Read(request))) if request.id == id => Ok(request),
+            _ => Err(stale()),
+        }
     }
 
     /// Complete a resource SPI failure using the actual pending request URI.
@@ -291,6 +321,18 @@ impl HostSession {
             Err(error) => error,
         };
         self.vm.resume(id, Err(error))
+    }
+
+    pub fn module_request(
+        &self,
+        token: &str,
+    ) -> Result<crate::modules::ModuleRequest, RuntimeError> {
+        self.open()?;
+        let id = self.request_id(token)?;
+        match self.vm.pending_requests().pop() {
+            Some(Some(PendingRequest::Module(request))) if request.id == id => Ok(request),
+            _ => Err(stale()),
+        }
     }
 
     /// Complete exactly one typed module request owned by the current context.

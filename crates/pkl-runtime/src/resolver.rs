@@ -115,6 +115,7 @@ fn is_base_class(name: &str) -> bool {
     matches!(
         name,
         "Module"
+            | "Resource"
             | "FileOutput"
             | "ModuleOutput"
             | "BaseValueRenderer"
@@ -194,9 +195,23 @@ pub enum Binding {
     CustomMethod,
 }
 
+/// Ordered construction observations, including repeated visits.
+#[derive(Clone, Debug)]
+pub(crate) enum AstPreparation {
+    Import {
+        uri: String,
+        span: Span,
+        member: crate::value::PklString,
+    },
+}
+
 #[derive(Clone, Debug)]
 pub struct ResolvedModule {
     pub module: Module,
+    pub(crate) preparation: Vec<AstPreparation>,
+    pub(crate) preparation_is_evaluation: bool,
+    pub(crate) function_owners: BTreeMap<Span, crate::value::PklString>,
+    pub(crate) preparation_failure: Option<Diagnostic>,
     pub names: BTreeMap<Span, Binding>,
     pub const_names: std::collections::BTreeSet<Span>,
     /// Direct custom-this reads; lambda bodies use their captured normal receiver.
@@ -243,6 +258,11 @@ struct ConstScope {
 }
 
 struct Resolver<'a> {
+    function_owners: BTreeMap<Span, crate::value::PklString>,
+    source: &'a str,
+    preparation: Vec<AstPreparation>,
+    deferred_diagnostics: &'a [Diagnostic],
+    evaluation_preparation: bool,
     scopes: Vec<Scope<'a>>,
     folded_integer_spans: &'a BTreeMap<Span, Span>,
     names: BTreeMap<Span, Binding>,
@@ -302,6 +322,7 @@ fn member_header_span(member: &Member) -> Span {
 // ordered exactly as the pinned builder, including generator body-first checks.
 enum Work<'a> {
     Expression(&'a Expr, bool),
+    MapArguments(&'a Expr),
     Annotations(&'a [Expr], bool, ConstLevel),
     Annotation(&'a Expr, bool),
     AnnotationBody(&'a [ObjectMember], bool),
@@ -309,6 +330,8 @@ enum Work<'a> {
     EndAnnotationBody(ConstLevel),
     Receiver(&'a Expr),
     Type(&'a Type),
+    NamedType(&'a Type),
+    Supertype(&'a Type),
     Constraints(&'a [Expr]),
     Members(&'a [Member], bool),
     MembersNext {
@@ -321,6 +344,11 @@ enum Work<'a> {
     MemberBody(&'a Member, bool),
     ObjectMembers(&'a [ObjectMember]),
     ObjectBody(&'a [ObjectMember], Option<Span>),
+    SpecializedBody {
+        members: &'a [ObjectMember],
+        index: usize,
+        seen: std::collections::BTreeSet<(&'a str, bool)>,
+    },
     ObjectMember(&'a ObjectMember, Option<Span>),
     ConstantEntries(&'a [ObjectMember]),
     Eager(&'a Expr, bool),
@@ -481,7 +509,39 @@ impl<'a> Resolver<'a> {
         // scopes without recursively visiting or owning any authored subtrees.
         let mut work = vec![initial];
         while let Some(task) = work.pop() {
+            if let Work::Expression(expression, _) = &task
+                && let Some(diagnostic) = self.deferred_diagnostics.iter().find(|diagnostic| {
+                    diagnostic.span == expression.span
+                        || (matches!(expression.kind, ExprKind::Int(_))
+                            && expression.span.start <= diagnostic.span.start
+                            && expression.span.end >= diagnostic.span.end)
+                })
+            {
+                let mut diagnostic = diagnostic.clone();
+                if self.evaluation_preparation {
+                    diagnostic.member = self
+                        .diagnostic_owners
+                        .name()
+                        .filter(|name| !name.is_empty())
+                        .map(Into::into);
+                }
+                return Err(diagnostic);
+            }
             match task {
+                Work::MapArguments(expression) => {
+                    let mut error = Diagnostic::language(
+                        DiagnosticOrigin::DeferredAstValidation,
+                        DiagnosticKind::Syntax,
+                        Span::new(expression.span.end - 1, expression.span.end),
+                        "Number of `Map()` arguments must be a multiple of two: `Map(key1, value1, key2, value2, ..., keyN, valueN)`",
+                    );
+                    error.member = self
+                        .diagnostic_owners
+                        .name()
+                        .filter(|name| !name.is_empty())
+                        .map(Into::into);
+                    return Err(error);
+                }
                 Work::Annotations(annotations, class, level) => {
                     let previous = std::mem::replace(&mut self.const_level, level);
                     work.push(Work::EndAnnotations(previous));
@@ -625,6 +685,23 @@ impl<'a> Resolver<'a> {
                     // This continuation runs after EndMember restores ownership.
                     if index > 0 {
                         let member = members[index - 1];
+                        let category = member_category(member);
+                        if self.evaluation_preparation
+                            && object
+                            && self.amending_module
+                            && self.object_levels.len() == 1
+                            && !member.local
+                            && (category == 1 || category == 2)
+                        {
+                            let (target, label) = if category == 1 {
+                                ("class", "Class")
+                            } else {
+                                ("type alias", "Type alias")
+                            };
+                            return Err(Diagnostic::language(DiagnosticOrigin::Resolver, DiagnosticKind::Syntax,
+                                member_header_span(member), format!("{label} needs a `local` modifier."))
+                                .with_hint(format!("To define a non-local {target}, extend rather than amend the parent module (which must be `open` for extension).")));
+                        }
                         if !seen.insert((member.name.as_str(), is_method(member))) {
                             return Err(Diagnostic::language(
                                 DiagnosticOrigin::Resolver,
@@ -641,7 +718,7 @@ impl<'a> Resolver<'a> {
                             seen,
                             object,
                         });
-                        work.push(Work::Member(member, object));
+                        work.push(Work::Member(member, object && member_category(member) >= 3));
                     }
                 }
                 Work::Member(member, object) => {
@@ -652,7 +729,53 @@ impl<'a> Resolver<'a> {
                     if modifier_flags(&member.modifiers) & ModifierKind::Const.flag() != 0 {
                         self.const_level = ConstLevel::All;
                     }
-                    self.validate_member(member, object)?;
+                    if self.evaluation_preparation && !object {
+                        match &member.expr.kind {
+                            ExprKind::Class {
+                                type_parameters, ..
+                            }
+                            | ExprKind::Function {
+                                type_parameters,
+                                method: true,
+                                ..
+                            } => {
+                                self.reject_nonstdlib_type_parameters(type_parameters)
+                                    .map_err(|mut error| {
+                                        error.member = self
+                                            .diagnostic_owners
+                                            .enclosing_name()
+                                            .filter(|name| !name.is_empty())
+                                            .map(Into::into);
+                                        error
+                                    })?;
+                            }
+                            _ => (),
+                        }
+                    }
+                    self.validate_member(member, object, false)?;
+                    if self.evaluation_preparation
+                        && let ExprKind::TypeAlias {
+                            type_parameters, ..
+                        } = &member.expr.kind
+                    {
+                        let mut seen = std::collections::BTreeSet::new();
+                        for parameter in type_parameters {
+                            if !seen.insert(&parameter.name) {
+                                let mut error = Diagnostic::language(
+                                    DiagnosticOrigin::Resolver,
+                                    DiagnosticKind::DuplicateMember,
+                                    parameter.span,
+                                    format!("Duplicate type parameter `{}`.", parameter.name),
+                                );
+                                error.member = self
+                                    .diagnostic_owners
+                                    .enclosing_name()
+                                    .filter(|name| !name.is_empty())
+                                    .map(Into::into);
+                                return Err(error);
+                            }
+                        }
+                    }
                     work.push(Work::EndMember(previous));
                     if let Some(ty) = &member.ty {
                         work.push(Work::Type(ty));
@@ -668,6 +791,9 @@ impl<'a> Resolver<'a> {
                     }
                 }
                 Work::MemberBody(member, object) => {
+                    if self.evaluation_preparation {
+                        self.validate_member(member, object, true)?;
+                    }
                     if object
                         && is_method(member)
                         && modifier_flags(&member.modifiers) & ModifierKind::Local.flag() == 0
@@ -751,14 +877,16 @@ impl<'a> Resolver<'a> {
                             return Err(error);
                         }
                     }
-                    if members.iter().all(|member| {
-                        matches!(
-                            member,
-                            ObjectMember::Property(_)
-                                | ObjectMember::Element { .. }
-                                | ObjectMember::Entry { .. }
-                        )
-                    }) {
+                    if !self.evaluation_preparation
+                        && members.iter().all(|member| {
+                            matches!(
+                                member,
+                                ObjectMember::Property(_)
+                                    | ObjectMember::Element { .. }
+                                    | ObjectMember::Entry { .. }
+                            )
+                        })
+                    {
                         let mut seen = std::collections::BTreeSet::new();
                         for member in &names {
                             if !seen.insert((&member.name, is_method(member))) {
@@ -785,7 +913,13 @@ impl<'a> Resolver<'a> {
                     let previous = self.enter_object(names);
                     work.push(Work::EndObject(previous));
                     work.push(Work::ConstantEntries(members));
-                    if self.diagnostic_owners.is_enabled()
+                    if self.evaluation_preparation {
+                        work.push(Work::SpecializedBody {
+                            members,
+                            index: 0,
+                            seen: Default::default(),
+                        });
+                    } else if self.diagnostic_owners.is_enabled()
                         && let Some(generator) = members.iter().position(|member| {
                             !matches!(
                                 member,
@@ -803,6 +937,48 @@ impl<'a> Resolver<'a> {
                         }
                     } else {
                         work.push(Work::ObjectBody(members, None));
+                    }
+                }
+                Work::SpecializedBody {
+                    members,
+                    index,
+                    mut seen,
+                } => {
+                    if index > 0
+                        && let ObjectMember::Property(member) = &members[index - 1]
+                        && !seen.insert((&member.name, is_method(member)))
+                    {
+                        let mut error = Diagnostic::language(
+                            DiagnosticOrigin::Resolver,
+                            DiagnosticKind::DuplicateMember,
+                            member.name_span,
+                            format!("Duplicate definition of member `{}`.", member.name),
+                        );
+                        error.member = self
+                            .diagnostic_owners
+                            .name()
+                            .filter(|name| !name.is_empty())
+                            .map(Into::into);
+                        return Err(error);
+                    }
+                    if let Some(member) = members.get(index) {
+                        if matches!(
+                            member,
+                            ObjectMember::Property(_)
+                                | ObjectMember::Element { .. }
+                                | ObjectMember::Entry { .. }
+                        ) {
+                            work.push(Work::SpecializedBody {
+                                members,
+                                index: index + 1,
+                                seen,
+                            });
+                            work.push(Work::ObjectMember(member, None));
+                        } else {
+                            // The specialized builder has already visited its prefix.
+                            // Its generator fallback visits the complete body again.
+                            work.push(Work::ObjectBody(members, None));
+                        }
                     }
                 }
                 Work::ObjectBody(members, for_span) => work.extend(
@@ -898,8 +1074,29 @@ impl<'a> Resolver<'a> {
                     else {
                         unreachable!()
                     };
+                    if self.evaluation_preparation && index == 0 {
+                        for parameter in parameters {
+                            if parameter.name != "_" && !seen.insert(&parameter.name) {
+                                let mut error = Diagnostic::language(
+                                    DiagnosticOrigin::Resolver,
+                                    DiagnosticKind::DuplicateMember,
+                                    parameter.span,
+                                    format!("Duplicate definition of member `{}`.", parameter.name),
+                                );
+                                error.member = self
+                                    .diagnostic_owners
+                                    .name()
+                                    .filter(|name| !name.is_empty())
+                                    .map(Into::into);
+                                return Err(error);
+                            }
+                        }
+                    }
                     if let Some(parameter) = parameters.get(index) {
-                        if parameter.name != "_" && !seen.insert(&parameter.name) {
+                        if !self.evaluation_preparation
+                            && parameter.name != "_"
+                            && !seen.insert(&parameter.name)
+                        {
                             let mut error = Diagnostic::language(
                                 DiagnosticOrigin::Resolver,
                                 DiagnosticKind::DuplicateMember,
@@ -1004,50 +1201,81 @@ impl<'a> Resolver<'a> {
                             .map(|expression| Work::Expression(expression, false)),
                     );
                 }
-                Work::Type(ty) => match &ty.kind {
-                    TypeKind::Named {
-                        path, arguments, ..
-                    } => {
-                        let parameter = path.len() == 1
-                            && self.scopes.iter().rev().any(|scope| match scope {
-                                Scope::TypeParameters(parameters) => {
-                                    parameters.iter().any(|parameter| parameter.name == path[0])
-                                }
-                                _ => false,
-                            });
-                        if path.len() > 2 {
-                            self.diagnostic_owner_requested = true;
-                            let mut error = Diagnostic::language(
+                Work::Supertype(ty) => {
+                    let span = ty.unparenthesized_span.unwrap_or(ty.span);
+                    if !matches!(ty.kind, TypeKind::Named { .. } | TypeKind::Module) {
+                        let mut error = Diagnostic::language(
+                            DiagnosticOrigin::Resolver,
+                            DiagnosticKind::Syntax,
+                            span,
+                            format!(
+                                "`{}` is not a valid supertype.",
+                                &self.source[span.start..span.end]
+                            ),
+                        );
+                        error.member = self
+                            .diagnostic_owners
+                            .name()
+                            .filter(|name| !name.is_empty())
+                            .map(Into::into);
+                        return Err(error);
+                    }
+                }
+                Work::NamedType(ty) => {
+                    let TypeKind::Named {
+                        path, name_spans, ..
+                    } = &ty.kind
+                    else {
+                        unreachable!()
+                    };
+                    let parameter = path.len() == 1
+                        && self.scopes.iter().rev().any(|scope| match scope {
+                            Scope::TypeParameters(parameters) => {
+                                parameters.iter().any(|parameter| parameter.name == path[0])
+                            }
+                            _ => false,
+                        });
+                    if path.len() > 2 {
+                        self.diagnostic_owner_requested = true;
+                        let identifier_span = Span::new(
+                            name_spans.first().unwrap().start,
+                            name_spans.last().unwrap().end,
+                        );
+                        let mut error = Diagnostic::language(
                                 DiagnosticOrigin::Resolver,
                                 DiagnosticKind::Syntax,
-                                ty.span,
-                                format!("Invalid type name `{}`.", path.join(".")),
+                                identifier_span,
+                                format!("Invalid type name `{}`.", &self.source[identifier_span.start..identifier_span.end]),
                             ).with_hint("A qualified type name consists of a module import name and a type name.\nExample: `importedModule.SomeClass`");
-                            error.member = self.diagnostic_owners.name().map(Into::into);
-                            return Err(error);
-                        }
-                        if !parameter {
-                            let objects = self
-                                .scopes
-                                .iter()
-                                .filter_map(|scope| match scope {
-                                    Scope::Object(members) => Some(members),
-                                    _ => None,
-                                })
-                                .collect::<Vec<_>>();
-                            let binding = objects
-                                .first()
-                                .and_then(|members| {
-                                    members
-                                        .iter()
-                                        .find(|member| member.name == path[0] && !is_method(member))
-                                })
-                                .map_or(Binding::ImplicitThis, |member| Binding::Property {
-                                    owner_depth: objects.len() - 1,
-                                    local: member.local,
-                                });
-                            self.names.insert(ty.span, binding);
-                        }
+                        error.member = self.diagnostic_owners.name().map(Into::into);
+                        return Err(error);
+                    }
+                    if !parameter {
+                        let objects = self
+                            .scopes
+                            .iter()
+                            .filter_map(|scope| match scope {
+                                Scope::Object(members) => Some(members),
+                                _ => None,
+                            })
+                            .collect::<Vec<_>>();
+                        let binding = objects
+                            .first()
+                            .and_then(|members| {
+                                members
+                                    .iter()
+                                    .find(|member| member.name == path[0] && !is_method(member))
+                            })
+                            .map_or(Binding::ImplicitThis, |member| Binding::Property {
+                                owner_depth: objects.len() - 1,
+                                local: member.local,
+                            });
+                        self.names.insert(ty.span, binding);
+                    }
+                }
+                Work::Type(ty) => match &ty.kind {
+                    TypeKind::Named { arguments, .. } => {
+                        work.push(Work::NamedType(ty));
                         work.extend(arguments.iter().rev().map(Work::Type));
                     }
                     TypeKind::Nullable(inner) => work.push(Work::Type(inner)),
@@ -1083,12 +1311,20 @@ impl<'a> Resolver<'a> {
                     }
                 }
                 Work::Expression(expression, contextual_new) => match &expression.kind {
+                    ExprKind::Import { uri, uri_span, .. } => {
+                        self.preparation.push(AstPreparation::Import {
+                            uri: uri.clone(),
+                            span: *uri_span,
+                            member: self.diagnostic_owners.name().unwrap_or_default(),
+                        });
+                    }
                     ExprKind::Trace(value) => {
                         work.push(Work::Expression(value, contextual_new));
                     }
                     ExprKind::Parenthesized(value)
                     | ExprKind::NonNull(value)
                     | ExprKind::Throw(value)
+                    | ExprKind::ReadResourceGlob(value)
                     | ExprKind::ReadResource(value)
                     | ExprKind::ReadResourceOrNull(value)
                     | ExprKind::Unary { operand: value, .. } => {
@@ -1102,6 +1338,13 @@ impl<'a> Resolver<'a> {
                         work.extend(parts.iter().rev().map(|part| Work::Expression(part, false)))
                     }
                     ExprKind::Call { callee, arguments } => {
+                        if self.evaluation_preparation
+                            && matches!(&callee.kind, ExprKind::Name(name)
+                            if name == "Map" && self.binding(name, true) == Binding::ImplicitMethod)
+                            && arguments.len() % 2 != 0
+                        {
+                            work.push(Work::MapArguments(expression));
+                        }
                         work.extend(
                             arguments
                                 .iter()
@@ -1137,9 +1380,21 @@ impl<'a> Resolver<'a> {
                         work.push(Work::Expression(key, false));
                         work.push(Work::Receiver(receiver));
                     }
-                    ExprKind::Binary { left, right, .. } => {
-                        work.push(Work::Expression(right, false));
-                        work.push(Work::Expression(left, false));
+                    ExprKind::Binary { left, right, op } => {
+                        if self.evaluation_preparation
+                            && matches!(
+                                op,
+                                crate::syntax::BinaryOp::And
+                                    | crate::syntax::BinaryOp::Or
+                                    | crate::syntax::BinaryOp::NullCoalesce
+                            )
+                        {
+                            work.push(Work::Expression(left, false));
+                            work.push(Work::Expression(right, false));
+                        } else {
+                            work.push(Work::Expression(right, false));
+                            work.push(Work::Expression(left, false));
+                        }
                     }
                     ExprKind::If {
                         condition,
@@ -1169,7 +1424,10 @@ impl<'a> Resolver<'a> {
                         }
                         let mut seen = std::collections::BTreeSet::new();
                         for parameter in parameters {
-                            if parameter.name != "_" && !seen.insert(&parameter.name) {
+                            if !self.evaluation_preparation
+                                && parameter.name != "_"
+                                && !seen.insert(&parameter.name)
+                            {
                                 return Err(Diagnostic::language(
                                     DiagnosticOrigin::Resolver,
                                     DiagnosticKind::DuplicateMember,
@@ -1194,6 +1452,11 @@ impl<'a> Resolver<'a> {
                         let previous = std::mem::replace(&mut self.receiver_is_lambda, !method);
                         if !method {
                             self.diagnostic_owners.enter_lambda();
+                            if self.evaluation_preparation
+                                && let Some(owner) = self.diagnostic_owners.name()
+                            {
+                                self.function_owners.insert(expression.span, owner);
+                            }
                         }
                         work.push(Work::EndFunction(previous, !method));
                         if let Some(ty) = return_type {
@@ -1232,6 +1495,9 @@ impl<'a> Resolver<'a> {
                         self.reject_nonstdlib_type_parameters(type_parameters)?;
                         work.push(Work::ClassMembers(members));
                         if let Some(ty) = superclass {
+                            if self.evaluation_preparation {
+                                work.push(Work::Supertype(ty));
+                            }
                             work.push(Work::Type(ty));
                         }
                     }
@@ -1361,7 +1627,12 @@ impl<'a> Resolver<'a> {
         Ok(())
     }
 
-    fn validate_member(&mut self, member: &Member, object: bool) -> Result<(), Diagnostic> {
+    fn validate_member(
+        &mut self,
+        member: &Member,
+        object: bool,
+        body: bool,
+    ) -> Result<(), Diagnostic> {
         use ModifierKind as M;
         let (valid, target): (&[ModifierKind], &str) = if object {
             (&[M::Local, M::Const], "object members")
@@ -1427,6 +1698,9 @@ impl<'a> Resolver<'a> {
                 .filter(|name| !name.is_empty())
                 .map(Into::into);
             return Err(error);
+        }
+        if self.evaluation_preparation && !body {
+            return Ok(());
         }
         if object
             && self.amending_module
@@ -1789,33 +2063,39 @@ fn validate_modifiers(
 }
 
 pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
-    let (result, diagnostic_owner_requested) = resolve_module_inner(module, false);
-    if !diagnostic_owner_requested {
-        return result;
-    }
-    let Err(mut error) = result else {
-        unreachable!("diagnostic ownership is requested only on rejection");
+    let (resolved, error, owner_requested) = resolve_module_inner(module, false, false);
+    let Some(mut error) = error else {
+        return Ok(resolved);
     };
-    // Valid modules never allocate this naming stack. Replay the same worklist
-    // once for the selected rejection, so sibling ordinals retain visit order.
-    // Adopt only ownership, and only if every other diagnostic field is equal.
-    if let (Err(mut replay), _) = resolve_module_inner(module, true) {
-        let owner = replay.member.take();
-        let original_owner = error.member.take();
-        error.member = if replay == error {
-            owner
-        } else {
-            original_owner
-        };
+    if owner_requested {
+        let (_, replay, _) = resolve_module_inner(module, true, false);
+        if let Some(mut replay) = replay {
+            let owner = replay.member.take();
+            let original = error.member.take();
+            error.member = if replay == error { owner } else { original };
+        }
     }
     Err(error)
+}
+
+/// An incomplete binding result can only compile to a failing initializer.
+pub(crate) fn resolve_module_for_evaluation(module: &Module) -> ResolvedModule {
+    let (mut resolved, error, _) = resolve_module_inner(module, true, true);
+    resolved.preparation_failure = error;
+    resolved
 }
 
 fn resolve_module_inner(
     module: &Module,
     capture_diagnostic_owner: bool,
-) -> (Result<ResolvedModule, Diagnostic>, bool) {
+    evaluation_preparation: bool,
+) -> (ResolvedModule, Option<Diagnostic>, bool) {
     let mut resolver = Resolver {
+        function_owners: BTreeMap::new(),
+        preparation: Vec::new(),
+        deferred_diagnostics: &module.deferred_diagnostics,
+        source: &module.source,
+        evaluation_preparation,
         scopes: Vec::new(),
         folded_integer_spans: &module.folded_integer_spans,
         names: BTreeMap::new(),
@@ -1858,40 +2138,97 @@ fn resolve_module_inner(
                 },
             )?;
         }
-        if let Some(declaration) = &module.declaration {
+        if evaluation_preparation {
             let previous = resolver.enter_object(module.members.iter().collect());
-            resolver.visit(Work::Annotations(
-                &declaration.annotations,
-                false,
-                ConstLevel::None,
-            ))?;
+            for member in module.members.iter().filter(|m| member_category(m) == 0) {
+                let ExprKind::Import { uri, uri_span, .. } = &member.expr.kind else {
+                    unreachable!()
+                };
+                resolver.preparation.push(AstPreparation::Import {
+                    uri: uri.clone(),
+                    span: *uri_span,
+                    member: Default::default(),
+                });
+            }
+            if let Some(declaration) = &module.declaration {
+                resolver.visit(Work::Annotations(
+                    &declaration.annotations,
+                    false,
+                    ConstLevel::None,
+                ))?;
+                if let Some(parent) = &declaration.parent {
+                    resolver.preparation.push(AstPreparation::Import {
+                        uri: parent.uri.clone(),
+                        span: parent.span,
+                        member: Default::default(),
+                    });
+                }
+            }
+            let ordered = (1..5)
+                .flat_map(|category| {
+                    module
+                        .members
+                        .iter()
+                        .filter(move |m| member_category(m) == category)
+                })
+                .collect();
+            let mut seen = std::collections::BTreeSet::new();
+            for member in module.members.iter().filter(|m| member_category(m) == 0) {
+                if !seen.insert((member.name.as_str(), false)) {
+                    return Err(Diagnostic::language(
+                        DiagnosticOrigin::Resolver,
+                        DiagnosticKind::DuplicateMember,
+                        member_header_span(member),
+                        format!("Duplicate definition of member `{}`.", member.name),
+                    ));
+                }
+            }
+            resolver.visit(Work::MembersNext {
+                members: ordered,
+                index: 0,
+                seen,
+                object: resolver.amending_module,
+            })?;
             resolver.visit(Work::EndObject(previous))?;
-        }
-        if resolver.amending_module {
-            resolver.amending_members(&module.members)?;
         } else {
-            resolver.members(&module.members, false)?;
+            if let Some(declaration) = &module.declaration {
+                let previous = resolver.enter_object(module.members.iter().collect());
+                resolver.visit(Work::Annotations(
+                    &declaration.annotations,
+                    false,
+                    ConstLevel::None,
+                ))?;
+                resolver.visit(Work::EndObject(previous))?;
+            }
+            if resolver.amending_module {
+                resolver.amending_members(&module.members)?;
+            } else {
+                resolver.members(&module.members, false)?;
+            }
         }
         Ok::<(), Diagnostic>(())
     })();
     let diagnostic_owner_requested = resolver.diagnostic_owner_requested;
-    let result = validation
-        .map_err(|mut error| {
-            error.module_name = module
-                .declaration
-                .as_ref()
-                .and_then(|declaration| declaration.name.as_ref())
-                .map(|name| name.join(".").into_boxed_str());
-            error
-        })
-        .map(|()| ResolvedModule {
-            module: module.clone(),
-            names: resolver.names,
-            const_names: resolver.const_names,
-            custom_this: resolver.custom_this,
-            custom_functions: resolver.custom_functions,
-        });
-    (result, diagnostic_owner_requested)
+    let error = validation.err().map(|mut error| {
+        error.module_name = module
+            .declaration
+            .as_ref()
+            .and_then(|d| d.name.as_ref())
+            .map(|name| name.join(".").into_boxed_str());
+        error
+    });
+    let resolved = ResolvedModule {
+        module: module.clone(),
+        preparation: resolver.preparation,
+        function_owners: resolver.function_owners,
+        preparation_is_evaluation: evaluation_preparation,
+        preparation_failure: None,
+        names: resolver.names,
+        const_names: resolver.const_names,
+        custom_this: resolver.custom_this,
+        custom_functions: resolver.custom_functions,
+    };
+    (resolved, error, diagnostic_owner_requested)
 }
 
 /// Resolve a separately parsed expression in a synthetic module scope. The
@@ -1904,6 +2241,11 @@ pub(crate) fn resolve_session_expression(
     parsed: &crate::parser::ParsedExpression,
 ) -> Result<ResolvedModule, Diagnostic> {
     let mut resolver = Resolver {
+        function_owners: BTreeMap::new(),
+        preparation: Vec::new(),
+        deferred_diagnostics: &parsed.deferred_diagnostics,
+        source: text,
+        evaluation_preparation: true,
         scopes: Vec::new(),
         folded_integer_spans: &parsed.folded_integer_spans,
         names: BTreeMap::new(),
@@ -1918,14 +2260,21 @@ pub(crate) fn resolve_session_expression(
         entry_counts: BTreeMap::new(),
         member_path: Vec::new(),
         diagnostic_path: Vec::new(),
-        diagnostic_owners: diagnostic_owner::OwnerScopes::new(false),
+        diagnostic_owners: diagnostic_owner::OwnerScopes::new(true),
         diagnostic_owner_requested: false,
         amending_module: false,
     };
     resolver.enter_object(Vec::new());
-    resolver.visit(Work::Expression(&parsed.expression, false))?;
+    let preparation_failure = resolver
+        .visit(Work::Expression(&parsed.expression, false))
+        .err();
     Ok(ResolvedModule {
+        preparation: resolver.preparation,
+        function_owners: resolver.function_owners,
+        preparation_is_evaluation: true,
+        preparation_failure,
         module: Module {
+            deferred_diagnostics: Vec::new(),
             source: text.into(),
             declaration: None,
             members: Vec::new(),

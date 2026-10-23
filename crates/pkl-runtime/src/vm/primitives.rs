@@ -119,6 +119,33 @@ impl Vm {
         name: &str,
         method: bool,
     ) -> Result<bool, RuntimeError> {
+        if !method && let Value::Bytes(bytes) = receiver {
+            if name == "base64" {
+                self.stack.push(Value::String(resources::base64(bytes)));
+                return Ok(true);
+            }
+            return Ok(false);
+        }
+        if !method
+            && name == "base64DecodedBytes"
+            && let Value::String(text) = receiver
+        {
+            let bytes = resources::decode_base64(text).map_err(|message| {
+                let rendered = crate::diagnostic_values::render_string(
+                    receiver,
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )
+                .expect("rendering a String does not read the heap");
+                RuntimeError::new(
+                    ErrorKind::Arithmetic,
+                    PklString::join(&[message.into(), "\nString: ".into(), rendered], ""),
+                )
+            })?;
+            self.stack.push(Value::Bytes(bytes));
+            return Ok(true);
+        }
         let class = match receiver {
             Value::Bool(_) => "Boolean",
             Value::Int(_) => "Int",

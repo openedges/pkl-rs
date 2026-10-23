@@ -535,6 +535,38 @@ impl SourceSession {
             .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
+    pub fn complete_module_capabilities(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        local: bool,
+        hierarchical: bool,
+        fragment_paths: bool,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_module_capabilities(
+                &string(&token)?,
+                local,
+                hierarchical,
+                fragment_paths,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn complete_module_has_element(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        exists: bool,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_module_has_element(&string(&token)?, exists, unsigned(now)?)
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
     pub fn complete_module_resolution(
         &mut self,
         env: Env,
@@ -605,6 +637,88 @@ impl SourceSession {
                 &string(&token)?,
                 true,
                 &string(&kind)?,
+                message.map(|message| PklString::from_utf16(message.to_vec())),
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn reject_module_preparation(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        has_element: bool,
+        kind: Utf16String,
+        message: Option<Utf16String>,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .reject_module_preparation_text(
+                &string(&token)?,
+                has_element,
+                &string(&kind)?,
+                message.map(|message| PklString::from_utf16(message.to_vec())),
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn resolved_read_uri(&self, env: Env, token: Utf16String) -> Result<String> {
+        self.inner
+            .resolved_read_uri(&string(&token)?)
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn complete_read_missing(&mut self, env: Env, token: Utf16String, now: f64) -> Result<()> {
+        self.inner
+            .complete_read_missing(&string(&token)?, unsigned(now)?)
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn complete_read_text(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        units: napi::bindgen_prelude::Uint16Array,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_read_text(
+                &string(&token)?,
+                PklString::from_utf16(units.to_vec()),
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn complete_read_resource(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        uri: Utf16String,
+        bytes: Uint8Array,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_read_resource(
+                &string(&token)?,
+                PklString::from_utf16(uri.to_vec()),
+                bytes.to_vec(),
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn reject_read_security_manager(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        message: Option<Utf16String>,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .reject_read_security_manager(
+                &string(&token)?,
                 message.map(|message| PklString::from_utf16(message.to_vec())),
                 unsigned(now)?,
             )

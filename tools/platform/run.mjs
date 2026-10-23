@@ -54,7 +54,11 @@ const server = createServer(async (request, response) => {
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 let browser;
 try {
-  browser = await chromium.launch({ headless: true });
+  const browserExecutable = chromium.executablePath();
+  const browserExecutableSha256 = createHash('sha256').update(await readFile(browserExecutable)).digest('hex');
+  const browserLaunchOptions = {headless: true, executablePath: browserExecutable};
+  await writeFile(resolve(output, 'browser-launch.json'), JSON.stringify({browserExecutable, browserExecutableSha256, browserLaunchOptions}, null, 2) + '\n');
+  browser = await chromium.launch(browserLaunchOptions);
   const page = await browser.newPage();
   page.on('pageerror', e => browserErrors.push(e.stack));
   await page.goto(`http://127.0.0.1:${server.address().port}`);
@@ -70,7 +74,7 @@ try {
   await writeFile(resolve(output, 'browser-legacy-utf8-observations.json'), JSON.stringify(result.legacyUtf8Observations, null, 2) + '\n');
   await writeFile(resolve(output, 'browser.stdout.bin'), result.outputs.join('\n') + '\n');
   await writeFile(resolve(output, 'browser-checks.json'), JSON.stringify(result.checks, null, 2) + '\n');
-  const report = { schema: 1, node: process.version, nodeVersions: process.versions, browser: browser.version(), browserExecutable: chromium.executablePath(), playwright: playwrightVersion, playwrightCore: playwrightCoreVersion, playwrightPin: pin, fixtureSha256: createHash('sha256').update(manifestBytes).digest('hex'), total: cases.length, historicalJavaUtf8FixtureGroups: ['string-representation', 'diagnostic-frame-identity', 'frontend-owner'], historicalStringRepresentationBoundary: 'Java UTF8 only; actual JS units retained separately; no frame-unit equality claim', nodeChecks, browserChecks: result.checks, browserErrors };
+  const report = { schema: 1, node: process.version, nodeVersions: process.versions, browser: browser.version(), browserExecutable, browserExecutableSha256, browserLaunchOptions, playwright: playwrightVersion, playwrightCore: playwrightCoreVersion, playwrightPin: pin, fixtureSha256: createHash('sha256').update(manifestBytes).digest('hex'), total: cases.length, historicalJavaUtf8FixtureGroups: ['string-representation', 'diagnostic-frame-identity', 'frontend-owner'], historicalStringRepresentationBoundary: 'Java UTF8 only; actual JS units retained separately; no frame-unit equality claim', nodeChecks, browserChecks: result.checks, browserErrors };
   await writeFile(resolve(output, 'execution.json'), JSON.stringify(report, null, 2) + '\n');
   if (browserErrors.length) throw new Error('browser reported uncaught errors');
   console.log(JSON.stringify({ total: cases.length, nodeChecks: nodeChecks.length, browserChecks: result.checks.length, browser: browser.version() }));

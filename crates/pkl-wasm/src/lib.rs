@@ -584,6 +584,36 @@ impl SourceSession {
             )
             .map_err(|failure| text_error(failure.message))
     }
+    #[wasm_bindgen(js_name = completeModuleCapabilities)]
+    pub fn complete_module_capabilities(
+        &mut self,
+        token: JsString,
+        local: bool,
+        hierarchical: bool,
+        fragment_paths: bool,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_module_capabilities(
+                &string(&token)?,
+                local,
+                hierarchical,
+                fragment_paths,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[wasm_bindgen(js_name = completeModuleHasElement)]
+    pub fn complete_module_has_element(
+        &mut self,
+        token: JsString,
+        exists: bool,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_module_has_element(&string(&token)?, exists, unsigned(now)?)
+            .map_err(|failure| text_error(failure.message))
+    }
     #[wasm_bindgen(js_name = completeModuleResolution)]
     pub fn complete_module_resolution(
         &mut self,
@@ -651,6 +681,90 @@ impl SourceSession {
                 &string(&token)?,
                 true,
                 &string(&kind)?,
+                message.as_ref().map(pkl_text).transpose()?,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[wasm_bindgen(js_name = rejectModulePreparation)]
+    pub fn reject_module_preparation(
+        &mut self,
+        token: JsString,
+        has_element: bool,
+        kind: JsString,
+        message: Option<JsString>,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .reject_module_preparation_text(
+                &string(&token)?,
+                has_element,
+                &string(&kind)?,
+                message.as_ref().map(pkl_text).transpose()?,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[wasm_bindgen(js_name = resolvedReadUri)]
+    pub fn resolved_read_uri(&self, token: JsString) -> Result<String, JsValue> {
+        self.inner
+            .resolved_read_uri(&string(&token)?)
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[wasm_bindgen(js_name = completeReadMissing)]
+    pub fn complete_read_missing(&mut self, token: JsString, now: f64) -> Result<(), JsValue> {
+        self.inner
+            .complete_read_missing(&string(&token)?, unsigned(now)?)
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[wasm_bindgen(js_name = completeReadText)]
+    pub fn complete_read_text(
+        &mut self,
+        token: JsString,
+        units: js_sys::Uint16Array,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        if !JsValue::is_instance_of::<js_sys::Uint16Array>(units.as_ref()) {
+            return Err(error("expected Uint16Array"));
+        }
+        self.inner
+            .complete_read_text(
+                &string(&token)?,
+                PklString::from_utf16(units.to_vec()),
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[wasm_bindgen(js_name = completeReadResource)]
+    pub fn complete_read_resource(
+        &mut self,
+        token: JsString,
+        uri: JsString,
+        bytes: Uint8Array,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        if !JsValue::is_instance_of::<Uint8Array>(bytes.as_ref()) {
+            return Err(error("expected Uint8Array"));
+        }
+        self.inner
+            .complete_read_resource(
+                &string(&token)?,
+                pkl_text(&uri)?,
+                bytes.to_vec(),
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[wasm_bindgen(js_name = rejectReadSecurityManager)]
+    pub fn reject_read_security_manager(
+        &mut self,
+        token: JsString,
+        message: Option<JsString>,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .reject_read_security_manager(
+                &string(&token)?,
                 message.as_ref().map(pkl_text).transpose()?,
                 unsigned(now)?,
             )

@@ -628,6 +628,7 @@ impl Vm {
             callsite_hidden: false,
             builders: Vec::new(),
             module_load: None,
+            uri_resolution: None,
             module_receiver: None,
         });
         Ok(())

@@ -129,6 +129,9 @@ fn original_invalid_amendment_uses_the_adopted_module_diagnostic_name() {
         },
         &ModuleEvalOptions::default(),
         |request| match &request.kind {
+            ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
+                panic!("unexpected ModuleKey preparation in this fixture")
+            }
             ModuleRequestKind::Resolve { original_uri, .. } => {
                 assert!(original_uri.ends_with("/modules/library.pkl"));
                 ModuleCompletion::Resolved(Ok(ResolvedModule {

@@ -174,6 +174,9 @@ fn original_super_method_failure_describes_the_parent_lookup_module() {
         },
         &ModuleEvalOptions::default(),
         |request| match &request.kind {
+            ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
+                panic!("unexpected ModuleKey preparation in this fixture")
+            }
             ModuleRequestKind::Resolve { original_uri, .. } => {
                 ModuleCompletion::Resolved(Ok(ResolvedModule {
                     original_uri: original_uri.clone(),

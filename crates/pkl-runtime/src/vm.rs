@@ -30,12 +30,14 @@ mod pcf_format;
 mod primitives;
 pub(crate) mod reference;
 mod rendering;
+mod resources;
 mod strings;
 mod tracing;
 #[cfg(test)]
 mod type_equivalence_tests;
 mod type_resolution;
 mod typecheck;
+mod uri_resolution;
 use typecheck::{TypeDestination, TypeRun};
 
 #[derive(Clone, Debug)]
@@ -46,6 +48,7 @@ pub enum Instruction {
         or_null: bool,
     },
     ImportModule(modules::ImportSpec),
+    PrepareModuleImports(crate::modules::UnitId),
     CheckModuleOutput,
     /// Eager initialization in the private standard-library profile.
     BootstrapStdlib,
@@ -293,6 +296,7 @@ pub enum Instruction {
     Jump(usize),
     JumpIfFalse(usize),
     ReadResource,
+    ResourceProperty(resources::Property),
     ReadResourceOrNull,
     Return,
 }
@@ -860,6 +864,7 @@ impl Program {
         };
         let access_members = reference::access_members(&mut blocks, &mut metadata);
         let mut builtin_members = annotations::builtin_members(&mut blocks, &mut metadata);
+        builtin_members.extend(resources::builtin_members(&mut blocks, &mut metadata));
         let mut objects = Vec::new();
         builtin_members.extend(output::builtin_members(
             &mut blocks,
@@ -909,8 +914,17 @@ pub struct ReadRequest {
     /// registered unit; otherwise its explicit source URI. This is independent
     /// of the caller and is never replaced by the canonical resolved key.
     pub module_uri: Option<Arc<str>>,
+    /// Prepared URI from a successful declaration-ModuleKey resolution.
+    pub resolved_uri: Option<Arc<str>>,
     /// Only an absent resource becomes null; parse, policy and reader errors propagate.
     pub nullable: bool,
+}
+
+impl ReadRequest {
+    /// Resolved URI delivered to the reader. URI semantics remain in the engine.
+    pub fn resolved_uri(&self) -> Result<String, RuntimeError> {
+        crate::host::resources::resolved_uri(self)
+    }
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -958,6 +972,7 @@ struct Frame {
     callsite_hidden: bool,
     builders: Vec<ObjectId>,
     module_load: Option<modules::ModuleRun>,
+    uri_resolution: Option<uri_resolution::Resolution>,
     module_receiver: Option<ObjectId>,
 }
 
@@ -1035,6 +1050,7 @@ pub struct Vm {
     /// Reentering or restarting a declaration retains its first captured environment.
     modules_original: BTreeMap<Arc<str>, modules::CachedModule>,
     modules_resolved: BTreeMap<Arc<str>, modules::CachedModule>,
+    resources: BTreeMap<crate::host::resources::CacheKey, Option<Value>>,
     class_singletons: BTreeMap<usize, ObjectId>,
     alias_singletons: BTreeMap<usize, ObjectId>,
     resolved_declarations: BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
@@ -1099,6 +1115,7 @@ impl Vm {
             power_assertions: false,
             modules_original: BTreeMap::new(),
             modules_resolved: BTreeMap::new(),
+            resources: BTreeMap::new(),
             class_singletons: BTreeMap::new(),
             alias_singletons: BTreeMap::new(),
             resolved_declarations: BTreeMap::new(),
@@ -1200,6 +1217,7 @@ impl Vm {
             callsite_hidden: false,
             builders: Vec::new(),
             module_load: None,
+            uri_resolution: None,
             module_receiver: None,
         });
         self.state = State::Running;
@@ -1484,6 +1502,7 @@ impl Vm {
         self.context = EvaluationContext::default();
         self.modules_original.clear();
         self.modules_resolved.clear();
+        self.resources.clear();
         self.class_singletons.clear();
         self.alias_singletons.clear();
         self.resolved_declarations.clear();
@@ -1540,6 +1559,7 @@ impl Vm {
     /// Safepoint collection includes suspended frames and externally pinned results.
     pub fn collect(&mut self, external_roots: &[Value]) -> HeapStats {
         let mut roots = external_roots.to_vec();
+        roots.extend(self.resources.values().filter_map(Clone::clone));
         roots.extend(
             self.modules_original
                 .values()
@@ -1655,6 +1675,12 @@ impl Vm {
             error.hint = self.pcf_undefined_hint();
         }
         let catch_boundary = self.guest_catch_boundary(&error);
+        let unavailable_origin = error.unavailable_origin;
+        if unavailable_origin {
+            // Consume this origin once: cached exceptions already contain the
+            // visible stack. Unwinding and inserted let frames are unaffected.
+            error.unavailable_origin = false;
+        }
         let unwind_start = catch_boundary.map_or(0, |index| index + 1);
         self.reset_force_marks(unwind_start);
         // Inferred properties read their class prototype without type checks.
@@ -1806,7 +1832,10 @@ impl Vm {
             {
                 let reading_inferred_parent = frame_index + 1 < diagnostic_frames.len()
                     && matches!(instruction(frame), Some(Instruction::InferPropertyParent));
-                if !frame.hides_callsite() && !reading_inferred_parent {
+                if !frame.hides_callsite()
+                    && !reading_inferred_parent
+                    && !(unavailable_origin && frame_index + 1 == diagnostic_frames.len())
+                {
                     error.frames.push(RuntimeFrame {
                         source: metadata.source.clone(),
                         span: if error.frames.is_empty() {
@@ -2404,6 +2433,7 @@ impl Vm {
             callsite_hidden: false,
             builders: Vec::new(),
             module_load: None,
+            uri_resolution: None,
             module_receiver: None,
             force: Some(Force {
                 entry,
@@ -3264,6 +3294,7 @@ impl Vm {
             callsite_hidden: false,
             builders: Vec::new(),
             module_load: None,
+            uri_resolution: None,
             module_receiver: None,
         });
         Ok(())
@@ -3419,6 +3450,7 @@ impl Vm {
                 unreachable!("type instruction uses its bounded dispatcher")
             }
             Instruction::ImportModule(spec) => self.begin_import(spec)?,
+            Instruction::PrepareModuleImports(unit) => self.prepare_module_imports(unit)?,
             Instruction::InitializeModuleParent => self.initialize_module_parent()?,
             Instruction::CheckModuleOutput => self.check_module_output()?,
             Instruction::BootstrapStdlib => self.bootstrap_stdlib()?,
@@ -3438,6 +3470,7 @@ impl Vm {
                 self.stack
                     .push(Value::Bytes(value.to_java_utf8().into_bytes().into()));
             }
+            Instruction::ResourceProperty(property) => self.resource_property(property)?,
             Instruction::OutputRenderer => self.output_renderer()?,
             Instruction::RenderPcf { document } => self.begin_pcf(document)?,
             Instruction::PublishModuleMember { code } => {
@@ -4634,19 +4667,23 @@ impl Vm {
                 let value = self.pop()?;
                 if !matches!(value, Value::Bool(_)) {
                     let operator = if or { "||" } else { "&&" };
-                    return Err(
-                        if matches!(instruction, Instruction::CheckLogicalLeft { .. }) {
-                            RuntimeError::new(
-                                ErrorKind::Type,
-                                PklString::join(&[format!("Operator `{operator}` is not defined for left operand type `").into(),
-(value_type_name(&value)).into(),
-"`.\nLeft operand: ".into(),
-display_value(&value)], ""),
-                            )
-                        } else {
-                            binary_error(operator, &Value::Bool(!or), &value)
-                        },
-                    );
+                    let name = crate::diagnostic_values::type_name(
+                        &value,
+                        &self.heap,
+                        &self.program.module_name,
+                    )?;
+                    let rendered = crate::diagnostic_values::render(
+                        &value,
+                        &self.heap,
+                        &self.program.module_name,
+                        80,
+                    )?;
+                    let message = if matches!(instruction, Instruction::CheckLogicalLeft { .. }) {
+                        PklString::join(&[format!("Operator `{operator}` is not defined for left operand type `{name}`.\nLeft operand: ").into(), rendered], "")
+                    } else {
+                        PklString::join(&[format!("Operator `{operator}` is not defined for operand types `Boolean` and `{name}`.\nLeft operand : {}\nRight operand: ", !or).into(), rendered], "")
+                    };
+                    return Err(RuntimeError::new(ErrorKind::Type, message));
                 }
                 self.stack.push(value);
             }
@@ -4803,12 +4840,14 @@ display_value(&value)], ""),
                             .or(self.context.primary_source.as_ref())
                             .map(|source| source.uri.clone())
                     });
-                self.state = State::Waiting(PendingRequest::Read(ReadRequest {
+                let request = ReadRequest {
                     id,
                     uri,
                     module_uri,
+                    resolved_uri: None,
                     nullable,
-                }));
+                };
+                self.begin_read_resolution(request)?;
             }
             Instruction::Return => {
                 let base = self.frames.last().expect("active frame").base;
@@ -5173,6 +5212,34 @@ fn compile_unit_into(
     source: Option<Arc<crate::value::RuntimeSource>>,
     identity: Option<crate::modules::ModuleIdentity>,
 ) -> Result<crate::modules::UnitId, RuntimeError> {
+    if resolved.preparation_failure.is_none() {
+        return compile_unit_body(program, resolved, options, instrument, source, identity);
+    }
+    // Rejected ASTs never publish or execute partially resolved guest members.
+    // Their initializer only replays the observed construction prefix and fails.
+    let mut rejected = resolved.clone();
+    rejected.module.members.clear();
+    rejected.module.deferred_diagnostics.clear();
+    if let Some(declaration) = &mut rejected.module.declaration {
+        declaration.annotations.clear();
+        declaration.parent = None;
+        declaration.modifiers.clear();
+    }
+    rejected.preparation.clear();
+    rejected.preparation_failure = None;
+    let unit = compile_unit_body(program, &rejected, options, instrument, source, identity)?;
+    program.units[unit.0 as usize].import_order = uri_resolution::module_import_order(resolved);
+    Ok(unit)
+}
+
+fn compile_unit_body(
+    program: &mut Program,
+    resolved: &crate::resolver::ResolvedModule,
+    options: CompileOptions,
+    instrument: bool,
+    source: Option<Arc<crate::value::RuntimeSource>>,
+    identity: Option<crate::modules::ModuleIdentity>,
+) -> Result<crate::modules::UnitId, RuntimeError> {
     // Development adapters may append raw blocks without source metadata.
     // Preserve their missing provenance while aligning the append-only arenas
     // before compiling an imported or standard-library unit into this program.
@@ -5279,6 +5346,7 @@ fn compile_unit_into(
             crate::syntax::modifier_flags(&declaration.modifiers)
         });
     let mut entry = Code::default();
+    entry.push(Instruction::PrepareModuleImports(unit));
     entry.push(Instruction::MakeObject {
         template,
         has_parent: false,
@@ -5289,12 +5357,16 @@ fn compile_unit_into(
         .as_ref()
         .and_then(|declaration| declaration.parent.as_ref())
     {
-        let spec = modules::ImportSpec::new(
-            parent.uri.clone().into(),
-            parent.span,
-            unit,
-            compiler.identity.as_ref(),
-        )?;
+        let spec = if resolved.preparation_is_evaluation {
+            modules::ImportSpec::authored(parent.uri.clone().into(), parent.span, unit)
+        } else {
+            modules::ImportSpec::new(
+                parent.uri.clone().into(),
+                parent.span,
+                unit,
+                compiler.identity.as_ref(),
+            )?
+        };
         entry.push_at(Instruction::ImportModule(spec), parent.span);
         entry.push_at(Instruction::InitializeModuleParent, parent.span);
     }
@@ -5361,6 +5433,7 @@ fn compile_unit_into(
         template,
         entry,
         initial_members: initial_module_members,
+        import_order: uri_resolution::module_import_order(resolved),
         mode,
         modifiers,
         class_id: if unit.0 == 0 {
@@ -5830,12 +5903,17 @@ impl Compiler<'_> {
                 if uri == "pkl:ref" {
                     output.push(Instruction::LoadRefModule);
                 } else {
-                    output.push(Instruction::ImportModule(modules::ImportSpec::new(
-                        uri.clone().into(),
-                        *uri_span,
-                        self.unit,
-                        self.identity.as_ref(),
-                    )?));
+                    let spec = if self.resolved.preparation_is_evaluation {
+                        modules::ImportSpec::authored(uri.clone().into(), *uri_span, self.unit)
+                    } else {
+                        modules::ImportSpec::new(
+                            uri.clone().into(),
+                            *uri_span,
+                            self.unit,
+                            self.identity.as_ref(),
+                        )?
+                    };
+                    output.push(Instruction::ImportModule(spec));
                 }
             }
             ExprKind::Class {

@@ -1,0 +1,2054 @@
+{
+  "pins": {
+    "logical": {
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01",
+      "reportSha256": "db1b7305da5f564a3b670b8e3deee304e7188ee579138b7cf5d9187a4ce64765",
+      "inventorySha256": "281fa7f68de56960018e08b16cae1b57cf2f1977193945434afe0af36866c75b",
+      "closureSha256": "b2f54f1e12c94b405d7a5ba1f6e2f06211b26e067dc27be0773e2d6dcb65c528"
+    },
+    "capability": {
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03",
+      "reportSha256": "eda49c0ed06b2320b33dd877391b64adb62a0611deac09d0a828da1d0e012740",
+      "inventorySha256": "0ea0c4fa48550771ca8ad0c313baca78b43a2f59a5999c50f8dbcc32a2010caf",
+      "closureSha256": "a1b71530f9b68603d7fd47faceea08e0f6ac5380123d50434a2f22b1b538e1b1"
+    }
+  },
+  "originalPaths": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/report.json": {
+      "path": "provenance/logical/report.json",
+      "sha256": "db1b7305da5f564a3b670b8e3deee304e7188ee579138b7cf5d9187a4ce64765",
+      "bytes": 166772
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases.json": {
+      "path": "provenance/logical/cases.json",
+      "sha256": "d552bac4894403d3bc383cde90f5a925fb6623dcd6f6031e69a517c275969dd4",
+      "bytes": 3689
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/inventory.json": {
+      "path": "provenance/logical/inventory.json",
+      "sha256": "281fa7f68de56960018e08b16cae1b57cf2f1977193945434afe0af36866c75b",
+      "bytes": 231838
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/closure.json": {
+      "path": "provenance/logical/closure.json",
+      "sha256": "b2f54f1e12c94b405d7a5ba1f6e2f06211b26e067dc27be0773e2d6dcb65c528",
+      "bytes": 270
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/workspace/coalesce-lambda-owner/tree/a/b/main.pkl": {
+      "path": "sources/coalesce-lambda-owner.pkl",
+      "sha256": "a9b1e279097c5f2f83b9adff80237f8db0beb7f7036316c9b917e7654f89fcad",
+      "bytes": 66
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-0.status.bin": {
+      "path": "raw/81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "bytes": 8
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-0.stdout.bin": {
+      "path": "raw/7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451.bin",
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-0.stderr.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-0.stdout.code-units.bin": {
+      "path": "raw/797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188.bin",
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+      "bytes": 2
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-0.stderr.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-0.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-0.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-0.expression.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-0.error-class.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-0.counters-before.bin": {
+      "path": "raw/94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8.bin",
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-0.counters-after.bin": {
+      "path": "raw/a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15.bin",
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-1.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-1.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-1.stderr.bin": {
+      "path": "raw/e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99.bin",
+      "sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+      "bytes": 574
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-1.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-1.stderr.code-units.bin": {
+      "path": "raw/e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc.bin",
+      "sha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+      "bytes": 1132
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-1.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-1.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-1.expression.bin": {
+      "path": "raw/148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940.bin",
+      "sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-1.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-1.counters-before.bin": {
+      "path": "raw/a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15.bin",
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-1.counters-after.bin": {
+      "path": "raw/bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598.bin",
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-2.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-2.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-2.stderr.bin": {
+      "path": "raw/e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99.bin",
+      "sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+      "bytes": 574
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-2.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-2.stderr.code-units.bin": {
+      "path": "raw/e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc.bin",
+      "sha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+      "bytes": 1132
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-2.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-2.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-2.expression.bin": {
+      "path": "raw/148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940.bin",
+      "sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-2.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-2.counters-before.bin": {
+      "path": "raw/bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598.bin",
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-0/outer-2.counters-after.bin": {
+      "path": "raw/e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc.bin",
+      "sha256": "e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-0.status.bin": {
+      "path": "raw/81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "bytes": 8
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-0.stdout.bin": {
+      "path": "raw/7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451.bin",
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-0.stderr.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-0.stdout.code-units.bin": {
+      "path": "raw/797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188.bin",
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+      "bytes": 2
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-0.stderr.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-0.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-0.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-0.expression.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-0.error-class.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-0.counters-before.bin": {
+      "path": "raw/94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8.bin",
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-0.counters-after.bin": {
+      "path": "raw/a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15.bin",
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-1.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-1.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-1.stderr.bin": {
+      "path": "raw/e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99.bin",
+      "sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+      "bytes": 574
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-1.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-1.stderr.code-units.bin": {
+      "path": "raw/e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc.bin",
+      "sha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+      "bytes": 1132
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-1.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-1.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-1.expression.bin": {
+      "path": "raw/148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940.bin",
+      "sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-1.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-1.counters-before.bin": {
+      "path": "raw/a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15.bin",
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-1.counters-after.bin": {
+      "path": "raw/bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598.bin",
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-2.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-2.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-2.stderr.bin": {
+      "path": "raw/e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99.bin",
+      "sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+      "bytes": 574
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-2.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-2.stderr.code-units.bin": {
+      "path": "raw/e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc.bin",
+      "sha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+      "bytes": 1132
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-2.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-2.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-2.expression.bin": {
+      "path": "raw/148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940.bin",
+      "sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-2.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-2.counters-before.bin": {
+      "path": "raw/bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598.bin",
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/0/calls/session-1/outer-2.counters-after.bin": {
+      "path": "raw/e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc.bin",
+      "sha256": "e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-0.status.bin": {
+      "path": "raw/81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "bytes": 8
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-0.stdout.bin": {
+      "path": "raw/7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451.bin",
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-0.stderr.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-0.stdout.code-units.bin": {
+      "path": "raw/797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188.bin",
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+      "bytes": 2
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-0.stderr.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-0.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-0.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-0.expression.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-0.error-class.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-0.counters-before.bin": {
+      "path": "raw/94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8.bin",
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-0.counters-after.bin": {
+      "path": "raw/a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15.bin",
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-1.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-1.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-1.stderr.bin": {
+      "path": "raw/e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99.bin",
+      "sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+      "bytes": 574
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-1.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-1.stderr.code-units.bin": {
+      "path": "raw/e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc.bin",
+      "sha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+      "bytes": 1132
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-1.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-1.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-1.expression.bin": {
+      "path": "raw/148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940.bin",
+      "sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-1.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-1.counters-before.bin": {
+      "path": "raw/a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15.bin",
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-1.counters-after.bin": {
+      "path": "raw/bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598.bin",
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-2.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-2.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-2.stderr.bin": {
+      "path": "raw/e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99.bin",
+      "sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+      "bytes": 574
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-2.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-2.stderr.code-units.bin": {
+      "path": "raw/e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc.bin",
+      "sha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+      "bytes": 1132
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-2.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-2.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-2.expression.bin": {
+      "path": "raw/148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940.bin",
+      "sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-2.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-2.counters-before.bin": {
+      "path": "raw/bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598.bin",
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-0/outer-2.counters-after.bin": {
+      "path": "raw/e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc.bin",
+      "sha256": "e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-0.status.bin": {
+      "path": "raw/81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "bytes": 8
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-0.stdout.bin": {
+      "path": "raw/7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451.bin",
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-0.stderr.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-0.stdout.code-units.bin": {
+      "path": "raw/797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188.bin",
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+      "bytes": 2
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-0.stderr.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-0.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-0.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-0.expression.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-0.error-class.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-0.counters-before.bin": {
+      "path": "raw/94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8.bin",
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-0.counters-after.bin": {
+      "path": "raw/a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15.bin",
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-1.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-1.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-1.stderr.bin": {
+      "path": "raw/e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99.bin",
+      "sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+      "bytes": 574
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-1.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-1.stderr.code-units.bin": {
+      "path": "raw/e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc.bin",
+      "sha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+      "bytes": 1132
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-1.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-1.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-1.expression.bin": {
+      "path": "raw/148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940.bin",
+      "sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-1.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-1.counters-before.bin": {
+      "path": "raw/a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15.bin",
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-1.counters-after.bin": {
+      "path": "raw/bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598.bin",
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-2.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-2.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-2.stderr.bin": {
+      "path": "raw/e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99.bin",
+      "sha256": "e4db4a4e36409a958bc16991b57a3db20d27613ce0841bb1a1a8d01630dfcb99",
+      "bytes": 574
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-2.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-2.stderr.code-units.bin": {
+      "path": "raw/e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc.bin",
+      "sha256": "e2f5863db0da2ab5a8b032766bf9b66328997786f8a5f29bfa48ed5184f678fc",
+      "bytes": 1132
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-2.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-2.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-2.expression.bin": {
+      "path": "raw/148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940.bin",
+      "sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-2.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-2.counters-before.bin": {
+      "path": "raw/bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598.bin",
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-logical-binding-oracle-01/cases/coalesce-lambda-owner/1/calls/session-1/outer-2.counters-after.bin": {
+      "path": "raw/e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc.bin",
+      "sha256": "e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/report.json": {
+      "path": "provenance/capability/report.json",
+      "sha256": "eda49c0ed06b2320b33dd877391b64adb62a0611deac09d0a828da1d0e012740",
+      "bytes": 61455
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases.json": {
+      "path": "provenance/capability/cases.json",
+      "sha256": "ce492f7edb9633e3492cacdd0df12d744db9d0bc35b869daf83cb08611e2b0f7",
+      "bytes": 1058
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/inventory.json": {
+      "path": "provenance/capability/inventory.json",
+      "sha256": "0ea0c4fa48550771ca8ad0c313baca78b43a2f59a5999c50f8dbcc32a2010caf",
+      "bytes": 89661
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/closure.json": {
+      "path": "provenance/capability/closure.json",
+      "sha256": "a1b71530f9b68603d7fd47faceea08e0f6ac5380123d50434a2f22b1b538e1b1",
+      "bytes": 269
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonlocal/main.pkl": {
+      "path": "sources/triple-dot-nonlocal.pkl",
+      "sha256": "ac3c77c63e39649ef7d73f6b37308969bf72b2c29a95402c9493facbaefed7c3",
+      "bytes": 78
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-0.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-0.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-0.stderr.bin": {
+      "path": "raw/234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240.bin",
+      "sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+      "bytes": 240
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-0.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-0.stderr.code-units.bin": {
+      "path": "raw/c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667.bin",
+      "sha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+      "bytes": 464
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-0.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-0.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-0.expression.bin": {
+      "path": "raw/454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1.bin",
+      "sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-0.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-0.counters-before.bin": {
+      "path": "raw/94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8.bin",
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-0.counters-after.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-1.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-1.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-1.stderr.bin": {
+      "path": "raw/e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e.bin",
+      "sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+      "bytes": 242
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-1.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-1.stderr.code-units.bin": {
+      "path": "raw/e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e.bin",
+      "sha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+      "bytes": 468
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-1.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-1.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-1.expression.bin": {
+      "path": "raw/1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7.bin",
+      "sha256": "1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7",
+      "bytes": 2
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-1.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-1.counters-before.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-1.counters-after.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-2.status.bin": {
+      "path": "raw/81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "bytes": 8
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-2.stdout.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-2.stderr.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-2.stdout.code-units.bin": {
+      "path": "raw/bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47.bin",
+      "sha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+      "bytes": 12
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-2.stderr.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-2.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-2.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-2.expression.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-2.error-class.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-2.counters-before.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-0/outer-2.counters-after.bin": {
+      "path": "raw/8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31.bin",
+      "sha256": "8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-0.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-0.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-0.stderr.bin": {
+      "path": "raw/234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240.bin",
+      "sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+      "bytes": 240
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-0.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-0.stderr.code-units.bin": {
+      "path": "raw/c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667.bin",
+      "sha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+      "bytes": 464
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-0.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-0.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-0.expression.bin": {
+      "path": "raw/454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1.bin",
+      "sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-0.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-0.counters-before.bin": {
+      "path": "raw/94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8.bin",
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-0.counters-after.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-1.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-1.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-1.stderr.bin": {
+      "path": "raw/e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e.bin",
+      "sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+      "bytes": 242
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-1.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-1.stderr.code-units.bin": {
+      "path": "raw/e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e.bin",
+      "sha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+      "bytes": 468
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-1.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-1.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-1.expression.bin": {
+      "path": "raw/1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7.bin",
+      "sha256": "1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7",
+      "bytes": 2
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-1.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-1.counters-before.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-1.counters-after.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-2.status.bin": {
+      "path": "raw/81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "bytes": 8
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-2.stdout.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-2.stderr.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-2.stdout.code-units.bin": {
+      "path": "raw/bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47.bin",
+      "sha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+      "bytes": 12
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-2.stderr.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-2.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-2.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-2.expression.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-2.error-class.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-2.counters-before.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls/session-1/outer-2.counters-after.bin": {
+      "path": "raw/8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31.bin",
+      "sha256": "8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-0.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-0.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-0.stderr.bin": {
+      "path": "raw/234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240.bin",
+      "sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+      "bytes": 240
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-0.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-0.stderr.code-units.bin": {
+      "path": "raw/c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667.bin",
+      "sha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+      "bytes": 464
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-0.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-0.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-0.expression.bin": {
+      "path": "raw/454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1.bin",
+      "sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-0.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-0.counters-before.bin": {
+      "path": "raw/94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8.bin",
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-0.counters-after.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-1.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-1.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-1.stderr.bin": {
+      "path": "raw/e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e.bin",
+      "sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+      "bytes": 242
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-1.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-1.stderr.code-units.bin": {
+      "path": "raw/e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e.bin",
+      "sha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+      "bytes": 468
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-1.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-1.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-1.expression.bin": {
+      "path": "raw/1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7.bin",
+      "sha256": "1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7",
+      "bytes": 2
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-1.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-1.counters-before.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-1.counters-after.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-2.status.bin": {
+      "path": "raw/81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "bytes": 8
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-2.stdout.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-2.stderr.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-2.stdout.code-units.bin": {
+      "path": "raw/bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47.bin",
+      "sha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+      "bytes": 12
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-2.stderr.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-2.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-2.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-2.expression.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-2.error-class.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-2.counters-before.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-0/outer-2.counters-after.bin": {
+      "path": "raw/8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31.bin",
+      "sha256": "8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-0.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-0.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-0.stderr.bin": {
+      "path": "raw/234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240.bin",
+      "sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+      "bytes": 240
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-0.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-0.stderr.code-units.bin": {
+      "path": "raw/c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667.bin",
+      "sha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+      "bytes": 464
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-0.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-0.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-0.expression.bin": {
+      "path": "raw/454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1.bin",
+      "sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-0.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-0.counters-before.bin": {
+      "path": "raw/94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8.bin",
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-0.counters-after.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-1.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-1.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-1.stderr.bin": {
+      "path": "raw/e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e.bin",
+      "sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+      "bytes": 242
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-1.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-1.stderr.code-units.bin": {
+      "path": "raw/e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e.bin",
+      "sha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+      "bytes": 468
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-1.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-1.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-1.expression.bin": {
+      "path": "raw/1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7.bin",
+      "sha256": "1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7",
+      "bytes": 2
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-1.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-1.counters-before.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-1.counters-after.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-2.status.bin": {
+      "path": "raw/81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "bytes": 8
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-2.stdout.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-2.stderr.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-2.stdout.code-units.bin": {
+      "path": "raw/bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47.bin",
+      "sha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+      "bytes": 12
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-2.stderr.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-2.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-2.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-2.expression.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-2.error-class.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-2.counters-before.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls/session-1/outer-2.counters-after.bin": {
+      "path": "raw/8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31.bin",
+      "sha256": "8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonhierarchical/main.pkl": {
+      "path": "sources/triple-dot-nonhierarchical.pkl",
+      "sha256": "ac3c77c63e39649ef7d73f6b37308969bf72b2c29a95402c9493facbaefed7c3",
+      "bytes": 78
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-0.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-0.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-0.stderr.bin": {
+      "path": "raw/234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240.bin",
+      "sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+      "bytes": 240
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-0.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-0.stderr.code-units.bin": {
+      "path": "raw/c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667.bin",
+      "sha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+      "bytes": 464
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-0.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-0.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-0.expression.bin": {
+      "path": "raw/454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1.bin",
+      "sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-0.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-0.counters-before.bin": {
+      "path": "raw/94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8.bin",
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-0.counters-after.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-1.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-1.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-1.stderr.bin": {
+      "path": "raw/e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e.bin",
+      "sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+      "bytes": 242
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-1.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-1.stderr.code-units.bin": {
+      "path": "raw/e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e.bin",
+      "sha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+      "bytes": 468
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-1.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-1.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-1.expression.bin": {
+      "path": "raw/1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7.bin",
+      "sha256": "1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7",
+      "bytes": 2
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-1.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-1.counters-before.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-1.counters-after.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-2.status.bin": {
+      "path": "raw/81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "bytes": 8
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-2.stdout.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-2.stderr.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-2.stdout.code-units.bin": {
+      "path": "raw/bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47.bin",
+      "sha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+      "bytes": 12
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-2.stderr.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-2.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-2.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-2.expression.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-2.error-class.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-2.counters-before.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-0/outer-2.counters-after.bin": {
+      "path": "raw/8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31.bin",
+      "sha256": "8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-0.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-0.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-0.stderr.bin": {
+      "path": "raw/234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240.bin",
+      "sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+      "bytes": 240
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-0.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-0.stderr.code-units.bin": {
+      "path": "raw/c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667.bin",
+      "sha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+      "bytes": 464
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-0.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-0.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-0.expression.bin": {
+      "path": "raw/454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1.bin",
+      "sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-0.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-0.counters-before.bin": {
+      "path": "raw/94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8.bin",
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-0.counters-after.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-1.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-1.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-1.stderr.bin": {
+      "path": "raw/e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e.bin",
+      "sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+      "bytes": 242
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-1.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-1.stderr.code-units.bin": {
+      "path": "raw/e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e.bin",
+      "sha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+      "bytes": 468
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-1.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-1.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-1.expression.bin": {
+      "path": "raw/1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7.bin",
+      "sha256": "1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7",
+      "bytes": 2
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-1.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-1.counters-before.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-1.counters-after.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-2.status.bin": {
+      "path": "raw/81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "bytes": 8
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-2.stdout.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-2.stderr.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-2.stdout.code-units.bin": {
+      "path": "raw/bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47.bin",
+      "sha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+      "bytes": 12
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-2.stderr.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-2.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-2.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-2.expression.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-2.error-class.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-2.counters-before.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls/session-1/outer-2.counters-after.bin": {
+      "path": "raw/8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31.bin",
+      "sha256": "8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-0.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-0.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-0.stderr.bin": {
+      "path": "raw/234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240.bin",
+      "sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+      "bytes": 240
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-0.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-0.stderr.code-units.bin": {
+      "path": "raw/c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667.bin",
+      "sha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+      "bytes": 464
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-0.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-0.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-0.expression.bin": {
+      "path": "raw/454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1.bin",
+      "sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-0.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-0.counters-before.bin": {
+      "path": "raw/94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8.bin",
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-0.counters-after.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-1.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-1.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-1.stderr.bin": {
+      "path": "raw/e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e.bin",
+      "sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+      "bytes": 242
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-1.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-1.stderr.code-units.bin": {
+      "path": "raw/e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e.bin",
+      "sha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+      "bytes": 468
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-1.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-1.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-1.expression.bin": {
+      "path": "raw/1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7.bin",
+      "sha256": "1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7",
+      "bytes": 2
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-1.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-1.counters-before.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-1.counters-after.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-2.status.bin": {
+      "path": "raw/81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "bytes": 8
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-2.stdout.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-2.stderr.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-2.stdout.code-units.bin": {
+      "path": "raw/bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47.bin",
+      "sha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+      "bytes": 12
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-2.stderr.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-2.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-2.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-2.expression.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-2.error-class.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-2.counters-before.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-0/outer-2.counters-after.bin": {
+      "path": "raw/8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31.bin",
+      "sha256": "8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-0.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-0.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-0.stderr.bin": {
+      "path": "raw/234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240.bin",
+      "sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+      "bytes": 240
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-0.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-0.stderr.code-units.bin": {
+      "path": "raw/c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667.bin",
+      "sha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+      "bytes": 464
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-0.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-0.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-0.expression.bin": {
+      "path": "raw/454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1.bin",
+      "sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-0.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-0.counters-before.bin": {
+      "path": "raw/94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8.bin",
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-0.counters-after.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-1.status.bin": {
+      "path": "raw/f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-1.stdout.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-1.stderr.bin": {
+      "path": "raw/e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e.bin",
+      "sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+      "bytes": 242
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-1.stdout.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-1.stderr.code-units.bin": {
+      "path": "raw/e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e.bin",
+      "sha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+      "bytes": 468
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-1.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-1.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-1.expression.bin": {
+      "path": "raw/1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7.bin",
+      "sha256": "1d86a9a75e7c54f39f36598a97cffa9ed8a6a1909e651076b4b9af759114cfb7",
+      "bytes": 2
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-1.error-class.bin": {
+      "path": "raw/4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-1.counters-before.bin": {
+      "path": "raw/dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9.bin",
+      "sha256": "dd257d9061628c923e3ab31263c6928e63dcfd882d0be7991ee7bd896359dfc9",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-1.counters-after.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-2.status.bin": {
+      "path": "raw/81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "bytes": 8
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-2.stdout.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-2.stderr.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-2.stdout.code-units.bin": {
+      "path": "raw/bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47.bin",
+      "sha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+      "bytes": 12
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-2.stderr.code-units.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-2.reads-before.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-2.reads-after.bin": {
+      "path": "raw/5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9.bin",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-2.expression.bin": {
+      "path": "raw/f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6.bin",
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+      "bytes": 6
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-2.error-class.bin": {
+      "path": "raw/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-2.counters-before.bin": {
+      "path": "raw/114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca.bin",
+      "sha256": "114bf0ecd0ab6aacaa19cc245ea7a3d336ebaf079e827ce986ff7d55ec2a4aca",
+      "bytes": 87
+    },
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls/session-1/outer-2.counters-after.bin": {
+      "path": "raw/8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31.bin",
+      "sha256": "8809ab008f257d5288669d4133eb6fc4edfcf675592e0403be0e8fe051060b31",
+      "bytes": 87
+    }
+  },
+  "expectedSource": "Existing actual pinned Java raw files only; repeated observations are byte-identical and content-addressed raw blobs deduplicate exact bytes only; no native-derived expectations"
+}

@@ -2,10 +2,14 @@
 use super::*;
 
 pub(crate) fn id(name: &str) -> Option<usize> {
-    annotations::builtin_id(name).or_else(|| output::class_id(name))
+    annotations::builtin_id(name)
+        .or_else(|| output::class_id(name))
+        .or_else(|| (name == "Resource").then_some(resources::RESOURCE))
 }
 pub(crate) fn name(id: usize) -> Option<&'static str> {
-    annotations::builtin_name(id).or_else(|| output::class_name(id))
+    annotations::builtin_name(id)
+        .or_else(|| output::class_name(id))
+        .or_else(|| (id == resources::RESOURCE).then_some("Resource"))
 }
 pub(super) fn parent(id: usize) -> Option<usize> {
     if annotations::builtin_name(id).is_some() && id != annotations::ANNOTATION_ID {

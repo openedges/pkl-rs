@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find resource `.../stage46-oracle-unique-missing-719a.txt`.
+
+12 | missingQ = read?(".../stage46-oracle-unique-missing-719a.txt").toString()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#missingQ (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-triple-dot-oracle-01/workspace/file-tree-deny-resource-read/tree/a/b/main.pkl)
+
+1 | missingQ
+    ^^^^^^^^
+at  (repl:text)

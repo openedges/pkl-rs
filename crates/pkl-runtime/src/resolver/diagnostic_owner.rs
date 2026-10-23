@@ -1,8 +1,9 @@
 //! Scope names for selected resolver diagnostics.
 //!
-//! Captured only on a replay after a non-local object property type annotation,
-//! non-local const modifier, or inferred-parent rejection. The pinned
-//! SymbolTable assigns child ordinals to scopes, not to rendered path strings.
+//! Evaluation records owners during AST preparation; legacy standalone binding
+//! requests a pure replay for selected diagnostics. The pinned SymbolTable
+//! assigns child ordinals to scopes, not to rendered path strings. Compiled
+//! lambda metadata reuses the AST-assigned owner despite bytecode visit order.
 use crate::syntax::{Expr, ExprKind, UnaryOp};
 use crate::value::PklString;
 

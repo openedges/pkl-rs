@@ -1,0 +1,44 @@
+[
+  {
+    "id": "triple-dot-nonlocal",
+    "mode": "cap-nonlocal",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonlocal",
+    "operations": [
+      [
+        "main.pkl",
+        "r"
+      ],
+      [
+        "main.pkl",
+        "rq"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ]
+    ],
+    "sourceUri": "virt:/a/b/main.pkl",
+    "sourceKind": "actual custom ModuleKey SPI with specified local/hierarchical flags"
+  },
+  {
+    "id": "triple-dot-nonhierarchical",
+    "mode": "cap-nonhierarchical",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonhierarchical",
+    "operations": [
+      [
+        "main.pkl",
+        "r"
+      ],
+      [
+        "main.pkl",
+        "rq"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ]
+    ],
+    "sourceUri": "virt:/a/b/main.pkl",
+    "sourceKind": "actual custom ModuleKey SPI with specified local/hierarchical flags"
+  }
+]

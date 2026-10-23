@@ -341,15 +341,17 @@ export async function compareModuleEval(args) {
       const path = url.pathname === '/module-eval-session.mjs' ? resolve(dirname(script), 'module-eval-session.mjs')
         : resolve(wasm, '.' + decodeURIComponent(url.pathname));
       if (url.pathname !== '/module-eval-session.mjs' && !path.startsWith(wasm + sep)) throw Error('unsafe Wasm path');
-      response.writeHead(200, { 'Content-Type': extname(path) === '.wasm' ? 'application/wasm' : 'text/javascript' }); response.end(await readFile(path));
-    } catch { response.writeHead(404); response.end(); }
+      const assetBytes = await readFile(path); response.writeHead(200, { 'Content-Type': extname(path) === '.wasm' ? 'application/wasm' : 'text/javascript' }); response.end(assetBytes);
+    } catch { if (!response.headersSent) { response.writeHead(404); response.end(); } else response.destroy(); }
   });
   let browser;
   try {
     await new Promise((ok, fail) => { server.once('error', fail); server.listen(0, '127.0.0.1', ok); });
-    browser = await chromium.launch({ headless: true });
-    report.browser = browser.version(); report.browserExecutable = chromium.executablePath();
+    report.browserExecutable = chromium.executablePath();
     report.browserExecutableSha256 = hash(await readFile(report.browserExecutable));
+    report.browserLaunchOptions = {headless: true, executablePath: report.browserExecutable};
+    browser = await chromium.launch(report.browserLaunchOptions);
+    report.browser = browser.version();
     const page = await browser.newPage();
     page.on('pageerror', error => report.browserErrors.push({ type: 'pageerror', message: error.message, stack: error.stack }));
     page.on('crash', () => report.browserErrors.push({ type: 'crash' }));

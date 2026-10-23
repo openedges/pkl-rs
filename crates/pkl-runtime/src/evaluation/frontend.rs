@@ -136,7 +136,7 @@ pub fn evaluate_module_frontend(
     input: ModuleSourceInput<'_>,
     options: &ModuleEvalOptions,
 ) -> ModuleFrontendResult {
-    if let Err(error) = resolve_input(input, options) {
+    if let Err(error) = resolve_input(input, options, false) {
         return error.into();
     }
     unsupported(
@@ -150,6 +150,7 @@ pub fn evaluate_module_frontend(
 fn resolve_input(
     input: ModuleSourceInput<'_>,
     options: &ModuleEvalOptions,
+    defer_ast: bool,
 ) -> Result<(crate::resolver::ResolvedModule, String), ModuleFrontendFailure> {
     if !options.no_cache || !options.no_project || options.settings != "pkl:settings" {
         return Err(unsupported(
@@ -158,7 +159,12 @@ fn resolve_input(
             "This module-evaluation adapter requires --no-cache --no-project --settings pkl:settings.",
         ));
     }
-    let module = match crate::parser::parse_module(input.text) {
+    let parsed = if defer_ast {
+        crate::parser::parse_module_for_evaluation(input.text)
+    } else {
+        crate::parser::parse_module(input.text)
+    };
+    let module = match parsed {
         Ok(module) => module,
         Err(error) => {
             return Err(render_failure_text(
@@ -177,8 +183,13 @@ fn resolve_input(
         inferred_name: declared_name.as_deref().unwrap_or(input.inferred_name),
         ..input
     };
-    let resolved = crate::resolver::resolve_module(&module)
-        .map_err(|error| render_failure_text(resolved_input, options.diagnostic_profile, error))?;
+    let resolved = if defer_ast {
+        crate::resolver::resolve_module_for_evaluation(&module)
+    } else {
+        crate::resolver::resolve_module(&module).map_err(|error| {
+            render_failure_text(resolved_input, options.diagnostic_profile, error)
+        })?
+    };
     Ok((resolved, resolved_input.inferred_name.to_owned()))
 }
 
@@ -195,7 +206,7 @@ pub fn prepare_module_text(
     input: ModuleSourceInput<'_>,
     options: &ModuleEvalOptions,
 ) -> Result<PreparedModule, ModuleFrontendFailure> {
-    let (resolved, name) = resolve_input(input, options)?;
+    let (resolved, name) = resolve_input(input, options, true)?;
     let mut sources = SourceMap::default();
     let id = sources.add(input.uri, input.text);
     let source = sources.get(id).expect("source inserted").clone();
@@ -385,7 +396,27 @@ pub fn evaluate_module_output_with_host(
     options: &ModuleEvalOptions,
     module_host: impl FnMut(&crate::modules::ModuleRequest) -> crate::modules::ModuleCompletion,
 ) -> ModuleOutputResult {
-    evaluate_module_output_with_budget_and_host(input, options, 1_048_576, module_host)
+    evaluate_module_output_with_hosts(input, options, module_host, |_| None)
+}
+
+/// Evaluate with typed external resource reads in addition to module I/O.
+/// Returning None delegates to the shared configured property/environment policy.
+pub fn evaluate_module_output_with_hosts(
+    input: ModuleSourceInput<'_>,
+    options: &ModuleEvalOptions,
+    module_host: impl FnMut(&crate::modules::ModuleRequest) -> crate::modules::ModuleCompletion,
+    resource_host: impl FnMut(
+        &crate::vm::ReadRequest,
+    )
+        -> Option<Result<crate::resources::ReadResult, crate::host::ReadFailure>>,
+) -> ModuleOutputResult {
+    evaluate_module_output_with_budget_and_hosts(
+        input,
+        options,
+        1_048_576,
+        module_host,
+        resource_host,
+    )
 }
 
 #[cfg(test)]
@@ -394,19 +425,25 @@ fn evaluate_module_output_with_budget(
     options: &ModuleEvalOptions,
     poll_budget: usize,
 ) -> ModuleOutputResult {
-    evaluate_module_output_with_budget_and_host(
+    evaluate_module_output_with_budget_and_hosts(
         input,
         options,
         poll_budget,
         crate::modules::unsupported_completion,
+        |_| None,
     )
 }
 
-fn evaluate_module_output_with_budget_and_host(
+fn evaluate_module_output_with_budget_and_hosts(
     input: ModuleSourceInput<'_>,
     options: &ModuleEvalOptions,
     poll_budget: usize,
     mut module_host: impl FnMut(&crate::modules::ModuleRequest) -> crate::modules::ModuleCompletion,
+    mut resource_host: impl FnMut(
+        &crate::vm::ReadRequest,
+    ) -> Option<
+        Result<crate::resources::ReadResult, crate::host::ReadFailure>,
+    >,
 ) -> ModuleOutputResult {
     use super::session::{SourceSession, SourceSessionOptions};
     use crate::host::HostPoll;
@@ -436,12 +473,19 @@ fn evaluate_module_output_with_budget_and_host(
                 HostPoll::Module { token, request } => {
                     session.complete_module(&token, module_host(&request), 0)?
                 }
-                HostPoll::Read { token, .. } => session.resume_default_read(
-                    &token,
-                    &options.properties,
-                    &options.environment,
-                    0,
-                )?,
+                HostPoll::Read { token, .. } => {
+                    let request = session.read_request(&token)?;
+                    if let Some(result) = resource_host(&request) {
+                        session.complete_read(&token, result, 0)?;
+                    } else {
+                        session.resume_default_read(
+                            &token,
+                            &options.properties,
+                            &options.environment,
+                            0,
+                        )?;
+                    }
+                }
                 HostPoll::Log { token, event } => {
                     let level = match event.level {
                         crate::logging::LogLevel::Trace => "TRACE",

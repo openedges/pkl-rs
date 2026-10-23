@@ -240,19 +240,22 @@ fn initialization_failure_is_replayed_without_new_module_or_log() {
 }
 
 #[test]
-fn source_compile_error_keeps_complete_oracle_diagnostic_before_host_creation() {
+fn source_ast_setup_failure_keeps_complete_oracle_diagnostic_before_guest_effects() {
     // Pinned Java frontend observation: grouped new remains an inference boundary.
     let source = "class C { x=7 }\nfoo: C=trace((new {}))\nresult=foo.x\n";
-    let error = match SourceSession::compile(
+    let mut session = SourceSession::compile(
         source,
         "file:///stage37-trace.pkl",
         "stage37-trace",
         &["result".into(), "foo".into()],
         SourceSessionOptions::default(),
-    ) {
-        Err(error) => error,
-        Ok(_) => panic!("invalid inferred parent must fail compilation"),
+    )
+    .unwrap();
+    session.start_module(0, None).unwrap();
+    let HostPoll::Ready(Err(failure)) = settle(&mut session) else {
+        panic!("invalid inferred parent must fail AST setup before trace delivery");
     };
+    let error = session.format_error(failure);
     assert_eq!(
         error,
         "–– Pkl Error ––\nCannot tell which parent to amend.\n\n2 | foo: C=trace((new {}))\n                  ^^^\nat stage37-trace#foo (file:///stage37-trace.pkl)\n\nPlease specify a parent explicitly, for example `new Person { ... }` instead of `new { ... }`.\n"

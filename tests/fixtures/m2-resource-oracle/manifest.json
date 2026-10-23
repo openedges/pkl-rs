@@ -1,0 +1,712 @@
+{
+  "schemaVersion": 1,
+  "baseline": "Pkl0.32.0",
+  "cases": [
+    {
+      "id": "cache-text-resource-missing-retry",
+      "source": "sources/cache-text-resource-missing-retry/main.pkl",
+      "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-oracle-01/workspace/cache-text-resource-missing-retry/main.pkl",
+      "sourceSha256": "6a2ca645a7369a8df695e198579195db54c86ef7749a92f3985bf960ba44b86a",
+      "payloads": [],
+      "primaryApiCalls": 21,
+      "operations": [
+        [
+          "main.pkl",
+          "a"
+        ],
+        [
+          "main.pkl",
+          "bb"
+        ],
+        [
+          "main.pkl",
+          "c"
+        ],
+        [
+          "main.pkl",
+          "missingNullable"
+        ],
+        [
+          "main.pkl",
+          "missingOrdinary"
+        ],
+        [
+          "main.pkl",
+          "missingOrdinary"
+        ],
+        [
+          "main.pkl",
+          "missingOtherSpelling"
+        ],
+        [
+          "main.pkl",
+          "retry"
+        ],
+        [
+          "main.pkl",
+          "stable"
+        ],
+        [
+          "main.pkl",
+          "retry"
+        ],
+        [
+          "main.pkl",
+          "retryNullable"
+        ],
+        [
+          "main.pkl",
+          "rUri"
+        ],
+        [
+          "main.pkl",
+          "rText"
+        ],
+        [
+          "main.pkl",
+          "rBase64"
+        ],
+        [
+          "main.pkl",
+          "rBytesBase64"
+        ],
+        [
+          "main.pkl",
+          "rClass"
+        ],
+        [
+          "main.pkl",
+          "rType"
+        ],
+        [
+          "main.pkl",
+          "rClassEquality"
+        ],
+        [
+          "main.pkl",
+          "rEquality"
+        ],
+        [
+          "main.pkl",
+          "rRender"
+        ],
+        "GC",
+        [
+          "main.pkl",
+          "rText"
+        ],
+        [
+          "other.pkl",
+          "bb"
+        ],
+        [
+          "other.pkl",
+          "missingNullable"
+        ],
+        [
+          "other.pkl",
+          "rUri"
+        ],
+        [
+          "other.pkl",
+          "retry"
+        ]
+      ],
+      "javaIndependentRootCalls": "Preservedinprovenance;notpartofprimaryfixtureconsumer",
+      "gc": "ExplicitJavaSystem.gc request is not equivalent toobservednativecollecteverypoll."
+    },
+    {
+      "id": "resource-bytes-utf8",
+      "source": "sources/resource-bytes-utf8/main.pkl",
+      "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-oracle-01/workspace/resource-bytes-utf8/main.pkl",
+      "sourceSha256": "f00b1bab3fdf271b18894da919c5e9c426c6fe2d855cab029512196325c4cc8e",
+      "payloads": [
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector0.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector1.bin",
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "bytes": 1
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector2.bin",
+          "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+          "bytes": 2
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector3.bin",
+          "sha256": "cc47e48487e4940b27eeb4838129c05f85eb1ee8e9221049183fffd8d47c7f10",
+          "bytes": 5
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector4.bin",
+          "sha256": "f0443a342c5ef54783a111b51ba56c938e474c32324d90c3a60c9c8e3a37e2d9",
+          "bytes": 4
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector5.bin",
+          "sha256": "76be8b528d0075f7aae98d6fa57a6d3c83ae480a8469e668d7b0af968995ac71",
+          "bytes": 1
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector6.bin",
+          "sha256": "caf573f0daa6960ecb26f8eddbc4e2059277ad5afc6f72ffd59a0ecead602a22",
+          "bytes": 2
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector7.bin",
+          "sha256": "c557e71380112b980eaf1145fa80621130dfbdfa1e375d87ae0018b7c60ac16b",
+          "bytes": 1
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector8.bin",
+          "sha256": "5139684440c1c30b57cd3c541c1b45f76ab74dfe3bef619da2658d9e16e005fe",
+          "bytes": 2
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector9.bin",
+          "sha256": "91a681b998555fb475479817b126c94e57e52011fa1842c5d188795a4a05226b",
+          "bytes": 3
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector10.bin",
+          "sha256": "8482f657e9aef9b2687570e8b49ea21becd8fee6def3fe4ac45903c91f7bc8f3",
+          "bytes": 3
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector11.bin",
+          "sha256": "fb16995ef3b5d7c2c81b153f945979f1db35ebc62b17616cdc896f8e7836d371",
+          "bytes": 4
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector12.bin",
+          "sha256": "53e47574c2e0167066cd4ef518e8fa66594f1e0d1f3331889884f670b780a905",
+          "bytes": 2
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector13.bin",
+          "sha256": "e1c1e1427f5babb7705eee70c883a3c114d4c463b61930a88f75596e36ce1417",
+          "bytes": 3
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector14.bin",
+          "sha256": "e7e66b481c59ea5b1962e08c9ef3422907532d6732fa651e76c5d37ada0c805b",
+          "bytes": 3
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector15.bin",
+          "sha256": "81cb6f2a8be07e0bc603e036ab7fcda6225b5f50189622832fc1b483eb69e449",
+          "bytes": 3
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector16.bin",
+          "sha256": "ca3dff22a77ac0c606b7a246bc34931f4ae81fb15f71bd51a463847d3e3482c4",
+          "bytes": 4
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector17.bin",
+          "sha256": "e02085b179e543ebf51f0a1493f43452f1196694d053f36f41d8aac285cf3007",
+          "bytes": 4
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector18.bin",
+          "sha256": "9b9b34fcc6a32a6b0b6d43b3e71b033e90c3e3977646d82934b59e8e4006ff42",
+          "bytes": 2
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector19.bin",
+          "sha256": "83d544ccc223c057d2bf80d3f2a32982c32c3c0db8e2674820da5064783fb097",
+          "bytes": 3
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector20.bin",
+          "sha256": "e81a82bd34f26aa19c093cf3279c5032a9a08eadd746d52996061922eb50a566",
+          "bytes": 4
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector21.bin",
+          "sha256": "8a8821b226fa468b6fadc951dad490315bf41b4761d6f3f56917f1d0e50d4dae",
+          "bytes": 3
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector22.bin",
+          "sha256": "708b8add9f6b5b556a07b72973b10ff9a3ec30e002034ef24aa076fab4b40e50",
+          "bytes": 4
+        },
+        {
+          "path": "sources/resource-bytes-utf8/payloads/vector23.bin",
+          "sha256": "f197692810d457e297fce9c5653b02581ff99a50852370f29d7e5fe47d9d37e6",
+          "bytes": 2
+        }
+      ],
+      "primaryApiCalls": 108,
+      "operations": [
+        [
+          "main.pkl",
+          "v0Text"
+        ],
+        [
+          "main.pkl",
+          "v0Base64"
+        ],
+        [
+          "main.pkl",
+          "v0BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v0Uri"
+        ],
+        [
+          "main.pkl",
+          "v1Text"
+        ],
+        [
+          "main.pkl",
+          "v1Base64"
+        ],
+        [
+          "main.pkl",
+          "v1BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v1Uri"
+        ],
+        [
+          "main.pkl",
+          "v2Text"
+        ],
+        [
+          "main.pkl",
+          "v2Base64"
+        ],
+        [
+          "main.pkl",
+          "v2BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v2Uri"
+        ],
+        [
+          "main.pkl",
+          "v3Text"
+        ],
+        [
+          "main.pkl",
+          "v3Base64"
+        ],
+        [
+          "main.pkl",
+          "v3BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v3Uri"
+        ],
+        [
+          "main.pkl",
+          "v4Text"
+        ],
+        [
+          "main.pkl",
+          "v4Base64"
+        ],
+        [
+          "main.pkl",
+          "v4BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v4Uri"
+        ],
+        [
+          "main.pkl",
+          "v5Text"
+        ],
+        [
+          "main.pkl",
+          "v5Base64"
+        ],
+        [
+          "main.pkl",
+          "v5BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v5Uri"
+        ],
+        [
+          "main.pkl",
+          "v6Text"
+        ],
+        [
+          "main.pkl",
+          "v6Base64"
+        ],
+        [
+          "main.pkl",
+          "v6BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v6Uri"
+        ],
+        [
+          "main.pkl",
+          "v7Text"
+        ],
+        [
+          "main.pkl",
+          "v7Base64"
+        ],
+        [
+          "main.pkl",
+          "v7BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v7Uri"
+        ],
+        [
+          "main.pkl",
+          "v8Text"
+        ],
+        [
+          "main.pkl",
+          "v8Base64"
+        ],
+        [
+          "main.pkl",
+          "v8BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v8Uri"
+        ],
+        [
+          "main.pkl",
+          "v9Text"
+        ],
+        [
+          "main.pkl",
+          "v9Base64"
+        ],
+        [
+          "main.pkl",
+          "v9BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v9Uri"
+        ],
+        [
+          "main.pkl",
+          "v10Text"
+        ],
+        [
+          "main.pkl",
+          "v10Base64"
+        ],
+        [
+          "main.pkl",
+          "v10BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v10Uri"
+        ],
+        [
+          "main.pkl",
+          "v11Text"
+        ],
+        [
+          "main.pkl",
+          "v11Base64"
+        ],
+        [
+          "main.pkl",
+          "v11BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v11Uri"
+        ],
+        [
+          "main.pkl",
+          "v12Text"
+        ],
+        [
+          "main.pkl",
+          "v12Base64"
+        ],
+        [
+          "main.pkl",
+          "v12BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v12Uri"
+        ],
+        [
+          "main.pkl",
+          "v13Text"
+        ],
+        [
+          "main.pkl",
+          "v13Base64"
+        ],
+        [
+          "main.pkl",
+          "v13BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v13Uri"
+        ],
+        [
+          "main.pkl",
+          "v14Text"
+        ],
+        [
+          "main.pkl",
+          "v14Base64"
+        ],
+        [
+          "main.pkl",
+          "v14BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v14Uri"
+        ],
+        [
+          "main.pkl",
+          "v15Text"
+        ],
+        [
+          "main.pkl",
+          "v15Base64"
+        ],
+        [
+          "main.pkl",
+          "v15BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v15Uri"
+        ],
+        [
+          "main.pkl",
+          "v16Text"
+        ],
+        [
+          "main.pkl",
+          "v16Base64"
+        ],
+        [
+          "main.pkl",
+          "v16BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v16Uri"
+        ],
+        [
+          "main.pkl",
+          "v17Text"
+        ],
+        [
+          "main.pkl",
+          "v17Base64"
+        ],
+        [
+          "main.pkl",
+          "v17BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v17Uri"
+        ],
+        [
+          "main.pkl",
+          "v18Text"
+        ],
+        [
+          "main.pkl",
+          "v18Base64"
+        ],
+        [
+          "main.pkl",
+          "v18BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v18Uri"
+        ],
+        [
+          "main.pkl",
+          "v19Text"
+        ],
+        [
+          "main.pkl",
+          "v19Base64"
+        ],
+        [
+          "main.pkl",
+          "v19BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v19Uri"
+        ],
+        [
+          "main.pkl",
+          "v20Text"
+        ],
+        [
+          "main.pkl",
+          "v20Base64"
+        ],
+        [
+          "main.pkl",
+          "v20BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v20Uri"
+        ],
+        [
+          "main.pkl",
+          "v21Text"
+        ],
+        [
+          "main.pkl",
+          "v21Base64"
+        ],
+        [
+          "main.pkl",
+          "v21BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v21Uri"
+        ],
+        [
+          "main.pkl",
+          "v22Text"
+        ],
+        [
+          "main.pkl",
+          "v22Base64"
+        ],
+        [
+          "main.pkl",
+          "v22BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v22Uri"
+        ],
+        [
+          "main.pkl",
+          "v23Text"
+        ],
+        [
+          "main.pkl",
+          "v23Base64"
+        ],
+        [
+          "main.pkl",
+          "v23BytesBase64"
+        ],
+        [
+          "main.pkl",
+          "v23Uri"
+        ],
+        [
+          "main.pkl",
+          "className"
+        ],
+        [
+          "main.pkl",
+          "typeCheck"
+        ],
+        [
+          "main.pkl",
+          "classEquality"
+        ],
+        [
+          "main.pkl",
+          "resourceRender"
+        ],
+        [
+          "main.pkl",
+          "customClass"
+        ],
+        [
+          "main.pkl",
+          "customBytes"
+        ],
+        [
+          "main.pkl",
+          "undefinedClass"
+        ],
+        [
+          "main.pkl",
+          "undefinedRender"
+        ],
+        [
+          "main.pkl",
+          "badText"
+        ],
+        [
+          "main.pkl",
+          "badUri"
+        ],
+        [
+          "main.pkl",
+          "stable"
+        ],
+        "GC",
+        [
+          "main.pkl",
+          "v9Text"
+        ],
+        [
+          "other.pkl",
+          "v9Text"
+        ]
+      ],
+      "javaIndependentRootCalls": "Preservedinprovenance;notpartofprimaryfixtureconsumer",
+      "gc": "ExplicitJavaSystem.gc request is not equivalent toobservednativecollecteverypoll."
+    }
+  ],
+  "primaryCallsPerEvaluator": 129,
+  "capturedPrimaryCallsAcross2Jvms2EvaluatorsEach": 516,
+  "fullJavaApiCalls": 740,
+  "initialNativeConsumerUnexecutedApiCalls": 224,
+  "provenance": {
+    "report.json": "a7b35392e82804c581a00ccc19689c376917c4552fb46639248e06b1033e60a2",
+    "inventory.json": "85887c02a40d83415f85138efaa299f1e08659c797e1f2e2cc2fb0e1baef3800",
+    "closure.json": "27c123fdb66fa186f782a9a9a46936e96174c13959f23b7d76e058cff61ef167",
+    "cases.json": "42106b664f5f1cb1c209d41445e9a970b7d5a78e3b6be045c55540d89deda7fd"
+  },
+  "scope": "Expectedvalues/errors/readcounts are onlysealedJava rawcaptures;noRustderivedexpectations.129uniqueprimarysequencecalls\u00d74Javaexecutions=516nativecomparisonselections. AllotherJavaAPIcontrols remainunexecutedbyinitialnativeconsumer.",
+  "tableColumns": [
+    "case",
+    "index",
+    "expression",
+    "statusHex",
+    "stdoutUtf8Hex",
+    "stderrUtf8Hex",
+    "stdoutUtf16BEHex",
+    "stderrUtf16BEHex",
+    "readsBefore",
+    "readsAfter"
+  ]
+}

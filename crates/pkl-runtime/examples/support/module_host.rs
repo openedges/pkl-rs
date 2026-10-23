@@ -8,6 +8,23 @@ use std::path::{Path, PathBuf};
 
 pub fn complete(request: &ModuleRequest) -> ModuleCompletion {
     match &request.kind {
+        ModuleRequestKind::Capabilities { module } => {
+            ModuleCompletion::Capabilities(file_path(&module.original_uri).map(|_| {
+                pkl_runtime::modules::ModuleCapabilities {
+                    local: true,
+                    hierarchical: true,
+                    fragment_paths: false,
+                }
+            }))
+        }
+        ModuleRequestKind::HasElement {
+            module,
+            element_uri,
+        } => ModuleCompletion::HasElement(
+            file_path(&module.original_uri)
+                .and_then(|_| file_path(element_uri))
+                .map(|path| path.exists()),
+        ),
         ModuleRequestKind::Resolve {
             import_uri,
             original_uri,
@@ -184,6 +201,8 @@ mod tests {
             &ModuleEvalOptions::default(),
             |request| {
                 phases.push(match request.kind {
+                    ModuleRequestKind::Capabilities { .. } => "capabilities",
+                    ModuleRequestKind::HasElement { .. } => "has-element",
                     ModuleRequestKind::Resolve { .. } => "resolve",
                     ModuleRequestKind::LoadSource { .. } => "source",
                 });
@@ -221,6 +240,8 @@ mod tests {
             &ModuleEvalOptions::default(),
             |request| {
                 phases.push(match request.kind {
+                    ModuleRequestKind::Capabilities { .. } => "capabilities",
+                    ModuleRequestKind::HasElement { .. } => "has-element",
                     ModuleRequestKind::Resolve { .. } => "resolve",
                     ModuleRequestKind::LoadSource { .. } => "source",
                 });

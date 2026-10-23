@@ -189,7 +189,10 @@ impl SourceSession {
         let module_entry = program.entry;
         let program_mut = Arc::make_mut(&mut program);
         let expression_owner = if parsed_expressions {
-            Some(crate::parser::parse_module(source.text()).map_err(|error| error.message)?)
+            Some(
+                crate::parser::parse_module_for_evaluation(source.text())
+                    .map_err(|error| error.message)?,
+            )
         } else {
             None
         };
@@ -566,6 +569,25 @@ impl SourceSession {
     ) -> Result<(), RuntimeError> {
         self.host
             .resume_default_read(token, properties, environment, now_ms)
+    }
+
+    pub fn complete_read(
+        &mut self,
+        token: &str,
+        result: Result<crate::resources::ReadResult, crate::host::ReadFailure>,
+        now_ms: u64,
+    ) -> Result<(), RuntimeError> {
+        self.host.complete_read(token, result, now_ms)
+    }
+
+    pub fn module_request(
+        &self,
+        token: &str,
+    ) -> Result<crate::modules::ModuleRequest, RuntimeError> {
+        self.host.module_request(token)
+    }
+    pub fn read_request(&self, token: &str) -> Result<crate::vm::ReadRequest, RuntimeError> {
+        self.host.read_request(token)
     }
     pub fn reject_read(
         &mut self,

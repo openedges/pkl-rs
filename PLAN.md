@@ -790,6 +790,8 @@ Stage 45 구현 `97b4da0`과 합친 [집중 연결 검증](reports/m2/classpath-
 
 Stage 46의 Java 비교 입력은 런타임과 별도 체크포인트로 정리했습니다. [portable Resource fixture](docs/m2-resource-portable-fixtures.md)는 원래 Java API 1,272회 중 선택한 1,008회·20개 세션과 미선택 264회를 구분합니다. 원본 payload 11,507개와 manifest 한 개를 보존하며, 독립 봉인 해시·읽기 횟수·원본 호출과 이벤트 연결·정확한 파일 집합을 검증합니다. 저장소 승격 뒤 변조 회귀를 포함한 Python 검사 27개, fixture CLI와 전체 목록 freshness가 통과했습니다. 첫 파일 수 검사의 payload·총파일 혼동은 실패 기록으로 남기고 바이트 변경 없이 정정했습니다. [검증 기록](reports/m2/resource-portable-fixtures.json)은 실제 Node·Chromium 실행 및 Stage 46 런타임 마감과 구분합니다.
 
+C05 후보에서 원본 `basic/read.pkl` 두 반복, native Resource API 1,008회와 File·논리식·capability API 716회가 원시 결과로 일치했습니다. File 생성자 단계의 미실행 16회와 SPI 정책 이벤트의 별도 경계는 유지합니다. 실제 Node·Chromium의 Resource API도 환경별 1,008회가 일치했고, 추가 모듈 탐색·정책·함수 owner 대조군 252회는 환경별 출력·오류·읽기 횟수와 명시한 정책 이벤트 투영이 일치했습니다. Java가 직접 기록하지 않은 capabilities·has-element 요청 순서나 전체 SPI 일치를 주장하지 않습니다. C05 필수 검사에서 Clippy 경고가 발견되어 최소 교정을 적용했으며, 새 도구·fixture와 목록 source hash를 함께 고정한 C06에서 필수 검사와 실제 플랫폼 검증을 다시 수행합니다. C05 브라우저 기록은 기본 설치 경로와 실제 headless 실행 파일의 연결이 증명되지 않아 원본에 별도 설명을 붙입니다. 후속 실행은 기록한 실행 파일을 명시적으로 선택하는 새 조건이며 이전 증거를 덮어쓰지 않습니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

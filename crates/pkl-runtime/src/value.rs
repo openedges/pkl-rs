@@ -133,6 +133,9 @@ pub struct RuntimeError {
 pub struct RuntimeErrorDetails {
     /// A typed Host SPI mapping produced an ordinary guest exception.
     pub(crate) host_language_exception: bool,
+    /// The throwing helper has neither a guest node nor a source section.
+    /// Its innermost call-target frame is unavailable; caller frames remain.
+    pub(crate) unavailable_origin: bool,
     pub frontend: Option<Arc<crate::modules::ModuleDiagnostic>>,
     pub(crate) cached_module_frames: bool,
     pub(crate) module_failure_key: Option<Arc<str>>,
@@ -141,6 +144,7 @@ pub struct RuntimeErrorDetails {
 }
 const EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
     host_language_exception: false,
+    unavailable_origin: false,
     frontend: None,
     cached_module_frames: false,
     module_failure_key: None,

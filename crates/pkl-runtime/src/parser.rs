@@ -450,6 +450,7 @@ enum ExpressionFrame {
     Throw(usize),
     Trace(usize),
     ReadResource(usize),
+    ReadResourceGlob(usize),
     ReadResourceOrNull(usize),
     Unary(usize, UnaryOp),
     Binary(Expr, BinaryOp),
@@ -481,7 +482,7 @@ struct ExpressionMachine {
 enum ExpressionFlow {
     Continue,
     Primary,
-    Done(Expr),
+    Done,
 }
 
 #[derive(Clone)]
@@ -1324,9 +1325,7 @@ impl<'a> Parser<'a> {
                     span: Span::new(build.start, end),
                 });
                 if machine.object_root && machine.frames.is_empty() {
-                    return Ok(ExpressionFlow::Done(
-                        machine.current.take().expect("object syntax"),
-                    ));
+                    return Ok(ExpressionFlow::Done);
                 }
                 if !build.postfix {
                     if self.is_symbol('{')
@@ -1625,11 +1624,19 @@ impl<'a> Parser<'a> {
                 }
             } else if self.is_name("read") {
                 self.advance()?;
+                let glob = self.is_symbol('*');
+                if glob {
+                    self.advance()?;
+                }
                 self.expect('(')?;
                 machine.frames.push((
                     machine.minimum,
                     self.expectation.replace(")".into()),
-                    ExpressionFrame::ReadResource(span.start),
+                    if glob {
+                        ExpressionFrame::ReadResourceGlob(span.start)
+                    } else {
+                        ExpressionFrame::ReadResource(span.start)
+                    },
                 ));
                 machine.minimum = 0;
                 return Ok(ExpressionFlow::Continue);
@@ -1796,7 +1803,8 @@ impl<'a> Parser<'a> {
             return Ok(ExpressionFlow::Continue);
         }
         let Some((parent_minimum, expectation, frame)) = machine.frames.pop() else {
-            return Ok(ExpressionFlow::Done(left));
+            machine.current = Some(left);
+            return Ok(ExpressionFlow::Done);
         };
         machine.minimum = parent_minimum;
         self.expectation = expectation;
@@ -1834,6 +1842,13 @@ impl<'a> Parser<'a> {
                 let end = self.expect(')')?.span.end;
                 Expr {
                     kind: ExprKind::ReadResource(Box::new(left)),
+                    span: Span::new(start, end),
+                }
+            }
+            ExpressionFrame::ReadResourceGlob(start) => {
+                let end = self.expect(')')?.span.end;
+                Expr {
+                    kind: ExprKind::ReadResourceGlob(Box::new(left)),
                     span: Span::new(start, end),
                 }
             }
@@ -2606,6 +2621,17 @@ fn integer(text: &str, negative: bool, span: Span) -> Result<i64, Diagnostic> {
 }
 
 pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
+    let module = parse_module_for_evaluation(source)?;
+    if let Some(error) = module.deferred_diagnostics.first() {
+        return Err(error.clone());
+    }
+    Ok(module)
+}
+
+/// Syntax errors still precede every AST-building effect. Evaluation preserves
+/// deferred AST failures so the shared preparation plan can interleave them
+/// with ModuleKey operations in the upstream visitor's order.
+pub(crate) fn parse_module_for_evaluation(source: &str) -> Result<Module, Diagnostic> {
     let mut parser = Parser::new(source)?;
     let documented = parser.doc_comment()?;
     let annotations = parser.annotations()?;
@@ -2650,14 +2676,14 @@ pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
         }
     }
     members.extend(parser.member_list(MemberContext::Module, initial)?);
-    if let Some(mut error) = parser.pending.into_iter().next() {
+    for error in &mut parser.pending {
         error.module_name = declaration
             .as_ref()
             .and_then(|declaration| declaration.name.as_ref())
             .map(|name| name.join(".").into_boxed_str());
-        return Err(error);
     }
     Ok(Module {
+        deferred_diagnostics: parser.pending,
         source: std::sync::Arc::from(source),
         declaration,
         members,
@@ -2670,6 +2696,7 @@ pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
 #[derive(Clone, Debug)]
 pub(crate) struct ParsedExpression {
     pub expression: Expr,
+    pub deferred_diagnostics: Vec<Diagnostic>,
     pub folded_integer_spans: std::collections::BTreeMap<Span, Span>,
     pub interpolation_spans: std::collections::BTreeMap<Span, Span>,
 }
@@ -2679,16 +2706,24 @@ pub fn parse_expression(source: &str) -> Result<Expr, Diagnostic> {
 }
 
 pub(crate) fn parse_expression_with_metadata(source: &str) -> Result<ParsedExpression, Diagnostic> {
+    let parsed = parse_expression_for_evaluation(source)?;
+    if let Some(error) = parsed.deferred_diagnostics.first() {
+        return Err(error.clone());
+    }
+    Ok(parsed)
+}
+
+pub(crate) fn parse_expression_for_evaluation(
+    source: &str,
+) -> Result<ParsedExpression, Diagnostic> {
     let mut parser = Parser::new(source)?;
     let expression = parser.expression(0)?;
     if parser.token.kind != Kind::Eof {
         return Err(parser.unexpected(Some("end of file")));
     }
-    if let Some(error) = parser.pending.into_iter().next() {
-        return Err(error);
-    }
     Ok(ParsedExpression {
         expression,
+        deferred_diagnostics: parser.pending,
         folded_integer_spans: parser.folded_integer_spans,
         interpolation_spans: parser.interpolation_spans,
     })

@@ -8,6 +8,8 @@ pub struct Module {
     pub source: std::sync::Arc<str>,
     pub declaration: Option<ModuleDeclaration>,
     pub members: Vec<Member>,
+    /// AST construction failures retained for ordered Host-aware preparation.
+    pub deferred_diagnostics: Vec<crate::diagnostic::Diagnostic>,
     /// Numeric token locations for signed integers folded by the parser.
     /// The expression span still includes the unary minus and intervening trivia.
     pub folded_integer_spans: std::collections::BTreeMap<Span, Span>,
@@ -191,6 +193,8 @@ impl ModifierKind {
 pub struct Type {
     /// Parenthesized constants are not the AST string-literal union optimization.
     pub parenthesized: bool,
+    /// The actual constructed node excludes transparent grouping parentheses.
+    pub unparenthesized_span: Option<Span>,
     pub kind: TypeKind,
     pub span: Span,
 }
@@ -265,6 +269,7 @@ impl Clone for Expr {
                         E::Throw(_) => E::Throw(Box::new(next())),
                         E::Trace(_) => E::Trace(Box::new(next())),
                         E::ReadResource(_) => E::ReadResource(Box::new(next())),
+                        E::ReadResourceGlob(_) => E::ReadResourceGlob(Box::new(next())),
                         E::ReadResourceOrNull(_) => E::ReadResourceOrNull(Box::new(next())),
                         E::Member(_, name) => E::Member(Box::new(next()), name.clone()),
                         E::NullableMember(_, name) => {
@@ -378,6 +383,7 @@ impl Expr {
             | E::NonNull(value)
             | E::Throw(value)
             | E::Trace(value)
+            | E::ReadResourceGlob(value)
             | E::ReadResource(value)
             | E::ReadResourceOrNull(value)
             | E::Member(value, _)
@@ -557,6 +563,7 @@ impl Drop for Expr {
                 | E::NonNull(value)
                 | E::Throw(value)
                 | E::Trace(value)
+                | E::ReadResourceGlob(value)
                 | E::ReadResource(value)
                 | E::ReadResourceOrNull(value)
                 | E::Member(value, _)
@@ -647,6 +654,7 @@ pub enum ExprKind {
     Throw(Box<Expr>),
     Trace(Box<Expr>),
     ReadResource(Box<Expr>),
+    ReadResourceGlob(Box<Expr>),
     ReadResourceOrNull(Box<Expr>),
     TypeCheck {
         value: Box<Expr>,

@@ -1,0 +1,726 @@
+{
+  "scope": "Supplemental pinned Java nullable-first Missing/IOException and custom ModuleKey capability observations only;not native compatibility. Original whole input remains separate unchanged. Same-evaluator secondModuleSource and fresh-evaluator sessions are separate;explicitGC request does not establish observed collection.",
+  "freshJvmCount": 4,
+  "evaluatorSessions": 8,
+  "apiCalls": 24,
+  "counts": {
+    "error\n": 16,
+    "success\n": 8
+  },
+  "records": [
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonlocal/0/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonlocal/0/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "CapabilityProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonlocal",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/0/calls",
+        "cap-nonlocal"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonlocal",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonlocal/0/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonlocal/0/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonlocal/0/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonlocal/0/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792743244068709000,
+      "finishedUnixNs": 1792743245582714000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 1513980959,
+        "sha256": {
+          "stdout": "90b50e0e13492506a1bcea7d6d7c732cea0612d32f73eb86a1309a68ad42fb68",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "triple-dot-nonlocal",
+      "repeat": 0,
+      "workspaceBefore": {
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "ac3c77c63e39649ef7d73f6b37308969bf72b2c29a95402c9493facbaefed7c3"
+        },
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "64893e3c949d469cc233d47e507b3e4c57079d304229df2f6eb53c9281544805"
+        }
+      },
+      "workspaceAfter": {
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "ac3c77c63e39649ef7d73f6b37308969bf72b2c29a95402c9493facbaefed7c3"
+        },
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "64893e3c949d469cc233d47e507b3e4c57079d304229df2f6eb53c9281544805"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonlocal/1/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonlocal/1/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "CapabilityProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonlocal",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonlocal/1/calls",
+        "cap-nonlocal"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonlocal",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonlocal/1/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonlocal/1/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonlocal/1/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonlocal/1/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792743245653514000,
+      "finishedUnixNs": 1792743246524934000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 871408125,
+        "sha256": {
+          "stdout": "90b50e0e13492506a1bcea7d6d7c732cea0612d32f73eb86a1309a68ad42fb68",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "triple-dot-nonlocal",
+      "repeat": 1,
+      "workspaceBefore": {
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "ac3c77c63e39649ef7d73f6b37308969bf72b2c29a95402c9493facbaefed7c3"
+        },
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "64893e3c949d469cc233d47e507b3e4c57079d304229df2f6eb53c9281544805"
+        }
+      },
+      "workspaceAfter": {
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "ac3c77c63e39649ef7d73f6b37308969bf72b2c29a95402c9493facbaefed7c3"
+        },
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "64893e3c949d469cc233d47e507b3e4c57079d304229df2f6eb53c9281544805"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonhierarchical/0/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonhierarchical/0/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "CapabilityProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonhierarchical",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/0/calls",
+        "cap-nonhierarchical"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonhierarchical",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonhierarchical/0/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonhierarchical/0/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonhierarchical/0/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonhierarchical/0/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792743246592672000,
+      "finishedUnixNs": 1792743247481262000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 888575041,
+        "sha256": {
+          "stdout": "90b50e0e13492506a1bcea7d6d7c732cea0612d32f73eb86a1309a68ad42fb68",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "triple-dot-nonhierarchical",
+      "repeat": 0,
+      "workspaceBefore": {
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "ac3c77c63e39649ef7d73f6b37308969bf72b2c29a95402c9493facbaefed7c3"
+        },
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "64893e3c949d469cc233d47e507b3e4c57079d304229df2f6eb53c9281544805"
+        }
+      },
+      "workspaceAfter": {
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "ac3c77c63e39649ef7d73f6b37308969bf72b2c29a95402c9493facbaefed7c3"
+        },
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "64893e3c949d469cc233d47e507b3e4c57079d304229df2f6eb53c9281544805"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonhierarchical/1/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonhierarchical/1/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "CapabilityProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonhierarchical",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases/triple-dot-nonhierarchical/1/calls",
+        "cap-nonhierarchical"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonhierarchical",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonhierarchical/1/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonhierarchical/1/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonhierarchical/1/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/runtime-private/triple-dot-nonhierarchical/1/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792743247515404000,
+      "finishedUnixNs": 1792743248376354000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 860796334,
+        "sha256": {
+          "stdout": "90b50e0e13492506a1bcea7d6d7c732cea0612d32f73eb86a1309a68ad42fb68",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "triple-dot-nonhierarchical",
+      "repeat": 1,
+      "workspaceBefore": {
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "ac3c77c63e39649ef7d73f6b37308969bf72b2c29a95402c9493facbaefed7c3"
+        },
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "64893e3c949d469cc233d47e507b3e4c57079d304229df2f6eb53c9281544805"
+        }
+      },
+      "workspaceAfter": {
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "ac3c77c63e39649ef7d73f6b37308969bf72b2c29a95402c9493facbaefed7c3"
+        },
+        "operations.tsv": {
+          "kind": "file",
+          "sha256": "64893e3c949d469cc233d47e507b3e4c57079d304229df2f6eb53c9281544805"
+        }
+      }
+    }
+  ],
+  "observations": [
+    {
+      "case": "triple-dot-nonlocal",
+      "repeat": 0,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "main.pkl",
+          "expression": "r",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonlocal/0/calls/session-0/outer-0",
+          "utf8Sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+          "utf16BESha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c20720a202020205e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c00200072000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "main.pkl",
+          "expression": "rq",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonlocal/0/calls/session-0/outer-1",
+          "utf8Sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+          "utf16BESha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c2072710a202020205e5e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c002000720071000a0020002000200020005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/triple-dot-nonlocal/0/calls/session-0/outer-2",
+          "utf8Sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+          "utf16BESha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+          "utf8Hex": "737461626c65",
+          "utf16BEHex": "0073007400610062006c0065",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "main.pkl",
+          "expression": "r",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonlocal/0/calls/session-1/outer-0",
+          "utf8Sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+          "utf16BESha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c20720a202020205e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c00200072000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "main.pkl",
+          "expression": "rq",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonlocal/0/calls/session-1/outer-1",
+          "utf8Sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+          "utf16BESha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c2072710a202020205e5e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c002000720071000a0020002000200020005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/triple-dot-nonlocal/0/calls/session-1/outer-2",
+          "utf8Sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+          "utf16BESha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+          "utf8Hex": "737461626c65",
+          "utf16BEHex": "0073007400610062006c0065",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=7\n"
+        }
+      ]
+    },
+    {
+      "case": "triple-dot-nonlocal",
+      "repeat": 1,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "main.pkl",
+          "expression": "r",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonlocal/1/calls/session-0/outer-0",
+          "utf8Sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+          "utf16BESha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c20720a202020205e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c00200072000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "main.pkl",
+          "expression": "rq",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonlocal/1/calls/session-0/outer-1",
+          "utf8Sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+          "utf16BESha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c2072710a202020205e5e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c002000720071000a0020002000200020005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/triple-dot-nonlocal/1/calls/session-0/outer-2",
+          "utf8Sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+          "utf16BESha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+          "utf8Hex": "737461626c65",
+          "utf16BEHex": "0073007400610062006c0065",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "main.pkl",
+          "expression": "r",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonlocal/1/calls/session-1/outer-0",
+          "utf8Sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+          "utf16BESha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c20720a202020205e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c00200072000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "main.pkl",
+          "expression": "rq",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonlocal/1/calls/session-1/outer-1",
+          "utf8Sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+          "utf16BESha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c2072710a202020205e5e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c002000720071000a0020002000200020005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/triple-dot-nonlocal/1/calls/session-1/outer-2",
+          "utf8Sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+          "utf16BESha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+          "utf8Hex": "737461626c65",
+          "utf16BEHex": "0073007400610062006c0065",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=7\n"
+        }
+      ]
+    },
+    {
+      "case": "triple-dot-nonhierarchical",
+      "repeat": 0,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "main.pkl",
+          "expression": "r",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonhierarchical/0/calls/session-0/outer-0",
+          "utf8Sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+          "utf16BESha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c20720a202020205e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c00200072000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "main.pkl",
+          "expression": "rq",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonhierarchical/0/calls/session-0/outer-1",
+          "utf8Sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+          "utf16BESha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c2072710a202020205e5e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c002000720071000a0020002000200020005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/triple-dot-nonhierarchical/0/calls/session-0/outer-2",
+          "utf8Sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+          "utf16BESha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+          "utf8Hex": "737461626c65",
+          "utf16BEHex": "0073007400610062006c0065",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "main.pkl",
+          "expression": "r",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonhierarchical/0/calls/session-1/outer-0",
+          "utf8Sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+          "utf16BESha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c20720a202020205e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c00200072000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "main.pkl",
+          "expression": "rq",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonhierarchical/0/calls/session-1/outer-1",
+          "utf8Sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+          "utf16BESha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c2072710a202020205e5e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c002000720071000a0020002000200020005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/triple-dot-nonhierarchical/0/calls/session-1/outer-2",
+          "utf8Sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+          "utf16BESha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+          "utf8Hex": "737461626c65",
+          "utf16BEHex": "0073007400610062006c0065",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=7\n"
+        }
+      ]
+    },
+    {
+      "case": "triple-dot-nonhierarchical",
+      "repeat": 1,
+      "calls": [
+        {
+          "session": 0,
+          "prefix": "outer-0",
+          "source": "main.pkl",
+          "expression": "r",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonhierarchical/1/calls/session-0/outer-0",
+          "utf8Sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+          "utf16BESha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c20720a202020205e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c00200072000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-1",
+          "source": "main.pkl",
+          "expression": "rq",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonhierarchical/1/calls/session-0/outer-1",
+          "utf8Sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+          "utf16BESha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c2072710a202020205e5e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c002000720071000a0020002000200020005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 0,
+          "prefix": "outer-2",
+          "source": "main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/triple-dot-nonhierarchical/1/calls/session-0/outer-2",
+          "utf8Sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+          "utf16BESha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+          "utf8Hex": "737461626c65",
+          "utf16BEHex": "0073007400610062006c0065",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=7\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-0",
+          "source": "main.pkl",
+          "expression": "r",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonhierarchical/1/calls/session-1/outer-0",
+          "utf8Sha256": "234734f38f538512ebe54f04162aaf07ec96baf122d9a81562a232efdb259240",
+          "utf16BESha256": "c0f6d9746189d7182adb3fbbd4dd39636d2fdcda43388ac683527f7119b1b667",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c20720a202020205e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c00200072000a0020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=0\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=0\n",
+          "countersAfter": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-1",
+          "source": "main.pkl",
+          "expression": "rq",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/triple-dot-nonhierarchical/1/calls/session-1/outer-1",
+          "utf8Sha256": "e367ca6fce5561d42b3046a44a84a372bfdeaeb72109d3b64b3ef33205c0498e",
+          "utf16BESha256": "e00bb8aaecf675a9dee13f5f34d7793ce4203e5c1fcc5a784469b4dc828f4b1e",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f74207265736f6c7665206120747269706c652d646f7420696d706f72742066726f6d206d6f64756c65205552492060766972743a2f612f622f6d61696e2e706b6c602e0a0a31207c2072710a202020205e5e0a61742020287265706c3a74657874290a0a547269706c652d646f7420696d706f727473206d6179206f6e6c79206265207265736f6c766564206279206d6f64756c6520736368656d657320746861742061726520636f6e73696465726564206c6f63616c2c20616e6420686176652068696572617263686963616c20555249732e0a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f00740020007200650073006f006c007600650020006100200074007200690070006c0065002d0064006f007400200069006d0070006f00720074002000660072006f006d0020006d006f00640075006c00650020005500520049002000600076006900720074003a002f0061002f0062002f006d00610069006e002e0070006b006c0060002e000a000a00310020007c002000720071000a0020002000200020005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0054007200690070006c0065002d0064006f007400200069006d0070006f0072007400730020006d006100790020006f006e006c00790020006200650020007200650073006f006c0076006500640020006200790020006d006f00640075006c006500200073006300680065006d0065007300200074006800610074002000610072006500200063006f006e00730069006400650072006500640020006c006f00630061006c002c00200061006e006400200068006100760065002000680069006500720061007200630068006900630061006c00200055005200490073002e000a",
+          "countersBefore": "resolve=2\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=3\n",
+          "countersAfter": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n"
+        },
+        {
+          "session": 1,
+          "prefix": "outer-2",
+          "source": "main.pkl",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/triple-dot-nonhierarchical/1/calls/session-1/outer-2",
+          "utf8Sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6",
+          "utf16BESha256": "bb7f7e26066f72ba06a62a533052c51e1f42ffe86424f65957700506cc392e47",
+          "utf8Hex": "737461626c65",
+          "utf16BEHex": "0073007400610062006c0065",
+          "countersBefore": "resolve=3\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=5\n",
+          "countersAfter": "resolve=4\nimport=0\nread=0\npolicyRead=0\nresolveResource=0\nsecurePath=0\ndenied=0\nevent=7\n"
+        }
+      ]
+    }
+  ],
+  "repeatDifferences": [
+    {
+      "case": "triple-dot-nonlocal",
+      "rawPathDifferences": []
+    },
+    {
+      "case": "triple-dot-nonhierarchical",
+      "rawPathDifferences": []
+    }
+  ],
+  "inputHashes": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/CapabilityProbe.java": "8ab9f30603ac197c4b2d48ea138c994c710f1f66f8483b417c5aff6844eedfc4",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/run.py": "2528dd4f7d0f563c16c1d5f2039f431cff6dd5a01d0a3ba6aa446f5e38343cba",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/cases.json": "ce492f7edb9633e3492cacdd0df12d744db9d0bc35b869daf83cb08611e2b0f7",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/profile.json": "2a2fa312c63c2601f0f4a0e12a3ae7e3dae6bfe5dcae8f1e60c1598786953d59",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/classes/CapabilityProbe$2.class": "5533feda50908e332556bc8e0ed1696f4a46abbda30b8455d1f8befc1e07fe8a",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/classes/CapabilityProbe.class": "0ebb790cb0bee96bc1492ef4706c4c9ad1c43e38a9d75a84b97a4c31e82606a3",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/classes/CapabilityProbe$1.class": "1cd7150fecf5734c64280f1e43c170a9aa8d3b04cd442713aa202040bc20b4bd",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/classes/CapabilityProbe$3.class": "23a334ef793815fc4d991e8fb9c3b1f56eeebda286e6862da8f2f077b84db1b1",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/classes/CapabilityProbe$2$1.class": "8adca060d0710017b6f2d25fe7bffccf2a2f6637879c0303d3921d3853554b68",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/upstream/pkl-core/src/main/java/org/pkl/core/runtime/ResourceManager.java": "28aebd541df89e229c20a9f1909dd972062a89188a569678c5834989c12aa6bd",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/upstream/pkl-core/src/main/java/org/pkl/core/resource/Resource.java": "d819074e333a69b73bdebe7840132df080b9a705f8c2c026c0cccfabdde322f2",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/upstream/pkl-core/src/main/java/org/pkl/core/resource/ResourceReaders.java": "e14a41e5c5f84e0395709a04f3dabdc4b6ecc584504d65f758476454dd9e8c06",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/upstream/pkl-core/src/main/java/org/pkl/core/SecurityManagers.java": "18d813d8c34fc9837883ca4d8916d3266ec4113a6142f20f6d53d0ad4c4dff15",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/upstream/pkl-core/src/main/java/org/pkl/core/ast/expression/unary/AbstractReadNode.java": "3f5406962ed0a29673b8563234818cdc41af1edbc3f6beb58a6b96779c05f0fe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/upstream/stdlib/base.pkl": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/tool-sources/tools/compat.py": "fa40a0daee29eb078c7b9cb814fc3779556ceaacc2634657c96e3f7810aa5edc",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/tool-sources/tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/tool-sources/references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/tool-sources/oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonlocal/main.pkl": "ac3c77c63e39649ef7d73f6b37308969bf72b2c29a95402c9493facbaefed7c3",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonlocal/operations.tsv": "64893e3c949d469cc233d47e507b3e4c57079d304229df2f6eb53c9281544805",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonhierarchical/main.pkl": "ac3c77c63e39649ef7d73f6b37308969bf72b2c29a95402c9493facbaefed7c3",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-capability-oracle-03/workspace/triple-dot-nonhierarchical/operations.tsv": "64893e3c949d469cc233d47e507b3e4c57079d304229df2f6eb53c9281544805"
+  },
+  "inputChanges": [],
+  "workspacesUnchanged": true,
+  "jarStable": true,
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O"
+}

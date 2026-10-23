@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Cannot resolve a triple-dot import from module URI `virt:/a/b/main.pkl`.
+
+1 | r
+    ^
+at  (repl:text)
+
+Triple-dot imports may only be resolved by module schemes that are considered local, and have hierarchical URIs.
