@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "scope": "Terminal Stage47 selected native/lifecycle regression with retained strict failures; no fullM2/platform/performance claim.",
+  "archives": [
+    {
+      "path": "reports/m2/stage47-final-regression-01.tar.gz",
+      "sha256": "d299ee3506505b31ea2ef0c9b099111e18c4ada045553dde19fbfa3b82bc8288",
+      "compressed_bytes": 35202600,
+      "payload_files": 29663,
+      "payload_bytes": 80630721,
+      "sizing_disposition": "Partitioned by80MiB raw target; no arbitrary compressed-size retry gate."
+    },
+    {
+      "path": "reports/m2/stage47-final-regression-02.tar.gz",
+      "sha256": "9855ced48f3f48ecfa0dd2fcd999acc2d883cbc4ecd9ac30fe20914431465cf8",
+      "compressed_bytes": 7428991,
+      "payload_files": 3858,
+      "payload_bytes": 79899429,
+      "sizing_disposition": "Partitioned by80MiB raw target; no arbitrary compressed-size retry gate."
+    },
+    {
+      "path": "reports/m2/stage47-final-regression-03.tar.gz",
+      "sha256": "50a1ab719422539a30d116f5d4d84cfcfb3e77f49c588f0723d9f9f185780aae",
+      "compressed_bytes": 6498063,
+      "payload_files": 28699,
+      "payload_bytes": 60145626,
+      "sizing_disposition": "Partitioned by80MiB raw target; no arbitrary compressed-size retry gate."
+    }
+  ],
+  "payload_files": 62220,
+  "payload_bytes": 220675776,
+  "producer_declared_payload_files": 62152,
+  "selection_sha256": "4bf285d4ef43b0da53fc7e507090ed3542f686d651a1badf8a7264573d2005e9",
+  "originals_unchanged": true,
+  "all_archives_tool_create_verify_exit0": true,
+  "independent_original_byte_readback": true,
+  "cache_traversal": false,
+  "wrapper_exit_code": 0,
+  "reused_baseline": {
+    "summary": {
+      "path": "reports/m2/stage46-final-summary.json",
+      "sha256": "2cece692987c1210b404b1f0d66239126095a0860639dae3cceac4022ded582f"
+    },
+    "captures": {
+      "path": "reports/m2/stage46-final-regression-captures.json",
+      "sha256": "a1f29efd2da476c51a9a704553dfc822f5ddb6b7c38dd96c5d86f5d25e1f97dc"
+    },
+    "archives": [
+      {
+        "path": "reports/m2/stage46-final-regression-01.tar.gz",
+        "sha256": "695af9265a30cd47459dfbcaad75f3c3e7aaf7a0e54fb595d54505ad5f2e4880",
+        "compressed_bytes": 35239303,
+        "payload_files": 29647,
+        "payload_bytes": 83735278,
+        "sizing_disposition": "Partitioned by80MiB raw target; no arbitrary compressed-size retry gate."
+      },
+      {
+        "path": "reports/m2/stage46-final-regression-02.tar.gz",
+        "sha256": "a1361b2275320c6fc1c9979c08492c69c52731a835cb85bfeebd2e8ac142b2f8",
+        "compressed_bytes": 9309479,
+        "payload_files": 7683,
+        "payload_bytes": 80757499,
+        "sizing_disposition": "Partitioned by80MiB raw target; no arbitrary compressed-size retry gate."
+      },
+      {
+        "path": "reports/m2/stage46-final-regression-03.tar.gz",
+        "sha256": "02caf7c4c3f0be70422e0572ef8a2f02e33d2e72bb954d56eb32aa51a960eb45",
+        "compressed_bytes": 3297175,
+        "payload_files": 24839,
+        "payload_bytes": 41264524,
+        "sizing_disposition": "Partitioned by80MiB raw target; no arbitrary compressed-size retry gate."
+      }
+    ],
+    "qualification": "Previously published Stage46 raw archives are reused by exact pointers. Four fixed audited baseline metadata files remain in the audit capture for offline provenance; no earlier raw archive is recursively repackaged. Stage45 schema1 omission stays historical."
+  },
+  "full_m2_complete": false
+}

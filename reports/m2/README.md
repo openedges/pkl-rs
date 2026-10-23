@@ -32,9 +32,9 @@ these two provider experiments.
 source and artifact bindings, and independent reviews. General ModuleKey
 factories, key-kind and isCached rules, eager import-clause factory selection,
 primary/query/repl lifecycle, URI equality and import globs remain required work.
-Stage48 full selected regression has not been acquired for this checkpoint.
-The separate Stage47 acquisition runs from its own fixed commit; the latest
-published full selected result remains Stage46's 3,650 of 3,664 cases.
+The separate Stage48 full selected acquisition is in progress and is not part
+of this checkpoint. The latest published selected result is Stage47's
+3,652 of 3,664 cases, acquired from its own fixed commit.
 **M2, full product compatibility and the performance targets remain incomplete.**
 
 The [Stage47 C06 implementation checkpoint](stage47-implementation-checkpoint.json)
@@ -57,9 +57,9 @@ Core, native/oracle and platform archives retain raw channels, source/artifact
 bindings, reviews and earlier failures. All 51,745 C06 source inputs are bound;
 seven early intermediate source versions remain explicitly hash-only. The
 subsequent documentation and publication files are separate from the frozen
-runtime candidate. Stage47 full selected regression, standard-module admission,
-remaining identity semantics and the strict M2 gate remain open. The latest
-published full selected result is still Stage46's 3,650 of 3,664 cases.
+runtime candidate. The separate Stage47 final regression is recorded below;
+remaining identity semantics and the strict M2 gate remain open. Later
+standard-module admission changes have their own implementation evidence.
 
 The [Stage47 C05 platform record](stage47-c05-platform-summary.json) preserves
 an intermediate shared renderer/identity candidate: 860 renderer, 1,008 Resource
@@ -145,6 +145,31 @@ payloads before reads. Staging tools, the first installed run and corrective
 verification remain separate evidence. This fixture/tool checkpoint does not
 execute the renderer through Rust, N-API or Wasm and does not complete Stage 47
 or M2.
+
+## Stage 47 final selected regression
+
+The [native result](stage47-final-summary.json) is bound to `0e13a58`: 3,652 of
+3,664 selected cases match Java, with two unsupported cases, nine mismatches
+and one oracle error retained. The unchanged original `moduleOutput2.pkl` and
+`pcfRenderer9.pkl` improve from unsupported to passing. No previously passing
+case regresses. All 4,527 inventory IDs, 475 requirements, selected order and
+the existing JVM/classpath mapping remain unchanged.
+
+All 88 metamorphic relations and 2,782 ordered calls across 334 persistent
+sequence executions match their declared channels. The 928 producer error-class
+differences and unexecuted lifecycle boundaries remain separate. Acquisition,
+evidence integrity and the persistent contract pass; development, strict selected
+and full-language gates still fail. The full gate retains 1,825 failure reasons.
+
+The [independent audit](stage47-final-regression-audit.json) verifies 62,152
+declared payloads and binds 4,405 captured source records across 4,187 unique
+paths to the implementation and pinned reference Git blobs. The
+[raw captures](stage47-final-regression-captures.json) retain the observed
+wrapper exit zero, failed compatibility gate exits, and the explicitly late
+terminal receipt alongside the original audit notice. Expression acquisition
+used four workers instead of Stage46's two; module commands stayed sequential.
+This scheduling change is not a performance comparison. This result does not
+validate later Stage48/49 changes or complete M2, platform or performance goals.
 
 ## Stage 46 final selected regression
 

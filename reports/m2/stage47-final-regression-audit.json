@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "scope": "Independent terminal data audit of Stage47/classpath full selected regression at0e13a58; not M2 completion, CI, platform or performance evidence.",
+  "implementation_commit": "0e13a589d43c4cb1d83f41dd1ec416cac1770fc1",
+  "pinned_references": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "declared_inputs_unchanged_during_audit": true,
+  "wrapper_commands_complete": true,
+  "wrapper_own_terminal": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-final-audit-execution-01/wrapper-terminal-from-root-notice.json",
+    "sha256": "5c6d9d8377310adbf9f322383b7ef39c7c9185b5161d742689e671c05cbb8559",
+    "exit_code": 0
+  },
+  "wrapper_terminal_qualification": "Required root receipt binds actual wrapper OS exit0 to the complete8command process report; strict child exit1 remains a failed gate.",
+  "gates": {
+    "language-acquire": 0,
+    "language-verify-report": 0,
+    "language-verify-development": 1,
+    "language-verify-subset": 1,
+    "language-verify-full": 1,
+    "lifecycle-acquire": 0,
+    "lifecycle-verify-report": 0,
+    "lifecycle-verify-contract": 0
+  },
+  "scheduling_change": {
+    "baseline_workers": 2,
+    "current_workers": 4,
+    "performance_comparison_claimed": false
+  },
+  "nonpass_union_qualification": "Union of baseline Stage46 current nonpass and current Stage47 nonpass; not all historical stages combined.",
+  "language": {
+    "report_sha256": "2829254a464dffa0607230a2e92aa12e423cdcd948c98150a15bbbdbeb417b64",
+    "case_definitions": 4527,
+    "requirements": 475,
+    "selected": 3664,
+    "case_order_and_selection_unchanged": true,
+    "status_counts": {
+      "candidate-unsupported": 2,
+      "mismatch": 9,
+      "oracle-error": 1,
+      "pass": 3652
+    },
+    "full_gate_failure_reasons": 1825,
+    "status_transition_count": 2,
+    "current_nonpass_cases": 12,
+    "historical_nonpass_comparison_union": 14,
+    "declared_payloads_verified": 37319,
+    "classpath_child_report_sha256": "20ee4303ccdf83b565f63e8299a17b8f771dbbe69b6059b03c78d7baaf2642c4",
+    "classpath_repetitions": 2,
+    "classpath_same_case_counted_once": true
+  },
+  "lifecycle": {
+    "report_sha256": "8ee6cdb478749e815529c7ab6da47396dd817ffaddaebc41a894589ee015db8a",
+    "sequences": 334,
+    "calls_each_language": 2782,
+    "status_counts": {
+      "java": {
+        "error": 928,
+        "success": 1854
+      },
+      "rust": {
+        "error": 928,
+        "success": 1854
+      }
+    },
+    "raw_mismatches": [],
+    "comparison_channels": [
+      "status",
+      "stdout",
+      "stderr"
+    ],
+    "error_class_differences_retained_excluded_from_equality": 928,
+    "declared_payloads_verified": 24833,
+    "unexecuted_groups_preserved": true
+  },
+  "source_binding": {
+    "captured_records": 4405,
+    "unique_paths": 4187,
+    "all_match_commit_blobs": true,
+    "lifecycle_config_directly_captured": true,
+    "config_qualification": "Stage47 schema2 directly captures root.cargo/config.toml and all4Rust Cargo controls, as did Stage46. Stage45 schema1 omission remains historical."
+  },
+  "exact_build_paths_never_enumerated": {
+    "language": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-language-final-01/build",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-language-final-01/jvm-classpath/build"
+    ],
+    "lifecycle": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-class-lifecycle-final-01/build",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-class-lifecycle-final-01/jvm-classpath/build"
+    ]
+  },
+  "payload_coverage_qualification": "Every declared payload was read directly; no evidence/cache directory tree was walked. The recorded producer integrity checks separately verify actual path coverage.",
+  "output_pointers": {
+    "source-map.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-final-audit-01/source-map.json",
+      "sha256": "e2c8d7797d4ca35f1969fae9d127be497876c3fcdcda0ee547ddc2661c0b3a5b"
+    },
+    "case-changes.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-final-audit-01/case-changes.json",
+      "sha256": "5b1651fbc219c3cde7d1c851dfc25833069aa5692c5f9bc0f434bc7ca6917289"
+    },
+    "status-changes.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-final-audit-01/status-changes.json",
+      "sha256": "86e237dc6648c28c1eaf4a1d95ef1a7a6455d77289be17b642ce83fb3adba530"
+    },
+    "raw-changes.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-final-audit-01/raw-changes.json",
+      "sha256": "97bf548b3f23c985f739547742b4e042058b1f88a236feffb3dbb0c6d6f342f1"
+    },
+    "payload-manifest.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-final-audit-01/payload-manifest.json",
+      "sha256": "0bb19690eedd3a08cf0a960692e4a4a790c1aa86ea000d51ae105e06692335e0"
+    },
+    "scheduling-comparison.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-final-audit-01/scheduling-comparison.json",
+      "sha256": "7b3613d961853183fa63cdff9d0827cd6398193c4e3a3e8f8f507f4c0a1e6786"
+    }
+  },
+  "remaining": [
+    "Root review and publication archive/summary/source pointers",
+    "All remaining strict failures and unmapped/unimplemented requirements",
+    "Later Stage48/49 implementation is a separate source/evidence scope, not validated by this frozen Stage47 regression; M2 obligations remain open"
+  ],
+  "full_m2_complete": false,
+  "hosted_ci_claimed": false,
+  "performance_target_claimed": false
+}
