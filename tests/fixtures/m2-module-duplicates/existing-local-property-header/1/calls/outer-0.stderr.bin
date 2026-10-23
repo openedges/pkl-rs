@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Duplicate definition of member `result`.
+
+3 | local result = 2
+    ^^^^^^^^^^^^
+at example.named (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-oracle-01/workspace/existing-local-property-header/main.pkl)

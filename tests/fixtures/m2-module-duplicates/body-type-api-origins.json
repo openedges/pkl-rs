@@ -1,0 +1,30 @@
+{
+  "oracleReport": "target/m2/stage42-member-body-type-order-oracle-01/report.json",
+  "oracleReportSha256": "e5b317b0daf83e51f0a415f7de90436a50ef52d19aa923b27a9498e5dd1a9c75",
+  "oracleCasesSha256": "815fc144a6b967977ddce50876968da41960970be2ec36f637a816c31590dfef",
+  "scope": "Fresh API full-body AST diagnostics; caught expression failures are not CLI process failures.",
+  "cases": [
+    {
+      "id": "property-body-before-type-and-duplicate",
+      "sourceSha256": "c75a8d06b2b7a5aeadddbde2a0319242f68856dbf296272065e3c9cfb4e5cc59",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-member-body-type-order-oracle-01/workspace/property-body-before-type-and-duplicate/main.pkl",
+      "expressions": [
+        "1"
+      ],
+      "oracleDirectory": "target/m2/stage42-member-body-type-order-oracle-01/cases/property-body-before-type-and-duplicate",
+      "utf8Sha256": "3fcfb56507719560b1322ee11e36ddaf9bbc9cbd0befdd90a9846135492cb463",
+      "utf16BESha256": "12fbaa3cb4a1f9fce561b6324cd6c1838e09ba1709046884510ee19c855ac3fd"
+    },
+    {
+      "id": "method-body-before-parameter-type-and-duplicate",
+      "sourceSha256": "3f42ee62101de2cfd7e5de6f63cdf857e49893a263bfb2e19957db557f4ee90e",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-member-body-type-order-oracle-01/workspace/method-body-before-parameter-type-and-duplicate/main.pkl",
+      "expressions": [
+        "1"
+      ],
+      "oracleDirectory": "target/m2/stage42-member-body-type-order-oracle-01/cases/method-body-before-parameter-type-and-duplicate",
+      "utf8Sha256": "1051db1c593fe5a3fe114f8cee4fcd1bcbff46c391e00e6451d167cb639ef664",
+      "utf16BESha256": "e639d55cbc82a92f5786f6605fd3fcffbb64d154c0eede6892c7cfed06e49dce"
+    }
+  ]
+}

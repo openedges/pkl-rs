@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-XshowSettings:properties",
+    "-version"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/identity/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/identity/tmp",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "TZ": "UTC"
+  },
+  "result": {
+    "exit_code": 0,
+    "elapsed_ns": 48375750,
+    "sha256": {
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "ad59a6cc7929dbc09bb8e86703d21c872d9e5f2c861950769e5ec3bbfbd7ffe6"
+    },
+    "timed_out": false,
+    "workspace_changes": {},
+    "files": {}
+  }
+}

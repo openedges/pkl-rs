@@ -310,7 +310,9 @@ pub fn render_error(message: &str, frames: &[RenderFrame<'_>], hint: Option<&str
     if frames.is_empty()
         && let Some(hint) = hint
     {
-        write!(output, "\n{hint}\n").unwrap();
+        // VmExceptionRenderer appends a frameless hint verbatim. Its own
+        // trailing newline (for example an empty method list) is significant.
+        write!(output, "\n{hint}").unwrap();
     }
     output
 }

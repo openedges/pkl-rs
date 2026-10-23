@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Duplicate definition of member `value`.
+
+2 | local value = (y) -> y
+    ^^^^^^^^^^^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header/main.pkl)

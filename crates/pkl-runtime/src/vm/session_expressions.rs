@@ -81,6 +81,8 @@ fn append(
         member: "repl:text".into(),
         let_members: Vec::new(),
         type_scopes: Vec::new(),
+        runtime_type_owner: true,
+        runtime_type_fallback: None,
         modifiers: Vec::new(),
         constraint_module: false,
         alias_frames: Vec::new(),
@@ -120,6 +122,8 @@ fn append(
         entry: usize::MAX,
         initial_members: Vec::new(),
         class_id: primary.class_id,
+        mode: modules::ModuleMode::Plain,
+        modifiers: 0,
     });
     Ok(entry)
 }
@@ -129,7 +133,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn failed_expression_append_rolls_back_emitted_lambda_and_source_unit_arena() {
+    fn failed_expression_append_rolls_back_emitted_lambda_type_recipe_and_source_unit_arena() {
         let module = crate::parser::parse_module("stable=7\n").unwrap();
         let resolved = crate::resolver::resolve_module(&module).unwrap();
         let mut program = Arc::unwrap_or_clone(compile_module(&resolved).unwrap());
@@ -141,7 +145,7 @@ mod tests {
             false,
         )
         .unwrap();
-        let expression = "let (f=(x)->x) import(\"child.pkl\")";
+        let expression = "let (f=(x:remote.Person)->x) import(\"child.pkl\")";
         let parsed = crate::parser::parse_expression_with_metadata(expression).unwrap();
         let resolved_expression =
             crate::resolver::resolve_session_expression(&module, expression, &parsed).unwrap();
@@ -164,6 +168,7 @@ mod tests {
         assert_eq!(error.kind, ErrorKind::Unsupported);
         assert!(unguarded.blocks.len() > program.blocks.len());
         assert!(unguarded.metadata.len() > program.metadata.len());
+        assert!(unguarded.type_recipes.len() > program.type_recipes.len());
         let before = (
             program.blocks.len(),
             program.metadata.len(),
@@ -171,6 +176,12 @@ mod tests {
             program.units.len(),
             program.next_declaration,
             program.constraint_origins.len(),
+            program.type_recipes.len(),
+            program
+                .alias_definitions
+                .keys()
+                .copied()
+                .collect::<Vec<_>>(),
         );
         assert!(matches!(
             compile_session_expression(
@@ -190,7 +201,13 @@ mod tests {
                 program.objects.len(),
                 program.units.len(),
                 program.next_declaration,
-                program.constraint_origins.len()
+                program.constraint_origins.len(),
+                program.type_recipes.len(),
+                program
+                    .alias_definitions
+                    .keys()
+                    .copied()
+                    .collect::<Vec<_>>(),
             )
         );
         let module_entry = program.entry;

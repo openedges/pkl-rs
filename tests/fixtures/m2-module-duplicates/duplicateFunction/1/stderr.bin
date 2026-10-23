@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Duplicate definition of member `foo`.
+
+7 | function foo(arg) = "other" // duplicate
+    ^^^^^^^^^^^^^^^^^
+at duplicateFunction (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-original-modules41-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateFunction.pkl, line 7)

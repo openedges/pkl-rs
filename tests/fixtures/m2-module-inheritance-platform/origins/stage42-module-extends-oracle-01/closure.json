@@ -1,0 +1,416 @@
+{
+  "closed": true,
+  "caseCount": 1,
+  "processCount": 2,
+  "actualApiCalls": 8,
+  "allOrdinarySuccess": true,
+  "repeatDifferences": [],
+  "inputChanges": [],
+  "inventory": {
+    "AmendingMembersProbe.java": {
+      "bytes": 7186,
+      "sha256": "ecb0475cf2618d82208e61792e6d4ee588cc584ba94dcc6be441db169d5ad565"
+    },
+    "adjacent-driver-logs/stage42-module-extends-oracle-01.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "adjacent-driver-logs/stage42-module-extends-oracle-01.stdout.log": {
+      "bytes": 786,
+      "sha256": "ac82f772170a0bd759a95cb87a9194fcdc0242a0216089487da7bf5a8d1e5550"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/counters.bin": {
+      "bytes": 30,
+      "sha256": "bc5d907a9967165d6543afe03caa81f9eaa2e443ebbbe68d8be9edce8bdb2615"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/event-0.bin": {
+      "bytes": 19,
+      "sha256": "4625a929230491a5cfa170419973f85ae0905e0ee66a007cdb79b1c06204bdd0"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/event-1.bin": {
+      "bytes": 29,
+      "sha256": "48f0511ceff91495a31c8450aff0147bbb9db8066b04a3dcf839afd36e1984df"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/event-2.bin": {
+      "bytes": 34,
+      "sha256": "943011a6029ee5e8a045abee800afb88b68ce970b4128c14ea781aee3c015ea9"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/event-3.bin": {
+      "bytes": 32,
+      "sha256": "321cf9045397de045a8f1efd9d3513d957507c554497c9cd7b11ee14f5e51795"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/event-4.bin": {
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/event-5.bin": {
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/event-6.bin": {
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/event-7.bin": {
+      "bytes": 19,
+      "sha256": "4625a929230491a5cfa170419973f85ae0905e0ee66a007cdb79b1c06204bdd0"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/event-8.bin": {
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-0.error-class.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-0.expression.bin": {
+      "bytes": 6,
+      "sha256": "ed5b8120601641c516d02ed9dc643a59648524248d5e2af877da39ea253c723e"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-0.status.bin": {
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-0.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-0.stdout.bin": {
+      "bytes": 1,
+      "sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-0.stdout.code-units.bin": {
+      "bytes": 2,
+      "sha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-1.error-class.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-1.expression.bin": {
+      "bytes": 10,
+      "sha256": "bd2c4ee154981cfc23952e7f7e2d1214540eb89e877e1c92852d4621703b669e"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-1.status.bin": {
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-1.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-1.stdout.bin": {
+      "bytes": 1,
+      "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-1.stdout.code-units.bin": {
+      "bytes": 2,
+      "sha256": "906c5d2485cae722073a430f4d04fe1767507592cef226629aeadb85a2ec909d"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-2.error-class.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-2.expression.bin": {
+      "bytes": 9,
+      "sha256": "096af944fefbf4224cb484287aeed74e2dc1ee1bea9046d1d089e5ef14a0fabf"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-2.status.bin": {
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-2.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-2.stdout.bin": {
+      "bytes": 2,
+      "sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-2.stdout.code-units.bin": {
+      "bytes": 4,
+      "sha256": "62a3e07d3b00b54b0118ddac457ec750283afde1c39954c03d1fac42cbdab63c"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-3.error-class.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-3.expression.bin": {
+      "bytes": 51,
+      "sha256": "16bcd863bc96713f148bc1531a55d2bc8b74d9b96f00300cfb937697f3c2ea65"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-3.status.bin": {
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-3.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-3.stdout.bin": {
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/calls/outer-3.stdout.code-units.bin": {
+      "bytes": 10,
+      "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/process.json": {
+      "bytes": 3454,
+      "sha256": "de49a61c95bde5cf728c53cca267550869aa10b712567d77d60d0e4c226569aa"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/result.json": {
+      "bytes": 294,
+      "sha256": "8792474877661d005a13d4da6a94b7adf8442316a14ebc67ea0c4d6c07f75cd4"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/0/stdout.bin": {
+      "bytes": 202,
+      "sha256": "acd340c0ca306e73f1e89ba2f6d88ebc9b08e590f412bdb5f54c8edb7e449cf4"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/counters.bin": {
+      "bytes": 30,
+      "sha256": "bc5d907a9967165d6543afe03caa81f9eaa2e443ebbbe68d8be9edce8bdb2615"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/event-0.bin": {
+      "bytes": 19,
+      "sha256": "4625a929230491a5cfa170419973f85ae0905e0ee66a007cdb79b1c06204bdd0"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/event-1.bin": {
+      "bytes": 29,
+      "sha256": "48f0511ceff91495a31c8450aff0147bbb9db8066b04a3dcf839afd36e1984df"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/event-2.bin": {
+      "bytes": 34,
+      "sha256": "943011a6029ee5e8a045abee800afb88b68ce970b4128c14ea781aee3c015ea9"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/event-3.bin": {
+      "bytes": 32,
+      "sha256": "321cf9045397de045a8f1efd9d3513d957507c554497c9cd7b11ee14f5e51795"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/event-4.bin": {
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/event-5.bin": {
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/event-6.bin": {
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/event-7.bin": {
+      "bytes": 19,
+      "sha256": "4625a929230491a5cfa170419973f85ae0905e0ee66a007cdb79b1c06204bdd0"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/event-8.bin": {
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-0.error-class.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-0.expression.bin": {
+      "bytes": 6,
+      "sha256": "ed5b8120601641c516d02ed9dc643a59648524248d5e2af877da39ea253c723e"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-0.status.bin": {
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-0.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-0.stdout.bin": {
+      "bytes": 1,
+      "sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-0.stdout.code-units.bin": {
+      "bytes": 2,
+      "sha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-1.error-class.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-1.expression.bin": {
+      "bytes": 10,
+      "sha256": "bd2c4ee154981cfc23952e7f7e2d1214540eb89e877e1c92852d4621703b669e"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-1.status.bin": {
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-1.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-1.stdout.bin": {
+      "bytes": 1,
+      "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-1.stdout.code-units.bin": {
+      "bytes": 2,
+      "sha256": "906c5d2485cae722073a430f4d04fe1767507592cef226629aeadb85a2ec909d"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-2.error-class.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-2.expression.bin": {
+      "bytes": 9,
+      "sha256": "096af944fefbf4224cb484287aeed74e2dc1ee1bea9046d1d089e5ef14a0fabf"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-2.status.bin": {
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-2.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-2.stdout.bin": {
+      "bytes": 2,
+      "sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-2.stdout.code-units.bin": {
+      "bytes": 4,
+      "sha256": "62a3e07d3b00b54b0118ddac457ec750283afde1c39954c03d1fac42cbdab63c"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-3.error-class.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-3.expression.bin": {
+      "bytes": 51,
+      "sha256": "16bcd863bc96713f148bc1531a55d2bc8b74d9b96f00300cfb937697f3c2ea65"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-3.status.bin": {
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-3.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-3.stdout.bin": {
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/calls/outer-3.stdout.code-units.bin": {
+      "bytes": 10,
+      "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/process.json": {
+      "bytes": 3454,
+      "sha256": "b6ce8a5b27c98eb85a9b690feab6f3d39d6f17d058b187f973fb328c0d4abf3e"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/result.json": {
+      "bytes": 294,
+      "sha256": "d239b1e90f8cae8e439db829d2ec0e6f1a2cfdc66a81f7cebf82416b1e66029f"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cases/extends-open-parent-values-and-class-identity/1/stdout.bin": {
+      "bytes": 202,
+      "sha256": "acd340c0ca306e73f1e89ba2f6d88ebc9b08e590f412bdb5f54c8edb7e449cf4"
+    },
+    "cases.json": {
+      "bytes": 901,
+      "sha256": "be17e8c442c32bdb94a704f61309d31e76de21208a67d3455b6411952db3ebd8"
+    },
+    "classes/AmendingMembersProbe$1.class": {
+      "bytes": 1743,
+      "sha256": "70cc215f2eca37354d2263d5c624c2446fd46e423067f7e7a4fa8cde0ae69a98"
+    },
+    "classes/AmendingMembersProbe$Key$1.class": {
+      "bytes": 3069,
+      "sha256": "049dc93faa5a4eab6abc298d45c40254c92bc70c9d6ae1ddba96f030ea068f33"
+    },
+    "classes/AmendingMembersProbe$Key.class": {
+      "bytes": 2001,
+      "sha256": "8fc31eaa0e99bbb4c248bfa1ebb7874b572f948d7734c7bb726cdf3e7c3ba2d9"
+    },
+    "classes/AmendingMembersProbe.class": {
+      "bytes": 9090,
+      "sha256": "7dfea5c3b5f0d6b2073ac84eb728696b55ef708656601c07e65ec24f1cafb6f5"
+    },
+    "identity/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": {
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    "inputs-before.json": {
+      "bytes": 2792,
+      "sha256": "ab11b3498cfd518fab64a60e273cc486286fdd380a7ab9e610be753bbf7bd1a6"
+    },
+    "javac/result.json": {
+      "bytes": 294,
+      "sha256": "70b2ee67fdd43a48c6cb3486805db9e5043cd6d367ccd8fe073640d9acdfce13"
+    },
+    "javac/stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "javac/stdout.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "javac.process.json": {
+      "bytes": 1153,
+      "sha256": "3df958c23b66d658285f4b7871ca6985ba8c94b8f8231c255ba521d3d046c426"
+    },
+    "jdk/result.json": {
+      "bytes": 293,
+      "sha256": "825565c82bc628e5abdd4f709fddc91db4958f823fe43fdd65bcb76e43139a86"
+    },
+    "jdk/stderr.bin": {
+      "bytes": 2564,
+      "sha256": "ad59a6cc7929dbc09bb8e86703d21c872d9e5f2c861950769e5ec3bbfbd7ffe6"
+    },
+    "jdk/stdout.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "jdk.process.json": {
+      "bytes": 868,
+      "sha256": "b0758325e3b9f2d4c2c59b40f8b94331e1bd5a2f5193df0f06d6950f239926b5"
+    },
+    "raw-inventory.json": {
+      "bytes": 13651,
+      "sha256": "461376ff3ce6ada82f37366a41d90ddabc48046987c20376001348464ac2a0e5"
+    },
+    "report.json": {
+      "bytes": 16092,
+      "sha256": "ee6c6b2a8361037fbcd539373fbe0f5166920e8b927a8940b93993fd4ef853db"
+    },
+    "run.py": {
+      "bytes": 6047,
+      "sha256": "349f2fcdb06c525bac5b96446a874dece3deda4d165fa460a3359481e3430572"
+    },
+    "workspace/extends-open-parent-values-and-class-identity/callback.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "workspace/extends-open-parent-values-and-class-identity/main.pkl": {
+      "bytes": 48,
+      "sha256": "14dee5002fb67c397feb29f2eb54c471a9d88c6d6d3aa44b05ee745f33247a8f"
+    },
+    "workspace/extends-open-parent-values-and-class-identity/plan.tsv": {
+      "bytes": 128,
+      "sha256": "c433fe8d6509e9e216926deffc36b2f94255dccd305531034865753cdcea3d32"
+    },
+    "workspace/extends-open-parent-values-and-class-identity/source.pkl": {
+      "bytes": 45,
+      "sha256": "0b0896f73e6b77ebf518a067d51ebf7becbb943d7a7562d5b7355130876ecc27"
+    }
+  },
+  "liveHandles": []
+}

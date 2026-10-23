@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Character index `4` is out of range `0`..`3`.
+String: "?😀?z"
+
+1 | mixed[4]
+          ^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at StringSubscriptErrorUnitsProbe.evaluate(StringSubscriptErrorUnitsProbe.java:36)
+	at StringSubscriptErrorUnitsProbe.main(StringSubscriptErrorUnitsProbe.java:103)

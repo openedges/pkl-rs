@@ -258,7 +258,42 @@ struct Resolver<'a> {
     diagnostic_path: Vec<crate::value::PklString>,
     diagnostic_owners: diagnostic_owner::OwnerScopes,
     diagnostic_owner_requested: bool,
-    external_type_names: std::collections::BTreeSet<String>,
+    amending_module: bool,
+}
+
+fn member_category(member: &Member) -> u8 {
+    match member.expr.kind {
+        // Import clauses lower to a member whose name is the entire clause.
+        // A normal property initialized by import(...) stays a class property.
+        ExprKind::Import { .. } if member.name_span == member.expr.span => 0,
+        ExprKind::Class { .. } => 1,
+        ExprKind::TypeAlias { .. } => 2,
+        ExprKind::Function { method: true, .. } => 4,
+        _ => 3,
+    }
+}
+
+fn member_header_span(member: &Member) -> Span {
+    match &member.expr.kind {
+        ExprKind::Class { header_span, .. }
+        | ExprKind::TypeAlias { header_span, .. }
+        | ExprKind::Function {
+            header_span,
+            method: true,
+            ..
+        } => *header_span,
+        ExprKind::Import { .. } if member.name_span == member.expr.span => member.expr.span,
+        _ => Span::new(
+            member
+                .modifiers
+                .first()
+                .map_or(member.name_span.start, |modifier| modifier.span.start),
+            member
+                .ty
+                .as_ref()
+                .map_or(member.name_span.end, |ty| ty.span.end),
+        ),
+    }
 }
 
 // Resolver continuations own temporary scope state, never authored AST nodes.
@@ -275,6 +310,12 @@ enum Work<'a> {
     Type(&'a Type),
     Constraints(&'a [Expr]),
     Members(&'a [Member], bool),
+    MembersNext {
+        members: Vec<&'a Member>,
+        index: usize,
+        seen: std::collections::BTreeSet<(&'a str, bool)>,
+        object: bool,
+    },
     Member(&'a Member, bool),
     MemberBody(&'a Member, bool),
     ObjectMembers(&'a [ObjectMember]),
@@ -382,6 +423,42 @@ impl<'a> Resolver<'a> {
 
     fn members(&mut self, members: &'a [Member], object: bool) -> Result<(), Diagnostic> {
         self.visit(Work::Members(members, object))
+    }
+
+    /// AstBuilder builds an amending module as object members, in grouped
+    /// declaration order. A class/alias is fully visited before its local check.
+    fn amending_members(&mut self, members: &'a [Member]) -> Result<(), Diagnostic> {
+        let previous = self.enter_object(members.iter().collect());
+        let mut seen = std::collections::BTreeSet::new();
+        for category in 0..5 {
+            for member in members
+                .iter()
+                .filter(|member| member_category(member) == category)
+            {
+                self.visit(Work::Member(member, category >= 3))?;
+                let header = member_header_span(member);
+                if !member.local && (category == 1 || category == 2) {
+                    let (target, label) = if category == 1 {
+                        ("class", "Class")
+                    } else {
+                        ("type alias", "Type alias")
+                    };
+                    return Err(Diagnostic::language(
+                        DiagnosticOrigin::Resolver, DiagnosticKind::Syntax, header,
+                        format!("{label} needs a `local` modifier."),
+                    ).with_hint(format!("To define a non-local {target}, extend rather than amend the parent module (which must be `open` for extension).")));
+                }
+                if !seen.insert((&member.name, is_method(member))) {
+                    return Err(Diagnostic::language(
+                        DiagnosticOrigin::Resolver,
+                        DiagnosticKind::DuplicateMember,
+                        header,
+                        format!("Duplicate definition of member `{}`.", member.name),
+                    ));
+                }
+            }
+        }
+        self.visit(Work::EndObject(previous))
     }
 
     fn enter_object(&mut self, names: Vec<&'a Member>) -> bool {
@@ -517,39 +594,54 @@ impl<'a> Resolver<'a> {
                 }
                 Work::ConstantEntries(members) => self.constant_entries(members)?,
                 Work::Members(members, object) => {
-                    let mut seen = std::collections::BTreeSet::new();
-                    for (index, member) in members.iter().enumerate() {
-                        if !seen.insert((&member.name, is_method(member))) {
-                            let span = if members[..index].iter().any(|previous| {
-                                previous.name == member.name
-                                    && matches!(previous.expr.kind, ExprKind::Import { .. })
-                            }) {
-                                Span::new(
-                                    member.span.start,
-                                    member
-                                        .ty
-                                        .as_ref()
-                                        .map_or(member.name_span.end, |ty| ty.span.end),
-                                )
-                            } else {
-                                member.name_span
-                            };
+                    let previous = self.enter_object(members.iter().collect());
+                    work.push(Work::EndObject(previous));
+                    // AstBuilder builds module imports, classes and aliases before
+                    // class properties, then methods. Class bodies have only the
+                    // final two categories. Preserve source order within each.
+                    let ordered = (0..5)
+                        .flat_map(|category| {
+                            members
+                                .iter()
+                                .filter(move |member| member_category(member) == category)
+                        })
+                        .collect();
+                    work.push(Work::MembersNext {
+                        members: ordered,
+                        index: 0,
+                        seen: std::collections::BTreeSet::new(),
+                        object,
+                    });
+                }
+                Work::MembersNext {
+                    members,
+                    index,
+                    mut seen,
+                    object,
+                } => {
+                    // A member's annotations, modifiers, types and body are
+                    // validated before its duplicate check, as in AstBuilder.
+                    // This continuation runs after EndMember restores ownership.
+                    if index > 0 {
+                        let member = members[index - 1];
+                        if !seen.insert((member.name.as_str(), is_method(member))) {
                             return Err(Diagnostic::language(
                                 DiagnosticOrigin::Resolver,
                                 DiagnosticKind::DuplicateMember,
-                                span,
+                                member_header_span(member),
                                 format!("Duplicate definition of member `{}`.", member.name),
                             ));
                         }
                     }
-                    let previous = self.enter_object(members.iter().collect());
-                    work.push(Work::EndObject(previous));
-                    work.extend(
-                        members
-                            .iter()
-                            .rev()
-                            .map(|member| Work::Member(member, object)),
-                    );
+                    if let Some(&member) = members.get(index) {
+                        work.push(Work::MembersNext {
+                            members,
+                            index: index + 1,
+                            seen,
+                            object,
+                        });
+                        work.push(Work::Member(member, object));
+                    }
                 }
                 Work::Member(member, object) => {
                     self.diagnostic_owners.enter_member(&member.name);
@@ -561,15 +653,18 @@ impl<'a> Resolver<'a> {
                     }
                     self.validate_member(member, object)?;
                     work.push(Work::EndMember(previous));
-                    work.push(Work::MemberBody(member, object));
                     if let Some(ty) = &member.ty {
                         work.push(Work::Type(ty));
                     }
-                    work.push(Work::Annotations(
-                        &member.annotations,
-                        !object && self.object_levels.len() > 1,
-                        previous,
-                    ));
+                    // AstBuilder visits a property's body before its type AST.
+                    work.push(Work::MemberBody(member, object));
+                    if !(object && self.amending_module && self.object_levels.len() == 1) {
+                        work.push(Work::Annotations(
+                            &member.annotations,
+                            !object && self.object_levels.len() > 1,
+                            previous,
+                        ));
+                    }
                 }
                 Work::MemberBody(member, object) => {
                     if object
@@ -579,17 +674,44 @@ impl<'a> Resolver<'a> {
                         let ExprKind::Function { header_span, .. } = member.expr.kind else {
                             unreachable!()
                         };
+                        let amending = self.amending_module && self.object_levels.len() == 1;
                         let mut error = Diagnostic::language(
                             DiagnosticOrigin::Resolver,
                             DiagnosticKind::Syntax,
                             header_span,
-                            "Method needs a `local` modifier because it is defined in an object, not a class.",
+                            if amending {
+                                "Method needs a `local` modifier."
+                            } else {
+                                "Method needs a `local` modifier because it is defined in an object, not a class."
+                            },
                         );
+                        if amending {
+                            error = error.with_hint("To define a non-local method, extend rather than amend the parent module (which must be `open` for extension).");
+                        }
                         let enclosing = &self.diagnostic_path[..self.diagnostic_path.len() - 1];
                         if !enclosing.is_empty() {
                             error.member =
                                 Some(crate::value::PklString::join(enclosing, ".").into());
                         }
+                        return Err(error);
+                    }
+                    if object
+                        && self.amending_module
+                        && self.object_levels.len() == 1
+                        && let ExprKind::Function {
+                            type_parameters_span: Some(span),
+                            method: true,
+                            ..
+                        } = &member.expr.kind
+                    {
+                        let mut error = Diagnostic::language(
+                            DiagnosticOrigin::Resolver,
+                            DiagnosticKind::Syntax,
+                            **span,
+                            "Only standard library members can have type parameters.",
+                        );
+                        error.member =
+                            Some(crate::value::PklString::join(&self.diagnostic_path, ".").into());
                         return Err(error);
                     }
                     work.push(Work::Expression(&member.expr, true));
@@ -892,24 +1014,16 @@ impl<'a> Resolver<'a> {
                                 }
                                 _ => false,
                             });
-                        if !parameter && self.external_type_names.contains(&path[0]) {
-                            return Err(Diagnostic::unsupported(
-                                DiagnosticOrigin::Resolver,
-                                "session-expression-module-type",
-                                ty.span,
-                                "Module declaration types in session expressions are not implemented.",
-                            ));
-                        }
                         if path.len() > 2 {
-                            return Err(Diagnostic::language(
+                            self.diagnostic_owner_requested = true;
+                            let mut error = Diagnostic::language(
                                 DiagnosticOrigin::Resolver,
                                 DiagnosticKind::Syntax,
                                 ty.span,
-                                format!(
-                                    "Invalid type name `{}`.\n\nA qualified type name consists of a module import name and a type name.\nExample: `importedModule.SomeClass`",
-                                    path.join(".")
-                                ),
-                            ));
+                                format!("Invalid type name `{}`.", path.join(".")),
+                            ).with_hint("A qualified type name consists of a module import name and a type name.\nExample: `importedModule.SomeClass`");
+                            error.member = self.diagnostic_owners.name().map(Into::into);
+                            return Err(error);
                         }
                         if !parameter {
                             let objects = self
@@ -1081,9 +1195,6 @@ impl<'a> Resolver<'a> {
                             self.diagnostic_owners.enter_lambda();
                         }
                         work.push(Work::EndFunction(previous, !method));
-                        // A method body can infer its parent from the return type;
-                        // a lambda body is not an inference context.
-                        work.push(Work::Expression(body, *method));
                         if let Some(ty) = return_type {
                             work.push(Work::Type(ty));
                         }
@@ -1093,6 +1204,11 @@ impl<'a> Resolver<'a> {
                                 .rev()
                                 .filter_map(|parameter| parameter.ty.as_ref().map(Work::Type)),
                         );
+                        // AstBuilder visits the body before parameter/return
+                        // type ASTs (parameter names were checked above).
+                        // Methods infer an untyped new from the return type;
+                        // a lambda body is not an inference context.
+                        work.push(Work::Expression(body, *method));
                     }
                     ExprKind::Let {
                         name,
@@ -1121,6 +1237,7 @@ impl<'a> Resolver<'a> {
                     ExprKind::TypeAlias {
                         type_parameters,
                         ty,
+                        ..
                     } => {
                         let mut seen = std::collections::BTreeSet::new();
                         for parameter in type_parameters {
@@ -1286,7 +1403,7 @@ impl<'a> Resolver<'a> {
                 .iter()
                 .find(|modifier| modifier.kind == kind)
         };
-        if object && has(M::Const) && !has(M::Local) {
+        if object && !is_method(member) && has(M::Const) && !has(M::Local) {
             let Some(const_modifier) = modifier(M::Const) else {
                 return Err(Diagnostic::unsupported(
                     DiagnosticOrigin::Resolver,
@@ -1303,7 +1420,28 @@ impl<'a> Resolver<'a> {
                 "Modifier `const` can only be applied to object members that are also `local`.",
             );
             // AstBuilder rejects this modifier before entering the member scope.
-            error.member = self.diagnostic_owners.enclosing_name().map(Into::into);
+            error.member = self
+                .diagnostic_owners
+                .enclosing_name()
+                .filter(|name| !name.is_empty())
+                .map(Into::into);
+            return Err(error);
+        }
+        if object
+            && self.amending_module
+            && self.object_levels.len() == 1
+            && has(M::Local)
+            && matches!(member.expr.kind, ExprKind::Uninitialized)
+            && let Some(ty) = &member.ty
+        {
+            self.diagnostic_owner_requested = true;
+            let mut error = Diagnostic::language(
+                DiagnosticOrigin::Resolver,
+                DiagnosticKind::Syntax,
+                Span::new(ty.span.end, ty.span.end),
+                "Missing property value.",
+            );
+            error.member = self.diagnostic_owners.name().map(Into::into);
             return Err(error);
         }
         if object
@@ -1693,7 +1831,11 @@ fn resolve_module_inner(
         diagnostic_path: Vec::new(),
         diagnostic_owners: diagnostic_owner::OwnerScopes::new(capture_diagnostic_owner),
         diagnostic_owner_requested: false,
-        external_type_names: Default::default(),
+        amending_module: module
+            .declaration
+            .as_ref()
+            .and_then(|decl| decl.parent.as_ref())
+            .is_some_and(|parent| parent.kind == ModuleParentKind::Amends),
     };
     let validation = (|| {
         if let Some(declaration) = &module.declaration {
@@ -1724,7 +1866,11 @@ fn resolve_module_inner(
             ))?;
             resolver.visit(Work::EndObject(previous))?;
         }
-        resolver.members(&module.members, false)?;
+        if resolver.amending_module {
+            resolver.amending_members(&module.members)?;
+        } else {
+            resolver.members(&module.members, false)?;
+        }
         Ok::<(), Diagnostic>(())
     })();
     let diagnostic_owner_requested = resolver.diagnostic_owner_requested;
@@ -1749,9 +1895,10 @@ fn resolve_module_inner(
 
 /// Resolve a separately parsed expression in a synthetic module scope. The
 /// actual module is the runtime receiver, not this expression's lexical owner.
-/// Original local/import declarations therefore stay invisible to the expression.
+/// Original local/import variables therefore stay invisible to the expression.
+/// Declared types are resolved separately through the actual runtime owner.
 pub(crate) fn resolve_session_expression(
-    module: &Module,
+    _module: &Module,
     text: &str,
     parsed: &crate::parser::ParsedExpression,
 ) -> Result<ResolvedModule, Diagnostic> {
@@ -1772,12 +1919,7 @@ pub(crate) fn resolve_session_expression(
         diagnostic_path: Vec::new(),
         diagnostic_owners: diagnostic_owner::OwnerScopes::new(false),
         diagnostic_owner_requested: false,
-        external_type_names: module
-            .members
-            .iter()
-            .filter(|member| !is_method(member))
-            .map(|member| member.name.clone())
-            .collect(),
+        amending_module: false,
     };
     resolver.enter_object(Vec::new());
     resolver.visit(Work::Expression(&parsed.expression, false))?;

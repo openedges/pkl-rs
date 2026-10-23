@@ -438,7 +438,7 @@ fn is_uri_like(text: &str) -> bool {
             .any(|c| matches!(c, '\n' | '\r' | '\u{85}' | '\u{2028}' | '\u{2029}'))
 }
 
-fn quote_path(text: &str) -> String {
+pub(crate) fn quote_path(text: &str) -> String {
     let mut result = String::new();
     for c in text.chars() {
         if Component::Path.permits(c) {

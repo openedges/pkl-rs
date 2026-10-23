@@ -46,11 +46,17 @@ export function compareLoaderResult(expected,actual){
     stringBoundary:expected.kind==='bytes'?'exact-output-bytes':expectedUnits==null?'java-utf8-serialization-only':'exact-java-utf16-and-java-utf8'};
 }
 const unitBytes=units=>{const bytes=Buffer.alloc(units.length*2);units.forEach((unit,index)=>bytes.writeUInt16BE(unit,index*2));return bytes;};
+export function selectModuleFixtureVerifier(args){
+  if(args.length!==4&&args.length!==5)throw Error('usage: compare-module-loader.mjs OUTPUT WASM_DIR NAPI_BINARY FIXTURE_DIR [VERIFIER]');
+  const allowed=['module_loading_fixtures.py','module_inheritance_fixtures.py','string_subscript_fixtures.py'].map(name=>resolve(root,'tools',name));
+  if(args.length===4)return allowed[0];
+  if(typeof args[4]!=='string'||args[4].length===0||!allowed.includes(resolve(args[4])))throw Error('unregistered module fixture verifier');
+  return resolve(args[4]);
+}
 export async function compareModuleLoader(args){
-  if(args.length!==4)throw Error('usage: compare-module-loader.mjs OUTPUT WASM_DIR NAPI_BINARY FIXTURE_DIR');
-  const [output,wasm,addon,fixtureDir]=args.map(path=>resolve(path));
+  const verifier=selectModuleFixtureVerifier(args);
+  const [output,wasm,addon,fixtureDir]=args.slice(0,4).map(path=>resolve(path));
   await mkdir(output,{recursive:false});
-  const verifier=resolve(root,'tools/module_loading_fixtures.py');
   const command=['python3',verifier,'--fixtures',fixtureDir];
   const checked=spawnSync(command[0],command.slice(1),{cwd:root,encoding:null});
   await writeFile(resolve(output,'preflight.stdout.bin'),checked.stdout??Buffer.alloc(0));
@@ -58,7 +64,11 @@ export async function compareModuleLoader(args){
   await writeFile(resolve(output,'preflight.process.json'),json({command,cwd:root,exitCode:checked.status,signal:checked.signal,error:checked.error?.message??null}));
   if(checked.status!==0)throw Error('fixture/oracle verification failed; raw preflight retained');
   const casesPath=resolve(fixtureDir,'cases.json'), data=JSON.parse(await readFile(casesPath));
-  const fixtures=data.cases;
+  // The registered string verifier exports a lossless graph of the original
+  // ordered API calls. Other graph fixture contracts keep their existing shape.
+  const stringSelection=verifier===resolve(root,'tools/string_subscript_fixtures.py')
+    ?JSON.parse(checked.stdout.toString('utf8')):null;
+  const fixtures=stringSelection?.graphFixtures??data.cases;
   if(!Array.isArray(fixtures)||!fixtures.length||fixtures.some(f=>! /^[a-z0-9-]+$/.test(f.id))||new Set(fixtures.map(f=>f.id)).size!==fixtures.length)throw Error('invalid fixture order/identities');
   const require=createRequire(resolve(root,'tools/platform/package.json'));
   const {chromium}=require('playwright');
@@ -77,6 +87,9 @@ export async function compareModuleLoader(args){
   for(const name of ['compare-module-loader.mjs','module-loader-session.mjs'])await writeFile(resolve(output,name),await readFile(resolve(dirname(script),name)));
   const report={schema:1,scope:'Two fresh shared SourceSessions per exact Java-backed module graph on actual Node/Chromium. Raw output/diagnostics, UTF16 when captured, callbacks, logs and typed request counts are separate comparisons. API observations are not native CLI process/files parity.',
     argv:process.argv,cwd:process.cwd(),cases:fixtures.length,repetitions:2,unexecutedBoundaryControls:data.unexecutedBoundaryControls,
+    ...(stringSelection?{orderedApiCallsPerSession:stringSelection.caseCount,
+      oracleApiEvaluations:stringSelection.actualJavaEvaluations,
+      selectionBoundary:stringSelection.scope}:{}),
     excludedProducerMetadata:{javaErrorClass:'JVM class names are retained in expected/origin records; raw diagnostic strings and API status kinds are compared. Shared phase/disposition are implementation metadata, not Java producer-phase equality.'},
     node:process.version,nodeExecutable:process.execPath,nodeExecutableSha256:hash(await readFile(process.execPath)),
     playwright,playwrightCore,playwrightPin:pin,artifactAndInputHashes:hashes,targets:{},infrastructureErrors:[],browserErrors:[]};

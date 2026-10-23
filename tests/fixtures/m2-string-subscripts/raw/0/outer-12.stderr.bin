@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Operator `[]` is not defined for operand types `String` and `String`.
+Left operand : "abcdef"
+Right operand: "0"
+
+1 | ascii["0"]
+    ^^^^^^^^^^
+at  (repl:text)

@@ -511,8 +511,183 @@
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
       "input_sha256": "be3b5aa79eaa7b71d237c280985d27e7d86823f0e260e56610ef3c5dd7add3cb",
       "upstream_case_sha256": "4d17fc3000d2fd57fe4ac1913dacd49058ac5dce586f49a7e228b2fc0a4c0d68"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule2.pkl",
+      "input_sha256": "a697d6162491e046abd1065e201e6f18d54810d9584a7ccbc04cb8535a1fd7ce",
+      "upstream_case_sha256": "8dd3dfa30b576304c279ba080efbdcfe016751de54979028ce5fb11061e824fe"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule3.pkl",
+      "input_sha256": "fa6ea4ae5df4af50114745024562b2f3b153b7239c9f0d6bd96c1295f2acf49a",
+      "upstream_case_sha256": "dec72e4bee3bc9cc2ae22fed77d9dbded804ab5ef54af388ad2fa8ac6971ae63"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule4.pkl",
+      "input_sha256": "98914f29acb3d3bacfb22ad01b99d3f2037b25f3b9d3c024b60cd69b505667b7",
+      "upstream_case_sha256": "12b96ff22b3660fc37b4992402d8ab22289cf6c59d931614aa197aad975fcf35"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule5.pkl",
+      "input_sha256": "e592bc7118c34529bd6d2772b9b4013ae333f3da265537b805ff8e730d02a95a",
+      "upstream_case_sha256": "ed39e674af24808a4de10f4207559be88b12b82b658ccb8ea5026c59110b3379"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule6.pkl",
+      "input_sha256": "e233bdd89a4b1266ba3d308b2421b0b9dca36f46e45547c5a940819ca6acda2a",
+      "upstream_case_sha256": "817f184183effc28ef8e1089b40baf3f8dec7be4155c7f2de335f791f1dffa71"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateFunction.pkl",
+      "input_sha256": "cca92012a574d761fb7fa91c2775baf6aaaf2771aa10992a7753186e18fcba11",
+      "upstream_case_sha256": "fb225f97200bd0b5f70aa3cf095205b4c8d13da7eeb8458f9278c28bab3e511e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty1.pkl",
+      "input_sha256": "e5a7b3491e4a254c7a557d3f5e9f703689b9ce0ee190e71f377e048064614252",
+      "upstream_case_sha256": "62732f93611a016d495d254efaa3a5f59e87143f259a3948331f2a8748e40b6c"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty2.pkl",
+      "input_sha256": "647d1b7b77bc8869d54238f092bdc4e5260f0f3ce866c9dda51f61e9f298636e",
+      "upstream_case_sha256": "96c8ef026b23f0a528e78a34ad3b85129d40a663816878b0e9ea961cee962c2a"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty3.pkl",
+      "input_sha256": "95de81ee412dc94e5a42c4ce0da652ece0bff3eee73bc8b6d999e1cecaf4e483",
+      "upstream_case_sha256": "c4a99fea53c203bc28309208d987611104419598b3ab06ab2d53da0f34d2db5e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/equality.pkl",
+      "input_sha256": "2b68a92ec47e468fa027f384a93a76a87362f3fac3df84bc0cb66097a9ed181d",
+      "upstream_case_sha256": "7fd05128f16eb49a4899823dd6fbb1ea35c490b6097ee69e54f71a5c5a0ba30e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/externalFunction.pkl",
+      "input_sha256": "5b6c65535f03d11550911d0ae14ce8ed22e098b6e3be3949516748c569d553f6",
+      "upstream_case_sha256": "cccf616f22418c4f7a817d75c9fb4a0f9e7d1d69e35e791f5fa10aacc54324d7"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/externalProperty.pkl",
+      "input_sha256": "374f7d90983ae67eb1f56b7c102b66ccd6ddb10cd49220eb2c1f00fb77afd725",
+      "upstream_case_sha256": "ec4ec5de5fc75fb7d52147588661a835e801076e25089e1db8d5b8587d0cc5f9"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces 2.pkl",
+      "input_sha256": "b1bee9e63a114f2152c94ab9cb2508bbba9430be9d84b703982f50a67888673e",
+      "upstream_case_sha256": "4cfd3a6d0b31dc32145252c07be8017f328a0ba492ba96cfceb28024a9426a05"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/functions.pkl",
+      "input_sha256": "ac0d8cc4e27844870e49ec117379e97f19aced896eb5f8fbc05b41f92be5cef0",
+      "upstream_case_sha256": "7002b04d560156c036487fa031bcd67928a806fc17d1161271f659f7df5ca9d6"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend1.pkl",
+      "input_sha256": "da928ebd21571bb7338394b68f896e4d099a9ae18f282e2cc606e6787cfe6495",
+      "upstream_case_sha256": "76c092b987bbe88137b1a3cc5c6f60ed47b9abe3bc7f521934c778a99056cbe7"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend2.pkl",
+      "input_sha256": "5f75db35109169a0e9e0b2db09a4b6a59da43a965eb6fa0b523b2116e667de70",
+      "upstream_case_sha256": "4fe0e141d620f00a768e09042c8ffb2a52aef9556035b0d88b4e186178dbe778"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend3.pkl",
+      "input_sha256": "b3f9c6f98b0f85a66c851120811b0495640ee9f10ab92d714cbaea76216f5b49",
+      "upstream_case_sha256": "b9ff652d6f68c8f3dbf79e36a993200da33fa7065ba15e17e0b70462f05af19a"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend4.pkl",
+      "input_sha256": "3d5556477f26458830c461bd68b1ded5d35ec8df1915f83603401cdfc6907bc0",
+      "upstream_case_sha256": "ebea24cf5438e424fa808fbf923d260a00ce33d342e3bd37b6400d52a699b87b"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend5.pkl",
+      "input_sha256": "abf60e1216883b36c5695f450b4f80aeddb637107d34c15d5501093f825fca6c",
+      "upstream_case_sha256": "c630f7d121a3fb56412e1eb30af6392ccf18f95eea3d97990d84b305f2c5397c"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend6.pkl",
+      "input_sha256": "ff3ce0f4e4156eff51dc5d69600795db9ebfcb37ceb3e7332022aa9e322cd578",
+      "upstream_case_sha256": "838a82cdc8dd250a5555ec92b777ca04d445fc8d2160d520e57661dc593c364c"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidExtend1.pkl",
+      "input_sha256": "1718dda75befa43b2c2f2fa128a09cf68a466d22643adbd5ea00b6c83b850edf",
+      "upstream_case_sha256": "092c2d861bd14577ac7bc226d6d588f6f872243122852851b2fab361193ffef9"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidExtend2.pkl",
+      "input_sha256": "51755fd54065bcdc33fb4b8a8968d8a1bc59d0f646c403851399b75064cb2044",
+      "upstream_case_sha256": "ccfaffee9db404d8bc5803e7075b62f7082129ea33e6439b167ce2e4e67b8e1f"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidExtend3.pkl",
+      "input_sha256": "a27ad0d53135b63d0d25f2ea9423464711f73b16146412381c252998f37cb799",
+      "upstream_case_sha256": "4933b64ca692c4f546fa172506502fc8911b1e4a8b84e097e411bfb96ed8c512"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidModule1.pkl",
+      "input_sha256": "ea97d13465d34c104cb795b8adb4cb9f26c8ee6791f541ed530818734454e21a",
+      "upstream_case_sha256": "a5996b6b7acd6933ccddc54aa2241ceef237214f90206e9a8b7092ac6071dfc3"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/library.pkl",
+      "input_sha256": "7fdf83218029fc0e9a6fc93487b8b6a50520fa5c8db037d03e7622c8f2fce46d",
+      "upstream_case_sha256": "b156050decb8abd19102e0568a64ef58c2e47bb1c2bd556b57667de8bb4a85ab"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/lists.pkl",
+      "input_sha256": "e32d5fa6594f81fb1c0070a469a91abe5926319935445bf6b16cdd5f34a500ab",
+      "upstream_case_sha256": "b4adbdc48b0bff6bc362cb13611bb7828e5a1a18da6688b7d176867bc6eb68fd"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/objects.pkl",
+      "input_sha256": "13812e29958e2f86183f106db94343092fa32dbfb5ac8dc131bf592b21a8e8f0",
+      "upstream_case_sha256": "62517cb472451151ab071aa8d63dfe00cc78beeb0fdafbef2b3fd9e9b54d4fae"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls1.pkl",
+      "input_sha256": "1ec7a4472849742fa150187d3c67c7c4d83e7e573dd40197b8a073eab6c91e96",
+      "upstream_case_sha256": "e5bcffa9ef0cf1394e5d61d03546c0f0ba27adcc2fafa9ae90eaf5b3fb44b08d"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls2.pkl",
+      "input_sha256": "6abc03a52ddb8308490168aaea9bd1535b9c6c73754ba5353ddb48d28e7a0aa9",
+      "upstream_case_sha256": "0ce5450427dab7fb1418f347a0b35069ed9f59dcb3ada3e6b791acc038cafb90"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls3.pkl",
+      "input_sha256": "040bab5975b521ba4e192e2975d2eb3890fabc02bbefbcb5657ab958906c0e9e",
+      "upstream_case_sha256": "9e4408b62e3cbf411524debcc5476e511106eead90960fbb2aad624bb5e009a1"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleMethods1.pkl",
+      "input_sha256": "a19dfdf17b50cbc3438116b605f25c483b3759f0908c30c1e8f1a12315d8f6f6",
+      "upstream_case_sha256": "f7143eeaa50a31bd9ec1fecf59ffb3f53c89470482f8ba0df8b391099f04321c"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties1.pkl",
+      "input_sha256": "8bf1b46f0803828c99583ae10dc1c5a6b0442240941f4932857f5e2f9f66a312",
+      "upstream_case_sha256": "6e454984659e3f7a608534c23cfc55a7550dcda2a5d3f9f61a65ca5ea84ca1fa"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties2.pkl",
+      "input_sha256": "9adcfd0f6e9e16a074e1fb435daff8ab1228e9da915f403690c098815eb1bb45",
+      "upstream_case_sha256": "7b9bd5be964d75922fa721428299018941106579ed4cb460300ca377fd0433ab"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties3.pkl",
+      "input_sha256": "d0dd7cdd56c83f5ab13ad1e373730b6b1c81c0396681d3c4ec3cf3b21696603b",
+      "upstream_case_sha256": "caa8d407c7706479bc1ace846289d83a8b01f7779e5fee0bb3076a8de1f060dd"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語_error.pkl",
+      "input_sha256": "c645d3ebcff6501d9636153a3f5a57a16d70d4825d3aab4f2546d5f5606f34b7",
+      "upstream_case_sha256": "efd83eacf8164069eb9099555214d1a8e8af426d56b56d74aca94688dd4f89a7"
     }
   ],
   "schema_version": 1,
-  "scope": "Reviewed unchanged original module-eval process contracts: Stage39 parser/error72 plus Stage40 output/module/renderer dependency30. Registration makes the actual shared output operation executable, not necessarily compatible; unsupported dependencies and raw mismatches remain failures. Upstream golden files remain provenance only."
+  "scope": "Reviewed unchanged original module-eval process contracts: Stage39 parser/error72, Stage40 output/module/renderer dependency30, and Stage42 remaining35 original modules cases (all41 in input/modules). Registration makes the actual shared output operation executable, not necessarily compatible; unsupported dependencies and raw mismatches remain failures. Upstream golden files remain provenance only."
 }

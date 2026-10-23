@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Modifier `hidden` is not applicable to methods.
+
+2 | class C { hidden function f() = 1 }
+              ^^^^^^
+at main#C (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-oracle-01/workspace/class-body-validation-before-duplicate/main.pkl)

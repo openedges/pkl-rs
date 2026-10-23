@@ -1,0 +1,52 @@
+{
+  "oracleReport": "target/m2/stage42-duplicate-members-oracle-01/report.json",
+  "oracleReportSha256": "9730713f033c504d97d40a7e4d49f5e86331a5f6b01de605c3b761403f15e701",
+  "oracleCasesSha256": "4cad1ad11f1008a8e98acce513b63200ea92cb49346b1be5bbd0a069adec4b96",
+  "scope": "Fresh API full-body AST diagnostics. These are evaluated API errors caught by Java helper, not CLI process exits; frontend regression compares exact API body at captured physical URI.",
+  "cases": [
+    {
+      "id": "existing-local-property-header",
+      "sourceSha256": "63fab073fa8ec9b4cadf90e427d42bf23194eef8b5a56559d84691e16f45ed72",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-oracle-01/workspace/existing-local-property-header/main.pkl",
+      "expressions": [
+        "1"
+      ],
+      "oracleDirectory": "target/m2/stage42-duplicate-members-oracle-01/cases/existing-local-property-header",
+      "utf8Sha256": "24ac1881e6fdfa0d9f27e3cc3e75e2d20a6c19e76f1cf045b3a9f2207d08e12c",
+      "utf16BESha256": "2d960f60b3c5b0ebd21309425effd7a5771edb0e6dda01b0cd8884f24c9e748a"
+    },
+    {
+      "id": "method-validation-before-duplicate",
+      "sourceSha256": "35c4112f4f586c71be26442a1aadd718e406fdd521ce3f29753ddac7a6f0a31f",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-oracle-01/workspace/method-validation-before-duplicate/main.pkl",
+      "expressions": [
+        "1"
+      ],
+      "oracleDirectory": "target/m2/stage42-duplicate-members-oracle-01/cases/method-validation-before-duplicate",
+      "utf8Sha256": "37ba625767433e2a7b9edaee47158980aad9ed5f71dd2b5078900754618289d0",
+      "utf16BESha256": "95ebb8794d2e8c6cad83522501e9ad1d3994cc33ba1b194dc0bc73106ddb466c"
+    },
+    {
+      "id": "class-body-validation-before-duplicate",
+      "sourceSha256": "314d2d193faf7b091a04bcf5e9e02dfa02c21e507c603d024ec06ac49061d498",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-oracle-01/workspace/class-body-validation-before-duplicate/main.pkl",
+      "expressions": [
+        "1"
+      ],
+      "oracleDirectory": "target/m2/stage42-duplicate-members-oracle-01/cases/class-body-validation-before-duplicate",
+      "utf8Sha256": "4af80d2ffa888e2f7b2a6916de57573aec78e6742ae510bb5fbd98a36c5fde92",
+      "utf16BESha256": "606c205664952bdd6d128398c838cae488760d428b04f05ff9715a6aa580e236"
+    },
+    {
+      "id": "class-property-before-method-validation",
+      "sourceSha256": "6c3717665a910074c10b82efb72dd07700e5934b1bddb9224e5f1a7ce24b65be",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-oracle-01/workspace/class-property-before-method-validation/main.pkl",
+      "expressions": [
+        "1"
+      ],
+      "oracleDirectory": "target/m2/stage42-duplicate-members-oracle-01/cases/class-property-before-method-validation",
+      "utf8Sha256": "7eddaec792ba524755879e83294db5cb5d930b61727ffd76c619016cc5e55701",
+      "utf16BESha256": "5297bf2bae84815748e8c9c6405da32f77911db0f25e3045b30c8290875a21fa"
+    }
+  ]
+}

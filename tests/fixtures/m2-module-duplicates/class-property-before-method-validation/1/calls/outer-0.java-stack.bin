@@ -1,0 +1,16 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Invalid type name `a.b.C`.
+
+3 | x: a.b.C = 2
+       ^^^^^
+at main#C.x (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-oracle-01/workspace/class-property-before-method-validation/main.pkl)
+
+A qualified type name consists of a module import name and a type name.
+Example: `importedModule.SomeClass`
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at AmendingMembersProbe.evaluate(AmendingMembersProbe.java:36)
+	at AmendingMembersProbe.main(AmendingMembersProbe.java:103)

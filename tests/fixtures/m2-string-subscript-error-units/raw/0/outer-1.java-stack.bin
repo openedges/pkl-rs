@@ -1,0 +1,15 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Operator `[]` is not defined for operand types `String` and `String`.
+Left operand : "abcdef"
+Right operand: "?"
+
+1 | ascii[mixed[0]]
+    ^^^^^^^^^^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at StringSubscriptErrorUnitsProbe.evaluate(StringSubscriptErrorUnitsProbe.java:36)
+	at StringSubscriptErrorUnitsProbe.main(StringSubscriptErrorUnitsProbe.java:103)

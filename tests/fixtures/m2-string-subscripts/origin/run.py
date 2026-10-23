@@ -1,0 +1,30 @@
+"""Actual Java string-subscript API controls, fresh evaluator/JVM per repeat."""
+from pathlib import Path
+import sys,json,hashlib,base64,time
+R=Path.cwd();O=Path(__file__).resolve().parent;sys.path.insert(0,str(R/'tools'));import compat
+sha=lambda b:hashlib.sha256(b).hexdigest()
+def write(p,v):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(v,indent=2,ensure_ascii=False)+'\n')
+origin=R/'target/m2/stage42-module-inheritance-oracle-01/QualifiedTypesProbe.java';helper=O/'StringSubscriptProbe.java';helper.write_bytes(origin.read_bytes().replace(b'public final class QualifiedTypesProbe',b'public final class StringSubscriptProbe'))
+source='ascii = "abcdef"\npair = "\\u{1f600}x"\nmixed = "\\u{d83d}\\u{1f600}\\u{dc00}z"\nempty = ""\n'
+controls=[('ascii-valid','ascii[4]'),('supplementary-first','pair[0]'),('supplementary-second','pair[1]'),('supplementary-end','pair[2]'),('mixed-unpaired-high','mixed[0]'),('mixed-supplementary','mixed[1]'),('mixed-unpaired-low','mixed[2]'),('mixed-tail','mixed[3]'),('negative','ascii[-1]'),('end','ascii[6]'),('empty','empty[0]'),('huge-integer','ascii[9223372036854775807]'),('non-integer','ascii["0"]'),('parenthesized-negative','ascii[(-1)]')]
+work=O/'workspace';work.mkdir();(work/'main.pkl').write_text(source);(work/'callback.txt').write_text('');(work/'plan.tsv').write_text(''.join('eval\t'+base64.b64encode(e.encode()).decode()+'\n' for _,e in controls))
+cases=[dict(id=i,expression=e,source=source,sourceSha256=sha(source.encode()),moduleUri=(work/'main.pkl').as_uri(),callPrefix='outer-'+str(index)) for index,(i,e) in enumerate(controls)];write(O/'cases.json',cases)
+jar=R/'.cache/oracle/pkl-tools-0.32.0.jar';lock=json.loads((R/'oracle.lock.json').read_bytes());assert sha(jar.read_bytes())==lock['artifact']['sha256'];home=O/'identity/home';tmp=O/'identity/tmp';home.mkdir(parents=True);tmp.mkdir(parents=True)
+env={'PATH':'/bin:/usr/bin','HOME':str(home),'TMPDIR':str(tmp),'LANG':'C.UTF-8','LC_ALL':'C.UTF-8','TERM':'dumb','NO_COLOR':'1','TZ':'UTC'}
+base=['/usr/bin/java','-Xms64m','-Xmx512m','-Dfile.encoding=UTF-8','-Dstdout.encoding=UTF-8','-Dstderr.encoding=UTF-8','-Duser.language=en','-Duser.country=US','-Duser.timezone=UTC','-Duser.name=oracle','-Duser.home='+str(home),'-Djava.io.tmpdir='+str(tmp),'-cp',str(O/'classes')+':'+str(jar),'StringSubscriptProbe']
+def capture(name,cmd,cwd,timeout=30):
+ try:r=compat.capture(cmd,cwd,env,timeout,O/'generated')
+ except compat.CaptureTimeout as e:r=e.result
+ m=compat.store_capture(O/name,r);record={'command':cmd,'cwd':str(cwd),'environment':env,'result':m};write(O/(name+'.process.json'),record);return r,record
+r,_=capture('javac',['/usr/bin/javac','-cp',str(jar),'-d',str(O/'classes'),str(helper)],R);assert r['exit_code']==0
+capture('jdk',['/usr/bin/java','-XshowSettings:properties','-version'],R)
+paths=[jar,origin,helper,Path(__file__),O/'cases.json',R/'oracle.lock.json',R/'references.lock',R/'tools/compat.py',*sorted(work.iterdir()),*sorted((O/'classes').glob('*.class'))]
+inputs={str(p):sha(p.read_bytes()) for p in paths};write(O/'inputs-before.json',inputs);baseline=compat.snapshot(work);records=[];observations=[];payloads=[]
+for repeat in (0,1):
+ name='repeats/'+str(repeat);calls=O/name/'calls';r,process=capture(name,base+[str(work),str(calls),'plain'],work);process.update({'repeat':repeat,'moduleUri':cases[0]['moduleUri'],'sourceSha256':sha(source.encode()),'workspaceBefore':baseline,'workspaceAfter':compat.snapshot(work)});write(O/name/'process.json',process);records.append(process)
+ payloads.append({p.name:p.read_bytes() for p in calls.glob('*.bin')})
+ values=[]
+ for c in cases:
+  pre=c['callPrefix'];status=(calls/(pre+'.status.bin')).read_bytes();ch='stdout' if status==b'success\n' else 'stderr';b=(calls/(pre+'.'+ch+'.bin')).read_bytes();u=(calls/(pre+'.'+ch+'.code-units.bin')).read_bytes();values.append({'id':c['id'],'expression':c['expression'],'status':status.decode(),'errorClass':(calls/(pre+'.error-class.bin')).read_text(),'utf8Hex':b.hex(),'utf16BEHex':u.hex(),'text':b.decode(),'rawPrefix':str((calls/pre).relative_to(O))})
+ observations.append({'repeat':repeat,'calls':values,'counters':(calls/'counters.bin').read_text()});print(json.dumps({'repeat':repeat,'exitCode':r['exit_code'],'calls':[(x['id'],x['status'],x['utf16BEHex'] if x['status']=='success\n' else x['text']) for x in values]}),flush=True)
+changes=[p for p,h in inputs.items() if sha(Path(p).read_bytes())!=h];diff=[n for n in payloads[0].keys()|payloads[1].keys() if payloads[0].get(n)!=payloads[1].get(n)];write(O/'inputs-after.json',{p:sha(Path(p).read_bytes()) for p in inputs});report={'scope':'Fourteen focused actual Java evaluateExpressionString string-subscript controls; identical source, ordered calls, one evaluator per fresh JVM/repeat. No CLI substitution or Rust-derived expectations.','caseCount':14,'processCount':2,'evaluationCount':28,'records':records,'observations':observations,'repeatDifferences':diff,'inputChanges':changes,'workspaceUnchanged':compat.snapshot(work)==baseline,'identity':{'jar':str(jar),'jarSha256':sha(jar.read_bytes()),'lockSha256':sha((R/'oracle.lock.json').read_bytes()),'javaExecutableSha256':sha(Path('/usr/bin/java').read_bytes()),'jdkReleaseSha256':sha(Path('/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release').read_bytes()),'jdkRuntimeModulesSha256':sha(Path('/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules').read_bytes()),'helperOrigin':str(origin),'helperOriginSha256':sha(origin.read_bytes()),'helperChange':'Class name only; actual evaluateExpressionString ModuleSource.path main.pkl, original expression, default stack transformer, preconfigured default factories+unused lifeSPI/real unusedLogger, empty envprop.'},'utf16Boundary':'Returned actual Java char sequence retained separately with DataOutput.writeChar; UTF8 getBytes untouched (lone surrogate replacement differs from JS UTF8).'};write(O/'report.json',report);assert not diff and not changes and report['workspaceUnchanged'];print(json.dumps({'reportSha256':sha((O/'report.json').read_bytes())}),flush=True)

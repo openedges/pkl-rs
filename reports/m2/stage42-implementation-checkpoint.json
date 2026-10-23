@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "scope": "Stage42 implementation checkpoint: module-owned class/alias resolution, shared extends/amends, source validation order, string code-point indexing and corrected Reference logical-frame ownership. FullM2 remains in progress.",
+  "baselineVersion": "0.32.0",
+  "implementationBaseCommit": "46342c492c9f76584b8a1a4ff69d297d0fb60386",
+  "fullM2Complete": false,
+  "stage42FinalCloseout": false,
+  "evidenceIndex": {
+    "path": "reports/m2/stage42-implementation-captures.json",
+    "sha256": "acb970176bdc32fd326909488acf2444b08dd5c4ac80e302081fb1651c0a0c2d"
+  },
+  "correctedSourceBinding": {
+    "sourceCount": 5810,
+    "mismatches": [],
+    "validationReportPath": "target/m2/stage42-implementation-validation-01/report.json",
+    "validationReportSha256": "2e50cf9b5e764d35b2b9062a891d2141242ee273fb9504125d330ef8b5cd68d8",
+    "requiredReportPath": "target/m2/stage42-corrected-required-checks-01/report.json",
+    "requiredReportSha256": "9c429888f6b855c60d7889fc80e33fca9252406d233dedbeed31457e80c8eebe",
+    "commandsPassed": 5,
+    "scope": "Exact promoted source/fixture bytes match the isolated corrected local checks. CIworkflow omitted fromcopy; no hostedCI claim."
+  },
+  "preCorrectionFullRegression": {
+    "language": {
+      "selected": 3664,
+      "pass": 3639,
+      "candidateUnsupported": 13,
+      "mismatch": 10,
+      "oracleContractMismatch": 1,
+      "oracleError": 1,
+      "metamorphicPass": 88,
+      "fullGateFailureReasons": 1838
+    },
+    "persistentEvaluator": {
+      "definitions": 167,
+      "sequences": 334,
+      "callsPass": 2782
+    },
+    "reportPath": "target/m2/stage42-full-regression-01/process-report.json",
+    "reportSha256": "abd8fd325112e2c4857bd17d323ee01330ac3880e526c0d534f4644153af58e8",
+    "scope": "Complete pre-correction run, retaining original Reference regression. Not a fresh whole-selection run after correction."
+  },
+  "correctedActualPlatforms": {
+    "reportPath": "target/m2/stage42-owner-corrected-candidate-01/report.json",
+    "reportSha256": "68f6ef8fa473ad71eb67d65bc1e4047f46b47b7a0587a9bf85efd1fbc0a69e4e",
+    "ownerControlsPass": true,
+    "nativeGraphPass": 66,
+    "nativeGraphMismatch": 2,
+    "nativeCallsPass": 188,
+    "nativeCallsMismatch": 4,
+    "sharedPrimitiveResults": 6078,
+    "javaPrimitivePassEach": 6076,
+    "retainedGaps": [
+      "two original string diagnostic UTF16 mismatches",
+      "two primitive regex mismatches",
+      "original trace Java oracle errors"
+    ]
+  },
+  "inventory": {
+    "definitions": 4527,
+    "ready": 3663,
+    "unimplemented": 824,
+    "unmapped": 40,
+    "freshnessExit": 0,
+    "manifestSha256": "2e2d6efaf9c3bdaf7003fb66d99f722033f5b901d6c8d07bb0ecc54b6a2f7210"
+  },
+  "nextRequiredWork": [
+    "Fresh post-correction whole-selection verification and Stage42 final evidence closeout.",
+    "Stage43 canonical UTF16 diagnostics are under separate development and are not part of this implementation.",
+    "All remaining original M2 language requirements, unmapped cases, unsupported features and known compatibility failures."
+  ],
+  "publicationReview": {
+    "path": "reports/m2/stage42-implementation-publication-review.json",
+    "sha256": "38b6990cae864f6c95ecd06111598af66218884acc7c27bbc2e601a2a0bc9dd8",
+    "archivePath": "reports/m2/stage42-implementation-publication-review.tar.gz",
+    "archiveSha256": "76ed7cb352118a11ee56bfd9d6b4c2c0e1d5da22661e629f5b6eee6a5c8802c7",
+    "archiveIntegrityExit": 0,
+    "uniquePayloadFiles": 92880
+  }
+}

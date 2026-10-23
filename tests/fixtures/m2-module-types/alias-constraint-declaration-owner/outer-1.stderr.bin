@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `this > threshold` violated.
+Value: 5
+
+2 | typealias Positive = Int(this > threshold)
+                             ^^^^^^^^^^^^^^^^
+at main#rejected (life:/child)
+
+4 | rejected: child.Positive = 5
+                               ^
+at main#rejected (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-constraint-declaration-owner/main.pkl)
+
+1 | rejected
+    ^^^^^^^^
+at  (repl:text)

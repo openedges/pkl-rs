@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find module import `missing`.
+
+2 | result: child.A<missing.Left, also.Right>? = null
+                    ^^^^^^^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-arguments-before-arity/main.pkl)

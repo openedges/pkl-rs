@@ -1108,32 +1108,6 @@ impl Vm {
                         domain: Box::new(TypeCheck::Any),
                         referent: Box::new(TypeCheck::Any),
                     }
-                } else if object.is_module {
-                    if object.class_definition.is_some() {
-                        return Ok(Value::Class(*id));
-                    }
-                    if let Some(id) = self.heap.find_class(MODULE_ID) {
-                        return Ok(Value::Class(id));
-                    }
-                    let class = self.heap.allocate(Object {
-                        class_definition: Some(Class {
-                            module: None,
-                            id: MODULE_ID,
-                            name: self.program.module_name.clone(),
-                            open: false,
-                            abstract_: false,
-                        }),
-                        members: object.members.clone(),
-                        environment: Environment {
-                            scopes: vec![Scope {
-                                receiver: *id,
-                                owner: *id,
-                            }],
-                            ..Environment::default()
-                        },
-                        ..Object::default()
-                    });
-                    return Ok(Value::Class(class));
                 } else if let Some(class) = collections::typed_class(&self.heap, *id)? {
                     return Ok(Value::Class(
                         self.heap

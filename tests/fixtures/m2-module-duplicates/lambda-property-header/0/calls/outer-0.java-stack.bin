@@ -1,0 +1,13 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Duplicate definition of member `value`.
+
+2 | local value = (y) -> y
+    ^^^^^^^^^^^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header/main.pkl)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at AmendingMembersProbe.evaluate(AmendingMembersProbe.java:36)
+	at AmendingMembersProbe.main(AmendingMembersProbe.java:103)

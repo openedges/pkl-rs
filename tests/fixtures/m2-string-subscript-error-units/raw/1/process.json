@@ -1,0 +1,76 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/identity/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/identity/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+    "StringSubscriptErrorUnitsProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/repeats/1/calls",
+    "plain",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/plan.tsv"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/identity/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/identity/tmp",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "TZ": "UTC"
+  },
+  "result": {
+    "exit_code": 0,
+    "elapsed_ns": 501509375,
+    "sha256": {
+      "stdout": "3533288c1392f0e9a9437f1389652438b6ff3e1adb40f64339c0fad2e280414f",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "timed_out": false,
+    "workspace_changes": {},
+    "files": {}
+  },
+  "repeat": 1,
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+  "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+  "workspaceBefore": {
+    "callback.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e"
+    },
+    "plan.tsv": {
+      "kind": "file",
+      "sha256": "b1f51ed73882c801cea1f7a569ef455322f9c6685ca6c9ff5b1367bca8d68e56"
+    }
+  },
+  "workspaceAfter": {
+    "callback.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e"
+    },
+    "plan.tsv": {
+      "kind": "file",
+      "sha256": "b1f51ed73882c801cea1f7a569ef455322f9c6685ca6c9ff5b1367bca8d68e56"
+    }
+  }
+}

@@ -105,12 +105,18 @@ and renders complete uncolored diagnostics. Native `language_probe`, Node
 development adapters with scalar and selected Reference/type-alias/strict List/Map/Set
 property-path results. SourceSession also compiles expression entries through
 the common frontend and executes them against the actual module receiver;
-module-declared type lookup and the full product expression API remain incomplete.
-Typed module resolve/source Host requests now load imported code into the same
+declared-type recipes resolve against the actual module owner and can suspend
+for typed module Host requests. This type context does not expose lexical imports
+as ordinary value bindings in the synthetic expression scope. The complete
+product expression API remains unfinished.
+Typed module resolve/source Host requests load imported code into the same
 VM and traced heap. Original and resolved URI caches retain distinct behavior,
 including resolve retries, cached source/initialization failures and source
-callback reentry. Imported type resolution, module inheritance, general compound
-rendering and the remaining transport capabilities are still required.
+callback reentry. Imported classes and aliases retain their declaring unit and
+owner. An `extends` module initializes its own class; an `amends` module adopts
+its parent's class through the same Host continuation. Complete recursive-type
+and inheritance behavior, general compound rendering and the remaining transport
+capabilities still require implementation and corpus validation.
 
 Identifier predicates are generated from the pinned Java lexer and JDK.
 The upstream lexer tests UTF-16 code units, so supplementary characters are

@@ -55,6 +55,24 @@ impl PklString {
         }
     }
 
+    /// Select one Java code point, retaining an unmatched surrogate as a unit.
+    pub(crate) fn code_point_at(&self, index: usize) -> Option<Self> {
+        match &self.0 {
+            Repr::Utf8(text) => text
+                .chars()
+                .nth(index)
+                .map(|point| point.to_string().into()),
+            Repr::Utf16(units) => {
+                char::decode_utf16(units.iter().copied())
+                    .nth(index)
+                    .map(|point| match point {
+                        Ok(point) => point.to_string().into(),
+                        Err(point) => Self::from_utf16(vec![point.unpaired_surrogate()]),
+                    })
+            }
+        }
+    }
+
     pub fn is_empty(&self) -> bool {
         match &self.0 {
             Repr::Utf8(text) => text.is_empty(),

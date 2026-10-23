@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Duplicate definition of member `same`.
+
+1 | same = import("life:/child")
+    ^^^^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order/main.pkl)

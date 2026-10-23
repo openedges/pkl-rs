@@ -1,0 +1,114 @@
+[
+  {
+    "id": "ascii-valid",
+    "expression": "ascii[4]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-0"
+  },
+  {
+    "id": "supplementary-first",
+    "expression": "pair[0]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-1"
+  },
+  {
+    "id": "supplementary-second",
+    "expression": "pair[1]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-2"
+  },
+  {
+    "id": "supplementary-end",
+    "expression": "pair[2]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-3"
+  },
+  {
+    "id": "mixed-unpaired-high",
+    "expression": "mixed[0]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-4"
+  },
+  {
+    "id": "mixed-supplementary",
+    "expression": "mixed[1]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-5"
+  },
+  {
+    "id": "mixed-unpaired-low",
+    "expression": "mixed[2]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-6"
+  },
+  {
+    "id": "mixed-tail",
+    "expression": "mixed[3]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-7"
+  },
+  {
+    "id": "negative",
+    "expression": "ascii[-1]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-8"
+  },
+  {
+    "id": "end",
+    "expression": "ascii[6]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-9"
+  },
+  {
+    "id": "empty",
+    "expression": "empty[0]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-10"
+  },
+  {
+    "id": "huge-integer",
+    "expression": "ascii[9223372036854775807]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-11"
+  },
+  {
+    "id": "non-integer",
+    "expression": "ascii[\"0\"]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-12"
+  },
+  {
+    "id": "parenthesized-negative",
+    "expression": "ascii[(-1)]",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "callPrefix": "outer-13"
+  }
+]

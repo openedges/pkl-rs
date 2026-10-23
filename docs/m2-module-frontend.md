@@ -18,8 +18,10 @@ those dependencies and all unexecuted language cases.
 `compatibility/m2-module-eval.json` registers reviewed original upstream case IDs.
 Each entry binds both the input bytes and the complete original corpus case,
 including its arguments, working directory, environment, and resources. The
-registry selects the original 72 frontend error cases and 30 output/loading
-cases. Registration means the comparison can be attempted; it does not mean
+registry selects the original 72 frontend error cases, 30 output/loading
+cases, and 35 additional module cases. Together these include all 41 original
+`input/modules` cases without changing the previous 102 entries. Registration
+means the comparison can be attempted; it does not mean
 the candidate passes or that its original execution prerequisites are fulfilled.
 The JVM-classpath-dependent `basic/import1b` case remains blocked in the original
 corpus. A matching CLI failure cannot satisfy its expected successful outcome.

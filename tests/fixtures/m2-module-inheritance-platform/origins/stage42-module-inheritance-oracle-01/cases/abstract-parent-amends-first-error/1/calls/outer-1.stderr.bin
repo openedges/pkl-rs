@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot instantiate abstract class `parent`.
+
+2 | amends "life:/parent"
+    ^^^^^^^^^^^^^^^^^^^^^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/main.pkl)
+
+Abstract classes cannot be instantiated.
+Instead, instantiate a concrete subclass.

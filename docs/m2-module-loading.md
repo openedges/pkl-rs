@@ -85,8 +85,9 @@ invented native process exit semantics.
 `SourceSession::compile_expressions` adds fixed expression entries using the
 shared parser, resolver and compiler. Each entry has its own `repl:text` source
 and declaration identities, while execution uses the loaded module as receiver
-in the same VM and heap. The synthetic expression scope does not expose the
-module's lexical imports or private declarations. Public methods and closures
+in the same VM and heap. Ordinary value lookup in the synthetic expression
+scope does not expose the module's lexical imports or private declarations.
+Public methods and closures
 keep their original declaration scopes when called through that receiver.
 
 Expression compilation failures are retained as per-entry failures. Starting an
@@ -97,9 +98,33 @@ added. Frontend errors retain the synthetic `repl:text` member identity;
 ordinary runtime expression frames keep their separate root name.
 
 The existing property-path session entry remains available. Fixed expression
-entries do not establish a mutable REPL or the complete embedding API. Resolution
-of module-declared types from these expressions and the full synthetic-URI
-resource/import policy still require implementation and differential checks.
+entries do not establish a mutable REPL or the complete embedding API. The full
+synthetic-URI resource/import policy remains incomplete.
+
+## Declared types and module inheritance
+
+Declared-type recipes retain their compiled unit, source spans and declaration
+context. Resolving a recipe can suspend for a module Host request and resume in
+the same evaluator. Resolved classes and aliases use actual declaring objects;
+their identities, alias environments and pending resolutions participate in heap
+tracing. Generic substitution retains unchanged shared branches instead of
+expanding their type graphs.
+
+Type lookup in an expression session uses its actual module owner. This is
+separate from ordinary value lookup: a module's lexical import can qualify a
+type without becoming a value binding in the synthetic expression. Imported
+local declarations remain private. Class argument-count checks and alias
+argument evaluation follow their separate upstream ordering.
+
+The development engine initializes an `extends` module with its own class and
+an `amends` module with its parent's adopted class. Parent source loading uses
+the existing typed Host continuation and partial primary receiver. Amending
+declaration restrictions retain the upstream AST validation order; abstract
+parent rejection precedes child member validation. Stage42 compares these paths
+against original modules and actual native, Node and Chromium sessions. The
+existing 22 module graphs and three additional inheritance graphs pass on the
+recorded candidate. Complete module inheritance and recursive-type compatibility
+remain subject to the full corpus and lifecycle gates.
 
 ## Verification and remaining scope
 
@@ -111,6 +136,7 @@ provenance and integrity; it does not execute an evaluator:
 
 ```sh
 python3 tools/module_loading_fixtures.py
+python3 tools/module_inheritance_fixtures.py
 cargo test -p pkl-runtime --test m2_module_loading --test m2_module_transport --test m2_module_diagnostics --test m2_session_expressions --locked
 ```
 
@@ -125,8 +151,29 @@ generated files as described in the [module command contract](m2-module-frontend
 Portable output-byte and expression comparisons have their own API boundaries.
 Successful component or fixture checks cannot substitute for those executions.
 
-Module `extends` and `amends`, qualified imported types, complete URI and module
+Complete `extends` and `amends` behavior, recursive declared types, URI and module
 identity semantics, remaining standard modules and external capabilities, and
 the full upstream loading corpus remain unfinished. Constructor/setup errors,
 deadline and post-close outcomes listed by the fixture package remain pending
 comparisons. These are outstanding obligations, not exclusions from M2.
+
+## String indexing and diagnostic payloads
+
+String subscripts select Java code points, retaining an unmatched surrogate as
+one UTF-16 unit. Supplementary pairs are returned together. The shared compiler
+retains the index expression's diagnostic span, including the upstream handling
+of folded negative integer literals. The Java-origin string fixtures compare
+both complete UTF-16 payloads and their Java UTF-8 encoding:
+
+```sh
+python3 tools/string_subscript_fixtures.py
+cargo test -p pkl-runtime --test m2_string_subscripts --locked
+```
+
+Fourteen ordered expressions pass in the recorded native, Node and Chromium
+sessions. Two additional error cases expose a remaining shared diagnostic
+limitation: an unmatched surrogate in an error operand loses its original
+UTF-16 unit even when the Java UTF-8 bytes agree. The separate
+`m2-string-subscript-error-units` fixture keeps those mismatches required. The
+current diagnostic text representation needs lossless payload handling before
+that boundary can pass.

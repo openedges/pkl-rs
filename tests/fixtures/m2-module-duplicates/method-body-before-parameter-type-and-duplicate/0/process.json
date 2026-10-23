@@ -1,0 +1,86 @@
+{
+  "id": "method-body-before-parameter-type-and-duplicate",
+  "repeat": 0,
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-member-body-type-order-oracle-01/identity/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-member-body-type-order-oracle-01/identity/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-member-body-type-order-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+    "AmendingMembersProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-member-body-type-order-oracle-01/workspace/method-body-before-parameter-type-and-duplicate",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-member-body-type-order-oracle-01/cases/method-body-before-parameter-type-and-duplicate/0/calls",
+    "plain"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-member-body-type-order-oracle-01/workspace/method-body-before-parameter-type-and-duplicate",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-member-body-type-order-oracle-01/identity/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-member-body-type-order-oracle-01/identity/tmp",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "TZ": "UTC"
+  },
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-member-body-type-order-oracle-01/workspace/method-body-before-parameter-type-and-duplicate/main.pkl",
+  "sourceSha256": "3f42ee62101de2cfd7e5de6f63cdf857e49893a263bfb2e19957db557f4ee90e",
+  "startedUnixNs": 1792722875505885000,
+  "finishedUnixNs": 1792722876004286000,
+  "result": {
+    "exit_code": 0,
+    "elapsed_ns": 497160083,
+    "sha256": {
+      "stdout": "da0b0f8a646774d499160b6d5c5b9ad52e91f849ee2415f2429253cc321f6dc2",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "timed_out": false,
+    "workspace_changes": {},
+    "files": {}
+  },
+  "workspaceBefore": {
+    "callback.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "3f42ee62101de2cfd7e5de6f63cdf857e49893a263bfb2e19957db557f4ee90e"
+    },
+    "plan.tsv": {
+      "kind": "file",
+      "sha256": "76a1f9f05e22b4221771168a82318cf8d6a001801162079ee2ef3b1b7a8cff41"
+    },
+    "source.pkl": {
+      "kind": "file",
+      "sha256": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+    }
+  },
+  "workspaceAfter": {
+    "callback.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "3f42ee62101de2cfd7e5de6f63cdf857e49893a263bfb2e19957db557f4ee90e"
+    },
+    "plan.tsv": {
+      "kind": "file",
+      "sha256": "76a1f9f05e22b4221771168a82318cf8d6a001801162079ee2ef3b1b7a8cff41"
+    },
+    "source.pkl": {
+      "kind": "file",
+      "sha256": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+    }
+  }
+}

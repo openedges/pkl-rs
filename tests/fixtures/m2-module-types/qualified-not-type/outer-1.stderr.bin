@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected `C` to be a type, but it is not.
+
+2 | result: child.C? = null
+            ^^^^^^^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-not-type/main.pkl)

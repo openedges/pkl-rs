@@ -53,7 +53,40 @@ Stage 40 connects actual module output, PCF continuations and lossless string
 output across the shared engine and bindings.
 Stage 41 adds shared module imports, typed resolve/source Host requests,
 expression sessions and imported diagnostic ownership.
+Stage 42 connects module-owned class/alias types, inheritance and amendments,
+original module validation order, and code-point string indexing.
 These checkpoints do not complete the language milestone.
+
+## Stage 42 implementation checkpoint
+
+The [implementation checkpoint](stage42-implementation-checkpoint.json) and
+[implementation captures](stage42-implementation-captures.json) preserve
+the complete pre-correction language and persistent-evaluator runs, the
+Reference frame correction, corrected native/Node/Chromium observations, five
+required Rust checks, and exact source promotion evidence. All 5,810 source and
+fixture files used by the corrected required checks match the promoted checkout.
+The [independent publication review](stage42-implementation-publication-review.json)
+verifies all 92,880 payload files across four archives.
+The isolated check workspace omits the CI workflow file; these local commands
+do not consume it, and no hosted CI run is claimed.
+
+The pre-correction language run matches 3,639 of 3,664 selected cases, retaining
+13 unsupported cases, ten mismatches, one oracle contract failure and one
+oracle error. All 88 metamorphic relations and 2,782 persistent-evaluator calls
+match. Compared with Stage 41, four original inheritance cases improve to pass;
+the sole prior-pass regression is the Reference constraint frame owner.
+All 3,629 prior cases retain their definitions, inputs and relative order; the
+35 additions follow original inventory positions and yield 30 passes and five
+unsupported cases. Raw cross-run path differences remain recorded.
+
+The corrected implementation preserves the declaring frame's module owner.
+Its focused native and actual Node/Chromium owner controls pass, and all five
+required Rust commands pass. Existing module, inheritance, string and PCF
+controls remain successful. Two string diagnostic cases still lose unmatched
+surrogate units; existing regex mismatches and Java trace errors remain visible.
+The separate Stage 43 workspace is implementing canonical UTF-16 diagnostics.
+These captures do not claim a fresh full-selection run after the owner
+correction, Stage 42 closeout, or M2 completion.
 
 ## Stage 42 development captures
 
@@ -75,10 +108,10 @@ string error cases still lose unmatched surrogate units in diagnostic payloads,
 even when their Java UTF-8 bytes agree. All five required Rust commands pass.
 These component results leave the full language gate open.
 
-Whole-selection and persistent-evaluator regression acquisition is still in
-progress. It has exposed a previous passing Reference constraint diagnostic
+At the time of these historical captures, whole-selection and persistent-evaluator
+regression acquisition was in progress. It exposed a previous passing Reference constraint diagnostic
 whose qualified frame uses the caller's module name instead of `pkl.ref`.
-The captured candidate and raw failures remain unchanged while the owner fix is
+The captured candidate and raw failures remain unchanged. The owner fix was
 verified in a separate source copy. These archives precede that correction and
 do not establish Stage42 closeout or M2 completion.
 

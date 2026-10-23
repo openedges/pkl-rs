@@ -32,16 +32,8 @@ fn file_uri(path: &Path) -> Result<String, ProbeError> {
     let path = path.to_str().ok_or_else(|| {
         ProbeError::Unsupported("module-eval adapter requires a UTF-8 source path".into())
     })?;
-    let mut uri = String::from("file://");
-    for byte in path.bytes() {
-        if byte.is_ascii_alphanumeric() || b"/-._~:".contains(&byte) {
-            uri.push(char::from(byte));
-        } else {
-            use std::fmt::Write;
-            write!(uri, "%{byte:02X}").expect("writing to String cannot fail");
-        }
-    }
-    Ok(uri)
+    pkl_runtime::modules::original_file_uri(path)
+        .map_err(|error| ProbeError::Unsupported(format!("{error:?}")))
 }
 
 fn run(arguments: &[String]) -> Result<i32, ProbeError> {
@@ -112,6 +104,18 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn original_file_uri_preserves_unicode_and_quotes_reserved_path_characters() {
+        assert_eq!(
+            file_uri(Path::new("/tmp/日本語 #?%.pkl")).unwrap(),
+            "file:///tmp/日本語%20%23%3F%25.pkl"
+        );
+        assert_eq!(
+            file_uri(Path::new("/tmp/child%20%25.pkl")).unwrap(),
+            "file:///tmp/child%2520%2525.pkl"
+        );
+    }
+
     #[test]
     fn nonexistent_input_is_an_internal_acquisition_failure_not_unsupported() {
         let path = std::env::temp_dir()

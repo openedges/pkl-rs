@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find type `Missing` in module `child`.
+
+2 | result: child.Missing? = null
+                  ^^^^^^^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-missing-type/main.pkl)

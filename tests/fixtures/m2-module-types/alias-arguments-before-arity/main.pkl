@@ -1,0 +1,2 @@
+import "life:/child" as child
+result: child.A<missing.Left, also.Right>? = null

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Duplicate definition of member `test`.
+
+1 | test = "test" // this is considered the duplicate as ASTGenerator doesn't maintain order between props and classes
+    ^^^^
+at duplicateProperty3 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-original-modules41-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty3.pkl, line 1)

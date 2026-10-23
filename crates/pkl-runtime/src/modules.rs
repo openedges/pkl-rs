@@ -13,6 +13,22 @@ pub struct ModuleIdentity {
     pub resolved_uri: Arc<str>,
 }
 
+/// Construct the original file ModuleKey from an absolute slash-separated path.
+/// This follows `IoUtils.toUri` path quoting: Unicode remains Unicode, while
+/// reserved path characters are escaped. It performs no I/O, normalization, or
+/// canonicalization. A Host's canonical resolved key is a separate identity.
+pub fn original_file_uri(path: &str) -> Result<String, ModuleHostError> {
+    if !path.starts_with('/') {
+        return Err(ModuleHostError::Unsupported(
+            "Original file URI construction requires an absolute slash-separated path.".into(),
+        ));
+    }
+    Ok(format!(
+        "file://{}",
+        crate::host::resources::quote_path(path)
+    ))
+}
+
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ResolvedModule {
     pub original_uri: Arc<str>,

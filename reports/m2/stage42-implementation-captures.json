@@ -1,0 +1,132 @@
+{
+  "archive_integrity_exit": 0,
+  "archives": [
+    {
+      "bytes": 23598605,
+      "path": "reports/m2/stage42-implementation-captures-01.tar.gz",
+      "payload_files": 64857,
+      "sha256": "2f13f4358835b681e63253ec28a6b2bac299173596bdf0cafcc9bdd421a18520",
+      "uncompressed_payload_bytes": 149721403,
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage42-implementation-captures-01.tar.gz"
+        ],
+        "exit_code": 0,
+        "stderr_hex": "",
+        "stdout_hex": "56657269666965642036343835372065766964656e63652066696c65733a207265706f7274732f6d322f737461676534322d696d706c656d656e746174696f6e2d63617074757265732d30312e7461722e677a0a"
+      }
+    },
+    {
+      "bytes": 542951,
+      "path": "reports/m2/stage42-implementation-captures-02.tar.gz",
+      "payload_files": 28,
+      "sha256": "ef25d3d1cd0310a6b80484fd2c9a3775b6eee67dc3d6a02462e945d3c44bed7c",
+      "uncompressed_payload_bytes": 2346148,
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage42-implementation-captures-02.tar.gz"
+        ],
+        "exit_code": 0,
+        "stderr_hex": "",
+        "stdout_hex": "56657269666965642032382065766964656e63652066696c65733a207265706f7274732f6d322f737461676534322d696d706c656d656e746174696f6e2d63617074757265732d30322e7461722e677a0a"
+      }
+    },
+    {
+      "bytes": 59691052,
+      "path": "reports/m2/stage42-implementation-captures-03.tar.gz",
+      "payload_files": 21680,
+      "sha256": "4b9e097a60be84d880ade730887e62f7b6b51d84074feaa6a7f8c56574fdaa71",
+      "uncompressed_payload_bytes": 246526221,
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage42-implementation-captures-03.tar.gz"
+        ],
+        "exit_code": 0,
+        "stderr_hex": "",
+        "stdout_hex": "56657269666965642032313638302065766964656e63652066696c65733a207265706f7274732f6d322f737461676534322d696d706c656d656e746174696f6e2d63617074757265732d30332e7461722e677a0a"
+      }
+    },
+    {
+      "bytes": 3483145,
+      "path": "reports/m2/stage42-implementation-captures-04.tar.gz",
+      "payload_files": 6315,
+      "sha256": "22057ef385eda5cc08319f19b4c80d09df506548bd1a8d5a0216bf5f4fa4893f",
+      "uncompressed_payload_bytes": 18045504,
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage42-implementation-captures-04.tar.gz"
+        ],
+        "exit_code": 0,
+        "stderr_hex": "",
+        "stdout_hex": "566572696669656420363331352065766964656e63652066696c65733a207265706f7274732f6d322f737461676534322d696d706c656d656e746174696f6e2d63617074757265732d30342e7461722e677a0a"
+      }
+    }
+  ],
+  "direct_original_files": [
+    "target/m2/stage42-full-regression-audit-01.stderr.bin",
+    "target/m2/stage42-full-regression-audit-01.stdout.bin",
+    "target/m2/stage42-owner-portable-preparation-01.stderr.log",
+    "target/m2/stage42-owner-portable-preparation-01.stdout.log",
+    "target/m2/stage42-reference-frame-fix-01.seal.stderr.bin",
+    "target/m2/stage42-reference-frame-fix-01.seal.stdout.bin",
+    "target/m2/stage42-implementation-publication-01/publish.py",
+    "target/m2/stage42-implementation-publication-01/selection.json"
+  ],
+  "exact_cache_exclusions_before_traversal": [
+    "target/m2/stage42-class-lifecycle-final-01/build",
+    "target/m2/stage42-owner-corrected-candidate-01/cargo-target",
+    "target/m2/stage42-owner-corrected-candidate-01/workspace/.cache/m1-tools",
+    "target/m2/stage42-owner-corrected-candidate-01/workspace/.cache/oracle/pkl-tools-0.32.0.jar",
+    "target/m2/stage42-owner-corrected-candidate-01/workspace/.git",
+    "target/m2/stage42-owner-corrected-candidate-01/workspace/external/pkl",
+    "target/m2/stage42-owner-corrected-candidate-01/workspace/external/pkl-pantry",
+    "target/m2/stage42-owner-corrected-candidate-01/workspace/target",
+    "target/m2/stage42-owner-corrected-candidate-01/workspace/tools/platform/node_modules",
+    "target/m2/stage42-reference-frame-fix-01/cargo-target"
+  ],
+  "full_m2_complete": false,
+  "historical_inventory_scope": [
+    "The full-wrapper supplemental driver inventory/closure postdate its independent audit, whose original24 payloads remain unchanged.",
+    "Corrected workspace excludes readonly pinned reference/tool/cache aliases as listed in its retained exclusions.json; pins/source identities are bound independently.",
+    "The corrected localcheck workspace omits .github/workflows/ci.yml; localrequiredcommands do not consume it and noCIexecution or wholeconfigequivalence is claimed.",
+    "The independent equivalence count addendum corrects a summary count while preserving originalmaps and report.",
+    "All nested original inventory and closure files in selected roots are included; outerarchive integrity does not repair or relabel historical outcomes."
+  ],
+  "omitted_live_or_managed_roots": [
+    "target/m2/stage43-lossless-diagnostics-implementation-01",
+    "target/m2/stage42-original-modules41-workspace-01"
+  ],
+  "schema": 1,
+  "scope": "Stage42 implementation checkpoint: complete pre-correction selected/lifecycle baseline with retained Reference regression; isolated corrected native/Node/Chromium and requiredRust5 evidence; exact sourcepromotion binding. Stage43 sources not included. FullM2 remains incomplete; corrected fullselection rerun is not claimed.",
+  "source_changes_during_publication": [],
+  "source_roots": [
+    "target/m2/stage42-language-final-01",
+    "target/m2/stage42-class-lifecycle-final-01",
+    "target/m2/stage42-full-regression-01",
+    "target/m2/stage42-full-regression-audit-01",
+    "target/m2/stage42-language-regression-review-01",
+    "target/m2/stage42-reference-frame-fix-01",
+    "target/m2/stage42-constraint-frame-review-01",
+    "target/m2/stage42-owner-corrected-candidate-01",
+    "target/m2/stage42-owner-portable-preparation-01",
+    "target/m2/stage42-owner-portable-baseline-command-01",
+    "target/m2/stage42-owner-portable-baseline-01",
+    "target/m2/stage42-corrected-required-checks-01",
+    "target/m2/stage42-promotion-equivalence-review-01",
+    "target/m2/stage42-promotion-equivalence-review-addendum-01",
+    "target/m2/stage42-owner-fix-promotion-01",
+    "target/m2/stage42-implementation-validation-01"
+  ]
+}

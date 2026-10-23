@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected `notImport` to be a module import, but it is not.
+
+2 | result: notImport.C? = null
+            ^^^^^^^^^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-not-import/main.pkl)

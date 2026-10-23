@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Duplicate definition of member `test`.
+
+3 | class test // duplicate
+    ^^^^^^^^^^
+at duplicateProperty2 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-original-modules41-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty2.pkl, line 3)

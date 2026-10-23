@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Type constraint `key == null` violated.
+Value: "name"
+
+227 | property: String(key == null)?
+                       ^^^^^^^^^^^
+at pkl.ref#Access.property (https://github.com/apple/pkl/blob/0.32.0/stdlib/ref.pkl#L227)
+
+4 | result = new ref.Access { property = "name"; key = "key" }.property
+                                         ^^^^^^
+at reference-stage10-access-invalid#result.property (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/tests/fixtures/m2/reference-stage10-access-invalid.pkl)
+
+4 | result = new ref.Access { property = "name"; key = "key" }.property
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at reference-stage10-access-invalid#result (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/tests/fixtures/m2/reference-stage10-access-invalid.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

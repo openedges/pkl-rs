@@ -28,6 +28,7 @@ enum Mismatch {
         value: Value,
     },
     Constraint {
+        source: Option<Arc<crate::value::RuntimeSource>>,
         span: Span,
         value: Value,
         body_span: Span,
@@ -50,7 +51,7 @@ impl Mismatch {
         Ok(match self {
             Self::InsertedFrame { inner, .. } => inner.diagnostic(heap, module, indent)?,
             Self::Simple { span, ty, value } => TypeDiagnostic::Simple { span: *span, message: type_error_at_width(ty, value, module, heap, 80usize.saturating_sub(indent))?.message },
-            Self::Constraint { span, value, body_span, observations } => TypeDiagnostic::Constraint {
+            Self::Constraint { span, value, body_span, observations, .. } => TypeDiagnostic::Constraint {
                 span: *span, value: render(value, heap, module, 80usize.saturating_sub(indent))?, body_span: *body_span,
                 observations: observations.as_ref().map(|trace| trace.iter().map(|(span, observation)| Ok(PowerAssertionValue {
                     span: *span, value: render(&observation.value, heap, module, 100)?, executions: observation.executions,
@@ -188,6 +189,7 @@ pub(super) struct TypeRun {
     eager: bool,
     constraint_active: bool,
     tracker: Option<Trace>,
+    constraint_source: Option<Arc<crate::value::RuntimeSource>>,
 }
 pub(super) fn environment_roots(environment: &Environment, roots: &mut Vec<Value>) {
     roots.extend(environment.locals.iter().cloned());
@@ -257,6 +259,7 @@ impl TypeRun {
     }
     fn mismatch(&mut self, span: Span, body_span: Span, value: Value) {
         self.outcome = Some(Err(Mismatch::Constraint {
+            source: self.constraint_source.clone(),
             span,
             value,
             body_span,
@@ -269,7 +272,7 @@ impl TypeRun {
 pub(super) fn needs_custom_this(ty: &TypeCheck) -> bool {
     match ty {
         TypeCheck::Shared(node) => node.needs_custom_this(),
-        TypeCheck::Constrained { .. } => true,
+        TypeCheck::Constrained { .. } | TypeCheck::Declared { .. } => true,
         TypeCheck::NamedAlias { expanded, .. }
         | TypeCheck::Nullable(expanded)
         | TypeCheck::Alias(expanded)
@@ -428,6 +431,7 @@ impl Vm {
             eager,
             constraint_active: false,
             tracker: None,
+            constraint_source: None,
         });
         Ok(())
     }
@@ -467,7 +471,22 @@ impl Vm {
         constraint: ConstraintCode,
     ) -> Result<(), RuntimeError> {
         let mut environment = if constraint.module_environment {
-            module_environment(&run.environment)?
+            let mut environment = run.environment.clone();
+            if let Some(unit) = self
+                .program
+                .metadata
+                .get(constraint.block)
+                .and_then(|metadata| metadata.unit)
+                .and_then(|unit| self.program.units.get(unit.0 as usize))
+                && unit.entry != usize::MAX
+                && let Some(module) = self.heap.find_module(unit.id)
+            {
+                environment.scopes = vec![Scope {
+                    receiver: module,
+                    owner: module,
+                }];
+            }
+            module_environment(&environment)?
         } else {
             run.environment.clone()
         };
@@ -541,6 +560,11 @@ impl Vm {
             .filter(|metadata| metadata.constraint_root.is_some())
             .map_or_else(|| run.member.clone(), |metadata| metadata.member.clone());
         run.constraint_active = true;
+        run.constraint_source = self
+            .program
+            .metadata
+            .get(constraint.block)
+            .and_then(|metadata| metadata.source.clone());
         self.frames.last_mut().expect("type frame").type_run = Some(run);
         self.frames.last_mut().expect("type frame").callsite_hidden = true;
         self.frames.push(Frame {
@@ -551,6 +575,7 @@ impl Vm {
             force: None,
             lambda: false,
             type_run: None,
+            type_resolution: None,
             generic_default: None,
             equality_run: None,
             deep_force: None,
@@ -646,6 +671,46 @@ impl Vm {
                     );
                     error.span = Some(diagnostic.span());
                     error.frames = run.frames;
+                    if let Mismatch::Constraint {
+                        source: Some(source),
+                        ..
+                    } = &mismatch
+                    {
+                        // Keep the constraint's source section, but qualify its
+                        // member with the same logical root that supplied
+                        // TypeRun.member. An explicit frame with no source
+                        // belongs to the primary module, even when the active
+                        // value body belongs to another source.
+                        let caller = self.frames.last_mut().expect("type frame");
+                        let owner_source = match error.frames.first() {
+                            Some(frame) => frame.source.as_ref(),
+                            None => self
+                                .program
+                                .metadata
+                                .get(caller.block)
+                                .and_then(|metadata| metadata.source.as_ref()),
+                        };
+                        let module = owner_source
+                            .map_or(&self.program.module_name, |source| &source.module_name);
+                        let source = if &source.module_name == module {
+                            source.clone()
+                        } else {
+                            Arc::new(crate::value::RuntimeSource {
+                                module_name: module.clone(),
+                                ..source.as_ref().clone()
+                            })
+                        };
+                        if let Some(frame) = error.frames.first_mut() {
+                            frame.source = Some(source);
+                        } else {
+                            error.frames.push(RuntimeFrame {
+                                source: Some(source),
+                                span: diagnostic.span(),
+                                member: run.member.clone(),
+                            });
+                        }
+                        caller.callsite_hidden = true;
+                    }
                     if let Mismatch::InsertedFrame { frame, .. } = &mismatch {
                         if error.frames.is_empty() {
                             error.frames.push(RuntimeFrame {
@@ -665,6 +730,32 @@ impl Vm {
                 }
             }
             return Ok(());
+        };
+        let task = if let Task::Check { ty, span } = task {
+            if ty.has_declared() {
+                let environment = run.environment.clone();
+                run.tasks.push(Task::Check {
+                    ty: ty.clone(),
+                    span,
+                });
+                self.frames.last_mut().expect("type frame").type_run = Some(run);
+                let Some(resolved) = self.resolve_runtime_type(&ty, &environment)? else {
+                    return Ok(());
+                };
+                run = self
+                    .frames
+                    .last_mut()
+                    .expect("type frame")
+                    .type_run
+                    .take()
+                    .expect("retained type run");
+                run.tasks.pop();
+                Task::Check { ty: resolved, span }
+            } else {
+                Task::Check { ty, span }
+            }
+        } else {
+            task
         };
         match task {
             Task::PairResult(mut state) => {

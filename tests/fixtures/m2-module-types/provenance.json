@@ -1,0 +1,762 @@
+{
+  "oracleRoot": "target/m2/stage42-qualified-types-oracle-01",
+  "reportSha256": "1cd61fbd886e110efa031fa45a68e4784bf6469fe5e98bc68fa5826bc5de3e04",
+  "closureSha256": "7a4a69819cc96ef423f0f7f90c1665e8220e2683913e56aa1a3644599fe39d29",
+  "cases": [
+    {
+      "id": "qualified-missing-import",
+      "source": "result: missing.C? = null\n",
+      "child": "class C {}\n",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-missing-import",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-missing-import/main.pkl",
+      "childUri": "life:/child",
+      "sourceSha256": "2ae7bad51bd84386806a898c88613ea23326f30270f5ef9df867dff920fc62bd",
+      "childSha256": "8a7eaee3a2ed1ded2f10c111143f7629820f78b4e63210aebe6b9986850db4ac"
+    },
+    {
+      "id": "qualified-not-import",
+      "source": "local notImport = 7\nresult: notImport.C? = null\n",
+      "child": "class C {}\n",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-not-import",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-not-import/main.pkl",
+      "childUri": "life:/child",
+      "sourceSha256": "8cfe96fdf0079faeccb84a7ce67c0f34b2bf82767b923270c9074048280526c9",
+      "childSha256": "8a7eaee3a2ed1ded2f10c111143f7629820f78b4e63210aebe6b9986850db4ac"
+    },
+    {
+      "id": "qualified-missing-type",
+      "source": "import \"life:/child\" as child\nresult: child.Missing? = null\n",
+      "child": "class C {}\n",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-missing-type",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-missing-type/main.pkl",
+      "childUri": "life:/child",
+      "sourceSha256": "5eac3fa371fa8c90f2931a041dfff3c1cf1aa30e5d8285d1576980d25d3b4972",
+      "childSha256": "8a7eaee3a2ed1ded2f10c111143f7629820f78b4e63210aebe6b9986850db4ac"
+    },
+    {
+      "id": "qualified-not-type",
+      "source": "import \"life:/child\" as child\nresult: child.C? = null\n",
+      "child": "C = 7\n",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-not-type",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-not-type/main.pkl",
+      "childUri": "life:/child",
+      "sourceSha256": "67dfe9aa98ee4e62082e81f1aee3d2293acf4b5e8acc58d53f9bb858bdf90686",
+      "childSha256": "20b820d55141dd7cabe2a7db69f894c4d18b82465c482fa98c3e9f8b231433e3"
+    },
+    {
+      "id": "qualified-local-type-hidden",
+      "source": "import \"life:/child\" as child\nresult: child.Hidden? = null\n",
+      "child": "local class Hidden {}\n",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-local-type-hidden",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/qualified-local-type-hidden/main.pkl",
+      "childUri": "life:/child",
+      "sourceSha256": "270c33384aa7ff4575820c8fb4e3156476e10c5a3b61a2aa96163b2b478b142b",
+      "childSha256": "ced8fc1850cf647abb0729738d9a70f2eb2ceb034c0231af2e9ec13d7b1e4365"
+    },
+    {
+      "id": "class-arity-before-arguments",
+      "source": "import \"life:/child\" as child\nresult: child.C<missing.Left, also.Right>? = null\n",
+      "child": "class C {}\n",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/class-arity-before-arguments",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/class-arity-before-arguments/main.pkl",
+      "childUri": "life:/child",
+      "sourceSha256": "f5161e65111916b3e917574bab20cfef09c73f0f159200a6cfcdff3c60efc5b6",
+      "childSha256": "8a7eaee3a2ed1ded2f10c111143f7629820f78b4e63210aebe6b9986850db4ac"
+    },
+    {
+      "id": "alias-arguments-before-arity",
+      "source": "import \"life:/child\" as child\nresult: child.A<missing.Left, also.Right>? = null\n",
+      "child": "typealias A<T> = T\n",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-arguments-before-arity",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-arguments-before-arity/main.pkl",
+      "childUri": "life:/child",
+      "sourceSha256": "70432b5848f3c479ffd91b3e4b3c9b3700ceafda4e56d838c5776386fded3886",
+      "childSha256": "e79c4c634c0a219df8bf9ab463bd652f161ff6a0ff4fef9173117ecc150be858"
+    },
+    {
+      "id": "alias-arguments-left-to-right",
+      "source": "import \"life:/child\" as child\nresult: child.A<first.Missing, second.Missing>? = null\n",
+      "child": "typealias A<X, Y> = Pair<X, Y>\n",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-arguments-left-to-right",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-arguments-left-to-right/main.pkl",
+      "childUri": "life:/child",
+      "sourceSha256": "72c0be23af69c5de75d19832e446c8c03e08ef184e7c21d86f822f84187bcb0d",
+      "childSha256": "e7ed692406a3b2cacea14e8b27b438fd49fc4f84d6e3232045f6eb2ef7f45d41"
+    },
+    {
+      "id": "alias-handle-and-nullable-default",
+      "source": "import \"life:/child\" as child\nhandle = child.Maybe\nresult: child.Maybe<Int>\n",
+      "child": "typealias Maybe<T> = T?\n",
+      "expressions": [
+        "handle",
+        "handle.getClass()",
+        "result",
+        "handle == handle"
+      ],
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-handle-and-nullable-default",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-handle-and-nullable-default/main.pkl",
+      "childUri": "life:/child",
+      "sourceSha256": "897d245a35d9d69ae453679404ca8280d4af95e05b6c3b177c7a71da9f86d8e6",
+      "childSha256": "a879e4e2c3b0ba202d739dbd076a2b7fa20c37c8a014fc68be973513334b4c64"
+    },
+    {
+      "id": "alias-constraint-declaration-owner",
+      "source": "import \"life:/child\" as child\nconst threshold = 0\naccepted: child.Positive = 11\nrejected: child.Positive = 5\n",
+      "child": "const threshold = 10\ntypealias Positive = Int(this > threshold)\n",
+      "expressions": [
+        "accepted",
+        "rejected",
+        "rejected",
+        "accepted"
+      ],
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-constraint-declaration-owner",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-constraint-declaration-owner/main.pkl",
+      "childUri": "life:/child",
+      "sourceSha256": "ad8c2663b5fd80d2aa93faf7e8fbfb0c23ad0ea302e1bd0339165de9d96d5318",
+      "childSha256": "06964d2ec42c2fa3a1de672fe9e7cab881c4a58aa0c4185c097eb36a4ecc9b7d"
+    },
+    {
+      "id": "alias-initialization-failure-retry",
+      "source": "import \"life:/child\" as child\nresult: child.Bad? = null\n",
+      "child": "typealias Bad = missing.C\n",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-initialization-failure-retry",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-initialization-failure-retry/main.pkl",
+      "childUri": "life:/child",
+      "sourceSha256": "295071f27702f05de62c0fa5cbb9f1a264d0afb0fc6c02ae8db44589bd0de517",
+      "childSha256": "9c2cbab836ec5903475d6a47820b89f4805f77096d8dd75be408ef7f94e0923a"
+    },
+    {
+      "id": "alias-class-default-declaring-owner",
+      "source": "import \"life:/child\" as child\nclass Box { x = 99 }\nresult: child.BoxAlias\nsameClass = result.getClass() == child.Box\n",
+      "child": "class Box { x = 6 }\ntypealias BoxAlias = Box\n",
+      "expressions": [
+        "result.x",
+        "sameClass",
+        "result.x"
+      ],
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-class-default-declaring-owner",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-class-default-declaring-owner/main.pkl",
+      "childUri": "life:/child",
+      "sourceSha256": "24ab1b370f89981fbd588c83da320067c9c03bb5d9174d78ca7ae704bae46070",
+      "childSha256": "64481576de35706b7147ea4630df30a9e2ca21e1bf110f0648d36009e1f8e2ff"
+    }
+  ],
+  "files": [
+    {
+      "file": "qualified-missing-import/outer-0.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-import/0/calls/outer-0.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "qualified-missing-import/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-import/0/calls/outer-0.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "qualified-missing-import/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-import/0/calls/outer-0.stderr.bin",
+      "sha256": "98f2e0d2c455143faa42aa4354bb38cd1de74bcba6c497391a4b7f55a2c4881e"
+    },
+    {
+      "file": "qualified-missing-import/outer-0.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-import/0/calls/outer-0.stderr.code-units.bin",
+      "sha256": "b1207cd240946d8150a4e9d92af82f9a4bd294689cf419dbc9f85fe419aecee9"
+    },
+    {
+      "file": "qualified-missing-import/outer-1.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-import/0/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "qualified-missing-import/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-import/0/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "qualified-missing-import/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-import/0/calls/outer-1.stderr.bin",
+      "sha256": "98f2e0d2c455143faa42aa4354bb38cd1de74bcba6c497391a4b7f55a2c4881e"
+    },
+    {
+      "file": "qualified-missing-import/outer-1.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-import/0/calls/outer-1.stderr.code-units.bin",
+      "sha256": "b1207cd240946d8150a4e9d92af82f9a4bd294689cf419dbc9f85fe419aecee9"
+    },
+    {
+      "file": "qualified-not-import/outer-0.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-import/0/calls/outer-0.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "qualified-not-import/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-import/0/calls/outer-0.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "qualified-not-import/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-import/0/calls/outer-0.stderr.bin",
+      "sha256": "96bbab8ce21418621eb4ad8f72b3244c3145dd633dec89aeda673629e9e3d09c"
+    },
+    {
+      "file": "qualified-not-import/outer-0.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-import/0/calls/outer-0.stderr.code-units.bin",
+      "sha256": "b118ffda0b2b47e975a38d35ae543307093866419f0af5f5a57e79242b5b9e43"
+    },
+    {
+      "file": "qualified-not-import/outer-1.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-import/0/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "qualified-not-import/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-import/0/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "qualified-not-import/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-import/0/calls/outer-1.stderr.bin",
+      "sha256": "96bbab8ce21418621eb4ad8f72b3244c3145dd633dec89aeda673629e9e3d09c"
+    },
+    {
+      "file": "qualified-not-import/outer-1.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-import/0/calls/outer-1.stderr.code-units.bin",
+      "sha256": "b118ffda0b2b47e975a38d35ae543307093866419f0af5f5a57e79242b5b9e43"
+    },
+    {
+      "file": "qualified-missing-type/outer-0.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-type/0/calls/outer-0.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "qualified-missing-type/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-type/0/calls/outer-0.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "qualified-missing-type/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-type/0/calls/outer-0.stderr.bin",
+      "sha256": "0214eef111315245d7ac4feb4773740736aff0af67cb6ddac7355acb98e10a99"
+    },
+    {
+      "file": "qualified-missing-type/outer-0.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-type/0/calls/outer-0.stderr.code-units.bin",
+      "sha256": "e49a383d91626582aaa8f1112c82b4593dce6b07bbdd0bfc3582bcb512841af9"
+    },
+    {
+      "file": "qualified-missing-type/outer-1.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-type/0/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "qualified-missing-type/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-type/0/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "qualified-missing-type/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-type/0/calls/outer-1.stderr.bin",
+      "sha256": "0214eef111315245d7ac4feb4773740736aff0af67cb6ddac7355acb98e10a99"
+    },
+    {
+      "file": "qualified-missing-type/outer-1.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-missing-type/0/calls/outer-1.stderr.code-units.bin",
+      "sha256": "e49a383d91626582aaa8f1112c82b4593dce6b07bbdd0bfc3582bcb512841af9"
+    },
+    {
+      "file": "qualified-not-type/outer-0.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-type/0/calls/outer-0.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "qualified-not-type/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-type/0/calls/outer-0.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "qualified-not-type/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-type/0/calls/outer-0.stderr.bin",
+      "sha256": "1745af314d0bcd220f951231e2707b57aafecb5de952cd29f8094bd6845392fa"
+    },
+    {
+      "file": "qualified-not-type/outer-0.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-type/0/calls/outer-0.stderr.code-units.bin",
+      "sha256": "b10b17f823d2cfc985fc3eed45c560c36e3e8f58c430e6a88793778fd863d282"
+    },
+    {
+      "file": "qualified-not-type/outer-1.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-type/0/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "qualified-not-type/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-type/0/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "qualified-not-type/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-type/0/calls/outer-1.stderr.bin",
+      "sha256": "1745af314d0bcd220f951231e2707b57aafecb5de952cd29f8094bd6845392fa"
+    },
+    {
+      "file": "qualified-not-type/outer-1.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-not-type/0/calls/outer-1.stderr.code-units.bin",
+      "sha256": "b10b17f823d2cfc985fc3eed45c560c36e3e8f58c430e6a88793778fd863d282"
+    },
+    {
+      "file": "qualified-local-type-hidden/outer-0.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-local-type-hidden/0/calls/outer-0.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "qualified-local-type-hidden/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-local-type-hidden/0/calls/outer-0.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "qualified-local-type-hidden/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-local-type-hidden/0/calls/outer-0.stderr.bin",
+      "sha256": "3cd502ab2bdd6f16f95bcf54ddb685c1ee2fe46506585bf24fe6e857d71c2d3b"
+    },
+    {
+      "file": "qualified-local-type-hidden/outer-0.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-local-type-hidden/0/calls/outer-0.stderr.code-units.bin",
+      "sha256": "815b6710e038d0dba031892fac078bd5efa497fdf9eb5154bc2206b50976e9ca"
+    },
+    {
+      "file": "qualified-local-type-hidden/outer-1.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-local-type-hidden/0/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "qualified-local-type-hidden/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-local-type-hidden/0/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "qualified-local-type-hidden/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-local-type-hidden/0/calls/outer-1.stderr.bin",
+      "sha256": "3cd502ab2bdd6f16f95bcf54ddb685c1ee2fe46506585bf24fe6e857d71c2d3b"
+    },
+    {
+      "file": "qualified-local-type-hidden/outer-1.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/qualified-local-type-hidden/0/calls/outer-1.stderr.code-units.bin",
+      "sha256": "815b6710e038d0dba031892fac078bd5efa497fdf9eb5154bc2206b50976e9ca"
+    },
+    {
+      "file": "class-arity-before-arguments/outer-0.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/class-arity-before-arguments/0/calls/outer-0.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "class-arity-before-arguments/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/class-arity-before-arguments/0/calls/outer-0.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "class-arity-before-arguments/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/class-arity-before-arguments/0/calls/outer-0.stderr.bin",
+      "sha256": "36f30b7caa04dd6b12bb75dca4ebbaed0ae576dfa6ec1b2e8ce2686af302f76c"
+    },
+    {
+      "file": "class-arity-before-arguments/outer-0.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/class-arity-before-arguments/0/calls/outer-0.stderr.code-units.bin",
+      "sha256": "efad94b3a90da43712de6ae6714bad730a113a11fabf55d1ceae6b5f409983c0"
+    },
+    {
+      "file": "class-arity-before-arguments/outer-1.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/class-arity-before-arguments/0/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "class-arity-before-arguments/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/class-arity-before-arguments/0/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "class-arity-before-arguments/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/class-arity-before-arguments/0/calls/outer-1.stderr.bin",
+      "sha256": "36f30b7caa04dd6b12bb75dca4ebbaed0ae576dfa6ec1b2e8ce2686af302f76c"
+    },
+    {
+      "file": "class-arity-before-arguments/outer-1.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/class-arity-before-arguments/0/calls/outer-1.stderr.code-units.bin",
+      "sha256": "efad94b3a90da43712de6ae6714bad730a113a11fabf55d1ceae6b5f409983c0"
+    },
+    {
+      "file": "alias-arguments-before-arity/outer-0.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-before-arity/0/calls/outer-0.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "alias-arguments-before-arity/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-before-arity/0/calls/outer-0.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-arguments-before-arity/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-before-arity/0/calls/outer-0.stderr.bin",
+      "sha256": "5056ca4fdedd8c8258a8cc13ae59a3abb479849f3292fa422e856ad4aee0ffcc"
+    },
+    {
+      "file": "alias-arguments-before-arity/outer-0.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-before-arity/0/calls/outer-0.stderr.code-units.bin",
+      "sha256": "4d0371ed81b54c2ba52780783d8a10a71edd4cae2bf00ca650703451142af82b"
+    },
+    {
+      "file": "alias-arguments-before-arity/outer-1.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-before-arity/0/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "alias-arguments-before-arity/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-before-arity/0/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-arguments-before-arity/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-before-arity/0/calls/outer-1.stderr.bin",
+      "sha256": "5056ca4fdedd8c8258a8cc13ae59a3abb479849f3292fa422e856ad4aee0ffcc"
+    },
+    {
+      "file": "alias-arguments-before-arity/outer-1.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-before-arity/0/calls/outer-1.stderr.code-units.bin",
+      "sha256": "4d0371ed81b54c2ba52780783d8a10a71edd4cae2bf00ca650703451142af82b"
+    },
+    {
+      "file": "alias-arguments-left-to-right/outer-0.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-left-to-right/0/calls/outer-0.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "alias-arguments-left-to-right/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-left-to-right/0/calls/outer-0.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-arguments-left-to-right/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-left-to-right/0/calls/outer-0.stderr.bin",
+      "sha256": "912cfc5d6860bd6d3a347182a7b067891827d34bd4a7b41f2a4ce4823796578a"
+    },
+    {
+      "file": "alias-arguments-left-to-right/outer-0.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-left-to-right/0/calls/outer-0.stderr.code-units.bin",
+      "sha256": "a6fa03f8b2ca5cbbd5699c85dd5dc25ef14d8d24856cdd06ce7f1762b2301c0e"
+    },
+    {
+      "file": "alias-arguments-left-to-right/outer-1.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-left-to-right/0/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "alias-arguments-left-to-right/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-left-to-right/0/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-arguments-left-to-right/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-left-to-right/0/calls/outer-1.stderr.bin",
+      "sha256": "912cfc5d6860bd6d3a347182a7b067891827d34bd4a7b41f2a4ce4823796578a"
+    },
+    {
+      "file": "alias-arguments-left-to-right/outer-1.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-arguments-left-to-right/0/calls/outer-1.stderr.code-units.bin",
+      "sha256": "a6fa03f8b2ca5cbbd5699c85dd5dc25ef14d8d24856cdd06ce7f1762b2301c0e"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-0.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-0.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-0.stdout.bin",
+      "sha256": "3892ae4e1d7fa5a6f51efd51d7c83db1bd0139ffda3a8257d3636c280b7b6976"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-0.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-0.stdout.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-0.stdout.code-units.bin",
+      "sha256": "91c99ab15e54ed933177c5092da8f330f610cd56d118b6381f2e3c2c29a9e064"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-1.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-1.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-1.stdout.bin",
+      "sha256": "6b9d65546ff382f8137eae317e3e8d9ed12c5324c2a420f48e771a831c837140"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-1.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-1.stdout.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-1.stdout.code-units.bin",
+      "sha256": "5a605d62fd5199a399fe3f532b3c8a4a6db5bab24da7c7f1f1761f14655fdce3"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-2.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-2.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-2.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-2.stdout.bin",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-2.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-2.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-2.stdout.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-2.stdout.code-units.bin",
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-3.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-3.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-3.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-3.stdout.bin",
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-3.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-3.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-handle-and-nullable-default/outer-3.stdout.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-handle-and-nullable-default/0/calls/outer-3.stdout.code-units.bin",
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-0.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-0.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-0.stdout.bin",
+      "sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-0.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-0.stdout.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-0.stdout.code-units.bin",
+      "sha256": "62a3e07d3b00b54b0118ddac457ec750283afde1c39954c03d1fac42cbdab63c"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-1.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-1.stderr.bin",
+      "sha256": "b446e1fde0b390f12b01ed0a009f853b92151775bb9cbc694641bfc6845fe3c9"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-1.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-1.stderr.code-units.bin",
+      "sha256": "62db52937168aacd2425e58f15b18d52f33211a210e535e9814ca69ae5036274"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-2.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-2.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-2.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-2.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-2.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-2.stderr.bin",
+      "sha256": "b446e1fde0b390f12b01ed0a009f853b92151775bb9cbc694641bfc6845fe3c9"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-2.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-2.stderr.code-units.bin",
+      "sha256": "62db52937168aacd2425e58f15b18d52f33211a210e535e9814ca69ae5036274"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-3.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-3.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-3.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-3.stdout.bin",
+      "sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-3.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-3.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-constraint-declaration-owner/outer-3.stdout.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-constraint-declaration-owner/0/calls/outer-3.stdout.code-units.bin",
+      "sha256": "62a3e07d3b00b54b0118ddac457ec750283afde1c39954c03d1fac42cbdab63c"
+    },
+    {
+      "file": "alias-initialization-failure-retry/outer-0.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-initialization-failure-retry/0/calls/outer-0.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "alias-initialization-failure-retry/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-initialization-failure-retry/0/calls/outer-0.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-initialization-failure-retry/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-initialization-failure-retry/0/calls/outer-0.stderr.bin",
+      "sha256": "0bca65469a01b3b2f5a8d1ea86b89c9b233437ad59309535ac68c4e004d41783"
+    },
+    {
+      "file": "alias-initialization-failure-retry/outer-0.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-initialization-failure-retry/0/calls/outer-0.stderr.code-units.bin",
+      "sha256": "5e5dbef76c92f9f5052c677b07bb2cc941a45bb61804a403e169ca7a24141867"
+    },
+    {
+      "file": "alias-initialization-failure-retry/outer-1.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-initialization-failure-retry/0/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "alias-initialization-failure-retry/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-initialization-failure-retry/0/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-initialization-failure-retry/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-initialization-failure-retry/0/calls/outer-1.stderr.bin",
+      "sha256": "0bca65469a01b3b2f5a8d1ea86b89c9b233437ad59309535ac68c4e004d41783"
+    },
+    {
+      "file": "alias-initialization-failure-retry/outer-1.stderr.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-initialization-failure-retry/0/calls/outer-1.stderr.code-units.bin",
+      "sha256": "5e5dbef76c92f9f5052c677b07bb2cc941a45bb61804a403e169ca7a24141867"
+    },
+    {
+      "file": "alias-class-default-declaring-owner/outer-0.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-class-default-declaring-owner/0/calls/outer-0.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "alias-class-default-declaring-owner/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-class-default-declaring-owner/0/calls/outer-0.stdout.bin",
+      "sha256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683"
+    },
+    {
+      "file": "alias-class-default-declaring-owner/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-class-default-declaring-owner/0/calls/outer-0.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-class-default-declaring-owner/outer-0.stdout.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-class-default-declaring-owner/0/calls/outer-0.stdout.code-units.bin",
+      "sha256": "3bf9c81c231cae70b678d3f3038f9f4f6d6b9d7adcf9b378f25919ae53d17686"
+    },
+    {
+      "file": "alias-class-default-declaring-owner/outer-1.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-class-default-declaring-owner/0/calls/outer-1.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "alias-class-default-declaring-owner/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-class-default-declaring-owner/0/calls/outer-1.stdout.bin",
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "file": "alias-class-default-declaring-owner/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-class-default-declaring-owner/0/calls/outer-1.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-class-default-declaring-owner/outer-1.stdout.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-class-default-declaring-owner/0/calls/outer-1.stdout.code-units.bin",
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "file": "alias-class-default-declaring-owner/outer-2.status.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-class-default-declaring-owner/0/calls/outer-2.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "alias-class-default-declaring-owner/outer-2.stdout.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-class-default-declaring-owner/0/calls/outer-2.stdout.bin",
+      "sha256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683"
+    },
+    {
+      "file": "alias-class-default-declaring-owner/outer-2.stderr.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-class-default-declaring-owner/0/calls/outer-2.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "alias-class-default-declaring-owner/outer-2.stdout.code-units.bin",
+      "origin": "target/m2/stage42-qualified-types-oracle-01/cases/alias-class-default-declaring-owner/0/calls/outer-2.stdout.code-units.bin",
+      "sha256": "3bf9c81c231cae70b678d3f3038f9f4f6d6b9d7adcf9b378f25919ae53d17686"
+    }
+  ]
+}

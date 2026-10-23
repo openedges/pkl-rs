@@ -432,6 +432,7 @@ struct PropertyHead {
 
 struct MethodHead {
     type_parameters: Vec<TypeParameter>,
+    type_parameters_span: Option<Box<Span>>,
     parameters: Vec<Parameter>,
     return_type: Option<Type>,
     header_span: Span,
@@ -589,10 +590,14 @@ impl<'a> Parser<'a> {
 
     fn unexpected(&self, expected: Option<&str>) -> Diagnostic {
         let eof = self.token.kind == Kind::Eof;
+        // Pinned Lexer emits STRING_START/STRING_MULTI_START before content.
+        // Our lexer coalesces strings, so grammar errors must recover the
+        // opening-delimiter token rather than display/highlight the full value.
+        let token_span = self.diagnostic_token_span();
         let token = if eof {
             "EOF"
         } else {
-            &self.lexer.source[self.token.span.start..self.token.span.end]
+            &self.lexer.source[token_span.start..token_span.end]
         };
         let message = match expected {
             Some(expected) => format!("Unexpected token `{token}`. Expected `{expected}`."),
@@ -609,7 +614,7 @@ impl<'a> Parser<'a> {
             if synthetic {
                 Span::new(self.previous_end, self.previous_end)
             } else {
-                self.token.span
+                token_span
             },
             message,
         );
@@ -1046,6 +1051,7 @@ impl<'a> Parser<'a> {
             )
         } else if alias {
             let type_parameters = self.type_parameters()?;
+            let header_span = Span::new(start, self.previous_end);
             self.expect('=')?;
             let ty = self.type_expression()?;
             let span = Span::new(start, ty.span.end);
@@ -1054,13 +1060,17 @@ impl<'a> Parser<'a> {
                     kind: ExprKind::TypeAlias {
                         type_parameters,
                         ty,
+                        header_span,
                     },
                     span,
                 },
                 None,
             )
         } else if method {
+            let type_parameters_start = self.token.span.start;
             let type_parameters = self.type_parameters()?;
+            let type_parameters_span = (!type_parameters.is_empty())
+                .then(|| Box::new(Span::new(type_parameters_start, self.previous_end)));
             let parameters = self.parameters()?;
             let return_type = self.type_annotation()?;
             let header_span = Span::new(start, self.previous_end);
@@ -1080,6 +1090,7 @@ impl<'a> Parser<'a> {
                 Expr {
                     kind: ExprKind::Function {
                         type_parameters,
+                        type_parameters_span,
                         header_span,
                         parameters,
                         return_type,
@@ -1916,6 +1927,7 @@ impl<'a> Parser<'a> {
                 Expr {
                     kind: ExprKind::Function {
                         type_parameters: Vec::new(),
+                        type_parameters_span: None,
                         header_span,
                         parameters,
                         return_type: None,
@@ -2234,7 +2246,10 @@ impl<'a> Parser<'a> {
         let (name, name_span) = self.identifier()?;
         self.member_path.push(name.clone().into());
         let (ty, method) = if method {
+            let type_parameters_start = self.token.span.start;
             let type_parameters = self.type_parameters()?;
+            let type_parameters_span = (!type_parameters.is_empty())
+                .then(|| Box::new(Span::new(type_parameters_start, self.previous_end)));
             let parameters = self.parameters()?;
             let return_type = self.type_annotation()?;
             let header_span = Span::new(start, self.previous_end);
@@ -2242,6 +2257,7 @@ impl<'a> Parser<'a> {
                 None,
                 Some(MethodHead {
                     type_parameters,
+                    type_parameters_span,
                     parameters,
                     return_type,
                     header_span,
@@ -2274,6 +2290,7 @@ impl<'a> Parser<'a> {
         let end = expr.span.end;
         if let Some(MethodHead {
             type_parameters,
+            type_parameters_span,
             parameters,
             return_type,
             header_span,
@@ -2282,6 +2299,7 @@ impl<'a> Parser<'a> {
             expr = Expr {
                 kind: ExprKind::Function {
                     type_parameters,
+                    type_parameters_span,
                     parameters,
                     return_type,
                     header_span,

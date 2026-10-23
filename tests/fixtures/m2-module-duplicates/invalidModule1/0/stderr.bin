@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Unexpected token `"`. Expected `identifier`.
+
+1 | module "DoNotQuote"
+           ^
+at invalidModule1 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-original-modules41-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidModule1.pkl, line 1)

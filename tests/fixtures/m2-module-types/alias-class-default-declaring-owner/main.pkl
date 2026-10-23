@@ -1,0 +1,4 @@
+import "life:/child" as child
+class Box { x = 99 }
+result: child.BoxAlias
+sameClass = result.getClass() == child.Box

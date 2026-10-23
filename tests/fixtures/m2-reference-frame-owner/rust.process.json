@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-01/artifacts/language_probe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/tests/fixtures/m2/reference-stage10-access-invalid.pkl",
+    "result"
+  ],
+  "exit_code": 1,
+  "stderr_sha256": "f087dfb663fb45ce103a78485a928e6e2c107a32f31d134486e9783cacb9d673",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "timed_out": false
+}

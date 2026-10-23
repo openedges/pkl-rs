@@ -1408,13 +1408,22 @@ impl Vm {
                         }
                     })?;
             }
-            Instruction::Subscript | Instruction::SuperSubscript => {
+            Instruction::Subscript { .. } | Instruction::SuperSubscript => {
                 let key = self.pop()?;
                 let is_super = matches!(instruction, Instruction::SuperSubscript);
                 let receiver = if is_super {
                     self.scope(0)?.receiver
                 } else {
-                    self.pop()?.as_object()?
+                    let value = self.pop()?;
+                    if let Value::String(text) = &value {
+                        let Instruction::Subscript { key_span } = instruction else {
+                            unreachable!("ordinary subscript instruction")
+                        };
+                        let value = self.subscript_string(text, key, key_span)?;
+                        self.stack.push(value);
+                        return Ok(());
+                    }
+                    value.as_object()?
                 };
                 if self.heap.get(receiver)?.collection_kind == CollectionKind::Set {
                     return Err(RuntimeError::new(

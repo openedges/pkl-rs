@@ -54,7 +54,7 @@ fn multiline_frames_underline_only_the_first_source_line() {
 fn errors_without_language_frames_keep_messages_and_hints() {
     assert_eq!(
         render_error("First line.\nValue: 42", &[], Some("A hint.")),
-        "–– Pkl Error ––\nFirst line.\nValue: 42\n\nA hint.\n"
+        "–– Pkl Error ––\nFirst line.\nValue: 42\n\nA hint."
     );
 }
 

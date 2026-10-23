@@ -1,0 +1,3 @@
+These fixtures retain two additive actual Pkl 0.32.0 `evaluateExpressionString` observations from two fresh JVMs. `cases.json` preserves the source URI, expression order, and raw payload paths.
+
+Compare error strings using `utf16BEFile`; the diagnostic retains actual unpaired Java units. `utf8File` preserves Java UTF8 serialization separately, including `?` for unpaired surrogates. Java UTF8 agreement alone does not establish exact returned error-string agreement. Error payloads contain the complete default API diagnostic and exact source span. JVM error class names are provenance, not Rust producer requirements. These records do not establish CLI, file, or whole-language compatibility.

@@ -31,6 +31,61 @@ pub(super) fn repeat_block(
 }
 
 impl Vm {
+    pub(super) fn subscript_string(
+        &self,
+        text: &PklString,
+        key: Value,
+        key_span: Span,
+    ) -> Result<Value, RuntimeError> {
+        let Value::Int(index) = key else {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                format!(
+                    "Operator `[]` is not defined for operand types `String` and `{}`.\nLeft operand : {}\nRight operand: {}",
+                    crate::diagnostic_values::type_name(
+                        &key,
+                        &self.heap,
+                        &self.program.module_name
+                    )?,
+                    crate::diagnostic_values::render(
+                        &Value::String(text.clone()),
+                        &self.heap,
+                        &self.program.module_name,
+                        80
+                    )?,
+                    crate::diagnostic_values::render(
+                        &key,
+                        &self.heap,
+                        &self.program.module_name,
+                        80
+                    )?,
+                ),
+            ));
+        };
+        if let Some(point) = usize::try_from(index)
+            .ok()
+            .and_then(|i| text.code_point_at(i))
+        {
+            return Ok(Value::String(point));
+        }
+        let last = text.code_point_len() as i64 - 1;
+        Err(RuntimeError::new(
+            ErrorKind::Type,
+            format!(
+                "Character index `{}` is out of range `0`..`{}`.\nString: {}",
+                diagnostic_integer(index),
+                diagnostic_integer(last),
+                crate::diagnostic_values::render(
+                    &Value::String(text.clone()),
+                    &self.heap,
+                    &self.program.module_name,
+                    80
+                )?,
+            ),
+        )
+        .at(key_span))
+    }
+
     pub(super) fn string_repeat_method(&mut self, receiver: Value) {
         let id = self.heap.allocate(Object {
             function: Some(Function {
@@ -147,6 +202,22 @@ impl Vm {
         }
         Ok(())
     }
+}
+
+// Java MessageFormat formats numeric error arguments with grouping separators.
+fn diagnostic_integer(value: i64) -> String {
+    let digits = value.unsigned_abs().to_string();
+    let mut output = String::with_capacity(digits.len() + digits.len() / 3 + 1);
+    if value < 0 {
+        output.push('-');
+    }
+    for (index, digit) in digits.chars().enumerate() {
+        if index != 0 && (digits.len() - index).is_multiple_of(3) {
+            output.push(',');
+        }
+        output.push(digit);
+    }
+    output
 }
 
 pub(super) fn encode_block(

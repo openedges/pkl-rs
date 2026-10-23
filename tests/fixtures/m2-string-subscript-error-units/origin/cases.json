@@ -1,0 +1,18 @@
+[
+  {
+    "id": "mixed-out-of-range",
+    "expression": "mixed[4]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "callPrefix": "outer-0"
+  },
+  {
+    "id": "unpaired-index-type",
+    "expression": "ascii[mixed[0]]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+    "source": "ascii = \"abcdef\"\npair = \"\\u{1f600}x\"\nmixed = \"\\u{d83d}\\u{1f600}\\u{dc00}z\"\nempty = \"\"\n",
+    "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+    "callPrefix": "outer-1"
+  }
+]

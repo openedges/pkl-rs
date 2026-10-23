@@ -205,12 +205,30 @@ fn authored_partial_parse_resolve_and_compile_errors_release_on_small_stack() {
             assert_eq!(error.kind, ErrorKind::Type);
             drop(error);
             drop(resolved);
-            // Compilation rejects inheritance before walking the already accepted tree.
+            // The original inheritance source now compiles. Keep its complete
+            // deep tree and release the resulting program on the same stack.
             let parsed = parse_module(&format!("amends \"mem:base\"\nresult = {deep}\n")).unwrap();
             let resolved = resolve_module(&parsed).unwrap();
             drop(parsed);
-            let error = compile_module(&resolved).unwrap_err();
-            assert_eq!(error.kind, ErrorKind::Unsupported);
+            let program = compile_module(&resolved).unwrap();
+            drop(program);
+            drop(resolved);
+            // A malformed import URI still fails during compilation, after
+            // the completed deep first argument has emitted its instructions.
+            let source =
+                format!("amends \"mem:base\"\nresult = List({deep}, import(\"life:%GG\"))\n");
+            let parsed = parse_module(&source).unwrap();
+            let resolved = resolve_module(&parsed).unwrap();
+            drop(parsed);
+            let error = match compile_module(&resolved) {
+                Err(error) => error,
+                Ok(program) => {
+                    drop(program);
+                    panic!("malformed import URI unexpectedly compiled");
+                }
+            };
+            assert_eq!(error.kind, ErrorKind::Host);
+            assert!(error.span.unwrap().start > source.find(&deep).unwrap() + deep.len());
             drop(error);
             drop(resolved);
         },

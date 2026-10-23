@@ -145,6 +145,7 @@ impl Vm {
             force: None,
             lambda: false,
             type_run: None,
+            type_resolution: None,
             generic_default: None,
             equality_run: None,
             pcf_render: None,

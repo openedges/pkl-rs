@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Character index `9,223,372,036,854,775,807` is out of range `0`..`5`.
+String: "abcdef"
+
+1 | ascii[9223372036854775807]
+          ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at StringSubscriptProbe.evaluate(StringSubscriptProbe.java:36)
+	at StringSubscriptProbe.main(StringSubscriptProbe.java:103)

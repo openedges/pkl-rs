@@ -1,0 +1,36 @@
+{
+  "classification": "Original Java observation and pre-fix candidate failure, copied without transformation.",
+  "module_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/tests/fixtures/m2/reference-stage10-access-invalid.pkl",
+  "module_name": "reference-stage10-access-invalid",
+  "expression": "result",
+  "files": {
+    "input.pkl": {
+      "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-01/cases/reference-stage10-access-invalid/input.pkl",
+      "sha256": "0e08f19985e1900496c53375ece051225a63403976a068803e495b15f9845800"
+    },
+    "java.stderr.bin": {
+      "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-01/cases/reference-stage10-access-invalid/java.stderr.bin",
+      "sha256": "7bdd640a6c29e3807bd187fa8b15013d0ed895db1c77a52257eee032a606612f"
+    },
+    "java.stdout.bin": {
+      "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-01/cases/reference-stage10-access-invalid/java.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "java.outcome.bin": {
+      "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-01/cases/reference-stage10-access-invalid/java.outcome.bin",
+      "sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+    },
+    "java.process.json": {
+      "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-01/cases/reference-stage10-access-invalid/java.process.json",
+      "sha256": "22f9c47bff301c6ace3d8cf466043c04f7bd1f790f8add4c0764d4ffac87f2bb"
+    },
+    "rust.stderr.bin": {
+      "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-01/cases/reference-stage10-access-invalid/rust.stderr.bin",
+      "sha256": "f087dfb663fb45ce103a78485a928e6e2c107a32f31d134486e9783cacb9d673"
+    },
+    "rust.process.json": {
+      "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-01/cases/reference-stage10-access-invalid/rust.process.json",
+      "sha256": "18cd647f2f721ada3493607aa5bec86fad639d1cc300f90226f38992508aba94"
+    }
+  }
+}

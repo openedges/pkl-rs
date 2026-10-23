@@ -1,0 +1,18 @@
+[
+  {
+    "id": "extends-open-parent-values-and-class-identity",
+    "source": "extends \"life:/child\"\nmarker = 9\nchildOnly = 11\n",
+    "child": "open module parent\nmarker = 7\nparentOnly = 3\n",
+    "expressions": [
+      "marker",
+      "parentOnly",
+      "childOnly",
+      "this.getClass() == import(\"life:/child\").getClass()"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/workspace/extends-open-parent-values-and-class-identity",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/workspace/extends-open-parent-values-and-class-identity/main.pkl",
+    "childUri": "life:/child",
+    "sourceSha256": "14dee5002fb67c397feb29f2eb54c471a9d88c6d6d3aa44b05ee745f33247a8f",
+    "childSha256": "0b0896f73e6b77ebf518a067d51ebf7becbb943d7a7562d5b7355130876ecc27"
+  }
+]

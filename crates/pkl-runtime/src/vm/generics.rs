@@ -19,6 +19,10 @@ impl TypeCheck {
         let sub = |ty: &TypeCheck| ty.substituted(environment);
         Ok(match self {
             Shared(_) => self.clone(),
+            Declared { recipe, arguments } => Declared {
+                recipe: *recipe,
+                arguments: arguments.iter().map(sub).collect::<Result<_, _>>()?,
+            },
             Parameter { block, name } => environment
                 .type_arguments
                 .get(&(*block, name.clone()))
@@ -155,6 +159,7 @@ impl TypeCheck {
 }
 
 enum DefaultTask {
+    Stack,
     Visit(TypeCheck),
     Nullable,
     Collection(ObjectId),
@@ -168,6 +173,13 @@ pub(super) struct GenericDefaultRun {
     origin: Option<RuntimeFrame>,
 }
 impl GenericDefaultRun {
+    pub(super) fn stack(ty: TypeCheck, origin: Option<RuntimeFrame>) -> Self {
+        Self {
+            tasks: vec![DefaultTask::Stack, DefaultTask::Visit(ty)],
+            value: None,
+            origin,
+        }
+    }
     pub(super) fn inferred_parent(ty: TypeCheck, origin: Option<RuntimeFrame>) -> Self {
         Self {
             tasks: vec![DefaultTask::InferredParent, DefaultTask::Visit(ty)],
@@ -196,7 +208,8 @@ impl GenericDefaultRun {
         roots.extend(self.value.iter().cloned());
         roots.extend(self.tasks.iter().filter_map(|task| match task {
             DefaultTask::Collection(id) | DefaultTask::Publish(id) => Some(Value::Object(*id)),
-            DefaultTask::Visit(_)
+            DefaultTask::Stack
+            | DefaultTask::Visit(_)
             | DefaultTask::Nullable
             | DefaultTask::Constructor(_, _)
             | DefaultTask::InferredParent => None,
@@ -215,11 +228,58 @@ impl Vm {
             .generic_default
             .take()
             .expect("default run");
-        match run
+        let task = run
             .tasks
             .pop()
-            .ok_or_else(|| invalid("empty default run"))?
-        {
+            .ok_or_else(|| invalid("empty default run"))?;
+        let task = if let DefaultTask::Visit(ty) = task {
+            if ty.has_declared() {
+                let environment = self
+                    .frames
+                    .last()
+                    .expect("default frame")
+                    .environment
+                    .clone();
+                run.tasks.push(DefaultTask::Visit(ty.clone()));
+                self.frames
+                    .last_mut()
+                    .expect("default frame")
+                    .generic_default = Some(run);
+                let Some(resolved) = self.resolve_runtime_type(&ty, &environment)? else {
+                    return Ok(());
+                };
+                run = self
+                    .frames
+                    .last_mut()
+                    .expect("default frame")
+                    .generic_default
+                    .take()
+                    .expect("retained default run");
+                run.tasks.pop();
+                DefaultTask::Visit(resolved)
+            } else {
+                DefaultTask::Visit(ty)
+            }
+        } else {
+            task
+        };
+        match task {
+            DefaultTask::Stack => {
+                let value = run.value.ok_or_else(|| {
+                    let name = self
+                        .frames
+                        .last()
+                        .and_then(|frame| frame.force.as_ref())
+                        .map_or("", |force| force.name.as_ref());
+                    RuntimeError::new(
+                        ErrorKind::MissingMember,
+                        format!("Tried to read property `{name}` but its value is undefined."),
+                    )
+                    .undefined()
+                })?;
+                self.stack.push(value);
+                return Ok(());
+            }
             DefaultTask::InferredParent => {
                 self.stack.push(run.value.ok_or_else(cannot_infer_parent)?);
                 return Ok(());
@@ -403,8 +463,9 @@ impl TypeCheck {
     }
 
     /// Structural metadata children, excluding executable constraint bodies.
-    fn type_children(&self) -> Box<dyn Iterator<Item = &Self> + '_> {
+    pub(super) fn type_children(&self) -> Box<dyn Iterator<Item = &Self> + '_> {
         match self.resolved() {
+            Self::Declared { arguments, .. } => Box::new(arguments.iter()),
             Self::NamedAlias {
                 arguments,
                 expanded,
@@ -512,6 +573,7 @@ struct SharedNode {
     ty: TypeCheck,
     noop: bool,
     needs_custom_this: bool,
+    has_declared: bool,
 }
 impl std::fmt::Debug for SharedTypeCheck {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -525,6 +587,9 @@ impl SharedTypeCheck {
     }
     pub(super) fn noop(&self) -> bool {
         self.node().noop
+    }
+    pub(super) fn has_declared(&self) -> bool {
+        self.node().has_declared
     }
     pub(super) fn needs_custom_this(&self) -> bool {
         self.node().needs_custom_this
@@ -543,6 +608,7 @@ impl Drop for SharedTypeCheck {
                         pending.push(node.ty);
                     }
                 }
+                TypeCheck::Declared { arguments, .. } => pending.extend(arguments),
                 TypeCheck::NamedAlias {
                     arguments,
                     expanded,
@@ -603,10 +669,12 @@ impl TypeCheck {
         }
         let noop = self.noop();
         let needs_custom_this = typecheck::needs_custom_this(&self);
+        let has_declared = self.has_declared();
         Self::Shared(SharedTypeCheck(Some(Arc::new(SharedNode {
             ty: self,
             noop,
             needs_custom_this,
+            has_declared,
         }))))
     }
 }

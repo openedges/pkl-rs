@@ -1,0 +1,3 @@
+import "life:/child" as child
+handle = child.Maybe
+result: child.Maybe<Int>

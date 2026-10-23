@@ -1,0 +1,2 @@
+const threshold = 10
+typealias Positive = Int(this > threshold)

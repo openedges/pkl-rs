@@ -376,8 +376,7 @@ fn nested_module_cancellation_drains_each_owned_operation_and_reclaims_empty_rec
     );
 }
 
-#[test]
-fn failed_compiler_append_keeps_existing_closures_and_later_units_valid() {
+fn failed_append_keeps_existing_closures(bad_source: &str, kind: pkl_runtime::value::ErrorKind) {
     let mut session = session(
         "a=import(\"a.pkl\")\nfirst=a.f(2)\nbad=import(\"bad.pkl\").x\nlast=import(\"b.pkl\").f(3)+a.f(4)\n",
         &["first", "bad", "last"],
@@ -386,9 +385,7 @@ fn failed_compiler_append_keeps_existing_closures_and_later_units_valid() {
         ModuleRequestKind::Resolve { .. } => resolve(request, None),
         ModuleRequestKind::LoadSource { resolved } => {
             if resolved.original_uri.ends_with("bad.pkl") {
-                // The function has already appended code when this unsupported
-                // imported type aborts compilation of the imported unit.
-                source("import \"other.pkl\" as other\nfunction retained(x)=x+9\nx:other.C\n")
+                source(bad_source)
             } else {
                 source("const base=7\nfunction f(x)=base+x\n")
             }
@@ -398,17 +395,61 @@ fn failed_compiler_append_keeps_existing_closures_and_later_units_valid() {
     assert_eq!(settle(&mut session, &mut host).unwrap(), Value::string("9"));
     session.start_path(1, 0, None).unwrap();
     let error = settle(&mut session, &mut host).unwrap_err();
-    assert_eq!(
-        error.kind,
-        pkl_runtime::value::ErrorKind::Unsupported,
-        "{error:?}"
-    );
+    assert_eq!(error.kind, kind, "{error:?}");
     session.collect(&[]);
     session.start_path(2, 0, None).unwrap();
     assert_eq!(
         settle(&mut session, &mut host).unwrap(),
         Value::string("21")
     );
+    session.close();
+    assert_eq!(session.heap_stats().live, 0);
+}
+
+#[test]
+fn imported_type_initialization_failure_keeps_existing_closures_and_later_units_valid() {
+    // This exact Stage41 input now reaches real qualified-type resolution.
+    failed_append_keeps_existing_closures(
+        "import \"other.pkl\" as other\nfunction retained(x)=x+9\nx:other.C\n",
+        pkl_runtime::value::ErrorKind::Type,
+    );
+}
+
+#[test]
+fn failed_compiler_append_keeps_existing_closures_and_later_units_valid() {
+    // URI preparation fails in the later member after the function emitted
+    // code into the shared append-only arenas.
+    failed_append_keeps_existing_closures(
+        "function retained(x)=x+9\nx=import(\"life:%GG\")\n",
+        pkl_runtime::value::ErrorKind::Host,
+    );
+}
+
+#[test]
+fn failed_self_superclass_preserves_the_original_followup_method_error() {
+    // Both complete Java errors and the original source are from the closed
+    // loader-oracle-03 self-class-parent-error graph, including the second call.
+    let mut session = SourceSession::compile_expressions(
+        include_str!("../../../tests/fixtures/m2-module-loading/graphs/self-class-parent-error/primary.pkl"),
+        "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/self-class-parent-error/main.pkl",
+        "main",
+        &["answer".into()],
+        SourceSessionOptions::default(),
+    )
+    .unwrap();
+    for expected in [
+        include_bytes!("../../../tests/fixtures/m2-module-loading/origins/stage41-loader-oracle-03/cases/self-class-parent-error/0/calls/outer-0.stderr.bin").as_slice(),
+        include_bytes!("../../../tests/fixtures/m2-module-loading/origins/stage41-loader-oracle-03/cases/self-class-parent-error/0/calls/outer-1.stderr.bin").as_slice(),
+    ] {
+        session.start_path(0, 0, None).unwrap();
+        let failure = settle(&mut session, &mut |request| match request.kind {
+            ModuleRequestKind::Resolve { .. } => resolve(request, None),
+            ModuleRequestKind::LoadSource { .. } => panic!("primary source already exists"),
+        })
+        .unwrap_err();
+        assert_eq!(session.format_error(failure).as_bytes(), expected);
+        session.collect(&[]);
+    }
     session.close();
     assert_eq!(session.heap_stats().live, 0);
 }
@@ -445,6 +486,31 @@ fn imported_error_keeps_declared_module_and_original_display_source() {
     );
     session.close();
     assert_eq!(session.heap_stats().live, 0);
+}
+
+#[test]
+fn original_unicode_primary_uri_keeps_the_complete_java_output_error() {
+    let uri = pkl_runtime::modules::original_file_uri(
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-original-modules41-workspace-01/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語_error.pkl",
+    )
+    .unwrap();
+    let result = evaluate_module_output_with_host(
+        ModuleSourceInput {
+            text: include_str!(
+                "../../../external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語_error.pkl"
+            ),
+            uri: &uri,
+            inferred_name: "日本語_error",
+        },
+        &ModuleEvalOptions::default(),
+        |_| panic!("this original input has no imports"),
+    );
+    assert_eq!(result.exit_code, 1);
+    assert!(result.stdout.is_empty());
+    assert_eq!(
+        result.stderr,
+        include_bytes!("../../../tests/fixtures/m2-module-uri/original-unicode-error/error.bin")
+    );
 }
 
 #[test]

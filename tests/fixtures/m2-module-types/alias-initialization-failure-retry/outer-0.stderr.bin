@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find module import `missing`.
+
+1 | typealias Bad = missing.C
+                    ^^^^^^^
+at child#Bad (life:/child)
+
+2 | result: child.Bad? = null
+            ^^^^^^^^^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/alias-initialization-failure-retry/main.pkl)

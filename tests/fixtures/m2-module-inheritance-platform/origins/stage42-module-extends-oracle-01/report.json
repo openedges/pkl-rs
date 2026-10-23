@@ -1,0 +1,297 @@
+{
+  "scope": "One fixed fresh pinned Java successful module-extends API graph with four unchanged ordered expressions, two fresh JVMs per source. Fixed complete input set retained; no Rust evaluation or compatibility claim.",
+  "caseCount": 1,
+  "processCount": 2,
+  "records": [
+    {
+      "id": "extends-open-parent-values-and-class-identity",
+      "repeat": 0,
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "AmendingMembersProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/workspace/extends-open-parent-values-and-class-identity",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/cases/extends-open-parent-values-and-class-identity/0/calls",
+        "plain"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/workspace/extends-open-parent-values-and-class-identity",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/workspace/extends-open-parent-values-and-class-identity/main.pkl",
+      "sourceSha256": "14dee5002fb67c397feb29f2eb54c471a9d88c6d6d3aa44b05ee745f33247a8f",
+      "startedUnixNs": 1792721005957335000,
+      "finishedUnixNs": 1792721006623651000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 664895083,
+        "sha256": {
+          "stdout": "acd340c0ca306e73f1e89ba2f6d88ebc9b08e590f412bdb5f54c8edb7e449cf4",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "workspaceBefore": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "14dee5002fb67c397feb29f2eb54c471a9d88c6d6d3aa44b05ee745f33247a8f"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "c433fe8d6509e9e216926deffc36b2f94255dccd305531034865753cdcea3d32"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "0b0896f73e6b77ebf518a067d51ebf7becbb943d7a7562d5b7355130876ecc27"
+        }
+      },
+      "workspaceAfter": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "14dee5002fb67c397feb29f2eb54c471a9d88c6d6d3aa44b05ee745f33247a8f"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "c433fe8d6509e9e216926deffc36b2f94255dccd305531034865753cdcea3d32"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "0b0896f73e6b77ebf518a067d51ebf7becbb943d7a7562d5b7355130876ecc27"
+        }
+      }
+    },
+    {
+      "id": "extends-open-parent-values-and-class-identity",
+      "repeat": 1,
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "AmendingMembersProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/workspace/extends-open-parent-values-and-class-identity",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/cases/extends-open-parent-values-and-class-identity/1/calls",
+        "plain"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/workspace/extends-open-parent-values-and-class-identity",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/workspace/extends-open-parent-values-and-class-identity/main.pkl",
+      "sourceSha256": "14dee5002fb67c397feb29f2eb54c471a9d88c6d6d3aa44b05ee745f33247a8f",
+      "startedUnixNs": 1792721006623976000,
+      "finishedUnixNs": 1792721007180561000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 555049625,
+        "sha256": {
+          "stdout": "acd340c0ca306e73f1e89ba2f6d88ebc9b08e590f412bdb5f54c8edb7e449cf4",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "workspaceBefore": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "14dee5002fb67c397feb29f2eb54c471a9d88c6d6d3aa44b05ee745f33247a8f"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "c433fe8d6509e9e216926deffc36b2f94255dccd305531034865753cdcea3d32"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "0b0896f73e6b77ebf518a067d51ebf7becbb943d7a7562d5b7355130876ecc27"
+        }
+      },
+      "workspaceAfter": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "14dee5002fb67c397feb29f2eb54c471a9d88c6d6d3aa44b05ee745f33247a8f"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "c433fe8d6509e9e216926deffc36b2f94255dccd305531034865753cdcea3d32"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "0b0896f73e6b77ebf518a067d51ebf7becbb943d7a7562d5b7355130876ecc27"
+        }
+      }
+    }
+  ],
+  "observations": [
+    {
+      "id": "extends-open-parent-values-and-class-identity",
+      "repeat": 0,
+      "calls": [
+        {
+          "expression": "marker",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+          "utf16BESha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa",
+          "text": "9",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/cases/extends-open-parent-values-and-class-identity/0/calls/outer-0"
+        },
+        {
+          "expression": "parentOnly",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+          "utf16BESha256": "906c5d2485cae722073a430f4d04fe1767507592cef226629aeadb85a2ec909d",
+          "text": "3",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/cases/extends-open-parent-values-and-class-identity/0/calls/outer-1"
+        },
+        {
+          "expression": "childOnly",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
+          "utf16BESha256": "62a3e07d3b00b54b0118ddac457ec750283afde1c39954c03d1fac42cbdab63c",
+          "text": "11",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/cases/extends-open-parent-values-and-class-identity/0/calls/outer-2"
+        },
+        {
+          "expression": "this.getClass() == import(\"life:/child\").getClass()",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+          "utf16BESha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9",
+          "text": "false",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/cases/extends-open-parent-values-and-class-identity/0/calls/outer-3"
+        }
+      ],
+      "counters": "resolve=1\nsource=1\ncallback=0\n"
+    },
+    {
+      "id": "extends-open-parent-values-and-class-identity",
+      "repeat": 1,
+      "calls": [
+        {
+          "expression": "marker",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+          "utf16BESha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa",
+          "text": "9",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/cases/extends-open-parent-values-and-class-identity/1/calls/outer-0"
+        },
+        {
+          "expression": "parentOnly",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+          "utf16BESha256": "906c5d2485cae722073a430f4d04fe1767507592cef226629aeadb85a2ec909d",
+          "text": "3",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/cases/extends-open-parent-values-and-class-identity/1/calls/outer-1"
+        },
+        {
+          "expression": "childOnly",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
+          "utf16BESha256": "62a3e07d3b00b54b0118ddac457ec750283afde1c39954c03d1fac42cbdab63c",
+          "text": "11",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/cases/extends-open-parent-values-and-class-identity/1/calls/outer-2"
+        },
+        {
+          "expression": "this.getClass() == import(\"life:/child\").getClass()",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+          "utf16BESha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9",
+          "text": "false",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/cases/extends-open-parent-values-and-class-identity/1/calls/outer-3"
+        }
+      ],
+      "counters": "resolve=1\nsource=1\ncallback=0\n"
+    }
+  ],
+  "repeatDifferences": [],
+  "inputHashes": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/AmendingMembersProbe.java": "ecb0475cf2618d82208e61792e6d4ee588cc584ba94dcc6be441db169d5ad565",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/run.py": "349f2fcdb06c525bac5b96446a874dece3deda4d165fa460a3359481e3430572",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/cases.json": "be17e8c442c32bdb94a704f61309d31e76de21208a67d3455b6411952db3ebd8",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/tools/compat.py": "fa40a0daee29eb078c7b9cb814fc3779556ceaacc2634657c96e3f7810aa5edc",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/classes/AmendingMembersProbe$1.class": "70cc215f2eca37354d2263d5c624c2446fd46e423067f7e7a4fa8cde0ae69a98",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/classes/AmendingMembersProbe.class": "7dfea5c3b5f0d6b2073ac84eb728696b55ef708656601c07e65ec24f1cafb6f5",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/classes/AmendingMembersProbe$Key$1.class": "049dc93faa5a4eab6abc298d45c40254c92bc70c9d6ae1ddba96f030ea068f33",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/classes/AmendingMembersProbe$Key.class": "8fc31eaa0e99bbb4c248bfa1ebb7874b572f948d7734c7bb726cdf3e7c3ba2d9",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/workspace/extends-open-parent-values-and-class-identity/main.pkl": "14dee5002fb67c397feb29f2eb54c471a9d88c6d6d3aa44b05ee745f33247a8f",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/workspace/extends-open-parent-values-and-class-identity/callback.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/workspace/extends-open-parent-values-and-class-identity/plan.tsv": "c433fe8d6509e9e216926deffc36b2f94255dccd305531034865753cdcea3d32",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-extends-oracle-01/workspace/extends-open-parent-values-and-class-identity/source.pkl": "0b0896f73e6b77ebf518a067d51ebf7becbb943d7a7562d5b7355130876ecc27"
+  },
+  "inputChanges": [],
+  "sourceArtifactStability": true,
+  "maxConcurrentProcesses": 1,
+  "profile": {
+    "api": "evaluateExpressionString(ModuleSource.path(main.pkl), exact expression)",
+    "moduleCache": "one evaluator retained across calls, fresh evaluator/JVM per repeat",
+    "evaluator": "preconfigured;color=false;emptyenvprop;defaultmodulefactories+lifeSPI;defaultstackframetransformer;real Logger",
+    "helperOrigin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-expression-context-oracle-01/ExpressionContextProbe.java",
+    "helperOriginSha256": "ef1daf278fa74327b836fc343d1ea1a6974ed793ff0122f4c8d3e5c7dbac4790",
+    "helperChange": "Class name only",
+    "utf16": "actual Java chars via DataOutputStream.writeChar, separate untouched UTF8 getBytes payloads"
+  }
+}

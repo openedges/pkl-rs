@@ -22,7 +22,12 @@ class RegistryTests(unittest.TestCase):
         corpus = m2_manifest.load(Path('compatibility/corpus.json'))
         registry = m2_manifest.load(m2_manifest.MODULE_ADAPTERS)
         valid = module.registry_cases(root, corpus, registry)
-        self.assertEqual(len(valid), 102)
+        self.assertEqual(len(valid), 137)
+        module_cases = {case['id'] for case in corpus['cases']
+                        if case['suite'] == 'language-snippet' and case['source']['path'].startswith(
+                            'pkl-core/src/test/files/LanguageSnippetTests/input/modules/')}
+        self.assertEqual(len(module_cases), 41)
+        self.assertTrue(module_cases <= valid.keys())
         selected = [case for case in corpus['cases'] if case['id'] in valid]
         self.assertEqual({case['expected_outcome'] for case in selected}, {'success', 'observe'})
         for change in ('argv', 'environment', 'duplicate', 'source', 'outcome', 'resource'):
@@ -51,9 +56,9 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(case['upstream_case']['execution']['status'], 'blocked')
         self.assertEqual(case['execution'], dict(state='unimplemented', reason=case['upstream_case']['execution']['reason']))
         self.assertIn(case, m2_language.selected_cases(manifest, [module.ADAPTER]))
-        self.assertEqual(manifest['counts']['cases_by_execution'], dict(ready=3628, unimplemented=859, unmapped=40))
+        self.assertEqual(manifest['counts']['cases_by_execution'], dict(ready=3663, unimplemented=824, unmapped=40))
         selected = m2_language.selected_cases(manifest)
-        self.assertEqual(len(selected), 3629)
+        self.assertEqual(len(selected), 3664)
         # Even a forged complete set of passing statuses cannot close this
         # original success obligation while the modulepath fixture is blocked.
         self.assertIn('required case incomplete: ' + identifier,

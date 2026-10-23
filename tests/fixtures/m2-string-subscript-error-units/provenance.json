@@ -1,0 +1,349 @@
+{
+  "schema": 1,
+  "originRoot": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01",
+  "reportSha256": "948d4fe90e7b44eabea00c9980666d4852d8b364bc5fc34dfd8b878ff79e8fa1",
+  "closureSha256": "709fb260761e1b4700fe631791eaf75dcbb73f6e646fbb97a8b8a0c9c8078c8e",
+  "inventorySha256": "2fa7b977644772b7f0de082f1942b81bb4d5c61c41561e81c7cc9deae0e53745",
+  "freshJavaProcesses": 2,
+  "actualEvaluations": 4,
+  "orderedIdCount": 2,
+  "identity": {
+    "jar": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+    "jarSha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "lockSha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "javaExecutableSha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+    "jdkReleaseSha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+    "jdkRuntimeModulesSha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "helperOrigin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/StringSubscriptProbe.java",
+    "helperOriginSha256": "ec4f3895f32439c86488d64768fca98e8c033ab8aeeff3cfb7f5a39f0fafa1c3",
+    "helperChange": "Class name plus external plan-file argument only. Actual unchanged ModuleSource.path/work main.pkl, expressionAPI/source/helperevent logic preserved."
+  },
+  "sourceBoundary": "Original physical ModuleSource.path URI retained in cases.json; exact source bytes copied. Same evaluator for2ordered calls, fresh evaluator/JVM per repeat.",
+  "utf16Boundary": "All UTF16BE files are actual DataOutputStream.writeChar Java returned/error units. Untouched Java UTF8 getBytes channels remain separate; lone surrogates serialize as question marks, so value compatibility requires actual units.",
+  "bindings": [
+    {
+      "path": "main.pkl",
+      "originPath": "workspace-inputs/main.pkl",
+      "sha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+      "bytes": 85
+    },
+    {
+      "path": "origin/report.json",
+      "originPath": "report.json",
+      "sha256": "948d4fe90e7b44eabea00c9980666d4852d8b364bc5fc34dfd8b878ff79e8fa1",
+      "bytes": 14144
+    },
+    {
+      "path": "origin/closure.json",
+      "originPath": "closure.json",
+      "sha256": "709fb260761e1b4700fe631791eaf75dcbb73f6e646fbb97a8b8a0c9c8078c8e",
+      "bytes": 428
+    },
+    {
+      "path": "origin/inventory.json",
+      "originPath": "inventory.json",
+      "sha256": "2fa7b977644772b7f0de082f1942b81bb4d5c61c41561e81c7cc9deae0e53745",
+      "bytes": 11374
+    },
+    {
+      "path": "origin/cases.json",
+      "originPath": "cases.json",
+      "sha256": "363161c5ab6b712c1cb9426d73f28e08f72f789254e22a2d759422620bd8cc7c",
+      "bytes": 895
+    },
+    {
+      "path": "origin/run.py",
+      "originPath": "run.py",
+      "sha256": "ac88aa26a609d4187323c33fe1b0257b363932898e84b7b08494d85765ce4c06",
+      "bytes": 6003
+    },
+    {
+      "path": "origin/StringSubscriptErrorUnitsProbe.java",
+      "originPath": "StringSubscriptErrorUnitsProbe.java",
+      "sha256": "060fdc323c811629ca4906a7ca2653b6232085f34a25808ac0885d3761ef7f9b",
+      "bytes": 7219
+    },
+    {
+      "path": "origin/inputs-before.json",
+      "originPath": "inputs-before.json",
+      "sha256": "d15e7a95ce2b45e9f116f0e60edba45edc56b823fdba9c1f2b2a95f5eb795313",
+      "bytes": 3304
+    },
+    {
+      "path": "origin/inputs-after.json",
+      "originPath": "inputs-after.json",
+      "sha256": "d15e7a95ce2b45e9f116f0e60edba45edc56b823fdba9c1f2b2a95f5eb795313",
+      "bytes": 3304
+    },
+    {
+      "path": "origin/jdk.process.json",
+      "originPath": "jdk.process.json",
+      "sha256": "a349415c07e7efd2fcbfd1ffa74810660edc254d6b35a20028742c2380174b78",
+      "bytes": 896
+    },
+    {
+      "path": "origin/jdk/stdout.bin",
+      "originPath": "jdk/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "origin/jdk/stderr.bin",
+      "originPath": "jdk/stderr.bin",
+      "sha256": "f402ee5832782204e4a644b9c7377bb58d7b6670ab657635d9ed871a4144a28c",
+      "bytes": 2578
+    },
+    {
+      "path": "origin/javac.process.json",
+      "originPath": "javac.process.json",
+      "sha256": "0ed35f83af40d700ce513a908d03db4bd426baec2045fdc11b0860c38199c26b",
+      "bytes": 1219
+    },
+    {
+      "path": "origin/javac/stdout.bin",
+      "originPath": "javac/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "origin/javac/stderr.bin",
+      "originPath": "javac/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "origin/driver.process.json",
+      "originPath": "driver.process.json",
+      "sha256": "caa58d16eb8762571d4ca0cb5fb6f5654bd91cdfbf5936937b4f5012e80db9a3",
+      "bytes": 279
+    },
+    {
+      "path": "origin/driver.stdout.bin",
+      "originPath": "driver.stdout.bin",
+      "sha256": "8961d24ad090477c6f85261abeb270c0cf326456def96787f01d1bd0c1474f36",
+      "bytes": 3541
+    },
+    {
+      "path": "origin/driver.stderr.bin",
+      "originPath": "driver.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/0/process.json",
+      "originPath": "repeats/0/process.json",
+      "sha256": "d994dbd5fc11b09efa9fdbe96fee44a3d54f2f9a3aa51bb07db29c5c757cecd7",
+      "bytes": 3088
+    },
+    {
+      "path": "raw/0/counters.bin",
+      "originPath": "repeats/0/calls/counters.bin",
+      "sha256": "3f7ea81a7f11189119c1154d2f9ef348ad44d04a4ec6610a8dcfe6d0f2dddfd4",
+      "bytes": 30
+    },
+    {
+      "path": "raw/0/event-0.bin",
+      "originPath": "repeats/0/calls/event-0.bin",
+      "sha256": "1a8af62a78b1354c60db120b60e52e641ef46ce009682c8751c91bf6fc48d367",
+      "bytes": 39
+    },
+    {
+      "path": "raw/0/event-1.bin",
+      "originPath": "repeats/0/calls/event-1.bin",
+      "sha256": "61dcdb060db00d7463485577e516341f6e6c121fad2bf6972a4116f8ee409880",
+      "bytes": 39
+    },
+    {
+      "path": "raw/0/outer-0.error-class.bin",
+      "originPath": "repeats/0/calls/outer-0.error-class.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    {
+      "path": "raw/0/outer-0.expression.bin",
+      "originPath": "repeats/0/calls/outer-0.expression.bin",
+      "sha256": "44f7d8b126c61cee0ea7aa79c25934f1f754e43dadefbbcb71fd6072f52db5ba",
+      "bytes": 8
+    },
+    {
+      "path": "raw/0/outer-0.java-stack.bin",
+      "originPath": "repeats/0/calls/outer-0.java-stack.bin",
+      "sha256": "4558a86ff9ac10c1acb6cadc9a9f0febf9b76ac3b2310cd54d6905c50f8e6393",
+      "bytes": 609
+    },
+    {
+      "path": "raw/0/outer-0.status.bin",
+      "originPath": "repeats/0/calls/outer-0.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    {
+      "path": "raw/0/outer-0.stderr.bin",
+      "originPath": "repeats/0/calls/outer-0.stderr.bin",
+      "sha256": "fa3c62c1a56e5844437aaaa38c5f0eb89403ee7690221492798005746bee7e0f",
+      "bytes": 130
+    },
+    {
+      "path": "raw/0/outer-0.stderr.code-units.bin",
+      "originPath": "repeats/0/calls/outer-0.stderr.code-units.bin",
+      "sha256": "bd859f5cc6d22c68fd5e63cd6e16a4097f5ba74b853bcc0de80da468e195f78b",
+      "bytes": 240
+    },
+    {
+      "path": "raw/0/outer-0.stdout.bin",
+      "originPath": "repeats/0/calls/outer-0.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/0/outer-1.error-class.bin",
+      "originPath": "repeats/0/calls/outer-1.error-class.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    {
+      "path": "raw/0/outer-1.expression.bin",
+      "originPath": "repeats/0/calls/outer-1.expression.bin",
+      "sha256": "9fedcfbc6bc7b2f05c8ec130e3ed47e2f709a5b1d254983353118c33fa4fe310",
+      "bytes": 15
+    },
+    {
+      "path": "raw/0/outer-1.java-stack.bin",
+      "originPath": "repeats/0/calls/outer-1.java-stack.bin",
+      "sha256": "7784079273106f5e2f2bb8090c94c414c0b54e402cad055ecee1cf55f8226a8a",
+      "bytes": 673
+    },
+    {
+      "path": "raw/0/outer-1.status.bin",
+      "originPath": "repeats/0/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    {
+      "path": "raw/0/outer-1.stderr.bin",
+      "originPath": "repeats/0/calls/outer-1.stderr.bin",
+      "sha256": "5e73641b3b18c22310bb7dd26e374f0d249cba85d372f87f1903c8e3975e171f",
+      "bytes": 194
+    },
+    {
+      "path": "raw/0/outer-1.stderr.code-units.bin",
+      "originPath": "repeats/0/calls/outer-1.stderr.code-units.bin",
+      "sha256": "46177874d3e83ec5c06d607f483f5ac089310240f984b388b7ee2a30a1f1f091",
+      "bytes": 372
+    },
+    {
+      "path": "raw/0/outer-1.stdout.bin",
+      "originPath": "repeats/0/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/1/process.json",
+      "originPath": "repeats/1/process.json",
+      "sha256": "55a82f2657d82e64671e4c0a211f0728e28bc38f08a5ae2f604a95c06bc3b00f",
+      "bytes": 3088
+    },
+    {
+      "path": "raw/1/counters.bin",
+      "originPath": "repeats/1/calls/counters.bin",
+      "sha256": "3f7ea81a7f11189119c1154d2f9ef348ad44d04a4ec6610a8dcfe6d0f2dddfd4",
+      "bytes": 30
+    },
+    {
+      "path": "raw/1/event-0.bin",
+      "originPath": "repeats/1/calls/event-0.bin",
+      "sha256": "1a8af62a78b1354c60db120b60e52e641ef46ce009682c8751c91bf6fc48d367",
+      "bytes": 39
+    },
+    {
+      "path": "raw/1/event-1.bin",
+      "originPath": "repeats/1/calls/event-1.bin",
+      "sha256": "61dcdb060db00d7463485577e516341f6e6c121fad2bf6972a4116f8ee409880",
+      "bytes": 39
+    },
+    {
+      "path": "raw/1/outer-0.error-class.bin",
+      "originPath": "repeats/1/calls/outer-0.error-class.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    {
+      "path": "raw/1/outer-0.expression.bin",
+      "originPath": "repeats/1/calls/outer-0.expression.bin",
+      "sha256": "44f7d8b126c61cee0ea7aa79c25934f1f754e43dadefbbcb71fd6072f52db5ba",
+      "bytes": 8
+    },
+    {
+      "path": "raw/1/outer-0.java-stack.bin",
+      "originPath": "repeats/1/calls/outer-0.java-stack.bin",
+      "sha256": "4558a86ff9ac10c1acb6cadc9a9f0febf9b76ac3b2310cd54d6905c50f8e6393",
+      "bytes": 609
+    },
+    {
+      "path": "raw/1/outer-0.status.bin",
+      "originPath": "repeats/1/calls/outer-0.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    {
+      "path": "raw/1/outer-0.stderr.bin",
+      "originPath": "repeats/1/calls/outer-0.stderr.bin",
+      "sha256": "fa3c62c1a56e5844437aaaa38c5f0eb89403ee7690221492798005746bee7e0f",
+      "bytes": 130
+    },
+    {
+      "path": "raw/1/outer-0.stderr.code-units.bin",
+      "originPath": "repeats/1/calls/outer-0.stderr.code-units.bin",
+      "sha256": "bd859f5cc6d22c68fd5e63cd6e16a4097f5ba74b853bcc0de80da468e195f78b",
+      "bytes": 240
+    },
+    {
+      "path": "raw/1/outer-0.stdout.bin",
+      "originPath": "repeats/1/calls/outer-0.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/1/outer-1.error-class.bin",
+      "originPath": "repeats/1/calls/outer-1.error-class.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "bytes": 25
+    },
+    {
+      "path": "raw/1/outer-1.expression.bin",
+      "originPath": "repeats/1/calls/outer-1.expression.bin",
+      "sha256": "9fedcfbc6bc7b2f05c8ec130e3ed47e2f709a5b1d254983353118c33fa4fe310",
+      "bytes": 15
+    },
+    {
+      "path": "raw/1/outer-1.java-stack.bin",
+      "originPath": "repeats/1/calls/outer-1.java-stack.bin",
+      "sha256": "7784079273106f5e2f2bb8090c94c414c0b54e402cad055ecee1cf55f8226a8a",
+      "bytes": 673
+    },
+    {
+      "path": "raw/1/outer-1.status.bin",
+      "originPath": "repeats/1/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "bytes": 6
+    },
+    {
+      "path": "raw/1/outer-1.stderr.bin",
+      "originPath": "repeats/1/calls/outer-1.stderr.bin",
+      "sha256": "5e73641b3b18c22310bb7dd26e374f0d249cba85d372f87f1903c8e3975e171f",
+      "bytes": 194
+    },
+    {
+      "path": "raw/1/outer-1.stderr.code-units.bin",
+      "originPath": "repeats/1/calls/outer-1.stderr.code-units.bin",
+      "sha256": "46177874d3e83ec5c06d607f483f5ac089310240f984b388b7ee2a30a1f1f091",
+      "bytes": 372
+    },
+    {
+      "path": "raw/1/outer-1.stdout.bin",
+      "originPath": "repeats/1/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

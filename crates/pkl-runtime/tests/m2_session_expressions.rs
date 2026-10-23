@@ -180,7 +180,14 @@ fn expression_parser_metadata_and_original_path_boundary_are_both_preserved() {
     assert_eq!(utf8(next(&mut path).value.unwrap()), b"9");
     let mut typed = expression_probe("class C {}", &["new C {}"], false);
     typed.start_path(0, 0, None).unwrap();
-    assert_eq!(next(&mut typed).disposition, Some("unsupported"));
+    // Exact unchanged source/expression/URI captured by two fresh pinned Java
+    // Stage42 session-type-boundary-oracle-02 evaluators: UTF8 6e65772043207b7d.
+    let result = next(&mut typed);
+    assert_eq!(result.kind, "value");
+    assert_eq!(
+        result.value.unwrap(),
+        vec![110, 101, 119, 32, 67, 32, 123, 125]
+    );
 }
 
 #[test]

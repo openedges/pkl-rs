@@ -1,0 +1,30 @@
+{
+  "oracleReport": "target/m2/stage42-duplicate-members-kind-oracle-01/report.json",
+  "oracleReportSha256": "0e79ec5710167168c1c4d08067c99521230aab759c475ca7f62fb22a47417b11",
+  "oracleCasesSha256": "777cef72e4eb53a651654dafb937484c75e28229977d8512f47a1b9fc318f78d",
+  "scope": "Fresh API full-body AST diagnostics; caught expression failures are not CLI process failures.",
+  "cases": [
+    {
+      "id": "lambda-property-header",
+      "sourceSha256": "e71ff171c0b2ed32e9d8dbaf42c8d8901a85c948ede3b9b636f0ee119904c12a",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header/main.pkl",
+      "expressions": [
+        "1"
+      ],
+      "oracleDirectory": "target/m2/stage42-duplicate-members-kind-oracle-01/cases/lambda-property-header",
+      "utf8Sha256": "a4e0dbe06b36c15031ea250e5c161d8c4ba15b4e469f46aaa3e5433ec107dd8a",
+      "utf16BESha256": "30b261b9025cec3764b0ec79b5878fb68bb8cab47e0e0a4b80ff516d2820cc96"
+    },
+    {
+      "id": "import-expression-property-order",
+      "sourceSha256": "c8badd6d665d5b09e4a7ddf5e23d6a435c35a32f796b7991178977d05fd0e1c5",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order/main.pkl",
+      "expressions": [
+        "1"
+      ],
+      "oracleDirectory": "target/m2/stage42-duplicate-members-kind-oracle-01/cases/import-expression-property-order",
+      "utf8Sha256": "e848fb8b0acf151468bb639d944153be9a202b85b8ee771dcc2ee15f4d07c129",
+      "utf16BESha256": "538e7a4a267aff14599696199c4fe3f6d81dd83b4dc7c4889846eb8f40f8b678"
+    }
+  ]
+}

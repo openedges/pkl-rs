@@ -1,0 +1,35 @@
+[
+  {
+    "id": "abstract-parent-amends-first-error",
+    "source": "@Deprecated { when(throw(\"child-annotation\")) { message=\"x\" } }\namends \"life:/parent\"\nmissing = throw(\"child-body\")\n",
+    "child": "abstract module parent\nexisting = 7\n",
+    "expressions": [
+      "existing",
+      "existing"
+    ],
+    "callback": "",
+    "mode": "plain",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/main.pkl",
+    "childUri": "life:/parent",
+    "sourceSha256": "4ecc68f7d9fd426ff90118c1de013acefb29cc126f22cc2e628c0d0bbeff32d2",
+    "childSha256": "f60aec2eb1a471507307be9e7266c5e7431cbdfe992dc56241d6cbf9af191b2d"
+  },
+  {
+    "id": "amends-parent-source-primary-identity",
+    "source": "amends \"life:/parent\"\nmarker = 9\n",
+    "child": "open module parent\nmarker = 7\n",
+    "expressions": [
+      "marker",
+      "this.getClass() == import(\"life:/parent\").getClass()",
+      "marker"
+    ],
+    "callback": "this == import(\"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity/main.pkl\")",
+    "mode": "source-reentry",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity/main.pkl",
+    "childUri": "life:/parent",
+    "sourceSha256": "acf1b1d41cfa07192eeaa61014922ebd454071b6f054e66a5f6a7205dca0f6a3",
+    "childSha256": "e43c31b0b0fdadcf7c0438d44f1f21359fdc96763049960bca03a8ea87b1f7a6"
+  }
+]

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected 0 type argument(s) but got 2.
+
+2 | result: child.C<missing.Left, also.Right>? = null
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-qualified-types-oracle-01/workspace/class-arity-before-arguments/main.pkl)

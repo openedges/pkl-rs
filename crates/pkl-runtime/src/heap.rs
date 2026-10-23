@@ -51,9 +51,11 @@ pub struct Member {
 impl Member {
     const CLASS: u32 = 0x100;
     const TYPE_ALIAS: u32 = 0x200;
+    const IMPORT: u32 = 0x80;
     pub(crate) fn declaration_flags(member: &crate::syntax::Member) -> u32 {
         crate::syntax::modifier_flags(&member.modifiers)
             | match member.expr.kind {
+                crate::syntax::ExprKind::Import { .. } => Self::IMPORT,
                 crate::syntax::ExprKind::Class { .. } => Self::CLASS,
                 crate::syntax::ExprKind::TypeAlias { .. } => Self::TYPE_ALIAS,
                 _ => 0,
@@ -67,6 +69,9 @@ impl Member {
     }
     pub(crate) fn abstract_member(&self) -> bool {
         self.flags & crate::syntax::ModifierKind::Abstract.flag() != 0
+    }
+    pub(crate) fn import(&self) -> bool {
+        self.flags & Self::IMPORT != 0
     }
     pub(crate) fn definition(&self) -> bool {
         self.flags & (Self::CLASS | Self::TYPE_ALIAS) != 0
@@ -183,6 +188,7 @@ pub struct Object {
     pub reference: Option<crate::vm::reference::Reference>,
     pub native_function: Option<crate::vm::reference::NativeFunction>,
     pub type_alias: Option<Arc<str>>,
+    pub type_alias_declaration: Option<usize>,
     pub type_alias_initialized: bool,
     /// Declaration-owned annotation values; fields remain ordinary lazy members.
     pub annotations: Vec<Value>,
@@ -508,6 +514,18 @@ impl Heap {
         self.slots.iter().enumerate().find_map(|(index, slot)| {
             slot.object()
                 .filter(|o| o.builtin_type.as_ref().is_some_and(|t| t.equivalent(ty)))
+                .map(|_| ObjectId {
+                    heap: self.identity,
+                    index,
+                    generation: slot.generation,
+                })
+        })
+    }
+
+    pub(crate) fn find_module(&self, unit: crate::modules::UnitId) -> Option<ObjectId> {
+        self.slots.iter().enumerate().find_map(|(index, slot)| {
+            slot.object()
+                .filter(|object| object.module_unit == Some(unit))
                 .map(|_| ObjectId {
                     heap: self.identity,
                     index,

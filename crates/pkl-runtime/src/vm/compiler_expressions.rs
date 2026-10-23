@@ -822,7 +822,9 @@ impl Compiler<'_> {
                 self.initialize_type_resolution(ty, output);
                 match self.compile_type(ty) {
                     Ok(check) => {
-                        if let TypeCheck::Class { .. } = check.unaliased() {
+                        if matches!(check.unaliased(), TypeCheck::Class { .. })
+                            || check.has_declared()
+                        {
                             self.class_value(&check, output, ty.span)?;
                             output.push_at(Instruction::CheckAnnotationClass, ty.span);
                             let generator = members.iter().any(|member| {
@@ -939,7 +941,7 @@ impl Compiler<'_> {
                         ));
                     }
                     self.schedule_collection(members, kind, has_default, output, work)?;
-                } else if check.contains_parameter() {
+                } else if check.contains_parameter() || check.has_declared() {
                     let check = if self.constructor_parameters_bound {
                         check
                     } else {
@@ -1075,7 +1077,9 @@ impl Compiler<'_> {
                     if super_receiver {
                         Instruction::SuperSubscript
                     } else {
-                        Instruction::Subscript
+                        Instruction::Subscript {
+                            key_span: self.executable_value_span(key),
+                        }
                     },
                     None,
                 ));

@@ -1,0 +1,162 @@
+{
+  "oracleRoot": "target/m2/stage42-module-inheritance-oracle-01",
+  "reportSha256": "fb385ee19c874cf3bd4757a605e168652eea24df2da2a08196c7b98ac42ce3fa",
+  "closureSha256": "a948815066e14d93ec37f7247edf8e9e5eaf43891a88c2ec7d1629914a4975d2",
+  "cases": [
+    {
+      "id": "abstract-parent-amends-first-error",
+      "source": "@Deprecated { when(throw(\"child-annotation\")) { message=\"x\" } }\namends \"life:/parent\"\nmissing = throw(\"child-body\")\n",
+      "child": "abstract module parent\nexisting = 7\n",
+      "expressions": [
+        "existing",
+        "existing"
+      ],
+      "callback": "",
+      "mode": "plain",
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/main.pkl",
+      "childUri": "life:/parent",
+      "sourceSha256": "4ecc68f7d9fd426ff90118c1de013acefb29cc126f22cc2e628c0d0bbeff32d2",
+      "childSha256": "f60aec2eb1a471507307be9e7266c5e7431cbdfe992dc56241d6cbf9af191b2d"
+    },
+    {
+      "id": "amends-parent-source-primary-identity",
+      "source": "amends \"life:/parent\"\nmarker = 9\n",
+      "child": "open module parent\nmarker = 7\n",
+      "expressions": [
+        "marker",
+        "this.getClass() == import(\"life:/parent\").getClass()",
+        "marker"
+      ],
+      "callback": "this == import(\"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity/main.pkl\")",
+      "mode": "source-reentry",
+      "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity/main.pkl",
+      "childUri": "life:/parent",
+      "sourceSha256": "acf1b1d41cfa07192eeaa61014922ebd454071b6f054e66a5f6a7205dca0f6a3",
+      "childSha256": "e43c31b0b0fdadcf7c0438d44f1f21359fdc96763049960bca03a8ea87b1f7a6"
+    }
+  ],
+  "files": [
+    {
+      "file": "abstract-parent-amends-first-error/outer-0.status.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/0/calls/outer-0.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "abstract-parent-amends-first-error/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/0/calls/outer-0.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "abstract-parent-amends-first-error/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/0/calls/outer-0.stderr.bin",
+      "sha256": "ce2ec88359baf22f53be0fe91c8bcbd61829449eab07c81a56a8afff4f37704a"
+    },
+    {
+      "file": "abstract-parent-amends-first-error/outer-0.stderr.code-units.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/0/calls/outer-0.stderr.code-units.bin",
+      "sha256": "74291e112abf227818e928f8398374ecb00fa994ef2b5f60a6e0c32dcfb549c4"
+    },
+    {
+      "file": "abstract-parent-amends-first-error/outer-1.status.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/0/calls/outer-1.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "file": "abstract-parent-amends-first-error/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/0/calls/outer-1.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "abstract-parent-amends-first-error/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/0/calls/outer-1.stderr.bin",
+      "sha256": "ce2ec88359baf22f53be0fe91c8bcbd61829449eab07c81a56a8afff4f37704a"
+    },
+    {
+      "file": "abstract-parent-amends-first-error/outer-1.stderr.code-units.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/0/calls/outer-1.stderr.code-units.bin",
+      "sha256": "74291e112abf227818e928f8398374ecb00fa994ef2b5f60a6e0c32dcfb549c4"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/outer-0.status.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-0.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/outer-0.stdout.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-0.stdout.bin",
+      "sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/outer-0.stderr.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-0.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/outer-0.stdout.code-units.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-0.stdout.code-units.bin",
+      "sha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/outer-1.status.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-1.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/outer-1.stdout.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-1.stdout.bin",
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/outer-1.stderr.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-1.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/outer-1.stdout.code-units.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-1.stdout.code-units.bin",
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/outer-2.status.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-2.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/outer-2.stdout.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-2.stdout.bin",
+      "sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/outer-2.stderr.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-2.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/outer-2.stdout.code-units.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-2.stdout.code-units.bin",
+      "sha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/inner-0.status.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/inner-0.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/inner-0.stdout.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/inner-0.stdout.bin",
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/inner-0.stderr.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/inner-0.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "amends-parent-source-primary-identity/inner-0.stdout.code-units.bin",
+      "origin": "target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/inner-0.stdout.code-units.bin",
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    }
+  ]
+}

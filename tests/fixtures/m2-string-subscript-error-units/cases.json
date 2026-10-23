@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "scope": "Actual Java evaluateExpressionString string subscript API, not CLI output/process parity. Source/URI and ordered2 calls preserved.",
+  "sourceFile": "main.pkl",
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+  "cases": [
+    {
+      "id": "mixed-out-of-range",
+      "expression": "mixed[4]",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+      "moduleName": "main",
+      "sourceFile": "main.pkl",
+      "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+      "callPrefix": "outer-0",
+      "expected": {
+        "kind": "error",
+        "javaStatus": "error",
+        "javaErrorClass": "org.pkl.core.PklException",
+        "utf8File": "raw/0/outer-0.stderr.bin",
+        "utf16BEFile": "raw/0/outer-0.stderr.code-units.bin",
+        "oracleError": false
+      },
+      "repeats": [
+        {
+          "repeat": 0,
+          "kind": "error",
+          "statusFile": "raw/0/outer-0.status.bin",
+          "expressionFile": "raw/0/outer-0.expression.bin",
+          "stdoutFile": "raw/0/outer-0.stdout.bin",
+          "stderrFile": "raw/0/outer-0.stderr.bin",
+          "utf8File": "raw/0/outer-0.stderr.bin",
+          "utf16BEFile": "raw/0/outer-0.stderr.code-units.bin",
+          "errorClassFile": "raw/0/outer-0.error-class.bin",
+          "javaErrorClass": "org.pkl.core.PklException"
+        },
+        {
+          "repeat": 1,
+          "kind": "error",
+          "statusFile": "raw/1/outer-0.status.bin",
+          "expressionFile": "raw/1/outer-0.expression.bin",
+          "stdoutFile": "raw/1/outer-0.stdout.bin",
+          "stderrFile": "raw/1/outer-0.stderr.bin",
+          "utf8File": "raw/1/outer-0.stderr.bin",
+          "utf16BEFile": "raw/1/outer-0.stderr.code-units.bin",
+          "errorClassFile": "raw/1/outer-0.error-class.bin",
+          "javaErrorClass": "org.pkl.core.PklException"
+        }
+      ]
+    },
+    {
+      "id": "unpaired-index-type",
+      "expression": "ascii[mixed[0]]",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+      "moduleName": "main",
+      "sourceFile": "main.pkl",
+      "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+      "callPrefix": "outer-1",
+      "expected": {
+        "kind": "error",
+        "javaStatus": "error",
+        "javaErrorClass": "org.pkl.core.PklException",
+        "utf8File": "raw/0/outer-1.stderr.bin",
+        "utf16BEFile": "raw/0/outer-1.stderr.code-units.bin",
+        "oracleError": false
+      },
+      "repeats": [
+        {
+          "repeat": 0,
+          "kind": "error",
+          "statusFile": "raw/0/outer-1.status.bin",
+          "expressionFile": "raw/0/outer-1.expression.bin",
+          "stdoutFile": "raw/0/outer-1.stdout.bin",
+          "stderrFile": "raw/0/outer-1.stderr.bin",
+          "utf8File": "raw/0/outer-1.stderr.bin",
+          "utf16BEFile": "raw/0/outer-1.stderr.code-units.bin",
+          "errorClassFile": "raw/0/outer-1.error-class.bin",
+          "javaErrorClass": "org.pkl.core.PklException"
+        },
+        {
+          "repeat": 1,
+          "kind": "error",
+          "statusFile": "raw/1/outer-1.status.bin",
+          "expressionFile": "raw/1/outer-1.expression.bin",
+          "stdoutFile": "raw/1/outer-1.stdout.bin",
+          "stderrFile": "raw/1/outer-1.stderr.bin",
+          "utf8File": "raw/1/outer-1.stderr.bin",
+          "utf16BEFile": "raw/1/outer-1.stderr.code-units.bin",
+          "errorClassFile": "raw/1/outer-1.error-class.bin",
+          "javaErrorClass": "org.pkl.core.PklException"
+        }
+      ]
+    }
+  ]
+}

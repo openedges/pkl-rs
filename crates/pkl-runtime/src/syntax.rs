@@ -309,6 +309,7 @@ impl Clone for Expr {
                         },
                         E::Function {
                             type_parameters,
+                            type_parameters_span,
                             header_span,
                             parameters,
                             return_type,
@@ -316,6 +317,7 @@ impl Clone for Expr {
                             ..
                         } => E::Function {
                             type_parameters: type_parameters.clone(),
+                            type_parameters_span: type_parameters_span.clone(),
                             header_span: *header_span,
                             parameters: parameters.clone(),
                             return_type: return_type.clone(),
@@ -674,6 +676,7 @@ pub enum ExprKind {
     },
     Function {
         type_parameters: Vec<TypeParameter>,
+        type_parameters_span: Option<Box<Span>>,
         header_span: Span,
         parameters: Vec<Parameter>,
         return_type: Option<Type>,
@@ -699,6 +702,7 @@ pub enum ExprKind {
     TypeAlias {
         type_parameters: Vec<TypeParameter>,
         ty: Type,
+        header_span: Span,
     },
     Annotation {
         parameters: Vec<Parameter>,

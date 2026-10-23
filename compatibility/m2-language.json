@@ -145325,16 +145325,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule2.pkl",
       "input_sha256": "a697d6162491e046abd1065e201e6f18d54810d9584a7ccbc04cb8535a1fd7ce",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -145419,16 +145421,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule3.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule3.pkl",
       "input_sha256": "fa6ea4ae5df4af50114745024562b2f3b153b7239c9f0d6bd96c1295f2acf49a",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -145513,16 +145517,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule4.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule4.pkl",
       "input_sha256": "98914f29acb3d3bacfb22ad01b99d3f2037b25f3b9d3c024b60cd69b505667b7",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -145607,16 +145613,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule5.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule5.pkl",
       "input_sha256": "e592bc7118c34529bd6d2772b9b4013ae333f3da265537b805ff8e730d02a95a",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -145701,16 +145709,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule6.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule6.pkl",
       "input_sha256": "e233bdd89a4b1266ba3d308b2421b0b9dca36f46e45547c5a940819ca6acda2a",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -145795,16 +145805,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateFunction.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateFunction.pkl",
       "input_sha256": "cca92012a574d761fb7fa91c2775baf6aaaf2771aa10992a7753186e18fcba11",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -145890,16 +145902,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty1.pkl",
       "input_sha256": "e5a7b3491e4a254c7a557d3f5e9f703689b9ce0ee190e71f377e048064614252",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -145985,16 +145999,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty2.pkl",
       "input_sha256": "647d1b7b77bc8869d54238f092bdc4e5260f0f3ce866c9dda51f61e9f298636e",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -146080,16 +146096,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty3.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty3.pkl",
       "input_sha256": "95de81ee412dc94e5a42c4ce0da652ece0bff3eee73bc8b6d999e1cecaf4e483",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -146175,16 +146193,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/equality.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/equality.pkl",
       "input_sha256": "2b68a92ec47e468fa027f384a93a76a87362f3fac3df84bc0cb66097a9ed181d",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -146366,16 +146386,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/externalFunction.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/externalFunction.pkl",
       "input_sha256": "5b6c65535f03d11550911d0ae14ce8ed22e098b6e3be3949516748c569d553f6",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -146461,16 +146483,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/externalProperty.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/externalProperty.pkl",
       "input_sha256": "374f7d90983ae67eb1f56b7c102b66ccd6ddb10cd49220eb2c1f00fb77afd725",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -146556,16 +146580,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces 2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces 2.pkl",
       "input_sha256": "b1bee9e63a114f2152c94ab9cb2508bbba9430be9d84b703982f50a67888673e",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -146747,16 +146773,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/functions.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/functions.pkl",
       "input_sha256": "ac0d8cc4e27844870e49ec117379e97f19aced896eb5f8fbc05b41f92be5cef0",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -146841,16 +146869,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend1.pkl",
       "input_sha256": "da928ebd21571bb7338394b68f896e4d099a9ae18f282e2cc606e6787cfe6495",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -146936,16 +146966,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend2.pkl",
       "input_sha256": "5f75db35109169a0e9e0b2db09a4b6a59da43a965eb6fa0b523b2116e667de70",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -147031,16 +147063,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend3.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend3.pkl",
       "input_sha256": "b3f9c6f98b0f85a66c851120811b0495640ee9f10ab92d714cbaea76216f5b49",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -147126,16 +147160,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend4.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend4.pkl",
       "input_sha256": "3d5556477f26458830c461bd68b1ded5d35ec8df1915f83603401cdfc6907bc0",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -147221,16 +147257,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend5.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend5.pkl",
       "input_sha256": "abf60e1216883b36c5695f450b4f80aeddb637107d34c15d5501093f825fca6c",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -147316,16 +147354,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend6.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend6.pkl",
       "input_sha256": "ff3ce0f4e4156eff51dc5d69600795db9ebfcb37ceb3e7332022aa9e322cd578",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -147411,16 +147451,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidExtend1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidExtend1.pkl",
       "input_sha256": "1718dda75befa43b2c2f2fa128a09cf68a466d22643adbd5ea00b6c83b850edf",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -147506,16 +147548,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidExtend2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidExtend2.pkl",
       "input_sha256": "51755fd54065bcdc33fb4b8a8968d8a1bc59d0f646c403851399b75064cb2044",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -147601,16 +147645,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidExtend3.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidExtend3.pkl",
       "input_sha256": "a27ad0d53135b63d0d25f2ea9423464711f73b16146412381c252998f37cb799",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -147696,16 +147742,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidModule1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidModule1.pkl",
       "input_sha256": "ea97d13465d34c104cb795b8adb4cb9f26c8ee6791f541ed530818734454e21a",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -147791,16 +147839,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/library.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/library.pkl",
       "input_sha256": "7fdf83218029fc0e9a6fc93487b8b6a50520fa5c8db037d03e7622c8f2fce46d",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -147885,16 +147935,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/lists.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/lists.pkl",
       "input_sha256": "e32d5fa6594f81fb1c0070a469a91abe5926319935445bf6b16cdd5f34a500ab",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -147979,16 +148031,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/objects.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/objects.pkl",
       "input_sha256": "13812e29958e2f86183f106db94343092fa32dbfb5ac8dc131bf592b21a8e8f0",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -148256,16 +148310,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls1.pkl",
       "input_sha256": "1ec7a4472849742fa150187d3c67c7c4d83e7e573dd40197b8a073eab6c91e96",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -148350,16 +148406,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls2.pkl",
       "input_sha256": "6abc03a52ddb8308490168aaea9bd1535b9c6c73754ba5353ddb48d28e7a0aa9",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -148444,16 +148502,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls3.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls3.pkl",
       "input_sha256": "040bab5975b521ba4e192e2975d2eb3890fabc02bbefbcb5657ab958906c0e9e",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -148538,16 +148598,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleMethods1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleMethods1.pkl",
       "input_sha256": "a19dfdf17b50cbc3438116b605f25c483b3759f0908c30c1e8f1a12315d8f6f6",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -148632,16 +148694,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties1.pkl",
       "input_sha256": "8bf1b46f0803828c99583ae10dc1c5a6b0442240941f4932857f5e2f9f66a312",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -148726,16 +148790,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties2.pkl",
       "input_sha256": "9adcfd0f6e9e16a074e1fb435daff8ab1228e9da915f403690c098815eb1bb45",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -148821,16 +148887,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties3.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties3.pkl",
       "input_sha256": "d0dd7cdd56c83f5ab13ad1e373730b6b1c81c0396681d3c4ec3cf3b21696603b",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -149013,16 +149081,18 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語_error.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語_error.pkl",
       "input_sha256": "c645d3ebcff6501d9636153a3f5a57a16d70d4825d3aab4f2546d5f5606f34b7",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -163464,8 +163534,8 @@
   "counts": {
     "cases": 4527,
     "cases_by_execution": {
-      "ready": 3628,
-      "unimplemented": 859,
+      "ready": 3663,
+      "unimplemented": 824,
       "unmapped": 40
     },
     "requirements": 475,
@@ -165804,62 +165874,62 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "a05fd47b4807c6f7203cef2f7b8ae890719d2f45bb6d61911de3d31d8dde2541",
+            "sha256": "a1c018dcc918ce4b917104e42bccb1eea93cf494b2ec18259f57fb1f2eae524d",
             "symbol": "reference_candidate"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "force_key"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "eba289a18e9750a2cb78d869c01aeeee340c08e17de509ceccfa13e59a7bd459",
+            "sha256": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "validate_reference_arguments"
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "03da248598d8651984d495dc5a14806afee865f8addc66bcd78f836c76485549",
+            "sha256": "bdaf7713fb1aac8526cb619e65a997df29c4107f62f8e5c0ea53e4c61829370a",
             "symbol": "ForceRun"
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "03da248598d8651984d495dc5a14806afee865f8addc66bcd78f836c76485549",
+            "sha256": "bdaf7713fb1aac8526cb619e65a997df29c4107f62f8e5c0ea53e4c61829370a",
             "symbol": "step_deep_force"
           },
           {
@@ -167407,12 +167477,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "03da248598d8651984d495dc5a14806afee865f8addc66bcd78f836c76485549",
+            "sha256": "bdaf7713fb1aac8526cb619e65a997df29c4107f62f8e5c0ea53e4c61829370a",
             "symbol": "ForceRun"
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "03da248598d8651984d495dc5a14806afee865f8addc66bcd78f836c76485549",
+            "sha256": "bdaf7713fb1aac8526cb619e65a997df29c4107f62f8e5c0ea53e4c61829370a",
             "symbol": "step_deep_force"
           },
           {
@@ -168386,12 +168456,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "inherited_member"
           }
         ],
@@ -168594,22 +168664,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "initialize_member_types"
           }
         ],
@@ -168998,42 +169068,42 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "4bbf41cf326538729b3c813b4bd3ec8189cb59f62843f4cdca52681116896594",
+            "sha256": "c185209c4da023f831079b26fd21e696ab2840cd5fa0c730e976330372ac84f6",
             "symbol": "validate_modifiers"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "4bbf41cf326538729b3c813b4bd3ec8189cb59f62843f4cdca52681116896594",
+            "sha256": "c185209c4da023f831079b26fd21e696ab2840cd5fa0c730e976330372ac84f6",
             "symbol": "ConstLevel"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "4bbf41cf326538729b3c813b4bd3ec8189cb59f62843f4cdca52681116896594",
+            "sha256": "c185209c4da023f831079b26fd21e696ab2840cd5fa0c730e976330372ac84f6",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "arguments"
           },
           {
@@ -169344,37 +169414,37 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "a05fd47b4807c6f7203cef2f7b8ae890719d2f45bb6d61911de3d31d8dde2541",
+            "sha256": "a1c018dcc918ce4b917104e42bccb1eea93cf494b2ec18259f57fb1f2eae524d",
             "symbol": "subtype"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "Function"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "4bbf41cf326538729b3c813b4bd3ec8189cb59f62843f4cdca52681116896594",
+            "sha256": "c185209c4da023f831079b26fd21e696ab2840cd5fa0c730e976330372ac84f6",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "arguments"
           },
           {
@@ -171814,62 +171884,62 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "eba289a18e9750a2cb78d869c01aeeee340c08e17de509ceccfa13e59a7bd459",
+            "sha256": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "eba289a18e9750a2cb78d869c01aeeee340c08e17de509ceccfa13e59a7bd459",
+            "sha256": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -173570,72 +173640,72 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "eba289a18e9750a2cb78d869c01aeeee340c08e17de509ceccfa13e59a7bd459",
+            "sha256": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "eba289a18e9750a2cb78d869c01aeeee340c08e17de509ceccfa13e59a7bd459",
+            "sha256": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -174348,52 +174418,52 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "eba289a18e9750a2cb78d869c01aeeee340c08e17de509ceccfa13e59a7bd459",
+            "sha256": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "eba289a18e9750a2cb78d869c01aeeee340c08e17de509ceccfa13e59a7bd459",
+            "sha256": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
             "symbol": "launch_constraint"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "eba289a18e9750a2cb78d869c01aeeee340c08e17de509ceccfa13e59a7bd459",
+            "sha256": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -175085,47 +175155,47 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "eba289a18e9750a2cb78d869c01aeeee340c08e17de509ceccfa13e59a7bd459",
+            "sha256": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -176199,27 +176269,27 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "a05fd47b4807c6f7203cef2f7b8ae890719d2f45bb6d61911de3d31d8dde2541",
+            "sha256": "a1c018dcc918ce4b917104e42bccb1eea93cf494b2ec18259f57fb1f2eae524d",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "a05fd47b4807c6f7203cef2f7b8ae890719d2f45bb6d61911de3d31d8dde2541",
+            "sha256": "a1c018dcc918ce4b917104e42bccb1eea93cf494b2ec18259f57fb1f2eae524d",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "a05fd47b4807c6f7203cef2f7b8ae890719d2f45bb6d61911de3d31d8dde2541",
+            "sha256": "a1c018dcc918ce4b917104e42bccb1eea93cf494b2ec18259f57fb1f2eae524d",
             "symbol": "invoke_reference_native"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "eba289a18e9750a2cb78d869c01aeeee340c08e17de509ceccfa13e59a7bd459",
+            "sha256": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -176459,12 +176529,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "annotations"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "4bbf41cf326538729b3c813b4bd3ec8189cb59f62843f4cdca52681116896594",
+            "sha256": "c185209c4da023f831079b26fd21e696ab2840cd5fa0c730e976330372ac84f6",
             "symbol": "Annotations"
           },
           {
@@ -176479,7 +176549,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "Object"
           }
         ],
@@ -176615,32 +176685,32 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "Object"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "a05fd47b4807c6f7203cef2f7b8ae890719d2f45bb6d61911de3d31d8dde2541",
+            "sha256": "a1c018dcc918ce4b917104e42bccb1eea93cf494b2ec18259f57fb1f2eae524d",
             "symbol": "reference_candidate"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "eba289a18e9750a2cb78d869c01aeeee340c08e17de509ceccfa13e59a7bd459",
+            "sha256": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "620c6e39aebb92594b7977a417131a43fcc0a9f0fbe5dd20417a41d2a53c1598",
+            "sha256": "06d0c12d651922463889a52a8db621dfd20ad547d7e8056dd3d6c2740a612d19",
             "symbol": "step_generic_default"
           }
         ],
@@ -176819,17 +176889,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "4bbf41cf326538729b3c813b4bd3ec8189cb59f62843f4cdca52681116896594",
+            "sha256": "c185209c4da023f831079b26fd21e696ab2840cd5fa0c730e976330372ac84f6",
             "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "compile_type_at"
           },
           {
@@ -176844,8 +176914,23 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "CheckModuleOutput"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/modules.rs",
+            "sha256": "f728fde0e531c896d121b3e23efc1ea06f6efbf4e7a9af8e64932d9f4fba348b",
+            "symbol": "begin_import"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/type_resolution.rs",
+            "sha256": "5281d2176abc38534f69d5bcdc99c2ce9e8f435ca3e574ca54180739d6d14194",
+            "symbol": "resolve_runtime_type"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/modules/inheritance.rs",
+            "sha256": "e1274b1bc4c91dad1cb763388b1e8a02414eecd47440f1646fb2a6c5dcd65ded",
+            "symbol": "initialize_module_parent"
           }
         ],
         "state": "partial"
@@ -176855,12 +176940,13 @@
       "required": true,
       "reviewed_mapping": {
         "remaining": [
-          "General module loading, extends/amends, imports beyond the pkl:ref bridge and complete module identity semantics remain open.",
-          "Original import/module snippets and full invalid syntax/name resolution corpus still require their original adapters and execution.",
+          "Complete module initialization, recursive declared-type behavior, inheritance and amendment semantics require the original corpus and full raw comparisons; Stage42 implementation is under validation.",
+          "All remaining original import/module snippets and invalid syntax/name resolution cases still require their original adapters and execution. Existing unsupported and mismatched outcomes remain failures.",
+          "Complete URI and primary-module identity rules, standard modules, external capabilities and source timeout/close behavior remain open.",
           "Output.files/multiple outputs and complete renderer/converter/transformer/reflection dependencies remain partial or unsupported; every original selected failure stays in the full gate.",
           "The selected output kernel does not establish whole-language, public evaluator API or performance compatibility."
         ],
-        "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons. Stage40 adds an actual single-module output.bytes operation with typed preparation, real ModuleOutput checking and shared Host lifecycle. All reviewed original30 output/module contracts are executable without source/expression wrappers; readiness is not a pass claim.",
+        "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons. Stage40 adds an actual single-module output.bytes operation with typed preparation, real ModuleOutput checking and shared Host lifecycle. All reviewed original30 output/module contracts are executable without source/expression wrappers; readiness is not a pass claim. Stage41 connects shared-VM source loading, module caches and synthetic expression entries. Stage42 adds evaluator-owned imported class/alias resolution and module extends/amends initialization. All41 original input/modules contracts are registered, retaining every prior entry and all original command/input expectations. New registration and partial implementation are not passing compatibility evidence.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -176904,7 +176990,42 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule4.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule5.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule6.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateFunction.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/equality.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/externalFunction.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/externalProperty.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces 2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/functions.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend4.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend5.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend6.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidExtend1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidExtend2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidExtend3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/library.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/lists.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/objects.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleMethods1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語_error.pkl"
         ],
         "state": "partial"
       }
@@ -176941,17 +177062,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "4bbf41cf326538729b3c813b4bd3ec8189cb59f62843f4cdca52681116896594",
+            "sha256": "c185209c4da023f831079b26fd21e696ab2840cd5fa0c730e976330372ac84f6",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "arguments"
           },
           {
             "path": "crates/pkl-runtime/src/pkl_string.rs",
-            "sha256": "8783ecab09d7c5ee43aff77ac342e62bf2eb37760977ae8ecab389c80edb57a4",
+            "sha256": "c1cc2424f9307fe07e9e9a2c6fbc73e54438422c8ab73884de24906230deeefa",
             "symbol": "PklString"
           },
           {
@@ -176961,7 +177082,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "executable_value_span"
           },
           {
@@ -176971,12 +177092,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "03da248598d8651984d495dc5a14806afee865f8addc66bcd78f836c76485549",
+            "sha256": "bdaf7713fb1aac8526cb619e65a997df29c4107f62f8e5c0ea53e4c61829370a",
             "symbol": "ForceRun"
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "03da248598d8651984d495dc5a14806afee865f8addc66bcd78f836c76485549",
+            "sha256": "bdaf7713fb1aac8526cb619e65a997df29c4107f62f8e5c0ea53e4c61829370a",
             "symbol": "step_deep_force"
           },
           {
@@ -180293,12 +180414,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "annotations"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "4bbf41cf326538729b3c813b4bd3ec8189cb59f62843f4cdca52681116896594",
+            "sha256": "c185209c4da023f831079b26fd21e696ab2840cd5fa0c730e976330372ac84f6",
             "symbol": "Annotations"
           },
           {
@@ -180313,7 +180434,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "Object"
           }
         ],
@@ -181878,7 +181999,7 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "parse_module"
           },
           {
@@ -182046,12 +182167,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "annotations"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "4bbf41cf326538729b3c813b4bd3ec8189cb59f62843f4cdca52681116896594",
+            "sha256": "c185209c4da023f831079b26fd21e696ab2840cd5fa0c730e976330372ac84f6",
             "symbol": "Annotations"
           },
           {
@@ -182066,7 +182187,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "Object"
           }
         ],
@@ -182681,7 +182802,7 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "parse_module"
           },
           {
@@ -184749,17 +184870,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "ReadResource"
           },
           {
             "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
-            "sha256": "a16b473e4c81e493fe62e8993175b5e29cc3ef22dadd319d488e5b0aff537999",
+            "sha256": "43103d33f8dbe68d66fe3a84820701bc74a6c1610110ddcb81da0f757f96a79e",
             "symbol": "ReadResourceOrNull"
           },
           {
             "path": "crates/pkl-runtime/src/host/resources.rs",
-            "sha256": "c79d2b069bca8a6b00a5066e789b9de6156ff69adce2f1d6384175fe942e1a41",
+            "sha256": "377436ee0e10860a898b41b126705db27fdeaa1331ac1196e49c87487254507d",
             "symbol": "default_result"
           }
         ],
@@ -184872,17 +184993,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "ReadResource"
           },
           {
             "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
-            "sha256": "a16b473e4c81e493fe62e8993175b5e29cc3ef22dadd319d488e5b0aff537999",
+            "sha256": "43103d33f8dbe68d66fe3a84820701bc74a6c1610110ddcb81da0f757f96a79e",
             "symbol": "ReadResourceOrNull"
           },
           {
             "path": "crates/pkl-runtime/src/host/resources.rs",
-            "sha256": "c79d2b069bca8a6b00a5066e789b9de6156ff69adce2f1d6384175fe942e1a41",
+            "sha256": "377436ee0e10860a898b41b126705db27fdeaa1331ac1196e49c87487254507d",
             "symbol": "default_result"
           }
         ],
@@ -185970,12 +186091,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "annotations"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "4bbf41cf326538729b3c813b4bd3ec8189cb59f62843f4cdca52681116896594",
+            "sha256": "c185209c4da023f831079b26fd21e696ab2840cd5fa0c730e976330372ac84f6",
             "symbol": "Annotations"
           },
           {
@@ -185990,7 +186111,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "Object"
           }
         ],
@@ -186871,22 +186992,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "75040689d7ebd832eca15152b9e8173e6dab9840fc06a61b585e91d42235eef3",
+            "sha256": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "initialize_member_types"
           }
         ],
@@ -187314,17 +187435,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "4bbf41cf326538729b3c813b4bd3ec8189cb59f62843f4cdca52681116896594",
+            "sha256": "c185209c4da023f831079b26fd21e696ab2840cd5fa0c730e976330372ac84f6",
             "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "80bc2164f354f97b57ad3c7c05a453e9607627f96bc446466211e63609cd2597",
+            "sha256": "fb0069cd0b769ca0114b3ba6e2abad5e4cbfb1a1ed89b128733693ac561b5478",
             "symbol": "compile_type_at"
           }
         ],
@@ -188275,17 +188396,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "f46be3faa2e87e0f077ada45cfd5a34819150c35f252a57e19125caa3fb64fc6",
+            "sha256": "2ba259ab0a86069e3b429188b406b99cdcf94523c5315254d40c5cd851bd6b5d",
             "symbol": "ReadResource"
           },
           {
             "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
-            "sha256": "a16b473e4c81e493fe62e8993175b5e29cc3ef22dadd319d488e5b0aff537999",
+            "sha256": "43103d33f8dbe68d66fe3a84820701bc74a6c1610110ddcb81da0f757f96a79e",
             "symbol": "ReadResourceOrNull"
           },
           {
             "path": "crates/pkl-runtime/src/host/resources.rs",
-            "sha256": "c79d2b069bca8a6b00a5066e789b9de6156ff69adce2f1d6384175fe942e1a41",
+            "sha256": "377436ee0e10860a898b41b126705db27fdeaa1331ac1196e49c87487254507d",
             "symbol": "default_result"
           }
         ],
@@ -188594,22 +188715,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "a05fd47b4807c6f7203cef2f7b8ae890719d2f45bb6d61911de3d31d8dde2541",
+            "sha256": "a1c018dcc918ce4b917104e42bccb1eea93cf494b2ec18259f57fb1f2eae524d",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "a05fd47b4807c6f7203cef2f7b8ae890719d2f45bb6d61911de3d31d8dde2541",
+            "sha256": "a1c018dcc918ce4b917104e42bccb1eea93cf494b2ec18259f57fb1f2eae524d",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "a05fd47b4807c6f7203cef2f7b8ae890719d2f45bb6d61911de3d31d8dde2541",
+            "sha256": "a1c018dcc918ce4b917104e42bccb1eea93cf494b2ec18259f57fb1f2eae524d",
             "symbol": "invoke_reference_native"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "eba289a18e9750a2cb78d869c01aeeee340c08e17de509ceccfa13e59a7bd459",
+            "sha256": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
             "symbol": "step_type"
           }
         ],
@@ -189831,8 +189952,8 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "c2617557199ae338f64315fce2028a10d58e57b9a193a1a33de3b63eb7c5660a",
-    "compatibility/m2-module-eval.json": "4d556596ef007c0f3f87f9b99a0a604952c8ef3b825a76f1fc85a8cdcb19bd41",
+    "compatibility/m2-mappings.json": "bc548f855e319263af08d937c2d7b64ee5bb0351d550c5b631ce8c2bcbc63b7d",
+    "compatibility/m2-module-eval.json": "1c6a086fe16d8db4e1fede1d4ed0d28885fb7d52379de0dc8da4d757b38ac523",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",

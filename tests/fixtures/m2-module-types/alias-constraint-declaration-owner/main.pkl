@@ -1,0 +1,4 @@
+import "life:/child" as child
+const threshold = 0
+accepted: child.Positive = 11
+rejected: child.Positive = 5

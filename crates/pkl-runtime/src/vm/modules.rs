@@ -5,6 +5,15 @@ use crate::modules::{
 };
 use crate::value::RuntimeSource;
 
+mod inheritance;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum ModuleMode {
+    Plain,
+    Extends,
+    Amends,
+}
+
 #[derive(Clone, Debug)]
 pub(crate) struct ModuleUnit {
     pub id: UnitId,
@@ -15,6 +24,8 @@ pub(crate) struct ModuleUnit {
     pub entry: usize,
     pub initial_members: Vec<Member>,
     pub class_id: usize,
+    pub mode: ModuleMode,
+    pub modifiers: u32,
 }
 
 #[derive(Clone, Debug)]
@@ -298,6 +309,7 @@ impl Vm {
             force: None,
             lambda: false,
             type_run: None,
+            type_resolution: None,
             generic_default: None,
             equality_run: None,
             deep_force: None,
@@ -373,6 +385,8 @@ pub(super) struct ArenaCheckpoint {
     objects: usize,
     units: usize,
     declaration: usize,
+    type_recipes: usize,
+    aliases: BTreeSet<usize>,
 }
 impl ArenaCheckpoint {
     pub(super) fn new(program: &Program) -> Self {
@@ -382,6 +396,8 @@ impl ArenaCheckpoint {
             objects: program.objects.len(),
             units: program.units.len(),
             declaration: program.next_declaration,
+            type_recipes: program.type_recipes.len(),
+            aliases: program.alias_definitions.keys().copied().collect(),
         }
     }
     pub(super) fn rollback(self, program: &mut Program) {
@@ -390,6 +406,10 @@ impl ArenaCheckpoint {
         program.objects.truncate(self.objects);
         program.units.truncate(self.units);
         program.next_declaration = self.declaration;
+        program.type_recipes.truncate(self.type_recipes);
+        program
+            .alias_definitions
+            .retain(|id, _| self.aliases.contains(id));
         program
             .constraint_origins
             .retain(|block, _| *block < self.blocks);

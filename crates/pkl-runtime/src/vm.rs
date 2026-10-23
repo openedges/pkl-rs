@@ -30,6 +30,7 @@ pub(crate) mod reference;
 mod rendering;
 mod strings;
 mod tracing;
+mod type_resolution;
 mod typecheck;
 use typecheck::{TypeDestination, TypeRun};
 
@@ -48,6 +49,7 @@ pub enum Instruction {
         code: usize,
     },
     FinishModule,
+    InitializeModuleParent,
     AppendAnnotation,
     BeginMemberAnnotations,
     InitializeDeprecation,
@@ -125,7 +127,9 @@ pub enum Instruction {
         end: usize,
     },
     AddPredicateMember(Member),
-    Subscript,
+    Subscript {
+        key_span: Span,
+    },
     SuperSubscript,
     EntryParent,
     InferPropertyParent,
@@ -174,6 +178,12 @@ pub enum Instruction {
         owner_depth: usize,
         local: bool,
         method: bool,
+    },
+    ResolveType(TypeCheck),
+    ResolvedClass(TypeCheck),
+    ResolvedDefault {
+        ty: TypeCheck,
+        origin: Option<RuntimeFrame>,
     },
     ResolveClassType {
         name: Arc<str>,
@@ -276,6 +286,11 @@ pub enum Instruction {
 pub enum TypeCheck {
     /// Immutable instantiated argument graph; cloning never copies its descendants.
     Shared(generics::SharedTypeCheck),
+    /// A unit-owned declaration lookup, resolved by the evaluator at its use site.
+    Declared {
+        recipe: usize,
+        arguments: Vec<TypeCheck>,
+    },
     Unknown,
     /// A lexical parameter in a reusable constraint template. Resolved before checking.
     Parameter {
@@ -606,6 +621,9 @@ impl TypeCheck {
     fn accepts_leaf(&self, value: &Value, heap: &Heap) -> bool {
         match self.resolved() {
             Self::Shared(_) => unreachable!(),
+            Self::Declared { .. } => {
+                unreachable!("declaration must be resolved before checking a value")
+            }
             Self::Any | Self::Unknown => true,
             Self::MetaClass(name) => matches!(
                 (name.as_ref(), value),
@@ -726,6 +744,8 @@ pub(crate) struct LetScope {
 pub struct Program {
     pub(crate) units: Vec<modules::ModuleUnit>,
     next_declaration: usize,
+    type_recipes: Vec<type_resolution::TypeRecipe>,
+    alias_definitions: BTreeMap<usize, type_resolution::AliasDefinition>,
     pub module_name: Arc<str>,
     pub module_template: Option<usize>,
     /// Imports, classes and aliases exist before module annotation evaluation.
@@ -815,6 +835,8 @@ impl Program {
         Self {
             units: Vec::new(),
             next_declaration: 0,
+            type_recipes: Vec::new(),
+            alias_definitions: BTreeMap::new(),
             module_name: Arc::from(""),
             module_template: None,
             initial_module_members: Vec::new(),
@@ -881,6 +903,7 @@ struct Frame {
     force: Option<Force>,
     lambda: bool,
     type_run: Option<TypeRun>,
+    type_resolution: Option<type_resolution::DeclaredRun>,
     generic_default: Option<generics::GenericDefaultRun>,
     equality_run: Option<equality::EqualityRun>,
     deep_force: Option<forcing::ForceRun>,
@@ -973,6 +996,7 @@ pub struct Vm {
     modules_resolved: BTreeMap<Arc<str>, modules::CachedModule>,
     class_singletons: BTreeMap<usize, ObjectId>,
     alias_singletons: BTreeMap<usize, ObjectId>,
+    resolved_declarations: BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
     /// Static call targets own code state, never captured receivers/environments.
     executable_roots: BTreeMap<usize, ExecutableOwnerId>,
 }
@@ -1036,6 +1060,7 @@ impl Vm {
             modules_resolved: BTreeMap::new(),
             class_singletons: BTreeMap::new(),
             alias_singletons: BTreeMap::new(),
+            resolved_declarations: BTreeMap::new(),
             executable_roots: BTreeMap::new(),
         }
     }
@@ -1119,6 +1144,7 @@ impl Vm {
             force: None,
             lambda: false,
             type_run: None,
+            type_resolution: None,
             generic_default: None,
             equality_run: None,
             deep_force: None,
@@ -1367,11 +1393,17 @@ impl Vm {
             .chain(self.frames.iter())
             .flat_map(|frame| &frame.environment.scopes)
             .map(|scope| scope.receiver)
-            .find(|id| self.heap.get(*id).is_ok_and(|object| object.is_module))
+            .find(|id| {
+                self.heap
+                    .get(*id)
+                    .is_ok_and(|object| object.module_unit == Some(crate::modules::UnitId(0)))
+            })
             .map(Value::Object)
             .or_else(|| match &self.state {
                 State::Finished(Ok(Value::Object(id)))
-                    if self.heap.get(*id).is_ok_and(|object| object.is_module) =>
+                    if self.heap.get(*id).is_ok_and(|object| {
+                        object.module_unit == Some(crate::modules::UnitId(0))
+                    }) =>
                 {
                     Some(Value::Object(*id))
                 }
@@ -1415,6 +1447,7 @@ impl Vm {
         self.modules_resolved.clear();
         self.class_singletons.clear();
         self.alias_singletons.clear();
+        self.resolved_declarations.clear();
         self.executable_roots.clear();
         self.heap.release();
         self.program = Arc::new(Program::new(Vec::new()));
@@ -1477,6 +1510,12 @@ impl Vm {
                     _ => None,
                 }),
         );
+        for ((_, owner), value) in &self.resolved_declarations {
+            roots.push(Value::Object(*owner));
+            if let type_resolution::DeclarationValue::Value(value) = value {
+                roots.push(value.clone());
+            }
+        }
         roots.extend(self.executable_roots.values().map(|owner| owner.root()));
         roots.extend(self.class_singletons.values().copied().map(Value::Class));
         roots.extend(
@@ -1535,6 +1574,9 @@ impl Vm {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.equality_run {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.type_resolution {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.generic_default {
@@ -1743,7 +1785,10 @@ impl Vm {
                         span: if error.frames.is_empty() {
                             error.span.unwrap_or(*span)
                         } else {
-                            *span
+                            frame
+                                .type_resolution
+                                .as_ref()
+                                .map_or(*span, |run| run.span(&self.program))
                         },
                         member: frame
                             .diagnostic_member
@@ -2024,7 +2069,11 @@ impl Vm {
                 }
                 owner = match object.parent {
                     Some(parent) => parent,
-                    None if method && name.as_ref() == "toString" => {
+                    None if method
+                        && name.as_ref() == "toString"
+                        && (object.class_definition.is_none()
+                            || object.class_superclass_initialized) =>
+                    {
                         let function =
                             self.native_reference_method(Value::Object(receiver), "objectToString");
                         self.stack.push(function);
@@ -2268,6 +2317,7 @@ impl Vm {
             environment,
             lambda: false,
             type_run: None,
+            type_resolution: None,
             generic_default: None,
             equality_run: None,
             deep_force: None,
@@ -2776,7 +2826,9 @@ impl Vm {
             .class_definition
             .as_ref()
             .ok_or_else(|| invalid("missing parent class"))?;
-        let parent_name = if parent_class.id == reference::ACCESS_ID {
+        let parent_name = if self.heap.get(parent)?.is_module {
+            parent_class.name.to_string()
+        } else if parent_class.id == reference::ACCESS_ID {
             "pkl.ref#Access".to_owned()
         } else {
             format!(
@@ -2916,6 +2968,12 @@ impl Vm {
             ancestor = object.parent;
         }
         if let Some(class_name) = class_name {
+            // Typed amendments diagnose the class prototype. A module
+            // prototype retains its own ModuleInfo name, including when the
+            // receiver being amended adopted that class from another module.
+            let module_name = class_parent
+                .filter(|id| self.heap.get(*id).is_ok_and(|object| object.is_module))
+                .map(|_| class_name.clone());
             let class_label = if let Some(id) = class_parent {
                 let class = self
                     .heap
@@ -2940,10 +2998,17 @@ impl Vm {
                 {
                     let mut error = RuntimeError::new(
                         ErrorKind::MissingMember,
-                        format!(
-                            "Cannot find property `{}` in object of type `{class_label}`.",
-                            member.name
-                        ),
+                        if let Some(module_name) = &module_name {
+                            format!(
+                                "Cannot find property `{}` in module `{module_name}`.",
+                                member.name
+                            )
+                        } else {
+                            format!(
+                                "Cannot find property `{}` in object of type `{class_label}`.",
+                                member.name
+                            )
+                        },
                     );
                     error.span = self
                         .program
@@ -2959,14 +3024,21 @@ impl Vm {
                         let mut names = property_names.clone();
                         names.sort_by(|left, right| left.encode_utf16().cmp(right.encode_utf16()));
                         names.dedup();
-                        Some(format!(
-                            "Available properties:\n{}",
-                            if names.is_empty() {
-                                "(none)".into()
-                            } else {
+                        Some(if let Some(module_name) = &module_name {
+                            format!(
+                                "Available properties in module `{module_name}`:\n{}",
                                 names.join("\n")
-                            }
-                        ))
+                            )
+                        } else {
+                            format!(
+                                "Available properties:\n{}",
+                                if names.is_empty() {
+                                    "(none)".into()
+                                } else {
+                                    names.join("\n")
+                                }
+                            )
+                        })
                     });
                     return Err(error);
                 }
@@ -3096,6 +3168,7 @@ impl Vm {
             force: None,
             lambda: !function.method,
             type_run: None,
+            type_resolution: None,
             generic_default: None,
             equality_run: None,
             deep_force: None,
@@ -3115,6 +3188,13 @@ impl Vm {
     }
 
     fn step(&mut self) -> Result<(), RuntimeError> {
+        if self
+            .frames
+            .last()
+            .is_some_and(|frame| frame.type_resolution.is_some() && frame.module_load.is_none())
+        {
+            return self.step_declared_type();
+        }
         if self
             .frames
             .last()
@@ -3175,6 +3255,9 @@ impl Vm {
         } else {
             instruction
         };
+        let Some(instruction) = self.resolve_instruction_types(instruction)? else {
+            return Ok(());
+        };
         let frame_index = self.frames.len() - 1;
         let result = if matches!(
             &instruction,
@@ -3195,7 +3278,7 @@ impl Vm {
                 | Instruction::OpenPredicate
                 | Instruction::PredicateNext { .. }
                 | Instruction::AddPredicateMember(_)
-                | Instruction::Subscript
+                | Instruction::Subscript { .. }
                 | Instruction::SuperSubscript
                 | Instruction::EntryParent
                 | Instruction::MakeList { .. }
@@ -3205,6 +3288,18 @@ impl Vm {
                 | Instruction::AddMapEntry
         ) {
             self.collection_instruction(instruction)
+        } else if matches!(
+            &instruction,
+            Instruction::ValidateTypeArguments { .. }
+                | Instruction::BuiltinClass(_)
+                | Instruction::TestType(_)
+                | Instruction::ResolveType(_)
+                | Instruction::ResolvedClass(_)
+                | Instruction::ResolvedDefault { .. }
+                | Instruction::ResolveClassType { .. }
+                | Instruction::CheckType(_)
+        ) {
+            self.type_instruction(instruction)
         } else {
             self.step_instruction(instruction)
         };
@@ -3224,7 +3319,18 @@ impl Vm {
     fn step_instruction(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
         let frame = self.frames.last_mut().expect("active frame");
         match instruction {
+            Instruction::ValidateTypeArguments { .. }
+            | Instruction::BuiltinClass(_)
+            | Instruction::TestType(_)
+            | Instruction::ResolveType(_)
+            | Instruction::ResolvedClass(_)
+            | Instruction::ResolvedDefault { .. }
+            | Instruction::ResolveClassType { .. }
+            | Instruction::CheckType(_) => {
+                unreachable!("type instruction uses its bounded dispatcher")
+            }
             Instruction::ImportModule(spec) => self.begin_import(spec)?,
+            Instruction::InitializeModuleParent => self.initialize_module_parent()?,
             Instruction::CheckModuleOutput => self.check_module_output()?,
             Instruction::EncodeUtf8 => {
                 let Value::String(value) = self.pop()? else {
@@ -3252,6 +3358,11 @@ impl Vm {
                     .find(|m| m.code == code)
                     .ok_or_else(|| invalid("missing module declaration"))?
                     .clone();
+                if self.program.units[unit.0 as usize].mode == modules::ModuleMode::Extends
+                    && let Some(parent) = self.heap.get(owner)?.parent
+                {
+                    self.validate_class_override(parent, &member)?;
+                }
                 let object = self.heap.get_mut(owner)?;
                 if object.published_module_members.insert(code) {
                     object.members.push(member);
@@ -3263,7 +3374,9 @@ impl Vm {
                     .last()
                     .ok_or_else(|| invalid("missing module"))?
                     .as_object()?;
-                self.heap.get_mut(owner)?.module_initializing = false;
+                let object = self.heap.get_mut(owner)?;
+                object.module_initializing = false;
+                object.class_initializing = false;
             }
             Instruction::CheckAnnotationClass => {
                 let Some(Value::Class(id)) = self.stack.last() else {
@@ -3349,6 +3462,7 @@ impl Vm {
                     let name = Arc::from(format!("{}{}", self.current_module_name(), name));
                     let id = self.heap.allocate(Object {
                         type_alias: Some(name),
+                        type_alias_declaration: Some(declaration),
                         environment,
                         ..Object::default()
                     });
@@ -3373,19 +3487,7 @@ impl Vm {
                     ));
                 }
             }
-            Instruction::ValidateTypeArguments { ty, aliases } => {
-                let frame = self.frames.last().expect("active frame");
-                let ty = ty.substituted(&frame.environment)?;
-                let span = self
-                    .program
-                    .metadata
-                    .get(frame.block)
-                    .and_then(|metadata| metadata.spans.get(frame.pc.saturating_sub(1)))
-                    .copied()
-                    .flatten()
-                    .unwrap_or(Span::new(0, 0));
-                ty.validate_reference_arguments(span, &aliases, &self.program.constraint_origins)?;
-            }
+
             Instruction::BuiltinTypeAlias(name) => {
                 let id = self.heap.find_type_alias(&name).unwrap_or_else(|| {
                     self.heap.allocate(Object {
@@ -3403,11 +3505,7 @@ impl Vm {
                 });
                 self.stack.push(Value::Object(id));
             }
-            Instruction::BuiltinClass(ty) => {
-                let ty = ty.substituted(&self.frames.last().expect("active frame").environment)?;
-                let value = self.builtin_class(ty);
-                self.stack.push(value);
-            }
+
             Instruction::ReferenceRenderMethod => {
                 let id = self.pop()?.as_object()?;
                 let domain = self
@@ -3444,7 +3542,7 @@ impl Vm {
             | Instruction::OpenPredicate
             | Instruction::PredicateNext { .. }
             | Instruction::AddPredicateMember(_)
-            | Instruction::Subscript
+            | Instruction::Subscript { .. }
             | Instruction::SuperSubscript
             | Instruction::EntryParent
             | Instruction::MakeList { .. }
@@ -3649,10 +3747,7 @@ impl Vm {
                     self.stack.push(Value::string(scalar_string(&value)?));
                 }
             }
-            Instruction::TestType(ty) => {
-                let value = self.pop()?;
-                self.begin_type(ty, value, TypeDestination::Test, Vec::new())?;
-            }
+
             Instruction::JumpIfNull(target) => {
                 if self.pop()?.is_null() {
                     self.jump(target)?;
@@ -3955,18 +4050,7 @@ impl Vm {
                 self.force(scope.receiver, parent, name.clone(), false, false, method)?;
             }
             Instruction::Fail(error) => return Err(error),
-            Instruction::ResolveClassType { name, local } => {
-                let frame = self.frames.last().expect("active frame");
-                let module = match frame.environment.scopes.last() {
-                    Some(scope) => scope.receiver,
-                    None => self
-                        .stack
-                        .first()
-                        .ok_or_else(|| invalid("missing module for type resolution"))?
-                        .as_object()?,
-                };
-                self.force(module, module, name, local, true, false)?;
-            }
+
             Instruction::Undefined(name) => {
                 return Err(RuntimeError::new(
                     ErrorKind::MissingMember,
@@ -4135,25 +4219,7 @@ impl Vm {
                     .class_definition
                     .as_ref()
                     .ok_or_else(|| invalid("invalid class handle"))?;
-                if class.abstract_ {
-                    let mut error = RuntimeError::new(
-                        ErrorKind::Type,
-                        format!(
-                            "Cannot instantiate abstract class `{}`.",
-                            if builtins::name(class.id).is_some() {
-                                class.name.to_string()
-                            } else {
-                                format!(
-                                    "{}#{}",
-                                    class.module.as_deref().unwrap_or(&self.program.module_name),
-                                    class.name
-                                )
-                            }
-                        ),
-                    );
-                    error.hint = Some("Abstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.".into());
-                    return Err(error);
-                }
+                self.check_class_instantiable(class)?;
                 let members = if builtin {
                     &self.program.builtin_objects
                 } else {
@@ -4211,7 +4277,10 @@ impl Vm {
                     .cloned();
                 let parent = if has_parent {
                     Some(self.pop()?.as_object()?)
-                } else if module.is_some() {
+                } else if module
+                    .as_ref()
+                    .is_some_and(|unit| unit.mode == modules::ModuleMode::Plain)
+                {
                     self.builtin_class(builtins::ty(output::MODULE)).heap_id()
                 } else {
                     None
@@ -4222,7 +4291,11 @@ impl Vm {
                     return Err(collections::external_amendment_error("pkl.ref#Reference"));
                 }
                 let members = if let Some(module) = &module {
-                    module.initial_members.clone()
+                    if module.mode == modules::ModuleMode::Amends {
+                        Vec::new()
+                    } else {
+                        module.initial_members.clone()
+                    }
                 } else {
                     self.program
                         .objects
@@ -4246,20 +4319,32 @@ impl Vm {
                     .environment
                     .clone();
                 let definition = Object {
-                    is_module: module.is_some(),
+                    is_module: module
+                        .as_ref()
+                        .is_some_and(|unit| unit.mode != modules::ModuleMode::Amends),
                     module_unit: module.as_ref().map(|unit| unit.id),
-                    class_definition: (module.is_some()).then(|| Class {
-                        module: None,
-                        id: module.as_ref().unwrap().class_id,
-                        name: if module.as_ref().unwrap().id.0 == 0 {
-                            self.program.module_name.clone()
-                        } else {
-                            module.as_ref().unwrap().name.clone()
-                        },
-                        open: false,
-                        abstract_: false,
-                    }),
-                    class_superclass_initialized: module.is_some(),
+                    class_definition: module
+                        .as_ref()
+                        .filter(|unit| unit.mode != modules::ModuleMode::Amends)
+                        .map(|unit| Class {
+                            module: None,
+                            id: unit.class_id,
+                            name: if unit.id.0 == 0 {
+                                self.program.module_name.clone()
+                            } else {
+                                unit.name.clone()
+                            },
+                            open: unit.modifiers & crate::syntax::ModifierKind::Open.flag() != 0,
+                            abstract_: unit.modifiers
+                                & crate::syntax::ModifierKind::Abstract.flag()
+                                != 0,
+                        }),
+                    class_initializing: module
+                        .as_ref()
+                        .is_some_and(|unit| unit.mode == modules::ModuleMode::Extends),
+                    class_superclass_initialized: module
+                        .as_ref()
+                        .is_some_and(|unit| unit.mode == modules::ModuleMode::Plain),
                     module_initializing: module.is_some(),
                     published_module_members: if module.is_some() {
                         members.iter().map(|m| m.code).collect()
@@ -4404,25 +4489,7 @@ impl Vm {
                     .callsite_hidden = true;
                 self.invoke_function(id, vec![left], false)?;
             }
-            Instruction::CheckType(ty) => {
-                let frame = self.frames.last().expect("active frame");
-                if self
-                    .program
-                    .metadata
-                    .get(frame.block)
-                    .is_some_and(|metadata| {
-                        metadata.property_typecheck == Some(frame.pc.saturating_sub(1))
-                    })
-                    && frame
-                        .force
-                        .as_ref()
-                        .is_some_and(|force| force.skip_typecheck)
-                {
-                    return Ok(());
-                }
-                let value = self.pop()?;
-                self.begin_type(ty, value, TypeDestination::Stack, Vec::new())?;
-            }
+
             Instruction::Duplicate => {
                 let value = self.pop()?;
                 self.stack.push(value.clone());
@@ -4959,11 +5026,6 @@ fn compile_module_configured(
     options: CompileOptions,
     instrument: bool,
 ) -> Result<Arc<Program>, RuntimeError> {
-    if let Some(declaration) = &resolved.module.declaration
-        && (declaration.parent.is_some() || !declaration.modifiers.is_empty())
-    {
-        return Err(unsupported_type("module inheritance and modifiers").at(declaration.span));
-    }
     let mut program = Program::new(Vec::new());
     compile_unit_into(&mut program, resolved, options, instrument, None, None)?;
     Ok(Arc::new(program))
@@ -4977,11 +5039,6 @@ fn compile_unit_into(
     source: Option<Arc<crate::value::RuntimeSource>>,
     identity: Option<crate::modules::ModuleIdentity>,
 ) -> Result<crate::modules::UnitId, RuntimeError> {
-    if let Some(declaration) = &resolved.module.declaration
-        && (declaration.parent.is_some() || !declaration.modifiers.is_empty())
-    {
-        return Err(unsupported_type("module inheritance and modifiers").at(declaration.span));
-    }
     let unit = crate::modules::UnitId(
         program
             .units
@@ -5006,6 +5063,12 @@ fn compile_unit_into(
         type_scopes: Vec::new(),
         modifiers: Vec::new(),
         constraint_module: false,
+        runtime_type_owner: resolved
+            .module
+            .declaration
+            .as_ref()
+            .is_some_and(|declaration| declaration.parent.is_some()),
+        runtime_type_fallback: None,
         alias_frames: Vec::new(),
         constraint_origins: BTreeMap::new(),
         active_constraints: BTreeMap::new(),
@@ -5054,22 +5117,59 @@ fn compile_unit_into(
             }
         }
     }
+    let mode = match resolved
+        .module
+        .declaration
+        .as_ref()
+        .and_then(|declaration| declaration.parent.as_ref())
+        .map(|parent| parent.kind)
+    {
+        Some(crate::syntax::ModuleParentKind::Extends) => modules::ModuleMode::Extends,
+        Some(crate::syntax::ModuleParentKind::Amends) => modules::ModuleMode::Amends,
+        None => modules::ModuleMode::Plain,
+    };
+    let modifiers = resolved
+        .module
+        .declaration
+        .as_ref()
+        .map_or(0, |declaration| {
+            crate::syntax::modifier_flags(&declaration.modifiers)
+        });
     let mut entry = Code::default();
     entry.push(Instruction::MakeObject {
         template,
         has_parent: false,
     });
+    if let Some(parent) = resolved
+        .module
+        .declaration
+        .as_ref()
+        .and_then(|declaration| declaration.parent.as_ref())
+    {
+        let spec = modules::ImportSpec::new(
+            parent.uri.clone().into(),
+            parent.span,
+            unit,
+            compiler.identity.as_ref(),
+        )?;
+        entry.push_at(Instruction::ImportModule(spec), parent.span);
+        entry.push_at(Instruction::InitializeModuleParent, parent.span);
+    }
     compiler.type_scopes.push(resolved.module.members.clone());
     if let Some(declaration) = &resolved.module.declaration {
         compiler.annotations(&declaration.annotations, &mut entry)?;
     }
     for method in [false, true] {
+        if mode == modules::ModuleMode::Amends {
+            break;
+        }
         for (index, member) in resolved.module.members.iter().enumerate() {
             let compiled = compiler.program.objects[template][index].clone();
             if compiled.method != method {
                 continue;
             }
-            let annotated = !member.annotations.is_empty()
+            let annotated = mode != modules::ModuleMode::Amends
+                && !member.annotations.is_empty()
                 && !matches!(
                     member.expr.kind,
                     crate::syntax::ExprKind::Class { .. }
@@ -5113,6 +5213,8 @@ fn compile_unit_into(
         template,
         entry,
         initial_members: initial_module_members,
+        mode,
+        modifiers,
         class_id: if unit.0 == 0 {
             reference::MODULE_ID
         } else {
@@ -5165,6 +5267,8 @@ struct Compiler<'a> {
     type_scopes: Vec<Vec<crate::syntax::Member>>,
     modifiers: Vec<crate::syntax::Modifier>,
     constraint_module: bool,
+    runtime_type_owner: bool,
+    runtime_type_fallback: Option<Span>,
     /// Alias use sites retained separately from executable constraint blocks.
     alias_frames: Vec<RuntimeFrame>,
     constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
@@ -5238,7 +5342,7 @@ fn reference_constrained_type(check: &TypeCheck) -> Option<&TypeCheck> {
 impl Compiler<'_> {
     /// Source owned by the executable value after Java's grouping removal and
     /// direct numeric negation folding. Authored spans remain the identity for
-    /// resolution and assertion observations; only value-call frames use this.
+    /// resolution and assertion observations; runtime value locations use this.
     fn executable_value_span(&self, expression: &crate::syntax::Expr) -> Span {
         use crate::syntax::{ExprKind, UnaryOp};
 
@@ -5608,10 +5712,8 @@ impl Compiler<'_> {
                         != 0,
                 };
                 // Class definitions are forced lazily, including their member type resolution.
+                let arena = modules::ArenaCheckpoint::new(self.program);
                 let checkpoint = (
-                    self.program.blocks.len(),
-                    self.program.metadata.len(),
-                    self.program.objects.len(),
                     self.type_scopes.len(),
                     self.member.clone(),
                     self.modifiers.clone(),
@@ -5619,12 +5721,10 @@ impl Compiler<'_> {
                 let template = match self.object_template(members, true, false) {
                     Ok(template) => template,
                     Err(error) => {
-                        self.program.blocks.truncate(checkpoint.0);
-                        self.program.metadata.truncate(checkpoint.1);
-                        self.program.objects.truncate(checkpoint.2);
-                        self.type_scopes.truncate(checkpoint.3);
-                        self.member = checkpoint.4;
-                        self.modifiers = checkpoint.5;
+                        arena.rollback(self.program);
+                        self.type_scopes.truncate(checkpoint.0);
+                        self.member = checkpoint.1;
+                        self.modifiers = checkpoint.2;
                         let span = error.span.unwrap_or(expression.span);
                         output.push_at(Instruction::Fail(error.at(span)), span);
                         return Ok(());
@@ -5720,6 +5820,7 @@ impl Compiler<'_> {
             ExprKind::TypeAlias {
                 type_parameters,
                 ty,
+                ..
             } => {
                 let begin = output.len();
                 let declaration_name = self
@@ -5747,6 +5848,44 @@ impl Compiler<'_> {
                     end: 0,
                 });
                 self.declaration_annotations(expression, output)?;
+                let declaration = self.declaration_base + expression.span.start;
+                let formals = type_parameters
+                    .iter()
+                    .map(|parameter| {
+                        (
+                            parameter.name.clone(),
+                            TypeCheck::Parameter {
+                                block: declaration,
+                                name: parameter.name.clone().into(),
+                            },
+                        )
+                    })
+                    .collect();
+                let previous_module = std::mem::replace(&mut self.constraint_module, true);
+                let alias_body = self.compile_type_at(
+                    ty,
+                    self.type_scopes.len(),
+                    &mut BTreeSet::new(),
+                    &formals,
+                );
+                self.constraint_module = previous_module;
+                if let Ok(body) = alias_body {
+                    self.program.alias_definitions.insert(
+                        declaration,
+                        type_resolution::AliasDefinition {
+                            parameters: type_parameters
+                                .iter()
+                                .map(|parameter| Arc::from(parameter.name.as_str()))
+                                .collect(),
+                            body,
+                            origin: RuntimeFrame {
+                                source: self.source.clone(),
+                                span: ty.span,
+                                member: self.member.clone(),
+                            },
+                        },
+                    );
+                }
                 let parameters = type_parameters
                     .iter()
                     .map(|parameter| (parameter.name.clone(), TypeCheck::Unknown))
@@ -6198,6 +6337,13 @@ impl Compiler<'_> {
         output: &mut Code,
     ) -> Result<(), Box<(RuntimeError, Span)>> {
         use crate::syntax::{ExprKind, TypeKind};
+        if let Ok(check) =
+            self.compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), parameters)
+            && check.has_declared()
+        {
+            output.push_at(Instruction::ResolveType(check), ty.span);
+            return Ok(());
+        }
         match &ty.kind {
             TypeKind::Named {
                 path,
@@ -6402,6 +6548,7 @@ impl Compiler<'_> {
                     && let ExprKind::TypeAlias {
                         type_parameters,
                         ty: aliased,
+                        ..
                     } = &member.expr.kind
                 {
                     let substitutions = type_parameters
@@ -6435,9 +6582,36 @@ impl Compiler<'_> {
         parameters: &BTreeMap<String, TypeCheck>,
     ) -> Result<TypeCheck, RuntimeError> {
         use crate::syntax::{ExprKind, TypeKind};
+        if self.runtime_type_owner
+            && self.runtime_type_fallback != Some(ty.span)
+            && let TypeKind::Named {
+                path, arguments, ..
+            } = &ty.kind
+            && path.len() == 1
+            && !parameters.contains_key(&path[0])
+        {
+            let actuals = arguments
+                .iter()
+                .map(|argument| self.compile_type_at(argument, limit, aliases, parameters))
+                .collect::<Result<Vec<_>, _>>()?;
+            let fallback = if crate::diagnostic_names::BASE_PROPERTIES.contains(&path[0].as_str()) {
+                let previous = self.runtime_type_fallback.replace(ty.span);
+                let result = self.compile_type_at(ty, limit, aliases, parameters);
+                self.runtime_type_fallback = previous;
+                Some(result)
+            } else {
+                None
+            };
+            let result = self.declared_type(ty, actuals);
+            if let TypeCheck::Declared { recipe, .. } = &result {
+                self.program.type_recipes[*recipe].builtin = fallback;
+            }
+            return Ok(result);
+        }
         Ok(match &ty.kind {
             TypeKind::Unknown => TypeCheck::Unknown,
             TypeKind::Nothing => TypeCheck::Nothing,
+            TypeKind::Module => self.module_type(ty.span),
             TypeKind::Function {
                 parameters: args,
                 return_type,
@@ -6580,14 +6754,17 @@ impl Compiler<'_> {
                     .module
                     .members
                     .iter()
-                    .find(|member| member.name == path[0] && member.local)
-                    .ok_or_else(|| {
-                        RuntimeError::new(
-                            ErrorKind::Type,
-                            format!("Cannot find module import `{}`.", path[0]),
-                        )
-                        .at(name_spans[0])
-                    })?;
+                    .find(|member| member.name == path[0] && member.local);
+                if import.is_none()
+                    || !matches!(&import.unwrap().expr.kind, ExprKind::Import { uri, .. } if uri == "pkl:ref")
+                {
+                    let arguments = arguments
+                        .iter()
+                        .map(|argument| self.compile_type_at(argument, limit, aliases, parameters))
+                        .collect::<Result<Vec<_>, _>>()?;
+                    return Ok(self.declared_type(ty, arguments));
+                }
+                let import = import.unwrap();
                 let ExprKind::Import { uri, .. } = &import.expr.kind else {
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
@@ -6599,7 +6776,11 @@ impl Compiler<'_> {
                     .at(name_spans[0]));
                 };
                 if uri != "pkl:ref" {
-                    return Err(unsupported_type(&format!("module import {uri}")).at(import.span));
+                    let arguments = arguments
+                        .iter()
+                        .map(|argument| self.compile_type_at(argument, limit, aliases, parameters))
+                        .collect::<Result<Vec<_>, _>>()?;
+                    return Ok(self.declared_type(ty, arguments));
                 }
                 match path[1].as_str() {
                     "Domain" if arguments.is_empty() => TypeCheck::RefDomain,
@@ -6687,6 +6868,15 @@ impl Compiler<'_> {
                     parameter.clone()
                 } else if let Some((member, index)) = self.find_type(&path[0], limit) {
                     match &member.expr.kind {
+                        ExprKind::Import { .. } => {
+                            let actuals = arguments
+                                .iter()
+                                .map(|argument| {
+                                    self.compile_type_at(argument, limit, aliases, parameters)
+                                })
+                                .collect::<Result<Vec<_>, _>>()?;
+                            self.declared_type(ty, actuals)
+                        }
                         ExprKind::Class { .. } => {
                             if !arguments.is_empty() {
                                 return Err(RuntimeError::new(
@@ -6709,6 +6899,7 @@ impl Compiler<'_> {
                         ExprKind::TypeAlias {
                             type_parameters,
                             ty: aliased,
+                            ..
                         } => {
                             if !arguments.is_empty() && type_parameters.len() != arguments.len() {
                                 return Err(RuntimeError::new(
@@ -7057,6 +7248,10 @@ impl Compiler<'_> {
         output: &mut Code,
         span: Span,
     ) -> Result<(), RuntimeError> {
+        if check.has_declared() {
+            output.push_at(Instruction::ResolvedClass(check.clone()), span);
+            return Ok(());
+        }
         if matches!(
             check.unaliased(),
             TypeCheck::RefDomain | TypeCheck::Reference { .. }
@@ -7143,6 +7338,16 @@ impl Compiler<'_> {
         span: Span,
         origin: Option<&RuntimeFrame>,
     ) -> Result<bool, RuntimeError> {
+        if check.has_declared() {
+            output.push_at(
+                Instruction::ResolvedDefault {
+                    ty: check.clone(),
+                    origin: origin.cloned(),
+                },
+                span,
+            );
+            return Ok(true);
+        }
         match check {
             TypeCheck::Null => output.push_at(Instruction::Constant(Value::Null), span),
             TypeCheck::Nullable(inner) => {

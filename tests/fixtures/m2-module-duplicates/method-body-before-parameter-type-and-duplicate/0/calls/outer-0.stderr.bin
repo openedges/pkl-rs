@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Modifier `hidden` is not applicable to object members.
+
+2 | function f(x: a.b.C) = new Dynamic { hidden function g() = 1 }
+                                         ^^^^^^
+at main#f (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-member-body-type-order-oracle-01/workspace/method-body-before-parameter-type-and-duplicate/main.pkl)

@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Character index `-1` is out of range `0`..`5`.
+String: "abcdef"
+
+1 | ascii[-1]
+           ^
+at  (repl:text)

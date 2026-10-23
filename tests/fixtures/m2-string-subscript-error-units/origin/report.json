@@ -1,0 +1,228 @@
+{
+  "scope": "Two additive actual evaluateExpressionString error-unit boundaries. Exact original14 source and physical URI retained read-only; only external plan differs. No Rust invocation/expectation or CLI substitute.",
+  "caseCount": 2,
+  "processCount": 2,
+  "evaluationCount": 4,
+  "records": [
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "StringSubscriptErrorUnitsProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/repeats/0/calls",
+        "plain",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/plan.tsv"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 643025125,
+        "sha256": {
+          "stdout": "3533288c1392f0e9a9437f1389652438b6ff3e1adb40f64339c0fad2e280414f",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "repeat": 0,
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+      "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+      "workspaceBefore": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "b1f51ed73882c801cea1f7a569ef455322f9c6685ca6c9ff5b1367bca8d68e56"
+        }
+      },
+      "workspaceAfter": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "b1f51ed73882c801cea1f7a569ef455322f9c6685ca6c9ff5b1367bca8d68e56"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "StringSubscriptErrorUnitsProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/repeats/1/calls",
+        "plain",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/plan.tsv"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-error-units-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 501509375,
+        "sha256": {
+          "stdout": "3533288c1392f0e9a9437f1389652438b6ff3e1adb40f64339c0fad2e280414f",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "repeat": 1,
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/workspace/main.pkl",
+      "sourceSha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e",
+      "workspaceBefore": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "b1f51ed73882c801cea1f7a569ef455322f9c6685ca6c9ff5b1367bca8d68e56"
+        }
+      },
+      "workspaceAfter": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "281add65092210c3a67523b25b8ee87a27ef0b13b8638097d8208e251b9dcf1e"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "b1f51ed73882c801cea1f7a569ef455322f9c6685ca6c9ff5b1367bca8d68e56"
+        }
+      }
+    }
+  ],
+  "observations": [
+    {
+      "repeat": 0,
+      "calls": [
+        {
+          "id": "mixed-out-of-range",
+          "expression": "mixed[4]",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43686172616374657220696e64657820603460206973206f7574206f662072616e6765206030602e2e6033602e0a537472696e673a20223ff09f98803f7a220a0a31207c206d697865645b345d0a202020202020202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430068006100720061006300740065007200200069006e00640065007800200060003400600020006900730020006f007500740020006f0066002000720061006e006700650020006000300060002e002e006000330060002e000a0053007400720069006e0067003a00200022d83dd83dde00dc00007a0022000a000a00310020007c0020006d0069007800650064005b0034005d000a0020002000200020002000200020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "text": "–– Pkl Error ––\nCharacter index `4` is out of range `0`..`3`.\nString: \"?😀?z\"\n\n1 | mixed[4]\n          ^\nat  (repl:text)\n",
+          "rawPrefix": "repeats/0/calls/outer-0"
+        },
+        {
+          "id": "unpaired-index-type",
+          "expression": "ascii[mixed[0]]",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f7220605b5d60206973206e6f7420646566696e656420666f72206f706572616e642074797065732060537472696e676020616e642060537472696e67602e0a4c656674206f706572616e64203a2022616263646566220a5269676874206f706572616e643a20223f220a0a31207c2061736369695b6d697865645b305d5d0a202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f007200200060005b005d00600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600053007400720069006e0067006000200061006e0064002000600053007400720069006e00670060002e000a004c0065006600740020006f0070006500720061006e00640020003a002000220061006200630064006500660022000a005200690067006800740020006f0070006500720061006e0064003a00200022d83d0022000a000a00310020007c002000610073006300690069005b006d0069007800650064005b0030005d005d000a0020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "text": "–– Pkl Error ––\nOperator `[]` is not defined for operand types `String` and `String`.\nLeft operand : \"abcdef\"\nRight operand: \"?\"\n\n1 | ascii[mixed[0]]\n    ^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+          "rawPrefix": "repeats/0/calls/outer-1"
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "calls": [
+        {
+          "id": "mixed-out-of-range",
+          "expression": "mixed[4]",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a43686172616374657220696e64657820603460206973206f7574206f662072616e6765206030602e2e6033602e0a537472696e673a20223ff09f98803f7a220a0a31207c206d697865645b345d0a202020202020202020205e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430068006100720061006300740065007200200069006e00640065007800200060003400600020006900730020006f007500740020006f0066002000720061006e006700650020006000300060002e002e006000330060002e000a0053007400720069006e0067003a00200022d83dd83dde00dc00007a0022000a000a00310020007c0020006d0069007800650064005b0034005d000a0020002000200020002000200020002000200020005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "text": "–– Pkl Error ––\nCharacter index `4` is out of range `0`..`3`.\nString: \"?😀?z\"\n\n1 | mixed[4]\n          ^\nat  (repl:text)\n",
+          "rawPrefix": "repeats/1/calls/outer-0"
+        },
+        {
+          "id": "unpaired-index-type",
+          "expression": "ascii[mixed[0]]",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a4f70657261746f7220605b5d60206973206e6f7420646566696e656420666f72206f706572616e642074797065732060537472696e676020616e642060537472696e67602e0a4c656674206f706572616e64203a2022616263646566220a5269676874206f706572616e643a20223f220a0a31207c2061736369695b6d697865645b305d5d0a202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a004f00700065007200610074006f007200200060005b005d00600020006900730020006e006f007400200064006500660069006e0065006400200066006f00720020006f0070006500720061006e0064002000740079007000650073002000600053007400720069006e0067006000200061006e0064002000600053007400720069006e00670060002e000a004c0065006600740020006f0070006500720061006e00640020003a002000220061006200630064006500660022000a005200690067006800740020006f0070006500720061006e0064003a00200022d83d0022000a000a00310020007c002000610073006300690069005b006d0069007800650064005b0030005d005d000a0020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "text": "–– Pkl Error ––\nOperator `[]` is not defined for operand types `String` and `String`.\nLeft operand : \"abcdef\"\nRight operand: \"?\"\n\n1 | ascii[mixed[0]]\n    ^^^^^^^^^^^^^^^\nat  (repl:text)\n",
+          "rawPrefix": "repeats/1/calls/outer-1"
+        }
+      ]
+    }
+  ],
+  "repeatDifferences": [],
+  "inputChanges": [],
+  "originalWorkspaceUnchanged": true,
+  "originalReportSha256": "cc7a5029ee4f39f4f3f9ef7b3ea4857b093428dc6de28e09f84d26a0b73a310f",
+  "originalClosureSha256": "44b01237b49913413e17c20bdb871c1e908b479c0b6e39ef014979cf7a569520",
+  "identity": {
+    "jar": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+    "jarSha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "lockSha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "javaExecutableSha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+    "jdkReleaseSha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+    "jdkRuntimeModulesSha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "helperOrigin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-string-subscript-oracle-01/StringSubscriptProbe.java",
+    "helperOriginSha256": "ec4f3895f32439c86488d64768fca98e8c033ab8aeeff3cfb7f5a39f0fafa1c3",
+    "helperChange": "Class name plus external plan-file argument only. Actual unchanged ModuleSource.path/work main.pkl, expressionAPI/source/helperevent logic preserved."
+  }
+}

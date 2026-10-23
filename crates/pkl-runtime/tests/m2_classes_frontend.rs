@@ -49,6 +49,7 @@ fn generic_typealias_parameters_are_scoped_and_duplicate_checked() {
     let ExprKind::TypeAlias {
         type_parameters,
         ty,
+        ..
     } = &module.members[0].expr.kind
     else {
         panic!("alias")
@@ -188,11 +189,13 @@ fn declared_types_ignore_value_bindings_in_nested_scopes() {
         Binding::ImplicitThis
     );
     let module = parse_module("value: one.two.Three = null").unwrap();
-    assert!(
-        resolve_module(&module)
-            .unwrap_err()
-            .message
-            .starts_with("Invalid type name `one.two.Three`.\n\n")
+    let error = resolve_module(&module).unwrap_err();
+    assert_eq!(error.message, "Invalid type name `one.two.Three`.");
+    assert_eq!(
+        error.hint(),
+        Some(
+            "A qualified type name consists of a module import name and a type name.\nExample: `importedModule.SomeClass`"
+        )
     );
     for source in [
         "result = new { class Nested {} }",
@@ -260,7 +263,8 @@ fn semantic_diagnostics_preserve_declared_module_and_identifier_spans() {
     let source = "module example.named\nresult = 1\nlocal result = 2";
     let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
     assert_eq!(error.message, "Duplicate definition of member `result`.");
-    assert_eq!(&source[error.span.start..error.span.end], "result");
+    // Pinned Java checks the full property header, including `local`.
+    assert_eq!(&source[error.span.start..error.span.end], "local result");
     assert_eq!(error.module_name.as_deref(), Some("example.named"));
 }
 

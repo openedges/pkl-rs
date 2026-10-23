@@ -1,0 +1,575 @@
+{
+  "scope": "Two authorized fresh pinned Java inheritance boundaries: abstract parent amendment first-error and actual primary receiver identity during parent source reentry. Two fresh JVMs per source; all prior controls unchanged. No Rust evaluation or compatibility claim.",
+  "caseCount": 2,
+  "processCount": 4,
+  "records": [
+    {
+      "id": "abstract-parent-amends-first-error",
+      "repeat": 0,
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "QualifiedTypesProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/0/calls",
+        "plain"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/main.pkl",
+      "sourceSha256": "4ecc68f7d9fd426ff90118c1de013acefb29cc126f22cc2e628c0d0bbeff32d2",
+      "startedUnixNs": 1792720123083555000,
+      "finishedUnixNs": 1792720123817007000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 732350625,
+        "sha256": {
+          "stdout": "3808a86c97a66af7e2520a2a7042c6192c6ade7990f1d9c81916bbee6027a199",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "workspaceBefore": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4ecc68f7d9fd426ff90118c1de013acefb29cc126f22cc2e628c0d0bbeff32d2"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "391d95caf9f4db206bcd6d68bfd95a66045394e9db63964a1a5ff1f0bdcf48c7"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "f60aec2eb1a471507307be9e7266c5e7431cbdfe992dc56241d6cbf9af191b2d"
+        }
+      },
+      "workspaceAfter": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4ecc68f7d9fd426ff90118c1de013acefb29cc126f22cc2e628c0d0bbeff32d2"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "391d95caf9f4db206bcd6d68bfd95a66045394e9db63964a1a5ff1f0bdcf48c7"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "f60aec2eb1a471507307be9e7266c5e7431cbdfe992dc56241d6cbf9af191b2d"
+        }
+      }
+    },
+    {
+      "id": "abstract-parent-amends-first-error",
+      "repeat": 1,
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "QualifiedTypesProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/1/calls",
+        "plain"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/main.pkl",
+      "sourceSha256": "4ecc68f7d9fd426ff90118c1de013acefb29cc126f22cc2e628c0d0bbeff32d2",
+      "startedUnixNs": 1792720123817271000,
+      "finishedUnixNs": 1792720124406223000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 588095625,
+        "sha256": {
+          "stdout": "3808a86c97a66af7e2520a2a7042c6192c6ade7990f1d9c81916bbee6027a199",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "workspaceBefore": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4ecc68f7d9fd426ff90118c1de013acefb29cc126f22cc2e628c0d0bbeff32d2"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "391d95caf9f4db206bcd6d68bfd95a66045394e9db63964a1a5ff1f0bdcf48c7"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "f60aec2eb1a471507307be9e7266c5e7431cbdfe992dc56241d6cbf9af191b2d"
+        }
+      },
+      "workspaceAfter": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4ecc68f7d9fd426ff90118c1de013acefb29cc126f22cc2e628c0d0bbeff32d2"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "391d95caf9f4db206bcd6d68bfd95a66045394e9db63964a1a5ff1f0bdcf48c7"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "f60aec2eb1a471507307be9e7266c5e7431cbdfe992dc56241d6cbf9af191b2d"
+        }
+      }
+    },
+    {
+      "id": "amends-parent-source-primary-identity",
+      "repeat": 0,
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "QualifiedTypesProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls",
+        "source-reentry"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity/main.pkl",
+      "sourceSha256": "acf1b1d41cfa07192eeaa61014922ebd454071b6f054e66a5f6a7205dca0f6a3",
+      "startedUnixNs": 1792720123082328000,
+      "finishedUnixNs": 1792720123805886000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 722407209,
+        "sha256": {
+          "stdout": "ea4900dc599c7d1ac1025bb7e7d647e2419a9d16a795488c7860c3759f97579e",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "workspaceBefore": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "52989fb5572ba15c724d53f1d3ca445356f889c0b33175e6d8ce3ff09b6b245b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "acf1b1d41cfa07192eeaa61014922ebd454071b6f054e66a5f6a7205dca0f6a3"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "7a5d8c977f4ae8ca38d765fe81a64404abade33d096838a96ddffa27527223cd"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "e43c31b0b0fdadcf7c0438d44f1f21359fdc96763049960bca03a8ea87b1f7a6"
+        }
+      },
+      "workspaceAfter": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "52989fb5572ba15c724d53f1d3ca445356f889c0b33175e6d8ce3ff09b6b245b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "acf1b1d41cfa07192eeaa61014922ebd454071b6f054e66a5f6a7205dca0f6a3"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "7a5d8c977f4ae8ca38d765fe81a64404abade33d096838a96ddffa27527223cd"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "e43c31b0b0fdadcf7c0438d44f1f21359fdc96763049960bca03a8ea87b1f7a6"
+        }
+      }
+    },
+    {
+      "id": "amends-parent-source-primary-identity",
+      "repeat": 1,
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "QualifiedTypesProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/1/calls",
+        "source-reentry"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity/main.pkl",
+      "sourceSha256": "acf1b1d41cfa07192eeaa61014922ebd454071b6f054e66a5f6a7205dca0f6a3",
+      "startedUnixNs": 1792720123806192000,
+      "finishedUnixNs": 1792720124404043000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 596526000,
+        "sha256": {
+          "stdout": "ea4900dc599c7d1ac1025bb7e7d647e2419a9d16a795488c7860c3759f97579e",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "workspaceBefore": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "52989fb5572ba15c724d53f1d3ca445356f889c0b33175e6d8ce3ff09b6b245b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "acf1b1d41cfa07192eeaa61014922ebd454071b6f054e66a5f6a7205dca0f6a3"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "7a5d8c977f4ae8ca38d765fe81a64404abade33d096838a96ddffa27527223cd"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "e43c31b0b0fdadcf7c0438d44f1f21359fdc96763049960bca03a8ea87b1f7a6"
+        }
+      },
+      "workspaceAfter": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "52989fb5572ba15c724d53f1d3ca445356f889c0b33175e6d8ce3ff09b6b245b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "acf1b1d41cfa07192eeaa61014922ebd454071b6f054e66a5f6a7205dca0f6a3"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "7a5d8c977f4ae8ca38d765fe81a64404abade33d096838a96ddffa27527223cd"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "e43c31b0b0fdadcf7c0438d44f1f21359fdc96763049960bca03a8ea87b1f7a6"
+        }
+      }
+    }
+  ],
+  "observations": [
+    {
+      "id": "abstract-parent-amends-first-error",
+      "repeat": 0,
+      "calls": [
+        {
+          "expression": "existing",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "utf8Sha256": "ce2ec88359baf22f53be0fe91c8bcbd61829449eab07c81a56a8afff4f37704a",
+          "utf16BESha256": "74291e112abf227818e928f8398374ecb00fa994ef2b5f60a6e0c32dcfb549c4",
+          "text": "–– Pkl Error ––\nCannot instantiate abstract class `parent`.\n\n2 | amends \"life:/parent\"\n    ^^^^^^^^^^^^^^^^^^^^^\nat main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/main.pkl)\n\nAbstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.\n",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/0/calls/outer-0"
+        },
+        {
+          "expression": "existing",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "utf8Sha256": "ce2ec88359baf22f53be0fe91c8bcbd61829449eab07c81a56a8afff4f37704a",
+          "utf16BESha256": "74291e112abf227818e928f8398374ecb00fa994ef2b5f60a6e0c32dcfb549c4",
+          "text": "–– Pkl Error ––\nCannot instantiate abstract class `parent`.\n\n2 | amends \"life:/parent\"\n    ^^^^^^^^^^^^^^^^^^^^^\nat main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/main.pkl)\n\nAbstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.\n",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/0/calls/outer-1"
+        }
+      ],
+      "counters": "resolve=1\nsource=1\ncallback=0\n"
+    },
+    {
+      "id": "abstract-parent-amends-first-error",
+      "repeat": 1,
+      "calls": [
+        {
+          "expression": "existing",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "utf8Sha256": "ce2ec88359baf22f53be0fe91c8bcbd61829449eab07c81a56a8afff4f37704a",
+          "utf16BESha256": "74291e112abf227818e928f8398374ecb00fa994ef2b5f60a6e0c32dcfb549c4",
+          "text": "–– Pkl Error ––\nCannot instantiate abstract class `parent`.\n\n2 | amends \"life:/parent\"\n    ^^^^^^^^^^^^^^^^^^^^^\nat main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/main.pkl)\n\nAbstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.\n",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/1/calls/outer-0"
+        },
+        {
+          "expression": "existing",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "utf8Sha256": "ce2ec88359baf22f53be0fe91c8bcbd61829449eab07c81a56a8afff4f37704a",
+          "utf16BESha256": "74291e112abf227818e928f8398374ecb00fa994ef2b5f60a6e0c32dcfb549c4",
+          "text": "–– Pkl Error ––\nCannot instantiate abstract class `parent`.\n\n2 | amends \"life:/parent\"\n    ^^^^^^^^^^^^^^^^^^^^^\nat main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/main.pkl)\n\nAbstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.\n",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/abstract-parent-amends-first-error/1/calls/outer-1"
+        }
+      ],
+      "counters": "resolve=1\nsource=1\ncallback=0\n"
+    },
+    {
+      "id": "amends-parent-source-primary-identity",
+      "repeat": 0,
+      "calls": [
+        {
+          "expression": "marker",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+          "utf16BESha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa",
+          "text": "9",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-0"
+        },
+        {
+          "expression": "this.getClass() == import(\"life:/parent\").getClass()",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+          "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b",
+          "text": "true",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-1"
+        },
+        {
+          "expression": "marker",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+          "utf16BESha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa",
+          "text": "9",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/0/calls/outer-2"
+        }
+      ],
+      "counters": "resolve=1\nsource=1\ncallback=1\n"
+    },
+    {
+      "id": "amends-parent-source-primary-identity",
+      "repeat": 1,
+      "calls": [
+        {
+          "expression": "marker",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+          "utf16BESha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa",
+          "text": "9",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/1/calls/outer-0"
+        },
+        {
+          "expression": "this.getClass() == import(\"life:/parent\").getClass()",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+          "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b",
+          "text": "true",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/1/calls/outer-1"
+        },
+        {
+          "expression": "marker",
+          "status": "success\n",
+          "errorClass": "",
+          "utf8Sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+          "utf16BESha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa",
+          "text": "9",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases/amends-parent-source-primary-identity/1/calls/outer-2"
+        }
+      ],
+      "counters": "resolve=1\nsource=1\ncallback=1\n"
+    }
+  ],
+  "repeatDifferences": [],
+  "inputHashes": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/QualifiedTypesProbe.java": "d90a222856ee44c1c963044953378f088440c03e43fab090c17cf7971321de89",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/run.py": "f91986b12206ec5931c9e2c78155030268a14fd9fd78c28c3817b10c06cbd846",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/cases.json": "317b11758394351857d5aa97530f4c2982401da3416d8acfba21be4d1fd9d6be",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/tools/compat.py": "fa40a0daee29eb078c7b9cb814fc3779556ceaacc2634657c96e3f7810aa5edc",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/classes/QualifiedTypesProbe$Key$1.class": "3eb90d1d60d0ad81aca8675623c00b7f2920f916194e916715477b76d866f6c7",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/classes/QualifiedTypesProbe.class": "abeadd733214aea1827c197e1271d02b6527c3204a786c62c06a991feaa31491",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/classes/QualifiedTypesProbe$Key.class": "c33a6edd11fd1625fc6633902551bcf9fd83c51d155d3d88b82f7bbb72f04332",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/classes/QualifiedTypesProbe$1.class": "40109966d87f3f3a33c9b2353324dbb568295b3fd2d1783e18e465254c7ea697",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/main.pkl": "4ecc68f7d9fd426ff90118c1de013acefb29cc126f22cc2e628c0d0bbeff32d2",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/callback.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/plan.tsv": "391d95caf9f4db206bcd6d68bfd95a66045394e9db63964a1a5ff1f0bdcf48c7",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/abstract-parent-amends-first-error/source.pkl": "f60aec2eb1a471507307be9e7266c5e7431cbdfe992dc56241d6cbf9af191b2d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity/main.pkl": "acf1b1d41cfa07192eeaa61014922ebd454071b6f054e66a5f6a7205dca0f6a3",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity/callback.txt": "52989fb5572ba15c724d53f1d3ca445356f889c0b33175e6d8ce3ff09b6b245b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity/plan.tsv": "7a5d8c977f4ae8ca38d765fe81a64404abade33d096838a96ddffa27527223cd",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity/source.pkl": "e43c31b0b0fdadcf7c0438d44f1f21359fdc96763049960bca03a8ea87b1f7a6"
+  },
+  "inputChanges": [],
+  "sourceArtifactStability": true,
+  "maxConcurrentProcesses": 2,
+  "profile": {
+    "api": "evaluateExpressionString(ModuleSource.path(main.pkl), exact expression)",
+    "moduleCache": "one evaluator retained across calls, fresh evaluator/JVM per repeat",
+    "evaluator": "preconfigured;color=false;emptyenvprop;defaultmodulefactories+lifeSPI;defaultstackframetransformer;real Logger",
+    "helperOrigin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-expression-context-oracle-01/ExpressionContextProbe.java",
+    "helperOriginSha256": "ef1daf278fa74327b836fc343d1ea1a6974ed793ff0122f4c8d3e5c7dbac4790",
+    "helperChange": "Class name only",
+    "utf16": "actual Java chars via DataOutputStream.writeChar, separate untouched UTF8 getBytes payloads"
+  },
+  "callbackObservations": [
+    {
+      "id": "amends-parent-source-primary-identity",
+      "repeat": 0,
+      "prefix": "inner-0",
+      "expression": "this == import(\"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity/main.pkl\")",
+      "status": "success\n",
+      "text": "true",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b",
+      "errorClass": ""
+    },
+    {
+      "id": "amends-parent-source-primary-identity",
+      "repeat": 1,
+      "prefix": "inner-0",
+      "expression": "this == import(\"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-module-inheritance-oracle-01/workspace/amends-parent-source-primary-identity/main.pkl\")",
+      "status": "success\n",
+      "text": "true",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b",
+      "errorClass": ""
+    }
+  ],
+  "outerCallCount": 10,
+  "callbackCallCount": 2,
+  "workspaceChanges": [],
+  "terminalAcquisition": {
+    "argv": [
+      "python3",
+      "target/m2/stage42-module-inheritance-oracle-01/run.py"
+    ],
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42",
+    "toolSession": 88014,
+    "exitCode": 0,
+    "stdout": "acquire.stdout.log",
+    "stderr": "acquire.stderr.log"
+  },
+  "pinnedSourceSnapshots": [
+    {
+      "path": "references.lock",
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+      "snapshot": "sources/references.lock"
+    },
+    {
+      "path": "oracle.lock.json",
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+      "snapshot": "sources/oracle.lock.json"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/literal/AmendModuleNode.java",
+      "sha256": "1bc8152faaaa2d764ff4a3a306537ee642f29c0750e9ba2c8c135651b98c95ec",
+      "snapshot": "sources/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/literal/AmendModuleNode.java"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/literal/SpecializedObjectLiteralNode.java",
+      "sha256": "8f48a31c6a09b001407e81df187053a312f2b0b63c4c5eb7947db6e8917cac0e",
+      "snapshot": "sources/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/literal/SpecializedObjectLiteralNode.java"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmUtils.java",
+      "sha256": "17a5b4a3750ec5ebf9a1bc8ed930cd6165f072ca97ce9d37f4f4043ac8fcce2a",
+      "snapshot": "sources/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmUtils.java"
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/member/ClassNode.java",
+      "sha256": "4ab1314748adb166ed9a07bc3cd94f2d566d9f7e31fecb6626a54de6a3993bdf",
+      "snapshot": "sources/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/member/ClassNode.java"
+    }
+  ]
+}

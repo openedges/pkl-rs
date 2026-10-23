@@ -143,7 +143,7 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 
 핵심 언어 기능을 폭넓게 구현했지만, 전체 호환성 마감에는 상당한 작업이 남아 있습니다. 아래 9개 작업 영역은 모두 일부 종료 조건이 남은 `진행 중` 상태입니다. Stage 번호는 완료한 전체 작업의 비율이 아니라 누적 구현·검증 단계를 나타냅니다. 선택 코퍼스의 높은 성공률도 M2 전체 완료율이 아닙니다.
 
-전체 목록의 요구사항 475개와 부분 mapping 42개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. Stage 40의 실행 연결 기준 ready 3,628개·미구현 859개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. ready는 어댑터로 실행 가능하다는 뜻이며 통과 판정은 별도입니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
+전체 목록의 요구사항 475개와 부분 mapping 42개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. Stage 42의 실행 연결 기준 ready 3,663개·미구현 824개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. ready는 어댑터로 실행 가능하다는 뜻이며 통과 판정은 별도입니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
 
 남은 큰 범위는 annotation·module 초기화와 상속 규칙, 지연·재귀 타입 및 제약, collection·Reference 메타데이터의 나머지 의미론, 전체 오류 메시지·논리적 스택과 원본 upstream 코퍼스 연결입니다. 원본 언어 사례가 요구하는 표준 라이브러리·출력·로딩 기능은 M3·M4와의 의존성으로 유지합니다. 이 조건을 충족하기 전에는 검증만 남은 마감 단계로 보고하지 않습니다.
 
@@ -673,6 +673,46 @@ Java-origin 모듈 graph 22개의 실제 Node·Chromium 비교에서는 각 환�
 최종 native 선택 3,629개 중 3,606개가 Java 원시 결과와 일치했습니다. 미지원 12개·불일치 9개·원래 Java 실행 조건 불충족 1개·Java 오류 1개는 그대로 남습니다. 변형 관계 88개도 통과했습니다. 같은 평가기의 순차 계약은 정의 167개·반복 실행 334회의 호출 2,782개가 모두 일치하며, 이전 단계와 순서·입력·원시 상태·출력 채널이 같습니다. 원본 30개 native 재비교도 60회 중 일치 32회·미지원 24회·불일치 2회·원래 Java 실행 조건 불충족 2회로, 앞선 수정 후보와 모든 원시 결과가 같습니다.
 
 취득과 보고서 무결성 검사는 통과했습니다. 개발·엄격한 선택·전체 언어 gate는 실패하며 전체 gate의 실패 이유는 1,871개입니다. [최종 결과](reports/m2/stage41-final-summary.json)와 [회귀 증거](reports/m2/stage41-final-regression-captures.json)는 독립 회귀 검토, 구현 커밋 `23fe3e8`의 정확한 소스 대응과 원본 로그·실패를 보존합니다. 원본 4,527개 정의와 선택 순서는 모두 같고, `import1/2/3` 세 사례만 미지원에서 통과로 바뀌었습니다. 원시 채널 차이 3,501개는 경로 정규화 없이 개별 기록했습니다. **Stage 41의 공유 모듈 로더 구현·로컬 검증은 마감하며 M2 전체는 진행 중입니다.** 모듈 간 선언 타입 해석, 실제 `extends`·`amends`, 나머지 언어·진단·원본 코퍼스와 제품·플랫폼·성능 의무는 계속 구현해야 합니다.
+
+### Stage 42 — 모듈 선언 타입과 상속의 런타임 해석
+
+[중간 검증 기록](reports/m2/stage42-checkpoint-captures.json)과 [독립 게시 검토](reports/m2/stage42-checkpoint-publication-review.json)는 `46342c4`에 별도로 커밋하여 `m2/stage42-module-types`와 `main`에 푸시했습니다. 이 커밋은 수정 전 후보·실패 원본을 보존하는 증거 게시이며, 기능 구현 커밋이나 최종 회귀 마감이 아닙니다.
+
+Stage 41 구현 `23fe3e8`과 이전 마감 문서를 합친 `517c69f`에서 별도 작업 공간을 만들었습니다. Stage 41의 최종 회귀·증거 마감 `ba80410`은 `main`에 커밋·푸시했으며, 현재 작업 공간에도 기능 변경을 보존한 채 합쳤습니다. 공통 엔진은 `gpt-6-astra / xhigh`, session·표현식·portable 연결과 독립 Java 관찰·검토는 각각 `gpt-6.1-sol / high`에 배정합니다. 주 에이전트는 원본 코퍼스 실행 연결·통합 검사·문서·커밋·푸시를 담당합니다.
+
+첫 목표는 원본 `recursiveModule1.pkl`·`recursiveModule2.pkl`과 기존 모듈 graph 네 종류의 실제 선언 타입 해석입니다. 같은 VM·heap에서 가져온 모듈의 class·alias를 찾고, unit별 선언 identity와 실제 lexical owner를 유지합니다. 타입 해석은 module Host 요청으로 중단·재개할 수 있어야 하며, 부분 class 게시와 실패 뒤 후속 호출도 기존 Java 관찰을 그대로 검증합니다. `self-class-parent-error`의 두 번째 호출 차이를 첫 미지원 결과에 묻어 완료 처리하지 않습니다.
+
+구현에는 unit별 타입 해석 recipe, 재개 가능한 import·type lookup, 실제 alias 선언 metadata, 타입 검사·default·생성·signature 소비 경로를 연결합니다. 단순 이름은 local→현재 regular member→base→부모 regular member 순서, qualified 이름은 import를 선언한 owner와 가져온 모듈의 regular type 선언을 기준으로 해석합니다. class와 alias의 인자 해석·arity·초기화 순서를 구분하고, source·제약·generic 치환 출처를 유지합니다. synthetic 표현식의 일반 값 이름 해석과 선언 타입 해석은 구분합니다. 일반 값 경로에 원래 모듈의 lexical import나 private 선언을 노출하지 않으며, 타입 경로의 실제 module owner·local class·import 접근 규칙은 별도 Java 대조군으로 확인합니다.
+
+이 기반으로 실제 `extends`와 별도의 부모 class 채택 규칙을 갖는 `amends`를 구현했습니다. 기존 원본·22개 graph·paired import 오류·표현식 진단을 보존하고, 추가 Java 관찰은 기존 자료로 판정할 수 없는 타입 lookup·인자 순서·alias default·constraint·재시도와 상속·amending 선언 경계에 사용합니다. GC·Host 재진입·취소·종료와 실제 native·Node·Chromium 비교, 필요한 Rust 검사와 전체 회귀를 함께 수행합니다. **Stage 42와 M2 전체는 진행 중이며, 선언 lookup 일부 성공으로 전체 타입·상속 의무를 줄이지 않습니다.**
+
+원본 `input/modules` 41개 전체의 실제 CLI 계약을 연결합니다. 기존 registry 102개의 순서·내용을 보존하고 미연결 35개를 추가하여 원본 adapter는 137개가 됩니다. 실행 연결과 통과 판정은 별개입니다. 같은 물리 workspace에서 Java 41개×두 반복을 취득한 뒤 안정된 Rust 후보를 비교하며, 모든 argv·환경·리소스·종료 조건과 생성 파일을 유지합니다. 추가 실패나 미지원 사례를 선택에서 빼지 않습니다. 별도의 `amends` 선언 제한과 부모 로딩 재진입·추상 부모 오류 우선순위도 실제 Java와 대조합니다.
+
+Java 원본 41개의 두 번 반복 취득은 정상 종료 44회·일반 Pkl 오류 38회로 마쳤고, 모든 원시 채널이 반복 간 같습니다. 독립 검토는 입력·원본 명령·환경·리소스·기대 종료 상태와 workspace 복구를 확인했습니다. 이 결과는 Rust 통과 증거가 아닙니다. 실행 연결 목록은 잠정 ready 3,663개·미구현 824개·미연결 40개이며, 최종 코드 고정 뒤 구현 hash와 전체 검증 결과를 갱신합니다. 타입 해석 경로에서 발생한 기존 256KB 스택 회귀는 명령 dispatch 분리와 불변 공유 타입의 선언 포함 정보 캐시로 수정했습니다. 원래 테스트 조건의 네 검사 통과와 실패·timeout 기록을 보존합니다.
+
+고정한 세 번째 구현 후보의 원본 CLI 비교는 41개×두 반복에서 일치 70회·미지원 10회·불일치 2회입니다. 고유 원본 기준으로 35개가 통과하고, `amendModule6`, `equality`, `invalidAmend6`, `supercalls3`, `typedModuleMethods1`은 미지원, `日本語`는 glob 구문의 불일치로 남습니다. 원본 triple-dot 탐색, `pkl:base`·`pkl:test`, Resource 값과 glob 의존성을 구현해야 하며 M3·M4에 배정된 기능이라는 이유로 이 여섯 M2 의무를 제외하지 않습니다. 첫 후보의 29개 통과와 모든 실패 원본도 보존합니다.
+
+실제 native API 비교에서는 기존 모듈 graph 22개와 추가 상속 graph 3개의 두 번 반복·136개 호출이 모두 일치합니다. 문자열 인덱싱의 추가 14개 표현식도 두 evaluator의 28개 호출이 일치하지만, 별도로 취득한 두 오류 사례의 네 호출은 Java UTF-8 바이트가 같아도 UTF-16 payload가 다릅니다. 단독 surrogate를 보존하는 공통 진단 표현이 남은 구현 조건입니다. 최초 native 집계 도구의 Host 요청 이름 변환 오류는 원시 결과를 유지한 별도 오프라인 재판정으로 바로잡았으며, 평가 실행을 다시 했다고 기록하지 않습니다.
+
+필수 Rust 검사 다섯 개가 모두 통과했고, workspace 테스트는 671개 harness 호출 통과·1개 ignored입니다. 이 수치는 고유 기능 커버리지가 아닙니다. 최초 검사에서 발견한 새 테스트의 Clippy 경고와 기존 `amends` 컴파일 실패 가정은 테스트만 수정했습니다. 원래 768단계·256KB 입력은 성공 후 해제 검사로 보존하고, 같은 깊은 식 뒤의 실제 URI 컴파일 실패를 별도로 검증합니다. 같은 구현의 실제 Node·Chromium 비교에서도 기존 graph 22개·상속 graph 3개·문자열 14개의 호출이 모두 일치하고, 추가 오류 두 사례의 UTF-16 불일치는 그대로 남습니다. 환경별 PCF 출력 384회는 모두 통과했으며 trace는 일치 58회·Java 오류 32회입니다. 공통 플랫폼 6,078개는 세 Rust 대상 간 같고 Java 일치 6,076개와 기존 정규식 차이 두 개를 유지합니다. 기존 expression-session Java 대조군 여덟 종류의 native 비교는 52개 호출 중 46개 일치·6개 미지원이며, synthetic URI의 상대 read/import와 선언된 메서드의 Resource read가 남습니다. 전체 선택 3,664개와 순차 evaluator 회귀, 증거 검토·게시를 이어갑니다. 전체 회귀 중 기존 `reference-stage10-access-invalid`의 첫 논리적 프레임에 잘못된 모듈 이름을 붙이는 새 회귀를 발견했습니다. 원래 후보와 실행 기록을 보존하고 별도 소스 복사본에서 선언 프레임의 owner와 멤버 이름을 함께 유지하는 수정안을 검증합니다. **이 결과는 Stage 42 또는 M2 전체 완료 선언이 아닙니다.**
+
+수정 전 고정 후보의 전체 선택 취득은 3,664개 중 일치 3,639개·미지원 13개·불일치 10개·원래 Java 실행 조건 불충족 1개·Java 오류 1개로 마쳤습니다. 변형 관계 88개와 같은 evaluator의 순차 호출 2,782개는 모두 일치했고 소스·artifact는 실행 중 같았습니다. 전체 gate 실패 이유 1,838개와 새 Reference 프레임 회귀를 포함한 원본 결과를 유지합니다. 이전 3,629개 정의·입력·상대 순서를 유지하며, 새 35개는 원래 inventory 위치에 끼워집니다. 이전에 통과하던 사례의 새 회귀는 Reference 프레임 한 건이고, 기존 상속 사례 네 건과 새 원본 서른 건이 통과했습니다.
+
+### Stage 42 구현 체크포인트
+
+전체 취득·검증 프로세스 종료와 원본 증거 마감을 확인한 뒤 Reference owner 수정과 테스트·fixture 아홉 개를 작업 공간에 반영했습니다. 분리된 수정 후보의 native·Node·Chromium owner 대조군과 필수 Rust 검사 다섯 개가 통과했으며, 검사에 쓰인 소스·fixture 5,810개가 승격한 작업 공간과 모두 같습니다. 실행 목록의 source hash를 갱신하고 freshness 검사도 통과했습니다. 복사본의 CI workflow 누락을 별도로 기록하며 이 로컬 검사를 CI 실행으로 주장하지 않습니다. [구현 검증 기록](reports/m2/stage42-implementation-captures.json)은 수정 전 전체 회귀와 수정 후 집중 검증을 구분합니다. 수정 후 전체 선택 재실행과 Stage 42 최종 마감, M2 전체 완료는 아직 남아 있습니다.
+
+### Stage 43 — UTF-16을 보존하는 공통 진단
+
+Stage 42의 고정 후보가 전체 회귀를 실행하는 동안, 검토한 Reference 프레임 수정 후보를 복사한 별도 작업 공간에서 공통 진단 구현을 시작합니다. 이 공간의 변경은 Stage 42 검증 소스에 섞지 않으며, 승격 전에 실제 변경 파일과 artifact의 소스 대응을 확인합니다. 공통 엔진은 `gpt-6-astra / xhigh`, native·Node·Chromium 연결과 독립 Java 관찰은 각각 `gpt-6.1-sol / high`가 담당합니다.
+
+오류 message·hint·type detail·논리적 frame·최종 진단을 `PklString`으로 유지하고, CLI와 기존 byte API 경계에서만 Java UTF-8 인코딩을 적용합니다. 여러 변경 가능한 오류 표현이나 단독 surrogate를 지우는 대체 규칙을 추가하지 않습니다. 정상적인 Unicode 문자열과 단독 high/low surrogate, 유효한 pair, 실제 `?`·U+FFFD·NUL을 구분한 전체 UTF-16·UTF-8 결과를 비교합니다.
+
+기존 문자열 오류 두 사례와 별도로 Java의 throw, 단순 타입·union·제약 및 power detail, 실제 trace 후 throw와 renderer hint를 관찰했습니다. 12개 순서 있는 호출을 두 번씩 실행한 결과는 값 두 회·일반 Pkl 오류 22회이며 반복 결과는 같습니다. hint가 발생하지 않은 초기 시도도 실패 원본으로 보존합니다. 같은 evaluator의 후속 호출·오류 선택·GC·종료와 실제 native·Node·Chromium 경계를 함께 검증해야 합니다. **현재는 분리된 작업 공간에서 공통 표현과 소비 경로를 구현하는 단계이며, 전체 진단 또는 M2 완료 선언이 아닙니다.**
+
+공통 컴파일·모듈 준비·실행 오류와 session·probe의 canonical 경로를 연결했습니다. 기존 문자열 오류 두 사례는 native에서 전체 UTF-16·Java UTF-8이 모두 일치하며, producer·hint 열 호출의 두 반복도 일치합니다. 여기서 드러난 `Undefined()` 제안 누락은 property 읽기에도 실제 method 후보를 포함하는 공통 규칙으로 수정했습니다. 기존 중복 선언의 원본 source·물리 URI·전체 오류를 유지한 준비 단계 검사도 통과했습니다. 최초 테스트의 내부 단계 분류 가정 오류는 기존 `Resolution` 의미를 확인해 테스트만 고쳤고 실패 기록을 유지합니다. 단일 값·연속 평가의 canonical helper와 Node·Wasm 값·오류 경계도 연결했으며, 문자열 리터럴 타입·union의 추가 Java 관찰을 적용하고 실제 portable 실행을 준비합니다.
+
+Host logger의 새 Java 관찰에서는 재진입한 guest 오류 뒤 logger가 던진 예외가 `PklBugException`으로 보고됩니다. 두 evaluator의 16개 실제 호출에서 Java 내부 오류 4회·일반 Pkl 오류 8회·후속 정상 값 4회를 원본 그대로 보존하며 내부 오류를 호환성 통과로 세지 않습니다. 지원하는 UTF-8 소스의 supplementary member 이름은 실제 frame에서 검증했고, backtick 식별자 안의 `\\u{...}`는 escape로 해석되지 않습니다. 임의 단독 surrogate를 가진 source·URI나 frame 이름을 이 관찰로 검증했다고 주장하지 않습니다. Node 오류 객체의 UTF-16 보존과 숨겨진 Env 인자, Wasm의 긴 문자열 인자 수 제한 수정은 독립 정적 검토를 마쳤으며 실제 실행 검증은 별도입니다.
 
 ## M3 — 표준 라이브러리와 출력
 

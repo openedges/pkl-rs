@@ -1,0 +1,9 @@
+factory life:/child
+resolve life:/child attempt=1
+source-start life:/child attempt=1
+source-end life:/child attempt=1
+outer-0 success
+outer-1 success
+outer-2 success
+factory life:/child
+outer-3 success
