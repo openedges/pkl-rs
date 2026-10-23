@@ -9,6 +9,7 @@
 // specific language governing permissions and limitations under the License.
 
 use super::RenderFrame;
+use crate::pkl_string::{PklString, PklStringBuilder};
 use std::fmt::Write;
 
 #[derive(Debug, PartialEq, Eq)]
@@ -150,7 +151,11 @@ fn compress_range<T: PartialEq>(
     }
 }
 
-pub(super) fn render(output: &mut String, frames: &[RenderFrame<'_>], hint: Option<&str>) {
+pub(super) fn render(
+    output: &mut PklStringBuilder,
+    frames: &[RenderFrame<'_>],
+    hint: Option<&PklString>,
+) {
     // Invalid source positions are never compressed with each other.
     let keys: Vec<_> = frames
         .iter()
@@ -160,17 +165,19 @@ pub(super) fn render(output: &mut String, frames: &[RenderFrame<'_>], hint: Opti
     render_groups(output, frames, &compress(&keys), hint, "", true);
 }
 
-fn render_hint(output: &mut String, hint: Option<&str>, margin: &str) {
+fn render_hint(output: &mut PklStringBuilder, hint: Option<&PklString>, margin: &str) {
     if let Some(hint) = hint {
-        write!(output, "\n{margin}{hint}\n").unwrap();
+        write!(output, "\n{margin}").unwrap();
+        output.push_value(hint);
+        output.push('\n');
     }
 }
 
 fn render_groups(
-    output: &mut String,
+    output: &mut PklStringBuilder,
     frames: &[RenderFrame<'_>],
     groups: &[Group],
-    hint: Option<&str>,
+    hint: Option<&PklString>,
     margin: &str,
     mut first: bool,
 ) {

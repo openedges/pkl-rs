@@ -235,7 +235,7 @@ fn frontend_probe() {
                     let (start, span_length) = mapped.utf16_span(error.span).unwrap();
                     let length = error.highlight_length_utf16.unwrap_or(span_length);
                     writeln!(output, "error\t{start}\t{length}").unwrap();
-                    output.push_str(&error.message);
+                    output.push_str(&error.message.to_java_utf8());
                 }
             }
         }

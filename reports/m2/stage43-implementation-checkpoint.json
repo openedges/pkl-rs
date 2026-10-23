@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "status": "Implementation checkpoint; final full-corpus closeout pending.",
+  "fullM2Complete": false,
+  "baseline": "Pkl 0.32.0",
+  "baseCommit": "058d22417b3959ad5bdfb3b03f5f664003e67a53",
+  "changes": [
+    "Canonical PklString diagnostic messages, hints, type details and logical frames; explicit Java UTF8 byte boundaries.",
+    "Canonical frontend/scalar/session APIs and actual NAPI/Wasm string and error transport.",
+    "Direct native Error throw avoids user toString/cause callbacks in NAPI.",
+    "Syntactic literal-union origin and Java-compatible union type-check equivalence."
+  ],
+  "requiredRustChecks": {
+    "report": "reports/m2/stage43-required-checks.json",
+    "sha256": "b2f0d0ae27fe36da1c20dc66fdc66c1af9ff7c424f3d81e0995ade774e9456d2",
+    "allFivePassed": true,
+    "sourceCount": 7026,
+    "sourcesBeforeSha256": "341663ae266444fa85d93077db089147596c1005f69650ce3e11a801ed1c0877",
+    "sourceStable": true,
+    "workspaceHarnessInvocations": {
+      "passed": 685,
+      "failed": 0,
+      "ignored": 1,
+      "filteredOut": 36
+    },
+    "countsAreDistinctFeatures": false
+  },
+  "portable": {
+    "summary": "reports/m2/stage43-platform-summary.json",
+    "sha256": "85dd8f2fe7ab9a1b921baf7101e6f6a25b11669dff835e04a1ea39a92a553fc6",
+    "eachTarget": [
+      "Node NAPI",
+      "Chromium Wasm"
+    ],
+    "literalReuseApiCalls": 48,
+    "producerAndHintCalls": 20,
+    "constructorCalls": 24,
+    "constructorJavaMessageCalls": 6,
+    "constructorInputPolicyCalls": 18,
+    "scalarSequenceRepeats": 2,
+    "originalModuleGraphs": 44,
+    "inheritanceGraphs": 6,
+    "ownerGraphs": 14,
+    "stringSubscriptCalls": 28,
+    "previousStringDiagnosticCalls": 4,
+    "pcfOutputCalls": 384,
+    "comparisonBoundary": "Java-backed string cases compare exact UTF16 and Java UTF8; the18 constructor input-policy calls per target and other binding architecture controls have no Java compatibility claim.",
+    "recordedBuildSourceInputs": 147,
+    "crateSrcInputs": {
+      "runtimeRustIncludingCfgTest": 67,
+      "runtimeEmbeddedPkl": 2,
+      "bindingRust": 2,
+      "total": 71
+    }
+  },
+  "independentReview": {
+    "report": "reports/m2/stage43-code-review.json",
+    "sha256": "a8e8d1f5a4d1169573d9be24b323333faf21acb2b04ee6a637907f83ce44d564",
+    "internalJavaPredicatePairs": 16,
+    "freshJvmRepeats": 2,
+    "negativeControlExitCode": 101,
+    "negativeControlFailedTests": 1,
+    "doesNotClaimObservedApiMismatchForUnionReuse": true
+  },
+  "preservedFailures": [
+    "Known primitive regex differences:2of6078 per target.",
+    "Trace45:58matched calls and32Java oracle errors per portable target; strict comparison exits1.",
+    "Pre-correction full runtime assertions, tooling/preflight/build attempts and old NAPI callback behavior retained.",
+    "Whole original language/module corpus, full API/Host/platform/performance obligations remain open."
+  ],
+  "remainingWork": [
+    "Fresh final full selected language and persistent-evaluator regression after Stage43.",
+    "Canonical converter/output-format/abstract-member producers and typed Host rejection inputs under Stage44.",
+    "Complete source/URI input capabilities and original M2 requirements; no boundary substitutions."
+  ],
+  "evidenceIndex": "reports/m2/stage43-implementation-captures.json",
+  "evidenceIndexSha256": "41dc084cad3324e44e7c24f05eb8d42523fe0e09cde0644114a701649560acc0",
+  "publication": {
+    "archives": 7,
+    "uniquePayloadFiles": 80907,
+    "payloadBytes": 474836718,
+    "compressedBytes": 72265578,
+    "sourceChanges": []
+  },
+  "publicationReview": {
+    "path": "reports/m2/stage43-publication-review.json",
+    "sha256": "c9a0214f4f739e6292fcfce72c88ec56640412b706ad11e890460b6b1b6cc84e",
+    "archivePath": "reports/m2/stage43-closeout-captures.tar.gz",
+    "archiveSha256": "5a825a29a6d8743314c0a2fa32d273b6b44025931168c600d72dcb0241e556b5",
+    "archiveIntegrityExit": 0,
+    "matchedImplementationPaths": 7093,
+    "uniqueGitBlobs": 4581,
+    "scope": "Closed archive audit and exact staged-source proof; full-corpus closeout remains pending."
+  }
+}

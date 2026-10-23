@@ -1,0 +1,17 @@
+–– Pkl Error ––
+Cannot find property `undefined`.
+
+7 | hinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })
+                                                                        ^^^^^^^^^
+at main#hinted[#1] (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01/workspace/main.pkl)
+
+Did you mean any of the following?
+Undefined()
+
+7 | hinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#hinted (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01/workspace/main.pkl)
+
+1 | hinted
+    ^^^^^^
+at  (repl:text)

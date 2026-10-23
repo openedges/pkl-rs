@@ -1,13 +1,33 @@
 //! Node experiment; no separate evaluator or Java fallback.
 use napi::{
-    Error, Result,
-    bindgen_prelude::{BigInt, Uint8Array, Utf16String},
+    Env, Error, Result,
+    bindgen_prelude::{BigInt, JsObjectValue, Uint8Array, Utf16String},
 };
 use napi_derive::napi;
-use pkl_runtime::{probe, value::Value};
+use pkl_runtime::{
+    probe,
+    value::{PklString, Value},
+};
 
 fn error(e: impl ToString) -> Error {
     Error::from_reason(e.to_string())
+}
+// Throw the exact native object without Error::from(Unknown): that conversion
+// coerces it to a string and reads `cause`, allowing unexpected JS callbacks.
+// PendingException tells napi codegen to preserve the already-thrown object.
+fn text_error(env: &Env, text: PklString) -> Error {
+    let create = || -> Result<Error> {
+        let mut object = env.create_error(Error::from_reason(""))?;
+        object.set_named_property(
+            "message",
+            env.create_string_utf16(text.encode_utf16().collect::<Vec<_>>())?,
+        )?;
+        env.throw(object)?;
+        Ok(Error::from_status(napi::Status::PendingException))
+    };
+    match create() {
+        Ok(error) | Err(error) => error,
+    }
 }
 fn unsigned(value: f64) -> Result<u32> {
     probe::unsigned_argument(value).map_err(error)
@@ -44,14 +64,15 @@ pub fn evaluate(source: Utf16String, member: Utf16String) -> Result<String> {
 }
 /// Development-only scalar boundary with shared Pkl diagnostic rendering.
 #[napi]
-pub fn evaluate_language(
+pub fn evaluate_language<'env>(
+    env: &'env Env,
     source: Utf16String,
     uri: Utf16String,
     module_name: Utf16String,
     expression: Utf16String,
     power_assertions: Option<bool>,
-) -> Result<String> {
-    pkl_runtime::evaluation::scalar_expression_with_options(
+) -> Result<napi::JsString<'env>> {
+    pkl_runtime::evaluation::scalar_expression_text_with_options(
         &string(&source)?,
         &string(&uri)?,
         &string(&module_name)?,
@@ -60,7 +81,8 @@ pub fn evaluate_language(
             power_assertions: power_assertions.unwrap_or(false),
         },
     )
-    .map_err(error)
+    .map_err(|text| text_error(env, text))
+    .and_then(|text| env.create_string_utf16(text.encode_utf16().collect::<Vec<_>>()))
 }
 /// Portable frontend bytes; this does not execute a native process or render output.
 #[napi(object)]
@@ -149,15 +171,16 @@ pub fn evaluate_module_output(
 
 /// Development-only ordered calls on one evaluator, retaining failures as data.
 #[napi]
-pub fn evaluate_language_sequence(
+pub fn evaluate_language_sequence<'env>(
+    env: &'env Env,
     source: Utf16String,
     uri: Utf16String,
     module_name: Utf16String,
     expressions: Vec<Utf16String>,
     power_assertions: Option<bool>,
-) -> Result<Vec<String>> {
+) -> Result<Vec<napi::JsString<'env>>> {
     let expressions = expressions.iter().map(string).collect::<Result<Vec<_>>>()?;
-    Ok(pkl_runtime::evaluation::scalar_expressions_with_options(
+    pkl_runtime::evaluation::scalar_expressions_text_with_options(
         &string(&source)?,
         &string(&uri)?,
         &string(&module_name)?,
@@ -166,13 +189,21 @@ pub fn evaluate_language_sequence(
             power_assertions: power_assertions.unwrap_or(false),
         },
     )
-    .map_err(error)?
+    .map_err(|text| text_error(env, text))?
     .into_iter()
-    .map(|result| match result {
-        Ok(value) => format!("value\t{value}"),
-        Err(error) => format!("error\t{error}"),
+    .map(|result| {
+        let (prefix, text) = match result {
+            Ok(value) => ("value\t", value),
+            Err(error) => ("error\t", error),
+        };
+        env.create_string_utf16(
+            prefix
+                .encode_utf16()
+                .chain(text.encode_utf16())
+                .collect::<Vec<_>>(),
+        )
     })
-    .collect())
+    .collect()
 }
 #[napi]
 pub fn roundtrip_string(input: Utf16String) -> Result<String> {
@@ -362,6 +393,7 @@ impl SourceSession {
     #[napi(factory)]
     #[allow(clippy::too_many_arguments)]
     pub fn for_output(
+        env: Env,
         source: Utf16String,
         uri: Utf16String,
         module_name: Utf16String,
@@ -395,7 +427,7 @@ impl SourceSession {
         let uri = string(&uri)?;
         let name = string(&module_name)?;
         Ok(Self {
-            inner: probe::SourceProbe::new_output(
+            inner: probe::SourceProbe::new_output_text(
                 ModuleSourceInput {
                     text: &source,
                     uri: &uri,
@@ -405,17 +437,13 @@ impl SourceSession {
                 &invocation.options,
                 options,
             )
-            .map_err(|failure| {
-                error(
-                    String::from_utf8(failure.stderr)
-                        .expect("shared diagnostic renderer emits UTF-8"),
-                )
-            })?,
+            .map_err(|failure| text_error(&env, failure.text))?,
         })
     }
     #[napi(factory)]
     #[allow(clippy::too_many_arguments)]
     pub fn for_expressions(
+        env: Env,
         source: Utf16String,
         uri: Utf16String,
         module_name: Utf16String,
@@ -432,7 +460,7 @@ impl SourceSession {
             .transpose()?
             .unwrap_or_else(|| "compact".into());
         Ok(Self {
-            inner: probe::SourceProbe::new_expressions(
+            inner: probe::SourceProbe::new_expressions_text(
                 &string(&source)?,
                 &string(&uri)?,
                 &string(&module_name)?,
@@ -442,12 +470,13 @@ impl SourceSession {
                 host_frame_transformer.unwrap_or(false),
                 power_assertions.unwrap_or(false),
             )
-            .map_err(error)?,
+            .map_err(|text| text_error(&env, text))?,
         })
     }
     #[napi(constructor)]
     #[allow(clippy::too_many_arguments)]
     pub fn new(
+        env: Env,
         source: Utf16String,
         uri: Utf16String,
         module_name: Utf16String,
@@ -464,7 +493,7 @@ impl SourceSession {
             .transpose()?
             .unwrap_or_else(|| "compact".into());
         Ok(Self {
-            inner: probe::SourceProbe::new(
+            inner: probe::SourceProbe::new_text(
                 &string(&source)?,
                 &string(&uri)?,
                 &string(&module_name)?,
@@ -474,24 +503,25 @@ impl SourceSession {
                 host_frame_transformer.unwrap_or(false),
                 power_assertions.unwrap_or(false),
             )
-            .map_err(error)?,
+            .map_err(|text| text_error(&env, text))?,
         })
     }
     #[napi]
-    pub fn start_module(&mut self, now: f64, timeout: Option<f64>) -> Result<()> {
+    pub fn start_module(&mut self, env: Env, now: f64, timeout: Option<f64>) -> Result<()> {
         self.inner
             .start_module(unsigned(now)?, timeout.map(unsigned).transpose()?)
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
-    pub fn start_output_bytes(&mut self, now: f64, timeout: Option<f64>) -> Result<()> {
+    pub fn start_output_bytes(&mut self, env: Env, now: f64, timeout: Option<f64>) -> Result<()> {
         self.inner
             .start_output_bytes(unsigned(now)?, timeout.map(unsigned).transpose()?)
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
     pub fn reenter_output_bytes(
         &mut self,
+        env: Env,
         token: Utf16String,
         now: f64,
         timeout: Option<f64>,
@@ -502,11 +532,12 @@ impl SourceSession {
                 unsigned(now)?,
                 timeout.map(unsigned).transpose()?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
     pub fn complete_module_resolution(
         &mut self,
+        env: Env,
         token: Utf16String,
         original_uri: Utf16String,
         resolved_uri: Utf16String,
@@ -521,11 +552,12 @@ impl SourceSession {
                 &string(&source_uri)?,
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
     pub fn complete_module_source(
         &mut self,
+        env: Env,
         token: Utf16String,
         text: Utf16String,
         inferred_name: Utf16String,
@@ -538,11 +570,12 @@ impl SourceSession {
                 &string(&inferred_name)?,
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
     pub fn reject_module_resolution(
         &mut self,
+        env: Env,
         token: Utf16String,
         kind: Utf16String,
         message: Utf16String,
@@ -556,11 +589,12 @@ impl SourceSession {
                 &string(&message)?,
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
     pub fn reject_module_source(
         &mut self,
+        env: Env,
         token: Utf16String,
         kind: Utf16String,
         message: Utf16String,
@@ -574,23 +608,29 @@ impl SourceSession {
                 &string(&message)?,
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
-    pub fn respond_configured(&mut self, token: Utf16String, now: f64) -> Result<()> {
+    pub fn respond_configured(&mut self, env: Env, token: Utf16String, now: f64) -> Result<()> {
         self.inner
             .respond_configured(&string(&token)?, unsigned(now)?)
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
-    pub fn start_path(&mut self, index: f64, now: f64, timeout: Option<f64>) -> Result<()> {
+    pub fn start_path(
+        &mut self,
+        env: Env,
+        index: f64,
+        now: f64,
+        timeout: Option<f64>,
+    ) -> Result<()> {
         self.inner
             .start_path(
                 unsigned(index)?,
                 unsigned(now)?,
                 timeout.map(unsigned).transpose()?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
     pub fn setup_failed(&self) -> bool {
@@ -599,6 +639,7 @@ impl SourceSession {
     #[napi]
     pub fn reenter_path(
         &mut self,
+        env: Env,
         token: Utf16String,
         index: f64,
         now: f64,
@@ -611,18 +652,19 @@ impl SourceSession {
                 unsigned(now)?,
                 timeout.map(unsigned).transpose()?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
-    pub fn poll(&mut self, now: f64, budget: f64) -> Result<SourceEvent> {
+    pub fn poll(&mut self, env: Env, now: f64, budget: f64) -> Result<SourceEvent> {
         self.inner
             .poll(unsigned(now)?, unsigned(budget)?)
             .map(Into::into)
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
     pub fn acknowledge_log(
         &mut self,
+        env: Env,
         token: Utf16String,
         failure: Option<napi::bindgen_prelude::Uint16Array>,
         now: f64,
@@ -633,11 +675,12 @@ impl SourceSession {
                 failure.map(|units| units.to_vec()),
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
     pub fn respond_string(
         &mut self,
+        env: Env,
         token: Utf16String,
         value: napi::bindgen_prelude::Uint16Array,
         now: f64,
@@ -648,39 +691,57 @@ impl SourceSession {
                 Value::String(pkl_runtime::value::PklString::from_utf16(value.to_vec())),
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
-    pub fn respond_integer(&mut self, token: Utf16String, value: BigInt, now: f64) -> Result<()> {
+    pub fn respond_integer(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        value: BigInt,
+        now: f64,
+    ) -> Result<()> {
         self.inner
             .respond(
                 &string(&token)?,
                 Value::Int(integer(value)?),
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
-    pub fn respond_bytes(&mut self, token: Utf16String, value: Uint8Array, now: f64) -> Result<()> {
+    pub fn respond_bytes(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        value: Uint8Array,
+        now: f64,
+    ) -> Result<()> {
         self.inner
             .respond(
                 &string(&token)?,
                 Value::Bytes(value.to_vec().into()),
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
-    pub fn reject(&mut self, token: Utf16String, message: Utf16String, now: f64) -> Result<()> {
+    pub fn reject(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        message: Utf16String,
+        now: f64,
+    ) -> Result<()> {
         self.inner
             .reject(&string(&token)?, &string(&message)?, unsigned(now)?)
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
-    pub fn close_from_callback(&mut self, token: Utf16String) -> Result<()> {
+    pub fn close_from_callback(&mut self, env: Env, token: Utf16String) -> Result<()> {
         self.inner
             .close_from_callback(&string(&token)?)
-            .map_err(error)
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
     pub fn drain_cancelled_modules(&mut self) -> Vec<String> {

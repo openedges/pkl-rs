@@ -1,0 +1,28 @@
+[
+  {
+    "id": "lambda-property-header",
+    "source": "value = (x) -> x\nlocal value = (y) -> y\n",
+    "child": "value=10\n",
+    "expressions": [
+      "1"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header/main.pkl",
+    "childUri": "life:/child",
+    "sourceSha256": "e71ff171c0b2ed32e9d8dbaf42c8d8901a85c948ede3b9b636f0ee119904c12a",
+    "childSha256": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+  },
+  {
+    "id": "import-expression-property-order",
+    "source": "same = import(\"life:/child\")\nclass same {}\n",
+    "child": "value=10\n",
+    "expressions": [
+      "1"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order/main.pkl",
+    "childUri": "life:/child",
+    "sourceSha256": "c8badd6d665d5b09e4a7ddf5e23d6a435c35a32f796b7991178977d05fd0e1c5",
+    "childSha256": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+  }
+]

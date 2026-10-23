@@ -1,0 +1,20 @@
+[
+  {
+    "id": "grouped-literal-union",
+    "expression": "grouped",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-union-origin-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias Alias = \"\\u{d83d}\"\ngrouped: (\"\\u{d83d}\") | \"\\u{dc00}\" = \"different\"\naliasUnion: Alias | \"\\u{dc00}\" = \"different\"\n",
+    "sourceSha256": "f35c990d5aad4b9615cd26f182072004b6f29ed1f67b23490800a80e598a5988",
+    "callPrefix": "outer-0"
+  },
+  {
+    "id": "alias-literal-union",
+    "expression": "aliasUnion",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-union-origin-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias Alias = \"\\u{d83d}\"\ngrouped: (\"\\u{d83d}\") | \"\\u{dc00}\" = \"different\"\naliasUnion: Alias | \"\\u{dc00}\" = \"different\"\n",
+    "sourceSha256": "f35c990d5aad4b9615cd26f182072004b6f29ed1f67b23490800a80e598a5988",
+    "callPrefix": "outer-1"
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "counts": {
+    "error": 36,
+    "success": 12
+  },
+  "freshJVMs": 2,
+  "orderedCallsPerJVM": 24,
+  "distinctControls": 12,
+  "sameEvaluatorRetryPayloadsExact": true,
+  "crossJVMRawFilesExact": true,
+  "workspaceUnchanged": true,
+  "sourceAndInputChanges": [],
+  "sourceProofCopies": [
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java",
+      "copy": "source-proof/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java",
+      "sha256": "e423325b3cef4b7410d7a01c3e9c776b7c1e5993f93f7bec02e0852d5d5fd7d8"
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/type/TypeNode.java",
+      "copy": "source-proof/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/type/TypeNode.java",
+      "sha256": "9c05775d80ecadafb618de8f06b91b410cfc9fa617ae0627826206a70ea57286"
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/oracle.lock.json",
+      "copy": "source-proof/oracle.lock.json",
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b"
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/references.lock",
+      "copy": "source-proof/references.lock",
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b"
+    }
+  ],
+  "limitations": [
+    "All invalid Listing reuse reads fail in the underlying original optimized cast before destination can reject; this oracle does not demonstrate a changed destination diagnostic or query wrapper identity.",
+    "Equivalence node-kind/Set-vs-order/default behavior is independently pinned-source evidence; do not label this capture an observed Rust mismatch.",
+    "No Rust candidate or native/portable compatibility call executed."
+  ],
+  "actualSuccessUnits": {
+    "valid-reordered": "d83d",
+    "default-first-value": "d83d",
+    "default-second-value": "dc00",
+    "valid-reordered-retry": "d83d",
+    "default-first-value-retry": "d83d",
+    "default-second-value-retry": "dc00"
+  }
+}

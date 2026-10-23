@@ -5,7 +5,7 @@
 pub use crate::diagnostic::FailureDisposition;
 pub mod arguments;
 
-use crate::diagnostic::{Diagnostic, DiagnosticOrigin, RenderFrame, render_error};
+use crate::diagnostic::{Diagnostic, DiagnosticOrigin, RenderFrame, render_error_text};
 use crate::source::SourceMap;
 use crate::value::PklString;
 use std::sync::Arc;
@@ -80,6 +80,17 @@ impl FrontendPhase {
     }
 }
 
+/// A rendered failure whose message retains all Java UTF-16 code units.
+/// Byte-oriented adapters consume this value at their output boundary.
+#[derive(Clone, Debug)]
+pub struct ModuleFrontendFailure {
+    pub phase: FrontendPhase,
+    pub disposition: FailureDisposition,
+    pub reason: Option<&'static str>,
+    pub text: PklString,
+}
+
+/// Legacy byte-oriented frontend observation.
 #[derive(Clone, Debug)]
 pub struct ModuleFrontendResult {
     pub phase: FrontendPhase,
@@ -90,14 +101,31 @@ pub struct ModuleFrontendResult {
     pub exit_code: i32,
 }
 
-fn unsupported(phase: FrontendPhase, reason: &'static str, message: &str) -> ModuleFrontendResult {
-    ModuleFrontendResult {
+impl From<ModuleFrontendFailure> for ModuleFrontendResult {
+    fn from(failure: ModuleFrontendFailure) -> Self {
+        Self {
+            phase: failure.phase,
+            disposition: failure.disposition,
+            reason: failure.reason,
+            stdout: Vec::new(),
+            stderr: failure.text.to_java_utf8().into_bytes(),
+            // Development-probe outcomes, not the complete product CLI exit contract.
+            exit_code: match failure.disposition {
+                FailureDisposition::LanguageError => 1,
+                FailureDisposition::Unsupported => 2,
+                FailureDisposition::LimitExceeded => 3,
+                FailureDisposition::InternalFailure => 4,
+            },
+        }
+    }
+}
+
+fn unsupported(phase: FrontendPhase, reason: &'static str, message: &str) -> ModuleFrontendFailure {
+    ModuleFrontendFailure {
         phase,
         disposition: FailureDisposition::Unsupported,
         reason: Some(reason),
-        stdout: Vec::new(),
-        stderr: render_error(message, &[], None).into_bytes(),
-        exit_code: 2,
+        text: render_error_text(&message.into(), &[], None),
     }
 }
 
@@ -109,19 +137,20 @@ pub fn evaluate_module_frontend(
     options: &ModuleEvalOptions,
 ) -> ModuleFrontendResult {
     if let Err(error) = resolve_input(input, options) {
-        return error;
+        return error.into();
     }
     unsupported(
         FrontendPhase::ModuleOutput,
         "module-output-evaluation",
         "Module output evaluation is not implemented by this frontend adapter.",
     )
+    .into()
 }
 
 fn resolve_input(
     input: ModuleSourceInput<'_>,
     options: &ModuleEvalOptions,
-) -> Result<(crate::resolver::ResolvedModule, String), ModuleFrontendResult> {
+) -> Result<(crate::resolver::ResolvedModule, String), ModuleFrontendFailure> {
     if !options.no_cache || !options.no_project || options.settings != "pkl:settings" {
         return Err(unsupported(
             FrontendPhase::Configuration,
@@ -131,7 +160,13 @@ fn resolve_input(
     }
     let module = match crate::parser::parse_module(input.text) {
         Ok(module) => module,
-        Err(error) => return Err(render_failure(input, options.diagnostic_profile, error)),
+        Err(error) => {
+            return Err(render_failure_text(
+                input,
+                options.diagnostic_profile,
+                error,
+            ));
+        }
     };
     let declared_name = module
         .declaration
@@ -143,7 +178,7 @@ fn resolve_input(
         ..input
     };
     let resolved = crate::resolver::resolve_module(&module)
-        .map_err(|error| render_failure(resolved_input, options.diagnostic_profile, error))?;
+        .map_err(|error| render_failure_text(resolved_input, options.diagnostic_profile, error))?;
     Ok((resolved, resolved_input.inferred_name.to_owned()))
 }
 
@@ -152,13 +187,21 @@ pub fn prepare_module(
     input: ModuleSourceInput<'_>,
     options: &ModuleEvalOptions,
 ) -> Result<PreparedModule, ModuleFrontendResult> {
+    prepare_module_text(input, options).map_err(Into::into)
+}
+
+/// Prepare execution with lossless diagnostic text and structured failure meaning.
+pub fn prepare_module_text(
+    input: ModuleSourceInput<'_>,
+    options: &ModuleEvalOptions,
+) -> Result<PreparedModule, ModuleFrontendFailure> {
     let (resolved, name) = resolve_input(input, options)?;
     let mut sources = SourceMap::default();
     let id = sources.add(input.uri, input.text);
     let source = sources.get(id).expect("source inserted").clone();
     let mut program =
         crate::vm::compile_module_with_power_assertions(&resolved).map_err(|error| {
-            let mut result = render_module_runtime_failure(
+            let mut result = render_module_runtime_failure_text(
                 &source,
                 input.uri,
                 &name,
@@ -182,7 +225,7 @@ pub fn prepare_module(
             },
         )
         .map_err(|error| {
-            render_module_runtime_failure(
+            render_module_runtime_failure_text(
                 &source,
                 input.uri,
                 &name,
@@ -205,6 +248,17 @@ pub fn render_module_runtime_failure(
     profile: DiagnosticProfile,
     error: crate::value::RuntimeError,
 ) -> ModuleFrontendResult {
+    render_module_runtime_failure_text(source, uri, name, profile, error).into()
+}
+
+/// Retain diagnostic code units and metadata for an actual module-operation failure.
+pub fn render_module_runtime_failure_text(
+    source: &crate::source::Source,
+    uri: &str,
+    name: &str,
+    profile: DiagnosticProfile,
+    error: crate::value::RuntimeError,
+) -> ModuleFrontendFailure {
     use crate::value::ErrorKind;
     if let Some(frontend) = &error.frontend {
         let disposition = frontend.diagnostic.provenance.disposition;
@@ -215,50 +269,36 @@ pub fn render_module_runtime_failure(
             DiagnosticOrigin::Resolver => FrontendPhase::Resolution,
             DiagnosticOrigin::Unclassified => FrontendPhase::Unclassified,
         };
-        return ModuleFrontendResult {
+        return ModuleFrontendFailure {
             phase,
             disposition,
             reason: frontend.diagnostic.provenance.reason,
-            stdout: Vec::new(),
-            stderr: super::runtime_error_with_profile(source, uri, name, "", error, None, profile)
-                .into_bytes(),
-            exit_code: match disposition {
-                FailureDisposition::LanguageError => 1,
-                FailureDisposition::Unsupported => 2,
-                FailureDisposition::LimitExceeded => 3,
-                FailureDisposition::InternalFailure => 4,
-            },
+            text: super::runtime_error_text_with_profile(
+                source, uri, name, "", error, None, profile,
+            ),
         };
     }
-    let (disposition, exit_code, reason) = match error.kind {
-        ErrorKind::Unsupported => (
-            FailureDisposition::Unsupported,
-            2,
-            Some("runtime-capability"),
-        ),
+    let (disposition, reason) = match error.kind {
+        ErrorKind::Unsupported => (FailureDisposition::Unsupported, Some("runtime-capability")),
         ErrorKind::InvalidBytecode | ErrorKind::StaleHandle => (
             FailureDisposition::InternalFailure,
-            4,
             Some("runtime-invariant"),
         ),
-        _ => (FailureDisposition::LanguageError, 1, None),
+        _ => (FailureDisposition::LanguageError, None),
     };
-    ModuleFrontendResult {
+    ModuleFrontendFailure {
         phase: FrontendPhase::ModuleOutput,
         disposition,
         reason,
-        stdout: Vec::new(),
-        stderr: super::runtime_error_with_profile(source, uri, name, "", error, None, profile)
-            .into_bytes(),
-        exit_code,
+        text: super::runtime_error_text_with_profile(source, uri, name, "", error, None, profile),
     }
 }
 
-fn render_failure(
+fn render_failure_text(
     input: ModuleSourceInput<'_>,
     profile: DiagnosticProfile,
     error: Diagnostic,
-) -> ModuleFrontendResult {
+) -> ModuleFrontendFailure {
     let phase = match error.provenance.origin {
         DiagnosticOrigin::Lexer => FrontendPhase::Lexing,
         DiagnosticOrigin::Parser => FrontendPhase::Parsing,
@@ -288,12 +328,11 @@ fn render_failure(
         }
         _ => input.uri.to_owned(),
     };
-    ModuleFrontendResult {
+    ModuleFrontendFailure {
         phase,
         disposition: error.provenance.disposition,
         reason: error.provenance.reason,
-        stdout: Vec::new(),
-        stderr: render_error(
+        text: render_error_text(
             &error.message,
             &[RenderFrame {
                 source,
@@ -303,15 +342,7 @@ fn render_failure(
                 highlight_length_utf16: error.highlight_length_utf16,
             }],
             error.hint(),
-        )
-        .into_bytes(),
-        // Development-probe outcomes, not the complete product CLI exit contract.
-        exit_code: match error.provenance.disposition {
-            FailureDisposition::LanguageError => 1,
-            FailureDisposition::Unsupported => 2,
-            FailureDisposition::LimitExceeded => 3,
-            FailureDisposition::InternalFailure => 4,
-        },
+        ),
     }
 }
 

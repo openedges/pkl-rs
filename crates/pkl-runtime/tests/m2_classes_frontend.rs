@@ -192,7 +192,7 @@ fn declared_types_ignore_value_bindings_in_nested_scopes() {
     let error = resolve_module(&module).unwrap_err();
     assert_eq!(error.message, "Invalid type name `one.two.Three`.");
     assert_eq!(
-        error.hint(),
+        error.hint().and_then(|text| text.as_str()),
         Some(
             "A qualified type name consists of a module import name and a type name.\nExample: `importedModule.SomeClass`"
         )

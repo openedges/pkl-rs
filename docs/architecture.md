@@ -136,6 +136,35 @@ Selected differential checks establish only the behavior they execute. See
 [the M2 contract](m2-language.md) and [raw results](../reports/m2/README.md)
 for the remaining language and diagnostic obligations.
 
+### Canonical diagnostic text
+
+`RuntimeError`, diagnostic messages and hints, and logical frame names use
+`PklString`. Diagnostic construction and rendering retain UTF-16 code units,
+including unmatched surrogates. Convert to Java-compatible UTF-8 only at a
+declared byte boundary. `Display` is such a conversion and must not be used to
+compose canonical messages from Pkl strings.
+
+`ModuleFrontendFailure` carries the frontend phase, disposition, optional
+unsupported reason, and canonical text. Converting it to `ModuleFrontendResult`
+produces the existing exit code and byte channels. The scalar `*_text_with_options`
+helpers and session `*_text` constructors expose canonical text; legacy Rust
+`String` helpers encode their values and errors explicitly. `SourceProbe` keeps
+error units alongside byte output, deriving both from the same failure.
+
+Node and Wasm scalar/session adapters return JS strings with the original units.
+N-API creates the error's message as a UTF-16 string and throws the native Error
+directly. Converting that object through `napi::Error::from` would read user-visible
+`toString` and `cause` properties. Wasm constructs strings in bounded chunks to
+avoid JavaScript's variadic argument limit, including when a surrogate pair spans
+two chunks.
+
+This migration does not establish complete diagnostic compatibility. Source text,
+URIs, and identifiers still use the UTF-8 input boundary. The probe convenience
+methods for Host rejection messages also retain their explicit UTF-8-only input
+policy. Remaining producers, including invalid converter-path messages, still
+need canonical composition. Actual Java UTF-16 captures establish string equality;
+older UTF-8-only fixtures establish only their declared serialization boundary.
+
 ### Resource reads and implicit method diagnostics
 
 `read` and `read?` have dedicated expression nodes and VM instructions. Their
@@ -204,9 +233,10 @@ point. Reference type names and metadata keys also preserve literal units.
 Host suspension and evaluator caches carry the same value representation.
 
 `to_java_utf8` is an explicit output operation: it maps unmatched units to `?`
-as Java's UTF-8 writer does. Development language adapters observe that writer
-boundary. This does not establish lossless public JavaScript string transport
-or the complete embedding API. Module and resource URIs containing unmatched
+as Java's UTF-8 writer does. Native byte adapters observe that writer boundary;
+the canonical scalar/session APIs and JS bindings preserve units separately.
+These development adapters do not establish the complete embedding API.
+Module and resource URIs containing unmatched
 units remain explicitly unsupported rather than being converted to a different
 URI. Full string builtins, general Java regular expressions, and performance
 and memory parity remain separate requirements.

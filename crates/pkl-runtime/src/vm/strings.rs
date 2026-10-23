@@ -38,29 +38,22 @@ impl Vm {
         key_span: Span,
     ) -> Result<Value, RuntimeError> {
         let Value::Int(index) = key else {
-            return Err(RuntimeError::new(
-                ErrorKind::Type,
-                format!(
-                    "Operator `[]` is not defined for operand types `String` and `{}`.\nLeft operand : {}\nRight operand: {}",
-                    crate::diagnostic_values::type_name(
-                        &key,
-                        &self.heap,
-                        &self.program.module_name
-                    )?,
-                    crate::diagnostic_values::render(
-                        &Value::String(text.clone()),
-                        &self.heap,
-                        &self.program.module_name,
-                        80
-                    )?,
-                    crate::diagnostic_values::render(
-                        &key,
-                        &self.heap,
-                        &self.program.module_name,
-                        80
-                    )?,
-                ),
-            ));
+            let mut message = crate::pkl_string::PklStringBuilder::default();
+            message.push_str(&format!("Operator `[]` is not defined for operand types `String` and `{}`.\nLeft operand : ", crate::diagnostic_values::type_name(&key, &self.heap, &self.program.module_name)?));
+            message.push_value(&crate::diagnostic_values::render_string(
+                &Value::String(text.clone()),
+                &self.heap,
+                &self.program.module_name,
+                80,
+            )?);
+            message.push_str("\nRight operand: ");
+            message.push_value(&crate::diagnostic_values::render_string(
+                &key,
+                &self.heap,
+                &self.program.module_name,
+                80,
+            )?);
+            return Err(RuntimeError::new(ErrorKind::Type, message.finish()));
         };
         if let Some(point) = usize::try_from(index)
             .ok()
@@ -69,21 +62,19 @@ impl Vm {
             return Ok(Value::String(point));
         }
         let last = text.code_point_len() as i64 - 1;
-        Err(RuntimeError::new(
-            ErrorKind::Type,
-            format!(
-                "Character index `{}` is out of range `0`..`{}`.\nString: {}",
-                diagnostic_integer(index),
-                diagnostic_integer(last),
-                crate::diagnostic_values::render(
-                    &Value::String(text.clone()),
-                    &self.heap,
-                    &self.program.module_name,
-                    80
-                )?,
-            ),
-        )
-        .at(key_span))
+        let mut message = crate::pkl_string::PklStringBuilder::default();
+        message.push_str(&format!(
+            "Character index `{}` is out of range `0`..`{}`.\nString: ",
+            diagnostic_integer(index),
+            diagnostic_integer(last)
+        ));
+        message.push_value(&crate::diagnostic_values::render_string(
+            &Value::String(text.clone()),
+            &self.heap,
+            &self.program.module_name,
+            80,
+        )?);
+        Err(RuntimeError::new(ErrorKind::Type, message.finish()).at(key_span))
     }
 
     pub(super) fn string_repeat_method(&mut self, receiver: Value) {
@@ -118,7 +109,7 @@ impl Vm {
                     error.type_diagnostic = Some(Box::new(TypeDiagnostic::Constraint {
                         span,
                         body_span: span,
-                        value: count.to_string(),
+                        value: count.to_string().into(),
                         observations: Some(vec![PowerAssertionValue {
                             span,
                             value: "false".into(),
@@ -245,6 +236,7 @@ pub(super) fn encode_block(
     blocks.push(vec![
         Instruction::LoadLocal(0),
         Instruction::CheckType(TypeCheck::Union {
+            string_literals: false,
             types,
             labels: spans.clone(),
             spans,

@@ -1,0 +1,23 @@
+{
+  "scope": "Corrected isolated Stage43 candidate after source-backed TypeCheck equivalent fix. API literal reuse compares original underlying-cast outcomes; no claim the old API byte result was mismatched. M2 remains open.",
+  "sourceSrcFilesIncludingCfgTest": 69,
+  "vmSha256": "34bff0fcbe7714421097eb0f8e19a65294d5f0abee09e8dd6d35dff56d5002e9",
+  "allSourceSrcPathsEqualFrozenRealStage43": true,
+  "standard": {
+    "reportSha256": "aff99324e5518af2491ad8ecc90cc6ab5931900e58031a512b38fc0be6416681",
+    "recordedExitCode": 0,
+    "shared": 6078,
+    "javaPassEachTarget": 6076,
+    "knownRegexMismatches": 2,
+    "architectureChecksEachJsTarget": 92
+  },
+  "comparisonReportSha256": "f7954a930cc7a39d6931ac9bf1770e40162ec9dd34a8a2a8cc4c418f42aed054",
+  "comparisonExitCode": 1,
+  "knownStrictFailure": "trace45 each58pass/32oracle-error, original failures retained",
+  "initialFailures": [
+    "standard missing tool path before any build/evaluator call",
+    "literal-reuse exporter old inventory schema before evaluator calls; exact failed source and raw reproduction retained, initial tool output only in transcript"
+  ],
+  "consoleScope": "Every subprocess raw stdout/stderr and actual command/exit is captured. Orchestrator console output was delivered through tool transport; not a separate raw file.",
+  "liveHandles": []
+}

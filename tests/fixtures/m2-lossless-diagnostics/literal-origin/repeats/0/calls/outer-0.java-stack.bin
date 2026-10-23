@@ -1,0 +1,22 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `("\u{d83d}") | "\u{dc00}"`, but got type `String`.
+Value: "different"
+
+2 | grouped: ("\u{d83d}") | "\u{dc00}" = "different"
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#grouped (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-union-origin-oracle-01/workspace/main.pkl)
+
+2 | grouped: ("\u{d83d}") | "\u{dc00}" = "different"
+                                         ^^^^^^^^^^^
+at main#grouped (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-union-origin-oracle-01/workspace/main.pkl)
+
+1 | grouped
+    ^^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at LosslessLiteralUnionOriginProbe.evaluate(LosslessLiteralUnionOriginProbe.java:36)
+	at LosslessLiteralUnionOriginProbe.main(LosslessLiteralUnionOriginProbe.java:103)

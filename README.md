@@ -32,11 +32,14 @@ properties and PCF through the shared VM; the separate frontend-only operation
 still stops after preparation. Imports now use typed resolve/source Host requests
 and share the evaluator's VM, heap, module cache and declaration identities.
 Expression sessions use the common parser and compiler with the actual module
-receiver. The [Stage 41 result](reports/m2/stage41-final-summary.json)
+receiver. Module-owned class/alias types, `extends`, and `amends` share that
+engine. [Canonical diagnostics](docs/m2-diagnostics.md) preserve UTF-16 strings
+through native, Node, and Wasm APIs, with Java UTF-8 serialization checked
+separately. The [Stage 41 result](reports/m2/stage41-final-summary.json)
 records 3,606 matching native cases out of 3,629 attempts, with all remaining
 unsupported cases, mismatches and oracle failures retained.
 Complete modifier and type semantics, remaining collection and Reference rules,
-module inheritance and imported type resolution, reflection metadata, and the remaining language corpus are
+the remaining inheritance and imported-type rules, reflection metadata, and the remaining language corpus are
 required before M2 can close.
 
 ## Goals

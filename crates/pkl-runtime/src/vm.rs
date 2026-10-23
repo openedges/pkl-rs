@@ -30,6 +30,8 @@ pub(crate) mod reference;
 mod rendering;
 mod strings;
 mod tracing;
+#[cfg(test)]
+mod type_equivalence_tests;
 mod type_resolution;
 mod typecheck;
 use typecheck::{TypeDestination, TypeRun};
@@ -356,6 +358,8 @@ pub enum TypeCheck {
     /// Generic aliases themselves participate in upstream union eager classification.
     GenericAlias(Box<TypeCheck>),
     Union {
+        /// Pinned AST distinguishes an authored union of string constants.
+        string_literals: bool,
         types: Vec<TypeCheck>,
         spans: Vec<Span>,
         labels: Vec<Span>,
@@ -499,18 +503,38 @@ impl TypeCheck {
                 (
                     Self::Union {
                         types: a,
-                        default: ad,
+                        string_literals: al,
                         ..
                     },
                     Self::Union {
                         types: b,
-                        default: bd,
+                        string_literals: bl,
                         ..
                     },
-                ) => {
-                    pending.extend(a.iter().zip(b));
-                    ad == bd && a.len() == b.len()
-                }
+                ) => match (al, bl) {
+                    (true, true) => {
+                        // Java's optimized literal union compares its set of
+                        // strings. Order, duplicates and defaults do not affect
+                        // whether a lazy collection can reuse this type check.
+                        let literals = |types: &[Self]| {
+                            types
+                                .iter()
+                                .map(|ty| match ty.resolved() {
+                                    Self::StringLiteral(value) => value.clone(),
+                                    _ => unreachable!("literal union metadata"),
+                                })
+                                .collect::<BTreeSet<_>>()
+                        };
+                        literals(a) == literals(b)
+                    }
+                    (false, false) => {
+                        // General unions compare ordered child checks; their
+                        // default alternatives do not change check equivalence.
+                        pending.extend(a.iter().zip(b));
+                        a.len() == b.len()
+                    }
+                    _ => false,
+                },
                 (
                     Self::Constrained {
                         base: a,
@@ -1361,10 +1385,7 @@ impl Vm {
                     .acknowledge_log()?;
                 self.state = State::Running;
             }
-            Err(error) => self.fail(RuntimeError::new(
-                ErrorKind::Host,
-                error.message.to_java_utf8(),
-            )),
+            Err(error) => self.fail(RuntimeError::new(ErrorKind::Host, error.message)),
         }
         Ok(())
     }
@@ -1717,38 +1738,8 @@ impl Vm {
                 .get(frame.block)
                 .and_then(|code| code.get(frame.pc.saturating_sub(1)))
         {
-            let mut names = Vec::new();
-            for scope in &frame.environment.scopes {
-                if let Ok(owner) = self.heap.get(scope.owner) {
-                    names.extend(
-                        owner
-                            .members
-                            .iter()
-                            .filter(|member| !member.method)
-                            .map(|member| member.name.to_string()),
-                    );
-                }
-                let mut current = Some(scope.receiver);
-                let mut visited = BTreeSet::new();
-                while let Some(id) = current {
-                    if !visited.insert(id) {
-                        break;
-                    }
-                    let Ok(object) = self.heap.get(id) else {
-                        break;
-                    };
-                    names.extend(
-                        object
-                            .members
-                            .iter()
-                            .filter(|member| !member.method && !member.local)
-                            .map(|member| member.name.to_string()),
-                    );
-                    current = object.parent;
-                }
-            }
-            error.message = format!("Cannot find property `{name}`.");
-            error.hint = crate::diagnostic::property_suggestions(name, names, true);
+            error.message = format!("Cannot find property `{name}`.").into();
+            error.hint = self.implicit_member_suggestions(frame, name, -1);
         }
         if error.kind == ErrorKind::MissingMember
             && let Some(frame) = self.frames.last()
@@ -1760,8 +1751,15 @@ impl Vm {
                 .get(frame.block)
                 .and_then(|code| code.get(frame.pc.saturating_sub(1)))
         {
-            error.message = format!("Cannot find method `{name}`.");
-            error.hint = self.implicit_method_suggestions(frame, name);
+            error.message = format!("Cannot find method `{name}`.").into();
+            let arity = self
+                .program
+                .metadata
+                .get(frame.block)
+                .and_then(|metadata| metadata.method_arities.get(&frame.pc.saturating_sub(1)))
+                .copied()
+                .unwrap_or(0);
+            error.hint = self.implicit_member_suggestions(frame, name, arity as isize);
         }
         for (frame_index, frame) in diagnostic_frames.iter().enumerate().rev() {
             if frame.block == self.program.amended_function_block
@@ -2378,7 +2376,7 @@ impl Vm {
                 );
                 error.hint = Some(format!(
                     "To fix, do either of:\n1. Add modifier `const` to {kind} `{name}`\n2. Self-import this module, and {reference} from the import."
-                ));
+                ).into());
                 return Err(error);
             }
             if local {
@@ -2398,7 +2396,12 @@ impl Vm {
     }
 
     /// Match lexical candidate visibility without evaluating candidate members.
-    fn implicit_method_suggestions(&self, frame: &Frame, name: &str) -> Option<String> {
+    fn implicit_member_suggestions(
+        &self,
+        frame: &Frame,
+        name: &str,
+        arity: isize,
+    ) -> Option<PklString> {
         use crate::diagnostic::MemberSuggestion;
 
         let mut candidates = Vec::new();
@@ -2492,14 +2495,7 @@ impl Vm {
             current = object.parent;
         }
         candidates.extend(receiver_methods);
-        let arity = self
-            .program
-            .metadata
-            .get(frame.block)
-            .and_then(|metadata| metadata.method_arities.get(&frame.pc.saturating_sub(1)))
-            .copied()
-            .unwrap_or(0);
-        crate::diagnostic::ordered_member_suggestions(name, arity as isize, candidates)
+        crate::diagnostic::ordered_member_suggestions(name, arity, candidates)
     }
 
     /// VmExceptionBuilder enumerates the live prototype, never the full template.
@@ -2586,11 +2582,14 @@ impl Vm {
                     let mut names: Vec<_> = methods.into_iter().map(|method| method.0).collect();
                     names.sort_by(|a, b| a.encode_utf16().cmp(b.encode_utf16()));
                     names.dedup();
-                    Some(format!(
-                        "Available methods in module `{}`:\n{}",
-                        module_name,
-                        names.join("\n")
-                    ))
+                    Some(
+                        format!(
+                            "Available methods in module `{}`:\n{}",
+                            module_name,
+                            names.join("\n")
+                        )
+                        .into(),
+                    )
                 });
                 return Ok(error);
             }
@@ -2617,12 +2616,15 @@ impl Vm {
             }
             names.sort_by(|a, b| a.encode_utf16().cmp(b.encode_utf16()));
             names.dedup();
-            error.hint = Some(format!(
-                "Available {} in module `{}`:\n{}",
-                if method { "methods" } else { "properties" },
-                module_name,
-                names.join("\n")
-            ));
+            error.hint = Some(
+                format!(
+                    "Available {} in module `{}`:\n{}",
+                    if method { "methods" } else { "properties" },
+                    module_name,
+                    names.join("\n")
+                )
+                .into(),
+            );
             return Ok(error);
         }
         let class = collections::typed_class(&self.heap, receiver)?;
@@ -2749,6 +2751,7 @@ impl Vm {
                         "Available methods in class `{class_name}`:\n{}",
                         names.join("\n")
                     )
+                    .into()
                 } else {
                     format!(
                         "Available properties:\n{}",
@@ -2758,6 +2761,7 @@ impl Vm {
                             names.join("\n")
                         }
                     )
+                    .into()
                 })
             });
         Ok(error)
@@ -2855,7 +2859,7 @@ impl Vm {
                 error.hint = Some(format!(
                     "Property `{}` must be declared {modifier}, because it overrides a {modifier} property on parent class `{parent_name}`.",
                     member.name
-                ));
+                ).into());
                 error.span = metadata.and_then(|m| m.declaration);
                 error
             } else {
@@ -2869,7 +2873,7 @@ impl Vm {
                 error.hint = Some(format!(
                     "Property `{}` cannot be declared {modifier}, because it overrides a non-{modifier} property on parent class `{parent_name}`.",
                     member.name
-                ));
+                ).into());
                 error.span = metadata.and_then(|m| {
                     if modifier == "fixed" {
                         m.fixed_span
@@ -3029,6 +3033,7 @@ impl Vm {
                                 "Available properties in module `{module_name}`:\n{}",
                                 names.join("\n")
                             )
+                            .into()
                         } else {
                             format!(
                                 "Available properties:\n{}",
@@ -3038,6 +3043,7 @@ impl Vm {
                                     names.join("\n")
                                 }
                             )
+                            .into()
                         })
                     });
                     return Err(error);
@@ -3675,7 +3681,7 @@ impl Vm {
                         &self.heap,
                     )?);
                 };
-                return Err(RuntimeError::new(ErrorKind::Type, message.to_java_utf8()));
+                return Err(RuntimeError::new(ErrorKind::Type, message));
             }
             Instruction::StringRepeat => self.repeat_string()?,
             Instruction::StringEncode => self.encode_string()?,
@@ -4456,30 +4462,38 @@ impl Vm {
                 let Value::Function(id) = right else {
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
-                        format!(
-                            "Operator `|>` is not defined for operand types `{}` and `{}`.\nLeft operand : {}\nRight operand: {}",
-                            crate::diagnostic_values::type_name(
-                                &left,
-                                &self.heap,
-                                &self.program.module_name
-                            )?,
-                            crate::diagnostic_values::type_name(
-                                &right,
-                                &self.heap,
-                                &self.program.module_name
-                            )?,
-                            crate::diagnostic_values::render(
-                                &left,
-                                &self.heap,
-                                &self.program.module_name,
-                                80
-                            )?,
-                            crate::diagnostic_values::render(
-                                &right,
-                                &self.heap,
-                                &self.program.module_name,
-                                80
-                            )?,
+                        PklString::join(
+                            &[
+                                "Operator `|>` is not defined for operand types `".into(),
+                                (crate::diagnostic_values::type_name(
+                                    &left,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                )?)
+                                .into(),
+                                "` and `".into(),
+                                (crate::diagnostic_values::type_name(
+                                    &right,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                )?)
+                                .into(),
+                                "`.\nLeft operand : ".into(),
+                                crate::diagnostic_values::render(
+                                    &left,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80,
+                                )?,
+                                "\nRight operand: ".into(),
+                                crate::diagnostic_values::render(
+                                    &right,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80,
+                                )?,
+                            ],
+                            "",
                         ),
                     ));
                 };
@@ -4523,11 +4537,10 @@ impl Vm {
                         if matches!(instruction, Instruction::CheckLogicalLeft { .. }) {
                             RuntimeError::new(
                                 ErrorKind::Type,
-                                format!(
-                                    "Operator `{operator}` is not defined for left operand type `{}`.\nLeft operand: {}",
-                                    value_type_name(&value),
-                                    display_value(&value)
-                                ),
+                                PklString::join(&[format!("Operator `{operator}` is not defined for left operand type `").into(),
+(value_type_name(&value)).into(),
+"`.\nLeft operand: ".into(),
+display_value(&value)], ""),
                             )
                         } else {
                             binary_error(operator, &Value::Bool(!or), &value)
@@ -4612,19 +4625,27 @@ impl Vm {
                         let operator = if nullable { "read?" } else { "read" };
                         return Err(RuntimeError::new(
                             ErrorKind::Type,
-                            format!(
-                                "Operator `{operator}` is not defined for operand type `{}`.\nOperand: {}",
-                                crate::diagnostic_values::type_name(
-                                    &operand,
-                                    &self.heap,
-                                    &self.program.module_name
-                                )?,
-                                crate::diagnostic_values::render(
-                                    &operand,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                    80
-                                )?,
+                            PklString::join(
+                                &[
+                                    format!(
+                                        "Operator `{operator}` is not defined for operand type `"
+                                    )
+                                    .into(),
+                                    (crate::diagnostic_values::type_name(
+                                        &operand,
+                                        &self.heap,
+                                        &self.program.module_name,
+                                    )?)
+                                    .into(),
+                                    "`.\nOperand: ".into(),
+                                    crate::diagnostic_values::render(
+                                        &operand,
+                                        &self.heap,
+                                        &self.program.module_name,
+                                        80,
+                                    )?,
+                                ],
+                                "",
                             ),
                         ));
                     }
@@ -6084,47 +6105,80 @@ fn type_error_at_width(
     let actual_type = if matches!(expected.unaliased(), TypeCheck::Reference { .. })
         && let Some(reference) = actual_reference
     {
-        reference::export_type_name(reference, heap, module)?
+        reference::export_type_name_value(reference, heap, module)?
     } else {
-        crate::diagnostic_values::type_name(actual, heap, module)?
+        crate::diagnostic_values::type_name(actual, heap, module)?.into()
     };
-    let value = crate::diagnostic_values::render(actual, heap, module, limit)?;
+    let value = crate::diagnostic_values::render_string(actual, heap, module, limit)?;
     if matches!(expected.unaliased(), TypeCheck::Nothing) {
-        return Ok(RuntimeError::new(
-            ErrorKind::Type,
-            format!(
-                "Expected `nothing`, but got type `{actual_type}`.\n\n\
-                 `nothing` is typically used as the return type of functions that throw errors.\n\
-                 Value: {value}"
-            ),
-        ));
+        return Ok(RuntimeError::new(ErrorKind::Type, PklString::join(&[
+            "Expected `nothing`, but got type `".into(), actual_type,
+            "`.\n\n`nothing` is typically used as the return type of functions that throw errors.\nValue: ".into(), value
+        ], "")));
     }
+    let inline_value = matches!(
+        expected.resolved(),
+        TypeCheck::Union {
+            string_literals: true,
+            ..
+        }
+    ) && matches!(actual, Value::String(_));
     let expected = if matches!(expected.unaliased(), TypeCheck::Reference { .. })
         && actual_reference.is_some()
     {
-        reference::type_name(expected, module)
+        reference::type_name_value(expected, module)
     } else {
-        type_name(expected, module)
+        type_name_value(expected, module)
     };
     Ok(RuntimeError::new(
         ErrorKind::Type,
         if actual.is_null() {
-            format!("Expected value of type `{expected}`, but got `null`.")
+            PklString::join(
+                &[
+                    "Expected value of type `".into(),
+                    expected,
+                    "`, but got `null`.".into(),
+                ],
+                "",
+            )
+        } else if inline_value {
+            PklString::join(
+                &[
+                    "Expected value of type `".into(),
+                    expected,
+                    "`, but got `".into(),
+                    value,
+                    "`.".into(),
+                ],
+                "",
+            )
         } else {
-            format!(
-                "Expected value of type `{expected}`, but got type `{actual_type}`.\nValue: {value}"
+            PklString::join(
+                &[
+                    "Expected value of type `".into(),
+                    expected,
+                    "`, but got type `".into(),
+                    actual_type,
+                    "`.\nValue: ".into(),
+                    value,
+                ],
+                "",
             )
         },
     ))
 }
 
 fn type_name(ty: &TypeCheck, module: &str) -> String {
+    type_name_value(ty, module).to_java_utf8()
+}
+
+fn type_name_value(ty: &TypeCheck, module: &str) -> PklString {
     enum Part<'a> {
         Type(&'a TypeCheck),
         Text(String),
     }
     let mut pending = vec![Part::Type(ty)];
-    let mut result = String::new();
+    let mut result = crate::pkl_string::PklStringBuilder::default();
     while let Some(part) = pending.pop() {
         let ty = match part {
             Part::Text(text) => {
@@ -6165,10 +6219,32 @@ fn type_name(ty: &TypeCheck, module: &str) -> String {
             }
             TypeCheck::Pair { .. } => "Pair".into(),
             TypeCheck::CollectionBase { .. } => "Collection".into(),
-            TypeCheck::StringLiteral(value) => format!("{:?}", value.to_java_utf8()),
+            TypeCheck::StringLiteral(value) => {
+                result.push_value(&value.quoted());
+                continue;
+            }
             TypeCheck::Nullable(inner) => {
                 pending.push(Part::Text("?".into()));
                 pending.push(Part::Type(inner));
+                continue;
+            }
+            TypeCheck::Union {
+                types,
+                string_literals: true,
+                ..
+            } => {
+                let mut seen = std::collections::BTreeSet::new();
+                for ty in types {
+                    let TypeCheck::StringLiteral(value) = ty.resolved() else {
+                        unreachable!("literal union metadata")
+                    };
+                    if seen.insert(value.clone()) {
+                        if seen.len() > 1 {
+                            result.push('|');
+                        }
+                        result.push_value(&value.quoted());
+                    }
+                }
                 continue;
             }
             TypeCheck::Union { types, .. } => {
@@ -6184,7 +6260,7 @@ fn type_name(ty: &TypeCheck, module: &str) -> String {
         };
         result.push_str(&text);
     }
-    result
+    result.finish()
 }
 
 fn value_type_name(value: &Value) -> &'static str {
@@ -6202,37 +6278,29 @@ fn value_type_name(value: &Value) -> &'static str {
     }
 }
 
-fn display_value(value: &Value) -> String {
+fn display_value(value: &Value) -> PklString {
     match value {
-        Value::String(value) => format!("{:?}", value.to_java_utf8()),
-        _ => scalar_string(value)
-            .map(|value| value.to_java_utf8())
-            .unwrap_or_else(|_| value_type_name(value).to_owned()),
+        Value::String(value) => value.quoted(),
+        _ => scalar_string(value).unwrap_or_else(|_| value_type_name(value).into()),
     }
 }
 
 fn unary_error(operator: &str, operand: &Value) -> RuntimeError {
     RuntimeError::new(
         ErrorKind::Type,
-        format!(
-            "Operator `{operator}` is not defined for operand type `{}`.\nOperand: {}",
-            value_type_name(operand),
-            display_value(operand)
-        ),
+        PklString::from(format!(
+            "Operator `{operator}` is not defined for operand type `{}`.\nOperand: ",
+            value_type_name(operand)
+        ))
+        .concat(&display_value(operand)),
     )
 }
 
 fn binary_error(operator: &str, left: &Value, right: &Value) -> RuntimeError {
-    RuntimeError::new(
-        ErrorKind::Type,
-        format!(
-            "Operator `{operator}` is not defined for operand types `{}` and `{}`.\nLeft operand : {}\nRight operand: {}",
-            value_type_name(left),
-            value_type_name(right),
-            display_value(left),
-            display_value(right)
-        ),
-    )
+    RuntimeError::new(ErrorKind::Type, PklString::join(&[
+        format!("Operator `{operator}` is not defined for operand types `{}` and `{}`.\nLeft operand : ", value_type_name(left), value_type_name(right)).into(),
+        display_value(left), "\nRight operand: ".into(), display_value(right),
+    ], ""))
 }
 
 fn operator_name(instruction: &Instruction) -> &'static str {
@@ -6721,6 +6789,9 @@ impl Compiler<'_> {
                 }
             }
             TypeKind::Union { types, default } => TypeCheck::Union {
+                string_literals: types
+                    .iter()
+                    .all(|ty| !ty.parenthesized && matches!(ty.kind, TypeKind::String(_))),
                 spans: types.iter().map(|ty| self.type_source_span(ty)).collect(),
                 // Alternatives retain their use-site labels even when checking an
                 // alias expands to a different source section. Type parameters

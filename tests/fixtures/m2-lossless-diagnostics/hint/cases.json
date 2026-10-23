@@ -1,0 +1,20 @@
+[
+  {
+    "id": "pcf-missing-member-hint",
+    "expression": "hinted",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-renderer-hint-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "payload = \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}\"\nclass C { required: Int }\nhinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = new C {} })\n",
+    "sourceSha256": "a96164db868820183bbb4be603bd46caf97011015dd2a6fb0f935838ed81951c",
+    "callPrefix": "outer-0"
+  },
+  {
+    "id": "pcf-missing-member-hint-retry",
+    "expression": "hinted",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-renderer-hint-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "payload = \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}\"\nclass C { required: Int }\nhinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = new C {} })\n",
+    "sourceSha256": "a96164db868820183bbb4be603bd46caf97011015dd2a6fb0f935838ed81951c",
+    "callPrefix": "outer-1"
+  }
+]

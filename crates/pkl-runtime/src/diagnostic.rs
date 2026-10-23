@@ -2,6 +2,7 @@
 mod frames;
 mod highlight;
 
+use crate::pkl_string::PklStringBuilder;
 use crate::source::{Source, SourceId, Span};
 use crate::value::PklString;
 use std::fmt;
@@ -59,7 +60,7 @@ pub struct LogicalFrame {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct PowerAssertionValue {
     pub span: Span,
-    pub value: String,
+    pub value: PklString,
     pub executions: usize,
     pub hidden: bool,
 }
@@ -76,17 +77,17 @@ pub struct UnionTypeDiagnostic {
 pub enum TypeDiagnostic {
     Simple {
         span: Span,
-        message: String,
+        message: PklString,
     },
     Constraint {
         span: Span,
-        value: String,
+        value: PklString,
         body_span: Span,
         observations: Option<Vec<PowerAssertionValue>>,
     },
     Union {
         span: Span,
-        value: String,
+        value: PklString,
         actual_type: String,
         is_null: bool,
         children: Vec<UnionTypeDiagnostic>,
@@ -102,20 +103,24 @@ impl TypeDiagnostic {
         }
     }
 
-    pub fn render(&self, source: &Source) -> (String, Option<String>) {
+    pub fn render(&self, source: &Source) -> (PklString, Option<PklString>) {
         self.render_indented(source, "")
     }
 
-    fn render_indented(&self, source: &Source, indent: &str) -> (String, Option<String>) {
+    fn render_indented(&self, source: &Source, indent: &str) -> (PklString, Option<PklString>) {
+        let mut message_text = PklStringBuilder::default();
         match self {
-            Self::Simple { message, .. } => (
-                message
-                    .split('\n')
-                    .map(|line| format!("{indent}{line}"))
-                    .collect::<Vec<_>>()
-                    .join("\n"),
-                None,
-            ),
+            Self::Simple { message, .. } => {
+                let units: Vec<_> = message.encode_utf16().collect();
+                for (index, line) in units.split(|unit| *unit == 10).enumerate() {
+                    if index > 0 {
+                        message_text.push('\n');
+                    }
+                    message_text.push_str(indent);
+                    message_text.push_value(&PklString::from_utf16(line.to_vec()));
+                }
+                (message_text.finish(), None)
+            }
             Self::Constraint {
                 span,
                 value,
@@ -123,19 +128,20 @@ impl TypeDiagnostic {
                 observations,
             } => {
                 let expression = source.slice(*span).unwrap_or("");
-                let mut message = format!(
-                    "{indent}Type constraint `{expression}` violated.\n{indent}Value: {value}"
-                );
+                message_text.push_str(&format!(
+                    "{indent}Type constraint `{expression}` violated.\n{indent}Value: "
+                ));
+                message_text.push_value(value);
                 if let Some(observations) = observations {
-                    message.push_str("\n\n");
-                    message.push_str(&crate::power_assertions::render(
+                    message_text.push_str("\n\n");
+                    message_text.push_value(&crate::power_assertions::render(
                         source,
                         *body_span,
                         observations,
                         &format!("{indent}    "),
                     ));
                 }
-                (message, None)
+                (message_text.finish(), None)
             }
             Self::Union {
                 span,
@@ -153,9 +159,8 @@ impl TypeDiagnostic {
                 } else {
                     format!("type `{actual_type}`")
                 };
-                let message = format!(
-                    "{indent}Expected value of type `{expected}`, but got {actual}.\n{indent}Value: {value}"
-                );
+                message_text.push_str(&format!("{indent}Expected value of type `{expected}`, but got {actual}.\n{indent}Value: "));
+                message_text.push_value(value);
                 let hints: Vec<_> = nontrivial
                     .into_iter()
                     .map(|child| {
@@ -163,17 +168,22 @@ impl TypeDiagnostic {
                         let (message, hint) = child
                             .diagnostic
                             .render_indented(source, &format!("{indent}  "));
-                        let mut text = format!(
-                            "{indent}* Value is not of type `{expected}` because:\n{message}"
-                        );
+                        let mut text = PklStringBuilder::default();
+                        text.push_str(&format!(
+                            "{indent}* Value is not of type `{expected}` because:\n"
+                        ));
+                        text.push_value(&message);
                         if let Some(hint) = hint {
                             text.push_str("\n\n");
-                            text.push_str(&hint);
+                            text.push_value(&hint);
                         }
-                        text
+                        text.finish()
                     })
                     .collect();
-                (message, (!hints.is_empty()).then(|| hints.join("\n\n")))
+                (
+                    message_text.finish(),
+                    (!hints.is_empty()).then(|| PklString::join(&hints, "\n\n")),
+                )
             }
         }
     }
@@ -192,7 +202,7 @@ pub struct Diagnostic {
     pub kind: DiagnosticKind,
     pub provenance: Box<DiagnosticProvenance>,
     pub span: Span,
-    pub message: String,
+    pub message: PklString,
     /// Synthetic JVM underline width (not a source byte length), e.g. at EOF.
     pub highlight_length_utf16: Option<usize>,
     /// Authored member path for delayed AST validation (e.g. `result` or `C.x`).
@@ -207,11 +217,11 @@ pub struct Diagnostic {
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 struct DiagnosticDetails {
-    hint: String,
+    hint: PklString,
 }
 
 impl Diagnostic {
-    pub fn new(kind: DiagnosticKind, span: Span, message: impl Into<String>) -> Self {
+    pub fn new(kind: DiagnosticKind, span: Span, message: impl Into<PklString>) -> Self {
         Self {
             kind,
             provenance: Box::new(DiagnosticProvenance {
@@ -233,7 +243,7 @@ impl Diagnostic {
         origin: DiagnosticOrigin,
         kind: DiagnosticKind,
         span: Span,
-        message: impl Into<String>,
+        message: impl Into<PklString>,
     ) -> Self {
         let mut diagnostic = Self::new(kind, span, message);
         diagnostic.provenance.origin = origin;
@@ -246,7 +256,7 @@ impl Diagnostic {
         origin: DiagnosticOrigin,
         capability: &'static str,
         span: Span,
-        message: impl Into<String>,
+        message: impl Into<PklString>,
     ) -> Self {
         let mut diagnostic = Self::new(DiagnosticKind::Unsupported, span, message);
         diagnostic.provenance.origin = origin;
@@ -259,26 +269,26 @@ impl Diagnostic {
         origin: DiagnosticOrigin,
         resource: &'static str,
         span: Span,
-        message: impl Into<String>,
+        message: impl Into<PklString>,
     ) -> Self {
         let mut diagnostic = Self::unsupported(origin, resource, span, message);
         diagnostic.provenance.disposition = FailureDisposition::LimitExceeded;
         diagnostic
     }
 
-    pub fn with_hint(mut self, hint: impl Into<String>) -> Self {
+    pub fn with_hint(mut self, hint: impl Into<PklString>) -> Self {
         self.details = Some(Box::new(DiagnosticDetails { hint: hint.into() }));
         self
     }
 
-    pub fn hint(&self) -> Option<&str> {
-        self.details.as_ref().map(|details| details.hint.as_str())
+    pub fn hint(&self) -> Option<&PklString> {
+        self.details.as_ref().map(|details| &details.hint)
     }
 }
 
 impl fmt::Display for Diagnostic {
     fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
-        formatter.write_str(&self.message)
+        fmt::Display::fmt(&self.message, formatter)
     }
 }
 
@@ -301,8 +311,19 @@ pub struct RenderFrame<'a> {
 /// Includes the pinned recursive frame compression. Source transformers and
 /// colored output remain separate compatibility requirements.
 pub fn render_error(message: &str, frames: &[RenderFrame<'_>], hint: Option<&str>) -> String {
-    use std::fmt::Write;
-    let mut output = format!("–– Pkl Error ––\n{message}\n");
+    render_error_text(&message.into(), frames, hint.map(PklString::from).as_ref()).to_java_utf8()
+}
+
+/// Canonical uncolored diagnostic text before any UTF-8 writer boundary.
+pub fn render_error_text(
+    message: &PklString,
+    frames: &[RenderFrame<'_>],
+    hint: Option<&PklString>,
+) -> PklString {
+    let mut output = PklStringBuilder::default();
+    output.push_str("–– Pkl Error ––\n");
+    output.push_value(message);
+    output.push('\n');
     if !frames.is_empty() {
         output.push('\n');
         frames::render(&mut output, frames, hint);
@@ -310,14 +331,14 @@ pub fn render_error(message: &str, frames: &[RenderFrame<'_>], hint: Option<&str
     if frames.is_empty()
         && let Some(hint) = hint
     {
-        // VmExceptionRenderer appends a frameless hint verbatim. Its own
-        // trailing newline (for example an empty method list) is significant.
-        write!(output, "\n{hint}").unwrap();
+        // Frameless hints preserve their own significant trailing newline.
+        output.push('\n');
+        output.push_value(hint);
     }
-    output
+    output.finish()
 }
 
-fn render_frame(output: &mut String, frame: &RenderFrame<'_>, margin: &str) {
+fn render_frame(output: &mut PklStringBuilder, frame: &RenderFrame<'_>, margin: &str) {
     use std::fmt::Write;
     let text = frame.source.text();
     let Some(position) = frame.source.position(frame.span.start) else {
@@ -357,7 +378,9 @@ fn render_frame(output: &mut String, frame: &RenderFrame<'_>, margin: &str) {
         "^".repeat(width)
     )
     .unwrap();
-    writeln!(output, "{margin}at {} ({})", frame.member, frame.uri).unwrap();
+    output.push_str(&format!("{margin}at "));
+    output.push_value(frame.member);
+    writeln!(output, " ({})", frame.uri).unwrap();
 }
 
 // Java Character.isWhitespace deliberately excludes the non-breaking spaces.
@@ -373,7 +396,7 @@ pub(crate) fn property_suggestions(
     name: &str,
     candidates: impl IntoIterator<Item = String>,
     include_base: bool,
-) -> Option<String> {
+) -> Option<PklString> {
     let mut seen = std::collections::BTreeSet::new();
     let base = crate::diagnostic_names::BASE_PROPERTIES
         .iter()
@@ -398,6 +421,7 @@ pub(crate) fn property_suggestions(
                 .collect::<Vec<_>>()
                 .join("\n")
         )
+        .into()
     })
 }
 
@@ -417,7 +441,7 @@ pub(crate) fn member_suggestions(
     arity: isize,
     properties: &[String],
     methods: &[(String, String, usize)],
-) -> Option<String> {
+) -> Option<PklString> {
     ordered_member_suggestions(
         name,
         arity,
@@ -441,7 +465,7 @@ pub(crate) fn ordered_member_suggestions<'a>(
     name: &str,
     arity: isize,
     candidates: impl IntoIterator<Item = MemberSuggestion<'a>>,
-) -> Option<String> {
+) -> Option<PklString> {
     let mut seen = std::collections::BTreeSet::new();
     let mut ranked = Vec::new();
     for candidate in candidates {
@@ -476,6 +500,7 @@ pub(crate) fn ordered_member_suggestions<'a>(
                 .collect::<Vec<_>>()
                 .join("\n")
         )
+        .into()
     })
 }
 
@@ -541,11 +566,15 @@ mod suggestion_tests {
     #[test]
     fn property_typos_use_candidates_and_base_without_fixture_specific_names() {
         assert_eq!(
-            property_suggestions("missing", [], true).as_deref(),
+            property_suggestions("missing", [], true)
+                .as_ref()
+                .and_then(|text| text.as_str()),
             Some("Did you mean any of the following?\nListing")
         );
         assert_eq!(
-            property_suggestions("answr", ["answer".into(), "answer".into()], false).as_deref(),
+            property_suggestions("answr", ["answer".into(), "answer".into()], false)
+                .as_ref()
+                .and_then(|text| text.as_str()),
             Some("Did you mean any of the following?\nanswer")
         );
         assert_eq!(property_suggestions("missing", [], false), None);

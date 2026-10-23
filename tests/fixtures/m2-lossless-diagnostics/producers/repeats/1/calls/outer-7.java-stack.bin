@@ -1,0 +1,24 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `undefined`.
+
+7 | hinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })
+                                                                        ^^^^^^^^^
+at main#hinted[#1] (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01/workspace/main.pkl)
+
+Did you mean any of the following?
+Undefined()
+
+7 | hinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#hinted (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01/workspace/main.pkl)
+
+1 | hinted
+    ^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at LosslessDiagnosticProbe.evaluate(LosslessDiagnosticProbe.java:36)
+	at LosslessDiagnosticProbe.main(LosslessDiagnosticProbe.java:103)

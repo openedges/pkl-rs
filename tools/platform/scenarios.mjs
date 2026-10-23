@@ -1,3 +1,4 @@
+import { legacyJavaUtf8Observation } from './legacy-java-utf8.mjs';
 import { FakeHostOperations, waitingEvaluation } from './host-adapter.mjs';
 import { classPublicationCases } from './class-publication-cases.mjs';
 import { typeMetadataCases, typeMetadataOracle } from './type-metadata-cases.mjs';
@@ -23,7 +24,7 @@ import { frontendOwnerCases, frontendOwnerContext } from './frontend-owner-cases
 import { frontendParentCases, frontendParentContext } from './frontend-parent-cases.mjs';
 
 // Identical assertions execute inside Node and an actual Chromium page.
-export async function scenarios(api) {
+export async function scenarios(api, { legacyUtf8Observations = [] } = {}) {
   const passed = [];
   const assert = (condition, message) => { if (!condition) throw new Error(message); };
   const eq = (actual, expected) => assert(actual === expected, `${String(actual)} != ${String(expected)}`);
@@ -313,11 +314,16 @@ export async function scenarios(api) {
         const evaluate = () => api.evaluateLanguage(fixture.source,
           stringRepresentationContext.uri, stringRepresentationContext.moduleName,
           fixture.expression);
+        let actual, expected;
         if (Object.hasOwn(fixture, 'expectedError')) {
-          throws(evaluate, fixture.expectedError);
-        } else {
-          eq(evaluate(), fixture.expectedValue);
-        }
+          let caught;
+          try { evaluate(); } catch (error) { caught = error; }
+          assert(caught instanceof Error, 'expected a JavaScript Error');
+          actual = caught.message; expected = fixture.expectedError;
+        } else { actual = evaluate(); expected = fixture.expectedValue; }
+        const observation = legacyJavaUtf8Observation(actual, expected);
+        legacyUtf8Observations.push({id: fixture.id, repetition, ...observation});
+        assert(observation.matches, 'historical Java UTF8 mismatch: ' + fixture.id);
       }
     }
   });
@@ -327,11 +333,16 @@ export async function scenarios(api) {
         const evaluate = () => api.evaluateLanguage(fixture.source,
           diagnosticFrameIdentityContext.uri, diagnosticFrameIdentityContext.moduleName,
           fixture.expression);
+        let actual, expected;
         if (Object.hasOwn(fixture, 'expectedError')) {
-          throws(evaluate, fixture.expectedError);
-        } else {
-          eq(evaluate(), fixture.expectedValue);
-        }
+          let caught;
+          try { evaluate(); } catch (error) { caught = error; }
+          assert(caught instanceof Error, 'expected a JavaScript Error');
+          actual = caught.message; expected = fixture.expectedError;
+        } else { actual = evaluate(); expected = fixture.expectedValue; }
+        const observation = legacyJavaUtf8Observation(actual, expected);
+        legacyUtf8Observations.push({id: fixture.id, repetition, ...observation});
+        assert(observation.matches, 'historical Java UTF8 mismatch: ' + fixture.id);
       }
     }
   });
@@ -357,11 +368,16 @@ export async function scenarios(api) {
         const evaluate = () => api.evaluateLanguage(fixture.source,
           frontendOwnerContext.uri, frontendOwnerContext.moduleName,
           fixture.expression, frontendOwnerContext.powerAssertions);
+        let actual, expected;
         if (Object.hasOwn(fixture, 'expectedError')) {
-          throws(evaluate, fixture.expectedError);
-        } else {
-          eq(evaluate(), fixture.expectedValue);
-        }
+          let caught;
+          try { evaluate(); } catch (error) { caught = error; }
+          assert(caught instanceof Error, 'expected a JavaScript Error');
+          actual = caught.message; expected = fixture.expectedError;
+        } else { actual = evaluate(); expected = fixture.expectedValue; }
+        const observation = legacyJavaUtf8Observation(actual, expected);
+        legacyUtf8Observations.push({id: fixture.id, repetition, ...observation});
+        assert(observation.matches, 'historical Java UTF8 mismatch: ' + fixture.id);
       }
     }
   });

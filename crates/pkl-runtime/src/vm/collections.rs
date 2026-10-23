@@ -748,10 +748,8 @@ impl Vm {
         );
         let mut error = RuntimeError::new(
             ErrorKind::Type,
-            format!(
-                "Cannot spread value of type `{source_kind:?}` into object of type `{label}`.\nValue: {}",
-                crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)?
-            ),
+            PklString::join(&[format!("Cannot spread value of type `{source_kind:?}` into object of type `{label}`.\nValue: ").into(),
+crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)?], ""),
         );
         error.hint = Some(hint.into());
         Err(error)
@@ -974,10 +972,18 @@ impl Vm {
                     class.module.as_deref().unwrap_or(&self.program.module_name),
                     class.name
                 )
+                .into()
             };
             let mut error = RuntimeError::new(
                 ErrorKind::Type,
-                format!("Object of type `{type_label}` cannot have an {label}."),
+                PklString::join(
+                    &[
+                        "Object of type `".into(),
+                        type_label,
+                        format!("` cannot have an {label}.").into(),
+                    ],
+                    "",
+                ),
             );
             error.hint = Some(if element {
                 "Only objects of type `Listing` and `Dynamic` can have elements. If you did not mean to add an element, you probably got the syntax wrong. For example, `obj { name }` adds an element, whereas `obj { name = \"Pigeon\" }` sets a property."
@@ -1062,14 +1068,18 @@ impl Vm {
         }) {
             return Err(RuntimeError::new(
                 ErrorKind::Type,
-                format!(
-                    "Duplicate definition of member `{}`.",
-                    crate::diagnostic_values::render(
-                        &descriptor.key,
-                        &self.heap,
-                        &self.program.module_name,
-                        80
-                    )?
+                PklString::join(
+                    &[
+                        "Duplicate definition of member `".into(),
+                        crate::diagnostic_values::render(
+                            &descriptor.key,
+                            &self.heap,
+                            &self.program.module_name,
+                            80,
+                        )?,
+                        "`.".into(),
+                    ],
+                    "",
                 ),
             ));
         }
@@ -1162,7 +1172,7 @@ impl Vm {
         }
     }
 
-    fn spread_error(&mut self, message: String, member: &Member) -> RuntimeError {
+    fn spread_error(&mut self, message: impl Into<PklString>, member: &Member) -> RuntimeError {
         let mut error = RuntimeError::new(ErrorKind::Type, message);
         let frame = self.frames.last_mut().expect("active frame");
         if let Some(metadata) = self.program.metadata.get(frame.block)
@@ -1428,25 +1438,31 @@ impl Vm {
                 if self.heap.get(receiver)?.collection_kind == CollectionKind::Set {
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
-                        format!(
-                            "Operator `[]` is not defined for operand types `Set` and `{}`.\nLeft operand : {}\nRight operand: {}",
-                            crate::diagnostic_values::type_name(
-                                &key,
-                                &self.heap,
-                                &self.program.module_name
-                            )?,
-                            crate::diagnostic_values::render(
-                                &Value::Object(receiver),
-                                &self.heap,
-                                &self.program.module_name,
-                                80
-                            )?,
-                            crate::diagnostic_values::render(
-                                &key,
-                                &self.heap,
-                                &self.program.module_name,
-                                80
-                            )?
+                        PklString::join(
+                            &[
+                                "Operator `[]` is not defined for operand types `Set` and `".into(),
+                                (crate::diagnostic_values::type_name(
+                                    &key,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                )?)
+                                .into(),
+                                "`.\nLeft operand : ".into(),
+                                crate::diagnostic_values::render(
+                                    &Value::Object(receiver),
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80,
+                                )?,
+                                "\nRight operand: ".into(),
+                                crate::diagnostic_values::render(
+                                    &key,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80,
+                                )?,
+                            ],
+                            "",
                         ),
                     ));
                 }
@@ -1458,15 +1474,19 @@ impl Vm {
                     let value = self.map_value(receiver, &key)?.ok_or_else(|| {
                         RuntimeError::new(
                             ErrorKind::MissingMember,
-                            format!(
-                                "Cannot find key `{}`.",
-                                crate::diagnostic_values::render(
-                                    &key,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                    80
-                                )
-                                .unwrap_or_else(|_| display_value(&key))
+                            PklString::join(
+                                &[
+                                    "Cannot find key `".into(),
+                                    crate::diagnostic_values::render(
+                                        &key,
+                                        &self.heap,
+                                        &self.program.module_name,
+                                        80,
+                                    )
+                                    .unwrap_or_else(|_| display_value(&key)),
+                                    "`.".into(),
+                                ],
+                                "",
                             ),
                         )
                     })?;
@@ -1511,22 +1531,22 @@ impl Vm {
                         let name = format!("{:?}", object.collection_kind);
                         return Err(RuntimeError::new(
                             ErrorKind::Type,
-                            format!(
-                                "Operator `[]` is not defined for operand types `{name}` and `{}`.\nLeft operand : {}\nRight operand: {}",
-                                value_type_name(&key),
-                                crate::diagnostic_values::render(
+                            PklString::join(&[format!("Operator `[]` is not defined for operand types `{name}` and `").into(),
+(value_type_name(&key)).into(),
+"`.\nLeft operand : ".into(),
+crate::diagnostic_values::render(
                                     &Value::Object(receiver),
                                     &self.heap,
                                     &self.program.module_name,
                                     80
                                 )?,
-                                crate::diagnostic_values::render(
+"\nRight operand: ".into(),
+crate::diagnostic_values::render(
                                     &key,
                                     &self.heap,
                                     &self.program.module_name,
                                     80
-                                )?
-                            ),
+                                )?], ""),
                         ));
                     };
                     if index < 0 || index as usize >= object.length {
@@ -1560,15 +1580,19 @@ impl Vm {
                 let member = member.ok_or_else(|| {
                     RuntimeError::new(
                         ErrorKind::MissingMember,
-                        format!(
-                            "Cannot find key `{}`.",
-                            crate::diagnostic_values::render(
-                                &key,
-                                &self.heap,
-                                &self.program.module_name,
-                                80
-                            )
-                            .unwrap_or_else(|_| display_value(&key))
+                        PklString::join(
+                            &[
+                                "Cannot find key `".into(),
+                                crate::diagnostic_values::render(
+                                    &key,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80,
+                                )
+                                .unwrap_or_else(|_| display_value(&key)),
+                                "`.".into(),
+                            ],
+                            "",
                         ),
                     )
                 })?;
@@ -1675,14 +1699,17 @@ impl Vm {
                                 ),
                             );
                             if !(spread && value.is_null()) {
-                                error.message.push_str(&format!(
-                                    "\nValue: {}",
-                                    crate::diagnostic_values::render(
-                                        &value,
-                                        &self.heap,
-                                        &self.program.module_name,
-                                        80
-                                    )?
+                                error.message = error.message.concat(&PklString::join(
+                                    &[
+                                        "\nValue: ".into(),
+                                        crate::diagnostic_values::render(
+                                            &value,
+                                            &self.heap,
+                                            &self.program.module_name,
+                                            80,
+                                        )?,
+                                    ],
+                                    "",
                                 ));
                             }
                             if spread && value.is_null() {
@@ -1702,29 +1729,31 @@ impl Vm {
                     if self.heap.get(source)?.reference.is_some() {
                         return Err(RuntimeError::new(
                             ErrorKind::Type,
-                            format!(
-                                "Cannot iterate over value of type `pkl.ref#Reference`.\nValue: {}",
-                                crate::diagnostic_values::render(
+                            PklString::join(&["Cannot iterate over value of type `pkl.ref#Reference`.\nValue: ".into(),
+crate::diagnostic_values::render(
                                     &value,
                                     &self.heap,
                                     &self.program.module_name,
                                     80
-                                )?
-                            ),
+                                )?], ""),
                         ));
                     }
                     if self.heap.get(source)?.is_module {
                         let mut error = RuntimeError::new(
                             ErrorKind::Type,
-                            format!(
-                                "Cannot iterate over value of type `{}`.\nValue: {}",
-                                self.program.module_name,
-                                crate::diagnostic_values::render(
-                                    &value,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                    80
-                                )?
+                            PklString::join(
+                                &[
+                                    "Cannot iterate over value of type `".into(),
+                                    self.program.module_name.clone().into(),
+                                    "`.\nValue: ".into(),
+                                    crate::diagnostic_values::render(
+                                        &value,
+                                        &self.heap,
+                                        &self.program.module_name,
+                                        80,
+                                    )?,
+                                ],
+                                "",
                             ),
                         );
                         if spread {
@@ -1739,22 +1768,27 @@ impl Vm {
                     if let Some(class) = typed_class(&self.heap, source)? {
                         let mut error = RuntimeError::new(
                             ErrorKind::Type,
-                            format!(
-                                "Cannot iterate over value of type `{}`.\nValue: {}",
-                                reference::type_name(
-                                    &TypeCheck::Class {
-                                        module: class.module.clone(),
-                                        id: class.id,
-                                        name: class.name
-                                    },
-                                    &self.program.module_name
-                                ),
-                                crate::diagnostic_values::render(
-                                    &value,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                    80
-                                )?
+                            PklString::join(
+                                &[
+                                    "Cannot iterate over value of type `".into(),
+                                    (reference::type_name(
+                                        &TypeCheck::Class {
+                                            module: class.module.clone(),
+                                            id: class.id,
+                                            name: class.name,
+                                        },
+                                        &self.program.module_name,
+                                    ))
+                                    .into(),
+                                    "`.\nValue: ".into(),
+                                    crate::diagnostic_values::render(
+                                        &value,
+                                        &self.heap,
+                                        &self.program.module_name,
+                                        80,
+                                    )?,
+                                ],
+                                "",
                             ),
                         );
                         if spread {
@@ -1960,11 +1994,11 @@ impl Vm {
                         "entry key"
                     };
                     let key = if source_member.kind == CollectionMemberKind::Property {
-                        scalar_string(&key)?.to_java_utf8()
+                        scalar_string(&key)?
                     } else {
                         display_value(&key)
                     };
-                    return Err(self.spread_error(format!("Cannot spread object because the enclosing object already has a declaration of {label} `{key}`."), &member));
+                    return Err(self.spread_error(PklString::join(&[format!("Cannot spread object because the enclosing object already has a declaration of {label} `").into(),key,"`.".into()], ""), &member));
                 }
                 member.constant = false;
                 let key = (source_member.kind != CollectionMemberKind::Element).then_some(key);

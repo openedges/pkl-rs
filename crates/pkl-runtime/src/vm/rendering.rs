@@ -182,7 +182,7 @@ impl RenderRun {
     }
 }
 impl Vm {
-    pub(super) fn pcf_undefined_hint(&self) -> Option<String> {
+    pub(super) fn pcf_undefined_hint(&self) -> Option<PklString> {
         let force = self
             .frames
             .iter()
@@ -212,7 +212,7 @@ impl Vm {
             } else {
                 path.push(PathPart::Property(force.name.as_ref().into()));
             }
-            let mut text = String::new();
+            let mut text = crate::pkl_string::PklStringBuilder::default();
             let mut trailing = false;
             for part in path {
                 match part {
@@ -222,21 +222,23 @@ impl Vm {
                             text.push('.');
                         }
                         trailing = true;
-                        let name = name.to_java_utf8();
-                        if crate::parser::is_regular_identifier(&name) {
-                            text.push_str(&name);
+                        if name
+                            .as_str()
+                            .is_some_and(crate::parser::is_regular_identifier)
+                        {
+                            text.push_value(&name);
                         } else {
                             text.push('`');
-                            text.push_str(&name);
+                            text.push_value(&name);
                             text.push('`');
                         }
                     }
                     PathPart::Entry(value) => {
                         text.push('[');
                         match value {
-                            Value::String(value) => text.push_str(&value.to_java_utf8()),
-                            value => text.push_str(
-                                &crate::diagnostic_values::render(
+                            Value::String(value) => text.push_value(&value),
+                            value => text.push_value(
+                                &crate::diagnostic_values::render_string(
                                     &value,
                                     &self.heap,
                                     &self.program.module_name,
@@ -249,14 +251,17 @@ impl Vm {
                     }
                 }
             }
-            let mut hint = format!("The above error occurred when rendering path `{text}`");
+            let mut hint = crate::pkl_string::PklStringBuilder::default();
+            hint.push_str("The above error occurred when rendering path `");
+            hint.push_value(&text.finish());
+            hint.push('`');
             if matches!(&run.root, Value::Object(id) if self.heap.get(*id).is_ok_and(|object| object.is_module))
             {
                 let source = self.context.primary_source.as_ref()?;
                 hint.push_str(&format!(" of module `{}`", source.uri));
             }
             hint.push('.');
-            return Some(hint);
+            return Some(hint.finish());
         }
         None
     }
@@ -470,9 +475,7 @@ impl Vm {
                         )?;
                         return Err(RuntimeError::new(
                             ErrorKind::Type,
-                            format!(
-                                "The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `{ty}`.\nValue: {text}"
-                            ),
+                            PklString::from(format!("The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `{ty}`.\nValue: ")).concat(&text),
                         ));
                     }
                 }
@@ -973,7 +976,10 @@ impl Vm {
             crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)?;
         let mut error = RuntimeError::new(
             ErrorKind::Type,
-            format!("Cannot render value of type `{ty}` as Pcf.\nValue: {rendered}"),
+            PklString::from(format!(
+                "Cannot render value of type `{ty}` as Pcf.\nValue: "
+            ))
+            .concat(&rendered),
         );
         error.hint = Some("Consider adding a converter to `output.converters`.".into());
         error.frames.extend(run.source.clone());

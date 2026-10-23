@@ -145,11 +145,13 @@ impl TypeCheck {
                 syntax: *syntax,
             },
             Union {
+                string_literals,
                 types,
                 spans,
                 labels,
                 default,
             } => Union {
+                string_literals: *string_literals,
                 types: types.iter().map(&mut map).collect::<Result<_, _>>()?,
                 spans: spans.clone(),
                 labels: labels.clone(),

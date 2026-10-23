@@ -358,7 +358,7 @@ fn imported_diagnostic(
 ) -> RuntimeError {
     let mut error = RuntimeError::new(ErrorKind::Type, diagnostic.message.clone());
     error.span = Some(diagnostic.span);
-    error.hint = diagnostic.hint().map(str::to_owned);
+    error.hint = diagnostic.hint().cloned();
     error.frames.push(RuntimeFrame {
         span: diagnostic.span,
         source: Some(source.clone()),

@@ -1244,7 +1244,7 @@ mod tests {
             let metadata = program
                 .metadata
                 .iter()
-                .find(|metadata| metadata.member == PklString::from("#value"))
+                .find(|metadata| metadata.member == "#value")
                 .unwrap();
             let span = metadata.value_span.unwrap();
             assert_eq!(&source[span.start..span.end], expected, "{source}");
@@ -1280,7 +1280,7 @@ mod tests {
                 let block = program
                     .metadata
                     .iter()
-                    .position(|metadata| metadata.member == PklString::from("#value"))
+                    .position(|metadata| metadata.member == "#value")
                     .unwrap();
                 let span = program.metadata[block].value_span.unwrap();
                 assert_eq!(&source[span.start..span.end], value, "{authored}");

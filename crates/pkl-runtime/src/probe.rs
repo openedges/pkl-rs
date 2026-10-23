@@ -1,7 +1,7 @@
 //! Explicitly experimental M1 adapter entry points, not the final public Pkl API.
 use crate::{
     host::{HostPoll, HostSession},
-    value::{ErrorKind, RuntimeError, Value},
+    value::{ErrorKind, PklString, RuntimeError, Value},
     vm::{Instruction, Program, Vm, VmPoll},
 };
 use std::sync::Arc;
@@ -153,7 +153,11 @@ impl HostProbe {
             }
             HostPoll::Ready(Ok(v)) => format!("ready\t{}", encode_value(v)),
             HostPoll::Ready(Err(e)) => {
-                format!("error\t{:?}\t{}", e.kind, hex(e.message.as_bytes()))
+                format!(
+                    "error\t{:?}\t{}",
+                    e.kind,
+                    hex(e.message.to_java_utf8().as_bytes())
+                )
             }
         }
     }
@@ -294,6 +298,7 @@ pub struct SourceProbe {
     environment: Vec<(String, String)>,
 }
 impl SourceProbe {
+    /// Legacy constructor; Java UTF-8 conversion is explicit at this boundary.
     #[allow(clippy::too_many_arguments)]
     pub fn new(
         source: &str,
@@ -305,8 +310,31 @@ impl SourceProbe {
         host_frame_transformer: bool,
         power_assertions: bool,
     ) -> Result<Self, String> {
+        Self::new_text(
+            source,
+            uri,
+            module_name,
+            paths,
+            trace_mode,
+            host_logger,
+            host_frame_transformer,
+            power_assertions,
+        )
+        .map_err(|text| text.to_java_utf8())
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn new_text(
+        source: &str,
+        uri: &str,
+        module_name: &str,
+        paths: &[String],
+        trace_mode: &str,
+        host_logger: bool,
+        host_frame_transformer: bool,
+        power_assertions: bool,
+    ) -> Result<Self, PklString> {
         Ok(Self {
-            session: crate::evaluation::session::SourceSession::compile(
+            session: crate::evaluation::session::SourceSession::compile_text(
                 source,
                 uri,
                 module_name,
@@ -316,7 +344,8 @@ impl SourceProbe {
                     host_logger,
                     host_frame_transformer,
                     power_assertions,
-                )?,
+                )
+                .map_err(PklString::from)?,
             )?,
             output: false,
             properties: Vec::new(),
@@ -334,8 +363,31 @@ impl SourceProbe {
         host_frame_transformer: bool,
         power_assertions: bool,
     ) -> Result<Self, String> {
+        Self::new_expressions_text(
+            source,
+            uri,
+            module_name,
+            expressions,
+            trace_mode,
+            host_logger,
+            host_frame_transformer,
+            power_assertions,
+        )
+        .map_err(|text| text.to_java_utf8())
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn new_expressions_text(
+        source: &str,
+        uri: &str,
+        module_name: &str,
+        expressions: &[String],
+        trace_mode: &str,
+        host_logger: bool,
+        host_frame_transformer: bool,
+        power_assertions: bool,
+    ) -> Result<Self, PklString> {
         Ok(Self {
-            session: crate::evaluation::session::SourceSession::compile_expressions(
+            session: crate::evaluation::session::SourceSession::compile_expressions_text(
                 source,
                 uri,
                 module_name,
@@ -345,7 +397,8 @@ impl SourceProbe {
                     host_logger,
                     host_frame_transformer,
                     power_assertions,
-                )?,
+                )
+                .map_err(PklString::from)?,
             )?,
             output: false,
             properties: Vec::new(),
@@ -380,8 +433,16 @@ impl SourceProbe {
         module_options: &crate::evaluation::frontend::ModuleEvalOptions,
         session_options: crate::evaluation::session::SourceSessionOptions,
     ) -> Result<Self, crate::evaluation::frontend::ModuleFrontendResult> {
+        Self::new_output_text(input, paths, module_options, session_options).map_err(Into::into)
+    }
+    pub fn new_output_text(
+        input: crate::evaluation::frontend::ModuleSourceInput<'_>,
+        paths: &[String],
+        module_options: &crate::evaluation::frontend::ModuleEvalOptions,
+        session_options: crate::evaluation::session::SourceSessionOptions,
+    ) -> Result<Self, crate::evaluation::frontend::ModuleFrontendFailure> {
         Ok(Self {
-            session: crate::evaluation::session::SourceSession::compile_output(
+            session: crate::evaluation::session::SourceSession::compile_output_text(
                 input,
                 paths,
                 module_options,
@@ -507,16 +568,23 @@ impl SourceProbe {
                 let mut event = SourceEvent::new("error");
                 // This is shared implementation classification, not a Java API
                 // process exit. Expression diagnostics retain their raw units.
-                let failure = self.session.output_failure(error.clone());
+                let failure = self.session.output_failure_text(error.clone());
                 event.phase = Some(failure.phase.as_str());
                 event.disposition = Some(failure.disposition.as_str());
                 event.reason = failure.reason;
                 if self.output {
-                    let failure = self.session.output_session_failure(error);
+                    let failure = self.session.output_session_failure_text(error);
+                    event.error = Some(failure.text.encode_utf16().collect());
+                    let failure: crate::evaluation::frontend::ModuleFrontendResult = failure.into();
                     event.error_bytes = Some(failure.stderr);
                     event.exit_code = Some(failure.exit_code);
                 } else {
-                    event.error = Some(self.session.format_error(error).encode_utf16().collect());
+                    event.error = Some(
+                        self.session
+                            .format_error_text(error)
+                            .encode_utf16()
+                            .collect(),
+                    );
                 }
                 event
             }

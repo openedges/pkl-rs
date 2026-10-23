@@ -107,6 +107,7 @@ pub(super) fn builtin_members(
                 spans.push(Span::new(start, start + 6));
                 types.push(TypeCheck::String);
                 ty = TypeCheck::Union {
+                    string_literals: false,
                     types,
                     labels: spans.clone(),
                     spans,

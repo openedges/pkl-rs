@@ -547,7 +547,7 @@ result = obj.absent
         "Cannot find property `absent` in object of type `Dynamic`."
     );
     assert_eq!(
-        error.hint.as_deref(),
+        error.hint.as_ref().and_then(|text| text.as_str()),
         Some("Available properties:\nauthored\ndefault\ninherited")
     );
     let obj = member(&mut vm, &module, "obj").unwrap();

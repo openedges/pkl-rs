@@ -1615,7 +1615,7 @@ impl<'a> Resolver<'a> {
             DiagnosticOrigin::Resolver,
             DiagnosticKind::Syntax,
             expression.span,
-            message,
+            message.into(),
         );
         if !self.diagnostic_path.is_empty() {
             error.member = Some(crate::value::PklString::join(&self.diagnostic_path, ".").into());

@@ -215,9 +215,9 @@ impl Vm {
                     )?;
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
-                        format!(
-                            "Expected value of type `String | Regex`, but got type `{name}`.\nValue: {rendered}"
-                        ),
+                        PklString::from(format!(
+                            "Expected value of type `String | Regex`, but got type `{name}`.\nValue: "
+                        )).concat(&rendered),
                     ));
                 };
                 let text = text.encode_utf16().collect::<Vec<_>>();

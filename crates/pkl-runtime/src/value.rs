@@ -121,10 +121,10 @@ pub struct RuntimeError {
     /// Internal exception provenance; unknown-member failures are never undefined.
     pub(crate) undefined_value: bool,
     pub kind: ErrorKind,
-    pub message: String,
+    pub message: PklString,
     pub span: Option<Span>,
     pub frames: Vec<RuntimeFrame>,
-    pub hint: Option<String>,
+    pub hint: Option<PklString>,
 }
 
 /// Rare structured provenance is detached so the common Result error stays
@@ -155,7 +155,7 @@ impl std::ops::DerefMut for RuntimeError {
 }
 
 impl RuntimeError {
-    pub fn new(kind: ErrorKind, message: impl Into<String>) -> Self {
+    pub fn new(kind: ErrorKind, message: impl Into<PklString>) -> Self {
         Self {
             details: None,
             undefined_value: false,
@@ -182,7 +182,7 @@ impl RuntimeError {
 
 impl fmt::Display for RuntimeError {
     fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
-        formatter.write_str(&self.message)
+        fmt::Display::fmt(&self.message, formatter)
     }
 }
 

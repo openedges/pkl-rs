@@ -1,0 +1,29 @@
+[
+  {
+    "id": "literal-type",
+    "expression": "single",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-type-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "single: \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}|\\\"|\\\\|\\n\" = \"different\"\nnullable: \"\\u{d83d}\"? = \"different\"\nunion: \"\\u{d83d}\" | \"\\u{dc00}\" = \"different\"\n",
+    "sourceSha256": "927733457418637dbabfbd7888e3bfd90e3286a639a573036f9b1b99489de38c",
+    "callPrefix": "outer-0"
+  },
+  {
+    "id": "nullable-literal-type",
+    "expression": "nullable",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-type-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "single: \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}|\\\"|\\\\|\\n\" = \"different\"\nnullable: \"\\u{d83d}\"? = \"different\"\nunion: \"\\u{d83d}\" | \"\\u{dc00}\" = \"different\"\n",
+    "sourceSha256": "927733457418637dbabfbd7888e3bfd90e3286a639a573036f9b1b99489de38c",
+    "callPrefix": "outer-1"
+  },
+  {
+    "id": "union-literal-type",
+    "expression": "union",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-type-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "single: \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}|\\\"|\\\\|\\n\" = \"different\"\nnullable: \"\\u{d83d}\"? = \"different\"\nunion: \"\\u{d83d}\" | \"\\u{dc00}\" = \"different\"\n",
+    "sourceSha256": "927733457418637dbabfbd7888e3bfd90e3286a639a573036f9b1b99489de38c",
+    "callPrefix": "outer-2"
+  }
+]

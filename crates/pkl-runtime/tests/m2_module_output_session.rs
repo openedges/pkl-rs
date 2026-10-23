@@ -316,8 +316,16 @@ fn shared_output_failure_transport_uses_raw_diagnostic_bytes() {
             "read" => probe.respond_configured(&event.token.unwrap(), 0).unwrap(),
             "error" => {
                 assert!(event.bytes.is_none());
-                assert!(event.error.is_none());
-                completed = event.error_bytes;
+                let units = event.error.expect("canonical output diagnostic units");
+                let bytes = event.error_bytes.expect("explicit output diagnostic bytes");
+                assert_eq!(
+                    units,
+                    String::from_utf8(bytes.clone())
+                        .expect("this original ASCII-message diagnostic is UTF-8")
+                        .encode_utf16()
+                        .collect::<Vec<_>>()
+                );
+                completed = Some(bytes);
                 break;
             }
             _ => panic!("expected actual output diagnostic"),

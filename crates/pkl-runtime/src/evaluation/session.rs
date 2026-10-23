@@ -1,10 +1,11 @@
 //! Development-only parsed-source Host session. Entries are fixed before execution;
 //! this is not a general REPL. Module I/O is supplied through typed Host effects.
 use super::frontend::{
-    DiagnosticProfile, FailureDisposition, FrontendPhase, ModuleEvalOptions, ModuleFrontendResult,
-    ModuleSourceInput, prepare_module, render_module_runtime_failure,
+    DiagnosticProfile, FailureDisposition, FrontendPhase, ModuleEvalOptions, ModuleFrontendFailure,
+    ModuleFrontendResult, ModuleSourceInput, prepare_module_text,
+    render_module_runtime_failure_text,
 };
-use super::{EvaluationOptions, compile_program, runtime_error};
+use super::{EvaluationOptions, compile_program_text, runtime_error_text};
 use crate::{
     heap::HeapStats,
     host::{HostPoll, HostSession},
@@ -63,6 +64,7 @@ pub struct SourceSession {
 }
 
 impl SourceSession {
+    /// Legacy constructor encoding diagnostic text at the Java UTF-8 boundary.
     pub fn compile(
         text: &str,
         uri: &str,
@@ -70,10 +72,21 @@ impl SourceSession {
         property_paths: &[String],
         options: SourceSessionOptions,
     ) -> Result<Self, String> {
+        Self::compile_text(text, uri, module_name, property_paths, options)
+            .map_err(|text| text.to_java_utf8())
+    }
+
+    pub fn compile_text(
+        text: &str,
+        uri: &str,
+        module_name: &str,
+        property_paths: &[String],
+        options: SourceSessionOptions,
+    ) -> Result<Self, PklString> {
         let mut sources = SourceMap::default();
         let id = sources.add(uri, text);
         let source = sources.get(id).expect("inserted source").clone();
-        let (program, name) = compile_program(
+        let (program, name) = compile_program_text(
             &source,
             uri,
             module_name,
@@ -101,10 +114,22 @@ impl SourceSession {
         expressions: &[String],
         options: SourceSessionOptions,
     ) -> Result<Self, String> {
+        Self::compile_expressions_text(text, uri, module_name, expressions, options)
+            .map_err(|text| text.to_java_utf8())
+    }
+
+    pub fn compile_expressions_text(
+        text: &str,
+        uri: &str,
+        module_name: &str,
+        expressions: &[String],
+        options: SourceSessionOptions,
+    ) -> Result<Self, PklString> {
         let mut sources = SourceMap::default();
         let id = sources.add(uri, text);
         let source = sources.get(id).expect("inserted source").clone();
-        let (program, name) = compile_program(&source, uri, module_name, "", options.evaluation)?;
+        let (program, name) =
+            compile_program_text(&source, uri, module_name, "", options.evaluation)?;
         Self::from_program(program, source, uri, name, expressions, options, None, true)
     }
 
@@ -116,7 +141,19 @@ impl SourceSession {
         module_options: &ModuleEvalOptions,
         options: SourceSessionOptions,
     ) -> Result<Self, ModuleFrontendResult> {
-        let prepared = prepare_module(input, module_options)?;
+        Self::compile_output_text(input, property_paths, module_options, options)
+            .map_err(Into::into)
+    }
+
+    /// Canonical output preparation preserves diagnostic text until its caller
+    /// chooses a byte-oriented result or an API UTF-16 transport.
+    pub fn compile_output_text(
+        input: ModuleSourceInput<'_>,
+        property_paths: &[String],
+        module_options: &ModuleEvalOptions,
+        options: SourceSessionOptions,
+    ) -> Result<Self, ModuleFrontendFailure> {
+        let prepared = prepare_module_text(input, module_options)?;
         Self::from_program(
             prepared.program,
             prepared.source,
@@ -127,13 +164,11 @@ impl SourceSession {
             Some(module_options.diagnostic_profile),
             false,
         )
-        .map_err(|message| ModuleFrontendResult {
+        .map_err(|message| ModuleFrontendFailure {
             phase: FrontendPhase::Configuration,
             disposition: FailureDisposition::Unsupported,
             reason: Some("source-session-callback-expression"),
-            stdout: Vec::new(),
-            stderr: crate::diagnostic::render_error(&message, &[], None).into_bytes(),
-            exit_code: 2,
+            text: crate::diagnostic::render_error_text(&message, &[], None),
         })
     }
 
@@ -147,7 +182,7 @@ impl SourceSession {
         options: SourceSessionOptions,
         output_profile: Option<DiagnosticProfile>,
         parsed_expressions: bool,
-    ) -> Result<Self, String> {
+    ) -> Result<Self, PklString> {
         let module_entry = program.entry;
         let program_mut = Arc::make_mut(&mut program);
         let expression_owner = if parsed_expressions {
@@ -183,7 +218,7 @@ impl SourceSession {
                                 let mut error =
                                     RuntimeError::new(ErrorKind::Type, diagnostic.message.clone());
                                 error.span = Some(diagnostic.span);
-                                error.hint = diagnostic.hint().map(str::to_owned);
+                                error.hint = diagnostic.hint().cloned();
                                 error.frontend = Some(Arc::new(crate::modules::ModuleDiagnostic {
                                     diagnostic: *diagnostic,
                                     source: source.clone(),
@@ -293,7 +328,7 @@ impl SourceSession {
                     resolved_uri: uri.into(),
                 },
             )
-            .map_err(|failure| runtime_error(&source, uri, &name, "", failure, None))?;
+            .map_err(|failure| runtime_error_text(&source, uri, &name, "", failure, None))?;
         let mut host = HostSession::with_context(program, context);
         host.set_power_assertions(options.evaluation.power_assertions);
         Ok(Self {
@@ -584,12 +619,17 @@ impl SourceSession {
         }
         self.host.collect(&roots)
     }
-    pub fn format_error(&self, error: RuntimeError) -> String {
+    /// Canonical diagnostic text. No UTF-8 conversion occurs before API units.
+    pub fn format_error_text(&self, error: RuntimeError) -> PklString {
         let expression = self
             .last_expression
             .and_then(|index| self.paths.get(index))
             .map_or("", String::as_str);
-        runtime_error(&self.source, &self.uri, &self.name, expression, error, None)
+        runtime_error_text(&self.source, &self.uri, &self.name, expression, error, None)
+    }
+    /// Legacy byte-oriented diagnostic convenience wrapper.
+    pub fn format_error(&self, error: RuntimeError) -> String {
+        self.format_error_text(error).to_java_utf8()
     }
     pub fn result_string(value: Value) -> Result<PklString, RuntimeError> {
         match value {
@@ -606,8 +646,8 @@ impl SourceSession {
             )),
         }
     }
-    pub fn output_failure(&self, error: RuntimeError) -> ModuleFrontendResult {
-        render_module_runtime_failure(
+    pub fn output_failure_text(&self, error: RuntimeError) -> ModuleFrontendFailure {
+        render_module_runtime_failure_text(
             &self.source,
             &self.uri,
             &self.name,
@@ -615,17 +655,23 @@ impl SourceSession {
             error,
         )
     }
+    pub fn output_failure(&self, error: RuntimeError) -> ModuleFrontendResult {
+        self.output_failure_text(error).into()
+    }
     /// A callback property path still belongs to the expression-string API,
     /// even when its suspended parent is an output operation.
     pub fn output_session_error_bytes(&self, error: RuntimeError) -> Vec<u8> {
         self.output_session_failure(error).stderr
     }
-    pub fn output_session_failure(&self, error: RuntimeError) -> ModuleFrontendResult {
-        let mut failure = self.output_failure(error.clone());
+    pub fn output_session_failure_text(&self, error: RuntimeError) -> ModuleFrontendFailure {
+        let mut failure = self.output_failure_text(error.clone());
         if self.last_expression.is_some() {
-            failure.stderr = self.format_error(error).into_bytes();
+            failure.text = self.format_error_text(error);
         }
         failure
+    }
+    pub fn output_session_failure(&self, error: RuntimeError) -> ModuleFrontendResult {
+        self.output_session_failure_text(error).into()
     }
     fn open(&self) -> Result<(), RuntimeError> {
         if self.host.is_closed() {

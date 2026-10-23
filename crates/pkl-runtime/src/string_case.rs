@@ -41,7 +41,7 @@ mod tests {
         assert_eq!(uppercase(&input), expected);
         assert_eq!(
             uppercase(&PklString::from("iıİ σς Straße")),
-            "IIİ ΣΣ STRASSE".into()
+            "IIİ ΣΣ STRASSE"
         );
     }
 }

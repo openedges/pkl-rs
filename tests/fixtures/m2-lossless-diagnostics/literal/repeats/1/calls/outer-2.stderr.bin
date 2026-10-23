@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Expected value of type `"?"|"?"`, but got `"different"`.
+
+3 | union: "\u{d83d}" | "\u{dc00}" = "different"
+           ^^^^^^^^^^^^^^^^^^^^^^^
+at main#union (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-type-oracle-01/workspace/main.pkl)
+
+3 | union: "\u{d83d}" | "\u{dc00}" = "different"
+                                     ^^^^^^^^^^^
+at main#union (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-type-oracle-01/workspace/main.pkl)
+
+1 | union
+    ^^^^^
+at  (repl:text)

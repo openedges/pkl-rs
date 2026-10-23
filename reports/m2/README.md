@@ -55,7 +55,45 @@ Stage 41 adds shared module imports, typed resolve/source Host requests,
 expression sessions and imported diagnostic ownership.
 Stage 42 connects module-owned class/alias types, inheritance and amendments,
 original module validation order, and code-point string indexing.
+Stage 43 preserves canonical diagnostic strings through the shared engine and
+native/Node/Wasm boundaries, and corrects literal-union type-check equivalence.
 These checkpoints do not complete the language milestone.
+
+## Stage 43 implementation checkpoint
+
+The [publication review](stage43-publication-review.json) verifies all seven
+implementation archives and the exact staged implementation sources. Its raw audit,
+publisher records, and staged-source proof are retained in the
+[closeout captures](stage43-closeout-captures.tar.gz).
+
+The [checkpoint](stage43-implementation-checkpoint.json) and
+[captures](stage43-implementation-captures.json) preserve the canonical diagnostic
+migration, actual Java UTF-16 and UTF-8 records, initial failures, independent
+code review, and corrected native/Node/Chromium results. The
+[five required Rust checks](stage43-required-checks.json) pass on the corrected
+source: 7,026 source/fixture/configuration inputs remain unchanged, with 685
+passing workspace harness invocations, no failures, and one ignored invocation.
+These counts are not distinct feature coverage.
+
+The [corrected platform candidate](stage43-platform-summary.json) matches its
+original Java literal-reuse API calls, producer diagnostics and logs, constructor
+messages, module/inheritance/owner graphs, string cases, and PCF output. The two
+previous string diagnostic cases now match both actual UTF-16 and Java UTF-8.
+Known primitive regex differences remain two of 6,078 comparisons, and trace
+retains 58 matched calls plus 32 Java oracle errors per portable target.
+
+The [code review](stage43-code-review.json) found a missing literal-union
+classification in lazy collection type-check reuse. Direct Java internal
+predicate observations establish the corrected equivalence rules; reverting only
+the old arm makes the new test fail. Separate actual evaluator calls retain their
+original underlying-cast failures, so no prior API byte mismatch is inferred from
+the internal predicate difference.
+
+Historical byte-only JS fixtures retain their original expectations and actual
+JS units as separate observations. They do not establish expected unit equality.
+See the [diagnostic contract](../../docs/m2-diagnostics.md). Full selected-corpus
+closeout, remaining diagnostic producers and Host inputs, and the complete M2,
+product, platform, speed, and memory requirements remain open.
 
 ## Stage 42 implementation checkpoint
 

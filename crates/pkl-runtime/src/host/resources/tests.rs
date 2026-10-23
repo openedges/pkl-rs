@@ -58,7 +58,10 @@ fn malformed_uri_precedes_policy_and_missing_uses_authored_operand() {
             error.message,
             format!("Resource URI `{authored}` has invalid syntax.")
         );
-        assert_eq!(error.hint.as_deref(), Some(reason));
+        assert_eq!(
+            error.hint.as_ref().and_then(|text| text.as_str()),
+            Some(reason)
+        );
     }
     for authored in ["prop:/a/../missing", "env:PATH", "prop:java.version"] {
         assert_eq!(

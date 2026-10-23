@@ -1,0 +1,43 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-predicate-oracle-01/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-predicate-oracle-01/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-predicate-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+    "org.pkl.core.ast.type.UnionPredicateProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-predicate-oracle-01/repeats/1/calls"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43",
+  "env": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-predicate-oracle-01/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-predicate-oracle-01/tmp",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "NO_COLOR": "1",
+    "TERM": "dumb"
+  },
+  "result": {
+    "exit_code": 0,
+    "elapsed_ns": 240725000,
+    "sha256": {
+      "stdout": "f228010e0c9616930d7cb31984b7d3e5bf40bd976314c2ad8ccad39c2a77b108",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "timed_out": false,
+    "workspace_changes": {},
+    "files": {}
+  }
+}

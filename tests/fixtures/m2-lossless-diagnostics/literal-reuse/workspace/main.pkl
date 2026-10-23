@@ -1,0 +1,14 @@
+typealias High = "\u{d83d}"
+original: Listing<"\u{d83d}" | "\u{dc00}"> = new { "different" }
+grouped: Listing<("\u{d83d}") | "\u{dc00}"> = original
+aliased: Listing<High | "\u{dc00}"> = original
+reordered: Listing<"\u{dc00}" | "\u{d83d}"> = original
+duplicate: Listing<"\u{d83d}" | "\u{dc00}" | "\u{d83d}"> = original
+orderedGeneral: Listing<"\u{dc00}" | ("\u{d83d}")> = grouped
+specialFromGrouped: Listing<"\u{d83d}" | "\u{dc00}"> = grouped
+defaultFirstListing: Listing<*"\u{d83d}" | "\u{dc00}"> = original
+defaultSecondListing: Listing<"\u{d83d}" | *"\u{dc00}"> = original
+defaultFirst: *"\u{d83d}" | "\u{dc00}"
+defaultSecond: "\u{d83d}" | *"\u{dc00}"
+valid: Listing<"\u{d83d}" | "\u{dc00}"> = new { "\u{d83d}" }
+validReordered: Listing<"\u{dc00}" | "\u{d83d}"> = valid

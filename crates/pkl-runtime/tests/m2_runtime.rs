@@ -717,7 +717,10 @@ fn unknown_typed_object_properties_report_headers_and_visible_property_candidate
         error.message,
         "Cannot find property `extra` in object of type `sample#B`."
     );
-    assert_eq!(error.hint.as_deref(), Some("Available properties:\nx\nz"));
+    assert_eq!(
+        error.hint.as_ref().and_then(|text| text.as_str()),
+        Some("Available properties:\nx\nz")
+    );
     assert_eq!(
         &source[error.frames[0].span.start..error.frames[0].span.end],
         "extra"
@@ -733,7 +736,7 @@ fn unknown_typed_object_properties_report_headers_and_visible_property_candidate
     let error = evaluate("class C { answer = 42 }\nc = new C { answr = 2 }\nresult = c.answer")
         .unwrap_err();
     assert_eq!(
-        error.hint.as_deref(),
+        error.hint.as_ref().and_then(|text| text.as_str()),
         Some("Did you mean any of the following?\nanswer")
     );
 }

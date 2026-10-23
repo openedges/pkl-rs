@@ -736,7 +736,11 @@ fn original_72_parser_messages_and_utf16_spans_match_pinned_observations() {
     assert_eq!(cases.len(), 72);
     for &(name, source, message, offset, length) in cases {
         let error = parse_module(source).unwrap_err();
-        assert_eq!(error.message.as_bytes(), message.as_bytes(), "{name}");
+        assert_eq!(
+            error.message.to_java_utf8().as_bytes(),
+            message.as_bytes(),
+            "{name}"
+        );
         assert_eq!(
             error.provenance.disposition,
             FailureDisposition::LanguageError,

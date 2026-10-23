@@ -157,8 +157,8 @@ impl PartialOrd for PklString {
     }
 }
 
-// Formatting is used by diagnostic text builders. Runtime concatenation and
-// toString use the lossless operations above, never formatting.
+// Display is an explicit Java UTF-8 convenience boundary. Canonical diagnostic
+// and language-value composition uses PklStringBuilder::push_value instead.
 impl fmt::Display for PklString {
     fn fmt(&self, output: &mut fmt::Formatter<'_>) -> fmt::Result {
         output.write_str(&self.to_java_utf8())
@@ -241,5 +241,53 @@ impl PklStringBuilder {
             Some(units) => PklString::from_utf16(units),
             None => self.text.into(),
         }
+    }
+}
+
+// Formatting fixed UTF-8 labels and numbers is safe. Language values must use
+// push_value so formatting never invokes their byte-oriented Display boundary.
+impl fmt::Write for PklStringBuilder {
+    fn write_str(&mut self, text: &str) -> fmt::Result {
+        self.push_str(text);
+        Ok(())
+    }
+}
+
+impl PartialEq<str> for PklString {
+    fn eq(&self, other: &str) -> bool {
+        self.encode_utf16().eq(other.encode_utf16())
+    }
+}
+impl PartialEq<&str> for PklString {
+    fn eq(&self, other: &&str) -> bool {
+        self == *other
+    }
+}
+impl PartialEq<String> for PklString {
+    fn eq(&self, other: &String) -> bool {
+        self == other.as_str()
+    }
+}
+impl PklString {
+    pub fn starts_with(&self, prefix: &str) -> bool {
+        let mut units = self.encode_utf16();
+        prefix.encode_utf16().all(|unit| units.next() == Some(unit))
+    }
+    pub fn ends_with(&self, suffix: &str) -> bool {
+        self.encode_utf16()
+            .collect::<Vec<_>>()
+            .ends_with(&suffix.encode_utf16().collect::<Vec<_>>())
+    }
+    pub fn contains(&self, needle: &str) -> bool {
+        let needle: Vec<_> = needle.encode_utf16().collect();
+        needle.is_empty()
+            || self
+                .encode_utf16()
+                .collect::<Vec<_>>()
+                .windows(needle.len())
+                .any(|window| window == needle)
+    }
+    pub(crate) fn push_str(&mut self, suffix: &str) {
+        *self = self.concat(&suffix.into());
     }
 }

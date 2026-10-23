@@ -27,7 +27,9 @@ const cases = JSON.parse(manifestBytes).cases;
 if (!cases.length || new Set(cases.map(c => c.id)).size !== cases.length) throw new Error('empty or duplicate corpus');
 const encode = value => Buffer.from(value).toString('hex');
 const native = createRequire(import.meta.url)(resolve(napiArg));
-const nodeChecks = await scenarios(native);
+const nodeLegacyUtf8Observations = [];
+const nodeChecks = await scenarios(native, {legacyUtf8Observations: nodeLegacyUtf8Observations});
+await writeFile(resolve(output, 'node-legacy-utf8-observations.json'), JSON.stringify(nodeLegacyUtf8Observations, null, 2) + '\n');
 const nodeOutputs = cases.map(c => encode(native.primitive(c.family, c.input)));
 await writeFile(resolve(output, 'node.stdout.bin'), nodeOutputs.join('\n') + '\n');
 await writeFile(resolve(output, 'node-checks.json'), JSON.stringify(nodeChecks, null, 2) + '\n');
@@ -38,7 +40,7 @@ const server = createServer(async (request, response) => {
     const url = new URL(request.url, 'http://127.0.0.1');
     if (url.pathname === '/') { response.writeHead(200, { 'Content-Type': 'text/html' }); response.end('<!doctype html><title>M1 Wasm verification</title>'); return; }
     let path;
-    if (['/scenarios.mjs', '/host-adapter.mjs', '/class-publication-cases.mjs', '/type-metadata-cases.mjs', '/type-resolution-cases.mjs', '/recursive-types-cases.mjs', '/constraint-slots-cases.mjs', '/local-resolution-cases.mjs', '/generic-types-cases.mjs', '/generic-metadata-cases.mjs', '/generic-defaults-cases.mjs', '/generic-constructors-cases.mjs', '/strict-map-cases.mjs', '/strict-set-cases.mjs', '/collection-type-cases.mjs', '/frontend-depth-cases.mjs', '/string-frontend-cases.mjs', '/lexical-diagnostic-cases.mjs', '/unicode-diagnostic-cases.mjs', '/string-representation-cases.mjs', '/diagnostic-frame-identity-cases.mjs', '/numeric-value-frame-cases.mjs', '/frontend-owner-cases.mjs', '/frontend-parent-cases.mjs'].includes(url.pathname)) path = new URL('.' + url.pathname, import.meta.url);
+    if (['/legacy-java-utf8.mjs', '/scenarios.mjs', '/host-adapter.mjs', '/class-publication-cases.mjs', '/type-metadata-cases.mjs', '/type-resolution-cases.mjs', '/recursive-types-cases.mjs', '/constraint-slots-cases.mjs', '/local-resolution-cases.mjs', '/generic-types-cases.mjs', '/generic-metadata-cases.mjs', '/generic-defaults-cases.mjs', '/generic-constructors-cases.mjs', '/strict-map-cases.mjs', '/strict-set-cases.mjs', '/collection-type-cases.mjs', '/frontend-depth-cases.mjs', '/string-frontend-cases.mjs', '/lexical-diagnostic-cases.mjs', '/unicode-diagnostic-cases.mjs', '/string-representation-cases.mjs', '/diagnostic-frame-identity-cases.mjs', '/numeric-value-frame-cases.mjs', '/frontend-owner-cases.mjs', '/frontend-parent-cases.mjs'].includes(url.pathname)) path = new URL('.' + url.pathname, import.meta.url);
     else {
       path = resolve(wasm, '.' + decodeURIComponent(url.pathname));
       if (!path.startsWith(wasm + sep)) throw new Error('invalid path');
@@ -60,13 +62,15 @@ try {
     const api = await import('/pkl_wasm.js');
     await api.default();
     const { scenarios } = await import('/scenarios.mjs');
-    const checks = await scenarios(api);
+    const legacyUtf8Observations = [];
+    const checks = await scenarios(api, {legacyUtf8Observations});
     const encode = value => [...new TextEncoder().encode(value)].map(b => b.toString(16).padStart(2, '0')).join('');
-    return { checks, outputs: cases.map(c => encode(api.primitive(c.family, c.input))) };
+    return { checks, legacyUtf8Observations, outputs: cases.map(c => encode(api.primitive(c.family, c.input))) };
   }, cases);
+  await writeFile(resolve(output, 'browser-legacy-utf8-observations.json'), JSON.stringify(result.legacyUtf8Observations, null, 2) + '\n');
   await writeFile(resolve(output, 'browser.stdout.bin'), result.outputs.join('\n') + '\n');
   await writeFile(resolve(output, 'browser-checks.json'), JSON.stringify(result.checks, null, 2) + '\n');
-  const report = { schema: 1, node: process.version, nodeVersions: process.versions, browser: browser.version(), browserExecutable: chromium.executablePath(), playwright: playwrightVersion, playwrightCore: playwrightCoreVersion, playwrightPin: pin, fixtureSha256: createHash('sha256').update(manifestBytes).digest('hex'), total: cases.length, nodeChecks, browserChecks: result.checks, browserErrors };
+  const report = { schema: 1, node: process.version, nodeVersions: process.versions, browser: browser.version(), browserExecutable: chromium.executablePath(), playwright: playwrightVersion, playwrightCore: playwrightCoreVersion, playwrightPin: pin, fixtureSha256: createHash('sha256').update(manifestBytes).digest('hex'), total: cases.length, historicalJavaUtf8FixtureGroups: ['string-representation', 'diagnostic-frame-identity', 'frontend-owner'], historicalStringRepresentationBoundary: 'Java UTF8 only; actual JS units retained separately; no frame-unit equality claim', nodeChecks, browserChecks: result.checks, browserErrors };
   await writeFile(resolve(output, 'execution.json'), JSON.stringify(report, null, 2) + '\n');
   if (browserErrors.length) throw new Error('browser reported uncaught errors');
   console.log(JSON.stringify({ total: cases.length, nodeChecks: nodeChecks.length, browserChecks: result.checks.length, browser: browser.version() }));

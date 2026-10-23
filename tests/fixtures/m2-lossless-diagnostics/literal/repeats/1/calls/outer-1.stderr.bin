@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `"?"`, but got type `String`.
+Value: "different"
+
+2 | nullable: "\u{d83d}"? = "different"
+              ^^^^^^^^^^
+at main#nullable (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-type-oracle-01/workspace/main.pkl)
+
+2 | nullable: "\u{d83d}"? = "different"
+                            ^^^^^^^^^^^
+at main#nullable (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-type-oracle-01/workspace/main.pkl)
+
+1 | nullable
+    ^^^^^^^^
+at  (repl:text)

@@ -498,7 +498,7 @@ fn normalize_path(path: &str) -> String {
 }
 
 fn unsupported(message: impl Into<String>) -> RuntimeError {
-    RuntimeError::new(ErrorKind::Unsupported, message)
+    RuntimeError::new(ErrorKind::Unsupported, message.into())
 }
 
 #[cfg(test)]

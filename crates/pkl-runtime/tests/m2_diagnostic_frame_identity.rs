@@ -244,7 +244,7 @@ child = x["\u{d800}"][0]
             let error = ready(&mut session, &module, now).unwrap_err();
             assert_eq!(
                 (error.kind, error.message.as_str()),
-                (ErrorKind::Host, "frame retry")
+                (ErrorKind::Host, Some("frame retry"))
             );
             assert!(
                 error

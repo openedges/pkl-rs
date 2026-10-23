@@ -92,6 +92,12 @@ Run all verification-tool regressions with `python3 -m unittest discover -s tool
 
 ## Compatibility Comparisons
 
+The [canonical diagnostic contract](docs/m2-diagnostics.md) keeps actual Java
+UTF-16 strings separate from their Java UTF-8 serialization. Native and portable
+checks preserve both channels; historical byte-only fixtures do not establish
+string-unit equality. SourceSession, scalar helpers, frontend constructors, and
+N-API error callbacks have distinct recorded boundaries.
+
 M2 language implementation and verification are in progress. The
 [M2 contract](docs/m2-language.md) separates whole-language requirement accounting
 from the executable selection:

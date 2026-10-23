@@ -50,7 +50,7 @@ fn fixed_overrides_use_immediate_superclass_and_preserve_const_rules() {
     let error = evaluate("open class A { fixed p = 1 }\nopen class B extends A\nclass C extends B { p = 2 }\nresult = C").unwrap_err();
     assert_eq!(error.message, "Missing modifier `fixed`.");
     assert_eq!(
-        error.hint.as_deref(),
+        error.hint.as_ref().and_then(|text| text.as_str()),
         Some(
             "Property `p` must be declared fixed, because it overrides a fixed property on parent class `#B`."
         )

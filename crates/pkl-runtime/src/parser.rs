@@ -442,7 +442,7 @@ enum ObjectValue {
     Property(Box<PropertyHead>),
     Element(usize, Option<PklString>),
     Spread(usize, bool),
-    Entry(usize, Expr, bool, bool, Option<PklString>),
+    Entry(usize, Box<Expr>, bool, bool, Option<PklString>),
 }
 
 enum ExpressionFrame {
@@ -1029,7 +1029,7 @@ impl<'a> Parser<'a> {
                 let members = self.member_list(MemberContext::Class, None)?;
                 if self.token.kind == Kind::Eof {
                     let mut error = self.unexpected(None);
-                    error.message = "Missing `}` delimiter.".to_owned();
+                    error.message = "Missing `}` delimiter.".to_owned().into();
                     return Err(error);
                 }
                 self.expect('}')?;
@@ -1296,7 +1296,7 @@ impl<'a> Parser<'a> {
             if self.is_symbol('}') || self.token.kind == Kind::Eof {
                 if self.token.kind == Kind::Eof && build.missing_delimiter {
                     let mut error = self.unexpected(None);
-                    error.message = "Missing `}` delimiter.".to_owned();
+                    error.message = "Missing `}` delimiter.".to_owned().into();
                     return Err(error);
                 }
                 let end = self.expect('}')?.span.end;
@@ -1964,13 +1964,13 @@ impl<'a> Parser<'a> {
                         self.exit_entry_path(previous);
                         if predicate {
                             ObjectMember::Predicate {
-                                condition: key,
+                                condition: *key,
                                 value: left,
                                 span,
                             }
                         } else {
                             ObjectMember::Entry {
-                                key,
+                                key: *key,
                                 value: left,
                                 span,
                             }
@@ -2016,7 +2016,7 @@ impl<'a> Parser<'a> {
                         self.expectation.replace("}".into()),
                         ExpressionFrame::ObjectValue(
                             build,
-                            ObjectValue::Entry(start, left, predicate, false, previous),
+                            ObjectValue::Entry(start, Box::new(left), predicate, false, previous),
                         ),
                     ));
                 } else {
@@ -2034,7 +2034,7 @@ impl<'a> Parser<'a> {
                         self.expectation.clone(),
                         ExpressionFrame::ObjectValue(
                             build,
-                            ObjectValue::Entry(start, left, predicate, true, previous),
+                            ObjectValue::Entry(start, Box::new(left), predicate, true, previous),
                         ),
                     ));
                 }

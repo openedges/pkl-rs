@@ -80,11 +80,13 @@ impl TypeCheck {
             Alias(inner) => Alias(Box::new(sub(inner)?)),
             GenericAlias(inner) => GenericAlias(Box::new(sub(inner)?)),
             Union {
+                string_literals,
                 types,
                 spans,
                 labels,
                 default,
             } => Union {
+                string_literals: *string_literals,
                 types: types.iter().map(sub).collect::<Result<_, _>>()?,
                 spans: spans.clone(),
                 labels: labels.clone(),

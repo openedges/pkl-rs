@@ -1,0 +1,451 @@
+{
+  "scope": "Two fixed fresh pinned Java property-expression kind/duplicate-header controls, two fresh JVMs per source. Complete matrix fixed before acquisition; no Rust-derived expectations or compatibility claim.",
+  "caseCount": 2,
+  "processCount": 4,
+  "records": [
+    {
+      "id": "lambda-property-header",
+      "repeat": 0,
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "AmendingMembersProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/cases/lambda-property-header/0/calls",
+        "plain"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header/main.pkl",
+      "sourceSha256": "e71ff171c0b2ed32e9d8dbaf42c8d8901a85c948ede3b9b636f0ee119904c12a",
+      "startedUnixNs": 1792722808778794000,
+      "finishedUnixNs": 1792722809700045000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 919906959,
+        "sha256": {
+          "stdout": "da0b0f8a646774d499160b6d5c5b9ad52e91f849ee2415f2429253cc321f6dc2",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "workspaceBefore": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "e71ff171c0b2ed32e9d8dbaf42c8d8901a85c948ede3b9b636f0ee119904c12a"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "76a1f9f05e22b4221771168a82318cf8d6a001801162079ee2ef3b1b7a8cff41"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+        }
+      },
+      "workspaceAfter": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "e71ff171c0b2ed32e9d8dbaf42c8d8901a85c948ede3b9b636f0ee119904c12a"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "76a1f9f05e22b4221771168a82318cf8d6a001801162079ee2ef3b1b7a8cff41"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+        }
+      }
+    },
+    {
+      "id": "lambda-property-header",
+      "repeat": 1,
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "AmendingMembersProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/cases/lambda-property-header/1/calls",
+        "plain"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header/main.pkl",
+      "sourceSha256": "e71ff171c0b2ed32e9d8dbaf42c8d8901a85c948ede3b9b636f0ee119904c12a",
+      "startedUnixNs": 1792722809700481000,
+      "finishedUnixNs": 1792722810347506000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 645746708,
+        "sha256": {
+          "stdout": "da0b0f8a646774d499160b6d5c5b9ad52e91f849ee2415f2429253cc321f6dc2",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "workspaceBefore": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "e71ff171c0b2ed32e9d8dbaf42c8d8901a85c948ede3b9b636f0ee119904c12a"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "76a1f9f05e22b4221771168a82318cf8d6a001801162079ee2ef3b1b7a8cff41"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+        }
+      },
+      "workspaceAfter": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "e71ff171c0b2ed32e9d8dbaf42c8d8901a85c948ede3b9b636f0ee119904c12a"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "76a1f9f05e22b4221771168a82318cf8d6a001801162079ee2ef3b1b7a8cff41"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+        }
+      }
+    },
+    {
+      "id": "import-expression-property-order",
+      "repeat": 0,
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "AmendingMembersProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/cases/import-expression-property-order/0/calls",
+        "plain"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order/main.pkl",
+      "sourceSha256": "c8badd6d665d5b09e4a7ddf5e23d6a435c35a32f796b7991178977d05fd0e1c5",
+      "startedUnixNs": 1792722810348292000,
+      "finishedUnixNs": 1792722810863568000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 513915000,
+        "sha256": {
+          "stdout": "da0b0f8a646774d499160b6d5c5b9ad52e91f849ee2415f2429253cc321f6dc2",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "workspaceBefore": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "c8badd6d665d5b09e4a7ddf5e23d6a435c35a32f796b7991178977d05fd0e1c5"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "76a1f9f05e22b4221771168a82318cf8d6a001801162079ee2ef3b1b7a8cff41"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+        }
+      },
+      "workspaceAfter": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "c8badd6d665d5b09e4a7ddf5e23d6a435c35a32f796b7991178977d05fd0e1c5"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "76a1f9f05e22b4221771168a82318cf8d6a001801162079ee2ef3b1b7a8cff41"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+        }
+      }
+    },
+    {
+      "id": "import-expression-property-order",
+      "repeat": 1,
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "AmendingMembersProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/cases/import-expression-property-order/1/calls",
+        "plain"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order/main.pkl",
+      "sourceSha256": "c8badd6d665d5b09e4a7ddf5e23d6a435c35a32f796b7991178977d05fd0e1c5",
+      "startedUnixNs": 1792722810863918000,
+      "finishedUnixNs": 1792722811377134000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 512021875,
+        "sha256": {
+          "stdout": "da0b0f8a646774d499160b6d5c5b9ad52e91f849ee2415f2429253cc321f6dc2",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "workspaceBefore": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "c8badd6d665d5b09e4a7ddf5e23d6a435c35a32f796b7991178977d05fd0e1c5"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "76a1f9f05e22b4221771168a82318cf8d6a001801162079ee2ef3b1b7a8cff41"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+        }
+      },
+      "workspaceAfter": {
+        "callback.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "c8badd6d665d5b09e4a7ddf5e23d6a435c35a32f796b7991178977d05fd0e1c5"
+        },
+        "plan.tsv": {
+          "kind": "file",
+          "sha256": "76a1f9f05e22b4221771168a82318cf8d6a001801162079ee2ef3b1b7a8cff41"
+        },
+        "source.pkl": {
+          "kind": "file",
+          "sha256": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+        }
+      }
+    }
+  ],
+  "observations": [
+    {
+      "id": "lambda-property-header",
+      "repeat": 0,
+      "calls": [
+        {
+          "expression": "1",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "utf8Sha256": "a4e0dbe06b36c15031ea250e5c161d8c4ba15b4e469f46aaa3e5433ec107dd8a",
+          "utf16BESha256": "30b261b9025cec3764b0ec79b5878fb68bb8cab47e0e0a4b80ff516d2820cc96",
+          "text": "–– Pkl Error ––\nDuplicate definition of member `value`.\n\n2 | local value = (y) -> y\n    ^^^^^^^^^^^\nat main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header/main.pkl)\n",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/cases/lambda-property-header/0/calls/outer-0"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\ncallback=0\n"
+    },
+    {
+      "id": "lambda-property-header",
+      "repeat": 1,
+      "calls": [
+        {
+          "expression": "1",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "utf8Sha256": "a4e0dbe06b36c15031ea250e5c161d8c4ba15b4e469f46aaa3e5433ec107dd8a",
+          "utf16BESha256": "30b261b9025cec3764b0ec79b5878fb68bb8cab47e0e0a4b80ff516d2820cc96",
+          "text": "–– Pkl Error ––\nDuplicate definition of member `value`.\n\n2 | local value = (y) -> y\n    ^^^^^^^^^^^\nat main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header/main.pkl)\n",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/cases/lambda-property-header/1/calls/outer-0"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\ncallback=0\n"
+    },
+    {
+      "id": "import-expression-property-order",
+      "repeat": 0,
+      "calls": [
+        {
+          "expression": "1",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "utf8Sha256": "e848fb8b0acf151468bb639d944153be9a202b85b8ee771dcc2ee15f4d07c129",
+          "utf16BESha256": "538e7a4a267aff14599696199c4fe3f6d81dd83b4dc7c4889846eb8f40f8b678",
+          "text": "–– Pkl Error ––\nDuplicate definition of member `same`.\n\n1 | same = import(\"life:/child\")\n    ^^^^\nat main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order/main.pkl)\n",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/cases/import-expression-property-order/0/calls/outer-0"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\ncallback=0\n"
+    },
+    {
+      "id": "import-expression-property-order",
+      "repeat": 1,
+      "calls": [
+        {
+          "expression": "1",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "utf8Sha256": "e848fb8b0acf151468bb639d944153be9a202b85b8ee771dcc2ee15f4d07c129",
+          "utf16BESha256": "538e7a4a267aff14599696199c4fe3f6d81dd83b4dc7c4889846eb8f40f8b678",
+          "text": "–– Pkl Error ––\nDuplicate definition of member `same`.\n\n1 | same = import(\"life:/child\")\n    ^^^^\nat main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order/main.pkl)\n",
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/cases/import-expression-property-order/1/calls/outer-0"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\ncallback=0\n"
+    }
+  ],
+  "repeatDifferences": [],
+  "inputHashes": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/AmendingMembersProbe.java": "ecb0475cf2618d82208e61792e6d4ee588cc584ba94dcc6be441db169d5ad565",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/run.py": "fe3010a5b2af1ddca561b436f7702b8da00dd6217efbf82b662fd89e0479b2a6",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/cases.json": "777cef72e4eb53a651654dafb937484c75e28229977d8512f47a1b9fc318f78d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/tools/compat.py": "fa40a0daee29eb078c7b9cb814fc3779556ceaacc2634657c96e3f7810aa5edc",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/classes/AmendingMembersProbe$1.class": "70cc215f2eca37354d2263d5c624c2446fd46e423067f7e7a4fa8cde0ae69a98",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/classes/AmendingMembersProbe.class": "7dfea5c3b5f0d6b2073ac84eb728696b55ef708656601c07e65ec24f1cafb6f5",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/classes/AmendingMembersProbe$Key$1.class": "049dc93faa5a4eab6abc298d45c40254c92bc70c9d6ae1ddba96f030ea068f33",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/classes/AmendingMembersProbe$Key.class": "8fc31eaa0e99bbb4c248bfa1ebb7874b572f948d7734c7bb726cdf3e7c3ba2d9",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header/main.pkl": "e71ff171c0b2ed32e9d8dbaf42c8d8901a85c948ede3b9b636f0ee119904c12a",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header/callback.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header/plan.tsv": "76a1f9f05e22b4221771168a82318cf8d6a001801162079ee2ef3b1b7a8cff41",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/lambda-property-header/source.pkl": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order/main.pkl": "c8badd6d665d5b09e4a7ddf5e23d6a435c35a32f796b7991178977d05fd0e1c5",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order/callback.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order/plan.tsv": "76a1f9f05e22b4221771168a82318cf8d6a001801162079ee2ef3b1b7a8cff41",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-duplicate-members-kind-oracle-01/workspace/import-expression-property-order/source.pkl": "480f26ae341b38bbef599aab6b15028255003db9ce6b893879ed783e62f668b8"
+  },
+  "inputChanges": [],
+  "sourceArtifactStability": true,
+  "maxConcurrentProcesses": 1,
+  "profile": {
+    "api": "evaluateExpressionString(ModuleSource.path(main.pkl), exact expression)",
+    "moduleCache": "one evaluator retained across calls, fresh evaluator/JVM per repeat",
+    "evaluator": "preconfigured;color=false;emptyenvprop;defaultmodulefactories+lifeSPI;defaultstackframetransformer;real Logger",
+    "helperOrigin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-expression-context-oracle-01/ExpressionContextProbe.java",
+    "helperOriginSha256": "ef1daf278fa74327b836fc343d1ea1a6974ed793ff0122f4c8d3e5c7dbac4790",
+    "helperChange": "Class name only",
+    "utf16": "actual Java chars via DataOutputStream.writeChar, separate untouched UTF8 getBytes payloads"
+  }
+}

@@ -1,0 +1,7 @@
+payload = "\u{d83d}|\u{dc00}|\u{1f600}|?|\u{fffd}|\u{0}"
+throwing = throw(payload)
+badInt: Int = payload
+badConstraint: String(this == "allowed") = payload
+badUnion: Int | Boolean = payload
+loggingThenThrow = throw(trace(payload))
+hinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })

@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `("\u{d83d}") | "\u{dc00}"`, but got type `String`.
+Value: "different"
+
+2 | grouped: ("\u{d83d}") | "\u{dc00}" = "different"
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#grouped (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-union-origin-oracle-01/workspace/main.pkl)
+
+2 | grouped: ("\u{d83d}") | "\u{dc00}" = "different"
+                                         ^^^^^^^^^^^
+at main#grouped (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-union-origin-oracle-01/workspace/main.pkl)
+
+1 | grouped
+    ^^^^^^^
+at  (repl:text)

@@ -1,0 +1,180 @@
+{
+  "status": "independent bounded archive/source review passed",
+  "archiveCount": 7,
+  "payloadFiles": 80907,
+  "payloadBytes": 474836718,
+  "compressedBytes": 72265578,
+  "roots": 39,
+  "directFiles": 16,
+  "exactExclusionsBeforeTraversal": 27,
+  "archives": [
+    {
+      "bytes": 15835460,
+      "path": "reports/m2/stage43-implementation-captures-01.tar.gz",
+      "payloadBytes": 70650068,
+      "payloadFiles": 1006,
+      "sha256": "8e38d003088fad3a8dc2c16a5743ac4cb4978f7ca4a85c19d21531d2f3266adc",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-01.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 10864842,
+      "path": "reports/m2/stage43-implementation-captures-02.tar.gz",
+      "payloadBytes": 67431865,
+      "payloadFiles": 13960,
+      "sha256": "32d52b73e9ecce835b462dfa29ef79e9c72f70e17624374fd5adfd46e0c9e3f4",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-02.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 15666384,
+      "path": "reports/m2/stage43-implementation-captures-03.tar.gz",
+      "payloadBytes": 74186075,
+      "payloadFiles": 3814,
+      "sha256": "304849a4e5244581a81b956e452e4fc10810b6348df72a62f48cc9a44721beeb",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-03.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 7201173,
+      "path": "reports/m2/stage43-implementation-captures-04.tar.gz",
+      "payloadBytes": 74957157,
+      "payloadFiles": 12593,
+      "sha256": "57b8c56ca99e61bdfb3cb202bfbe985869bbc0b6d377c0f22221c478a8d9da47",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-04.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 8147858,
+      "path": "reports/m2/stage43-implementation-captures-05.tar.gz",
+      "payloadBytes": 72144642,
+      "payloadFiles": 8035,
+      "sha256": "ff53d80983f78f26b7751063b3a239a25db334abcf9f6714f2296a287ccc759c",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-05.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 7091846,
+      "path": "reports/m2/stage43-implementation-captures-06.tar.gz",
+      "payloadBytes": 74567220,
+      "payloadFiles": 18553,
+      "sha256": "65d4adfed8942986018563edd22e4b1ff8c0cab09ae8d6ba197ee618ddd53ea0",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-06.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 7458015,
+      "path": "reports/m2/stage43-implementation-captures-07.tar.gz",
+      "payloadBytes": 40899691,
+      "payloadFiles": 22946,
+      "sha256": "02e585507671d931c2ca9210104a733a2d587336cfbe884e52abd2f866ab6fe3",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-07.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    }
+  ],
+  "archiveProof": "audit.py + original-membership.json + archive-membership.json + audit.stdout.bin; completed before the recorded metadata-assumption failure",
+  "initialAuditFailure": {
+    "stage": "Source-map shape assertion after all archives and required source copies verified",
+    "reason": "Comparison map has67runtime Rust files; standard147map has69runtime src entries including2embedded stdlib Pkl files, plus2binding source files (71crate-src total). oracle_passed is per-target dict. Both initial count assumptions are retained as tool errors.",
+    "impact": "No archive/source integrity failure; all initial logs and script retained. No archive reread or evaluator rerun."
+  },
+  "symlinkRepresentations": [
+    {
+      "kind": "symlink",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-diagnostics-implementation-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+      "targetUtf8": "child/",
+      "targetHex": "6368696c642f",
+      "targetSha256": "2affd42fb4ab5d3937747d31d118219afff6ac4116f0382d4a6bf8a6654ce273",
+      "pinnedReference": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "referencePath": "pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+      "gitBlobBytesMatch": true,
+      "representation": "The original symlink is excluded before traversal and represented by this exact target-byte record. Its sibling referent directory files are included by ordinary traversal; no symlink is followed.",
+      "independentPinnedGitBlobBytesMatch": true
+    }
+  ],
+  "requiredSourceRecordsExact": 7026,
+  "requiredCopiesExactInArchivePhase": true,
+  "correctedPlatformBuildRecordsExact": 147,
+  "correctedRuntimeSrcRecordsExact": 69,
+  "allCrateSrcRecordsExact": 71,
+  "comparisonRuntimeGuardRecordsExact": 67,
+  "stagedIndexPathsChecked": 7093,
+  "uniqueStagedGitBlobBytesRead": 4581,
+  "stagedIndexMismatch": [],
+  "requiredFiveExitCodes": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "requiredHarnessCounts": {
+    "passed": 685,
+    "failed": 0,
+    "ignored": 1,
+    "measured": 0,
+    "filtered_out": 36
+  },
+  "duplicateOrMissingSelectedPaths": [],
+  "originalSourceChanges": [],
+  "modes": "0644 archive representation; original executable modes not claimed",
+  "knownOutcomesPreserved": [
+    "Pre-correction core/portable evidence remains historical",
+    "Negative control expected101",
+    "Known primitive regex failures2",
+    "Trace58pass32oracle-error per portable target",
+    "Internal32predicate calls distinct from actual48APIcalls; no inferred API mismatch"
+  ],
+  "docsScopeReview": "README/PLAN/reports README preserve bounded checkpoint, historical UTF8-only comparison boundary, Stage44 gaps, pending full corpus and open M2. No material overclaim found.",
+  "runtimeReruns": 0,
+  "scope": "Exact selected path/hash/membership/current source+staged object bindings only; no whole-language/product/performance completion."
+}

@@ -116,7 +116,7 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
                     sequence.push(Part::Text(") -> ".into()));
                     sequence.push(Part::Type(result));
                 } else {
-                    output.push_str(&super::type_name(ty, module));
+                    output.push_value(&super::type_name_value(ty, module));
                     output.push('<');
                     args.push(result);
                     list(args, ", ");
@@ -180,7 +180,7 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
                 output.push_value(value);
                 output.push('"');
             }
-            _ => output.push_str(&super::type_name(ty, module)),
+            _ => output.push_value(&super::type_name_value(ty, module)),
         }
         pending.extend(sequence.into_iter().rev());
     }
@@ -352,6 +352,7 @@ fn union(types: Vec<TypeCheck>, module: &str) -> TypeCheck {
         return result.remove(0);
     }
     TypeCheck::Union {
+        string_literals: false,
         types: result,
         spans: Vec::new(),
         labels: Vec::new(),
@@ -993,7 +994,8 @@ impl Vm {
                     80,
                 )?;
                 return Err(constructor_error(
-                    format!("Type constraint `this is Domain` violated.\nValue: {value}"),
+                    PklString::from("Type constraint `this is Domain` violated.\nValue: ")
+                        .concat(&value),
                     "this is Domain",
                 ));
             }
@@ -1010,9 +1012,10 @@ impl Vm {
                     &self.program.module_name,
                 )?;
                 return Err(constructor_error(
-                    format!(
-                        "Expected value of type `Class`, but got type `{actual}`.\nValue: {value}"
-                    ),
+                    PklString::from(format!(
+                        "Expected value of type `Class`, but got type `{actual}`.\nValue: "
+                    ))
+                    .concat(&value),
                     "Class<T>",
                 ));
             };
@@ -1278,14 +1281,21 @@ impl Vm {
     ) -> Result<RuntimeError, RuntimeError> {
         let failed = failed.resolved();
         let module = &self.program.module_name;
-        let actual = export_type_name(reference, &self.heap, module)?;
-        let referent = type_name(&reference.referent, module);
-        let failed_type = type_name(failed, module);
+        let actual = export_type_name_value(reference, &self.heap, module)?;
+        let referent = type_name_value(&reference.referent, module);
+        let failed_type = type_name_value(failed, module);
         let union = !reference.referent.equivalent(failed);
         let mut error = if let Some(property) = property {
             let mut error = RuntimeError::new(
                 ErrorKind::MissingMember,
-                format!("Cannot find property `{property}` in object of type `{actual}`."),
+                PklString::join(
+                    &[
+                        format!("Cannot find property `{property}` in object of type `").into(),
+                        actual.clone(),
+                        "`.".into(),
+                    ],
+                    "",
+                ),
             );
             error.hint = Some(
                 if property == "output" && matches!(failed, TypeCheck::Class { id: MODULE_ID, .. })
@@ -1306,13 +1316,27 @@ impl Vm {
                         | TypeCheck::ParameterizedCollection { kind: k, .. } => format!("{k:?}"),
                         _ => unreachable!(),
                     };
-                    format!("Cannot reference property `default` in class `{name}`.")
+                    format!("Cannot reference property `default` in class `{name}`.").into()
                 } else if union {
-                    format!(
-                        "Cannot find property `{property}` in type `{referent}`.\n\t└─ Cannot find property `{property}` in type `{failed_type}`."
+                    PklString::join(
+                        &[
+                            format!("Cannot find property `{property}` in type `").into(),
+                            referent,
+                            format!("`.\n\t└─ Cannot find property `{property}` in type `").into(),
+                            failed_type,
+                            "`.".into(),
+                        ],
+                        "",
                     )
                 } else {
-                    format!("Cannot find property `{property}` in type `{referent}`.")
+                    PklString::join(
+                        &[
+                            format!("Cannot find property `{property}` in type `").into(),
+                            referent,
+                            "`.".into(),
+                        ],
+                        "",
+                    )
                 },
             );
             error
@@ -1324,17 +1348,28 @@ impl Vm {
             let right = crate::diagnostic_values::render(key, &self.heap, module, 80)?;
             let mut error = RuntimeError::new(
                 ErrorKind::Type,
-                format!(
-                    "Operator `[]` is not defined for operand types `{actual}` and `{key_type}`.\nLeft operand : {left}\nRight operand: {right}"
+                PklString::join(
+                    &[
+                        "Operator `[]` is not defined for operand types `".into(),
+                        actual,
+                        format!("` and `{key_type}`.\nLeft operand : ").into(),
+                        left,
+                        "\nRight operand: ".into(),
+                        right,
+                    ],
+                    "",
                 ),
             );
             error.hint = Some(if union {
-                format!(
-                    "Operator `[]` is not defined for operand types `{referent}` and `{key_type}`.\n\t└─ Operator `[]` is not defined for operand types `{failed_type}` and `{key_type}`."
-                )
+                PklString::join(&["Operator `[]` is not defined for operand types `".into(), referent, format!("` and `{key_type}`.\n\t└─ Operator `[]` is not defined for operand types `").into(), failed_type, format!("` and `{key_type}`.").into()], "")
             } else {
-                format!(
-                    "Operator `[]` is not defined for operand types `{referent}` and `{key_type}`."
+                PklString::join(
+                    &[
+                        "Operator `[]` is not defined for operand types `".into(),
+                        referent,
+                        format!("` and `{key_type}`.").into(),
+                    ],
+                    "",
                 )
             });
             error
@@ -1353,10 +1388,18 @@ impl Vm {
         let fail = || {
             RuntimeError::new(
                 ErrorKind::MissingMember,
-                format!(
-                    "Cannot reference {} in type `{}`.",
-                    property.map_or_else(|| "subscript".into(), |p| format!("property `{p}`")),
-                    type_name(ty, &self.program.module_name)
+                PklString::join(
+                    &[
+                        format!(
+                            "Cannot reference {} in type `",
+                            property
+                                .map_or_else(|| "subscript".into(), |p| format!("property `{p}`"))
+                        )
+                        .into(),
+                        type_name_value(ty, &self.program.module_name),
+                        "`.".into(),
+                    ],
+                    "",
                 ),
             )
         };
@@ -1447,19 +1490,23 @@ fn reference_key_matches(ty: &TypeCheck, key: &Value, heap: &Heap) -> bool {
     false
 }
 
-pub(crate) fn export_type_name(
+pub(crate) fn export_type_name_value(
     reference: &Reference,
     heap: &Heap,
     module: &str,
-) -> Result<String, RuntimeError> {
+) -> Result<PklString, RuntimeError> {
     let domain = crate::diagnostic_values::type_name(&reference.domain, heap, module)?;
-    Ok(format!(
-        "pkl.ref#Reference<{domain}, {}>",
-        type_name(&reference.referent, module)
+    Ok(PklString::join(
+        &[
+            format!("pkl.ref#Reference<{domain}, ").into(),
+            type_name_value(&reference.referent, module),
+            ">".into(),
+        ],
+        "",
     ))
 }
 
-fn constructor_error(message: String, fragment: &str) -> RuntimeError {
+fn constructor_error(message: impl Into<PklString>, fragment: &str) -> RuntimeError {
     let source = crate::stdlib_sources::reference();
     let declaration = source
         .text

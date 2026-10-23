@@ -148,9 +148,9 @@ fn trace_preserves_let_and_property_inferred_parents() {
         assert_eq!(values, [Value::Int(value)]);
         assert!(reads.is_empty());
         assert_eq!(logs.len(), 1);
-        assert_eq!(logs[0].message, message.into());
+        assert_eq!(logs[0].message, message);
         let frame = &logs[0].frame;
-        assert_eq!(frame.module_uri, URI.into());
+        assert_eq!(frame.module_uri, URI);
         assert_eq!(frame.member_name, None);
         assert_eq!(
             (
@@ -183,7 +183,7 @@ fn nested_trace_logs_inner_then_outer_with_distinct_operand_sections() {
         logs.iter()
             .map(|event| event.message.clone())
             .collect::<Vec<_>>(),
-        ["1 + 2 = 3".into(), "trace( (1 + 2) ) = 3".into()]
+        ["1 + 2 = 3", "trace( (1 + 2) ) = 3"]
     );
     assert_eq!(
         (logs[0].frame.start_column, logs[0].frame.end_column),
@@ -206,7 +206,7 @@ fn trace_operand_is_evaluated_once_and_cached_property_does_not_log_again() {
         assert_eq!(reads, ["life:text"]);
         assert_eq!(logs.len(), usize::from(delivery == LogDelivery::Host));
         if let Some(event) = logs.first() {
-            assert_eq!(event.message, "read(\"life:text\") = \"resource\"".into());
+            assert_eq!(event.message, "read(\"life:text\") = \"resource\"");
         }
     }
 }

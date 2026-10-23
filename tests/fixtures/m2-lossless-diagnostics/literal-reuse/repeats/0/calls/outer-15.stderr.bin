@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Expected value of type `"?"|"?"`, but got `"different"`.
+
+2 | original: Listing<"\u{d83d}" | "\u{dc00}"> = new { "different" }
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+at main#original (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl)
+
+2 | original: Listing<"\u{d83d}" | "\u{dc00}"> = new { "different" }
+                                                       ^^^^^^^^^^^
+at main#original[#1] (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl)
+
+1 | reordered[0]
+    ^^^^^^^^^^^^
+at  (repl:text)

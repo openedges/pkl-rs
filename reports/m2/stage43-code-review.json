@@ -1,0 +1,48 @@
+{
+  "schema": "stage43-independent-source-review-v1",
+  "baseline": "058d22417b3959ad5bdfb3b03f5f664003e67a53",
+  "runtimeDiffFiles": 32,
+  "sourceRecords": 39,
+  "review": "REVIEW.md",
+  "finding": {
+    "kind": "executable union equivalence did not consume syntactic origin",
+    "status": "corrected in real Stage43 worktree by root; original frozen candidate retained",
+    "correctedFile": "crates/pkl-runtime/src/vm.rs",
+    "correctedSha256": "34bff0fcbe7714421097eb0f8e19a65294d5f0abee09e8dd6d35dff56d5002e9",
+    "sourceBackedConsumers": [
+      "TypeCheck.equivalent",
+      "Vm collection-cast skip",
+      "TypeCheck.map_children and substitute",
+      "AST union classification"
+    ],
+    "noObservedApiMismatchClaim": true
+  },
+  "actualJavaEvidence": [
+    {
+      "root": "target/m2/stage43-literal-union-reuse-oracle-02",
+      "boundary": "evaluateExpressionString actual48calls",
+      "reportSha256": "932c105b2d4d560dda9112c1a873f322aebb2f923267fdd6a1f04e4e691f56e7",
+      "closureSha256": "e49b26419289c703aae723920b3f67a2b7af5aaa51dd38e809a949cbefd6ef5e"
+    },
+    {
+      "root": "target/m2/stage43-literal-union-predicate-oracle-01",
+      "boundary": "internal TypeNode predicate actual32calls, not language evaluation",
+      "reportSha256": "8e272c8d11ebd607a28ce2bd029e3a804076c391d27fa94d4ae9359da9119e07",
+      "closureSha256": "6014a5474f92033c3624efb0b36fe37c8e675c59dc1a7641269e3cdc45081468"
+    }
+  ],
+  "historicalTooling": "tooling-checkpoint-05.json",
+  "additionalActionableFindings": [],
+  "knownExcludedFindings": [
+    "Separate Stage44 converter/outputformat Display loss",
+    "Explicit unpaired Host rejection message Unsupported input"
+  ],
+  "execution": {
+    "rustBuilds": 0,
+    "rustRuntimeCalls": 0,
+    "jsScenarioReruns": 0,
+    "javaApiCallsSeparateRoot": 48,
+    "javaInternalPredicateCallsSeparateRoot": 32
+  },
+  "scope": "Bounded source review; M2 full obligations, known failures and product boundaries unchanged"
+}

@@ -182,7 +182,7 @@ applied = closure.apply()
         let error = ready(&mut session, &module, 3).unwrap_err();
         assert_eq!(
             (error.kind, error.message.as_str()),
-            (ErrorKind::Host, "string retry")
+            (ErrorKind::Host, Some("string retry"))
         );
         assert_eq!(session.context_depth(), 1);
 

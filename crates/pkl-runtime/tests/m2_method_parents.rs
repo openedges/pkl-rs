@@ -133,7 +133,7 @@ fn missing_defaults_remain_lazy_and_first_errors_precede_amendment_members() {
         let span = error.span.unwrap();
         assert_eq!(&used[span.start..span.end], "new", "{ty}");
         assert_eq!(
-            error.hint.as_deref(),
+            error.hint.as_ref().and_then(|text| text.as_str()),
             Some(
                 "Please specify a parent explicitly, for example `new Person { ... }` instead of `new { ... }`."
             )

@@ -1,0 +1,218 @@
+[
+  {
+    "id": "original-optimized",
+    "expression": "original[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-0"
+  },
+  {
+    "id": "grouped-general",
+    "expression": "grouped[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-1"
+  },
+  {
+    "id": "alias-general",
+    "expression": "aliased[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-2"
+  },
+  {
+    "id": "optimized-reordered",
+    "expression": "reordered[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-3"
+  },
+  {
+    "id": "optimized-duplicates",
+    "expression": "duplicate[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-4"
+  },
+  {
+    "id": "general-reordered",
+    "expression": "orderedGeneral[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-5"
+  },
+  {
+    "id": "valid-reordered",
+    "expression": "validReordered[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-6"
+  },
+  {
+    "id": "special-from-general",
+    "expression": "specialFromGrouped[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-7"
+  },
+  {
+    "id": "default-first-listing",
+    "expression": "defaultFirstListing[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-8"
+  },
+  {
+    "id": "default-second-listing",
+    "expression": "defaultSecondListing[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-9"
+  },
+  {
+    "id": "default-first-value",
+    "expression": "defaultFirst",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-10"
+  },
+  {
+    "id": "default-second-value",
+    "expression": "defaultSecond",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-11"
+  },
+  {
+    "id": "original-optimized-retry",
+    "expression": "original[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-12"
+  },
+  {
+    "id": "grouped-general-retry",
+    "expression": "grouped[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-13"
+  },
+  {
+    "id": "alias-general-retry",
+    "expression": "aliased[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-14"
+  },
+  {
+    "id": "optimized-reordered-retry",
+    "expression": "reordered[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-15"
+  },
+  {
+    "id": "optimized-duplicates-retry",
+    "expression": "duplicate[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-16"
+  },
+  {
+    "id": "general-reordered-retry",
+    "expression": "orderedGeneral[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-17"
+  },
+  {
+    "id": "valid-reordered-retry",
+    "expression": "validReordered[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-18"
+  },
+  {
+    "id": "special-from-general-retry",
+    "expression": "specialFromGrouped[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-19"
+  },
+  {
+    "id": "default-first-listing-retry",
+    "expression": "defaultFirstListing[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-20"
+  },
+  {
+    "id": "default-second-listing-retry",
+    "expression": "defaultSecondListing[0]",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-21"
+  },
+  {
+    "id": "default-first-value-retry",
+    "expression": "defaultFirst",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-22"
+  },
+  {
+    "id": "default-second-value-retry",
+    "expression": "defaultSecond",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "typealias High = \"\\u{d83d}\"\noriginal: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"different\" }\ngrouped: Listing<(\"\\u{d83d}\") | \"\\u{dc00}\"> = original\naliased: Listing<High | \"\\u{dc00}\"> = original\nreordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = original\nduplicate: Listing<\"\\u{d83d}\" | \"\\u{dc00}\" | \"\\u{d83d}\"> = original\norderedGeneral: Listing<\"\\u{dc00}\" | (\"\\u{d83d}\")> = grouped\nspecialFromGrouped: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = grouped\ndefaultFirstListing: Listing<*\"\\u{d83d}\" | \"\\u{dc00}\"> = original\ndefaultSecondListing: Listing<\"\\u{d83d}\" | *\"\\u{dc00}\"> = original\ndefaultFirst: *\"\\u{d83d}\" | \"\\u{dc00}\"\ndefaultSecond: \"\\u{d83d}\" | *\"\\u{dc00}\"\nvalid: Listing<\"\\u{d83d}\" | \"\\u{dc00}\"> = new { \"\\u{d83d}\" }\nvalidReordered: Listing<\"\\u{dc00}\" | \"\\u{d83d}\"> = valid\n",
+    "sourceSha256": "8fb87fa8ac736ab43d8547fa4f694e3adb6ad8cb5e1cda95d22bd3d31486a642",
+    "callPrefix": "outer-23"
+  }
+]

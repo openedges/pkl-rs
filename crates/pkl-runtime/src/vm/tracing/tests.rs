@@ -101,7 +101,7 @@ fn pending_logger_keeps_value_roots_and_callback_errors_do_not_finish_parent() {
     let (token, snapshot) = log(&mut host, &roots);
     assert_eq!(
         snapshot.message,
-        "obj = new Dynamic { x = \"resource\"; y = 2 }".into()
+        "obj = new Dynamic { x = \"resource\"; y = 2 }"
     );
     assert_eq!(
         next_event(&mut host, &roots),
@@ -137,7 +137,7 @@ fn pending_logger_keeps_value_roots_and_callback_errors_do_not_finish_parent() {
     assert_eq!(ready(&mut host, &roots), Ok(Value::Bool(true)));
     host.close();
     assert_eq!(host.heap_stats().slots, 0);
-    assert_eq!(snapshot.frame.module_uri, URI.into());
+    assert_eq!(snapshot.frame.module_uri, URI);
 }
 
 #[test]
@@ -272,7 +272,7 @@ fn mixed_log_read_log_cancellation_aborts_only_the_correct_read_context() {
     assert!(host.acknowledge_log(&inner, Ok(()), 0).is_err());
     assert!(host.acknowledge_log(&outer, Ok(()), 0).is_err());
     assert!(host.resume(&read_token, Ok(Value::Int(1)), 0).is_err());
-    assert_eq!(outer_snapshot.message, "1 = 1".into());
+    assert_eq!(outer_snapshot.message, "1 = 1");
 }
 
 #[test]
@@ -322,7 +322,7 @@ fn callback_close_finishes_already_issued_ancestor_reads_and_logs() {
         assert!(host.is_closed());
         assert_eq!(host.heap_stats().slots, 0);
         assert!(host.drain_cancelled_reads().is_empty());
-        assert_eq!(snapshot.message, "7 = 7".into());
+        assert_eq!(snapshot.message, "7 = 7");
     }
 }
 
@@ -335,15 +335,11 @@ fn pretty_preserves_authored_crlf_and_compact_truncates_only_rendered_value() {
     let (token, event) = log(&mut host, std::slice::from_ref(&module));
     assert_eq!(
         event.message,
-        "\n  new Dynamic {\r\n    x=1\r\n  }\n=\n  new Dynamic {\n    x = 1\n  }\n".into()
+        "\n  new Dynamic {\r\n    x=1\r\n  }\n=\n  new Dynamic {\n    x = 1\n  }\n"
     );
     assert_eq!(
         event.frame.source_lines.as_ref(),
-        [
-            "result=trace(new Dynamic {".into(),
-            "  x=1".into(),
-            "}).x".into()
-        ]
+        ["result=trace(new Dynamic {", "  x=1", "}).x"]
     );
     host.acknowledge_log(&token, Ok(()), 0).unwrap();
     assert_eq!(ready(&mut host, &[module]), Ok(Value::Int(1)));
@@ -392,11 +388,8 @@ fn noop_logger_still_delivers_custom_transformer_and_timeout_releases_active_tre
     assert_eq!(host.heap_stats().slots, 0);
     assert!(host.acknowledge_log(&log_token, Ok(()), 10).is_err());
     assert!(host.resume(&read_token, Ok(Value::Int(8)), 10).is_err());
-    assert_eq!(snapshot.message, "1 = 1".into());
-    assert_eq!(
-        snapshot.frame.source_lines.as_ref(),
-        ["first=trace(1)".into()]
-    );
+    assert_eq!(snapshot.message, "1 = 1");
+    assert_eq!(snapshot.frame.source_lines.as_ref(), ["first=trace(1)"]);
 }
 
 #[test]

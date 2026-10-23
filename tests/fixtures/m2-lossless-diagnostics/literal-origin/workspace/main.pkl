@@ -1,0 +1,3 @@
+typealias Alias = "\u{d83d}"
+grouped: ("\u{d83d}") | "\u{dc00}" = "different"
+aliasUnion: Alias | "\u{dc00}" = "different"

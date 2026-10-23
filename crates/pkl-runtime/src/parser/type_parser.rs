@@ -63,6 +63,7 @@ impl Parser<'_> {
                 self.type_height(height, base_depth)?;
                 values.push(Parsed {
                     ty: Type {
+                        parenthesized: false,
                         kind: TypeKind::Constrained {
                             base: Box::new(request.base.ty),
                             constraints,
@@ -155,6 +156,7 @@ impl Parser<'_> {
                     self.type_height(height, base_depth)?;
                     values.push(Parsed {
                         ty: Type {
+                            parenthesized: false,
                             kind: TypeKind::Union {
                                 types: union.types,
                                 default: union.default,
@@ -247,6 +249,7 @@ impl Parser<'_> {
                 };
                 values.push(Parsed {
                     ty: Type {
+                        parenthesized: false,
                         kind,
                         span: Span::new(start, self.previous_end),
                     },
@@ -271,6 +274,7 @@ impl Parser<'_> {
                 self.type_height(height, base_depth)?;
                 values.push(Parsed {
                     ty: Type {
+                        parenthesized: false,
                         kind: TypeKind::Named {
                             path: named.path,
                             name_spans: named.name_spans,
@@ -311,6 +315,7 @@ impl Parser<'_> {
                     }
                     let mut ty = parameters.parameters.pop().unwrap();
                     ty.span = Span::new(parameters.start, self.previous_end);
+                    ty.parenthesized = true;
                     values.push(Parsed {
                         ty,
                         height: parameters.height,
@@ -325,6 +330,7 @@ impl Parser<'_> {
                 let end = value.ty.span.end;
                 values.push(Parsed {
                     ty: Type {
+                        parenthesized: false,
                         kind: TypeKind::Function {
                             parameters: parameters.parameters,
                             return_type: Box::new(value.ty),
@@ -345,6 +351,7 @@ impl Parser<'_> {
                         let end = self.advance()?.span.end;
                         value = Parsed {
                             ty: Type {
+                                parenthesized: false,
                                 kind: TypeKind::Nullable(Box::new(value.ty)),
                                 span: Span::new(start, end),
                             },

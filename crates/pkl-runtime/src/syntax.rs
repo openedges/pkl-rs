@@ -189,6 +189,8 @@ impl ModifierKind {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Type {
+    /// Parenthesized constants are not the AST string-literal union optimization.
+    pub parenthesized: bool,
     pub kind: TypeKind,
     pub span: Span,
 }

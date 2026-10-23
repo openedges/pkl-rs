@@ -1,0 +1,74 @@
+[
+  {
+    "id": "payload-value",
+    "expression": "payload",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "payload = \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}\"\nthrowing = throw(payload)\nbadInt: Int = payload\nbadConstraint: String(this == \"allowed\") = payload\nbadUnion: Int | Boolean = payload\nloggingThenThrow = throw(trace(payload))\nhinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })\n",
+    "sourceSha256": "9a473a9c1398ea8c7810c389c703d36a5a6fe59a617b49657acdc4d0c44c5e2f",
+    "callPrefix": "outer-0"
+  },
+  {
+    "id": "direct-throw",
+    "expression": "throwing",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "payload = \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}\"\nthrowing = throw(payload)\nbadInt: Int = payload\nbadConstraint: String(this == \"allowed\") = payload\nbadUnion: Int | Boolean = payload\nloggingThenThrow = throw(trace(payload))\nhinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })\n",
+    "sourceSha256": "9a473a9c1398ea8c7810c389c703d36a5a6fe59a617b49657acdc4d0c44c5e2f",
+    "callPrefix": "outer-1"
+  },
+  {
+    "id": "simple-type-value",
+    "expression": "badInt",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "payload = \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}\"\nthrowing = throw(payload)\nbadInt: Int = payload\nbadConstraint: String(this == \"allowed\") = payload\nbadUnion: Int | Boolean = payload\nloggingThenThrow = throw(trace(payload))\nhinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })\n",
+    "sourceSha256": "9a473a9c1398ea8c7810c389c703d36a5a6fe59a617b49657acdc4d0c44c5e2f",
+    "callPrefix": "outer-2"
+  },
+  {
+    "id": "constrained-value-power",
+    "expression": "badConstraint",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "payload = \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}\"\nthrowing = throw(payload)\nbadInt: Int = payload\nbadConstraint: String(this == \"allowed\") = payload\nbadUnion: Int | Boolean = payload\nloggingThenThrow = throw(trace(payload))\nhinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })\n",
+    "sourceSha256": "9a473a9c1398ea8c7810c389c703d36a5a6fe59a617b49657acdc4d0c44c5e2f",
+    "callPrefix": "outer-3"
+  },
+  {
+    "id": "union-type-value",
+    "expression": "badUnion",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "payload = \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}\"\nthrowing = throw(payload)\nbadInt: Int = payload\nbadConstraint: String(this == \"allowed\") = payload\nbadUnion: Int | Boolean = payload\nloggingThenThrow = throw(trace(payload))\nhinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })\n",
+    "sourceSha256": "9a473a9c1398ea8c7810c389c703d36a5a6fe59a617b49657acdc4d0c44c5e2f",
+    "callPrefix": "outer-4"
+  },
+  {
+    "id": "direct-throw-retry",
+    "expression": "throwing",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "payload = \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}\"\nthrowing = throw(payload)\nbadInt: Int = payload\nbadConstraint: String(this == \"allowed\") = payload\nbadUnion: Int | Boolean = payload\nloggingThenThrow = throw(trace(payload))\nhinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })\n",
+    "sourceSha256": "9a473a9c1398ea8c7810c389c703d36a5a6fe59a617b49657acdc4d0c44c5e2f",
+    "callPrefix": "outer-5"
+  },
+  {
+    "id": "logger-then-throw",
+    "expression": "loggingThenThrow",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "payload = \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}\"\nthrowing = throw(payload)\nbadInt: Int = payload\nbadConstraint: String(this == \"allowed\") = payload\nbadUnion: Int | Boolean = payload\nloggingThenThrow = throw(trace(payload))\nhinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })\n",
+    "sourceSha256": "9a473a9c1398ea8c7810c389c703d36a5a6fe59a617b49657acdc4d0c44c5e2f",
+    "callPrefix": "outer-6"
+  },
+  {
+    "id": "pcf-undefined-hint",
+    "expression": "hinted",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01/workspace/main.pkl",
+    "moduleName": "main",
+    "source": "payload = \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}\"\nthrowing = throw(payload)\nbadInt: Int = payload\nbadConstraint: String(this == \"allowed\") = payload\nbadUnion: Int | Boolean = payload\nloggingThenThrow = throw(trace(payload))\nhinted = (new PcfRenderer {}).renderValue(new Mapping { [payload] = undefined })\n",
+    "sourceSha256": "9a473a9c1398ea8c7810c389c703d36a5a6fe59a617b49657acdc4d0c44c5e2f",
+    "callPrefix": "outer-7"
+  }
+]

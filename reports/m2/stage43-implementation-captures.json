@@ -1,0 +1,395 @@
+{
+  "archives": [
+    {
+      "bytes": 15835460,
+      "path": "reports/m2/stage43-implementation-captures-01.tar.gz",
+      "payloadBytes": 70650068,
+      "payloadFiles": 1006,
+      "sha256": "8e38d003088fad3a8dc2c16a5743ac4cb4978f7ca4a85c19d21531d2f3266adc",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-01.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 10864842,
+      "path": "reports/m2/stage43-implementation-captures-02.tar.gz",
+      "payloadBytes": 67431865,
+      "payloadFiles": 13960,
+      "sha256": "32d52b73e9ecce835b462dfa29ef79e9c72f70e17624374fd5adfd46e0c9e3f4",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-02.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 15666384,
+      "path": "reports/m2/stage43-implementation-captures-03.tar.gz",
+      "payloadBytes": 74186075,
+      "payloadFiles": 3814,
+      "sha256": "304849a4e5244581a81b956e452e4fc10810b6348df72a62f48cc9a44721beeb",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-03.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 7201173,
+      "path": "reports/m2/stage43-implementation-captures-04.tar.gz",
+      "payloadBytes": 74957157,
+      "payloadFiles": 12593,
+      "sha256": "57b8c56ca99e61bdfb3cb202bfbe985869bbc0b6d377c0f22221c478a8d9da47",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-04.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 8147858,
+      "path": "reports/m2/stage43-implementation-captures-05.tar.gz",
+      "payloadBytes": 72144642,
+      "payloadFiles": 8035,
+      "sha256": "ff53d80983f78f26b7751063b3a239a25db334abcf9f6714f2296a287ccc759c",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-05.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 7091846,
+      "path": "reports/m2/stage43-implementation-captures-06.tar.gz",
+      "payloadBytes": 74567220,
+      "payloadFiles": 18553,
+      "sha256": "65d4adfed8942986018563edd22e4b1ff8c0cab09ae8d6ba197ee618ddd53ea0",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-06.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 7458015,
+      "path": "reports/m2/stage43-implementation-captures-07.tar.gz",
+      "payloadBytes": 40899691,
+      "payloadFiles": 22946,
+      "sha256": "02e585507671d931c2ca9210104a733a2d587336cfbe884e52abd2f866ab6fe3",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage43-implementation-captures-07.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    }
+  ],
+  "excludedBeforeTraversal": [
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-diagnostics-implementation-01/cargo-target",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-diagnostics-implementation-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-platform-candidate-01/cargo-target",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-platform-candidate-01/workspace/.cache",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-platform-candidate-01/workspace/.cache/m1-tools",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-platform-candidate-01/workspace/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-platform-candidate-01/workspace/.git",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-platform-candidate-01/workspace/external/pkl",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-platform-candidate-01/workspace/external/pkl-pantry",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-platform-candidate-01/workspace/target",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-platform-candidate-01/workspace/tools/__pycache__",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-platform-candidate-01/workspace/tools/platform/node_modules",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-platform-candidate-01/workspace/tools/tests/__pycache__",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-lossless-platform-candidate-02/cargo-target",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-lossless-platform-candidate-02/workspace/.cache",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-lossless-platform-candidate-02/workspace/.cache/m1-tools",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-lossless-platform-candidate-02/workspace/.cache/oracle/pkl-tools-0.32.0.jar",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-lossless-platform-candidate-02/workspace/.git",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-lossless-platform-candidate-02/workspace/external/pkl",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-lossless-platform-candidate-02/workspace/external/pkl-pantry",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-lossless-platform-candidate-02/workspace/target",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-lossless-platform-candidate-02/workspace/tools/__pycache__",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-lossless-platform-candidate-02/workspace/tools/platform/node_modules",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-lossless-platform-candidate-02/workspace/tools/tests/__pycache__",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-union-equivalence-negative-01/cargo-target",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-union-equivalence-negative-01/workspace/external",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-union-equivalence-negative-01/workspace/tests/fixtures"
+  ],
+  "files": [
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-lossless-diagnostic-hint-oracle-command.stderr",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-hint-oracle-command.stderr"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-lossless-diagnostic-hint-oracle-command.stdout",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-hint-oracle-command.stdout"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-lossless-diagnostic-oracle-command.stderr",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-command.stderr"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-lossless-diagnostic-oracle-command.stdout",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-command.stdout"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-lossless-diagnostic-renderer-hint-oracle-command.stderr",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-renderer-hint-oracle-command.stderr"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-lossless-diagnostic-renderer-hint-oracle-command.stdout",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-renderer-hint-oracle-command.stdout"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-lossless-literal-type-oracle-command.stderr",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-type-oracle-command.stderr"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-lossless-literal-type-oracle-command.stdout",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-type-oracle-command.stdout"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-lossless-literal-union-origin-oracle-command.stderr",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-union-origin-oracle-command.stderr"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-lossless-literal-union-origin-oracle-command.stdout",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-union-origin-oracle-command.stdout"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-lossless-logger-frame-oracle-command.stderr",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-logger-frame-oracle-command.stderr"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-lossless-logger-frame-oracle-command.stdout",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-logger-frame-oracle-command.stdout"
+    },
+    {
+      "archivePath": "publication/source-link-01.json",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-implementation-publication-01/source-link-01.json"
+    },
+    {
+      "archivePath": "publication/publish.py",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-implementation-publication-01/publish.py"
+    },
+    {
+      "archivePath": "publication/selection.json",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-implementation-publication-01/selection.json"
+    },
+    {
+      "archivePath": "publication/preflight.json",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-implementation-publication-01/preflight.json"
+    }
+  ],
+  "fullM2Complete": false,
+  "historicalInventoryScope": "Some original fixture/source-copy inventories describe their original full acquisition. Copies and initial failed inventories remain unchanged; outer publication verifies every selected payload byte.",
+  "omissions": [
+    "Exact declared Cargo caches and readonly tooling/reference aliases are excluded before walking; artifact hashes and source/tool identities retained in capture records.",
+    "Stage42 corrected full corpus and Stage44 implementation remain separately live; neither is published or claimed completed here.",
+    "Publisher own evolving bookkeeping is excluded; its fixed script and selection are retained separately."
+  ],
+  "payloadBytes": 474836718,
+  "payloadFiles": 80907,
+  "preservation": "Each unique selected path is stored once. Raw failed and successful outcomes retained. Archive payload modes are 0644; no executable-mode equivalence claim.",
+  "roots": [
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-lossless-bindings-impact-review-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-bindings-impact-review-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-lossless-diagnostic-acceptance-index-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-acceptance-index-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-lossless-diagnostic-design-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-design-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-lossless-diagnostic-hint-oracle-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-hint-oracle-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-lossless-diagnostic-oracle-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-oracle-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-lossless-diagnostic-renderer-hint-oracle-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-diagnostic-renderer-hint-oracle-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-lossless-literal-type-oracle-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-type-oracle-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-lossless-literal-union-origin-oracle-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-union-origin-oracle-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-lossless-logger-frame-oracle-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-logger-frame-oracle-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-b-evidence-seal-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-b-evidence-seal-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-bindings-canonical-review-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-bindings-canonical-review-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-frontend-canonical-review-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-frontend-canonical-review-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-host-rejection-design-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-host-rejection-design-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-host-rejection-review-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-host-rejection-review-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-lossless-core-checkpoint-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-core-checkpoint-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-lossless-diagnostics-implementation-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-diagnostics-implementation-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-lossless-frontend-validation-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-frontend-validation-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-lossless-frontend-validation-02",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-frontend-validation-02"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-lossless-js-selection-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-js-selection-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-lossless-platform-candidate-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-platform-candidate-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-lossless-producer-portable-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-producer-portable-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-lossless-session-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-session-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage43-napi-pending-error-review-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-napi-pending-error-review-01"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-independent-code-review-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-independent-code-review-01"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-literal-union-predicate-oracle-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-predicate-oracle-01"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-literal-union-reuse-oracle-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-01"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-literal-union-reuse-oracle-02",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-literal-union-reuse-oracle-02"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-manifest-validation-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-manifest-validation-01"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-manifest-validation-02",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-manifest-validation-02"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-manifest-validation-03",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-manifest-validation-03"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-promotion-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-promotion-01"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-required-checks-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-required-checks-01"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-required-checks-02",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-required-checks-02"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-required-checks-03",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-required-checks-03"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-required-checks-04",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-required-checks-04"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-tooling-promotion-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-tooling-promotion-01"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-union-equivalence-negative-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-union-equivalence-negative-01"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-reference-binding-addendum-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-reference-binding-addendum-01"
+    },
+    {
+      "archivePrefix": "stage43-worktree/target/m2/stage43-lossless-platform-candidate-02",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/target/m2/stage43-lossless-platform-candidate-02"
+    }
+  ],
+  "schema": 1,
+  "scope": "Stage43 canonical diagnostic implementation: preserved initial failures, actual Java references, pre-correction and corrected native/Node/Chromium observations, all five corrected Rust checks, independent code review and sensitive negative control. Not final full-corpus/M2/product/platform/performance completion.",
+  "sourceChanges": [],
+  "symlinkRepresentations": [
+    {
+      "gitBlobBytesMatch": true,
+      "kind": "symlink",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-diagnostics-implementation-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+      "pinnedReference": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "referencePath": "pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+      "representation": "The original symlink is excluded before traversal and represented by this exact target-byte record. Its sibling referent directory files are included by ordinary traversal; no symlink is followed.",
+      "targetHex": "6368696c642f",
+      "targetSha256": "2affd42fb4ab5d3937747d31d118219afff6ac4116f0382d4a6bf8a6654ce273",
+      "targetUtf8": "child/"
+    }
+  ]
+}

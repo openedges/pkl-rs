@@ -3,6 +3,7 @@
 //! Observations come from VM execution. Parsing here only associates authored
 //! expressions with display positions; it never evaluates the source.
 use crate::diagnostic::PowerAssertionValue;
+use crate::pkl_string::{PklString, PklStringBuilder};
 use crate::source::{Source, Span};
 use crate::syntax::{Expr, ExprKind, ObjectMember};
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
@@ -11,7 +12,7 @@ use std::collections::{BTreeMap, BTreeSet, VecDeque};
 struct Entry {
     line: usize,
     column: usize,
-    text: String,
+    text: PklString,
 }
 
 impl Entry {
@@ -21,7 +22,7 @@ impl Entry {
 
     fn marker(&self) -> Self {
         Self {
-            text: "│".to_owned(),
+            text: "│".into(),
             ..self.clone()
         }
     }
@@ -32,7 +33,7 @@ pub(crate) fn render(
     body: Span,
     observations: &[PowerAssertionValue],
     indent: &str,
-) -> String {
+) -> PklString {
     let text = source.slice(body).unwrap_or("");
     let mut anchors = BTreeMap::new();
     if let Ok(expression) = crate::parser::parse_expression(text) {
@@ -70,7 +71,7 @@ pub(crate) fn render(
             .min()
             .unwrap_or(0)
     };
-    let mut output = String::new();
+    let mut output = PklStringBuilder::default();
     let mut had_markers = false;
     for (index, (start, text)) in lines.iter().enumerate() {
         if had_markers {
@@ -110,12 +111,12 @@ pub(crate) fn render(
             for entry in layer {
                 let offset = entry.column.saturating_sub(1 + trim + cursor);
                 output.push_str(&" ".repeat(offset));
-                output.push_str(&entry.text);
+                output.push_value(&entry.text);
                 cursor += offset + entry.width();
             }
         }
     }
-    output
+    output.finish()
 }
 
 fn source_lines(source: &Source, span: Span) -> Vec<(usize, &str)> {
@@ -357,7 +358,7 @@ mod tests {
     use super::*;
     use crate::source::SourceMap;
 
-    fn graph(expression: &str, observations: &[(&str, &str, usize)]) -> String {
+    fn graph(expression: &str, observations: &[(&str, &str, usize)]) -> PklString {
         let text = format!("result: Int({expression}) = 42\n");
         let mut map = SourceMap::default();
         let id = map.add("test.pkl", &text);

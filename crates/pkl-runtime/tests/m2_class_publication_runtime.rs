@@ -212,7 +212,7 @@ fn missing_members_list_only_published_definitions_and_inherited_methods() {
         "Cannot find property `unpublished` in object of type `publication#C`."
     );
     assert_eq!(
-        property.hint.as_deref(),
+        property.hint.as_ref().and_then(|text| text.as_str()),
         Some("Available properties:\nearly")
     );
     let method = member(&mut vm, module, "missingMethod").unwrap_err();
@@ -221,7 +221,7 @@ fn missing_members_list_only_published_definitions_and_inherited_methods() {
         "Cannot find method `after` in class `publication#C`."
     );
     assert_eq!(
-        method.hint.as_deref(),
+        method.hint.as_ref().and_then(|text| text.as_str()),
         Some(
             "Available methods in class `publication#C`:\nbefore\ngetClass\ngetProperty\ngetPropertyOrNull\nhasProperty\nifNonNull\ntoDynamic\ntoMap\ntoString"
         )
@@ -238,14 +238,16 @@ fn missing_method_candidates_include_published_property_and_method_signatures() 
         member(&mut vm, module, "propertyCandidate")
             .unwrap_err()
             .hint
-            .as_deref(),
+            .as_ref()
+            .and_then(|text| text.as_str()),
         Some("Did you mean any of the following?\nlater")
     );
     assert_eq!(
         member(&mut vm, module, "methodCandidate")
             .unwrap_err()
             .hint
-            .as_deref(),
+            .as_ref()
+            .and_then(|text| text.as_str()),
         Some("Did you mean any of the following?\nbefore(value)")
     );
 }

@@ -47,7 +47,7 @@ impl Mismatch {
         module: &str,
         indent: usize,
     ) -> Result<TypeDiagnostic, RuntimeError> {
-        use crate::diagnostic_values::{render, type_name as actual_type};
+        use crate::diagnostic_values::{render_string as render, type_name as actual_type};
         Ok(match self {
             Self::InsertedFrame { inner, .. } => inner.diagnostic(heap, module, indent)?,
             Self::Simple { span, ty, value } => TypeDiagnostic::Simple { span: *span, message: type_error_at_width(ty, value, module, heap, 80usize.saturating_sub(indent))?.message },
@@ -665,8 +665,8 @@ impl Vm {
                     let mut error = RuntimeError::new(
                         ErrorKind::Type,
                         match &diagnostic {
-                            TypeDiagnostic::Simple { message, .. } => message.as_str(),
-                            _ => "Type constraint violated.",
+                            TypeDiagnostic::Simple { message, .. } => message.clone(),
+                            _ => "Type constraint violated.".into(),
                         },
                     );
                     error.span = Some(diagnostic.span());
@@ -854,6 +854,7 @@ impl Vm {
                     types,
                     spans,
                     labels,
+                    string_literals: false,
                     ..
                 } if !types.is_empty() => {
                     let parent_test = run.in_type_test;
@@ -1153,20 +1154,19 @@ impl Vm {
                             (|| {
                                 Ok(RuntimeError::new(
                                     ErrorKind::Type,
-                                    format!(
-                                        "Expected value of type `Boolean` or `Function`, but got type `{}`.\nValue: {}",
-                                        crate::diagnostic_values::type_name(
+                                    PklString::join(&["Expected value of type `Boolean` or `Function`, but got type `".into(),
+(crate::diagnostic_values::type_name(
                                             &value,
                                             &self.heap,
                                             &self.program.module_name
-                                        )?,
-                                        crate::diagnostic_values::render(
+                                        )?).into(),
+"`.\nValue: ".into(),
+crate::diagnostic_values::render(
                                             &value,
                                             &self.heap,
                                             &self.program.module_name,
                                             80
-                                        )?,
-                                    ),
+                                        )?], ""),
                                 ))
                             })()
                         };

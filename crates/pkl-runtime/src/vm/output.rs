@@ -451,6 +451,7 @@ pub(super) fn builtin_members(
     let string_span = part("String");
     let union_span = Span::new(class_span.start, string_span.end);
     let key_type = TypeCheck::Union {
+        string_literals: false,
         types: vec![TypeCheck::MetaClass("Class".into()), TypeCheck::String],
         labels: vec![class_span, string_span],
         spans: vec![class_span, string_span],

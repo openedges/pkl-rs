@@ -119,8 +119,8 @@ pub(crate) fn render(
     heap: &Heap,
     module: &str,
     limit: usize,
-) -> Result<String, RuntimeError> {
-    Ok(render_string(value, heap, module, limit)?.to_java_utf8())
+) -> Result<crate::value::PklString, RuntimeError> {
+    render_string(value, heap, module, limit)
 }
 
 pub(crate) fn render_string(
@@ -701,14 +701,21 @@ mod tests {
             render(&Value::string("x".repeat(78)), &heap, "test", 80).unwrap(),
             format!("\"{}...", "x".repeat(76))
         );
+        let truncated = render(
+            &Value::string(format!("{}😀suffix", "a".repeat(75))),
+            &heap,
+            "test",
+            80,
+        )
+        .unwrap();
+        let mut expected: Vec<_> = format!("\"{}", "a".repeat(75)).encode_utf16().collect();
+        expected.push(0xd83d);
+        expected.extend("...".encode_utf16());
+        // Truncation is measured in UTF-16 units. Encoding the detached result
+        // at the byte boundary retains the previous Java UTF-8 output.
+        assert_eq!(truncated.encode_utf16().collect::<Vec<_>>(), expected);
         assert_eq!(
-            render(
-                &Value::string(format!("{}😀suffix", "a".repeat(75))),
-                &heap,
-                "test",
-                80
-            )
-            .unwrap(),
+            truncated.to_java_utf8(),
             format!("\"{}?...", "a".repeat(75))
         );
     }
@@ -798,7 +805,7 @@ mod tests {
         let value = Value::Object(object);
         let text = render(&value, &heap, "test", 80).unwrap();
         assert_eq!(text.encode_utf16().count(), 80);
-        assert!(text.ends_with("..."));
+        assert!(text.as_str().is_some_and(|text| text.ends_with("...")));
         assert!(text.starts_with("new Dynamic { self { self {"));
         assert_eq!(
             render(&value, &Heap::new(), "test", 80).unwrap_err().kind,

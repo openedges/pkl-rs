@@ -1,0 +1,110 @@
+{
+  "scope": "Five required local Rust checks of corrected Stage43 in its real Git worktree after literal-union equivalence correction. Pre-correction checks retained separately; not whole-language/platform/product completion.",
+  "host": {
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage43",
+    "environment": {
+      "CARGO_TARGET_DIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage43-lossless-diagnostics-implementation-01/cargo-target"
+    },
+    "rustc": {
+      "command": [
+        "rustc",
+        "-Vv"
+      ],
+      "exit_code": 0
+    },
+    "cargo": {
+      "command": [
+        "cargo",
+        "-V"
+      ],
+      "exit_code": 0
+    },
+    "head": {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0
+    }
+  },
+  "results": [
+    {
+      "label": "pins",
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.7563324593938887
+    },
+    {
+      "label": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.7193943746387959
+    },
+    {
+      "label": "clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 5.691750457976013
+    },
+    {
+      "label": "test",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--no-fail-fast"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 108.95828062482178
+    },
+    {
+      "label": "wasm",
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.8496200842782855
+    }
+  ],
+  "all_commands_pass": true,
+  "source_count": 7026,
+  "source_stable": true,
+  "changed_sources": [],
+  "harness_invocations": {
+    "passed": 685,
+    "failed": 0,
+    "ignored": 1,
+    "measured": 0,
+    "filtered_out": 36
+  },
+  "counts_are_distinct_features": false
+}

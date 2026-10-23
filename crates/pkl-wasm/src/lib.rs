@@ -1,10 +1,33 @@
 //! Browser experiment; all evaluation and lifecycle state lives in pkl-runtime.
 use js_sys::{BigInt, JsString, Uint8Array};
-use pkl_runtime::{probe, value::Value};
+use pkl_runtime::{
+    probe,
+    value::{PklString, Value},
+};
 use wasm_bindgen::prelude::*;
 
 fn error(e: impl ToString) -> JsValue {
     js_sys::Error::new(&e.to_string()).into()
+}
+fn js_text(text: &PklString) -> JsString {
+    let units: Vec<_> = text.encode_utf16().collect();
+    // js-sys uses variadic String.fromCharCode; bound every call before joining.
+    let pieces = js_sys::Array::new();
+    for chunk in units.chunks(1024) {
+        pieces.push(JsString::from_char_code(chunk).as_ref());
+    }
+    pieces.join("")
+}
+fn text_error(text: PklString) -> JsValue {
+    let object = js_sys::Error::new("");
+    match js_sys::Reflect::set(
+        object.as_ref(),
+        &JsValue::from_str("message"),
+        js_text(&text).as_ref(),
+    ) {
+        Ok(_) => object.into(),
+        Err(error) => error,
+    }
 }
 fn unsigned(value: f64) -> Result<u32, JsValue> {
     probe::unsigned_argument(value).map_err(error)
@@ -46,8 +69,8 @@ pub fn evaluate_language(
     module_name: JsString,
     expression: JsString,
     power_assertions: Option<bool>,
-) -> Result<String, JsValue> {
-    pkl_runtime::evaluation::scalar_expression_with_options(
+) -> Result<JsString, JsValue> {
+    pkl_runtime::evaluation::scalar_expression_text_with_options(
         &string(&source)?,
         &string(&uri)?,
         &string(&module_name)?,
@@ -56,7 +79,8 @@ pub fn evaluate_language(
             power_assertions: power_assertions.unwrap_or(false),
         },
     )
-    .map_err(error)
+    .map(|text| js_text(&text))
+    .map_err(text_error)
 }
 /// Portable frontend bytes; no native process exit or generated-files execution.
 #[wasm_bindgen(js_name = evaluateModuleFrontend)]
@@ -163,24 +187,31 @@ pub fn evaluate_language_sequence(
         .iter()
         .map(|value| string(&JsString::from(value)))
         .collect::<Result<Vec<_>, _>>()?;
-    Ok(pkl_runtime::evaluation::scalar_expressions_with_options(
-        &string(&source)?,
-        &string(&uri)?,
-        &string(&module_name)?,
-        &expressions,
-        pkl_runtime::evaluation::EvaluationOptions {
-            power_assertions: power_assertions.unwrap_or(false),
-        },
-    )
-    .map_err(error)?
-    .into_iter()
-    .map(|result| {
-        JsValue::from_str(&match result {
-            Ok(value) => format!("value\t{value}"),
-            Err(error) => format!("error\t{error}"),
+    Ok(
+        pkl_runtime::evaluation::scalar_expressions_text_with_options(
+            &string(&source)?,
+            &string(&uri)?,
+            &string(&module_name)?,
+            &expressions,
+            pkl_runtime::evaluation::EvaluationOptions {
+                power_assertions: power_assertions.unwrap_or(false),
+            },
+        )
+        .map_err(text_error)?
+        .into_iter()
+        .map(|result| {
+            let (prefix, text) = match result {
+                Ok(value) => ("value\t", value),
+                Err(error) => ("error\t", error),
+            };
+            let units = prefix
+                .encode_utf16()
+                .chain(text.encode_utf16())
+                .collect::<Vec<_>>();
+            JsValue::from(js_text(&PklString::from_utf16(units)))
         })
-    })
-    .collect())
+        .collect(),
+    )
 }
 #[wasm_bindgen(js_name = roundtripString)]
 pub fn roundtrip_string(input: JsString) -> Result<String, JsValue> {
@@ -433,7 +464,7 @@ impl SourceSession {
         let uri = string(&uri)?;
         let name = string(&module_name)?;
         Ok(Self {
-            inner: probe::SourceProbe::new_output(
+            inner: probe::SourceProbe::new_output_text(
                 ModuleSourceInput {
                     text: &source,
                     uri: &uri,
@@ -443,12 +474,7 @@ impl SourceSession {
                 &invocation.options,
                 options,
             )
-            .map_err(|failure| {
-                error(
-                    String::from_utf8(failure.stderr)
-                        .expect("shared diagnostic renderer emits UTF-8"),
-                )
-            })?,
+            .map_err(|failure| text_error(failure.text))?,
         })
     }
     #[wasm_bindgen(js_name = forExpressions)]
@@ -473,7 +499,7 @@ impl SourceSession {
             .transpose()?
             .unwrap_or_else(|| "compact".into());
         Ok(Self {
-            inner: probe::SourceProbe::new_expressions(
+            inner: probe::SourceProbe::new_expressions_text(
                 &string(&source)?,
                 &string(&uri)?,
                 &string(&module_name)?,
@@ -483,7 +509,7 @@ impl SourceSession {
                 host_frame_transformer.unwrap_or(false),
                 power_assertions.unwrap_or(false),
             )
-            .map_err(error)?,
+            .map_err(text_error)?,
         })
     }
     #[wasm_bindgen(constructor)]
@@ -508,7 +534,7 @@ impl SourceSession {
             .transpose()?
             .unwrap_or_else(|| "compact".into());
         Ok(Self {
-            inner: probe::SourceProbe::new(
+            inner: probe::SourceProbe::new_text(
                 &string(&source)?,
                 &string(&uri)?,
                 &string(&module_name)?,
@@ -518,20 +544,20 @@ impl SourceSession {
                 host_frame_transformer.unwrap_or(false),
                 power_assertions.unwrap_or(false),
             )
-            .map_err(error)?,
+            .map_err(text_error)?,
         })
     }
     #[wasm_bindgen(js_name = startModule)]
     pub fn start_module(&mut self, now: f64, timeout: Option<f64>) -> Result<(), JsValue> {
         self.inner
             .start_module(unsigned(now)?, timeout.map(unsigned).transpose()?)
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = startOutputBytes)]
     pub fn start_output_bytes(&mut self, now: f64, timeout: Option<f64>) -> Result<(), JsValue> {
         self.inner
             .start_output_bytes(unsigned(now)?, timeout.map(unsigned).transpose()?)
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = reenterOutputBytes)]
     pub fn reenter_output_bytes(
@@ -546,7 +572,7 @@ impl SourceSession {
                 unsigned(now)?,
                 timeout.map(unsigned).transpose()?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = completeModuleResolution)]
     pub fn complete_module_resolution(
@@ -565,7 +591,7 @@ impl SourceSession {
                 &string(&source_uri)?,
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = completeModuleSource)]
     pub fn complete_module_source(
@@ -582,7 +608,7 @@ impl SourceSession {
                 &string(&inferred_name)?,
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = rejectModuleResolution)]
     pub fn reject_module_resolution(
@@ -600,7 +626,7 @@ impl SourceSession {
                 &string(&message)?,
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = rejectModuleSource)]
     pub fn reject_module_source(
@@ -618,13 +644,13 @@ impl SourceSession {
                 &string(&message)?,
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = respondConfigured)]
     pub fn respond_configured(&mut self, token: JsString, now: f64) -> Result<(), JsValue> {
         self.inner
             .respond_configured(&string(&token)?, unsigned(now)?)
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = startPath)]
     pub fn start_path(
@@ -639,7 +665,7 @@ impl SourceSession {
                 unsigned(now)?,
                 timeout.map(unsigned).transpose()?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = setupFailed)]
     pub fn setup_failed(&self) -> bool {
@@ -660,13 +686,13 @@ impl SourceSession {
                 unsigned(now)?,
                 timeout.map(unsigned).transpose()?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     pub fn poll(&mut self, now: f64, budget: f64) -> Result<JsValue, JsValue> {
         source_event(
             self.inner
                 .poll(unsigned(now)?, unsigned(budget)?)
-                .map_err(error)?,
+                .map_err(|failure| text_error(failure.message))?,
         )
     }
     #[wasm_bindgen(js_name = acknowledgeLog)]
@@ -688,7 +714,7 @@ impl SourceSession {
                 failure.map(|units| units.to_vec()),
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = respondString)]
     pub fn respond_string(
@@ -706,7 +732,7 @@ impl SourceSession {
                 Value::String(pkl_runtime::value::PklString::from_utf16(value.to_vec())),
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = respondInteger)]
     pub fn respond_integer(
@@ -721,7 +747,7 @@ impl SourceSession {
                 Value::Int(integer(value)?),
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = respondBytes)]
     pub fn respond_bytes(
@@ -739,18 +765,18 @@ impl SourceSession {
                 Value::Bytes(value.to_vec().into()),
                 unsigned(now)?,
             )
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     pub fn reject(&mut self, token: JsString, message: JsString, now: f64) -> Result<(), JsValue> {
         self.inner
             .reject(&string(&token)?, &string(&message)?, unsigned(now)?)
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = closeFromCallback)]
     pub fn close_from_callback(&mut self, token: JsString) -> Result<(), JsValue> {
         self.inner
             .close_from_callback(&string(&token)?)
-            .map_err(error)
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = drainCancelledModules)]
     pub fn drain_cancelled_modules(&mut self) -> Vec<String> {

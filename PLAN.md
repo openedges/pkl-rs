@@ -714,6 +714,16 @@ Stage 42의 고정 후보가 전체 회귀를 실행하는 동안, 검토한 Ref
 
 Host logger의 새 Java 관찰에서는 재진입한 guest 오류 뒤 logger가 던진 예외가 `PklBugException`으로 보고됩니다. 두 evaluator의 16개 실제 호출에서 Java 내부 오류 4회·일반 Pkl 오류 8회·후속 정상 값 4회를 원본 그대로 보존하며 내부 오류를 호환성 통과로 세지 않습니다. 지원하는 UTF-8 소스의 supplementary member 이름은 실제 frame에서 검증했고, backtick 식별자 안의 `\\u{...}`는 escape로 해석되지 않습니다. 임의 단독 surrogate를 가진 source·URI나 frame 이름을 이 관찰로 검증했다고 주장하지 않습니다. Node 오류 객체의 UTF-16 보존과 숨겨진 Env 인자, Wasm의 긴 문자열 인자 수 제한 수정은 독립 정적 검토를 마쳤으며 실제 실행 검증은 별도입니다.
 
+공통 구현을 고정한 뒤 별도 `m2/stage43-lossless-diagnostics` worktree에 소스·fixture 6,112개를 정확히 반영했습니다. 기존의 최종 fmt·Wasm 검사 입력과 대조하고, 실제 submodule을 갖춘 worktree에서 pin 검사·workspace Clippy·전체 workspace 테스트를 실행했습니다. 세 명령은 모두 통과했으며 테스트 집계는 harness 호출 683개 통과·실패 0개·ignored 1개입니다. 이는 고유 기능 수가 아닙니다. 이전 전체 runtime 검사의 오래된 API 단언 두 실패와 수정 후 집중 검사, 검증 도구의 초기 입력 대응 실패도 보존합니다.
+
+N-API 오류 전환에서 JavaScript의 `toString`·`cause` getter를 호출하는 추가 동작을 발견했습니다. UTF-16 message를 설정한 Error 객체를 직접 throw하고 pending exception을 전달하도록 수정했습니다. 실제 Node에서 세 오류 진입 경로의 추가 callback이 각각 발생하던 원본과, callback 없이 같은 전체 message 단위를 보존하고 후속 평가·GC 검사를 통과한 수정 결과를 구분합니다. 문자열 리터럴 union의 구문 출처도 보존해 직접 literal·괄호·alias union의 Java 오류 형식을 구분합니다.
+
+남은 명시적 의무에는 converter path·output format 오류를 구성할 때의 조기 UTF-8 변환, Host reject 메시지의 UTF-8 입력 제한, 전체 원본 코퍼스 회귀와 진단·제품 API·플랫폼·성능 검증이 있습니다. 다음 분리 작업 공간에서 원본 Java IOException과 오류 producer 관찰을 바탕으로 이어갑니다. Stage 43의 제한된 성공으로 이 범위를 제외하지 않으며 **M2 전체는 진행 중입니다.**
+
+커밋 전 독립 검토에서 새 literal union 분류를 지연 컬렉션의 타입 검사 재사용 판정에 반영하지 않은 문제를 발견했습니다. 실제 Java 내부 `TypeNode.isEquivalentTo` 16쌍을 두 번 실행해 literal union의 집합 비교와 일반 union의 순서 비교, 서로 다른 종류·default 처리 규칙을 확인했습니다. 수정 전 arm만 되돌린 대조군은 새 회귀 검사에 실패합니다. 별도 실제 API 24개 순차 호출을 두 evaluator에서 실행한 결과는 원래 입력의 안쪽 타입 검사가 먼저 실패하므로, 내부 판정 차이를 관측된 API 오류 메시지 차이로 주장하지 않습니다.
+
+수정 후 필수 Rust 검사 다섯 개를 모두 다시 실행해 통과했습니다. 소스·fixture·설정 7,026개는 검사 전후 같고, workspace 테스트는 harness 호출 685개 통과·실패 0개·ignored 1개입니다. 실제 Node·Chromium에서도 literal reuse 48회, producer·hint 20회, 생성자 24회와 scalar·N-API callback 대조군이 환경별 통과했습니다. 기존 모듈 graph·상속·owner·문자열 및 PCF 출력도 일치했고, 종전 문자열 오류 두 사례는 이제 UTF-16과 Java UTF-8이 모두 일치합니다. 공통 primitive 비교는 6,078개 중 Java 일치 6,076개와 기존 정규식 차이 두 개를 유지하며, trace는 환경별 일치 58회·Java 내부 오류 32회입니다. 역사적인 UTF-8 전용 fixture 세 그룹은 원래 기대 바이트와 실제 JS 단위를 별도로 보존하고 문자열 단위 호환성으로 세지 않습니다. 전체 선택 코퍼스 재실행과 M2 전체 마감은 남습니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

@@ -142,7 +142,8 @@ fn reference_function_syntax_metadata_is_distinct_from_function_class_subtyping(
         member(&mut vm, module, "missing")
             .unwrap_err()
             .hint
-            .as_deref(),
+            .as_ref()
+            .and_then(|text| text.as_str()),
         Some("Cannot find property `missing` in type `(Int) -> String`.")
     );
 }

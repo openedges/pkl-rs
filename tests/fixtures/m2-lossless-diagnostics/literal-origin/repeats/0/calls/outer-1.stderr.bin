@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `Alias | "\u{dc00}"`, but got a different `String`.
+Value: "different"
+
+3 | aliasUnion: Alias | "\u{dc00}" = "different"
+                ^^^^^^^^^^^^^^^^^^
+at main#aliasUnion (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-union-origin-oracle-01/workspace/main.pkl)
+
+* Value is not of type `Alias` because:
+  Expected value of type `"?"`, but got type `String`.
+  Value: "different"
+
+3 | aliasUnion: Alias | "\u{dc00}" = "different"
+                                     ^^^^^^^^^^^
+at main#aliasUnion (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-lossless-literal-union-origin-oracle-01/workspace/main.pkl)
+
+1 | aliasUnion
+    ^^^^^^^^^^
+at  (repl:text)
