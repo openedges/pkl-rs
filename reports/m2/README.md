@@ -65,6 +65,8 @@ the complete pre-correction language and persistent-evaluator runs, the
 Reference frame correction, corrected native/Node/Chromium observations, five
 required Rust checks, and exact source promotion evidence. All 5,810 source and
 fixture files used by the corrected required checks match the promoted checkout.
+The [committed source binding](stage42-implementation-source-binding.json)
+checks those files against implementation commit `7544699`.
 The [independent publication review](stage42-implementation-publication-review.json)
 verifies all 92,880 payload files across four archives.
 The isolated check workspace omits the CI workflow file; these local commands

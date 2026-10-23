@@ -700,7 +700,7 @@ Java 원본 41개의 두 번 반복 취득은 정상 종료 44회·일반 Pkl �
 
 ### Stage 42 구현 체크포인트
 
-전체 취득·검증 프로세스 종료와 원본 증거 마감을 확인한 뒤 Reference owner 수정과 테스트·fixture 아홉 개를 작업 공간에 반영했습니다. 분리된 수정 후보의 native·Node·Chromium owner 대조군과 필수 Rust 검사 다섯 개가 통과했으며, 검사에 쓰인 소스·fixture 5,810개가 승격한 작업 공간과 모두 같습니다. 실행 목록의 source hash를 갱신하고 freshness 검사도 통과했습니다. 복사본의 CI workflow 누락을 별도로 기록하며 이 로컬 검사를 CI 실행으로 주장하지 않습니다. [구현 검증 기록](reports/m2/stage42-implementation-captures.json)은 수정 전 전체 회귀와 수정 후 집중 검증을 구분합니다. 수정 후 전체 선택 재실행과 Stage 42 최종 마감, M2 전체 완료는 아직 남아 있습니다.
+전체 취득·검증 프로세스 종료와 원본 증거 마감을 확인한 뒤 Reference owner 수정과 테스트·fixture 아홉 개를 작업 공간에 반영하고 구현을 `7544699`에 커밋했습니다. 분리된 수정 후보의 native·Node·Chromium owner 대조군과 필수 Rust 검사 다섯 개가 통과했으며, 검사에 쓰인 소스·fixture 5,810개가 [구현 커밋의 Git blob](reports/m2/stage42-implementation-source-binding.json)과 모두 같습니다. 실행 목록의 source hash를 갱신하고 freshness 검사도 통과했습니다. 복사본의 CI workflow 누락을 별도로 기록하며 이 로컬 검사를 CI 실행으로 주장하지 않습니다. [구현 검증 기록](reports/m2/stage42-implementation-captures.json)은 수정 전 전체 회귀와 수정 후 집중 검증을 구분합니다. 수정 후 전체 선택 재실행과 Stage 42 최종 마감, M2 전체 완료는 아직 남아 있습니다.
 
 ### Stage 43 — UTF-16을 보존하는 공통 진단
 
