@@ -1,0 +1,12 @@
+r = new JsonRenderer {
+  indent = read("res:/options/indent")
+  omitNullProperties = read("res:/options/omit") == "yes"
+  converters = if (read("res:/options/converters-get") == "go") new Mapping {
+    [Int] = if (read("res:/options/converters-force") == "go") ((v) -> v) else throw("converter-entry")
+  } else throw("converter-getter")
+  convertPropertyTransformers = if (read("res:/options/transformers-get") == "go") new Mapping {
+    [ConvertProperty] = if (read("res:/options/transformers-force") == "go") ((a) -> a) else throw("transformer-entry")
+  } else throw("transformer-getter")
+}
+retry = new JsonRenderer { indent = read("res:/io-first") }
+stable = 7

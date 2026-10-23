@@ -1,0 +1,304 @@
+{
+  "schema": 1,
+  "scope": "Pinned Java renderer reference fixtures and offline verification tooling. No new Rust evaluator, N-API or Wasm renderer acquisition in this checkpoint.",
+  "baseline": "Pkl 0.32.0",
+  "baseCommit": "f4bad9df03a9bacd475d41e9cddd7e4c67e75ec8",
+  "fixture": "tests/fixtures/m2-renderer-portable",
+  "fixtureManifestSha256": "90f6694ff7637cfbe86e0a1a99f1a2351baba9537018022ffa8e3ff17c52cd77",
+  "fixturePayloadFiles": 14995,
+  "fixtureTotalRegularFiles": 14996,
+  "fixtureTotalBytes": 19564102,
+  "sessions": 44,
+  "selectedJavaApiCalls": 860,
+  "selectionAccounting": {
+    "acquiredJavaApiCallsInFiveSourceGroups": 1320,
+    "selectedCalls": 860,
+    "acquiredButUnselectedCalls": 460,
+    "policyProfileCallsWithinUnselected": 84,
+    "initialJavacFailureUnexecutedPlannedCalls": 648,
+    "laterSeparateJavaCallsOutsideBundle": 132
+  },
+  "boundaryDispositions": [
+    {
+      "root": "stage47-renderer-api-oracle-01",
+      "apiCalls": 648,
+      "kind": "unexecuted-javac-failure"
+    },
+    {
+      "root": "stage47-renderer-api-oracle-02",
+      "apiCalls": 72,
+      "kind": "authored-parser-rejection-not-renderer"
+    },
+    {
+      "root": "stage47-renderer-api-oracle-02",
+      "apiCalls": 16,
+      "kind": "nested-query-lexical-rejection-not-directive-path"
+    },
+    {
+      "root": "stage47-renderer-api-oracle-02",
+      "apiCalls": 40,
+      "kind": "other-directive-calls-superseded-selection-only-original-retained"
+    },
+    {
+      "root": "stage47-renderer-api-oracle-03",
+      "apiCalls": 44,
+      "kind": "Any-converter-does-not-dispatch-primitives"
+    },
+    {
+      "root": "stage47-renderer-api-oracle-05",
+      "apiCalls": 120,
+      "kind": "reserved-identifier-parser-rejections-not-renderer"
+    },
+    {
+      "root": "stage47-renderer-api-oracle-05",
+      "apiCalls": 48,
+      "kind": "query-import-alias-rejections-not-policy"
+    },
+    {
+      "root": "stage47-renderer-api-oracle-05",
+      "apiCalls": 36,
+      "kind": "policy-stable-sentinels-original-retained"
+    },
+    {
+      "root": "stage47-renderer-api-oracle-06",
+      "apiCalls": 84,
+      "kind": "actual-policy-profiles-acquired-not-selected-for-default-policy-portable"
+    },
+    {
+      "kind": "separate-followup-required",
+      "scope": "Policy profiles portable/native, Bytes wrapper/resource identity, captured primitive frames, close/reentry, complete renderer inventory; original whole CLI is independently acquired; no complete renderer or M2 claim"
+    },
+    {
+      "kind": "gc-observation-boundary",
+      "scope": "Java System.gc requests do not establish observed collection; portable runner collection policy recorded independently"
+    }
+  ],
+  "toolSources": {
+    "tools/renderer_fixtures.py": "2a1050393a30154cc7cfb6897c04ab7998b055033a3dc522afd30772dd9a3a13",
+    "tools/tests/test_renderer_fixtures.py": "b635f5b1b80977df02cc3933fdfed81acf7c2ea641bca2a77da8c155a6e99ee7",
+    "tools/platform/compare-renderer.mjs": "d0fe94bc28827916410348a20b51cf33e32ec40f46463125b7522c18ccd02532",
+    "tools/platform/resource-session.mjs": "3eb6c38918d3f167529aa7ed26a9957e4cc44ceb52df4de4c17d710f5461706f",
+    "tools/platform/resource-session.test.mjs": "d31262e94538ed5985d34eeb840336bed3c52da995b37607ebfeaa26e6a1931a"
+  },
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "pythonExecutable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+  "pythonExecutableSha256": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063",
+  "nodeExecutable": "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+  "nodeExecutableSha256": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+  "verification": {
+    "pythonTestsPassed": 27,
+    "javascriptSessionUnitTestsPassed": 12,
+    "wrapperExitCode": 0,
+    "actualSessionId": 77592,
+    "sourceChanges": [],
+    "reportSha256": "1d9ddcaae6b1a0dd24e76e93ce789547f98d6d990086680c3ca3eb243288e9c4",
+    "recordedCommands": [
+      {
+        "name": "tests",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-W",
+          "error::ResourceWarning",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-p",
+          "test_renderer_fixtures.py",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "pid": 11277,
+        "exitCode": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "671b7eb37915008bc1f3f321a0d8fc01821a781f5069c9897ec559ef9478c25c"
+      },
+      {
+        "name": "fixture",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/renderer_fixtures.py",
+          "--fixtures",
+          "tests/fixtures/m2-renderer-portable"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "pid": 12445,
+        "exitCode": 0,
+        "stdoutSha256": "9994972882d0c8ba67f89d2474de9dd9fecc2c258cb9fface482bcdf8e83b3ef",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "driver-syntax",
+        "argv": [
+          "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+          "--check",
+          "tools/platform/compare-renderer.mjs"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "pid": 12502,
+        "exitCode": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "session-helper",
+        "argv": [
+          "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+          "--test",
+          "tools/platform/resource-session.test.mjs"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "pid": 12506,
+        "exitCode": 0,
+        "stdoutSha256": "4d3f7018d5c51223d41f0a9394dbcbeca105633bd8349b3b91d0807a206ecc2a",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "inventory",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "pid": 12508,
+        "exitCode": 0,
+        "stdoutSha256": "9478840e45652d07c257b8151019713675c818441c78f56786fcfd83b89fc800",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "repository",
+        "argv": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "pid": 12513,
+        "exitCode": 0,
+        "stdoutSha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+        "stderrSha256": "be365833dc48c1d83b7f08a7b4270a9a1146a24b888ec42219e94c1ca2485792"
+      }
+    ],
+    "oracleRerun": false,
+    "nativeRendererRun": false,
+    "nodeBindingRun": false,
+    "browserRun": false
+  },
+  "corrections": {
+    "initialInstalledRun": {
+      "actualSessionId": 41961,
+      "exitCode": 0,
+      "pythonTestsPassed": 23,
+      "preservedArchivePrefix": "promotion01"
+    },
+    "finalInstalledRun": "promotion02",
+    "changes": [
+      "Authenticate required paths before directory traversal; reject undeclared directories before descent.",
+      "Validate root, every parent and regular leaf before opening fixture files; reject links and FIFO before reads.",
+      "Default installed tests to repository fixtures while preserving an explicit environment override.",
+      "Hash actual HTTP response assets and the explicitly selected browser executable for final stability checks."
+    ],
+    "stagingSourceLimitsRetained": true,
+    "oraclePayloadChanges": 0
+  },
+  "inventoryCounts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3664,
+      "unimplemented": 823,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "independentReview": {
+    "archivePath": "independent-review/promotion02-actual-addendum.json",
+    "sha256": "346463695747163c7e7c5f510e98ec7555453a1bcbb0c748c85d167594385e58",
+    "scope": "Source corrections and actual local verification receipts; no actual renderer platform execution.",
+    "findings": []
+  },
+  "stagedSourceBinding": {
+    "archivePath": "publication/staged-source-binding.json",
+    "sha256": "c9b547c34f401276119f06e8adb17083b66df740b78c553548351b5b7e6cad5b",
+    "verifiedFiles": 14999,
+    "fixtureFiles": 14996,
+    "fixtureMatchesOriginalCopy": true
+  },
+  "captures": [
+    {
+      "path": "reports/m2/renderer-tooling-originals.tar.gz",
+      "sha256": "4b2f00a3d51cd14d19adc8f20393bc1200ff1660cbecfd1c5f52695e467c4721",
+      "bytes": 1065097,
+      "payloadFiles": 145,
+      "scope": "Original staging tools, actual logs and terminals, failed initial javac acquisition and scope ledger."
+    },
+    {
+      "path": "reports/m2/renderer-portable-fixture-captures.tar.gz",
+      "sha256": "01c8989733378cacf526dec4e268991b24dab31aea75dd3ff6464a6abc940b92",
+      "bytes": 2170033,
+      "payloadFiles": 93,
+      "scope": "Initial and corrected installed checks, copied source versions, independent reviews, staged source binding and original archive publication receipts."
+    }
+  ],
+  "archiveVerification": [
+    {
+      "name": "original-archive-verify",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/evidence.py",
+        "verify",
+        "reports/m2/renderer-tooling-originals.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "bba735488d29808193620909a43e0f1a7947084a75d7a83d4f74cb8d49205991",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "create",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-renderer-fixture-publication-01/clean-source",
+        "reports/m2/renderer-portable-fixture-captures.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "72a933ba9570704a68ebfe0569a406a924daf5201ff90848f1c8c13796fe474b",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "verify",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/evidence.py",
+        "verify",
+        "reports/m2/renderer-portable-fixture-captures.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "72a933ba9570704a68ebfe0569a406a924daf5201ff90848f1c8c13796fe474b",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "remainingScope": [
+    "Shared renderer reference identity and slot representation implementation; existing candidate mismatches remain failures.",
+    "Actual native and Node/Chromium renderer comparisons bound to immutable artifacts.",
+    "Standard-module admission and configured policy profiles, later identity/capture/close observations, full renderer and M2 gates."
+  ],
+  "fullCompatibilityPassed": false,
+  "fullM2Passed": false,
+  "independentPublicationReview": {
+    "path": "reports/m2/renderer-portable-publication-review.json",
+    "sha256": "b1971b1ad60d6ff7365f9603cac31c0a021112d0fdadfa21d163c4df5c387f5b",
+    "reviewedSummarySha256": "8e096b8c5b7acf5437bac914026e5695ee5f64e6cb7fc6735cb6085c67e9a7c1",
+    "findings": [],
+    "scope": "Archive, source binding, actual local receipts, accounting and publication claims; no new evaluator acquisition."
+  }
+}

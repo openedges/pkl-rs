@@ -1,0 +1,21 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Tried to read property `missing` but its value is undefined.
+
+3 | class Other { missing: String }
+                  ^^^^^^^
+at main#Other.missing (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-03/workspace/directives-text-lazy-bytes-undefined/main.pkl)
+
+6 | forward = new RenderDirective { text = other.missing }
+                                           ^^^^^^^^^^^^^
+at main#forward.text (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-03/workspace/directives-text-lazy-bytes-undefined/main.pkl)
+
+1 | r.renderValue(forward)
+    ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at RendererProbe.capture(RendererProbe.java:19)
+	at RendererProbe.main(RendererProbe.java:55)

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+converter-failure
+
+5 | throwing = new JsonRenderer { converters { [Int] = (_) -> throw("converter-failure") } }
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#throwing.converters[#1].<function#1> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-03/workspace/document-value-hints-identity/main.pkl)
+
+1 | throwing.renderDocument(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

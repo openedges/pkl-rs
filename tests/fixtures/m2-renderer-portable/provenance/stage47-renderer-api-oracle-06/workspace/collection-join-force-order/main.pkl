@@ -1,0 +1,14 @@
+class Thing { x = read("res:/join-object") }
+class Missing { x: String }
+class Bad { x = throw("join-first-object") }
+class Override { x = 1; function toString(): String = throw("guest-toString-must-not-run") }
+thing = new Thing {}
+missing = new Missing {}
+bad = new Bad {}
+overridden = new Override {}
+list = List(thing)
+nested = List(List(thing))
+undefinedList = List(missing)
+badList = List(bad)
+overrideList = List(overridden)
+stable = 7

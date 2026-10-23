@@ -1,0 +1,6 @@
+p = new PcfRenderer { converters { [Int] = (v) -> v + 0 } }
+floatSame = new JsonRenderer { converters { [Float] = (v) -> v } }
+floatNew = new JsonRenderer { converters { [Float] = (v) -> v + 0.0 } }
+bytesSame = new JsonRenderer { converters { [Bytes] = (v) -> v } }
+bytesNew = new JsonRenderer { converters { [Bytes] = (_) -> "AQ==".base64DecodedBytes } }
+stable = 7

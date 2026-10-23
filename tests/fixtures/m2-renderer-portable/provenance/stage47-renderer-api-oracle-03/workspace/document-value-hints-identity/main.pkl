@@ -1,0 +1,11 @@
+class Missing { missing: String }
+pair = new JsonRenderer { converters { [Int] = (_) -> Pair(1, 2) } }
+nonfinite = new JsonRenderer { converters { [Int] = (_) -> Infinity } }
+undefined = new JsonRenderer { converters { [Int] = (_) -> new Missing {} } }
+throwing = new JsonRenderer { converters { [Int] = (_) -> throw("converter-failure") } }
+floatSame = new JsonRenderer { converters { [Float] = (v) -> v } }
+floatNew = new JsonRenderer { converters { [Float] = (v) -> v + 0.0 } }
+bytesSame = new JsonRenderer { converters { [Bytes] = (v) -> v } }
+bytesNew = new JsonRenderer { converters { [Bytes] = (_) -> "AQ==".base64DecodedBytes } }
+p = new PcfRenderer { converters { [Int] = (v) -> v + 0 } }
+stable = 7

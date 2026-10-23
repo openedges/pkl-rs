@@ -1,0 +1,16 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `Pair` as JSON.
+Value: Pair(1, 2)
+
+1 | pair.renderValue(1)
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at RendererProbe.capture(RendererProbe.java:19)
+	at RendererProbe.main(RendererProbe.java:55)

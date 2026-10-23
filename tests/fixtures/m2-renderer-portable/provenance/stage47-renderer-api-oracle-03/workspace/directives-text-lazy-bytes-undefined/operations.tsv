@@ -1,0 +1,15 @@
+main.pkl	stable
+main.pkl	r.renderValue(verbatim)
+main.pkl	r.renderDocument(verbatim)
+main.pkl	p.renderValue(verbatim)
+main.pkl	r.renderValue(withRead)
+main.pkl	r.renderDocument(nestedRead)
+main.pkl	r.renderValue(direct)
+main.pkl	r.renderDocument(nestedDirect)
+main.pkl	p.renderValue(direct)
+main.pkl	p.renderDocument(nestedDirect)
+main.pkl	r.renderValue(forward)
+main.pkl	r.renderDocument(nestedForward)
+GC
+main.pkl	stable
+main.pkl	r.renderValue(verbatim)

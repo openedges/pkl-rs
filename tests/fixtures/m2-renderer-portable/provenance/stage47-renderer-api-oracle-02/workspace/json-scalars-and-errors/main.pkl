@@ -1,0 +1,4 @@
+r = new JsonRenderer {}
+compact = new JsonRenderer { indent = "" }
+tab = new JsonRenderer { indent = "\t" }
+stable = 7

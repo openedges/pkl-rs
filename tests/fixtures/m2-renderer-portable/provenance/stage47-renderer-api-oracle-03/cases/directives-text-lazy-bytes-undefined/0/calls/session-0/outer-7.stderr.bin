@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Tried to read property `text` but its value is undefined.
+
+507 | text: String
+      ^^^^
+at pkl.base#RenderDirective.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L507)
+
+The above error occurred when rendering path `q.text`.
+
+1 | r.renderDocument(nestedDirect)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

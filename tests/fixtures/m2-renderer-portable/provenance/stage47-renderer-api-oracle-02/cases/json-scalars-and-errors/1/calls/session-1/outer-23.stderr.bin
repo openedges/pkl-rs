@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Cannot render object with non-string key as JSON.
+Object: new Dynamic { [1] = 2 }
+Key   : 1
+
+1 | r.renderValue(new Dynamic { [1] = 2 })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

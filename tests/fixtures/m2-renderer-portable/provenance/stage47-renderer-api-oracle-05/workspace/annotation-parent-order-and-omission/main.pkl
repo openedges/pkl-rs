@@ -1,0 +1,21 @@
+open class Add extends ConvertProperty {
+  amount: Int
+  render = (prop, _) -> Pair(prop.key + "a", (prop.value as Int) + amount)
+}
+class Multiply extends ConvertProperty {
+  factor: Int
+  render = (prop, _) -> Pair(prop.key + "m", (prop.value as Int) * factor)
+}
+open class Parent {
+  @Add { amount = 2 }
+  a: Int = 3
+}
+class Child extends Parent {
+  @Multiply { factor = 4 }
+  a: Int = 5
+}
+value = new Child {}
+r = new JsonRenderer { converters { ["a"] = (v) -> v + 100 } }
+omit = new JsonRenderer { omitNullProperties = true; converters { ["a"] = (_) -> null } }
+p = new PcfRenderer {}
+stable = 7

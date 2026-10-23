@@ -1,0 +1,8 @@
+import "pkl:ref"
+class D extends ref.Domain {
+  function renderReference(reference: ref.Reference<D, Any>): String = read("res:/reference") + reference.getData().toString()
+}
+domain = new D {}
+reference = ref.Reference(domain, String, "DATA")
+list = List(reference)
+stable = 7

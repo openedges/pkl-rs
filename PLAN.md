@@ -806,6 +806,10 @@ Stage 46 구현을 `a3eb363`에 커밋·푸시했습니다. [구현 체크포인
 
 `pkl:json.Property`와 `Value`의 원래 선언도 공통 loader에 연결하되 초기 후보는 기본 접근 정책 범위입니다. 다음 필수 체크포인트에서 evaluator별 표준 모듈의 typed resolve·접근 허용·캐시를 pure frontend·native Host·Node/Wasm provider까지 함께 연결합니다. Java `ModuleCache`의 singleton 조기 반환을 쓰는 `pkl:base`·`pkl:ref`·`pkl:test`와 일반 resolve/security 경로의 `pkl:json`을 구분해야 합니다. 모든 표준 모듈에 접근 검사를 일괄 추가하거나 `pkl:json`만 무조건 허용하지 않습니다. 이 의무는 M2 전체 완료 기준에 남습니다.
 
+Stage 47의 [Java renderer 기준 데이터](docs/m2-renderer-oracle.md)를 런타임과 별도 체크포인트로 정리했습니다. 고정 Java에서 관찰한 860회 API 호출·44개 순차 세션의 입력·전체 출력·오류·UTF-16·Java UTF-8·reader 순서를 보존합니다. 최초 컴파일 실패, 의도한 기능에 도달하지 못한 authored 사례, 별도 정책 84회와 후속 identity·종료 관찰은 구분하며 통과로 계산하지 않습니다. fixture의 payload 14,995개와 manifest는 원래 취득 데이터와 바이트가 같습니다.
+
+[설치 검증](reports/m2/renderer-portable-fixtures.json)에서 Python 검사 27개, 공통 JS 세션 단위 검사 12개, fixture CLI·JS 문법·목록 freshness·저장소 검사가 통과했습니다. 독립 검토에 따라 미선언 디렉터리는 탐색 전에, link·특수 파일은 읽기 전에 거부하도록 보완했습니다. 원래 staging 도구와 초기 설치 검증은 별도 원시 기록으로 보존합니다. 실제 Node·Chromium renderer 실행은 새 드라이버와 고정된 binding artifact를 연결해 별도로 검증해야 합니다. 공통 참조 identity·slot 표현의 런타임 구현, 표준 모듈 접근 정책과 전체 M2 종료 조건은 계속 진행합니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

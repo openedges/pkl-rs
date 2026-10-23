@@ -59,6 +59,24 @@ Stage 43 preserves canonical diagnostic strings through the shared engine and
 native/Node/Wasm boundaries, and corrects literal-union type-check equivalence.
 These checkpoints do not complete the language milestone.
 
+## Renderer reference-fixture checkpoint
+
+The [renderer Java fixtures](../../docs/m2-renderer-oracle.md) preserve 860 selected
+API observations in 44 persistent evaluator sessions, including complete output
+and error UTF-16/Java UTF-8 channels and ordered reader inputs. Their 14,995
+payload files and manifest retain the original bytes. Acquired but unselected
+calls, authored probes that did not reach the intended feature, policy profiles
+and subsequent identity/lifecycle observations have explicit separate dispositions.
+
+The [verification record](renderer-portable-fixtures.json) records 27 Python
+regressions, 12 shared JavaScript session unit tests, the fixture verifier,
+driver syntax, inventory freshness and repository checks. Independent review
+led to rejecting undeclared directories before traversal and links/non-regular
+payloads before reads. Staging tools, the first installed run and corrective
+verification remain separate evidence. This fixture/tool checkpoint does not
+execute the renderer through Rust, N-API or Wasm and does not complete Stage 47
+or M2.
+
 ## Stage 46 implementation checkpoint
 
 The shared Resource value, evaluator-local successful/Missing cache and typed

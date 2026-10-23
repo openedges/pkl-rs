@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Cannot render value `∞` as JSON.
+
+1 | nonfinite.renderDocument(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+This value was converted during rendering. Previous: 1. After: Infinity.

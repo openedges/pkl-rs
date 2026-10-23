@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot render value of type `Pair` as JSON.
+Value: Pair(1, 2)
+
+1 | r.renderValue(new Dynamic { a = Pair(1, 2) })
+                                ^^^^^^^^^^^^^^
+at pkl.base#JsonRenderer.renderValue (repl:text)
+
+Consider adding a converter to `output.converters`.
+
+1 | r.renderValue(new Dynamic { a = Pair(1, 2) })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

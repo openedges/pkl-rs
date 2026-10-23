@@ -1,0 +1,11 @@
+–– Pkl Error ––
+I/O error reading resource `res:/io-first`.
+IOException: renderer-reader-first
+
+11 | retry = new JsonRenderer { indent = read("res:/io-first") }
+                                         ^^^^^^^^^^^^^^^^^^^^^
+at main#retry.indent (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-02/workspace/options-getters-entry-force-retry/main.pkl)
+
+1 | retry.renderValue(new Dynamic { a = 1 })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

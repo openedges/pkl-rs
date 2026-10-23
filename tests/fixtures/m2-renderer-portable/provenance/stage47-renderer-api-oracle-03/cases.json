@@ -1,0 +1,204 @@
+[
+  {
+    "id": "document-value-hints-identity",
+    "mode": "allow",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-03/workspace/document-value-hints-identity",
+    "operations": [
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "pair.renderDocument(1)"
+      ],
+      [
+        "main.pkl",
+        "pair.renderValue(1)"
+      ],
+      [
+        "main.pkl",
+        "pair.renderDocument(1)"
+      ],
+      [
+        "main.pkl",
+        "nonfinite.renderDocument(1)"
+      ],
+      [
+        "main.pkl",
+        "nonfinite.renderValue(1)"
+      ],
+      [
+        "main.pkl",
+        "undefined.renderDocument(1)"
+      ],
+      [
+        "main.pkl",
+        "undefined.renderValue(1)"
+      ],
+      [
+        "main.pkl",
+        "throwing.renderDocument(1)"
+      ],
+      [
+        "main.pkl",
+        "throwing.renderValue(1)"
+      ],
+      [
+        "main.pkl",
+        "floatSame.renderDocument(Infinity)"
+      ],
+      [
+        "main.pkl",
+        "floatNew.renderDocument(Infinity)"
+      ],
+      [
+        "main.pkl",
+        "bytesSame.renderDocument(\"AQ==\".base64DecodedBytes)"
+      ],
+      [
+        "main.pkl",
+        "bytesNew.renderDocument(\"AQ==\".base64DecodedBytes)"
+      ],
+      [
+        "main.pkl",
+        "p.renderDocument(1)"
+      ],
+      [
+        "main.pkl",
+        "p.renderDocument(1000)"
+      ],
+      "GC",
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "pair.renderDocument(1)"
+      ]
+    ],
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-03/workspace/document-value-hints-identity/main.pkl",
+    "scope": "Fresh corrective control. Original02 preserved; corrected invalid typed undefined object / query lexical capture independently."
+  },
+  {
+    "id": "directives-text-lazy-bytes-undefined",
+    "mode": "allow",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-03/workspace/directives-text-lazy-bytes-undefined",
+    "operations": [
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "r.renderValue(verbatim)"
+      ],
+      [
+        "main.pkl",
+        "r.renderDocument(verbatim)"
+      ],
+      [
+        "main.pkl",
+        "p.renderValue(verbatim)"
+      ],
+      [
+        "main.pkl",
+        "r.renderValue(withRead)"
+      ],
+      [
+        "main.pkl",
+        "r.renderDocument(nestedRead)"
+      ],
+      [
+        "main.pkl",
+        "r.renderValue(direct)"
+      ],
+      [
+        "main.pkl",
+        "r.renderDocument(nestedDirect)"
+      ],
+      [
+        "main.pkl",
+        "p.renderValue(direct)"
+      ],
+      [
+        "main.pkl",
+        "p.renderDocument(nestedDirect)"
+      ],
+      [
+        "main.pkl",
+        "r.renderValue(forward)"
+      ],
+      [
+        "main.pkl",
+        "r.renderDocument(nestedForward)"
+      ],
+      "GC",
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "r.renderValue(verbatim)"
+      ]
+    ],
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-03/workspace/directives-text-lazy-bytes-undefined/main.pkl",
+    "scope": "Fresh corrective control. Original02 preserved; corrected invalid typed undefined object / query lexical capture independently."
+  },
+  {
+    "id": "primitive-polymorphic-function-history",
+    "mode": "allow",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-03/workspace/primitive-polymorphic-function-history",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-03/workspace/primitive-polymorphic-function-history/main.pkl",
+    "operations": [
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "r.renderDocument(Infinity)"
+      ],
+      [
+        "main.pkl",
+        "r.renderValue(\"warm\")"
+      ],
+      [
+        "main.pkl",
+        "r.renderDocument(Infinity)"
+      ],
+      [
+        "main.pkl",
+        "r.renderDocument(Infinity)"
+      ],
+      [
+        "main.pkl",
+        "p.renderDocument(1000)"
+      ],
+      [
+        "main.pkl",
+        "p.renderDocument(1)"
+      ],
+      [
+        "main.pkl",
+        "r.renderValue(\"AQ==\".base64DecodedBytes)"
+      ],
+      "GC",
+      [
+        "main.pkl",
+        "r.renderDocument(Infinity)"
+      ],
+      [
+        "main.pkl",
+        "p.renderDocument(1000)"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ]
+    ],
+    "scope": "One persistent Any identity closure warmed Float then String then Long/Bytes, separate explicit GC request. No preclaimed boxing outcome."
+  }
+]

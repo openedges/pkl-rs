@@ -1,0 +1,12 @@
+r = new JsonRenderer {}
+p = new PcfRenderer {}
+class Other { missing: String }
+other = new Other {}
+direct = new RenderDirective {}
+forward = new RenderDirective { text = other.missing }
+verbatim = new RenderDirective { text = " RAW\n\"x\" "; bytes = throw("bytes-must-stay-lazy") }
+withRead = new RenderDirective { text = read("res:/directive-text"); bytes = read("res:/directive-bytes").encodeToBytes("UTF-8") }
+stable = 7
+nestedRead = new Dynamic { q = withRead }
+nestedDirect = new Dynamic { q = direct }
+nestedForward = new Dynamic { q = forward }

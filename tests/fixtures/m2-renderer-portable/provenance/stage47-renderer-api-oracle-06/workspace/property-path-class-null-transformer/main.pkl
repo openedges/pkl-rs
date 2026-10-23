@@ -1,0 +1,18 @@
+import "pkl:json"
+import "pkl:json" as jsonAgain
+open class Parent {
+  @json.Property { name = "renamed" }
+  a: Int = 1
+  b: Int? = null
+}
+class Child extends Parent { a = 2 }
+value = new Child {}
+r = new JsonRenderer { converters { ["a"] = (v) -> v + 10; ["renamed"] = (_) -> 999; [Int] = (v) -> v + 100 } }
+plain = new JsonRenderer {}
+omit = new JsonRenderer { omitNullProperties = true; converters { [Int] = (_) -> null } }
+transformed = new JsonRenderer { convertPropertyTransformers { [json.Property] { name = "transformed" } } }
+p = new PcfRenderer {}
+inner = new JsonRenderer { indent = "" }
+rNested = new JsonRenderer { converters { [Int] = (v) -> inner.renderValue(v + 1) } }
+classIdentity = json.Property == jsonAgain.Property
+stable = 7

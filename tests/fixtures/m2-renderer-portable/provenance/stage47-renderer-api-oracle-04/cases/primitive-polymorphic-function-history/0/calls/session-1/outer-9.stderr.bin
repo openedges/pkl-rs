@@ -1,0 +1,7 @@
+–– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `Int`.
+Value: 1000
+
+1 | p.renderDocument(1000)
+    ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

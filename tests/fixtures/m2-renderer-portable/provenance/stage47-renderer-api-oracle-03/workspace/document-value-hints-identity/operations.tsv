@@ -1,0 +1,19 @@
+main.pkl	stable
+main.pkl	pair.renderDocument(1)
+main.pkl	pair.renderValue(1)
+main.pkl	pair.renderDocument(1)
+main.pkl	nonfinite.renderDocument(1)
+main.pkl	nonfinite.renderValue(1)
+main.pkl	undefined.renderDocument(1)
+main.pkl	undefined.renderValue(1)
+main.pkl	throwing.renderDocument(1)
+main.pkl	throwing.renderValue(1)
+main.pkl	floatSame.renderDocument(Infinity)
+main.pkl	floatNew.renderDocument(Infinity)
+main.pkl	bytesSame.renderDocument("AQ==".base64DecodedBytes)
+main.pkl	bytesNew.renderDocument("AQ==".base64DecodedBytes)
+main.pkl	p.renderDocument(1)
+main.pkl	p.renderDocument(1000)
+GC
+main.pkl	stable
+main.pkl	pair.renderDocument(1)

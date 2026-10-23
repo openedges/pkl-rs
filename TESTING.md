@@ -108,6 +108,20 @@ python3 tools/resource_fixtures.py --fixtures tests/fixtures/m2-resource-portabl
 python3 -W error::ResourceWarning -m unittest discover -s tools/tests -p 'test_resource_portable_fixtures.py' -v
 ```
 
+The [renderer reference fixtures](docs/m2-renderer-oracle.md) preserve 860 Java
+API calls in 44 persistent sessions. Their offline verifier authenticates the
+original inputs, raw UTF-16/Java UTF-8 channels and reader plans before accepting
+the exact fixture file set. The regression suite exercises re-signed fixture
+forgeries and rejection of undeclared directories before traversal:
+
+```sh
+python3 tools/renderer_fixtures.py --fixtures tests/fixtures/m2-renderer-portable
+python3 -W error::ResourceWarning -m unittest discover -s tools/tests -p 'test_renderer_fixtures.py' -v
+```
+
+The renderer platform driver requires separately recorded binding artifacts.
+Offline fixture success does not establish runtime or platform compatibility.
+
 The [module preparation platform contract](docs/m2-module-preparation-platforms.md)
 adds exact provider-input lookup and ordered Java-observable policy comparisons.
 Its 252 selected calls distinguish resource policy denial from a counted reader

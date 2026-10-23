@@ -1,0 +1,4 @@
+identity = (v) -> v
+r = new JsonRenderer { converters { [Float] = identity; [Int] = identity; [String] = identity; [Bytes] = identity } }
+p = new PcfRenderer { converters { [Float] = identity; [Int] = identity; [String] = identity; [Bytes] = identity } }
+stable = 7

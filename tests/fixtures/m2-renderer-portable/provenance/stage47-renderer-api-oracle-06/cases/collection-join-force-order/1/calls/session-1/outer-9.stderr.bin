@@ -1,0 +1,6 @@
+–– Pkl Error ––
+later-argument
+
+1 | List(1).join("a", throw("later-argument"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

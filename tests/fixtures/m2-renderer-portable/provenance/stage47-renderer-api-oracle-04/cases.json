@@ -1,0 +1,56 @@
+[
+  {
+    "id": "primitive-polymorphic-function-history",
+    "mode": "allow",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-04/workspace/primitive-polymorphic-function-history",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-04/workspace/primitive-polymorphic-function-history/main.pkl",
+    "operations": [
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "r.renderDocument(Infinity)"
+      ],
+      [
+        "main.pkl",
+        "r.renderValue(\"warm\")"
+      ],
+      [
+        "main.pkl",
+        "r.renderDocument(Infinity)"
+      ],
+      [
+        "main.pkl",
+        "r.renderDocument(Infinity)"
+      ],
+      [
+        "main.pkl",
+        "p.renderDocument(1000)"
+      ],
+      [
+        "main.pkl",
+        "p.renderDocument(1)"
+      ],
+      [
+        "main.pkl",
+        "r.renderValue(\"AQ==\".base64DecodedBytes)"
+      ],
+      "GC",
+      [
+        "main.pkl",
+        "r.renderDocument(Infinity)"
+      ],
+      [
+        "main.pkl",
+        "p.renderDocument(1000)"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ]
+    ],
+    "scope": "Explicit primitive converter keys all point to one persistent closure; previous Any-only control did not dispatch to primitive converter."
+  }
+]

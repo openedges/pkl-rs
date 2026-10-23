@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot render value of type `Bytes` as JSON.
+Value: Bytes(1)
+
+1 | r.renderValue("AQ==".base64DecodedBytes)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.

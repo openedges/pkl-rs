@@ -1,0 +1,11 @@
+main.pkl	stable
+main.pkl	p.renderDocument(1)
+main.pkl	p.renderDocument(1000)
+main.pkl	floatSame.renderDocument(Infinity)
+main.pkl	floatNew.renderDocument(Infinity)
+main.pkl	bytesSame.renderDocument("AQ==".base64DecodedBytes)
+main.pkl	bytesNew.renderDocument("AQ==".base64DecodedBytes)
+GC
+main.pkl	p.renderDocument(1)
+main.pkl	p.renderDocument(1000)
+main.pkl	stable

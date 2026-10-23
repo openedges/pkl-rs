@@ -1,0 +1,3914 @@
+{
+  "files": [
+    {
+      "path": "PLAN.ko.md",
+      "bytes": 226,
+      "sha256": "74b8be83efa4d8bab27f2f64d9f9b892c8fff38bfdecb75fe9664ac9b21e8e0b"
+    },
+    {
+      "path": "RendererProbe.java",
+      "bytes": 6988,
+      "sha256": "af3dc0ddab01dc35928a507a7ee51f7af220ec069cece9d085d1f24b1d32eed2"
+    },
+    {
+      "path": "cases.json",
+      "bytes": 1374,
+      "sha256": "ef42f7e9ad0b5b7c47d268737c1090f0cbf2d3f73c704c3aaceee0bcde327c8a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0.process.json",
+      "bytes": 2525,
+      "sha256": "d8c627c03e2fab162ec6bca77f81f6c5582ddd563e37952fa9bedb7cc8bb62b4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/counters.bin",
+      "bytes": 89,
+      "sha256": "fdef45c6ce702e264df63f4c5b2bcc9d50044798b8c2d8cbe2ca4da6309cb1c4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/denied-uri.bin",
+      "bytes": 19,
+      "sha256": "42fea26eb6a6cf2a05d7589d82514b6eab292a711107c137782970e94fe38b5d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-0.bin",
+      "bytes": 172,
+      "sha256": "2f996581f59cc2bfa4ce377cdc1c2512ef015995581524682e764e2a43618c25"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-1.bin",
+      "bytes": 177,
+      "sha256": "2bbb29b0214828c301aa4e3a8bb0d57a9d48fff878f55ff734373da54423b8af"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-10.bin",
+      "bytes": 39,
+      "sha256": "524998182bbcbb6112a5aa8b529c1e57ba1e601139595df10a920c5671ae2c18"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-11.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-12.bin",
+      "bytes": 39,
+      "sha256": "88551a6dce95b89deb985de07e7f7435aa144a0f41caa5a50b68792f2bf31712"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-13.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-14.bin",
+      "bytes": 39,
+      "sha256": "3d82e464a974a1fd24affd3f3968b3d4c61acde327b1edd46a0c60f66ee6dbae"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-15.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-16.bin",
+      "bytes": 39,
+      "sha256": "88a4bd2ae4ce7b2d2fba34a080c272702fc3476ed55994029fc938a4b1d1ae5b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-17.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-18.bin",
+      "bytes": 39,
+      "sha256": "85c9e28a71268c1a21e733dc19d369a7301f778d6181749dfd39ebcd27ce438a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-19.bin",
+      "bytes": 17,
+      "sha256": "3a05ffd094aee7ce9ea0c07636936bd5ab2e065b5d62220d58202d0f62cff260"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-2.bin",
+      "bytes": 172,
+      "sha256": "2f996581f59cc2bfa4ce377cdc1c2512ef015995581524682e764e2a43618c25"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-20.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-21.bin",
+      "bytes": 39,
+      "sha256": "d3a40bb817c8d6d984617a1e27f806dd11f17f52781246fb51c3ee37bd199e9d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-22.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-23.bin",
+      "bytes": 39,
+      "sha256": "15cccdc9cfe71a735bb983fa69ddd7049c98981df51c845b01e4cda8da4423dd"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-24.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-25.bin",
+      "bytes": 16,
+      "sha256": "e0f797775c8aa21943243671cf906b4c2d62688d5eb6ef3432e46db550ccb3d2"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-3.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-4.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-5.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-6.bin",
+      "bytes": 39,
+      "sha256": "61dcdb060db00d7463485577e516341f6e6c121fad2bf6972a4116f8ee409880"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-7.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-8.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/event-9.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.counters-after.bin",
+      "bytes": 87,
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.counters-before.bin",
+      "bytes": 87,
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-0.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.counters-after.bin",
+      "bytes": 87,
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.counters-before.bin",
+      "bytes": 87,
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.java-stack.bin",
+      "bytes": 628,
+      "sha256": "deaef64ddd9637bcd63194dc5412f0846280fe88a215e657f30a25f869f8ac4a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.stderr.bin",
+      "bytes": 219,
+      "sha256": "d947d47036abdc4922f9684f5499d970eb49e6c9cf25334688e51e7fb1597884"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.stderr.code-units.bin",
+      "bytes": 418,
+      "sha256": "b0be9a691c348427c8f931984f4326c915afa82ec72f0fa339802f7e3d2334e8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-1.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.counters-after.bin",
+      "bytes": 89,
+      "sha256": "fdef45c6ce702e264df63f4c5b2bcc9d50044798b8c2d8cbe2ca4da6309cb1c4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.counters-before.bin",
+      "bytes": 89,
+      "sha256": "2370c450b946f9808544ababbf8eefb52c44e7e60b484cc7e4701ef52b2ad985"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-10.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.counters-after.bin",
+      "bytes": 87,
+      "sha256": "e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.counters-before.bin",
+      "bytes": 87,
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.expression.bin",
+      "bytes": 21,
+      "sha256": "8979d4d0be887b91d1bfa4e00b3e9cc0616ebea4f9adcfaea87b3d39b726d841"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.stdout.bin",
+      "bytes": 6,
+      "sha256": "e40310fbec639c561d2d469785addfa0da3897f2a0758b21c9f5d708f6a66563"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-2.stdout.code-units.bin",
+      "bytes": 12,
+      "sha256": "a96c4f5287ec7e72a9cc5c2040074bebc3a9f47447cfdbd8ca7d6f5f2fd265e2"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.counters-after.bin",
+      "bytes": 88,
+      "sha256": "e58246f46e777accfe091a471e05ef7cd43155e7d4605e93f558d7a125c4175c"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.counters-before.bin",
+      "bytes": 87,
+      "sha256": "e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.java-stack.bin",
+      "bytes": 547,
+      "sha256": "b18cd13552b0eafb8c29e44069e739a8e7baeea392b40bbf004e06facc50ce73"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.stderr.bin",
+      "bytes": 138,
+      "sha256": "ada9191197ecc03610e136c557d2ebdc69c1fd8b192631790da2dbc0b47e0e8f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.stderr.code-units.bin",
+      "bytes": 256,
+      "sha256": "fcc69a062dbb9d7826e8d1775634e273941051431234d68fb2b8ec0f7d0a2eda"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-3.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.counters-after.bin",
+      "bytes": 88,
+      "sha256": "a71a6fb8dbc01711c7983731c6ed972a4ede909a564206a44794991ec601135a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.counters-before.bin",
+      "bytes": 88,
+      "sha256": "e58246f46e777accfe091a471e05ef7cd43155e7d4605e93f558d7a125c4175c"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.java-stack.bin",
+      "bytes": 547,
+      "sha256": "b18cd13552b0eafb8c29e44069e739a8e7baeea392b40bbf004e06facc50ce73"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.stderr.bin",
+      "bytes": 138,
+      "sha256": "ada9191197ecc03610e136c557d2ebdc69c1fd8b192631790da2dbc0b47e0e8f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.stderr.code-units.bin",
+      "bytes": 256,
+      "sha256": "fcc69a062dbb9d7826e8d1775634e273941051431234d68fb2b8ec0f7d0a2eda"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-4.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.counters-after.bin",
+      "bytes": 88,
+      "sha256": "671de50ccc1847d4cd1ae61f1624c713594c2f27f2ed6a56f1b6c636e2d0ee69"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.counters-before.bin",
+      "bytes": 88,
+      "sha256": "a71a6fb8dbc01711c7983731c6ed972a4ede909a564206a44794991ec601135a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.expression.bin",
+      "bytes": 22,
+      "sha256": "10adbb6312348fcfd84c17b8c747ddd8d740a6b04a1ebf1277ce1bd1f07e1323"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.java-stack.bin",
+      "bytes": 611,
+      "sha256": "94964b35a8f85c712e2d05f3d82f31717a3abe8243b7a6c9668ea3d8ad5496ff"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.stderr.bin",
+      "bytes": 202,
+      "sha256": "32b0adfd18056d5775e185a05c62b997c6b4cf999394441e3506f625e105622f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.stderr.code-units.bin",
+      "bytes": 388,
+      "sha256": "33d8bac7553c76ae1da5f3a0540111f2889df347cd824cf474c699025692276d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-5.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.counters-after.bin",
+      "bytes": 88,
+      "sha256": "a1139de590e34352a3a744430b78e52ad61c9c6aeda50704aada3f6a7f07d6e6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.counters-before.bin",
+      "bytes": 88,
+      "sha256": "671de50ccc1847d4cd1ae61f1624c713594c2f27f2ed6a56f1b6c636e2d0ee69"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.expression.bin",
+      "bytes": 19,
+      "sha256": "275280e778cb20bc3c43ab6a28e091e5ae82674a40818ecb0382d8497fed5774"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.java-stack.bin",
+      "bytes": 602,
+      "sha256": "d847646b2a619c0c67065c0ccd27d96ca2cf4dd4f884b502e4d849947ee656f4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.stderr.bin",
+      "bytes": 193,
+      "sha256": "ef3b6e09fccea30b87635a0a5fa18b8082cdf383850b0427eb7a2599024107f1"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.stderr.code-units.bin",
+      "bytes": 370,
+      "sha256": "11fc9e1e49cf5593bfcdcc6df593003c8228232fe07ec658276cf2093c8a7f31"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-6.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.counters-after.bin",
+      "bytes": 89,
+      "sha256": "3bbfcd7f84beb5a681e457b27eeb09fdf9a75449393c1bfb2dc26955801e5230"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.counters-before.bin",
+      "bytes": 88,
+      "sha256": "a1139de590e34352a3a744430b78e52ad61c9c6aeda50704aada3f6a7f07d6e6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.expression.bin",
+      "bytes": 40,
+      "sha256": "e3a58d3f0911105d531717f4cc720fa6ca33742c273974fc8e737b9a3c1cd6dd"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.java-stack.bin",
+      "bytes": 654,
+      "sha256": "2254a0294e6c183b3e27fdfa27d4a00bead00345890d77bb749120dcd5d82753"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.stderr.bin",
+      "bytes": 245,
+      "sha256": "e6634dce49a7a1baa9d7019ab2ace5abd1eb8561f400ae17875bc290710483a9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.stderr.code-units.bin",
+      "bytes": 474,
+      "sha256": "c299da2ff4eb0a49042ea228c73674150e2b015deb271d1ddd6522b060a04a6c"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-7.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.counters-after.bin",
+      "bytes": 89,
+      "sha256": "c5e37a435d099eb96d6fe12820de986c81665a9f22688e8a1fdff993996eb534"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.counters-before.bin",
+      "bytes": 89,
+      "sha256": "cba33645b7df655e8a2925bd4d2ff6411ca51c3f16c82cffe528a5dbb2a827f1"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.java-stack.bin",
+      "bytes": 547,
+      "sha256": "b18cd13552b0eafb8c29e44069e739a8e7baeea392b40bbf004e06facc50ce73"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.stderr.bin",
+      "bytes": 138,
+      "sha256": "ada9191197ecc03610e136c557d2ebdc69c1fd8b192631790da2dbc0b47e0e8f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.stderr.code-units.bin",
+      "bytes": 256,
+      "sha256": "fcc69a062dbb9d7826e8d1775634e273941051431234d68fb2b8ec0f7d0a2eda"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-8.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.counters-after.bin",
+      "bytes": 89,
+      "sha256": "2370c450b946f9808544ababbf8eefb52c44e7e60b484cc7e4701ef52b2ad985"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.counters-before.bin",
+      "bytes": 89,
+      "sha256": "c5e37a435d099eb96d6fe12820de986c81665a9f22688e8a1fdff993996eb534"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.expression.bin",
+      "bytes": 22,
+      "sha256": "10adbb6312348fcfd84c17b8c747ddd8d740a6b04a1ebf1277ce1bd1f07e1323"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.java-stack.bin",
+      "bytes": 611,
+      "sha256": "94964b35a8f85c712e2d05f3d82f31717a3abe8243b7a6c9668ea3d8ad5496ff"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.stderr.bin",
+      "bytes": 202,
+      "sha256": "32b0adfd18056d5775e185a05c62b997c6b4cf999394441e3506f625e105622f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.stderr.code-units.bin",
+      "bytes": 388,
+      "sha256": "33d8bac7553c76ae1da5f3a0540111f2889df347cd824cf474c699025692276d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-0/outer-9.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/counters.bin",
+      "bytes": 89,
+      "sha256": "fdef45c6ce702e264df63f4c5b2bcc9d50044798b8c2d8cbe2ca4da6309cb1c4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/denied-uri.bin",
+      "bytes": 19,
+      "sha256": "42fea26eb6a6cf2a05d7589d82514b6eab292a711107c137782970e94fe38b5d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-0.bin",
+      "bytes": 172,
+      "sha256": "2f996581f59cc2bfa4ce377cdc1c2512ef015995581524682e764e2a43618c25"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-1.bin",
+      "bytes": 177,
+      "sha256": "2bbb29b0214828c301aa4e3a8bb0d57a9d48fff878f55ff734373da54423b8af"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-10.bin",
+      "bytes": 39,
+      "sha256": "524998182bbcbb6112a5aa8b529c1e57ba1e601139595df10a920c5671ae2c18"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-11.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-12.bin",
+      "bytes": 39,
+      "sha256": "88551a6dce95b89deb985de07e7f7435aa144a0f41caa5a50b68792f2bf31712"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-13.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-14.bin",
+      "bytes": 39,
+      "sha256": "3d82e464a974a1fd24affd3f3968b3d4c61acde327b1edd46a0c60f66ee6dbae"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-15.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-16.bin",
+      "bytes": 39,
+      "sha256": "88a4bd2ae4ce7b2d2fba34a080c272702fc3476ed55994029fc938a4b1d1ae5b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-17.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-18.bin",
+      "bytes": 39,
+      "sha256": "85c9e28a71268c1a21e733dc19d369a7301f778d6181749dfd39ebcd27ce438a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-19.bin",
+      "bytes": 17,
+      "sha256": "3a05ffd094aee7ce9ea0c07636936bd5ab2e065b5d62220d58202d0f62cff260"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-2.bin",
+      "bytes": 172,
+      "sha256": "2f996581f59cc2bfa4ce377cdc1c2512ef015995581524682e764e2a43618c25"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-20.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-21.bin",
+      "bytes": 39,
+      "sha256": "d3a40bb817c8d6d984617a1e27f806dd11f17f52781246fb51c3ee37bd199e9d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-22.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-23.bin",
+      "bytes": 39,
+      "sha256": "15cccdc9cfe71a735bb983fa69ddd7049c98981df51c845b01e4cda8da4423dd"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-24.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-25.bin",
+      "bytes": 16,
+      "sha256": "e0f797775c8aa21943243671cf906b4c2d62688d5eb6ef3432e46db550ccb3d2"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-3.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-4.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-5.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-6.bin",
+      "bytes": 39,
+      "sha256": "61dcdb060db00d7463485577e516341f6e6c121fad2bf6972a4116f8ee409880"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-7.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-8.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/event-9.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.counters-after.bin",
+      "bytes": 87,
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.counters-before.bin",
+      "bytes": 87,
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-0.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.counters-after.bin",
+      "bytes": 87,
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.counters-before.bin",
+      "bytes": 87,
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.java-stack.bin",
+      "bytes": 628,
+      "sha256": "deaef64ddd9637bcd63194dc5412f0846280fe88a215e657f30a25f869f8ac4a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.stderr.bin",
+      "bytes": 219,
+      "sha256": "d947d47036abdc4922f9684f5499d970eb49e6c9cf25334688e51e7fb1597884"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.stderr.code-units.bin",
+      "bytes": 418,
+      "sha256": "b0be9a691c348427c8f931984f4326c915afa82ec72f0fa339802f7e3d2334e8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-1.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.counters-after.bin",
+      "bytes": 89,
+      "sha256": "fdef45c6ce702e264df63f4c5b2bcc9d50044798b8c2d8cbe2ca4da6309cb1c4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.counters-before.bin",
+      "bytes": 89,
+      "sha256": "2370c450b946f9808544ababbf8eefb52c44e7e60b484cc7e4701ef52b2ad985"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-10.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.counters-after.bin",
+      "bytes": 87,
+      "sha256": "e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.counters-before.bin",
+      "bytes": 87,
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.expression.bin",
+      "bytes": 21,
+      "sha256": "8979d4d0be887b91d1bfa4e00b3e9cc0616ebea4f9adcfaea87b3d39b726d841"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.stdout.bin",
+      "bytes": 6,
+      "sha256": "e40310fbec639c561d2d469785addfa0da3897f2a0758b21c9f5d708f6a66563"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-2.stdout.code-units.bin",
+      "bytes": 12,
+      "sha256": "a96c4f5287ec7e72a9cc5c2040074bebc3a9f47447cfdbd8ca7d6f5f2fd265e2"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.counters-after.bin",
+      "bytes": 88,
+      "sha256": "e58246f46e777accfe091a471e05ef7cd43155e7d4605e93f558d7a125c4175c"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.counters-before.bin",
+      "bytes": 87,
+      "sha256": "e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.java-stack.bin",
+      "bytes": 547,
+      "sha256": "b18cd13552b0eafb8c29e44069e739a8e7baeea392b40bbf004e06facc50ce73"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.stderr.bin",
+      "bytes": 138,
+      "sha256": "ada9191197ecc03610e136c557d2ebdc69c1fd8b192631790da2dbc0b47e0e8f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.stderr.code-units.bin",
+      "bytes": 256,
+      "sha256": "fcc69a062dbb9d7826e8d1775634e273941051431234d68fb2b8ec0f7d0a2eda"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-3.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.counters-after.bin",
+      "bytes": 88,
+      "sha256": "a71a6fb8dbc01711c7983731c6ed972a4ede909a564206a44794991ec601135a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.counters-before.bin",
+      "bytes": 88,
+      "sha256": "e58246f46e777accfe091a471e05ef7cd43155e7d4605e93f558d7a125c4175c"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.java-stack.bin",
+      "bytes": 547,
+      "sha256": "b18cd13552b0eafb8c29e44069e739a8e7baeea392b40bbf004e06facc50ce73"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.stderr.bin",
+      "bytes": 138,
+      "sha256": "ada9191197ecc03610e136c557d2ebdc69c1fd8b192631790da2dbc0b47e0e8f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.stderr.code-units.bin",
+      "bytes": 256,
+      "sha256": "fcc69a062dbb9d7826e8d1775634e273941051431234d68fb2b8ec0f7d0a2eda"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-4.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.counters-after.bin",
+      "bytes": 88,
+      "sha256": "671de50ccc1847d4cd1ae61f1624c713594c2f27f2ed6a56f1b6c636e2d0ee69"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.counters-before.bin",
+      "bytes": 88,
+      "sha256": "a71a6fb8dbc01711c7983731c6ed972a4ede909a564206a44794991ec601135a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.expression.bin",
+      "bytes": 22,
+      "sha256": "10adbb6312348fcfd84c17b8c747ddd8d740a6b04a1ebf1277ce1bd1f07e1323"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.java-stack.bin",
+      "bytes": 611,
+      "sha256": "94964b35a8f85c712e2d05f3d82f31717a3abe8243b7a6c9668ea3d8ad5496ff"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.stderr.bin",
+      "bytes": 202,
+      "sha256": "32b0adfd18056d5775e185a05c62b997c6b4cf999394441e3506f625e105622f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.stderr.code-units.bin",
+      "bytes": 388,
+      "sha256": "33d8bac7553c76ae1da5f3a0540111f2889df347cd824cf474c699025692276d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-5.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.counters-after.bin",
+      "bytes": 88,
+      "sha256": "a1139de590e34352a3a744430b78e52ad61c9c6aeda50704aada3f6a7f07d6e6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.counters-before.bin",
+      "bytes": 88,
+      "sha256": "671de50ccc1847d4cd1ae61f1624c713594c2f27f2ed6a56f1b6c636e2d0ee69"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.expression.bin",
+      "bytes": 19,
+      "sha256": "275280e778cb20bc3c43ab6a28e091e5ae82674a40818ecb0382d8497fed5774"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.java-stack.bin",
+      "bytes": 602,
+      "sha256": "d847646b2a619c0c67065c0ccd27d96ca2cf4dd4f884b502e4d849947ee656f4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.stderr.bin",
+      "bytes": 193,
+      "sha256": "ef3b6e09fccea30b87635a0a5fa18b8082cdf383850b0427eb7a2599024107f1"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.stderr.code-units.bin",
+      "bytes": 370,
+      "sha256": "11fc9e1e49cf5593bfcdcc6df593003c8228232fe07ec658276cf2093c8a7f31"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-6.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.counters-after.bin",
+      "bytes": 89,
+      "sha256": "3bbfcd7f84beb5a681e457b27eeb09fdf9a75449393c1bfb2dc26955801e5230"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.counters-before.bin",
+      "bytes": 88,
+      "sha256": "a1139de590e34352a3a744430b78e52ad61c9c6aeda50704aada3f6a7f07d6e6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.expression.bin",
+      "bytes": 40,
+      "sha256": "e3a58d3f0911105d531717f4cc720fa6ca33742c273974fc8e737b9a3c1cd6dd"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.java-stack.bin",
+      "bytes": 654,
+      "sha256": "2254a0294e6c183b3e27fdfa27d4a00bead00345890d77bb749120dcd5d82753"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.stderr.bin",
+      "bytes": 245,
+      "sha256": "e6634dce49a7a1baa9d7019ab2ace5abd1eb8561f400ae17875bc290710483a9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.stderr.code-units.bin",
+      "bytes": 474,
+      "sha256": "c299da2ff4eb0a49042ea228c73674150e2b015deb271d1ddd6522b060a04a6c"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-7.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.counters-after.bin",
+      "bytes": 89,
+      "sha256": "c5e37a435d099eb96d6fe12820de986c81665a9f22688e8a1fdff993996eb534"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.counters-before.bin",
+      "bytes": 89,
+      "sha256": "cba33645b7df655e8a2925bd4d2ff6411ca51c3f16c82cffe528a5dbb2a827f1"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.java-stack.bin",
+      "bytes": 547,
+      "sha256": "b18cd13552b0eafb8c29e44069e739a8e7baeea392b40bbf004e06facc50ce73"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.stderr.bin",
+      "bytes": 138,
+      "sha256": "ada9191197ecc03610e136c557d2ebdc69c1fd8b192631790da2dbc0b47e0e8f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.stderr.code-units.bin",
+      "bytes": 256,
+      "sha256": "fcc69a062dbb9d7826e8d1775634e273941051431234d68fb2b8ec0f7d0a2eda"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-8.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.counters-after.bin",
+      "bytes": 89,
+      "sha256": "2370c450b946f9808544ababbf8eefb52c44e7e60b484cc7e4701ef52b2ad985"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.counters-before.bin",
+      "bytes": 89,
+      "sha256": "c5e37a435d099eb96d6fe12820de986c81665a9f22688e8a1fdff993996eb534"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.expression.bin",
+      "bytes": 22,
+      "sha256": "10adbb6312348fcfd84c17b8c747ddd8d740a6b04a1ebf1277ce1bd1f07e1323"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.java-stack.bin",
+      "bytes": 611,
+      "sha256": "94964b35a8f85c712e2d05f3d82f31717a3abe8243b7a6c9668ea3d8ad5496ff"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.stderr.bin",
+      "bytes": 202,
+      "sha256": "32b0adfd18056d5775e185a05c62b997c6b4cf999394441e3506f625e105622f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.stderr.code-units.bin",
+      "bytes": 388,
+      "sha256": "33d8bac7553c76ae1da5f3a0540111f2889df347cd824cf474c699025692276d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/calls/session-1/outer-9.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/process.json",
+      "bytes": 3441,
+      "sha256": "a83b097690bec18f48eab6320fc61c5853e16ba38230a20f9196c0b2e4b019d8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/result.json",
+      "bytes": 294,
+      "sha256": "fb0c7a92b9d29ddfcf7b0ea6ce84c018ace156bd651114c6bb0e745cce0ee16b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/0/stdout.bin",
+      "bytes": 2526,
+      "sha256": "f303cfa74024a71ba4c53f83081c56f4dbfb41fe4f8fb2daa8e94f1205ea7259"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1.process.json",
+      "bytes": 2525,
+      "sha256": "56da7bec555665c42abfa26c7e13b71281abcc7d14afa6c3b60889266af19f34"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/counters.bin",
+      "bytes": 89,
+      "sha256": "fdef45c6ce702e264df63f4c5b2bcc9d50044798b8c2d8cbe2ca4da6309cb1c4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/denied-uri.bin",
+      "bytes": 19,
+      "sha256": "42fea26eb6a6cf2a05d7589d82514b6eab292a711107c137782970e94fe38b5d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-0.bin",
+      "bytes": 172,
+      "sha256": "2f996581f59cc2bfa4ce377cdc1c2512ef015995581524682e764e2a43618c25"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-1.bin",
+      "bytes": 177,
+      "sha256": "2bbb29b0214828c301aa4e3a8bb0d57a9d48fff878f55ff734373da54423b8af"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-10.bin",
+      "bytes": 39,
+      "sha256": "524998182bbcbb6112a5aa8b529c1e57ba1e601139595df10a920c5671ae2c18"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-11.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-12.bin",
+      "bytes": 39,
+      "sha256": "88551a6dce95b89deb985de07e7f7435aa144a0f41caa5a50b68792f2bf31712"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-13.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-14.bin",
+      "bytes": 39,
+      "sha256": "3d82e464a974a1fd24affd3f3968b3d4c61acde327b1edd46a0c60f66ee6dbae"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-15.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-16.bin",
+      "bytes": 39,
+      "sha256": "88a4bd2ae4ce7b2d2fba34a080c272702fc3476ed55994029fc938a4b1d1ae5b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-17.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-18.bin",
+      "bytes": 39,
+      "sha256": "85c9e28a71268c1a21e733dc19d369a7301f778d6181749dfd39ebcd27ce438a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-19.bin",
+      "bytes": 17,
+      "sha256": "3a05ffd094aee7ce9ea0c07636936bd5ab2e065b5d62220d58202d0f62cff260"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-2.bin",
+      "bytes": 172,
+      "sha256": "2f996581f59cc2bfa4ce377cdc1c2512ef015995581524682e764e2a43618c25"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-20.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-21.bin",
+      "bytes": 39,
+      "sha256": "d3a40bb817c8d6d984617a1e27f806dd11f17f52781246fb51c3ee37bd199e9d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-22.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-23.bin",
+      "bytes": 39,
+      "sha256": "15cccdc9cfe71a735bb983fa69ddd7049c98981df51c845b01e4cda8da4423dd"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-24.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-25.bin",
+      "bytes": 16,
+      "sha256": "e0f797775c8aa21943243671cf906b4c2d62688d5eb6ef3432e46db550ccb3d2"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-3.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-4.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-5.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-6.bin",
+      "bytes": 39,
+      "sha256": "61dcdb060db00d7463485577e516341f6e6c121fad2bf6972a4116f8ee409880"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-7.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-8.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/event-9.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.counters-after.bin",
+      "bytes": 87,
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.counters-before.bin",
+      "bytes": 87,
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-0.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.counters-after.bin",
+      "bytes": 87,
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.counters-before.bin",
+      "bytes": 87,
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.java-stack.bin",
+      "bytes": 628,
+      "sha256": "deaef64ddd9637bcd63194dc5412f0846280fe88a215e657f30a25f869f8ac4a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.stderr.bin",
+      "bytes": 219,
+      "sha256": "d947d47036abdc4922f9684f5499d970eb49e6c9cf25334688e51e7fb1597884"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.stderr.code-units.bin",
+      "bytes": 418,
+      "sha256": "b0be9a691c348427c8f931984f4326c915afa82ec72f0fa339802f7e3d2334e8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-1.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.counters-after.bin",
+      "bytes": 89,
+      "sha256": "fdef45c6ce702e264df63f4c5b2bcc9d50044798b8c2d8cbe2ca4da6309cb1c4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.counters-before.bin",
+      "bytes": 89,
+      "sha256": "2370c450b946f9808544ababbf8eefb52c44e7e60b484cc7e4701ef52b2ad985"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-10.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.counters-after.bin",
+      "bytes": 87,
+      "sha256": "e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.counters-before.bin",
+      "bytes": 87,
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.expression.bin",
+      "bytes": 21,
+      "sha256": "8979d4d0be887b91d1bfa4e00b3e9cc0616ebea4f9adcfaea87b3d39b726d841"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.stdout.bin",
+      "bytes": 6,
+      "sha256": "e40310fbec639c561d2d469785addfa0da3897f2a0758b21c9f5d708f6a66563"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-2.stdout.code-units.bin",
+      "bytes": 12,
+      "sha256": "a96c4f5287ec7e72a9cc5c2040074bebc3a9f47447cfdbd8ca7d6f5f2fd265e2"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.counters-after.bin",
+      "bytes": 88,
+      "sha256": "e58246f46e777accfe091a471e05ef7cd43155e7d4605e93f558d7a125c4175c"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.counters-before.bin",
+      "bytes": 87,
+      "sha256": "e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.java-stack.bin",
+      "bytes": 547,
+      "sha256": "b18cd13552b0eafb8c29e44069e739a8e7baeea392b40bbf004e06facc50ce73"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.stderr.bin",
+      "bytes": 138,
+      "sha256": "ada9191197ecc03610e136c557d2ebdc69c1fd8b192631790da2dbc0b47e0e8f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.stderr.code-units.bin",
+      "bytes": 256,
+      "sha256": "fcc69a062dbb9d7826e8d1775634e273941051431234d68fb2b8ec0f7d0a2eda"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-3.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.counters-after.bin",
+      "bytes": 88,
+      "sha256": "a71a6fb8dbc01711c7983731c6ed972a4ede909a564206a44794991ec601135a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.counters-before.bin",
+      "bytes": 88,
+      "sha256": "e58246f46e777accfe091a471e05ef7cd43155e7d4605e93f558d7a125c4175c"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.java-stack.bin",
+      "bytes": 547,
+      "sha256": "b18cd13552b0eafb8c29e44069e739a8e7baeea392b40bbf004e06facc50ce73"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.stderr.bin",
+      "bytes": 138,
+      "sha256": "ada9191197ecc03610e136c557d2ebdc69c1fd8b192631790da2dbc0b47e0e8f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.stderr.code-units.bin",
+      "bytes": 256,
+      "sha256": "fcc69a062dbb9d7826e8d1775634e273941051431234d68fb2b8ec0f7d0a2eda"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-4.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.counters-after.bin",
+      "bytes": 88,
+      "sha256": "671de50ccc1847d4cd1ae61f1624c713594c2f27f2ed6a56f1b6c636e2d0ee69"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.counters-before.bin",
+      "bytes": 88,
+      "sha256": "a71a6fb8dbc01711c7983731c6ed972a4ede909a564206a44794991ec601135a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.expression.bin",
+      "bytes": 22,
+      "sha256": "10adbb6312348fcfd84c17b8c747ddd8d740a6b04a1ebf1277ce1bd1f07e1323"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.java-stack.bin",
+      "bytes": 611,
+      "sha256": "94964b35a8f85c712e2d05f3d82f31717a3abe8243b7a6c9668ea3d8ad5496ff"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.stderr.bin",
+      "bytes": 202,
+      "sha256": "32b0adfd18056d5775e185a05c62b997c6b4cf999394441e3506f625e105622f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.stderr.code-units.bin",
+      "bytes": 388,
+      "sha256": "33d8bac7553c76ae1da5f3a0540111f2889df347cd824cf474c699025692276d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-5.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.counters-after.bin",
+      "bytes": 88,
+      "sha256": "a1139de590e34352a3a744430b78e52ad61c9c6aeda50704aada3f6a7f07d6e6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.counters-before.bin",
+      "bytes": 88,
+      "sha256": "671de50ccc1847d4cd1ae61f1624c713594c2f27f2ed6a56f1b6c636e2d0ee69"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.expression.bin",
+      "bytes": 19,
+      "sha256": "275280e778cb20bc3c43ab6a28e091e5ae82674a40818ecb0382d8497fed5774"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.java-stack.bin",
+      "bytes": 602,
+      "sha256": "d847646b2a619c0c67065c0ccd27d96ca2cf4dd4f884b502e4d849947ee656f4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.stderr.bin",
+      "bytes": 193,
+      "sha256": "ef3b6e09fccea30b87635a0a5fa18b8082cdf383850b0427eb7a2599024107f1"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.stderr.code-units.bin",
+      "bytes": 370,
+      "sha256": "11fc9e1e49cf5593bfcdcc6df593003c8228232fe07ec658276cf2093c8a7f31"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-6.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.counters-after.bin",
+      "bytes": 89,
+      "sha256": "3bbfcd7f84beb5a681e457b27eeb09fdf9a75449393c1bfb2dc26955801e5230"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.counters-before.bin",
+      "bytes": 88,
+      "sha256": "a1139de590e34352a3a744430b78e52ad61c9c6aeda50704aada3f6a7f07d6e6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.expression.bin",
+      "bytes": 40,
+      "sha256": "e3a58d3f0911105d531717f4cc720fa6ca33742c273974fc8e737b9a3c1cd6dd"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.java-stack.bin",
+      "bytes": 654,
+      "sha256": "2254a0294e6c183b3e27fdfa27d4a00bead00345890d77bb749120dcd5d82753"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.stderr.bin",
+      "bytes": 245,
+      "sha256": "e6634dce49a7a1baa9d7019ab2ace5abd1eb8561f400ae17875bc290710483a9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.stderr.code-units.bin",
+      "bytes": 474,
+      "sha256": "c299da2ff4eb0a49042ea228c73674150e2b015deb271d1ddd6522b060a04a6c"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-7.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.counters-after.bin",
+      "bytes": 89,
+      "sha256": "c5e37a435d099eb96d6fe12820de986c81665a9f22688e8a1fdff993996eb534"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.counters-before.bin",
+      "bytes": 89,
+      "sha256": "cba33645b7df655e8a2925bd4d2ff6411ca51c3f16c82cffe528a5dbb2a827f1"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.java-stack.bin",
+      "bytes": 547,
+      "sha256": "b18cd13552b0eafb8c29e44069e739a8e7baeea392b40bbf004e06facc50ce73"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.stderr.bin",
+      "bytes": 138,
+      "sha256": "ada9191197ecc03610e136c557d2ebdc69c1fd8b192631790da2dbc0b47e0e8f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.stderr.code-units.bin",
+      "bytes": 256,
+      "sha256": "fcc69a062dbb9d7826e8d1775634e273941051431234d68fb2b8ec0f7d0a2eda"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-8.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.counters-after.bin",
+      "bytes": 89,
+      "sha256": "2370c450b946f9808544ababbf8eefb52c44e7e60b484cc7e4701ef52b2ad985"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.counters-before.bin",
+      "bytes": 89,
+      "sha256": "c5e37a435d099eb96d6fe12820de986c81665a9f22688e8a1fdff993996eb534"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.expression.bin",
+      "bytes": 22,
+      "sha256": "10adbb6312348fcfd84c17b8c747ddd8d740a6b04a1ebf1277ce1bd1f07e1323"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.java-stack.bin",
+      "bytes": 611,
+      "sha256": "94964b35a8f85c712e2d05f3d82f31717a3abe8243b7a6c9668ea3d8ad5496ff"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.stderr.bin",
+      "bytes": 202,
+      "sha256": "32b0adfd18056d5775e185a05c62b997c6b4cf999394441e3506f625e105622f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.stderr.code-units.bin",
+      "bytes": 388,
+      "sha256": "33d8bac7553c76ae1da5f3a0540111f2889df347cd824cf474c699025692276d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-0/outer-9.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/counters.bin",
+      "bytes": 89,
+      "sha256": "fdef45c6ce702e264df63f4c5b2bcc9d50044798b8c2d8cbe2ca4da6309cb1c4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/denied-uri.bin",
+      "bytes": 19,
+      "sha256": "42fea26eb6a6cf2a05d7589d82514b6eab292a711107c137782970e94fe38b5d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-0.bin",
+      "bytes": 172,
+      "sha256": "2f996581f59cc2bfa4ce377cdc1c2512ef015995581524682e764e2a43618c25"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-1.bin",
+      "bytes": 177,
+      "sha256": "2bbb29b0214828c301aa4e3a8bb0d57a9d48fff878f55ff734373da54423b8af"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-10.bin",
+      "bytes": 39,
+      "sha256": "524998182bbcbb6112a5aa8b529c1e57ba1e601139595df10a920c5671ae2c18"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-11.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-12.bin",
+      "bytes": 39,
+      "sha256": "88551a6dce95b89deb985de07e7f7435aa144a0f41caa5a50b68792f2bf31712"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-13.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-14.bin",
+      "bytes": 39,
+      "sha256": "3d82e464a974a1fd24affd3f3968b3d4c61acde327b1edd46a0c60f66ee6dbae"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-15.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-16.bin",
+      "bytes": 39,
+      "sha256": "88a4bd2ae4ce7b2d2fba34a080c272702fc3476ed55994029fc938a4b1d1ae5b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-17.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-18.bin",
+      "bytes": 39,
+      "sha256": "85c9e28a71268c1a21e733dc19d369a7301f778d6181749dfd39ebcd27ce438a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-19.bin",
+      "bytes": 17,
+      "sha256": "3a05ffd094aee7ce9ea0c07636936bd5ab2e065b5d62220d58202d0f62cff260"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-2.bin",
+      "bytes": 172,
+      "sha256": "2f996581f59cc2bfa4ce377cdc1c2512ef015995581524682e764e2a43618c25"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-20.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-21.bin",
+      "bytes": 39,
+      "sha256": "d3a40bb817c8d6d984617a1e27f806dd11f17f52781246fb51c3ee37bd199e9d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-22.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-23.bin",
+      "bytes": 39,
+      "sha256": "15cccdc9cfe71a735bb983fa69ddd7049c98981df51c845b01e4cda8da4423dd"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-24.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-25.bin",
+      "bytes": 16,
+      "sha256": "e0f797775c8aa21943243671cf906b4c2d62688d5eb6ef3432e46db550ccb3d2"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-3.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-4.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-5.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-6.bin",
+      "bytes": 39,
+      "sha256": "61dcdb060db00d7463485577e516341f6e6c121fad2bf6972a4116f8ee409880"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-7.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-8.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/event-9.bin",
+      "bytes": 31,
+      "sha256": "18e58c93d54fefcb64f83a9d9eddddcdcd6a2222ab70b70dad5bee388782244b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.counters-after.bin",
+      "bytes": 87,
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.counters-before.bin",
+      "bytes": 87,
+      "sha256": "94f8842fb4617f416b1ab6731d6106b75139889d7f850ad3a3ca40a9e2d2fbd8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-0.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.counters-after.bin",
+      "bytes": 87,
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.counters-before.bin",
+      "bytes": 87,
+      "sha256": "a102b09764fa4479a491a24933dd09565e35e3b20948a2bfa0639656381d7e15"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.java-stack.bin",
+      "bytes": 628,
+      "sha256": "deaef64ddd9637bcd63194dc5412f0846280fe88a215e657f30a25f869f8ac4a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.stderr.bin",
+      "bytes": 219,
+      "sha256": "d947d47036abdc4922f9684f5499d970eb49e6c9cf25334688e51e7fb1597884"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.stderr.code-units.bin",
+      "bytes": 418,
+      "sha256": "b0be9a691c348427c8f931984f4326c915afa82ec72f0fa339802f7e3d2334e8"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-1.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.counters-after.bin",
+      "bytes": 89,
+      "sha256": "fdef45c6ce702e264df63f4c5b2bcc9d50044798b8c2d8cbe2ca4da6309cb1c4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.counters-before.bin",
+      "bytes": 89,
+      "sha256": "2370c450b946f9808544ababbf8eefb52c44e7e60b484cc7e4701ef52b2ad985"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-10.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.counters-after.bin",
+      "bytes": 87,
+      "sha256": "e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.counters-before.bin",
+      "bytes": 87,
+      "sha256": "bbb8379c2da6b72437ac47f430a92c22c8e2a0741f2e92a11f536e426465a598"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.expression.bin",
+      "bytes": 21,
+      "sha256": "8979d4d0be887b91d1bfa4e00b3e9cc0616ebea4f9adcfaea87b3d39b726d841"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.stdout.bin",
+      "bytes": 6,
+      "sha256": "e40310fbec639c561d2d469785addfa0da3897f2a0758b21c9f5d708f6a66563"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-2.stdout.code-units.bin",
+      "bytes": 12,
+      "sha256": "a96c4f5287ec7e72a9cc5c2040074bebc3a9f47447cfdbd8ca7d6f5f2fd265e2"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.counters-after.bin",
+      "bytes": 88,
+      "sha256": "e58246f46e777accfe091a471e05ef7cd43155e7d4605e93f558d7a125c4175c"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.counters-before.bin",
+      "bytes": 87,
+      "sha256": "e4992132d7c75291d725d1d3231b4ffbedc4c85d97f02424001623419df796bc"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.java-stack.bin",
+      "bytes": 547,
+      "sha256": "b18cd13552b0eafb8c29e44069e739a8e7baeea392b40bbf004e06facc50ce73"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.stderr.bin",
+      "bytes": 138,
+      "sha256": "ada9191197ecc03610e136c557d2ebdc69c1fd8b192631790da2dbc0b47e0e8f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.stderr.code-units.bin",
+      "bytes": 256,
+      "sha256": "fcc69a062dbb9d7826e8d1775634e273941051431234d68fb2b8ec0f7d0a2eda"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-3.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.counters-after.bin",
+      "bytes": 88,
+      "sha256": "a71a6fb8dbc01711c7983731c6ed972a4ede909a564206a44794991ec601135a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.counters-before.bin",
+      "bytes": 88,
+      "sha256": "e58246f46e777accfe091a471e05ef7cd43155e7d4605e93f558d7a125c4175c"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.java-stack.bin",
+      "bytes": 547,
+      "sha256": "b18cd13552b0eafb8c29e44069e739a8e7baeea392b40bbf004e06facc50ce73"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.stderr.bin",
+      "bytes": 138,
+      "sha256": "ada9191197ecc03610e136c557d2ebdc69c1fd8b192631790da2dbc0b47e0e8f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.stderr.code-units.bin",
+      "bytes": 256,
+      "sha256": "fcc69a062dbb9d7826e8d1775634e273941051431234d68fb2b8ec0f7d0a2eda"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-4.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.counters-after.bin",
+      "bytes": 88,
+      "sha256": "671de50ccc1847d4cd1ae61f1624c713594c2f27f2ed6a56f1b6c636e2d0ee69"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.counters-before.bin",
+      "bytes": 88,
+      "sha256": "a71a6fb8dbc01711c7983731c6ed972a4ede909a564206a44794991ec601135a"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.expression.bin",
+      "bytes": 22,
+      "sha256": "10adbb6312348fcfd84c17b8c747ddd8d740a6b04a1ebf1277ce1bd1f07e1323"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.java-stack.bin",
+      "bytes": 611,
+      "sha256": "94964b35a8f85c712e2d05f3d82f31717a3abe8243b7a6c9668ea3d8ad5496ff"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.stderr.bin",
+      "bytes": 202,
+      "sha256": "32b0adfd18056d5775e185a05c62b997c6b4cf999394441e3506f625e105622f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.stderr.code-units.bin",
+      "bytes": 388,
+      "sha256": "33d8bac7553c76ae1da5f3a0540111f2889df347cd824cf474c699025692276d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-5.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.counters-after.bin",
+      "bytes": 88,
+      "sha256": "a1139de590e34352a3a744430b78e52ad61c9c6aeda50704aada3f6a7f07d6e6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.counters-before.bin",
+      "bytes": 88,
+      "sha256": "671de50ccc1847d4cd1ae61f1624c713594c2f27f2ed6a56f1b6c636e2d0ee69"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.expression.bin",
+      "bytes": 19,
+      "sha256": "275280e778cb20bc3c43ab6a28e091e5ae82674a40818ecb0382d8497fed5774"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.java-stack.bin",
+      "bytes": 602,
+      "sha256": "d847646b2a619c0c67065c0ccd27d96ca2cf4dd4f884b502e4d849947ee656f4"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.stderr.bin",
+      "bytes": 193,
+      "sha256": "ef3b6e09fccea30b87635a0a5fa18b8082cdf383850b0427eb7a2599024107f1"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.stderr.code-units.bin",
+      "bytes": 370,
+      "sha256": "11fc9e1e49cf5593bfcdcc6df593003c8228232fe07ec658276cf2093c8a7f31"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-6.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.counters-after.bin",
+      "bytes": 89,
+      "sha256": "3bbfcd7f84beb5a681e457b27eeb09fdf9a75449393c1bfb2dc26955801e5230"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.counters-before.bin",
+      "bytes": 88,
+      "sha256": "a1139de590e34352a3a744430b78e52ad61c9c6aeda50704aada3f6a7f07d6e6"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.expression.bin",
+      "bytes": 40,
+      "sha256": "e3a58d3f0911105d531717f4cc720fa6ca33742c273974fc8e737b9a3c1cd6dd"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.java-stack.bin",
+      "bytes": 654,
+      "sha256": "2254a0294e6c183b3e27fdfa27d4a00bead00345890d77bb749120dcd5d82753"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.stderr.bin",
+      "bytes": 245,
+      "sha256": "e6634dce49a7a1baa9d7019ab2ace5abd1eb8561f400ae17875bc290710483a9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.stderr.code-units.bin",
+      "bytes": 474,
+      "sha256": "c299da2ff4eb0a49042ea228c73674150e2b015deb271d1ddd6522b060a04a6c"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-7.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.counters-after.bin",
+      "bytes": 89,
+      "sha256": "c5e37a435d099eb96d6fe12820de986c81665a9f22688e8a1fdff993996eb534"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.counters-before.bin",
+      "bytes": 89,
+      "sha256": "cba33645b7df655e8a2925bd4d2ff6411ca51c3f16c82cffe528a5dbb2a827f1"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.expression.bin",
+      "bytes": 26,
+      "sha256": "00d05dceb9eb93f29cfa42d0b487d4a0c3030c685042a423866956ac74777671"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.java-stack.bin",
+      "bytes": 547,
+      "sha256": "b18cd13552b0eafb8c29e44069e739a8e7baeea392b40bbf004e06facc50ce73"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.stderr.bin",
+      "bytes": 138,
+      "sha256": "ada9191197ecc03610e136c557d2ebdc69c1fd8b192631790da2dbc0b47e0e8f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.stderr.code-units.bin",
+      "bytes": 256,
+      "sha256": "fcc69a062dbb9d7826e8d1775634e273941051431234d68fb2b8ec0f7d0a2eda"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-8.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.counters-after.bin",
+      "bytes": 89,
+      "sha256": "2370c450b946f9808544ababbf8eefb52c44e7e60b484cc7e4701ef52b2ad985"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.counters-before.bin",
+      "bytes": 89,
+      "sha256": "c5e37a435d099eb96d6fe12820de986c81665a9f22688e8a1fdff993996eb534"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.expression.bin",
+      "bytes": 22,
+      "sha256": "10adbb6312348fcfd84c17b8c747ddd8d740a6b04a1ebf1277ce1bd1f07e1323"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.java-stack.bin",
+      "bytes": 611,
+      "sha256": "94964b35a8f85c712e2d05f3d82f31717a3abe8243b7a6c9668ea3d8ad5496ff"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.source.bin",
+      "bytes": 8,
+      "sha256": "54f20cc8cc015a809002dd2bb983010a1622957d58c52a6944382a079670d7d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.stderr.bin",
+      "bytes": 202,
+      "sha256": "32b0adfd18056d5775e185a05c62b997c6b4cf999394441e3506f625e105622f"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.stderr.code-units.bin",
+      "bytes": 388,
+      "sha256": "33d8bac7553c76ae1da5f3a0540111f2889df347cd824cf474c699025692276d"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/calls/session-1/outer-9.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/process.json",
+      "bytes": 3441,
+      "sha256": "e226b8228888fa43936d13847de0f36a17ab2d74eefc3399b85afc719d6e2386"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/result.json",
+      "bytes": 294,
+      "sha256": "d64f76e806dfd64f0bbc6b1013b55e355a7014d07254d1763b7270333da211d0"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/primitive-polymorphic-function-history/1/stdout.bin",
+      "bytes": 2526,
+      "sha256": "f303cfa74024a71ba4c53f83081c56f4dbfb41fe4f8fb2daa8e94f1205ea7259"
+    },
+    {
+      "path": "classes/RendererProbe$1.class",
+      "bytes": 2405,
+      "sha256": "eaa107906a5cea9696cadfc30fc62efeb38c5cd1f9e8ff07eaa31c74ce269e07"
+    },
+    {
+      "path": "classes/RendererProbe$2.class",
+      "bytes": 4042,
+      "sha256": "bf08ad4bdafb0e1b35c65f0e69f8670c052913ef44740f8d4e89f99a39c7be7b"
+    },
+    {
+      "path": "classes/RendererProbe.class",
+      "bytes": 8412,
+      "sha256": "6a31b12b2b9cf906bc74b5f81a079e226b066ee2587cab9ec02da09be0caeaa6"
+    },
+    {
+      "path": "closure-exclusions.json",
+      "bytes": 324,
+      "sha256": "41f2e549f7b6677dca4b006690458888d409b38e0fdda758dfcf2eb48f1e0abd"
+    },
+    {
+      "path": "correction.json",
+      "bytes": 310,
+      "sha256": "ba1864d5df27a2a0bb176b17dd615c7f19f70eaa67b5c4b82eea4b670524dd42"
+    },
+    {
+      "path": "inputs-after.json",
+      "bytes": 7522,
+      "sha256": "840aa84dae355d4e78360577a3ef7abf422f32b3cdd0d83c6e445b1c52a75d38"
+    },
+    {
+      "path": "inputs-before.json",
+      "bytes": 7522,
+      "sha256": "840aa84dae355d4e78360577a3ef7abf422f32b3cdd0d83c6e445b1c52a75d38"
+    },
+    {
+      "path": "interpretation.json",
+      "bytes": 178,
+      "sha256": "f324e5663d02dd6452f961d353e74100049d900329495ef0559b39864c7d36e5"
+    },
+    {
+      "path": "javac.process.json",
+      "bytes": 1511,
+      "sha256": "6d70c783145fc47bd492f6f890d5b8ac0d20c23385508ad838874c638ea1525a"
+    },
+    {
+      "path": "javac/result.json",
+      "bytes": 294,
+      "sha256": "0b1be474026b48eb8ec9704fcb4f1fbdf858dc6660f7e5ace67a4a1955551b82"
+    },
+    {
+      "path": "javac/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "javac/stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "monitor.py",
+      "bytes": 1665,
+      "sha256": "1a062e7b98a58cb1713f4f2fdbad0e20168f7fb340f90d40d162ebfcb37171bf"
+    },
+    {
+      "path": "observed-pids.json",
+      "bytes": 3676,
+      "sha256": "4917e6eb147b2752c2d10a75af9e34e346103b24864d8118f7807e40937960b6"
+    },
+    {
+      "path": "outer-launch.json",
+      "bytes": 251,
+      "sha256": "39704b0c7c7c4f09f84c003d076b1f57576364993635067144b02ed8018c334b"
+    },
+    {
+      "path": "outer-terminal.json",
+      "bytes": 190,
+      "sha256": "d684df948d10bd7e3c8e9abdd9929bf5ce16c7fff73d805b3b4d5994b1141969"
+    },
+    {
+      "path": "outer.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "outer.stdout.bin",
+      "bytes": 422,
+      "sha256": "365bf98237aa38a35feacb2ce83c85e22a563680e83cb5e6b7f99ba4ad1fc556"
+    },
+    {
+      "path": "profile.json",
+      "bytes": 7796,
+      "sha256": "ab3bc2a690ba9624ff31cda58bc2caa29d533c4d458a7eb03bb83db94278a3f5"
+    },
+    {
+      "path": "progress.json",
+      "bytes": 116,
+      "sha256": "b8aec7c979c2f5d72615c31ee4bdf52d4e89d897f0dddb7f39028591273a9baf"
+    },
+    {
+      "path": "report.json",
+      "bytes": 86926,
+      "sha256": "59c2dfaddf8e9750317b21c39d02f67872bb66a547f627587fa5b86de73a8683"
+    },
+    {
+      "path": "run.py",
+      "bytes": 7517,
+      "sha256": "cfa8fa56a4a9570297fc27a76c06bd89a3434051983a73386b0e9fe84988cda1"
+    },
+    {
+      "path": "runtime-private/primitive-polymorphic-function-history/0/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "runtime-private/primitive-polymorphic-function-history/1/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "tool-session.json",
+      "bytes": 125,
+      "sha256": "a106eb5d462734c133ccda5c9ae46b54ca064adb9b87521eb28000db2f4ef403"
+    },
+    {
+      "path": "tool-sources/oracle.lock.json",
+      "bytes": 4421,
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b"
+    },
+    {
+      "path": "tool-sources/references.lock",
+      "bytes": 648,
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b"
+    },
+    {
+      "path": "tool-sources/tools/compat.py",
+      "bytes": 32186,
+      "sha256": "fa40a0daee29eb078c7b9cb814fc3779556ceaacc2634657c96e3f7810aa5edc"
+    },
+    {
+      "path": "tool-sources/tools/oracle.py",
+      "bytes": 16102,
+      "sha256": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/SecurityManagers.java",
+      "bytes": 12138,
+      "sha256": "18d813d8c34fc9837883ca4d8916d3266ec4113a6142f20f6d53d0ad4c4dff15"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java",
+      "bytes": 121807,
+      "sha256": "e423325b3cef4b7410d7a01c3e9c776b7c1e5993f93f7bec02e0852d5d5fd7d8"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/ast/expression/unary/AbstractReadNode.java",
+      "bytes": 3335,
+      "sha256": "3f5406962ed0a29673b8563234818cdc41af1edbc3f6beb58a6b96779c05f0fe"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKeys.java",
+      "bytes": 27158,
+      "sha256": "137c1635b1bbc0894f30171355c50719a6c0c15b40e92aa44b51104f20103a05"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/resource/Resource.java",
+      "bytes": 1464,
+      "sha256": "d819074e333a69b73bdebe7840132df080b9a705f8c2c026c0cccfabdde322f2"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/resource/ResourceReaders.java",
+      "bytes": 25412,
+      "sha256": "e14a41e5c5f84e0395709a04f3dabdc4b6ecc584504d65f758476454dd9e8c06"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/ResourceManager.java",
+      "bytes": 5393,
+      "sha256": "28aebd541df89e229c20a9f1909dd972062a89188a569678c5834989c12aa6bd"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/VmBytes.java",
+      "bytes": 5517,
+      "sha256": "b5a472605cb390061dbb9362aebc1d1d42825f19cda4af7e4851ea3b7d81fb0e"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/VmCollection.java",
+      "bytes": 5138,
+      "sha256": "9fbf04917ef8e22b81d88dc45f57afec5dcef64e0e15ea4607f3de3f308ae376"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/VmObject.java",
+      "bytes": 7333,
+      "sha256": "5f74b5d18f72377b0ba8405f3dd34a9144acc419e068be5178ee8c2bc98b2fde"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/VmPair.java",
+      "bytes": 2984,
+      "sha256": "25dd338ad95cf282c3dd2252587e5a6a414b103ad40574689227b490a1e615f0"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/VmReference.java",
+      "bytes": 20781,
+      "sha256": "bb576166ef28e6e8d1b6d154d5717d9e79134d3be48243d29b7d104c77a33b50"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/stdlib/AbstractRenderer.java",
+      "bytes": 14727,
+      "sha256": "a005456a2f0348fbb520e4479b642538c424cc756f797b0ac5a6cec26570d7e4"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/stdlib/PklConverter.java",
+      "bytes": 11778,
+      "sha256": "35b117d45679f00a620d51465fa8a65a76dd0ccbcda59b83d8ffc81b3f6896be"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/stdlib/base/JsonRendererNodes.java",
+      "bytes": 7594,
+      "sha256": "9be85c2337820067485f59302bdb40da876d714bd0e901b2ca7f76571dbb45d5"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/stdlib/base/PcfRendererNodes.java",
+      "bytes": 2169,
+      "sha256": "13ebae3aafdff1f6daf96b9038e4b3ce9d3eda98d30f03e39f5057646cab2fd0"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/util/IoUtils.java",
+      "bytes": 32137,
+      "sha256": "e0d14b69e64185c9ef4b771648173d5584b9ab910e717244a6ec889ca43c9e10"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/util/json/JsonEscaper.java",
+      "bytes": 2461,
+      "sha256": "c8699d1b6e6e4b3a800c1badae3054456589c8a091c047722fb01ecbc95b6269"
+    },
+    {
+      "path": "upstream/stdlib/base.pkl",
+      "bytes": 126112,
+      "sha256": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb"
+    },
+    {
+      "path": "upstream/stdlib/json.pkl",
+      "bytes": 2983,
+      "sha256": "f0ad1b0a3f1261786418569be6ca3fdbb5a7941131bdc7e9db80429d325b4d3c"
+    },
+    {
+      "path": "upstream/stdlib/ref.pkl",
+      "bytes": 8213,
+      "sha256": "aefca000fc62f11a4bdefe81ac2afc517c2d07214b35e3d10dd8ce3d40f86a12"
+    },
+    {
+      "path": "workspace/primitive-polymorphic-function-history/main.pkl",
+      "bytes": 266,
+      "sha256": "a025d570512332b3adc9f09ddb2f3fb81e51b6b54c9f08d8ae51fdc7c913a8b1"
+    },
+    {
+      "path": "workspace/primitive-polymorphic-function-history/operations.tsv",
+      "bytes": 353,
+      "sha256": "435451c0cd5efd8172c936b37574ccd8b25cab9e80e79f23b4744eaf4b87d931"
+    },
+    {
+      "path": "workspace/primitive-polymorphic-function-history/reader.tsv",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

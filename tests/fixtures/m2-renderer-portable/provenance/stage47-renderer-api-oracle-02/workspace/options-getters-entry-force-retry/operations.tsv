@@ -1,0 +1,10 @@
+main.pkl	stable
+main.pkl	r.renderValue(1)
+main.pkl	r.renderDocument(new Dynamic { a = 1; b = null })
+main.pkl	r.renderValue(new Dynamic { a = 2 })
+GC
+main.pkl	retry.renderValue(new Dynamic { a = 1 })
+main.pkl	stable
+main.pkl	retry.renderValue(new Dynamic { a = 1 })
+main.pkl	retry.renderDocument(new Dynamic { a = 2 })
+main.pkl	stable

@@ -1,0 +1,17 @@
+org.pkl.core.PklException: –– Pkl Error ––
+join-first-object
+
+3 | class Bad { x = throw("join-first-object") }
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#Bad.x (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/collection-join-force-order/main.pkl)
+
+1 | badList.join("|")
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at RendererProbe.capture(RendererProbe.java:19)
+	at RendererProbe.main(RendererProbe.java:55)

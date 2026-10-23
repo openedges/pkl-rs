@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "scope": "Read-only precommit renderer Java fixture publication review; no Java/native/Node renderer/browser/test/Git execution by reviewer. Only Python byte/JSON/tar/source-identity inspection.",
+  "verdict": "No publication blocker found.",
+  "findings": [],
+  "checksPerformed": 60436,
+  "failedChecks": 0,
+  "archiveStats": [
+    {
+      "archive": "renderer-tooling-originals.tar.gz",
+      "sha256": "4b2f00a3d51cd14d19adc8f20393bc1200ff1660cbecfd1c5f52695e467c4721",
+      "payloads": 145,
+      "members": 146
+    },
+    {
+      "archive": "renderer-portable-fixture-captures.tar.gz",
+      "sha256": "01c8989733378cacf526dec4e268991b24dab31aea75dd3ff6464a6abc940b92",
+      "payloads": 93,
+      "members": 94
+    }
+  ],
+  "accounting": {
+    "acquiredGroups02to06": {
+      "2": 648,
+      "3": 172,
+      "4": 44,
+      "5": 252,
+      "6": 204
+    },
+    "acquired": 1320,
+    "selected": 860,
+    "unselected": 460,
+    "policySubsetOfUnselected": 84,
+    "initialPlannedJavacUnexecuted": 648,
+    "later07and08Separate": 132
+  },
+  "actualInstalledChecks": {
+    "python": 27,
+    "sharedJavaScriptUnit": 12,
+    "commands": 6,
+    "allExitCodesZero": true,
+    "capturedToolSession": 77592,
+    "newRendererOrOracleAcquisition": false
+  },
+  "sourceBinding": {
+    "records": 14999,
+    "fixtureFiles": 14996,
+    "currentFilesMatchCapturedSha256": true,
+    "gitBlobIdentifiersRecomputedWithoutGit": true,
+    "actualCurrentGitIndexNotRequeried": "Git is root-owned; this review checks the captured staged receipt and current file bytes."
+  },
+  "inputHashesBefore": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/renderer-portable-fixtures.json": "8e096b8c5b7acf5437bac914026e5695ee5f64e6cb7fc6735cb6085c67e9a7c1",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/docs/m2-renderer-oracle.md": "c8168decefcea43b6e436de2f8481bd65bd62e05f38aacf63ad4f65494c1248c",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/PLAN.md": "092ad34a7ae8b7990660ff4eab09584a2cd2ee44c02b728b9e4fdd9fac248d6d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/README.md": "f97a320eb7eb500ece38c4e6f069b83165af21b6f0d9ffdbfe36af177af01628",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/renderer-tooling-originals.tar.gz": "4b2f00a3d51cd14d19adc8f20393bc1200ff1660cbecfd1c5f52695e467c4721",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/renderer-portable-fixture-captures.tar.gz": "01c8989733378cacf526dec4e268991b24dab31aea75dd3ff6464a6abc940b92"
+  },
+  "inputHashesAfter": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/renderer-portable-fixtures.json": "8e096b8c5b7acf5437bac914026e5695ee5f64e6cb7fc6735cb6085c67e9a7c1",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/docs/m2-renderer-oracle.md": "c8168decefcea43b6e436de2f8481bd65bd62e05f38aacf63ad4f65494c1248c",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/PLAN.md": "092ad34a7ae8b7990660ff4eab09584a2cd2ee44c02b728b9e4fdd9fac248d6d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/README.md": "f97a320eb7eb500ece38c4e6f069b83165af21b6f0d9ffdbfe36af177af01628",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/renderer-tooling-originals.tar.gz": "4b2f00a3d51cd14d19adc8f20393bc1200ff1660cbecfd1c5f52695e467c4721",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/renderer-portable-fixture-captures.tar.gz": "01c8989733378cacf526dec4e268991b24dab31aea75dd3ff6464a6abc940b92"
+  },
+  "inputChanges": [],
+  "originalOrProductionMutations": 0,
+  "finishedUtc": "2026-10-23T12:35:29.971473+00:00"
+}

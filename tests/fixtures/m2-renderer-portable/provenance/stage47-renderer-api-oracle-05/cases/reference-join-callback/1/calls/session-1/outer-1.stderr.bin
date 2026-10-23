@@ -1,0 +1,15 @@
+–– Pkl Error ––
+I/O error reading resource `res:/reference`.
+IOException: renderer-reader-first
+
+3 | function renderReference(reference: ref.Reference<D, Any>): String = read("res:/reference") + reference.getData().toString()
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^
+at main#D.renderReference (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-05/workspace/reference-join-callback/main.pkl)
+
+201 | function toString(): String = getDomain().renderReference(this)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.ref#Reference.toString (https://github.com/apple/pkl/blob/0.32.0/stdlib/ref.pkl#L201)
+
+1 | reference.toString()
+    ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

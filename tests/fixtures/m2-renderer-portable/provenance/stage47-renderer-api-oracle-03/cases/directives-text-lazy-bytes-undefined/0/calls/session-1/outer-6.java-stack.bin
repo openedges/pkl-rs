@@ -1,0 +1,19 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Tried to read property `text` but its value is undefined.
+
+507 | text: String
+      ^^^^
+at pkl.base#RenderDirective.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L507)
+
+The above error occurred when rendering path `text`.
+
+1 | r.renderValue(direct)
+    ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at RendererProbe.capture(RendererProbe.java:19)
+	at RendererProbe.main(RendererProbe.java:55)

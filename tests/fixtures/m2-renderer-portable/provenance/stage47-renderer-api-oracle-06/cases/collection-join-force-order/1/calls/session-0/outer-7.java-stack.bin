@@ -1,0 +1,18 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 3
+
+3371 | external function join(separator: String): String
+                                         ^^^^^^
+at pkl.base#List.join (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3371)
+
+1 | List(1, 2).join(3)
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at RendererProbe.capture(RendererProbe.java:19)
+	at RendererProbe.main(RendererProbe.java:55)

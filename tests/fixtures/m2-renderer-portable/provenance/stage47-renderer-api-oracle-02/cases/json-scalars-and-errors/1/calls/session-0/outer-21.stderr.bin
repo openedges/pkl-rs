@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot render value `NaN` as JSON.
+
+1 | r.renderValue(NaN)
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

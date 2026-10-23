@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot render value of type `Pair` as JSON.
+Value: Pair(1, 2)
+
+1 | pair.renderDocument(1)
+    ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.

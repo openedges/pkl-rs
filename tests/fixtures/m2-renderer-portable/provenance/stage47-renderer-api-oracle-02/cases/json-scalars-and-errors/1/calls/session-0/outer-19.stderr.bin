@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot render value `∞` as JSON.
+
+1 | r.renderValue(Infinity)
+    ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
