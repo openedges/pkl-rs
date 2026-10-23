@@ -1,0 +1,160 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/runtime-private/actual-factory-synthetic-cached-true/1/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/runtime-private/actual-factory-synthetic-cached-true/1/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+    "AdmissionProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/workspace/actual-factory-synthetic-cached-true",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/cases/actual-factory-synthetic-cached-true/1/calls",
+    "allow",
+    "main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/workspace/actual-factory-synthetic-cached-true",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/runtime-private/actual-factory-synthetic-cached-true/1/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/runtime-private/actual-factory-synthetic-cached-true/1/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/runtime-private/actual-factory-synthetic-cached-true/1/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/runtime-private/actual-factory-synthetic-cached-true/1/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 88644,
+  "startedUnixNs": 1792781944867924000,
+  "pid": 88652,
+  "exitCode": 0,
+  "timedOut": false,
+  "finishedUnixNs": 1792781945877856000,
+  "stdoutSha256": "2caed0504821cbb5a50b720e107b5964879dbe8c6ec79f1e1891d2d792023a56",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "case": "actual-factory-synthetic-cached-true",
+  "repeat": 1,
+  "workspaceBefore": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "276f73b4261e5a6b8fc98f41da1602e83ac48d7e18aec8ea9c05f7ecc398cbc5",
+      "bytes": 11,
+      "mode": 420
+    },
+    "state-one.pkl": {
+      "kind": "regular",
+      "sha256": "8e484f47041369002874ca3144ee5a5d40ce463a2818e3ebc7b1efd6c523b5a0",
+      "bytes": 56,
+      "mode": 420
+    },
+    "state-two.pkl": {
+      "kind": "regular",
+      "sha256": "743cb6db148f88ebdcff3ad402d05818047f43e131985aad799a6226e6b0b3be",
+      "bytes": 56,
+      "mode": 420
+    },
+    "supplied-one.pkl": {
+      "kind": "regular",
+      "sha256": "d020c222d4e2a5592958e31053f3b54d08f8f7864f014a837543d684a2655264",
+      "bytes": 54,
+      "mode": 420
+    },
+    "supplied-two.pkl": {
+      "kind": "regular",
+      "sha256": "9aa601545f1c7809b1f6ba5cf239c56fdf3a5665a571cb1ee17db57fc5a64bae",
+      "bytes": 54,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "9a3a0aa09333ebc9a89483a553d693134799efe9179eba51eb323d8b2012f804",
+      "bytes": 215,
+      "mode": 420
+    },
+    "source-inputs.txt": {
+      "kind": "regular",
+      "sha256": "0c396cf11a97788dcf7f8f1e2dfb5bd9560d885d7fc2886478493362085d678c",
+      "bytes": 71,
+      "mode": 420
+    },
+    "source-profiles.tsv": {
+      "kind": "regular",
+      "sha256": "ef465c388d5f26e03b13430d873ab8166602f00ef0136c1ca5b21d3dc07b10a0",
+      "bytes": 208,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "f72a9d3faf9cd82406175c08d8f72d24bcde2cceb153080b88ef3413ed6c8e70",
+      "bytes": 165,
+      "mode": 420
+    }
+  },
+  "workspaceAfter": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "276f73b4261e5a6b8fc98f41da1602e83ac48d7e18aec8ea9c05f7ecc398cbc5",
+      "bytes": 11,
+      "mode": 420
+    },
+    "state-one.pkl": {
+      "kind": "regular",
+      "sha256": "8e484f47041369002874ca3144ee5a5d40ce463a2818e3ebc7b1efd6c523b5a0",
+      "bytes": 56,
+      "mode": 420
+    },
+    "state-two.pkl": {
+      "kind": "regular",
+      "sha256": "743cb6db148f88ebdcff3ad402d05818047f43e131985aad799a6226e6b0b3be",
+      "bytes": 56,
+      "mode": 420
+    },
+    "supplied-one.pkl": {
+      "kind": "regular",
+      "sha256": "d020c222d4e2a5592958e31053f3b54d08f8f7864f014a837543d684a2655264",
+      "bytes": 54,
+      "mode": 420
+    },
+    "supplied-two.pkl": {
+      "kind": "regular",
+      "sha256": "9aa601545f1c7809b1f6ba5cf239c56fdf3a5665a571cb1ee17db57fc5a64bae",
+      "bytes": 54,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "9a3a0aa09333ebc9a89483a553d693134799efe9179eba51eb323d8b2012f804",
+      "bytes": 215,
+      "mode": 420
+    },
+    "source-inputs.txt": {
+      "kind": "regular",
+      "sha256": "0c396cf11a97788dcf7f8f1e2dfb5bd9560d885d7fc2886478493362085d678c",
+      "bytes": 71,
+      "mode": 420
+    },
+    "source-profiles.tsv": {
+      "kind": "regular",
+      "sha256": "ef465c388d5f26e03b13430d873ab8166602f00ef0136c1ca5b21d3dc07b10a0",
+      "bytes": 208,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "f72a9d3faf9cd82406175c08d8f72d24bcde2cceb153080b88ef3413ed6c8e70",
+      "bytes": 165,
+      "mode": 420
+    }
+  }
+}

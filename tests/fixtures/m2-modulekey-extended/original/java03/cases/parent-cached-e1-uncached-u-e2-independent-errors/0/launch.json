@@ -1,0 +1,41 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/runtime-private/parent-cached-e1-uncached-u-e2-independent-errors/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/runtime-private/parent-cached-e1-uncached-u-e2-independent-errors/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+    "AdmissionProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/cases/parent-cached-e1-uncached-u-e2-independent-errors/0/calls",
+    "allow",
+    "main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/runtime-private/parent-cached-e1-uncached-u-e2-independent-errors/0/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/runtime-private/parent-cached-e1-uncached-u-e2-independent-errors/0/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/runtime-private/parent-cached-e1-uncached-u-e2-independent-errors/0/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/runtime-private/parent-cached-e1-uncached-u-e2-independent-errors/0/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 69065,
+  "startedUnixNs": 1792779629798499000,
+  "pid": 69093
+}

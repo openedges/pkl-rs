@@ -1,0 +1,4 @@
+import "memo:/request-basename.pkl"
+stable = 7
+function marker() = selected.Marker.toString()
+function tagValue() = selected.tag

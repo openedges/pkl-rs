@@ -75,6 +75,42 @@ impl Resolution {
         self.failure(error)
     }
 }
+impl Program {
+    fn update_import_uris<'a>(
+        &mut self,
+        unit: UnitId,
+        prepared: impl Fn(Span) -> Option<&'a (Arc<str>, Arc<str>)>,
+    ) {
+        // Preparation can update earlier shell/body instructions. Find those
+        // logical IDs read-only before requesting any segment's mutable COW
+        // view; unrelated prepared code and other owners stay shared.
+        let blocks: Vec<_> = self
+            .blocks
+            .iter_with_ids()
+            .filter_map(|(id, code)| {
+                code.iter()
+                    .any(|instruction| {
+                        matches!(instruction, Instruction::ImportModule(spec)
+                            if spec.unit == unit
+                                && prepared(spec.span).is_some_and(|(absolute, original)|
+                                    spec.absolute_uri != *absolute || spec.original_uri != *original))
+                    })
+                    .then_some(id)
+            })
+            .collect();
+        for id in blocks {
+            for instruction in self.blocks.get_mut(id).expect("selected import block") {
+                if let Instruction::ImportModule(spec) = instruction
+                    && spec.unit == unit
+                    && let Some((absolute, original)) = prepared(spec.span)
+                {
+                    spec.absolute_uri = absolute.clone();
+                    spec.original_uri = original.clone();
+                }
+            }
+        }
+    }
+}
 impl Vm {
     pub(super) fn begin_read_resolution(
         &mut self,
@@ -304,17 +340,11 @@ impl Vm {
                     current.spec.original_uri = original.clone().into();
                     let Some(path) = crate::host::resources::import_triple_path(&parsed_authored)?
                     else {
-                        for code in &mut Arc::make_mut(&mut self.program).blocks {
-                            for instruction in code {
-                                if let Instruction::ImportModule(spec) = instruction
-                                    && spec.unit == current.spec.unit
-                                    && spec.span == current.spec.span
-                                {
-                                    spec.absolute_uri = absolute.clone().into();
-                                    spec.original_uri = original.clone().into();
-                                }
-                            }
-                        }
+                        let prepared = (absolute.into(), original.into());
+                        Arc::make_mut(&mut self.program)
+                            .update_import_uris(current.spec.unit, |span| {
+                                (span == current.spec.span).then_some(&prepared)
+                            });
                         if current.clause {
                             return self.start_clause_selection(module, current, remaining);
                         }
@@ -544,17 +574,7 @@ impl Vm {
         if let (Some(arena), Some(owner)) = (arena, code_owner) {
             self.code_arenas.push(arena.finish(program, owner, false));
         }
-        for code in &mut program.blocks {
-            for instruction in code {
-                if let Instruction::ImportModule(spec) = instruction
-                    && spec.unit == unit
-                    && let Some((absolute, original)) = build.prepared.get(&spec.span)
-                {
-                    spec.absolute_uri = absolute.clone();
-                    spec.original_uri = original.clone();
-                }
-            }
-        }
+        program.update_import_uris(unit, |span| build.prepared.get(&span));
         program.units[unit.0 as usize].key = declaration.key;
         program.units[unit.0 as usize].delegate_key = declaration.delegate_key;
         program.units[unit.0 as usize].standard_library = declaration.standard_library;
@@ -648,17 +668,10 @@ impl Vm {
             }
             Target::Import { current, remaining } => {
                 let (absolute, original) = crate::host::resources::prepare_module_uri(&uri, None)?;
-                for code in &mut Arc::make_mut(&mut self.program).blocks {
-                    for instruction in code {
-                        if let Instruction::ImportModule(spec) = instruction
-                            && spec.unit == current.spec.unit
-                            && spec.span == current.spec.span
-                        {
-                            spec.absolute_uri = absolute.clone().into();
-                            spec.original_uri = original.clone().into();
-                        }
-                    }
-                }
+                let prepared = (absolute.clone().into(), original.clone().into());
+                Arc::make_mut(&mut self.program).update_import_uris(current.spec.unit, |span| {
+                    (span == current.spec.span).then_some(&prepared)
+                });
                 if current.clause {
                     let mut current = current;
                     current.spec.absolute_uri = absolute.into();

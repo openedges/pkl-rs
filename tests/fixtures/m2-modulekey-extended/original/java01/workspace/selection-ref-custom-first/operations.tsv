@@ -1,0 +1,9 @@
+main.pkl	stable
+main.pkl	one().label
+FACTORY	builtin
+main.pkl	two().Reference.toString()
+main.pkl	import("pkl:ref").toString()
+FACTORY	custom
+main.pkl	one().label
+main.pkl	three().label
+main.pkl	stable

@@ -1,0 +1,126 @@
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl resource=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-custom memo:/request-opaque-version.pkl
+factory-custom-hit memo:/request-opaque-version.pkl
+key-created id=0 requested=memo:/request-opaque-version.pkl selected=memo:org.example.Widget:1.2 cached-snapshot=true
+key-get-uri id=0 memo:org.example.Widget:1.2
+key-fragment-paths id=0 false
+policy-resolve-module repl:text
+outer-0 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl -> memo:/request-opaque-version.pkl
+factory-custom memo:/request-opaque-version.pkl
+factory-custom-hit memo:/request-opaque-version.pkl
+key-created id=1 requested=memo:/request-opaque-version.pkl selected=memo:org.example.Widget:1.2 cached-snapshot=true
+key-is-cached id=1 memo:org.example.Widget:1.2 true
+key-get-uri id=1 memo:org.example.Widget:1.2
+key-resolve id=1 memo:org.example.Widget:1.2
+policy-resolve-module memo:org.example.Widget:1.2
+key-resolved id=1 memo:org.example.Widget:1.2 -> memo:/resolved/opaque-version.pkl
+resolved-get-uri id=1 memo:/resolved/opaque-version.pkl
+load-source id=1 memo:org.example.Widget:1.2 -> memo:/resolved/opaque-version.pkl load=0 state=good
+resolved-get-original id=1 memo:org.example.Widget:1.2
+key-get-uri id=1 memo:org.example.Widget:1.2
+key-get-uri id=1 memo:org.example.Widget:1.2
+key-get-uri id=1 memo:org.example.Widget:1.2
+resolved-get-uri id=1 memo:/resolved/opaque-version.pkl
+key-get-uri id=1 memo:org.example.Widget:1.2
+key-fragment-paths id=1 false
+key-get-uri id=1 memo:org.example.Widget:1.2
+key-get-uri id=1 memo:org.example.Widget:1.2
+outer-1 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-2 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-3 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-4 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl resource=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-custom memo:/request-opaque-version.pkl
+factory-custom-hit memo:/request-opaque-version.pkl
+key-created id=0 requested=memo:/request-opaque-version.pkl selected=memo:org.example.Widget:1.2 cached-snapshot=true
+key-get-uri id=0 memo:org.example.Widget:1.2
+key-fragment-paths id=0 false
+policy-resolve-module repl:text
+outer-0 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl -> memo:/request-opaque-version.pkl
+factory-custom memo:/request-opaque-version.pkl
+factory-custom-hit memo:/request-opaque-version.pkl
+key-created id=1 requested=memo:/request-opaque-version.pkl selected=memo:org.example.Widget:1.2 cached-snapshot=true
+key-is-cached id=1 memo:org.example.Widget:1.2 true
+key-get-uri id=1 memo:org.example.Widget:1.2
+key-resolve id=1 memo:org.example.Widget:1.2
+policy-resolve-module memo:org.example.Widget:1.2
+key-resolved id=1 memo:org.example.Widget:1.2 -> memo:/resolved/opaque-version.pkl
+resolved-get-uri id=1 memo:/resolved/opaque-version.pkl
+load-source id=1 memo:org.example.Widget:1.2 -> memo:/resolved/opaque-version.pkl load=0 state=good
+resolved-get-original id=1 memo:org.example.Widget:1.2
+key-get-uri id=1 memo:org.example.Widget:1.2
+key-get-uri id=1 memo:org.example.Widget:1.2
+key-get-uri id=1 memo:org.example.Widget:1.2
+resolved-get-uri id=1 memo:/resolved/opaque-version.pkl
+key-get-uri id=1 memo:org.example.Widget:1.2
+key-fragment-paths id=1 false
+key-get-uri id=1 memo:org.example.Widget:1.2
+key-get-uri id=1 memo:org.example.Widget:1.2
+outer-1 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-2 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-3 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-opaque-version-implicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-4 success

@@ -1,0 +1,172 @@
+[
+  {
+    "id": "actual-factory-synthetic-cached-true",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/workspace/actual-factory-synthetic-cached-true",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/workspace/actual-factory-synthetic-cached-true/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "source",
+        "value": "one"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "underlying",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "uri",
+        "expression": "tag"
+      },
+      {
+        "kind": "source",
+        "value": "two"
+      },
+      {
+        "kind": "evaluate",
+        "source": "uri",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "underlying",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "source": "uri",
+        "expression": "output.text"
+      }
+    ],
+    "inputPaths": [
+      "main.pkl",
+      "state-one.pkl",
+      "state-two.pkl",
+      "supplied-one.pkl",
+      "supplied-two.pkl",
+      "module-plan.tsv",
+      "source-inputs.txt",
+      "source-profiles.tsv",
+      "operations.tsv"
+    ],
+    "factoryKeyKind": "actual ModuleKeys.synthetic(uri,importBaseUri,resolvedUri,text,isCached), returned unwrapped",
+    "cacheConfiguration": true,
+    "sourceSnapshot": "Source text captured at each actual factory return; later state changes do not mutate that key.",
+    "scope": "Legitimate actual Synthetic returned by priority factory. URI-only and non-repl URI+contents same-URI cache/wrapper behavior with different supplied/factory texts. Real factory and security events recorded; Synthetic internal getter/resolve/loadSource callbacks are NOT intercepted, so observer key-is-cached/key-resolve/sourceLoad zero is NOT no-call evidence. No proxy changes the actual returned class."
+  },
+  {
+    "id": "actual-factory-synthetic-cached-false",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/workspace/actual-factory-synthetic-cached-false",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-06/workspace/actual-factory-synthetic-cached-false/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "source",
+        "value": "one"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "underlying",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "uri",
+        "expression": "tag"
+      },
+      {
+        "kind": "source",
+        "value": "two"
+      },
+      {
+        "kind": "evaluate",
+        "source": "uri",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "underlying",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "source": "uri",
+        "expression": "output.text"
+      }
+    ],
+    "inputPaths": [
+      "main.pkl",
+      "state-one.pkl",
+      "state-two.pkl",
+      "supplied-one.pkl",
+      "supplied-two.pkl",
+      "module-plan.tsv",
+      "source-inputs.txt",
+      "source-profiles.tsv",
+      "operations.tsv"
+    ],
+    "factoryKeyKind": "actual ModuleKeys.synthetic(uri,importBaseUri,resolvedUri,text,isCached), returned unwrapped",
+    "cacheConfiguration": false,
+    "sourceSnapshot": "Source text captured at each actual factory return; later state changes do not mutate that key.",
+    "scope": "Legitimate actual Synthetic returned by priority factory. URI-only and non-repl URI+contents same-URI cache/wrapper behavior with different supplied/factory texts. Real factory and security events recorded; Synthetic internal getter/resolve/loadSource callbacks are NOT intercepted, so observer key-is-cached/key-resolve/sourceLoad zero is NOT no-call evidence. No proxy changes the actual returned class."
+  }
+]

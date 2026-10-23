@@ -1,0 +1,166 @@
+{
+  "schema": 1,
+  "scope": "Stage50 implementation checkpoint, actual local verification and immutable raw evidence. Full M2 and product/performance requirements remain open.",
+  "recordedUtc": "2026-10-23T21:46:44.029306+00:00",
+  "baselineCommit": "d0450699f59174752d4759e4fb9b7e6eeef586fc",
+  "archives": [
+    {
+      "repositoryPath": "reports/m2/stage50-a-fixture-tooling.tar.gz",
+      "sha256": "c502eedcac8d078744d17f4a0ee44be5d318a328af7361b12411a5426f3fe580",
+      "bytes": 4298676
+    },
+    {
+      "repositoryPath": "reports/m2/stage50-b-helper-reviews.tar.gz",
+      "sha256": "be6ee4877faa6a31a925e77f10b24c37a19fb9093e18bdaf4315dd91bf2a23d9",
+      "bytes": 2596294
+    },
+    {
+      "repositoryPath": "reports/m2/stage50-c-old05-controls.tar.gz",
+      "sha256": "dfff54d314dc6e4fc49c5a57089a29cafc612f0341713e4f7e00eda85273457c",
+      "bytes": 8675136
+    },
+    {
+      "repositoryPath": "reports/m2/stage50-d-storage-candidates.tar.gz",
+      "sha256": "c2157b7bc1add2e72bcf9cd4362fdb5ce475e1814604a8af7c8265b3e7b858b0",
+      "bytes": 9774578
+    },
+    {
+      "repositoryPath": "reports/m2/stage50-e-required-freshness.tar.gz",
+      "sha256": "4f9bc41c92e4e882963d1dbc6535b5642e56f44a18d5ef853fcbebe6646c7a25",
+      "bytes": 8273070
+    },
+    {
+      "repositoryPath": "reports/m2/stage50-f-native-controls.tar.gz",
+      "sha256": "365e7ac7320e3fd2f6e136410c86f206bef2e4063bee1f198087fac825ac8e99",
+      "bytes": 14273298
+    },
+    {
+      "repositoryPath": "reports/m2/stage50-native-tooling-publication-metadata.tar.gz",
+      "sha256": "b0d7003cc9d5345b241c890f7525de32906d91cc64ce1b979123a24994cd4fc0",
+      "bytes": 6957351
+    },
+    {
+      "repositoryPath": "reports/m2/stage50-platform-primitives.tar.gz",
+      "sha256": "c8dca3da580527de61dce2c491de4d68f64be775cf3db5a3aa9f31efb0f1bac0",
+      "bytes": 6642866
+    },
+    {
+      "repositoryPath": "reports/m2/stage50-platform-integration.tar.gz",
+      "sha256": "f77759f36793283cecd80f0506f7b45eb287d0f06332fc3dd93baf132d0c2090",
+      "bytes": 10080476
+    },
+    {
+      "repositoryPath": "reports/m2/stage50-platform-independent-audit.tar.gz",
+      "sha256": "abd4ccb03f95d93bbee37c60032d801620946fc92c42cbf5bda217103dc853af",
+      "bytes": 3954992
+    },
+    {
+      "repositoryPath": "reports/m2/stage50-publication-metadata.tar.gz",
+      "sha256": "fc85e2b0d966d8b14f31453e31f9edce3b2d9c8408c254f343389fc57adc7b8d",
+      "bytes": 9587857
+    }
+  ],
+  "archiveCount": 11,
+  "archiveBytes": 85114594,
+  "reportSha256": {
+    "stage50-implementation-checkpoint.json": "3bbbf1a4199ea296215f8d0376920d221c344b6e08ea53c3b40d27142bc8e564",
+    "stage50-platform-captures.json": "e631eb8e4ef724ad967ade5e855a48dee9a4ff669b1ba19c9b930c4638ca7929",
+    "stage50-source-binding.json": "227ac4aa2e28632ef931bfb63fb4a7bac70ca00a2c3f35df3e4fc24ccf452199",
+    "stage50-native-tooling-captures.json": "d8be0aa8b113a17ad3c43d30d33e8a13e83dcda8d6a50bedc084068f1c333a96",
+    "stage50-native-tooling-index.json": "908fbc8e9b91e96ff02c4986b3a1ea7e30ed474fad99e39f8423acf7d890793c",
+    "stage50-native-tooling-closeout.json": "0353e6e63ea19d13db5a56cb91dec610f5c604fcb412fdbd8dbcaf9a7b05455b"
+  },
+  "sourceEntryGuard": {
+    "recordedUtc": "2026-10-23T21:46:43.934728+00:00",
+    "scope": "Source entry mode/object IDs remain identical after adding publication reports; prior independent audit read actual Git blob bytes. Publication-only additions do not claim another runtime execution.",
+    "sourceBlobProofSha256": "6cee978cd8214890de0328dbbb31adae86e9de73d7a96457cc731308baaa2115",
+    "sourcePaths": 86571,
+    "differences": [],
+    "indexEntriesSha256": "979602d3b868b9dc3cfc23024dfff3e628291919dd732388bf0ad1b1688eafba",
+    "parent": "d0450699f59174752d4759e4fb9b7e6eeef586fc"
+  },
+  "sourceCaptureQualification": "86,571 current source inputs are bound to actual staged Git blobs. 343 have captured byte snapshots; the remaining inputs have captured hashes and current Git blob binding, without a claim of original byte snapshots for every input.",
+  "platformAudit": {
+    "archive": "reports/m2/stage50-platform-independent-audit.tar.gz",
+    "member": "stage50-platform02-c-audit-01/report.json",
+    "sha256": "1f59c97b1ba740cad2b23dc4beaffdc32a26658763a9afe690766a2713325d58"
+  },
+  "checkpointReview": {
+    "archive": "reports/m2/stage50-platform-independent-audit.tar.gz",
+    "member": "stage50-checkpoint-c-review-01/report.json",
+    "sha256": "7f63f317de3796bdb84d56d47b99f36c8d8f375f5ba48052d0d10fe87d37969b"
+  },
+  "metadataVerification": {
+    "reportSha256": "6384774226053274d446b3001f35cf70bd075d48bdc3fff514161907a0307e05",
+    "actualSession": 56526,
+    "actualExitCode": 0,
+    "terminalChunk": "46729f",
+    "commands": [
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+          "create",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-publication-metadata-01/staging",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-publication-metadata-01/stage50-publication-metadata.tar.gz"
+        ],
+        "startedUtc": "2026-10-23T21:45:00.839140+00:00",
+        "pid": 74418,
+        "exitCode": 0,
+        "finishedUtc": "2026-10-23T21:45:02.503485+00:00"
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-publication-metadata-01/stage50-publication-metadata.tar.gz"
+        ],
+        "startedUtc": "2026-10-23T21:45:02.504080+00:00",
+        "pid": 74426,
+        "exitCode": 0,
+        "finishedUtc": "2026-10-23T21:45:02.740401+00:00"
+      }
+    ],
+    "allSelectedMembersReadBack": 69,
+    "originalChanges": []
+  },
+  "originalFixtureWhitespace": {
+    "recordedUtc": "2026-10-23T21:38:34.360596+00:00",
+    "commands": [
+      {
+        "argv": [
+          "git",
+          "diff",
+          "--check",
+          "--cached"
+        ],
+        "exitCode": 2,
+        "stdoutSha256": "93dcb17aadcd740a953d25cd62a0717d9d7ac971a02156f3ba730cb6e4bb8376",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "git",
+          "diff",
+          "--check",
+          "--cached",
+          "--",
+          ".",
+          ":(exclude)tests/fixtures/m2-modulekey-extended/original/**"
+        ],
+        "exitCode": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "originalFixtureWhitespaceWarnings": 24,
+    "qualification": "Original Java/upstream bytes and empty TSV columns are preserved. Full staged diff-check retains exit2; the authored source/docs/tool diff excluding original fixtures passes. No fixture normalization or whitespace suppression was applied."
+  },
+  "fullSelectedStage50Acquired": false,
+  "fullM2Complete": false,
+  "hostedCiClaimed": false,
+  "releasePlatformCoverageComplete": false,
+  "performanceTargetClaimed": false,
+  "implementationCommitNotYetClaimed": true
+}

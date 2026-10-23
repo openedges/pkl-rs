@@ -1,0 +1,172 @@
+[
+  {
+    "id": "module-source-valid-plain-key",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-04/workspace/module-source-valid-plain-key",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-04/workspace/module-source-valid-plain-key/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "source": "uri",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "uri",
+        "expression": "Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl1",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl2",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl1",
+        "expression": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl2",
+        "expression": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "output.text"
+      }
+    ],
+    "inputPaths": [
+      "main.pkl",
+      "one.pkl",
+      "two.pkl",
+      "underlying.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ],
+    "scope": "Valid actual custom ModuleKey fragment capability: False. Same-URI supplied contents wrappers versus uncached underlying key, module/class name and URI-cache overwrite; repl:text separate supplied contents; output.text direct path. No invalid null fragment and no Rust-derived expected output."
+  },
+  {
+    "id": "module-source-valid-fragment-key",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-04/workspace/module-source-valid-fragment-key",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-04/workspace/module-source-valid-fragment-key/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "source": "uri",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "uri",
+        "expression": "Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl1",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl2",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl1",
+        "expression": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl2",
+        "expression": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "output.text"
+      }
+    ],
+    "inputPaths": [
+      "main.pkl",
+      "one.pkl",
+      "two.pkl",
+      "underlying.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ],
+    "scope": "Valid actual custom ModuleKey fragment capability: True. Same-URI supplied contents wrappers versus uncached underlying key, module/class name and URI-cache overwrite; repl:text separate supplied contents; output.text direct path. No invalid null fragment and no Rust-derived expected output."
+  }
+]

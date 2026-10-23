@@ -710,38 +710,38 @@ impl Vm {
 }
 
 impl Compiler<'_> {
-    pub(super) fn module_type(&mut self, span: Span) -> TypeCheck {
+    pub(super) fn module_type(&mut self, span: Span) -> Result<TypeCheck, RuntimeError> {
         let recipe = self
             .program
             .type_recipes
-            .iter()
-            .position(|recipe| {
+            .iter_with_ids()
+            .find(|(_, recipe)| {
                 recipe.unit == self.unit && recipe.span == span && recipe.path.is_empty()
             })
-            .unwrap_or_else(|| {
-                let recipe = self.program.type_recipes.len();
-                self.program.type_recipes.push(TypeRecipe {
-                    unit: self.unit,
-                    path: Vec::new(),
-                    names: Vec::new(),
-                    span,
-                    argument_spans: Vec::new(),
-                    builtin: None,
-                    reference: None,
-                });
-                recipe
-            });
-        TypeCheck::Declared {
+            .map(|(id, _)| id);
+        let recipe = match recipe {
+            Some(id) => id,
+            None => self.program.type_recipes.try_push(TypeRecipe {
+                unit: self.unit,
+                path: Vec::new(),
+                names: Vec::new(),
+                span,
+                argument_spans: Vec::new(),
+                builtin: None,
+                reference: None,
+            })?,
+        };
+        Ok(TypeCheck::Declared {
             recipe,
             arguments: Vec::new(),
-        }
+        })
     }
 
     pub(super) fn declared_type(
         &mut self,
         ty: &crate::syntax::Type,
         arguments: Vec<TypeCheck>,
-    ) -> TypeCheck {
+    ) -> Result<TypeCheck, RuntimeError> {
         let crate::syntax::TypeKind::Named {
             path,
             name_spans,
@@ -753,8 +753,8 @@ impl Compiler<'_> {
         let recipe = self
             .program
             .type_recipes
-            .iter()
-            .position(|recipe| {
+            .iter_with_ids()
+            .find(|(_, recipe)| {
                 recipe.unit == self.unit
                     && recipe.span == ty.span
                     && recipe
@@ -763,20 +763,20 @@ impl Compiler<'_> {
                         .map(AsRef::as_ref)
                         .eq(path.iter().map(String::as_str))
             })
-            .unwrap_or_else(|| {
-                let id = self.program.type_recipes.len();
-                self.program.type_recipes.push(TypeRecipe {
-                    unit: self.unit,
-                    path: path.iter().map(|name| Arc::from(name.as_str())).collect(),
-                    names: name_spans.clone(),
-                    span: ty.span,
-                    argument_spans: actuals.iter().map(|argument| argument.span).collect(),
-                    builtin: None,
-                    reference: None,
-                });
-                id
-            });
-        TypeCheck::Declared { recipe, arguments }
+            .map(|(id, _)| id);
+        let recipe = match recipe {
+            Some(id) => id,
+            None => self.program.type_recipes.try_push(TypeRecipe {
+                unit: self.unit,
+                path: path.iter().map(|name| Arc::from(name.as_str())).collect(),
+                names: name_spans.clone(),
+                span: ty.span,
+                argument_spans: actuals.iter().map(|argument| argument.span).collect(),
+                builtin: None,
+                reference: None,
+            })?,
+        };
+        Ok(TypeCheck::Declared { recipe, arguments })
     }
 }
 

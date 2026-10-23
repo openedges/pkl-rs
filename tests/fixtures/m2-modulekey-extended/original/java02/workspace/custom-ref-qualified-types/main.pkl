@@ -1,0 +1,5 @@
+import "pkl:ref" as ref
+x: ref.Reference? = null
+y: ref.Domain? = null
+stable = 7
+function refLabel() = ref.label

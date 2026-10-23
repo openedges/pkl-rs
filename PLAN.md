@@ -969,6 +969,77 @@ Python cache 하나는 원시 자료로 별도 보존하며 Git source로 집계
 고정 커밋의 전체 선택 회귀는 별도로 취득합니다.
 **M2의 9개 영역과 전체 호환성·성능 조건은 계속 진행 중입니다.**
 
+### Stage 50 — 실행 코드 저장 공간과 확대 portable 비교
+
+Stage 49 구현·증거를 `d045069`에 커밋·푸시하고 원격 `main`과의 일치를 확인했습니다.
+해당 소스는 전체 선택 코퍼스·순차 evaluator 회귀를 위해 고정합니다. Stage 48의
+별도 회귀도 계속 진행 중이며, 두 실행이 끝나기 전에는 결과를 통과로 집계하지 않습니다.
+후속 구현은 `m2/stage50-code-storage`의 별도 작업 공간에서 진행합니다.
+
+공통 VM·compiler·저장 구조는 `gpt-6-astra / xhigh`에 배정합니다. 동적 실행 코드를
+논리 ID가 유지되는 resident segment로 관리하여 도달할 수 없는 non-tail 슬롯과
+내부 capacity를 함께 회수합니다. 초기 고정 코드, owner 하나의 여러 segment,
+부분 compile rollback, 살아 있는 class·alias·closure와 pending callback의 참조를
+보존해야 합니다. 단순 payload 삭제나 heap 슬롯 수만으로 종료하지 않고 반복 횟수
+N→10N에서 실제 보유 저장 공간이 누적되지 않는지 확인합니다. 성능 비용은 별도로 검증합니다.
+
+확대 Java 944회는 기존 고정 원본을 재사용하여 native·Node·Chromium에서 비교할 수
+있도록 연결합니다. fixture export·독립 검증·실행 driver는 `gpt-6.1-sol / high`, 공통
+JS session/provider와 통합은 주 에이전트가 맡습니다. URI·contents·repl별 입력,
+factory/source/policy 변경, key 종류·override·capability·element 응답을 명시적으로
+전달합니다. key의 소유권과 phase별 original/selected/candidate URI를 구분하며,
+Java 기대 바이트와 원래 사건 순서를 다시 생성하거나 정규화하지 않습니다.
+
+이 작업은 원래 35개 case·140세션·944회 API·10,124개 이벤트를 유지합니다. 의도에
+도달하지 못한 진단 100회, Java 내부 오류 8회, 전체 trace 실패는 별도 상태로 보존합니다.
+새 후보에서 필수 Rust 검사·실제 세 플랫폼·기존 사례 회귀를 취득한 뒤 체크포인트를
+커밋합니다. **저장 공간 개선과 확대 비교의 성공도 M2 전체 완료를 뜻하지 않습니다.**
+
+현재 원본 Java fixture 32,968개 파일의 export·검증을 연결했고, 확대 JS provider의
+첫 진단 실행을 `target/m2/stage50-extended-helper-native05-debug-01`에 보존했습니다.
+Stage49 build05의 고정 N-API artifact로 140세션·944회를 실행하여 원시 일치 936회,
+의도한 ordinary 일치 836회, 의도 미도달 진단 일치 100회, 내부 오류 불일치 8회를
+확인했습니다. 입력 변화와 취득·cleanup 실패는 없었습니다. 이 결과는 새 Stage50
+runtime 또는 브라우저의 검증이 아니며, 실제 후보 검증은 별도로 수행합니다.
+provider 의미론·부정 입력 검사는 `gpt-6.1-sol / high`가 병행합니다. 비교 범위는
+[확대 ModuleKey 계약](docs/m2-modulekey-extended.md)에 기록합니다.
+
+같은 고정 build05의 실제 Node·Chromium 대조를
+`target/m2/stage50-extended944-platform05-control-02`에서 마쳤습니다. 대상마다
+944회 중 일반 사례 836회·진단 전용 100회의 원시 결과가 일치했고, 내부 오류
+8회는 불일치로 남았습니다. 취득·관찰 순서·cleanup gate와 입력 불변 검사는
+통과했지만 전체 trace·호환 gate 및 명령 종료 코드는 계속 실패(`1`)입니다.
+최초 control01의 빈 GC 인자 관찰 비교 실패와 오류 분류 재현도 보존했습니다.
+수정 후 helper mock 36개·driver 11개·Python 12개와 독립 원본 연결 검토를
+완료했습니다. 이 대조군은 **Stage50 저장 구조 변경의 검증이 아닙니다**.
+
+후보02에서 실제 저장 구조 검증을 완료했습니다. 고정 코드와 resident segment를
+분리하고, 도달할 수 없는 실행 코드의 directory entry·내부 vector capacity를
+회수합니다. URI 준비는 바뀔 block을 먼저 찾은 뒤 해당 segment만 수정하여
+기존 snapshot과 관계없는 owner의 불필요한 복사를 방지합니다. 일반·재진입
+uncached 평가 20회와 200회의 보유 저장 공간, 살아 있는 class·alias·closure,
+실패 뒤 rollback과 source 수명주기를 검사했습니다. 집중 검사 190개와 필수
+Rust 검사 다섯 개가 통과했고, 검증 중 입력 86,455개가 바뀌지 않았습니다.
+이는 전체 RSS 또는 Java 대비 속도·메모리 목표 달성 측정이 아닙니다.
+
+동일 후보의 native·Node·Chromium에서 원래 provided-primary·public profile이
+각각 212회 일치했습니다. 확대 944회는 대상마다 일반 사례 836회·진단 전용
+100회 일치, 내부 오류 경계 8회 불일치를 유지합니다. 전체 Java event·counter
+gate는 미통과이며 반복·플랫폼 수를 독립 기능 수로 더하지 않습니다.
+실제 portable renderer 860회·Resource 1,008회·module preparation 252회가
+대상마다 일치했습니다. Loader·inheritance는 API·callback 결과가 일치하지만
+각각 12개·6개 실행의 request-counter gate가 실패합니다. ModuleInfo의 내부
+경계·미실행 후속 호출과 guest-catch의 constructor·terminal 부분 범위도
+보존합니다. 공통 primitive 6,078개는 세 대상 간 일치하고 Java 비교는 6,076개
+일치·정규식 실패 2개입니다.
+
+검증은 macOS 로컬에서 수행했습니다. native 독립 감사와 플랫폼 결과 재비교를
+수행하고 초기 실패·수정 후보를 별도 원문으로 게시합니다. Stage48·49의 전체
+선택 회귀는 각 고정 소스에서 실행 중이며 Stage50 결과로 승계하지 않습니다.
+이 체크포인트 뒤에는 `List.map`과 관련 collection callback·중단/재개 의미론을
+Java 기준으로 확장합니다. **전체 M2, 제품 API, 릴리스 플랫폼과 성능 조건은
+계속 미완료입니다.**
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

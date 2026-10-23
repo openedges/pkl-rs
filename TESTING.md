@@ -185,6 +185,23 @@ Offline fixture integrity does not establish native or portable execution.
 Supplied-primary and public-entrypoint experiments must retain distinct results;
 raw API agreement cannot replace full ordered lifecycle observations.
 
+The [extended ModuleKey contract](docs/m2-modulekey-extended.md) separately
+preserves 944 API calls and 10,124 ordered Java events across URI, contents and
+REPL sources, changing factory/source/policy state, URI overrides and fragment
+capabilities. Its fixture verifier and transport regressions are:
+
+```sh
+python3 tools/modulekey_extended_fixtures.py --fixtures tests/fixtures/m2-modulekey-extended
+python3 -W error::ResourceWarning -m unittest discover -s tools/tests -p 'test_modulekey_extended_fixtures.py' -v
+node --test tools/platform/modulekey-extended-session.test.mjs tools/platform/compare-modulekey-extended.test.mjs
+```
+
+Keep ordinary compatibility, diagnostic-only matches, Java internal-error
+boundaries, raw equality, acquisition/cleanup integrity and the full Java
+event/counter gate separate. A completed capture with preserved mismatches is
+not a strict compatibility pass. An older frozen engine used to debug a new
+provider does not verify a subsequent Rust runtime candidate.
+
 M2 language implementation and verification are in progress. The
 [M2 contract](docs/m2-language.md) separates whole-language requirement accounting
 from the executable selection:

@@ -1,0 +1,94 @@
+policy-profile deny-supplied
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=0 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=true
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+policy-resolve-module repl:text
+outer-0 success
+policy-profile allow
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=1 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=true
+key-get-uri id=1 memo:/supplied.pkl
+policy-resolve-module repl:text
+outer-1 success
+policy-profile deny-repl
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=2 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=true
+key-get-uri id=2 memo:/supplied.pkl
+policy-resolve-module repl:text
+actual-module-denied repl:text denial=0
+outer-2 error org.pkl.core.PklException
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=3 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=true
+key-get-uri id=3 memo:/supplied.pkl
+outer-3 success
+policy-resolve-module repl:text
+actual-module-denied repl:text denial=1
+outer-4 error org.pkl.core.PklException
+policy-profile allow
+policy-resolve-module repl:text
+policy-resolve-module repl:text
+outer-5 success
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=4 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=true
+key-get-uri id=4 memo:/supplied.pkl
+policy-resolve-module repl:text
+outer-6 success
+policy-profile deny-supplied
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=0 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=true
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+policy-resolve-module repl:text
+outer-0 success
+policy-profile allow
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=1 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=true
+key-get-uri id=1 memo:/supplied.pkl
+policy-resolve-module repl:text
+outer-1 success
+policy-profile deny-repl
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=2 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=true
+key-get-uri id=2 memo:/supplied.pkl
+policy-resolve-module repl:text
+actual-module-denied repl:text denial=0
+outer-2 error org.pkl.core.PklException
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=3 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=true
+key-get-uri id=3 memo:/supplied.pkl
+outer-3 success
+policy-resolve-module repl:text
+actual-module-denied repl:text denial=1
+outer-4 error org.pkl.core.PklException
+policy-profile allow
+policy-resolve-module repl:text
+policy-resolve-module repl:text
+outer-5 success
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=4 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=true
+key-get-uri id=4 memo:/supplied.pkl
+policy-resolve-module repl:text
+outer-6 success

@@ -320,7 +320,8 @@ impl SourceSession {
             let output_text = expression == "output.text";
             output_text_entries.push(output_text);
             if output_text {
-                entries.push(append_output_entry(program_mut, "text"));
+                entries
+                    .push(append_output_entry(program_mut, "text").map_err(|error| error.message)?);
                 continue;
             }
             if parsed_expressions {
@@ -366,15 +367,17 @@ impl SourceSession {
                                 member: "repl:text".into(),
                             });
                         }
-                        let entry = program_mut.blocks.len();
-                        program_mut.blocks.push(vec![Instruction::Fail(error)]);
-                        program_mut.metadata.push(BlockMetadata {
-                            source: Some(source),
-                            spans: vec![None],
-                            module_receiver_input: Some(0),
-                            ..Default::default()
-                        });
-                        entry
+                        program_mut
+                            .alloc_block(
+                                vec![Instruction::Fail(error)],
+                                BlockMetadata {
+                                    source: Some(source),
+                                    spans: vec![None],
+                                    module_receiver_input: Some(0),
+                                    ..Default::default()
+                                },
+                            )
+                            .map_err(|error| error.message)?
                     }
                 };
                 entries.push(entry);
@@ -405,8 +408,6 @@ impl SourceSession {
             spans.push(None);
             block.push(Instruction::Return);
             spans.push(None);
-            entries.push(program_mut.blocks.len());
-            program_mut.blocks.push(block);
             let metadata = BlockMetadata {
                 source: Some(Arc::new(RuntimeSource {
                     text: expression.clone().into(),
@@ -418,9 +419,16 @@ impl SourceSession {
                 module_receiver_input: Some(0),
                 ..Default::default()
             };
-            program_mut.metadata.push(metadata);
+            entries.push(
+                program_mut
+                    .alloc_block(block, metadata)
+                    .map_err(|error| error.message)?,
+            );
         }
-        let output_entry = output_profile.map(|_| append_output_entry(program_mut, "bytes"));
+        let output_entry = output_profile
+            .map(|_| append_output_entry(program_mut, "bytes"))
+            .transpose()
+            .map_err(|error| error.message)?;
         let text = source.text();
         let context = EvaluationContext {
             primary_source: Some(Arc::new(RuntimeSource {
@@ -905,20 +913,23 @@ fn error(message: &str) -> RuntimeError {
 }
 
 /// Real ModuleOutput operation, with no synthetic expression or ToString root.
-pub(super) fn append_output_entry(program: &mut Program, member: &str) -> usize {
-    let entry = program.blocks.len();
-    program.blocks.push(vec![
-        Instruction::Input(0),
-        Instruction::GetMember("output".into()),
-        Instruction::CheckModuleOutput,
-        Instruction::GetMember(member.into()),
-        Instruction::Return,
-    ]);
-    program.metadata.push(BlockMetadata {
-        module_receiver_input: Some(0),
-        ..Default::default()
-    });
-    entry
+pub(super) fn append_output_entry(
+    program: &mut Program,
+    member: &str,
+) -> Result<usize, RuntimeError> {
+    program.alloc_block(
+        vec![
+            Instruction::Input(0),
+            Instruction::GetMember("output".into()),
+            Instruction::CheckModuleOutput,
+            Instruction::GetMember(member.into()),
+            Instruction::Return,
+        ],
+        BlockMetadata {
+            module_receiver_input: Some(0),
+            ..Default::default()
+        },
+    )
 }
 
 #[cfg(test)]

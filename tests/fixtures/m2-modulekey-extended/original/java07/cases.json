@@ -1,0 +1,108 @@
+[
+  {
+    "id": "wrapper-triple-fragment-uri",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-07/workspace/wrapper-triple-fragment-uri",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-07/workspace/wrapper-triple-fragment-uri/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "found().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "found().tag"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "found().tag"
+      }
+    ],
+    "inputPaths": [
+      "main.pkl",
+      "parent.pkl",
+      "fragment-target.pkl",
+      "path-target.pkl",
+      "module-plan.tsv",
+      "source-inputs.txt",
+      "source-profiles.tsv",
+      "element-inputs.tsv",
+      "operations.tsv"
+    ],
+    "primarySourceKind": "uri",
+    "primarySourceUri": "memo:/wrapper-request.pkl",
+    "primaryContentsRelativeFile": null,
+    "hasElementContract": "Actual delegate method uses declared positive URI set membership; absent candidates return false. No filesystem or Host search/URI algorithm. Exact actual candidate/key-id/result trace captured.",
+    "scope": "Real URI-only versusCachedModuleKey contents wrapper triple-dot search. Delegate haslocal=true/hierarchical=true/fragmentPaths=true; wrapperdelegateslocal/hierarchical/hasElementbutinheritsfragmentfalse. Member function triple resolution is AST preparation, not lazy runtime lookup. Actual result and candidates determinecoverage; source prediction notexpected."
+  },
+  {
+    "id": "wrapper-triple-fragment-contents",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-07/workspace/wrapper-triple-fragment-contents",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-07/workspace/wrapper-triple-fragment-contents/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "found().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "found().tag"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "found().tag"
+      }
+    ],
+    "inputPaths": [
+      "main.pkl",
+      "parent.pkl",
+      "fragment-target.pkl",
+      "path-target.pkl",
+      "module-plan.tsv",
+      "source-inputs.txt",
+      "source-profiles.tsv",
+      "element-inputs.tsv",
+      "operations.tsv"
+    ],
+    "primarySourceKind": "contents",
+    "primarySourceUri": "memo:/wrapper-request.pkl",
+    "primaryContentsRelativeFile": "parent.pkl",
+    "hasElementContract": "Actual delegate method uses declared positive URI set membership; absent candidates return false. No filesystem or Host search/URI algorithm. Exact actual candidate/key-id/result trace captured.",
+    "scope": "Real URI-only versusCachedModuleKey contents wrapper triple-dot search. Delegate haslocal=true/hierarchical=true/fragmentPaths=true; wrapperdelegateslocal/hierarchical/hasElementbutinheritsfragmentfalse. Member function triple resolution is AST preparation, not lazy runtime lookup. Actual result and candidates determinecoverage; source prediction notexpected."
+  }
+]

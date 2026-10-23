@@ -1,0 +1,17 @@
+org.pkl.core.PklBugException: An unexpected error has occurred. Would you mind filing a bug report?
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:406)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at AdmissionProbe.capture(AdmissionProbe.java:65)
+	at AdmissionProbe.main(AdmissionProbe.java:89)
+Caused by: java.lang.NullPointerException: Cannot invoke "String.lastIndexOf(int)" because "path" is null
+	at org.pkl.core.util.IoUtils.getNameWithoutExtension(IoUtils.java:260)
+	at org.pkl.core.util.IoUtils.inferModuleName(IoUtils.java:311)
+	at org.pkl.core.ast.builder.AstBuilder.create(AstBuilder.java:330)
+	at org.pkl.core.runtime.VmLanguage.initializeModule(VmLanguage.java:111)
+	at org.pkl.core.runtime.ModuleCache.doLoad(ModuleCache.java:184)
+	at org.pkl.core.runtime.ModuleCache.getOrLoad(ModuleCache.java:135)
+	at org.pkl.core.runtime.VmLanguage.loadModule(VmLanguage.java:69)
+	at org.pkl.core.EvaluatorImpl.lambda$doEvaluate$0(EvaluatorImpl.java:469)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:388)
+	... 4 more

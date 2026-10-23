@@ -1,0 +1,92 @@
+[
+  {
+    "id": "parent-cached-e1-uncached-u-e2-independent-errors",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "source",
+        "value": "init1"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "parent().tag"
+      },
+      {
+        "kind": "cache",
+        "value": "off"
+      },
+      {
+        "kind": "source",
+        "value": "init2"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "uncached().tag"
+      },
+      {
+        "kind": "cache",
+        "value": "on"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "parent().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "cached().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "parent().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "cached().tag"
+      },
+      {
+        "kind": "gc",
+        "value": ""
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "parent().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "cached().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "inputPaths": [
+      "main.pkl",
+      "parent.pkl",
+      "state-init1.pkl",
+      "state-init2.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ],
+    "scope": "Actual separate Java exception identities: parent P1 and U first initialization failure E1; uncached U E2 overwrite; cached parent E1 rethrow must not overwrite cached U E2. No Rust-derived expectation."
+  }
+]

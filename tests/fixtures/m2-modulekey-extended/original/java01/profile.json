@@ -1,0 +1,85 @@
+{
+  "jar": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+  "jarSha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+  "jdk": {
+    "executable": "/usr/bin/java",
+    "executableSha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+    "runtimeModulesSha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "releaseSha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+    "properties": {
+      "java.vendor": "Eclipse Adoptium",
+      "java.version": "21.0.12.1",
+      "java.runtime.version": "21.0.12.1+1-LTS",
+      "java.vm.name": "OpenJDK 64-Bit Server VM",
+      "java.vm.version": "21.0.12.1+1-LTS",
+      "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+      "os.name": "Mac OS X",
+      "os.arch": "aarch64",
+      "os.version": "27.0"
+    },
+    "actualProcess": {
+      "command": [
+        "/usr/bin/java",
+        "-XshowSettings:properties",
+        "-version"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/identity/.cache/oracle/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/identity/.cache/oracle/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/identity/.cache/oracle/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/identity/.cache/oracle/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "parentPid": 63664,
+      "startedUnixNs": 1792779216854595000,
+      "pid": 63669,
+      "exitCode": 0,
+      "timedOut": false,
+      "finishedUnixNs": 1792779217057753000,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "edc2068ce4e58e1aae480e3688cfa3b0003e2d35e08761003192b1c2ea8edc42"
+    }
+  },
+  "release": {
+    "version": "0.32.0",
+    "commitId": "e51fb2f",
+    "stdlibModules": "pkl:analyze,pkl:base,pkl:Benchmark,pkl:Command,pkl:DocPackageInfo,pkl:DocsiteInfo,pkl:EvaluatorSettings,pkl:json,pkl:jsonnet,pkl:math,pkl:pklbinary,pkl:platform,pkl:Project,pkl:protobuf,pkl:ref,pkl:reflect,pkl:release,pkl:semver,pkl:settings,pkl:shell,pkl:test,pkl:xml,pkl:yaml"
+  },
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/identity/.cache/oracle/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/identity/.cache/oracle/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/identity/.cache/oracle/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/identity/.cache/oracle/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "jvmOptions": [
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle"
+  ],
+  "sourcePin": "e51fb2f91774265666f94980ec630db794a4db2d;rootinitializedverifiedreferences; copiedexplicitupstreamsourcehashes, noBgitcommand",
+  "worktreeHeadDeclaredByRoot": "5e68c4b (root declaration; no B Git command)",
+  "evaluatorProfile": "Original public Evaluator.evaluateExpressionString with path, uri, create(uri,contents), text(repl:text), and actual StandardSecurityManager; preconfigured/cache=null/colorfalse/emptyenvprops/powertrue. TwoevaluatorsequentialperJVM, twofreshJVMrepeatspercase. Defaultkeysreturnedunchanged byfactoryobserver; customkeyprofileexplicit.",
+  "trustProfile": "SeparatepublicSecurityManagers.defaultTrustLevels/checkImportModule calls;twofreshJVMs/twobatches, noevaluatorandnojar/networkIO.",
+  "eventEncodings": "Newhelper independentlycapturesJavaUTF16andJavaUTF8 forallevents; originalJava06separatelyUTF8only."
+}

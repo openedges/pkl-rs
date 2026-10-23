@@ -1,0 +1,4 @@
+import "memo:/request-opaque-version.pkl"
+stable = 7
+function marker() = Widget.Marker.toString()
+function tagValue() = Widget.tag

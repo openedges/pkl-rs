@@ -1,0 +1,3 @@
+function relative() = import("./child.pkl")
+function absolute() = import("memo:/authored-absolute.pkl")
+stable = 7

@@ -1,0 +1,16 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `selected`.
+
+1 | selected.tag
+    ^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+Deprecated
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at AdmissionProbe.capture(AdmissionProbe.java:65)
+	at AdmissionProbe.main(AdmissionProbe.java:89)

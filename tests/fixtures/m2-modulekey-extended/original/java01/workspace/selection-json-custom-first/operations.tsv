@@ -1,0 +1,9 @@
+main.pkl	stable
+main.pkl	one().label
+FACTORY	builtin
+main.pkl	two().Property.toString()
+main.pkl	import("pkl:json").toString()
+FACTORY	custom
+main.pkl	one().label
+main.pkl	three().label
+main.pkl	stable

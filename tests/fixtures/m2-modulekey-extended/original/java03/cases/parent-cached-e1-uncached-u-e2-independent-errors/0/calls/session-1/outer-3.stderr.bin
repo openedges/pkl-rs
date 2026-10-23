@@ -1,0 +1,18 @@
+–– Pkl Error ––
+Cannot find type `MissingOne`.
+
+1 | p: MissingOne = 1
+       ^^^^^^^^^^
+at u (memo:/u.pkl)
+
+Searched in the following places:
+* Module `u` and any supermodules
+* Module `pkl#base`
+
+2 | p: u.Absent? = null
+       ^^^^^^^^
+at parent (memo:/parent.pkl)
+
+1 | parent().tag
+    ^^^^^^^^
+at  (repl:text)

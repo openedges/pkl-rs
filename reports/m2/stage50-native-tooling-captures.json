@@ -1,0 +1,278 @@
+{
+  "schema": 1,
+  "archives": [
+    {
+      "unit": "A-fixture-tooling",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-a-fixture-tooling.tar.gz",
+      "repositoryRelativePath": "reports/m2/stage50-a-fixture-tooling.tar.gz",
+      "sha256": "c502eedcac8d078744d17f4a0ee44be5d318a328af7361b12411a5426f3fe580",
+      "compressedBytes": 4298676,
+      "archiveInventoryFiles": 120,
+      "originalPayloadFiles": 119,
+      "originalPayloadBytes": 416902,
+      "references": 65936,
+      "separateVerifyPassed": true,
+      "everyMemberReadbackPassed": true
+    },
+    {
+      "unit": "B-helper-reviews",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-b-helper-reviews.tar.gz",
+      "repositoryRelativePath": "reports/m2/stage50-b-helper-reviews.tar.gz",
+      "sha256": "be6ee4877faa6a31a925e77f10b24c37a19fb9093e18bdaf4315dd91bf2a23d9",
+      "compressedBytes": 2596294,
+      "archiveInventoryFiles": 260,
+      "originalPayloadFiles": 259,
+      "originalPayloadBytes": 37970286,
+      "references": 0,
+      "separateVerifyPassed": true,
+      "everyMemberReadbackPassed": true
+    },
+    {
+      "unit": "C-old05-controls",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-c-old05-controls.tar.gz",
+      "repositoryRelativePath": "reports/m2/stage50-c-old05-controls.tar.gz",
+      "sha256": "dfff54d314dc6e4fc49c5a57089a29cafc612f0341713e4f7e00eda85273457c",
+      "compressedBytes": 8675136,
+      "archiveInventoryFiles": 25097,
+      "originalPayloadFiles": 25096,
+      "originalPayloadBytes": 123756179,
+      "references": 7,
+      "separateVerifyPassed": true,
+      "everyMemberReadbackPassed": true
+    },
+    {
+      "unit": "D-storage-candidates",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-d-storage-candidates.tar.gz",
+      "repositoryRelativePath": "reports/m2/stage50-d-storage-candidates.tar.gz",
+      "sha256": "c2157b7bc1add2e72bcf9cd4362fdb5ce475e1814604a8af7c8265b3e7b858b0",
+      "compressedBytes": 9774578,
+      "archiveInventoryFiles": 573,
+      "originalPayloadFiles": 572,
+      "originalPayloadBytes": 48172490,
+      "references": 0,
+      "separateVerifyPassed": true,
+      "everyMemberReadbackPassed": true
+    },
+    {
+      "unit": "E-required-freshness",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-e-required-freshness.tar.gz",
+      "repositoryRelativePath": "reports/m2/stage50-e-required-freshness.tar.gz",
+      "sha256": "4f9bc41c92e4e882963d1dbc6535b5642e56f44a18d5ef853fcbebe6646c7a25",
+      "compressedBytes": 8273070,
+      "archiveInventoryFiles": 51,
+      "originalPayloadFiles": 50,
+      "originalPayloadBytes": 95643019,
+      "references": 0,
+      "separateVerifyPassed": true,
+      "everyMemberReadbackPassed": true
+    },
+    {
+      "unit": "F-native-controls",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-f-native-controls.tar.gz",
+      "repositoryRelativePath": "reports/m2/stage50-f-native-controls.tar.gz",
+      "sha256": "365e7ac7320e3fd2f6e136410c86f206bef2e4063bee1f198087fac825ac8e99",
+      "compressedBytes": 14273298,
+      "archiveInventoryFiles": 63765,
+      "originalPayloadFiles": 63764,
+      "originalPayloadBytes": 107952573,
+      "references": 0,
+      "separateVerifyPassed": true,
+      "everyMemberReadbackPassed": true
+    }
+  ],
+  "totalCompressedBytes": 47891052,
+  "archivesBelow100000000Bytes": true,
+  "originalChanges": 0,
+  "commands": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-evidence-publication-01/gathered/A-fixture-tooling",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-a-fixture-tooling.tar.gz"
+      ],
+      "pid": 69415,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "startedUtc": "2026-10-23T21:35:46.541533+00:00",
+      "finishedUtc": "2026-10-23T21:35:47.853265+00:00",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-a-fixture-tooling.tar.gz"
+      ],
+      "pid": 69434,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "startedUtc": "2026-10-23T21:35:47.854287+00:00",
+      "finishedUtc": "2026-10-23T21:35:48.066472+00:00",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-evidence-publication-01/gathered/B-helper-reviews",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-b-helper-reviews.tar.gz"
+      ],
+      "pid": 69436,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "startedUtc": "2026-10-23T21:35:48.557243+00:00",
+      "finishedUtc": "2026-10-23T21:35:49.133402+00:00",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-b-helper-reviews.tar.gz"
+      ],
+      "pid": 69437,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "startedUtc": "2026-10-23T21:35:49.133854+00:00",
+      "finishedUtc": "2026-10-23T21:35:49.259888+00:00",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-evidence-publication-01/gathered/C-old05-controls",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-c-old05-controls.tar.gz"
+      ],
+      "pid": 69543,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "startedUtc": "2026-10-23T21:36:04.643169+00:00",
+      "finishedUtc": "2026-10-23T21:36:19.365905+00:00",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-c-old05-controls.tar.gz"
+      ],
+      "pid": 69666,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "startedUtc": "2026-10-23T21:36:19.366973+00:00",
+      "finishedUtc": "2026-10-23T21:36:20.298061+00:00",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-evidence-publication-01/gathered/D-storage-candidates",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-d-storage-candidates.tar.gz"
+      ],
+      "pid": 69743,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "startedUtc": "2026-10-23T21:36:26.312492+00:00",
+      "finishedUtc": "2026-10-23T21:36:30.311369+00:00",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-d-storage-candidates.tar.gz"
+      ],
+      "pid": 69774,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "startedUtc": "2026-10-23T21:36:30.312086+00:00",
+      "finishedUtc": "2026-10-23T21:36:30.522039+00:00",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-evidence-publication-01/gathered/E-required-freshness",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-e-required-freshness.tar.gz"
+      ],
+      "pid": 69776,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "startedUtc": "2026-10-23T21:36:31.119875+00:00",
+      "finishedUtc": "2026-10-23T21:36:32.486079+00:00",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-e-required-freshness.tar.gz"
+      ],
+      "pid": 69783,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "startedUtc": "2026-10-23T21:36:32.486688+00:00",
+      "finishedUtc": "2026-10-23T21:36:32.708823+00:00",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-evidence-publication-01/gathered/F-native-controls",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-f-native-controls.tar.gz"
+      ],
+      "pid": 70058,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "startedUtc": "2026-10-23T21:37:10.115414+00:00",
+      "finishedUtc": "2026-10-23T21:37:33.867665+00:00",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/reports/m2/stage50-f-native-controls.tar.gz"
+      ],
+      "pid": 70224,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "startedUtc": "2026-10-23T21:37:33.868807+00:00",
+      "finishedUtc": "2026-10-23T21:37:37.522361+00:00",
+      "exitCode": 0
+    }
+  ],
+  "scope": {
+    "provided212RawMatches": 212,
+    "public212RawMatches": 212,
+    "extended944RawMatches": 936,
+    "ordinaryCompatible": 836,
+    "diagnosticOnly": 100,
+    "internalMismatch": 8,
+    "fullJavaEventCounterGatePassed": false
+  },
+  "GExcluded": true,
+  "fixtureReferences": {
+    "manifestSha256": "eda9449570132c0f76ebf2ea67071a94b6b3a53b29fb9a49dfb982e66ad18bb2",
+    "oldArchiveOriginalFiles": 32964,
+    "derivedTrackedFiles": 4
+  },
+  "publicationGitBindingPendingRoot": true
+}

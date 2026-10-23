@@ -1,0 +1,979 @@
+[
+  {
+    "id": "inference-basename-implicit",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-basename-implicit",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-basename-implicit/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "selected.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "selected.tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "selected.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Factory request URI differs from selected key URI and resolved URI. Actual getter trace distinguishes clause inference and module name inference; no archive I/O for jar URI.",
+    "inputPaths": [
+      "main.pkl",
+      "child.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "inference-basename-explicit",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-basename-explicit",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-basename-explicit/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "named.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "named.tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "named.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Factory request URI differs from selected key URI and resolved URI. Actual getter trace distinguishes clause inference and module name inference; no archive I/O for jar URI.",
+    "inputPaths": [
+      "main.pkl",
+      "child.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "inference-opaque-version-implicit",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-opaque-version-implicit",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-opaque-version-implicit/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "Widget.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "Widget.tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "Widget.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Factory request URI differs from selected key URI and resolved URI. Actual getter trace distinguishes clause inference and module name inference; no archive I/O for jar URI.",
+    "inputPaths": [
+      "main.pkl",
+      "child.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "inference-opaque-version-explicit",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-opaque-version-explicit",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-opaque-version-explicit/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "named.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "named.tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "named.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Factory request URI differs from selected key URI and resolved URI. Actual getter trace distinguishes clause inference and module name inference; no archive I/O for jar URI.",
+    "inputPaths": [
+      "main.pkl",
+      "child.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "inference-fragment-implicit",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-fragment-implicit",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-fragment-implicit/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "fragmentName.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "fragmentName.tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "fragmentName.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Factory request URI differs from selected key URI and resolved URI. Actual getter trace distinguishes clause inference and module name inference; no archive I/O for jar URI.",
+    "inputPaths": [
+      "main.pkl",
+      "child.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "inference-fragment-explicit",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-fragment-explicit",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-fragment-explicit/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "named.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "named.tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "named.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Factory request URI differs from selected key URI and resolved URI. Actual getter trace distinguishes clause inference and module name inference; no archive I/O for jar URI.",
+    "inputPaths": [
+      "main.pkl",
+      "child.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "inference-jar-implicit",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-jar-implicit",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-jar-implicit/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "jarName.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "jarName.tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "jarName.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Factory request URI differs from selected key URI and resolved URI. Actual getter trace distinguishes clause inference and module name inference; no archive I/O for jar URI.",
+    "inputPaths": [
+      "main.pkl",
+      "child.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "inference-jar-explicit",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-jar-explicit",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-jar-explicit/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "named.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "named.tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "named.Marker.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Factory request URI differs from selected key URI and resolved URI. Actual getter trace distinguishes clause inference and module name inference; no archive I/O for jar URI.",
+    "inputPaths": [
+      "main.pkl",
+      "child.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "custom-ref-qualified-types",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "x == null"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "y == null"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "(new ref.Reference {}).tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "(new ref.Domain {}).tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "ref.label"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Actual custom key pkl:ref has ordinary authored Reference/Domain classes; no builtin external specialization.",
+    "inputPaths": [
+      "main.pkl",
+      "custom-ref.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "selection-ref-custom-first",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/selection-ref-custom-first",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/selection-ref-custom-first/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().label"
+      },
+      {
+        "kind": "factory",
+        "value": "builtin"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "two().Reference.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:ref\").toString()"
+      },
+      {
+        "kind": "factory",
+        "value": "custom"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().label"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "three().label"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Switch actual custom factory presence at later import sites; singleton ref versus ordinary json URI cache. Existing successful site remains independent. Some deliberate missing-member errors are observations, not intent failures.",
+    "inputPaths": [
+      "main.pkl",
+      "custom.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "selection-ref-builtin-first",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/selection-ref-builtin-first",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/selection-ref-builtin-first/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "factory",
+        "value": "builtin"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "two().Reference.toString()"
+      },
+      {
+        "kind": "factory",
+        "value": "custom"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().label"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "three().label"
+      },
+      {
+        "kind": "factory",
+        "value": "builtin"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "two().Reference.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Switch actual custom factory presence at later import sites; singleton ref versus ordinary json URI cache. Existing successful site remains independent. Some deliberate missing-member errors are observations, not intent failures.",
+    "inputPaths": [
+      "main.pkl",
+      "custom.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "selection-json-custom-first",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/selection-json-custom-first",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/selection-json-custom-first/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().label"
+      },
+      {
+        "kind": "factory",
+        "value": "builtin"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "two().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:json\").toString()"
+      },
+      {
+        "kind": "factory",
+        "value": "custom"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().label"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "three().label"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Switch actual custom factory presence at later import sites; singleton ref versus ordinary json URI cache. Existing successful site remains independent. Some deliberate missing-member errors are observations, not intent failures.",
+    "inputPaths": [
+      "main.pkl",
+      "custom.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "selection-json-builtin-first",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/selection-json-builtin-first",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/selection-json-builtin-first/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "factory",
+        "value": "builtin"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "two().Property.toString()"
+      },
+      {
+        "kind": "factory",
+        "value": "custom"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().label"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "three().label"
+      },
+      {
+        "kind": "factory",
+        "value": "builtin"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "two().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Switch actual custom factory presence at later import sites; singleton ref versus ordinary json URI cache. Existing successful site remains independent. Some deliberate missing-member errors are observations, not intent failures.",
+    "inputPaths": [
+      "main.pkl",
+      "custom.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "uncached-io-then-cached",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/uncached-io-then-cached",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/uncached-io-then-cached/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "old().tag"
+      },
+      {
+        "kind": "cache",
+        "value": "off"
+      },
+      {
+        "kind": "source",
+        "value": "io"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "fail().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "old().tag"
+      },
+      {
+        "kind": "cache",
+        "value": "on"
+      },
+      {
+        "kind": "source",
+        "value": "good"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "later().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "old().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "later().tag"
+      },
+      {
+        "kind": "cache",
+        "value": "off"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "recovered().tag"
+      },
+      {
+        "kind": "cache",
+        "value": "on"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"memo:/toggle.pkl\").tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "old().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Prior successful site retains receiver while uncached source/init failure overwrites URI caches; later cached lookup replays failure, uncached successful reload recovers. Actual Java decides eager init reach.",
+    "inputPaths": [
+      "main.pkl",
+      "state-good.pkl",
+      "state-init.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "uncached-init-then-cached",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/uncached-init-then-cached",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/uncached-init-then-cached/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "old().tag"
+      },
+      {
+        "kind": "cache",
+        "value": "off"
+      },
+      {
+        "kind": "source",
+        "value": "init"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "fail().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "old().tag"
+      },
+      {
+        "kind": "cache",
+        "value": "on"
+      },
+      {
+        "kind": "source",
+        "value": "good"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "later().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "old().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "later().tag"
+      },
+      {
+        "kind": "cache",
+        "value": "off"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "recovered().tag"
+      },
+      {
+        "kind": "cache",
+        "value": "on"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"memo:/toggle.pkl\").tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "old().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Prior successful site retains receiver while uncached source/init failure overwrites URI caches; later cached lookup replays failure, uncached successful reload recovers. Actual Java decides eager init reach.",
+    "inputPaths": [
+      "main.pkl",
+      "state-good.pkl",
+      "state-init.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "module-source-contents-and-repl",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/module-source-contents-and-repl",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/module-source-contents-and-repl/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied2",
+        "expression": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "source": "uri",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl1",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl2",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl1",
+        "expression": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl2",
+        "expression": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      }
+    ],
+    "scope": "Actual ModuleSource.create(uri,contents), uri-only and text(repl:text) in same evaluator; wrapper caching/delegation and direct output.text path versus synthetic query.",
+    "inputPaths": [
+      "main.pkl",
+      "one.pkl",
+      "two.pkl",
+      "underlying.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "module-source-primary-query-denial",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/module-source-primary-query-denial",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/module-source-primary-query-denial/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "policy",
+        "value": "deny-supplied"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      },
+      {
+        "kind": "policy",
+        "value": "allow"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      },
+      {
+        "kind": "policy",
+        "value": "deny-repl"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl1",
+        "expression": "tag"
+      },
+      {
+        "kind": "policy",
+        "value": "allow"
+      },
+      {
+        "kind": "evaluate",
+        "source": "repl1",
+        "expression": "tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "supplied1",
+        "expression": "tag"
+      }
+    ],
+    "scope": "Primary supplied-wrapper resolve denial versus synthetic query/repl denial, retry and direct output.text fast path. Exact actual policy order preserved.",
+    "inputPaths": [
+      "main.pkl",
+      "one.pkl",
+      "two.pkl",
+      "underlying.pkl",
+      "module-plan.tsv",
+      "source-profiles.tsv",
+      "source-inputs.txt",
+      "operations.tsv"
+    ]
+  }
+]

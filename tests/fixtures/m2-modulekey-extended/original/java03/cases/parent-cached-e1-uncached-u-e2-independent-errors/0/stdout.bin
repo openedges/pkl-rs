@@ -1,0 +1,362 @@
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl resource=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+policy-resolve-module repl:text
+outer-0 success
+source-profile init1
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/parent.pkl
+factory-custom memo:/parent.pkl
+factory-custom-hit memo:/parent.pkl
+key-created id=0 requested=memo:/parent.pkl selected=memo:/parent.pkl cached-snapshot=true
+key-is-cached id=0 memo:/parent.pkl true
+key-get-uri id=0 memo:/parent.pkl
+key-resolve id=0 memo:/parent.pkl
+policy-resolve-module memo:/parent.pkl
+key-resolved id=0 memo:/parent.pkl -> memo:/resolved/parent.pkl
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+load-source id=0 memo:/parent.pkl -> memo:/resolved/parent.pkl load=0 state=init1
+resolved-get-original id=0 memo:/parent.pkl
+key-get-uri id=0 memo:/parent.pkl
+key-get-uri id=0 memo:/parent.pkl
+key-get-uri id=0 memo:/parent.pkl
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+key-get-uri id=0 memo:/parent.pkl
+key-fragment-paths id=0 false
+key-get-uri id=0 memo:/parent.pkl
+key-fragment-paths id=0 false
+factory-custom memo:/u.pkl
+factory-custom-hit memo:/u.pkl
+key-created id=1 requested=memo:/u.pkl selected=memo:/u.pkl cached-snapshot=true
+key-get-uri id=0 memo:/parent.pkl
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+policy-import memo:/resolved/parent.pkl -> memo:/u.pkl
+factory-custom memo:/u.pkl
+factory-custom-hit memo:/u.pkl
+key-created id=2 requested=memo:/u.pkl selected=memo:/u.pkl cached-snapshot=true
+key-is-cached id=2 memo:/u.pkl true
+key-get-uri id=2 memo:/u.pkl
+key-resolve id=2 memo:/u.pkl
+policy-resolve-module memo:/u.pkl
+key-resolved id=2 memo:/u.pkl -> memo:/resolved/u.pkl
+resolved-get-uri id=2 memo:/resolved/u.pkl
+load-source id=2 memo:/u.pkl -> memo:/resolved/u.pkl load=1 state=init1
+resolved-get-original id=2 memo:/u.pkl
+key-get-uri id=2 memo:/u.pkl
+key-get-uri id=2 memo:/u.pkl
+key-get-uri id=2 memo:/u.pkl
+resolved-get-uri id=2 memo:/resolved/u.pkl
+key-get-uri id=2 memo:/u.pkl
+key-fragment-paths id=2 false
+key-get-uri id=2 memo:/u.pkl
+key-get-uri id=2 memo:/u.pkl
+resolved-get-uri id=2 memo:/resolved/u.pkl
+key-get-uri id=0 memo:/parent.pkl
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+outer-1 error org.pkl.core.PklException
+cache-profile false
+source-profile init2
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/u.pkl
+factory-custom memo:/u.pkl
+factory-custom-hit memo:/u.pkl
+key-created id=3 requested=memo:/u.pkl selected=memo:/u.pkl cached-snapshot=false
+key-is-cached id=3 memo:/u.pkl false
+key-resolve id=3 memo:/u.pkl
+policy-resolve-module memo:/u.pkl
+key-resolved id=3 memo:/u.pkl -> memo:/resolved/u.pkl
+load-source id=3 memo:/u.pkl -> memo:/resolved/u.pkl load=2 state=init2
+resolved-get-original id=3 memo:/u.pkl
+key-get-uri id=3 memo:/u.pkl
+key-get-uri id=3 memo:/u.pkl
+key-get-uri id=3 memo:/u.pkl
+resolved-get-uri id=3 memo:/resolved/u.pkl
+key-get-uri id=3 memo:/u.pkl
+key-fragment-paths id=3 false
+key-get-uri id=3 memo:/u.pkl
+key-get-uri id=3 memo:/u.pkl
+resolved-get-uri id=3 memo:/resolved/u.pkl
+outer-2 error org.pkl.core.PklException
+cache-profile true
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/parent.pkl
+factory-custom memo:/parent.pkl
+factory-custom-hit memo:/parent.pkl
+key-created id=4 requested=memo:/parent.pkl selected=memo:/parent.pkl cached-snapshot=true
+key-is-cached id=4 memo:/parent.pkl true
+key-get-uri id=4 memo:/parent.pkl
+outer-3 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/u.pkl
+factory-custom memo:/u.pkl
+factory-custom-hit memo:/u.pkl
+key-created id=5 requested=memo:/u.pkl selected=memo:/u.pkl cached-snapshot=true
+key-is-cached id=5 memo:/u.pkl true
+key-get-uri id=5 memo:/u.pkl
+outer-4 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/parent.pkl
+factory-custom memo:/parent.pkl
+factory-custom-hit memo:/parent.pkl
+key-created id=6 requested=memo:/parent.pkl selected=memo:/parent.pkl cached-snapshot=true
+key-is-cached id=6 memo:/parent.pkl true
+key-get-uri id=6 memo:/parent.pkl
+outer-5 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/u.pkl
+factory-custom memo:/u.pkl
+factory-custom-hit memo:/u.pkl
+key-created id=7 requested=memo:/u.pkl selected=memo:/u.pkl cached-snapshot=true
+key-is-cached id=7 memo:/u.pkl true
+key-get-uri id=7 memo:/u.pkl
+outer-6 error org.pkl.core.PklException
+system-gc-request
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/parent.pkl
+factory-custom memo:/parent.pkl
+factory-custom-hit memo:/parent.pkl
+key-created id=8 requested=memo:/parent.pkl selected=memo:/parent.pkl cached-snapshot=true
+key-is-cached id=8 memo:/parent.pkl true
+key-get-uri id=8 memo:/parent.pkl
+outer-7 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/u.pkl
+factory-custom memo:/u.pkl
+factory-custom-hit memo:/u.pkl
+key-created id=9 requested=memo:/u.pkl selected=memo:/u.pkl cached-snapshot=true
+key-is-cached id=9 memo:/u.pkl true
+key-get-uri id=9 memo:/u.pkl
+outer-8 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-9 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl resource=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+policy-resolve-module repl:text
+outer-0 success
+source-profile init1
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/parent.pkl
+factory-custom memo:/parent.pkl
+factory-custom-hit memo:/parent.pkl
+key-created id=0 requested=memo:/parent.pkl selected=memo:/parent.pkl cached-snapshot=true
+key-is-cached id=0 memo:/parent.pkl true
+key-get-uri id=0 memo:/parent.pkl
+key-resolve id=0 memo:/parent.pkl
+policy-resolve-module memo:/parent.pkl
+key-resolved id=0 memo:/parent.pkl -> memo:/resolved/parent.pkl
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+load-source id=0 memo:/parent.pkl -> memo:/resolved/parent.pkl load=0 state=init1
+resolved-get-original id=0 memo:/parent.pkl
+key-get-uri id=0 memo:/parent.pkl
+key-get-uri id=0 memo:/parent.pkl
+key-get-uri id=0 memo:/parent.pkl
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+key-get-uri id=0 memo:/parent.pkl
+key-fragment-paths id=0 false
+key-get-uri id=0 memo:/parent.pkl
+key-fragment-paths id=0 false
+factory-custom memo:/u.pkl
+factory-custom-hit memo:/u.pkl
+key-created id=1 requested=memo:/u.pkl selected=memo:/u.pkl cached-snapshot=true
+key-get-uri id=0 memo:/parent.pkl
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+policy-import memo:/resolved/parent.pkl -> memo:/u.pkl
+factory-custom memo:/u.pkl
+factory-custom-hit memo:/u.pkl
+key-created id=2 requested=memo:/u.pkl selected=memo:/u.pkl cached-snapshot=true
+key-is-cached id=2 memo:/u.pkl true
+key-get-uri id=2 memo:/u.pkl
+key-resolve id=2 memo:/u.pkl
+policy-resolve-module memo:/u.pkl
+key-resolved id=2 memo:/u.pkl -> memo:/resolved/u.pkl
+resolved-get-uri id=2 memo:/resolved/u.pkl
+load-source id=2 memo:/u.pkl -> memo:/resolved/u.pkl load=1 state=init1
+resolved-get-original id=2 memo:/u.pkl
+key-get-uri id=2 memo:/u.pkl
+key-get-uri id=2 memo:/u.pkl
+key-get-uri id=2 memo:/u.pkl
+resolved-get-uri id=2 memo:/resolved/u.pkl
+key-get-uri id=2 memo:/u.pkl
+key-fragment-paths id=2 false
+key-get-uri id=2 memo:/u.pkl
+key-get-uri id=2 memo:/u.pkl
+resolved-get-uri id=2 memo:/resolved/u.pkl
+key-get-uri id=0 memo:/parent.pkl
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+outer-1 error org.pkl.core.PklException
+cache-profile false
+source-profile init2
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/u.pkl
+factory-custom memo:/u.pkl
+factory-custom-hit memo:/u.pkl
+key-created id=3 requested=memo:/u.pkl selected=memo:/u.pkl cached-snapshot=false
+key-is-cached id=3 memo:/u.pkl false
+key-resolve id=3 memo:/u.pkl
+policy-resolve-module memo:/u.pkl
+key-resolved id=3 memo:/u.pkl -> memo:/resolved/u.pkl
+load-source id=3 memo:/u.pkl -> memo:/resolved/u.pkl load=2 state=init2
+resolved-get-original id=3 memo:/u.pkl
+key-get-uri id=3 memo:/u.pkl
+key-get-uri id=3 memo:/u.pkl
+key-get-uri id=3 memo:/u.pkl
+resolved-get-uri id=3 memo:/resolved/u.pkl
+key-get-uri id=3 memo:/u.pkl
+key-fragment-paths id=3 false
+key-get-uri id=3 memo:/u.pkl
+key-get-uri id=3 memo:/u.pkl
+resolved-get-uri id=3 memo:/resolved/u.pkl
+outer-2 error org.pkl.core.PklException
+cache-profile true
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/parent.pkl
+factory-custom memo:/parent.pkl
+factory-custom-hit memo:/parent.pkl
+key-created id=4 requested=memo:/parent.pkl selected=memo:/parent.pkl cached-snapshot=true
+key-is-cached id=4 memo:/parent.pkl true
+key-get-uri id=4 memo:/parent.pkl
+outer-3 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/u.pkl
+factory-custom memo:/u.pkl
+factory-custom-hit memo:/u.pkl
+key-created id=5 requested=memo:/u.pkl selected=memo:/u.pkl cached-snapshot=true
+key-is-cached id=5 memo:/u.pkl true
+key-get-uri id=5 memo:/u.pkl
+outer-4 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/parent.pkl
+factory-custom memo:/parent.pkl
+factory-custom-hit memo:/parent.pkl
+key-created id=6 requested=memo:/parent.pkl selected=memo:/parent.pkl cached-snapshot=true
+key-is-cached id=6 memo:/parent.pkl true
+key-get-uri id=6 memo:/parent.pkl
+outer-5 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/u.pkl
+factory-custom memo:/u.pkl
+factory-custom-hit memo:/u.pkl
+key-created id=7 requested=memo:/u.pkl selected=memo:/u.pkl cached-snapshot=true
+key-is-cached id=7 memo:/u.pkl true
+key-get-uri id=7 memo:/u.pkl
+outer-6 error org.pkl.core.PklException
+system-gc-request
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/parent.pkl
+factory-custom memo:/parent.pkl
+factory-custom-hit memo:/parent.pkl
+key-created id=8 requested=memo:/parent.pkl selected=memo:/parent.pkl cached-snapshot=true
+key-is-cached id=8 memo:/parent.pkl true
+key-get-uri id=8 memo:/parent.pkl
+outer-7 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl -> memo:/u.pkl
+factory-custom memo:/u.pkl
+factory-custom-hit memo:/u.pkl
+key-created id=9 requested=memo:/u.pkl selected=memo:/u.pkl cached-snapshot=true
+key-is-cached id=9 memo:/u.pkl true
+key-get-uri id=9 memo:/u.pkl
+outer-8 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-03/workspace/parent-cached-e1-uncached-u-e2-independent-errors/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-9 success

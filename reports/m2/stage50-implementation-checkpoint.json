@@ -1,0 +1,224 @@
+{
+  "schema": 1,
+  "recordedUtc": "2026-10-23T21:37:51.713364+00:00",
+  "scope": "Resident executable storage and extended ModuleKey comparisons on frozen Stage50 candidate02; not complete M2 or product/performance compatibility.",
+  "baselineCommit": "d0450699f59174752d4759e4fb9b7e6eeef586fc",
+  "candidate": {
+    "buildJson": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-storage-build02/build.json",
+    "buildSha256": "65724103043d34db82cc43e8e69cb3006ca11c4a899e17eb11f23fffa49b8331",
+    "artifactSha256": "116f301c06b4c4cc25e2e4609d263e45a12dc61c49ade796c73b0c0cc33a39b6",
+    "sourceMapSha256": "2db9af148a8bffd6def9996629383c98f792f88397651000a72cd11e32598560",
+    "sourceCount": 227,
+    "runtimeSourceChangesFromStage49": [
+      "crates/pkl-runtime/src/evaluation/session.rs",
+      "crates/pkl-runtime/src/evaluation.rs",
+      "crates/pkl-runtime/src/vm/code_storage.rs",
+      "crates/pkl-runtime/src/vm/collections.rs",
+      "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+      "crates/pkl-runtime/src/vm/modules.rs",
+      "crates/pkl-runtime/src/vm/query_lifecycle.rs",
+      "crates/pkl-runtime/src/vm/session_expressions.rs",
+      "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+      "crates/pkl-runtime/src/vm/type_resolution.rs",
+      "crates/pkl-runtime/src/vm/uri_resolution.rs",
+      "crates/pkl-runtime/src/vm.rs"
+    ],
+    "adapterPins": {
+      "crates/pkl-runtime/examples/stage49_modulekey_probe.rs": "9297e1a47c30c995bdef0557ffb2d02129de287c7ac59467f838b1c5ffad3f31",
+      "crates/pkl-runtime/examples/stage49_modulekey_probe/module_keys.rs": "b906f9644f1eabbabedb79072e6c5011ada2c42c3524725663564c4a2d70532d",
+      "crates/pkl-runtime/examples/stage48_policy_probe/file_host.rs": "3476a12c649d22e946b9913e4293f996f124dedec8c32ece75c9453fccfe7b3b"
+    },
+    "producerRecord": {
+      "command": [
+        "cargo",
+        "build",
+        "-p",
+        "pkl-runtime",
+        "--example",
+        "stage49_modulekey_probe",
+        "--locked"
+      ],
+      "pid": 58307,
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+      "exitCode": 0,
+      "elapsedSeconds": 1.99070405960083,
+      "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+      "sourceStable": true,
+      "sourceCount": 227,
+      "artifact": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-storage-build02/stage49_modulekey_probe",
+      "artifactSha256": "116f301c06b4c4cc25e2e4609d263e45a12dc61c49ade796c73b0c0cc33a39b6",
+      "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)\nbinary: rustc\ncommit-hash: 48a229ceaefd4985c50990b14116b6d856af0985\ncommit-date: 2026-09-01\nhost: aarch64-apple-darwin\nrelease: 1.98.1\nLLVM version: 22.1.8\n",
+      "scope": "Stage50 resident executable segments and monotonic logical addresses. Prepared code stays in a fixed prefix; runtime compilation allocates and retires complete owned segments, including public-operation entries. Includes multi-segment owners, transaction rollback, COW-preserving lookup and selective mutation of import instructions across clause/triple preparation. This build freezes source and the existing native ModuleKey probe only. Required Rust checks, Java comparisons and actual platforms are separate; no whole-memory or performance claim.",
+      "status": "CLOSED"
+    },
+    "qualification": "Immutable selected source copies independently rehashed. Actual build/source stability is recorded by the pinned producer; this is not a complete Git checkout or performance proof."
+  },
+  "implementation": [
+    "Fixed prepared prefix plus resident dynamic segments; committed logical addresses are not reused.",
+    "Reachability retires complete segments and independent public-operation entries, preserving escaped declarations/closures and suspended frames.",
+    "Transactional compile rollback restores replaced module units and metadata.",
+    "URI preparation mutates only blocks with actual URI changes, preserving unrelated snapshot owners."
+  ],
+  "storageValidation": {
+    "focusedTests": 190,
+    "ordinaryAndReentrantEvaluationCounts": [
+      20,
+      200
+    ],
+    "measures": "Resident segment counts, slots, capacities, nested storage, source bytes and selected heap/declaration counts.",
+    "wholeProcessRssMeasured": false,
+    "javaPerformanceTargetClaimed": false,
+    "report": {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-code-storage-focused-02/report.json",
+      "sha256": "1951f3a4c9b8871b38377ab39f4133086805cefaca1ea97183bd44eaceeb2d37"
+    },
+    "independentReview": {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-code-storage-c-review-02/report.json",
+      "sha256": "32062cb2e25a8e338c34c8d3afafeef608fa4691db278136baf9bc79edc8b317"
+    }
+  },
+  "requiredRust": {
+    "sourceCount": 86455,
+    "sourceStable": true,
+    "checks": [
+      {
+        "index": 0,
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "pid": 58651,
+        "exitCode": 0,
+        "elapsedSeconds": 0.9636602401733398
+      },
+      {
+        "index": 1,
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "pid": 58672,
+        "exitCode": 0,
+        "elapsedSeconds": 1.0643529891967773
+      },
+      {
+        "index": 2,
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "pid": 58679,
+        "exitCode": 0,
+        "elapsedSeconds": 1.7402329444885254
+      },
+      {
+        "index": 3,
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "pid": 58750,
+        "exitCode": 0,
+        "elapsedSeconds": 189.81772112846375
+      },
+      {
+        "index": 4,
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "pid": 61621,
+        "exitCode": 0,
+        "elapsedSeconds": 2.0952630043029785
+      }
+    ],
+    "report": {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-required-rust-02/report.json",
+      "sha256": "3ccdb2811b536d578882497c4bb4e81d88078feda056e496e77178b7f0950ada"
+    },
+    "wrapperSession": 44569,
+    "exitCode": 0,
+    "terminalChunk": "96b9ad"
+  },
+  "native": {
+    "report": {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-native-controls-build02-01/report.json",
+      "sha256": "9fc79cfdda684ba433b0b435f2fe27453693263342c49bd08656eb2cfedaf52f"
+    },
+    "independentAudit": {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-native-build02-c-audit-02/report.json",
+      "sha256": "1740c7248597e4b5b3d2edd3769a124396a0529a88af660b8d7ad19b075a062b"
+    },
+    "provided212": {
+      "calls": 212,
+      "rawMatches": 212,
+      "ordinaryCompatible": 212
+    },
+    "public212": {
+      "calls": 212,
+      "rawMatches": 212,
+      "ordinaryCompatible": 212
+    },
+    "extended944": {
+      "calls": 944,
+      "rawMatches": 936,
+      "ordinaryCompatible": 836,
+      "intentNotReachedDiagnosticMatches": 100,
+      "internalBoundaryMismatches": 8
+    },
+    "processes": 212,
+    "acquisitionIntegrityPassed": true,
+    "fullJavaEventsCountersPassed": false,
+    "repeatedProfilesAreNotDistinctFeatures": true
+  },
+  "platformCaptures": "stage50-platform-captures.json",
+  "nativeToolingCaptures": "stage50-native-tooling-captures.json",
+  "m1NodeProvenanceQualification": "M1 launches bare node and records child version, not child execPath/hash. Parent observes the executable path/hash and unchanged environment; exact child executable identity is inferred. All eleven integration commands explicitly launch the recorded absolute Node path.",
+  "inventory": {
+    "rows": 4527,
+    "ready": 3664,
+    "unimplemented": 823,
+    "unmapped": 40,
+    "requirements": 475,
+    "countInterpretation": "Overlapping accounting rows, not distinct features or completion percentage. Only source hashes refreshed."
+  },
+  "fullSelectedRegression": {
+    "stage50Acquired": false,
+    "stage48And49": "Separate fixed-commit acquisitions; never inherited as Stage50 results.",
+    "latestPublishedStage47": {
+      "matches": 3652,
+      "selected": 3664,
+      "unsupported": 2,
+      "mismatches": 9,
+      "oracleErrors": 1
+    }
+  },
+  "historicalFailuresPreserved": [
+    "Fixture exporter and test expectations",
+    "Provider error-classification gap",
+    "Old Stage49-artifact GC observation comparison",
+    "Earlier audit assumptions",
+    "Candidate01 unnecessary copy-on-write and Clippy failures"
+  ],
+  "fullM2Complete": false,
+  "hostedCiClaimed": false,
+  "releasePlatformCoverageComplete": false,
+  "performanceTargetClaimed": false
+}

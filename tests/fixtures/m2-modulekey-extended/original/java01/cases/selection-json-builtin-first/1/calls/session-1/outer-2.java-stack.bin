@@ -1,0 +1,19 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `label` in module `pkl.json`.
+
+1 | one().label
+    ^^^^^^^^^^^
+at  (repl:text)
+
+Available properties in module `pkl.json`:
+Parser
+Property
+Value
+output
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at AdmissionProbe.capture(AdmissionProbe.java:65)
+	at AdmissionProbe.main(AdmissionProbe.java:89)

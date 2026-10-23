@@ -100,17 +100,22 @@ pub fn scalar_expressions_text_with_options(
     let program_mut = std::sync::Arc::make_mut(&mut program);
     // The Java expression-string boundary converts a returned Reference through
     // its domain renderer and a strict Map/Set through its non-forcing value renderer.
-    let stringify = program_mut.blocks.len();
-    program_mut.blocks.push(vec![
-        Instruction::Input(0),
-        Instruction::ToString,
-        Instruction::Return,
-    ]);
-    program_mut.metadata.push(BlockMetadata::default());
+    let stringify = program_mut
+        .alloc_block(
+            vec![
+                Instruction::Input(0),
+                Instruction::ToString,
+                Instruction::Return,
+            ],
+            BlockMetadata::default(),
+        )
+        .map_err(|error| error.message)?;
     let output_text = expressions
         .iter()
         .any(|expression| expression == "output.text")
-        .then(|| session::append_output_entry(program_mut, "text"));
+        .then(|| session::append_output_entry(program_mut, "text"))
+        .transpose()
+        .map_err(|error| error.message)?;
     let entry = program.entry;
     std::sync::Arc::make_mut(&mut program)
         .register_primary_source(

@@ -1,0 +1,5 @@
+function old() = import("memo:/toggle.pkl")
+function fail() = import("memo:/toggle.pkl")
+function later() = import("memo:/toggle.pkl")
+function recovered() = import("memo:/toggle.pkl")
+stable = 7

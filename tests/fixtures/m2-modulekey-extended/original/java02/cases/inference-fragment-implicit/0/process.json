@@ -1,0 +1,124 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/runtime-private/inference-fragment-implicit/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/runtime-private/inference-fragment-implicit/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+    "AdmissionProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-fragment-implicit",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/cases/inference-fragment-implicit/0/calls",
+    "allow",
+    "main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-fragment-implicit",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/runtime-private/inference-fragment-implicit/0/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/runtime-private/inference-fragment-implicit/0/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/runtime-private/inference-fragment-implicit/0/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/runtime-private/inference-fragment-implicit/0/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 66331,
+  "startedUnixNs": 1792779446811948000,
+  "pid": 66690,
+  "exitCode": 0,
+  "timedOut": false,
+  "finishedUnixNs": 1792779448716442000,
+  "stdoutSha256": "f9b4cb13c29995f98679feef63d89b94bba186ecc37ea4e2a2ba4db183bfccf0",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "case": "inference-fragment-implicit",
+  "repeat": 0,
+  "workspaceBefore": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "bb27b895ee69bfd32500cf1fc8730e80300e18c1fbf6a2e0f350437c0626fb82",
+      "bytes": 137,
+      "mode": 420
+    },
+    "child.pkl": {
+      "kind": "regular",
+      "sha256": "e2d6799f0fc284bb8ca3ec92f8c8212f1d899dbc107079f2238796589c5f4477",
+      "bytes": 40,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "58abfccc6fe8a17336ae293e3be94bcaccafc4ff9f490b1958c3aedfde776779",
+      "bytes": 116,
+      "mode": 420
+    },
+    "source-profiles.tsv": {
+      "kind": "regular",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420
+    },
+    "source-inputs.txt": {
+      "kind": "regular",
+      "sha256": "85dde164a7075c61d966a75181b3aaf3d81f3a9a37404c1e7d6a1e536a9ac17b",
+      "bytes": 19,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "fa7f90ad3958dda856f7e1aff68c347689534cfe8352d459ba4de2a3791a00d7",
+      "bytes": 88,
+      "mode": 420
+    }
+  },
+  "workspaceAfter": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "bb27b895ee69bfd32500cf1fc8730e80300e18c1fbf6a2e0f350437c0626fb82",
+      "bytes": 137,
+      "mode": 420
+    },
+    "child.pkl": {
+      "kind": "regular",
+      "sha256": "e2d6799f0fc284bb8ca3ec92f8c8212f1d899dbc107079f2238796589c5f4477",
+      "bytes": 40,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "58abfccc6fe8a17336ae293e3be94bcaccafc4ff9f490b1958c3aedfde776779",
+      "bytes": 116,
+      "mode": 420
+    },
+    "source-profiles.tsv": {
+      "kind": "regular",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420
+    },
+    "source-inputs.txt": {
+      "kind": "regular",
+      "sha256": "85dde164a7075c61d966a75181b3aaf3d81f3a9a37404c1e7d6a1e536a9ac17b",
+      "bytes": 19,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "fa7f90ad3958dda856f7e1aff68c347689534cfe8352d459ba4de2a3791a00d7",
+      "bytes": 88,
+      "mode": 420
+    }
+  }
+}

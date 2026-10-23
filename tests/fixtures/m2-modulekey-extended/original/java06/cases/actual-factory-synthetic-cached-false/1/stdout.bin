@@ -1,0 +1,112 @@
+source-profile one
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=one capture=0
+policy-resolve-module repl:text
+outer-0 success
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=one capture=1
+policy-resolve-module repl:text
+outer-1 success
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=one capture=2
+policy-resolve-module memo:/synthetic-contents.pkl
+policy-resolve-module repl:text
+outer-2 success
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=one capture=3
+policy-resolve-module repl:text
+outer-3 success
+factory-custom memo:/synthetic-uri.pkl
+factory-custom-hit memo:/synthetic-uri.pkl
+factory-synthetic-return requested=memo:/synthetic-uri.pkl selected-input=memo:/synthetic-uri.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=one capture=4
+policy-resolve-module memo:/synthetic-uri.pkl
+policy-resolve-module repl:text
+outer-4 success
+source-profile two
+factory-custom memo:/synthetic-uri.pkl
+factory-custom-hit memo:/synthetic-uri.pkl
+factory-synthetic-return requested=memo:/synthetic-uri.pkl selected-input=memo:/synthetic-uri.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=two capture=5
+policy-resolve-module memo:/synthetic-uri.pkl
+policy-resolve-module repl:text
+outer-5 success
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=two capture=6
+policy-resolve-module memo:/synthetic-contents.pkl
+policy-resolve-module repl:text
+outer-6 success
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=two capture=7
+policy-resolve-module repl:text
+outer-7 success
+system-gc-request
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=two capture=8
+outer-8 success
+factory-custom memo:/synthetic-uri.pkl
+factory-custom-hit memo:/synthetic-uri.pkl
+factory-synthetic-return requested=memo:/synthetic-uri.pkl selected-input=memo:/synthetic-uri.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=two capture=9
+policy-resolve-module memo:/synthetic-uri.pkl
+outer-9 success
+source-profile one
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=one capture=0
+policy-resolve-module repl:text
+outer-0 success
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=one capture=1
+policy-resolve-module repl:text
+outer-1 success
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=one capture=2
+policy-resolve-module memo:/synthetic-contents.pkl
+policy-resolve-module repl:text
+outer-2 success
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=one capture=3
+policy-resolve-module repl:text
+outer-3 success
+factory-custom memo:/synthetic-uri.pkl
+factory-custom-hit memo:/synthetic-uri.pkl
+factory-synthetic-return requested=memo:/synthetic-uri.pkl selected-input=memo:/synthetic-uri.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=one capture=4
+policy-resolve-module memo:/synthetic-uri.pkl
+policy-resolve-module repl:text
+outer-4 success
+source-profile two
+factory-custom memo:/synthetic-uri.pkl
+factory-custom-hit memo:/synthetic-uri.pkl
+factory-synthetic-return requested=memo:/synthetic-uri.pkl selected-input=memo:/synthetic-uri.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=two capture=5
+policy-resolve-module memo:/synthetic-uri.pkl
+policy-resolve-module repl:text
+outer-5 success
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=two capture=6
+policy-resolve-module memo:/synthetic-contents.pkl
+policy-resolve-module repl:text
+outer-6 success
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=two capture=7
+policy-resolve-module repl:text
+outer-7 success
+system-gc-request
+factory-custom memo:/synthetic-contents.pkl
+factory-custom-hit memo:/synthetic-contents.pkl
+factory-synthetic-return requested=memo:/synthetic-contents.pkl selected-input=memo:/synthetic-contents.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=two capture=8
+outer-8 success
+factory-custom memo:/synthetic-uri.pkl
+factory-custom-hit memo:/synthetic-uri.pkl
+factory-synthetic-return requested=memo:/synthetic-uri.pkl selected-input=memo:/synthetic-uri.pkl cached-config=false class=org.pkl.core.module.ModuleKeys$Synthetic source-state=two capture=9
+policy-resolve-module memo:/synthetic-uri.pkl
+outer-9 success

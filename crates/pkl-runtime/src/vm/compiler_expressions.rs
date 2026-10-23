@@ -496,7 +496,7 @@ impl Compiler<'_> {
                             } else {
                                 expression.span
                             }),
-                        );
+                        )?;
                         self.program.metadata[block].value_span =
                             Some(self.executable_value_span(body));
                         self.member = previous;
@@ -665,7 +665,7 @@ impl Compiler<'_> {
                             );
                         }
                         instructions.push(Instruction::Return);
-                        let code = self.program.blocks.len();
+                        let code = self.program.blocks.next_id();
                         let header_span = Span::new(
                             member.span.start,
                             member
@@ -673,7 +673,7 @@ impl Compiler<'_> {
                                 .as_ref()
                                 .map_or(member.name_span.end, |ty| ty.span.end),
                         );
-                        self.block(instructions, Some(header_span));
+                        self.block(instructions, Some(header_span))?;
                         self.program.metadata[code].hidden = member
                             .modifiers
                             .iter()
@@ -736,7 +736,7 @@ impl Compiler<'_> {
                             ),
                         };
                         self.constructor_parameters_bound = previous_bound;
-                        self.program.objects.push(vec![compiled.clone()]);
+                        self.program.objects.try_push(vec![compiled.clone()])?;
                         self.type_scopes.pop();
                         self.type_scopes.push(collection_scope);
                         pending_spans = pending;

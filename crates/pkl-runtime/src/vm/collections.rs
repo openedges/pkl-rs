@@ -2621,7 +2621,7 @@ impl Compiler<'_> {
             }
         }
         code.push(Instruction::Return);
-        let block = self.block(code, Some(span));
+        let block = self.block(code, Some(span))?;
         self.program.metadata[block].member_span = Some(span);
         self.program.metadata[block].value_span = Some(if self.constant_member_body(value) {
             self.constant_member_value_span(

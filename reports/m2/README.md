@@ -1,5 +1,43 @@
 # M2 language evidence
 
+The [Stage50 implementation checkpoint](stage50-implementation-checkpoint.json)
+reclaims unreachable dynamic code segments, their directory entries and nested
+capacities while preserving committed logical addresses. Active frames, escaped
+declarations and closures retain their executable owners. Compilation rollback
+restores replaced module state, and URI preparation avoids copying unchanged
+owners held by program snapshots. Storage tests compare 20 and 200 ordinary and
+reentrant uncached evaluations. These are retained-storage checks, not peak RSS
+measurements or proof of the Java performance targets.
+
+All five required Rust checks pass on candidate02, with 86,455 recorded inputs
+unchanged. The focused storage suite passes 190 tests. Native, Node and Chromium
+each match 212 API calls under both supplied-primary and public-URI profiles.
+The extended comparison now runs on all three targets: 936 of 944 raw outcomes
+match, comprising 836 intended ordinary operations and 100 diagnostic-only
+observations that did not reach the intended feature. Eight Java internal-error
+boundaries remain unmatched. Full Java event/counter compatibility remains
+unproved and its strict gates fail. Repeated profiles and targets are not
+independent feature counts.
+
+Actual Node and Chromium each retain 860 renderer, 1,008 Resource and 252
+module-preparation matches. Loader and inheritance API/callback payloads match,
+but 12 loader and six inheritance executions per target retain strict
+request-counter mismatches. ModuleInfo retains 12 internal boundaries and 56
+unexecuted shared-evaluator follow-ups per target; guest-catch separately records
+24 full ordinary, ten constructor-only and eight partial terminal executions.
+The primitive experiment matches 6,078 cases across the shared targets and
+6,076 against Java, preserving both regex failures.
+
+The [native/tooling captures](stage50-native-tooling-captures.json) and
+[platform captures](stage50-platform-captures.json) preserve original failed
+attempts, source snapshots, actual runtime artifacts, raw outcomes and independent
+reviews. Earlier Stage49-artifact provider controls retain their original
+identity and are separate from candidate02 results. The complete selected
+language and persistent-evaluator regression for Stage50 remains to be acquired.
+Stage48/49 acquisitions and Stage47's published result do not verify Stage50.
+**M2, complete products, release platform coverage and performance targets remain
+incomplete.**
+
 The [Stage49 implementation checkpoint](stage49-implementation-checkpoint.json)
 adds selected/resolved key identities, independent cache-policy requests, eager
 import-clause factory selection, public ModuleSource operations, and traced

@@ -97,7 +97,7 @@ fn append(
     let unit = crate::modules::UnitId(
         program
             .units
-            .len()
+            .next_id()
             .try_into()
             .map_err(|_| invalid("module unit limit"))?,
     );
@@ -147,7 +147,7 @@ fn append(
     }
     code.push(Instruction::ToString);
     code.push(Instruction::Return);
-    let entry = compiler.block(code, None);
+    let entry = compiler.block(code, None)?;
     compiler.program.metadata[entry].module_receiver_input = Some(0);
     // AstBuilder uses the synthetic ModuleInfo name for nested lexical nodes;
     // the expression's SimpleRootNode itself has an empty name.
@@ -158,7 +158,7 @@ fn append(
         .extend(compiler.constraint_origins);
     // This source unit owns bytecode provenance only. It shares the existing
     // module receiver and never runs an initializer or publishes a cache entry.
-    compiler.program.units.push(modules::ModuleUnit {
+    compiler.program.units.try_push(modules::ModuleUnit {
         id: unit,
         identity: Some(identity.clone()),
         standard_library: false,
@@ -175,7 +175,7 @@ fn append(
         class_id: primary.class_id,
         mode: modules::ModuleMode::Plain,
         modifiers: 0,
-    });
+    })?;
     Ok(entry)
 }
 

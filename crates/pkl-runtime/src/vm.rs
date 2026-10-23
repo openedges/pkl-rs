@@ -13,7 +13,9 @@ use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, RuntimeFrame, V
 pub(crate) mod amendment;
 pub(crate) mod annotations;
 pub(crate) mod builtins;
+mod code_storage;
 pub mod collections;
+pub use code_storage::CodeStorage;
 mod compiler_expressions;
 mod converters;
 pub(crate) mod equality;
@@ -805,17 +807,17 @@ pub(crate) struct LetScope {
 
 #[derive(Clone, Debug)]
 pub struct Program {
-    pub(crate) units: Vec<modules::ModuleUnit>,
+    pub(crate) units: CodeStorage<modules::ModuleUnit>,
     next_declaration: usize,
-    type_recipes: Vec<type_resolution::TypeRecipe>,
+    type_recipes: CodeStorage<type_resolution::TypeRecipe>,
     alias_definitions: BTreeMap<usize, type_resolution::AliasDefinition>,
     pub module_name: Arc<str>,
     pub module_template: Option<usize>,
     /// Imports, classes and aliases exist before module annotation evaluation.
     pub(crate) initial_module_members: Vec<Member>,
-    pub blocks: Vec<Vec<Instruction>>,
-    pub metadata: Vec<BlockMetadata>,
-    pub objects: Vec<Vec<Member>>,
+    pub blocks: CodeStorage<Vec<Instruction>>,
+    pub metadata: CodeStorage<BlockMetadata>,
+    pub objects: CodeStorage<Vec<Member>>,
     builtin_objects: Vec<Vec<Member>>,
     pub entry: usize,
     pub(crate) reference_render_block: usize,
@@ -899,16 +901,16 @@ impl Program {
         let (amended_function_block, identity_mixin_block) =
             amendment::blocks(&mut blocks, &mut metadata);
         Self {
-            units: Vec::new(),
+            units: CodeStorage::default(),
             next_declaration: 0,
-            type_recipes: Vec::new(),
+            type_recipes: CodeStorage::default(),
             alias_definitions: BTreeMap::new(),
             module_name: Arc::from(""),
             module_template: None,
             initial_module_members: Vec::new(),
-            metadata,
-            blocks,
-            objects: Vec::new(),
+            metadata: metadata.into(),
+            blocks: blocks.into(),
+            objects: CodeStorage::default(),
             builtin_objects: objects,
             entry: 0,
             reference_render_block,
@@ -924,6 +926,44 @@ impl Program {
             builtin_members,
             constraint_origins: BTreeMap::new(),
         }
+    }
+
+    fn seal_code_segment(&mut self) {
+        self.blocks.seal();
+        self.metadata.seal();
+        self.objects.seal();
+        self.units.seal();
+        self.type_recipes.seal();
+    }
+
+    fn align_metadata(&mut self) -> Result<(), RuntimeError> {
+        let missing = self.metadata.next_id() < self.blocks.next_id();
+        while self.metadata.next_id() < self.blocks.next_id() {
+            self.metadata.try_push(BlockMetadata::default())?;
+        }
+        if self.metadata.next_id() != self.blocks.next_id() {
+            return Err(invalid("misaligned executable metadata"));
+        }
+        if missing {
+            // Missing raw-adapter provenance precedes the current compiler
+            // transaction and must not share its retirement segment.
+            self.metadata.seal();
+        }
+        Ok(())
+    }
+
+    pub(crate) fn alloc_block(
+        &mut self,
+        code: Vec<Instruction>,
+        metadata: BlockMetadata,
+    ) -> Result<usize, RuntimeError> {
+        self.align_metadata()?;
+        self.blocks.check_allocation()?;
+        self.metadata.check_allocation()?;
+        let id = self.blocks.try_push(code)?;
+        let metadata_id = self.metadata.try_push(metadata)?;
+        debug_assert_eq!(id, metadata_id);
+        Ok(id)
     }
 }
 
@@ -1096,7 +1136,7 @@ impl Vm {
         let registration = if let Some(source) = &context.primary_source {
             if program
                 .units
-                .first()
+                .get(0)
                 .is_some_and(|unit| unit.identity.is_none())
             {
                 Arc::make_mut(&mut program).register_primary_source(
@@ -1200,7 +1240,7 @@ impl Vm {
     ) -> Result<(), RuntimeError> {
         self.available()?;
         self.code_validation.clone()?;
-        if entry >= self.program.blocks.len() {
+        if self.program.blocks.get(entry).is_none() {
             return Err(invalid("invalid entry block"));
         }
         for input in &inputs {
@@ -2431,7 +2471,7 @@ impl Vm {
                 self.stack.push(value.clone());
                 return Ok(());
             }
-        } else if member.code >= self.program.blocks.len() {
+        } else if self.program.blocks.get(member.code).is_none() {
             return Err(invalid("invalid member block"));
         }
         if self.frames.len() >= 4096 {
@@ -4510,11 +4550,10 @@ impl Vm {
                     .ok_or_else(|| invalid("invalid class handle"))?;
                 self.check_class_instantiable(class)?;
                 let members = if builtin {
-                    &self.program.builtin_objects
+                    self.program.builtin_objects.get(template)
                 } else {
-                    &self.program.objects
+                    self.program.objects.get(template)
                 }
-                .get(template)
                 .ok_or_else(|| invalid("invalid instance template"))?
                 .clone();
                 self.validate_object_members(parent, &members)?;
@@ -4702,7 +4741,7 @@ impl Vm {
                 method,
                 capture_custom_this,
             } => {
-                if block >= self.program.blocks.len() {
+                if self.program.blocks.get(block).is_none() {
                     return Err(invalid("invalid function block"));
                 }
                 let environment = self
@@ -5386,6 +5425,11 @@ fn compile_module_configured(
 ) -> Result<Arc<Program>, RuntimeError> {
     let mut program = Program::new(Vec::new());
     compile_unit_into(&mut program, resolved, options, instrument, None, None)?;
+    program.blocks.freeze_prepared_prefix();
+    program.metadata.freeze_prepared_prefix();
+    program.objects.freeze_prepared_prefix();
+    program.units.freeze_prepared_prefix();
+    program.type_recipes.freeze_prepared_prefix();
     Ok(Arc::new(program))
 }
 
@@ -5471,18 +5515,13 @@ fn compile_unit_body_at(
     source: Option<Arc<crate::value::RuntimeSource>>,
     identity: Option<crate::modules::ModuleIdentity>,
 ) -> Result<crate::modules::UnitId, RuntimeError> {
-    // Development adapters may append raw blocks without source metadata.
-    // Preserve their missing provenance while aligning the append-only arenas
-    // before compiling an imported or standard-library unit into this program.
-    if program.metadata.len() < program.blocks.len() {
-        program
-            .metadata
-            .resize_with(program.blocks.len(), BlockMetadata::default);
-    }
+    // Raw development blocks may omit provenance, but their logical IDs
+    // still share the same address space as compiler-created metadata.
+    program.align_metadata()?;
     let unit = replacement.unwrap_or(crate::modules::UnitId(
         program
             .units
-            .len()
+            .next_id()
             .try_into()
             .map_err(|_| invalid("module unit limit"))?,
     ));
@@ -5655,7 +5694,7 @@ fn compile_unit_body_at(
     entry.push(Instruction::FinishModule);
     compiler.type_scopes.pop();
     entry.push(Instruction::Return);
-    let entry = compiler.block(entry, None);
+    let entry = compiler.block(entry, None)?;
     if unit.0 == 0 {
         compiler.program.entry = entry;
         compiler.program.initial_module_members = initial_module_members.clone();
@@ -5689,7 +5728,7 @@ fn compile_unit_body_at(
     if let Some(id) = replacement {
         compiler.program.units[id.0 as usize] = built_unit;
     } else {
-        compiler.program.units.push(built_unit);
+        compiler.program.units.try_push(built_unit)?;
     }
     Ok(unit)
 }
@@ -5954,7 +5993,7 @@ impl Compiler<'_> {
                         Instruction::Fail(error.clone()),
                         error.span.unwrap_or(member.span),
                     );
-                    let block = self.block(code, Some(member.name_span));
+                    let block = self.block(code, Some(member.name_span))?;
                     self.program.metadata[block].initialization_error = Some(error);
                     result.push(Member {
                         flags: Member::declaration_flags(member),
@@ -5977,8 +6016,7 @@ impl Compiler<'_> {
                 Err(error) => return Err(error),
             }
         }
-        let index = self.program.objects.len();
-        self.program.objects.push(result);
+        let index = self.program.objects.try_push(result)?;
         self.type_scopes.pop();
         Ok(index)
     }
@@ -6057,7 +6095,7 @@ impl Compiler<'_> {
             );
         }
         instructions.push(Instruction::Return);
-        let code = self.program.blocks.len();
+        let code = self.program.blocks.next_id();
         let header_span = Span::new(
             member.span.start,
             member
@@ -6065,7 +6103,7 @@ impl Compiler<'_> {
                 .as_ref()
                 .map_or(member.name_span.end, |ty| ty.span.end),
         );
-        self.block(instructions, Some(header_span));
+        self.block(instructions, Some(header_span))?;
         self.program.metadata[code].hidden = member
             .modifiers
             .iter()
@@ -6127,35 +6165,35 @@ impl Compiler<'_> {
         })
     }
 
-    fn block(&mut self, code: Code, declaration: Option<Span>) -> usize {
-        let index = self.program.blocks.len();
-        self.program.blocks.push(code.instructions);
-        self.program.metadata.push(BlockMetadata {
-            unit: Some(self.unit),
-            module_receiver_input: None,
-            source: self.source.clone(),
-            hidden: false,
-            stdlib_bootstrap: false,
-            constant_member: false,
-            spans: code.spans,
-            member: self.member.clone(),
-            declaration,
-            member_span: None,
-            value_span: None,
-            property_typecheck: None,
-            inline_property_typecheck: false,
-            amendment: false,
-            fixed_span: None,
-            const_span: None,
-            initialization_error: None,
-            method_signature: None,
-            method_arities: code.method_arities,
-            let_scopes: code.let_scopes,
-            constraint_root: None,
-            inline_constraint: false,
-            type_casts: code.type_casts,
-        });
-        index
+    fn block(&mut self, code: Code, declaration: Option<Span>) -> Result<usize, RuntimeError> {
+        self.program.alloc_block(
+            code.instructions,
+            BlockMetadata {
+                unit: Some(self.unit),
+                module_receiver_input: None,
+                source: self.source.clone(),
+                hidden: false,
+                stdlib_bootstrap: false,
+                constant_member: false,
+                spans: code.spans,
+                member: self.member.clone(),
+                declaration,
+                member_span: None,
+                value_span: None,
+                property_typecheck: None,
+                inline_property_typecheck: false,
+                amendment: false,
+                fixed_span: None,
+                const_span: None,
+                initialization_error: None,
+                method_signature: None,
+                method_arities: code.method_arities,
+                let_scopes: code.let_scopes,
+                constraint_root: None,
+                inline_constraint: false,
+                type_casts: code.type_casts,
+            },
+        )
     }
 
     fn inner_expression(
@@ -6967,7 +7005,7 @@ impl Compiler<'_> {
         output: &mut Code,
     ) -> Result<(), Box<(RuntimeError, Span)>> {
         use crate::syntax::{ExprKind, TypeKind};
-        let reference_start = self.program.type_recipes.len();
+        let reference_start = self.program.type_recipes.next_id();
         let check =
             self.compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), parameters);
         self.reference_usage_context(reference_start, ty);
@@ -7149,7 +7187,7 @@ impl Compiler<'_> {
     }
 
     fn reference_usage_context(&mut self, start: usize, ty: &crate::syntax::Type) {
-        for recipe in &mut self.program.type_recipes[start..] {
+        for recipe in self.program.type_recipes.iter_from_mut(start) {
             if let Some(Err(error)) = &mut recipe.reference
                 && !error.frames.is_empty()
             {
@@ -7312,7 +7350,7 @@ impl Compiler<'_> {
             } else {
                 None
             };
-            let result = self.declared_type(ty, actuals);
+            let result = self.declared_type(ty, actuals)?;
             if let TypeCheck::Declared { recipe, .. } = &result {
                 self.program.type_recipes[*recipe].builtin = fallback;
             }
@@ -7321,7 +7359,7 @@ impl Compiler<'_> {
         Ok(match &ty.kind {
             TypeKind::Unknown => TypeCheck::Unknown,
             TypeKind::Nothing => TypeCheck::Nothing,
-            TypeKind::Module => self.module_type(ty.span),
+            TypeKind::Module => self.module_type(ty.span)?,
             TypeKind::Function {
                 parameters: args,
                 return_type,
@@ -7357,7 +7395,7 @@ impl Compiler<'_> {
                         });
                         continue;
                     }
-                    let block = self.block(Code::default(), Some(expression.span));
+                    let block = self.block(Code::default(), Some(expression.span))?;
                     self.active_constraints.insert(expression.span, block);
                     // Compile one finite template. Recursive uses retain substitutions
                     // instead of expanding an unbounded family of specialized bodies.
@@ -7465,14 +7503,13 @@ impl Compiler<'_> {
                     .map(|argument| self.compile_type_at(argument, limit, aliases, parameters))
                     .collect::<Result<Vec<_>, _>>()?;
                 let reference = self.compile_reference_type(ty, &actuals);
-                let declared = self.declared_type(ty, actuals);
+                let declared = self.declared_type(ty, actuals)?;
                 let TypeCheck::Declared { recipe, arguments } = declared else {
                     unreachable!()
                 };
                 let mut specialized = self.program.type_recipes[recipe].clone();
                 specialized.reference = Some(reference);
-                let recipe = self.program.type_recipes.len();
-                self.program.type_recipes.push(specialized);
+                let recipe = self.program.type_recipes.try_push(specialized)?;
                 TypeCheck::Declared { recipe, arguments }
             }
 
@@ -7492,7 +7529,7 @@ impl Compiler<'_> {
                                     self.compile_type_at(argument, limit, aliases, parameters)
                                 })
                                 .collect::<Result<Vec<_>, _>>()?;
-                            self.declared_type(ty, actuals)
+                            self.declared_type(ty, actuals)?
                         }
                         ExprKind::Class { .. } => {
                             if !arguments.is_empty() {
@@ -7596,7 +7633,7 @@ impl Compiler<'_> {
                                 member: previous_member.clone(),
                                 source: self.source.clone(),
                             });
-                            let reference_start = self.program.type_recipes.len();
+                            let reference_start = self.program.type_recipes.next_id();
                             let result = self
                                 .compile_type_at(aliased, index + 1, aliases, &substitutions)
                                 .map_err(|mut error| {
@@ -7607,7 +7644,7 @@ impl Compiler<'_> {
                                     });
                                     error
                                 });
-                            for recipe in &mut self.program.type_recipes[reference_start..] {
+                            for recipe in self.program.type_recipes.iter_from_mut(reference_start) {
                                 if let Some(Err(error)) = &mut recipe.reference {
                                     error.frames.push(RuntimeFrame {
                                         span: aliased.span,

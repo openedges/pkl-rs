@@ -1,0 +1,120 @@
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl resource=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-custom memo:/request-jar.pkl
+factory-custom-hit memo:/request-jar.pkl
+key-created id=0 requested=memo:/request-jar.pkl selected=jar:file:/stage49/archive.jar!/inside/jarName.pkl cached-snapshot=true
+policy-resolve-module repl:text
+outer-0 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl -> memo:/request-jar.pkl
+factory-custom memo:/request-jar.pkl
+factory-custom-hit memo:/request-jar.pkl
+key-created id=1 requested=memo:/request-jar.pkl selected=jar:file:/stage49/archive.jar!/inside/jarName.pkl cached-snapshot=true
+key-is-cached id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl true
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-resolve id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+policy-resolve-module jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-resolved id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl -> memo:/resolved/jar.pkl
+resolved-get-uri id=1 memo:/resolved/jar.pkl
+load-source id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl -> memo:/resolved/jar.pkl load=0 state=good
+resolved-get-original id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+resolved-get-uri id=1 memo:/resolved/jar.pkl
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+outer-1 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-2 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-3 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-4 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl resource=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-custom memo:/request-jar.pkl
+factory-custom-hit memo:/request-jar.pkl
+key-created id=0 requested=memo:/request-jar.pkl selected=jar:file:/stage49/archive.jar!/inside/jarName.pkl cached-snapshot=true
+policy-resolve-module repl:text
+outer-0 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl -> memo:/request-jar.pkl
+factory-custom memo:/request-jar.pkl
+factory-custom-hit memo:/request-jar.pkl
+key-created id=1 requested=memo:/request-jar.pkl selected=jar:file:/stage49/archive.jar!/inside/jarName.pkl cached-snapshot=true
+key-is-cached id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl true
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-resolve id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+policy-resolve-module jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-resolved id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl -> memo:/resolved/jar.pkl
+resolved-get-uri id=1 memo:/resolved/jar.pkl
+load-source id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl -> memo:/resolved/jar.pkl load=0 state=good
+resolved-get-original id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+resolved-get-uri id=1 memo:/resolved/jar.pkl
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+key-get-uri id=1 jar:file:/stage49/archive.jar!/inside/jarName.pkl
+outer-1 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-2 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-3 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-02/workspace/inference-jar-explicit/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-4 success

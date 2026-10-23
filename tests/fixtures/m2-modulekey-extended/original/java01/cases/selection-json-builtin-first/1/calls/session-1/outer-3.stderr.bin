@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Cannot find property `label` in module `pkl.json`.
+
+1 | three().label
+    ^^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties in module `pkl.json`:
+Parser
+Property
+Value
+output

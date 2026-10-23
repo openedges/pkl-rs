@@ -1186,8 +1186,30 @@ spelling, eager clause-factory preparation, and public ModuleSource operations.
 Clause preparation can select a key even when the runtime import edge is never
 executed. Query and module executable owners follow active and captured heap
 environments; unreachable payloads can be retired without invalidating surviving
-declarations. Non-tail storage slots still require reclamation for bounded total
-memory. See [module keys and public evaluation](m2-module-keys.md).
+declarations. The Stage49 representation still retained non-tail storage slots.
+See [module keys and public evaluation](m2-module-keys.md).
+
+Stage50 replaces that representation with a fixed prepared prefix and dynamic
+resident segments. Logical addresses advance independently of resident element
+counts; retiring a segment removes its directory entry and owned vectors without
+reusing committed addresses. A traced executable owner may retain several
+segments, including a module's clause-preparation shell and compiled body.
+Public-operation entries have independent retirement boundaries. Active and
+suspended frames, escaped classes, aliases and closures retain their code until
+their final root is gone.
+
+Compilation checkpoints seal allocation boundaries and restore replaced module
+units and module metadata on rollback. Only unpublished compiler addresses can
+be reused. Copy-on-write segments keep surviving program snapshots intact;
+mutable suffix traversal avoids cloning excluded prefixes, and failed lookups
+do not clone an unrelated segment. URI preparation first identifies blocks with
+actual URI changes, then mutates only those blocks. This includes earlier module
+shell/body segments without copying unrelated owners held by a snapshot.
+Resident storage and nested-capacity plateau tests compare 20 and 200 ordinary
+and reentrant uncached module evaluations. They are separate from whole-process
+RSS and Java performance comparisons. The frozen candidate has completed the
+five required Rust checks and focused native, Node and Chromium captures; its
+full selected language and persistent-evaluator regression remains separate.
 
 Complete factory behavior, URI semantics, import globs and public evaluator
 policy counters remain required work. Full ordered event traces are separate

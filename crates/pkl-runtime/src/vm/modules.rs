@@ -102,7 +102,7 @@ impl Program {
         source: Arc<RuntimeSource>,
         identity: ModuleIdentity,
     ) -> Result<(), RuntimeError> {
-        let Some(unit) = self.units.first_mut() else {
+        let Some(unit) = self.units.get_mut(0) else {
             return Ok(());
         };
         unit.source = Some(source.clone());
@@ -212,7 +212,7 @@ impl Vm {
     ) -> Result<usize, RuntimeError> {
         crate::host::resources::validate_module_key_uri(&source.uri)?;
         let program = Arc::make_mut(&mut self.program);
-        let entry = program.blocks.len();
+        program.seal_code_segment();
         let mut code = vec![Instruction::LoadPrimary(Arc::new(source))];
         if expression.as_ref() == "output.text" {
             code.extend([
@@ -224,8 +224,8 @@ impl Vm {
             code.push(Instruction::EvaluateQuery(expression));
         }
         code.push(Instruction::Return);
-        program.blocks.push(code);
-        program.metadata.push(BlockMetadata::default());
+        let entry = program.alloc_block(code, BlockMetadata::default())?;
+        program.seal_code_segment();
         self.public_operation_entries.insert(entry);
         Ok(entry)
     }
@@ -376,7 +376,7 @@ impl Vm {
         // permanent static-root table must not retain a completed query site.
         let owner = self.heap.allocate_executable();
         self.code_arenas
-            .push(arena.finish(&self.program, owner, true));
+            .push(arena.finish(Arc::make_mut(&mut self.program), owner, true));
         self.frames.last_mut().unwrap().environment.executable_owner = Some(owner);
         self.frames.last_mut().unwrap().environment.code_owner = Some(owner);
         self.frames
@@ -1038,7 +1038,7 @@ impl Vm {
         let compiled = compile_unit_into(program, &resolved_ast, CompileOptions { fuse_constant_add: true }, self.power_assertions,
             Some(source.clone()), Some(ModuleIdentity { original_uri: resolved.original_uri, resolved_uri: resolved.resolved_uri }))
             .and_then(|unit| {
-                if program.blocks[checkpoint.blocks..].iter().flatten().any(|instruction|
+                if program.blocks.iter_from(checkpoint.blocks).flatten().any(|instruction|
                     matches!(instruction, Instruction::Constant(value) if value.heap_id().is_some())) {
                     Err(invalid("object constants cannot be stored in compiled code"))
                 } else { Ok(unit) }
@@ -1176,30 +1176,43 @@ pub(super) struct ArenaCheckpoint {
     blocks: usize,
     metadata: usize,
     objects: usize,
-    units: usize,
+    units: CodeStorage<ModuleUnit>,
+    module_name: Arc<str>,
+    module_template: Option<usize>,
+    entry: usize,
+    initial_members: Vec<Member>,
     declaration: usize,
     type_recipes: usize,
     aliases: BTreeSet<usize>,
 }
 impl ArenaCheckpoint {
-    pub(super) fn new(program: &Program) -> Self {
+    pub(super) fn new(program: &mut Program) -> Self {
+        program.seal_code_segment();
         Self {
-            blocks: program.blocks.len(),
-            metadata: program.metadata.len(),
-            objects: program.objects.len(),
-            units: program.units.len(),
+            blocks: program.blocks.next_id(),
+            metadata: program.metadata.next_id(),
+            objects: program.objects.next_id(),
+            units: program.units.clone(),
+            module_name: program.module_name.clone(),
+            module_template: program.module_template,
+            entry: program.entry,
+            initial_members: program.initial_module_members.clone(),
             declaration: program.next_declaration,
-            type_recipes: program.type_recipes.len(),
+            type_recipes: program.type_recipes.next_id(),
             aliases: program.alias_definitions.keys().copied().collect(),
         }
     }
     pub(super) fn rollback(self, program: &mut Program) {
-        program.blocks.truncate(self.blocks);
-        program.metadata.truncate(self.metadata);
-        program.objects.truncate(self.objects);
-        program.units.truncate(self.units);
+        program.blocks.rollback(self.blocks);
+        program.metadata.rollback(self.metadata);
+        program.objects.rollback(self.objects);
+        program.units = self.units;
+        program.module_name = self.module_name;
+        program.module_template = self.module_template;
+        program.entry = self.entry;
+        program.initial_module_members = self.initial_members;
         program.next_declaration = self.declaration;
-        program.type_recipes.truncate(self.type_recipes);
+        program.type_recipes.rollback(self.type_recipes);
         program
             .alias_definitions
             .retain(|id, _| self.aliases.contains(id));

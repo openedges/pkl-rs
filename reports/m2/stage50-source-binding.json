@@ -1,0 +1,41 @@
+{
+  "differences": [],
+  "finishedUnix": 1792791692.011768,
+  "gitBoundSourcePaths": 86571,
+  "headTreeSerializerVerified": "e39761fdb551d86b41badf282394f0419a5520fc",
+  "implementationCommitNotYetClaimed": true,
+  "indexEntriesAfterSha256": "0cde88ccdb6dfbb9b6f2df2d7d4ba4f91c4becabae71462db8f7f549dccdd3be",
+  "indexEntriesBeforeSha256": "0cde88ccdb6dfbb9b6f2df2d7d4ba4f91c4becabae71462db8f7f549dccdd3be",
+  "indexTreeAfter": "75d569179edab8d712de3933d8d9a309832d5a5d",
+  "indexTreeBefore": "75d569179edab8d712de3933d8d9a309832d5a5d",
+  "parent": "d0450699f59174752d4759e4fb9b7e6eeef586fc",
+  "passed": true,
+  "publicationOnlyPaths": 5,
+  "referenceGitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "schema": 1,
+  "scope": "Actual staged Git blob bytes joined to current producer input map; no source/index/object writes or evaluator reruns.",
+  "sourceMap": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-current-source-binding-01/current-source-map-02.json",
+    "sha256": "cf363981d7ed598b5e253f4faa1f660048f8012f4c4623198beaaf40fb493468"
+  },
+  "sourcePaths": 86571,
+  "startedUnix": 1792791687.4937322,
+  "uniqueBlobsRead": 10498,
+  "fullBinding": {
+    "archive": "reports/m2/stage50-publication-metadata.tar.gz",
+    "member": "stage50-current-source-binding-01/staged-02/report.json",
+    "sha256": "c412f566041f2935f3d2e5a6e4bd4ed3e7998c25bb923bad27b5618698972b17"
+  },
+  "handoff": {
+    "archive": "reports/m2/stage50-publication-metadata.tar.gz",
+    "member": "stage50-current-source-binding-01/handoff.json",
+    "sha256": "8a836fe62296a05e17079d9fed360f830e53d36b76c205011e929808253c9dcb"
+  },
+  "actualTerminal": {
+    "session": 37197,
+    "exitCode": 0
+  }
+}

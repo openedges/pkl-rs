@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find property `Property` in module `json`.
+
+1 | two().Property.toString()
+    ^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+hasProperty(name)
+getProperty(name)

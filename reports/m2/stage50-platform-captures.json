@@ -1,0 +1,519 @@
+{
+  "schema": 1,
+  "scope": "Actual local macOS native/Node/Chromium controls for Stage50 candidate02; strict failures remain failures.",
+  "host": {
+    "observedAtUtc": "2026-10-23T21:02:59.009052+00:00",
+    "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "node": "v26.10.0",
+    "nodePath": "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+    "nodeSha256": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+    "browser": "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+    "browserSha256": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+    "browserVersionRaw": "Google Chrome for Testing 156.0.8078.4 \n",
+    "bindgenPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/.cache/m1-tools/bin/wasm-bindgen",
+    "bindgenSha256": "b72ed0a81b26005a7c85ff4f06670988f028c3092fb7072ea8d18969047560c1",
+    "bindgenVersion": "wasm-bindgen 0.2.108\n",
+    "playwright": "1.64.1",
+    "packageSha256": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+    "packageLockSha256": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+    "commands": [
+      {
+        "argv": [
+          "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+          "--version"
+        ],
+        "exitCode": 0
+      },
+      {
+        "argv": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/.cache/m1-tools/bin/wasm-bindgen",
+          "--version"
+        ],
+        "exitCode": 0
+      },
+      {
+        "argv": [
+          "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+          "--version"
+        ],
+        "exitCode": 0
+      },
+      {
+        "argv": [
+          "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+          "-e",
+          "console.log(JSON.stringify([require('./tools/platform/node_modules/playwright/package.json').version,require('./tools/platform/node_modules/playwright-core/package.json').version]))"
+        ],
+        "exitCode": 0
+      }
+    ]
+  },
+  "m1Report": {
+    "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-control-01/report.json",
+    "sha256": "4c680bfd862c4a95de59d303c1ee9ea33343fae8a5528b9a5f12e91fe158f9bd"
+  },
+  "m1PrimitiveReport": {
+    "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-control-01/primitives/report.json",
+    "sha256": "bd527be968c458930341779623d9829737a7a028ef969ceb87e5a6871128dc81"
+  },
+  "artifactPins": {
+    "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-control-01/artifact-pins.json",
+    "sha256": "cc02e92d1fa9b589356dc531a9d01311ed105391ef2ccad539c8967578c5561c"
+  },
+  "integration": {
+    "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/report.json",
+    "sha256": "56159691ce3ab1daaf5a22d7b0cd518846cf05fe151cb5478357c551ba7118b3"
+  },
+  "rootTerminalReceipt": {
+    "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/root-terminal-receipt.json",
+    "sha256": "6bd67a8fb52eebebb2a372f75785e0ed8b681aa8c4d473e4e07516f1abb2d004"
+  },
+  "drivers": [
+    {
+      "label": "modulekey-public",
+      "exitCode": 1,
+      "report": {
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/modulekey-public/execution.json",
+        "sha256": "ce83cb4c780a0f96aeafeefc038efd1248295ae4e1bb48db1a523ae1ef746628"
+      },
+      "gates": {
+        "preflightOnly": false,
+        "fullCompatibilityPassed": false,
+        "fullLifecyclePassed": false,
+        "acquisitionIntegrityPassed": true,
+        "rawApiPassed": true,
+        "selectedContractPassed": false
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "actualApiCalls": 212,
+          "rawApiPassed": true,
+          "fullLifecyclePassed": false
+        },
+        "browser": {
+          "complete": true,
+          "actualApiCalls": 212,
+          "rawApiPassed": true,
+          "fullLifecyclePassed": false
+        }
+      }
+    },
+    {
+      "label": "modulekey-provided-primary",
+      "exitCode": 1,
+      "report": {
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/modulekey-provided-primary/execution.json",
+        "sha256": "e6f9567d0091fabefca72fedb3d7f89b102bd2bb5487830ae601c9096629831c"
+      },
+      "gates": {
+        "preflightOnly": false,
+        "fullCompatibilityPassed": false,
+        "fullLifecyclePassed": false,
+        "acquisitionIntegrityPassed": true,
+        "rawApiPassed": true,
+        "selectedContractPassed": false
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "actualApiCalls": 212,
+          "rawApiPassed": true,
+          "fullLifecyclePassed": false
+        },
+        "browser": {
+          "complete": true,
+          "actualApiCalls": 212,
+          "rawApiPassed": true,
+          "fullLifecyclePassed": false
+        }
+      }
+    },
+    {
+      "label": "modulekey-extended",
+      "exitCode": 1,
+      "report": {
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/modulekey-extended/execution.json",
+        "sha256": "6f4d03434281d36e8eea53ff81693b80cc995ca403907899e33bebb36471b4fe"
+      },
+      "gates": {
+        "preflightOnly": false,
+        "fullCompatibilityPassed": false,
+        "fullLifecyclePassed": false,
+        "toolIntegrityPassed": true,
+        "acquisitionIntegrityPassed": true,
+        "rawApiPassed": false,
+        "ordinaryCompatibilityPassed": true,
+        "selectedContractPassed": false
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "actualApiCalls": 944,
+          "rawApiPassed": false,
+          "acquisitionIntegrityPassed": true,
+          "observationIntegrityPassed": true,
+          "ordinaryCompatibilityPassed": true,
+          "rawByteMatches": 936,
+          "rawByteMismatchOrMissing": 8,
+          "intendedOrdinaryRawMatched": 836,
+          "intendedOrdinaryCompatible": 836,
+          "diagnosticOnlyRawMatched": 100,
+          "internalBoundaryRawMatched": 0,
+          "internalBoundaryCount": 8,
+          "fullLifecyclePassed": false
+        },
+        "browser": {
+          "complete": true,
+          "actualApiCalls": 944,
+          "rawApiPassed": false,
+          "acquisitionIntegrityPassed": true,
+          "observationIntegrityPassed": true,
+          "ordinaryCompatibilityPassed": true,
+          "rawByteMatches": 936,
+          "rawByteMismatchOrMissing": 8,
+          "intendedOrdinaryRawMatched": 836,
+          "intendedOrdinaryCompatible": 836,
+          "diagnosticOnlyRawMatched": 100,
+          "internalBoundaryRawMatched": 0,
+          "internalBoundaryCount": 8,
+          "fullLifecyclePassed": false
+        }
+      }
+    },
+    {
+      "label": "renderer",
+      "exitCode": 0,
+      "report": {
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/renderer/execution.json",
+        "sha256": "0a27f492498a0baa1af04c00fb8c1c1b6b99ad7116ff8c5ee25bd5c49fb3179b"
+      },
+      "gates": {
+        "selectedContractPassed": true,
+        "fullCompatibilityPassed": false
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "rawApiCounts": {
+            "pass": 860
+          },
+          "selectedContractPassed": true
+        },
+        "browser": {
+          "complete": true,
+          "rawApiCounts": {
+            "pass": 860
+          },
+          "selectedContractPassed": true
+        }
+      }
+    },
+    {
+      "label": "resource",
+      "exitCode": 0,
+      "report": {
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/resource/execution.json",
+        "sha256": "90e46d9877848ffc2802fc7f1d164e0c978385628da22fec2c14dcbaa9c1e357"
+      },
+      "gates": {
+        "selectedContractPassed": true,
+        "fullCompatibilityPassed": false
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "rawApiCounts": {
+            "pass": 1008
+          },
+          "selectedContractPassed": true
+        },
+        "browser": {
+          "complete": true,
+          "rawApiCounts": {
+            "pass": 1008
+          },
+          "selectedContractPassed": true
+        }
+      }
+    },
+    {
+      "label": "module-preparation",
+      "exitCode": 0,
+      "report": {
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/module-preparation/execution.json",
+        "sha256": "67d3d0b42dcc84ce94be26eb37aa1b077ece34e6b918cb72127c7efa1e60d7d2"
+      },
+      "gates": {
+        "selectedContractPassed": true,
+        "fullCompatibilityPassed": false
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "rawApiCounts": {
+            "pass": 252
+          },
+          "selectedContractPassed": true
+        },
+        "browser": {
+          "complete": true,
+          "rawApiCounts": {
+            "pass": 252
+          },
+          "selectedContractPassed": true
+        }
+      }
+    },
+    {
+      "label": "moduleinfo",
+      "exitCode": 0,
+      "report": {
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/moduleinfo/execution.json",
+        "sha256": "880eaa556b2b247adb26a1a9d91d736619faaeee45e3ae3cb967d2ca2ef9d4fd"
+      },
+      "gates": {
+        "transportContractPassed": true,
+        "strictJavaCompatibilityPassed": false
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "sessions": 56,
+          "counts": {
+            "pass": 156,
+            "java-internal-unsupported-boundary": 12
+          },
+          "unexecutedNativeSharedEvaluatorFollowups": 56
+        },
+        "browser": {
+          "complete": true,
+          "sessions": 56,
+          "counts": {
+            "pass": 156,
+            "java-internal-unsupported-boundary": 12
+          },
+          "unexecutedNativeSharedEvaluatorFollowups": 56
+        }
+      }
+    },
+    {
+      "label": "security-denial",
+      "exitCode": 0,
+      "report": {
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/security-denial/execution.json",
+        "sha256": "7bfcdf21c82f2dc41fa0115ed5ea174125709168263a1f92f753afe5d436f241"
+      },
+      "gates": {
+        "transportContractPassed": true,
+        "strictJavaCompatibilityPassed": false
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "sessions": 2,
+          "counts": {
+            "pass": 10
+          }
+        },
+        "browser": {
+          "complete": true,
+          "sessions": 2,
+          "counts": {
+            "pass": 10
+          }
+        }
+      }
+    },
+    {
+      "label": "guest-catch",
+      "exitCode": 0,
+      "report": {
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/guest-catch/execution.json",
+        "sha256": "4f1e39d18c77f91d16f4ece4931a4f56951258b2fef6ada2cde0e4e9e25c7fa4"
+      },
+      "gates": {
+        "transportContractPassed": true
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "executions": 42,
+          "statusCounts": {
+            "constructor-boundary-pass": 10,
+            "pass": 24,
+            "terminal-partial-pass": 8
+          }
+        },
+        "browser": {
+          "complete": true,
+          "executions": 42,
+          "statusCounts": {
+            "constructor-boundary-pass": 10,
+            "pass": 24,
+            "terminal-partial-pass": 8
+          }
+        }
+      }
+    },
+    {
+      "label": "module-loader",
+      "exitCode": 1,
+      "report": {
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/module-loader/execution.json",
+        "sha256": "779d7519ec4301be4992f896191f4a99c8cb3751211498188b973c7789a80597"
+      },
+      "gates": {
+        "selectedCompatibilityComplete": false
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "executions": 44,
+          "statusCounts": {
+            "pass": 32,
+            "mismatch": 12
+          }
+        },
+        "browser": {
+          "complete": true,
+          "executions": 44,
+          "statusCounts": {
+            "pass": 32,
+            "mismatch": 12
+          }
+        }
+      }
+    },
+    {
+      "label": "module-inheritance",
+      "exitCode": 1,
+      "report": {
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-platform-integration-01/module-inheritance/execution.json",
+        "sha256": "9d455aa9eec8424fb593029a5a024c83660cda5b35ff07d1c4ebdf992f0aa561"
+      },
+      "gates": {
+        "selectedCompatibilityComplete": false
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "executions": 6,
+          "statusCounts": {
+            "mismatch": 6
+          }
+        },
+        "browser": {
+          "complete": true,
+          "executions": 6,
+          "statusCounts": {
+            "mismatch": 6
+          }
+        }
+      }
+    }
+  ],
+  "archives": [
+    {
+      "group": "platform-primitives",
+      "roots": [
+        "stage50-platform-control-01"
+      ],
+      "archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-root-publication-01/stage50-platform-primitives.tar.gz",
+      "repositoryPath": "reports/m2/stage50-platform-primitives.tar.gz",
+      "originalFiles": 578,
+      "originalBytes": 31785025,
+      "commands": [
+        {
+          "action": "create",
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+            "create",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-root-publication-01/staging/platform-primitives",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-root-publication-01/stage50-platform-primitives.tar.gz"
+          ],
+          "startedUtc": "2026-10-23T21:34:27.086744+00:00",
+          "pid": 68714,
+          "exitCode": 0,
+          "finishedUtc": "2026-10-23T21:34:29.233606+00:00"
+        },
+        {
+          "action": "verify",
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+            "verify",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-root-publication-01/stage50-platform-primitives.tar.gz"
+          ],
+          "startedUtc": "2026-10-23T21:34:29.234128+00:00",
+          "pid": 68723,
+          "exitCode": 0,
+          "finishedUtc": "2026-10-23T21:34:29.418513+00:00"
+        }
+      ],
+      "sha256": "c8dca3da580527de61dce2c491de4d68f64be775cf3db5a3aa9f31efb0f1bac0",
+      "bytes": 6642866,
+      "rawReadbackFiles": 578,
+      "originalChanges": []
+    },
+    {
+      "group": "platform-integration",
+      "roots": [
+        "stage50-platform-integration-01"
+      ],
+      "archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-root-publication-01/stage50-platform-integration.tar.gz",
+      "repositoryPath": "reports/m2/stage50-platform-integration.tar.gz",
+      "originalFiles": 38273,
+      "originalBytes": 153537133,
+      "commands": [
+        {
+          "action": "create",
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+            "create",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-root-publication-01/staging/platform-integration",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-root-publication-01/stage50-platform-integration.tar.gz"
+          ],
+          "startedUtc": "2026-10-23T21:34:45.756857+00:00",
+          "pid": 68841,
+          "exitCode": 0,
+          "finishedUtc": "2026-10-23T21:35:01.718343+00:00"
+        },
+        {
+          "action": "verify",
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/tools/evidence.py",
+            "verify",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-root-publication-01/stage50-platform-integration.tar.gz"
+          ],
+          "startedUtc": "2026-10-23T21:35:01.719384+00:00",
+          "pid": 68998,
+          "exitCode": 0,
+          "finishedUtc": "2026-10-23T21:35:02.900821+00:00"
+        }
+      ],
+      "sha256": "f77759f36793283cecd80f0506f7b45eb287d0f06332fc3dd93baf132d0c2090",
+      "bytes": 10080476,
+      "rawReadbackFiles": 38273,
+      "originalChanges": []
+    }
+  ],
+  "archiveVerification": {
+    "wrapperSession": 73957,
+    "actualExitCode": 0,
+    "terminalChunk": "521ba9",
+    "separateVerifyAndAllSelectedRawMemberReadback": true
+  },
+  "m1NodeProvenanceQualification": "M1 launches bare node and records child version, not child execPath/hash. Parent observes the executable path/hash and unchanged environment; exact child executable identity is inferred. All eleven integration commands explicitly launch the recorded absolute Node path.",
+  "remainingGates": [
+    "Two Java regex mismatches",
+    "ModuleKey full Java event/counter parity",
+    "Eight extended Java internal boundaries",
+    "Loader/inheritance exact request counters",
+    "Declared ModuleInfo/constructor/terminal/unexecuted boundaries",
+    "Complete M2, release platforms, speed and peak RSS"
+  ]
+}

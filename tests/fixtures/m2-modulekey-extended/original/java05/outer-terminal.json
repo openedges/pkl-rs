@@ -1,0 +1,36 @@
+{
+  "parentPid": 81657,
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/run.py"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05",
+  "startedUtc": "2026-10-23T18:45:50.505089+00:00",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "sourceBefore": {
+    "AdmissionProbe.java": "e1af181fad5e006fd97c4d9c90d421b7aa6251b7ff001cdcf865b02001a04764",
+    "TrustProbe.java": "2fde40b8ef17f8d972c1820469e87f3da4f4553ec54e3761b7347a9f97638d80",
+    "prepare.py": "315cfc3b112d77b4fc843eeb6f9b1e7902fb86242f3e9a1d8fa1199cbf615cab",
+    "run.py": "baff0d20ed06405f089164c1118aae8bb142d7b11a4dfa1f785232bf37fcff80",
+    "cases.json": "dfb5637bbbf057e028c208badb61bac374313b4f4f66b16048e0ea4e752022a3",
+    "trust-uris.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "launch.py": "5b7b242d567ee3b484965defb7b3da2da1d8766c4ae2aae9002392c719d6cbc1"
+  },
+  "pid": 81658,
+  "exitCode": 0,
+  "finishedUtc": "2026-10-23T18:45:56.176639+00:00",
+  "sourceAfter": {
+    "AdmissionProbe.java": "e1af181fad5e006fd97c4d9c90d421b7aa6251b7ff001cdcf865b02001a04764",
+    "TrustProbe.java": "2fde40b8ef17f8d972c1820469e87f3da4f4553ec54e3761b7347a9f97638d80",
+    "prepare.py": "315cfc3b112d77b4fc843eeb6f9b1e7902fb86242f3e9a1d8fa1199cbf615cab",
+    "run.py": "baff0d20ed06405f089164c1118aae8bb142d7b11a4dfa1f785232bf37fcff80",
+    "cases.json": "dfb5637bbbf057e028c208badb61bac374313b4f4f66b16048e0ea4e752022a3",
+    "trust-uris.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "launch.py": "5b7b242d567ee3b484965defb7b3da2da1d8766c4ae2aae9002392c719d6cbc1"
+  },
+  "stdoutSha256": "22d72dcdc5470458fc2a2dbbe881c6eb9385a953605a56d39dccde0c5b530435",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "liveHandles": []
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "id": "resolve-uri-override-uri",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/workspace/resolve-uri-override-uri",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/workspace/resolve-uri-override-uri/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "relative().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "absolute().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "relative().tag"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "absolute().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "stable"
+      }
+    ],
+    "inputPaths": [
+      "main.pkl",
+      "holder.pkl",
+      "override-relative.pkl",
+      "override-absolute.pkl",
+      "default-relative.pkl",
+      "default-absolute.pkl",
+      "wrong-base-relative.pkl",
+      "module-plan.tsv",
+      "source-inputs.txt",
+      "source-profiles.tsv",
+      "uri-overrides.tsv",
+      "operations.tsv"
+    ],
+    "primarySourceKind": "uri",
+    "primarySourceUri": "memo:/holder-request.pkl",
+    "primaryContentsRelativeFile": null,
+    "scope": "Actual custom ModuleKey.resolveUri override on relative and absolute authored import operands; selected key URI differs from factory request/resolved URI. URI-only actual key should invoke configured override. Authored module functions avoid query-local alias errors; no expected results are predicted."
+  },
+  {
+    "id": "resolve-uri-override-contents",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/workspace/resolve-uri-override-contents",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/workspace/resolve-uri-override-contents/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "relative().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "absolute().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "relative().tag"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "absolute().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "primary",
+        "expression": "stable"
+      }
+    ],
+    "inputPaths": [
+      "main.pkl",
+      "holder.pkl",
+      "override-relative.pkl",
+      "override-absolute.pkl",
+      "default-relative.pkl",
+      "default-absolute.pkl",
+      "wrong-base-relative.pkl",
+      "module-plan.tsv",
+      "source-inputs.txt",
+      "source-profiles.tsv",
+      "uri-overrides.tsv",
+      "operations.tsv"
+    ],
+    "primarySourceKind": "contents",
+    "primarySourceUri": "memo:/holder-request.pkl",
+    "primaryContentsRelativeFile": "holder.pkl",
+    "scope": "Actual custom ModuleKey.resolveUri override on relative and absolute authored import operands; selected key URI differs from factory request/resolved URI. URI+contents CachedModuleKey wrapper contrast inherits its own default resolver; no delegated override assumption. Authored module functions avoid query-local alias errors; no expected results are predicted."
+  }
+]

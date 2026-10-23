@@ -1,0 +1,202 @@
+factory-custom memo:/holder-request.pkl
+factory-custom-hit memo:/holder-request.pkl
+key-created id=0 requested=memo:/holder-request.pkl selected=memo:/selected/holder.pkl cached-snapshot=true
+key-is-cached id=0 memo:/selected/holder.pkl true
+key-get-uri id=0 memo:/selected/holder.pkl
+key-resolve id=0 memo:/selected/holder.pkl
+policy-resolve-module memo:/selected/holder.pkl
+key-resolved id=0 memo:/selected/holder.pkl -> memo:/resolved/holder.pkl
+resolved-get-uri id=0 memo:/resolved/holder.pkl
+load-source id=0 memo:/selected/holder.pkl -> memo:/resolved/holder.pkl load=0 state=good
+resolved-get-original id=0 memo:/selected/holder.pkl
+key-get-uri id=0 memo:/selected/holder.pkl
+key-get-uri id=0 memo:/selected/holder.pkl
+key-get-uri id=0 memo:/selected/holder.pkl
+resolved-get-uri id=0 memo:/resolved/holder.pkl
+key-get-uri id=0 memo:/selected/holder.pkl
+key-fragment-paths id=0 false
+key-get-uri id=0 memo:/selected/holder.pkl
+key-get-uri id=0 memo:/selected/holder.pkl
+key-resolve-uri id=0 key=memo:/selected/holder.pkl operand=./child.pkl call=0
+key-uri-result id=0 target=memo:/override-relative.pkl call=0
+key-resolve-uri id=0 key=memo:/selected/holder.pkl operand=memo:/authored-absolute.pkl call=1
+key-uri-result id=0 target=memo:/override-absolute.pkl call=1
+policy-resolve-module repl:text
+outer-0 success
+factory-custom memo:/holder-request.pkl
+factory-custom-hit memo:/holder-request.pkl
+key-created id=1 requested=memo:/holder-request.pkl selected=memo:/selected/holder.pkl cached-snapshot=true
+key-is-cached id=1 memo:/selected/holder.pkl true
+key-get-uri id=1 memo:/selected/holder.pkl
+policy-resolve-module repl:text
+resolved-get-uri id=0 memo:/resolved/holder.pkl
+policy-import memo:/resolved/holder.pkl -> memo:/override-relative.pkl
+factory-custom memo:/override-relative.pkl
+factory-custom-hit memo:/override-relative.pkl
+key-created id=2 requested=memo:/override-relative.pkl selected=memo:/override-relative.pkl cached-snapshot=true
+key-is-cached id=2 memo:/override-relative.pkl true
+key-get-uri id=2 memo:/override-relative.pkl
+key-resolve id=2 memo:/override-relative.pkl
+policy-resolve-module memo:/override-relative.pkl
+key-resolved id=2 memo:/override-relative.pkl -> memo:/override-relative.pkl
+resolved-get-uri id=2 memo:/override-relative.pkl
+load-source id=2 memo:/override-relative.pkl -> memo:/override-relative.pkl load=1 state=good
+resolved-get-original id=2 memo:/override-relative.pkl
+key-get-uri id=2 memo:/override-relative.pkl
+key-get-uri id=2 memo:/override-relative.pkl
+key-get-uri id=2 memo:/override-relative.pkl
+resolved-get-uri id=2 memo:/override-relative.pkl
+key-get-uri id=2 memo:/override-relative.pkl
+key-fragment-paths id=2 false
+key-get-uri id=2 memo:/override-relative.pkl
+outer-1 success
+factory-custom memo:/holder-request.pkl
+factory-custom-hit memo:/holder-request.pkl
+key-created id=3 requested=memo:/holder-request.pkl selected=memo:/selected/holder.pkl cached-snapshot=true
+key-is-cached id=3 memo:/selected/holder.pkl true
+key-get-uri id=3 memo:/selected/holder.pkl
+policy-resolve-module repl:text
+resolved-get-uri id=0 memo:/resolved/holder.pkl
+policy-import memo:/resolved/holder.pkl -> memo:/override-absolute.pkl
+factory-custom memo:/override-absolute.pkl
+factory-custom-hit memo:/override-absolute.pkl
+key-created id=4 requested=memo:/override-absolute.pkl selected=memo:/override-absolute.pkl cached-snapshot=true
+key-is-cached id=4 memo:/override-absolute.pkl true
+key-get-uri id=4 memo:/override-absolute.pkl
+key-resolve id=4 memo:/override-absolute.pkl
+policy-resolve-module memo:/override-absolute.pkl
+key-resolved id=4 memo:/override-absolute.pkl -> memo:/override-absolute.pkl
+resolved-get-uri id=4 memo:/override-absolute.pkl
+load-source id=4 memo:/override-absolute.pkl -> memo:/override-absolute.pkl load=2 state=good
+resolved-get-original id=4 memo:/override-absolute.pkl
+key-get-uri id=4 memo:/override-absolute.pkl
+key-get-uri id=4 memo:/override-absolute.pkl
+key-get-uri id=4 memo:/override-absolute.pkl
+resolved-get-uri id=4 memo:/override-absolute.pkl
+key-get-uri id=4 memo:/override-absolute.pkl
+key-fragment-paths id=4 false
+key-get-uri id=4 memo:/override-absolute.pkl
+outer-2 success
+factory-custom memo:/holder-request.pkl
+factory-custom-hit memo:/holder-request.pkl
+key-created id=5 requested=memo:/holder-request.pkl selected=memo:/selected/holder.pkl cached-snapshot=true
+key-is-cached id=5 memo:/selected/holder.pkl true
+key-get-uri id=5 memo:/selected/holder.pkl
+policy-resolve-module repl:text
+outer-3 success
+system-gc-request
+factory-custom memo:/holder-request.pkl
+factory-custom-hit memo:/holder-request.pkl
+key-created id=6 requested=memo:/holder-request.pkl selected=memo:/selected/holder.pkl cached-snapshot=true
+key-is-cached id=6 memo:/selected/holder.pkl true
+key-get-uri id=6 memo:/selected/holder.pkl
+policy-resolve-module repl:text
+outer-4 success
+factory-custom memo:/holder-request.pkl
+factory-custom-hit memo:/holder-request.pkl
+key-created id=7 requested=memo:/holder-request.pkl selected=memo:/selected/holder.pkl cached-snapshot=true
+key-is-cached id=7 memo:/selected/holder.pkl true
+key-get-uri id=7 memo:/selected/holder.pkl
+policy-resolve-module repl:text
+outer-5 success
+factory-custom memo:/holder-request.pkl
+factory-custom-hit memo:/holder-request.pkl
+key-created id=0 requested=memo:/holder-request.pkl selected=memo:/selected/holder.pkl cached-snapshot=true
+key-is-cached id=0 memo:/selected/holder.pkl true
+key-get-uri id=0 memo:/selected/holder.pkl
+key-resolve id=0 memo:/selected/holder.pkl
+policy-resolve-module memo:/selected/holder.pkl
+key-resolved id=0 memo:/selected/holder.pkl -> memo:/resolved/holder.pkl
+resolved-get-uri id=0 memo:/resolved/holder.pkl
+load-source id=0 memo:/selected/holder.pkl -> memo:/resolved/holder.pkl load=0 state=good
+resolved-get-original id=0 memo:/selected/holder.pkl
+key-get-uri id=0 memo:/selected/holder.pkl
+key-get-uri id=0 memo:/selected/holder.pkl
+key-get-uri id=0 memo:/selected/holder.pkl
+resolved-get-uri id=0 memo:/resolved/holder.pkl
+key-get-uri id=0 memo:/selected/holder.pkl
+key-fragment-paths id=0 false
+key-get-uri id=0 memo:/selected/holder.pkl
+key-get-uri id=0 memo:/selected/holder.pkl
+key-resolve-uri id=0 key=memo:/selected/holder.pkl operand=./child.pkl call=0
+key-uri-result id=0 target=memo:/override-relative.pkl call=0
+key-resolve-uri id=0 key=memo:/selected/holder.pkl operand=memo:/authored-absolute.pkl call=1
+key-uri-result id=0 target=memo:/override-absolute.pkl call=1
+policy-resolve-module repl:text
+outer-0 success
+factory-custom memo:/holder-request.pkl
+factory-custom-hit memo:/holder-request.pkl
+key-created id=1 requested=memo:/holder-request.pkl selected=memo:/selected/holder.pkl cached-snapshot=true
+key-is-cached id=1 memo:/selected/holder.pkl true
+key-get-uri id=1 memo:/selected/holder.pkl
+policy-resolve-module repl:text
+resolved-get-uri id=0 memo:/resolved/holder.pkl
+policy-import memo:/resolved/holder.pkl -> memo:/override-relative.pkl
+factory-custom memo:/override-relative.pkl
+factory-custom-hit memo:/override-relative.pkl
+key-created id=2 requested=memo:/override-relative.pkl selected=memo:/override-relative.pkl cached-snapshot=true
+key-is-cached id=2 memo:/override-relative.pkl true
+key-get-uri id=2 memo:/override-relative.pkl
+key-resolve id=2 memo:/override-relative.pkl
+policy-resolve-module memo:/override-relative.pkl
+key-resolved id=2 memo:/override-relative.pkl -> memo:/override-relative.pkl
+resolved-get-uri id=2 memo:/override-relative.pkl
+load-source id=2 memo:/override-relative.pkl -> memo:/override-relative.pkl load=1 state=good
+resolved-get-original id=2 memo:/override-relative.pkl
+key-get-uri id=2 memo:/override-relative.pkl
+key-get-uri id=2 memo:/override-relative.pkl
+key-get-uri id=2 memo:/override-relative.pkl
+resolved-get-uri id=2 memo:/override-relative.pkl
+key-get-uri id=2 memo:/override-relative.pkl
+key-fragment-paths id=2 false
+key-get-uri id=2 memo:/override-relative.pkl
+outer-1 success
+factory-custom memo:/holder-request.pkl
+factory-custom-hit memo:/holder-request.pkl
+key-created id=3 requested=memo:/holder-request.pkl selected=memo:/selected/holder.pkl cached-snapshot=true
+key-is-cached id=3 memo:/selected/holder.pkl true
+key-get-uri id=3 memo:/selected/holder.pkl
+policy-resolve-module repl:text
+resolved-get-uri id=0 memo:/resolved/holder.pkl
+policy-import memo:/resolved/holder.pkl -> memo:/override-absolute.pkl
+factory-custom memo:/override-absolute.pkl
+factory-custom-hit memo:/override-absolute.pkl
+key-created id=4 requested=memo:/override-absolute.pkl selected=memo:/override-absolute.pkl cached-snapshot=true
+key-is-cached id=4 memo:/override-absolute.pkl true
+key-get-uri id=4 memo:/override-absolute.pkl
+key-resolve id=4 memo:/override-absolute.pkl
+policy-resolve-module memo:/override-absolute.pkl
+key-resolved id=4 memo:/override-absolute.pkl -> memo:/override-absolute.pkl
+resolved-get-uri id=4 memo:/override-absolute.pkl
+load-source id=4 memo:/override-absolute.pkl -> memo:/override-absolute.pkl load=2 state=good
+resolved-get-original id=4 memo:/override-absolute.pkl
+key-get-uri id=4 memo:/override-absolute.pkl
+key-get-uri id=4 memo:/override-absolute.pkl
+key-get-uri id=4 memo:/override-absolute.pkl
+resolved-get-uri id=4 memo:/override-absolute.pkl
+key-get-uri id=4 memo:/override-absolute.pkl
+key-fragment-paths id=4 false
+key-get-uri id=4 memo:/override-absolute.pkl
+outer-2 success
+factory-custom memo:/holder-request.pkl
+factory-custom-hit memo:/holder-request.pkl
+key-created id=5 requested=memo:/holder-request.pkl selected=memo:/selected/holder.pkl cached-snapshot=true
+key-is-cached id=5 memo:/selected/holder.pkl true
+key-get-uri id=5 memo:/selected/holder.pkl
+policy-resolve-module repl:text
+outer-3 success
+system-gc-request
+factory-custom memo:/holder-request.pkl
+factory-custom-hit memo:/holder-request.pkl
+key-created id=6 requested=memo:/holder-request.pkl selected=memo:/selected/holder.pkl cached-snapshot=true
+key-is-cached id=6 memo:/selected/holder.pkl true
+key-get-uri id=6 memo:/selected/holder.pkl
+policy-resolve-module repl:text
+outer-4 success
+factory-custom memo:/holder-request.pkl
+factory-custom-hit memo:/holder-request.pkl
+key-created id=7 requested=memo:/holder-request.pkl selected=memo:/selected/holder.pkl cached-snapshot=true
+key-is-cached id=7 memo:/selected/holder.pkl true
+key-get-uri id=7 memo:/selected/holder.pkl
+policy-resolve-module repl:text
+outer-5 success

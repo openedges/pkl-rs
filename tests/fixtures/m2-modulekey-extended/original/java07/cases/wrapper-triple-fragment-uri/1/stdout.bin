@@ -1,0 +1,158 @@
+factory-custom memo:/wrapper-request.pkl
+factory-custom-hit memo:/wrapper-request.pkl
+key-created id=0 requested=memo:/wrapper-request.pkl selected=memo:/path/a/main.pkl#/fragment/a/module.pkl cached-snapshot=true
+key-is-cached id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl true
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-resolve id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+policy-resolve-module memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-resolved id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl -> memo:/resolved/parent.pkl
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+load-source id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl -> memo:/resolved/parent.pkl load=0 state=good
+resolved-get-original id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-fragment-paths id=0 true
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-local id=0 true
+key-hierarchical id=0 true
+key-fragment-paths id=0 true
+key-fragment-paths id=0 true
+key-has-element id=0 key=memo:/path/a/main.pkl#/fragment/a/module.pkl candidate=memo:/path/a/main.pkl#/fragment/target.pkl query=0
+key-element-result id=0 candidate=memo:/path/a/main.pkl#/fragment/target.pkl exists=false query=0
+key-fragment-paths id=0 true
+key-has-element id=0 key=memo:/path/a/main.pkl#/fragment/a/module.pkl candidate=memo:/path/a/main.pkl#/target.pkl query=1
+key-element-result id=0 candidate=memo:/path/a/main.pkl#/target.pkl exists=true query=1
+policy-resolve-module repl:text
+outer-0 success
+factory-custom memo:/wrapper-request.pkl
+factory-custom-hit memo:/wrapper-request.pkl
+key-created id=1 requested=memo:/wrapper-request.pkl selected=memo:/path/a/main.pkl#/fragment/a/module.pkl cached-snapshot=true
+key-is-cached id=1 memo:/path/a/main.pkl#/fragment/a/module.pkl true
+key-get-uri id=1 memo:/path/a/main.pkl#/fragment/a/module.pkl
+policy-resolve-module repl:text
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+policy-import memo:/resolved/parent.pkl -> memo:/path/a/main.pkl#/target.pkl
+factory-custom memo:/path/a/main.pkl#/target.pkl
+factory-custom-hit memo:/path/a/main.pkl#/target.pkl
+key-created id=2 requested=memo:/path/a/main.pkl#/target.pkl selected=memo:/path/a/main.pkl#/target.pkl cached-snapshot=true
+key-is-cached id=2 memo:/path/a/main.pkl#/target.pkl true
+key-get-uri id=2 memo:/path/a/main.pkl#/target.pkl
+key-resolve id=2 memo:/path/a/main.pkl#/target.pkl
+policy-resolve-module memo:/path/a/main.pkl#/target.pkl
+key-resolved id=2 memo:/path/a/main.pkl#/target.pkl -> memo:/resolved/fragment-target.pkl
+resolved-get-uri id=2 memo:/resolved/fragment-target.pkl
+load-source id=2 memo:/path/a/main.pkl#/target.pkl -> memo:/resolved/fragment-target.pkl load=1 state=good
+resolved-get-original id=2 memo:/path/a/main.pkl#/target.pkl
+key-get-uri id=2 memo:/path/a/main.pkl#/target.pkl
+key-get-uri id=2 memo:/path/a/main.pkl#/target.pkl
+key-get-uri id=2 memo:/path/a/main.pkl#/target.pkl
+resolved-get-uri id=2 memo:/resolved/fragment-target.pkl
+key-get-uri id=2 memo:/path/a/main.pkl#/target.pkl
+key-fragment-paths id=2 true
+key-get-uri id=2 memo:/path/a/main.pkl#/target.pkl
+outer-1 success
+factory-custom memo:/wrapper-request.pkl
+factory-custom-hit memo:/wrapper-request.pkl
+key-created id=3 requested=memo:/wrapper-request.pkl selected=memo:/path/a/main.pkl#/fragment/a/module.pkl cached-snapshot=true
+key-is-cached id=3 memo:/path/a/main.pkl#/fragment/a/module.pkl true
+key-get-uri id=3 memo:/path/a/main.pkl#/fragment/a/module.pkl
+policy-resolve-module repl:text
+outer-2 success
+system-gc-request
+factory-custom memo:/wrapper-request.pkl
+factory-custom-hit memo:/wrapper-request.pkl
+key-created id=4 requested=memo:/wrapper-request.pkl selected=memo:/path/a/main.pkl#/fragment/a/module.pkl cached-snapshot=true
+key-is-cached id=4 memo:/path/a/main.pkl#/fragment/a/module.pkl true
+key-get-uri id=4 memo:/path/a/main.pkl#/fragment/a/module.pkl
+policy-resolve-module repl:text
+outer-3 success
+factory-custom memo:/wrapper-request.pkl
+factory-custom-hit memo:/wrapper-request.pkl
+key-created id=5 requested=memo:/wrapper-request.pkl selected=memo:/path/a/main.pkl#/fragment/a/module.pkl cached-snapshot=true
+key-is-cached id=5 memo:/path/a/main.pkl#/fragment/a/module.pkl true
+key-get-uri id=5 memo:/path/a/main.pkl#/fragment/a/module.pkl
+policy-resolve-module repl:text
+outer-4 success
+factory-custom memo:/wrapper-request.pkl
+factory-custom-hit memo:/wrapper-request.pkl
+key-created id=0 requested=memo:/wrapper-request.pkl selected=memo:/path/a/main.pkl#/fragment/a/module.pkl cached-snapshot=true
+key-is-cached id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl true
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-resolve id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+policy-resolve-module memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-resolved id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl -> memo:/resolved/parent.pkl
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+load-source id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl -> memo:/resolved/parent.pkl load=0 state=good
+resolved-get-original id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-fragment-paths id=0 true
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-get-uri id=0 memo:/path/a/main.pkl#/fragment/a/module.pkl
+key-local id=0 true
+key-hierarchical id=0 true
+key-fragment-paths id=0 true
+key-fragment-paths id=0 true
+key-has-element id=0 key=memo:/path/a/main.pkl#/fragment/a/module.pkl candidate=memo:/path/a/main.pkl#/fragment/target.pkl query=0
+key-element-result id=0 candidate=memo:/path/a/main.pkl#/fragment/target.pkl exists=false query=0
+key-fragment-paths id=0 true
+key-has-element id=0 key=memo:/path/a/main.pkl#/fragment/a/module.pkl candidate=memo:/path/a/main.pkl#/target.pkl query=1
+key-element-result id=0 candidate=memo:/path/a/main.pkl#/target.pkl exists=true query=1
+policy-resolve-module repl:text
+outer-0 success
+factory-custom memo:/wrapper-request.pkl
+factory-custom-hit memo:/wrapper-request.pkl
+key-created id=1 requested=memo:/wrapper-request.pkl selected=memo:/path/a/main.pkl#/fragment/a/module.pkl cached-snapshot=true
+key-is-cached id=1 memo:/path/a/main.pkl#/fragment/a/module.pkl true
+key-get-uri id=1 memo:/path/a/main.pkl#/fragment/a/module.pkl
+policy-resolve-module repl:text
+resolved-get-uri id=0 memo:/resolved/parent.pkl
+policy-import memo:/resolved/parent.pkl -> memo:/path/a/main.pkl#/target.pkl
+factory-custom memo:/path/a/main.pkl#/target.pkl
+factory-custom-hit memo:/path/a/main.pkl#/target.pkl
+key-created id=2 requested=memo:/path/a/main.pkl#/target.pkl selected=memo:/path/a/main.pkl#/target.pkl cached-snapshot=true
+key-is-cached id=2 memo:/path/a/main.pkl#/target.pkl true
+key-get-uri id=2 memo:/path/a/main.pkl#/target.pkl
+key-resolve id=2 memo:/path/a/main.pkl#/target.pkl
+policy-resolve-module memo:/path/a/main.pkl#/target.pkl
+key-resolved id=2 memo:/path/a/main.pkl#/target.pkl -> memo:/resolved/fragment-target.pkl
+resolved-get-uri id=2 memo:/resolved/fragment-target.pkl
+load-source id=2 memo:/path/a/main.pkl#/target.pkl -> memo:/resolved/fragment-target.pkl load=1 state=good
+resolved-get-original id=2 memo:/path/a/main.pkl#/target.pkl
+key-get-uri id=2 memo:/path/a/main.pkl#/target.pkl
+key-get-uri id=2 memo:/path/a/main.pkl#/target.pkl
+key-get-uri id=2 memo:/path/a/main.pkl#/target.pkl
+resolved-get-uri id=2 memo:/resolved/fragment-target.pkl
+key-get-uri id=2 memo:/path/a/main.pkl#/target.pkl
+key-fragment-paths id=2 true
+key-get-uri id=2 memo:/path/a/main.pkl#/target.pkl
+outer-1 success
+factory-custom memo:/wrapper-request.pkl
+factory-custom-hit memo:/wrapper-request.pkl
+key-created id=3 requested=memo:/wrapper-request.pkl selected=memo:/path/a/main.pkl#/fragment/a/module.pkl cached-snapshot=true
+key-is-cached id=3 memo:/path/a/main.pkl#/fragment/a/module.pkl true
+key-get-uri id=3 memo:/path/a/main.pkl#/fragment/a/module.pkl
+policy-resolve-module repl:text
+outer-2 success
+system-gc-request
+factory-custom memo:/wrapper-request.pkl
+factory-custom-hit memo:/wrapper-request.pkl
+key-created id=4 requested=memo:/wrapper-request.pkl selected=memo:/path/a/main.pkl#/fragment/a/module.pkl cached-snapshot=true
+key-is-cached id=4 memo:/path/a/main.pkl#/fragment/a/module.pkl true
+key-get-uri id=4 memo:/path/a/main.pkl#/fragment/a/module.pkl
+policy-resolve-module repl:text
+outer-3 success
+factory-custom memo:/wrapper-request.pkl
+factory-custom-hit memo:/wrapper-request.pkl
+key-created id=5 requested=memo:/wrapper-request.pkl selected=memo:/path/a/main.pkl#/fragment/a/module.pkl cached-snapshot=true
+key-is-cached id=5 memo:/path/a/main.pkl#/fragment/a/module.pkl true
+key-get-uri id=5 memo:/path/a/main.pkl#/fragment/a/module.pkl
+policy-resolve-module repl:text
+outer-4 success

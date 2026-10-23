@@ -1,0 +1,152 @@
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl resource=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-custom pkl:ref
+factory-custom-hit pkl:ref
+key-created id=0 requested=pkl:ref selected=pkl:ref cached-snapshot=true
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl -> pkl:ref
+factory-custom pkl:ref
+factory-custom-hit pkl:ref
+key-created id=1 requested=pkl:ref selected=pkl:ref cached-snapshot=true
+key-is-cached id=1 pkl:ref true
+key-get-uri id=1 pkl:ref
+key-resolve id=1 pkl:ref
+policy-resolve-module pkl:ref
+key-resolved id=1 pkl:ref -> memo:/resolved/custom-ref.pkl
+resolved-get-uri id=1 memo:/resolved/custom-ref.pkl
+load-source id=1 pkl:ref -> memo:/resolved/custom-ref.pkl load=0 state=good
+resolved-get-original id=1 pkl:ref
+key-get-uri id=1 pkl:ref
+key-get-uri id=1 pkl:ref
+key-get-uri id=1 pkl:ref
+resolved-get-uri id=1 memo:/resolved/custom-ref.pkl
+key-get-uri id=1 pkl:ref
+key-fragment-paths id=1 false
+key-get-uri id=1 pkl:ref
+key-get-uri id=1 pkl:ref
+key-get-uri id=1 pkl:ref
+policy-resolve-module repl:text
+outer-0 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-1 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-2 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-3 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-4 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-5 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-6 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl resource=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-custom pkl:ref
+factory-custom-hit pkl:ref
+key-created id=0 requested=pkl:ref selected=pkl:ref cached-snapshot=true
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl -> pkl:ref
+factory-custom pkl:ref
+factory-custom-hit pkl:ref
+key-created id=1 requested=pkl:ref selected=pkl:ref cached-snapshot=true
+key-is-cached id=1 pkl:ref true
+key-get-uri id=1 pkl:ref
+key-resolve id=1 pkl:ref
+policy-resolve-module pkl:ref
+key-resolved id=1 pkl:ref -> memo:/resolved/custom-ref.pkl
+resolved-get-uri id=1 memo:/resolved/custom-ref.pkl
+load-source id=1 pkl:ref -> memo:/resolved/custom-ref.pkl load=0 state=good
+resolved-get-original id=1 pkl:ref
+key-get-uri id=1 pkl:ref
+key-get-uri id=1 pkl:ref
+key-get-uri id=1 pkl:ref
+resolved-get-uri id=1 memo:/resolved/custom-ref.pkl
+key-get-uri id=1 pkl:ref
+key-fragment-paths id=1 false
+key-get-uri id=1 pkl:ref
+key-get-uri id=1 pkl:ref
+key-get-uri id=1 pkl:ref
+policy-resolve-module repl:text
+outer-0 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-1 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-2 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-3 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-4 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-5 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/custom-ref-qualified-types/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-6 success

@@ -1,0 +1,18 @@
+main.pkl	stable
+main.pkl	old().tag
+CACHE	off
+SOURCE	io
+main.pkl	fail().tag
+main.pkl	old().tag
+CACHE	on
+SOURCE	good
+main.pkl	later().tag
+main.pkl	old().tag
+main.pkl	later().tag
+CACHE	off
+main.pkl	recovered().tag
+CACHE	on
+GC
+main.pkl	import("memo:/toggle.pkl").tag
+main.pkl	old().tag
+main.pkl	stable

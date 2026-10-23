@@ -1,0 +1,4 @@
+import "memo:/request-jar.pkl"
+stable = 7
+function marker() = jarName.Marker.toString()
+function tagValue() = jarName.tag

@@ -1,0 +1,13 @@
+SOURCE	one
+supplied1	tag
+supplied2	tag
+underlying	tag
+supplied2	tag
+uri	tag
+SOURCE	two
+uri	tag
+underlying	tag
+supplied1	tag
+GC
+supplied2	output.text
+uri	output.text

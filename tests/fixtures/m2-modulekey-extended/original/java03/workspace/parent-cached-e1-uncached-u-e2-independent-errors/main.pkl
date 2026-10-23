@@ -1,0 +1,4 @@
+function parent() = import("memo:/parent.pkl")
+function uncached() = import("memo:/u.pkl")
+function cached() = import("memo:/u.pkl")
+stable = 7

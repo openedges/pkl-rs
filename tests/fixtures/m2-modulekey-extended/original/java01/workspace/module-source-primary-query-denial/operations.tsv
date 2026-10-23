@@ -1,0 +1,11 @@
+POLICY	deny-supplied
+supplied1	tag
+POLICY	allow
+supplied1	tag
+POLICY	deny-repl
+supplied1	tag
+supplied1	output.text
+repl1	tag
+POLICY	allow
+repl1	tag
+supplied1	tag

@@ -228,27 +228,28 @@ fn append_members(
                         .as_ref()
                         .expect("pinned catch argument")
                         .span;
-                    let block = program.blocks.len();
-                    program.blocks.push(vec![
-                        Instruction::LoadLocal(0),
-                        Instruction::CheckType(TypeCheck::Function {
-                            parameters: Some(Vec::new()),
-                            result: Box::new(TypeCheck::Any),
-                            syntax: true,
-                        }),
-                        Instruction::GuestCatch {
-                            or_null: declaration.name == "catchOrNull",
+                    let block = program.alloc_block(
+                        vec![
+                            Instruction::LoadLocal(0),
+                            Instruction::CheckType(TypeCheck::Function {
+                                parameters: Some(Vec::new()),
+                                result: Box::new(TypeCheck::Any),
+                                syntax: true,
+                            }),
+                            Instruction::GuestCatch {
+                                or_null: declaration.name == "catchOrNull",
+                            },
+                            Instruction::Return,
+                        ],
+                        BlockMetadata {
+                            unit: Some(unit),
+                            source: Some(source.clone()),
+                            member: format!("#{}", declaration.name).into(),
+                            declaration: Some(*header_span),
+                            spans: vec![None, Some(argument_span), None, None],
+                            ..Default::default()
                         },
-                        Instruction::Return,
-                    ]);
-                    program.metadata.push(BlockMetadata {
-                        unit: Some(unit),
-                        source: Some(source.clone()),
-                        member: format!("#{}", declaration.name).into(),
-                        declaration: Some(*header_span),
-                        spans: vec![None, Some(argument_span), None, None],
-                        ..Default::default()
-                    });
+                    )?;
                     vec![Instruction::MakeFunction {
                         block,
                         arity: 1,
@@ -260,17 +261,18 @@ fn append_members(
             }
         };
         body.push(Instruction::Return);
-        let block = program.blocks.len();
         let spans = vec![Some(declaration.name_span); body.len()];
-        program.blocks.push(body);
-        program.metadata.push(BlockMetadata {
-            unit: Some(unit),
-            source: Some(source.clone()),
-            member: format!("#{}", declaration.name).into(),
-            declaration: Some(declaration.name_span),
-            spans,
-            ..Default::default()
-        });
+        let block = program.alloc_block(
+            body,
+            BlockMetadata {
+                unit: Some(unit),
+                source: Some(source.clone()),
+                member: format!("#{}", declaration.name).into(),
+                declaration: Some(declaration.name_span),
+                spans,
+                ..Default::default()
+            },
+        )?;
         members.push(Member {
             flags: Member::declaration_flags(declaration),
             entry: false,

@@ -1,0 +1,196 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/runtime-private/resolve-uri-override-uri/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/runtime-private/resolve-uri-override-uri/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+    "AdmissionProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/workspace/resolve-uri-override-uri",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/cases/resolve-uri-override-uri/0/calls",
+    "allow",
+    "main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/workspace/resolve-uri-override-uri",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/runtime-private/resolve-uri-override-uri/0/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/runtime-private/resolve-uri-override-uri/0/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/runtime-private/resolve-uri-override-uri/0/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-05/runtime-private/resolve-uri-override-uri/0/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 81658,
+  "startedUnixNs": 1792781151460180000,
+  "pid": 81663,
+  "exitCode": 0,
+  "timedOut": false,
+  "finishedUnixNs": 1792781152439207000,
+  "stdoutSha256": "2f9a030675ac4f05c90e4029c8761cbc420b316d04685ac27d56efe95733de75",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "case": "resolve-uri-override-uri",
+  "repeat": 0,
+  "workspaceBefore": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "276f73b4261e5a6b8fc98f41da1602e83ac48d7e18aec8ea9c05f7ecc398cbc5",
+      "bytes": 11,
+      "mode": 420
+    },
+    "holder.pkl": {
+      "kind": "regular",
+      "sha256": "b92dc4f46312a4299368fbdf414539517aeca4206513c17f6af7e05e7d8639e1",
+      "bytes": 115,
+      "mode": 420
+    },
+    "override-relative.pkl": {
+      "kind": "regular",
+      "sha256": "1ae944d5a203bdaf42d484cc309abc184ffb1422ad76f896298031fcfb6733a4",
+      "bytes": 26,
+      "mode": 420
+    },
+    "override-absolute.pkl": {
+      "kind": "regular",
+      "sha256": "0cd41018c225f28c28e181adeb662f5c32b3a4e6deec4fed72e37ff4671d451f",
+      "bytes": 26,
+      "mode": 420
+    },
+    "default-relative.pkl": {
+      "kind": "regular",
+      "sha256": "bd373ddbe1bb7b64fed520e20eac1ee9a94d27177237918e468ed68e2f71e466",
+      "bytes": 25,
+      "mode": 420
+    },
+    "default-absolute.pkl": {
+      "kind": "regular",
+      "sha256": "a234a6e48ad4cf6bbcd2337b17f8a8ba790a35fb61ad5c4a320a04a91e1f0b71",
+      "bytes": 25,
+      "mode": 420
+    },
+    "wrong-base-relative.pkl": {
+      "kind": "regular",
+      "sha256": "dd11f409eee24435b10f4c11669e6eb42ad78a6648d20d001c897ce552430de4",
+      "bytes": 27,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "649dff1a88d70392018a2fb00c29d5b6946d1a0b9c4fbd8200314166cf3779fc",
+      "bytes": 639,
+      "mode": 420
+    },
+    "source-inputs.txt": {
+      "kind": "regular",
+      "sha256": "6b2f32083c82c9cb45a263704b2fe8ac457f9bc3f817a95e1b84ec20f680a4a4",
+      "bytes": 130,
+      "mode": 420
+    },
+    "source-profiles.tsv": {
+      "kind": "regular",
+      "sha256": "609a1cfbcbe1a4d4d8d2462bfc1e2ef42b10638ce5c4796fd0c4566e108a9cb2",
+      "bytes": 38,
+      "mode": 420
+    },
+    "uri-overrides.tsv": {
+      "kind": "regular",
+      "sha256": "60d2e670ef88502cfdcbfc1d5a5981d416b118103c1cdfce2695597a05efd3e6",
+      "bytes": 148,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "8b71db587627535263454129024fc6708c9a7d7f321e407fc8be1110ba62f1a8",
+      "bytes": 125,
+      "mode": 420
+    }
+  },
+  "workspaceAfter": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "276f73b4261e5a6b8fc98f41da1602e83ac48d7e18aec8ea9c05f7ecc398cbc5",
+      "bytes": 11,
+      "mode": 420
+    },
+    "holder.pkl": {
+      "kind": "regular",
+      "sha256": "b92dc4f46312a4299368fbdf414539517aeca4206513c17f6af7e05e7d8639e1",
+      "bytes": 115,
+      "mode": 420
+    },
+    "override-relative.pkl": {
+      "kind": "regular",
+      "sha256": "1ae944d5a203bdaf42d484cc309abc184ffb1422ad76f896298031fcfb6733a4",
+      "bytes": 26,
+      "mode": 420
+    },
+    "override-absolute.pkl": {
+      "kind": "regular",
+      "sha256": "0cd41018c225f28c28e181adeb662f5c32b3a4e6deec4fed72e37ff4671d451f",
+      "bytes": 26,
+      "mode": 420
+    },
+    "default-relative.pkl": {
+      "kind": "regular",
+      "sha256": "bd373ddbe1bb7b64fed520e20eac1ee9a94d27177237918e468ed68e2f71e466",
+      "bytes": 25,
+      "mode": 420
+    },
+    "default-absolute.pkl": {
+      "kind": "regular",
+      "sha256": "a234a6e48ad4cf6bbcd2337b17f8a8ba790a35fb61ad5c4a320a04a91e1f0b71",
+      "bytes": 25,
+      "mode": 420
+    },
+    "wrong-base-relative.pkl": {
+      "kind": "regular",
+      "sha256": "dd11f409eee24435b10f4c11669e6eb42ad78a6648d20d001c897ce552430de4",
+      "bytes": 27,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "649dff1a88d70392018a2fb00c29d5b6946d1a0b9c4fbd8200314166cf3779fc",
+      "bytes": 639,
+      "mode": 420
+    },
+    "source-inputs.txt": {
+      "kind": "regular",
+      "sha256": "6b2f32083c82c9cb45a263704b2fe8ac457f9bc3f817a95e1b84ec20f680a4a4",
+      "bytes": 130,
+      "mode": 420
+    },
+    "source-profiles.tsv": {
+      "kind": "regular",
+      "sha256": "609a1cfbcbe1a4d4d8d2462bfc1e2ef42b10638ce5c4796fd0c4566e108a9cb2",
+      "bytes": 38,
+      "mode": 420
+    },
+    "uri-overrides.tsv": {
+      "kind": "regular",
+      "sha256": "60d2e670ef88502cfdcbfc1d5a5981d416b118103c1cdfce2695597a05efd3e6",
+      "bytes": 148,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "8b71db587627535263454129024fc6708c9a7d7f321e407fc8be1110ba62f1a8",
+      "bytes": 125,
+      "mode": 420
+    }
+  }
+}

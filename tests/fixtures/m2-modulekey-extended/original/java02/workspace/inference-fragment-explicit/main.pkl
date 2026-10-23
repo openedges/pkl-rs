@@ -1,0 +1,4 @@
+import "memo:/request-fragment.pkl" as named
+stable = 7
+function marker() = named.Marker.toString()
+function tagValue() = named.tag

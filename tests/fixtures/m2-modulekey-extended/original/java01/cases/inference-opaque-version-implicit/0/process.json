@@ -1,0 +1,124 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/runtime-private/inference-opaque-version-implicit/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/runtime-private/inference-opaque-version-implicit/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+    "AdmissionProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-opaque-version-implicit",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/cases/inference-opaque-version-implicit/0/calls",
+    "allow",
+    "main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/workspace/inference-opaque-version-implicit",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/runtime-private/inference-opaque-version-implicit/0/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/runtime-private/inference-opaque-version-implicit/0/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/runtime-private/inference-opaque-version-implicit/0/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-modulekey-01/runtime-private/inference-opaque-version-implicit/0/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 63664,
+  "startedUnixNs": 1792779228749177000,
+  "pid": 63831,
+  "exitCode": 0,
+  "timedOut": false,
+  "finishedUnixNs": 1792779230532858000,
+  "stdoutSha256": "c6b8aa3d7a5e181598a38d7713729b17ea14893253ac4aeef75604ef9c8bc3be",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "case": "inference-opaque-version-implicit",
+  "repeat": 0,
+  "workspaceBefore": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "8a4ecb280e88aff0554f244316d2a1035a7a1c95ca406c419ab8f1dea904a41d",
+      "bytes": 53,
+      "mode": 420
+    },
+    "child.pkl": {
+      "kind": "regular",
+      "sha256": "e2d6799f0fc284bb8ca3ec92f8c8212f1d899dbc107079f2238796589c5f4477",
+      "bytes": 40,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "adfd1d17fa62d782c827e091e8f8efdeaa1823c374b973c9f790acde6e962f49",
+      "bytes": 116,
+      "mode": 420
+    },
+    "source-profiles.tsv": {
+      "kind": "regular",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420
+    },
+    "source-inputs.txt": {
+      "kind": "regular",
+      "sha256": "85dde164a7075c61d966a75181b3aaf3d81f3a9a37404c1e7d6a1e536a9ac17b",
+      "bytes": 19,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "9c5625f745a39f2aae2c5cfe1b4ebf45ffcdca4dd3b5ba08db4b3a6a6fd871b2",
+      "bytes": 120,
+      "mode": 420
+    }
+  },
+  "workspaceAfter": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "8a4ecb280e88aff0554f244316d2a1035a7a1c95ca406c419ab8f1dea904a41d",
+      "bytes": 53,
+      "mode": 420
+    },
+    "child.pkl": {
+      "kind": "regular",
+      "sha256": "e2d6799f0fc284bb8ca3ec92f8c8212f1d899dbc107079f2238796589c5f4477",
+      "bytes": 40,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "adfd1d17fa62d782c827e091e8f8efdeaa1823c374b973c9f790acde6e962f49",
+      "bytes": 116,
+      "mode": 420
+    },
+    "source-profiles.tsv": {
+      "kind": "regular",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420
+    },
+    "source-inputs.txt": {
+      "kind": "regular",
+      "sha256": "85dde164a7075c61d966a75181b3aaf3d81f3a9a37404c1e7d6a1e536a9ac17b",
+      "bytes": 19,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "9c5625f745a39f2aae2c5cfe1b4ebf45ffcdca4dd3b5ba08db4b3a6a6fd871b2",
+      "bytes": 120,
+      "mode": 420
+    }
+  }
+}

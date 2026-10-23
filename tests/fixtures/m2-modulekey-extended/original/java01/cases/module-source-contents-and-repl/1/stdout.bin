@@ -1,0 +1,114 @@
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=0 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=false
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+policy-resolve-module repl:text
+outer-0 success
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=1 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=false
+key-get-uri id=1 memo:/supplied.pkl
+policy-resolve-module repl:text
+outer-1 success
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=2 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=false
+key-get-uri id=2 memo:/supplied.pkl
+outer-2 success
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=3 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=false
+key-is-cached id=3 memo:/supplied.pkl false
+key-resolve id=3 memo:/supplied.pkl
+policy-resolve-module memo:/supplied.pkl
+key-resolved id=3 memo:/supplied.pkl -> memo:/resolved/underlying.pkl
+load-source id=3 memo:/supplied.pkl -> memo:/resolved/underlying.pkl load=0 state=good
+resolved-get-original id=3 memo:/supplied.pkl
+key-get-uri id=3 memo:/supplied.pkl
+key-get-uri id=3 memo:/supplied.pkl
+key-get-uri id=3 memo:/supplied.pkl
+resolved-get-uri id=3 memo:/resolved/underlying.pkl
+key-get-uri id=3 memo:/supplied.pkl
+key-fragment-paths id=3 true
+key-get-uri id=3 memo:/supplied.pkl
+resolved-get-uri id=3 memo:/resolved/underlying.pkl
+outer-3 error org.pkl.core.PklBugException
+policy-resolve-module repl:text
+policy-resolve-module repl:text
+outer-4 success
+policy-resolve-module repl:text
+policy-resolve-module repl:text
+outer-5 success
+policy-resolve-module repl:text
+outer-6 success
+policy-resolve-module repl:text
+outer-7 success
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=4 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=false
+key-get-uri id=4 memo:/supplied.pkl
+outer-8 error org.pkl.core.PklBugException
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=0 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=false
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+key-get-uri id=0 memo:/supplied.pkl
+policy-resolve-module repl:text
+outer-0 success
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=1 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=false
+key-get-uri id=1 memo:/supplied.pkl
+policy-resolve-module repl:text
+outer-1 success
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=2 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=false
+key-get-uri id=2 memo:/supplied.pkl
+outer-2 success
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=3 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=false
+key-is-cached id=3 memo:/supplied.pkl false
+key-resolve id=3 memo:/supplied.pkl
+policy-resolve-module memo:/supplied.pkl
+key-resolved id=3 memo:/supplied.pkl -> memo:/resolved/underlying.pkl
+load-source id=3 memo:/supplied.pkl -> memo:/resolved/underlying.pkl load=0 state=good
+resolved-get-original id=3 memo:/supplied.pkl
+key-get-uri id=3 memo:/supplied.pkl
+key-get-uri id=3 memo:/supplied.pkl
+key-get-uri id=3 memo:/supplied.pkl
+resolved-get-uri id=3 memo:/resolved/underlying.pkl
+key-get-uri id=3 memo:/supplied.pkl
+key-fragment-paths id=3 true
+key-get-uri id=3 memo:/supplied.pkl
+resolved-get-uri id=3 memo:/resolved/underlying.pkl
+outer-3 error org.pkl.core.PklBugException
+policy-resolve-module repl:text
+policy-resolve-module repl:text
+outer-4 success
+policy-resolve-module repl:text
+policy-resolve-module repl:text
+outer-5 success
+policy-resolve-module repl:text
+outer-6 success
+policy-resolve-module repl:text
+outer-7 success
+factory-custom memo:/supplied.pkl
+factory-custom-hit memo:/supplied.pkl
+key-created id=4 requested=memo:/supplied.pkl selected=memo:/supplied.pkl cached-snapshot=false
+key-get-uri id=4 memo:/supplied.pkl
+outer-8 error org.pkl.core.PklBugException

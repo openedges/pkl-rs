@@ -1,0 +1,15 @@
+main.pkl	stable
+SOURCE	init1
+main.pkl	parent().tag
+CACHE	off
+SOURCE	init2
+main.pkl	uncached().tag
+CACHE	on
+main.pkl	parent().tag
+main.pkl	cached().tag
+main.pkl	parent().tag
+main.pkl	cached().tag
+GC
+main.pkl	parent().tag
+main.pkl	cached().tag
+main.pkl	stable

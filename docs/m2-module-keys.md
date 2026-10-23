@@ -24,11 +24,19 @@ compatibility of the planned CLI, REPL or server products.
 
 Each public query receives fresh executable state while retaining the evaluator's
 module caches. Active and captured environments retain their executable owners,
-so escaped closures and declarations keep the code they need. Collection retires
-unreachable module/query payloads, including source and type data. This is not a
-proof of bounded total memory: retired non-tail vector slots and some nested
-capacities still accumulate. Reclaiming that storage while preserving live code
-identities remains required for long-running sessions.
+so escaped closures and declarations keep the code they need. Stage50 stores
+dynamic executable code in resident segments and retires unreachable segments,
+including their source/type data and nested capacities. Retired committed
+logical addresses are not reused. The previous Stage49 representation retained
+non-tail slots even after releasing their payloads.
+
+Storage regressions compare 20 and 200 uncached module evaluations, including
+import clauses, classes, generic aliases, constraints and suspended-parent
+reentry. Separate tests retain escaped values and old program snapshots through
+collection and compilation rollback. These checks establish the recorded
+storage invariants; they do not establish whole-process RSS, all session
+workloads or the Java performance targets. See the
+[storage architecture](architecture.md).
 
 ## Java reference fixtures
 
@@ -96,6 +104,13 @@ These tests check adapters and evidence validation with mocked sessions. Actual
 Node/Chromium acquisition requires separately recorded builds, source bindings,
 and explicit artifact/browser hashes; a preflight-only run does not execute
 either engine.
+
+The [extended controls](m2-modulekey-extended.md) preserve another 944 original
+API calls and 10,124 Java events across source profiles, changing source/factory
+state, policy denial, URI overrides and fragment capabilities. Their 836
+ordinary calls, 100 diagnostic-only calls and eight internal-error boundaries
+remain separately accounted for. They do not replace the original 212-call
+contract or its missing full lifecycle comparison.
 
 The older module-loader adapter also models a bounded virtual File factory:
 hierarchical `file:/...` key selection does not check whether a source exists.

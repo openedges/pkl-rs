@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "CLOSED",
+  "targetHandoff": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage50-evidence-publication-01/handoff.json",
+  "handoffSha256": "babb640f499a336c29c5cd07140333d9f16ba21016dd25a634e67795f501ab97",
+  "closureSha256": "eb9146cda4664dc7d57b0987aa5e5ae3ec8c79eeb03281130ebfab4034eb47c4",
+  "finalIndexRepositoryPath": "reports/m2/stage50-native-tooling-index.json",
+  "finalIndexSha256": "908fbc8e9b91e96ff02c4986b3a1ea7e30ed474fad99e39f8423acf7d890793c",
+  "archives": 7,
+  "totalCompressedBytes": 54848403,
+  "maxArchiveBytes": 14273298,
+  "originalFilesChecked": 155803,
+  "originalChanges": 0,
+  "selection": {
+    "actualToolSessionId": 51273,
+    "exitCode": 0
+  },
+  "publication": {
+    "actualToolSessionId": 77077,
+    "pid": 69409,
+    "exitCode": 0,
+    "terminalSha256": "b11addaf83b99468cd029326d85828685fc1022ef0c4856a934c0f37e4f7676b"
+  },
+  "closeout": {
+    "actualToolSessionId": 83978,
+    "pid": 70726,
+    "exitCode": 0,
+    "terminalSha256": "ab43678c5cb656dad8f05931504846eadd746fbebe1d195e264aa2c0dd1d9d39"
+  },
+  "everyArchiveSeparateVerifyAndAllMemberReadback": true,
+  "packagingSourceAndSelectionUnchanged": true,
+  "engineOrJavaExecutions": 0,
+  "GitOperations": 0,
+  "rootGAndFinalGitBindingRemainSeparate": true
+}
