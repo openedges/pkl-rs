@@ -85,10 +85,17 @@ target; both known regex failures remain failures.
 The M1 platform collector directly captured 76 of 77 production inputs. Its
 omitted `stdlib/modules.txt` is bound separately by the complete source freeze
 before platform acquisition and the identical native snapshot afterward. It is
-not relabeled as an M1-captured input. Complete raw archive publication,
-committed-source binding, and full selected/lifecycle regression follow this
-implementation checkpoint. No hosted CI, full compatibility, or performance
-completion is claimed.
+not relabeled as an M1-captured input.
+
+Implementation `97b4da0` is committed. The [published evidence](stage45-implementation-captures.json)
+retains 26 verified archives, including initial failures and the original
+historical inventory defect with its prior correction addendum. The
+[committed-source binding](stage45-implementation-source-binding.json) and
+[source map](stage45-implementation-source-map.json) connect 14,216 captured
+project inputs and nine publication files to actual Git blobs. Repeated snapshots
+are provenance, not distinct semantic cases. Full selected/lifecycle regression
+is running separately at combined commit `01971d0`; no result from that run is
+claimed here. Hosted CI, full compatibility, and performance remain unverified.
 
 ## Native JVM-classpath checkpoint
 

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "commit": "97b4da0526ea0a96e4efb71eb5616bc15d80c116",
+  "commit_tree": "2476c9cfdf9894e67b58c3b39594ce1d9970b74d",
+  "scope": "Exact 14,216 final Rust5/native captured source bytes match real committed Git blobs; not a claim that every historical capture used these bytes.",
+  "captured_map_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-native-final-01/source-after.json",
+  "captured_map_sha256": "2a84330b4e9d1b47703a84b1eef72845c4449d41fcadcd48d94ded2e4a1d3830",
+  "source_map_sha256": "2ee2b439205b2d8145296abd1c7646401822ddc40dcb9d556817d82fdb09188f",
+  "verified_paths": 14216,
+  "all_match": true,
+  "publication_paths": 9,
+  "publication_map_sha256": "2db4d13ab6ade4a84c97b4461a68f60013f9f4e13e5a8ad4f31e881470333040",
+  "gitlinks": {
+    "external/pkl": {
+      "mode": "160000",
+      "git_commit": "e51fb2f91774265666f94980ec630db794a4db2d"
+    },
+    "external/pkl-pantry": {
+      "mode": "160000",
+      "git_commit": "904a68184e54da378b0a0e8a911a3fab3956f693"
+    }
+  },
+  "m1_collector_qualification": "76 of 77 production inputs were captured directly; stdlib/modules.txt uses the complete earlier freeze and identical later native map, not a fabricated M1 capture.",
+  "git_writes": false,
+  "full_m2_complete": false
+}

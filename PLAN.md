@@ -760,7 +760,7 @@ Stage 43의 canonical 진단 위에 module resolve/source와 resource read의 �
 
 수정된 최종 후보의 필수 Rust 검사 다섯 개와 source 안정성 검사가 통과했습니다. 원본 여섯 사례의 두 반복 12회, 일반 ModuleInfo 156회, 실제 security 오류 API 10회가 native에서 일치합니다. 동일 artifact의 실제 Node·Chromium에서도 각 환경의 guest catch 전체 세션 24개·API 완료 166회, 일반 ModuleInfo 156회, security API 10회가 일치합니다. 생성자 전용·terminal 부분 비교와 Java 내부 오류 12개·독립 root 후속 호출 56개는 별도 범위로 유지합니다. 공통 플랫폼은 6,078개 모두 세 Rust 대상 간 같고 Java와는 6,076개 일치·기존 정규식 실패 두 개입니다.
 
-더 넓은 bootstrap 600회는 환경별 일치 194회·미지원 192회·불일치 214회입니다. 미지원은 reflection 144회와 JSON renderer 48회이고, 불일치에는 리소스 read 횟수와 JVM 전역 표준 모듈 캐시 재사용의 차이가 있습니다. 이 수치를 원래 선택 회귀 집계에 합산하지 않으며, 원본 언어 사례가 요구하는 표준 라이브러리·출력·로딩 의무를 제외하지 않습니다. 생산 소스 고정 뒤 portable 검증 도구 아홉 개와 목록의 source hash를 별도 반영했습니다. 전체 선택 코퍼스·순차 evaluator 회귀와 증거 게시를 이어갑니다. **Stage 45와 M2 전체는 진행 중입니다.**
+더 넓은 bootstrap 600회는 환경별 일치 194회·미지원 192회·불일치 214회입니다. 미지원은 reflection 144회와 JSON renderer 48회이고, 불일치에는 리소스 read 횟수와 JVM 전역 표준 모듈 캐시 재사용의 차이가 있습니다. 이 수치를 원래 선택 회귀 집계에 합산하지 않으며, 원본 언어 사례가 요구하는 표준 라이브러리·출력·로딩 의무를 제외하지 않습니다. 생산 소스 고정 뒤 portable 검증 도구 아홉 개와 목록의 source hash를 별도 반영했습니다. 구현을 `97b4da0`에 커밋·푸시했고, [원시 증거](reports/m2/stage45-implementation-captures.json) 26개 archive와 [실제 커밋 소스 대응](reports/m2/stage45-implementation-source-binding.json)을 게시했습니다. 입력 14,216개와 게시 파일 아홉 개를 실제 Git blob에 연결하며 초기 실패·미실행·원래 봉인 오류와 정정 addendum을 보존합니다. 전체 선택 코퍼스·순차 evaluator 회귀는 JVM 연결을 합친 `01971d0`에서 별도로 진행합니다. **Stage 45와 M2 전체는 진행 중입니다.**
 
 ### 병행 구현 — 원본 JVM classpath snippet 실행
 

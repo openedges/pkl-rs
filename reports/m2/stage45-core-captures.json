@@ -1,0 +1,282 @@
+{
+  "schema": 1,
+  "scope": "Core Stage45 evidence preparation only. Target-only files, no reports publication or Git changes.",
+  "implementation_commit": "97b4da0526ea0a96e4efb71eb5616bc15d80c116",
+  "source_binding": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/committed-source-binding.json",
+    "sha256": "2b293e02e556fb820476956f06be50fcbfa4acedb31718e48d7082ccd7dbcbf1"
+  },
+  "source_map": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/committed-source-map.json",
+    "sha256": "2ee2b439205b2d8145296abd1c7646401822ddc40dcb9d556817d82fdb09188f"
+  },
+  "selection": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/selection.json",
+    "sha256": "0fef49f1d2fba524b024234b6df2f03e34d21eb4dfcd927976c731bd07a0f2cd"
+  },
+  "source_payloads": 93464,
+  "source_bytes": 633024891,
+  "archives": [
+    {
+      "unit": "committed-documents",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-committed-documents.tar.gz",
+      "sha256": "edb7066ee9fa68027a5b1f458c4796094220d2ef5e44fdf6be9e5fb743f9ccbd",
+      "compressed_bytes": 661414,
+      "source_payloads": 9,
+      "source_bytes": 7378880,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 10
+    },
+    {
+      "unit": "final-classpath",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-final-classpath.tar.gz",
+      "sha256": "e8e9debab065d996ab0df1294f36ac0588fe0cfd7cdc9fe61e9a9a7dcf908f28",
+      "compressed_bytes": 37883605,
+      "source_payloads": 23307,
+      "source_bytes": 104725651,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 23308
+    },
+    {
+      "unit": "final-native",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-final-native.tar.gz",
+      "sha256": "a2a12221e9257f14d933a12969cd9d80b136ec64c31b21bda9e1fce5e3fe1e08",
+      "compressed_bytes": 10541903,
+      "source_payloads": 14224,
+      "source_bytes": 55806188,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 14225
+    },
+    {
+      "unit": "historical-execution-records",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-historical-execution-records.tar.gz",
+      "sha256": "5f1e80a9b5a3a0aee8d611acb19d95a19f6f4270bbf39e6d5e217371c41a6cb6",
+      "compressed_bytes": 32375383,
+      "source_payloads": 253,
+      "source_bytes": 191407024,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 254
+    },
+    {
+      "unit": "historical-candidates-01-02",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-historical-candidates-01-02.tar.gz",
+      "sha256": "76405288ba2c06c26dd309e8d102e46c64eec9411c8c9cd75666e4dd41ff1182",
+      "compressed_bytes": 7639726,
+      "source_payloads": 14,
+      "source_bytes": 35514562,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 15
+    },
+    {
+      "unit": "historical-candidate-build-03",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-historical-candidate-build-03.tar.gz",
+      "sha256": "24003ebab0d46d614ef408413173497b50b06ccafac247ba0ad95ab782673699",
+      "compressed_bytes": 7044647,
+      "source_payloads": 13058,
+      "source_bytes": 34850047,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 13059
+    },
+    {
+      "unit": "historical-candidate-build-04",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-historical-candidate-build-04.tar.gz",
+      "sha256": "1af86ebfbfa6cd90e3a8aa825fe816ae94904f21c75cfe46c68de614b62d68ff",
+      "compressed_bytes": 10371275,
+      "source_payloads": 13060,
+      "source_bytes": 50680203,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 13061
+    },
+    {
+      "unit": "historical-candidate-build-05",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-historical-candidate-build-05.tar.gz",
+      "sha256": "e85d05553b1fa7ab2872a6651d0da14a2ee5078720a887324ac4ef7d681cbb79",
+      "compressed_bytes": 10378176,
+      "source_payloads": 13060,
+      "source_bytes": 50713573,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 13061
+    },
+    {
+      "unit": "historical-workspace",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-historical-workspace.tar.gz",
+      "sha256": "23fa1d029dbe35eea9147aead0044c01f34c8aab1cf891103208c2ca02ec12dc",
+      "compressed_bytes": 3625272,
+      "source_payloads": 16099,
+      "source_bytes": 19847113,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 16100
+    },
+    {
+      "unit": "main-platform",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-main-platform.tar.gz",
+      "sha256": "451846f9b1f896f4104036b4f5762107891ab2a8acb46fc46c24762c94c585f7",
+      "compressed_bytes": 4995593,
+      "source_payloads": 215,
+      "source_bytes": 23268356,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 216
+    },
+    {
+      "unit": "receipts-tooling",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-receipts-tooling.tar.gz",
+      "sha256": "1a50db665515ecccf27fdce6272f9cd5763f103c8042c4b974f220fe93c75fae",
+      "compressed_bytes": 1798605,
+      "source_payloads": 42,
+      "source_bytes": 23451955,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 43
+    },
+    {
+      "unit": "reviews",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-reviews.tar.gz",
+      "sha256": "97d13a0d556eb2993d034cc8d861db17a12a35fb709bdf96a69a8362017f3723",
+      "compressed_bytes": 1116015,
+      "source_payloads": 74,
+      "source_bytes": 7944861,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 75
+    },
+    {
+      "unit": "rust-checks",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-rust-checks.tar.gz",
+      "sha256": "924136ac41d208fda9a7fc1fad994f7e929b8214af3c5faa85f7a545969aa9e3",
+      "compressed_bytes": 3793718,
+      "source_payloads": 49,
+      "source_bytes": 27436478,
+      "derived_selection_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 50
+    },
+    {
+      "unit": "closeout",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/archives/stage45-core-closeout.tar.gz",
+      "sha256": "d41bca0e2c0820aba8289d66f7be94f5864e61da6896a9510ca2d8452d516a90",
+      "compressed_bytes": 4070371,
+      "archive_payloads_excluding_evidence_inventory": 18,
+      "metadata": [
+        {
+          "path": "collect.py",
+          "sha256": "5338dbea4b9c696a688234aec006de6bc385f3e2ae05bf22f21d6c73449804e2",
+          "bytes": 10003
+        },
+        {
+          "path": "package.py",
+          "sha256": "3a448eafef7703477ae8eaee33325923ba0d309ebafd9286f0a5f08295f31b52",
+          "bytes": 5674
+        },
+        {
+          "path": "archive.py",
+          "sha256": "1c75494825e315efcc73af06147ddacb3780c639bfaff38681ee56183b902755",
+          "bytes": 5840
+        },
+        {
+          "path": "run_archive.py",
+          "sha256": "3573a56e5e47115846af9b3209afd7eb7a978bbae0f6f6a07a036223bc3b2b8e",
+          "bytes": 1818
+        },
+        {
+          "path": "closeout.py",
+          "sha256": "08da8d202061697a2de35a47f174940d48b1b82f6c8ca081f3a9250b326c5c6d",
+          "bytes": 5862
+        },
+        {
+          "path": "selection.json",
+          "sha256": "0fef49f1d2fba524b024234b6df2f03e34d21eb4dfcd927976c731bd07a0f2cd",
+          "bytes": 56370022
+        },
+        {
+          "path": "proposal.json",
+          "sha256": "c6384d2b81393e5efd237c29dd161b6ec46c3e36fb6ac490d704e1107168407c",
+          "bytes": 2363
+        },
+        {
+          "path": "exclusions.json",
+          "sha256": "6864a2092a0045afb9c30b30ba654132c3f1d51f0749365bf0befff933143e4a",
+          "bytes": 2814
+        },
+        {
+          "path": "committed-source-binding.json",
+          "sha256": "2b293e02e556fb820476956f06be50fcbfa4acedb31718e48d7082ccd7dbcbf1",
+          "bytes": 1282
+        },
+        {
+          "path": "committed-source-map.json",
+          "sha256": "2ee2b439205b2d8145296abd1c7646401822ddc40dcb9d556817d82fdb09188f",
+          "bytes": 3978912
+        },
+        {
+          "path": "committed-publication-map.json",
+          "sha256": "2db4d13ab6ade4a84c97b4461a68f60013f9f4e13e5a8ad4f31e881470333040",
+          "bytes": 1970
+        },
+        {
+          "path": "gather-report.json",
+          "sha256": "679470954f18e369dfdcb4a3a510bd1dc2845ddcfe8f7996ed720d580553fa18",
+          "bytes": 408
+        },
+        {
+          "path": "archive-plan.json",
+          "sha256": "58561387ef6893216072a28e2526a31188517014705defa5bbaa900f2d5a687e",
+          "bytes": 1662
+        },
+        {
+          "path": "archive-report.json",
+          "sha256": "35eefbef27e43e77065897efeba5301b13b99c0881eb9c112846b96b030c1d2d",
+          "bytes": 7301
+        },
+        {
+          "path": "archive-process.json",
+          "sha256": "8a8e7c9920681c8b041da3da46a09c2acc9d0f0b8626c086352431e7ec45a8d8",
+          "bytes": 3488
+        },
+        {
+          "path": "archive.stdout.bin",
+          "sha256": "a4773d3de9c11eecba6ea3c62b7015a7dc5fc9425b9a1df892403d2fed9c96b1",
+          "bytes": 2306
+        },
+        {
+          "path": "archive.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "oracle-boundary.json",
+          "sha256": "9457788aac47acde5ec40ec2a9782c11ae6f996086a2f9c09133837fec72a794",
+          "bytes": 956
+        }
+      ]
+    }
+  ],
+  "archive_count": 14,
+  "total_compressed_bytes": 136295703,
+  "largest_compressed_bytes": 37883605,
+  "original_sources_verified_before_and_after_gather_and_archiving": true,
+  "symbolic_link_payloads_as_exact_raw_target_bytes": 15,
+  "archive_integrity_and_exact_selection_join_passed": true,
+  "independent_inventory_per_archive": true,
+  "all_archives_below_48_mib": true,
+  "historical_failures_preserved": [
+    "denied-catch-tests-01 exit101",
+    "guest-oracle-tests-01/02",
+    "workspace-tests-01..04",
+    "other original producer statuses as recorded"
+  ],
+  "original_evidence_changed": false,
+  "production_changed": false,
+  "git_writes": false,
+  "separate_oracle_boundary": "B owns 37 historical stage42 and12 final Stage45 oracle/original6/bootstrap/portable roots plus handoff, including preserved supplemental audit failures. Canonical main-platform and final-native full build snapshots are in this core set; sealed comparison duplicate binaries remain in B set.",
+  "separate_oracle_handoff": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-publication-01/oracle-boundary.json",
+    "sha256": "9457788aac47acde5ec40ec2a9782c11ae6f996086a2f9c09133837fec72a794"
+  },
+  "remaining": [
+    "Root review and reports/Git publication",
+    "Root integration of separately completed oracle/portable archives",
+    "Combined selected and sequential evaluator regression",
+    "M1 modules.txt collector omission qualification and later tooling fix",
+    "All full M2, product/platform and performance obligations"
+  ],
+  "full_m2_complete": false,
+  "hosted_ci_claimed": false,
+  "performance_target_claimed": false
+}
