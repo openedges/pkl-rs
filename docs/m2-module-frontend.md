@@ -162,7 +162,7 @@ and nested properties. The runtime test compares complete bytes and retains the
 owned result after evaluator close. Component formatter checks are separate
 evidence and cannot replace actual evaluator execution.
 
-Complete PCF behavior, imports and resource loading, other renderers and file
+Complete PCF behavior, imported types and module inheritance, remaining resource loading, other renderers and file
 outputs, remaining language rules, and all product CLI options retain their
 original milestone obligations. The output-operation logger-close control also
 retains a Java internal error and a candidate mismatch. Focused results do not
@@ -174,3 +174,29 @@ parser phase observations, and independent input bindings to the pinned
 submodule's Git blobs. The CLI repeats have identical raw results. This archive
 contains no Rust candidate executions and does not establish candidate
 compatibility.
+
+## Shared imports and expression sessions
+
+The engine separates module URI resolution from source loading with typed Host
+requests. Native development adapters supply file sources; portable adapters
+supply explicit resolution/source bundles. Imported programs share the current
+VM, traced heap, declaration identities and module caches. Source loading may
+suspend or reenter that evaluator. The engine publishes the empty receiver before
+initialization and preserves observed retry and failure-cache behavior.
+
+`SourceSession::compile_expressions` and the portable
+`SourceSession.forExpressions` compile each expression through the shared parser,
+resolver and compiler. Expressions execute against the actual module receiver.
+They retain the synthetic `repl:text` source and error frames. A compilation error
+in a later expression is deferred until that entry executes, preserving module
+initialization precedence and earlier successful calls. This is a development
+session API; module-declared types in these expressions and mutable REPL behavior
+are still incomplete.
+
+The [Stage 41 platform captures](../reports/m2/stage41-platform-captures.json)
+retain 22 unchanged Java-origin module graphs. Each Node/Chromium target has 36
+matching and eight unsupported graph repetitions. Underlying call comparisons
+contain 106 matches, eight unsupported calls and two mismatches; the two
+follow-up mismatches remain visible inside an unsupported graph. Imported type
+resolution, `extends`/`amends`, timeout/close boundaries and complete URI transport
+remain required work.

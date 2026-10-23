@@ -1,0 +1,475 @@
+{
+  "all_4527_definitions_unchanged": true,
+  "compatibility_complete": false,
+  "distinct_rust_test_count_claimed": false,
+  "failures": [
+    {
+      "id": "error-cycle",
+      "status": "oracle-error"
+    },
+    {
+      "id": "error-remainder-zero",
+      "status": "mismatch"
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-union-and-string",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-cast-negative",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-max-count",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-uri-unpaired-surrogate",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-opaque",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-invalid-host",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+      "status": "oracle-contract-mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+      "status": "candidate-unsupported"
+    }
+  ],
+  "full_gate_failure_reasons": 1871,
+  "gates": {
+    "acquire": 0,
+    "development": 1,
+    "full": 1,
+    "integrity": 0,
+    "subset": 1
+  },
+  "generated_file_changes": [],
+  "host": "Darwin research-macmini1.local 27.0.0 Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:27 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8103 arm64",
+  "host_evidence": {
+    "bytes": 145,
+    "path": "target/m2/stage41-required-checks-03/host.stdout",
+    "sha256": "f6f3a39d4ac7a955e9c3604f1add32429776f61de1ee3e0f3c19bf3af5c78f73"
+  },
+  "hosted_ci_claimed": false,
+  "implementation_commit": "23fe3e8289902e2dba6abcb3edac075cc43637e6",
+  "independent_regression_reviews": [
+    {
+      "bytes": 16467,
+      "path": "target/m2/stage41-language-final-review-01/report.json",
+      "sha256": "a8d328ab9c9c4d1158c65162eed299e6fc1a53c890d85d9764a58ac5b41839e3"
+    },
+    {
+      "bytes": 6065,
+      "path": "target/m2/stage41-persistent-regression-review-01/report.json",
+      "sha256": "7529aaf4173a62c992f2ee5fcfe5e8e302da1f24abfa6f1744102028a2e230fd"
+    },
+    {
+      "bytes": 9467,
+      "path": "target/m2/stage41-original30-native-audit-03/report.json",
+      "sha256": "620ed1e978fba8e5d243966dd82b0826a7f2938aeea194c8027438dc35ec4341"
+    }
+  ],
+  "inventory_counts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3628,
+      "unimplemented": 859,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "metamorphic_matches": 88,
+  "metamorphic_relations": 88,
+  "old_raw_channel_comparison": [
+    {
+      "channel": "stdout",
+      "comparison": "equal",
+      "count": 3628,
+      "language": "java"
+    },
+    {
+      "channel": "stderr",
+      "comparison": "equal",
+      "count": 1889,
+      "language": "java"
+    },
+    {
+      "channel": "stdout",
+      "comparison": "equal",
+      "count": 3626,
+      "language": "rust"
+    },
+    {
+      "channel": "stderr",
+      "comparison": "equal",
+      "count": 1872,
+      "language": "rust"
+    },
+    {
+      "channel": "stderr",
+      "comparison": "different",
+      "count": 1740,
+      "language": "java"
+    },
+    {
+      "channel": "stderr",
+      "comparison": "different",
+      "count": 1757,
+      "language": "rust"
+    },
+    {
+      "channel": "stdout",
+      "comparison": "different",
+      "count": 3,
+      "language": "rust"
+    },
+    {
+      "channel": "stdout",
+      "comparison": "different",
+      "count": 1,
+      "language": "java"
+    }
+  ],
+  "old_raw_channel_records_changed": 3501,
+  "old_selected_order_preserved": true,
+  "old_selected_status_changes": [
+    {
+      "Stage40": "candidate-unsupported",
+      "Stage41": "pass",
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl"
+    },
+    {
+      "Stage40": "candidate-unsupported",
+      "Stage41": "pass",
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl"
+    },
+    {
+      "Stage40": "candidate-unsupported",
+      "Stage41": "pass",
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl"
+    }
+  ],
+  "original30_native_artifact_sha256": "21321e0017715fbd1e7f02f32e7b18a749bb58663de34adbaa292259fef3055b",
+  "original30_native_calls": 60,
+  "original30_native_counts": {
+    "candidate-unsupported": 24,
+    "mismatch": 2,
+    "oracle-contract-mismatch": 2,
+    "pass": 32
+  },
+  "pcf_matches_each_portable_target": 384,
+  "performance_target_claimed": false,
+  "persistent_calls_each_language": 2782,
+  "persistent_raw_changes": 0,
+  "persistent_sequence_definitions": 167,
+  "persistent_sequence_executions": 334,
+  "persistent_status_changes": [],
+  "portable_graphs": {
+    "cases": 22,
+    "experiments_per_target": 44,
+    "graph_statuses": {
+      "browser": {
+        "candidate-unsupported": 8,
+        "pass": 36
+      },
+      "node": {
+        "candidate-unsupported": 8,
+        "pass": 36
+      }
+    },
+    "note": "Two follow-up mismatches per target remain inside self-class-parent-error graphs classified Unsupported. Whole-graph status does not hide those raw mismatches.",
+    "old_six_diagnostic_graphs_all_pass": true,
+    "pending_boundary_controls": [
+      {
+        "id": "unused-malformed-uri",
+        "reason": "Actual Java setup error retained in loader02. SourceSession constructor/setup-failure transport must be compared explicitly before this can join this result-event fixture set."
+      },
+      {
+        "id": "source-timeout",
+        "reason": "Actual timeout and later RejectedExecutionException retained in loader03. Current synchronous browser fixture runner uses fixed clock and has no delayed source completion deadline control."
+      },
+      {
+        "id": "source-close-reentry",
+        "reason": "Actual current9 and closed-context rejections retained in loader03. Cross-API thrown-error mapping is not an ordinary language-error byte contract."
+      },
+      {
+        "id": "relative-encoded-missing",
+        "reason": "Actual CLI error preserved in import-percent oracle. forOutput uses API diagnostic profile; CLI error frames cannot be substituted for API error fixtures."
+      }
+    ],
+    "selected_compatibility_complete": false,
+    "underlying_comparison_statuses": {
+      "browser": {
+        "candidate-unsupported": 8,
+        "mismatch": 2,
+        "pass": 106
+      },
+      "node": {
+        "candidate-unsupported": 8,
+        "mismatch": 2,
+        "pass": 106
+      }
+    }
+  },
+  "preservation_indices": [
+    {
+      "bytes": 4681,
+      "path": "reports/m2/stage41-required-captures.json",
+      "sha256": "3f90a50b500fdb4cf6bd7b12392506e0ba58771d1828723183d88be275cd7a0e"
+    },
+    {
+      "bytes": 7183,
+      "path": "reports/m2/stage41-implementation-checkpoint.json",
+      "sha256": "675dee555b361bfa966a6cfb846d8adfb4e75270bc276aafdcf9817ca7f0385b"
+    },
+    {
+      "bytes": 4636,
+      "path": "reports/m2/stage41-oracle-captures.json",
+      "sha256": "aae4ead692826a5eb672f108737a86e7d9ee7d879475bdbe535803ea0c520cf5"
+    },
+    {
+      "bytes": 11439,
+      "path": "reports/m2/stage41-platform-captures.json",
+      "sha256": "58ef8c95841887271040d0d5386b8e82b2748717637f3d83f575619d26628fe5"
+    },
+    {
+      "bytes": 2719,
+      "path": "reports/m2/stage41-final-regression-captures.json",
+      "sha256": "13c423cb994aee671a8f2a26cdabcd3be88709e8783ae61bee38a646c614c0ca"
+    }
+  ],
+  "raw_comparison_note": "All differences remain individually enumerated, including physical URI changes, original Java cycle errors and changed unsupported diagnostics. No byte normalization or blanket raw-identity claim.",
+  "remaining": [
+    "Imported class/alias lookup, recursive types, actual module extends/amends and all remaining language semantics.",
+    "All native and portable unsupported/mismatched/oracle failure cases, including follow-up mismatches inside unsupported graphs.",
+    "Full upstream execution, diagnostics and strict whole-language gate.",
+    "Remaining URI/Host timeout/close controls, invalid environment-key collisions and product APIs.",
+    "Complete output formats/file outputs, release platforms, execution-time and memory targets."
+  ],
+  "required_local_checks": {
+    "archive": {
+      "bytes": 2532653,
+      "path": "reports/m2/stage41-final-required-checks.tar.gz",
+      "payload_files": 4995,
+      "sha256": "86b0a15c491b585a012061ad48db387b217e71b470d03e639c113030d6fffe4e"
+    },
+    "archive_integrity_exit": 0,
+    "commands": [
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "rustc",
+          "--version",
+          "--verbose"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 0.06854512495920062,
+        "exit_code": 0,
+        "name": "rustc-version"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "cargo",
+          "--version"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 0.04272974980995059,
+        "exit_code": 0,
+        "name": "cargo-version"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "uname",
+          "-a"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 0.004017166793346405,
+        "exit_code": 0,
+        "name": "host"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 1.0836716671474278,
+        "exit_code": 0,
+        "name": "references"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 0.6432506246492267,
+        "exit_code": 0,
+        "name": "format"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 5.072845333255827,
+        "exit_code": 0,
+        "name": "clippy"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 104.19939775019884,
+        "exit_code": 0,
+        "name": "tests"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 2.2751240828074515,
+        "exit_code": 0,
+        "name": "wasm-check"
+      }
+    ],
+    "distinct_test_count_claimed": false,
+    "failed_harness_invocations": 0,
+    "ignored_harness_invocations": 1,
+    "passing_harness_invocations": 633,
+    "publication_source_changes": [],
+    "source_changes": [],
+    "source_count": 4958
+  },
+  "required_rust_checks_passed": true,
+  "schema": 1,
+  "scope": "Shared imports, typed module Host requests, expression sessions and imported diagnostics; complete imported types, module inheritance and product compatibility remain unfinished.",
+  "selected_native_cases": 3629,
+  "selected_status_counts": {
+    "candidate-unsupported": 12,
+    "mismatch": 9,
+    "oracle-contract-mismatch": 1,
+    "oracle-error": 1,
+    "pass": 3606
+  },
+  "source_binding_reviews": [
+    {
+      "bytes": 5940,
+      "path": "target/m2/stage41-final-source-binding-review-01/report.json",
+      "sha256": "3d17965cca234234b6048dbf107476363b25c90ec9e53e03e38efb4a5ad7c552"
+    },
+    {
+      "bytes": 3663,
+      "path": "target/m2/stage41-language-final-review-01/final-source-binding-review.json",
+      "sha256": "92dba0e5f29a3acc56d1c44adc6cb97924e4a65ae4c05857d3f52aa1dba1d130"
+    }
+  ],
+  "standard_platform": {
+    "java_matches_each_target": 6076,
+    "known_regex_differences_each_target": 2,
+    "lifecycle_scenarios_each_target": 92,
+    "shared_results": 6078
+  },
+  "status": "Stage41 local shared-module-loader checkpoint verified; M2 remains in progress.",
+  "trace_calls_each_portable_target": 90,
+  "trace_status_counts_each_portable_target": {
+    "oracle-error": 32,
+    "pass": 58
+  }
+}

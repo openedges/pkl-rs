@@ -103,8 +103,14 @@ scalar evaluation boundary combines them with source URIs and module names
 and renders complete uncolored diagnostics. Native `language_probe`, Node
 `evaluateLanguage`, and Wasm `evaluateLanguage` use this boundary. These are
 development adapters with scalar and selected Reference/type-alias/strict List/Map/Set
-property-path results; full expression APIs, general compound rendering, and
-external module loading remain separate requirements.
+property-path results. SourceSession also compiles expression entries through
+the common frontend and executes them against the actual module receiver;
+module-declared type lookup and the full product expression API remain incomplete.
+Typed module resolve/source Host requests now load imported code into the same
+VM and traced heap. Original and resolved URI caches retain distinct behavior,
+including resolve retries, cached source/initialization failures and source
+callback reentry. Imported type resolution, module inheritance, general compound
+rendering and the remaining transport capabilities are still required.
 
 Identifier predicates are generated from the pinned Java lexer and JDK.
 The upstream lexer tests UTF-16 code units, so supplementary characters are

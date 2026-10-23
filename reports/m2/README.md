@@ -51,7 +51,55 @@ and generic method-lookup diagnostics.
 Stage 39 connects original module frontend commands and typed failure origins.
 Stage 40 connects actual module output, PCF continuations and lossless string
 output across the shared engine and bindings.
+Stage 41 adds shared module imports, typed resolve/source Host requests,
+expression sessions and imported diagnostic ownership.
 These checkpoints do not complete the language milestone.
+
+## Stage 41 local module-loader checkpoint
+
+The [implementation checkpoint](stage41-implementation-checkpoint.json) records
+commit `23fe3e8`: imports use one VM, heap and code space with original/resolved
+URI caches and source callback reentry. Expression sessions use the common
+frontend and actual module receiver. Imported errors preserve their declaration
+sources and logical frames. All five required local Rust checks pass, with 633
+passing harness invocations and one ignored invocation; these are not distinct
+feature counts.
+
+The [final summary](stage41-final-summary.json) records 3,606 matching native
+cases out of 3,629 attempts. Original `import1`, `import2` and `import3` improve
+from unsupported to passing. All other statuses, all 4,527 inventory definitions,
+and the selected order remain unchanged. Twelve unsupported cases, nine
+mismatches, one unmet original Java execution contract and one Java oracle error
+remain. All 88 metamorphic relations pass. Cross-stage raw differences in 3,501
+channels are individually preserved, including physical URIs, the Java cycle
+error and changed unsupported diagnostics; no output normalization is applied.
+
+All 2,782 calls across 334 persistent sequences match Java and the previous
+stage's raw status/output channels. The separate 30-original-module comparison
+has 32 matching, 24 unsupported, two mismatched and two unmet-oracle-contract
+calls across two repetitions; every result matches the preceding corrected
+candidate. The [final regression archive](stage41-final-regression-captures.json)
+preserves these runs, command logs, artifacts and independent audits. Exact
+source bindings cover the final required/component/portable maps and the final
+native/persistent maps against `23fe3e8` and pinned reference Git blobs.
+
+The [platform captures](stage41-platform-captures.json) retain actual Node and
+Chromium execution of 22 Java-origin graphs. Per target, 36 graph repetitions
+match and eight are unsupported. Underlying calls include 106 matches, eight
+unsupported results and two follow-up mismatches within an unsupported graph.
+The common platform corpus still has 6,076 Java matches out of 6,078 results,
+with the two regex gaps retained. Each portable target matches 384 PCF output
+calls; 90 trace calls contain 58 matches and 32 Java oracle errors.
+
+The [Java captures](stage41-oracle-captures.json) preserve original loader,
+cache, reentry, expression and diagnostic observations. Historical failures,
+later corrections and previously omitted adjacent logs remain explicitly
+identified in the archive indices. Local report integrity passes; development,
+strict selected and full language gates fail, retaining 1,871 full-gate reasons.
+The [independent closeout review](stage41-closeout-review.json) checks the final
+archive, source bindings, original logs and reported limits.
+Imported types, module inheritance, remaining language and Host boundaries,
+product interfaces, release platforms and speed/memory targets remain open.
 
 ## Stage 40 local module-output checkpoint
 

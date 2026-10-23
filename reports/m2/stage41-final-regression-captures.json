@@ -1,0 +1,72 @@
+{
+  "archive_integrity_exit": 0,
+  "archives": [
+    {
+      "bytes": 20760689,
+      "path": "reports/m2/stage41-final-regression-captures.tar.gz",
+      "payload_files": 59705,
+      "sha256": "9e8c52b42b6a8bd7363c73022629909c25fa5b343acd4b12fdd847e8cf854907",
+      "uncompressed_payload_bytes": 160019549
+    }
+  ],
+  "direct_original_files": [
+    "target/m2/stage41-original30-native-03.stdout.log",
+    "target/m2/stage41-original30-native-03.stderr.log",
+    "target/m2/stage41-original30-native-audit-03.stdout.log",
+    "target/m2/stage41-original30-native-audit-03.stderr.log",
+    "target/m2/stage41-final-regression-publication-01/finalize.py"
+  ],
+  "exact_cache_exclusions_before_traversal": [
+    "target/debug",
+    "target/release",
+    "target/wasm32-unknown-unknown",
+    "target/m2/stage41-class-lifecycle-final-01/build"
+  ],
+  "full_m2_complete": false,
+  "prior_evidence_indices": [
+    {
+      "bytes": 1421,
+      "path": "reports/m2/stage40-final-regression-captures.json",
+      "sha256": "513b26967787d1f74d4faa5a38c7566787cbd8caffabe0daacb24de9c4a86cbd"
+    },
+    {
+      "bytes": 4636,
+      "path": "reports/m2/stage41-oracle-captures.json",
+      "sha256": "aae4ead692826a5eb672f108737a86e7d9ee7d879475bdbe535803ea0c520cf5"
+    },
+    {
+      "bytes": 11439,
+      "path": "reports/m2/stage41-platform-captures.json",
+      "sha256": "58ef8c95841887271040d0d5386b8e82b2748717637f3d83f575619d26628fe5"
+    },
+    {
+      "bytes": 7183,
+      "path": "reports/m2/stage41-implementation-checkpoint.json",
+      "sha256": "675dee555b361bfa966a6cfb846d8adfb4e75270bc276aafdcf9817ca7f0385b"
+    }
+  ],
+  "schema": 1,
+  "scope": "Final Stage41 local native, persistent, original module and exact source regression evidence; actual failures and incomplete M2 scope remain explicit.",
+  "source_changes_during_publication": [],
+  "source_roots": [
+    "target/m2/stage41-language-final-01",
+    "target/m2/stage41-language-command-final-01",
+    "target/m2/stage41-class-lifecycle-final-01",
+    "target/m2/stage41-class-lifecycle-command-final-01",
+    "target/m2/stage41-persistent-regression-review-01",
+    "target/m2/stage41-original30-native-03",
+    "target/m2/stage41-original30-native-audit-03",
+    "target/m2/stage41-final-source-binding-review-01",
+    "target/m2/stage41-language-final-review-01"
+  ],
+  "verification": {
+    "command": [
+      "python3",
+      "tools/evidence.py",
+      "verify",
+      "reports/m2/stage41-final-regression-captures.tar.gz"
+    ],
+    "stderr_hex": "",
+    "stdout_hex": "56657269666965642035393730352065766964656e63652066696c65733a207265706f7274732f6d322f737461676534312d66696e616c2d72656772657373696f6e2d63617074757265732e7461722e677a0a"
+  }
+}

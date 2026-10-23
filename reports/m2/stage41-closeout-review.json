@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "scope": "Independent final Stage41 archive/current-origin/closure/summary/docs closeout review; no runtime or gate reruns.",
+  "status": "verified-local",
+  "implementation_commit": "23fe3e8289902e2dba6abcb3edac075cc43637e6",
+  "archive": {
+    "bytes": 20760689,
+    "path": "reports/m2/stage41-final-regression-captures.tar.gz",
+    "payload_files": 59705,
+    "sha256": "9e8c52b42b6a8bd7363c73022629909c25fa5b343acd4b12fdd847e8cf854907",
+    "uncompressed_payload_bytes": 160019549
+  },
+  "final_index_sha256": "13c423cb994aee671a8f2a26cdabcd3be88709e8783ae61bee38a646c614c0ca",
+  "final_summary_sha256": "979c666064da9fcf32b9756a81279e8ec93bf29ea7067eaa0875ea2973a19cec",
+  "payload_files_verified": 59705,
+  "all_current_origin_bytes_and_membership_verified": true,
+  "four_native_adjacent_logs_preserved": [
+    "target/m2/stage41-original30-native-03.stdout.log",
+    "target/m2/stage41-original30-native-03.stderr.log",
+    "target/m2/stage41-original30-native-audit-03.stdout.log",
+    "target/m2/stage41-original30-native-audit-03.stderr.log"
+  ],
+  "closure_dependency_records_verified": 5235,
+  "missing_closure_dependencies": [],
+  "prior_archive_dependency_map": [
+    {
+      "index": "reports/m2/stage41-oracle-captures.json",
+      "archive": "reports/m2/stage41-oracle-captures.tar.gz",
+      "sha256": "7d7fd447778f5d24033555034cc8b08aebac56472771ccc888ff5a16d2ec5a2d",
+      "inventoryRows": 4310,
+      "indexSha256": "aae4ead692826a5eb672f108737a86e7d9ee7d879475bdbe535803ea0c520cf5",
+      "indexBytes": 4636
+    },
+    {
+      "index": "reports/m2/stage41-oracle-captures.json",
+      "archive": "reports/m2/stage41-oracle-review-supplement.tar.gz",
+      "sha256": "8ddf9cf9b81edf30379ca7152a8b424138393dc38c3aac106b9ea9e70eab1732",
+      "inventoryRows": 45,
+      "indexSha256": "aae4ead692826a5eb672f108737a86e7d9ee7d879475bdbe535803ea0c520cf5",
+      "indexBytes": 4636
+    },
+    {
+      "index": "reports/m2/stage40-component-captures.json",
+      "archive": "reports/m2/stage40-components.tar.gz",
+      "sha256": "c7543bca7b77651443dc62adf0f668be09a5c6a444e2186f2ce1bca97ea06cc6",
+      "inventoryRows": 6742,
+      "indexSha256": "a5d72efbf1e0bda7843d25566b9fde54e9e4100e1ac43d1c7ee7e097ac3fb943",
+      "indexBytes": 4487
+    },
+    {
+      "index": "reports/m2/stage40-output-captures.json",
+      "archive": "reports/m2/stage40-output-comparisons.tar.gz",
+      "sha256": "a481980c02268bb1ee93f18bcd165951db496bbb17bab0c3c5d742d369769871",
+      "inventoryRows": 21951,
+      "indexSha256": "7fe58c870a8e9146f157d866133dfeacc3169484df7ff2d5c364165c75e5ba5e",
+      "indexBytes": 2921
+    },
+    {
+      "index": "reports/m2/stage41-platform-captures.json",
+      "archive": "reports/m2/stage41-platform-captures.tar.gz",
+      "sha256": "5e132a24dae913415e76bc7c4031064b49845022f40f0a55cc34759402c3a8f6",
+      "inventoryRows": 17807,
+      "indexSha256": "58ef8c95841887271040d0d5386b8e82b2748717637f3d83f575619d26628fe5",
+      "indexBytes": 11439
+    },
+    {
+      "index": "reports/m2/stage41-platform-captures.json",
+      "archive": "reports/m2/stage41-platform-review-supplement.tar.gz",
+      "sha256": "4c6e31898d55af0b47902bfd8d7cb8104fe1fae2cb459551c944301c944a0e0b",
+      "inventoryRows": 543,
+      "indexSha256": "58ef8c95841887271040d0d5386b8e82b2748717637f3d83f575619d26628fe5",
+      "indexBytes": 11439
+    }
+  ],
+  "prior_dependency_scope_note": "The final publication index lists prior references without claiming an exhaustive dependency graph. Copied original30 Java closure dependencies are in Stage40-output-captures; copied import-frame/loader closure dependencies are in Stage41 oracle plus its supplement. These are preserved prior origins, not omitted new final payload.",
+  "summary_counts_gates_failures_and_source_proofs_verified": true,
+  "required_harness_invocations": {
+    "passedInvocations": 633,
+    "failedInvocations": 0,
+    "ignoredInvocations": 1,
+    "distinctTestCountClaimed": false
+  },
+  "docs_material_findings": [],
+  "canonical_archive_modes": "0644; bytes/hash/membership claim only",
+  "review": {
+    "path": "target/m2/stage41-closeout-review-01/report.json",
+    "sha256": "82b7f0a3c49daafef7ec2db6d0ecdbe073e283e272836420ebce9cebdccee1b4",
+    "closure_sha256": "11aa2d96e55484a178badb5c6bfb6b74e8e7cbdc52a08c055be0b68d00237099"
+  },
+  "runtime_or_gate_reruns": 0,
+  "full_m2_complete": false
+}
