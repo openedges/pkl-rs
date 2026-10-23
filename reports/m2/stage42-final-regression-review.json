@@ -1,0 +1,386 @@
+{
+  "buildRuns": 0,
+  "declaredPayloads": {
+    "evidence": {
+      "stage42-class-lifecycle-final-01": 24790,
+      "stage42-class-lifecycle-final-02": 24791,
+      "stage42-language-final-01": 33332,
+      "stage42-language-final-02": 33333
+    },
+    "sources": {
+      "stage42-class-lifecycle-final-01": 518,
+      "stage42-class-lifecycle-final-02": 519,
+      "stage42-language-final-01": 3726,
+      "stage42-language-final-02": 3727
+    }
+  },
+  "evaluatorRuns": 0,
+  "fullM2Complete": false,
+  "gitMutations": 0,
+  "inputReports": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-class-lifecycle-final-01/report.json": "8445183922b4c3d1121bbed11efaaad519ae458beb502d70e16da664083c9815",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-class-lifecycle-final-02/report.json": "c6f7c02b99e921e6657d014b1931fc7fa9e489a775aebc04923246cb3754903b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-01/report.json": "e5b5745448b5a4c0f7c447a25ec6f82701809a044b7042f0876550989625a00b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-02/report.json": "049913e63804e30af1b71fe60baaf50037e593dde8e02bef004b91cb30fe76cf"
+  },
+  "javaRuns": 0,
+  "language": {
+    "fullGateReasons": 1837,
+    "newStatuses": {
+      "candidate-unsupported": 13,
+      "mismatch": 9,
+      "oracle-contract-mismatch": 1,
+      "oracle-error": 1,
+      "pass": 3640
+    },
+    "nonpasses": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      },
+      {
+        "id": "annotation-stage35-builtin-source-code-union-and-string",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-repeat-empty-cast-negative",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-repeat-empty-max-count",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-uri-unpaired-surrogate",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-opaque",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-invalid-host",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-nonnumeric-port",
+        "status": "mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+        "status": "oracle-contract-mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule6.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/equality.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend6.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls3.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleMethods1.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+        "status": "mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+        "status": "candidate-unsupported"
+      }
+    ],
+    "nontransportChangedIds": [
+      "error-cycle",
+      "reference-stage10-access-invalid"
+    ],
+    "nontransportChangedRecords": {
+      "java": 1,
+      "rust": 1
+    },
+    "oldStatuses": {
+      "candidate-unsupported": 13,
+      "mismatch": 10,
+      "oracle-contract-mismatch": 1,
+      "oracle-error": 1,
+      "pass": 3639
+    },
+    "rawChangedRecords": {
+      "java": 97,
+      "rust": 109
+    },
+    "relations": 88,
+    "relationsWholeResultsUnchanged": true,
+    "selected": 3664,
+    "selectionAndDefinitionsOrderInputContractsUnchanged": true,
+    "statusChanges": [
+      {
+        "id": "reference-stage10-access-invalid",
+        "new": "pass",
+        "old": "mismatch"
+      }
+    ]
+  },
+  "lifecycle": {
+    "allCallsRawJavaRustEqual": true,
+    "callStatuses": {
+      "java": {
+        "error": 928,
+        "success": 1854
+      },
+      "rust": {
+        "error": 928,
+        "success": 1854
+      }
+    },
+    "calls": 2782,
+    "definitions": 167,
+    "definitionsAndOrderAndStatusesPreserved": true,
+    "executions": 334,
+    "nontransportChangedCallChannels": {},
+    "processChannelChanges": 0,
+    "rawChangedCallChannels": {}
+  },
+  "lifecycleComparisonScope": {
+    "crossRuntime": [
+      "status",
+      "stdout",
+      "stderr"
+    ],
+    "errorClass": "Preserved01-to02 for each implementation; producer metadata excluded from cross-runtime equality."
+  },
+  "rawPolicy": "No trimming, sorting, reserialization or normalized passes. Exact path-only edit recognition is explanatory only.",
+  "reviewFailurePreserved": "Initial whole-manifest equality assertion failed on refreshed typecheck implementation-link hashes; all four raw/source scans already passed; corrected continuation checks precise metadata delta.",
+  "reviewSha256": "ce068a089915f22d2edcd8258e2b247a1c8198babc19b01406fcf9943da3e9d4",
+  "schema": 1,
+  "scope": "Independent offline Stage42 final02 vs final01 exact contract/status/raw/source review",
+  "sourceBinding": {
+    "allCapturedSourceBlobsMatchBothCommits": true,
+    "capturedSourceBlobsIdenticalBetweenCommits": true,
+    "implementationCommit": "7544699a9af8d5e1f200be5d2a6493884d164903",
+    "languageSourceRecords": 3727,
+    "lifecycleSourceRecords": 519,
+    "onlyReadOnlyGitCommands": [
+      "ls-tree -rz",
+      "cat-file --batch"
+    ],
+    "originalModuleInputsBoundToActualPinnedGitBlobs": 137,
+    "pinnedReferences": {
+      "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+    },
+    "proofCheckout": "058d22417b3959ad5bdfb3b03f5f664003e67a53",
+    "sourceDeltas01To02": {
+      "language": [
+        {
+          "new": "2e2d6efaf9c3bdaf7003fb66d99f722033f5b901d6c8d07bb0ecc54b6a2f7210",
+          "old": "92f79c66dee92fe8469cd470b3293cecd00ad4009917252260716e3e5f9c54ff",
+          "path": "compatibility/m2-language.json"
+        },
+        {
+          "new": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
+          "old": "a5810e74ac0fe3b789c18213aa56adc79d1f56dab1536ee3b1836ee00187807c",
+          "path": "crates/pkl-runtime/src/vm/typecheck.rs"
+        },
+        {
+          "new": "6bf0df7e0b8437140e6301c0263da61c26911015c7c371f259109700a19487e7",
+          "old": null,
+          "path": "crates/pkl-runtime/tests/m2_constraint_frame_owner.rs"
+        }
+      ],
+      "lifecycle": [
+        {
+          "new": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
+          "old": "a5810e74ac0fe3b789c18213aa56adc79d1f56dab1536ee3b1836ee00187807c",
+          "path": "crates/pkl-runtime/src/vm/typecheck.rs"
+        },
+        {
+          "new": "6bf0df7e0b8437140e6301c0263da61c26911015c7c371f259109700a19487e7",
+          "old": null,
+          "path": "crates/pkl-runtime/tests/m2_constraint_frame_owner.rs"
+        }
+      ]
+    },
+    "uniqueProjectBlobs": {
+      "058d22417b3959ad5bdfb3b03f5f664003e67a53": 3942,
+      "7544699a9af8d5e1f200be5d2a6493884d164903": 3942
+    },
+    "uniqueSourcePaths": 4070
+  },
+  "status": "pass-with-retained-known-nonpasses",
+  "terminal": {
+    "auditInventoryFiles": 5,
+    "complete": true,
+    "crossRuntimeCalls": 2782,
+    "driverInventoryFiles": 26,
+    "errorClassChannel": "Preserved and compared01-to02 per implementation; producer metadata excluded from cross-runtime parity.",
+    "lifecycleCrossRuntimeComparisonChannels": [
+      "status",
+      "stdout",
+      "stderr"
+    ],
+    "noEvidenceToolsOrEvaluatorsReplayed": true,
+    "rawLogBindings": [
+      {
+        "bytes": 168632,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/language-acquire.stdout.bin",
+        "sha256": "f0730cd3b2a5571f3cfd4a182a012cf6e2c008621f42acdec948bcacb4a6fa25",
+        "snapshot": "terminal-raw/language-acquire.stdout.bin"
+      },
+      {
+        "bytes": 0,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/language-acquire.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "snapshot": "terminal-raw/language-acquire.stderr.bin"
+      },
+      {
+        "bytes": 151,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/language-verify-report.stdout.bin",
+        "sha256": "cd8f0bd66bb9916742f8b1533a74c605b7cfec85c035bcdc8d29972a388c8794",
+        "snapshot": "terminal-raw/language-verify-report.stdout.bin"
+      },
+      {
+        "bytes": 0,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/language-verify-report.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "snapshot": "terminal-raw/language-verify-report.stderr.bin"
+      },
+      {
+        "bytes": 151,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/language-verify-development.stdout.bin",
+        "sha256": "cd8f0bd66bb9916742f8b1533a74c605b7cfec85c035bcdc8d29972a388c8794",
+        "snapshot": "terminal-raw/language-verify-development.stdout.bin"
+      },
+      {
+        "bytes": 0,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/language-verify-development.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "snapshot": "terminal-raw/language-verify-development.stderr.bin"
+      },
+      {
+        "bytes": 151,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/language-verify-subset.stdout.bin",
+        "sha256": "cd8f0bd66bb9916742f8b1533a74c605b7cfec85c035bcdc8d29972a388c8794",
+        "snapshot": "terminal-raw/language-verify-subset.stdout.bin"
+      },
+      {
+        "bytes": 0,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/language-verify-subset.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "snapshot": "terminal-raw/language-verify-subset.stderr.bin"
+      },
+      {
+        "bytes": 151,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/language-verify-full.stdout.bin",
+        "sha256": "cd8f0bd66bb9916742f8b1533a74c605b7cfec85c035bcdc8d29972a388c8794",
+        "snapshot": "terminal-raw/language-verify-full.stdout.bin"
+      },
+      {
+        "bytes": 0,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/language-verify-full.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "snapshot": "terminal-raw/language-verify-full.stderr.bin"
+      },
+      {
+        "bytes": 27416,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/lifecycle-acquire.stdout.bin",
+        "sha256": "244ed2a8c06a1a43c753264c37b17bf7638c9bc8e302778e15641522279e3a9d",
+        "snapshot": "terminal-raw/lifecycle-acquire.stdout.bin"
+      },
+      {
+        "bytes": 0,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/lifecycle-acquire.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "snapshot": "terminal-raw/lifecycle-acquire.stderr.bin"
+      },
+      {
+        "bytes": 1536,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/lifecycle-verify-report.stdout.bin",
+        "sha256": "187f55f47f5ab48cc632d63dea2734a2a6a8fe9baca93e5bdd796d1bb08be55f",
+        "snapshot": "terminal-raw/lifecycle-verify-report.stdout.bin"
+      },
+      {
+        "bytes": 0,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/lifecycle-verify-report.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "snapshot": "terminal-raw/lifecycle-verify-report.stderr.bin"
+      },
+      {
+        "bytes": 1536,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/lifecycle-verify-contract.stdout.bin",
+        "sha256": "187f55f47f5ab48cc632d63dea2734a2a6a8fe9baca93e5bdd796d1bb08be55f",
+        "snapshot": "terminal-raw/lifecycle-verify-contract.stdout.bin"
+      },
+      {
+        "bytes": 0,
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/lifecycle-verify-contract.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "snapshot": "terminal-raw/lifecycle-verify-contract.stderr.bin"
+      },
+      {
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-audit-02.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0,
+        "snapshot": "adjacent-raw/stage42-full-regression-audit-02.stderr.bin"
+      },
+      {
+        "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-audit-02.stdout.bin",
+        "sha256": "77727fab550509a49effcc4ce025f4688ac78d9c8aef97a864e22412108cbe2c",
+        "size": 553,
+        "snapshot": "adjacent-raw/stage42-full-regression-audit-02.stdout.bin"
+      }
+    ],
+    "recordedCommandExits": {
+      "language-acquire": 0,
+      "language-verify-development": 1,
+      "language-verify-full": 1,
+      "language-verify-report": 0,
+      "language-verify-subset": 1,
+      "lifecycle-acquire": 0,
+      "lifecycle-verify-contract": 0,
+      "lifecycle-verify-report": 0
+    },
+    "supplementalDriverClosureScope": "Added after audit driver-inventory; retained separately and explicitly verified."
+  }
+}

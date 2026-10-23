@@ -37,9 +37,11 @@ engine. [Canonical diagnostics](docs/m2-diagnostics.md) preserve UTF-16 strings
 through native, Node, and Wasm APIs, including typed Host IOException messages
 with distinct absent and empty causes. Java UTF-8 serialization is checked
 separately. The exact `output.text` expression request shares the ModuleOutput
-operation. The [Stage 41 result](reports/m2/stage41-final-summary.json)
-records 3,606 matching native cases out of 3,629 attempts, with all remaining
-unsupported cases, mismatches and oracle failures retained.
+operation. The [Stage 42 full regression](reports/m2/stage42-final-summary.json)
+records 3,640 matching native cases out of 3,664 attempts at implementation
+`7544699`, retaining unsupported cases, mismatches and oracle failures. The later
+diagnostic and Host checkpoints have their own focused evidence; their combined
+full regression is in progress.
 Complete modifier and type semantics, remaining collection and Reference rules,
 the remaining inheritance and imported-type rules, reflection metadata, and the remaining language corpus are
 required before M2 can close.

@@ -1,0 +1,361 @@
+{
+  "scope": "Corrected complete selected Stage42 development regression and separate persistent lifecycle contract; prior candidate failures remain preserved, not full M2 completion.",
+  "processReport": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02/process-report.json",
+    "sha256": "263e798601b02be8df980723567cb4c479a0d87b5adc87b628f04de0a58455ba"
+  },
+  "commands": {
+    "language-acquire": {
+      "returncode": 0,
+      "seconds": 3356.2200672500767,
+      "stdoutSha256": "f0730cd3b2a5571f3cfd4a182a012cf6e2c008621f42acdec948bcacb4a6fa25",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "language-verify-report": {
+      "returncode": 0,
+      "seconds": 24.80952883278951,
+      "stdoutSha256": "cd8f0bd66bb9916742f8b1533a74c605b7cfec85c035bcdc8d29972a388c8794",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "language-verify-development": {
+      "returncode": 1,
+      "seconds": 24.310699707828462,
+      "stdoutSha256": "cd8f0bd66bb9916742f8b1533a74c605b7cfec85c035bcdc8d29972a388c8794",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "language-verify-subset": {
+      "returncode": 1,
+      "seconds": 24.478092750068754,
+      "stdoutSha256": "cd8f0bd66bb9916742f8b1533a74c605b7cfec85c035bcdc8d29972a388c8794",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "language-verify-full": {
+      "returncode": 1,
+      "seconds": 24.824581959284842,
+      "stdoutSha256": "cd8f0bd66bb9916742f8b1533a74c605b7cfec85c035bcdc8d29972a388c8794",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lifecycle-acquire": {
+      "returncode": 0,
+      "seconds": 313.3469825000502,
+      "stdoutSha256": "244ed2a8c06a1a43c753264c37b17bf7638c9bc8e302778e15641522279e3a9d",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lifecycle-verify-report": {
+      "returncode": 0,
+      "seconds": 74.94254533294588,
+      "stdoutSha256": "187f55f47f5ab48cc632d63dea2734a2a6a8fe9baca93e5bdd796d1bb08be55f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lifecycle-verify-contract": {
+      "returncode": 0,
+      "seconds": 81.889735665638,
+      "stdoutSha256": "187f55f47f5ab48cc632d63dea2734a2a6a8fe9baca93e5bdd796d1bb08be55f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "language": {
+    "reportPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-02/report.json",
+    "reportSha256": "049913e63804e30af1b71fe60baaf50037e593dde8e02bef004b91cb30fe76cf",
+    "selected": 3664,
+    "statuses": {
+      "candidate-unsupported": 13,
+      "mismatch": 9,
+      "oracle-contract-mismatch": 1,
+      "oracle-error": 1,
+      "pass": 3640
+    },
+    "adapters": {
+      "language-api-string": {
+        "count": 3527,
+        "statuses": {
+          "pass": 3518,
+          "oracle-error": 1,
+          "mismatch": 8
+        }
+      },
+      "language-module-eval": {
+        "count": 137,
+        "statuses": {
+          "candidate-unsupported": 13,
+          "pass": 122,
+          "oracle-contract-mismatch": 1,
+          "mismatch": 1
+        }
+      }
+    },
+    "relations": {
+      "count": 88,
+      "statuses": {
+        "pass": 88
+      }
+    },
+    "sourceStable": true,
+    "artifactStable": true,
+    "buildIdentities": {
+      "candidate": {
+        "build": {
+          "command": [
+            "cargo",
+            "build",
+            "-p",
+            "pkl-runtime",
+            "--locked",
+            "--release",
+            "--example",
+            "language_probe",
+            "--example",
+            "module_eval_probe",
+            "--target-dir",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target"
+          ],
+          "exit_code": 0,
+          "stderr_sha256": "171a6d34cf744491dd3905a756848024e33c2edb9cf2f5a9274421a7ade80cb1",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "timed_out": false
+        },
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/release/examples/language_probe",
+        "sha256": "2cf54eb9f136295e5d9ead1b9ea0f2462b3f0cbbafff8d001890bb97765af79f",
+        "source_binding": "recorded-build"
+      },
+      "module_candidate": {
+        "build": {
+          "command": [
+            "cargo",
+            "build",
+            "-p",
+            "pkl-runtime",
+            "--locked",
+            "--release",
+            "--example",
+            "language_probe",
+            "--example",
+            "module_eval_probe",
+            "--target-dir",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target"
+          ],
+          "exit_code": 0,
+          "stderr_sha256": "171a6d34cf744491dd3905a756848024e33c2edb9cf2f5a9274421a7ade80cb1",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "timed_out": false
+        },
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/release/examples/module_eval_probe",
+        "sha256": "a8696ed4fa158fbc5806cccd52bd0f878d16f57cd994da4dc38cff8437add2dc",
+        "source_binding": "recorded-build"
+      }
+    },
+    "fullGateFailureCount": 1837,
+    "nonpasses": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      },
+      {
+        "id": "annotation-stage35-builtin-source-code-union-and-string",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-repeat-empty-cast-negative",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-repeat-empty-max-count",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-uri-unpaired-surrogate",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-opaque",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-invalid-host",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-nonnumeric-port",
+        "status": "mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+        "status": "oracle-contract-mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule6.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/equality.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend6.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls3.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleMethods1.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+        "status": "mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+        "status": "candidate-unsupported"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+        "status": "candidate-unsupported"
+      }
+    ]
+  },
+  "lifecycle": {
+    "reportPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-class-lifecycle-final-02/report.json",
+    "reportSha256": "c6f7c02b99e921e6657d014b1931fc7fa9e489a775aebc04923246cb3754903b",
+    "definitions": 167,
+    "sequenceExecutions": 334,
+    "callComparisons": 2782,
+    "statuses": {
+      "pass": 2782
+    },
+    "sourceStableBefore": true,
+    "sourceStableAfter": true,
+    "build": {
+      "command": [
+        "cargo",
+        "build",
+        "-p",
+        "pkl-runtime",
+        "--locked",
+        "--release",
+        "--example",
+        "class_lifecycle_probe",
+        "--message-format=json"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 42899636792,
+      "peak_rss_bytes": 789053440,
+      "user_cpu_seconds": 46.063508,
+      "system_cpu_seconds": 2.114815,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-class-lifecycle-final-02/cargo/stdout.bin",
+        "sha256": "5b6ad270e85a82b88fa274b113ee9fe124ad6cc52af9cd45bc707e068678e9f2",
+        "bytes": 10302
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-class-lifecycle-final-02/cargo/stderr.bin",
+        "sha256": "e4143b3fc034eed2c0e3d807d93a30dd267408ce7661a1f3082a9f442789b036",
+        "bytes": 373
+      }
+    },
+    "artifacts": [
+      {
+        "path": "classes/M2ClassLifecycleProbe.class",
+        "sha256": "7c490ec6ea6ee55475c9975fd7978e3034273ade23e7e603d3f0a0ac762ecbf0",
+        "bytes": 4107
+      },
+      {
+        "path": "binaries/class_lifecycle_probe",
+        "sha256": "5cc3f7c67aabe2300fb7dd1b143718d06c8f7342e6b9542b09da0c9f6a4bd100",
+        "bytes": 3027280
+      }
+    ],
+    "unexecutedGroups": [
+      {
+        "group": "P09",
+        "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+      },
+      {
+        "group": "P10",
+        "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+      },
+      {
+        "group": "P11",
+        "reason": "Actual annotation source now reaches Rust Host suspension, callback reentry and GC. Separate Stage 35 Java/Rust Host probes compare class, alias, property and method initialization, successful reads, eager failures and partial-state retries. This persistent scalar sequence adapter does not execute Host callbacks. Complete resource I/O failure, module-cache and product Host behavior remain unverified; native cancellation/timeout/close cleanup tests are separate from Java raw-byte equality."
+      },
+      {
+        "group": "P12",
+        "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+      },
+      {
+        "group": "P05",
+        "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+      }
+    ]
+  },
+  "crossAcquisitionSourceBinding": {
+    "sharedPathCount": 176,
+    "differentSharedPaths": []
+  },
+  "previousStage42Candidate": {
+    "reportPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-01/report.json",
+    "reportSha256": "e5b5745448b5a4c0f7c447a25ec6f82701809a044b7042f0876550989625a00b",
+    "sharedCases": 3664,
+    "newCases": [],
+    "removedCases": [],
+    "statusTransitions": [
+      {
+        "id": "reference-stage10-access-invalid",
+        "before": "mismatch",
+        "after": "pass"
+      }
+    ],
+    "contractFieldChanges": [],
+    "comparisonMeaning": "Status transitions only; each stage retains its own physical sources, oracle observations, artifacts and raw byte comparisons. No normalization between stage URIs."
+  },
+  "inventories": {
+    "language": {
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-02",
+      "fileCount": 33334,
+      "inventorySha256": "e0000f3e2fe6c1dc6d711d948aa39807dc1f007a2188e4230135bbe39b576402"
+    },
+    "lifecycle": {
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-class-lifecycle-final-02",
+      "fileCount": 24792,
+      "inventorySha256": "aa2b700750d21a83eeffbf074f24cf13adf6df2190e24b053b1e72f5cd7bb13f"
+    },
+    "driver": {
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02",
+      "fileCount": 26,
+      "inventorySha256": "d67d5adb0324f25201d114da55e7a29d3423549c582dc16a9034f10e12f2d43a"
+    }
+  },
+  "compatibilityComplete": false
+}

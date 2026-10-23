@@ -1,0 +1,271 @@
+{
+  "schema": 1,
+  "scope": "Corrected Stage42 module-owned types, inheritance/amendments and Reference frame owner: complete selected native and persistent regression at implementation7544699. Separate from newer Stage43/44/45 changes and from full M2 completion.",
+  "implementation_commit": "7544699a9af8d5e1f200be5d2a6493884d164903",
+  "recorded_checkout": "058d22417b3959ad5bdfb3b03f5f664003e67a53",
+  "stage42_selected_regression_closed": true,
+  "compatibility_complete": false,
+  "full_m2_complete": false,
+  "hosted_ci_claimed": false,
+  "performance_target_claimed": false,
+  "selected_native_cases": 3664,
+  "selected_status_counts": {
+    "candidate-unsupported": 13,
+    "mismatch": 9,
+    "oracle-contract-mismatch": 1,
+    "oracle-error": 1,
+    "pass": 3640
+  },
+  "selected_adapters": {
+    "language-api-string": {
+      "count": 3527,
+      "statuses": {
+        "pass": 3518,
+        "oracle-error": 1,
+        "mismatch": 8
+      }
+    },
+    "language-module-eval": {
+      "count": 137,
+      "statuses": {
+        "candidate-unsupported": 13,
+        "pass": 122,
+        "oracle-contract-mismatch": 1,
+        "mismatch": 1
+      }
+    }
+  },
+  "all_4527_case_definitions_unchanged": true,
+  "selected_order_inputs_contracts_unchanged": true,
+  "status_changes_from_pre_correction": [
+    {
+      "id": "reference-stage10-access-invalid",
+      "new": "pass",
+      "old": "mismatch"
+    }
+  ],
+  "failures": [
+    {
+      "id": "error-cycle",
+      "status": "oracle-error"
+    },
+    {
+      "id": "error-remainder-zero",
+      "status": "mismatch"
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-union-and-string",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-cast-negative",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-max-count",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-uri-unpaired-surrogate",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-opaque",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-invalid-host",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+      "status": "oracle-contract-mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule6.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/equality.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend6.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls3.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleMethods1.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+      "status": "candidate-unsupported"
+    }
+  ],
+  "metamorphic_relations": 88,
+  "metamorphic_matches": 88,
+  "language_source_stable": true,
+  "language_artifact_stable": true,
+  "gates": {
+    "language-acquire": 0,
+    "language-verify-report": 0,
+    "language-verify-development": 1,
+    "language-verify-subset": 1,
+    "language-verify-full": 1,
+    "lifecycle-acquire": 0,
+    "lifecycle-verify-report": 0,
+    "lifecycle-verify-contract": 0
+  },
+  "full_gate_failure_reasons": 1837,
+  "inventory_counts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3663,
+      "unimplemented": 824,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "persistent_sequence_definitions": 167,
+  "persistent_sequence_executions": 334,
+  "persistent_calls_each_language": 2782,
+  "persistent_calls_raw_match": true,
+  "persistent_status_counts_each": {
+    "success": 1854,
+    "error": 928
+  },
+  "persistent_comparison_channels": {
+    "crossRuntime": [
+      "status",
+      "stdout",
+      "stderr"
+    ],
+    "errorClass": "Preserved01-to02 for each implementation; producer metadata excluded from cross-runtime equality."
+  },
+  "persistent_raw_changes_from_previous": 0,
+  "persistent_source_stable_before": true,
+  "persistent_source_stable_after": true,
+  "persistent_unexecuted_groups": [
+    {
+      "group": "P09",
+      "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+    },
+    {
+      "group": "P10",
+      "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+    },
+    {
+      "group": "P11",
+      "reason": "Actual annotation source now reaches Rust Host suspension, callback reentry and GC. Separate Stage 35 Java/Rust Host probes compare class, alias, property and method initialization, successful reads, eager failures and partial-state retries. This persistent scalar sequence adapter does not execute Host callbacks. Complete resource I/O failure, module-cache and product Host behavior remain unverified; native cancellation/timeout/close cleanup tests are separate from Java raw-byte equality."
+    },
+    {
+      "group": "P12",
+      "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+    },
+    {
+      "group": "P05",
+      "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+    }
+  ],
+  "raw_language_changes_from_previous": {
+    "java": 97,
+    "rust": 109
+  },
+  "non_path_raw_change_ids": [
+    "error-cycle",
+    "reference-stage10-access-invalid"
+  ],
+  "raw_comparison_note": "Raw Java97/Rust109 changed records are preserved. Apart from exact acquisition-path edits, Rust Reference declaration ownership changes and the retained Java cycle-bug guest frame count changes1447 to1409. Classification is explanatory only; no normalized comparison pass.",
+  "source_binding": {
+    "path": "reports/m2/stage42-final-source-binding.json",
+    "sha256": "796280f536f54a4c23f05ebbc67e371760e472cf6e1cb362cc44f0a0d3af44ec"
+  },
+  "source_map": {
+    "path": "reports/m2/stage42-final-source-map.json",
+    "sha256": "105ee70f6473b7dc1a55ed3a43455351d8ed6a03f776086b35fe9b7e5db00688"
+  },
+  "unique_source_paths_bound": 4070,
+  "unique_project_blobs": 3942,
+  "original_module_inputs_bound_to_pinned_blobs": 137,
+  "independent_regression_review": {
+    "path": "reports/m2/stage42-final-regression-review.json",
+    "sha256": "718ae58620bfe6e5342554d7e7f4886567ee6e1303c455c67fbc96fd55a44b21"
+  },
+  "acquisition_audit": {
+    "path": "reports/m2/stage42-final-acquisition-audit.json",
+    "sha256": "7e3e7bd49e824a43b36db312f3abb6371fa39d6614fa05d586e533827deaa7ec"
+  },
+  "raw_captures": {
+    "path": "reports/m2/stage42-final-regression-captures.json",
+    "sha256": "8197725356327b68cd6d6cf3a1eb47218f389ad895a043ee04c207dec3c17629",
+    "archives": 2,
+    "payload_files": 58233,
+    "payload_bytes": 98231160,
+    "compressed_bytes": 15035063,
+    "source_changes": []
+  },
+  "required_checks_and_platform_scope": {
+    "path": "reports/m2/stage42-implementation-checkpoint.json",
+    "sha256": "6a904adebf4ca9fcd8891855d3aec90dceb8f70e029845bc2e583f671e1f39e6",
+    "note": "Previously published corrected implementation checks/platform controls are linked without rerunning or claiming new coverage in this native/persistent closeout."
+  },
+  "remaining": [
+    "All original M2 unmapped/unimplemented requirements and known strict language-gate failures.",
+    "Original stdlib, Resource, triple-dot, glob, renderer and reflection dependencies remain required by the original language cases.",
+    "Later Stage43/44 diagnostics and Host changes require their separate full selected regression; Stage45 remains under development.",
+    "Complete product/platform compatibility, execution-time and memory targets."
+  ],
+  "publication_review": {
+    "path": "reports/m2/stage42-final-publication-review.json",
+    "sha256": "aa59a6a75e1da8d0bc81a1994039c1e05ae87ce9425945b6745c5988ad03a755",
+    "raw_archive": "reports/m2/stage42-final-closeout-captures.tar.gz",
+    "raw_archive_sha256": "70854395365b7435b58e35ed08cfa84d41b403bca7647f1dd430ca52a4861aa9",
+    "archive_integrity_exit": 0
+  }
+}

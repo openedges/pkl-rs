@@ -1,0 +1,53 @@
+{
+  "allCapturedSourceBlobsMatchBothCommits": true,
+  "capturedSourceBlobsIdenticalBetweenCommits": true,
+  "implementationCommit": "7544699a9af8d5e1f200be5d2a6493884d164903",
+  "languageSourceRecords": 3727,
+  "lifecycleSourceRecords": 519,
+  "onlyReadOnlyGitCommands": [
+    "ls-tree -rz",
+    "cat-file --batch"
+  ],
+  "originalModuleInputsBoundToActualPinnedGitBlobs": 137,
+  "pinnedReferences": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "proofCheckout": "058d22417b3959ad5bdfb3b03f5f664003e67a53",
+  "sourceDeltas01To02": {
+    "language": [
+      {
+        "new": "2e2d6efaf9c3bdaf7003fb66d99f722033f5b901d6c8d07bb0ecc54b6a2f7210",
+        "old": "92f79c66dee92fe8469cd470b3293cecd00ad4009917252260716e3e5f9c54ff",
+        "path": "compatibility/m2-language.json"
+      },
+      {
+        "new": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
+        "old": "a5810e74ac0fe3b789c18213aa56adc79d1f56dab1536ee3b1836ee00187807c",
+        "path": "crates/pkl-runtime/src/vm/typecheck.rs"
+      },
+      {
+        "new": "6bf0df7e0b8437140e6301c0263da61c26911015c7c371f259109700a19487e7",
+        "old": null,
+        "path": "crates/pkl-runtime/tests/m2_constraint_frame_owner.rs"
+      }
+    ],
+    "lifecycle": [
+      {
+        "new": "729f246c340cfda2ebba3eddf06a4e8e6acc1147376cfefece482f5c9ddc6973",
+        "old": "a5810e74ac0fe3b789c18213aa56adc79d1f56dab1536ee3b1836ee00187807c",
+        "path": "crates/pkl-runtime/src/vm/typecheck.rs"
+      },
+      {
+        "new": "6bf0df7e0b8437140e6301c0263da61c26911015c7c371f259109700a19487e7",
+        "old": null,
+        "path": "crates/pkl-runtime/tests/m2_constraint_frame_owner.rs"
+      }
+    ]
+  },
+  "uniqueProjectBlobs": {
+    "058d22417b3959ad5bdfb3b03f5f664003e67a53": 3942,
+    "7544699a9af8d5e1f200be5d2a6493884d164903": 3942
+  },
+  "uniqueSourcePaths": 4070
+}

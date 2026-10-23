@@ -126,6 +126,38 @@ See the [diagnostic contract](../../docs/m2-diagnostics.md). Full selected-corpu
 closeout, remaining diagnostic producers and Host inputs, and the complete M2,
 product, platform, speed, and memory requirements remain open.
 
+## Stage 42 final selected regression
+
+The [publication audit](stage42-final-publication-review.json) verifies both
+archives, all 58,233 selected payloads, summary links and the preserved failure
+scope. Its review and publisher records are in the
+[closeout captures](stage42-final-closeout-captures.tar.gz).
+
+The [final result](stage42-final-summary.json) closes the corrected full selected
+run at implementation `7544699`, separately from the newer Stage 43/44 changes.
+Of 3,664 selected cases, 3,640 match Java; 13 remain unsupported, nine mismatch,
+one fails the original oracle contract, and one is an oracle error. All 88
+metamorphic relations and 2,782 ordered evaluator calls across 334 sequences
+match. Acquisition, evidence integrity and the persistent-session contract pass;
+development, strict selected and full-language gates still fail. The full gate
+retains 1,837 failure reasons.
+
+The [independent regression review](stage42-final-regression-review.json) verifies
+unchanged case definitions, inputs and order. The Reference frame-owner error is
+the only status improvement from the preceding candidate. All persistent process
+and per-call payloads remain unchanged. The language acquisitions retain 97
+changed Java and 109 changed Rust records: exact path changes, the corrected
+Reference owner, and a different frame count in the existing Java cycle bug.
+Those differences remain raw; none is normalized into a pass.
+
+The [source binding](stage42-final-source-binding.json) and
+[exact source map](stage42-final-source-map.json) bind 4,070 captured paths to both
+the implementation and recorded checkout commits. Original module inputs also
+match the pinned upstream blobs. [Raw captures](stage42-final-regression-captures.json)
+preserve the corrected runs, terminal commands, independent review and original
+failures. The preceding candidate remains in the implementation captures below.
+M2's whole-language, platform and performance obligations remain open.
+
 ## Stage 42 implementation checkpoint
 
 The [implementation checkpoint](stage42-implementation-checkpoint.json) and
@@ -155,9 +187,9 @@ Its focused native and actual Node/Chromium owner controls pass, and all five
 required Rust commands pass. Existing module, inheritance, string and PCF
 controls remain successful. Two string diagnostic cases still lose unmatched
 surrogate units; existing regex mismatches and Java trace errors remain visible.
-The separate Stage 43 workspace is implementing canonical UTF-16 diagnostics.
-These captures do not claim a fresh full-selection run after the owner
-correction, Stage 42 closeout, or M2 completion.
+Stage 43 subsequently added canonical UTF-16 diagnostics, with its own evidence
+above. These historical implementation captures precede the corrected full
+selection described above and do not establish M2 completion.
 
 ## Stage 42 development captures
 

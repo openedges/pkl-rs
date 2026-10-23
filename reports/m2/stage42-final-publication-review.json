@@ -1,0 +1,82 @@
+{
+  "all4527CaseDefinitionsUnchanged": true,
+  "archives": [
+    {
+      "bytes": 12477989,
+      "independentHashMembershipAndOriginalByteChecks": true,
+      "path": "reports/m2/stage42-final-regression-captures-01.tar.gz",
+      "payloadBytes": 71751884,
+      "payloadFiles": 54508,
+      "sha256": "b54598e734782c33c700e9bbc09f5eb9db4f473e5c8a26329b1fdb7b1488d65a",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage42-final-regression-captures-01.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 2557074,
+      "independentHashMembershipAndOriginalByteChecks": true,
+      "path": "reports/m2/stage42-final-regression-captures-02.tar.gz",
+      "payloadBytes": 26479276,
+      "payloadFiles": 3725,
+      "sha256": "6e7c4e3c13fcf3f58304c777c52d5cfc2dcc16adda1b5b7ab3cc634486debc5f",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage42-final-regression-captures-02.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    }
+  ],
+  "completeOriginalBeforeAfterUnionAndInnerInventoryEquality": true,
+  "compressedBytes": 15035063,
+  "copiedDocHashes": {
+    "PLAN.md": "7e5ca1f813ee02a3161f8b4546817e5666d6b1b8121a217a943e25a40b53de05",
+    "README.md": "0f055df2cab86ca3bb9254bce3db5ff6291e1aef71cf5b33e32f7d560e756f33",
+    "reports/m2/README.md": "cbbab1465bd269194eff06b7460fa3cdf55b6b62335cb1bef1ae91e89ae8e67f",
+    "reports/m2/stage42-final-summary.json": "3511dd732fe676b7d0ce066c43ca8257749b9c778eaea3f200a161bbbe1c3972"
+  },
+  "declaredSourceAndEvidenceMapsInUnion": true,
+  "directFiles": 2,
+  "documentationScopeChecked": true,
+  "exactExclusionsBeforeTraversal": [
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/debug",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-class-lifecycle-final-02/build",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/release",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/wasm32-unknown-unknown"
+  ],
+  "fullGateReasons": 1837,
+  "fullM2Complete": false,
+  "historicalImplementation": "7544699a9af8d5e1f200be5d2a6493884d164903",
+  "knownNonPasses": {
+    "candidate-unsupported": 13,
+    "mismatch": 9,
+    "oracle-contract-mismatch": 1,
+    "oracle-error": 1,
+    "pass": 3640
+  },
+  "noEvaluatorOrCheckOrBuildOrGitMutation": true,
+  "noNormalization": true,
+  "payloadBytes": 98231160,
+  "payloadFiles": 58233,
+  "payloadModes": "0644 archive representation; executable modes not claimed",
+  "recordedCheckout": "058d22417b3959ad5bdfb3b03f5f664003e67a53",
+  "reviewSha256": "2403e0fabb9b0c42bc3595cb8ec104a3033a257bce7d86217efec73f9cebc930",
+  "schema": 1,
+  "scope": "Independent final Stage42 archive union and historical summary/docs scope; reused closed source/raw regression audit without evaluator or check replay.",
+  "selectionRoots": 5,
+  "sourceProofReused": {
+    "review": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-final-regression-review-02/report.json",
+    "sha256": "718ae58620bfe6e5342554d7e7f4886567ee6e1303c455c67fbc96fd55a44b21"
+  },
+  "status": "pass-no-blocking-finding",
+  "summaryCopiesLinksAndCountsMatchClosedAudit": true
+}

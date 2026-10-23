@@ -702,6 +702,14 @@ Java 원본 41개의 두 번 반복 취득은 정상 종료 44회·일반 Pkl �
 
 전체 취득·검증 프로세스 종료와 원본 증거 마감을 확인한 뒤 Reference owner 수정과 테스트·fixture 아홉 개를 작업 공간에 반영하고 구현을 `7544699`에 커밋했습니다. 분리된 수정 후보의 native·Node·Chromium owner 대조군과 필수 Rust 검사 다섯 개가 통과했으며, 검사에 쓰인 소스·fixture 5,810개가 [구현 커밋의 Git blob](reports/m2/stage42-implementation-source-binding.json)과 모두 같습니다. 실행 목록의 source hash를 갱신하고 freshness 검사도 통과했습니다. 복사본의 CI workflow 누락을 별도로 기록하며 이 로컬 검사를 CI 실행으로 주장하지 않습니다. [구현 검증 기록](reports/m2/stage42-implementation-captures.json)은 수정 전 전체 회귀와 수정 후 집중 검증을 구분합니다. 수정 후 전체 선택 재실행과 Stage 42 최종 마감, M2 전체 완료는 아직 남아 있습니다.
 
+### Stage 42 최종 선택 코퍼스 회귀 검증
+
+수정 구현 `7544699`의 [전체 선택 결과](reports/m2/stage42-final-summary.json)는 3,664개 중 일치 3,640개·미지원 13개·불일치 9개·원래 Java 실행 조건 불충족 1개·Java 오류 1개입니다. 이전 후보와 정의·입력·순서를 모두 유지했고, `reference-stage10-access-invalid` 한 사례만 불일치에서 통과로 바뀌었습니다. 변형 관계 88개와 evaluator 순차 실행 334회의 호출 2,782개도 모두 일치합니다.
+
+[독립 회귀 검토](reports/m2/stage42-final-regression-review.json)는 순차 실행의 전체 process·호출 payload가 이전 실행과 같음을 확인했습니다. 언어 실행의 Java 97개·Rust 109개 변경 기록은 실제 경로 차이, 수정한 Reference owner, 기존 Java 순환 오류의 guest frame 수 변화이며 원시 자료와 개별 차이를 보존합니다. 경로 정규화나 오류 제외로 통과를 만들지 않았습니다.
+
+[검증 소스 대응](reports/m2/stage42-final-source-binding.json)은 취득된 고유 경로 4,070개를 구현 커밋과 기록된 checkout `058d224`의 실제 Git blob에 연결합니다. 취득·무결성·순차 evaluator 계약 검사는 통과했지만 개발·엄격한 선택·전체 언어 gate는 실패하며 전체 gate의 실패 이유 1,837개를 유지합니다. **Stage 42의 구현·선택 코퍼스 회귀 검증을 마감하며 M2 전체는 계속 진행합니다.** 후속 Stage 43·44의 전체 회귀와 원래 언어·표준 모듈·로딩 의존성은 별도로 남습니다.
+
 ### Stage 43 — UTF-16을 보존하는 공통 진단
 
 Stage 42의 고정 후보가 전체 회귀를 실행하는 동안, 검토한 Reference 프레임 수정 후보를 복사한 별도 작업 공간에서 공통 진단 구현을 시작합니다. 이 공간의 변경은 Stage 42 검증 소스에 섞지 않으며, 승격 전에 실제 변경 파일과 artifact의 소스 대응을 확인합니다. 공통 엔진은 `gpt-6-astra / xhigh`, native·Node·Chromium 연결과 독립 Java 관찰은 각각 `gpt-6.1-sol / high`가 담당합니다.

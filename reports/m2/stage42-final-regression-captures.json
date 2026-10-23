@@ -1,0 +1,88 @@
+{
+  "archives": [
+    {
+      "bytes": 12477989,
+      "path": "reports/m2/stage42-final-regression-captures-01.tar.gz",
+      "payloadBytes": 71751884,
+      "payloadFiles": 54508,
+      "sha256": "b54598e734782c33c700e9bbc09f5eb9db4f473e5c8a26329b1fdb7b1488d65a",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage42-final-regression-captures-01.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 2557074,
+      "path": "reports/m2/stage42-final-regression-captures-02.tar.gz",
+      "payloadBytes": 26479276,
+      "payloadFiles": 3725,
+      "sha256": "6e7c4e3c13fcf3f58304c777c52d5cfc2dcc16adda1b5b7ab3cc634486debc5f",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage42-final-regression-captures-02.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    }
+  ],
+  "excludedBeforeTraversal": [
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-class-lifecycle-final-02/build",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/debug",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/release",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/wasm32-unknown-unknown"
+  ],
+  "files": [
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-full-regression-audit-02.stdout.bin",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-audit-02.stdout.bin"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage42-full-regression-audit-02.stderr.bin",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-audit-02.stderr.bin"
+    }
+  ],
+  "fullM2Complete": false,
+  "historicalInventoryScope": "Some original fixture/source-copy inventories describe their original full acquisition. Copies and initial failed inventories remain unchanged; outer publication verifies every selected payload byte.",
+  "omissions": [
+    "Exact lifecycle build cache is pruned before traversal. Default target caches lie outside all selected roots.",
+    "Prior pre-correction acquisitions are already preserved in stage42-implementation-captures.json; this publication retains their comparison records and the corrected acquisitions.",
+    "Only explicitly named evidence roots are traversed; no repository-wide target, oracle cache, or current Stage44/45 work is collected."
+  ],
+  "payloadBytes": 98231160,
+  "payloadFiles": 58233,
+  "preservation": "Each unique selected path is stored once. Raw failed and successful outcomes retained. Archive payload modes are 0644; no executable-mode equivalence claim.",
+  "roots": [
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-language-final-02",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-language-final-02"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-class-lifecycle-final-02",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-class-lifecycle-final-02"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-full-regression-02",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-02"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-full-regression-audit-02",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-full-regression-audit-02"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage42-final-regression-review-02",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage42-final-regression-review-02"
+    }
+  ],
+  "schema": 1,
+  "scope": "Corrected Stage42 full selected language and persistent evaluator regression at implementation7544699, preserving nonpasses, strict gate failures, exact raw differences and independent source/regression review. This historical implementation closeout is separate from current Stage44/45 work and full M2 completion.",
+  "sourceChanges": [],
+  "symlinkRepresentations": []
+}
