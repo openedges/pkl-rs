@@ -1,0 +1,22 @@
+[
+  {
+    "id": "returned-lazy-object-versus-forced-undefined",
+    "mode": "plain",
+    "source": "import \"pkl:test\" as t\nstable = 7\nbad: unknown\nlazyCatch = t.catch(() -> new Dynamic { value = throw(\"must-stay-lazy\") })\nlazyNull = t.catchOrNull(() -> new Dynamic { value = throw(\"must-stay-lazy\") })\nforced = t.catch(() -> new Dynamic { value = throw(\"forced\") }.value)\nundefinedCaught = t.catch(() -> bad)\nundefinedNull = t.catchOrNull(() -> bad)\n",
+    "expressions": [
+      "lazyCatch",
+      "lazyNull",
+      "forced",
+      "undefinedCaught",
+      "undefinedNull",
+      "lazyNull",
+      "undefinedCaught",
+      "lazyCatch",
+      "stable"
+    ],
+    "callbacks": [],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined/main.pkl",
+    "sourceSha256": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539"
+  }
+]

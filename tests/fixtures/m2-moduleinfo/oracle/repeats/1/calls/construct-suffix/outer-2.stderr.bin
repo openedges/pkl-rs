@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Type constraint `matches(Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#))` violated.
+Value: "0.32.0-dev"
+
+    matches(Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#))
+    │       │
+    false   Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#)
+
+251 | minPklVersion: String(matches(Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#)))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#ModuleInfo.minPklVersion (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L251)
+
+2 | obj = new ModuleInfo { minPklVersion = "0.32.0-dev" }
+                                           ^^^^^^^^^^^^
+at moduleinfo.control_6#obj.minPklVersion (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-suffix/main.pkl)
+
+1 | obj.minPklVersion
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)

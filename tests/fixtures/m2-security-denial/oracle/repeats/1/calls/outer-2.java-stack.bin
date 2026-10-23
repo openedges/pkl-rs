@@ -1,0 +1,17 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Refusing to load module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl` because it does not match any entry in the module allowlist (`--allowed-modules`).
+
+4 | ordinary = import("file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#ordinary (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/main.pkl)
+
+1 | ordinary
+    ^^^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at DenialProbe.capture(DenialProbe.java:19)
+	at DenialProbe.main(DenialProbe.java:47)

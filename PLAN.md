@@ -754,6 +754,14 @@ Stage 43의 canonical 진단 위에 module resolve/source와 resource read의 �
 
 최초 wrapper 자체의 최종 종료 코드는 미확인입니다. 보존된 process report에는 언어 취득 자식 프로세스의 exit 0이 기록되어 있으며, 두 종료 상태를 혼동했던 초기 해석은 [정정 기록](reports/m2/stage44-final-provenance-correction.json)과 최종 요약에서 바로잡았습니다. 최초 audit·recovery·index·archive는 그대로 보존합니다. 별도 continuation에서 언어 취득을 반복하지 않고 기존 증거의 무결성을 검증한 뒤 수명주기 취득·보고서·계약 검사를 완료했습니다. [원시 자료](reports/m2/stage44-final-regression-captures.json)에는 최초 wrapper와 최종 continuation이 함께 있으며, [감사](reports/m2/stage44-final-regression-audit.json)는 payload 58,140개와 고유 소스 4,078개를 확인했습니다. [독립 검토](reports/m2/stage44-final-independent-review.json)는 archive·원시 판정·커밋 소스 대응을 확인했고 종료 코드 설명 한 건을 지적했습니다. 후속 classpath·Stage 45와 플랫폼·성능 검증 범위는 별도입니다. **Stage 43·44의 선택 회귀 마감이며 M2 전체 완료는 아닙니다.**
 
+### Stage 45 — 표준 모듈과 guest catch
+
+`pkl:base`·`pkl:test`의 지원 선언을 원래 소스와 같은 VM·heap·module identity에 연결하고, frame 소유 `catch`·`catchOrNull`, 별도 catch 진단 형식, 부분 오류 캐시와 annotation 초기화를 구현했습니다. Boolean `xor`·`implies`, ModuleInfo의 지연 검증·최소 버전·고정 JDK Unicode 숫자 조건도 추가했습니다. 실제 Java 정책 거부를 관찰해 typed `SecurityManagerException` resolve 완료를 추가했으며, 임의 Host 오류·logger·취소·timeout·close를 guest 예외로 바꾸지 않습니다. [계약과 검사](docs/m2-stdlib-bootstrap.md)는 전체 API와 제한된 adapter 경계를 구분합니다.
+
+수정된 최종 후보의 필수 Rust 검사 다섯 개와 source 안정성 검사가 통과했습니다. 원본 여섯 사례의 두 반복 12회, 일반 ModuleInfo 156회, 실제 security 오류 API 10회가 native에서 일치합니다. 동일 artifact의 실제 Node·Chromium에서도 각 환경의 guest catch 전체 세션 24개·API 완료 166회, 일반 ModuleInfo 156회, security API 10회가 일치합니다. 생성자 전용·terminal 부분 비교와 Java 내부 오류 12개·독립 root 후속 호출 56개는 별도 범위로 유지합니다. 공통 플랫폼은 6,078개 모두 세 Rust 대상 간 같고 Java와는 6,076개 일치·기존 정규식 실패 두 개입니다.
+
+더 넓은 bootstrap 600회는 환경별 일치 194회·미지원 192회·불일치 214회입니다. 미지원은 reflection 144회와 JSON renderer 48회이고, 불일치에는 리소스 read 횟수와 JVM 전역 표준 모듈 캐시 재사용의 차이가 있습니다. 이 수치를 원래 선택 회귀 집계에 합산하지 않으며, 원본 언어 사례가 요구하는 표준 라이브러리·출력·로딩 의무를 제외하지 않습니다. 생산 소스 고정 뒤 portable 검증 도구 아홉 개와 목록의 source hash를 별도 반영했습니다. 전체 선택 코퍼스·순차 evaluator 회귀와 증거 게시를 이어갑니다. **Stage 45와 M2 전체는 진행 중입니다.**
+
 ### 병행 구현 — 원본 JVM classpath snippet 실행
 
 원본 `basic/import1b.pkl`은 JVM API의 classpath loader를 요구하며 native upstream suite에서 제외됩니다. 기존 CLI 명령과 차단 기록은 그대로 두고, 고정 Java의 `EvaluatorBuilder.preconfigured()`·`evaluateOutputBytes`와 Rust 공통 VM의 directory classpath Host를 연결했습니다. 원본 파일·test resource directory·service descriptor를 유지하며, 배포 JAR에 없는 작은 Kotlin test provider 두 개는 출처와 hash를 연결한 Java 검증용 companion으로 제공합니다.

@@ -1,0 +1,264 @@
+{
+  "schema": 1,
+  "scope": "Stage45 implementation checkpoint on the shared native/Wasm/N-API engine. Focused comparisons and their retained failures; not full selected regression or M2 completion.",
+  "recorded_build_base": "43c97a4fc45e30dab18cfcf6a6e8ac3b1a41f52d",
+  "publication_base": "7c50f9b467ba0b5ec7bdf9b8b54f5fd7f226fab0",
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "required_rust_checks": [
+    {
+      "argv": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "source_stable": true
+    },
+    {
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "source_stable": true
+    },
+    {
+      "argv": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "source_stable": true
+    },
+    {
+      "argv": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "source_stable": true
+    },
+    {
+      "argv": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "source_stable": true
+    }
+  ],
+  "tooling": {
+    "fixture_verifiers_passed": 3,
+    "python_tests_passed": 27,
+    "javascript_transport_tests_passed": 22,
+    "manifest_source_hashes_updated": 102,
+    "all_case_definitions_counts_states_unchanged": true
+  },
+  "original_native_modules": {
+    "cases": 6,
+    "repetitions": 2,
+    "raw_matches": 12,
+    "candidate_sha256": "3c3651704ef2b92a2f529abeaba0fa48edcd08b7cc1a5c150386980e876afce2",
+    "source_stable": true,
+    "original_contracts_selected": true
+  },
+  "native_bootstrap_and_moduleinfo": {
+    "counts": {
+      "pass": 350,
+      "unsupported": 192,
+      "mismatch": 214,
+      "isolated-followup-control": 56,
+      "java-internal-error-boundary": 12
+    },
+    "strict_all_calls_passed": false,
+    "source_and_artifact_stable": true
+  },
+  "main_platforms": {
+    "total": 6078,
+    "shared_engine_passed": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "source_stability": true
+  },
+  "supplemental_platforms": {
+    "guest-catch": {
+      "evidence": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-guest-catch-platform-01/execution.json",
+        "sha256": "3330ea2ba079703f99c2a18caad977c94fce474f0624a42dfbaa6fc39f9c758e"
+      },
+      "recorded_scope": "Actual Node/Chromium shared-engine guest catch comparison. Full ordinary strings/status, UTF16/JavaUTF8, events/logs/counters; invalid constructor text and partial terminal lifecycle explicitly separate. No JVM exception-class or later terminal API parity claim; not full Stage45/M2.",
+      "session_status_counts": {
+        "node": {
+          "constructor-boundary-pass": 10,
+          "pass": 24,
+          "terminal-partial-pass": 8
+        },
+        "browser": {
+          "constructor-boundary-pass": 10,
+          "pass": 24,
+          "terminal-partial-pass": 8
+        }
+      },
+      "count_scope": "Session outcomes, not API-call counts; constructor and terminal partial comparisons remain distinct."
+    },
+    "moduleinfo": {
+      "evidence": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-moduleinfo-platform-01/execution.json",
+        "sha256": "5947c1f032a227ee64279bcd5a456f21749d662e77d9cf8a653c43a794dd4e1a"
+      },
+      "counts": {
+        "node": {
+          "pass": 156,
+          "java-internal-unsupported-boundary": 12
+        },
+        "browser": {
+          "pass": 156,
+          "java-internal-unsupported-boundary": 12
+        }
+      },
+      "recorded_scope": "Actual Node/Chromium ModuleInfo transport:156ordinary raw status/UTF16/JavaUTF8 calls per target,12explicit Unsupported controls for preserved Java internal errors. All56Java same-evaluator root-switch followups remain unexecuted native API boundaries. No full annotation/regex/API/M2 claim."
+    },
+    "security-denial": {
+      "evidence": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-security-denial-platform-01/execution.json",
+        "sha256": "e56b2df94dd012162b74e1c853aac945c91d8dfff8df355cad6a606abeed962a"
+      },
+      "counts": {
+        "node": {
+          "pass": 10
+        },
+        "browser": {
+          "pass": 10
+        }
+      },
+      "recorded_scope": "Actual Node/Chromium typed SecurityManagerException resolve completion:10ordinary raw status/UTF16/JavaUTF8 calls per target and3denied childrequests per repeat. Java actual Standard policy cause is preserved;NativeHost bridge does not implement or claim full Standard security policy/source-load parity."
+    },
+    "bootstrap": {
+      "evidence": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-bootstrap-platform-01/execution.json",
+        "sha256": "f92afce63a7c62c20ceb44200120fbd4b314b7d5646213e162816071c28bf32e"
+      },
+      "counts": {
+        "node": {
+          "pass": 194,
+          "unsupported": 192,
+          "mismatch": 214
+        },
+        "browser": {
+          "pass": 194,
+          "unsupported": 192,
+          "mismatch": 214
+        }
+      },
+      "recorded_scope": "Actual Node/Chromium controlled bootstrap evaluation,all600pinnedJava APIcalls per target,complete UTF16/JavaUTF8/status andcountedcallerreadcounters. JSON/reflect/successfulreadcache/JVM-globalstdlibcache differences stay unsupported/mismatch,not normalized. No fullsecurity/stdlib/API/M2/performance claim."
+    }
+  },
+  "production_source_capture": {
+    "productionInputs": 77,
+    "completeAfterRust5Sha256": "2a84330b4e9d1b47703a84b1eef72845c4449d41fcadcd48d94ded2e4a1d3830",
+    "allFivePostCommandMapsIdentical": true,
+    "directMainPlatformCapturedHashMatches": 76,
+    "completeBeforePlatformFreezeSha256": "2a84330b4e9d1b47703a84b1eef72845c4449d41fcadcd48d94ded2e4a1d3830",
+    "nativeFinalSourceMapSha256": "2a84330b4e9d1b47703a84b1eef72845c4449d41fcadcd48d94ded2e4a1d3830",
+    "collectorOmissions": [
+      "crates/pkl-runtime/src/stdlib/modules.txt"
+    ],
+    "omittedInputBindings": {
+      "crates/pkl-runtime/src/stdlib/modules.txt": "fd672bc13ca686b55f367ce2c4538a8ce6e96016a13280e7b23552e19698bf01"
+    },
+    "scope": "The M1 suffixcollector did not capture modules.txt. Its bytes are bound by the complete earlier frozen manifest,identical final native source snapshot and current immutable implementation;not relabeled as M1-captured."
+  },
+  "evidence_reports": {
+    "stage45-rust5-02/report.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-rust5-02/report.json",
+      "sha256": "c3b17b808fda77ba7538f8eb18b8ea6ca41c680f82fd5fd41aef3830a8c1b834"
+    },
+    "stage45-tooling-final-01/report.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-tooling-final-01/report.json",
+      "sha256": "b24e8cc1e8637da9ca220f486e6e523fd929eff9ea960d6f3e6d3ce54632c36c"
+    },
+    "stage45-original6-native-final-01/report.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-original6-native-final-01/report.json",
+      "sha256": "2cadb70005de53337f6053c101cd50d36adb1bd3e7e9a680cbb4920c2ab0fc71"
+    },
+    "stage45-bootstrap-native-final-01/report.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-bootstrap-native-final-01/report.json",
+      "sha256": "54d582bcb5fae9cf0e6f0ee7591b8864699a566465d6c66a3cbf47e212cc91a7"
+    },
+    "stage45-platform-candidate-01/report.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-platform-candidate-01/report.json",
+      "sha256": "d5b2d791b00abfcfc4d43275cd9c5de059a8f46ac40039086fded978b82a4165"
+    },
+    "stage45-supplemental-platform-audit-03/report.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-supplemental-platform-audit-03/report.json",
+      "sha256": "78f0caa748525faf3fca43c5a658d00a07b31e12ef6fbd319058713635f0dd7c"
+    },
+    "stage45-native-final-01/artifacts.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-native-final-01/artifacts.json",
+      "sha256": "9c81d4d72b07c6c86daa6831ad064e942e2b3220bf0d88adda4423c6f8feb635"
+    },
+    "stage45-core-review-03/report.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-review-03/report.json",
+      "sha256": "ae4723161fd4025a31eef31413a8ecd9cc159f0f862467c134b0b91fc157be93"
+    },
+    "stage45-core-integration-review-01/report.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-integration-review-01/report.json",
+      "sha256": "c721e879dc30be50062446407603594737619f77668abea7ec95b2bba9e2b3f4"
+    },
+    "stage45-core-integration-review-01/bootstrap-classification.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-core-integration-review-01/bootstrap-classification.json",
+      "sha256": "dda5358807e87901f913a6b6c66a12f6637c3e12b704b646c05c14b75ba26e12"
+    },
+    "stage45-proposed-binding-01/report.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-proposed-binding-01/report.json",
+      "sha256": "2ab82ea833daef8c494190c66af04debd039ccf5711f0c4ccc50305dea1dcefa"
+    },
+    "stage45-portable-promotion-01/report.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-portable-promotion-01/report.json",
+      "sha256": "c86651ff9951274a6684314b50e8be00454f38ae0807a7433c2baf71eea95f83"
+    }
+  },
+  "publication_scope": "Local immutable evidence roots are identified here; complete portable raw archive publication and committed-source binding follow separately.",
+  "full_selected_regression": "Pending on the combined implementation. Stage43/44 results are not attributed to Stage45.",
+  "full_m2_complete": false,
+  "hosted_ci_claimed": false,
+  "performance_target_claimed": false,
+  "remaining": [
+    "All original M2 requirements, unmapped and unimplemented cases, and strict failures.",
+    "Reflection and JsonRenderer bindings, complete resource reads/caching, standard-module cache lifetime, and remaining source/URI semantics.",
+    "Guest-catch constructor-only and terminal partial boundaries; ModuleInfo Java-internal errors and same-evaluator root switching.",
+    "Full product/platform compatibility and performance requirements."
+  ],
+  "whitespace_check": {
+    "full_staged_diff_exit_code": 2,
+    "authored_diff_exit_code": 0,
+    "exact_excluded_path": "tests/fixtures/m2-moduleinfo/oracle/upstream/stdlib/base.pkl",
+    "reason": "Two trailing spaces belong to the byte-identical pinned upstream base.pkl fixture and are preserved unchanged.",
+    "pinned_upstream_sha256": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb"
+  }
+}

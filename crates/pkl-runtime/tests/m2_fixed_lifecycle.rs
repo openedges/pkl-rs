@@ -1,7 +1,7 @@
 //! Fixed declarations share the ordinary Host scheduler and tracing lifecycle.
 //! Java byte compatibility for selected sources is recorded separately.
-//! Retained module graphs include their one builtin Module parent; executable
-//! nodes, transient-object deltas and terminal-zero assertions remain separate.
+//! Retained module graphs include their builtin Module parent and source-backed
+//! stdlib annotations; transient objects and terminal-zero assertions stay separate.
 use std::sync::Arc;
 
 use pkl_runtime::host::{HostPoll, HostSession};
@@ -123,10 +123,12 @@ fn inherited_fixed_values_keep_the_amended_receiver_across_gc_reentry_and_retry(
     session.resume(&outer, Ok(Value::Null), 6).unwrap();
     assert_eq!(ready(&mut session, 6), Ok(Value::Null));
     // Published classes retain their captured module and its completed caches.
-    // Reference path temporaries have been collected; this is the exact steady
-    // retained closure for this source, not a general nonzero allowance.
-    assert_eq!(session.collect(&[]).live, 12);
-    assert_eq!(session.collect(&[]).live, 12);
+    // The source-backed pkl:ref header adds ModuleInfo and Since instances,
+    // their three class prototypes, and three constraint execution nodes.
+    // Reference path temporaries have been collected. Keep the exact closure.
+    assert_eq!(session.collect(&[]).live, 20);
+    assert_eq!(session.heap_stats().executable_live, 3);
+    assert_eq!(session.collect(&[]).live, 20);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -165,10 +167,12 @@ fn inherited_hidden_fixed_reference_metadata_stays_deferred_during_render_retry(
     session.resume(&outer, Ok(Value::Null), 5).unwrap();
     assert_eq!(ready(&mut session, 5), Ok(Value::Null));
     // Published classes retain their captured module and its completed caches.
-    // Reference path temporaries have been collected; this is the exact steady
-    // retained closure for this source, not a general nonzero allowance.
-    assert_eq!(session.collect(&[]).live, 12);
-    assert_eq!(session.collect(&[]).live, 12);
+    // The source-backed pkl:ref header adds ModuleInfo and Since instances,
+    // their three class prototypes, and three constraint execution nodes.
+    // Reference path temporaries have been collected. Keep the exact closure.
+    assert_eq!(session.collect(&[]).live, 20);
+    assert_eq!(session.heap_stats().executable_live, 3);
+    assert_eq!(session.collect(&[]).live, 20);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);

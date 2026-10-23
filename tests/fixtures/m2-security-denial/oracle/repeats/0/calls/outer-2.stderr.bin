@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Refusing to load module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl` because it does not match any entry in the module allowlist (`--allowed-modules`).
+
+4 | ordinary = import("file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#ordinary (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/main.pkl)
+
+1 | ordinary
+    ^^^^^^^^
+at  (repl:text)

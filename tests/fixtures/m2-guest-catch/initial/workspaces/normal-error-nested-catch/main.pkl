@@ -1,0 +1,12 @@
+import "pkl:test" as t
+stable = 7
+callbackCaught = t.catch(() -> throw("callback-error"))
+function onlyInt(x: Int) = x
+caught = t.catch(() -> throw("boom"))
+normal = t.catchOrNull(() -> 7)
+expected = t.catch(() -> 7)
+nested = t.catch(() -> t.catch(() -> 7))
+nestedNormal = t.catchOrNull(() -> t.catch(() -> throw("inner")))
+innerNormal = t.catch(() -> t.catchOrNull(() -> throw("inner")))
+typed = t.catch(() -> onlyInt("x"))
+wrongFunction = t.catch(() -> t.catch(7))

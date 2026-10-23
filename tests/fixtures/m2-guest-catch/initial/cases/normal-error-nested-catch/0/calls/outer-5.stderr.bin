@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected an exception, but none was thrown.
+
+10 | innerNormal = t.catch(() -> t.catchOrNull(() -> throw("inner")))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#innerNormal (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/normal-error-nested-catch/main.pkl)
+
+1 | innerNormal
+    ^^^^^^^^^^^
+at  (repl:text)

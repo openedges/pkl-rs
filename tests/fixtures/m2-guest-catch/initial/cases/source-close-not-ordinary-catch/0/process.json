@@ -1,0 +1,82 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/source-close-not-ordinary-catch/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/source-close-not-ordinary-catch/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+    "GuestCatchProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-close-not-ordinary-catch",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/cases/source-close-not-ordinary-catch/0/calls",
+    "source-close"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-close-not-ordinary-catch",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/source-close-not-ordinary-catch/0/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/source-close-not-ordinary-catch/0/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/source-close-not-ordinary-catch/0/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/source-close-not-ordinary-catch/0/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "startedUnixNs": 1792732794426969000,
+  "finishedUnixNs": 1792732795210524000,
+  "result": {
+    "exit_code": 0,
+    "elapsed_ns": 782727541,
+    "sha256": {
+      "stdout": "13081160c6dda38968d7d9b70e2be45af3c87b8c628b94ae08e38fecb6579ba6",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "timed_out": false,
+    "workspace_changes": {},
+    "files": {}
+  },
+  "case": "source-close-not-ordinary-catch",
+  "repeat": 0,
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-close-not-ordinary-catch/main.pkl",
+  "sourceSha256": "6aac2d29dfea8ce1db95e35589f10b70656c64810863abddc07ee493f5db98f7",
+  "workspaceBefore": {
+    "callbacks.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expressions.txt": {
+      "kind": "file",
+      "sha256": "609c8430b730b2a61c1c2570afd8ca73ed35283a4358b5441eae627e78efcf25"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "6aac2d29dfea8ce1db95e35589f10b70656c64810863abddc07ee493f5db98f7"
+    }
+  },
+  "workspaceAfter": {
+    "callbacks.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expressions.txt": {
+      "kind": "file",
+      "sha256": "609c8430b730b2a61c1c2570afd8ca73ed35283a4358b5441eae627e78efcf25"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "6aac2d29dfea8ce1db95e35589f10b70656c64810863abddc07ee493f5db98f7"
+    }
+  }
+}

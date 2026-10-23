@@ -1,0 +1,23 @@
+resolve file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/main.pkl resource=false
+resolve file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/main.pkl
+resolve repl:text
+import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/main.pkl -> pkl:test
+import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/main.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl
+resolve file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl
+denied file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl org.pkl.core.SecurityManagerException
+outer-0 success
+resolve repl:text
+import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/main.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl
+resolve file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl
+denied file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl org.pkl.core.SecurityManagerException
+outer-1 success
+resolve repl:text
+import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/main.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl
+resolve file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl
+denied file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl org.pkl.core.SecurityManagerException
+outer-2 error org.pkl.core.PklException
+resolve repl:text
+outer-3 success
+resolve repl:text
+outer-4 success

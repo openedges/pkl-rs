@@ -1,0 +1,762 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/runtime-private/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/runtime-private/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+    "ModuleInfoProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/repeats/0/calls",
+    "construct-current",
+    "construct-older",
+    "construct-future",
+    "construct-leading-zero",
+    "construct-one-digit",
+    "construct-three-digit",
+    "construct-suffix",
+    "construct-spaces",
+    "construct-arabic-digits",
+    "construct-fullwidth-digits",
+    "construct-short",
+    "construct-extra-part",
+    "construct-integer",
+    "construct-missing",
+    "annotation-current",
+    "annotation-older",
+    "annotation-future",
+    "annotation-leading-zero",
+    "annotation-one-digit",
+    "annotation-three-digit",
+    "annotation-suffix",
+    "annotation-spaces",
+    "annotation-arabic-digits",
+    "annotation-fullwidth-digits",
+    "annotation-short",
+    "annotation-extra-part",
+    "annotation-integer",
+    "annotation-missing"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/runtime-private/0/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/runtime-private/0/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/runtime-private/0/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/runtime-private/0/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "startedUnixNs": 1792736141380533000,
+  "finishedUnixNs": 1792736142737098000,
+  "result": {
+    "exit_code": 0,
+    "elapsed_ns": 1356531292,
+    "sha256": {
+      "stdout": "2abfdfe994228d928408facc0d5dca3ee6b34220ae3a55ac8ed558ff7b998dab",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "timed_out": false,
+    "workspace_changes": {},
+    "files": {}
+  },
+  "repeat": 0,
+  "workspaceBefore": {
+    "annotation-arabic-digits": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-current": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-extra-part": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-fullwidth-digits": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-future": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-integer": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-leading-zero": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-missing": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-older": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-one-digit": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-short": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-spaces": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-suffix": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-three-digit": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-arabic-digits": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-current": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-extra-part": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-fullwidth-digits": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-future": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-integer": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-leading-zero": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-missing": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-older": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-one-digit": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-short": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-spaces": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-suffix": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-three-digit": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "control.pkl": {
+      "kind": "file",
+      "sha256": "12a03365128b0bd7c6814454c49a1f9f87a5c08bed49162c04a6d794606f9932"
+    },
+    "annotation-leading-zero/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-leading-zero/main.pkl": {
+      "kind": "file",
+      "sha256": "695ff363db6ec8ff10d6350afaebd39a05b37bd8ac5863e961cc85f54de1b91b"
+    },
+    "annotation-arabic-digits/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-arabic-digits/main.pkl": {
+      "kind": "file",
+      "sha256": "b26a9482473c0d76ffed22b1cffae051f9f251341e5a90d5264815204028cb0a"
+    },
+    "annotation-fullwidth-digits/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-fullwidth-digits/main.pkl": {
+      "kind": "file",
+      "sha256": "be667c1a256e2b818fc7f2a201c79e37643bb70ce7144a1f00dc498c32e62830"
+    },
+    "annotation-one-digit/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-one-digit/main.pkl": {
+      "kind": "file",
+      "sha256": "bd7ddbe4824db0d18e496c2aeb651caec5418bae3f76a44d56a402ef68e641cc"
+    },
+    "construct-short/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-short/main.pkl": {
+      "kind": "file",
+      "sha256": "cef18904c522ffe87b62593792c3bf56655496d3ea7f097c7c51c1b0510c3bfc"
+    },
+    "annotation-extra-part/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-extra-part/main.pkl": {
+      "kind": "file",
+      "sha256": "8ca8fdef2c0e7905ca24d17912be5a5b1fc91f6ce9c89cfe4e24c2651a13f9d0"
+    },
+    "annotation-three-digit/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-three-digit/main.pkl": {
+      "kind": "file",
+      "sha256": "70b88da2fac0a2f4b37a2ba80411243fd15403419b08a9d425d3ecf03e92b83d"
+    },
+    "construct-missing/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-missing/main.pkl": {
+      "kind": "file",
+      "sha256": "91c9fee1e9675564e0a1b4341234f115fb9e9013b8e19ef54323c9f624fac30a"
+    },
+    "construct-future/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-future/main.pkl": {
+      "kind": "file",
+      "sha256": "72e43f61faee2b3ed353da7d439051305b8a9af4161eee57202d976cf6e24f13"
+    },
+    "annotation-missing/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-missing/main.pkl": {
+      "kind": "file",
+      "sha256": "8f2f0c76469238e6ea44d247d2586430090a40623bbda1dbc4c1c99efd9d119e"
+    },
+    "annotation-spaces/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-spaces/main.pkl": {
+      "kind": "file",
+      "sha256": "9018d3b3e5defb4f8ce9ae80daeb58fc01b78a728fd1e9620415f234dc52903f"
+    },
+    "annotation-suffix/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-suffix/main.pkl": {
+      "kind": "file",
+      "sha256": "d7a7eb06232456b5e0baf2a611174303f3967837bff1d15208dbbacf5cefbcfa"
+    },
+    "construct-three-digit/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-three-digit/main.pkl": {
+      "kind": "file",
+      "sha256": "c48fbb37a3c8d120847c34e11f43e4b1f5394335bc5d8a48765c4c3213a4fba5"
+    },
+    "annotation-older/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-older/main.pkl": {
+      "kind": "file",
+      "sha256": "0f9f976ac042171117435f74fb544923566ae245d7b327b9ed596a572b8a3da3"
+    },
+    "construct-arabic-digits/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-arabic-digits/main.pkl": {
+      "kind": "file",
+      "sha256": "3cc59e22da73f38c5020facdbbdbaf5c4cc1f326908d127b44dcf095c5c51ac4"
+    },
+    "construct-leading-zero/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-leading-zero/main.pkl": {
+      "kind": "file",
+      "sha256": "26fc91d02bf1b77e8f4cd9790f0c047b233c23f07cdfe8f2228af5188e32d426"
+    },
+    "construct-older/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-older/main.pkl": {
+      "kind": "file",
+      "sha256": "19427c09a6b47cdfa292bde34a8c925ee8cc4e49896d55b2c61838f4da6b6c52"
+    },
+    "annotation-integer/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-integer/main.pkl": {
+      "kind": "file",
+      "sha256": "0ede27533030abf0d27385f56f2d74655de0ed6678e343173e7b4e15906812e4"
+    },
+    "construct-spaces/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-spaces/main.pkl": {
+      "kind": "file",
+      "sha256": "8327a28c76ecd3792ec8443c58ebd02731a84416ae1cf47ad4218efa3c3c00b8"
+    },
+    "annotation-current/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-current/main.pkl": {
+      "kind": "file",
+      "sha256": "96d77b8ff93fbeb076d09e1a754356ea2f61c28cfd58d365ae65c21703cb6f6b"
+    },
+    "construct-suffix/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-suffix/main.pkl": {
+      "kind": "file",
+      "sha256": "89b324d7806e9d74fc22c0c62144c096bba2b39364d23453e2bf606271172bdf"
+    },
+    "annotation-short/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-short/main.pkl": {
+      "kind": "file",
+      "sha256": "69960cbed9a356fa075331c76e3f1227ca9468cfb044238d8117d32829bbd74d"
+    },
+    "construct-current/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-current/main.pkl": {
+      "kind": "file",
+      "sha256": "fb95e61225ced01f6bd6b6f209b271c99f8efa7e6780a715da223d8b02c18a85"
+    },
+    "annotation-future/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-future/main.pkl": {
+      "kind": "file",
+      "sha256": "85b243f583790b7a7463ad325a1d1d92025ce23b62eb32b9a7b73f0684e1084f"
+    },
+    "construct-fullwidth-digits/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-fullwidth-digits/main.pkl": {
+      "kind": "file",
+      "sha256": "70b2353b471b74f45e0fe399e2d06796d3b496e480fbf58cc1ead0eb70c3a9df"
+    },
+    "construct-one-digit/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-one-digit/main.pkl": {
+      "kind": "file",
+      "sha256": "e7565ab35acd7222b92f6f0dbc14cefdc8d8172a92888d1c2060331cac5efa25"
+    },
+    "construct-integer/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-integer/main.pkl": {
+      "kind": "file",
+      "sha256": "bc51932f6dc844396045f1dd0ff64ecacb6b4566dcbbc112a90318a4dfbcf4fc"
+    },
+    "construct-extra-part/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-extra-part/main.pkl": {
+      "kind": "file",
+      "sha256": "3d9e21166364b482b912dbb273c5b64f7b77ebed59de4c7b5ede7ef8b4d43867"
+    }
+  },
+  "workspaceAfter": {
+    "annotation-arabic-digits": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-current": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-extra-part": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-fullwidth-digits": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-future": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-integer": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-leading-zero": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-missing": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-older": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-one-digit": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-short": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-spaces": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-suffix": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "annotation-three-digit": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-arabic-digits": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-current": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-extra-part": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-fullwidth-digits": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-future": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-integer": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-leading-zero": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-missing": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-older": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-one-digit": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-short": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-spaces": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-suffix": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "construct-three-digit": {
+      "kind": "directory",
+      "sha256": null
+    },
+    "control.pkl": {
+      "kind": "file",
+      "sha256": "12a03365128b0bd7c6814454c49a1f9f87a5c08bed49162c04a6d794606f9932"
+    },
+    "annotation-leading-zero/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-leading-zero/main.pkl": {
+      "kind": "file",
+      "sha256": "695ff363db6ec8ff10d6350afaebd39a05b37bd8ac5863e961cc85f54de1b91b"
+    },
+    "annotation-arabic-digits/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-arabic-digits/main.pkl": {
+      "kind": "file",
+      "sha256": "b26a9482473c0d76ffed22b1cffae051f9f251341e5a90d5264815204028cb0a"
+    },
+    "annotation-fullwidth-digits/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-fullwidth-digits/main.pkl": {
+      "kind": "file",
+      "sha256": "be667c1a256e2b818fc7f2a201c79e37643bb70ce7144a1f00dc498c32e62830"
+    },
+    "annotation-one-digit/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-one-digit/main.pkl": {
+      "kind": "file",
+      "sha256": "bd7ddbe4824db0d18e496c2aeb651caec5418bae3f76a44d56a402ef68e641cc"
+    },
+    "construct-short/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-short/main.pkl": {
+      "kind": "file",
+      "sha256": "cef18904c522ffe87b62593792c3bf56655496d3ea7f097c7c51c1b0510c3bfc"
+    },
+    "annotation-extra-part/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-extra-part/main.pkl": {
+      "kind": "file",
+      "sha256": "8ca8fdef2c0e7905ca24d17912be5a5b1fc91f6ce9c89cfe4e24c2651a13f9d0"
+    },
+    "annotation-three-digit/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-three-digit/main.pkl": {
+      "kind": "file",
+      "sha256": "70b88da2fac0a2f4b37a2ba80411243fd15403419b08a9d425d3ecf03e92b83d"
+    },
+    "construct-missing/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-missing/main.pkl": {
+      "kind": "file",
+      "sha256": "91c9fee1e9675564e0a1b4341234f115fb9e9013b8e19ef54323c9f624fac30a"
+    },
+    "construct-future/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-future/main.pkl": {
+      "kind": "file",
+      "sha256": "72e43f61faee2b3ed353da7d439051305b8a9af4161eee57202d976cf6e24f13"
+    },
+    "annotation-missing/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-missing/main.pkl": {
+      "kind": "file",
+      "sha256": "8f2f0c76469238e6ea44d247d2586430090a40623bbda1dbc4c1c99efd9d119e"
+    },
+    "annotation-spaces/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-spaces/main.pkl": {
+      "kind": "file",
+      "sha256": "9018d3b3e5defb4f8ce9ae80daeb58fc01b78a728fd1e9620415f234dc52903f"
+    },
+    "annotation-suffix/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-suffix/main.pkl": {
+      "kind": "file",
+      "sha256": "d7a7eb06232456b5e0baf2a611174303f3967837bff1d15208dbbacf5cefbcfa"
+    },
+    "construct-three-digit/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-three-digit/main.pkl": {
+      "kind": "file",
+      "sha256": "c48fbb37a3c8d120847c34e11f43e4b1f5394335bc5d8a48765c4c3213a4fba5"
+    },
+    "annotation-older/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-older/main.pkl": {
+      "kind": "file",
+      "sha256": "0f9f976ac042171117435f74fb544923566ae245d7b327b9ed596a572b8a3da3"
+    },
+    "construct-arabic-digits/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-arabic-digits/main.pkl": {
+      "kind": "file",
+      "sha256": "3cc59e22da73f38c5020facdbbdbaf5c4cc1f326908d127b44dcf095c5c51ac4"
+    },
+    "construct-leading-zero/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-leading-zero/main.pkl": {
+      "kind": "file",
+      "sha256": "26fc91d02bf1b77e8f4cd9790f0c047b233c23f07cdfe8f2228af5188e32d426"
+    },
+    "construct-older/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-older/main.pkl": {
+      "kind": "file",
+      "sha256": "19427c09a6b47cdfa292bde34a8c925ee8cc4e49896d55b2c61838f4da6b6c52"
+    },
+    "annotation-integer/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-integer/main.pkl": {
+      "kind": "file",
+      "sha256": "0ede27533030abf0d27385f56f2d74655de0ed6678e343173e7b4e15906812e4"
+    },
+    "construct-spaces/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-spaces/main.pkl": {
+      "kind": "file",
+      "sha256": "8327a28c76ecd3792ec8443c58ebd02731a84416ae1cf47ad4218efa3c3c00b8"
+    },
+    "annotation-current/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-current/main.pkl": {
+      "kind": "file",
+      "sha256": "96d77b8ff93fbeb076d09e1a754356ea2f61c28cfd58d365ae65c21703cb6f6b"
+    },
+    "construct-suffix/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-suffix/main.pkl": {
+      "kind": "file",
+      "sha256": "89b324d7806e9d74fc22c0c62144c096bba2b39364d23453e2bf606271172bdf"
+    },
+    "annotation-short/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-short/main.pkl": {
+      "kind": "file",
+      "sha256": "69960cbed9a356fa075331c76e3f1227ca9468cfb044238d8117d32829bbd74d"
+    },
+    "construct-current/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-current/main.pkl": {
+      "kind": "file",
+      "sha256": "fb95e61225ced01f6bd6b6f209b271c99f8efa7e6780a715da223d8b02c18a85"
+    },
+    "annotation-future/expressions.txt": {
+      "kind": "file",
+      "sha256": "496c51335e19fb524c6838df43a334d6ed0205b1072e2dbf20ef0647e47dd393"
+    },
+    "annotation-future/main.pkl": {
+      "kind": "file",
+      "sha256": "85b243f583790b7a7463ad325a1d1d92025ce23b62eb32b9a7b73f0684e1084f"
+    },
+    "construct-fullwidth-digits/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-fullwidth-digits/main.pkl": {
+      "kind": "file",
+      "sha256": "70b2353b471b74f45e0fe399e2d06796d3b496e480fbf58cc1ead0eb70c3a9df"
+    },
+    "construct-one-digit/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-one-digit/main.pkl": {
+      "kind": "file",
+      "sha256": "e7565ab35acd7222b92f6f0dbc14cefdc8d8172a92888d1c2060331cac5efa25"
+    },
+    "construct-integer/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-integer/main.pkl": {
+      "kind": "file",
+      "sha256": "bc51932f6dc844396045f1dd0ff64ecacb6b4566dcbbc112a90318a4dfbcf4fc"
+    },
+    "construct-extra-part/expressions.txt": {
+      "kind": "file",
+      "sha256": "713f79af0bf14d62ebefb7379dd8874846f15dedd617d5df0391a53fb6ecfd94"
+    },
+    "construct-extra-part/main.pkl": {
+      "kind": "file",
+      "sha256": "3d9e21166364b482b912dbb273c5b64f7b77ebed59de4c7b5ede7ef8b4d43867"
+    }
+  }
+}

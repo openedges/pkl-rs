@@ -372,10 +372,16 @@ impl Vm {
                     ..
                 } => run.tasks.push(DefaultTask::Visit(types.swap_remove(index))),
                 TypeCheck::Class { id, .. } => {
-                    let object = self
-                        .heap
-                        .find_class(id)
-                        .ok_or_else(|| invalid("missing resolved default class"))?;
+                    // A resolved builtin recipe can reach its default before any
+                    // class-value expression has materialized the shared prototype.
+                    // User class recipes still require their published declaration.
+                    let object = if builtins::name(id).is_some() {
+                        self.builtin_class(builtins::ty(id)).heap_id().unwrap()
+                    } else {
+                        self.heap
+                            .find_class(id)
+                            .ok_or_else(|| invalid("missing resolved default class"))?
+                    };
                     if self
                         .heap
                         .get(object)?

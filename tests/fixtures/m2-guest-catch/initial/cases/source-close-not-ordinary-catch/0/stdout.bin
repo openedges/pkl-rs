@@ -1,0 +1,8 @@
+outer-0 success
+resolve catch:/child attempt=1
+source-start catch:/child attempt=1
+source close
+source-end catch:/child attempt=1
+outer-1 error org.pkl.core.PklException
+outer-2 error org.graalvm.polyglot.PolyglotException
+outer-3 error org.graalvm.polyglot.PolyglotException

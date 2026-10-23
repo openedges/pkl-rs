@@ -1,0 +1,453 @@
+{
+  "schema": 1,
+  "scope": "One supplemental nearest guest function return/forcing boundary: lazy returned object stays unforced versus explicitly forced throw/undefined property, catch/catchOrNull and exact retries. All original14/additive4 preserved. Both repeats preserve complete raw API strings/errors/logs/events/counters; no Rust compatibility claim.",
+  "caseCount": 1,
+  "freshJvmCount": 2,
+  "outerCallCount": 18,
+  "callbackCallCount": 0,
+  "configuredOuterCallCount": 18,
+  "records": [
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/0/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/0/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "GuestCatchProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/cases/returned-lazy-object-versus-forced-undefined/0/calls",
+        "plain"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/0/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/0/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/0/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/0/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792733749292936000,
+      "finishedUnixNs": 1792733750389368000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 1095467834,
+        "sha256": {
+          "stdout": "d1fb778b69ebef6c42c68b3e46018710d4f0bd0a8ffbe04341595876eaf3df7b",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "returned-lazy-object-versus-forced-undefined",
+      "repeat": 0,
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined/main.pkl",
+      "sourceSha256": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539",
+      "workspaceBefore": {
+        "callbacks.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "2225187837e2140f004a1aa77836152ad6545e21a34b0c6322ca4c48d2273fc7"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539"
+        }
+      },
+      "workspaceAfter": {
+        "callbacks.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "2225187837e2140f004a1aa77836152ad6545e21a34b0c6322ca4c48d2273fc7"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/1/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/1/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "GuestCatchProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/cases/returned-lazy-object-versus-forced-undefined/1/calls",
+        "plain"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/1/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/1/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/1/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/1/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "startedUnixNs": 1792733750433960000,
+      "finishedUnixNs": 1792733751342381000,
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 907486375,
+        "sha256": {
+          "stdout": "d1fb778b69ebef6c42c68b3e46018710d4f0bd0a8ffbe04341595876eaf3df7b",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "returned-lazy-object-versus-forced-undefined",
+      "repeat": 1,
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined/main.pkl",
+      "sourceSha256": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539",
+      "workspaceBefore": {
+        "callbacks.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "2225187837e2140f004a1aa77836152ad6545e21a34b0c6322ca4c48d2273fc7"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539"
+        }
+      },
+      "workspaceAfter": {
+        "callbacks.txt": {
+          "kind": "file",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "2225187837e2140f004a1aa77836152ad6545e21a34b0c6322ca4c48d2273fc7"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539"
+        }
+      }
+    }
+  ],
+  "observations": [
+    {
+      "case": "returned-lazy-object-versus-forced-undefined",
+      "repeat": 0,
+      "calls": [
+        {
+          "prefix": "outer-0",
+          "expression": "lazyCatch",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-0",
+          "utf8Sha256": "347cc7f50d38bc41b6bbf054a662622967037b59bf20e5513a6ce20f5d04ffd6",
+          "utf16BESha256": "84c60999507831a851fbcb4c00bd6cf70d266f313f5f45077fd0434849bcd6b6",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a457870656374656420616e20657863657074696f6e2c20627574206e6f6e6520776173207468726f776e2e0a0a34207c206c617a794361746368203d20742e6361746368282829202d3e206e65772044796e616d6963207b2076616c7565203d207468726f7728226d7573742d737461792d6c617a792229207d290a202020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e236c617a794361746368202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534322f7461726765742f6d322f737461676534352d67756573742d63617463682d6f7261636c652d30332f776f726b7370616365732f72657475726e65642d6c617a792d6f626a6563742d7665727375732d666f726365642d756e646566696e65642f6d61696e2e706b6c290a0a31207c206c617a7943617463680a202020205e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a0045007800700065006300740065006400200061006e00200065007800630065007000740069006f006e002c00200062007500740020006e006f006e006500200077006100730020007400680072006f0077006e002e000a000a00340020007c0020006c0061007a0079004300610074006300680020003d00200074002e006300610074006300680028002800290020002d003e0020006e00650077002000440079006e0061006d006900630020007b002000760061006c007500650020003d0020007400680072006f007700280022006d007500730074002d0073007400610079002d006c0061007a0079002200290020007d0029000a0020002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e0023006c0061007a0079004300610074006300680020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340032002f007400610072006700650074002f006d0032002f0073007400610067006500340035002d00670075006500730074002d00630061007400630068002d006f007200610063006c0065002d00300033002f0077006f0072006b007300700061006300650073002f00720065007400750072006e00650064002d006c0061007a0079002d006f0062006a006500630074002d007600650072007300750073002d0066006f0072006300650064002d0075006e0064006500660069006e00650064002f006d00610069006e002e0070006b006c0029000a000a00310020007c0020006c0061007a007900430061007400630068000a0020002000200020005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-1",
+          "expression": "lazyNull",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-1",
+          "utf8Sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "utf16BESha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a",
+          "utf8Hex": "6e756c6c",
+          "utf16BEHex": "006e0075006c006c",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-2",
+          "expression": "forced",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-2",
+          "utf8Sha256": "38c8632dfc3b9f597420c9564a4850f9176ae335bc06fd04d0c60cbfcb58616a",
+          "utf16BESha256": "6dea6fcb692eb186c87b12b095a5e9a44b23de7cd8bd10f9e1f768e20c81dc61",
+          "utf8Hex": "666f72636564",
+          "utf16BEHex": "0066006f0072006300650064",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-3",
+          "expression": "undefinedCaught",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-3",
+          "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+          "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd",
+          "utf8Hex": "547269656420746f20726561642070726f706572747920606261646020627574206974732076616c756520697320756e646566696e65642e",
+          "utf16BEHex": "0054007200690065006400200074006f00200072006500610064002000700072006f0070006500720074007900200060006200610064006000200062007500740020006900740073002000760061006c0075006500200069007300200075006e0064006500660069006e00650064002e",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-4",
+          "expression": "undefinedNull",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-4",
+          "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+          "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd",
+          "utf8Hex": "547269656420746f20726561642070726f706572747920606261646020627574206974732076616c756520697320756e646566696e65642e",
+          "utf16BEHex": "0054007200690065006400200074006f00200072006500610064002000700072006f0070006500720074007900200060006200610064006000200062007500740020006900740073002000760061006c0075006500200069007300200075006e0064006500660069006e00650064002e",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-5",
+          "expression": "lazyNull",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-5",
+          "utf8Sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "utf16BESha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a",
+          "utf8Hex": "6e756c6c",
+          "utf16BEHex": "006e0075006c006c",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-6",
+          "expression": "undefinedCaught",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-6",
+          "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+          "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd",
+          "utf8Hex": "547269656420746f20726561642070726f706572747920606261646020627574206974732076616c756520697320756e646566696e65642e",
+          "utf16BEHex": "0054007200690065006400200074006f00200072006500610064002000700072006f0070006500720074007900200060006200610064006000200062007500740020006900740073002000760061006c0075006500200069007300200075006e0064006500660069006e00650064002e",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-7",
+          "expression": "lazyCatch",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-7",
+          "utf8Sha256": "347cc7f50d38bc41b6bbf054a662622967037b59bf20e5513a6ce20f5d04ffd6",
+          "utf16BESha256": "84c60999507831a851fbcb4c00bd6cf70d266f313f5f45077fd0434849bcd6b6",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a457870656374656420616e20657863657074696f6e2c20627574206e6f6e6520776173207468726f776e2e0a0a34207c206c617a794361746368203d20742e6361746368282829202d3e206e65772044796e616d6963207b2076616c7565203d207468726f7728226d7573742d737461792d6c617a792229207d290a202020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e236c617a794361746368202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534322f7461726765742f6d322f737461676534352d67756573742d63617463682d6f7261636c652d30332f776f726b7370616365732f72657475726e65642d6c617a792d6f626a6563742d7665727375732d666f726365642d756e646566696e65642f6d61696e2e706b6c290a0a31207c206c617a7943617463680a202020205e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a0045007800700065006300740065006400200061006e00200065007800630065007000740069006f006e002c00200062007500740020006e006f006e006500200077006100730020007400680072006f0077006e002e000a000a00340020007c0020006c0061007a0079004300610074006300680020003d00200074002e006300610074006300680028002800290020002d003e0020006e00650077002000440079006e0061006d006900630020007b002000760061006c007500650020003d0020007400680072006f007700280022006d007500730074002d0073007400610079002d006c0061007a0079002200290020007d0029000a0020002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e0023006c0061007a0079004300610074006300680020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340032002f007400610072006700650074002f006d0032002f0073007400610067006500340035002d00670075006500730074002d00630061007400630068002d006f007200610063006c0065002d00300033002f0077006f0072006b007300700061006300650073002f00720065007400750072006e00650064002d006c0061007a0079002d006f0062006a006500630074002d007600650072007300750073002d0066006f0072006300650064002d0075006e0064006500660069006e00650064002f006d00610069006e002e0070006b006c0029000a000a00310020007c0020006c0061007a007900430061007400630068000a0020002000200020005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-8",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-8",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "oracleError": false
+        }
+      ],
+      "counters": "resolve=0\nsource=0\nread=0\nlog=0\ncallback=0\nevent=9\n",
+      "processExit": 0,
+      "timedOut": false,
+      "expectedOuterCalls": 9,
+      "executedOuterCalls": 9,
+      "configuredCallbackCalls": 0,
+      "executedCallbackCalls": 0
+    },
+    {
+      "case": "returned-lazy-object-versus-forced-undefined",
+      "repeat": 1,
+      "calls": [
+        {
+          "prefix": "outer-0",
+          "expression": "lazyCatch",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-0",
+          "utf8Sha256": "347cc7f50d38bc41b6bbf054a662622967037b59bf20e5513a6ce20f5d04ffd6",
+          "utf16BESha256": "84c60999507831a851fbcb4c00bd6cf70d266f313f5f45077fd0434849bcd6b6",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a457870656374656420616e20657863657074696f6e2c20627574206e6f6e6520776173207468726f776e2e0a0a34207c206c617a794361746368203d20742e6361746368282829202d3e206e65772044796e616d6963207b2076616c7565203d207468726f7728226d7573742d737461792d6c617a792229207d290a202020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e236c617a794361746368202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534322f7461726765742f6d322f737461676534352d67756573742d63617463682d6f7261636c652d30332f776f726b7370616365732f72657475726e65642d6c617a792d6f626a6563742d7665727375732d666f726365642d756e646566696e65642f6d61696e2e706b6c290a0a31207c206c617a7943617463680a202020205e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a0045007800700065006300740065006400200061006e00200065007800630065007000740069006f006e002c00200062007500740020006e006f006e006500200077006100730020007400680072006f0077006e002e000a000a00340020007c0020006c0061007a0079004300610074006300680020003d00200074002e006300610074006300680028002800290020002d003e0020006e00650077002000440079006e0061006d006900630020007b002000760061006c007500650020003d0020007400680072006f007700280022006d007500730074002d0073007400610079002d006c0061007a0079002200290020007d0029000a0020002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e0023006c0061007a0079004300610074006300680020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340032002f007400610072006700650074002f006d0032002f0073007400610067006500340035002d00670075006500730074002d00630061007400630068002d006f007200610063006c0065002d00300033002f0077006f0072006b007300700061006300650073002f00720065007400750072006e00650064002d006c0061007a0079002d006f0062006a006500630074002d007600650072007300750073002d0066006f0072006300650064002d0075006e0064006500660069006e00650064002f006d00610069006e002e0070006b006c0029000a000a00310020007c0020006c0061007a007900430061007400630068000a0020002000200020005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-1",
+          "expression": "lazyNull",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-1",
+          "utf8Sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "utf16BESha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a",
+          "utf8Hex": "6e756c6c",
+          "utf16BEHex": "006e0075006c006c",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-2",
+          "expression": "forced",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-2",
+          "utf8Sha256": "38c8632dfc3b9f597420c9564a4850f9176ae335bc06fd04d0c60cbfcb58616a",
+          "utf16BESha256": "6dea6fcb692eb186c87b12b095a5e9a44b23de7cd8bd10f9e1f768e20c81dc61",
+          "utf8Hex": "666f72636564",
+          "utf16BEHex": "0066006f0072006300650064",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-3",
+          "expression": "undefinedCaught",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-3",
+          "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+          "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd",
+          "utf8Hex": "547269656420746f20726561642070726f706572747920606261646020627574206974732076616c756520697320756e646566696e65642e",
+          "utf16BEHex": "0054007200690065006400200074006f00200072006500610064002000700072006f0070006500720074007900200060006200610064006000200062007500740020006900740073002000760061006c0075006500200069007300200075006e0064006500660069006e00650064002e",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-4",
+          "expression": "undefinedNull",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-4",
+          "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+          "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd",
+          "utf8Hex": "547269656420746f20726561642070726f706572747920606261646020627574206974732076616c756520697320756e646566696e65642e",
+          "utf16BEHex": "0054007200690065006400200074006f00200072006500610064002000700072006f0070006500720074007900200060006200610064006000200062007500740020006900740073002000760061006c0075006500200069007300200075006e0064006500660069006e00650064002e",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-5",
+          "expression": "lazyNull",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-5",
+          "utf8Sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "utf16BESha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a",
+          "utf8Hex": "6e756c6c",
+          "utf16BEHex": "006e0075006c006c",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-6",
+          "expression": "undefinedCaught",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-6",
+          "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+          "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd",
+          "utf8Hex": "547269656420746f20726561642070726f706572747920606261646020627574206974732076616c756520697320756e646566696e65642e",
+          "utf16BEHex": "0054007200690065006400200074006f00200072006500610064002000700072006f0070006500720074007900200060006200610064006000200062007500740020006900740073002000760061006c0075006500200069007300200075006e0064006500660069006e00650064002e",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-7",
+          "expression": "lazyCatch",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-7",
+          "utf8Sha256": "347cc7f50d38bc41b6bbf054a662622967037b59bf20e5513a6ce20f5d04ffd6",
+          "utf16BESha256": "84c60999507831a851fbcb4c00bd6cf70d266f313f5f45077fd0434849bcd6b6",
+          "utf8Hex": "e28093e2809320506b6c204572726f7220e28093e280930a457870656374656420616e20657863657074696f6e2c20627574206e6f6e6520776173207468726f776e2e0a0a34207c206c617a794361746368203d20742e6361746368282829202d3e206e65772044796e616d6963207b2076616c7565203d207468726f7728226d7573742d737461792d6c617a792229207d290a202020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a6174206d61696e236c617a794361746368202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676534322f7461726765742f6d322f737461676534352d67756573742d63617463682d6f7261636c652d30332f776f726b7370616365732f72657475726e65642d6c617a792d6f626a6563742d7665727375732d666f726365642d756e646566696e65642f6d61696e2e706b6c290a0a31207c206c617a7943617463680a202020205e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a",
+          "utf16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a0045007800700065006300740065006400200061006e00200065007800630065007000740069006f006e002c00200062007500740020006e006f006e006500200077006100730020007400680072006f0077006e002e000a000a00340020007c0020006c0061007a0079004300610074006300680020003d00200074002e006300610074006300680028002800290020002d003e0020006e00650077002000440079006e0061006d006900630020007b002000760061006c007500650020003d0020007400680072006f007700280022006d007500730074002d0073007400610079002d006c0061007a0079002200290020007d0029000a0020002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a006100740020006d00610069006e0023006c0061007a0079004300610074006300680020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500340032002f007400610072006700650074002f006d0032002f0073007400610067006500340035002d00670075006500730074002d00630061007400630068002d006f007200610063006c0065002d00300033002f0077006f0072006b007300700061006300650073002f00720065007400750072006e00650064002d006c0061007a0079002d006f0062006a006500630074002d007600650072007300750073002d0066006f0072006300650064002d0075006e0064006500660069006e00650064002f006d00610069006e002e0070006b006c0029000a000a00310020007c0020006c0061007a007900430061007400630068000a0020002000200020005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "oracleError": false
+        },
+        {
+          "prefix": "outer-8",
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-8",
+          "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188",
+          "utf8Hex": "37",
+          "utf16BEHex": "0037",
+          "oracleError": false
+        }
+      ],
+      "counters": "resolve=0\nsource=0\nread=0\nlog=0\ncallback=0\nevent=9\n",
+      "processExit": 0,
+      "timedOut": false,
+      "expectedOuterCalls": 9,
+      "executedOuterCalls": 9,
+      "configuredCallbackCalls": 0,
+      "executedCallbackCalls": 0
+    }
+  ],
+  "counts": {
+    "error\n": 4,
+    "success\n": 14
+  },
+  "oracleErrorCalls": [],
+  "repeatDifferences": [],
+  "inputHashes": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/GuestCatchProbe.java": "bd8649f19ec2ae54662b7849d172fe5844dae4f4e82c2dee48423ab1525f6cc8",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/run.py": "24d302e0002d52e175b2ae79992c5334f80e8828b91904a072b4e9402d14c1b3",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/cases.json": "eb68698f7fdcc8f8bebf5b666d1a22bfbee011f442ddd81877f3c7c6cb8847e9",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/profile.json": "53bf8bcf7310c806c80a2c64ef4e3c9116ed4e5140e86cc6b4538b3e225e07a7",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/tools/compat.py": "fa40a0daee29eb078c7b9cb814fc3779556ceaacc2634657c96e3f7810aa5edc",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage43/tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/classes/GuestCatchProbe$Key.class": "c4db06132e84f1ead3af24e19aa5e6e68a8541cf7d2fad0f613ba420d0d1686b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/classes/GuestCatchProbe$1.class": "752eaf21e912a1f2a787c9846595319883c05d80c8eee09469af9c1e29beef48",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/classes/GuestCatchProbe.class": "f6927a6399e8d5562a9496ddb2d20cad2924144ede59f2bae8c43825b208fbc9",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/classes/GuestCatchProbe$Key$1.class": "de395bbc7b9e327d5ae4c27dad856b62cb4670190ddcc8130b56c87911b7bfe5",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/classes/GuestCatchProbe$2.class": "5ad2c07415a14d238e6b54cb9abd85e03b8f5be51aad50baa31171b9c7d40160",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/upstream/pkl-core/src/main/java/org/pkl/core/stdlib/test/TestNodes.java": "c0fc2b505cb9cc8df3632624e39f94ab9bc68111ddfc1444280b15df0c79603d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/upstream/stdlib/test.pkl": "c98633bf4b4b90032efefcab676515161d5dd75c3759ad013ee7bfb856d8aea4",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java": "96eb6429a710d0b4db09664b6d84a0cb25a17a3206983183f66a65382ae69d82",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined/callbacks.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined/expressions.txt": "2225187837e2140f004a1aa77836152ad6545e21a34b0c6322ca4c48d2273fc7",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined/main.pkl": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539"
+  },
+  "inputChanges": [],
+  "jarStable": true,
+  "profileSha256": "53bf8bcf7310c806c80a2c64ef4e3c9116ed4e5140e86cc6b4538b3e225e07a7",
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "processesSequential": true,
+  "knownBoundary": "Evaluator cancellation/Java bug outcomes retained. Successful guest-returned text alone is not classified by guessing an internal exception class; full result payload remains available."
+}

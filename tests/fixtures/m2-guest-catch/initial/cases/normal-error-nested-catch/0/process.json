@@ -1,0 +1,82 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/normal-error-nested-catch/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/normal-error-nested-catch/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+    "GuestCatchProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/normal-error-nested-catch",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/cases/normal-error-nested-catch/0/calls",
+    "plain"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/normal-error-nested-catch",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/normal-error-nested-catch/0/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/normal-error-nested-catch/0/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/normal-error-nested-catch/0/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/normal-error-nested-catch/0/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "startedUnixNs": 1792732767059343000,
+  "finishedUnixNs": 1792732767758263000,
+  "result": {
+    "exit_code": 0,
+    "elapsed_ns": 698047917,
+    "sha256": {
+      "stdout": "5260421401252611b7163396e64bf09609db224fa5c37cb93515b8fcf13a407f",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "timed_out": false,
+    "workspace_changes": {},
+    "files": {}
+  },
+  "case": "normal-error-nested-catch",
+  "repeat": 0,
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/normal-error-nested-catch/main.pkl",
+  "sourceSha256": "c376e84e2a53c8a21b2ab2c366a509b173a22a4d70c9a1fab35bf060c3fd1670",
+  "workspaceBefore": {
+    "callbacks.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expressions.txt": {
+      "kind": "file",
+      "sha256": "a57ea1e7b03731a5e86cf82e69e5e0f16db358769be11216770c2b465e9dbb09"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "c376e84e2a53c8a21b2ab2c366a509b173a22a4d70c9a1fab35bf060c3fd1670"
+    }
+  },
+  "workspaceAfter": {
+    "callbacks.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expressions.txt": {
+      "kind": "file",
+      "sha256": "a57ea1e7b03731a5e86cf82e69e5e0f16db358769be11216770c2b465e9dbb09"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "c376e84e2a53c8a21b2ab2c366a509b173a22a4d70c9a1fab35bf060c3fd1670"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "command": [
+    "/usr/bin/javac",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+    "-d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/classes",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/DenialProbe.java"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/identity/.cache/oracle/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/identity/.cache/oracle/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/identity/.cache/oracle/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/identity/.cache/oracle/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "startedUnixNs": 1792738587923045000,
+  "finishedUnixNs": 1792738588403817000,
+  "result": {
+    "exit_code": 0,
+    "elapsed_ns": 480821459,
+    "sha256": {
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "timed_out": false,
+    "workspace_changes": {},
+    "files": {}
+  }
+}

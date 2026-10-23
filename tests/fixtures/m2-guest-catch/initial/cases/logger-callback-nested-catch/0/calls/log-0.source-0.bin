@@ -1,0 +1,1 @@
+caught = t.catch(() -> if (trace(true)) throw("after-log") else 0)

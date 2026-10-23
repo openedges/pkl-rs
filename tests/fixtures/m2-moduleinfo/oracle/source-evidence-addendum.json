@@ -1,0 +1,16 @@
+{
+  "scope": "Pinned source consulted after acquisition; not retroactively added to pre-run inputs. Runtime JAR/profile pins already preserved.",
+  "evidence": "VmUtils.compilePattern uses Pattern.UNICODE_CHARACTER_CLASS|UNICODE_CASE; BaseNodes.Regex delegates compilation. Supports observed nonASCII digit acceptance.",
+  "files": [
+    {
+      "path": "pkl-core/src/main/java/org/pkl/core/runtime/VmUtils.java",
+      "sha256": "17a5b4a3750ec5ebf9a1bc8ed930cd6165f072ca97ce9d37f4f4043ac8fcce2a",
+      "pinnedGitBlobMatch": true
+    },
+    {
+      "path": "pkl-core/src/main/java/org/pkl/core/stdlib/base/BaseNodes.java",
+      "sha256": "c19497d400ae466d32f464b325c69d97bc169f213cd508e71ebc77d30772a237",
+      "pinnedGitBlobMatch": true
+    }
+  ]
+}

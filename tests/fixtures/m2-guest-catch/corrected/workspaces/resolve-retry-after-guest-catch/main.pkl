@@ -1,0 +1,7 @@
+import "catch:/child" as child
+import "pkl:test" as t
+stable = 7
+callbackCaught = t.catch(() -> throw("callback-error"))
+value = child.value
+caught = t.catch(() -> value)
+retry = t.catchOrNull(() -> value)

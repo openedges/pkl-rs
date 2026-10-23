@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Tried to read property `minPklVersion` but its value is undefined.
+
+251 | minPklVersion: String(matches(Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#)))
+      ^^^^^^^^^^^^^
+at pkl.base#ModuleInfo.minPklVersion (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L251)

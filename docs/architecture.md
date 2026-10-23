@@ -118,6 +118,15 @@ its parent's class through the same Host continuation. Complete recursive-type
 and inheritance behavior, general compound rendering and the remaining transport
 capabilities still require implementation and corpus validation.
 
+Supported `pkl:base`, `pkl:test`, and `pkl:ref` declarations use that same module
+arena with pinned declaration sources and Rust external bindings. Guest catch
+handlers belong to invocation frames and unwind to the nearest applicable
+forcing or guest boundary; they preserve successful lazy publications and
+partial cached errors. Typed language exceptions from the Host are distinct
+from raw Host and terminal failures. Standard-module bootstrap and JVM-global
+cache parity remain incomplete. See [standard modules and guest exception
+handling](m2-stdlib-bootstrap.md) for the execution and verification boundaries.
+
 Identifier predicates are generated from the pinned Java lexer and JDK.
 The upstream lexer tests UTF-16 code units, so supplementary characters are
 not accepted as unquoted identifiers even when their Unicode code point is

@@ -1,0 +1,20 @@
+{
+  "scope": "Actual Standard SecurityManager policy decision and same-evaluator guest behavior;Javareference only.",
+  "case": "Default file loader,existing childfile; exactmainURI+pkl/repl allowlist excludeschild. Delegating wrapper records and rethrows the actual SecurityManagerException. No synthetic exception or missing-loader control.",
+  "apiCalls": 10,
+  "counts": {
+    "success\n": 8,
+    "error\n": 2
+  },
+  "allRawRepeatBytesIdentical": true,
+  "deniedResolutionsPerJvm": 3,
+  "completePolicyCounters": "resolve=10,import=4,read=0,resolveResource=0,securePath=1,denied=3,event=23. Only denied child resolutions map to native SourceProbe Host callbacks; full policy callbacks remain independently recorded.",
+  "typedCauseFiles": "repeats/<repeat>/calls/denial-<0..2>.message.code-units.bin and .message.bin;actual error class org.pkl.core.SecurityManagerException.",
+  "outcomes": [
+    "caught andnullable return full exactsecurity message",
+    "ordinary is full PklException diagnostic withmain#ordinary and REPL frame",
+    "stable returns7",
+    "lastcaught reuses cachedvalue withoutanother denial"
+  ],
+  "rustBoundary": "Use new security-manager-exception typed provenance for resolvecompletion only. Generic Denied/rawHost.reject remain distinct; this is not full security policy or source-load parity."
+}

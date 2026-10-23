@@ -132,6 +132,7 @@ fn is_base_class(name: &str) -> bool {
             | "AlsoKnownAs"
             | "DocExample"
             | "SourceCode"
+            | "ModuleInfo"
             | "Class"
             | "TypeAlias"
             | "Function"

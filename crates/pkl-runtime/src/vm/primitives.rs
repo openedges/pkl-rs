@@ -6,6 +6,8 @@ pub enum Operation {
     Between,
     Uppercase,
     Contains,
+    BooleanXor,
+    BooleanImplies,
 }
 
 pub(super) fn blocks(
@@ -15,6 +17,20 @@ pub(super) fn blocks(
     let source = crate::stdlib_sources::base();
     let mut result = BTreeMap::new();
     for (class, name, signature, operation, arity) in [
+        (
+            "Boolean",
+            "xor",
+            "external function xor(other: Boolean): Boolean",
+            Operation::BooleanXor,
+            1,
+        ),
+        (
+            "Boolean",
+            "implies",
+            "external function implies(other: Boolean): Boolean",
+            Operation::BooleanImplies,
+            1,
+        ),
         (
             "Int",
             "isBetween",
@@ -67,6 +83,10 @@ pub(super) fn blocks(
                     start + signature.find(parameter).unwrap() + parameter.find("Number").unwrap();
                 code.push(Instruction::CheckType(TypeCheck::Number));
                 spans.push(Some(Span::new(offset, offset + 6)));
+            } else if matches!(operation, Operation::BooleanXor | Operation::BooleanImplies) {
+                let offset = start + signature.find("Boolean").unwrap();
+                code.push(Instruction::CheckType(TypeCheck::Boolean));
+                spans.push(Some(Span::new(offset, offset + 7)));
             }
         }
         code.push(Instruction::Primitive(operation));
@@ -100,6 +120,7 @@ impl Vm {
         method: bool,
     ) -> Result<bool, RuntimeError> {
         let class = match receiver {
+            Value::Bool(_) => "Boolean",
             Value::Int(_) => "Int",
             Value::Float(_) => "Float",
             Value::String(_) => "String",
@@ -115,7 +136,7 @@ impl Vm {
             };
             let arity = match name {
                 "isBetween" => 2,
-                "contains" => 1,
+                "contains" | "xor" | "implies" => 1,
                 _ => 0,
             };
             let id = self.heap.allocate(Object {
@@ -164,6 +185,18 @@ impl Vm {
             .and_then(|f| f.environment.this_value.clone())
             .ok_or_else(|| invalid("primitive receiver"))?;
         match operation {
+            Operation::BooleanXor | Operation::BooleanImplies => {
+                let Value::Bool(left) = receiver else {
+                    return Err(invalid("Boolean method receiver"));
+                };
+                let Value::Bool(right) = self.pop()? else {
+                    return Err(invalid("checked Boolean method argument"));
+                };
+                self.stack.push(Value::Bool(match operation {
+                    Operation::BooleanXor => left ^ right,
+                    _ => !left || right,
+                }));
+            }
             Operation::Between => {
                 let end = self.pop()?;
                 let start = self.pop()?;

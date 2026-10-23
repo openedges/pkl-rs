@@ -1,0 +1,19 @@
+[
+  {
+    "id": "actual-standard-policy-resolve-denied",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace",
+    "source": "import \"pkl:test\" as test\ncaught = test.catch(() -> import(\"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl\"))\nnullable = test.catchOrNull(() -> import(\"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl\"))\nordinary = import(\"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl\")\nstable = 7\n",
+    "sourceSha256": "663088ad66251e272ea23187ae5bc3ceda945b9382c879f40c20e4c04f358604",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/main.pkl",
+    "expressions": [
+      "caught",
+      "nullable",
+      "ordinary",
+      "stable",
+      "caught"
+    ],
+    "deniedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl",
+    "deniedExistingFileSha256": "39ba6d2e1c4c6e4fdc853d09df8fdc7f96e11d06c3f65dc8a121687698022ef7",
+    "securityPolicy": "Actual SecurityManagers.standard; allowed exact main URI plus pkl:/repl:;existing child file excluded. Counting wrapper delegates every operation and rethrows original SecurityManagerException."
+  }
+]

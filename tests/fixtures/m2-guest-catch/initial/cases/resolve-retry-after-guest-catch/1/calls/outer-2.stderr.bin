@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Keyword `import` is not allowed here.
+
+If you must use this name as identifier, enclose it in backticks.
+
+4 | import "catch:/child" as child
+    ^^^^^^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/resolve-retry-after-guest-catch/main.pkl)

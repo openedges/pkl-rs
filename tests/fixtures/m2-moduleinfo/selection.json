@@ -1,0 +1,398 @@
+{
+  "schema": 1,
+  "scope": "All28sources/224Java calls retained;156ordinary raw comparisons,12Java-internal explicitUnsupported controls,56Java same-evaluator followups unexecuted as native API.",
+  "cases": [
+    {
+      "id": "construct-current",
+      "sourceFile": "oracle/workspaces/construct-current/main.pkl",
+      "sourceSha256": "fb95e61225ced01f6bd6b6f209b271c99f8efa7e6780a715da223d8b02c18a85",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-current/main.pkl",
+      "moduleName": "moduleinfo.control_0",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-older",
+      "sourceFile": "oracle/workspaces/construct-older/main.pkl",
+      "sourceSha256": "19427c09a6b47cdfa292bde34a8c925ee8cc4e49896d55b2c61838f4da6b6c52",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-older/main.pkl",
+      "moduleName": "moduleinfo.control_1",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-future",
+      "sourceFile": "oracle/workspaces/construct-future/main.pkl",
+      "sourceSha256": "72e43f61faee2b3ed353da7d439051305b8a9af4161eee57202d976cf6e24f13",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-future/main.pkl",
+      "moduleName": "moduleinfo.control_2",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-leading-zero",
+      "sourceFile": "oracle/workspaces/construct-leading-zero/main.pkl",
+      "sourceSha256": "26fc91d02bf1b77e8f4cd9790f0c047b233c23f07cdfe8f2228af5188e32d426",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-leading-zero/main.pkl",
+      "moduleName": "moduleinfo.control_3",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-one-digit",
+      "sourceFile": "oracle/workspaces/construct-one-digit/main.pkl",
+      "sourceSha256": "e7565ab35acd7222b92f6f0dbc14cefdc8d8172a92888d1c2060331cac5efa25",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-one-digit/main.pkl",
+      "moduleName": "moduleinfo.control_4",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-three-digit",
+      "sourceFile": "oracle/workspaces/construct-three-digit/main.pkl",
+      "sourceSha256": "c48fbb37a3c8d120847c34e11f43e4b1f5394335bc5d8a48765c4c3213a4fba5",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-three-digit/main.pkl",
+      "moduleName": "moduleinfo.control_5",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-suffix",
+      "sourceFile": "oracle/workspaces/construct-suffix/main.pkl",
+      "sourceSha256": "89b324d7806e9d74fc22c0c62144c096bba2b39364d23453e2bf606271172bdf",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-suffix/main.pkl",
+      "moduleName": "moduleinfo.control_6",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-spaces",
+      "sourceFile": "oracle/workspaces/construct-spaces/main.pkl",
+      "sourceSha256": "8327a28c76ecd3792ec8443c58ebd02731a84416ae1cf47ad4218efa3c3c00b8",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-spaces/main.pkl",
+      "moduleName": "moduleinfo.control_7",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-arabic-digits",
+      "sourceFile": "oracle/workspaces/construct-arabic-digits/main.pkl",
+      "sourceSha256": "3cc59e22da73f38c5020facdbbdbaf5c4cc1f326908d127b44dcf095c5c51ac4",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-arabic-digits/main.pkl",
+      "moduleName": "moduleinfo.control_8",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-fullwidth-digits",
+      "sourceFile": "oracle/workspaces/construct-fullwidth-digits/main.pkl",
+      "sourceSha256": "70b2353b471b74f45e0fe399e2d06796d3b496e480fbf58cc1ead0eb70c3a9df",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-fullwidth-digits/main.pkl",
+      "moduleName": "moduleinfo.control_9",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-short",
+      "sourceFile": "oracle/workspaces/construct-short/main.pkl",
+      "sourceSha256": "cef18904c522ffe87b62593792c3bf56655496d3ea7f097c7c51c1b0510c3bfc",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-short/main.pkl",
+      "moduleName": "moduleinfo.control_10",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-extra-part",
+      "sourceFile": "oracle/workspaces/construct-extra-part/main.pkl",
+      "sourceSha256": "3d9e21166364b482b912dbb273c5b64f7b77ebed59de4c7b5ede7ef8b4d43867",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-extra-part/main.pkl",
+      "moduleName": "moduleinfo.control_11",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-integer",
+      "sourceFile": "oracle/workspaces/construct-integer/main.pkl",
+      "sourceSha256": "bc51932f6dc844396045f1dd0ff64ecacb6b4566dcbbc112a90318a4dfbcf4fc",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-integer/main.pkl",
+      "moduleName": "moduleinfo.control_12",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "construct-missing",
+      "sourceFile": "oracle/workspaces/construct-missing/main.pkl",
+      "sourceSha256": "91c9fee1e9675564e0a1b4341234f115fb9e9013b8e19ef54323c9f624fac30a",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-missing/main.pkl",
+      "moduleName": "moduleinfo.control_13",
+      "expressions": [
+        "obj.minPklVersion",
+        "obj.getClass() == ModuleInfo",
+        "obj.minPklVersion"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-current",
+      "sourceFile": "oracle/workspaces/annotation-current/main.pkl",
+      "sourceSha256": "96d77b8ff93fbeb076d09e1a754356ea2f61c28cfd58d365ae65c21703cb6f6b",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-current/main.pkl",
+      "moduleName": "moduleinfo.control_14",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-older",
+      "sourceFile": "oracle/workspaces/annotation-older/main.pkl",
+      "sourceSha256": "0f9f976ac042171117435f74fb544923566ae245d7b327b9ed596a572b8a3da3",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-older/main.pkl",
+      "moduleName": "moduleinfo.control_15",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-future",
+      "sourceFile": "oracle/workspaces/annotation-future/main.pkl",
+      "sourceSha256": "85b243f583790b7a7463ad325a1d1d92025ce23b62eb32b9a7b73f0684e1084f",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-future/main.pkl",
+      "moduleName": "moduleinfo.control_16",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-leading-zero",
+      "sourceFile": "oracle/workspaces/annotation-leading-zero/main.pkl",
+      "sourceSha256": "695ff363db6ec8ff10d6350afaebd39a05b37bd8ac5863e961cc85f54de1b91b",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-leading-zero/main.pkl",
+      "moduleName": "moduleinfo.control_17",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-one-digit",
+      "sourceFile": "oracle/workspaces/annotation-one-digit/main.pkl",
+      "sourceSha256": "bd7ddbe4824db0d18e496c2aeb651caec5418bae3f76a44d56a402ef68e641cc",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-one-digit/main.pkl",
+      "moduleName": "moduleinfo.control_18",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-three-digit",
+      "sourceFile": "oracle/workspaces/annotation-three-digit/main.pkl",
+      "sourceSha256": "70b88da2fac0a2f4b37a2ba80411243fd15403419b08a9d425d3ecf03e92b83d",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-three-digit/main.pkl",
+      "moduleName": "moduleinfo.control_19",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-suffix",
+      "sourceFile": "oracle/workspaces/annotation-suffix/main.pkl",
+      "sourceSha256": "d7a7eb06232456b5e0baf2a611174303f3967837bff1d15208dbbacf5cefbcfa",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-suffix/main.pkl",
+      "moduleName": "moduleinfo.control_20",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-spaces",
+      "sourceFile": "oracle/workspaces/annotation-spaces/main.pkl",
+      "sourceSha256": "9018d3b3e5defb4f8ce9ae80daeb58fc01b78a728fd1e9620415f234dc52903f",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-spaces/main.pkl",
+      "moduleName": "moduleinfo.control_21",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-arabic-digits",
+      "sourceFile": "oracle/workspaces/annotation-arabic-digits/main.pkl",
+      "sourceSha256": "b26a9482473c0d76ffed22b1cffae051f9f251341e5a90d5264815204028cb0a",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-arabic-digits/main.pkl",
+      "moduleName": "moduleinfo.control_22",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "java-internal-parser-boundary",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-fullwidth-digits",
+      "sourceFile": "oracle/workspaces/annotation-fullwidth-digits/main.pkl",
+      "sourceSha256": "be667c1a256e2b818fc7f2a201c79e37643bb70ce7144a1f00dc498c32e62830",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-fullwidth-digits/main.pkl",
+      "moduleName": "moduleinfo.control_23",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "java-internal-parser-boundary",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-short",
+      "sourceFile": "oracle/workspaces/annotation-short/main.pkl",
+      "sourceSha256": "69960cbed9a356fa075331c76e3f1227ca9468cfb044238d8117d32829bbd74d",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-short/main.pkl",
+      "moduleName": "moduleinfo.control_24",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-extra-part",
+      "sourceFile": "oracle/workspaces/annotation-extra-part/main.pkl",
+      "sourceSha256": "8ca8fdef2c0e7905ca24d17912be5a5b1fc91f6ce9c89cfe4e24c2651a13f9d0",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-extra-part/main.pkl",
+      "moduleName": "moduleinfo.control_25",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-integer",
+      "sourceFile": "oracle/workspaces/annotation-integer/main.pkl",
+      "sourceSha256": "0ede27533030abf0d27385f56f2d74655de0ed6678e343173e7b4e15906812e4",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-integer/main.pkl",
+      "moduleName": "moduleinfo.control_26",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    },
+    {
+      "id": "annotation-missing",
+      "sourceFile": "oracle/workspaces/annotation-missing/main.pkl",
+      "sourceSha256": "8f2f0c76469238e6ea44d247d2586430090a40623bbda1dbc4c1c99efd9d119e",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-missing/main.pkl",
+      "moduleName": "moduleinfo.control_27",
+      "expressions": [
+        "stable",
+        "stable",
+        "stable"
+      ],
+      "comparisonScope": "ordinary-full-diagnostic",
+      "sharedEvaluatorFollowupScope": "preserved-unexecuted-native-api"
+    }
+  ]
+}

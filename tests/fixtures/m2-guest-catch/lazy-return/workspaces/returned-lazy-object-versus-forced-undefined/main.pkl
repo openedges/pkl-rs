@@ -1,0 +1,8 @@
+import "pkl:test" as t
+stable = 7
+bad: unknown
+lazyCatch = t.catch(() -> new Dynamic { value = throw("must-stay-lazy") })
+lazyNull = t.catchOrNull(() -> new Dynamic { value = throw("must-stay-lazy") })
+forced = t.catch(() -> new Dynamic { value = throw("forced") }.value)
+undefinedCaught = t.catch(() -> bad)
+undefinedNull = t.catchOrNull(() -> bad)

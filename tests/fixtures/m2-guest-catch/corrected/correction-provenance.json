@@ -1,0 +1,8 @@
+{
+  "originalRoot": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01",
+  "originalReportSha256": "d20b07c0e269bb923c3b0a91c81adbfacc3314bd29cabaf5dec9fb3a60611fea",
+  "originalManifestSha256": "2187d66444c59fa80feabb7a9fb57fc9cd0e1045445b0d7a02d9d597e0e14688",
+  "correctedManifestSha256": "df7e6cf4841bd7c45f9de9d74027bbfd723e38d80a51422dac02f68e966ae593",
+  "caseCount": 4,
+  "changes": "Rename keyword property unknown to unknownModule; move authored import clauses before properties. Exact old failures retained; new sources/new physical URIs explicitly additive, no oldraw rewrite."
+}

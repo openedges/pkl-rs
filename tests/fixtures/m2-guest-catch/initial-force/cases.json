@@ -1,0 +1,18 @@
+[
+  {
+    "id": "nearest-guest-handler-inside-allow-undefined-force",
+    "mode": "plain",
+    "source": "import \"pkl:test\" as t\nstable = 7\nbad: unknown\nobj = new Dynamic { caught = t.catch(() -> bad); nullable = t.catchOrNull(() -> bad); missing: unknown }\nobserved = obj.toString()\n",
+    "expressions": [
+      "observed",
+      "obj.caught",
+      "obj.nullable",
+      "observed",
+      "stable"
+    ],
+    "callbacks": [],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/workspaces/nearest-guest-handler-inside-allow-undefined-force",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/workspaces/nearest-guest-handler-inside-allow-undefined-force/main.pkl",
+    "sourceSha256": "6a2a9f76680f91683aef175277d746d8dfa31e91ab43b658da538ccda9d3850f"
+  }
+]

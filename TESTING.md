@@ -115,6 +115,14 @@ The full gate must fail while required language implementations, mappings,
 adapters, or passing executions are missing. It cannot be replaced with the
 selected-case gate.
 
+The [standard-module and guest-catch contract](docs/m2-stdlib-bootstrap.md)
+records Java-origin catch, ModuleInfo, and typed security-denial fixtures, native
+consumers, and actual Node/browser comparisons. It distinguishes full ordered
+API calls from constructor-only, terminal partial, internal-error, and
+unexecuted independent-root boundaries. Broader bootstrap comparisons require
+observable resource-read counts as well as complete result channels; shared
+Rust-target agreement does not erase Java failures.
+
 The [original module contract](docs/m2-module-frontend.md) describes the
 additional `language-module-eval` adapter, included in default language
 acquisition. It preserves original upstream argv, environment, resources, and

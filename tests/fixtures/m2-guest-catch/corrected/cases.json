@@ -1,0 +1,75 @@
+[
+  {
+    "id": "stdlib-singleton-and-builtin-identity",
+    "mode": "plain",
+    "source": "import \"pkl:base\" as b\nimport \"pkl:base\" as b2\nimport \"pkl:test\" as t\nimport \"pkl:test\" as t2\nimport \"pkl:ref\" as r\nimport \"pkl:ref\" as r2\nbaseSame = b == b2\ntestSame = t == t2\nrefSame = r == r2\nbaseIntSame = b.Int == Int\nbaseModuleSame = b.Module == Module\nbaseDistinct = this != b\nstdDistinct = b != t && t != r && b != r\ntestClassSame = t.getClass() == t2.getClass()\nunknownModule = t.catch(() -> import(\"pkl:missingStage45\"))\n",
+    "expressions": [
+      "baseSame",
+      "testSame",
+      "refSame",
+      "baseIntSame",
+      "baseModuleSame",
+      "baseDistinct",
+      "stdDistinct",
+      "testClassSame",
+      "unknownModule",
+      "baseSame"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/stdlib-singleton-and-builtin-identity",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/stdlib-singleton-and-builtin-identity/main.pkl",
+    "sourceSha256": "cb6217f2a109b5359d2cabf3e5587a9a66fd939261f5dfbbd820343e846b7e43",
+    "callbacks": []
+  },
+  {
+    "id": "resolve-retry-after-guest-catch",
+    "mode": "resolve-retry",
+    "source": "import \"catch:/child\" as child\nimport \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\nvalue = child.value\ncaught = t.catch(() -> value)\nretry = t.catchOrNull(() -> value)\n",
+    "expressions": [
+      "caught",
+      "caught",
+      "retry",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/resolve-retry-after-guest-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/resolve-retry-after-guest-catch/main.pkl",
+    "sourceSha256": "65db88e270ab8990a9a81591ab65ec74c14b525c76a0cf73aa40d5b20446e474",
+    "callbacks": []
+  },
+  {
+    "id": "source-failure-cache-after-guest-catch",
+    "mode": "source-cache",
+    "source": "import \"catch:/child\" as child\nimport \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\nvalue = child.value\ncaught = t.catch(() -> value)\nretry = t.catchOrNull(() -> value)\n",
+    "expressions": [
+      "caught",
+      "caught",
+      "retry",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/source-failure-cache-after-guest-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/source-failure-cache-after-guest-catch/main.pkl",
+    "sourceSha256": "65db88e270ab8990a9a81591ab65ec74c14b525c76a0cf73aa40d5b20446e474",
+    "callbacks": []
+  },
+  {
+    "id": "source-callback-inner-publication-and-catch",
+    "mode": "source-reentry",
+    "source": "import \"catch:/child\" as child\nimport \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\nvalue = child.value\ncaught = t.catch(() -> value)\nretry = t.catchOrNull(() -> value)\n",
+    "expressions": [
+      "caught",
+      "retry",
+      "value",
+      "callbackCaught",
+      "stable"
+    ],
+    "callbacks": [
+      "stable",
+      "callbackCaught",
+      "value"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/source-callback-inner-publication-and-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/source-callback-inner-publication-and-catch/main.pkl",
+    "sourceSha256": "65db88e270ab8990a9a81591ab65ec74c14b525c76a0cf73aa40d5b20446e474"
+  }
+]

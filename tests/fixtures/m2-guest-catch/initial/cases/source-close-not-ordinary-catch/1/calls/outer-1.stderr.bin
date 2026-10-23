@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected an exception, but none was thrown.
+
+4 | caught = t.catch(() -> import("catch:/child").value)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#caught (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-close-not-ordinary-catch/main.pkl)
+
+1 | caught
+    ^^^^^^
+at  (repl:text)

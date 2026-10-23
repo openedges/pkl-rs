@@ -43,6 +43,10 @@ records 3,640 matching native cases out of 3,664 attempts at implementation
 persistent evaluator calls match their declared channels. The original runner's
 missing terminal record and the completed verification continuation are preserved
 separately. Later classpath and Stage 45 changes have separate verification scopes.
+The [standard-module checkpoint](docs/m2-stdlib-bootstrap.md) adds supported
+source-backed `pkl:base`/`pkl:test` imports, guest exception handlers, ModuleInfo
+validation, and typed security-denial completions. Broader bootstrap comparisons
+still fail on missing bindings, resource-read counts, and standard-module caches.
 Complete modifier and type semantics, remaining collection and Reference rules,
 the remaining inheritance and imported-type rules, reflection metadata, and the remaining language corpus are
 required before M2 can close.

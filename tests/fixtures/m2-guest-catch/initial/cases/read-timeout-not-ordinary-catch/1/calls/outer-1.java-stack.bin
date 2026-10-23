@@ -1,0 +1,7 @@
+org.pkl.core.PklException: Evaluation timed out after 3 second(s).
+	at org.pkl.core.EvaluatorImpl.handleTimeout(EvaluatorImpl.java:481)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:421)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at GuestCatchProbe.capture(GuestCatchProbe.java:29)
+	at GuestCatchProbe.main(GuestCatchProbe.java:102)

@@ -1,5 +1,5 @@
 //! Typed Host failures retain Java exception-message units until rendering.
-use crate::value::{ErrorKind, PklString, RuntimeError};
+use crate::value::{PklString, RuntimeError};
 use std::sync::Arc;
 
 /// The supported base `java.io.IOException` failure. A missing message and an
@@ -23,7 +23,7 @@ impl IoFailure {
             }
             _ => headline,
         };
-        RuntimeError::new(ErrorKind::Host, message)
+        RuntimeError::host_language(message)
     }
 }
 

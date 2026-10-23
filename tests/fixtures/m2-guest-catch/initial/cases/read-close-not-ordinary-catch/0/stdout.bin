@@ -1,0 +1,6 @@
+outer-0 success
+read catch:/resource attempt=1
+read close
+outer-1 error org.pkl.core.PklException
+outer-2 error org.graalvm.polyglot.PolyglotException
+outer-3 error org.graalvm.polyglot.PolyglotException

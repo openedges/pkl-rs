@@ -1,0 +1,297 @@
+{
+  "scope": "Offline additive-correction observation audit only; original01rawsourcefailures stay unchanged.",
+  "passed": true,
+  "actualExitCode": 0,
+  "sessionId": 79843,
+  "reportSha256": "e6dc08feebf6e8c11c8a056116ebe3711797cbf991d6118284019078a6e782ce",
+  "outerCalls": 50,
+  "callbacks": 6,
+  "allUnitByteOppositeChannelsVerified": true,
+  "bindings": [
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-0",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-1",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-2",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-3",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-4",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-5",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-6",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-7",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-8",
+      "utf8Sha256": "05752359bd86035af4739dcf4cade0b37faf4c0356a0f34315ee8be390380249",
+      "utf16BESha256": "94d9b6362e07067993c57cf15fd98b8aa842ec97a7dbc9f9981344f42229a864"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-9",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-0",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-1",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-2",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-3",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-4",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-5",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-6",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-7",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-8",
+      "utf8Sha256": "05752359bd86035af4739dcf4cade0b37faf4c0356a0f34315ee8be390380249",
+      "utf16BESha256": "94d9b6362e07067993c57cf15fd98b8aa842ec97a7dbc9f9981344f42229a864"
+    },
+    {
+      "rawPrefix": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-9",
+      "utf8Sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "utf16BESha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "rawPrefix": "cases/resolve-retry-after-guest-catch/0/calls/outer-0",
+      "utf8Sha256": "6aaae01fa24b00a91c54f97ff8ef35c0058d341d4d57f3329343d1ac2c5fbdac",
+      "utf16BESha256": "ec89c8829659bbba82eab6aced9478afaf2c51b5ab863d0ea3ff553657f6148d"
+    },
+    {
+      "rawPrefix": "cases/resolve-retry-after-guest-catch/0/calls/outer-1",
+      "utf8Sha256": "6aaae01fa24b00a91c54f97ff8ef35c0058d341d4d57f3329343d1ac2c5fbdac",
+      "utf16BESha256": "ec89c8829659bbba82eab6aced9478afaf2c51b5ab863d0ea3ff553657f6148d"
+    },
+    {
+      "rawPrefix": "cases/resolve-retry-after-guest-catch/0/calls/outer-2",
+      "utf8Sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "utf16BESha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "rawPrefix": "cases/resolve-retry-after-guest-catch/0/calls/outer-3",
+      "utf8Sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+      "utf16BESha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "rawPrefix": "cases/resolve-retry-after-guest-catch/0/calls/outer-4",
+      "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "rawPrefix": "cases/resolve-retry-after-guest-catch/1/calls/outer-0",
+      "utf8Sha256": "6aaae01fa24b00a91c54f97ff8ef35c0058d341d4d57f3329343d1ac2c5fbdac",
+      "utf16BESha256": "ec89c8829659bbba82eab6aced9478afaf2c51b5ab863d0ea3ff553657f6148d"
+    },
+    {
+      "rawPrefix": "cases/resolve-retry-after-guest-catch/1/calls/outer-1",
+      "utf8Sha256": "6aaae01fa24b00a91c54f97ff8ef35c0058d341d4d57f3329343d1ac2c5fbdac",
+      "utf16BESha256": "ec89c8829659bbba82eab6aced9478afaf2c51b5ab863d0ea3ff553657f6148d"
+    },
+    {
+      "rawPrefix": "cases/resolve-retry-after-guest-catch/1/calls/outer-2",
+      "utf8Sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "utf16BESha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "rawPrefix": "cases/resolve-retry-after-guest-catch/1/calls/outer-3",
+      "utf8Sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+      "utf16BESha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "rawPrefix": "cases/resolve-retry-after-guest-catch/1/calls/outer-4",
+      "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "rawPrefix": "cases/source-failure-cache-after-guest-catch/0/calls/outer-0",
+      "utf8Sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef",
+      "utf16BESha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "rawPrefix": "cases/source-failure-cache-after-guest-catch/0/calls/outer-1",
+      "utf8Sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef",
+      "utf16BESha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "rawPrefix": "cases/source-failure-cache-after-guest-catch/0/calls/outer-2",
+      "utf8Sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef",
+      "utf16BESha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "rawPrefix": "cases/source-failure-cache-after-guest-catch/0/calls/outer-3",
+      "utf8Sha256": "c412cccc36205c1d2d9616872282afe3d88600b713090bd3f25bfa5bfb6d053f",
+      "utf16BESha256": "b328745fc93f4ae01a8b231e927b523a64bf3a42a1eb111695d9feb4af676b29"
+    },
+    {
+      "rawPrefix": "cases/source-failure-cache-after-guest-catch/0/calls/outer-4",
+      "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "rawPrefix": "cases/source-failure-cache-after-guest-catch/1/calls/outer-0",
+      "utf8Sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef",
+      "utf16BESha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "rawPrefix": "cases/source-failure-cache-after-guest-catch/1/calls/outer-1",
+      "utf8Sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef",
+      "utf16BESha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "rawPrefix": "cases/source-failure-cache-after-guest-catch/1/calls/outer-2",
+      "utf8Sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef",
+      "utf16BESha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "rawPrefix": "cases/source-failure-cache-after-guest-catch/1/calls/outer-3",
+      "utf8Sha256": "c412cccc36205c1d2d9616872282afe3d88600b713090bd3f25bfa5bfb6d053f",
+      "utf16BESha256": "b328745fc93f4ae01a8b231e927b523a64bf3a42a1eb111695d9feb4af676b29"
+    },
+    {
+      "rawPrefix": "cases/source-failure-cache-after-guest-catch/1/calls/outer-4",
+      "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/0/calls/outer-0",
+      "utf8Sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef",
+      "utf16BESha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/0/calls/outer-1",
+      "utf8Sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "utf16BESha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/0/calls/outer-2",
+      "utf8Sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+      "utf16BESha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/0/calls/outer-3",
+      "utf8Sha256": "d12b4c060eaa83277cce4c4d6799c0c433e14d7b65925c9c12079cd259d36eb6",
+      "utf16BESha256": "cb130a6a91215589c7644c4808b3e39931360e70588500bdd724c5a79937683c"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/0/calls/outer-4",
+      "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/0/calls/inner-0",
+      "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/0/calls/inner-1",
+      "utf8Sha256": "d12b4c060eaa83277cce4c4d6799c0c433e14d7b65925c9c12079cd259d36eb6",
+      "utf16BESha256": "cb130a6a91215589c7644c4808b3e39931360e70588500bdd724c5a79937683c"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/0/calls/inner-2",
+      "utf8Sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+      "utf16BESha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/1/calls/outer-0",
+      "utf8Sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef",
+      "utf16BESha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/1/calls/outer-1",
+      "utf8Sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "utf16BESha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/1/calls/outer-2",
+      "utf8Sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+      "utf16BESha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/1/calls/outer-3",
+      "utf8Sha256": "d12b4c060eaa83277cce4c4d6799c0c433e14d7b65925c9c12079cd259d36eb6",
+      "utf16BESha256": "cb130a6a91215589c7644c4808b3e39931360e70588500bdd724c5a79937683c"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/1/calls/outer-4",
+      "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/1/calls/inner-0",
+      "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/1/calls/inner-1",
+      "utf8Sha256": "d12b4c060eaa83277cce4c4d6799c0c433e14d7b65925c9c12079cd259d36eb6",
+      "utf16BESha256": "cb130a6a91215589c7644c4808b3e39931360e70588500bdd724c5a79937683c"
+    },
+    {
+      "rawPrefix": "cases/source-callback-inner-publication-and-catch/1/calls/inner-2",
+      "utf8Sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+      "utf16BESha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    }
+  ],
+  "observed": [
+    "base/test/ref repeated imports share singleton and base classes match implicit builtin classes; main/base distinct.",
+    "Resolve IOException failure retries; source IOException failure is cached and later uncaught error retains original firstcatch function frames.",
+    "Nested source callback publishes child successfully; outer source IOException is caught, subsequent child value remains9."
+  ]
+}

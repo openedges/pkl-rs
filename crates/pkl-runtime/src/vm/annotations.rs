@@ -1,5 +1,24 @@
 //! Declaration annotations use normal object constructors and VM frames.
 use super::*;
+mod java_decimal_digit_ranges;
+
+pub(super) fn matches_module_version(value: &PklString) -> bool {
+    let Some(value) = value.as_str() else {
+        return false;
+    };
+    let mut count = 0;
+    value.split('.').all(|part| {
+        count += 1;
+        let length = part.chars().count();
+        (1..=2).contains(&length)
+            && part.chars().all(|point| {
+                let point = point as u32;
+                let ranges = java_decimal_digit_ranges::JAVA_DECIMAL_DIGIT_RANGES;
+                let index = ranges.partition_point(|(_, end)| *end < point);
+                ranges.get(index).is_some_and(|(start, _)| *start <= point)
+            })
+    }) && count == 3
+}
 
 pub(crate) const ANNOTATION_ID: usize = usize::MAX - 100;
 pub(crate) const DEPRECATED_ID: usize = usize::MAX - 101;
@@ -11,6 +30,7 @@ const NAMES: &[&str] = &[
     "AlsoKnownAs",
     "DocExample",
     "SourceCode",
+    "ModuleInfo",
 ];
 
 pub(crate) fn builtin_id(name: &str) -> Option<usize> {
@@ -45,6 +65,7 @@ pub(super) fn builtin_members(
                 ("replaceWith", nullable()),
             ],
             "Since" => vec![("version", TypeCheck::String)],
+            "ModuleInfo" => vec![("minPklVersion", TypeCheck::String)],
             "AlsoKnownAs" => vec![("names", listing())],
             "DocExample" => vec![("subjects", listing())],
             "SourceCode" => vec![
@@ -112,6 +133,44 @@ pub(super) fn builtin_members(
                     labels: spans.clone(),
                     spans,
                     default: None,
+                };
+            }
+            if *name == "ModuleInfo" {
+                // The pinned Unicode digit version constraint is a bounded native
+                // implementation of its exact regex, using ordinary constraint
+                // evaluation and its source-backed diagnostic metadata.
+                let span = Span::new(type_start + "String(".len(), type_end - 1);
+                let block = blocks.len();
+                let regex_start = span.start + "matches(".len();
+                let regex_span = Span::new(regex_start, span.end - 1);
+                blocks.push(vec![
+                    Instruction::LoadCustomThis,
+                    Instruction::ObserveNativeLiteral {
+                        span: regex_span,
+                        rendered: source.text[regex_span.start..regex_span.end].into(),
+                    },
+                    Instruction::MatchModuleVersion,
+                    Instruction::Observe(span),
+                    Instruction::Return,
+                ]);
+                metadata.push(BlockMetadata {
+                    source: Some(source.clone()),
+                    member: "#ModuleInfo.minPklVersion".into(),
+                    spans: vec![Some(span), None, Some(span), None, None],
+                    inline_constraint: true,
+                    ..Default::default()
+                });
+                ty = TypeCheck::Constrained {
+                    base: Box::new(TypeCheck::String),
+                    base_span: Span::new(type_start, type_start + 6),
+                    constraints: vec![ConstraintCode {
+                        block,
+                        arguments: BTreeMap::new(),
+                        argument_sources: BTreeMap::new(),
+                        span,
+                        module_environment: false,
+                        source: source.text[span.start..span.end].into(),
+                    }],
                 };
             }
             if let TypeCheck::ParameterizedCollection { arguments, .. } = &mut ty {
@@ -182,6 +241,77 @@ pub(super) fn builtin_members(
 }
 
 impl Vm {
+    pub(super) fn read_module_version(&mut self) -> Result<(), RuntimeError> {
+        let module = self
+            .stack
+            .last()
+            .ok_or_else(|| invalid("missing module version owner"))?
+            .as_object()?;
+        let annotation = self.heap.get(module)?.annotations.iter().find_map(|value| {
+            let id = value.as_object().ok()?;
+            let class = collections::typed_class(&self.heap, id).ok()??;
+            (Some(class.id) == builtin_id("ModuleInfo")).then_some(id)
+        });
+        if let Some(annotation) = annotation {
+            self.force(
+                annotation,
+                annotation,
+                "minPklVersion".into(),
+                false,
+                true,
+                false,
+            )
+        } else {
+            self.stack.push(Value::Null);
+            Ok(())
+        }
+    }
+
+    pub(super) fn check_module_version(&mut self) -> Result<(), RuntimeError> {
+        let value = self.pop()?;
+        if value.is_null() {
+            return Ok(());
+        }
+        let Value::String(version) = value else {
+            return Err(invalid("checked ModuleInfo version"));
+        };
+        let parts = version
+            .as_str()
+            .filter(|value| value.is_ascii())
+            .and_then(|text| {
+                text.split('.')
+                    .map(str::parse::<u32>)
+                    .collect::<Result<Vec<_>, _>>()
+                    .ok()
+            });
+        let Some(parts) = parts.filter(|parts| parts.len() == 3) else {
+            return Err(RuntimeError::new(
+                ErrorKind::Unsupported,
+                "The Java ModuleInfo version parser fails internally for this Unicode version.",
+            ));
+        };
+        if parts.as_slice() > [0, 32, 0].as_slice() {
+            let module = self
+                .stack
+                .last()
+                .ok_or_else(|| invalid("missing module version owner"))?
+                .as_object()?;
+            let unit = self
+                .heap
+                .get(module)?
+                .module_unit
+                .ok_or_else(|| invalid("missing module version unit"))?;
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                format!(
+                    "Module `{}` requires Pkl version {}.{}.{} or higher, but your Pkl version is 0.32.0.",
+                    self.program.units[unit.0 as usize].name, parts[0], parts[1], parts[2]
+                ),
+            ));
+        }
+        Ok(())
+    }
+
     pub(super) fn append_annotation(&mut self) -> Result<(), RuntimeError> {
         let annotation = self.pop()?;
         let owner = self

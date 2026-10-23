@@ -131,14 +131,19 @@ pub struct RuntimeError {
 /// compact. Field access remains available through RuntimeError's dereference.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct RuntimeErrorDetails {
+    /// A typed Host SPI mapping produced an ordinary guest exception.
+    pub(crate) host_language_exception: bool,
     pub frontend: Option<Arc<crate::modules::ModuleDiagnostic>>,
     pub(crate) cached_module_frames: bool,
+    pub(crate) module_failure_key: Option<Arc<str>>,
     pub spread_hint: Option<Box<Span>>,
     pub type_diagnostic: Option<Box<crate::diagnostic::TypeDiagnostic>>,
 }
 const EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
+    host_language_exception: false,
     frontend: None,
     cached_module_frames: false,
+    module_failure_key: None,
     spread_hint: None,
     type_diagnostic: None,
 };
@@ -165,6 +170,14 @@ impl RuntimeError {
             frames: Vec::new(),
             hint: None,
         }
+    }
+
+    /// A shared, typed Host mapping has constructed an ordinary guest error.
+    /// Raw Host/protocol failures do not acquire this provenance by default.
+    pub(crate) fn host_language(message: impl Into<PklString>) -> Self {
+        let mut error = Self::new(ErrorKind::Host, message);
+        error.host_language_exception = true;
+        error
     }
 
     pub(crate) fn undefined(mut self) -> Self {

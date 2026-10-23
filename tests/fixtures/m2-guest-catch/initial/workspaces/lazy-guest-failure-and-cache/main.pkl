@@ -1,0 +1,6 @@
+import "pkl:test" as t
+stable = 7
+callbackCaught = t.catch(() -> throw("callback-error"))
+failing = if (trace(true)) throw("lazy-error") else 0
+caught = t.catch(() -> failing)
+retry = t.catchOrNull(() -> failing)

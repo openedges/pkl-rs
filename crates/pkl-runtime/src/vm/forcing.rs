@@ -35,6 +35,8 @@ pub(super) struct ForceRun {
     tasks: Vec<Task>,
     /// Only unfinished calls own rollback of a published force marker.
     active: Vec<ObjectId>,
+    /// Missing standard-library bindings remain deferred capability gaps.
+    incomplete: BTreeSet<ObjectId>,
     awaiting: Option<ReadBoundary>,
 }
 impl ForceRun {
@@ -113,6 +115,7 @@ impl Vm {
             tasks: vec![Task::Value(root.clone())],
             root,
             active: Vec::new(),
+            incomplete: BTreeSet::new(),
             awaiting: None,
         });
         Ok(())
@@ -120,6 +123,23 @@ impl Vm {
     /// Hashing/equality use the same persistent force operation with undefined forbidden.
     pub(super) fn force_value_frame(&mut self, root: Value) -> Result<(), RuntimeError> {
         self.force_frame(root, true)
+    }
+    pub(super) fn force_stdlib_frame(&mut self, root: Value) -> Result<(), RuntimeError> {
+        let annotations = root
+            .heap_id()
+            .map(|id| self.heap.get(id).map(|object| object.annotations.clone()))
+            .transpose()?
+            .unwrap_or_default();
+        self.force_value_frame(root)?;
+        self.frames
+            .last_mut()
+            .expect("stdlib force")
+            .deep_force
+            .as_mut()
+            .expect("force continuation")
+            .tasks
+            .extend(annotations.into_iter().rev().map(Task::Value));
+        Ok(())
     }
     pub(super) fn force_shallow_frame(&mut self, root: Value) -> Result<(), RuntimeError> {
         self.force_frame(root, false)
@@ -138,6 +158,7 @@ impl Vm {
             .environment
             .clone();
         self.frames.push(Frame {
+            guest_catch: None,
             block: usize::MAX,
             pc: 0,
             base: self.stack.len(),
@@ -161,6 +182,7 @@ impl Vm {
                 renderer: None,
                 tasks: vec![Task::Value(root)],
                 active: Vec::new(),
+                incomplete: BTreeSet::new(),
                 awaiting: None,
             }),
             prepared_hashes: None,
@@ -312,6 +334,9 @@ impl Vm {
             }
             Task::Value(_) => {}
             Task::Finish(id) => {
+                if run.incomplete.remove(&id) {
+                    self.heap.get_mut(id)?.forced = false;
+                }
                 if run.active.pop() != Some(id) {
                     return Err(invalid("unbalanced object force markers"));
                 }
@@ -328,7 +353,14 @@ impl Vm {
                         owner,
                         index: index + 1,
                     });
-                    if !member.local
+                    let deferred_binding = self.in_stdlib_bootstrap() && member.definition()
+                        && self.program.blocks.get(member.code).is_some_and(|code|
+                            matches!(code.first(), Some(Instruction::Fail(error)) if error.kind == ErrorKind::Unsupported));
+                    if deferred_binding {
+                        run.incomplete.insert(receiver);
+                    }
+                    if !deferred_binding
+                        && !member.local
                         && !member.method
                         && !member.external()
                         && !member.abstract_member()
@@ -360,6 +392,7 @@ impl Vm {
                                 root: Value::Null,
                                 tasks: Vec::new(),
                                 active: Vec::new(),
+                                incomplete: BTreeSet::new(),
                                 awaiting: None,
                             },
                         ));
@@ -393,7 +426,7 @@ impl Vm {
             }
         }
     }
-    pub(super) fn catch_force_undefined(&mut self) -> bool {
+    pub(super) fn catch_force_undefined(&mut self, innermost_guest: Option<usize>) -> bool {
         let Some(index) = self.frames.iter().rposition(|frame| {
             frame
                 .deep_force
@@ -402,6 +435,9 @@ impl Vm {
         }) else {
             return false;
         };
+        if innermost_guest.is_some_and(|guest| guest > index) {
+            return false;
+        }
         let read = self.frames[index]
             .deep_force
             .as_ref()

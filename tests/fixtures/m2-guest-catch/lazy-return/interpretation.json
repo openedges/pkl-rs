@@ -1,0 +1,104 @@
+{
+  "scope": "Supplemental force/catch boundary actualJava only, original14+corrected4 remainunchanged.",
+  "sessionId": 65203,
+  "actualExitCode": 0,
+  "reportSha256": "3e24d8658ebc4f08733e63b3400a813d15c2a5a6b42b4aaa4340321423505c3b",
+  "allRawUnitByteOppositeChannelsVerified": true,
+  "bindings": [
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-0",
+      "utf8Sha256": "347cc7f50d38bc41b6bbf054a662622967037b59bf20e5513a6ce20f5d04ffd6",
+      "utf16BESha256": "84c60999507831a851fbcb4c00bd6cf70d266f313f5f45077fd0434849bcd6b6"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-1",
+      "utf8Sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "utf16BESha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-2",
+      "utf8Sha256": "38c8632dfc3b9f597420c9564a4850f9176ae335bc06fd04d0c60cbfcb58616a",
+      "utf16BESha256": "6dea6fcb692eb186c87b12b095a5e9a44b23de7cd8bd10f9e1f768e20c81dc61"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-3",
+      "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+      "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-4",
+      "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+      "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-5",
+      "utf8Sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "utf16BESha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-6",
+      "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+      "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-7",
+      "utf8Sha256": "347cc7f50d38bc41b6bbf054a662622967037b59bf20e5513a6ce20f5d04ffd6",
+      "utf16BESha256": "84c60999507831a851fbcb4c00bd6cf70d266f313f5f45077fd0434849bcd6b6"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-8",
+      "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-0",
+      "utf8Sha256": "347cc7f50d38bc41b6bbf054a662622967037b59bf20e5513a6ce20f5d04ffd6",
+      "utf16BESha256": "84c60999507831a851fbcb4c00bd6cf70d266f313f5f45077fd0434849bcd6b6"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-1",
+      "utf8Sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "utf16BESha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-2",
+      "utf8Sha256": "38c8632dfc3b9f597420c9564a4850f9176ae335bc06fd04d0c60cbfcb58616a",
+      "utf16BESha256": "6dea6fcb692eb186c87b12b095a5e9a44b23de7cd8bd10f9e1f768e20c81dc61"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-3",
+      "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+      "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-4",
+      "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+      "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-5",
+      "utf8Sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "utf16BESha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-6",
+      "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+      "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-7",
+      "utf8Sha256": "347cc7f50d38bc41b6bbf054a662622967037b59bf20e5513a6ce20f5d04ffd6",
+      "utf16BESha256": "84c60999507831a851fbcb4c00bd6cf70d266f313f5f45077fd0434849bcd6b6"
+    },
+    {
+      "rawPrefix": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-8",
+      "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    }
+  ],
+  "observed": [
+    "Guest catch applies Function0 and does not deepforce a returned lazy object: catch throws expectedAnException, catchOrNull returns null.",
+    "Explicitly forced object member throw is caught as string.",
+    "Undefined property is a catchable guest failure in both catch/catchOrNull; repeated calls preserve full actualtext."
+  ]
+}

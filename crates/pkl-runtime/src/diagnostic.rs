@@ -104,10 +104,19 @@ impl TypeDiagnostic {
     }
 
     pub fn render(&self, source: &Source) -> (PklString, Option<PklString>) {
-        self.render_indented(source, "")
+        self.render_indented(source, "", true)
     }
 
-    fn render_indented(&self, source: &Source, indent: &str) -> (PklString, Option<PklString>) {
+    pub(crate) fn render_without_power(&self, source: &Source) -> PklString {
+        self.render_indented(source, "", false).0
+    }
+
+    fn render_indented(
+        &self,
+        source: &Source,
+        indent: &str,
+        power: bool,
+    ) -> (PklString, Option<PklString>) {
         let mut message_text = PklStringBuilder::default();
         match self {
             Self::Simple { message, .. } => {
@@ -132,7 +141,7 @@ impl TypeDiagnostic {
                     "{indent}Type constraint `{expression}` violated.\n{indent}Value: "
                 ));
                 message_text.push_value(value);
-                if let Some(observations) = observations {
+                if power && let Some(observations) = observations {
                     message_text.push_str("\n\n");
                     message_text.push_value(&crate::power_assertions::render(
                         source,
@@ -165,9 +174,10 @@ impl TypeDiagnostic {
                     .into_iter()
                     .map(|child| {
                         let expected = source.slice(child.type_span).unwrap_or("");
-                        let (message, hint) = child
-                            .diagnostic
-                            .render_indented(source, &format!("{indent}  "));
+                        let (message, hint) =
+                            child
+                                .diagnostic
+                                .render_indented(source, &format!("{indent}  "), power);
                         let mut text = PklStringBuilder::default();
                         text.push_str(&format!(
                             "{indent}* Value is not of type `{expected}` because:\n"

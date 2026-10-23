@@ -1,0 +1,5 @@
+import "pkl:test" as t
+stable = 7
+bad: unknown
+obj = new Dynamic { caught = t.catch(() -> bad); nullable = t.catchOrNull(() -> bad); missing = bad }
+observed = obj.toString()

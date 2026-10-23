@@ -1,0 +1,744 @@
+{
+  "files": [
+    {
+      "path": "GuestCatchProbe.java",
+      "bytes": 8156,
+      "sha256": "bd8649f19ec2ae54662b7849d172fe5844dae4f4e82c2dee48423ab1525f6cc8"
+    },
+    {
+      "path": "acquire.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "acquire.stdout.bin",
+      "bytes": 584,
+      "sha256": "a1b45097d2ed612a3713521690d50367c297a5decfc97c607b2ff971721d6b86"
+    },
+    {
+      "path": "cases.json",
+      "bytes": 876,
+      "sha256": "8da8c9c32c2aa86b8416b7c833d20b0bcf0277957b2f2a4c2ac84ca0a4a53ba2"
+    },
+    {
+      "path": "correction-provenance.json",
+      "bytes": 352,
+      "sha256": "d930f41c56327a255a06df18303e3fd696cd7e4913f51fbaa2a6ffe2fec5dc23"
+    },
+    {
+      "path": "exclusions.json",
+      "bytes": 205,
+      "sha256": "593052a632328c1024613060f92fe0aa9eaa4cc948fd18da25749533385ec79b"
+    },
+    {
+      "path": "inputs-after.json",
+      "bytes": 3671,
+      "sha256": "8d0c9500ba2b6ad1066976b3e152da4910510c5c449d126e23a653a6d353e539"
+    },
+    {
+      "path": "inputs-before.json",
+      "bytes": 3671,
+      "sha256": "8d0c9500ba2b6ad1066976b3e152da4910510c5c449d126e23a653a6d353e539"
+    },
+    {
+      "path": "interpretation.json",
+      "bytes": 3292,
+      "sha256": "12317999f50043f5e73b00edc9a0003f59a6405d7ef528dc36f688ddf044bedd"
+    },
+    {
+      "path": "javac.process.json",
+      "bytes": 1507,
+      "sha256": "2c2aff7525f896d202b892fa999d4faae99c7099ee0859449a087eb2469b0868"
+    },
+    {
+      "path": "profile.json",
+      "bytes": 7871,
+      "sha256": "c1e4c7526082a19ca72961a487abea4519647a7c8d1dad8e0e0b59446639e6fc"
+    },
+    {
+      "path": "progress.json",
+      "bytes": 5582,
+      "sha256": "c986ae7b90e2aee82f7e182495f09e3a9ce1419282a74db4b3ef927821e17fa4"
+    },
+    {
+      "path": "report.json",
+      "bytes": 24606,
+      "sha256": "4d7266cf7947b163024983fbb18827e04fcd85c0b7c1cfe63349a9200c42e64c"
+    },
+    {
+      "path": "run.py",
+      "bytes": 8516,
+      "sha256": "663722c69fa9d41545a0f533a5617697a0b86b944612245da7105316b84d7e10"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0.process.json",
+      "bytes": 2628,
+      "sha256": "21a9059368c407dc6e65f2e6f90ff9098c0983c53fe222fda29c7838e0c62697"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1.process.json",
+      "bytes": 2627,
+      "sha256": "48584dab3030fa83c3a08afa342da6ed705865f972b0f9a8e3fa4e38c6b402fa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/private-state.json",
+      "bytes": 349,
+      "sha256": "34576e78eebec82a7115f663c044c1ed825752db719a3dcf527b83f831568f38"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/process.json",
+      "bytes": 3831,
+      "sha256": "7db4263c2427b5c542d97839b0bf284d19c2d8386627bb582e3935810c9a6ae7"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/result.json",
+      "bytes": 295,
+      "sha256": "8577319877a5425f271e262cab8dd6163ce5303e36867d472d81d59372836c77"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/stdout.bin",
+      "bytes": 80,
+      "sha256": "c490b2645367ae682e89e13524fac8e43914af3902ebe3a488c7663943995999"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/counters.bin",
+      "bytes": 51,
+      "sha256": "8ead9beb05e084c4a50a38b9697964254e717a481683e3a67e5e19311119aefa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/event-0.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/event-1.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/event-2.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/event-3.bin",
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/event-4.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-0.expression.bin",
+      "bytes": 8,
+      "sha256": "604cee807f644af47487bf2bbab442b94212ac5119f36f995f78e9e4694dae8c"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-0.stdout.bin",
+      "bytes": 167,
+      "sha256": "25d1f5b8d376feca0261b79193dd66b99083f74b1777815081907c08d3d61e12"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-0.stdout.code-units.bin",
+      "bytes": 334,
+      "sha256": "ff3a6781cf5209f4f5936a56b30ae8bb29783699a97c70fe0244e6eec1ce258e"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-1.expression.bin",
+      "bytes": 10,
+      "sha256": "b2f44608244f055fd76bdd8f36d63eed332de9a910c466cc0d51503cb5158e5e"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-1.stdout.bin",
+      "bytes": 56,
+      "sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-1.stdout.code-units.bin",
+      "bytes": 112,
+      "sha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-2.expression.bin",
+      "bytes": 12,
+      "sha256": "0a06db2630abdef751826ee59412003992bdca172f0bc770832a6874925981fd"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-2.stdout.bin",
+      "bytes": 56,
+      "sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-2.stdout.code-units.bin",
+      "bytes": 112,
+      "sha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-3.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-3.expression.bin",
+      "bytes": 8,
+      "sha256": "604cee807f644af47487bf2bbab442b94212ac5119f36f995f78e9e4694dae8c"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-3.stdout.bin",
+      "bytes": 167,
+      "sha256": "25d1f5b8d376feca0261b79193dd66b99083f74b1777815081907c08d3d61e12"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-3.stdout.code-units.bin",
+      "bytes": 334,
+      "sha256": "ff3a6781cf5209f4f5936a56b30ae8bb29783699a97c70fe0244e6eec1ce258e"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-4.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-4.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-4.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/payload-blank.bin",
+      "bytes": 11,
+      "sha256": "20967933ce8b530c9248c230779fa0b0a66abad8145c2e032ccdb23c6a88bf81"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/payload-blank.code-units.bin",
+      "bytes": 18,
+      "sha256": "de3ca3c33cebc72e248b870ae7a458cdd625b6544b544c044c5eaa8637627982"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/payload-units.bin",
+      "bytes": 20,
+      "sha256": "72cc63d87ee2b2c39398df860f6a9154714cf4ce664cae1db21ff77b22df13d7"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/payload-units.code-units.bin",
+      "bytes": 28,
+      "sha256": "39535f07a8c319fac6d1d1b740b28d7f3175d35cc6f9484aa63b28a212d9e98e"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/payload-white.bin",
+      "bytes": 26,
+      "sha256": "b8b65023c26fd7d3b30df9bc82b15c8bec233598242f89375859975497260fea"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/payload-white.code-units.bin",
+      "bytes": 48,
+      "sha256": "812f54a348158907fe1c24b450379a7f6c845534c8c80bba0cb54f70659aade3"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/private-state.json",
+      "bytes": 349,
+      "sha256": "34576e78eebec82a7115f663c044c1ed825752db719a3dcf527b83f831568f38"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/process.json",
+      "bytes": 3830,
+      "sha256": "a3f6c291f050fa47e400fba975b800cdb7fb5ea9d74ba7b691480e41e4fff889"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/result.json",
+      "bytes": 294,
+      "sha256": "b01d5dbed9c3902396b1257eef325485e0d9d78041189b5dec2744654526230a"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/stdout.bin",
+      "bytes": 80,
+      "sha256": "c490b2645367ae682e89e13524fac8e43914af3902ebe3a488c7663943995999"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/counters.bin",
+      "bytes": 51,
+      "sha256": "8ead9beb05e084c4a50a38b9697964254e717a481683e3a67e5e19311119aefa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/event-0.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/event-1.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/event-2.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/event-3.bin",
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/event-4.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-0.expression.bin",
+      "bytes": 8,
+      "sha256": "604cee807f644af47487bf2bbab442b94212ac5119f36f995f78e9e4694dae8c"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-0.stdout.bin",
+      "bytes": 167,
+      "sha256": "25d1f5b8d376feca0261b79193dd66b99083f74b1777815081907c08d3d61e12"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-0.stdout.code-units.bin",
+      "bytes": 334,
+      "sha256": "ff3a6781cf5209f4f5936a56b30ae8bb29783699a97c70fe0244e6eec1ce258e"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-1.expression.bin",
+      "bytes": 10,
+      "sha256": "b2f44608244f055fd76bdd8f36d63eed332de9a910c466cc0d51503cb5158e5e"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-1.stdout.bin",
+      "bytes": 56,
+      "sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-1.stdout.code-units.bin",
+      "bytes": 112,
+      "sha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-2.expression.bin",
+      "bytes": 12,
+      "sha256": "0a06db2630abdef751826ee59412003992bdca172f0bc770832a6874925981fd"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-2.stdout.bin",
+      "bytes": 56,
+      "sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-2.stdout.code-units.bin",
+      "bytes": 112,
+      "sha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-3.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-3.expression.bin",
+      "bytes": 8,
+      "sha256": "604cee807f644af47487bf2bbab442b94212ac5119f36f995f78e9e4694dae8c"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-3.stdout.bin",
+      "bytes": 167,
+      "sha256": "25d1f5b8d376feca0261b79193dd66b99083f74b1777815081907c08d3d61e12"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-3.stdout.code-units.bin",
+      "bytes": 334,
+      "sha256": "ff3a6781cf5209f4f5936a56b30ae8bb29783699a97c70fe0244e6eec1ce258e"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-4.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-4.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-4.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/payload-blank.bin",
+      "bytes": 11,
+      "sha256": "20967933ce8b530c9248c230779fa0b0a66abad8145c2e032ccdb23c6a88bf81"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/payload-blank.code-units.bin",
+      "bytes": 18,
+      "sha256": "de3ca3c33cebc72e248b870ae7a458cdd625b6544b544c044c5eaa8637627982"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/payload-units.bin",
+      "bytes": 20,
+      "sha256": "72cc63d87ee2b2c39398df860f6a9154714cf4ce664cae1db21ff77b22df13d7"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/payload-units.code-units.bin",
+      "bytes": 28,
+      "sha256": "39535f07a8c319fac6d1d1b740b28d7f3175d35cc6f9484aa63b28a212d9e98e"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/payload-white.bin",
+      "bytes": 26,
+      "sha256": "b8b65023c26fd7d3b30df9bc82b15c8bec233598242f89375859975497260fea"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/payload-white.code-units.bin",
+      "bytes": 48,
+      "sha256": "812f54a348158907fe1c24b450379a7f6c845534c8c80bba0cb54f70659aade3"
+    },
+    {
+      "path": "cases/nearest-guest-handler-inside-allow-undefined-force/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "classes/GuestCatchProbe$1.class",
+      "bytes": 2386,
+      "sha256": "752eaf21e912a1f2a787c9846595319883c05d80c8eee09469af9c1e29beef48"
+    },
+    {
+      "path": "classes/GuestCatchProbe$2.class",
+      "bytes": 632,
+      "sha256": "5ad2c07415a14d238e6b54cb9abd85e03b8f5be51aad50baa31171b9c7d40160"
+    },
+    {
+      "path": "classes/GuestCatchProbe$Key$1.class",
+      "bytes": 2117,
+      "sha256": "de395bbc7b9e327d5ae4c27dad856b62cb4670190ddcc8130b56c87911b7bfe5"
+    },
+    {
+      "path": "classes/GuestCatchProbe$Key.class",
+      "bytes": 1762,
+      "sha256": "c4db06132e84f1ead3af24e19aa5e6e68a8541cf7d2fad0f613ba420d0d1686b"
+    },
+    {
+      "path": "classes/GuestCatchProbe.class",
+      "bytes": 10504,
+      "sha256": "f6927a6399e8d5562a9496ddb2d20cad2924144ede59f2bae8c43825b208fbc9"
+    },
+    {
+      "path": "javac/result.json",
+      "bytes": 294,
+      "sha256": "98e0b62468e17051dc59f1a1264a749e18d962f71275a11e22666f94a78757af"
+    },
+    {
+      "path": "javac/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "javac/stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runtime-private/nearest-guest-handler-inside-allow-undefined-force/0/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "runtime-private/nearest-guest-handler-inside-allow-undefined-force/1/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "bytes": 8387,
+      "sha256": "96eb6429a710d0b4db09664b6d84a0cb25a17a3206983183f66a65382ae69d82"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/stdlib/test/TestNodes.java",
+      "bytes": 2607,
+      "sha256": "c0fc2b505cb9cc8df3632624e39f94ab9bc68111ddfc1444280b15df0c79603d"
+    },
+    {
+      "path": "upstream/stdlib/test.pkl",
+      "bytes": 3303,
+      "sha256": "c98633bf4b4b90032efefcab676515161d5dd75c3759ad013ee7bfb856d8aea4"
+    },
+    {
+      "path": "workspaces/nearest-guest-handler-inside-allow-undefined-force/callbacks.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "workspaces/nearest-guest-handler-inside-allow-undefined-force/expressions.txt",
+      "bytes": 49,
+      "sha256": "47c409a29530f239f47a9769edfe7055435ffa708d7b7a71c06cbfaca13c34a4"
+    },
+    {
+      "path": "workspaces/nearest-guest-handler-inside-allow-undefined-force/main.pkl",
+      "bytes": 175,
+      "sha256": "8b28090100d03c9096247b4fbda22174f53b5f4e287318d9dc31917e3850cbbd"
+    }
+  ]
+}

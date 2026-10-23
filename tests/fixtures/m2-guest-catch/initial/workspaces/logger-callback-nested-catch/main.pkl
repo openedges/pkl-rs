@@ -1,0 +1,4 @@
+import "pkl:test" as t
+stable = 7
+callbackCaught = t.catch(() -> throw("callback-error"))
+caught = t.catch(() -> if (trace(true)) throw("after-log") else 0)

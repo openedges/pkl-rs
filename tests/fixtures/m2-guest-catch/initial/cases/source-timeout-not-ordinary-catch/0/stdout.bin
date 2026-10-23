@@ -1,0 +1,8 @@
+outer-0 success
+resolve catch:/child attempt=1
+source-start catch:/child attempt=1
+source sleep-start
+source interrupted
+outer-1 error org.pkl.core.PklException
+outer-2 error java.util.concurrent.RejectedExecutionException
+outer-3 error java.util.concurrent.RejectedExecutionException

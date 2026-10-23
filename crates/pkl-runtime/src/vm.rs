@@ -19,8 +19,10 @@ mod converters;
 pub(crate) mod equality;
 mod forcing;
 mod generics;
+mod guest_exceptions;
 mod modules;
 mod session_expressions;
+mod stdlib_modules;
 pub use session_expressions::{SessionExpressionError, compile_session_expression};
 mod output;
 mod pair;
@@ -39,8 +41,17 @@ use typecheck::{TypeDestination, TypeRun};
 #[derive(Clone, Debug)]
 pub enum Instruction {
     LoadRefModule,
+    /// Invoke a checked Function0 under a guest exception handler.
+    GuestCatch {
+        or_null: bool,
+    },
     ImportModule(modules::ImportSpec),
     CheckModuleOutput,
+    /// Eager initialization in the private standard-library profile.
+    BootstrapStdlib,
+    MatchModuleVersion,
+    ReadModuleVersion,
+    CheckModuleVersion,
     EncodeUtf8,
     OutputRenderer,
     RenderPcf {
@@ -167,6 +178,10 @@ pub enum Instruction {
     ContinueFunctionAmendment,
     CheckMixinArgument,
     Observe(Span),
+    ObserveNativeLiteral {
+        span: Span,
+        rendered: PklString,
+    },
     TestType(TypeCheck),
     JumpIfNull(usize),
     GetMember(Arc<str>),
@@ -736,6 +751,7 @@ pub struct BlockMetadata {
     pub module_receiver_input: Option<usize>,
     pub source: Option<Arc<crate::value::RuntimeSource>>,
     pub hidden: bool,
+    pub(crate) stdlib_bootstrap: bool,
     pub spans: Vec<Option<Span>>,
     pub member: PklString,
     pub declaration: Option<Span>,
@@ -920,6 +936,7 @@ struct Force {
 }
 
 struct Frame {
+    guest_catch: Option<guest_exceptions::GuestCatch>,
     block: usize,
     pc: usize,
     base: usize,
@@ -1161,6 +1178,7 @@ impl Vm {
         self.stack.clear();
         self.inputs = inputs;
         self.frames.push(Frame {
+            guest_catch: None,
             block: entry,
             pc: 0,
             base: 0,
@@ -1391,7 +1409,7 @@ impl Vm {
     }
 
     pub(crate) fn close_from_callback(&mut self, id: u64) -> Result<(), RuntimeError> {
-        if !matches!(&self.state, State::Waiting(request @ (PendingRequest::Log(_) | PendingRequest::Module(_))) if request.id() == id)
+        if !matches!(&self.state, State::Waiting(request @ (PendingRequest::Read(_) | PendingRequest::Log(_) | PendingRequest::Module(_))) if request.id() == id)
         {
             return Err(RuntimeError::new(
                 ErrorKind::Host,
@@ -1630,13 +1648,15 @@ impl Vm {
     }
 
     fn fail(&mut self, mut error: RuntimeError) {
-        if error.undefined_value && self.catch_force_undefined() {
+        if error.undefined_value && self.catch_force_undefined(self.guest_catch_boundary(&error)) {
             return;
         }
         if error.undefined_value && error.hint.is_none() {
             error.hint = self.pcf_undefined_hint();
         }
-        self.reset_force_marks(0);
+        let catch_boundary = self.guest_catch_boundary(&error);
+        let unwind_start = catch_boundary.map_or(0, |index| index + 1);
+        self.reset_force_marks(unwind_start);
         // Inferred properties read their class prototype without type checks.
         // An undefined prototype value is caught by the inference node, whose
         // authored new expression becomes the error origin. Keep all frames for
@@ -1656,14 +1676,14 @@ impl Vm {
                 )
             });
         let diagnostic_count = if caught_undefined {
-            self.frames
+            self.frames[unwind_start..]
                 .iter()
                 .rposition(|frame| {
                     matches!(instruction(frame), Some(Instruction::InferPropertyParent))
                 })
                 .map(|index| {
                     error = cannot_infer_parent();
-                    index + 1
+                    unwind_start + index + 1
                 })
                 .unwrap_or(self.frames.len())
         } else {
@@ -1694,7 +1714,11 @@ impl Vm {
             };
             logical_targets.push(target);
         }
-        for (index, frame) in diagnostic_frames.iter().rev().enumerate() {
+        for (index, frame) in diagnostic_frames[unwind_start.min(diagnostic_frames.len())..]
+            .iter()
+            .rev()
+            .enumerate()
+        {
             // A recoverable mismatch becomes VmException only at PklRootNode.
             // Let bodies within that root do not catch the original mismatch.
             if index == 0
@@ -1761,7 +1785,12 @@ impl Vm {
                 .unwrap_or(0);
             error.hint = self.implicit_member_suggestions(frame, name, arity as isize);
         }
-        for (frame_index, frame) in diagnostic_frames.iter().enumerate().rev() {
+        for (frame_index, frame) in diagnostic_frames
+            .iter()
+            .enumerate()
+            .skip(unwind_start)
+            .rev()
+        {
             if frame.block == self.program.amended_function_block
                 && let Some(owner) = frame.function_owner
                 && let Ok(object) = self.heap.get(owner)
@@ -1839,7 +1868,7 @@ impl Vm {
         }
         // Callback failures expose callers in suspended contexts without
         // unwinding those contexts or changing their force/cache ownership.
-        if !error.cached_module_frames {
+        if !error.cached_module_frames && catch_boundary.is_none() {
             for context in self.suspended.iter().rev() {
                 error
                     .frames
@@ -1849,13 +1878,14 @@ impl Vm {
         if error.span.is_none() {
             error.span = error.frames.first().map(|frame| frame.span);
         }
-        for frame in &self.frames {
+        for frame in &self.frames[unwind_start..] {
             if let Some(force) = &frame.force
                 && let Some(key) = &force.cache
                 && !self
                     .suspended
                     .iter()
                     .flat_map(|context| &context.frames)
+                    .chain(self.frames[..unwind_start].iter())
                     .any(|frame| {
                         frame.force.as_ref().is_some_and(|other| {
                             other.receiver == force.receiver && other.cache.as_ref() == Some(key)
@@ -1870,7 +1900,25 @@ impl Vm {
                 }
             }
         }
-        for frame in &self.frames {
+        // Truffle retains the same source/initialization exception in every
+        // module-cache alias. Its lazy stack keeps unwinding across guest catches;
+        // the first uncaught rendering freezes the completed stack.
+        if !error.cached_module_frames && error.module_failure_key.is_some() {
+            error.cached_module_frames = catch_boundary.is_none();
+            if let Some(key) = &error.module_failure_key {
+                for cached in self
+                    .modules_original
+                    .values_mut()
+                    .chain(self.modules_resolved.values_mut())
+                {
+                    if matches!(cached, modules::CachedModule::Failed(previous) if previous.module_failure_key.as_ref() == Some(key))
+                    {
+                        *cached = modules::CachedModule::Failed(error.clone());
+                    }
+                }
+            }
+        }
+        for frame in &self.frames[unwind_start..] {
             if let Some(receiver) = frame.module_receiver
                 && self
                     .heap
@@ -1885,6 +1933,10 @@ impl Vm {
                 && unit.entry == frame.block
                 && let Some(identity) = &unit.identity
             {
+                if error.module_failure_key.is_none() {
+                    error.module_failure_key = Some(identity.original_uri.clone());
+                    error.cached_module_frames = catch_boundary.is_none();
+                }
                 self.modules_original.insert(
                     identity.original_uri.clone(),
                     modules::CachedModule::Failed(error.clone()),
@@ -1898,6 +1950,10 @@ impl Vm {
                 && run.initializing
                 && let Some(resolved) = &run.resolved
             {
+                if error.module_failure_key.is_none() {
+                    error.module_failure_key = Some(resolved.original_uri.clone());
+                    error.cached_module_frames = catch_boundary.is_none();
+                }
                 self.modules_original.insert(
                     resolved.original_uri.clone(),
                     modules::CachedModule::Failed(error.clone()),
@@ -1908,10 +1964,22 @@ impl Vm {
                 );
             }
         }
-        self.frames.clear();
-        self.stack.clear();
-        self.inputs.clear();
-        self.state = State::Finished(Err(error));
+        if let Some(index) = catch_boundary {
+            let value = self.render_caught_exception(&error);
+            let handler = self.frames[index]
+                .guest_catch
+                .take()
+                .expect("catch boundary");
+            self.frames.truncate(index + 1);
+            self.stack.truncate(handler.stack);
+            self.stack.push(Value::String(value));
+            self.state = State::Running;
+        } else {
+            self.frames.clear();
+            self.stack.clear();
+            self.inputs.clear();
+            self.state = State::Finished(Err(error));
+        }
     }
 
     fn finish_top(&mut self) -> Result<(), RuntimeError> {
@@ -2077,7 +2145,13 @@ impl Vm {
                         self.stack.push(function);
                         return Ok(());
                     }
-                    None => return Err(self.missing_member(receiver, &name, method)?),
+                    None => {
+                        // A super method searches from its owner's parent while
+                        // retaining the actual receiver for successful invocation.
+                        // The failed lookup describes that search origin too.
+                        let diagnostic_receiver = if method { initial_owner } else { receiver };
+                        return Err(self.missing_member(diagnostic_receiver, &name, method)?);
+                    }
                 };
             }
         };
@@ -2309,6 +2383,7 @@ impl Vm {
             (member.code, 0)
         };
         self.frames.push(Frame {
+            guest_catch: None,
             block,
             pc,
             base,
@@ -3167,6 +3242,7 @@ impl Vm {
         environment.custom_this = None;
         environment.locals.extend(arguments);
         self.frames.push(Frame {
+            guest_catch: None,
             block: function.block,
             pc: 0,
             base: self.stack.len(),
@@ -3194,6 +3270,13 @@ impl Vm {
     }
 
     fn step(&mut self) -> Result<(), RuntimeError> {
+        if self
+            .frames
+            .last()
+            .is_some_and(|frame| frame.guest_catch.is_some())
+        {
+            return self.finish_guest_catch();
+        }
         if self
             .frames
             .last()
@@ -3338,6 +3421,16 @@ impl Vm {
             Instruction::ImportModule(spec) => self.begin_import(spec)?,
             Instruction::InitializeModuleParent => self.initialize_module_parent()?,
             Instruction::CheckModuleOutput => self.check_module_output()?,
+            Instruction::BootstrapStdlib => self.bootstrap_stdlib()?,
+            Instruction::ReadModuleVersion => self.read_module_version()?,
+            Instruction::CheckModuleVersion => self.check_module_version()?,
+            Instruction::MatchModuleVersion => {
+                let Value::String(value) = self.pop()? else {
+                    return Err(invalid("checked version string"));
+                };
+                let valid = annotations::matches_module_version(&value);
+                self.stack.push(Value::Bool(valid));
+            }
             Instruction::EncodeUtf8 => {
                 let Value::String(value) = self.pop()? else {
                     return Err(invalid("UTF-8 encoding operand"));
@@ -3504,12 +3597,11 @@ impl Vm {
                 });
                 self.stack.push(Value::TypeAlias(id));
             }
+            Instruction::GuestCatch { or_null } => {
+                self.begin_guest_catch(or_null)?;
+            }
             Instruction::LoadRefModule => {
-                let id = self.heap.allocate(Object {
-                    ref_module: true,
-                    ..Object::default()
-                });
-                self.stack.push(Value::Object(id));
+                self.import_stdlib("pkl:ref")?;
             }
 
             Instruction::ReferenceRenderMethod => {
@@ -3649,6 +3741,9 @@ impl Vm {
                     .last()
                     .ok_or_else(|| invalid("missing module scope"))?;
                 self.stack.push(Value::Object(scope.receiver));
+            }
+            Instruction::ObserveNativeLiteral { span, rendered } => {
+                self.observe_native_literal(span, rendered)
             }
             Instruction::Observe(span) => {
                 let value = self
@@ -4327,6 +4422,10 @@ impl Vm {
                     .environment
                     .clone();
                 let definition = Object {
+                    ref_module: module
+                        .as_ref()
+                        .and_then(|unit| unit.identity.as_ref())
+                        .is_some_and(|identity| identity.original_uri.as_ref() == "pkl:ref"),
                     is_module: module
                         .as_ref()
                         .is_some_and(|unit| unit.mode != modules::ModuleMode::Amends),
@@ -4658,6 +4757,18 @@ display_value(&value)], ""),
                         "Resource URIs containing unmatched UTF-16 surrogates are not implemented.",
                     ));
                 };
+                if self.in_stdlib_bootstrap() {
+                    // StdLibModule's private context contains no caller properties
+                    // or environment. Only base's nullable format read is required.
+                    if nullable && uri == "prop:pkl.outputFormat" {
+                        self.stack.push(Value::Null);
+                        return Ok(());
+                    }
+                    return Err(RuntimeError::new(
+                        ErrorKind::Unsupported,
+                        "Resource reader is unavailable in standard-library initialization.",
+                    ));
+                }
                 let uri = Arc::from(uri);
                 let id = self.next_request;
                 self.next_request = id
@@ -5062,6 +5173,14 @@ fn compile_unit_into(
     source: Option<Arc<crate::value::RuntimeSource>>,
     identity: Option<crate::modules::ModuleIdentity>,
 ) -> Result<crate::modules::UnitId, RuntimeError> {
+    // Development adapters may append raw blocks without source metadata.
+    // Preserve their missing provenance while aligning the append-only arenas
+    // before compiling an imported or standard-library unit into this program.
+    if program.metadata.len() < program.blocks.len() {
+        program
+            .metadata
+            .resize_with(program.blocks.len(), BlockMetadata::default);
+    }
     let unit = crate::modules::UnitId(
         program
             .units
@@ -5082,6 +5201,7 @@ fn compile_unit_into(
         identity,
         options,
         member: PklString::default(),
+        module_annotation: false,
         let_members: Vec::new(),
         type_scopes: Vec::new(),
         modifiers: Vec::new(),
@@ -5180,7 +5300,10 @@ fn compile_unit_into(
     }
     compiler.type_scopes.push(resolved.module.members.clone());
     if let Some(declaration) = &resolved.module.declaration {
-        compiler.annotations(&declaration.annotations, &mut entry)?;
+        compiler.module_annotation = true;
+        let annotations = compiler.annotations(&declaration.annotations, &mut entry);
+        compiler.module_annotation = false;
+        annotations?;
     }
     for method in [false, true] {
         if mode == modules::ModuleMode::Amends {
@@ -5216,6 +5339,8 @@ fn compile_unit_into(
             });
         }
     }
+    entry.push(Instruction::ReadModuleVersion);
+    entry.push(Instruction::CheckModuleVersion);
     entry.push(Instruction::FinishModule);
     compiler.type_scopes.pop();
     entry.push(Instruction::Return);
@@ -5286,6 +5411,7 @@ struct Compiler<'a> {
     identity: Option<crate::modules::ModuleIdentity>,
     options: CompileOptions,
     member: PklString,
+    module_annotation: bool,
     let_members: Vec<PklString>,
     type_scopes: Vec<Vec<crate::syntax::Member>>,
     modifiers: Vec<crate::syntax::Modifier>,
@@ -5537,7 +5663,12 @@ impl Compiler<'_> {
         self.validate_modifiers(member)?;
         let previous_member = self.member.clone();
         self.member = if previous_member.is_empty() {
-            format!("#{}", member.name).into()
+            format!(
+                "{}{}",
+                if self.module_annotation { "." } else { "#" },
+                member.name
+            )
+            .into()
         } else {
             previous_member.concat(&format!(".{}", member.name).into())
         };
@@ -5665,6 +5796,7 @@ impl Compiler<'_> {
             module_receiver_input: None,
             source: self.source.clone(),
             hidden: false,
+            stdlib_bootstrap: false,
             spans: code.spans,
             member: self.member.clone(),
             declaration,

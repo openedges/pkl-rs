@@ -1,0 +1,60 @@
+{
+  "scope": "Separate actual Java source; all previous captures retained unchanged.",
+  "sessionId": 27893,
+  "actualExitCode": 0,
+  "intendedForceBoundaryReached": true,
+  "reason": "Onlymissing=bad correction: outerobject.toString renders ownundefined as?, but innercatch/catchOrNull observe undefined exception first; allfollowups/retries fullrawsuccess.",
+  "allRawUnitByteOppositeChannelsVerified": true,
+  "bindings": [
+    {
+      "rawPrefix": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-0",
+      "utf8Sha256": "25d1f5b8d376feca0261b79193dd66b99083f74b1777815081907c08d3d61e12",
+      "utf16BESha256": "ff3a6781cf5209f4f5936a56b30ae8bb29783699a97c70fe0244e6eec1ce258e"
+    },
+    {
+      "rawPrefix": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-1",
+      "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+      "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "rawPrefix": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-2",
+      "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+      "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "rawPrefix": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-3",
+      "utf8Sha256": "25d1f5b8d376feca0261b79193dd66b99083f74b1777815081907c08d3d61e12",
+      "utf16BESha256": "ff3a6781cf5209f4f5936a56b30ae8bb29783699a97c70fe0244e6eec1ce258e"
+    },
+    {
+      "rawPrefix": "cases/nearest-guest-handler-inside-allow-undefined-force/0/calls/outer-4",
+      "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "rawPrefix": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-0",
+      "utf8Sha256": "25d1f5b8d376feca0261b79193dd66b99083f74b1777815081907c08d3d61e12",
+      "utf16BESha256": "ff3a6781cf5209f4f5936a56b30ae8bb29783699a97c70fe0244e6eec1ce258e"
+    },
+    {
+      "rawPrefix": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-1",
+      "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+      "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "rawPrefix": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-2",
+      "utf8Sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f",
+      "utf16BESha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "rawPrefix": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-3",
+      "utf8Sha256": "25d1f5b8d376feca0261b79193dd66b99083f74b1777815081907c08d3d61e12",
+      "utf16BESha256": "ff3a6781cf5209f4f5936a56b30ae8bb29783699a97c70fe0244e6eec1ce258e"
+    },
+    {
+      "rawPrefix": "cases/nearest-guest-handler-inside-allow-undefined-force/1/calls/outer-4",
+      "utf8Sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "utf16BESha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    }
+  ]
+}

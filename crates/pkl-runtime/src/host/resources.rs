@@ -35,13 +35,10 @@ pub(crate) fn configured_result(
         scheme,
         "prop" | "env" | "file" | "modulepath" | "package" | "projectpackage" | "https"
     ) {
-        return Err(RuntimeError::new(
-            ErrorKind::Host,
-            format!(
-                "Refusing to read resource `{}` because it does not match any entry in the resource allowlist (`--allowed-resources`).",
-                uri.text
-            ),
-        ));
+        return Err(RuntimeError::host_language(format!(
+            "Refusing to read resource `{}` because it does not match any entry in the resource allowlist (`--allowed-resources`).",
+            uri.text
+        )));
     }
     if matches!(scheme, "env" | "prop") {
         // URI.getSchemeSpecificPart decodes escapes; property/environment maps
@@ -79,10 +76,10 @@ pub(crate) fn configured_result(
         if request.nullable {
             return Ok(Value::Null);
         }
-        return Err(RuntimeError::new(
-            ErrorKind::Host,
-            format!("Cannot find resource `{}`.", request.uri),
-        ));
+        return Err(RuntimeError::host_language(format!(
+            "Cannot find resource `{}`.",
+            request.uri
+        )));
     }
     Err(unsupported(format!(
         "The default resource Host does not yet implement allowed `{scheme}` reads (`{}`).",
@@ -103,10 +100,8 @@ pub(crate) fn prepare_module_uri(
     };
     let parsed = ResourceUri::parse(&text).map_err(|error| match error {
         ParseError::Syntax(reason) => {
-            let mut error = RuntimeError::new(
-                ErrorKind::Host,
-                format!("Module URI `{authored}` has invalid syntax."),
-            );
+            let mut error =
+                RuntimeError::host_language(format!("Module URI `{authored}` has invalid syntax."));
             error.hint = Some(reason.into());
             error
         }
@@ -148,10 +143,9 @@ impl ResourceUri {
         };
         let uri = Self::parse(&text).map_err(|error| match error {
             ParseError::Syntax(reason) => {
-                let mut error = RuntimeError::new(
-                    ErrorKind::Host,
-                    format!("Resource URI `{authored}` has invalid syntax."),
-                );
+                let mut error = RuntimeError::host_language(format!(
+                    "Resource URI `{authored}` has invalid syntax."
+                ));
                 error.hint = Some(reason.into());
                 error
             }

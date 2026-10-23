@@ -1,0 +1,82 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+    "GuestCatchProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/cases/returned-lazy-object-versus-forced-undefined/0/calls",
+    "plain"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/0/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/0/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/0/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/runtime-private/returned-lazy-object-versus-forced-undefined/0/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "startedUnixNs": 1792733749292936000,
+  "finishedUnixNs": 1792733750389368000,
+  "result": {
+    "exit_code": 0,
+    "elapsed_ns": 1095467834,
+    "sha256": {
+      "stdout": "d1fb778b69ebef6c42c68b3e46018710d4f0bd0a8ffbe04341595876eaf3df7b",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "timed_out": false,
+    "workspace_changes": {},
+    "files": {}
+  },
+  "case": "returned-lazy-object-versus-forced-undefined",
+  "repeat": 0,
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined/main.pkl",
+  "sourceSha256": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539",
+  "workspaceBefore": {
+    "callbacks.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expressions.txt": {
+      "kind": "file",
+      "sha256": "2225187837e2140f004a1aa77836152ad6545e21a34b0c6322ca4c48d2273fc7"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539"
+    }
+  },
+  "workspaceAfter": {
+    "callbacks.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expressions.txt": {
+      "kind": "file",
+      "sha256": "2225187837e2140f004a1aa77836152ad6545e21a34b0c6322ca4c48d2273fc7"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539"
+    }
+  }
+}

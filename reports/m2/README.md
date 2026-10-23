@@ -59,6 +59,37 @@ Stage 43 preserves canonical diagnostic strings through the shared engine and
 native/Node/Wasm boundaries, and corrects literal-union type-check equivalence.
 These checkpoints do not complete the language milestone.
 
+## Stage 45 implementation checkpoint
+
+The [implementation checkpoint](stage45-implementation-checkpoint.json) records
+supported source-backed standard modules, guest catch continuations, ModuleInfo
+validation, and typed security-denial completions. See the [execution contract](../../docs/m2-stdlib-bootstrap.md)
+for the shared VM design and the boundaries that remain incomplete.
+
+All five required Rust checks passed with stable source snapshots. Three fixture
+verifiers, 27 Python tooling tests, and 22 JavaScript transport tests passed.
+Manifest freshness was restored by updating 102 implementation-source hashes;
+case definitions, execution states, counts, and ordering did not change.
+The final native candidate matches both repetitions of six original modules.
+Actual Node and Chromium match the declared guest-catch, ordinary ModuleInfo,
+and typed security-denial comparisons. Constructor-only and terminal partial
+comparisons, Java internal errors, and independent-root follow-ups retain their
+separate outcomes and limitations.
+
+Broader bootstrap comparisons retain 194 passes, 192 unsupported calls, and
+214 mismatches per target. Missing reflection/JSON bindings, resource-read
+counts, and JVM-global standard-module caches remain required work. The common
+platform comparison has 6,078 shared-engine matches and 6,076 Java matches per
+target; both known regex failures remain failures.
+
+The M1 platform collector directly captured 76 of 77 production inputs. Its
+omitted `stdlib/modules.txt` is bound separately by the complete source freeze
+before platform acquisition and the identical native snapshot afterward. It is
+not relabeled as an M1-captured input. Complete raw archive publication,
+committed-source binding, and full selected/lifecycle regression follow this
+implementation checkpoint. No hosted CI, full compatibility, or performance
+completion is claimed.
+
 ## Native JVM-classpath checkpoint
 
 The [committed source binding](classpath-committed-source-binding.json) verifies

@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Module `moduleinfo.control_16` requires Pkl version 99.99.99 or higher, but your Pkl version is 0.32.0.
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at ModuleInfoProbe.capture(ModuleInfoProbe.java:17)
+	at ModuleInfoProbe.main(ModuleInfoProbe.java:30)

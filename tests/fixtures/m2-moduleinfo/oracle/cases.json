@@ -1,0 +1,394 @@
+[
+  {
+    "id": "construct-current",
+    "kind": "construct",
+    "authoredValue": "\"0.32.0\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-current",
+    "source": "module moduleinfo.control_0\nobj = new ModuleInfo { minPklVersion = \"0.32.0\" }\nstable = 7\n",
+    "sourceSha256": "fb95e61225ced01f6bd6b6f209b271c99f8efa7e6780a715da223d8b02c18a85",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-current/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-older",
+    "kind": "construct",
+    "authoredValue": "\"0.31.0\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-older",
+    "source": "module moduleinfo.control_1\nobj = new ModuleInfo { minPklVersion = \"0.31.0\" }\nstable = 7\n",
+    "sourceSha256": "19427c09a6b47cdfa292bde34a8c925ee8cc4e49896d55b2c61838f4da6b6c52",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-older/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-future",
+    "kind": "construct",
+    "authoredValue": "\"99.99.99\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-future",
+    "source": "module moduleinfo.control_2\nobj = new ModuleInfo { minPklVersion = \"99.99.99\" }\nstable = 7\n",
+    "sourceSha256": "72e43f61faee2b3ed353da7d439051305b8a9af4161eee57202d976cf6e24f13",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-future/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-leading-zero",
+    "kind": "construct",
+    "authoredValue": "\"01.02.03\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-leading-zero",
+    "source": "module moduleinfo.control_3\nobj = new ModuleInfo { minPklVersion = \"01.02.03\" }\nstable = 7\n",
+    "sourceSha256": "26fc91d02bf1b77e8f4cd9790f0c047b233c23f07cdfe8f2228af5188e32d426",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-leading-zero/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-one-digit",
+    "kind": "construct",
+    "authoredValue": "\"0.1.2\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-one-digit",
+    "source": "module moduleinfo.control_4\nobj = new ModuleInfo { minPklVersion = \"0.1.2\" }\nstable = 7\n",
+    "sourceSha256": "e7565ab35acd7222b92f6f0dbc14cefdc8d8172a92888d1c2060331cac5efa25",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-one-digit/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-three-digit",
+    "kind": "construct",
+    "authoredValue": "\"123.2.3\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-three-digit",
+    "source": "module moduleinfo.control_5\nobj = new ModuleInfo { minPklVersion = \"123.2.3\" }\nstable = 7\n",
+    "sourceSha256": "c48fbb37a3c8d120847c34e11f43e4b1f5394335bc5d8a48765c4c3213a4fba5",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-three-digit/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-suffix",
+    "kind": "construct",
+    "authoredValue": "\"0.32.0-dev\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-suffix",
+    "source": "module moduleinfo.control_6\nobj = new ModuleInfo { minPklVersion = \"0.32.0-dev\" }\nstable = 7\n",
+    "sourceSha256": "89b324d7806e9d74fc22c0c62144c096bba2b39364d23453e2bf606271172bdf",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-suffix/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-spaces",
+    "kind": "construct",
+    "authoredValue": "\" 0.32.0 \"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-spaces",
+    "source": "module moduleinfo.control_7\nobj = new ModuleInfo { minPklVersion = \" 0.32.0 \" }\nstable = 7\n",
+    "sourceSha256": "8327a28c76ecd3792ec8443c58ebd02731a84416ae1cf47ad4218efa3c3c00b8",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-spaces/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-arabic-digits",
+    "kind": "construct",
+    "authoredValue": "\"\u0660.\u0663\u0662.\u0660\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-arabic-digits",
+    "source": "module moduleinfo.control_8\nobj = new ModuleInfo { minPklVersion = \"\u0660.\u0663\u0662.\u0660\" }\nstable = 7\n",
+    "sourceSha256": "3cc59e22da73f38c5020facdbbdbaf5c4cc1f326908d127b44dcf095c5c51ac4",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-arabic-digits/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-fullwidth-digits",
+    "kind": "construct",
+    "authoredValue": "\"\uff10.\uff13\uff12.\uff10\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-fullwidth-digits",
+    "source": "module moduleinfo.control_9\nobj = new ModuleInfo { minPklVersion = \"\uff10.\uff13\uff12.\uff10\" }\nstable = 7\n",
+    "sourceSha256": "70b2353b471b74f45e0fe399e2d06796d3b496e480fbf58cc1ead0eb70c3a9df",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-fullwidth-digits/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-short",
+    "kind": "construct",
+    "authoredValue": "\"0.32\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-short",
+    "source": "module moduleinfo.control_10\nobj = new ModuleInfo { minPklVersion = \"0.32\" }\nstable = 7\n",
+    "sourceSha256": "cef18904c522ffe87b62593792c3bf56655496d3ea7f097c7c51c1b0510c3bfc",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-short/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-extra-part",
+    "kind": "construct",
+    "authoredValue": "\"0.32.0.1\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-extra-part",
+    "source": "module moduleinfo.control_11\nobj = new ModuleInfo { minPklVersion = \"0.32.0.1\" }\nstable = 7\n",
+    "sourceSha256": "3d9e21166364b482b912dbb273c5b64f7b77ebed59de4c7b5ede7ef8b4d43867",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-extra-part/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-integer",
+    "kind": "construct",
+    "authoredValue": "42",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-integer",
+    "source": "module moduleinfo.control_12\nobj = new ModuleInfo { minPklVersion = 42 }\nstable = 7\n",
+    "sourceSha256": "bc51932f6dc844396045f1dd0ff64ecacb6b4566dcbbc112a90318a4dfbcf4fc",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-integer/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "construct-missing",
+    "kind": "construct",
+    "authoredValue": null,
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-missing",
+    "source": "module moduleinfo.control_13\nobj = new ModuleInfo {  }\nstable = 7\n",
+    "sourceSha256": "91c9fee1e9675564e0a1b4341234f115fb9e9013b8e19ef54323c9f624fac30a",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-missing/main.pkl",
+    "expressions": [
+      "obj.minPklVersion",
+      "obj.getClass() == ModuleInfo",
+      "obj.minPklVersion"
+    ]
+  },
+  {
+    "id": "annotation-current",
+    "kind": "annotation",
+    "authoredValue": "\"0.32.0\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-current",
+    "source": "@ModuleInfo { minPklVersion = \"0.32.0\" }\nmodule moduleinfo.control_14\nstable = 7\n",
+    "sourceSha256": "96d77b8ff93fbeb076d09e1a754356ea2f61c28cfd58d365ae65c21703cb6f6b",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-current/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-older",
+    "kind": "annotation",
+    "authoredValue": "\"0.31.0\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-older",
+    "source": "@ModuleInfo { minPklVersion = \"0.31.0\" }\nmodule moduleinfo.control_15\nstable = 7\n",
+    "sourceSha256": "0f9f976ac042171117435f74fb544923566ae245d7b327b9ed596a572b8a3da3",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-older/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-future",
+    "kind": "annotation",
+    "authoredValue": "\"99.99.99\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-future",
+    "source": "@ModuleInfo { minPklVersion = \"99.99.99\" }\nmodule moduleinfo.control_16\nstable = 7\n",
+    "sourceSha256": "85b243f583790b7a7463ad325a1d1d92025ce23b62eb32b9a7b73f0684e1084f",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-future/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-leading-zero",
+    "kind": "annotation",
+    "authoredValue": "\"01.02.03\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-leading-zero",
+    "source": "@ModuleInfo { minPklVersion = \"01.02.03\" }\nmodule moduleinfo.control_17\nstable = 7\n",
+    "sourceSha256": "695ff363db6ec8ff10d6350afaebd39a05b37bd8ac5863e961cc85f54de1b91b",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-leading-zero/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-one-digit",
+    "kind": "annotation",
+    "authoredValue": "\"0.1.2\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-one-digit",
+    "source": "@ModuleInfo { minPklVersion = \"0.1.2\" }\nmodule moduleinfo.control_18\nstable = 7\n",
+    "sourceSha256": "bd7ddbe4824db0d18e496c2aeb651caec5418bae3f76a44d56a402ef68e641cc",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-one-digit/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-three-digit",
+    "kind": "annotation",
+    "authoredValue": "\"123.2.3\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-three-digit",
+    "source": "@ModuleInfo { minPklVersion = \"123.2.3\" }\nmodule moduleinfo.control_19\nstable = 7\n",
+    "sourceSha256": "70b88da2fac0a2f4b37a2ba80411243fd15403419b08a9d425d3ecf03e92b83d",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-three-digit/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-suffix",
+    "kind": "annotation",
+    "authoredValue": "\"0.32.0-dev\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-suffix",
+    "source": "@ModuleInfo { minPklVersion = \"0.32.0-dev\" }\nmodule moduleinfo.control_20\nstable = 7\n",
+    "sourceSha256": "d7a7eb06232456b5e0baf2a611174303f3967837bff1d15208dbbacf5cefbcfa",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-suffix/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-spaces",
+    "kind": "annotation",
+    "authoredValue": "\" 0.32.0 \"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-spaces",
+    "source": "@ModuleInfo { minPklVersion = \" 0.32.0 \" }\nmodule moduleinfo.control_21\nstable = 7\n",
+    "sourceSha256": "9018d3b3e5defb4f8ce9ae80daeb58fc01b78a728fd1e9620415f234dc52903f",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-spaces/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-arabic-digits",
+    "kind": "annotation",
+    "authoredValue": "\"\u0660.\u0663\u0662.\u0660\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-arabic-digits",
+    "source": "@ModuleInfo { minPklVersion = \"\u0660.\u0663\u0662.\u0660\" }\nmodule moduleinfo.control_22\nstable = 7\n",
+    "sourceSha256": "b26a9482473c0d76ffed22b1cffae051f9f251341e5a90d5264815204028cb0a",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-arabic-digits/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-fullwidth-digits",
+    "kind": "annotation",
+    "authoredValue": "\"\uff10.\uff13\uff12.\uff10\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-fullwidth-digits",
+    "source": "@ModuleInfo { minPklVersion = \"\uff10.\uff13\uff12.\uff10\" }\nmodule moduleinfo.control_23\nstable = 7\n",
+    "sourceSha256": "be667c1a256e2b818fc7f2a201c79e37643bb70ce7144a1f00dc498c32e62830",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-fullwidth-digits/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-short",
+    "kind": "annotation",
+    "authoredValue": "\"0.32\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-short",
+    "source": "@ModuleInfo { minPklVersion = \"0.32\" }\nmodule moduleinfo.control_24\nstable = 7\n",
+    "sourceSha256": "69960cbed9a356fa075331c76e3f1227ca9468cfb044238d8117d32829bbd74d",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-short/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-extra-part",
+    "kind": "annotation",
+    "authoredValue": "\"0.32.0.1\"",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-extra-part",
+    "source": "@ModuleInfo { minPklVersion = \"0.32.0.1\" }\nmodule moduleinfo.control_25\nstable = 7\n",
+    "sourceSha256": "8ca8fdef2c0e7905ca24d17912be5a5b1fc91f6ce9c89cfe4e24c2651a13f9d0",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-extra-part/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-integer",
+    "kind": "annotation",
+    "authoredValue": "42",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-integer",
+    "source": "@ModuleInfo { minPklVersion = 42 }\nmodule moduleinfo.control_26\nstable = 7\n",
+    "sourceSha256": "0ede27533030abf0d27385f56f2d74655de0ed6678e343173e7b4e15906812e4",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-integer/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  },
+  {
+    "id": "annotation-missing",
+    "kind": "annotation",
+    "authoredValue": null,
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-missing",
+    "source": "@ModuleInfo {  }\nmodule moduleinfo.control_27\nstable = 7\n",
+    "sourceSha256": "8f2f0c76469238e6ea44d247d2586430090a40623bbda1dbc4c1c99efd9d119e",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-missing/main.pkl",
+    "expressions": [
+      "stable",
+      "stable",
+      "stable"
+    ]
+  }
+]

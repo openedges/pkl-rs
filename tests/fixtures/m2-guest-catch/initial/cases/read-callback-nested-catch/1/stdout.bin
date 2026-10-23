@@ -1,0 +1,11 @@
+read catch:/resource attempt=1
+callback-start
+inner-0 success
+inner-1 success
+callback-end
+outer-0 success
+read catch:/resource attempt=2
+outer-1 success
+outer-2 success
+outer-3 success
+outer-4 success

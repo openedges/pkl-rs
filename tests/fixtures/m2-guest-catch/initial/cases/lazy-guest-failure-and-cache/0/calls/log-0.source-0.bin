@@ -1,0 +1,1 @@
+failing = if (trace(true)) throw("lazy-error") else 0

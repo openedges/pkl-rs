@@ -1,0 +1,15 @@
+resolve catch:/child attempt=1
+source-start catch:/child attempt=1
+callback-start
+inner-0 success
+inner-1 success
+resolve catch:/child attempt=2
+source-start catch:/child attempt=2
+source-end catch:/child attempt=2
+inner-2 success
+callback-end
+outer-0 success
+outer-1 success
+outer-2 success
+outer-3 success
+outer-4 success

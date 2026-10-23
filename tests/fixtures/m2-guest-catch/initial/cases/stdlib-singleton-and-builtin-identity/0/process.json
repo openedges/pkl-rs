@@ -1,0 +1,82 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/stdlib-singleton-and-builtin-identity/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/stdlib-singleton-and-builtin-identity/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+    "GuestCatchProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/stdlib-singleton-and-builtin-identity",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/cases/stdlib-singleton-and-builtin-identity/0/calls",
+    "plain"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/stdlib-singleton-and-builtin-identity",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/stdlib-singleton-and-builtin-identity/0/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/stdlib-singleton-and-builtin-identity/0/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/stdlib-singleton-and-builtin-identity/0/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/stdlib-singleton-and-builtin-identity/0/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "startedUnixNs": 1792732765709351000,
+  "finishedUnixNs": 1792732766460289000,
+  "result": {
+    "exit_code": 0,
+    "elapsed_ns": 750039625,
+    "sha256": {
+      "stdout": "99fd693665e7ede9d66cf1c38200ef98b41df44830958203651d5a588e16f54d",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "timed_out": false,
+    "workspace_changes": {},
+    "files": {}
+  },
+  "case": "stdlib-singleton-and-builtin-identity",
+  "repeat": 0,
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/stdlib-singleton-and-builtin-identity/main.pkl",
+  "sourceSha256": "0026c95944597e64e4f6c8d8e1bc92b5926c841f43cce7208db36eb88ee60a45",
+  "workspaceBefore": {
+    "callbacks.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expressions.txt": {
+      "kind": "file",
+      "sha256": "256a73e8cd24da45e95fcecfc6f152fdfe5c1223bf65d035436703562afd03df"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "0026c95944597e64e4f6c8d8e1bc92b5926c841f43cce7208db36eb88ee60a45"
+    }
+  },
+  "workspaceAfter": {
+    "callbacks.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expressions.txt": {
+      "kind": "file",
+      "sha256": "256a73e8cd24da45e95fcecfc6f152fdfe5c1223bf65d035436703562afd03df"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "0026c95944597e64e4f6c8d8e1bc92b5926c841f43cce7208db36eb88ee60a45"
+    }
+  }
+}

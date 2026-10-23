@@ -79,6 +79,7 @@ fn append(
         identity: Some(identity.clone()),
         options,
         member: "repl:text".into(),
+        module_annotation: false,
         let_members: Vec::new(),
         type_scopes: Vec::new(),
         runtime_type_owner: true,

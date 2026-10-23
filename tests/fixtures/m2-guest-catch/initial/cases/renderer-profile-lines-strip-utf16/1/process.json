@@ -1,0 +1,82 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/renderer-profile-lines-strip-utf16/1/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/renderer-profile-lines-strip-utf16/1/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+    "GuestCatchProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/renderer-profile-lines-strip-utf16",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/cases/renderer-profile-lines-strip-utf16/1/calls",
+    "renderer"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/renderer-profile-lines-strip-utf16",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/renderer-profile-lines-strip-utf16/1/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/renderer-profile-lines-strip-utf16/1/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/renderer-profile-lines-strip-utf16/1/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/runtime-private/renderer-profile-lines-strip-utf16/1/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "startedUnixNs": 1792732796997388000,
+  "finishedUnixNs": 1792732797770230000,
+  "result": {
+    "exit_code": 0,
+    "elapsed_ns": 772149833,
+    "sha256": {
+      "stdout": "3e7dd13d63f3374686f0ffa4ead905f7c8fcd1e453f8d3c0df8b55771a9ecf69",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "timed_out": false,
+    "workspace_changes": {},
+    "files": {}
+  },
+  "case": "renderer-profile-lines-strip-utf16",
+  "repeat": 1,
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/renderer-profile-lines-strip-utf16/main.pkl",
+  "sourceSha256": "b85bd9a5b9ba83985a0e76d5853cb58735501e154048c72b799a8152e38160c6",
+  "workspaceBefore": {
+    "callbacks.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expressions.txt": {
+      "kind": "file",
+      "sha256": "3c17585cd53ac99d218364847dc8a5de8b90bcb4a98c71e23b0f163ac90ab989"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "b85bd9a5b9ba83985a0e76d5853cb58735501e154048c72b799a8152e38160c6"
+    }
+  },
+  "workspaceAfter": {
+    "callbacks.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expressions.txt": {
+      "kind": "file",
+      "sha256": "3c17585cd53ac99d218364847dc8a5de8b90bcb4a98c71e23b0f163ac90ab989"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "b85bd9a5b9ba83985a0e76d5853cb58735501e154048c72b799a8152e38160c6"
+    }
+  }
+}

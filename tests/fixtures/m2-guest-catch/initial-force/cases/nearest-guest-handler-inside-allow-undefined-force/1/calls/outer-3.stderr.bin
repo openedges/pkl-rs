@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Unexpected token `}`. Expected `=`.
+
+4 | obj = new Dynamic { caught = t.catch(() -> bad); nullable = t.catchOrNull(() -> bad); missing: unknown }
+                                                                                                           ^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/workspaces/nearest-guest-handler-inside-allow-undefined-force/main.pkl)

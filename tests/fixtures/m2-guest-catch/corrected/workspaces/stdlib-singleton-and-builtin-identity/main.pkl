@@ -1,0 +1,15 @@
+import "pkl:base" as b
+import "pkl:base" as b2
+import "pkl:test" as t
+import "pkl:test" as t2
+import "pkl:ref" as r
+import "pkl:ref" as r2
+baseSame = b == b2
+testSame = t == t2
+refSame = r == r2
+baseIntSame = b.Int == Int
+baseModuleSame = b.Module == Module
+baseDistinct = this != b
+stdDistinct = b != t && t != r && b != r
+testClassSame = t.getClass() == t2.getClass()
+unknownModule = t.catch(() -> import("pkl:missingStage45"))

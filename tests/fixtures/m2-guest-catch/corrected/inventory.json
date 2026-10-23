@@ -1,0 +1,3454 @@
+{
+  "files": [
+    {
+      "path": "GuestCatchProbe.java",
+      "bytes": 8156,
+      "sha256": "bd8649f19ec2ae54662b7849d172fe5844dae4f4e82c2dee48423ab1525f6cc8"
+    },
+    {
+      "path": "acquire.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "acquire.stdout.bin",
+      "bytes": 1688,
+      "sha256": "3f9161d5f0494c4b2da03ae4f0336e6eb25aff2ef6bca93cfea31e9c9a434c76"
+    },
+    {
+      "path": "cases.json",
+      "bytes": 3884,
+      "sha256": "df7e6cf4841bd7c45f9de9d74027bbfd723e38d80a51422dac02f68e966ae593"
+    },
+    {
+      "path": "correction-provenance.json",
+      "bytes": 627,
+      "sha256": "f9458cab2cae2063b35363017e36e3e50c7f6dc659300a9095885f6184c87bb1"
+    },
+    {
+      "path": "exclusions.json",
+      "bytes": 205,
+      "sha256": "593052a632328c1024613060f92fe0aa9eaa4cc948fd18da25749533385ec79b"
+    },
+    {
+      "path": "inputs-after.json",
+      "bytes": 5615,
+      "sha256": "6b50de77675e739c81658e89af27ddf15441827332b58e70603a1e2728ebb645"
+    },
+    {
+      "path": "inputs-before.json",
+      "bytes": 5615,
+      "sha256": "6b50de77675e739c81658e89af27ddf15441827332b58e70603a1e2728ebb645"
+    },
+    {
+      "path": "interpretation.json",
+      "bytes": 16124,
+      "sha256": "8838163bfaa21cb3992812e2c83524a76208c2b6aab006ba0196d5e96068d43e"
+    },
+    {
+      "path": "javac.process.json",
+      "bytes": 1507,
+      "sha256": "e65f13049fccf4e7a4c906abc2d1dbbcf7523eaa2b345499ee4a049fa3773a7b"
+    },
+    {
+      "path": "profile.json",
+      "bytes": 7871,
+      "sha256": "69cd23a60fae61843eef25fb75f26fd689f40fc4db1a4cb1590ece3230180817"
+    },
+    {
+      "path": "progress.json",
+      "bytes": 4928,
+      "sha256": "1462b35d726136a62ff5f67f772db20faf0bd2db54a55495f0345d6524ae4c50"
+    },
+    {
+      "path": "report.json",
+      "bytes": 89380,
+      "sha256": "e6dc08feebf6e8c11c8a056116ebe3711797cbf991d6118284019078a6e782ce"
+    },
+    {
+      "path": "run.py",
+      "bytes": 8355,
+      "sha256": "b3b5b0f8dd872bae975a25351670055aebe4283065ce09062bd8851f5db52112"
+    },
+    {
+      "path": "terminal.json",
+      "bytes": 369,
+      "sha256": "fd1df753752d857e442a30c15cf65fe089d6fd217e6415e65e4fea16949628b0"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0.process.json",
+      "bytes": 2464,
+      "sha256": "51a1f6ffb0ce56f4da819f09a0b6e39f145cbe3af825994b20db9a6e68b4ec08"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1.process.json",
+      "bytes": 2464,
+      "sha256": "706ee60ff80538b18c64e091f00b2110e8802ff616e1b549b39ee25a75c21d08"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/private-state.json",
+      "bytes": 349,
+      "sha256": "34576e78eebec82a7115f663c044c1ed825752db719a3dcf527b83f831568f38"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/process.json",
+      "bytes": 3629,
+      "sha256": "3d07df14910790869e4c72365b3ef5ceb3db6e48c00399cf39f3b45496cc6d8e"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/result.json",
+      "bytes": 294,
+      "sha256": "a24a40a7d0cb23a5a787799ee881cbac836069171246d73a8661c15bc8a94aac"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/stdout.bin",
+      "bytes": 212,
+      "sha256": "b22e8b3f669dd8cec218bf1351fd7cd714f1e176e12f438c0fb634a647f066cb"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/counters.bin",
+      "bytes": 51,
+      "sha256": "e38227781c16856ea15ead88cedd3c104278b1603eb13cbb80a74f269e9d6a4b"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/event-0.bin",
+      "bytes": 30,
+      "sha256": "82e115cc3be091fe02fe95d58b4682f0cf09aa07c407a5c1e3bc084926fb7caf"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/event-1.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/event-2.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/event-3.bin",
+      "bytes": 30,
+      "sha256": "2cdc88adb45667518bcf9cea5ee14e530831a6ba8589afcd18e9faf64168db36"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/event-4.bin",
+      "bytes": 35,
+      "sha256": "50787326b559754ef3c5135d6e4ac2f8edc1e2460da54eb349aeb4597e9cb8cd"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/event-5.bin",
+      "bytes": 33,
+      "sha256": "7989982eab150734ae2ddd39c994b8fd5e676840a81d422e358373d615ebbd0a"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/event-6.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/event-7.bin",
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/event-8.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-0.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-0.stdout.bin",
+      "bytes": 67,
+      "sha256": "6aaae01fa24b00a91c54f97ff8ef35c0058d341d4d57f3329343d1ac2c5fbdac"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-0.stdout.code-units.bin",
+      "bytes": 134,
+      "sha256": "ec89c8829659bbba82eab6aced9478afaf2c51b5ab863d0ea3ff553657f6148d"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-1.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-1.stdout.bin",
+      "bytes": 67,
+      "sha256": "6aaae01fa24b00a91c54f97ff8ef35c0058d341d4d57f3329343d1ac2c5fbdac"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-1.stdout.code-units.bin",
+      "bytes": 134,
+      "sha256": "ec89c8829659bbba82eab6aced9478afaf2c51b5ab863d0ea3ff553657f6148d"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-2.expression.bin",
+      "bytes": 5,
+      "sha256": "06b29bb318814108e94270528fe7994c096308b3692923723bf1ae6f98d50b4f"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-2.stdout.bin",
+      "bytes": 4,
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-2.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-3.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-3.expression.bin",
+      "bytes": 5,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-3.stdout.bin",
+      "bytes": 1,
+      "sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-3.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-4.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-4.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/outer-4.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/payload-blank.bin",
+      "bytes": 11,
+      "sha256": "20967933ce8b530c9248c230779fa0b0a66abad8145c2e032ccdb23c6a88bf81"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/payload-blank.code-units.bin",
+      "bytes": 18,
+      "sha256": "de3ca3c33cebc72e248b870ae7a458cdd625b6544b544c044c5eaa8637627982"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/payload-units.bin",
+      "bytes": 20,
+      "sha256": "72cc63d87ee2b2c39398df860f6a9154714cf4ce664cae1db21ff77b22df13d7"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/payload-units.code-units.bin",
+      "bytes": 28,
+      "sha256": "39535f07a8c319fac6d1d1b740b28d7f3175d35cc6f9484aa63b28a212d9e98e"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/payload-white.bin",
+      "bytes": 26,
+      "sha256": "b8b65023c26fd7d3b30df9bc82b15c8bec233598242f89375859975497260fea"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/calls/payload-white.code-units.bin",
+      "bytes": 48,
+      "sha256": "812f54a348158907fe1c24b450379a7f6c845534c8c80bba0cb54f70659aade3"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/private-state.json",
+      "bytes": 349,
+      "sha256": "34576e78eebec82a7115f663c044c1ed825752db719a3dcf527b83f831568f38"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/process.json",
+      "bytes": 3629,
+      "sha256": "c1690c8e593d29607485c6b1915cf579a5b7501f23ecbdabe0370adf6877b7d8"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/result.json",
+      "bytes": 294,
+      "sha256": "f0581ac225ce8876d58c0e685b0b5afe1bbdd004df826502a1e8fe82dd34cd76"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/stdout.bin",
+      "bytes": 212,
+      "sha256": "b22e8b3f669dd8cec218bf1351fd7cd714f1e176e12f438c0fb634a647f066cb"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/counters.bin",
+      "bytes": 51,
+      "sha256": "e38227781c16856ea15ead88cedd3c104278b1603eb13cbb80a74f269e9d6a4b"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/event-0.bin",
+      "bytes": 30,
+      "sha256": "82e115cc3be091fe02fe95d58b4682f0cf09aa07c407a5c1e3bc084926fb7caf"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/event-1.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/event-2.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/event-3.bin",
+      "bytes": 30,
+      "sha256": "2cdc88adb45667518bcf9cea5ee14e530831a6ba8589afcd18e9faf64168db36"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/event-4.bin",
+      "bytes": 35,
+      "sha256": "50787326b559754ef3c5135d6e4ac2f8edc1e2460da54eb349aeb4597e9cb8cd"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/event-5.bin",
+      "bytes": 33,
+      "sha256": "7989982eab150734ae2ddd39c994b8fd5e676840a81d422e358373d615ebbd0a"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/event-6.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/event-7.bin",
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/event-8.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-0.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-0.stdout.bin",
+      "bytes": 67,
+      "sha256": "6aaae01fa24b00a91c54f97ff8ef35c0058d341d4d57f3329343d1ac2c5fbdac"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-0.stdout.code-units.bin",
+      "bytes": 134,
+      "sha256": "ec89c8829659bbba82eab6aced9478afaf2c51b5ab863d0ea3ff553657f6148d"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-1.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-1.stdout.bin",
+      "bytes": 67,
+      "sha256": "6aaae01fa24b00a91c54f97ff8ef35c0058d341d4d57f3329343d1ac2c5fbdac"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-1.stdout.code-units.bin",
+      "bytes": 134,
+      "sha256": "ec89c8829659bbba82eab6aced9478afaf2c51b5ab863d0ea3ff553657f6148d"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-2.expression.bin",
+      "bytes": 5,
+      "sha256": "06b29bb318814108e94270528fe7994c096308b3692923723bf1ae6f98d50b4f"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-2.stdout.bin",
+      "bytes": 4,
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-2.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-3.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-3.expression.bin",
+      "bytes": 5,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-3.stdout.bin",
+      "bytes": 1,
+      "sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-3.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-4.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-4.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/outer-4.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/payload-blank.bin",
+      "bytes": 11,
+      "sha256": "20967933ce8b530c9248c230779fa0b0a66abad8145c2e032ccdb23c6a88bf81"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/payload-blank.code-units.bin",
+      "bytes": 18,
+      "sha256": "de3ca3c33cebc72e248b870ae7a458cdd625b6544b544c044c5eaa8637627982"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/payload-units.bin",
+      "bytes": 20,
+      "sha256": "72cc63d87ee2b2c39398df860f6a9154714cf4ce664cae1db21ff77b22df13d7"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/payload-units.code-units.bin",
+      "bytes": 28,
+      "sha256": "39535f07a8c319fac6d1d1b740b28d7f3175d35cc6f9484aa63b28a212d9e98e"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/payload-white.bin",
+      "bytes": 26,
+      "sha256": "b8b65023c26fd7d3b30df9bc82b15c8bec233598242f89375859975497260fea"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/calls/payload-white.code-units.bin",
+      "bytes": 48,
+      "sha256": "812f54a348158907fe1c24b450379a7f6c845534c8c80bba0cb54f70659aade3"
+    },
+    {
+      "path": "cases/resolve-retry-after-guest-catch/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0.process.json",
+      "bytes": 2573,
+      "sha256": "76da9c4e715fb797972ba22f072576e3fa7cf10215a9d2c11a0cc31b4e18e900"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1.process.json",
+      "bytes": 2573,
+      "sha256": "abce9b7ed96d18cd2eb0054a79460a60c18ec8ecca5d9f5f024b00651af6065f"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/private-state.json",
+      "bytes": 349,
+      "sha256": "34576e78eebec82a7115f663c044c1ed825752db719a3dcf527b83f831568f38"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/process.json",
+      "bytes": 3762,
+      "sha256": "12c144c70f8d3438d09949a6fe27cfeae7d0059be51c312a964182971bb6de41"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/result.json",
+      "bytes": 294,
+      "sha256": "2f42a3a1f99d3446f90d7fec5c062e975d70beb46ac33b3102bcdbe6a17bb632"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/stdout.bin",
+      "bytes": 324,
+      "sha256": "c8b59a8f4223b55d57409eab7b1421151531d1950234c46d22b903a6fdef56ae"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/counters.bin",
+      "bytes": 52,
+      "sha256": "0f0d02bd08b19e40e1bdbf951250b76dc2bf53b2fde702e6c265373882651b39"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-0.bin",
+      "bytes": 30,
+      "sha256": "82e115cc3be091fe02fe95d58b4682f0cf09aa07c407a5c1e3bc084926fb7caf"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-1.bin",
+      "bytes": 35,
+      "sha256": "50787326b559754ef3c5135d6e4ac2f8edc1e2460da54eb349aeb4597e9cb8cd"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-10.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-11.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-12.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-13.bin",
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-14.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-2.bin",
+      "bytes": 14,
+      "sha256": "505b480c827c75eab4f9841c384aa0b5c82313d3470dc9284e20de28c0919a07"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-3.bin",
+      "bytes": 15,
+      "sha256": "555a81f7f4048fcbba518fc6b9787b982fefc10baec7bb852430622b7ae6074e"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-4.bin",
+      "bytes": 15,
+      "sha256": "0dae7e3d08184cbb12623b3996014f4cf545a04d0123f35cbc7ce5ba5bfb72c7"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-5.bin",
+      "bytes": 30,
+      "sha256": "2cdc88adb45667518bcf9cea5ee14e530831a6ba8589afcd18e9faf64168db36"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-6.bin",
+      "bytes": 35,
+      "sha256": "6f5605f01c1af46829164bfe4381b8ffa8c3ac06cd160de3c6474ffa71ae2c30"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-7.bin",
+      "bytes": 33,
+      "sha256": "99523bddbdea34ee871f2c368cea6aca1262e150bfff9fa56f5d638254a6fc76"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-8.bin",
+      "bytes": 15,
+      "sha256": "6ffb6a05b9dadcd3f50c9a0c637273ee9137c3284d402c66a11d516e62509682"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/event-9.bin",
+      "bytes": 12,
+      "sha256": "548411fd6a98cdccfee5d5659ba1f2d3eaf565331046fe9d246a27302fd72f9f"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-0.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-0.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-0.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-1.expression.bin",
+      "bytes": 14,
+      "sha256": "8abd46ac9b2991494bbf11e8ab57749b756595373b5c221fabb6e1b410fab02e"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-1.stdout.bin",
+      "bytes": 14,
+      "sha256": "d12b4c060eaa83277cce4c4d6799c0c433e14d7b65925c9c12079cd259d36eb6"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-1.stdout.code-units.bin",
+      "bytes": 28,
+      "sha256": "cb130a6a91215589c7644c4808b3e39931360e70588500bdd724c5a79937683c"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-2.expression.bin",
+      "bytes": 5,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-2.stdout.bin",
+      "bytes": 1,
+      "sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/inner-2.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-0.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-0.stdout.bin",
+      "bytes": 66,
+      "sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-0.stdout.code-units.bin",
+      "bytes": 132,
+      "sha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-1.expression.bin",
+      "bytes": 5,
+      "sha256": "06b29bb318814108e94270528fe7994c096308b3692923723bf1ae6f98d50b4f"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-1.stdout.bin",
+      "bytes": 4,
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-1.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-2.expression.bin",
+      "bytes": 5,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-2.stdout.bin",
+      "bytes": 1,
+      "sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-2.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-3.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-3.expression.bin",
+      "bytes": 14,
+      "sha256": "8abd46ac9b2991494bbf11e8ab57749b756595373b5c221fabb6e1b410fab02e"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-3.stdout.bin",
+      "bytes": 14,
+      "sha256": "d12b4c060eaa83277cce4c4d6799c0c433e14d7b65925c9c12079cd259d36eb6"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-3.stdout.code-units.bin",
+      "bytes": 28,
+      "sha256": "cb130a6a91215589c7644c4808b3e39931360e70588500bdd724c5a79937683c"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-4.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-4.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/outer-4.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/payload-blank.bin",
+      "bytes": 11,
+      "sha256": "20967933ce8b530c9248c230779fa0b0a66abad8145c2e032ccdb23c6a88bf81"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/payload-blank.code-units.bin",
+      "bytes": 18,
+      "sha256": "de3ca3c33cebc72e248b870ae7a458cdd625b6544b544c044c5eaa8637627982"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/payload-units.bin",
+      "bytes": 20,
+      "sha256": "72cc63d87ee2b2c39398df860f6a9154714cf4ce664cae1db21ff77b22df13d7"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/payload-units.code-units.bin",
+      "bytes": 28,
+      "sha256": "39535f07a8c319fac6d1d1b740b28d7f3175d35cc6f9484aa63b28a212d9e98e"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/payload-white.bin",
+      "bytes": 26,
+      "sha256": "b8b65023c26fd7d3b30df9bc82b15c8bec233598242f89375859975497260fea"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/calls/payload-white.code-units.bin",
+      "bytes": 48,
+      "sha256": "812f54a348158907fe1c24b450379a7f6c845534c8c80bba0cb54f70659aade3"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/private-state.json",
+      "bytes": 349,
+      "sha256": "34576e78eebec82a7115f663c044c1ed825752db719a3dcf527b83f831568f38"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/process.json",
+      "bytes": 3762,
+      "sha256": "6033c9be2c7503f37e40dfe650a5d466ed5bdaf8e7fb2f0d4d7aca2529b4febd"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/result.json",
+      "bytes": 294,
+      "sha256": "9e02fa0ed48eaddbdcb1190721cee04b79abb9149386b994df905d6409ff2247"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/stdout.bin",
+      "bytes": 324,
+      "sha256": "c8b59a8f4223b55d57409eab7b1421151531d1950234c46d22b903a6fdef56ae"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/counters.bin",
+      "bytes": 52,
+      "sha256": "0f0d02bd08b19e40e1bdbf951250b76dc2bf53b2fde702e6c265373882651b39"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-0.bin",
+      "bytes": 30,
+      "sha256": "82e115cc3be091fe02fe95d58b4682f0cf09aa07c407a5c1e3bc084926fb7caf"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-1.bin",
+      "bytes": 35,
+      "sha256": "50787326b559754ef3c5135d6e4ac2f8edc1e2460da54eb349aeb4597e9cb8cd"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-10.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-11.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-12.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-13.bin",
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-14.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-2.bin",
+      "bytes": 14,
+      "sha256": "505b480c827c75eab4f9841c384aa0b5c82313d3470dc9284e20de28c0919a07"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-3.bin",
+      "bytes": 15,
+      "sha256": "555a81f7f4048fcbba518fc6b9787b982fefc10baec7bb852430622b7ae6074e"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-4.bin",
+      "bytes": 15,
+      "sha256": "0dae7e3d08184cbb12623b3996014f4cf545a04d0123f35cbc7ce5ba5bfb72c7"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-5.bin",
+      "bytes": 30,
+      "sha256": "2cdc88adb45667518bcf9cea5ee14e530831a6ba8589afcd18e9faf64168db36"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-6.bin",
+      "bytes": 35,
+      "sha256": "6f5605f01c1af46829164bfe4381b8ffa8c3ac06cd160de3c6474ffa71ae2c30"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-7.bin",
+      "bytes": 33,
+      "sha256": "99523bddbdea34ee871f2c368cea6aca1262e150bfff9fa56f5d638254a6fc76"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-8.bin",
+      "bytes": 15,
+      "sha256": "6ffb6a05b9dadcd3f50c9a0c637273ee9137c3284d402c66a11d516e62509682"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/event-9.bin",
+      "bytes": 12,
+      "sha256": "548411fd6a98cdccfee5d5659ba1f2d3eaf565331046fe9d246a27302fd72f9f"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-0.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-0.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-0.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-1.expression.bin",
+      "bytes": 14,
+      "sha256": "8abd46ac9b2991494bbf11e8ab57749b756595373b5c221fabb6e1b410fab02e"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-1.stdout.bin",
+      "bytes": 14,
+      "sha256": "d12b4c060eaa83277cce4c4d6799c0c433e14d7b65925c9c12079cd259d36eb6"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-1.stdout.code-units.bin",
+      "bytes": 28,
+      "sha256": "cb130a6a91215589c7644c4808b3e39931360e70588500bdd724c5a79937683c"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-2.expression.bin",
+      "bytes": 5,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-2.stdout.bin",
+      "bytes": 1,
+      "sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/inner-2.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-0.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-0.stdout.bin",
+      "bytes": 66,
+      "sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-0.stdout.code-units.bin",
+      "bytes": 132,
+      "sha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-1.expression.bin",
+      "bytes": 5,
+      "sha256": "06b29bb318814108e94270528fe7994c096308b3692923723bf1ae6f98d50b4f"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-1.stdout.bin",
+      "bytes": 4,
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-1.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-2.expression.bin",
+      "bytes": 5,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-2.stdout.bin",
+      "bytes": 1,
+      "sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-2.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "85224a5c0186b205a3e0a1ac0ac023bfb8cc6f4bf19c90be88fc5f0c2316a9fa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-3.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-3.expression.bin",
+      "bytes": 14,
+      "sha256": "8abd46ac9b2991494bbf11e8ab57749b756595373b5c221fabb6e1b410fab02e"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-3.stdout.bin",
+      "bytes": 14,
+      "sha256": "d12b4c060eaa83277cce4c4d6799c0c433e14d7b65925c9c12079cd259d36eb6"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-3.stdout.code-units.bin",
+      "bytes": 28,
+      "sha256": "cb130a6a91215589c7644c4808b3e39931360e70588500bdd724c5a79937683c"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-4.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-4.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/outer-4.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/payload-blank.bin",
+      "bytes": 11,
+      "sha256": "20967933ce8b530c9248c230779fa0b0a66abad8145c2e032ccdb23c6a88bf81"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/payload-blank.code-units.bin",
+      "bytes": 18,
+      "sha256": "de3ca3c33cebc72e248b870ae7a458cdd625b6544b544c044c5eaa8637627982"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/payload-units.bin",
+      "bytes": 20,
+      "sha256": "72cc63d87ee2b2c39398df860f6a9154714cf4ce664cae1db21ff77b22df13d7"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/payload-units.code-units.bin",
+      "bytes": 28,
+      "sha256": "39535f07a8c319fac6d1d1b740b28d7f3175d35cc6f9484aa63b28a212d9e98e"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/payload-white.bin",
+      "bytes": 26,
+      "sha256": "b8b65023c26fd7d3b30df9bc82b15c8bec233598242f89375859975497260fea"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/calls/payload-white.code-units.bin",
+      "bytes": 48,
+      "sha256": "812f54a348158907fe1c24b450379a7f6c845534c8c80bba0cb54f70659aade3"
+    },
+    {
+      "path": "cases/source-callback-inner-publication-and-catch/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0.process.json",
+      "bytes": 2526,
+      "sha256": "6d3b2aa045dc8889dc9d4e1ee39f7d65f56226e9842deba9667422e628114c48"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1.process.json",
+      "bytes": 2526,
+      "sha256": "9d35cfe58f1addd947d11bfb09a3c4467e07fe90d892e4af1ca074fb450a188a"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/private-state.json",
+      "bytes": 349,
+      "sha256": "34576e78eebec82a7115f663c044c1ed825752db719a3dcf527b83f831568f38"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/process.json",
+      "bytes": 3705,
+      "sha256": "9d974fe2a844019ab242ea298081b73dea8590b8c855cb75f52f426725b9819d"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/result.json",
+      "bytes": 294,
+      "sha256": "ed6d2fb5e6293a717847d721273d222666dadb6f8236c4eb227636e1482078e3"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/stdout.bin",
+      "bytes": 171,
+      "sha256": "bc0d519ae74ca9c2ba5980a33f341c9d802f5df8b0009aba3bd4257664c36aba"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/counters.bin",
+      "bytes": 51,
+      "sha256": "33de303fa7a90f615710d0ca730e51c0aabb0bd46f8686fb35a52197a11d19d6"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/event-0.bin",
+      "bytes": 30,
+      "sha256": "82e115cc3be091fe02fe95d58b4682f0cf09aa07c407a5c1e3bc084926fb7caf"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/event-1.bin",
+      "bytes": 35,
+      "sha256": "50787326b559754ef3c5135d6e4ac2f8edc1e2460da54eb349aeb4597e9cb8cd"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/event-2.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/event-3.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/event-4.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/event-5.bin",
+      "bytes": 39,
+      "sha256": "524998182bbcbb6112a5aa8b529c1e57ba1e601139595df10a920c5671ae2c18"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/event-6.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-0.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-0.stdout.bin",
+      "bytes": 66,
+      "sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-0.stdout.code-units.bin",
+      "bytes": 132,
+      "sha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-1.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-1.stdout.bin",
+      "bytes": 66,
+      "sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-1.stdout.code-units.bin",
+      "bytes": 132,
+      "sha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-2.expression.bin",
+      "bytes": 5,
+      "sha256": "06b29bb318814108e94270528fe7994c096308b3692923723bf1ae6f98d50b4f"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-2.stdout.bin",
+      "bytes": 66,
+      "sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-2.stdout.code-units.bin",
+      "bytes": 132,
+      "sha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-3.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-3.expression.bin",
+      "bytes": 5,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-3.java-stack.bin",
+      "bytes": 1473,
+      "sha256": "d96313bf3a9f48e94b39a8838aba729f0bde9c661fbab0441b9023706f554255"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-3.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-3.stderr.bin",
+      "bytes": 1055,
+      "sha256": "c412cccc36205c1d2d9616872282afe3d88600b713090bd3f25bfa5bfb6d053f"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-3.stderr.code-units.bin",
+      "bytes": 2094,
+      "sha256": "b328745fc93f4ae01a8b231e927b523a64bf3a42a1eb111695d9feb4af676b29"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-3.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-3.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-4.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-4.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/outer-4.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/payload-blank.bin",
+      "bytes": 11,
+      "sha256": "20967933ce8b530c9248c230779fa0b0a66abad8145c2e032ccdb23c6a88bf81"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/payload-blank.code-units.bin",
+      "bytes": 18,
+      "sha256": "de3ca3c33cebc72e248b870ae7a458cdd625b6544b544c044c5eaa8637627982"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/payload-units.bin",
+      "bytes": 20,
+      "sha256": "72cc63d87ee2b2c39398df860f6a9154714cf4ce664cae1db21ff77b22df13d7"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/payload-units.code-units.bin",
+      "bytes": 28,
+      "sha256": "39535f07a8c319fac6d1d1b740b28d7f3175d35cc6f9484aa63b28a212d9e98e"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/payload-white.bin",
+      "bytes": 26,
+      "sha256": "b8b65023c26fd7d3b30df9bc82b15c8bec233598242f89375859975497260fea"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/calls/payload-white.code-units.bin",
+      "bytes": 48,
+      "sha256": "812f54a348158907fe1c24b450379a7f6c845534c8c80bba0cb54f70659aade3"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/private-state.json",
+      "bytes": 349,
+      "sha256": "34576e78eebec82a7115f663c044c1ed825752db719a3dcf527b83f831568f38"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/process.json",
+      "bytes": 3705,
+      "sha256": "49c466e2e1a0f8221379d281c56fcd7cfd14e0e1d931dd19ef04544846d57559"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/result.json",
+      "bytes": 294,
+      "sha256": "5cd81d325d33c9adc241f9e3c64f3e020176e9d5e8fd94784e65cae395e1fccc"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/stdout.bin",
+      "bytes": 171,
+      "sha256": "bc0d519ae74ca9c2ba5980a33f341c9d802f5df8b0009aba3bd4257664c36aba"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/counters.bin",
+      "bytes": 51,
+      "sha256": "33de303fa7a90f615710d0ca730e51c0aabb0bd46f8686fb35a52197a11d19d6"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/event-0.bin",
+      "bytes": 30,
+      "sha256": "82e115cc3be091fe02fe95d58b4682f0cf09aa07c407a5c1e3bc084926fb7caf"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/event-1.bin",
+      "bytes": 35,
+      "sha256": "50787326b559754ef3c5135d6e4ac2f8edc1e2460da54eb349aeb4597e9cb8cd"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/event-2.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/event-3.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/event-4.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/event-5.bin",
+      "bytes": 39,
+      "sha256": "524998182bbcbb6112a5aa8b529c1e57ba1e601139595df10a920c5671ae2c18"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/event-6.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-0.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-0.stdout.bin",
+      "bytes": 66,
+      "sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-0.stdout.code-units.bin",
+      "bytes": 132,
+      "sha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-1.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-1.stdout.bin",
+      "bytes": 66,
+      "sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-1.stdout.code-units.bin",
+      "bytes": 132,
+      "sha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-2.expression.bin",
+      "bytes": 5,
+      "sha256": "06b29bb318814108e94270528fe7994c096308b3692923723bf1ae6f98d50b4f"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-2.stdout.bin",
+      "bytes": 66,
+      "sha256": "50bf3158411c02e8f1312a16546110ac28f9f266dca477e1b828d7cf122292ef"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-2.stdout.code-units.bin",
+      "bytes": 132,
+      "sha256": "581651c229d345ee3b64c73636eb542ddcaf375da7edb508092d688b19faabff"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-3.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-3.expression.bin",
+      "bytes": 5,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-3.java-stack.bin",
+      "bytes": 1473,
+      "sha256": "d96313bf3a9f48e94b39a8838aba729f0bde9c661fbab0441b9023706f554255"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-3.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-3.stderr.bin",
+      "bytes": 1055,
+      "sha256": "c412cccc36205c1d2d9616872282afe3d88600b713090bd3f25bfa5bfb6d053f"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-3.stderr.code-units.bin",
+      "bytes": 2094,
+      "sha256": "b328745fc93f4ae01a8b231e927b523a64bf3a42a1eb111695d9feb4af676b29"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-3.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-3.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-4.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-4.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/outer-4.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/payload-blank.bin",
+      "bytes": 11,
+      "sha256": "20967933ce8b530c9248c230779fa0b0a66abad8145c2e032ccdb23c6a88bf81"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/payload-blank.code-units.bin",
+      "bytes": 18,
+      "sha256": "de3ca3c33cebc72e248b870ae7a458cdd625b6544b544c044c5eaa8637627982"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/payload-units.bin",
+      "bytes": 20,
+      "sha256": "72cc63d87ee2b2c39398df860f6a9154714cf4ce664cae1db21ff77b22df13d7"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/payload-units.code-units.bin",
+      "bytes": 28,
+      "sha256": "39535f07a8c319fac6d1d1b740b28d7f3175d35cc6f9484aa63b28a212d9e98e"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/payload-white.bin",
+      "bytes": 26,
+      "sha256": "b8b65023c26fd7d3b30df9bc82b15c8bec233598242f89375859975497260fea"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/calls/payload-white.code-units.bin",
+      "bytes": 48,
+      "sha256": "812f54a348158907fe1c24b450379a7f6c845534c8c80bba0cb54f70659aade3"
+    },
+    {
+      "path": "cases/source-failure-cache-after-guest-catch/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0.process.json",
+      "bytes": 2510,
+      "sha256": "460cce5a208017cae76f8ae9191598c40d2b0483700168c825a35b5111f2004e"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1.process.json",
+      "bytes": 2510,
+      "sha256": "0e9af99db9763c9852528ff808f0b0a3d1fffdc88cbc56ac13fa0e890b14c042"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/private-state.json",
+      "bytes": 349,
+      "sha256": "34576e78eebec82a7115f663c044c1ed825752db719a3dcf527b83f831568f38"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/process.json",
+      "bytes": 3687,
+      "sha256": "60b0ca4a5f2e54174b469c7791174b07a028f9a52ce5d387570ffeb3deedeb6d"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/result.json",
+      "bytes": 294,
+      "sha256": "d98efc76b02981d07d49420b477d5722657b23a10991ae8ca26694f1040a727e"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/stdout.bin",
+      "bytes": 160,
+      "sha256": "cc11cff3f31088fc89ea202c9909951b4b9e18891b52e5da92833723df281b8e"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/counters.bin",
+      "bytes": 52,
+      "sha256": "469e8900c3e88561cba1ce4595dbe8b79587752d7790a57565b46035b809b0e9"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/event-0.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/event-1.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/event-2.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/event-3.bin",
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/event-4.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/event-5.bin",
+      "bytes": 15,
+      "sha256": "5e26bd2943a0be3bbc032b13836155e0e8099fb425314516ba17b09983f106d8"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/event-6.bin",
+      "bytes": 15,
+      "sha256": "b43f8cd89171b8cd483e84de3d63caf7a37cf20ebd65b6ce1517957442f9b0c4"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/event-7.bin",
+      "bytes": 15,
+      "sha256": "dd6bc9a3604bb4a1a327c260947afcb96dcb14b60c73054202e4b87800b5f048"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/event-8.bin",
+      "bytes": 15,
+      "sha256": "cb71d10d091f5c3c00073e7b8fd29222884538683d906900736257ec2e635548"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/event-9.bin",
+      "bytes": 15,
+      "sha256": "87a9a68636673836d474013cbe367d76dd8157566e4e40254f0ebe055da28727"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-0.expression.bin",
+      "bytes": 8,
+      "sha256": "1562a1da156fd71685c67fc8656c963d6805f487f818254ea0c58bb9c2792d5f"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-0.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-0.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-1.expression.bin",
+      "bytes": 8,
+      "sha256": "88b2323ed9f599318fc14e92535ddc0a2c71487eb015096df649aa0224f0b0bb"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-1.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-1.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-2.expression.bin",
+      "bytes": 7,
+      "sha256": "b65010e17b7c78e5867ac3ef4b73af25050e256191a47b4fbfd731f2151eb52b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-2.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-2.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-3.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-3.expression.bin",
+      "bytes": 11,
+      "sha256": "23114e3354e4f23ad30fc1f7e45258a523e0a5cd6807d074a8614da75a9b135f"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-3.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-3.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-4.expression.bin",
+      "bytes": 14,
+      "sha256": "c158ea9edef1d283ae9852fdeb2af879e8bacfc0293508951f75d2a8a89e1284"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-4.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-4.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-5.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-5.expression.bin",
+      "bytes": 12,
+      "sha256": "290391542fe0121ec7422478c57e8672b4dfb87f364305659fb9b9bb389b962a"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-5.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-5.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-5.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-5.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-5.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-5.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-6.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-6.expression.bin",
+      "bytes": 11,
+      "sha256": "3f6fd9038f6edc7430253a3cd94ce76a7221e0af12081f49eeb6c4114156f235"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-6.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-6.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-6.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-6.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-6.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-6.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-7.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-7.expression.bin",
+      "bytes": 13,
+      "sha256": "afb33840ef5f84f16f5768c9aa7f91333975f7b79cbea0c6a3a5a997239d7142"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-7.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-7.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-7.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-7.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-7.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-7.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-8.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-8.expression.bin",
+      "bytes": 13,
+      "sha256": "43bf4386bb59a6e5dc0343a3bbfff8c87c670ee3142e7607eb7ae65813b94e6f"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-8.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-8.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-8.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-8.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-8.stdout.bin",
+      "bytes": 57,
+      "sha256": "05752359bd86035af4739dcf4cade0b37faf4c0356a0f34315ee8be390380249"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-8.stdout.code-units.bin",
+      "bytes": 114,
+      "sha256": "94d9b6362e07067993c57cf15fd98b8aa842ec97a7dbc9f9981344f42229a864"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-9.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-9.expression.bin",
+      "bytes": 8,
+      "sha256": "1562a1da156fd71685c67fc8656c963d6805f487f818254ea0c58bb9c2792d5f"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-9.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-9.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-9.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-9.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-9.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/outer-9.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/payload-blank.bin",
+      "bytes": 11,
+      "sha256": "20967933ce8b530c9248c230779fa0b0a66abad8145c2e032ccdb23c6a88bf81"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/payload-blank.code-units.bin",
+      "bytes": 18,
+      "sha256": "de3ca3c33cebc72e248b870ae7a458cdd625b6544b544c044c5eaa8637627982"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/payload-units.bin",
+      "bytes": 20,
+      "sha256": "72cc63d87ee2b2c39398df860f6a9154714cf4ce664cae1db21ff77b22df13d7"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/payload-units.code-units.bin",
+      "bytes": 28,
+      "sha256": "39535f07a8c319fac6d1d1b740b28d7f3175d35cc6f9484aa63b28a212d9e98e"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/payload-white.bin",
+      "bytes": 26,
+      "sha256": "b8b65023c26fd7d3b30df9bc82b15c8bec233598242f89375859975497260fea"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/calls/payload-white.code-units.bin",
+      "bytes": 48,
+      "sha256": "812f54a348158907fe1c24b450379a7f6c845534c8c80bba0cb54f70659aade3"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/private-state.json",
+      "bytes": 349,
+      "sha256": "34576e78eebec82a7115f663c044c1ed825752db719a3dcf527b83f831568f38"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/process.json",
+      "bytes": 3687,
+      "sha256": "3947c71c7322bb184582b44c1616b3ffbf7c350ca598dbc1476edd0f623e9307"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/result.json",
+      "bytes": 294,
+      "sha256": "cd32a86fecadabd6bc2b9a8539acce2a0820a9dea863c20412717137fb52e53e"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/stdout.bin",
+      "bytes": 160,
+      "sha256": "cc11cff3f31088fc89ea202c9909951b4b9e18891b52e5da92833723df281b8e"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/counters.bin",
+      "bytes": 52,
+      "sha256": "469e8900c3e88561cba1ce4595dbe8b79587752d7790a57565b46035b809b0e9"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/event-0.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/event-1.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/event-2.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/event-3.bin",
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/event-4.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/event-5.bin",
+      "bytes": 15,
+      "sha256": "5e26bd2943a0be3bbc032b13836155e0e8099fb425314516ba17b09983f106d8"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/event-6.bin",
+      "bytes": 15,
+      "sha256": "b43f8cd89171b8cd483e84de3d63caf7a37cf20ebd65b6ce1517957442f9b0c4"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/event-7.bin",
+      "bytes": 15,
+      "sha256": "dd6bc9a3604bb4a1a327c260947afcb96dcb14b60c73054202e4b87800b5f048"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/event-8.bin",
+      "bytes": 15,
+      "sha256": "cb71d10d091f5c3c00073e7b8fd29222884538683d906900736257ec2e635548"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/event-9.bin",
+      "bytes": 15,
+      "sha256": "87a9a68636673836d474013cbe367d76dd8157566e4e40254f0ebe055da28727"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-0.expression.bin",
+      "bytes": 8,
+      "sha256": "1562a1da156fd71685c67fc8656c963d6805f487f818254ea0c58bb9c2792d5f"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-0.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-0.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-1.expression.bin",
+      "bytes": 8,
+      "sha256": "88b2323ed9f599318fc14e92535ddc0a2c71487eb015096df649aa0224f0b0bb"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-1.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-1.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-2.expression.bin",
+      "bytes": 7,
+      "sha256": "b65010e17b7c78e5867ac3ef4b73af25050e256191a47b4fbfd731f2151eb52b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-2.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-2.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-3.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-3.expression.bin",
+      "bytes": 11,
+      "sha256": "23114e3354e4f23ad30fc1f7e45258a523e0a5cd6807d074a8614da75a9b135f"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-3.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-3.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-4.expression.bin",
+      "bytes": 14,
+      "sha256": "c158ea9edef1d283ae9852fdeb2af879e8bacfc0293508951f75d2a8a89e1284"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-4.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-4.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-5.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-5.expression.bin",
+      "bytes": 12,
+      "sha256": "290391542fe0121ec7422478c57e8672b4dfb87f364305659fb9b9bb389b962a"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-5.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-5.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-5.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-5.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-5.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-5.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-6.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-6.expression.bin",
+      "bytes": 11,
+      "sha256": "3f6fd9038f6edc7430253a3cd94ce76a7221e0af12081f49eeb6c4114156f235"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-6.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-6.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-6.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-6.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-6.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-6.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-7.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-7.expression.bin",
+      "bytes": 13,
+      "sha256": "afb33840ef5f84f16f5768c9aa7f91333975f7b79cbea0c6a3a5a997239d7142"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-7.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-7.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-7.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-7.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-7.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-7.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-8.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-8.expression.bin",
+      "bytes": 13,
+      "sha256": "43bf4386bb59a6e5dc0343a3bbfff8c87c670ee3142e7607eb7ae65813b94e6f"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-8.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-8.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-8.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-8.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-8.stdout.bin",
+      "bytes": 57,
+      "sha256": "05752359bd86035af4739dcf4cade0b37faf4c0356a0f34315ee8be390380249"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-8.stdout.code-units.bin",
+      "bytes": 114,
+      "sha256": "94d9b6362e07067993c57cf15fd98b8aa842ec97a7dbc9f9981344f42229a864"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-9.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-9.expression.bin",
+      "bytes": 8,
+      "sha256": "1562a1da156fd71685c67fc8656c963d6805f487f818254ea0c58bb9c2792d5f"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-9.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-9.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-9.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-9.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-9.stdout.bin",
+      "bytes": 4,
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/outer-9.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/payload-blank.bin",
+      "bytes": 11,
+      "sha256": "20967933ce8b530c9248c230779fa0b0a66abad8145c2e032ccdb23c6a88bf81"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/payload-blank.code-units.bin",
+      "bytes": 18,
+      "sha256": "de3ca3c33cebc72e248b870ae7a458cdd625b6544b544c044c5eaa8637627982"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/payload-units.bin",
+      "bytes": 20,
+      "sha256": "72cc63d87ee2b2c39398df860f6a9154714cf4ce664cae1db21ff77b22df13d7"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/payload-units.code-units.bin",
+      "bytes": 28,
+      "sha256": "39535f07a8c319fac6d1d1b740b28d7f3175d35cc6f9484aa63b28a212d9e98e"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/payload-white.bin",
+      "bytes": 26,
+      "sha256": "b8b65023c26fd7d3b30df9bc82b15c8bec233598242f89375859975497260fea"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/calls/payload-white.code-units.bin",
+      "bytes": 48,
+      "sha256": "812f54a348158907fe1c24b450379a7f6c845534c8c80bba0cb54f70659aade3"
+    },
+    {
+      "path": "cases/stdlib-singleton-and-builtin-identity/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "classes/GuestCatchProbe$1.class",
+      "bytes": 2386,
+      "sha256": "752eaf21e912a1f2a787c9846595319883c05d80c8eee09469af9c1e29beef48"
+    },
+    {
+      "path": "classes/GuestCatchProbe$2.class",
+      "bytes": 632,
+      "sha256": "5ad2c07415a14d238e6b54cb9abd85e03b8f5be51aad50baa31171b9c7d40160"
+    },
+    {
+      "path": "classes/GuestCatchProbe$Key$1.class",
+      "bytes": 2117,
+      "sha256": "de395bbc7b9e327d5ae4c27dad856b62cb4670190ddcc8130b56c87911b7bfe5"
+    },
+    {
+      "path": "classes/GuestCatchProbe$Key.class",
+      "bytes": 1762,
+      "sha256": "c4db06132e84f1ead3af24e19aa5e6e68a8541cf7d2fad0f613ba420d0d1686b"
+    },
+    {
+      "path": "classes/GuestCatchProbe.class",
+      "bytes": 10504,
+      "sha256": "f6927a6399e8d5562a9496ddb2d20cad2924144ede59f2bae8c43825b208fbc9"
+    },
+    {
+      "path": "javac/result.json",
+      "bytes": 294,
+      "sha256": "c753d3c5f71d652dade9325e1ac2797374e72044e1cee76c4433a9058ca32c31"
+    },
+    {
+      "path": "javac/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "javac/stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runtime-private/resolve-retry-after-guest-catch/0/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "runtime-private/resolve-retry-after-guest-catch/1/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "runtime-private/source-callback-inner-publication-and-catch/0/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "runtime-private/source-callback-inner-publication-and-catch/1/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "runtime-private/source-failure-cache-after-guest-catch/0/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "runtime-private/source-failure-cache-after-guest-catch/1/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "runtime-private/stdlib-singleton-and-builtin-identity/0/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "runtime-private/stdlib-singleton-and-builtin-identity/1/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "bytes": 8387,
+      "sha256": "96eb6429a710d0b4db09664b6d84a0cb25a17a3206983183f66a65382ae69d82"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/stdlib/test/TestNodes.java",
+      "bytes": 2607,
+      "sha256": "c0fc2b505cb9cc8df3632624e39f94ab9bc68111ddfc1444280b15df0c79603d"
+    },
+    {
+      "path": "upstream/stdlib/test.pkl",
+      "bytes": 3303,
+      "sha256": "c98633bf4b4b90032efefcab676515161d5dd75c3759ad013ee7bfb856d8aea4"
+    },
+    {
+      "path": "workspaces/resolve-retry-after-guest-catch/callbacks.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "workspaces/resolve-retry-after-guest-catch/expressions.txt",
+      "bytes": 33,
+      "sha256": "24a6068f7ec8ecde54e03419059f17d4478e74d35f794e0cd36b437b4768944a"
+    },
+    {
+      "path": "workspaces/resolve-retry-after-guest-catch/main.pkl",
+      "bytes": 206,
+      "sha256": "65db88e270ab8990a9a81591ab65ec74c14b525c76a0cf73aa40d5b20446e474"
+    },
+    {
+      "path": "workspaces/source-callback-inner-publication-and-catch/callbacks.txt",
+      "bytes": 28,
+      "sha256": "7d19f879172d0f8203ab516b64da7d85e86fc89d698f473d91d7570a2a9c3597"
+    },
+    {
+      "path": "workspaces/source-callback-inner-publication-and-catch/expressions.txt",
+      "bytes": 41,
+      "sha256": "eaa37137e3519a814d64075fd4d666c1dba7f41416e5fe5b2fe82f3549a1805d"
+    },
+    {
+      "path": "workspaces/source-callback-inner-publication-and-catch/main.pkl",
+      "bytes": 206,
+      "sha256": "65db88e270ab8990a9a81591ab65ec74c14b525c76a0cf73aa40d5b20446e474"
+    },
+    {
+      "path": "workspaces/source-failure-cache-after-guest-catch/callbacks.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "workspaces/source-failure-cache-after-guest-catch/expressions.txt",
+      "bytes": 33,
+      "sha256": "24a6068f7ec8ecde54e03419059f17d4478e74d35f794e0cd36b437b4768944a"
+    },
+    {
+      "path": "workspaces/source-failure-cache-after-guest-catch/main.pkl",
+      "bytes": 206,
+      "sha256": "65db88e270ab8990a9a81591ab65ec74c14b525c76a0cf73aa40d5b20446e474"
+    },
+    {
+      "path": "workspaces/stdlib-singleton-and-builtin-identity/callbacks.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "workspaces/stdlib-singleton-and-builtin-identity/expressions.txt",
+      "bytes": 115,
+      "sha256": "bacc4d87d7113b71b85c296054213e6e594db7e8dfb1cbe5a2b4e1200917d4dd"
+    },
+    {
+      "path": "workspaces/stdlib-singleton-and-builtin-identity/main.pkl",
+      "bytes": 430,
+      "sha256": "cb6217f2a109b5359d2cabf3e5587a9a66fd939261f5dfbbd820343e846b7e43"
+    }
+  ]
+}

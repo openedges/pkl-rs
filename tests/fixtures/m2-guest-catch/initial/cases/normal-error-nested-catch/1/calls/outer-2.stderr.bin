@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected an exception, but none was thrown.
+
+7 | expected = t.catch(() -> 7)
+               ^^^^^^^^^^^^^^^^
+at main#expected (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/normal-error-nested-catch/main.pkl)
+
+1 | expected
+    ^^^^^^^^
+at  (repl:text)

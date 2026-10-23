@@ -1,0 +1,23 @@
+–– Pkl Error ––
+I/O error loading module `catch:/child`.
+IOException: source-first
+
+5 | value = child.value
+            ^^^^^
+at main#value (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/source-failure-cache-after-guest-catch/main.pkl)
+
+6 | caught = t.catch(() -> value)
+                           ^^^^^
+at main#caught.<function#1> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/source-failure-cache-after-guest-catch/main.pkl)
+
+7 | retry = t.catchOrNull(() -> value)
+                                ^^^^^
+at main#retry.<function#1> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/source-failure-cache-after-guest-catch/main.pkl)
+
+5 | value = child.value
+            ^^^^^
+at main#value (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/source-failure-cache-after-guest-catch/main.pkl)
+
+1 | value
+    ^^^^^
+at  (repl:text)

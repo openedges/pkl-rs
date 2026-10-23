@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 42
+
+251 | minPklVersion: String(matches(Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#)))
+                     ^^^^^^
+at pkl.base#ModuleInfo.minPklVersion (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L251)
+
+2 | obj = new ModuleInfo { minPklVersion = 42 }
+                                           ^^
+at moduleinfo.control_12#obj.minPklVersion (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-integer/main.pkl)
+
+1 | obj.minPklVersion
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -31,6 +31,20 @@ pub(crate) fn base() -> Arc<RuntimeSource> {
         .clone()
 }
 
+pub(crate) fn test() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/test.pkl").into(),
+                uri: "https://github.com/apple/pkl/blob/0.32.0/stdlib/test.pkl".into(),
+                module_name: "pkl.test".into(),
+                line_anchors: true,
+            })
+        })
+        .clone()
+}
+
 #[cfg(test)]
 mod tests {
     #[test]

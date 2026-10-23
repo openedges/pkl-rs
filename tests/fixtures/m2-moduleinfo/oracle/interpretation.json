@@ -1,0 +1,65 @@
+{
+  "scope": "Java observations only; no Rust compatibility claim.",
+  "apiCalls": 224,
+  "counts": {
+    "success\n": 130,
+    "error\n": 94
+  },
+  "freshJvmCount": 2,
+  "repeatAllRawFilesIdentical": true,
+  "all56IndependentStableFollowupsSucceeded": true,
+  "ordinaryConstruction": {
+    "accepted": [
+      "current",
+      "older",
+      "future",
+      "leading-zero",
+      "one-digit",
+      "arabic-digits",
+      "fullwidth-digits"
+    ],
+    "lazyClassAccess": "All14 ordinary sources return true for obj.getClass()==ModuleInfo, including failing/missing minPklVersion fields.",
+    "fieldFailures": {
+      "constraint": [
+        "three-digit",
+        "suffix",
+        "spaces",
+        "short",
+        "extra-part"
+      ],
+      "type": [
+        "integer"
+      ],
+      "undefined": [
+        "missing"
+      ]
+    }
+  },
+  "moduleAnnotation": {
+    "accepted": [
+      "current",
+      "older",
+      "one-digit"
+    ],
+    "incompatibleVersion": [
+      "future",
+      "leading-zero"
+    ],
+    "leadingZeroRequiredVersion": "01.02.03 is displayed as 1.2.3 in version diagnostic.",
+    "javaInternalError": [
+      "arabic-digits",
+      "fullwidth-digits"
+    ],
+    "fieldFailures": [
+      "three-digit",
+      "suffix",
+      "spaces",
+      "short",
+      "extra-part",
+      "integer",
+      "missing"
+    ]
+  },
+  "constraintSemantics": "Unicode digit classes enabled by pinned VmUtils.compilePattern. ASCII-only shortcut is incompatible.",
+  "remainingScope": "Other Unicode Nd code points/versions, annotation inheritance/subclasses/alias ordering, imported version diagnostics and product API exception mapping are unexecuted."
+}

@@ -1,0 +1,26 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Type constraint `matches(Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#))` violated.
+Value: "123.2.3"
+
+    matches(Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#))
+    │       │
+    false   Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#)
+
+251 | minPklVersion: String(matches(Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#)))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#ModuleInfo.minPklVersion (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L251)
+
+2 | obj = new ModuleInfo { minPklVersion = "123.2.3" }
+                                           ^^^^^^^^^
+at moduleinfo.control_5#obj.minPklVersion (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/construct-three-digit/main.pkl)
+
+1 | obj.minPklVersion
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at ModuleInfoProbe.capture(ModuleInfoProbe.java:17)
+	at ModuleInfoProbe.main(ModuleInfoProbe.java:30)

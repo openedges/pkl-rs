@@ -112,17 +112,24 @@ impl Vm {
             .and_then(|metadata| metadata.source.as_ref())
             .map_or(&self.program.module_name, |source| &source.module_name)
     }
-    fn module_cached(&self, cached: CachedModule) -> Result<Value, RuntimeError> {
+    pub(super) fn module_cached(&mut self, cached: CachedModule) -> Result<Value, RuntimeError> {
         match cached {
             CachedModule::Value(id) => Ok(Value::Object(id)),
-            CachedModule::Failed(mut error) => {
-                error.cached_module_frames = true;
+            CachedModule::Failed(error) => {
+                // A cached exception is thrown by ModuleCache, whose boundary
+                // has no guest call node, just like source initialization.
+                if let Some(frame) = self.frames.last_mut() {
+                    frame.callsite_hidden = true;
+                }
                 Err(error)
             }
         }
     }
 
     pub(super) fn begin_import(&mut self, spec: ImportSpec) -> Result<(), RuntimeError> {
+        if self.import_stdlib(&spec.absolute_uri)? {
+            return Ok(());
+        }
         if let Some(cached) = self.modules_original.get(&spec.original_uri).cloned() {
             let value = self.module_cached(cached)?;
             self.stack.push(value);
@@ -183,6 +190,17 @@ impl Vm {
             )
         {
             return Err(stale_module());
+        }
+        if matches!(
+            &completion,
+            ModuleCompletion::Source(Err(
+                crate::modules::ModuleHostError::SecurityManagerException { .. }
+            ))
+        ) {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "SecurityManagerException is only supported for module resolution.",
+            ));
         }
         let result = match completion {
             ModuleCompletion::Resolved(result) => self.resolved_module(result),
@@ -301,7 +319,13 @@ impl Vm {
         };
         let entry = program.units[unit.0 as usize].entry;
         self.state = State::Running;
+        self.push_module_initializer(entry, Some(receiver));
+        Ok(())
+    }
+
+    pub(super) fn push_module_initializer(&mut self, entry: usize, receiver: Option<ObjectId>) {
         self.frames.push(Frame {
+            guest_catch: None,
             block: entry,
             pc: 0,
             base: self.stack.len(),
@@ -323,9 +347,8 @@ impl Vm {
             callsite_hidden: false,
             builders: Vec::new(),
             module_load: None,
-            module_receiver: Some(receiver),
+            module_receiver: receiver,
         });
-        Ok(())
     }
 
     pub(super) fn step_module(&mut self) -> Result<(), RuntimeError> {

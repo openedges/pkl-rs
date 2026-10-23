@@ -1,0 +1,7 @@
+resolve catch:/child attempt=1
+source-start catch:/child attempt=1
+outer-0 success
+outer-1 success
+outer-2 success
+outer-3 error org.pkl.core.PklException
+outer-4 success

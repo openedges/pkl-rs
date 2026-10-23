@@ -1,6 +1,6 @@
 //! Shared Host and tracing regressions; Java byte comparisons are recorded separately.
-//! Retained module graphs include their one builtin Module parent; executable
-//! nodes, transient-object deltas and terminal-zero assertions remain separate.
+//! Retained module graphs include their builtin Module parent and source-backed
+//! stdlib annotations; transient objects and terminal-zero assertions stay separate.
 use std::sync::Arc;
 
 use pkl_runtime::host::{HostPoll, HostSession};
@@ -134,9 +134,11 @@ fn suspended_rendering_preserves_reference_metadata_during_reentry_gc_and_retry(
     session.resume(&outer, Ok(Value::Null), 5).unwrap();
     assert_eq!(ready(&mut session, 5), Ok(Value::Null));
     // Evaluator-owned class roots retain the captured module's completed cache
-    // closure. Repeated GC must settle at this exact source-specific size.
-    assert_eq!(session.collect(&[]).live, 11);
-    assert_eq!(session.collect(&[]).live, 11);
+    // closure, including pkl:ref's two annotation instances, three annotation
+    // class prototypes, and three constraint execution nodes. Repeated GC
+    // must settle at this exact source-specific size.
+    assert_eq!(session.collect(&[]).live, 19);
+    assert_eq!(session.collect(&[]).live, 19);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -169,9 +171,11 @@ fn domain_constraint_continuations_keep_reference_and_custom_this_through_gc() {
     session.resume(&outer, Ok(Value::Null), 4).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::Null));
     // Evaluator-owned class roots retain the captured module's completed cache
-    // closure. Repeated GC must settle at this exact source-specific size.
-    assert_eq!(retained_values(session.collect(&[]), 4), 10);
-    assert_eq!(retained_values(session.collect(&[]), 4), 10);
+    // closure, including pkl:ref's two annotation instances, three annotation
+    // class prototypes, and three constraint execution nodes. Repeated GC
+    // must settle at this exact source-specific size.
+    assert_eq!(retained_values(session.collect(&[]), 7), 15);
+    assert_eq!(retained_values(session.collect(&[]), 7), 15);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -281,9 +285,11 @@ fn equality_retains_pending_domain_and_data_comparisons_and_retries_only_failed_
     session.resume(&outer, Ok(Value::Null), 5).unwrap();
     assert_eq!(ready(&mut session, 5), Ok(Value::Null));
     // Evaluator-owned class roots retain the captured module's completed cache
-    // closure. Repeated GC must settle at this exact source-specific size.
-    assert_eq!(session.collect(&[]).live, 15);
-    assert_eq!(session.collect(&[]).live, 15);
+    // closure, including pkl:ref's two annotation instances, three annotation
+    // class prototypes, and three constraint execution nodes. Repeated GC
+    // must settle at this exact source-specific size.
+    assert_eq!(session.collect(&[]).live, 23);
+    assert_eq!(session.collect(&[]).live, 23);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);

@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Keyword `unknown` is not allowed here.
+
+If you must use this name as identifier, enclose it in backticks.
+
+15 | unknown = t.catch(() -> import("pkl:missingStage45"))
+     ^^^^^^^
+at main (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/stdlib-singleton-and-builtin-identity/main.pkl)

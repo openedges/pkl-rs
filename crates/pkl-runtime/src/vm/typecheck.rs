@@ -10,8 +10,32 @@ pub(super) enum TypeDestination {
 }
 
 #[derive(Clone)]
+enum ObservedValue {
+    Runtime(Value),
+    // Native constant folding can retain a value's canonical representation
+    // without allocating a guest object (the pinned ModuleInfo regex binding).
+    NativeLiteral(PklString),
+}
+impl ObservedValue {
+    fn roots(&self) -> Option<Value> {
+        match self {
+            Self::Runtime(value) => Some(value.clone()),
+            Self::NativeLiteral(_) => None,
+        }
+    }
+    fn render(&self, heap: &Heap, module: &str) -> Result<PklString, RuntimeError> {
+        match self {
+            Self::Runtime(value) => {
+                crate::diagnostic_values::render_string(value, heap, module, 100)
+            }
+            Self::NativeLiteral(text) => Ok(text.clone()),
+        }
+    }
+}
+
+#[derive(Clone)]
 struct Observation {
-    value: Value,
+    value: ObservedValue,
     executions: usize,
 }
 type Trace = BTreeMap<Span, Observation>;
@@ -54,8 +78,8 @@ impl Mismatch {
             Self::Constraint { span, value, body_span, observations, .. } => TypeDiagnostic::Constraint {
                 span: *span, value: render(value, heap, module, 80usize.saturating_sub(indent))?, body_span: *body_span,
                 observations: observations.as_ref().map(|trace| trace.iter().map(|(span, observation)| Ok(PowerAssertionValue {
-                    span: *span, value: render(&observation.value, heap, module, 100)?, executions: observation.executions,
-                    hidden: matches!(observation.value, Value::Function(_)),
+                    span: *span, value: observation.value.render(heap, module)?, executions: observation.executions,
+                    hidden: matches!(observation.value, ObservedValue::Runtime(Value::Function(_))),
                 })).collect::<Result<Vec<_>, RuntimeError>>()).transpose()?,
             },
             Self::Union { span, value, children } => TypeDiagnostic::Union {
@@ -79,7 +103,11 @@ impl Mismatch {
             } => {
                 roots.push(value.clone());
                 if let Some(trace) = observations {
-                    roots.extend(trace.values().map(|observation| observation.value.clone()));
+                    roots.extend(
+                        trace
+                            .values()
+                            .filter_map(|observation| observation.value.roots()),
+                    );
                 }
             }
             Self::Union {
@@ -213,7 +241,11 @@ impl TypeRun {
         roots.extend(self.returned.iter().cloned());
         environment_roots(&self.environment, roots);
         if let Some(trace) = &self.tracker {
-            roots.extend(trace.values().map(|observation| observation.value.clone()));
+            roots.extend(
+                trace
+                    .values()
+                    .filter_map(|observation| observation.value.roots()),
+            );
         }
         match &self.outcome {
             Some(Err(mismatch)) => mismatch.roots(roots),
@@ -303,6 +335,12 @@ fn module_environment(environment: &Environment) -> Result<Environment, RuntimeE
 
 impl Vm {
     pub(super) fn observe(&mut self, span: Span, value: Value) {
+        self.observe_value(span, ObservedValue::Runtime(value));
+    }
+    pub(super) fn observe_native_literal(&mut self, span: Span, rendered: PklString) {
+        self.observe_value(span, ObservedValue::NativeLiteral(rendered));
+    }
+    fn observe_value(&mut self, span: Span, value: ObservedValue) {
         for frame in &mut self.frames {
             if let Some(run) = &mut frame.type_run
                 && let Some(trace) = &mut run.tracker
@@ -568,6 +606,7 @@ impl Vm {
         self.frames.last_mut().expect("type frame").type_run = Some(run);
         self.frames.last_mut().expect("type frame").callsite_hidden = true;
         self.frames.push(Frame {
+            guest_catch: None,
             block: constraint.block,
             pc: 0,
             base: self.stack.len(),

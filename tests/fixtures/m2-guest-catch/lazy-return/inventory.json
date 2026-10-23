@@ -1,0 +1,1119 @@
+{
+  "files": [
+    {
+      "path": "GuestCatchProbe.java",
+      "bytes": 8156,
+      "sha256": "bd8649f19ec2ae54662b7849d172fe5844dae4f4e82c2dee48423ab1525f6cc8"
+    },
+    {
+      "path": "acquire.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "acquire.stdout.bin",
+      "bytes": 572,
+      "sha256": "a10877f8e55247a55346d703bfbf2897ca43e17aa1ffb379c5417a74431d14ab"
+    },
+    {
+      "path": "cases.json",
+      "bytes": 1127,
+      "sha256": "eb68698f7fdcc8f8bebf5b666d1a22bfbee011f442ddd81877f3c7c6cb8847e9"
+    },
+    {
+      "path": "exclusions.json",
+      "bytes": 205,
+      "sha256": "593052a632328c1024613060f92fe0aa9eaa4cc948fd18da25749533385ec79b"
+    },
+    {
+      "path": "inputs-after.json",
+      "bytes": 3653,
+      "sha256": "9e7e6aa8a42b7bb398eb5d208d0c3c110928229f5d4c88311ac6c5861a401edb"
+    },
+    {
+      "path": "inputs-before.json",
+      "bytes": 3653,
+      "sha256": "9e7e6aa8a42b7bb398eb5d208d0c3c110928229f5d4c88311ac6c5861a401edb"
+    },
+    {
+      "path": "interpretation.json",
+      "bytes": 5701,
+      "sha256": "f80644b73f03ab7aae2d527fb938bcfc8aa5f7e131bc05456cae7dd1428ab56a"
+    },
+    {
+      "path": "javac.process.json",
+      "bytes": 1507,
+      "sha256": "939aa9605fcf087aa41c00ef1e628a90c8cb646f1237420a842a58b65eae2458"
+    },
+    {
+      "path": "profile.json",
+      "bytes": 7871,
+      "sha256": "53bf8bcf7310c806c80a2c64ef4e3c9116ed4e5140e86cc6b4538b3e225e07a7"
+    },
+    {
+      "path": "progress.json",
+      "bytes": 11301,
+      "sha256": "01db9b4906badad1fefb7737cbe6fbd8295ea59f33ac38ed3dc56ff49c562888"
+    },
+    {
+      "path": "report.json",
+      "bytes": 35919,
+      "sha256": "3e24d8658ebc4f08733e63b3400a813d15c2a5a6b42b4aaa4340321423505c3b"
+    },
+    {
+      "path": "run.py",
+      "bytes": 8331,
+      "sha256": "24d302e0002d52e175b2ae79992c5334f80e8828b91904a072b4e9402d14c1b3"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0.process.json",
+      "bytes": 2574,
+      "sha256": "610c278611e00061f260bff57eb00e0771e720a61c21dfe4fafd1d24b076e3d8"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1.process.json",
+      "bytes": 2573,
+      "sha256": "b42ba41f5c893127377ac8760aa967dd8ad0061f774dddc9cde24d9a5752b943"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/private-state.json",
+      "bytes": 349,
+      "sha256": "34576e78eebec82a7115f663c044c1ed825752db719a3dcf527b83f831568f38"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/process.json",
+      "bytes": 3765,
+      "sha256": "682430a30783f0e4caee7391466087e48102144e660cefc97a93eeeda7b17867"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/result.json",
+      "bytes": 295,
+      "sha256": "0169ffab44800523bedf91ab099a19aafb27fcf737b7dbed9ade43204ba9f23c"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/stdout.bin",
+      "bytes": 192,
+      "sha256": "d1fb778b69ebef6c42c68b3e46018710d4f0bd0a8ffbe04341595876eaf3df7b"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/counters.bin",
+      "bytes": 51,
+      "sha256": "4b07d600427b3f7410b1e8979ed8203c56b891c1352a9cb70ee0cb91d26bd5b2"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/event-0.bin",
+      "bytes": 39,
+      "sha256": "1a8af62a78b1354c60db120b60e52e641ef46ce009682c8751c91bf6fc48d367"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/event-1.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/event-2.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/event-3.bin",
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/event-4.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/event-5.bin",
+      "bytes": 15,
+      "sha256": "5e26bd2943a0be3bbc032b13836155e0e8099fb425314516ba17b09983f106d8"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/event-6.bin",
+      "bytes": 15,
+      "sha256": "b43f8cd89171b8cd483e84de3d63caf7a37cf20ebd65b6ce1517957442f9b0c4"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/event-7.bin",
+      "bytes": 39,
+      "sha256": "85c9e28a71268c1a21e733dc19d369a7301f778d6181749dfd39ebcd27ce438a"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/event-8.bin",
+      "bytes": 15,
+      "sha256": "cb71d10d091f5c3c00073e7b8fd29222884538683d906900736257ec2e635548"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-0.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-0.expression.bin",
+      "bytes": 9,
+      "sha256": "05f00d90b06b63f41a86f9f21f8ce242d47aab2ed11fb84e4b3a4d4f94177f6f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-0.java-stack.bin",
+      "bytes": 867,
+      "sha256": "715b43472553a05114f9a6dfc0c52a00f570aee6cac0f1895e26a354422ce82f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-0.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-0.stderr.bin",
+      "bytes": 449,
+      "sha256": "347cc7f50d38bc41b6bbf054a662622967037b59bf20e5513a6ce20f5d04ffd6"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-0.stderr.code-units.bin",
+      "bytes": 882,
+      "sha256": "84c60999507831a851fbcb4c00bd6cf70d266f313f5f45077fd0434849bcd6b6"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-0.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-0.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-1.expression.bin",
+      "bytes": 8,
+      "sha256": "4390034b417fb6d1773089bfb3369b6df93a8abe053a546f50d47e8a603472c9"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-1.stdout.bin",
+      "bytes": 4,
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-1.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-2.expression.bin",
+      "bytes": 6,
+      "sha256": "38c8632dfc3b9f597420c9564a4850f9176ae335bc06fd04d0c60cbfcb58616a"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-2.stdout.bin",
+      "bytes": 6,
+      "sha256": "38c8632dfc3b9f597420c9564a4850f9176ae335bc06fd04d0c60cbfcb58616a"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-2.stdout.code-units.bin",
+      "bytes": 12,
+      "sha256": "6dea6fcb692eb186c87b12b095a5e9a44b23de7cd8bd10f9e1f768e20c81dc61"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-3.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-3.expression.bin",
+      "bytes": 15,
+      "sha256": "9b383bb70fcc4ba263ef4f32b4d100f7cf994c2110b441d0d6fa2d55bf9a0a83"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-3.stdout.bin",
+      "bytes": 56,
+      "sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-3.stdout.code-units.bin",
+      "bytes": 112,
+      "sha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-4.expression.bin",
+      "bytes": 13,
+      "sha256": "bd3fea586a5b580d0cfcad9d0140acdf732bd3f8801997d8c14bf73bb66d9cd4"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-4.stdout.bin",
+      "bytes": 56,
+      "sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-4.stdout.code-units.bin",
+      "bytes": 112,
+      "sha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-5.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-5.expression.bin",
+      "bytes": 8,
+      "sha256": "4390034b417fb6d1773089bfb3369b6df93a8abe053a546f50d47e8a603472c9"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-5.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-5.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-5.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-5.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-5.stdout.bin",
+      "bytes": 4,
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-5.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-6.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-6.expression.bin",
+      "bytes": 15,
+      "sha256": "9b383bb70fcc4ba263ef4f32b4d100f7cf994c2110b441d0d6fa2d55bf9a0a83"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-6.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-6.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-6.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-6.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-6.stdout.bin",
+      "bytes": 56,
+      "sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-6.stdout.code-units.bin",
+      "bytes": 112,
+      "sha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-7.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-7.expression.bin",
+      "bytes": 9,
+      "sha256": "05f00d90b06b63f41a86f9f21f8ce242d47aab2ed11fb84e4b3a4d4f94177f6f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-7.java-stack.bin",
+      "bytes": 867,
+      "sha256": "715b43472553a05114f9a6dfc0c52a00f570aee6cac0f1895e26a354422ce82f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-7.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-7.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-7.stderr.bin",
+      "bytes": 449,
+      "sha256": "347cc7f50d38bc41b6bbf054a662622967037b59bf20e5513a6ce20f5d04ffd6"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-7.stderr.code-units.bin",
+      "bytes": 882,
+      "sha256": "84c60999507831a851fbcb4c00bd6cf70d266f313f5f45077fd0434849bcd6b6"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-7.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-7.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-8.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-8.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-8.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-8.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-8.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-8.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-8.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/outer-8.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/payload-blank.bin",
+      "bytes": 11,
+      "sha256": "20967933ce8b530c9248c230779fa0b0a66abad8145c2e032ccdb23c6a88bf81"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/payload-blank.code-units.bin",
+      "bytes": 18,
+      "sha256": "de3ca3c33cebc72e248b870ae7a458cdd625b6544b544c044c5eaa8637627982"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/payload-units.bin",
+      "bytes": 20,
+      "sha256": "72cc63d87ee2b2c39398df860f6a9154714cf4ce664cae1db21ff77b22df13d7"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/payload-units.code-units.bin",
+      "bytes": 28,
+      "sha256": "39535f07a8c319fac6d1d1b740b28d7f3175d35cc6f9484aa63b28a212d9e98e"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/payload-white.bin",
+      "bytes": 26,
+      "sha256": "b8b65023c26fd7d3b30df9bc82b15c8bec233598242f89375859975497260fea"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/calls/payload-white.code-units.bin",
+      "bytes": 48,
+      "sha256": "812f54a348158907fe1c24b450379a7f6c845534c8c80bba0cb54f70659aade3"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/private-state.json",
+      "bytes": 349,
+      "sha256": "34576e78eebec82a7115f663c044c1ed825752db719a3dcf527b83f831568f38"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/process.json",
+      "bytes": 3764,
+      "sha256": "469c133f5944c729d29d12378fb68cfb11cc46543cf11aa19ee31ccf012e128e"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/result.json",
+      "bytes": 294,
+      "sha256": "2e6448728aa00c1f49167611132ff6cb40c212368bf5b704d5262fb42aa53042"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/stdout.bin",
+      "bytes": 192,
+      "sha256": "d1fb778b69ebef6c42c68b3e46018710d4f0bd0a8ffbe04341595876eaf3df7b"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/counters.bin",
+      "bytes": 51,
+      "sha256": "4b07d600427b3f7410b1e8979ed8203c56b891c1352a9cb70ee0cb91d26bd5b2"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/event-0.bin",
+      "bytes": 39,
+      "sha256": "1a8af62a78b1354c60db120b60e52e641ef46ce009682c8751c91bf6fc48d367"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/event-1.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/event-2.bin",
+      "bytes": 15,
+      "sha256": "8bfb0142b2c34414b46eced46a65baeace6a960c2568b40e1a866090331fd0b8"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/event-3.bin",
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/event-4.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/event-5.bin",
+      "bytes": 15,
+      "sha256": "5e26bd2943a0be3bbc032b13836155e0e8099fb425314516ba17b09983f106d8"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/event-6.bin",
+      "bytes": 15,
+      "sha256": "b43f8cd89171b8cd483e84de3d63caf7a37cf20ebd65b6ce1517957442f9b0c4"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/event-7.bin",
+      "bytes": 39,
+      "sha256": "85c9e28a71268c1a21e733dc19d369a7301f778d6181749dfd39ebcd27ce438a"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/event-8.bin",
+      "bytes": 15,
+      "sha256": "cb71d10d091f5c3c00073e7b8fd29222884538683d906900736257ec2e635548"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-0.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-0.expression.bin",
+      "bytes": 9,
+      "sha256": "05f00d90b06b63f41a86f9f21f8ce242d47aab2ed11fb84e4b3a4d4f94177f6f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-0.java-stack.bin",
+      "bytes": 867,
+      "sha256": "715b43472553a05114f9a6dfc0c52a00f570aee6cac0f1895e26a354422ce82f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-0.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-0.stderr.bin",
+      "bytes": 449,
+      "sha256": "347cc7f50d38bc41b6bbf054a662622967037b59bf20e5513a6ce20f5d04ffd6"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-0.stderr.code-units.bin",
+      "bytes": 882,
+      "sha256": "84c60999507831a851fbcb4c00bd6cf70d266f313f5f45077fd0434849bcd6b6"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-0.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-0.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-1.expression.bin",
+      "bytes": 8,
+      "sha256": "4390034b417fb6d1773089bfb3369b6df93a8abe053a546f50d47e8a603472c9"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-1.stdout.bin",
+      "bytes": 4,
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-1.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-2.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-2.expression.bin",
+      "bytes": 6,
+      "sha256": "38c8632dfc3b9f597420c9564a4850f9176ae335bc06fd04d0c60cbfcb58616a"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-2.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-2.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-2.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-2.stdout.bin",
+      "bytes": 6,
+      "sha256": "38c8632dfc3b9f597420c9564a4850f9176ae335bc06fd04d0c60cbfcb58616a"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-2.stdout.code-units.bin",
+      "bytes": 12,
+      "sha256": "6dea6fcb692eb186c87b12b095a5e9a44b23de7cd8bd10f9e1f768e20c81dc61"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-3.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-3.expression.bin",
+      "bytes": 15,
+      "sha256": "9b383bb70fcc4ba263ef4f32b4d100f7cf994c2110b441d0d6fa2d55bf9a0a83"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-3.stdout.bin",
+      "bytes": 56,
+      "sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-3.stdout.code-units.bin",
+      "bytes": 112,
+      "sha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-4.expression.bin",
+      "bytes": 13,
+      "sha256": "bd3fea586a5b580d0cfcad9d0140acdf732bd3f8801997d8c14bf73bb66d9cd4"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-4.stdout.bin",
+      "bytes": 56,
+      "sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-4.stdout.code-units.bin",
+      "bytes": 112,
+      "sha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-5.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-5.expression.bin",
+      "bytes": 8,
+      "sha256": "4390034b417fb6d1773089bfb3369b6df93a8abe053a546f50d47e8a603472c9"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-5.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-5.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-5.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-5.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-5.stdout.bin",
+      "bytes": 4,
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-5.stdout.code-units.bin",
+      "bytes": 8,
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-6.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-6.expression.bin",
+      "bytes": 15,
+      "sha256": "9b383bb70fcc4ba263ef4f32b4d100f7cf994c2110b441d0d6fa2d55bf9a0a83"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-6.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-6.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-6.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-6.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-6.stdout.bin",
+      "bytes": 56,
+      "sha256": "d4fd6fcde34b21797f837d7badc137cc5421d4ed4916cf75ad009d674722258f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-6.stdout.code-units.bin",
+      "bytes": 112,
+      "sha256": "d7609ebdfc18a7475e465a19245668ad78e57c60eaadeeea502943c0b0523fdd"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-7.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-7.expression.bin",
+      "bytes": 9,
+      "sha256": "05f00d90b06b63f41a86f9f21f8ce242d47aab2ed11fb84e4b3a4d4f94177f6f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-7.java-stack.bin",
+      "bytes": 867,
+      "sha256": "715b43472553a05114f9a6dfc0c52a00f570aee6cac0f1895e26a354422ce82f"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-7.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-7.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-7.stderr.bin",
+      "bytes": 449,
+      "sha256": "347cc7f50d38bc41b6bbf054a662622967037b59bf20e5513a6ce20f5d04ffd6"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-7.stderr.code-units.bin",
+      "bytes": 882,
+      "sha256": "84c60999507831a851fbcb4c00bd6cf70d266f313f5f45077fd0434849bcd6b6"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-7.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-7.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-8.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-8.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-8.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-8.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-8.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-8.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-8.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/outer-8.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/payload-blank.bin",
+      "bytes": 11,
+      "sha256": "20967933ce8b530c9248c230779fa0b0a66abad8145c2e032ccdb23c6a88bf81"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/payload-blank.code-units.bin",
+      "bytes": 18,
+      "sha256": "de3ca3c33cebc72e248b870ae7a458cdd625b6544b544c044c5eaa8637627982"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/payload-units.bin",
+      "bytes": 20,
+      "sha256": "72cc63d87ee2b2c39398df860f6a9154714cf4ce664cae1db21ff77b22df13d7"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/payload-units.code-units.bin",
+      "bytes": 28,
+      "sha256": "39535f07a8c319fac6d1d1b740b28d7f3175d35cc6f9484aa63b28a212d9e98e"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/payload-white.bin",
+      "bytes": 26,
+      "sha256": "b8b65023c26fd7d3b30df9bc82b15c8bec233598242f89375859975497260fea"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/calls/payload-white.code-units.bin",
+      "bytes": 48,
+      "sha256": "812f54a348158907fe1c24b450379a7f6c845534c8c80bba0cb54f70659aade3"
+    },
+    {
+      "path": "cases/returned-lazy-object-versus-forced-undefined/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "classes/GuestCatchProbe$1.class",
+      "bytes": 2386,
+      "sha256": "752eaf21e912a1f2a787c9846595319883c05d80c8eee09469af9c1e29beef48"
+    },
+    {
+      "path": "classes/GuestCatchProbe$2.class",
+      "bytes": 632,
+      "sha256": "5ad2c07415a14d238e6b54cb9abd85e03b8f5be51aad50baa31171b9c7d40160"
+    },
+    {
+      "path": "classes/GuestCatchProbe$Key$1.class",
+      "bytes": 2117,
+      "sha256": "de395bbc7b9e327d5ae4c27dad856b62cb4670190ddcc8130b56c87911b7bfe5"
+    },
+    {
+      "path": "classes/GuestCatchProbe$Key.class",
+      "bytes": 1762,
+      "sha256": "c4db06132e84f1ead3af24e19aa5e6e68a8541cf7d2fad0f613ba420d0d1686b"
+    },
+    {
+      "path": "classes/GuestCatchProbe.class",
+      "bytes": 10504,
+      "sha256": "f6927a6399e8d5562a9496ddb2d20cad2924144ede59f2bae8c43825b208fbc9"
+    },
+    {
+      "path": "javac/result.json",
+      "bytes": 294,
+      "sha256": "adea9f446887c4c99e94582c7603c99c28c8fe4eef3358c24c1ea08dd95a6eaf"
+    },
+    {
+      "path": "javac/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "javac/stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runtime-private/returned-lazy-object-versus-forced-undefined/0/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "runtime-private/returned-lazy-object-versus-forced-undefined/1/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "bytes": 8387,
+      "sha256": "96eb6429a710d0b4db09664b6d84a0cb25a17a3206983183f66a65382ae69d82"
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/stdlib/test/TestNodes.java",
+      "bytes": 2607,
+      "sha256": "c0fc2b505cb9cc8df3632624e39f94ab9bc68111ddfc1444280b15df0c79603d"
+    },
+    {
+      "path": "upstream/stdlib/test.pkl",
+      "bytes": 3303,
+      "sha256": "c98633bf4b4b90032efefcab676515161d5dd75c3759ad013ee7bfb856d8aea4"
+    },
+    {
+      "path": "workspaces/returned-lazy-object-versus-forced-undefined/callbacks.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "workspaces/returned-lazy-object-versus-forced-undefined/expressions.txt",
+      "bytes": 98,
+      "sha256": "2225187837e2140f004a1aa77836152ad6545e21a34b0c6322ca4c48d2273fc7"
+    },
+    {
+      "path": "workspaces/returned-lazy-object-versus-forced-undefined/main.pkl",
+      "bytes": 350,
+      "sha256": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539"
+    }
+  ]
+}

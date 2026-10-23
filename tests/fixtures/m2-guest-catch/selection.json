@@ -1,0 +1,415 @@
+{
+  "schema": 1,
+  "scope": "All original14, corrected4 and supplemental03/04/05 retained; invalid initial01/04 remain constructor-only boundaries.",
+  "cases": [
+    {
+      "group": "initial",
+      "id": "stdlib-singleton-and-builtin-identity",
+      "mode": "plain",
+      "sourceFile": "initial/workspaces/stdlib-singleton-and-builtin-identity/main.pkl",
+      "sourceSha256": "0026c95944597e64e4f6c8d8e1bc92b5926c841f43cce7208db36eb88ee60a45",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/stdlib-singleton-and-builtin-identity/main.pkl",
+      "expressions": [
+        "baseSame",
+        "testSame",
+        "refSame",
+        "baseIntSame",
+        "baseModuleSame",
+        "baseDistinct",
+        "stdDistinct",
+        "testClassSame",
+        "unknown",
+        "baseSame"
+      ],
+      "callbacks": [],
+      "comparisonScope": "frontend-constructor-only",
+      "reason": "Original authored source syntax blocked intended probe; all original Java followups preserved, shared constructor boundary is distinct."
+    },
+    {
+      "group": "initial",
+      "id": "normal-error-nested-catch",
+      "mode": "plain",
+      "sourceFile": "initial/workspaces/normal-error-nested-catch/main.pkl",
+      "sourceSha256": "c376e84e2a53c8a21b2ab2c366a509b173a22a4d70c9a1fab35bf060c3fd1670",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/normal-error-nested-catch/main.pkl",
+      "expressions": [
+        "caught",
+        "normal",
+        "expected",
+        "nested",
+        "nestedNormal",
+        "innerNormal",
+        "typed",
+        "wrongFunction",
+        "caught",
+        "stable"
+      ],
+      "callbacks": [],
+      "comparisonScope": "full-ordered-api",
+      "reason": "Compare every exact ordinary Java outer/callback API string/status plus full log fields and Host counters."
+    },
+    {
+      "group": "initial",
+      "id": "lazy-guest-failure-and-cache",
+      "mode": "plain",
+      "sourceFile": "initial/workspaces/lazy-guest-failure-and-cache/main.pkl",
+      "sourceSha256": "0d32621b10d4aa8145c41bcec93b6c2f13c430b4d0ebcb70c4a8920e591f932d",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/lazy-guest-failure-and-cache/main.pkl",
+      "expressions": [
+        "caught",
+        "caught",
+        "retry",
+        "retry",
+        "stable"
+      ],
+      "callbacks": [],
+      "comparisonScope": "full-ordered-api",
+      "reason": "Compare every exact ordinary Java outer/callback API string/status plus full log fields and Host counters."
+    },
+    {
+      "group": "initial",
+      "id": "resource-retry-after-guest-catch",
+      "mode": "read-retry",
+      "sourceFile": "initial/workspaces/resource-retry-after-guest-catch/main.pkl",
+      "sourceSha256": "2852e239f90d9f5f13433848c3cd5ba4001a96f86ce14a4a8f7dace35659b889",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/resource-retry-after-guest-catch/main.pkl",
+      "expressions": [
+        "caught",
+        "caught",
+        "retry",
+        "value",
+        "retry",
+        "stable"
+      ],
+      "callbacks": [],
+      "comparisonScope": "full-ordered-api",
+      "reason": "Compare every exact ordinary Java outer/callback API string/status plus full log fields and Host counters."
+    },
+    {
+      "group": "initial",
+      "id": "resolve-retry-after-guest-catch",
+      "mode": "resolve-retry",
+      "sourceFile": "initial/workspaces/resolve-retry-after-guest-catch/main.pkl",
+      "sourceSha256": "44bb834e0fd6298995e3f31382c8526bfe3ffdc908ed6d8525d6771a4bec3adf",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/resolve-retry-after-guest-catch/main.pkl",
+      "expressions": [
+        "caught",
+        "caught",
+        "retry",
+        "value",
+        "stable"
+      ],
+      "callbacks": [],
+      "comparisonScope": "frontend-constructor-only",
+      "reason": "Original authored source syntax blocked intended probe; all original Java followups preserved, shared constructor boundary is distinct."
+    },
+    {
+      "group": "initial",
+      "id": "source-failure-cache-after-guest-catch",
+      "mode": "source-cache",
+      "sourceFile": "initial/workspaces/source-failure-cache-after-guest-catch/main.pkl",
+      "sourceSha256": "44bb834e0fd6298995e3f31382c8526bfe3ffdc908ed6d8525d6771a4bec3adf",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-failure-cache-after-guest-catch/main.pkl",
+      "expressions": [
+        "caught",
+        "caught",
+        "retry",
+        "value",
+        "stable"
+      ],
+      "callbacks": [],
+      "comparisonScope": "frontend-constructor-only",
+      "reason": "Original authored source syntax blocked intended probe; all original Java followups preserved, shared constructor boundary is distinct."
+    },
+    {
+      "group": "initial",
+      "id": "read-callback-nested-catch",
+      "mode": "read-reentry",
+      "sourceFile": "initial/workspaces/read-callback-nested-catch/main.pkl",
+      "sourceSha256": "2852e239f90d9f5f13433848c3cd5ba4001a96f86ce14a4a8f7dace35659b889",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/read-callback-nested-catch/main.pkl",
+      "expressions": [
+        "caught",
+        "retry",
+        "value",
+        "callbackCaught",
+        "stable"
+      ],
+      "callbacks": [
+        "stable",
+        "callbackCaught"
+      ],
+      "comparisonScope": "full-ordered-api",
+      "reason": "Compare every exact ordinary Java outer/callback API string/status plus full log fields and Host counters."
+    },
+    {
+      "group": "initial",
+      "id": "source-callback-inner-publication-and-catch",
+      "mode": "source-reentry",
+      "sourceFile": "initial/workspaces/source-callback-inner-publication-and-catch/main.pkl",
+      "sourceSha256": "44bb834e0fd6298995e3f31382c8526bfe3ffdc908ed6d8525d6771a4bec3adf",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-callback-inner-publication-and-catch/main.pkl",
+      "expressions": [
+        "caught",
+        "retry",
+        "value",
+        "callbackCaught",
+        "stable"
+      ],
+      "callbacks": [
+        "stable",
+        "callbackCaught",
+        "value"
+      ],
+      "comparisonScope": "frontend-constructor-only",
+      "reason": "Original authored source syntax blocked intended probe; all original Java followups preserved, shared constructor boundary is distinct."
+    },
+    {
+      "group": "initial",
+      "id": "logger-callback-nested-catch",
+      "mode": "logger-reentry",
+      "sourceFile": "initial/workspaces/logger-callback-nested-catch/main.pkl",
+      "sourceSha256": "baa296f49bd13c8e6c0d2c14a7add8fad20c39a67a264c8bddcdfbb9ace3deb4",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/logger-callback-nested-catch/main.pkl",
+      "expressions": [
+        "caught",
+        "caught",
+        "callbackCaught",
+        "stable"
+      ],
+      "callbacks": [
+        "stable",
+        "callbackCaught"
+      ],
+      "comparisonScope": "full-ordered-api",
+      "reason": "Compare every exact ordinary Java outer/callback API string/status plus full log fields and Host counters."
+    },
+    {
+      "group": "initial",
+      "id": "read-timeout-not-ordinary-catch",
+      "mode": "read-timeout",
+      "sourceFile": "initial/workspaces/read-timeout-not-ordinary-catch/main.pkl",
+      "sourceSha256": "4e22a0ff0dcce131a3394d3eb83586e5c23bed9767e3d72c84686cc091c8a21f",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/read-timeout-not-ordinary-catch/main.pkl",
+      "expressions": [
+        "stable",
+        "caught",
+        "stable",
+        "caught"
+      ],
+      "callbacks": [],
+      "comparisonScope": "terminal-partial-parity",
+      "reason": "Preserve complete Java timeout/close followups including internal executor/cancelled outcomes; no blanket full compatibility claim."
+    },
+    {
+      "group": "initial",
+      "id": "read-close-not-ordinary-catch",
+      "mode": "read-close",
+      "sourceFile": "initial/workspaces/read-close-not-ordinary-catch/main.pkl",
+      "sourceSha256": "4e22a0ff0dcce131a3394d3eb83586e5c23bed9767e3d72c84686cc091c8a21f",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/read-close-not-ordinary-catch/main.pkl",
+      "expressions": [
+        "stable",
+        "caught",
+        "stable",
+        "caught"
+      ],
+      "callbacks": [],
+      "comparisonScope": "terminal-partial-parity",
+      "reason": "Preserve complete Java timeout/close followups including internal executor/cancelled outcomes; no blanket full compatibility claim."
+    },
+    {
+      "group": "initial",
+      "id": "source-timeout-not-ordinary-catch",
+      "mode": "source-timeout",
+      "sourceFile": "initial/workspaces/source-timeout-not-ordinary-catch/main.pkl",
+      "sourceSha256": "6aac2d29dfea8ce1db95e35589f10b70656c64810863abddc07ee493f5db98f7",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-timeout-not-ordinary-catch/main.pkl",
+      "expressions": [
+        "stable",
+        "caught",
+        "stable",
+        "caught"
+      ],
+      "callbacks": [],
+      "comparisonScope": "terminal-partial-parity",
+      "reason": "Preserve complete Java timeout/close followups including internal executor/cancelled outcomes; no blanket full compatibility claim."
+    },
+    {
+      "group": "initial",
+      "id": "source-close-not-ordinary-catch",
+      "mode": "source-close",
+      "sourceFile": "initial/workspaces/source-close-not-ordinary-catch/main.pkl",
+      "sourceSha256": "6aac2d29dfea8ce1db95e35589f10b70656c64810863abddc07ee493f5db98f7",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-close-not-ordinary-catch/main.pkl",
+      "expressions": [
+        "stable",
+        "caught",
+        "stable",
+        "caught"
+      ],
+      "callbacks": [],
+      "comparisonScope": "terminal-partial-parity",
+      "reason": "Preserve complete Java timeout/close followups including internal executor/cancelled outcomes; no blanket full compatibility claim."
+    },
+    {
+      "group": "initial",
+      "id": "renderer-profile-lines-strip-utf16",
+      "mode": "renderer",
+      "sourceFile": "initial/workspaces/renderer-profile-lines-strip-utf16/main.pkl",
+      "sourceSha256": "b85bd9a5b9ba83985a0e76d5853cb58735501e154048c72b799a8152e38160c6",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/renderer-profile-lines-strip-utf16/main.pkl",
+      "expressions": [
+        "white",
+        "units",
+        "blank",
+        "typed",
+        "white",
+        "units",
+        "stable"
+      ],
+      "callbacks": [],
+      "comparisonScope": "full-ordered-api",
+      "reason": "Compare every exact ordinary Java outer/callback API string/status plus full log fields and Host counters."
+    },
+    {
+      "group": "corrected",
+      "id": "stdlib-singleton-and-builtin-identity",
+      "mode": "plain",
+      "sourceFile": "corrected/workspaces/stdlib-singleton-and-builtin-identity/main.pkl",
+      "sourceSha256": "cb6217f2a109b5359d2cabf3e5587a9a66fd939261f5dfbbd820343e846b7e43",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/stdlib-singleton-and-builtin-identity/main.pkl",
+      "expressions": [
+        "baseSame",
+        "testSame",
+        "refSame",
+        "baseIntSame",
+        "baseModuleSame",
+        "baseDistinct",
+        "stdDistinct",
+        "testClassSame",
+        "unknownModule",
+        "baseSame"
+      ],
+      "callbacks": [],
+      "comparisonScope": "full-ordered-api",
+      "reason": "Compare every exact ordinary Java outer/callback API string/status plus full log fields and Host counters."
+    },
+    {
+      "group": "corrected",
+      "id": "resolve-retry-after-guest-catch",
+      "mode": "resolve-retry",
+      "sourceFile": "corrected/workspaces/resolve-retry-after-guest-catch/main.pkl",
+      "sourceSha256": "65db88e270ab8990a9a81591ab65ec74c14b525c76a0cf73aa40d5b20446e474",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/resolve-retry-after-guest-catch/main.pkl",
+      "expressions": [
+        "caught",
+        "caught",
+        "retry",
+        "value",
+        "stable"
+      ],
+      "callbacks": [],
+      "comparisonScope": "full-ordered-api",
+      "reason": "Compare every exact ordinary Java outer/callback API string/status plus full log fields and Host counters."
+    },
+    {
+      "group": "corrected",
+      "id": "source-failure-cache-after-guest-catch",
+      "mode": "source-cache",
+      "sourceFile": "corrected/workspaces/source-failure-cache-after-guest-catch/main.pkl",
+      "sourceSha256": "65db88e270ab8990a9a81591ab65ec74c14b525c76a0cf73aa40d5b20446e474",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/source-failure-cache-after-guest-catch/main.pkl",
+      "expressions": [
+        "caught",
+        "caught",
+        "retry",
+        "value",
+        "stable"
+      ],
+      "callbacks": [],
+      "comparisonScope": "full-ordered-api",
+      "reason": "Compare every exact ordinary Java outer/callback API string/status plus full log fields and Host counters."
+    },
+    {
+      "group": "corrected",
+      "id": "source-callback-inner-publication-and-catch",
+      "mode": "source-reentry",
+      "sourceFile": "corrected/workspaces/source-callback-inner-publication-and-catch/main.pkl",
+      "sourceSha256": "65db88e270ab8990a9a81591ab65ec74c14b525c76a0cf73aa40d5b20446e474",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-02/workspaces/source-callback-inner-publication-and-catch/main.pkl",
+      "expressions": [
+        "caught",
+        "retry",
+        "value",
+        "callbackCaught",
+        "stable"
+      ],
+      "callbacks": [
+        "stable",
+        "callbackCaught",
+        "value"
+      ],
+      "comparisonScope": "full-ordered-api",
+      "reason": "Compare every exact ordinary Java outer/callback API string/status plus full log fields and Host counters."
+    },
+    {
+      "group": "lazy-return",
+      "id": "returned-lazy-object-versus-forced-undefined",
+      "mode": "plain",
+      "sourceFile": "lazy-return/workspaces/returned-lazy-object-versus-forced-undefined/main.pkl",
+      "sourceSha256": "6f31bc7da885d29984f14b3e2bcefe334a5a448356bc014e30e729641f47c539",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-03/workspaces/returned-lazy-object-versus-forced-undefined/main.pkl",
+      "expressions": [
+        "lazyCatch",
+        "lazyNull",
+        "forced",
+        "undefinedCaught",
+        "undefinedNull",
+        "lazyNull",
+        "undefinedCaught",
+        "lazyCatch",
+        "stable"
+      ],
+      "callbacks": [],
+      "comparisonScope": "full-ordered-api",
+      "reason": "Full ordered raw Java string/status, retry, event and Host counter comparison."
+    },
+    {
+      "group": "initial-force",
+      "id": "nearest-guest-handler-inside-allow-undefined-force",
+      "mode": "plain",
+      "sourceFile": "initial-force/workspaces/nearest-guest-handler-inside-allow-undefined-force/main.pkl",
+      "sourceSha256": "6a2a9f76680f91683aef175277d746d8dfa31e91ab43b658da538ccda9d3850f",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/workspaces/nearest-guest-handler-inside-allow-undefined-force/main.pkl",
+      "expressions": [
+        "observed",
+        "obj.caught",
+        "obj.nullable",
+        "observed",
+        "stable"
+      ],
+      "callbacks": [],
+      "comparisonScope": "frontend-constructor-only",
+      "reason": "Original authored declaration rejected before intended force boundary; followups preserved."
+    },
+    {
+      "group": "corrected-force",
+      "id": "nearest-guest-handler-inside-allow-undefined-force",
+      "mode": "plain",
+      "sourceFile": "corrected-force/workspaces/nearest-guest-handler-inside-allow-undefined-force/main.pkl",
+      "sourceSha256": "8b28090100d03c9096247b4fbda22174f53b5f4e287318d9dc31917e3850cbbd",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-05/workspaces/nearest-guest-handler-inside-allow-undefined-force/main.pkl",
+      "expressions": [
+        "observed",
+        "obj.caught",
+        "obj.nullable",
+        "observed",
+        "stable"
+      ],
+      "callbacks": [],
+      "comparisonScope": "full-ordered-api",
+      "reason": "Full ordered raw Java string/status, retry, event and Host counter comparison."
+    }
+  ]
+}

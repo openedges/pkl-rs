@@ -1,0 +1,8 @@
+import "pkl:test" as t
+stable = 7
+callbackCaught = t.catch(() -> throw("callback-error"))
+function nonEmpty(v: String(!isEmpty)) = v
+white = t.catch(() -> throw(read("catch:/white")))
+units = t.catch(() -> throw(read("catch:/units")))
+blank = t.catch(() -> throw(read("catch:/blank")))
+typed = t.catch(() -> nonEmpty(""))

@@ -663,6 +663,7 @@ impl SourceProbe {
         let failure = match kind {
             "not-found" => ModuleHostError::NotFound,
             "io" => ModuleHostError::Io(crate::host::IoFailure::new(message)),
+            "security-manager-exception" => ModuleHostError::SecurityManagerException { message },
             "denied" | "unsupported" => {
                 let message = message.ok_or_else(|| {
                     RuntimeError::new(ErrorKind::Host, "this module Host error requires a message")

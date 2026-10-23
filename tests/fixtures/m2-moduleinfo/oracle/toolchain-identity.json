@@ -1,0 +1,16 @@
+{
+  "java": {
+    "path": "/usr/bin/java",
+    "sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552"
+  },
+  "javac": {
+    "path": "/usr/bin/javac",
+    "sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552"
+  },
+  "python": {
+    "path": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "version": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "sha256": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+  },
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O"
+}

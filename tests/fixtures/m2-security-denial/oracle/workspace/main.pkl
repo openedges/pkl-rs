@@ -1,0 +1,5 @@
+import "pkl:test" as test
+caught = test.catch(() -> import("file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl"))
+nullable = test.catchOrNull(() -> import("file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl"))
+ordinary = import("file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl")
+stable = 7

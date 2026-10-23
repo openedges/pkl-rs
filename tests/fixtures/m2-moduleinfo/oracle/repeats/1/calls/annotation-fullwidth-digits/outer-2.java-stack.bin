@@ -1,0 +1,16 @@
+org.pkl.core.PklBugException: An unexpected error has occurred. Would you mind filing a bug report?
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:406)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at ModuleInfoProbe.capture(ModuleInfoProbe.java:17)
+	at ModuleInfoProbe.main(ModuleInfoProbe.java:30)
+Caused by: java.lang.IllegalArgumentException: `０.３２.０` could not be parsed as a semantic version number.
+	at org.pkl.core.Version.parse(Version.java:89)
+	at org.pkl.core.runtime.MinPklVersionChecker.check(MinPklVersionChecker.java:41)
+	at org.pkl.core.runtime.VmLanguage.initializeModule(VmLanguage.java:115)
+	at org.pkl.core.runtime.ModuleCache.doLoad(ModuleCache.java:184)
+	at org.pkl.core.runtime.ModuleCache.getOrLoad(ModuleCache.java:163)
+	at org.pkl.core.runtime.VmLanguage.loadModule(VmLanguage.java:69)
+	at org.pkl.core.EvaluatorImpl.lambda$doEvaluate$0(EvaluatorImpl.java:469)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:388)
+	... 4 more

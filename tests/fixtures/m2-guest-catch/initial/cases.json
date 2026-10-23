@@ -1,0 +1,244 @@
+[
+  {
+    "id": "stdlib-singleton-and-builtin-identity",
+    "mode": "plain",
+    "source": "import \"pkl:base\" as b\nimport \"pkl:base\" as b2\nimport \"pkl:test\" as t\nimport \"pkl:test\" as t2\nimport \"pkl:ref\" as r\nimport \"pkl:ref\" as r2\nbaseSame = b == b2\ntestSame = t == t2\nrefSame = r == r2\nbaseIntSame = b.Int == Int\nbaseModuleSame = b.Module == Module\nbaseDistinct = this != b\nstdDistinct = b != t && t != r && b != r\ntestClassSame = t.getClass() == t2.getClass()\nunknown = t.catch(() -> import(\"pkl:missingStage45\"))\n",
+    "expressions": [
+      "baseSame",
+      "testSame",
+      "refSame",
+      "baseIntSame",
+      "baseModuleSame",
+      "baseDistinct",
+      "stdDistinct",
+      "testClassSame",
+      "unknown",
+      "baseSame"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/stdlib-singleton-and-builtin-identity",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/stdlib-singleton-and-builtin-identity/main.pkl",
+    "sourceSha256": "0026c95944597e64e4f6c8d8e1bc92b5926c841f43cce7208db36eb88ee60a45",
+    "callbacks": []
+  },
+  {
+    "id": "normal-error-nested-catch",
+    "mode": "plain",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\nfunction onlyInt(x: Int) = x\ncaught = t.catch(() -> throw(\"boom\"))\nnormal = t.catchOrNull(() -> 7)\nexpected = t.catch(() -> 7)\nnested = t.catch(() -> t.catch(() -> 7))\nnestedNormal = t.catchOrNull(() -> t.catch(() -> throw(\"inner\")))\ninnerNormal = t.catch(() -> t.catchOrNull(() -> throw(\"inner\")))\ntyped = t.catch(() -> onlyInt(\"x\"))\nwrongFunction = t.catch(() -> t.catch(7))\n",
+    "expressions": [
+      "caught",
+      "normal",
+      "expected",
+      "nested",
+      "nestedNormal",
+      "innerNormal",
+      "typed",
+      "wrongFunction",
+      "caught",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/normal-error-nested-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/normal-error-nested-catch/main.pkl",
+    "sourceSha256": "c376e84e2a53c8a21b2ab2c366a509b173a22a4d70c9a1fab35bf060c3fd1670",
+    "callbacks": []
+  },
+  {
+    "id": "lazy-guest-failure-and-cache",
+    "mode": "plain",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\nfailing = if (trace(true)) throw(\"lazy-error\") else 0\ncaught = t.catch(() -> failing)\nretry = t.catchOrNull(() -> failing)\n",
+    "expressions": [
+      "caught",
+      "caught",
+      "retry",
+      "retry",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/lazy-guest-failure-and-cache",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/lazy-guest-failure-and-cache/main.pkl",
+    "sourceSha256": "0d32621b10d4aa8145c41bcec93b6c2f13c430b4d0ebcb70c4a8920e591f932d",
+    "callbacks": []
+  },
+  {
+    "id": "resource-retry-after-guest-catch",
+    "mode": "read-retry",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\nvalue = read(\"catch:/resource\")\ncaught = t.catch(() -> value)\nretry = t.catchOrNull(() -> value)\n",
+    "expressions": [
+      "caught",
+      "caught",
+      "retry",
+      "value",
+      "retry",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/resource-retry-after-guest-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/resource-retry-after-guest-catch/main.pkl",
+    "sourceSha256": "2852e239f90d9f5f13433848c3cd5ba4001a96f86ce14a4a8f7dace35659b889",
+    "callbacks": []
+  },
+  {
+    "id": "resolve-retry-after-guest-catch",
+    "mode": "resolve-retry",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\nimport \"catch:/child\" as child\nvalue = child.value\ncaught = t.catch(() -> value)\nretry = t.catchOrNull(() -> value)\n",
+    "expressions": [
+      "caught",
+      "caught",
+      "retry",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/resolve-retry-after-guest-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/resolve-retry-after-guest-catch/main.pkl",
+    "sourceSha256": "44bb834e0fd6298995e3f31382c8526bfe3ffdc908ed6d8525d6771a4bec3adf",
+    "callbacks": []
+  },
+  {
+    "id": "source-failure-cache-after-guest-catch",
+    "mode": "source-cache",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\nimport \"catch:/child\" as child\nvalue = child.value\ncaught = t.catch(() -> value)\nretry = t.catchOrNull(() -> value)\n",
+    "expressions": [
+      "caught",
+      "caught",
+      "retry",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-failure-cache-after-guest-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-failure-cache-after-guest-catch/main.pkl",
+    "sourceSha256": "44bb834e0fd6298995e3f31382c8526bfe3ffdc908ed6d8525d6771a4bec3adf",
+    "callbacks": []
+  },
+  {
+    "id": "read-callback-nested-catch",
+    "mode": "read-reentry",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\nvalue = read(\"catch:/resource\")\ncaught = t.catch(() -> value)\nretry = t.catchOrNull(() -> value)\n",
+    "expressions": [
+      "caught",
+      "retry",
+      "value",
+      "callbackCaught",
+      "stable"
+    ],
+    "callbacks": [
+      "stable",
+      "callbackCaught"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/read-callback-nested-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/read-callback-nested-catch/main.pkl",
+    "sourceSha256": "2852e239f90d9f5f13433848c3cd5ba4001a96f86ce14a4a8f7dace35659b889"
+  },
+  {
+    "id": "source-callback-inner-publication-and-catch",
+    "mode": "source-reentry",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\nimport \"catch:/child\" as child\nvalue = child.value\ncaught = t.catch(() -> value)\nretry = t.catchOrNull(() -> value)\n",
+    "expressions": [
+      "caught",
+      "retry",
+      "value",
+      "callbackCaught",
+      "stable"
+    ],
+    "callbacks": [
+      "stable",
+      "callbackCaught",
+      "value"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-callback-inner-publication-and-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-callback-inner-publication-and-catch/main.pkl",
+    "sourceSha256": "44bb834e0fd6298995e3f31382c8526bfe3ffdc908ed6d8525d6771a4bec3adf"
+  },
+  {
+    "id": "logger-callback-nested-catch",
+    "mode": "logger-reentry",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\ncaught = t.catch(() -> if (trace(true)) throw(\"after-log\") else 0)\n",
+    "expressions": [
+      "caught",
+      "caught",
+      "callbackCaught",
+      "stable"
+    ],
+    "callbacks": [
+      "stable",
+      "callbackCaught"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/logger-callback-nested-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/logger-callback-nested-catch/main.pkl",
+    "sourceSha256": "baa296f49bd13c8e6c0d2c14a7add8fad20c39a67a264c8bddcdfbb9ace3deb4"
+  },
+  {
+    "id": "read-timeout-not-ordinary-catch",
+    "mode": "read-timeout",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\ncaught = t.catch(() -> read(\"catch:/resource\"))\n",
+    "expressions": [
+      "stable",
+      "caught",
+      "stable",
+      "caught"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/read-timeout-not-ordinary-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/read-timeout-not-ordinary-catch/main.pkl",
+    "sourceSha256": "4e22a0ff0dcce131a3394d3eb83586e5c23bed9767e3d72c84686cc091c8a21f",
+    "callbacks": []
+  },
+  {
+    "id": "read-close-not-ordinary-catch",
+    "mode": "read-close",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\ncaught = t.catch(() -> read(\"catch:/resource\"))\n",
+    "expressions": [
+      "stable",
+      "caught",
+      "stable",
+      "caught"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/read-close-not-ordinary-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/read-close-not-ordinary-catch/main.pkl",
+    "sourceSha256": "4e22a0ff0dcce131a3394d3eb83586e5c23bed9767e3d72c84686cc091c8a21f",
+    "callbacks": []
+  },
+  {
+    "id": "source-timeout-not-ordinary-catch",
+    "mode": "source-timeout",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\ncaught = t.catch(() -> import(\"catch:/child\").value)\n",
+    "expressions": [
+      "stable",
+      "caught",
+      "stable",
+      "caught"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-timeout-not-ordinary-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-timeout-not-ordinary-catch/main.pkl",
+    "sourceSha256": "6aac2d29dfea8ce1db95e35589f10b70656c64810863abddc07ee493f5db98f7",
+    "callbacks": []
+  },
+  {
+    "id": "source-close-not-ordinary-catch",
+    "mode": "source-close",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\ncaught = t.catch(() -> import(\"catch:/child\").value)\n",
+    "expressions": [
+      "stable",
+      "caught",
+      "stable",
+      "caught"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-close-not-ordinary-catch",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/source-close-not-ordinary-catch/main.pkl",
+    "sourceSha256": "6aac2d29dfea8ce1db95e35589f10b70656c64810863abddc07ee493f5db98f7",
+    "callbacks": []
+  },
+  {
+    "id": "renderer-profile-lines-strip-utf16",
+    "mode": "renderer",
+    "source": "import \"pkl:test\" as t\nstable = 7\ncallbackCaught = t.catch(() -> throw(\"callback-error\"))\nfunction nonEmpty(v: String(!isEmpty)) = v\nwhite = t.catch(() -> throw(read(\"catch:/white\")))\nunits = t.catch(() -> throw(read(\"catch:/units\")))\nblank = t.catch(() -> throw(read(\"catch:/blank\")))\ntyped = t.catch(() -> nonEmpty(\"\"))\n",
+    "expressions": [
+      "white",
+      "units",
+      "blank",
+      "typed",
+      "white",
+      "units",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/renderer-profile-lines-strip-utf16",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-01/workspaces/renderer-profile-lines-strip-utf16/main.pkl",
+    "sourceSha256": "b85bd9a5b9ba83985a0e76d5853cb58735501e154048c72b799a8152e38160c6",
+    "callbacks": []
+  }
+]

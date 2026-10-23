@@ -69,18 +69,26 @@ pub enum ModuleHostError {
     NotFound,
     /// Raw I/O exception message; shared diagnostics add the IOException type.
     Io(IoFailure),
+    /// An already constructed Host rejection; arbitrary text has no guest provenance.
     Denied(PklString),
+    /// Typed `org.pkl.core.SecurityManagerException` from module resolution.
+    /// The message is the Java exception message, not a formatted diagnostic.
+    /// Source loading does not support this completion variant.
+    SecurityManagerException {
+        message: Option<PklString>,
+    },
     Unsupported(PklString),
 }
 
 impl ModuleHostError {
     pub(crate) fn into_runtime(self, uri: &str) -> RuntimeError {
         match self {
-            Self::NotFound => {
-                RuntimeError::new(ErrorKind::Host, format!("Cannot find module `{uri}`."))
-            }
+            Self::NotFound => RuntimeError::host_language(format!("Cannot find module `{uri}`.")),
             Self::Io(cause) => cause.into_runtime("loading module", uri),
             Self::Denied(message) => RuntimeError::new(ErrorKind::Host, message),
+            Self::SecurityManagerException { message } => RuntimeError::host_language(
+                message.unwrap_or_else(|| "None (cause has no message)".into()),
+            ),
             Self::Unsupported(message) => RuntimeError::new(ErrorKind::Unsupported, message),
         }
     }

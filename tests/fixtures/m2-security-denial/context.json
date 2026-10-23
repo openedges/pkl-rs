@@ -1,0 +1,15 @@
+{
+  "sourceFile": "oracle/workspace/main.pkl",
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/main.pkl",
+  "deniedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl",
+  "expressions": [
+    "caught",
+    "nullable",
+    "ordinary",
+    "stable",
+    "caught"
+  ],
+  "completionStage": "resolve",
+  "completionKind": "security-manager-exception",
+  "nativeCounterScope": "Only3actualdeniedchildresolutions per repeat;Java fullpolicycallbacks retained separately,not claimed equivalent."
+}

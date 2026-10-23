@@ -1,0 +1,1457 @@
+{
+  "originalRoot": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01",
+  "pins": {
+    "report.json": "5aa3d3a4f48c525e8bdf485d9347ecd800270fb4dbc4932d995df3291c7759ad",
+    "closure.json": "4961f82718d9c9323f3303781af43a59fe820e8cf6c0e2c05a5658aca5001d25",
+    "inventory.json": "8a79a007eb225ca1e74d3bec27a57696afeb81c785e0b7b7231efd7b9ee29ede",
+    "cases.json": "5ebf1093031f303e0ebbcd8d9b86992305ffea69f6a0f73ffc861d82885ead72"
+  },
+  "bindings": [
+    {
+      "fixturePath": "oracle/DenialProbe.java",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/DenialProbe.java",
+      "bytes": 5044,
+      "sha256": "27f9eee29d87d7d110fe1777a54307bf047587a77235b25ce8f2032a7a865ecf"
+    },
+    {
+      "fixturePath": "oracle/acquire.stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/acquire.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/acquire.stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/acquire.stdout.bin",
+      "bytes": 353,
+      "sha256": "c7226aab160b43f109175bc3bd6642417ea1ecb545c92d377919e5b482000bce"
+    },
+    {
+      "fixturePath": "oracle/cases.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/cases.json",
+      "bytes": 1489,
+      "sha256": "5ebf1093031f303e0ebbcd8d9b86992305ffea69f6a0f73ffc861d82885ead72"
+    },
+    {
+      "fixturePath": "oracle/classes/DenialProbe$1.class",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/classes/DenialProbe$1.class",
+      "bytes": 2896,
+      "sha256": "1e3bee838f2a59e528c754348c606dc6029b54285f1017fdc3a8bef2cc60c314"
+    },
+    {
+      "fixturePath": "oracle/classes/DenialProbe.class",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/classes/DenialProbe.class",
+      "bytes": 7357,
+      "sha256": "a893a65de2adca94eb88dbe2560437ad489d47523e45614e6ae6638395844703"
+    },
+    {
+      "fixturePath": "oracle/closure-exclusions.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/closure-exclusions.json",
+      "bytes": 204,
+      "sha256": "1d929f9edea11e268066cc31212c842f8c24bff57aeacc0960d89ce9476b17ae"
+    },
+    {
+      "fixturePath": "oracle/closure.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/closure.json",
+      "bytes": 269,
+      "sha256": "4961f82718d9c9323f3303781af43a59fe820e8cf6c0e2c05a5658aca5001d25"
+    },
+    {
+      "fixturePath": "oracle/exclusions.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/exclusions.json",
+      "bytes": 173,
+      "sha256": "c5a52646da305ce3ad4f12893a4cc7fdcaee5878e99f7a9d34de5b42dc585d07"
+    },
+    {
+      "fixturePath": "oracle/inputs-after.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/inputs-after.json",
+      "bytes": 3658,
+      "sha256": "ff1027490c0f31d7f641d75efce2f27c3077ee0c1ba3614984ee64f0d1a263e1"
+    },
+    {
+      "fixturePath": "oracle/inputs-before.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/inputs-before.json",
+      "bytes": 3658,
+      "sha256": "ff1027490c0f31d7f641d75efce2f27c3077ee0c1ba3614984ee64f0d1a263e1"
+    },
+    {
+      "fixturePath": "oracle/interpretation.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/interpretation.json",
+      "bytes": 1329,
+      "sha256": "ed0fecac5b52abeed3ca746d374b852b6ef9877aced800b90bde3179f25cdec1"
+    },
+    {
+      "fixturePath": "oracle/inventory.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/inventory.json",
+      "bytes": 40404,
+      "sha256": "8a79a007eb225ca1e74d3bec27a57696afeb81c785e0b7b7231efd7b9ee29ede"
+    },
+    {
+      "fixturePath": "oracle/javac.process.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/javac.process.json",
+      "bytes": 1527,
+      "sha256": "3957facfc29102cbe4d8059d74baab9fc35ecffc86fc9d907d1460d0036ee886"
+    },
+    {
+      "fixturePath": "oracle/javac/result.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/javac/result.json",
+      "bytes": 294,
+      "sha256": "1321f87684615e15a78a3c91d600f15fd6fe4390494ff13a4a8e881619fd94c0"
+    },
+    {
+      "fixturePath": "oracle/javac/stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/javac/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/javac/stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/javac/stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/profile.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/profile.json",
+      "bytes": 7800,
+      "sha256": "cc7788cb0757e11680550cea6b1b50ab86ae9182c11e9d462777ca9fec51daec"
+    },
+    {
+      "fixturePath": "oracle/repeats/0.process.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0.process.json",
+      "bytes": 2191,
+      "sha256": "97dd3f2d1b911801654bf8eefc772fc66ee075205f82ebd94f9113d8ac937bc2"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/allowed-main-pattern.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/allowed-main-pattern.bin",
+      "bytes": 119,
+      "sha256": "82c4ba63b9fc5371a7a60716885e2d4ff817201f1a5d700171fc3fac729d984f"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/counters.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/counters.bin",
+      "bytes": 76,
+      "sha256": "546a7c09e908170fd41f28d322c0bc67a174306d83ce78c4d8d4c0514f9311fc"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/denial-0.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/denial-0.error-class.bin",
+      "bytes": 37,
+      "sha256": "0189f0b179f6cc907ebe236375b18e4dc08d0f544a524603cff8aca20953c8b3"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/denial-0.message.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/denial-0.message.bin",
+      "bytes": 224,
+      "sha256": "2df4931029d1ff0a0fa0ae61e8d38404b4b1bce2be2b8e5db09d88d577acf66b"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/denial-0.message.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/denial-0.message.code-units.bin",
+      "bytes": 448,
+      "sha256": "83c628adc470f1ed080e634a995898b3aba0c01d492079da524c02e6fec05ef6"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/denial-0.uri.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/denial-0.uri.bin",
+      "bytes": 115,
+      "sha256": "a5f67e9fd9b1801fd1888e98a7c7d7554839b6f24ff8e894030e799390a3c9e0"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/denial-1.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/denial-1.error-class.bin",
+      "bytes": 37,
+      "sha256": "0189f0b179f6cc907ebe236375b18e4dc08d0f544a524603cff8aca20953c8b3"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/denial-1.message.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/denial-1.message.bin",
+      "bytes": 224,
+      "sha256": "2df4931029d1ff0a0fa0ae61e8d38404b4b1bce2be2b8e5db09d88d577acf66b"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/denial-1.message.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/denial-1.message.code-units.bin",
+      "bytes": 448,
+      "sha256": "83c628adc470f1ed080e634a995898b3aba0c01d492079da524c02e6fec05ef6"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/denial-1.uri.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/denial-1.uri.bin",
+      "bytes": 115,
+      "sha256": "a5f67e9fd9b1801fd1888e98a7c7d7554839b6f24ff8e894030e799390a3c9e0"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/denial-2.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/denial-2.error-class.bin",
+      "bytes": 37,
+      "sha256": "0189f0b179f6cc907ebe236375b18e4dc08d0f544a524603cff8aca20953c8b3"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/denial-2.message.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/denial-2.message.bin",
+      "bytes": 224,
+      "sha256": "2df4931029d1ff0a0fa0ae61e8d38404b4b1bce2be2b8e5db09d88d577acf66b"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/denial-2.message.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/denial-2.message.code-units.bin",
+      "bytes": 448,
+      "sha256": "83c628adc470f1ed080e634a995898b3aba0c01d492079da524c02e6fec05ef6"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/denial-2.uri.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/denial-2.uri.bin",
+      "bytes": 115,
+      "sha256": "a5f67e9fd9b1801fd1888e98a7c7d7554839b6f24ff8e894030e799390a3c9e0"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-0.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-0.bin",
+      "bytes": 122,
+      "sha256": "f77ac8022ae3369d7fbcaf7214cd85851fcadaf41f09f0055027bf1215abae35"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-1.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-1.bin",
+      "bytes": 141,
+      "sha256": "8cbe37d32cd723a38fb837ac59f4ac32009fd2644d96cff07514fef175c1db64"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-10.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-10.bin",
+      "bytes": 240,
+      "sha256": "2dcb38cd50977150d7a74cda43334291b07a4b367a2138a0e71aebc78be82d05"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-11.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-11.bin",
+      "bytes": 123,
+      "sha256": "79d750821edfa86391bb63540bb2e9274134a671c367ff41d7343898fa5604a1"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-12.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-12.bin",
+      "bytes": 160,
+      "sha256": "920ede136f20f371953d94a18785f3c4e614838b2be98f7c5b7ccea8f3a6eb38"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-13.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-13.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-14.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-14.bin",
+      "bytes": 17,
+      "sha256": "56bb60861b664b5527b4c229045a54e7b5541738708215d9face6cf3411600a2"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-15.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-15.bin",
+      "bytes": 240,
+      "sha256": "2dcb38cd50977150d7a74cda43334291b07a4b367a2138a0e71aebc78be82d05"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-16.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-16.bin",
+      "bytes": 123,
+      "sha256": "79d750821edfa86391bb63540bb2e9274134a671c367ff41d7343898fa5604a1"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-17.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-17.bin",
+      "bytes": 160,
+      "sha256": "920ede136f20f371953d94a18785f3c4e614838b2be98f7c5b7ccea8f3a6eb38"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-18.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-18.bin",
+      "bytes": 39,
+      "sha256": "d75d914f831dc62c783ca775737e7059cd13423af7239381471bc65579fdd1ce"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-19.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-19.bin",
+      "bytes": 17,
+      "sha256": "56bb60861b664b5527b4c229045a54e7b5541738708215d9face6cf3411600a2"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-2.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-2.bin",
+      "bytes": 122,
+      "sha256": "f77ac8022ae3369d7fbcaf7214cd85851fcadaf41f09f0055027bf1215abae35"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-20.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-20.bin",
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-21.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-21.bin",
+      "bytes": 17,
+      "sha256": "56bb60861b664b5527b4c229045a54e7b5541738708215d9face6cf3411600a2"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-22.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-22.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-3.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-3.bin",
+      "bytes": 17,
+      "sha256": "56bb60861b664b5527b4c229045a54e7b5541738708215d9face6cf3411600a2"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-4.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-4.bin",
+      "bytes": 133,
+      "sha256": "21c33a04da6c61d9428b75826943c93db2f8ac78a7bd0c4c4c2733d3fc5e35f2"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-5.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-5.bin",
+      "bytes": 240,
+      "sha256": "2dcb38cd50977150d7a74cda43334291b07a4b367a2138a0e71aebc78be82d05"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-6.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-6.bin",
+      "bytes": 123,
+      "sha256": "79d750821edfa86391bb63540bb2e9274134a671c367ff41d7343898fa5604a1"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-7.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-7.bin",
+      "bytes": 160,
+      "sha256": "920ede136f20f371953d94a18785f3c4e614838b2be98f7c5b7ccea8f3a6eb38"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-8.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-8.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/event-9.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/event-9.bin",
+      "bytes": 17,
+      "sha256": "56bb60861b664b5527b4c229045a54e7b5541738708215d9face6cf3411600a2"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/existing-child-uri.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/existing-child-uri.bin",
+      "bytes": 115,
+      "sha256": "a5f67e9fd9b1801fd1888e98a7c7d7554839b6f24ff8e894030e799390a3c9e0"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-0.counters-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-0.counters-after.bin",
+      "bytes": 74,
+      "sha256": "47df2a98018d0f251010c5c1ae46960b10134dad29e31f7afc35c11e1ffbd694"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-0.counters-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-0.counters-before.bin",
+      "bytes": 74,
+      "sha256": "7e5d780528e6b22d520a04b14b407f50ab396b314e270c9a99d87e2618169c54"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-0.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-0.expression.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-0.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-0.message-null.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-0.reads-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-0.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-0.reads-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-0.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-0.status.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-0.stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-0.stderr.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-0.stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-0.stdout.bin",
+      "bytes": 224,
+      "sha256": "2df4931029d1ff0a0fa0ae61e8d38404b4b1bce2be2b8e5db09d88d577acf66b"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-0.stdout.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-0.stdout.code-units.bin",
+      "bytes": 448,
+      "sha256": "83c628adc470f1ed080e634a995898b3aba0c01d492079da524c02e6fec05ef6"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-1.counters-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-1.counters-after.bin",
+      "bytes": 75,
+      "sha256": "6adf83a9dcea07ae14eb1e5ad5ef89cfb6c23bed3dc9fda3cd08c7fd7895e738"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-1.counters-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-1.counters-before.bin",
+      "bytes": 74,
+      "sha256": "47df2a98018d0f251010c5c1ae46960b10134dad29e31f7afc35c11e1ffbd694"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-1.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-1.expression.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-1.expression.bin",
+      "bytes": 8,
+      "sha256": "e31de1ad143062105015b88a47e8b0c96d1e6dc53a555b8d87afdbe13640eb40"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-1.message-null.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-1.reads-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-1.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-1.reads-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-1.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-1.status.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-1.stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-1.stderr.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-1.stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-1.stdout.bin",
+      "bytes": 224,
+      "sha256": "2df4931029d1ff0a0fa0ae61e8d38404b4b1bce2be2b8e5db09d88d577acf66b"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-1.stdout.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-1.stdout.code-units.bin",
+      "bytes": 448,
+      "sha256": "83c628adc470f1ed080e634a995898b3aba0c01d492079da524c02e6fec05ef6"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.counters-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.counters-after.bin",
+      "bytes": 75,
+      "sha256": "9f9356a14d2129fce9f986a57b2084ed2afeee8c92429a143659419449d03fae"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.counters-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.counters-before.bin",
+      "bytes": 75,
+      "sha256": "6adf83a9dcea07ae14eb1e5ad5ef89cfb6c23bed3dc9fda3cd08c7fd7895e738"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.expression.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.expression.bin",
+      "bytes": 8,
+      "sha256": "03822375f2aca5e53d66838a3e803183e0c1a7921da8e4056d3341ea95777cd9"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.java-stack.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.java-stack.bin",
+      "bytes": 1110,
+      "sha256": "db7323039cc76d8569abb60453572c13ce99b6995e764afc4a47639d11951e52"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.message-null.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.reads-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.reads-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.status.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.stderr.bin",
+      "bytes": 709,
+      "sha256": "141183a58e8145b3dbc8d50114bab9d88edf2e04a6d0cda2b26fd9f670aafe1f"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.stderr.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.stderr.code-units.bin",
+      "bytes": 1402,
+      "sha256": "ae8048a2a54701767671d9ef784c7f5c638840929fa7ffef7ce82633f88739d3"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-2.stdout.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-2.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-3.counters-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-3.counters-after.bin",
+      "bytes": 75,
+      "sha256": "5e3b06af7d74fe2c150b964c0bae1889ed38e0f53dc3fd7d59c61ddb9cd028d0"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-3.counters-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-3.counters-before.bin",
+      "bytes": 75,
+      "sha256": "9f9356a14d2129fce9f986a57b2084ed2afeee8c92429a143659419449d03fae"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-3.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-3.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-3.expression.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-3.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-3.message-null.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-3.reads-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-3.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-3.reads-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-3.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-3.status.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-3.stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-3.stderr.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-3.stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-3.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-3.stdout.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-3.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-4.counters-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-4.counters-after.bin",
+      "bytes": 76,
+      "sha256": "546a7c09e908170fd41f28d322c0bc67a174306d83ce78c4d8d4c0514f9311fc"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-4.counters-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-4.counters-before.bin",
+      "bytes": 75,
+      "sha256": "5e3b06af7d74fe2c150b964c0bae1889ed38e0f53dc3fd7d59c61ddb9cd028d0"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-4.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-4.expression.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-4.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-4.message-null.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-4.reads-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-4.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-4.reads-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-4.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-4.status.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-4.stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-4.stderr.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-4.stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-4.stdout.bin",
+      "bytes": 224,
+      "sha256": "2df4931029d1ff0a0fa0ae61e8d38404b4b1bce2be2b8e5db09d88d577acf66b"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/calls/outer-4.stdout.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/calls/outer-4.stdout.code-units.bin",
+      "bytes": 448,
+      "sha256": "83c628adc470f1ed080e634a995898b3aba0c01d492079da524c02e6fec05ef6"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/process.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/process.json",
+      "bytes": 3055,
+      "sha256": "6358e2e12416d9d3c92a15df29ef06073e54666c9ca06cefbbb93d3d5d5d3854"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/result.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/result.json",
+      "bytes": 294,
+      "sha256": "2cdee0a05a772b7149bba09393636503afcf8296fc5528d3ce7d8088fce7072e"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/0/stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/0/stdout.bin",
+      "bytes": 2294,
+      "sha256": "4416937842f85fbedf10c96288e2e1317662dc240292acbc3b59ab3ff8525cf1"
+    },
+    {
+      "fixturePath": "oracle/repeats/1.process.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1.process.json",
+      "bytes": 2191,
+      "sha256": "eede2fa3e1336473c04b8709b48c57eae10d1baa355b4010676c34ebc3802f93"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/allowed-main-pattern.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/allowed-main-pattern.bin",
+      "bytes": 119,
+      "sha256": "82c4ba63b9fc5371a7a60716885e2d4ff817201f1a5d700171fc3fac729d984f"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/counters.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/counters.bin",
+      "bytes": 76,
+      "sha256": "546a7c09e908170fd41f28d322c0bc67a174306d83ce78c4d8d4c0514f9311fc"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/denial-0.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/denial-0.error-class.bin",
+      "bytes": 37,
+      "sha256": "0189f0b179f6cc907ebe236375b18e4dc08d0f544a524603cff8aca20953c8b3"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/denial-0.message.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/denial-0.message.bin",
+      "bytes": 224,
+      "sha256": "2df4931029d1ff0a0fa0ae61e8d38404b4b1bce2be2b8e5db09d88d577acf66b"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/denial-0.message.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/denial-0.message.code-units.bin",
+      "bytes": 448,
+      "sha256": "83c628adc470f1ed080e634a995898b3aba0c01d492079da524c02e6fec05ef6"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/denial-0.uri.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/denial-0.uri.bin",
+      "bytes": 115,
+      "sha256": "a5f67e9fd9b1801fd1888e98a7c7d7554839b6f24ff8e894030e799390a3c9e0"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/denial-1.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/denial-1.error-class.bin",
+      "bytes": 37,
+      "sha256": "0189f0b179f6cc907ebe236375b18e4dc08d0f544a524603cff8aca20953c8b3"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/denial-1.message.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/denial-1.message.bin",
+      "bytes": 224,
+      "sha256": "2df4931029d1ff0a0fa0ae61e8d38404b4b1bce2be2b8e5db09d88d577acf66b"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/denial-1.message.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/denial-1.message.code-units.bin",
+      "bytes": 448,
+      "sha256": "83c628adc470f1ed080e634a995898b3aba0c01d492079da524c02e6fec05ef6"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/denial-1.uri.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/denial-1.uri.bin",
+      "bytes": 115,
+      "sha256": "a5f67e9fd9b1801fd1888e98a7c7d7554839b6f24ff8e894030e799390a3c9e0"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/denial-2.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/denial-2.error-class.bin",
+      "bytes": 37,
+      "sha256": "0189f0b179f6cc907ebe236375b18e4dc08d0f544a524603cff8aca20953c8b3"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/denial-2.message.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/denial-2.message.bin",
+      "bytes": 224,
+      "sha256": "2df4931029d1ff0a0fa0ae61e8d38404b4b1bce2be2b8e5db09d88d577acf66b"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/denial-2.message.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/denial-2.message.code-units.bin",
+      "bytes": 448,
+      "sha256": "83c628adc470f1ed080e634a995898b3aba0c01d492079da524c02e6fec05ef6"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/denial-2.uri.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/denial-2.uri.bin",
+      "bytes": 115,
+      "sha256": "a5f67e9fd9b1801fd1888e98a7c7d7554839b6f24ff8e894030e799390a3c9e0"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-0.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-0.bin",
+      "bytes": 122,
+      "sha256": "f77ac8022ae3369d7fbcaf7214cd85851fcadaf41f09f0055027bf1215abae35"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-1.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-1.bin",
+      "bytes": 141,
+      "sha256": "8cbe37d32cd723a38fb837ac59f4ac32009fd2644d96cff07514fef175c1db64"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-10.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-10.bin",
+      "bytes": 240,
+      "sha256": "2dcb38cd50977150d7a74cda43334291b07a4b367a2138a0e71aebc78be82d05"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-11.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-11.bin",
+      "bytes": 123,
+      "sha256": "79d750821edfa86391bb63540bb2e9274134a671c367ff41d7343898fa5604a1"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-12.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-12.bin",
+      "bytes": 160,
+      "sha256": "920ede136f20f371953d94a18785f3c4e614838b2be98f7c5b7ccea8f3a6eb38"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-13.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-13.bin",
+      "bytes": 15,
+      "sha256": "ca1fec0d218f26930df5c836b267ff7f560a78fcdb98fc4a9cd8be07eb39bc6d"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-14.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-14.bin",
+      "bytes": 17,
+      "sha256": "56bb60861b664b5527b4c229045a54e7b5541738708215d9face6cf3411600a2"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-15.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-15.bin",
+      "bytes": 240,
+      "sha256": "2dcb38cd50977150d7a74cda43334291b07a4b367a2138a0e71aebc78be82d05"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-16.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-16.bin",
+      "bytes": 123,
+      "sha256": "79d750821edfa86391bb63540bb2e9274134a671c367ff41d7343898fa5604a1"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-17.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-17.bin",
+      "bytes": 160,
+      "sha256": "920ede136f20f371953d94a18785f3c4e614838b2be98f7c5b7ccea8f3a6eb38"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-18.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-18.bin",
+      "bytes": 39,
+      "sha256": "d75d914f831dc62c783ca775737e7059cd13423af7239381471bc65579fdd1ce"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-19.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-19.bin",
+      "bytes": 17,
+      "sha256": "56bb60861b664b5527b4c229045a54e7b5541738708215d9face6cf3411600a2"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-2.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-2.bin",
+      "bytes": 122,
+      "sha256": "f77ac8022ae3369d7fbcaf7214cd85851fcadaf41f09f0055027bf1215abae35"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-20.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-20.bin",
+      "bytes": 15,
+      "sha256": "8e2b62dafee28a312806a9a72e7030645a61f79b1fc82f77ff48a4c290b58828"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-21.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-21.bin",
+      "bytes": 17,
+      "sha256": "56bb60861b664b5527b4c229045a54e7b5541738708215d9face6cf3411600a2"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-22.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-22.bin",
+      "bytes": 15,
+      "sha256": "9878917845d64c113adda0efa53e982c05d100fd08f121a78414001da5170e04"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-3.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-3.bin",
+      "bytes": 17,
+      "sha256": "56bb60861b664b5527b4c229045a54e7b5541738708215d9face6cf3411600a2"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-4.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-4.bin",
+      "bytes": 133,
+      "sha256": "21c33a04da6c61d9428b75826943c93db2f8ac78a7bd0c4c4c2733d3fc5e35f2"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-5.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-5.bin",
+      "bytes": 240,
+      "sha256": "2dcb38cd50977150d7a74cda43334291b07a4b367a2138a0e71aebc78be82d05"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-6.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-6.bin",
+      "bytes": 123,
+      "sha256": "79d750821edfa86391bb63540bb2e9274134a671c367ff41d7343898fa5604a1"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-7.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-7.bin",
+      "bytes": 160,
+      "sha256": "920ede136f20f371953d94a18785f3c4e614838b2be98f7c5b7ccea8f3a6eb38"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-8.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-8.bin",
+      "bytes": 15,
+      "sha256": "d863fb525756cbff1ecc149362f1aa5047c06c41a0dd4a240ab356f366f0c84f"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/event-9.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/event-9.bin",
+      "bytes": 17,
+      "sha256": "56bb60861b664b5527b4c229045a54e7b5541738708215d9face6cf3411600a2"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/existing-child-uri.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/existing-child-uri.bin",
+      "bytes": 115,
+      "sha256": "a5f67e9fd9b1801fd1888e98a7c7d7554839b6f24ff8e894030e799390a3c9e0"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-0.counters-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-0.counters-after.bin",
+      "bytes": 74,
+      "sha256": "47df2a98018d0f251010c5c1ae46960b10134dad29e31f7afc35c11e1ffbd694"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-0.counters-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-0.counters-before.bin",
+      "bytes": 74,
+      "sha256": "7e5d780528e6b22d520a04b14b407f50ab396b314e270c9a99d87e2618169c54"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-0.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-0.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-0.expression.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-0.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-0.message-null.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-0.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-0.reads-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-0.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-0.reads-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-0.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-0.status.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-0.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-0.stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-0.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-0.stderr.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-0.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-0.stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-0.stdout.bin",
+      "bytes": 224,
+      "sha256": "2df4931029d1ff0a0fa0ae61e8d38404b4b1bce2be2b8e5db09d88d577acf66b"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-0.stdout.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-0.stdout.code-units.bin",
+      "bytes": 448,
+      "sha256": "83c628adc470f1ed080e634a995898b3aba0c01d492079da524c02e6fec05ef6"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-1.counters-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-1.counters-after.bin",
+      "bytes": 75,
+      "sha256": "6adf83a9dcea07ae14eb1e5ad5ef89cfb6c23bed3dc9fda3cd08c7fd7895e738"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-1.counters-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-1.counters-before.bin",
+      "bytes": 74,
+      "sha256": "47df2a98018d0f251010c5c1ae46960b10134dad29e31f7afc35c11e1ffbd694"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-1.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-1.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-1.expression.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-1.expression.bin",
+      "bytes": 8,
+      "sha256": "e31de1ad143062105015b88a47e8b0c96d1e6dc53a555b8d87afdbe13640eb40"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-1.message-null.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-1.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-1.reads-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-1.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-1.reads-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-1.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-1.status.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-1.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-1.stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-1.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-1.stderr.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-1.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-1.stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-1.stdout.bin",
+      "bytes": 224,
+      "sha256": "2df4931029d1ff0a0fa0ae61e8d38404b4b1bce2be2b8e5db09d88d577acf66b"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-1.stdout.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-1.stdout.code-units.bin",
+      "bytes": 448,
+      "sha256": "83c628adc470f1ed080e634a995898b3aba0c01d492079da524c02e6fec05ef6"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.counters-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.counters-after.bin",
+      "bytes": 75,
+      "sha256": "9f9356a14d2129fce9f986a57b2084ed2afeee8c92429a143659419449d03fae"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.counters-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.counters-before.bin",
+      "bytes": 75,
+      "sha256": "6adf83a9dcea07ae14eb1e5ad5ef89cfb6c23bed3dc9fda3cd08c7fd7895e738"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.error-class.bin",
+      "bytes": 25,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.expression.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.expression.bin",
+      "bytes": 8,
+      "sha256": "03822375f2aca5e53d66838a3e803183e0c1a7921da8e4056d3341ea95777cd9"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.java-stack.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.java-stack.bin",
+      "bytes": 1110,
+      "sha256": "db7323039cc76d8569abb60453572c13ce99b6995e764afc4a47639d11951e52"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.message-null.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.reads-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.reads-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.status.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.status.bin",
+      "bytes": 6,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.stderr.bin",
+      "bytes": 709,
+      "sha256": "141183a58e8145b3dbc8d50114bab9d88edf2e04a6d0cda2b26fd9f670aafe1f"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.stderr.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.stderr.code-units.bin",
+      "bytes": 1402,
+      "sha256": "ae8048a2a54701767671d9ef784c7f5c638840929fa7ffef7ce82633f88739d3"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-2.stdout.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-2.stdout.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-3.counters-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-3.counters-after.bin",
+      "bytes": 75,
+      "sha256": "5e3b06af7d74fe2c150b964c0bae1889ed38e0f53dc3fd7d59c61ddb9cd028d0"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-3.counters-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-3.counters-before.bin",
+      "bytes": 75,
+      "sha256": "9f9356a14d2129fce9f986a57b2084ed2afeee8c92429a143659419449d03fae"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-3.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-3.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-3.expression.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-3.expression.bin",
+      "bytes": 6,
+      "sha256": "f379ccb92b9116442dc65bdc35648a85d3786b34779db7f704a901fa07b00cb6"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-3.message-null.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-3.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-3.reads-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-3.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-3.reads-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-3.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-3.status.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-3.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-3.stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-3.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-3.stderr.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-3.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-3.stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-3.stdout.bin",
+      "bytes": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-3.stdout.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-3.stdout.code-units.bin",
+      "bytes": 2,
+      "sha256": "797427cf8368051fe7b8e3e9d5ade9c5bc9d0cf96f4f3fad2a1e1d7848368188"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-4.counters-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-4.counters-after.bin",
+      "bytes": 76,
+      "sha256": "546a7c09e908170fd41f28d322c0bc67a174306d83ce78c4d8d4c0514f9311fc"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-4.counters-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-4.counters-before.bin",
+      "bytes": 75,
+      "sha256": "5e3b06af7d74fe2c150b964c0bae1889ed38e0f53dc3fd7d59c61ddb9cd028d0"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-4.error-class.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-4.error-class.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-4.expression.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-4.expression.bin",
+      "bytes": 6,
+      "sha256": "a47a2e1872852966caf818c682a89d18bb7819d45c2c9d1d73c58613b99ad0ef"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-4.message-null.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-4.message-null.bin",
+      "bytes": 5,
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-4.reads-after.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-4.reads-after.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-4.reads-before.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-4.reads-before.bin",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-4.status.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-4.status.bin",
+      "bytes": 8,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-4.stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-4.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-4.stderr.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-4.stderr.code-units.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-4.stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-4.stdout.bin",
+      "bytes": 224,
+      "sha256": "2df4931029d1ff0a0fa0ae61e8d38404b4b1bce2be2b8e5db09d88d577acf66b"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/calls/outer-4.stdout.code-units.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/calls/outer-4.stdout.code-units.bin",
+      "bytes": 448,
+      "sha256": "83c628adc470f1ed080e634a995898b3aba0c01d492079da524c02e6fec05ef6"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/process.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/process.json",
+      "bytes": 3055,
+      "sha256": "ff59b1b579359ed08ef20c83ef6e9d875c8309bf6a09527a031f5912c9f04042"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/result.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/result.json",
+      "bytes": 294,
+      "sha256": "e169341a76e203add78cdc17db8f6c6de0496988796b2a4684c108fc9837c421"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/stderr.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixturePath": "oracle/repeats/1/stdout.bin",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/repeats/1/stdout.bin",
+      "bytes": 2294,
+      "sha256": "4416937842f85fbedf10c96288e2e1317662dc240292acbc3b59ab3ff8525cf1"
+    },
+    {
+      "fixturePath": "oracle/report.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/report.json",
+      "bytes": 34662,
+      "sha256": "5aa3d3a4f48c525e8bdf485d9347ecd800270fb4dbc4932d995df3291c7759ad"
+    },
+    {
+      "fixturePath": "oracle/run.py",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/run.py",
+      "bytes": 6055,
+      "sha256": "1f40e1437e0f6ad81f65d43386639ef600aef9b6c92a159737d1dca1aafcd7dd"
+    },
+    {
+      "fixturePath": "oracle/runtime-private/0/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/runtime-private/0/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "fixturePath": "oracle/runtime-private/1/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/runtime-private/1/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "bytes": 51363,
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+    },
+    {
+      "fixturePath": "oracle/terminal.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/terminal.json",
+      "bytes": 69,
+      "sha256": "0e156c3f3d5e4999ff1923149215cfdcf0c012fb238822027967cb97833c0c1c"
+    },
+    {
+      "fixturePath": "oracle/toolchain-identity.json",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/toolchain-identity.json",
+      "bytes": 556,
+      "sha256": "e8f86f359e69fad3430bff5c61fad961d68021c850ac4196943ab81412f8a0b2"
+    },
+    {
+      "fixturePath": "oracle/upstream/pkl-core/src/main/java/org/pkl/core/SecurityManager.java",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/SecurityManager.java",
+      "bytes": 3366,
+      "sha256": "cd3962b3c9364b278bb0508d2544f3818894a416426838dc22f29a2863be478e"
+    },
+    {
+      "fixturePath": "oracle/upstream/pkl-core/src/main/java/org/pkl/core/SecurityManagers.java",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/SecurityManagers.java",
+      "bytes": 12138,
+      "sha256": "18d813d8c34fc9837883ca4d8916d3266ec4113a6142f20f6d53d0ad4c4dff15"
+    },
+    {
+      "fixturePath": "oracle/upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKeys.java",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKeys.java",
+      "bytes": 27158,
+      "sha256": "137c1635b1bbc0894f30171355c50719a6c0c15b40e92aa44b51104f20103a05"
+    },
+    {
+      "fixturePath": "oracle/upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "bytes": 8387,
+      "sha256": "96eb6429a710d0b4db09664b6d84a0cb25a17a3206983183f66a65382ae69d82"
+    },
+    {
+      "fixturePath": "oracle/upstream/pkl-core/src/main/java/org/pkl/core/stdlib/test/TestNodes.java",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/stdlib/test/TestNodes.java",
+      "bytes": 2607,
+      "sha256": "c0fc2b505cb9cc8df3632624e39f94ab9bc68111ddfc1444280b15df0c79603d"
+    },
+    {
+      "fixturePath": "oracle/upstream/stdlib/test.pkl",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/upstream/stdlib/test.pkl",
+      "bytes": 3303,
+      "sha256": "c98633bf4b4b90032efefcab676515161d5dd75c3759ad013ee7bfb856d8aea4"
+    },
+    {
+      "fixturePath": "oracle/workspace/child.pkl",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/child.pkl",
+      "bytes": 10,
+      "sha256": "39ba6d2e1c4c6e4fdc853d09df8fdc7f96e11d06c3f65dc8a121687698022ef7"
+    },
+    {
+      "fixturePath": "oracle/workspace/expressions.txt",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/expressions.txt",
+      "bytes": 39,
+      "sha256": "58b275436c672a1627b314cd2873f05d10352715eba8cd42ca5351d7dbe80200"
+    },
+    {
+      "fixturePath": "oracle/workspace/main.pkl",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-security-denial-oracle-01/workspace/main.pkl",
+      "bytes": 488,
+      "sha256": "663088ad66251e272ea23187ae5bc3ceda945b9382c879f40c20e4c04f358604"
+    }
+  ]
+}

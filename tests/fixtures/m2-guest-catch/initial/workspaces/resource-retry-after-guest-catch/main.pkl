@@ -1,0 +1,6 @@
+import "pkl:test" as t
+stable = 7
+callbackCaught = t.catch(() -> throw("callback-error"))
+value = read("catch:/resource")
+caught = t.catch(() -> value)
+retry = t.catchOrNull(() -> value)

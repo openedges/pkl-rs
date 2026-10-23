@@ -1,0 +1,82 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/runtime-private/nearest-guest-handler-inside-allow-undefined-force/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/runtime-private/nearest-guest-handler-inside-allow-undefined-force/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+    "GuestCatchProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/workspaces/nearest-guest-handler-inside-allow-undefined-force",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/cases/nearest-guest-handler-inside-allow-undefined-force/0/calls",
+    "plain"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/workspaces/nearest-guest-handler-inside-allow-undefined-force",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/runtime-private/nearest-guest-handler-inside-allow-undefined-force/0/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/runtime-private/nearest-guest-handler-inside-allow-undefined-force/0/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/runtime-private/nearest-guest-handler-inside-allow-undefined-force/0/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/runtime-private/nearest-guest-handler-inside-allow-undefined-force/0/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "startedUnixNs": 1792733963722992000,
+  "finishedUnixNs": 1792733964416933000,
+  "result": {
+    "exit_code": 0,
+    "elapsed_ns": 693032750,
+    "sha256": {
+      "stdout": "468a28a9c626c9e26048e59372710a9eec4451ce5f0b73d9cb1a2d3ac5f4d55c",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "timed_out": false,
+    "workspace_changes": {},
+    "files": {}
+  },
+  "case": "nearest-guest-handler-inside-allow-undefined-force",
+  "repeat": 0,
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-guest-catch-oracle-04/workspaces/nearest-guest-handler-inside-allow-undefined-force/main.pkl",
+  "sourceSha256": "6a2a9f76680f91683aef175277d746d8dfa31e91ab43b658da538ccda9d3850f",
+  "workspaceBefore": {
+    "callbacks.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expressions.txt": {
+      "kind": "file",
+      "sha256": "47c409a29530f239f47a9769edfe7055435ffa708d7b7a71c06cbfaca13c34a4"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "6a2a9f76680f91683aef175277d746d8dfa31e91ab43b658da538ccda9d3850f"
+    }
+  },
+  "workspaceAfter": {
+    "callbacks.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "expressions.txt": {
+      "kind": "file",
+      "sha256": "47c409a29530f239f47a9769edfe7055435ffa708d7b7a71c06cbfaca13c34a4"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "6a2a9f76680f91683aef175277d746d8dfa31e91ab43b658da538ccda9d3850f"
+    }
+  }
+}

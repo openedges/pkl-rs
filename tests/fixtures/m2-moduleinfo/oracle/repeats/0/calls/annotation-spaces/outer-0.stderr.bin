@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `matches(Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#))` violated.
+Value: " 0.32.0 "
+
+    matches(Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#))
+    │       │
+    false   Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#)
+
+251 | minPklVersion: String(matches(Regex(#"\d{1,2}\.\d{1,2}\.\d{1,2}"#)))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#ModuleInfo.minPklVersion (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L251)
+
+1 | @ModuleInfo { minPklVersion = " 0.32.0 " }
+                                  ^^^^^^^^^^
+at moduleinfo.control_21.minPklVersion (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage45-moduleinfo-oracle-01/workspaces/annotation-spaces/main.pkl)
