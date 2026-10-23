@@ -69,6 +69,12 @@ module calls per target, 26 match, 30 are unsupported, two differ at `read*`
 syntax, and two retain unmet original Java execution prerequisites. Each portable
 target matches all 384 repeated UTF-16 output cases.
 
+The [component and development captures](stage40-component-captures.json)
+preserve 6,742 files from focused output, primitive, amendment, formatter,
+uppercase and tooling checks. The archive retains earlier failed checks and
+Java internal errors alongside corrected runs. Component comparisons establish
+only their recorded boundaries; they do not replace full evaluator comparisons.
+
 The standard platform corpus retains 6,076 Java matches out of 6,078 results,
 including the two existing regex gaps, and 92 passing lifecycle scenarios per
 portable target. Each target's 90 full-trace executions contain 58 matches and

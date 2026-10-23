@@ -622,6 +622,8 @@ PCF 출력에는 얕은 강제 평가와 converter·property transformer·member
 
 Stage 40의 [출력 비교 증거](reports/m2/stage40-output-captures.json)는 고정 Java 원본·수정 전후 native·실제 Node·Chromium·trace·UTF-16 출력과 독립 검토 파일 21,951개를 보존합니다. 실제 trace Cargo cache의 정확한 경로만 열거 전에 제외했고, archive 무결성 검사와 수집 중 원본 동일성 검사를 통과했습니다. 원본 30개 비교의 미구현·불일치·실행 조건 불충족, Java trace 오류와 정규식 차이는 그대로 남습니다. 전체 언어 취득과 나머지 증거 게시·최종 마감은 계속 진행합니다.
 
+[구성요소·개발 검증 증거](reports/m2/stage40-component-captures.json)는 출력·primitive·amendment·formatter·uppercase·도구 검사 파일 6,742개를 보존합니다. 초기 실패와 수정 후 결과를 함께 유지했으며, archive 무결성과 수집 중 원본 동일성을 확인했습니다. 구성요소 비교는 해당 경계의 근거로만 사용하고 전체 평가기·제품 호환성으로 확대하지 않습니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.
