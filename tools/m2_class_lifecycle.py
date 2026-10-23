@@ -15,6 +15,7 @@ import oracle
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = Path('compatibility/m2-class-lifecycle')
 REPETITIONS = 2
+REPORT_SCHEMA = 2
 
 
 def source_paths(root=ROOT, java_only=False):
@@ -22,12 +23,13 @@ def source_paths(root=ROOT, java_only=False):
              'tools/java/M2ClassLifecycleProbe.java', 'tools/java/M2ClassLifecycleHostProbe.java', 'tools/java/M2ClassIdentityProbe.java',
              'tools/benchmark.py', 'tools/oracle.py',
              'tools/tests/test_m2_class_lifecycle.py']
+    if not java_only:
+        fixed.extend(['Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', '.cargo/config.toml'])
     paths = [root / path for path in fixed]
     if any(not path.is_file() for path in paths):
         raise ValueError('missing required lifecycle source')
     paths.extend(path for path in sorted((root / FIXTURES).rglob('*')) if path.is_file())
     if not java_only:
-        paths.extend(root / path for path in ['Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml'])
         paths.extend(path for path in sorted((root / 'crates').rglob('*')) if path.is_file())
     return paths
 
@@ -138,7 +140,9 @@ def report_workspace(directory):
 def check_report(directory):
     directory = Path(directory)
     report = json.loads((directory / 'report.json').read_bytes())
-    if report.get('schema') != 1 or report.get('acquisition_error'):
+    if report.get('schema') == 1:
+        raise ValueError('legacy lifecycle schema 1: use its captured verifier; Rust captures did not include .cargo/config.toml')
+    if report.get('schema') != REPORT_SCHEMA or report.get('acquisition_error'):
         raise ValueError('failed or unsupported lifecycle acquisition report')
     if report.get('languages') not in (['java'], ['java', 'rust']):
         raise ValueError('unknown lifecycle languages')
@@ -247,7 +251,7 @@ def checked(result):
 def execute(output, java_only=False):
     output.mkdir(parents=True, exist_ok=False)
     languages = ['java'] if java_only else ['java', 'rust']
-    report = {'schema': 1, 'timestamp_utc': datetime.now(timezone.utc).isoformat(),
+    report = {'schema': REPORT_SCHEMA, 'timestamp_utc': datetime.now(timezone.utc).isoformat(),
               'scope': 'bounded ordered class/type-alias declaration publication calls; separate from M2 single-expression inventory',
               'languages': languages, 'workspace': str(ROOT), 'output_directory': str(output), 'repetitions': REPETITIONS, 'cases': [], 'sources': [], 'artifacts': [],
               'compatibility_complete': False, 'acquisition_error': None,

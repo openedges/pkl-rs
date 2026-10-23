@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "scope": "Lifecycle source-capture schema2: require root Cargo configuration and build controls for new native captures; preserve schema1 evidence with captured verifiers. Tooling checks only.",
+  "report_sha256": "328d9fae0a422c17b77a0b9bcb0d31cd05359fcfee0b0780da1d18fc83a4a5e8",
+  "checks": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-p",
+        "test_m2_class_lifecycle.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "python_tests": 18,
+  "source_stable": true,
+  "sources": {
+    "tools/m2_class_lifecycle.py": "d680c6067eb62cff22dadc48dce51293acb4d342a82a3e60ccbba380f33396c3",
+    "tools/tests/test_m2_class_lifecycle.py": "761aae287efb84cb9aead847fb80a3e66d4bd6acdc83468d5c93cee6afe34dd9",
+    "TESTING.md": "844da44be02e07b85316dbe9bba42eaa8a337148184cedb91f8492611b3e5faf",
+    ".cargo/config.toml": "07e75f80544a833951c1532649fadd0ee21712b40e55b6e74b880b3c11259e36"
+  },
+  "recorded_host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "outer_terminal": {
+    "scope": "Observed unified exec session 12347 actual exit0; Python checks and inventory freshness only. Historical Stage45 acquisition is separate and unchanged.",
+    "exit_code": 0,
+    "session_id": 12347,
+    "observedUtc": "2026-10-23T09:32:50.702770+00:00",
+    "report_sha256": "328d9fae0a422c17b77a0b9bcb0d31cd05359fcfee0b0780da1d18fc83a4a5e8",
+    "pythonExecutable": "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+    "pythonExecutableSha256": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063",
+    "source_stable": true,
+    "newOracleExecution": false,
+    "fullM2Complete": false
+  },
+  "archive": {
+    "path": "reports/m2/lifecycle-source-contract-captures.tar.gz",
+    "sha256": "ef47208b45bce251cf4bedfa164b9128a07fd33f844ffa65afbffae65b8dbbd2",
+    "compressed_bytes": 26744
+  },
+  "legacy_schema_policy": "Current verifier explicitly rejects schema1. Existing raw evidence and its captured verifier are unchanged; previous indirect configuration bindings are not direct captures.",
+  "new_semantic_or_platform_acquisition": false,
+  "full_m2_complete": false
+}

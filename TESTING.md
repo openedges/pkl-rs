@@ -165,6 +165,14 @@ python3 tools/m2_class_lifecycle.py --verify-report target/m2/class-lifecycle-ne
 python3 tools/m2_class_lifecycle.py --verify-contract target/m2/class-lifecycle-new
 ```
 
+New captures use report schema 2. Native source snapshots must include the root
+`.cargo/config.toml`, Cargo manifests and lockfile, and the pinned Rust toolchain;
+missing build controls fail acquisition. Schema 1 records omitted the root Cargo
+configuration. Verify those immutable records with their captured
+`sources/tools/m2_class_lifecycle.py`; do not upgrade their schema or describe a
+separate configuration binding as a directly captured input. The current verifier
+rejects schema 1 explicitly. Java-only captures do not require Rust build inputs.
+
 Each sequence retains one module and evaluator across ordered calls, including
 errors, and repeats with a fresh evaluator. Every selected call must match its
 raw Java status, stdout, and stderr without exceptions. These sequences have

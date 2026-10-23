@@ -162,6 +162,34 @@ class ClassLifecycleEvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'required lifecycle source'):
             tool.source_paths(self.root, java_only=True)
 
+    def test_native_capture_requires_cargo_config_and_every_build_control(self):
+        for path in tool.source_paths(java_only=True):
+            target = self.root / path.relative_to(tool.ROOT)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(path, target)
+        controls = ['Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', '.cargo/config.toml']
+        for name in controls:
+            target = self.root / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(tool.ROOT / name, target)
+        captured = {path.relative_to(self.root).as_posix() for path in tool.source_paths(self.root)}
+        self.assertTrue(set(controls) <= captured)
+        for name in controls:
+            with self.subTest(missing=name):
+                target = self.root / name
+                raw = target.read_bytes()
+                target.unlink()
+                with self.assertRaisesRegex(ValueError, 'required lifecycle source'):
+                    tool.source_paths(self.root)
+                target.write_bytes(raw)
+        java_sources = {path.relative_to(self.root).as_posix() for path in tool.source_paths(self.root, java_only=True)}
+        self.assertFalse(set(controls) & java_sources)
+
+    def test_legacy_reports_do_not_acquire_the_new_source_contract(self):
+        (self.root / 'report.json').write_text(json.dumps({'schema': 1}))
+        with self.assertRaisesRegex(ValueError, 'use its captured verifier'):
+            tool.check_report(self.root)
+
     def report_fixture(self):
         # Synthetic transport evidence exercises the verifier, never Pkl compatibility.
         sources = []
@@ -200,7 +228,7 @@ class ClassLifecycleEvidenceTests(unittest.TestCase):
             javac[name] = {'path': str(path), 'bytes': 0, 'sha256': tool.oracle.sha256(path)}
         (javac_dir / 'result.json').write_text(json.dumps(javac))
         manifest = tool.manifest_at(self.root / 'sources')
-        report = {'schema': 1, 'acquisition_error': None, 'languages': ['java'], 'sources': sources,
+        report = {'schema': tool.REPORT_SCHEMA, 'acquisition_error': None, 'languages': ['java'], 'sources': sources,
                   'artifacts': [{'path': artifact.relative_to(self.root).as_posix(), 'bytes': artifact.stat().st_size, 'sha256': tool.oracle.sha256(artifact)}],
                   'source_stability_before_execution': True, 'source_stability_after_execution': True,
                   'repetitions': tool.REPETITIONS, 'oracle': metadata, 'compatibility_complete': False,
