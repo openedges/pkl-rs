@@ -1,0 +1,851 @@
+{
+  "schema": 1,
+  "scope": "Complete selected native/lifecycle regression at the Stage46 implementation commit. Strict failures, unimplemented/unmapped scope and later Stage47 work remain open.",
+  "implementation_commit": "a3eb3634558cef6f36189320498fe7e013296c48",
+  "references": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "selected_regression_acquisition_complete": true,
+  "wrapper_exit_code": 0,
+  "gates": {
+    "language-acquire": 0,
+    "language-verify-report": 0,
+    "language-verify-development": 1,
+    "language-verify-subset": 1,
+    "language-verify-full": 1,
+    "lifecycle-acquire": 0,
+    "lifecycle-verify-report": 0,
+    "lifecycle-verify-contract": 0
+  },
+  "selected": 3664,
+  "status_counts": {
+    "candidate-unsupported": 4,
+    "mismatch": 9,
+    "oracle-error": 1,
+    "pass": 3650
+  },
+  "inventory_counts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3664,
+      "unimplemented": 823,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "selected_adapters": {
+    "language-api-string": {
+      "pass": 3518,
+      "oracle-error": 1,
+      "mismatch": 8
+    },
+    "language-module-eval": {
+      "pass": 131,
+      "candidate-unsupported": 4,
+      "mismatch": 1
+    },
+    "language-jvm-classpath-output": {
+      "pass": 1
+    }
+  },
+  "case_ids_and_order_preserved": 4527,
+  "case_mapping_changes": [],
+  "requirement_source_hash_changes": [
+    {
+      "path": "requirements/8/implementation/links/0/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/8/implementation/links/1/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/8/implementation/links/3/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/8/implementation/links/4/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/8/implementation/links/5/sha256",
+      "before": "343653eb6b14374de5fd9d15899fc241903d19afea62988293147eafe336cbc0",
+      "after": "92339499440816ca54cf4d9ebd276adbfa4014b80e52b803c318922c40a209aa"
+    },
+    {
+      "path": "requirements/8/implementation/links/10/sha256",
+      "before": "5f323346d4741023b24e5ffdec81504e14ead99de09644729400946cc4b6302c",
+      "after": "8edc3bb525c3e7483686a7417bf25f4224a0bc9b7b80b045730ad64e6c10f462"
+    },
+    {
+      "path": "requirements/8/implementation/links/11/sha256",
+      "before": "5f323346d4741023b24e5ffdec81504e14ead99de09644729400946cc4b6302c",
+      "after": "8edc3bb525c3e7483686a7417bf25f4224a0bc9b7b80b045730ad64e6c10f462"
+    },
+    {
+      "path": "requirements/9/implementation/links/0/sha256",
+      "before": "5f323346d4741023b24e5ffdec81504e14ead99de09644729400946cc4b6302c",
+      "after": "8edc3bb525c3e7483686a7417bf25f4224a0bc9b7b80b045730ad64e6c10f462"
+    },
+    {
+      "path": "requirements/9/implementation/links/1/sha256",
+      "before": "5f323346d4741023b24e5ffdec81504e14ead99de09644729400946cc4b6302c",
+      "after": "8edc3bb525c3e7483686a7417bf25f4224a0bc9b7b80b045730ad64e6c10f462"
+    },
+    {
+      "path": "requirements/10/implementation/links/0/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/10/implementation/links/1/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/11/implementation/links/0/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/11/implementation/links/1/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/11/implementation/links/2/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/11/implementation/links/3/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/12/implementation/links/0/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/12/implementation/links/1/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/12/implementation/links/2/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/12/implementation/links/3/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/12/implementation/links/4/sha256",
+      "before": "ff0b0ba2d1c7ca007c0d1d5020b05dff93e89298d1a99cd64ad1b460673700f2",
+      "after": "ff01d58ae7408a0c627f6f8b80c5959eee75bcd16155509a442ebcf8f3561461"
+    },
+    {
+      "path": "requirements/12/implementation/links/5/sha256",
+      "before": "ff0b0ba2d1c7ca007c0d1d5020b05dff93e89298d1a99cd64ad1b460673700f2",
+      "after": "ff01d58ae7408a0c627f6f8b80c5959eee75bcd16155509a442ebcf8f3561461"
+    },
+    {
+      "path": "requirements/12/implementation/links/6/sha256",
+      "before": "ff0b0ba2d1c7ca007c0d1d5020b05dff93e89298d1a99cd64ad1b460673700f2",
+      "after": "ff01d58ae7408a0c627f6f8b80c5959eee75bcd16155509a442ebcf8f3561461"
+    },
+    {
+      "path": "requirements/12/implementation/links/7/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/12/implementation/links/8/sha256",
+      "before": "ba660e1df479e041d5b9f543577c7e91cac3f1eec38dc534a49758d037abb03d",
+      "after": "b868cd82d941219f4022cf4c9d74c2573b71224043035da7f56df300399472cb"
+    },
+    {
+      "path": "requirements/13/implementation/links/0/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/13/implementation/links/1/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/13/implementation/links/3/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/13/implementation/links/4/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/13/implementation/links/5/sha256",
+      "before": "ff0b0ba2d1c7ca007c0d1d5020b05dff93e89298d1a99cd64ad1b460673700f2",
+      "after": "ff01d58ae7408a0c627f6f8b80c5959eee75bcd16155509a442ebcf8f3561461"
+    },
+    {
+      "path": "requirements/13/implementation/links/6/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/13/implementation/links/7/sha256",
+      "before": "ba660e1df479e041d5b9f543577c7e91cac3f1eec38dc534a49758d037abb03d",
+      "after": "b868cd82d941219f4022cf4c9d74c2573b71224043035da7f56df300399472cb"
+    },
+    {
+      "path": "requirements/17/implementation/links/0/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/17/implementation/links/1/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/17/implementation/links/2/sha256",
+      "before": "343653eb6b14374de5fd9d15899fc241903d19afea62988293147eafe336cbc0",
+      "after": "92339499440816ca54cf4d9ebd276adbfa4014b80e52b803c318922c40a209aa"
+    },
+    {
+      "path": "requirements/17/implementation/links/3/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/17/implementation/links/4/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/17/implementation/links/5/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/17/implementation/links/6/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/17/implementation/links/7/sha256",
+      "before": "343653eb6b14374de5fd9d15899fc241903d19afea62988293147eafe336cbc0",
+      "after": "92339499440816ca54cf4d9ebd276adbfa4014b80e52b803c318922c40a209aa"
+    },
+    {
+      "path": "requirements/18/implementation/links/0/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/18/implementation/links/1/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/18/implementation/links/2/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/18/implementation/links/3/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/18/implementation/links/4/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/18/implementation/links/5/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/18/implementation/links/6/sha256",
+      "before": "343653eb6b14374de5fd9d15899fc241903d19afea62988293147eafe336cbc0",
+      "after": "92339499440816ca54cf4d9ebd276adbfa4014b80e52b803c318922c40a209aa"
+    },
+    {
+      "path": "requirements/18/implementation/links/7/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/18/implementation/links/8/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/18/implementation/links/9/sha256",
+      "before": "343653eb6b14374de5fd9d15899fc241903d19afea62988293147eafe336cbc0",
+      "after": "92339499440816ca54cf4d9ebd276adbfa4014b80e52b803c318922c40a209aa"
+    },
+    {
+      "path": "requirements/19/implementation/links/0/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/19/implementation/links/1/sha256",
+      "before": "343653eb6b14374de5fd9d15899fc241903d19afea62988293147eafe336cbc0",
+      "after": "92339499440816ca54cf4d9ebd276adbfa4014b80e52b803c318922c40a209aa"
+    },
+    {
+      "path": "requirements/19/implementation/links/2/sha256",
+      "before": "343653eb6b14374de5fd9d15899fc241903d19afea62988293147eafe336cbc0",
+      "after": "92339499440816ca54cf4d9ebd276adbfa4014b80e52b803c318922c40a209aa"
+    },
+    {
+      "path": "requirements/19/implementation/links/3/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/19/implementation/links/4/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/19/implementation/links/5/sha256",
+      "before": "343653eb6b14374de5fd9d15899fc241903d19afea62988293147eafe336cbc0",
+      "after": "92339499440816ca54cf4d9ebd276adbfa4014b80e52b803c318922c40a209aa"
+    },
+    {
+      "path": "requirements/20/implementation/links/0/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/20/implementation/links/1/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/20/implementation/links/2/sha256",
+      "before": "343653eb6b14374de5fd9d15899fc241903d19afea62988293147eafe336cbc0",
+      "after": "92339499440816ca54cf4d9ebd276adbfa4014b80e52b803c318922c40a209aa"
+    },
+    {
+      "path": "requirements/20/implementation/links/3/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/20/implementation/links/4/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/23/implementation/links/3/sha256",
+      "before": "343653eb6b14374de5fd9d15899fc241903d19afea62988293147eafe336cbc0",
+      "after": "92339499440816ca54cf4d9ebd276adbfa4014b80e52b803c318922c40a209aa"
+    },
+    {
+      "path": "requirements/24/implementation/links/0/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/24/implementation/links/1/sha256",
+      "before": "ff0b0ba2d1c7ca007c0d1d5020b05dff93e89298d1a99cd64ad1b460673700f2",
+      "after": "ff01d58ae7408a0c627f6f8b80c5959eee75bcd16155509a442ebcf8f3561461"
+    },
+    {
+      "path": "requirements/24/implementation/links/4/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/25/implementation/links/0/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/25/implementation/links/1/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/25/implementation/links/2/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/25/implementation/links/4/sha256",
+      "before": "343653eb6b14374de5fd9d15899fc241903d19afea62988293147eafe336cbc0",
+      "after": "92339499440816ca54cf4d9ebd276adbfa4014b80e52b803c318922c40a209aa"
+    },
+    {
+      "path": "requirements/26/implementation/links/0/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/26/implementation/links/1/sha256",
+      "before": "ff0b0ba2d1c7ca007c0d1d5020b05dff93e89298d1a99cd64ad1b460673700f2",
+      "after": "ff01d58ae7408a0c627f6f8b80c5959eee75bcd16155509a442ebcf8f3561461"
+    },
+    {
+      "path": "requirements/26/implementation/links/2/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/26/implementation/links/3/sha256",
+      "before": "7731305deb1ed342acd6ee4484c6c993c75348a3c2233862644821519c0911f9",
+      "after": "2ae8913d0ac8bdd8c040bb009d20f8eac3afeb90dfce2fd2e110c800f03536c6"
+    },
+    {
+      "path": "requirements/26/implementation/links/4/sha256",
+      "before": "ce3708e4a98797fc900717d4fc36afaf1c00fadd9e6632e466e1a2014f781d9a",
+      "after": "d645fe23d21db2969e6209d31290dbdf9f9389219affd82407cf003f46d7f65e"
+    },
+    {
+      "path": "requirements/26/implementation/links/5/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/26/implementation/links/6/sha256",
+      "before": "59c327156e246a552df1b2340979950f823d05c91cfd2bb5afde098d865deca6",
+      "after": "2e1536e90dfc04c254c39df76231fd4523e79b1a830eec1f609d56af6a670879"
+    },
+    {
+      "path": "requirements/27/implementation/links/0/sha256",
+      "before": "25d9c06ed27697c62fa908d87141590495309f855e4ee56f0d318d4100e9a454",
+      "after": "257f8e391251b3fa9bb30da63691dc77642a283b56e83657254bed6b2bb418cc"
+    },
+    {
+      "path": "requirements/27/implementation/links/1/sha256",
+      "before": "cd231e9bbdcd920e40a05ebc89924123f72e2de5fd7ef26c7b6344906604e742",
+      "after": "fb94ebeeacb0875cbfd1debfcabeab92bd827b5adb9a77aefb3176573129dfad"
+    },
+    {
+      "path": "requirements/27/implementation/links/5/sha256",
+      "before": "ff0b0ba2d1c7ca007c0d1d5020b05dff93e89298d1a99cd64ad1b460673700f2",
+      "after": "ff01d58ae7408a0c627f6f8b80c5959eee75bcd16155509a442ebcf8f3561461"
+    },
+    {
+      "path": "requirements/27/implementation/links/6/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/27/implementation/links/8/sha256",
+      "before": "25d9c06ed27697c62fa908d87141590495309f855e4ee56f0d318d4100e9a454",
+      "after": "257f8e391251b3fa9bb30da63691dc77642a283b56e83657254bed6b2bb418cc"
+    },
+    {
+      "path": "requirements/27/implementation/links/9/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/27/implementation/links/10/sha256",
+      "before": "ba660e1df479e041d5b9f543577c7e91cac3f1eec38dc534a49758d037abb03d",
+      "after": "b868cd82d941219f4022cf4c9d74c2573b71224043035da7f56df300399472cb"
+    },
+    {
+      "path": "requirements/27/implementation/links/11/sha256",
+      "before": "5f323346d4741023b24e5ffdec81504e14ead99de09644729400946cc4b6302c",
+      "after": "8edc3bb525c3e7483686a7417bf25f4224a0bc9b7b80b045730ad64e6c10f462"
+    },
+    {
+      "path": "requirements/27/implementation/links/12/sha256",
+      "before": "5f323346d4741023b24e5ffdec81504e14ead99de09644729400946cc4b6302c",
+      "after": "8edc3bb525c3e7483686a7417bf25f4224a0bc9b7b80b045730ad64e6c10f462"
+    },
+    {
+      "path": "requirements/27/implementation/links/14/sha256",
+      "before": "ce3708e4a98797fc900717d4fc36afaf1c00fadd9e6632e466e1a2014f781d9a",
+      "after": "d645fe23d21db2969e6209d31290dbdf9f9389219affd82407cf003f46d7f65e"
+    },
+    {
+      "path": "requirements/27/implementation/links/15/sha256",
+      "before": "7731305deb1ed342acd6ee4484c6c993c75348a3c2233862644821519c0911f9",
+      "after": "2ae8913d0ac8bdd8c040bb009d20f8eac3afeb90dfce2fd2e110c800f03536c6"
+    },
+    {
+      "path": "requirements/28/implementation/links/2/sha256",
+      "before": "7731305deb1ed342acd6ee4484c6c993c75348a3c2233862644821519c0911f9",
+      "after": "2ae8913d0ac8bdd8c040bb009d20f8eac3afeb90dfce2fd2e110c800f03536c6"
+    },
+    {
+      "path": "requirements/33/implementation/links/0/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/33/implementation/links/1/sha256",
+      "before": "ff0b0ba2d1c7ca007c0d1d5020b05dff93e89298d1a99cd64ad1b460673700f2",
+      "after": "ff01d58ae7408a0c627f6f8b80c5959eee75bcd16155509a442ebcf8f3561461"
+    },
+    {
+      "path": "requirements/33/implementation/links/4/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/109/implementation/links/0/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/109/implementation/links/1/sha256",
+      "before": "ce3708e4a98797fc900717d4fc36afaf1c00fadd9e6632e466e1a2014f781d9a",
+      "after": "d645fe23d21db2969e6209d31290dbdf9f9389219affd82407cf003f46d7f65e"
+    },
+    {
+      "path": "requirements/113/implementation/links/0/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/113/implementation/links/1/sha256",
+      "before": "ff0b0ba2d1c7ca007c0d1d5020b05dff93e89298d1a99cd64ad1b460673700f2",
+      "after": "ff01d58ae7408a0c627f6f8b80c5959eee75bcd16155509a442ebcf8f3561461"
+    },
+    {
+      "path": "requirements/113/implementation/links/4/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/139/implementation/links/0/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/139/implementation/links/1/sha256",
+      "before": "ce3708e4a98797fc900717d4fc36afaf1c00fadd9e6632e466e1a2014f781d9a",
+      "after": "d645fe23d21db2969e6209d31290dbdf9f9389219affd82407cf003f46d7f65e"
+    },
+    {
+      "path": "requirements/243/implementation/links/0/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/243/implementation/links/1/sha256",
+      "before": "433f5452e37cc7885be3e3b93d605f553451d4fb999e4427e34edf9f7073ab9b",
+      "after": "6fc66f67a639c756941c76a942d59b0c86201876ec53685f24c80e3e6454b3a0"
+    },
+    {
+      "path": "requirements/243/implementation/links/2/sha256",
+      "before": "cd1c7936861d9a688e21e2e96c2da6a7b935d00acfa627575aa5642ef5dc7b84",
+      "after": "197e3203efabedf031cf1d41f775c2224a1eaa40055b77b4e080abdcf2136a7e"
+    },
+    {
+      "path": "requirements/244/implementation/links/0/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/244/implementation/links/1/sha256",
+      "before": "433f5452e37cc7885be3e3b93d605f553451d4fb999e4427e34edf9f7073ab9b",
+      "after": "6fc66f67a639c756941c76a942d59b0c86201876ec53685f24c80e3e6454b3a0"
+    },
+    {
+      "path": "requirements/244/implementation/links/2/sha256",
+      "before": "cd1c7936861d9a688e21e2e96c2da6a7b935d00acfa627575aa5642ef5dc7b84",
+      "after": "197e3203efabedf031cf1d41f775c2224a1eaa40055b77b4e080abdcf2136a7e"
+    },
+    {
+      "path": "requirements/299/implementation/links/0/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/299/implementation/links/1/sha256",
+      "before": "ff0b0ba2d1c7ca007c0d1d5020b05dff93e89298d1a99cd64ad1b460673700f2",
+      "after": "ff01d58ae7408a0c627f6f8b80c5959eee75bcd16155509a442ebcf8f3561461"
+    },
+    {
+      "path": "requirements/299/implementation/links/4/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/339/implementation/links/0/sha256",
+      "before": "7bdba94d6611d94b1e4a72f712bc25892462448129047095ce8b5e8beb69cfa2",
+      "after": "113d3f5e545fff97c758cb652517009266b5c7c742fc70513e5586888728e36b"
+    },
+    {
+      "path": "requirements/339/implementation/links/1/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/339/implementation/links/2/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/339/implementation/links/3/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/356/implementation/links/0/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/356/implementation/links/1/sha256",
+      "before": "ff0b0ba2d1c7ca007c0d1d5020b05dff93e89298d1a99cd64ad1b460673700f2",
+      "after": "ff01d58ae7408a0c627f6f8b80c5959eee75bcd16155509a442ebcf8f3561461"
+    },
+    {
+      "path": "requirements/356/implementation/links/2/sha256",
+      "before": "42012c47b734276c559b25b0e5f1a698dd53e485baca131dc30587d33e26dd29",
+      "after": "cfbe6af15a2b958608ab0b10e0bd53558cfe9654f7d8a8d622237dfd136ec479"
+    },
+    {
+      "path": "requirements/405/implementation/links/0/sha256",
+      "before": "8cec053591e113d148d02a566135511f7ccc8b84459b3576b999d688a68c3324",
+      "after": "dd64ffd36bbab4fb0d2d5550d20cdab4bd0e6a5856e9176ae755df2235d581c3"
+    },
+    {
+      "path": "requirements/405/implementation/links/1/sha256",
+      "before": "433f5452e37cc7885be3e3b93d605f553451d4fb999e4427e34edf9f7073ab9b",
+      "after": "6fc66f67a639c756941c76a942d59b0c86201876ec53685f24c80e3e6454b3a0"
+    },
+    {
+      "path": "requirements/405/implementation/links/2/sha256",
+      "before": "cd1c7936861d9a688e21e2e96c2da6a7b935d00acfa627575aa5642ef5dc7b84",
+      "after": "197e3203efabedf031cf1d41f775c2224a1eaa40055b77b4e080abdcf2136a7e"
+    },
+    {
+      "path": "requirements/419/implementation/links/3/sha256",
+      "before": "343653eb6b14374de5fd9d15899fc241903d19afea62988293147eafe336cbc0",
+      "after": "92339499440816ca54cf4d9ebd276adbfa4014b80e52b803c318922c40a209aa"
+    }
+  ],
+  "existing_jvm_profile_mapping_preserved": true,
+  "status_changes": [
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule6.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend6.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    }
+  ],
+  "failures": [
+    {
+      "id": "error-cycle",
+      "status": "oracle-error"
+    },
+    {
+      "id": "error-remainder-zero",
+      "status": "mismatch"
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-union-and-string",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-cast-negative",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-max-count",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-uri-unpaired-surrogate",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-opaque",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-invalid-host",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "status": "candidate-unsupported"
+    }
+  ],
+  "current_nonpass_cases": 14,
+  "historical_nonpass_comparison_union": 17,
+  "audit_field_qualification": "Current nonpassing case IDs and the union of Stage45/Stage46 nonpassing IDs are distinct fields. All exact raw differences remain preserved.",
+  "full_gate_failure_reasons": 1827,
+  "metamorphic_relations": 88,
+  "metamorphic_matches": 88,
+  "persistent": {
+    "report_sha256": "59cff0b71c41c3051a19c14be5335b458645601f60dcaf1979299a1cd5f834ed",
+    "sequences": 334,
+    "calls_each_language": 2782,
+    "status_counts": {
+      "java": {
+        "error": 928,
+        "success": 1854
+      },
+      "rust": {
+        "error": 928,
+        "success": 1854
+      }
+    },
+    "raw_mismatches": [],
+    "comparison_channels": [
+      "status",
+      "stdout",
+      "stderr"
+    ],
+    "error_class_differences_retained_excluded_from_equality": 928,
+    "declared_payloads_verified": 24823,
+    "unexecuted_groups_preserved": true
+  },
+  "unexecuted_lifecycle_groups": [
+    {
+      "group": "P09",
+      "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+    },
+    {
+      "group": "P10",
+      "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+    },
+    {
+      "group": "P11",
+      "reason": "Actual annotation source now reaches Rust Host suspension, callback reentry and GC. Separate Stage 35 Java/Rust Host probes compare class, alias, property and method initialization, successful reads, eager failures and partial-state retries. This persistent scalar sequence adapter does not execute Host callbacks. Complete resource I/O failure, module-cache and product Host behavior remain unverified; native cancellation/timeout/close cleanup tests are separate from Java raw-byte equality."
+    },
+    {
+      "group": "P12",
+      "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+    },
+    {
+      "group": "P05",
+      "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+    }
+  ],
+  "source_binding": {
+    "captured_records": 4385,
+    "unique_paths": 4177,
+    "all_match_commit_blobs": true,
+    "lifecycle_config_directly_captured": true,
+    "config_qualification": "Stage46 schema2 directly captures root.cargo/config.toml and all4Rust Cargo controls in lifecycle sources. Stage45 schema1 omission stays historical."
+  },
+  "source_stable": true,
+  "artifact_stable": true,
+  "lifecycle_schema": 2,
+  "lifecycle_cargo_controls_directly_captured": [
+    ".cargo/config.toml",
+    "Cargo.toml",
+    "Cargo.lock",
+    "rust-toolchain.toml"
+  ],
+  "historical_lifecycle_qualification": "Stage45 schema1 did not directly capture root.cargo/config.toml; this Stage46 schema2 result does not retroactively change that evidence.",
+  "raw_reports": {
+    "language": "dd5b9738b05e67b28f15c267ed917e279c12bb7f7492ca7484904dc0007a7cec",
+    "lifecycle": "59cff0b71c41c3051a19c14be5335b458645601f60dcaf1979299a1cd5f834ed"
+  },
+  "audit": {
+    "path": "reports/m2/stage46-final-regression-audit.json",
+    "sha256": "2ce579c1ca15647671ecfe5a4ce75c4936437e4c80814e20a347d633e0d64445"
+  },
+  "source_map": {
+    "path": "reports/m2/stage46-final-source-map.json",
+    "sha256": "728fa55a313d229bb5b51a9a0c31508aeb9517566b8a164181244e8460a836ee"
+  },
+  "case_changes": {
+    "path": "reports/m2/stage46-final-case-changes.json",
+    "sha256": "fdd773e018ea3b514e436186c4d46e7223e679ad7a7fca639b0c051035fbbe01"
+  },
+  "status_changes_record": {
+    "path": "reports/m2/stage46-final-status-changes.json",
+    "sha256": "59c89c431d1ef51d63a1f942ecc394678553c0fdcc94046a73a78b0579f08529"
+  },
+  "raw_changes": {
+    "path": "reports/m2/stage46-final-raw-changes.json",
+    "sha256": "84e2140696300d9f80a86d909d368d9329af77dd28fa3b0621d4fb6b4bac8563"
+  },
+  "captures": {
+    "path": "reports/m2/stage46-final-regression-captures.json",
+    "sha256": "a1f29efd2da476c51a9a704553dfc822f5ddb6b7c38dd96c5d86f5d25e1f97dc"
+  },
+  "implementation_checks_and_platforms": {
+    "path": "reports/m2/stage46-implementation-checkpoint.json",
+    "sha256": "a159edc667d6fd972fa258cc1ad74f77977f6c93f5fb67db87210cf308bd7ea4"
+  },
+  "full_m2_complete": false,
+  "compatibility_complete": false,
+  "hosted_ci_claimed": false,
+  "performance_target_claimed": false,
+  "remaining": [
+    "All current failed, unimplemented, unmapped and unexecuted required language cases.",
+    "Shared renderer/identity and remaining stdlib/security/producer obligations; Stage47 candidates are separate from this commit.",
+    "Whole product/platform and execution-time/peak-memory requirements.",
+    "Root publication review, planning/docs and Git publication."
+  ],
+  "publication_closeout": {
+    "path": "reports/m2/stage46-final-publication-closeout.json",
+    "sha256": "88cecb6093bbbdab5f634b34b42692a3e023b88c87f949f80653faca78551aaa"
+  },
+  "independent_review": {
+    "path": "reports/m2/stage46-final-independent-review.json",
+    "sha256": "4560e30939d296ce2c040e03ebef3e6038a69f04847bed9d46c589d27ad88058",
+    "reviewed_summary_sha256": "24accd33866c86efb0605fb81454df1fcdb863dc65c32ac49b76a18cc3d13fd0",
+    "captures": {
+      "path": "reports/m2/stage46-final-independent-review-captures.tar.gz",
+      "sha256": "466934cccd6fbe29a1f11719a46c4d0208fa322545e333bcd605dcbc4a4fe521",
+      "bytes": 11655,
+      "payload_files": 12
+    },
+    "findings": [],
+    "qualification": "Two initial review-tool schema assumptions failed and are retained. Corrected read-only review completed; no evaluator rerun."
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "scope": "Read-only Stage46 final publication review. Pure archive/JSON/source/raw byte inspection; no Java/native/build/test/Git execution or source mutation.",
+  "verdict": "No publication blocker found.",
+  "findings": [],
+  "checks": 241980,
+  "archives": [
+    {
+      "path": "reports/m2/stage46-final-regression-01.tar.gz",
+      "sha256": "695af9265a30cd47459dfbcaad75f3c3e7aaf7a0e54fb595d54505ad5f2e4880",
+      "compressedBytes": 35239303,
+      "payloads": 29647
+    },
+    {
+      "path": "reports/m2/stage46-final-regression-02.tar.gz",
+      "sha256": "a1361b2275320c6fc1c9979c08492c69c52731a835cb85bfeebd2e8ac142b2f8",
+      "compressedBytes": 9309479,
+      "payloads": 7683
+    },
+    {
+      "path": "reports/m2/stage46-final-regression-03.tar.gz",
+      "sha256": "02caf7c4c3f0be70422e0572ef8a2f02e33d2e72bb954d56eb32aa51a960eb45",
+      "compressedBytes": 3297175,
+      "payloads": 24839
+    },
+    {
+      "path": "reports/m2/stage46-final-publication-closeout.tar.gz",
+      "sha256": "01b10758a17824f6c6143320b456a0816e771b1726e15bc468626afea5eb0d73",
+      "compressedBytes": 18507,
+      "payloads": 35
+    }
+  ],
+  "compressedBytes": 47864464,
+  "language": {
+    "selected": 3664,
+    "counts": {
+      "pass": 3650,
+      "oracle-error": 1,
+      "mismatch": 9,
+      "candidate-unsupported": 4
+    },
+    "currentNonpass": 14,
+    "comparisonUnion": 17,
+    "transitions": 3,
+    "fullFailures": 1827
+  },
+  "persistent": {
+    "sequences": 334,
+    "callsEachLanguage": {
+      "java": 2782,
+      "rust": 2782
+    },
+    "rawStatusStdoutStderrDifferences": 0,
+    "errorClassDifferencesSeparate": 928,
+    "schema": 2
+  },
+  "sourceBinding": {
+    "records": 4385,
+    "uniquePaths": 4177,
+    "allCapturedBytesMatchDeclaredShaAndRecomputedGitBlobId": true,
+    "gitCommitTreeMembership": "Reuse independently captured C mapping; reviewer did not run Git.",
+    "directLifecycleCargoControls": [
+      ".cargo/config.toml",
+      "Cargo.toml",
+      "Cargo.lock",
+      "rust-toolchain.toml"
+    ]
+  },
+  "actualTerminals": {
+    "84018": {
+      "session_id": 84018,
+      "exit_code": 0,
+      "process_report_sha256": "515005ef807791c809a7ce53e1adf405b2e61aca6424b7debc37b0419148072e",
+      "observedUtc": "2026-10-23T13:18:15.713037+00:00",
+      "source": "Actual write_stdin completion of session84018; compatibility gate exits remain separately recorded."
+    },
+    "32842": {
+      "scope": "Reviewer observed own unified execution session actual terminal0 after prepare0 and audit0. No acquisition/build/evaluator/test rerun.",
+      "session_id": 32842,
+      "exit_code": 0,
+      "observed_utc": "2026-10-23T13:21:03.023331+00:00",
+      "process_report_sha256": "492274a7e9892fcfc1438d57df9a653f26a80c39a734a3385a11baf5ad6d8b69",
+      "audit_report_sha256": "2ce579c1ca15647671ecfe5a4ce75c4936437e4c80814e20a347d633e0d64445",
+      "observed_final_output": "audit exit 0\nAUDIT WRAPPER COMPLETE\n"
+    },
+    "46150": {
+      "scope": "Reviewer observed actual unified publication wrapper terminal0. Original acquisition/strict gates remain separate.",
+      "session_id": 46150,
+      "exit_code": 0,
+      "observed_utc": "2026-10-23T13:30:59.962011+00:00",
+      "process_report_sha256": "cd11f29296a3e8a93e6ec7420e79e5d5a037f7871434201eaa1e0772769b1df3",
+      "publisher_report_sha256": "2e520e39f81b4697d8800c275d26783c85b53940037202e1e5548240702e10de",
+      "observed_final_output": "PUBLICATION TERMINAL 0\n"
+    }
+  },
+  "inputHashesBefore": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-summary.json": "24accd33866c86efb0605fb81454df1fcdb863dc65c32ac49b76a18cc3d13fd0",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/README.md": "02d6fc8dd0bc8ae42a4655043f45983f5407b64495d0123b524c10f64496bbc3",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/PLAN.md": "75ef04f35b38b00ce4901e40d5ba87fd08d8ae8e333c14e791c584f7028aaab6",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/README.md": "de43bc0742ec5063049d24b8fb04b3411d959a04ddbb2cbffbc050f4424ca49c",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-final-publication-01/handoff.json": "73a2dbc58324280c3a1da262abf60ce8921fc42b23b81de5aabb8943cf537fda",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-regression-captures.json": "a1f29efd2da476c51a9a704553dfc822f5ddb6b7c38dd96c5d86f5d25e1f97dc",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-publication-closeout.json": "88cecb6093bbbdab5f634b34b42692a3e023b88c87f949f80653faca78551aaa",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-regression-audit.json": "2ce579c1ca15647671ecfe5a4ce75c4936437e4c80814e20a347d633e0d64445",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-source-map.json": "728fa55a313d229bb5b51a9a0c31508aeb9517566b8a164181244e8460a836ee",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-case-changes.json": "fdd773e018ea3b514e436186c4d46e7223e679ad7a7fca639b0c051035fbbe01",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-status-changes.json": "59c89c431d1ef51d63a1f942ecc394678553c0fdcc94046a73a78b0579f08529",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-raw-changes.json": "84e2140696300d9f80a86d909d368d9329af77dd28fa3b0621d4fb6b4bac8563",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-regression-01.tar.gz": "695af9265a30cd47459dfbcaad75f3c3e7aaf7a0e54fb595d54505ad5f2e4880",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-regression-02.tar.gz": "a1361b2275320c6fc1c9979c08492c69c52731a835cb85bfeebd2e8ac142b2f8",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-regression-03.tar.gz": "02caf7c4c3f0be70422e0572ef8a2f02e33d2e72bb954d56eb32aa51a960eb45",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-publication-closeout.tar.gz": "01b10758a17824f6c6143320b456a0816e771b1726e15bc468626afea5eb0d73"
+  },
+  "inputHashesAfter": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-summary.json": "24accd33866c86efb0605fb81454df1fcdb863dc65c32ac49b76a18cc3d13fd0",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/README.md": "02d6fc8dd0bc8ae42a4655043f45983f5407b64495d0123b524c10f64496bbc3",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/PLAN.md": "75ef04f35b38b00ce4901e40d5ba87fd08d8ae8e333c14e791c584f7028aaab6",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/README.md": "de43bc0742ec5063049d24b8fb04b3411d959a04ddbb2cbffbc050f4424ca49c",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-final-publication-01/handoff.json": "73a2dbc58324280c3a1da262abf60ce8921fc42b23b81de5aabb8943cf537fda",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-regression-captures.json": "a1f29efd2da476c51a9a704553dfc822f5ddb6b7c38dd96c5d86f5d25e1f97dc",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-publication-closeout.json": "88cecb6093bbbdab5f634b34b42692a3e023b88c87f949f80653faca78551aaa",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-regression-audit.json": "2ce579c1ca15647671ecfe5a4ce75c4936437e4c80814e20a347d633e0d64445",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-source-map.json": "728fa55a313d229bb5b51a9a0c31508aeb9517566b8a164181244e8460a836ee",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-case-changes.json": "fdd773e018ea3b514e436186c4d46e7223e679ad7a7fca639b0c051035fbbe01",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-status-changes.json": "59c89c431d1ef51d63a1f942ecc394678553c0fdcc94046a73a78b0579f08529",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-raw-changes.json": "84e2140696300d9f80a86d909d368d9329af77dd28fa3b0621d4fb6b4bac8563",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-regression-01.tar.gz": "695af9265a30cd47459dfbcaad75f3c3e7aaf7a0e54fb595d54505ad5f2e4880",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-regression-02.tar.gz": "a1361b2275320c6fc1c9979c08492c69c52731a835cb85bfeebd2e8ac142b2f8",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-regression-03.tar.gz": "02caf7c4c3f0be70422e0572ef8a2f02e33d2e72bb954d56eb32aa51a960eb45",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage46-final-publication-closeout.tar.gz": "01b10758a17824f6c6143320b456a0816e771b1726e15bc468626afea5eb0d73"
+  },
+  "inputChanges": [],
+  "originalMutations": 0,
+  "finishedUtc": "2026-10-23T13:46:24.788177+00:00"
+}

@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "scope": "Terminal Stage46 selected native/lifecycle regression with retained strict failures; no fullM2/platform/performance claim.",
+  "archives": [
+    {
+      "path": "reports/m2/stage46-final-regression-01.tar.gz",
+      "sha256": "695af9265a30cd47459dfbcaad75f3c3e7aaf7a0e54fb595d54505ad5f2e4880",
+      "compressed_bytes": 35239303,
+      "payload_files": 29647,
+      "payload_bytes": 83735278,
+      "sizing_disposition": "Partitioned by80MiB raw target; no arbitrary compressed-size retry gate."
+    },
+    {
+      "path": "reports/m2/stage46-final-regression-02.tar.gz",
+      "sha256": "a1361b2275320c6fc1c9979c08492c69c52731a835cb85bfeebd2e8ac142b2f8",
+      "compressed_bytes": 9309479,
+      "payload_files": 7683,
+      "payload_bytes": 80757499,
+      "sizing_disposition": "Partitioned by80MiB raw target; no arbitrary compressed-size retry gate."
+    },
+    {
+      "path": "reports/m2/stage46-final-regression-03.tar.gz",
+      "sha256": "02caf7c4c3f0be70422e0572ef8a2f02e33d2e72bb954d56eb32aa51a960eb45",
+      "compressed_bytes": 3297175,
+      "payload_files": 24839,
+      "payload_bytes": 41264524,
+      "sizing_disposition": "Partitioned by80MiB raw target; no arbitrary compressed-size retry gate."
+    }
+  ],
+  "payload_files": 62169,
+  "payload_bytes": 205757301,
+  "producer_declared_payload_files": 62122,
+  "selection_sha256": "4b365b3ddbea87431e66bba7d42ecd509b736c015974dd962f95af29f40d8952",
+  "originals_unchanged": true,
+  "all_archives_tool_create_verify_exit0": true,
+  "independent_original_byte_readback": true,
+  "cache_traversal": false,
+  "wrapper_exit_code": 0,
+  "reused_baseline": {
+    "summary": {
+      "path": "reports/m2/stage45-final-summary.json",
+      "sha256": "8f0f4c0a44aa42f3b1f65b7fb6d229e6978cf02457f5aebac3cd1ac7598ba874"
+    },
+    "captures": {
+      "path": "reports/m2/stage45-final-regression-captures.json",
+      "sha256": "856bee136ede4ecb38571dcbb85605d19cae14cc1ce4af998a692eb229afc118"
+    },
+    "archives": [
+      {
+        "path": "reports/m2/stage45-final-regression-01.tar.gz",
+        "sha256": "35e015053406a77668522fea93a731cb52c541e8f29babe001614d2e23976a32",
+        "compressed_bytes": 7802964,
+        "payload_files": 12121,
+        "payload_bytes": 41902680
+      },
+      {
+        "path": "reports/m2/stage45-final-regression-02.tar.gz",
+        "sha256": "62c59bc084be5231a97da345daf4c3f7bff80904903e1a99bb4c88e855d4b620",
+        "compressed_bytes": 27065703,
+        "payload_files": 17521,
+        "payload_bytes": 37341351
+      },
+      {
+        "path": "reports/m2/stage45-final-regression-03.tar.gz",
+        "sha256": "ace673f049f1ec45c18a9cf3d9d7cd28aab106361632512b26a10aa86831c72a",
+        "compressed_bytes": 3731859,
+        "payload_files": 3825,
+        "payload_bytes": 35508826
+      },
+      {
+        "path": "reports/m2/stage45-final-regression-04.tar.gz",
+        "sha256": "4d698c6dc58cfa77ba424e4e8c4bcb433284fbb2b4075d2257b829ec55a6ec7f",
+        "compressed_bytes": 4160626,
+        "payload_files": 3828,
+        "payload_bytes": 41491889
+      },
+      {
+        "path": "reports/m2/stage45-final-regression-05.tar.gz",
+        "sha256": "9bab270f6a15292c750fa6e7a8931a2982f466ac82badbfe4d3a6a4cd5adf27c",
+        "compressed_bytes": 3062294,
+        "payload_files": 24834,
+        "payload_bytes": 19418362
+      },
+      {
+        "path": "reports/m2/stage45-final-regression-06.tar.gz",
+        "sha256": "0ff8a9f99c5ec978cc10efd6ee93932771c28f50bedf44946d7b26ba3c85141d",
+        "compressed_bytes": 1564551,
+        "payload_files": 1,
+        "payload_bytes": 23082797
+      }
+    ],
+    "qualification": "Previously committed Stage45 baseline archives are reused by exact pointer; audit/baseline duplicate metadata is not repackaged. Stage45 schema1 qualification stays historical."
+  },
+  "full_m2_complete": false
+}

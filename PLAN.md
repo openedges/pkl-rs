@@ -794,9 +794,13 @@ C05 후보에서 원본 `basic/read.pkl` 두 반복, native Resource API 1,008�
 
 Stage 46 구현을 `a3eb363`에 커밋·푸시했습니다. [구현 체크포인트](reports/m2/stage46-implementation-checkpoint.json)에서 원본 `basic/read.pkl` 두 반복과 native API 1,724회가 일치합니다. 실제 Node·Chromium에서는 환경별 Resource 1,008회·모듈 준비 252회가 일치합니다. 필수 Rust 검사 다섯 개는 C06에서 통과했고, 보고서의 C05 표기 오류는 별도 정정 기록으로 보존합니다. 이후 HTTP 검증 도구 여섯 개만 수정했으며 엔진·빌드 설정은 같습니다. 초기 서버 실패와 browser 실행 파일 식별의 역사적 한계는 유지하고 새 실행에서 명시적으로 선택한 Chromium을 검증했습니다.
 
-커밋 대상의 입력 32,847개를 Git blob·고정 참조에 연결했습니다. `.bat` 두 파일의 upstream checkout 줄바꿈, 원래 source map 밖의 symlink 11개, snapshot 실행 권한 차이 여덟 개는 바이트 일치와 별도로 기록했습니다. 생성자 경계 16회·Resource 미선택 264회, 기존 File 정책 비교기의 capability projection 불일치 24회와 정규식 실패 두 개는 계속 남습니다. 구현 커밋을 고정한 전체 선택 3,664개·순차 evaluator 회귀를 별도로 시작했으며, 결과가 나오기 전에 전체 회귀 또는 M2 완료로 보고하지 않습니다.
+커밋 대상의 입력 32,847개를 Git blob·고정 참조에 연결했습니다. `.bat` 두 파일의 upstream checkout 줄바꿈, 원래 source map 밖의 symlink 11개, snapshot 실행 권한 차이 여덟 개는 바이트 일치와 별도로 기록했습니다. 생성자 경계 16회·Resource 미선택 264회, 기존 File 정책 비교기의 capability projection 불일치 24회와 정규식 실패 두 개는 계속 남습니다. 구현 커밋을 고정한 전체 선택 3,664개·순차 evaluator 회귀 결과는 아래 최종 기록으로 분리합니다.
 
 [원시 검증 자료](reports/m2/stage46-implementation-captures.json) 40개 archive와 [실제 커밋 소스 대응](reports/m2/stage46-implementation-source-binding.json)을 정리했습니다. 동일한 과거 source snapshot은 검증된 Git blob으로 복원할 수 있게 연결하고, 다른 소스 바이트·실행 artifact·원시 결과·초기 실패는 그대로 보존합니다. 게시 패키징과 독립 재검증, root 승격의 바이트 동일성을 확인했으며 실행 중인 전체 회귀와 Stage 47 결과는 이 집계에 포함하지 않습니다.
+
+`a3eb363`의 [최종 선택 회귀](reports/m2/stage46-final-summary.json)는 3,664개 중 3,650개 일치·미지원 4개·불일치 9개·oracle 오류 1개입니다. 원본 `basic/read.pkl`, `modules/amendModule6.pkl`, `modules/invalidAmend6.pkl`이 미지원에서 통과로 바뀌었고 이전 통과 사례의 회귀는 없습니다. 원래 4,527개 ID·요구사항 475개·선택 순서와 기존 JVM profile 연결을 유지했습니다. 순차 실행 334회의 언어별 2,782개 호출은 status·stdout·stderr가 일치하며, error-class metadata 차이 928개와 미실행 수명주기 범위는 별도로 보존합니다.
+
+[독립 감사](reports/m2/stage46-final-regression-audit.json)는 선언된 payload 62,122개를 두 번 대조하고 캡처 소스 4,385건·고유 경로 4,177개를 실제 구현·고정 참조 Git blob에 연결했습니다. lifecycle schema 2에서 `.cargo/config.toml`을 포함한 Cargo 제어 입력 네 개를 직접 캡처했습니다. 현재 미통과 14개와 이전·현재 미통과 합집합 17개를 구분합니다. wrapper 실제 종료·무결성·순차 계약은 통과했지만 개발·선택·전체 gate는 실패이며 전체 실패 이유 1,827개가 남습니다. **선택 회귀 취득의 마감이며, Stage 47·나머지 정책과 수명주기·M2 전체 및 성능 목표의 완료는 아닙니다.**
 
 ### Stage 47 — 공유 JSON 출력과 RenderDirective
 

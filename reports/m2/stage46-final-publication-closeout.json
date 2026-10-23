@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "scope": "Post-terminal publication metadata capture only; does not add evaluator comparisons.",
+  "archive": {
+    "path": "reports/m2/stage46-final-publication-closeout.tar.gz",
+    "sha256": "01b10758a17824f6c6143320b456a0816e771b1726e15bc468626afea5eb0d73",
+    "compressed_bytes": 18507,
+    "payload_files": 35,
+    "payload_bytes": 92906
+  },
+  "create_verify_exit_codes": [
+    0,
+    0
+  ],
+  "independent_member_original_byte_readback": true,
+  "actual_publication_terminal": {
+    "scope": "Reviewer observed actual unified publication wrapper terminal0. Original acquisition/strict gates remain separate.",
+    "session_id": 46150,
+    "exit_code": 0,
+    "observed_utc": "2026-10-23T13:30:59.962011+00:00",
+    "process_report_sha256": "cd11f29296a3e8a93e6ec7420e79e5d5a037f7871434201eaa1e0772769b1df3",
+    "publisher_report_sha256": "2e520e39f81b4697d8800c275d26783c85b53940037202e1e5548240702e10de",
+    "observed_final_output": "PUBLICATION TERMINAL 0\n"
+  },
+  "actual_closeout_terminal": {
+    "scope": "Reviewer observed immediate exec_command completion of closeout wrapper with actual exit0. No persistent session ID was returned.",
+    "exec_chunk_id": "6eca58",
+    "session_id": null,
+    "exit_code": 0,
+    "process_report_sha256": "f31e22b05b5db2f58fffc66492781d94d2423c9868c86c8816720ed1bf0d6706",
+    "observed_utc": "2026-10-23T13:32:00.666435+00:00",
+    "observed_final_output": "CLOSEOUT TERMINAL 0\n"
+  },
+  "reviewed_pre_pointer_summary": {
+    "archive_member": "reviewed-publication/stage46-final-summary.json",
+    "sha256": "f4569e3c2c13be125238c64bb3325884e3b230dc0dcfb3792f9e65bfc98a06c4"
+  },
+  "qualification": "The original pre-pointer summary and publisher report are preserved in the closeout archive. Final summary adds only publication_closeout; their earlier recorded hashes remain historical identities. Original language/lifecycle/source/raw evidence is not changed."
+}

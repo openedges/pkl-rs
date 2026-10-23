@@ -77,13 +77,38 @@ verification remain separate evidence. This fixture/tool checkpoint does not
 execute the renderer through Rust, N-API or Wasm and does not complete Stage 47
 or M2.
 
+## Stage 46 final selected regression
+
+The [native result](stage46-final-summary.json) is bound to `a3eb363`: 3,650 of
+3,664 selected cases match Java, with four unsupported cases, nine mismatches
+and one oracle error retained. The unchanged original `basic/read.pkl`,
+`modules/amendModule6.pkl` and `modules/invalidAmend6.pkl` improve from unsupported
+to passing. No previously passing case regresses. All 4,527 inventory IDs,
+475 requirements, selected order and the existing JVM/classpath mapping remain.
+
+All 2,782 ordered calls across 334 persistent sequence executions match status,
+stdout and stderr. The 928 producer error-class differences and unexecuted
+lifecycle boundaries remain separate. Acquisition, evidence integrity and the
+persistent contract pass; development, strict selected and full-language gates
+still fail. The full gate retains 1,827 failure reasons.
+
+The [independent audit](stage46-final-regression-audit.json) verifies 62,122
+declared payloads and binds 4,385 captured source records across 4,177 unique
+paths to the implementation and pinned reference Git blobs. Lifecycle schema 2
+directly captures all four Cargo control inputs, including `.cargo/config.toml`.
+The current 14 nonpassing cases are distinct from the union of 17 previously or
+currently nonpassing IDs. The [raw captures](stage46-final-regression-captures.json)
+preserve the actual wrapper exit zero and failed compatibility gate exits.
+This result adds no Stage 47, platform or performance coverage and does not
+complete M2.
+
 ## Stage 46 implementation checkpoint
 
 The shared Resource value, evaluator-local successful/Missing cache and typed
 module URI preparation are committed in `a3eb363`. The [local implementation
 record](stage46-implementation-checkpoint.json) separates focused comparisons
-from the full selected regression, which is being acquired separately on that
-commit. This checkpoint does not complete M2.
+from the full selected regression on that commit, reported above. This
+checkpoint does not complete M2.
 
 The unchanged original `basic/read.pkl` matches Java twice across output, errors,
 exit status and generated files. Native focused comparisons match 1,724 selected

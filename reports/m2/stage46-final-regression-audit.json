@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "scope": "Independent terminal data audit of Stage46/classpath full selected regression ata3eb363; not M2 completion, CI, platform or performance evidence.",
+  "implementation_commit": "a3eb3634558cef6f36189320498fe7e013296c48",
+  "pinned_references": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "declared_inputs_unchanged_during_audit": true,
+  "wrapper_commands_complete": true,
+  "wrapper_own_terminal": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-full-regression-01/outer-terminal.json",
+    "sha256": "aeca839040d0eecd22638da5aafcf3638df87d91a776698a46328bd36b67fe7a",
+    "exit_code": 0
+  },
+  "wrapper_terminal_qualification": "Required root receipt binds actual wrapper OS exit0 to the complete8command process report; strict child exit1 remains a failed gate.",
+  "gates": {
+    "language-acquire": 0,
+    "language-verify-report": 0,
+    "language-verify-development": 1,
+    "language-verify-subset": 1,
+    "language-verify-full": 1,
+    "lifecycle-acquire": 0,
+    "lifecycle-verify-report": 0,
+    "lifecycle-verify-contract": 0
+  },
+  "language": {
+    "report_sha256": "dd5b9738b05e67b28f15c267ed917e279c12bb7f7492ca7484904dc0007a7cec",
+    "case_definitions": 4527,
+    "requirements": 475,
+    "selected": 3664,
+    "case_order_and_selection_unchanged": true,
+    "status_counts": {
+      "candidate-unsupported": 4,
+      "mismatch": 9,
+      "oracle-error": 1,
+      "pass": 3650
+    },
+    "full_gate_failure_reasons": 1827,
+    "status_transition_count": 3,
+    "current_nonpass_cases": 14,
+    "historical_nonpass_comparison_union": 17,
+    "declared_payloads_verified": 37299,
+    "classpath_child_report_sha256": "b755330f0b6bb2dae7f68da9eda1a6dda095d0897d83ded06b47c54cbe3908c0",
+    "classpath_repetitions": 2,
+    "classpath_same_case_counted_once": true
+  },
+  "lifecycle": {
+    "report_sha256": "59cff0b71c41c3051a19c14be5335b458645601f60dcaf1979299a1cd5f834ed",
+    "sequences": 334,
+    "calls_each_language": 2782,
+    "status_counts": {
+      "java": {
+        "error": 928,
+        "success": 1854
+      },
+      "rust": {
+        "error": 928,
+        "success": 1854
+      }
+    },
+    "raw_mismatches": [],
+    "comparison_channels": [
+      "status",
+      "stdout",
+      "stderr"
+    ],
+    "error_class_differences_retained_excluded_from_equality": 928,
+    "declared_payloads_verified": 24823,
+    "unexecuted_groups_preserved": true
+  },
+  "source_binding": {
+    "captured_records": 4385,
+    "unique_paths": 4177,
+    "all_match_commit_blobs": true,
+    "lifecycle_config_directly_captured": true,
+    "config_qualification": "Stage46 schema2 directly captures root.cargo/config.toml and all4Rust Cargo controls in lifecycle sources. Stage45 schema1 omission stays historical."
+  },
+  "exact_build_paths_never_enumerated": {
+    "language": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-language-final-01/build",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-language-final-01/jvm-classpath/build"
+    ],
+    "lifecycle": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-class-lifecycle-final-01/build",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-class-lifecycle-final-01/jvm-classpath/build"
+    ]
+  },
+  "payload_coverage_qualification": "Every declared payload was read directly; no evidence/cache directory tree was walked. The recorded producer integrity checks separately verify actual path coverage.",
+  "output_pointers": {
+    "source-map.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-final-audit-proposal-01/source-map.json",
+      "sha256": "728fa55a313d229bb5b51a9a0c31508aeb9517566b8a164181244e8460a836ee"
+    },
+    "case-changes.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-final-audit-proposal-01/case-changes.json",
+      "sha256": "fdd773e018ea3b514e436186c4d46e7223e679ad7a7fca639b0c051035fbbe01"
+    },
+    "status-changes.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-final-audit-proposal-01/status-changes.json",
+      "sha256": "59c89c431d1ef51d63a1f942ecc394678553c0fdcc94046a73a78b0579f08529"
+    },
+    "raw-changes.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-final-audit-proposal-01/raw-changes.json",
+      "sha256": "84e2140696300d9f80a86d909d368d9329af77dd28fa3b0621d4fb6b4bac8563"
+    },
+    "payload-manifest.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-final-audit-proposal-01/payload-manifest.json",
+      "sha256": "159b1d4f070ec73f879603d0af23606eb0e5405f959e598f648b245dc6d90bff"
+    }
+  },
+  "remaining": [
+    "Root review and publication archive/summary/source pointers",
+    "All remaining strict failures and unmapped/unimplemented requirements",
+    "Stage47 renderer/identity is a separate unmerged source/evidence scope"
+  ],
+  "full_m2_complete": false,
+  "hosted_ci_claimed": false,
+  "performance_target_claimed": false
+}
