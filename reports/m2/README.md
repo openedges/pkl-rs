@@ -61,6 +61,10 @@ These checkpoints do not complete the language milestone.
 
 ## Stage 44 implementation checkpoint
 
+The [committed source binding](stage44-implementation-source-binding.json) ties
+all 9,925 checked paths to implementation `c9b140a` and its fixed reference
+commits, with no missing or mismatched inputs.
+
 The [publication audit](stage44-publication-review.json) independently verifies
 all 43,938 captured payloads, 9,925 staged/pinned source paths and the actual
 portable Host calls. Its raw review and publisher records are preserved in the

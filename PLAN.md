@@ -736,6 +736,8 @@ Stage 43의 canonical 진단 위에 module resolve/source와 resource read의 �
 
 일반 오류 주입과 typed IOException 완료는 별개입니다. 다른 Java 예외 종류, 전체 URI·security 오류, UTF-8 source·URI 입력 제한과 원래 M2 코퍼스의 미구현·미연결 의무는 남습니다. 실제 Git worktree에서 필수 검사 다섯 개가 모두 통과했고, workspace 테스트는 harness 호출 692회 통과·실패 0회·ignored 1회입니다. 검증 입력 9,925개(프로젝트 7,917개·고정 참조 2,008개)가 커밋 예정 Git blob과 같습니다. [구현 검증 기록](reports/m2/stage44-implementation-checkpoint.json)은 초기 실패와 실제 portable 결과를 보존합니다. 이는 전체 코퍼스 또는 M2 완료 선언이 아닙니다.
 
+구현을 `c9b140a`에 커밋했습니다. [커밋 소스 대응](reports/m2/stage44-implementation-source-binding.json)은 검증 입력 9,925개를 실제 구현 커밋과 고정 참조 커밋에 연결하며, 누락·차이는 없습니다. [독립 게시 검토](reports/m2/stage44-publication-review.json)는 원시 증거 43,938개와 실제 portable Host 호출을 확인했습니다.
+
 다음 Stage 45는 원본 여섯 사례를 막는 `pkl:base`·`pkl:test`의 실제 모듈 정체성과 VM 내부 `catch`·`catchOrNull`을 구현합니다. 공통 cache·heap·Host를 유지한 제한된 오류 unwind와 Java의 별도 catch 진단 profile을 연결합니다. 원본 전체 입력을 유지하며 Resource·triple-dot·glob 및 나머지 표준 모듈 의존성도 후속 의무로 추적합니다. 런타임은 `gpt-6-astra / xhigh`, 원본 Java 비교와 독립 설계 검토는 각각 `gpt-6.1-sol / high`에 배정합니다.
 
 ## M3 — 표준 라이브러리와 출력
