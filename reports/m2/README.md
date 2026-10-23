@@ -55,6 +55,33 @@ Stage 41 adds shared module imports, typed resolve/source Host requests,
 expression sessions and imported diagnostic ownership.
 These checkpoints do not complete the language milestone.
 
+## Stage 42 development captures
+
+The [development captures](stage42-checkpoint-captures.json) preserve 72,288
+files across five checked archives, including candidate source snapshots,
+Java originals, native and actual Node/Chromium executions, failed intermediate
+runs and independent reviews. Publication records exact Cargo cache exclusions
+before traversal. Forty nested provenance files omitted from three historical
+inner inventories are present at their original paths in these outer archives;
+the original inventories and the audits documenting their scope are retained.
+The [independent publication audit](stage42-checkpoint-publication-review.json)
+checks the complete archive union against all selected originals and source maps.
+
+The recorded candidate matches 35 of 41 original module programs, with five
+unsupported and one mismatched program; two repetitions retain all 82 outcomes.
+The original 22 module graphs, three added inheritance graphs and 14 string
+indexing expressions match Java on native, Node and Chromium. Two additional
+string error cases still lose unmatched surrogate units in diagnostic payloads,
+even when their Java UTF-8 bytes agree. All five required Rust commands pass.
+These component results leave the full language gate open.
+
+Whole-selection and persistent-evaluator regression acquisition is still in
+progress. It has exposed a previous passing Reference constraint diagnostic
+whose qualified frame uses the caller's module name instead of `pkl.ref`.
+The captured candidate and raw failures remain unchanged while the owner fix is
+verified in a separate source copy. These archives precede that correction and
+do not establish Stage42 closeout or M2 completion.
+
 ## Stage 41 local module-loader checkpoint
 
 The [implementation checkpoint](stage41-implementation-checkpoint.json) records

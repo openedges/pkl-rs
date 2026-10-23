@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "scope": "Independent read-only coverage and raw-byte audit of the five historical Stage42 capture archives; no evaluator or whole-language completion claim.",
+  "original_report_sha256": "5bab7657d09eb1fd78fe1e77ba688df98e86ca66cce1872b43fae70c6af5b91a",
+  "original_closure_sha256": "7f21f1639698a6d94847abbe97f58f544d838c4a7a0ff7a452a01cab626053df",
+  "raw_evidence": {
+    "path": "reports/m2/stage42-checkpoint-publication-review.tar.gz",
+    "bytes": 2315305,
+    "sha256": "5ee6eaf26ca8126fb9d927a997548d87f66a57e58f8ce5ae67f993f8cae7f620",
+    "verified_files": 8
+  },
+  "audit": {
+    "allFortyHistoricalOmissionsPresentAtExactOriginalPaths": true,
+    "archiveCount": 5,
+    "archiveModes": "Canonical 0644; original executable modes are not claimed preserved.",
+    "archives": [
+      {
+        "path": "reports/m2/stage42-checkpoint-captures-01.tar.gz",
+        "payloadBytes": 141911969,
+        "payloadFiles": 12626,
+        "sha256": "e8a7cd66763a8b364e5b437950902394835fe9b91c2d6a9654821c0cb02f661b"
+      },
+      {
+        "path": "reports/m2/stage42-checkpoint-captures-02.tar.gz",
+        "payloadBytes": 139350108,
+        "payloadFiles": 11729,
+        "sha256": "69d0ba14eedd26da26a51ae6a856818c94c620f8820f299f867f805c8665112e"
+      },
+      {
+        "path": "reports/m2/stage42-checkpoint-captures-03.tar.gz",
+        "payloadBytes": 137746051,
+        "payloadFiles": 642,
+        "sha256": "19f9ed54cfd11b1b2e8053927990a37348f804367df8f26d856a2a42cd4846a0"
+      },
+      {
+        "path": "reports/m2/stage42-checkpoint-captures-04.tar.gz",
+        "payloadBytes": 148402269,
+        "payloadFiles": 14603,
+        "sha256": "d40e913d0d5ebba638dec192c6668367fb145c1edeb68ee89591c6cab22ec4da"
+      },
+      {
+        "path": "reports/m2/stage42-checkpoint-captures-05.tar.gz",
+        "payloadBytes": 89894455,
+        "payloadFiles": 32688,
+        "sha256": "b21e669c7edb59bc33285dda4362cef5ca97a5fe23e9b777d459695c4ca73bd3"
+      }
+    ],
+    "at": "2026-10-23T03:18:08.402820+00:00",
+    "cacheExclusionsBeforeTraversal": [
+      "target/debug",
+      "target/release",
+      "target/wasm32-unknown-unknown",
+      "target/m2/stage42-core-cargo",
+      "target/m2/stage42-session-types-cargo",
+      "target/m2/stage42-class-lifecycle-final-01/build",
+      "target/m2/stage42-reference-frame-fix-01/cargo-target"
+    ],
+    "checkpointOmissions": 26,
+    "currentOriginalBytesMatchBeforeAndAfterPublication": true,
+    "directOriginalFiles": 116,
+    "duplicatePayloadPaths": [],
+    "exactCoverageOfAllSelectedOriginalFiles": true,
+    "index": {
+      "path": "reports/m2/stage42-checkpoint-captures.json",
+      "sha256": "7df8350321d173ce729c80be02f0c7ba9d648f010d3da426293c3fa43d938c53"
+    },
+    "moduleDriverOmissions": 14,
+    "omittedLiveOrManagedRoots": [
+      "target/m2/stage42-checkpoint-publication-01",
+      "target/m2/stage42-core-cargo",
+      "target/m2/stage42-full-regression-01",
+      "target/m2/stage42-language-final-01",
+      "target/m2/stage42-original-modules41-workspace-01",
+      "target/m2/stage42-session-types-cargo",
+      "target/m2/stage42-reference-frame-fix-01"
+    ],
+    "recordedToolVerification": "All five recorded evidence.py verify commands exit0; independently decoded all tar members and EVIDENCE inventories here, without rerunning tool tests.",
+    "scope": "Independent offline exact archive-union/current-original audit; no evaluator, Java, build, or tooling-test rerun. Historical captures remain historical; no whole-language or M2 completion claim.",
+    "selectedRoots": 104,
+    "sourceGuardLimitation": "This proves declared selected evidence inputs stable and current originals exact. It does not rebind old candidates to current production or assert held fix validity.",
+    "status": "PASS",
+    "summedPayloadFileCount": 72288,
+    "uncompressedPayloadBytes": 657304852,
+    "uniquePayloadFileCount": 72288
+  }
+}
