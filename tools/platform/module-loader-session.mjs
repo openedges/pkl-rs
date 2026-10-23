@@ -137,7 +137,12 @@ export function runModuleLoaderCase(api, fixture, budget = 7) {
               || !/^[0-9]+$/.test(request.id) || typeof request.originalUri !== 'string')
             throw new TransportError('invalid typed module request');
           requests.push({ token: event.token, ...request });
-          if (request.kind === 'resolve') {
+          if (request.kind === 'check-import') {
+            if (typeof request.importUri !== 'string' || typeof request.importerOriginalUri !== 'string'
+                || typeof request.importerResolvedUri !== 'string') throw new TransportError('incomplete import-check context');
+            if (session.completeDefaultModule(event.token, 0) !== true)
+              throw new TransportError('import check is unsupported by the shared default policy');
+          } else if (request.kind === 'resolve') {
             if (typeof request.importUri !== 'string' || typeof request.importerOriginalUri !== 'string'
                 || typeof request.importerResolvedUri !== 'string') throw new TransportError('incomplete resolver context');
             let entry = resolutions.get(request.importUri);
@@ -147,7 +152,11 @@ export function runModuleLoaderCase(api, fixture, budget = 7) {
               resolveCounts.set(request.importUri, index + 1);
               entry = {...entry, ...entry.resolves[index], resolves: undefined};
             }
-            if (!entry) session.rejectModuleResolution(event.token, 'not-found', '', 0);
+            if (!entry) {
+              const completed = session.completeDefaultModule(event.token, 0);
+              if (typeof completed !== 'boolean') throw new TransportError('invalid default module completion result');
+              if (!completed) session.rejectModuleResolution(event.token, 'not-found', '', 0);
+            }
             else if (entry.originalUri != null && entry.originalUri !== request.originalUri)
               throw new TransportError('module original identity differs from fixture');
             else if (entry.failure) session.rejectModuleResolution(event.token, entry.failure.kind, entry.failure.message, 0);
@@ -268,5 +277,6 @@ export function runModuleLoaderCase(api, fixture, budget = 7) {
       } catch (error) { acquisitionError = acquisitionError ? { ...acquisitionError, cleanup: thrown(error) } : thrown(error); }
     }
   }
-  return { id: fixture.id, results, requests, reads, callbacks, logs, architecture, acquisitionError };
+  return { id: fixture.id, results, requests, reads, callbacks, logs, architecture, acquisitionError,
+    modulePolicy: 'exact-module-tables-with-pkl-0.32.0-default-import-policy' };
 }

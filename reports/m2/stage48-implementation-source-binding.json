@@ -1,0 +1,305 @@
+{
+  "schema": 1,
+  "scope": "Read-only actual staged Git index blob/mode audit after root staging. No Git/index/source mutation or evaluator/test/build rerun.",
+  "head": "0e13a589d43c4cb1d83f41dd1ec416cac1770fc1",
+  "indexStageSha256": "bccfb3fd6bfab897c140d6c1dbdf75b60918e8c08052f7501fda6eec985508ee",
+  "indexStableBeforeAfter": true,
+  "candidateReleaseSha256": "04881b69a3ec7e063dbe1cf594e7ddbfb358854fc17bca8f29e21d3f3c179dc0",
+  "candidateSourceMapSha256": "9f546b82bd3cfba614c2c0bb1671db14f226466707f99cef3a5ceb5f6dc12a18",
+  "candidateProjectFiles": 47663,
+  "unchangedProjectFiles": 47656,
+  "postCandidateChangedPaths": [
+    {
+      "path": "PLAN.md",
+      "candidateSha256": "b48f0aab4ec947de2fe8c454d1631260afe4c54fa0f20797f37f5359f0ec2154",
+      "stagedSha256": "ea61095c3b0847596048920acd25c0bd1566b428234c7ac878641e34f01afff7",
+      "gitBlob": "c471bc0678c48d68369b0cdfae2af80ecddc0673",
+      "mode": "100644"
+    },
+    {
+      "path": "TESTING.md",
+      "candidateSha256": "7cfa637beeda07651854f771bdba572a5305a63ca77f151b30bfe3cf77e183dc",
+      "stagedSha256": "626b1df33df9de7162500b113ff3d28c5ba13d559ee894dff67b37b11084f240",
+      "gitBlob": "7388b626af6410feeadb8d2c0794a4845d8f51dd",
+      "mode": "100644"
+    },
+    {
+      "path": "compatibility/m2-language.json",
+      "candidateSha256": "ca00c706dd6abfdea404aff4adf54732867e6edce6c02a3c0a1279ac8cb77a9a",
+      "stagedSha256": "87a598c6aaccdb7be54268084b4a9174da181cf785a0d05f377b23436c111969",
+      "gitBlob": "b0a644c7bf2b090437e312219b9ba62d9525c4a3",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/architecture.md",
+      "candidateSha256": "37f6236a2804b7c9f9265f7bb9aa8ac832df43495dd2864c69aee1ae1b217afe",
+      "stagedSha256": "9d475d2d26edaac3d1488b786c57ca11631ca52667ab6d10e6516e04edbdcb70",
+      "gitBlob": "2575e70594303b33486dcb2fd9be1f54ead33c28",
+      "mode": "100644"
+    },
+    {
+      "path": "reports/m2/README.md",
+      "candidateSha256": "ef4bf9af4161f08df22dc0d647af83a026f1175cc6865e7cda37f12b49795128",
+      "stagedSha256": "18c33a8692a592b3a6acb4adc98ad2d6a5366f3614af4caa89d23c8c1bf6fc15",
+      "gitBlob": "37c688c931b911ce428785a2aca1085e875d6b90",
+      "mode": "100644"
+    },
+    {
+      "path": "tools/platform/bootstrap-session.mjs",
+      "candidateSha256": "d395cfb14fa0dd1dbcaf2512fdf819755973f9f6d05a0e364f498f3dadf948ba",
+      "stagedSha256": "ad5555374d13755e9904d0b05f6e1808463087acda868a27d74f850358e835f0",
+      "gitBlob": "c663efc46af011096e658abc1d738158704d8026",
+      "mode": "100644"
+    },
+    {
+      "path": "tools/platform/module-policy-session.test.mjs",
+      "candidateSha256": "9ec46d2dc557e84df018f31686242667bbe8420969903a08578d18dbd1e8b4ec",
+      "stagedSha256": "b8b1d402214f197556cedf8cc6c273ac7ffab12017289d605d383f302fe9604d",
+      "gitBlob": "2fe07220dfbd42284fbacda3acdc0e68ed231529",
+      "mode": "100644"
+    }
+  ],
+  "newPublicationOrDocFiles": [
+    {
+      "path": "docs/m2-module-admission.md",
+      "gitBlob": "47991df1b54a36b15c8a1cacebf6bd1bbd04e5b4",
+      "sha256": "1d9755194b5eef4ae5d9a949052ec06c32ac621336618942df963869beb36da1",
+      "bytes": 3810
+    },
+    {
+      "path": "reports/m2/stage48-admission-native-c01.tar.gz",
+      "gitBlob": "8c248499ddb5fdea099318e1d4753e3cf20e7530",
+      "sha256": "00ebd48c94e8c7cbf8dedb697ba7701d38f75e3c34cb0ec6fa4e03cba4add227",
+      "bytes": 1017807
+    },
+    {
+      "path": "reports/m2/stage48-admission-portable-c01.tar.gz",
+      "gitBlob": "5f14544656203346d2f007f5d645ddb24b013165",
+      "sha256": "48c3c4a7bc641454216796790094bbaca3a428a01943f406ccf758b68e96fb7a",
+      "bytes": 267474
+    },
+    {
+      "path": "reports/m2/stage48-admission-tooling-history.tar.gz",
+      "gitBlob": "e0b34ea96a3f119609f88dd1488737c49043beec",
+      "sha256": "0c248d1e1b35461a461579b87dc65ead12e21af27430b66bdc68cfb49d54970d",
+      "bytes": 1800541
+    },
+    {
+      "path": "reports/m2/stage48-bootstrap-captures.tar.gz",
+      "gitBlob": "9762328b6c6a2b5da0d9afd95755039c42d6d1fd",
+      "sha256": "58232927eaa4c66790921ac8763a5e0fb3bccce67b74b364b54eb719f0795e89",
+      "bytes": 1072474
+    },
+    {
+      "path": "reports/m2/stage48-core-artifacts.tar.gz",
+      "gitBlob": "9774c88d1cca3bd31cb70ec2e4600aa6a85954bc",
+      "sha256": "5af228416a157a8aa837c5d4996687199c4e378cf2d19886302ca168792ffa72",
+      "bytes": 21144614
+    },
+    {
+      "path": "reports/m2/stage48-core-captures.json",
+      "gitBlob": "cc6667c9b3b7dadb0c334d0d792741d238e6e0e1",
+      "sha256": "eca89d43c9b6f59c2b977b4070bef0ecc643a8d7d8434d05cb027b19b7deb00c",
+      "bytes": 12876
+    },
+    {
+      "path": "reports/m2/stage48-core-checks-history.tar.gz",
+      "gitBlob": "fd62ca5d0cd8f790ba1abad78090c3fbd827c18e",
+      "sha256": "04e305369ebc519b2656ee673c545ed62013fee92f6da81f28bc36c77985c807",
+      "bytes": 623474
+    },
+    {
+      "path": "reports/m2/stage48-core-evidence.md",
+      "gitBlob": "78170fcb4197053ae5b99b8b221b30f302278c06",
+      "sha256": "be4da718dd7f371f29efdcdd370da70662a8ab462b186c3d9c2f6c7311cc9244",
+      "bytes": 2494
+    },
+    {
+      "path": "reports/m2/stage48-core-promotion.json",
+      "gitBlob": "e0490ac82fd3f363a2f42f2c969b519b3f0e8380",
+      "sha256": "8a41c82c6e872651cebc7be63dec93910bcd78bdb111dc42b3f6af1d83135fc9",
+      "bytes": 3431
+    },
+    {
+      "path": "reports/m2/stage48-core-publication.json",
+      "gitBlob": "8e36c69ae454b9000deadca224deb853a87ff68f",
+      "sha256": "05406e99a9840821ac72c95c56c8a566e9f7f92dd2ced9cf4a13a096e25c9e40",
+      "bytes": 2908
+    },
+    {
+      "path": "reports/m2/stage48-core-review.json",
+      "gitBlob": "aa91e00ef693889b36ecf8acf6a10e5ac34c800c",
+      "sha256": "d122065ff306c4b84e53b0c605c0e045fb5c2ac4414b5986c6a637da868e6c7a",
+      "bytes": 4353
+    },
+    {
+      "path": "reports/m2/stage48-core-reviews-analysis.tar.gz",
+      "gitBlob": "313828c43d9edf9208f37cd6d51d355a28578f7b",
+      "sha256": "77cc26e57c0808cb79f37b29a07b86d2eaf23288a6f61c50d70e8816f7ee616b",
+      "bytes": 2414359
+    },
+    {
+      "path": "reports/m2/stage48-core-source-binding.tar.gz",
+      "gitBlob": "c9f2a08089bf149c08adc0258218246abc3f37dc",
+      "sha256": "5cf58e1941f1e20d47aa0658719c1211b655e5be6c7d028fb5c179a154da9d97",
+      "bytes": 6918906
+    },
+    {
+      "path": "reports/m2/stage48-core-summary.json",
+      "gitBlob": "9f62d772b0492611610fe643ae4bd9d56923cdf3",
+      "sha256": "b1f3dad7d7f6e1333d066ff407ff49a10e575b09638fa4b7271a00db354f4536",
+      "bytes": 2763
+    },
+    {
+      "path": "reports/m2/stage48-implementation-checkpoint.json",
+      "gitBlob": "f806c8c7aa2c22ebfc1b177284ce42da665cd75d",
+      "sha256": "eddf08599a03c648fd2237840068eae383934636137d10a85e13a69fa1d820e0",
+      "bytes": 19621
+    },
+    {
+      "path": "reports/m2/stage48-independent-reviews.tar.gz",
+      "gitBlob": "2845c85829e3a28d394abd002b4724740a0099d6",
+      "sha256": "dff742f58ea14fe6c6c942c0dc38a6097315133c30bb3a3465e712e9fafb3efa",
+      "bytes": 8658199
+    },
+    {
+      "path": "reports/m2/stage48-java-admission-controls.tar.gz",
+      "gitBlob": "9748b4c10e6c5c0b386efb58b767bdc6aeec076e",
+      "sha256": "4e1aa82e5033198e20e68772890197f8eb6157acf199f4db401574aeda998be0",
+      "bytes": 3011871
+    },
+    {
+      "path": "reports/m2/stage48-oracle-captures.json",
+      "gitBlob": "3b9b46463e8efbd807f90ddf5d9fc3b418d620c7",
+      "sha256": "7735388de2d73c5b581c0de410024f736d8b0eb1158e9972afad0097757136bc",
+      "bytes": 4004
+    },
+    {
+      "path": "reports/m2/stage48-oracle-closure.json",
+      "gitBlob": "d87275aff1a33dcd19f015a098d0fa382d1194fe",
+      "sha256": "286be2f37b0751e995a2c1efaa5c2a746598c90f6bf9273b610ca155cd49515c",
+      "bytes": 295
+    },
+    {
+      "path": "reports/m2/stage48-oracle-finalizer-terminal.json",
+      "gitBlob": "fe31dd4b4dafd483d18c19d96619d662a2f99a93",
+      "sha256": "a051053d64382f07a757f8fa41001bc93c3b9ab13039bac2ca4baf4c3cd22147",
+      "bytes": 386
+    },
+    {
+      "path": "reports/m2/stage48-oracle-handoff-initial.json",
+      "gitBlob": "cc3da5a53b9d247ef528d45fad84614b16a4b4bf",
+      "sha256": "f02a13325810a051214dce0ee4dcd52ef02b8a67c792d7302798b7a93e2a0d43",
+      "bytes": 3867
+    },
+    {
+      "path": "reports/m2/stage48-oracle-handoff.json",
+      "gitBlob": "5f9704bc5e6b8506b7e13b05345fb97ea61da08f",
+      "sha256": "c3757cfb45e18a702b1ddec99ef9d7cb413445a425a86381388314c0ca11244f",
+      "bytes": 4100
+    },
+    {
+      "path": "reports/m2/stage48-oracle-metadata-inventory.json",
+      "gitBlob": "22a1dd2311a8f0f4488cc74852f4c5231f0053b4",
+      "sha256": "cbd4374d3e30fa6a44b5a6dea3e6d0960390c3f1fafba7d077181e4711307dbf",
+      "bytes": 2479
+    },
+    {
+      "path": "reports/m2/stage48-oracle-promotion.json",
+      "gitBlob": "071762682e59497c973c2e13aa1c053f41191455",
+      "sha256": "8ecd9d5650075f0706faec4ce0259865718498f0c7b315ba85ff280d88cdd59e",
+      "bytes": 8146
+    },
+    {
+      "path": "reports/m2/stage48-oracle-publication-closeout.tar.gz",
+      "gitBlob": "fddc53d767c678219ba8aacb2031f1cde59e2765",
+      "sha256": "69d8354093f7d893aca91d4caa0c09e0f807a5e260ec11e4e8123b7e3140632b",
+      "bytes": 2305287
+    },
+    {
+      "path": "reports/m2/stage48-oracle-publication.json",
+      "gitBlob": "533be7ab3a71559e57e9db04491f0a797c03f10e",
+      "sha256": "61c4f1c8ceac58d26a138bba6d83aa7875e405d738c94fcf25dad4d2869d2838",
+      "bytes": 4736
+    },
+    {
+      "path": "reports/m2/stage48-oracle-review.json",
+      "gitBlob": "d6372826104155dec9a0b20d698c82c88f721943",
+      "sha256": "679638c805a969cf094c57ff5ca65b1affc5907f469d92e389a1788284c8436b",
+      "bytes": 3736
+    },
+    {
+      "path": "reports/m2/stage48-oracle-summary.json",
+      "gitBlob": "e4bb32dc8d4ad747cda001c814cc006526429ede",
+      "sha256": "adf2cb38b388a6fc69a2303416b00492992eed3c141049fc7ef93c04c8aa649a",
+      "bytes": 8140
+    },
+    {
+      "path": "reports/m2/stage48-platform-captures.json",
+      "gitBlob": "922f991ace1ddf0f9513d97dc480ecca752108ed",
+      "sha256": "28963e060029d6a49601e04a191445618ddb9bd31b5f0e0dd0e366e4f64c2516",
+      "bytes": 2962
+    },
+    {
+      "path": "reports/m2/stage48-platforms-captures.tar.gz",
+      "gitBlob": "51d59a43ac2af4a61d408a1e3f9666e512b54797",
+      "sha256": "7e37a8e9dda39dfeb2dcf453a448962d08759927a36e385ba552c3facb380d63",
+      "bytes": 8098365
+    },
+    {
+      "path": "reports/m2/stage48-root-metadata-publication.json",
+      "gitBlob": "491b7a3962d19e5e4dafde49905e6ecc6859ab65",
+      "sha256": "bb7a75e468cbaf7b03dadc4c74065d94d0168b7711c410b0544d514fcb64d10c",
+      "bytes": 53451
+    },
+    {
+      "path": "reports/m2/stage48-root-metadata.tar.gz",
+      "gitBlob": "66e3bace3c7ad622a33febee5cc759354674927a",
+      "sha256": "a433bf3fff9490ca495c77fcd6c3e328502a819b20bd1ee37b57ccf389008508",
+      "bytes": 2917904
+    },
+    {
+      "path": "reports/m2/stage48-tooling-captures.tar.gz",
+      "gitBlob": "bd03ea6293d482d16bdacdeeecb831cfe7f8749f",
+      "sha256": "f376415889e44c80ab47ae1e8c9b701d13bf9cc6d41deab7874f7e8e085173ef",
+      "bytes": 1041385
+    }
+  ],
+  "actualIndexBlobsRead": 9108,
+  "pinnedGitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "externalProofReuse": {
+    "reportPath": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage48-core-publication-c-review-01/report.json",
+    "reportSha256": "d122065ff306c4b84e53b0c605c0e045fb5c2ac4414b5986c6a637da868e6c7a",
+    "closureSha256": "ac400022e679fa005748ebaeaaa3c6ac5b1595457728531ba1016da1dcf5f8cd",
+    "regularExternalSnapshotFilesNotRewalked": 5573,
+    "externalSymlinksAlreadyVerified": 11
+  },
+  "inventory": {
+    "existingFingerprintChanges": 71,
+    "otherFieldsChanged": false,
+    "eachNewShaMatchesStagedSource": true
+  },
+  "runtimeCargoFixturesUnchanged": true,
+  "allowedConsumerHashes": {
+    "tools/platform/bootstrap-session.mjs": "ad5555374d13755e9904d0b05f6e1808463087acda868a27d74f850358e835f0",
+    "tools/platform/module-policy-session.test.mjs": "b8b1d402214f197556cedf8cc6c273ac7ffab12017289d605d383f302fe9604d"
+  },
+  "gitModeScope": "Git100644/100755 records executable bit; complete Unix modes remain in original C01 source metadata.",
+  "docClaimReview": "Five exact staged doc bodies/diffs reviewed; scoped semantics, tentative future API and required full-policy/full-M2 gaps remain explicit. No new material claim issue.",
+  "originalChanges": [],
+  "finalIndexBinding": {
+    "path": "final-index-binding.json",
+    "sha256": "7620d3cac3c75a14ebe92a09a0959f1346e7f8c164ebeb49311acc9b0eac3c98",
+    "tree": "477cfe7a84f5134526cb610de8eaf212a4bd82f0",
+    "checkpointSha256": "eddf08599a03c648fd2237840068eae383934636137d10a85e13a69fa1d820e0"
+  },
+  "publicationIndexBinding": {
+    "path": "publication-index-bindings.json",
+    "sha256": "50b00198dbf0ff9be39151b13dfa479b8468fa1308cf870047d2dc04fec3f8a6",
+    "checkedReferences": 42
+  },
+  "postAuditMetadataQualification": "Only tree477cfe7a84f5134526cb610de8eaf212a4bd82f0 is audited here; root will bind later source-audit/closeout metadata additions separately."
+}

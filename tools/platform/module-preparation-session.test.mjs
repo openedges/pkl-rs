@@ -134,3 +134,65 @@ test('retained output ownership is still checked after the actual session is fre
   class Borrowed extends Session { free() { for (const view of this.views) view.fill(0); } }
   assert.equal(compareModulePreparationCase(fixture, run(fixture, Borrowed)).checks.ownedResultsStable, false);
 });
+
+const importCheck = {...resolve, kind: 'check-import'};
+function importFixture(providers = []) {
+  return {...fixture, expressions: ['value'], readerPlan: [], readProviders: [], moduleProviders: providers,
+    expected: [expected('success', 'A', 0, 0, [])]};
+}
+class ImportSession extends Session {
+  constructor() { super(); this.programs = [[importCheck]]; this.payload = [65]; }
+}
+
+test('explicit import denial wins over default policy and keeps nullable UTF16 causes', () => {
+  for (const cause of [null, 'denied\ud800']) {
+    const input = importFixture([{request: importCheck,
+      result: {kind: 'failure', errorKind: 'security-manager-exception', message: cause},
+      observableEvents: ['custom denial']}]);
+    class Denied extends ImportSession {
+      completeDefaultModule() { assert.fail('explicit denial must precede default policy'); }
+      rejectModuleImportCheck(token, kind, message, now) {
+        assert.equal(kind, 'security-manager-exception'); assert.equal(message, cause); assert.equal(now, 0);
+        this.finish(token, 'check-import-denied');
+      }
+    }
+    const result = run(input, Denied);
+    assert.equal(result.acquisitionError, null);
+    assert.deepEqual(result.calls[0].observableEvents, ['custom denial']);
+  }
+});
+
+test('explicit import acceptance uses its typed completion without a default fallback', () => {
+  const input = importFixture([{request: importCheck, result: {kind: 'import-checked'}, observableEvents: []}]);
+  class Allowed extends ImportSession {
+    completeDefaultModule() { assert.fail('explicit provider must win'); }
+    completeModuleImportCheck(token, now) { assert.equal(now, 0); this.finish(token, 'check-import'); }
+  }
+  assert.equal(compareModulePreparationCase(input, run(input, Allowed)).passed, true);
+});
+
+test('default import and bundled resolve requests stay raw without inventing observable Java events', () => {
+  const input = importFixture();
+  class Default extends ImportSession {
+    constructor() { super(); this.programs = [[importCheck, resolve]]; }
+    completeDefaultModule(token) { this.finish(token, 'default-module'); return true; }
+  }
+  const result = run(input, Default);
+  assert.equal(compareModulePreparationCase(input, result).passed, true);
+  assert.deepEqual(result.moduleRequests.map(row => row.module.kind), ['check-import', 'resolve']);
+  assert.deepEqual(result.moduleRequests.map(row => row.provider), Array(2).fill('pkl-0.32.0-default'));
+  assert.deepEqual(result.observableEventsByCall, [[]]);
+});
+
+test('unsupported default completion remains an unconfigured request and invalid import failures fail before execution', () => {
+  class Unsupported extends ImportSession { completeDefaultModule() { return false; } }
+  const result = run(importFixture(), Unsupported);
+  assert.match(result.acquisitionError.message, /unconfigured exact module/);
+  assert.equal(result.calls.length, 0);
+  assert.equal(result.moduleRequests.length, 1);
+  for (const errorKind of ['not-found', 'io']) {
+    const input = importFixture([{request: importCheck,
+      result: {kind: 'failure', errorKind, message: ''}, observableEvents: []}]);
+    assert.throws(() => run(input, ImportSession), /invalid import-check failure provenance/);
+  }
+});

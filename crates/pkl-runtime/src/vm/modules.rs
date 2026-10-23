@@ -95,9 +95,20 @@ pub(super) enum CachedModule {
 
 pub(super) struct ModuleRun {
     pub spec: ImportSpec,
+    site: (ExecutableOwnerId, usize, usize),
+    phase: ModulePhase,
+    bundled: bool,
     pub resolved: Option<ResolvedModule>,
     pub receiver: Option<ObjectId>,
     pub initializing: bool,
+}
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum ModulePhase {
+    ImportCheck,
+    Resolve,
+    Source,
+    Initializer,
 }
 
 impl Vm {
@@ -123,12 +134,11 @@ impl Vm {
     }
 
     pub(super) fn begin_import(&mut self, spec: ImportSpec) -> Result<(), RuntimeError> {
-        if self.import_stdlib(&spec.absolute_uri)? {
-            return Ok(());
-        }
-        if let Some(cached) = self.modules_original.get(&spec.original_uri).cloned() {
-            let value = self.module_cached(cached)?;
-            self.stack.push(value);
+        let owner = self.current_executable()?;
+        let frame = self.frames.last().expect("import frame");
+        let site = (frame.block, frame.pc - 1);
+        if let Some(receiver) = self.heap.imported_module(owner, site)? {
+            self.stack.push(Value::Object(receiver));
             return Ok(());
         }
         let importer = self
@@ -142,18 +152,104 @@ impl Vm {
                     "Module imports require a registered declaration ModuleKey.",
                 )
             })?;
-        let request = ModuleRequestKind::Resolve {
+        let request = ModuleRequestKind::CheckImport {
             importer,
             import_uri: spec.absolute_uri.clone(),
-            original_uri: spec.original_uri.clone(),
         };
         self.frames.last_mut().expect("import frame").module_load = Some(ModuleRun {
+            site: (owner, site.0, site.1),
+            phase: ModulePhase::ImportCheck,
+            bundled: crate::modules::stdlib_kind(&spec.absolute_uri).is_some(),
             spec,
             resolved: None,
             receiver: None,
             initializing: false,
         });
         self.wait_module(request)
+    }
+
+    fn checked_import(
+        &mut self,
+        result: Result<(), crate::modules::ModuleHostError>,
+    ) -> Result<(), RuntimeError> {
+        let run = self
+            .frames
+            .last()
+            .and_then(|frame| frame.module_load.as_ref())
+            .ok_or_else(|| invalid("missing import admission continuation"))?;
+        if run.phase != ModulePhase::ImportCheck {
+            return Err(invalid("unexpected import admission phase"));
+        }
+        result.map_err(|error| error.into_runtime(&run.spec.absolute_uri))?;
+        let spec = run.spec.clone();
+        match crate::modules::stdlib_kind(&spec.absolute_uri) {
+            Some(crate::modules::StdlibKind::Missing) => {
+                return Err(self.stdlib_source(&spec.absolute_uri).unwrap_err());
+            }
+            Some(crate::modules::StdlibKind::Singleton(canonical)) => {
+                if let Some(cached) = self.modules_original.get(canonical).cloned() {
+                    let value = self.module_cached(cached)?;
+                    return self.finish_import(value);
+                }
+                return self.initialize_bundled(ResolvedModule {
+                    original_uri: canonical.into(),
+                    resolved_uri: canonical.into(),
+                    source_uri: canonical.into(),
+                });
+            }
+            _ => {}
+        }
+        if let Some(cached) = self.modules_original.get(&spec.original_uri).cloned() {
+            let value = self.module_cached(cached)?;
+            return self.finish_import(value);
+        }
+        let importer = self.program.units[spec.unit.0 as usize]
+            .identity
+            .clone()
+            .ok_or_else(|| invalid("import identity disappeared"))?;
+        self.frames
+            .last_mut()
+            .unwrap()
+            .module_load
+            .as_mut()
+            .unwrap()
+            .phase = ModulePhase::Resolve;
+        self.wait_module(ModuleRequestKind::Resolve {
+            importer,
+            import_uri: spec.absolute_uri,
+            original_uri: spec.original_uri,
+        })
+    }
+
+    fn finish_import(&mut self, value: Value) -> Result<(), RuntimeError> {
+        let receiver = value.as_object()?;
+        let run = self
+            .frames
+            .last_mut()
+            .and_then(|frame| frame.module_load.take())
+            .ok_or_else(|| invalid("missing import result continuation"))?;
+        self.heap
+            .publish_imported_module(run.site.0, (run.site.1, run.site.2), receiver)?;
+        self.stack.push(value);
+        self.state = State::Running;
+        Ok(())
+    }
+
+    fn initialize_bundled(&mut self, resolved: ResolvedModule) -> Result<(), RuntimeError> {
+        let receiver = self.heap.allocate(Object::default());
+        let run = self
+            .frames
+            .last_mut()
+            .and_then(|frame| frame.module_load.as_mut())
+            .ok_or_else(|| invalid("missing bundled import continuation"))?;
+        run.resolved = Some(resolved.clone());
+        run.receiver = Some(receiver);
+        run.initializing = true;
+        run.phase = ModulePhase::Initializer;
+        let entry = self.stdlib_entry(&resolved.original_uri)?;
+        self.state = State::Running;
+        self.push_module_initializer(entry, Some(receiver));
+        Ok(())
     }
 
     pub(super) fn wait_module(&mut self, kind: ModuleRequestKind) -> Result<(), RuntimeError> {
@@ -177,6 +273,9 @@ impl Vm {
             || !matches!(
                 (&request.kind, &completion),
                 (
+                    ModuleRequestKind::CheckImport { .. },
+                    ModuleCompletion::ImportChecked(_)
+                ) | (
                     ModuleRequestKind::Capabilities { .. },
                     ModuleCompletion::Capabilities(_)
                 ) | (
@@ -192,6 +291,33 @@ impl Vm {
             )
         {
             return Err(stale_module());
+        }
+        if matches!(
+            &completion,
+            ModuleCompletion::ImportChecked(Err(
+                crate::modules::ModuleHostError::NotFound | crate::modules::ModuleHostError::Io(_)
+            ))
+        ) {
+            return Err(invalid(
+                "Import admission does not accept module lookup or I/O failures.",
+            ));
+        }
+        if let (
+            ModuleRequestKind::Resolve {
+                import_uri,
+                original_uri,
+                ..
+            },
+            ModuleCompletion::Resolved(Ok(resolved)),
+        ) = (&request.kind, &completion)
+            && crate::modules::stdlib_kind(import_uri) == Some(crate::modules::StdlibKind::Cached)
+            && (resolved.original_uri != *original_uri
+                || resolved.resolved_uri != *import_uri
+                || resolved.source_uri != *import_uri)
+        {
+            return Err(invalid(
+                "Bundled module resolution must retain its pinned key and source identity.",
+            ));
         }
         if matches!(
             &completion,
@@ -216,6 +342,7 @@ impl Vm {
             ));
         }
         let result = match completion {
+            ModuleCompletion::ImportChecked(result) => self.checked_import(result),
             ModuleCompletion::Capabilities(result) => self.resolved_capabilities(result),
             ModuleCompletion::HasElement(result) => self.resolved_element(result),
             ModuleCompletion::Resolved(result) => self.resolved_module(result),
@@ -242,16 +369,18 @@ impl Vm {
         }
         if let Some(cached) = self.modules_resolved.get(&resolved.resolved_uri).cloned() {
             let value = self.module_cached(cached)?;
-            self.frames.last_mut().unwrap().module_load = None;
-            self.stack.push(value);
-            self.state = State::Running;
-            return Ok(());
+            // A resolved-key hit does not seed the original alias cache.
+            return self.finish_import(value);
+        }
+        if run.bundled {
+            return self.initialize_bundled(resolved);
         }
         // VmTyped exists before source I/O but is not cache-visible until that
         // source succeeds. A callback can independently load the same key.
         let receiver = self.heap.allocate(Object::default());
         run.receiver = Some(receiver);
         run.resolved = Some(resolved.clone());
+        run.phase = ModulePhase::Source;
         self.wait_module(ModuleRequestKind::LoadSource { resolved })
     }
 
@@ -270,6 +399,7 @@ impl Vm {
             .ok_or_else(|| invalid("missing resolved key"))?;
         // From this boundary onward failure is cached, including source errors.
         run.initializing = true;
+        run.phase = ModulePhase::Initializer;
         let input = result.map_err(|error| error.into_runtime(&resolved.original_uri))?;
         let receiver = run
             .receiver
@@ -374,7 +504,7 @@ impl Vm {
             .last_mut()
             .and_then(|frame| frame.module_load.take())
             .ok_or_else(|| invalid("missing module continuation"))?;
-        if !run.initializing {
+        if !run.initializing || run.phase != ModulePhase::Initializer {
             return Err(invalid(
                 "module continuation resumed before Host completion",
             ));
@@ -383,6 +513,12 @@ impl Vm {
         if self.stack.last().and_then(Value::heap_id) != run.receiver {
             return Err(invalid("module initializer result mismatch"));
         }
+        self.heap.publish_imported_module(
+            run.site.0,
+            (run.site.1, run.site.2),
+            run.receiver
+                .ok_or_else(|| invalid("missing initialized module"))?,
+        )?;
         Ok(())
     }
 }

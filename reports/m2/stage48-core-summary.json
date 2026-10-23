@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "status": "proposal-not-published",
+  "created_utc": "2026-10-23T17:00:49.706319+00:00",
+  "candidate_release": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-implementation-01/admission-candidate-build-01/release.json",
+  "candidate_release_sha256": "04881b69a3ec7e063dbe1cf594e7ddbfb358854fc17bca8f29e21d3f3c179dc0",
+  "source_count": 53236,
+  "source_links": 11,
+  "source_versions": 53304,
+  "git_bound_versions": 51754,
+  "source_blobs": 201,
+  "historical_hash_only": [
+    {
+      "path": "crates/pkl-runtime/src/vm/modules.rs",
+      "sha256": "fc848f8d47df98b6934ea7222125345df552eeeb8fadee6c8a9dffa29d70f3a1"
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+      "sha256": "a2f660a66be5f5d2513ee8a46eb4201c11b5a9fe377827093987859c67ee9bbe"
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_module_admission.rs",
+      "sha256": "070eea73b0302e158aa784a92b876779dc683f414b7b2a75b8b6170becf92153"
+    },
+    {
+      "path": "crates/pkl-wasm/src/lib.rs",
+      "sha256": "31852d6ef132c14c0d2ec78aff8e0ac7fb393c33f8f4a3dc53d92a5734427232"
+    }
+  ],
+  "check_exit_counts": {
+    "0": 13,
+    "101": 15
+  },
+  "qualifications": [
+    "No new evaluation or source/Git edits. Raw failures and unstable/setup/compiler observations retain original exit status.",
+    "Earlier Rust checks capture crates/.cargo plus four Cargo/reference controls. C01 build separately records full53236files/11symlinks with bytes/modes before/after; do not relabel narrow earlier captures whole-tree observations.",
+    "Successful actual default Rust checks and focused15admission/cycle+fixed3/ref4/diagnostic6 checks are development evidence, not fullJava policy/API/M2/performance completion.",
+    "Heap four-value attribution is source-derived(module,twoannotations,Accessclass), not an object-ID dump; unchanged12/12/15 and exactdescriptor/count/lifecycle assertions passed. No stack/poll/heap limit enlargement.",
+    "The policy comparison is independently owned by B: actual440rawpass/212SPIunexecuted/fullLifecycle0of52. No Boracle/acquisition payload is duplicated in this core proposal.",
+    "Bootstrap readback included here compares legacyStage48C01 observer with Stage45:194priorpasses preserved,+80pass,144reflectUnsupported/182mismatch remain. LegacyrespondString bypasses typedresourcecache; roottypedobserver02 is separate and intentionallyexcluded.",
+    "Customfactory/key-kind/isCached, primary/repl policy lifecycle, eagerclausefactoryselection, completeURIidentity, importglob and wholeM2 remain mandatoryunfinished."
+  ],
+  "separate_evidence": [
+    "B actualJava/nativepolicy packages",
+    "root/C actualplatform + typedbootstrap02",
+    "previously committed Stage47archives"
+  ]
+}

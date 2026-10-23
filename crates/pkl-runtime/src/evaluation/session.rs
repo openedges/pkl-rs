@@ -639,6 +639,14 @@ impl SourceSession {
     ) -> Result<(), RuntimeError> {
         self.host.complete_module(token, completion, now_ms)
     }
+
+    pub fn complete_default_module(
+        &mut self,
+        token: &str,
+        now_ms: u64,
+    ) -> Result<bool, RuntimeError> {
+        self.host.complete_default_module(token, now_ms)
+    }
     pub fn drain_cancelled_modules(&mut self) -> Vec<String> {
         self.host.drain_cancelled_modules()
     }

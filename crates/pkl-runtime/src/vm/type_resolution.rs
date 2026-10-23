@@ -9,6 +9,9 @@ pub(super) struct TypeRecipe {
     pub span: Span,
     pub argument_spans: Vec<Span>,
     pub builtin: Option<Result<TypeCheck, RuntimeError>>,
+    /// The specialized external type checker follows this import-only guard.
+    /// It forces the actual lazy import member without replacing type metadata.
+    pub import_guard: bool,
 }
 
 #[derive(Clone, Debug)]
@@ -637,6 +640,16 @@ impl Vm {
                 let module = self.pop()?.as_object()?;
                 run.imported = Some(module);
                 let recipe = &self.program.type_recipes[run.need.recipe];
+                if recipe.import_guard {
+                    self.resolved_declarations.insert(
+                        (run.need.recipe, run.need.owner),
+                        DeclarationValue::Builtin(TypeCheck::Unknown),
+                    );
+                    if run.retry_instruction {
+                        self.frames.last_mut().expect("type frame").pc -= 1;
+                    }
+                    return Ok(());
+                }
                 let name = recipe
                     .path
                     .get(1)
@@ -708,6 +721,7 @@ impl Compiler<'_> {
                     span,
                     argument_spans: Vec::new(),
                     builtin: None,
+                    import_guard: false,
                 });
                 recipe
             });
@@ -752,10 +766,20 @@ impl Compiler<'_> {
                     span: ty.span,
                     argument_spans: actuals.iter().map(|argument| argument.span).collect(),
                     builtin: None,
+                    import_guard: false,
                 });
                 id
             });
         TypeCheck::Declared { recipe, arguments }
+    }
+
+    pub(super) fn imported_type_guard(&mut self, ty: &crate::syntax::Type) -> TypeCheck {
+        let declared = self.declared_type(ty, Vec::new());
+        let TypeCheck::Declared { recipe, .. } = &declared else {
+            unreachable!()
+        };
+        self.program.type_recipes[*recipe].import_guard = true;
+        declared
     }
 }
 
@@ -871,6 +895,7 @@ mod tests {
                     span: Span::new(0, 1),
                     argument_spans: Vec::new(),
                     builtin: None,
+                    import_guard: false,
                 });
                 let mut vm = Vm::new(Arc::new(program));
                 let owner = vm.heap.allocate(Object {

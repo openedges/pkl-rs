@@ -1,0 +1,48 @@
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl resource=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl
+policy-resolve-module repl:text
+outer-0 success
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl -> pkl:json
+policy-resolve-module pkl:json
+actual-module-denied pkl:json
+outer-1 error org.pkl.core.PklException
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl -> pkl:base
+outer-2 success
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl -> pkl:ref
+outer-3 success
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl -> pkl:test
+outer-4 success
+system-gc-request
+policy-resolve-module repl:text
+outer-5 success
+policy-resolve-module repl:text
+outer-6 success
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl resource=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl
+policy-resolve-module repl:text
+outer-0 success
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl -> pkl:json
+policy-resolve-module pkl:json
+actual-module-denied pkl:json
+outer-1 error org.pkl.core.PklException
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl -> pkl:base
+outer-2 success
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl -> pkl:ref
+outer-3 success
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl -> pkl:test
+outer-4 success
+system-gc-request
+policy-resolve-module repl:text
+outer-5 success
+policy-resolve-module repl:text
+outer-6 success

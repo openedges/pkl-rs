@@ -1,4 +1,5 @@
 // Thin browser-safe SourceSession transport; no ModuleInfo/constraint/version semantics.
+import {completeDefaultModuleRequest} from './module-policy-session.mjs';
 function units(value) {
   if (!(value instanceof Uint16Array)) throw Error('expected Uint16Array');
   return Array.from(value);
@@ -9,7 +10,7 @@ function textUnits(value) {
 }
 export function runModuleInfoCase(api, fixture) {
   let session,polls=0;
-  const retained=[],result={id:fixture.id,repeat:fixture.repeat,scope:fixture.comparisonScope,calls:[],constructorError:null,acquisitionError:null,architecture:{collections:0,terminalSlots:null,ownedResultsStable:true}};
+  const retained=[],result={id:fixture.id,repeat:fixture.repeat,scope:fixture.comparisonScope,calls:[],moduleRequests:[],modulePolicy:'pkl-0.32.0-default',constructorError:null,acquisitionError:null,architecture:{collections:0,terminalSlots:null,ownedResultsStable:true}};
   try {
     try {session=api.SourceSession.forExpressions(fixture.source,fixture.moduleUri,fixture.moduleName,fixture.expressions,'compact',false,false,true);}
     catch(error) {result.constructorError={isError:error instanceof Error,messageUnits:textUnits(error.message)};return result;}
@@ -19,6 +20,11 @@ export function runModuleInfoCase(api, fixture) {
         if(++polls>1000000)throw Error('ModuleInfo poll bound exceeded');
         const event=session.poll(0,1);session.collect();result.architecture.collections++;
         if(event.kind==='yield')continue;
+        if(event.kind==='module-request'){
+          result.moduleRequests.push({callIndex:index,token:event.token,module:{...event.module}});
+          if(!completeDefaultModuleRequest(session,event))throw Error('unsupported ModuleInfo module request');
+          continue;
+        }
         if(!['value','error'].includes(event.kind))throw Error('unexpected ModuleInfo event '+event.kind);
         const view=event.kind==='value'?event.value:event.error,data=units(view);
         retained.push({view,data});result.calls.push({prefix:`outer-${index}`,kind:event.kind,units:data,phase:event.phase??null,disposition:event.disposition??null,reason:event.reason??null});

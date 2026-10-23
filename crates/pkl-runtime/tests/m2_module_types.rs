@@ -49,6 +49,9 @@ fn evaluate_original(name: &str, expected: &[u8]) -> Vec<String> {
         },
         &ModuleEvalOptions::default(),
         |request| match &request.kind {
+            ModuleRequestKind::CheckImport { .. } => {
+                pkl_runtime::modules::default_completion(request).expect("default import policy")
+            }
             ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
                 panic!("unexpected ModuleKey preparation in this fixture")
             }

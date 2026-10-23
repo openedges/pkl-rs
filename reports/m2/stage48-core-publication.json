@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "status": "proposal-integrity-verified-not-published",
+  "packaging": {
+    "exit_code": 0,
+    "started_utc": "2026-10-23T17:03:47.096564+00:00",
+    "finished_utc": "2026-10-23T17:03:59.447910+00:00",
+    "archive_count": 4,
+    "create_commands": 4,
+    "separate_verify_commands": 4,
+    "total_bytes": 31101353,
+    "full_member_readback": true,
+    "original_selected_inputs_unchanged": true,
+    "archive_index_sha256": "eca89d43c9b6f59c2b977b4070bef0ecc643a8d7d8434d05cb027b19b7deb00c"
+  },
+  "environment": {
+    "started_utc": "2026-10-23T17:03:47.096564+00:00",
+    "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48",
+    "evidence_tool_sha256": "b3224aa21497c955c865e143faefb8ebdc9c70ea48983eb678b5972be17fe62e",
+    "input_list_sha256": "f0f93696c8f1409eff6a9a96373db78ec3885e0c1d9eed63ea67e7445add3d7d",
+    "no_new_evaluation": true
+  },
+  "outer_terminal": {
+    "tool_session_id": 65460,
+    "actual_exit_code": 0,
+    "observed_utc": "2026-10-23T17:07:24.109747+00:00",
+    "tool_chunk_id": "358f96",
+    "qualification": "Actual exec session was polled and reported exit_code 0. No retry or evaluation was performed."
+  },
+  "stdout": {
+    "sha256": "2842e6bd619d77c32de41df88c48126982da637e25f181bc863d1fffec844c68",
+    "base64": "YXJ0aWZhY3RzLWNyZWF0ZSAwCmFydGlmYWN0cy12ZXJpZnkgMApjaGVja3MtaGlzdG9yeS1jcmVhdGUgMApjaGVja3MtaGlzdG9yeS12ZXJpZnkgMApyZXZpZXdzLWFuYWx5c2lzLWNyZWF0ZSAwCnJldmlld3MtYW5hbHlzaXMtdmVyaWZ5IDAKc291cmNlLWJpbmRpbmctY3JlYXRlIDAKc291cmNlLWJpbmRpbmctdmVyaWZ5IDAKeyJleGl0X2NvZGUiOiAwLCAic3RhcnRlZF91dGMiOiAiMjAyNi0xMC0yM1QxNzowMzo0Ny4wOTY1NjQrMDA6MDAiLCAiZmluaXNoZWRfdXRjIjogIjIwMjYtMTAtMjNUMTc6MDM6NTkuNDQ3OTEwKzAwOjAwIiwgImFyY2hpdmVfY291bnQiOiA0LCAiY3JlYXRlX2NvbW1hbmRzIjogNCwgInNlcGFyYXRlX3ZlcmlmeV9jb21tYW5kcyI6IDQsICJ0b3RhbF9ieXRlcyI6IDMxMTAxMzUzLCAiZnVsbF9tZW1iZXJfcmVhZGJhY2siOiB0cnVlLCAib3JpZ2luYWxfc2VsZWN0ZWRfaW5wdXRzX3VuY2hhbmdlZCI6IHRydWUsICJhcmNoaXZlX2luZGV4X3NoYTI1NiI6ICJlY2E4OWQ0M2M5YjZmNTljMmI5NzdiNDA3MGJlZjBlY2M2NDNhOGQ3ZDg0MzRkMDVjYjAyN2IxOWI3ZGViMDBjIn0K"
+  },
+  "stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "base64": ""
+  },
+  "prepare_script_sha256": "d0686ca00e833eec5f571c0cbeea464470619fd812240734907260b6ad661d76",
+  "packaging_script_sha256": "80c7d6fd26eb14c2546a3ff28cc7e1da062df06b792340087bce5c9ff9fbd058",
+  "archive_index_sha256": "eca89d43c9b6f59c2b977b4070bef0ecc643a8d7d8434d05cb027b19b7deb00c",
+  "summary_sha256": "b1f3dad7d7f6e1333d066ff407ff49a10e575b09638fa4b7271a00db354f4536",
+  "qualification": "This receipt was written after the actual packaging process terminal. It is outside the archives and does not hash itself."
+}

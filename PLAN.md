@@ -830,7 +830,61 @@ Java의 generator·명시적 tagged instance 원본 3개·세션 12개·240회 �
 
 최종 후보의 입력 51,745개를 고정 Git blob·보존 소스·별도 archive에 연결했습니다. 초기 중간 후보의 소스 버전 일곱 개는 해시만 남아 있어 완전한 소스 재구성을 주장하지 않으며, 최종 C06 입력의 누락은 없습니다. 이전 stack·heap·clippy·취득·게시 도구 실패를 원본과 함께 보존합니다. 검증 뒤 문서·게시 기록 변경은 고정 런타임 입력과 구분합니다.
 
-이 구현 체크포인트를 커밋·푸시한 뒤 깨끗한 고정 커밋에서 전체 선택·순차 evaluator 회귀를 취득합니다. 원래 Stage 46의 3,650/3,664 결과를 최신 후보의 전체 결과로 재사용하지 않습니다. 표준 모듈 import-edge trust·resolve·캐시 정책과 나머지 identity·의미론 보완을 계속 진행하며 **M2 전체와 성능·릴리스 조건은 미완료**입니다.
+이 구현 체크포인트를 `0e13a58`에 커밋·푸시하고 원격 `main`과의 일치를 확인했습니다. 깨끗한 고정 커밋에서 전체 선택·순차 evaluator 회귀를 취득 중입니다. expression 취득 worker를 이전 두 개에서 네 개로 변경했으며 module 명령은 순차 실행합니다. 이 변경은 취득 동시성에 관한 것이고 성능 비교가 아닙니다. 원래 Stage 46의 3,650/3,664 결과를 최신 후보의 전체 결과로 재사용하지 않습니다. 표준 모듈 import-edge trust·resolve·캐시 정책과 나머지 identity·의미론 보완을 계속 진행하며 **M2 전체와 성능·릴리스 조건은 미완료**입니다.
+
+### Stage 48 — 표준 모듈 접근 검사와 캐시 경계
+
+Stage 47 회귀 작업 공간을 고정한 채 `0e13a58`의 별도 worktree에서 구현합니다. 공통 VM·Host·native·Wasm·N-API는 `gpt-6-astra / xhigh`, Java 정책 관찰과 독립 의미론 검토는 각각 `gpt-6.1-sol / high`에 배정합니다. 주 에이전트는 portable provider·통합 회귀·문서·커밋을 담당합니다.
+
+실행 시 import site의 성공 cache, resolved importer에 대한 edge 검사, key 선택, singleton 또는 URI cache, key resolve, source·초기화 순서를 연결합니다. singleton은 key resolve만 우회하며 edge 검사는 유지합니다. implicit base bootstrap에 가짜 import 요청을 만들지 않습니다. 별도로 unused import 선언의 AST factory preflight, resolved alias의 original cache 미등록, uncached key의 조회 우회와 게시, 순환 중 반환한 부분 receiver와 site cache, 기존 HasElement 보안 예외 경로를 보존합니다.
+
+새 typed 요청의 완료·거부·기본 정책은 공통 Rust에서 처리합니다. portable 검증 provider는 명시적 fixture 거부를 먼저 적용하고 기본 정책에 위임한 실제 요청을 별도로 기록합니다. 기존 Java fixture·이벤트를 변경하거나 primary/repl 정책 이벤트를 합성하지 않습니다. 정책 84회와 새 same-site/different-site·거부/재시도·신뢰도·순환 control, 잘못된 phase/token·GC·취소·종료를 검증합니다. 전체 factory·uncached key·URI 동등성·primary/repl·import* 의무와 실제 플랫폼·전체 회귀는 독립적으로 구현·검증하며, 첫 연결 성공으로 전체 정책 호환성을 완료했다고 표시하지 않습니다.
+
+### Stage 48 — C01 검증과 provider 보완
+
+공통 import-site cache·typed admission과 Ref 타입의 실제 import 경로를 구현했습니다.
+[모듈 접근 계약](docs/m2-module-admission.md)에 기본 정책 위임과 남은 factory·primary/repl
+경계를 기록했습니다. C01은 소스 53,236개와 symlink 11개, native artifact 여섯 개를
+고정했습니다. 필수 Rust 검사 다섯 개가 통과했으며, 수명주기 단언 다섯 곳의 교정은
+독립 소스 검토와 새 실제 회귀로 확인했습니다. 네 bootstrap 객체의 개별 이름은 소스
+해석이고 object-ID dump를 취득한 것은 아닙니다. 기존 value 기대치 12/12/15와
+취소·재진입·종료 검사는 유지했습니다.
+
+Native 정책 비교는 전체 결과·오류 UTF-16 및 Java UTF-8 440회가 일치했습니다.
+Java 총 652회 중 일반 SPI 경로 212회는 미실행이며, primary/repl 등의 전체 이벤트와
+카운터 gate는 52개 세션 모두 실패입니다. API 일치를 전체 lifecycle 호환성으로
+확대하지 않습니다. 의도한 분기에 도달하지 못한 기존 관찰도 별도로 유지합니다.
+
+실제 Node·Chromium에서 환경별 renderer 860회, Resource 1,008회, 모듈 준비 252회가
+일치했습니다. ModuleInfo의 일반 관찰 156회와 보안 거부 10회도 일치했지만 ModuleInfo의
+Java 내부 경계 12회와 공유 evaluator 후속 56회는 별도 미완료 범위입니다. 공통 primitive는
+6,078회 플랫폼 간 일치, Java 대비 6,076회 일치와 기존 정규식 실패 두 개를 유지합니다.
+모듈 loader·상속의 출력은 일치하지만, 새 `CheckImport` 요청이 과거 resolve/source만
+기록한 fixture 카운터에 추가되어 기존 엄격한 카운터 비교는 실패합니다. 요청을 제거하거나
+기대 카운터를 다시 생성하지 않고 비교 범위를 독립 검토합니다.
+
+Bootstrap의 이전 provider는 텍스트 응답에 legacy `respondString`을 사용했습니다.
+기존 취득의 환경별 274회 일치·144회 미지원·182회 불일치를 보존하고, typed
+`completeReadText`로 같은 Resource 캐시를 거치는 후속 취득을 별도로 실행했습니다.
+같은 Java 입력·C01 artifact에서 환경별 402회 일치·144회 미지원·54회 불일치이며
+엄격한 비교는 계속 실패입니다. 이 후속 변경은 provider와 회귀 검사에 한정됩니다.
+
+정책 84회 영구 fixture의 검증·변조 회귀 여덟 개와 별도 위치의 독립 검증은 통과했습니다.
+같은 C01의 실제 Node·Chromium에서도 각각 정책 API 84회의 원시 결과가 일치했지만,
+전체 이벤트·카운터 비교는 환경별 12개 세션 모두 실패입니다. 독립 감사와 증거 게시·커밋을
+이어갑니다. Stage 47 전체
+선택 회귀는 별도 고정 커밋에서 실행 중이며, 그 결과를 C01 결과로 재사용하지 않습니다.
+전체 M2와 성능·제품 API 완료 조건은 열려 있습니다.
+
+후속 구현은 현재 미실행인 Java SPI 212회와 원래 이벤트를 기준으로 진행합니다.
+먼저 URI와 별개의 key 종류·opaque key handle을 갖는 `SelectKey`와 `isCached` 조회를
+분리하여 기존 SPI 132회를 연결합니다. 이어 import clause의 사전 factory 선택과
+이름 추론을 지연 가능한 준비 단계로 바꾸어 나머지 80회를 연결합니다. uncached key는
+조회만 우회하고 두 cache에 쓰는 Java 규칙을 유지해야 합니다. 이후 실제 primary와
+query/repl lifecycle 진입점을 공통 엔진에 구현하며, supplied-source 경로에 가짜
+callback을 삽입하지 않습니다. 각 단계에서 기존 raw 결과·오류 순서, GC·취소·재진입과
+실제 portable 동작을 다시 검증합니다. 새 인터페이스 이름은 설계안이며 아직 구현한
+API로 문서화하지 않습니다.
 
 ## M3 — 표준 라이브러리와 출력
 

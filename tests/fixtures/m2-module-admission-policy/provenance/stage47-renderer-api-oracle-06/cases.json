@@ -1,0 +1,256 @@
+[
+  {
+    "id": "property-path-class-null-transformer",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/property-path-class-null-transformer",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/property-path-class-null-transformer/main.pkl",
+    "mode": "allow",
+    "operations": [
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "classIdentity"
+      ],
+      [
+        "main.pkl",
+        "plain.renderDocument(value)"
+      ],
+      [
+        "main.pkl",
+        "r.renderDocument(value)"
+      ],
+      [
+        "main.pkl",
+        "omit.renderDocument(value)"
+      ],
+      [
+        "main.pkl",
+        "transformed.renderDocument(value)"
+      ],
+      [
+        "main.pkl",
+        "p.renderDocument(value)"
+      ],
+      [
+        "main.pkl",
+        "rNested.renderDocument(value)"
+      ],
+      "GC",
+      [
+        "main.pkl",
+        "r.renderDocument(value)"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ]
+    ],
+    "scope": "Authored Pkl0.32 continuous renderer observation. Intent sentinel audited independently; no Rust expected values."
+  },
+  {
+    "id": "collection-join-force-order",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/collection-join-force-order",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/collection-join-force-order/main.pkl",
+    "mode": "allow",
+    "operations": [
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "List().join(\",\")"
+      ],
+      [
+        "main.pkl",
+        "Set().join(\",\")"
+      ],
+      [
+        "main.pkl",
+        "List(\"one\").join(\",\")"
+      ],
+      [
+        "main.pkl",
+        "List(3, 1, 3).join(\"|\")"
+      ],
+      [
+        "main.pkl",
+        "Set(3, 1, 3).join(\"|\")"
+      ],
+      [
+        "main.pkl",
+        "List(\"a\", \"b\").join(read(\"res:/join-separator\"))"
+      ],
+      [
+        "main.pkl",
+        "List(1, 2).join(3)"
+      ],
+      [
+        "main.pkl",
+        "List(1).join()"
+      ],
+      [
+        "main.pkl",
+        "List(1).join(\"a\", throw(\"later-argument\"))"
+      ],
+      [
+        "main.pkl",
+        "nested.join(\"|\")"
+      ],
+      [
+        "main.pkl",
+        "list.join(\"|\")"
+      ],
+      [
+        "main.pkl",
+        "undefinedList.join(\"|\")"
+      ],
+      [
+        "main.pkl",
+        "badList.join(\"|\")"
+      ],
+      [
+        "main.pkl",
+        "overrideList.join(\"|\")"
+      ],
+      [
+        "main.pkl",
+        "List(\"AQIDBAUGBwgJCg==\".base64DecodedBytes).join(\"|\")"
+      ],
+      [
+        "main.pkl",
+        "List(Map(\"x\", thing)).join(\"|\")"
+      ],
+      [
+        "main.pkl",
+        "List(Pair(thing, 1)).join(\"|\")"
+      ],
+      "GC",
+      [
+        "main.pkl",
+        "list.join(\"|\")"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ]
+    ],
+    "scope": "Authored Pkl0.32 continuous renderer observation. Intent sentinel audited independently; no Rust expected values."
+  },
+  {
+    "id": "stdlib-admission-allow",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-allow",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-allow/main.pkl",
+    "mode": "allow",
+    "operations": [
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "jsonClass"
+      ],
+      [
+        "main.pkl",
+        "baseClass"
+      ],
+      [
+        "main.pkl",
+        "refClass"
+      ],
+      [
+        "main.pkl",
+        "testMessage"
+      ],
+      "GC",
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ]
+    ],
+    "scope": "Authored Pkl0.32 continuous renderer observation. Intent sentinel audited independently; no Rust expected values."
+  },
+  {
+    "id": "stdlib-admission-deny-json",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-json/main.pkl",
+    "mode": "deny-json",
+    "operations": [
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "jsonClass"
+      ],
+      [
+        "main.pkl",
+        "baseClass"
+      ],
+      [
+        "main.pkl",
+        "refClass"
+      ],
+      [
+        "main.pkl",
+        "testMessage"
+      ],
+      "GC",
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ]
+    ],
+    "scope": "Authored Pkl0.32 continuous renderer observation. Intent sentinel audited independently; no Rust expected values."
+  },
+  {
+    "id": "stdlib-admission-deny-singletons",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-singletons",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-06/workspace/stdlib-admission-deny-singletons/main.pkl",
+    "mode": "deny-singletons",
+    "operations": [
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "jsonClass"
+      ],
+      [
+        "main.pkl",
+        "baseClass"
+      ],
+      [
+        "main.pkl",
+        "refClass"
+      ],
+      [
+        "main.pkl",
+        "testMessage"
+      ],
+      "GC",
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ]
+    ],
+    "scope": "Authored Pkl0.32 continuous renderer observation. Intent sentinel audited independently; no Rust expected values."
+  }
+]

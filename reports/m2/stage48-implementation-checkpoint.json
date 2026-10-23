@@ -1,0 +1,530 @@
+{
+  "schema": 1,
+  "status": "verified-local-checkpoint-awaiting-commit",
+  "createdUtc": "2026-10-23T17:28:11.674789+00:00",
+  "scope": "Shared import admission, executable-site caching and portable Host provider checkpoint; not complete module-policy/M2 compatibility.",
+  "baseCommit": "0e13a589d43c4cb1d83f41dd1ec416cac1770fc1",
+  "candidate": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-implementation-01/admission-candidate-build-01/release.json",
+    "sha256": "04881b69a3ec7e063dbe1cf594e7ddbfb358854fc17bca8f29e21d3f3c179dc0"
+  },
+  "candidateSourceMapSha256": "9f546b82bd3cfba614c2c0bb1671db14f226466707f99cef3a5ceb5f6dc12a18",
+  "candidateFileCount": 53236,
+  "candidateSymlinkCount": 11,
+  "requiredRustChecks": [
+    {
+      "capture": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-implementation-01/admission-clippy-04",
+      "report_sha256": "554f95cfe192b82f65acf4a6c6245ddbe8a6988ba0e040cdca9cbe9fc29fa773",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "source_stable": true,
+      "source_before_sha256": "e5e88a8ebdff510f6677561a420348f0df8e1f0704c91f9c952a378c5544e6e7",
+      "source_after_sha256": "e5e88a8ebdff510f6677561a420348f0df8e1f0704c91f9c952a378c5544e6e7",
+      "candidate_differences": {
+        "crates/pkl-runtime/tests/m2_fixed_lifecycle.rs": {
+          "captured": "c20b78657456d6af1e2b99b9302ab9f7de304af368d801988e5de5ba4035ec59",
+          "candidate": "e692c509f578e213f5551591fb1816bda7de52ace6f0a3d32b1a7b75820c7551"
+        }
+      },
+      "captured_scope": "explicit crates/.cargo plus Cargo.toml/Cargo.lock/rust-toolchain.toml/references.lock; not a whole-tree pre-run observation"
+    },
+    {
+      "capture": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-implementation-01/admission-workspace-tests-02",
+      "report_sha256": "e796c19d0acfc49a00f163a939ff077afab98b42857f5ec83239e1a1858590e1",
+      "argv": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--no-fail-fast",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "source_stable": true,
+      "source_before_sha256": "e5e88a8ebdff510f6677561a420348f0df8e1f0704c91f9c952a378c5544e6e7",
+      "source_after_sha256": "e5e88a8ebdff510f6677561a420348f0df8e1f0704c91f9c952a378c5544e6e7",
+      "candidate_differences": {
+        "crates/pkl-runtime/tests/m2_fixed_lifecycle.rs": {
+          "captured": "c20b78657456d6af1e2b99b9302ab9f7de304af368d801988e5de5ba4035ec59",
+          "candidate": "e692c509f578e213f5551591fb1816bda7de52ace6f0a3d32b1a7b75820c7551"
+        }
+      },
+      "captured_scope": "explicit crates/.cargo plus Cargo.toml/Cargo.lock/rust-toolchain.toml/references.lock; not a whole-tree pre-run observation"
+    },
+    {
+      "capture": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-implementation-01/admission-fmt-01",
+      "report_sha256": "a688795db123d7a352bb05282d665b4e8ac19a4dfc90ec59b3071e1ba92d59d0",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "source_stable": true,
+      "source_before_sha256": "a66b18ac7e0e00a47514780e73d5a74612c5fc8b03feeaea0b6fe0fae009c09b",
+      "source_after_sha256": "a66b18ac7e0e00a47514780e73d5a74612c5fc8b03feeaea0b6fe0fae009c09b",
+      "candidate_differences": {},
+      "captured_scope": "explicit crates/.cargo plus Cargo.toml/Cargo.lock/rust-toolchain.toml/references.lock; not a whole-tree pre-run observation"
+    },
+    {
+      "capture": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-implementation-01/admission-wasm-check-01",
+      "report_sha256": "4687173d9ea96af3c906e74d1bde46c1b3d4eb17e0ca2d6b9a0d32fab7254d21",
+      "argv": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "source_stable": true,
+      "source_before_sha256": "a66b18ac7e0e00a47514780e73d5a74612c5fc8b03feeaea0b6fe0fae009c09b",
+      "source_after_sha256": "a66b18ac7e0e00a47514780e73d5a74612c5fc8b03feeaea0b6fe0fae009c09b",
+      "candidate_differences": {},
+      "captured_scope": "explicit crates/.cargo plus Cargo.toml/Cargo.lock/rust-toolchain.toml/references.lock; not a whole-tree pre-run observation"
+    },
+    {
+      "capture": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-implementation-01/admission-xtask-01",
+      "report_sha256": "39b619f307ca51c68575a9733b8260d349d2ce2b304028330bcc47604cdc1272",
+      "argv": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "source_stable": true,
+      "source_before_sha256": "a66b18ac7e0e00a47514780e73d5a74612c5fc8b03feeaea0b6fe0fae009c09b",
+      "source_after_sha256": "a66b18ac7e0e00a47514780e73d5a74612c5fc8b03feeaea0b6fe0fae009c09b",
+      "candidate_differences": {},
+      "captured_scope": "explicit crates/.cargo plus Cargo.toml/Cargo.lock/rust-toolchain.toml/references.lock; not a whole-tree pre-run observation"
+    }
+  ],
+  "focusedRegression": {
+    "capture": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-implementation-01/admission-cycle-lifecycle-tests-02",
+    "report_sha256": "2569fbb9dda12ab6657d64e906d63cf48cb6601b76721a44b27897b37b192a25",
+    "argv": [
+      "cargo",
+      "test",
+      "-p",
+      "pkl-runtime",
+      "--test",
+      "m2_module_admission",
+      "--test",
+      "m2_fixed_lifecycle",
+      "--test",
+      "m2_references_lifecycle",
+      "--test",
+      "m2_diagnostics",
+      "--no-fail-fast",
+      "--locked"
+    ],
+    "exit_code": 0,
+    "source_stable": true,
+    "source_before_sha256": "5f55c21317b611bb79d7c4b5f5e08bf7743aad54701ebc6e34f6d6c24c71a30f",
+    "source_after_sha256": "5f55c21317b611bb79d7c4b5f5e08bf7743aad54701ebc6e34f6d6c24c71a30f",
+    "candidate_differences": {
+      "crates/pkl-runtime/tests/m2_fixed_lifecycle.rs": {
+        "captured": "c20b78657456d6af1e2b99b9302ab9f7de304af368d801988e5de5ba4035ec59",
+        "candidate": "e692c509f578e213f5551591fb1816bda7de52ace6f0a3d32b1a7b75820c7551"
+      },
+      "crates/pkl-runtime/tests/m2_guest_catch.rs": {
+        "captured": "88c846572ed6e5bf3e1b55f4f5ad992ff447c419d3d853cdd8da5f6f2934b42e",
+        "candidate": "e1d5c71f8af79b2d80135c3e85c1a67d9449d8c642d15e802a9f43d4a810fe54"
+      },
+      "crates/pkl-runtime/tests/m2_module_inheritance_oracle.rs": {
+        "captured": "fe9563f27cff4358fba2ca52b417e7186d5338fd5041cb7775c0cc7fb46ed731",
+        "candidate": "57521e6da7f30469667df768d88bee77e224570336d0040bb329afeec04de898"
+      },
+      "crates/pkl-runtime/tests/m2_module_loading.rs": {
+        "captured": "3ea29631417bcb060d7dbc4c6a4dd8f1504ef55cb4de8bccd2177d39a163cd85",
+        "candidate": "94fbe5d7babacd269d6654b814f82e6c0133695ec2e43a9489eb8ffd8012293c"
+      },
+      "crates/pkl-runtime/tests/m2_module_types.rs": {
+        "captured": "46a5bdf7b07a0b1b005c0d69b3bcc0ddbae6653838ef1af355d54e9be112f723",
+        "candidate": "b92eb81329806d27a6e4b45b4176044c081ebcc15ceb2e903291af319f356c1d"
+      }
+    },
+    "captured_scope": "explicit crates/.cargo plus Cargo.toml/Cargo.lock/rust-toolchain.toml/references.lock; not a whole-tree pre-run observation"
+  },
+  "nativePolicy": {
+    "rawApiPass": 440,
+    "rawApiMismatchOrUnexecuted": 0,
+    "explicitUnexecutedApiCalls": 212,
+    "fullLifecyclePassSessions": 0,
+    "fullLifecycleFailSessions": 52,
+    "sourceChanges": [],
+    "artifactStable": true,
+    "toolsStable": true,
+    "allProcessesTerminal": true,
+    "selectedRawApiScope": 440
+  },
+  "portablePolicy": {
+    "targets": {
+      "node": {
+        "complete": true,
+        "rawApiCounts": {
+          "pass": 84
+        },
+        "sessions": 12,
+        "fullLifecycleFailedSessions": 12
+      },
+      "browser": {
+        "complete": true,
+        "rawApiCounts": {
+          "pass": 84
+        },
+        "sessions": 12,
+        "fullLifecycleFailedSessions": 12
+      }
+    },
+    "rawApiContractPassed": true,
+    "fullLifecyclePassed": false,
+    "strictExitCode": 1,
+    "infrastructureErrors": [],
+    "browserErrors": [],
+    "changedInputs": []
+  },
+  "platforms": {
+    "renderer": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-c01-platform-control-01/renderer/execution.json",
+        "sha256": "b545aa61d26157991471e1bf8cb4a8e0eec6b5f9d584c8eabaa23a14e266bac7"
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "rawApiCounts": {
+            "pass": 860
+          },
+          "selectedContractPassed": true
+        },
+        "browser": {
+          "complete": true,
+          "rawApiCounts": {
+            "pass": 860
+          },
+          "selectedContractPassed": true
+        }
+      },
+      "infrastructureErrors": [],
+      "browserErrors": []
+    },
+    "resource": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-c01-platform-control-01/resource/execution.json",
+        "sha256": "63d7e7580209c5f38b5da3670de4511d4f08d17548354ca4c4bd0137d95b5ac3"
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "rawApiCounts": {
+            "pass": 1008
+          },
+          "selectedContractPassed": true
+        },
+        "browser": {
+          "complete": true,
+          "rawApiCounts": {
+            "pass": 1008
+          },
+          "selectedContractPassed": true
+        }
+      },
+      "infrastructureErrors": [],
+      "browserErrors": []
+    },
+    "module-preparation": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-c01-platform-control-01/module-preparation/execution.json",
+        "sha256": "569d74abe78027b2855155abea2b3b75d240ea67479fc44eb35c7285b6d03a7d"
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "rawApiCounts": {
+            "pass": 252
+          },
+          "selectedContractPassed": true
+        },
+        "browser": {
+          "complete": true,
+          "rawApiCounts": {
+            "pass": 252
+          },
+          "selectedContractPassed": true
+        }
+      },
+      "infrastructureErrors": [],
+      "browserErrors": []
+    },
+    "moduleinfo": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-c01-platform-control-01/moduleinfo/execution.json",
+        "sha256": "1fdf6ed1351b7ce85a760a8b202940d60b7505fac7f08c0951f32bbb0c4de7cd"
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "counts": {
+            "pass": 156,
+            "java-internal-unsupported-boundary": 12
+          },
+          "unexecutedNativeSharedEvaluatorFollowups": 56
+        },
+        "browser": {
+          "complete": true,
+          "counts": {
+            "pass": 156,
+            "java-internal-unsupported-boundary": 12
+          },
+          "unexecutedNativeSharedEvaluatorFollowups": 56
+        }
+      },
+      "infrastructureErrors": [],
+      "browserErrors": []
+    },
+    "security-denial": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-c01-platform-control-01/security-denial/execution.json",
+        "sha256": "33f9edb66ab873493043a9438384133675604d937eaf50384e0b3dc52642e741"
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "counts": {
+            "pass": 10
+          }
+        },
+        "browser": {
+          "complete": true,
+          "counts": {
+            "pass": 10
+          }
+        }
+      },
+      "infrastructureErrors": [],
+      "browserErrors": []
+    },
+    "guest-catch": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-c01-platform-control-01/guest-catch/execution.json",
+        "sha256": "41893e9be1a96a3f87d8cb4bb3179130bc98c144fb26cba624dd3f06e8ae752b"
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "executions": 42,
+          "statusCounts": {
+            "constructor-boundary-pass": 10,
+            "pass": 24,
+            "terminal-partial-pass": 8
+          }
+        },
+        "browser": {
+          "complete": true,
+          "executions": 42,
+          "statusCounts": {
+            "constructor-boundary-pass": 10,
+            "pass": 24,
+            "terminal-partial-pass": 8
+          }
+        }
+      },
+      "infrastructureErrors": [],
+      "browserErrors": []
+    },
+    "module-loader": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-c01-platform-control-01/module-loader/execution.json",
+        "sha256": "970200d5904cf12a0310ccaf956c6e9495fc756140c52c0adc139d2f081e34d9"
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "executions": 44,
+          "statusCounts": {
+            "pass": 32,
+            "mismatch": 12
+          }
+        },
+        "browser": {
+          "complete": true,
+          "executions": 44,
+          "statusCounts": {
+            "pass": 32,
+            "mismatch": 12
+          }
+        }
+      },
+      "infrastructureErrors": [],
+      "browserErrors": []
+    },
+    "module-inheritance": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-c01-platform-control-01/module-inheritance/execution.json",
+        "sha256": "a0d6bd1429965fe4e57ad284035e0307eb29c51555f71ff837d5e4c0d987b33e"
+      },
+      "targets": {
+        "node": {
+          "complete": true,
+          "executions": 6,
+          "statusCounts": {
+            "mismatch": 6
+          }
+        },
+        "browser": {
+          "complete": true,
+          "executions": 6,
+          "statusCounts": {
+            "mismatch": 6
+          }
+        }
+      },
+      "infrastructureErrors": [],
+      "browserErrors": []
+    }
+  },
+  "primitives": {
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "shared_engine_passed": 6078,
+    "compatibility_status": "fail",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "experiment_contract_status": "pass"
+  },
+  "bootstrap": {
+    "legacy": {
+      "node": {
+        "pass": 274,
+        "unsupported": 144,
+        "mismatch": 182
+      },
+      "browser": {
+        "pass": 274,
+        "unsupported": 144,
+        "mismatch": 182
+      }
+    },
+    "typed": {
+      "node": {
+        "pass": 402,
+        "unsupported": 144,
+        "mismatch": 54
+      },
+      "browser": {
+        "pass": 402,
+        "unsupported": 144,
+        "mismatch": 54
+      }
+    }
+  },
+  "inventory": {
+    "counts": {
+      "cases": 4527,
+      "cases_by_execution": {
+        "ready": 3664,
+        "unimplemented": 823,
+        "unmapped": 40
+      },
+      "requirements": 475,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 31,
+        "specification": 198
+      }
+    },
+    "caseRequirementStatusMappingAndOrderChanges": false,
+    "changedExistingSourceLinkFingerprints": 71,
+    "freshness": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-inventory-refresh-02/report.json",
+      "sha256": "34c97fd0783d05a9007fe4c0b94cd25aa91c7539f4128ace4ea5428a2d091423"
+    }
+  },
+  "fullSelectedRegression": {
+    "Stage48": "not acquired for this checkpoint",
+    "latestPublished": "Stage46:3650/3664; strict full gate failed",
+    "separateStage47": "running from0e13a58; never reused as Stage48 result"
+  },
+  "postBuildChanges": [
+    "PLAN.md",
+    "TESTING.md",
+    "docs/architecture.md",
+    "docs/m2-module-admission.md",
+    "compatibility/m2-language.json (existing source-link fingerprints only)",
+    "tools/platform/bootstrap-session.mjs (typed Resource completion)",
+    "tools/platform/module-policy-session.test.mjs (typed completion regression)",
+    "reports/m2/README.md and new Stage48 publication records"
+  ],
+  "remaining": [
+    "General ModuleKey factories and URI-independent key kind, isCached lookup rules and eager clause factory/name preparation.",
+    "Actual primary/query/repl lifecycle and complete raw policy event/counter parity.",
+    "Complete URI key equality, import globs, remaining Reference/metadata/type/diagnostic requirements and the whole-language gate.",
+    "Bootstrap reflection and singleton cache behavior, known primitive regex mismatches and missing release platform/performance evidence."
+  ],
+  "evidenceQualifications": [
+    "Clippy/workspace tests precede one test-comment-only change. Earlier checks retain narrower source scope; C01 captures all53236file bytes/modes and11literal symlinks.",
+    "Four early Rust source versions are hash-only; every final C01 source is bound. Historical early provider source reconstruction is not broadly claimed.",
+    "Heap bootstrap object names are source-derived, not an object-ID dump.",
+    "Original Java event text is UTF8/ASCII-only with no independent UTF16 event capture.",
+    "All loader/inheritance API channels match, but strict request-count comparison fails after actual CheckImport requests are added to the existing resolve/source-only fixture scope. No requests or failures were removed.",
+    "M1 primitive source capture omits .cargo/config.toml; frozen C01 full map and build wrapper separately bind it.",
+    "Legacy loader HTTP per-response hashing and browser OS PID were not directly captured; recorded launch paths/hashes retain their actual scope.",
+    "Original query-name failures and lazy cycle probes that missed their intended branch remain raw observations, not intended-feature coverage."
+  ],
+  "hostedCiClaimed": false,
+  "performanceTargetClaimed": false,
+  "fullM2Complete": false,
+  "publication": {
+    "core": "reports/m2/stage48-core-captures.json",
+    "coreSourceReview": "reports/m2/stage48-core-review.json",
+    "platformsToolingAndReviews": "reports/m2/stage48-platform-captures.json",
+    "metadataOriginalPathsAndModes": "reports/m2/stage48-root-metadata-publication.json",
+    "javaNativePortablePolicyArchivePromotion": "reports/m2/stage48-oracle-promotion.json",
+    "javaNativePortablePolicyCaptures": "reports/m2/stage48-oracle-captures.json"
+  },
+  "policyFixtureVerification": {
+    "sessions": 12,
+    "apiCalls": 84,
+    "orderedEvents": 280,
+    "payloadFiles": 1443,
+    "manifestFiles": 1,
+    "installedRegressionTests": 8,
+    "fixtureCliExitCode": 0,
+    "independentHermeticCheckExitCode": 0,
+    "verifierSha256": "d1f91dc9a44b8d1a9291f4b8b65aa35ea2e295ec74c2fb521a44ecdf89227739",
+    "fixtureManifestSha256": "6a4d5b2c8d394108c8a0ee98b33bbc5fd20525aa467da7e68e1799b8cea8ab72"
+  },
+  "providerVerification": {
+    "C01UnitTests": 138,
+    "C01UnitTestExitCode": 0,
+    "typedBootstrapSuiteTests": 6,
+    "typedBootstrapSuiteExitCode": 0,
+    "scope": "Separate actual runs; these counts are not added as unique tests or language features."
+  },
+  "independentRawPolicyReviews": {
+    "native": "56d37854a0e3ecd8888534945c1589a16df456988afaf0040ff1156f8eddf45b",
+    "portableProducerAudit": "88b535dfcfa81ad4a1c2cc9874f74015627ccd5afa4206c9317441cf2a383632",
+    "portableSeparateReadback": "d743145332b2cd5dd9b13d03e5efa92b33a3a77cf52d13538aaedf4dc12699fd",
+    "identities": "SHA256 of original handoff.json records; their payloads are separately published."
+  }
+}

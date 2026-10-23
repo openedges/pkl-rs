@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "scope": "Quick independent read-only B final publication archive/source-mode/link/reference review. Earlier semantic/raw audits reused; no evaluator/build/tests/Java/Git reruns or full C01 source traversal.",
+  "handoffSha256": "c3757cfb45e18a702b1ddec99ef9d7cb413445a425a86381388314c0ca11244f",
+  "indexSha256": "7735388de2d73c5b581c0de410024f736d8b0eb1158e9972afad0097757136bc",
+  "reportSha256": "61c4f1c8ceac58d26a138bba6d83aa7875e405d738c94fcf25dad4d2869d2838",
+  "closureSha256": "286be2f37b0751e995a2c1efaa5c2a746598c90f6bf9273b610ca155cd49515c",
+  "archives": [
+    {
+      "name": "stage48-admission-tooling-history.tar.gz",
+      "sha256": "0c248d1e1b35461a461579b87dc65ead12e21af27430b66bdc68cfb49d54970d",
+      "compressedBytes": 1800541,
+      "payloadFiles": 738
+    },
+    {
+      "name": "stage48-java-admission-controls.tar.gz",
+      "sha256": "4e1aa82e5033198e20e68772890197f8eb6157acf199f4db401574aeda998be0",
+      "compressedBytes": 3011871,
+      "payloadFiles": 25830
+    },
+    {
+      "name": "stage48-admission-native-c01.tar.gz",
+      "sha256": "00ebd48c94e8c7cbf8dedb697ba7701d38f75e3c34cb0ec6fa4e03cba4add227",
+      "compressedBytes": 1017807,
+      "payloadFiles": 9176
+    },
+    {
+      "name": "stage48-admission-portable-c01.tar.gz",
+      "sha256": "48c3c4a7bc641454216796790094bbaca3a428a01943f406ccf758b68e96fb7a",
+      "compressedBytes": 267474,
+      "payloadFiles": 864
+    },
+    {
+      "name": "stage48-oracle-publication-closeout.tar.gz",
+      "sha256": "69d8354093f7d893aca91d4caa0c09e0f807a5e260ec11e4e8123b7e3140632b",
+      "compressedBytes": 2305287,
+      "payloadFiles": 56
+    }
+  ],
+  "selectedOriginalFiles": 36596,
+  "sourceRoots": 18,
+  "literalSymlinkRepresentations": [
+    {
+      "group": "java-controls",
+      "rootId": "java01",
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01",
+      "relative": "workspace/file-symlink-resolved-importer/entry.pkl",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/file-symlink-resolved-importer/entry.pkl",
+      "kind": "symlink",
+      "linkTarget": "actual/main.pkl",
+      "targetPayloadSha256": "ea5486169ecc763b702134d55448cfb45f0dc03040190ee257873ebf6590172a",
+      "sha256": "25d69a76656524627b9c1b7a912fab0bdbc53d87cb7718b2d8e03f595c6c81e5",
+      "bytes": 15,
+      "mode": 493,
+      "member": "payload/java01/workspace/file-symlink-resolved-importer/entry.pkl.symlink-target.bin",
+      "representation": "Regular payload contains original link target bytes; metadata retains original kind/mode/target payload hash, no archive symlink."
+    }
+  ],
+  "modeScope": "Tar headers0644; original kind/mode/path/target bytes available in each CAPTURE_SELECTION and final selection. Restore literal symlink explicitly; never execute regular target-byte payload as Pkl source.",
+  "externalReferences": {
+    "fixtureFiles": 1444,
+    "fixtureFinalGitBinding": "Root staged-source audit still pending.",
+    "priorArchiveSha256": "9ea79ec774b79d4e0535d6b79523a5fb5cc4bf05c8359c7a8b111fa9dea41192",
+    "C01ReleaseSha256": "04881b69a3ec7e063dbe1cf594e7ddbfb358854fc17bca8f29e21d3f3c179dc0",
+    "snapshotAndBinaryOwnership": "Core/root canonical hash references; no duplicated full source/binaries or ancestor ownership overlap."
+  },
+  "claims": "Native440 API matches vs212explicitunexecuted and0/52fulltrace; portable84each vs12fullfail each. Raw16queryname errors,36lazycycle intent misses, unsealed metadata, first seal flaw and select.py shadow failure remain qualified.",
+  "materialPublicationIssue": false,
+  "originalChanges": [],
+  "recursiveFilesystemTraversal": false
+}

@@ -442,10 +442,19 @@ impl Renderer<'_> {
                     self.append_units(text.encode_utf16());
                     return Ok(());
                 }
-                let name = class_name(*id, self.heap)?.ok_or_else(|| {
-                    RuntimeError::new(ErrorKind::InvalidBytecode, "class has no definition")
-                })?;
-                self.append(&format!("{}#{name}", self.module));
+                let class = self
+                    .heap
+                    .get(*id)?
+                    .class_definition
+                    .as_ref()
+                    .ok_or_else(|| {
+                        RuntimeError::new(ErrorKind::InvalidBytecode, "class has no definition")
+                    })?;
+                self.append(&format!(
+                    "{}#{}",
+                    class.module.as_deref().unwrap_or(self.module),
+                    class.name
+                ));
             }
             Value::Object(id) => self.object(*id, implicit, depth)?,
         }

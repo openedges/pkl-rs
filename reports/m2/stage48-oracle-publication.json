@@ -1,0 +1,105 @@
+{
+  "dataWorkerActualTerminal": {
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02/publish.py"
+    ],
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02",
+    "parentPid": 48500,
+    "startedUtc": "2026-10-23T17:33:10.014721+00:00",
+    "sourcePins": {
+      "publish.py": "7b76f6f51416b7ea739b2f9bd8dead7c1b8c0610fb4e8ba360ac8976ca12bf8d",
+      "selection_builder.py": "2e889bbb5488018086432845fff4b05478aaf5d7e07ae4b133ca6a6db9f03e23",
+      "selection.json": "f2573084e920a0844f016ace34497c05b23aee1815b270828a8875267a7172ad",
+      "groups.json": "436136cd2568b5024cc5955689fd5937330c3e442173df38ebb429bf98a09fe3",
+      "references.json": "5e27ea76989d4dec309abdcfd7af3267c6f6b51f0eba6e9236d3c9a944afbbe5"
+    },
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "pid": 48501,
+    "exitCode": 0,
+    "finishedUtc": "2026-10-23T17:34:00.774746+00:00",
+    "stdoutSha256": "69906b5a7a9a91f0cf6f438093823afdb35817b1dd3db207d1ea481eeb5b875a",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "liveHandles": []
+  },
+  "closeoutCommands": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02/tool-sources/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02/closeout-gathered",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02/archives/stage48-oracle-publication-closeout.tar.gz"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02",
+      "parentPid": 49184,
+      "startedUtc": "2026-10-23T17:35:03.027341+00:00",
+      "pid": 49191,
+      "exitCode": 0,
+      "finishedUtc": "2026-10-23T17:35:03.591598+00:00",
+      "stdoutSha256": "ec3fdad4877769f20566e756c76947e62aae18a54bbd49b6e45e54815e50dd7f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02/tool-sources/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02/archives/stage48-oracle-publication-closeout.tar.gz"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02",
+      "parentPid": 49184,
+      "startedUtc": "2026-10-23T17:35:03.592361+00:00",
+      "pid": 49192,
+      "exitCode": 0,
+      "finishedUtc": "2026-10-23T17:35:03.714628+00:00",
+      "stdoutSha256": "ec3fdad4877769f20566e756c76947e62aae18a54bbd49b6e45e54815e50dd7f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "allArchives": 5,
+  "compressedBytes": 8402980,
+  "selectedSourceRoots": 18,
+  "selectedSourceFiles": 36596,
+  "selectedRawBytes": 65264715,
+  "everyDataAndCloseoutRawMemberReadBack": true,
+  "allCreateAndSeparateVerify0": true,
+  "originalByteKindModePathsetChanges": [],
+  "sourceExclusions": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-policy84-tools-01/__pycache__",
+      "role": "Generated Python bytecode cache, not sealed evidence",
+      "walked": false,
+      "exists": true,
+      "kind": "directory",
+      "mode": 493,
+      "mtimeNs": 1792773277607820219
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-policy-native-consumer-01/tests-private",
+      "role": "Cleaned temporary fixture/stub-source clones; explicit producer exclusion",
+      "walked": false,
+      "exists": true,
+      "kind": "directory",
+      "mode": 493,
+      "mtimeNs": 1792773454417453119
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-policy-native-consumer-02/tests-private",
+      "role": "Cleaned temporary fixture/stub-source clones; explicit producer exclusion",
+      "walked": false,
+      "exists": true,
+      "kind": "directory",
+      "mode": 493,
+      "mtimeNs": 1792774145719974984
+    }
+  ],
+  "noEvaluatorOrGitExecuted": true,
+  "scope": "Java568Evaluator+392directpolicyAPI;native440rawpass/212unexecuted/fullLifecycle0of52;portable84Node+84browserrawpass/fullLifecycle0of12each;original16querynamefailures+36lazycycleintentmiss+historicaltool/selfsealflaw retained.",
+  "liveHandles": []
+}

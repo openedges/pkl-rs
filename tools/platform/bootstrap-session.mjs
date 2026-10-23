@@ -1,10 +1,11 @@
 // Thin controlled property Host. The shared engine owns all bootstrap/cache/renderer behavior.
+import {completeDefaultModuleRequest} from './module-policy-session.mjs';
 function units(view){if(!(view instanceof Uint16Array))throw Error('expected Uint16Array');return Array.from(view);}
 function textUnits(text){if(typeof text!=='string')throw Error('expected error message');return Array.from({length:text.length},(_,i)=>text.charCodeAt(i));}
 export function runBootstrapCase(api,fixture){
- const result={id:fixture.id,repeat:fixture.repeat,sessions:[]};
+ const result={id:fixture.id,repeat:fixture.repeat,sessions:[],modulePolicy:'pkl-0.32.0-default',resourceCompletion:'typed-resource-text-and-configured-default'};
  for(let index=0;index<fixture.formats.length;index++){
-  const format=fixture.formats[index],entry={index,format,calls:[],constructorError:null,acquisitionError:null,reads:0,architecture:{terminalSlots:null,ownedResultsStable:true,collections:0}},retained=[];result.sessions.push(entry);let session,polls=0;
+  const format=fixture.formats[index],entry={index,format,calls:[],moduleRequests:[],constructorError:null,acquisitionError:null,reads:0,architecture:{terminalSlots:null,ownedResultsStable:true,collections:0}},retained=[];result.sessions.push(entry);let session,polls=0;
   try{
    try{session=api.SourceSession.forExpressions(fixture.source,fixture.moduleUri,'main',fixture.expressions,'compact',false,false,true);}catch(error){entry.constructorError={isError:error instanceof Error,messageUnits:textUnits(error.message)};continue;}
    for(let call=0;call<fixture.expressions.length;call++){
@@ -13,9 +14,14 @@ export function runBootstrapCase(api,fixture){
      if(++polls>1000000)throw Error('bootstrap poll bound exceeded');
      const event=session.poll(0,1);session.collect();entry.architecture.collections++;
      if(event.kind==='yield')continue;
+     if(event.kind==='module-request'){
+      entry.moduleRequests.push({callIndex:call,token:event.token,module:{...event.module}});
+      if(!completeDefaultModuleRequest(session,event))throw Error('unsupported bootstrap module request');
+      continue;
+     }
      if(event.kind==='read'){
       entry.reads++;if(event.uri!=='prop:pkl.outputFormat')throw Error('unexpected bootstrap resource '+event.uri);
-      if(format==='absent')session.respondConfigured(event.token,0);else session.respondString(event.token,Uint16Array.from(textUnits(format)),0);
+      if(format==='absent')session.respondConfigured(event.token,0);else session.completeReadText(event.token,Uint16Array.from(textUnits(format)),0);
       continue;
      }
      if(!['value','error'].includes(event.kind))throw Error('unexpected bootstrap event '+event.kind);

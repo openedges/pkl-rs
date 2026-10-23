@@ -584,6 +584,39 @@ impl SourceSession {
             )
             .map_err(|failure| text_error(failure.message))
     }
+    #[wasm_bindgen(js_name = completeModuleImportCheck)]
+    pub fn complete_module_import_check(
+        &mut self,
+        token: JsString,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_module_import_check(&string(&token)?, unsigned(now)?)
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[wasm_bindgen(js_name = rejectModuleImportCheck)]
+    pub fn reject_module_import_check(
+        &mut self,
+        token: JsString,
+        kind: JsString,
+        message: Option<JsString>,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .reject_module_import_check(
+                &string(&token)?,
+                &string(&kind)?,
+                message.as_ref().map(pkl_text).transpose()?,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[wasm_bindgen(js_name = completeDefaultModule)]
+    pub fn complete_default_module(&mut self, token: JsString, now: f64) -> Result<bool, JsValue> {
+        self.inner
+            .complete_default_module(&string(&token)?, unsigned(now)?)
+            .map_err(|failure| text_error(failure.message))
+    }
     #[wasm_bindgen(js_name = completeModuleCapabilities)]
     pub fn complete_module_capabilities(
         &mut self,

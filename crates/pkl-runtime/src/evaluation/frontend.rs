@@ -386,7 +386,11 @@ pub fn evaluate_module_output(
     input: ModuleSourceInput<'_>,
     options: &ModuleEvalOptions,
 ) -> ModuleOutputResult {
-    evaluate_module_output_with_host(input, options, crate::modules::unsupported_completion)
+    evaluate_module_output_with_host(
+        input,
+        options,
+        crate::modules::default_or_unsupported_completion,
+    )
 }
 
 /// Evaluate actual output with module resolution/source I/O supplied by the Host.
@@ -429,7 +433,7 @@ fn evaluate_module_output_with_budget(
         input,
         options,
         poll_budget,
-        crate::modules::unsupported_completion,
+        crate::modules::default_or_unsupported_completion,
         |_| None,
     )
 }

@@ -2,6 +2,8 @@
 //! contracts complement, and do not replace, raw pinned Java comparisons.
 //! Retained module graphs include their one builtin Module parent; executable
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
+#[path = "support/module_policy.rs"]
+mod module_policy;
 use std::sync::Arc;
 #[path = "support/eager_base.rs"]
 mod eager_base;
@@ -16,7 +18,9 @@ use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll, compile_module};
 
 fn program(source: &str) -> Arc<Program> {
     let parsed = parse_module(source).unwrap();
-    compile_module(&resolve_module(&parsed).unwrap()).unwrap()
+    let mut program = compile_module(&resolve_module(&parsed).unwrap()).unwrap();
+    module_policy::register(Arc::make_mut(&mut program), source);
+    program
 }
 
 fn ready(vm: &mut Vm) -> Result<Value, RuntimeError> {
@@ -26,6 +30,13 @@ fn ready(vm: &mut Vm) -> Result<Value, RuntimeError> {
             VmPoll::Yielded => {
                 vm.collect(&[]);
             }
+            VmPoll::Module(request) => vm
+                .complete_module(
+                    request.id,
+                    pkl_runtime::modules::default_completion(&request)
+                        .expect("default module policy"),
+                )
+                .unwrap(),
             event => panic!("unexpected VM event {event:?}"),
         }
     }

@@ -7,7 +7,13 @@ use pkl_runtime::modules::{
 use std::path::{Path, PathBuf};
 
 pub fn complete(request: &ModuleRequest) -> ModuleCompletion {
+    if let Some(completion) = pkl_runtime::modules::default_completion(request) {
+        return completion;
+    }
     match &request.kind {
+        ModuleRequestKind::CheckImport { .. } => {
+            unreachable!("default policy handles import admission")
+        }
         ModuleRequestKind::Capabilities { module } => {
             ModuleCompletion::Capabilities(file_path(&module.original_uri).map(|_| {
                 pkl_runtime::modules::ModuleCapabilities {
@@ -201,6 +207,7 @@ mod tests {
             &ModuleEvalOptions::default(),
             |request| {
                 phases.push(match request.kind {
+                    ModuleRequestKind::CheckImport { .. } => "check-import",
                     ModuleRequestKind::Capabilities { .. } => "capabilities",
                     ModuleRequestKind::HasElement { .. } => "has-element",
                     ModuleRequestKind::Resolve { .. } => "resolve",
@@ -217,7 +224,7 @@ mod tests {
         );
         assert_eq!(output.stdout, b"7");
         assert!(output.stderr.is_empty());
-        assert_eq!(phases, ["resolve", "source"]);
+        assert_eq!(phases, ["check-import", "resolve", "source"]);
     }
 
     #[cfg(unix)]
@@ -240,6 +247,7 @@ mod tests {
             &ModuleEvalOptions::default(),
             |request| {
                 phases.push(match request.kind {
+                    ModuleRequestKind::CheckImport { .. } => "check-import",
                     ModuleRequestKind::Capabilities { .. } => "capabilities",
                     ModuleRequestKind::HasElement { .. } => "has-element",
                     ModuleRequestKind::Resolve { .. } => "resolve",
@@ -255,6 +263,15 @@ mod tests {
             String::from_utf8_lossy(&output.stderr)
         );
         assert_eq!(output.stdout, b"true");
-        assert_eq!(phases, ["resolve", "source", "resolve"]);
+        assert_eq!(
+            phases,
+            [
+                "check-import",
+                "resolve",
+                "source",
+                "check-import",
+                "resolve"
+            ]
+        );
     }
 }

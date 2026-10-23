@@ -6053,21 +6053,17 @@ impl Compiler<'_> {
         use crate::syntax::ExprKind;
         match &expression.kind {
             ExprKind::Import { uri, uri_span } => {
-                if uri == "pkl:ref" {
-                    output.push(Instruction::LoadRefModule);
+                let spec = if self.resolved.preparation_is_evaluation {
+                    modules::ImportSpec::authored(uri.clone().into(), *uri_span, self.unit)
                 } else {
-                    let spec = if self.resolved.preparation_is_evaluation {
-                        modules::ImportSpec::authored(uri.clone().into(), *uri_span, self.unit)
-                    } else {
-                        modules::ImportSpec::new(
-                            uri.clone().into(),
-                            *uri_span,
-                            self.unit,
-                            self.identity.as_ref(),
-                        )?
-                    };
-                    output.push(Instruction::ImportModule(spec));
-                }
+                    modules::ImportSpec::new(
+                        uri.clone().into(),
+                        *uri_span,
+                        self.unit,
+                        self.identity.as_ref(),
+                    )?
+                };
+                output.push(Instruction::ImportModule(spec));
             }
             ExprKind::Class {
                 type_parameters,
@@ -6772,6 +6768,21 @@ impl Compiler<'_> {
         output: &mut Code,
     ) -> Result<(), Box<(RuntimeError, Span)>> {
         use crate::syntax::{ExprKind, TypeKind};
+        if let TypeKind::Named { path, .. } = &ty.kind
+            && path.len() == 2
+            && self.resolved.module.members.iter().any(|member| {
+                member.local
+                    && member.name == path[0]
+                    && matches!(&member.expr.kind, ExprKind::Import { uri, .. } if matches!(crate::modules::stdlib_kind(uri), Some(crate::modules::StdlibKind::Singleton("pkl:ref"))))
+            })
+        {
+            // External ref types keep their specialized checks and argument
+            // diagnostics, but first force the same authored import member as
+            // every other qualified type. This is evaluator work, not a second
+            // import site or a compile-time policy decision.
+            let guard = self.imported_type_guard(ty);
+            output.push_at(Instruction::ResolveType(guard), ty.span);
+        }
         if let Ok(check) =
             self.compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), parameters)
             && check.has_declared()
@@ -7194,7 +7205,7 @@ impl Compiler<'_> {
                     .iter()
                     .find(|member| member.name == path[0] && member.local);
                 if import.is_none()
-                    || !matches!(&import.unwrap().expr.kind, ExprKind::Import { uri, .. } if uri == "pkl:ref")
+                    || !matches!(&import.unwrap().expr.kind, ExprKind::Import { uri, .. } if matches!(crate::modules::stdlib_kind(uri), Some(crate::modules::StdlibKind::Singleton("pkl:ref"))))
                 {
                     let arguments = arguments
                         .iter()
@@ -7213,7 +7224,10 @@ impl Compiler<'_> {
                     )
                     .at(name_spans[0]));
                 };
-                if uri != "pkl:ref" {
+                if !matches!(
+                    crate::modules::stdlib_kind(uri),
+                    Some(crate::modules::StdlibKind::Singleton("pkl:ref"))
+                ) {
                     let arguments = arguments
                         .iter()
                         .map(|argument| self.compile_type_at(argument, limit, aliases, parameters))

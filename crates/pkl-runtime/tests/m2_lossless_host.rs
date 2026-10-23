@@ -80,6 +80,12 @@ fn case(id: &str, mode: &str, cause: &str) {
                 match event.kind {
                     "yield" => {}
                     "module-request" => {
+                        if probe
+                            .complete_default_module(event.token.as_deref().unwrap(), 0)
+                            .unwrap()
+                        {
+                            continue;
+                        }
                         let token = event.token.unwrap();
                         let request = event.module.unwrap();
                         match request.kind {
@@ -182,6 +188,13 @@ fn next(probe: &mut SourceProbe) -> pkl_runtime::probe::SourceEvent {
     for _ in 0..100_000 {
         let event = probe.poll(0, 1).unwrap();
         probe.collect();
+        if event.kind == "module-request"
+            && probe
+                .complete_default_module(event.token.as_deref().unwrap(), 0)
+                .unwrap()
+        {
+            continue;
+        }
         if event.kind != "yield" {
             return event;
         }

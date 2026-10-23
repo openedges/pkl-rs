@@ -1,4 +1,5 @@
 // Browser-safe Host transport only: Pkl parsing, catch, caches and unwind stay in Rust.
+import {completeDefaultModuleRequest} from './module-policy-session.mjs';
 function units(value) {
   if (!(value instanceof Uint16Array)) throw Error('expected Uint16Array');
   return Array.from(value);
@@ -17,7 +18,7 @@ export function runGuestCatchCase(api, fixture) {
   const calls=[],events=[],logs=[],retained=[];
   const counts={resolve:0,source:0,read:0,log:0,callback:0,event:0};
   const architecture={collections:0,terminalSlots:null,ownedResultsStable:true,cancelledReads:[],cancelledModules:[]};
-  const result={group:fixture.group,id:fixture.id,repeat:fixture.repeat,scope:fixture.comparisonScope,calls,events,logs,counts,architecture,constructorError:null,acquisitionError:null};
+  const result={group:fixture.group,id:fixture.id,repeat:fixture.repeat,scope:fixture.comparisonScope,calls,events,logs,counts,architecture,moduleRequests:[],modulePolicy:'explicit-catch-host-with-pkl-0.32.0-default-import-policy',constructorError:null,acquisitionError:null};
   const emit=value=>{events.push(value);counts.event++;};
   function complete(event,prefix) {
     if(!['value','error'].includes(event.kind))throw Error('unexpected completion '+event.kind);
@@ -37,6 +38,14 @@ export function runGuestCatchCase(api, fixture) {
   function next(now=0) {
     while(++polls<=1000000) {
       const event=session.poll(now,1);session.collect();architecture.collections++;
+      if(event.kind==='module-request'){
+        const request=event.module;
+        result.moduleRequests.push({token:event.token,module:{...request}});
+        if(request.kind==='check-import'||(request.kind==='resolve'&&request.originalUri!=='catch:/child')){
+          if(!completeDefaultModuleRequest(session,event))throw Error('unsupported guest-catch module request');
+          continue;
+        }
+      }
       if(event.kind!=='yield')return event;
     }
     throw Error('poll bound exceeded');

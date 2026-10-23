@@ -1,0 +1,217 @@
+{
+  "schema": 1,
+  "status": "proposal-for-root-review-not-published",
+  "started_utc": "2026-10-23T17:03:47.096564+00:00",
+  "finished_utc": "2026-10-23T17:03:59.429526+00:00",
+  "archives": [
+    {
+      "name": "stage48-core-artifacts.tar.gz",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/stage48-core-artifacts.tar.gz",
+      "sha256": "5af228416a157a8aa837c5d4996687199c4e378cf2d19886302ca168792ffa72",
+      "bytes": 21144614,
+      "files": 6,
+      "raw_bytes": 99879696,
+      "create": {
+        "label": "artifacts-create",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/staging/source-binding/evidence.py",
+          "create",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/staging/artifacts",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/stage48-core-artifacts.tar.gz"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48",
+        "started_utc": "2026-10-23T17:03:47.543777+00:00",
+        "pid": 38479,
+        "exit_code": 0,
+        "finished_utc": "2026-10-23T17:03:55.154346+00:00",
+        "elapsed_seconds": 7.610584415961057,
+        "stdout_sha256": "adf7f5c2f0ef40568dfae641ae2627d2c986699c075e09e9e308e99e192b7c5c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_base64": "VmVyaWZpZWQgNiBldmlkZW5jZSBmaWxlczogL1VzZXJzL2NvZHkuaWouaHdhbmcvUHJvamVjdHMvcGtsLXJzLnN0YWdlNDgvdGFyZ2V0L20yL3N0YWdlNDgtY29yZS1wdWJsaWNhdGlvbi1wcm9wb3NhbC0wMS9zdGFnZTQ4LWNvcmUtYXJ0aWZhY3RzLnRhci5nego=",
+        "stderr_base64": ""
+      },
+      "separate_verify": {
+        "label": "artifacts-verify",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/staging/source-binding/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/stage48-core-artifacts.tar.gz"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48",
+        "started_utc": "2026-10-23T17:03:55.155230+00:00",
+        "pid": 38544,
+        "exit_code": 0,
+        "finished_utc": "2026-10-23T17:03:55.474682+00:00",
+        "elapsed_seconds": 0.31947125028818846,
+        "stdout_sha256": "adf7f5c2f0ef40568dfae641ae2627d2c986699c075e09e9e308e99e192b7c5c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_base64": "VmVyaWZpZWQgNiBldmlkZW5jZSBmaWxlczogL1VzZXJzL2NvZHkuaWouaHdhbmcvUHJvamVjdHMvcGtsLXJzLnN0YWdlNDgvdGFyZ2V0L20yL3N0YWdlNDgtY29yZS1wdWJsaWNhdGlvbi1wcm9wb3NhbC0wMS9zdGFnZTQ4LWNvcmUtYXJ0aWZhY3RzLnRhci5nego=",
+        "stderr_base64": ""
+      },
+      "full_member_readback": true
+    },
+    {
+      "name": "stage48-core-checks-history.tar.gz",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/stage48-core-checks-history.tar.gz",
+      "sha256": "04e305369ebc519b2656ee673c545ed62013fee92f6da81f28bc36c77985c807",
+      "bytes": 623474,
+      "files": 304,
+      "raw_bytes": 3349808,
+      "create": {
+        "label": "checks-history-create",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/staging/source-binding/evidence.py",
+          "create",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/staging/checks-history",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/stage48-core-checks-history.tar.gz"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48",
+        "started_utc": "2026-10-23T17:03:55.767019+00:00",
+        "pid": 38548,
+        "exit_code": 0,
+        "finished_utc": "2026-10-23T17:03:55.997737+00:00",
+        "elapsed_seconds": 0.23073758324608207,
+        "stdout_sha256": "68183741e49bb5f7edaefab02efcfa1826a71c684aae4a5a52de9b9b66b023fd",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_base64": "VmVyaWZpZWQgMzA0IGV2aWRlbmNlIGZpbGVzOiAvVXNlcnMvY29keS5pai5od2FuZy9Qcm9qZWN0cy9wa2wtcnMuc3RhZ2U0OC90YXJnZXQvbTIvc3RhZ2U0OC1jb3JlLXB1YmxpY2F0aW9uLXByb3Bvc2FsLTAxL3N0YWdlNDgtY29yZS1jaGVja3MtaGlzdG9yeS50YXIuZ3oK",
+        "stderr_base64": ""
+      },
+      "separate_verify": {
+        "label": "checks-history-verify",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/staging/source-binding/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/stage48-core-checks-history.tar.gz"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48",
+        "started_utc": "2026-10-23T17:03:55.998469+00:00",
+        "pid": 38549,
+        "exit_code": 0,
+        "finished_utc": "2026-10-23T17:03:56.078915+00:00",
+        "elapsed_seconds": 0.08046500012278557,
+        "stdout_sha256": "68183741e49bb5f7edaefab02efcfa1826a71c684aae4a5a52de9b9b66b023fd",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_base64": "VmVyaWZpZWQgMzA0IGV2aWRlbmNlIGZpbGVzOiAvVXNlcnMvY29keS5pai5od2FuZy9Qcm9qZWN0cy9wa2wtcnMuc3RhZ2U0OC90YXJnZXQvbTIvc3RhZ2U0OC1jb3JlLXB1YmxpY2F0aW9uLXByb3Bvc2FsLTAxL3N0YWdlNDgtY29yZS1jaGVja3MtaGlzdG9yeS50YXIuZ3oK",
+        "stderr_base64": ""
+      },
+      "full_member_readback": true
+    },
+    {
+      "name": "stage48-core-reviews-analysis.tar.gz",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/stage48-core-reviews-analysis.tar.gz",
+      "sha256": "77cc26e57c0808cb79f37b29a07b86d2eaf23288a6f61c50d70e8816f7ee616b",
+      "bytes": 2414359,
+      "files": 508,
+      "raw_bytes": 15771640,
+      "create": {
+        "label": "reviews-analysis-create",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/staging/source-binding/evidence.py",
+          "create",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/staging/reviews-analysis",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/stage48-core-reviews-analysis.tar.gz"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48",
+        "started_utc": "2026-10-23T17:03:56.147726+00:00",
+        "pid": 38550,
+        "exit_code": 0,
+        "finished_utc": "2026-10-23T17:03:57.357359+00:00",
+        "elapsed_seconds": 1.209648999851197,
+        "stdout_sha256": "414449707a9f214dcce9025f90503e97ef607442f387c86068010983a0048b21",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_base64": "VmVyaWZpZWQgNTA4IGV2aWRlbmNlIGZpbGVzOiAvVXNlcnMvY29keS5pai5od2FuZy9Qcm9qZWN0cy9wa2wtcnMuc3RhZ2U0OC90YXJnZXQvbTIvc3RhZ2U0OC1jb3JlLXB1YmxpY2F0aW9uLXByb3Bvc2FsLTAxL3N0YWdlNDgtY29yZS1yZXZpZXdzLWFuYWx5c2lzLnRhci5nego=",
+        "stderr_base64": ""
+      },
+      "separate_verify": {
+        "label": "reviews-analysis-verify",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/staging/source-binding/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/stage48-core-reviews-analysis.tar.gz"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48",
+        "started_utc": "2026-10-23T17:03:57.358179+00:00",
+        "pid": 38552,
+        "exit_code": 0,
+        "finished_utc": "2026-10-23T17:03:57.477029+00:00",
+        "elapsed_seconds": 0.11886954214423895,
+        "stdout_sha256": "414449707a9f214dcce9025f90503e97ef607442f387c86068010983a0048b21",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_base64": "VmVyaWZpZWQgNTA4IGV2aWRlbmNlIGZpbGVzOiAvVXNlcnMvY29keS5pai5od2FuZy9Qcm9qZWN0cy9wa2wtcnMuc3RhZ2U0OC90YXJnZXQvbTIvc3RhZ2U0OC1jb3JlLXB1YmxpY2F0aW9uLXByb3Bvc2FsLTAxL3N0YWdlNDgtY29yZS1yZXZpZXdzLWFuYWx5c2lzLnRhci5nego=",
+        "stderr_base64": ""
+      },
+      "full_member_readback": true
+    },
+    {
+      "name": "stage48-core-source-binding.tar.gz",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/stage48-core-source-binding.tar.gz",
+      "sha256": "5cf58e1941f1e20d47aa0658719c1211b655e5be6c7d028fb5c179a154da9d97",
+      "bytes": 6918906,
+      "files": 235,
+      "raw_bytes": 74241679,
+      "create": {
+        "label": "source-binding-create",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/staging/source-binding/evidence.py",
+          "create",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/staging/source-binding",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/stage48-core-source-binding.tar.gz"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48",
+        "started_utc": "2026-10-23T17:03:57.627227+00:00",
+        "pid": 38553,
+        "exit_code": 0,
+        "finished_utc": "2026-10-23T17:03:58.916089+00:00",
+        "elapsed_seconds": 1.2888810420408845,
+        "stdout_sha256": "0f82b88f86fa9055eb685a589efc11cca69da6d5312043fc2b3a5472d7d2cb96",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_base64": "VmVyaWZpZWQgMjM1IGV2aWRlbmNlIGZpbGVzOiAvVXNlcnMvY29keS5pai5od2FuZy9Qcm9qZWN0cy9wa2wtcnMuc3RhZ2U0OC90YXJnZXQvbTIvc3RhZ2U0OC1jb3JlLXB1YmxpY2F0aW9uLXByb3Bvc2FsLTAxL3N0YWdlNDgtY29yZS1zb3VyY2UtYmluZGluZy50YXIuZ3oK",
+        "stderr_base64": ""
+      },
+      "separate_verify": {
+        "label": "source-binding-verify",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/staging/source-binding/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-core-publication-proposal-01/stage48-core-source-binding.tar.gz"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48",
+        "started_utc": "2026-10-23T17:03:58.916940+00:00",
+        "pid": 38559,
+        "exit_code": 0,
+        "finished_utc": "2026-10-23T17:03:59.093701+00:00",
+        "elapsed_seconds": 0.17678183363750577,
+        "stdout_sha256": "0f82b88f86fa9055eb685a589efc11cca69da6d5312043fc2b3a5472d7d2cb96",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_base64": "VmVyaWZpZWQgMjM1IGV2aWRlbmNlIGZpbGVzOiAvVXNlcnMvY29keS5pai5od2FuZy9Qcm9qZWN0cy9wa2wtcnMuc3RhZ2U0OC90YXJnZXQvbTIvc3RhZ2U0OC1jb3JlLXB1YmxpY2F0aW9uLXByb3Bvc2FsLTAxL3N0YWdlNDgtY29yZS1zb3VyY2UtYmluZGluZy50YXIuZ3oK",
+        "stderr_base64": ""
+      },
+      "full_member_readback": true
+    }
+  ],
+  "total_bytes": 31101353,
+  "all_under_100MiB": true,
+  "archive_inputs_sha256": "f0f93696c8f1409eff6a9a96373db78ec3885e0c1d9eed63ea67e7445add3d7d",
+  "source_binding_archive": "stage48-core-source-binding.tar.gz",
+  "source_binding_path": "source-bindings.json",
+  "source_binding_sha256": "39f5b9d03d88bdc0ed1b3a50e701b8051f1b3b7980689b8925b217ba38854182",
+  "summary_sha256": "b1f3dad7d7f6e1333d066ff407ff49a10e575b09638fa4b7271a00db354f4536",
+  "historical_source_gaps": 4,
+  "C01_file_bindings_complete": 53236,
+  "C01_symlinks_recorded": 11,
+  "qualifications": [
+    "No new evaluation/source/Git mutations. Failed commands remain failed.",
+    "Archive headers use deterministic0644; actual source/artifact modes are separately captured.",
+    "Raw create/separateverify stdout/stderr retained asfiles and Base64 here; no report seals itself or active logs.",
+    "Previous published archives are not nested; current source bindings point to pinnedGit blobs or exactarchivedsource blobs.",
+    "Boracle/native/portable and root/Cplatform/typedbootstrap02 have separatepublication ownership."
+  ]
+}

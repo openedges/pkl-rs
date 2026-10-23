@@ -53,6 +53,10 @@ fn original_three_import_sources_use_actual_output_and_shared_imported_scope() {
             },
             &ModuleEvalOptions::default(),
             |request| match &request.kind {
+                ModuleRequestKind::CheckImport { .. } => {
+                    pkl_runtime::modules::default_completion(request)
+                        .expect("default import policy")
+                }
                 ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
                     panic!("unexpected ModuleKey preparation in this fixture")
                 }
@@ -101,7 +105,9 @@ fn settle(
         match session.poll(0, 16) {
             HostPoll::Ready(value) => return value,
             HostPoll::Module { token, request } => {
-                session.complete_module(&token, host(&request), 0).unwrap()
+                let completion = pkl_runtime::modules::default_completion(&request)
+                    .unwrap_or_else(|| host(&request));
+                session.complete_module(&token, completion, 0).unwrap()
             }
             HostPoll::Read { token, .. } => {
                 session.resume_default_read(&token, &[], &[], 0).unwrap()
@@ -124,6 +130,9 @@ fn canonical_alias_hit_does_not_add_an_original_alias_and_cache_roots_survive_gc
     let mut loads = 0;
     session.start_path(0, 0, None).unwrap();
     let value = settle(&mut session, &mut |request| match &request.kind {
+        ModuleRequestKind::CheckImport { .. } => {
+            pkl_runtime::modules::default_completion(request).expect("default import policy")
+        }
         ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
             panic!("unexpected ModuleKey preparation in this fixture")
         }
@@ -156,6 +165,10 @@ fn resolution_failures_retry_but_source_and_frontend_failures_replay_the_first_e
         for index in [0, 1, 0] {
             session.start_path(index, 0, None).unwrap();
             let error = settle(&mut session, &mut |request| match &request.kind {
+                ModuleRequestKind::CheckImport { .. } => {
+                    pkl_runtime::modules::default_completion(request)
+                        .expect("default import policy")
+                }
                 ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
                     panic!("unexpected ModuleKey preparation in this fixture")
                 }
@@ -239,6 +252,9 @@ fn appended_units_preserve_self_identity_and_distinguish_same_offset_declaration
         },
         &ModuleEvalOptions::default(),
         |request| match &request.kind {
+            ModuleRequestKind::CheckImport { .. } => {
+                pkl_runtime::modules::default_completion(request).expect("default import policy")
+            }
             ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
                 panic!("unexpected ModuleKey preparation in this fixture")
             }
@@ -266,7 +282,13 @@ fn appended_units_preserve_self_identity_and_distinguish_same_offset_declaration
 fn next_module(session: &mut SourceSession) -> (String, ModuleRequest) {
     for _ in 0..100_000 {
         match session.poll(0, 8) {
-            HostPoll::Module { token, request } => return (token, request),
+            HostPoll::Module { token, request } => {
+                if let Some(completion) = pkl_runtime::modules::default_completion(&request) {
+                    session.complete_module(&token, completion, 0).unwrap();
+                } else {
+                    return (token, request);
+                }
+            }
             HostPoll::Yielded => {}
             other => panic!("expected module effect: {other:?}"),
         }
@@ -295,6 +317,9 @@ fn source_callback_publication_survives_outer_failure_while_fresh_import_replays
     let mut child_resolves = 0;
     let mut child_loads = 0;
     let child = settle(&mut session, &mut |request| match request.kind {
+        ModuleRequestKind::CheckImport { .. } => {
+            pkl_runtime::modules::default_completion(request).expect("default import policy")
+        }
         ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
             panic!("unexpected ModuleKey preparation in this fixture")
         }
@@ -397,6 +422,9 @@ fn failed_append_keeps_existing_closures(bad_source: &str, kind: pkl_runtime::va
         &["first", "bad", "last"],
     );
     let mut host = |request: &ModuleRequest| match &request.kind {
+        ModuleRequestKind::CheckImport { .. } => {
+            pkl_runtime::modules::default_completion(request).expect("default import policy")
+        }
         ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
             panic!("unexpected ModuleKey preparation in this fixture")
         }
@@ -461,6 +489,7 @@ fn failed_self_superclass_preserves_the_original_followup_method_error() {
     ] {
         session.start_path(0, 0, None).unwrap();
         let failure = settle(&mut session, &mut |request| match request.kind {
+            ModuleRequestKind::CheckImport { .. } => pkl_runtime::modules::default_completion(request).expect("default import policy"),
             ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => panic!("unexpected ModuleKey preparation in this fixture"),
             ModuleRequestKind::Resolve { .. } => resolve(request, None),
             ModuleRequestKind::LoadSource { .. } => panic!("primary source already exists"),
@@ -478,6 +507,9 @@ fn imported_error_keeps_declared_module_and_original_display_source() {
     let mut session = session("first=import(\"alias.pkl\").value\n", &["first"]);
     session.start_path(0, 0, None).unwrap();
     let error = settle(&mut session, &mut |request| match &request.kind {
+        ModuleRequestKind::CheckImport { .. } => {
+            pkl_runtime::modules::default_completion(request).expect("default import policy")
+        }
         ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
             panic!("unexpected ModuleKey preparation in this fixture")
         }
@@ -549,6 +581,9 @@ fn outer_source_success_replaces_callback_source_failure() {
     let (outer, _) = next_module(&mut session);
     session.reenter_path(&outer, 0, 0, None).unwrap();
     let error = settle(&mut session, &mut |request| match request.kind {
+        ModuleRequestKind::CheckImport { .. } => {
+            pkl_runtime::modules::default_completion(request).expect("default import policy")
+        }
         ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
             panic!("unexpected ModuleKey preparation in this fixture")
         }

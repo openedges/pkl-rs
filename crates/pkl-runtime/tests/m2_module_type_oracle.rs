@@ -32,6 +32,12 @@ fn compare(
             match event.kind {
                 "yield" => {}
                 "module-request" => {
+                    if probe
+                        .complete_default_module(event.token.as_deref().unwrap(), 0)
+                        .unwrap()
+                    {
+                        continue;
+                    }
                     let module = event.module.unwrap();
                     let token = event.token.unwrap();
                     if module.kind == "resolve" {

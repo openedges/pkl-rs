@@ -45,6 +45,12 @@ fn next(probe: &mut SourceProbe, expected: &Path, denials: &mut usize) -> Source
         match event.kind {
             "yield" => {}
             "module-request" => {
+                if probe
+                    .complete_default_module(event.token.as_deref().unwrap(), 0)
+                    .unwrap()
+                {
+                    continue;
+                }
                 let request = event.module.unwrap();
                 assert_eq!(request.kind, "resolve");
                 assert_eq!(request.original_uri, text(&root(), "denied-uri.txt"));

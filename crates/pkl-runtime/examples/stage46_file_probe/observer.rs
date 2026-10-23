@@ -79,6 +79,16 @@ impl<'a> Observer<'a> {
     pub fn module(&mut self, request: &ModuleRequest) -> ModuleCompletion {
         self.module_requests += 1;
         match &request.kind {
+            ModuleRequestKind::CheckImport {
+                importer,
+                import_uri,
+            } => {
+                self.event(format!(
+                    "module-check-import {} -> {import_uri}",
+                    importer.resolved_uri
+                ));
+                super::module_host::complete(request)
+            }
             ModuleRequestKind::Capabilities { module } => {
                 self.event(format!("module-capabilities {}", module.original_uri));
                 if self.mode == "cap-nonlocal" || self.mode == "cap-nonhierarchical" {

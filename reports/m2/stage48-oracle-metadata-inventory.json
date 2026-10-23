@@ -1,0 +1,64 @@
+{
+  "files": {
+    "index.json": {
+      "sha256": "7735388de2d73c5b581c0de410024f736d8b0eb1158e9972afad0097757136bc",
+      "bytes": 4004
+    },
+    "report.json": {
+      "sha256": "61c4f1c8ceac58d26a138bba6d83aa7875e405d738c94fcf25dad4d2869d2838",
+      "bytes": 4736
+    },
+    "summary.json": {
+      "sha256": "adf2cb38b388a6fc69a2303416b00492992eed3c141049fc7ef93c04c8aa649a",
+      "bytes": 8140
+    },
+    "handoff.json": {
+      "sha256": "f02a13325810a051214dce0ee4dcd52ef02b8a67c792d7302798b7a93e2a0d43",
+      "bytes": 3867
+    },
+    "handoff-final.json": {
+      "sha256": "c3757cfb45e18a702b1ddec99ef9d7cb413445a425a86381388314c0ca11244f",
+      "bytes": 4100
+    },
+    "finalizer-tool-terminal.json": {
+      "sha256": "a051053d64382f07a757f8fa41001bc93c3b9ab13039bac2ca4baf4c3cd22147",
+      "bytes": 386
+    },
+    "selection.json": {
+      "sha256": "f2573084e920a0844f016ace34497c05b23aee1815b270828a8875267a7172ad",
+      "bytes": 25686643
+    },
+    "groups.json": {
+      "sha256": "436136cd2568b5024cc5955689fd5937330c3e442173df38ebb429bf98a09fe3",
+      "bytes": 774
+    },
+    "references.json": {
+      "sha256": "5e27ea76989d4dec309abdcfd7af3267c6f6b51f0eba6e9236d3c9a944afbbe5",
+      "bytes": 408110
+    },
+    "selection_builder.py": {
+      "sha256": "2e889bbb5488018086432845fff4b05478aaf5d7e07ae4b133ca6a6db9f03e23",
+      "bytes": 9808
+    },
+    "publish.py": {
+      "sha256": "7b76f6f51416b7ea739b2f9bd8dead7c1b8c0610fb4e8ba360ac8976ca12bf8d",
+      "bytes": 6380
+    },
+    "launch_publication.py": {
+      "sha256": "1bd1ff2616cbbaf2ba1b680905d1f298493467f2c29a31a2e37fe8daf3e80d3c",
+      "bytes": 1190
+    },
+    "finalize.py": {
+      "sha256": "71f27f3dced7c457ec716c6dfd95b6eb79012423a0291392b44d79f31e7276f9",
+      "bytes": 6628
+    }
+  },
+  "archiveHashes": {
+    "stage48-admission-tooling-history.tar.gz": "0c248d1e1b35461a461579b87dc65ead12e21af27430b66bdc68cfb49d54970d",
+    "stage48-java-admission-controls.tar.gz": "4e1aa82e5033198e20e68772890197f8eb6157acf199f4db401574aeda998be0",
+    "stage48-admission-native-c01.tar.gz": "00ebd48c94e8c7cbf8dedb697ba7701d38f75e3c34cb0ec6fa4e03cba4add227",
+    "stage48-admission-portable-c01.tar.gz": "48c3c4a7bc641454216796790094bbaca3a428a01943f406ccf758b68e96fb7a",
+    "stage48-oracle-publication-closeout.tar.gz": "69d8354093f7d893aca91d4caa0c09e0f807a5e260ec11e4e8123b7e3140632b"
+  },
+  "qualification": "Final external metadata inventory, not the initial producer receipts."
+}

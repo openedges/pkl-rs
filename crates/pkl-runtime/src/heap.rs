@@ -312,6 +312,9 @@ struct ExecutableState {
     // from the current frame on every invocation. Never retain the first receiver.
     local_properties: BTreeMap<(usize, usize), Member>,
     local_kinds: BTreeMap<(usize, usize), crate::vm::identity::SlotKind>,
+    // ImportNode caches its successful result, not the importing receiver or
+    // activation. Distinct executable clones retain distinct node state.
+    imported_modules: BTreeMap<(usize, usize), ObjectId>,
 }
 
 impl ExecutableOwnerId {
@@ -480,6 +483,27 @@ impl Heap {
         Ok(self.executable(owner)?.local_kinds.get(&slot).copied())
     }
 
+    pub(crate) fn imported_module(
+        &self,
+        owner: ExecutableOwnerId,
+        site: (usize, usize),
+    ) -> Result<Option<ObjectId>, RuntimeError> {
+        Ok(self.executable(owner)?.imported_modules.get(&site).copied())
+    }
+
+    pub(crate) fn publish_imported_module(
+        &mut self,
+        owner: ExecutableOwnerId,
+        site: (usize, usize),
+        receiver: ObjectId,
+    ) -> Result<(), RuntimeError> {
+        self.get(receiver)?;
+        self.executable_mut(owner)?
+            .imported_modules
+            .insert(site, receiver);
+        Ok(())
+    }
+
     pub(crate) fn set_local_kind(
         &mut self,
         owner: ExecutableOwnerId,
@@ -637,6 +661,7 @@ impl Heap {
                 }
                 Entry::Executable(state) => {
                     pending.extend(state.children.values().map(|owner| owner.0));
+                    pending.extend(state.imported_modules.values().copied());
                     continue;
                 }
                 Entry::CustomThis(value) => {

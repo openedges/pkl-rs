@@ -1,0 +1,55 @@
+{
+  "scope": "Exact-byte promotion of closed actual platform, bootstrap, tooling and independent review evidence. Acquisition completion and strict compatibility remain separate. Producer histories and failures are preserved.",
+  "recordedUtc": "2026-10-23T17:24:22.612016+00:00",
+  "files": [
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-root-publication-proposal-01/archives/stage48-platforms-captures.tar.gz",
+      "repositoryPath": "reports/m2/stage48-platforms-captures.tar.gz",
+      "sha256": "7e37a8e9dda39dfeb2dcf453a448962d08759927a36e385ba552c3facb380d63",
+      "bytes": 8098365
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-root-publication-proposal-01/archives/stage48-bootstrap-captures.tar.gz",
+      "repositoryPath": "reports/m2/stage48-bootstrap-captures.tar.gz",
+      "sha256": "58232927eaa4c66790921ac8763a5e0fb3bccce67b74b364b54eb719f0795e89",
+      "bytes": 1072474
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-root-publication-proposal-01/archives/stage48-tooling-captures.tar.gz",
+      "repositoryPath": "reports/m2/stage48-tooling-captures.tar.gz",
+      "sha256": "f376415889e44c80ab47ae1e8c9b701d13bf9cc6d41deab7874f7e8e085173ef",
+      "bytes": 1041385
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-root-audit-publication-01/stage48-independent-reviews.tar.gz",
+      "repositoryPath": "reports/m2/stage48-independent-reviews.tar.gz",
+      "sha256": "dff742f58ea14fe6c6c942c0dc38a6097315133c30bb3a3465e712e9fafb3efa",
+      "bytes": 8658199
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-root-metadata-publication-01/stage48-root-metadata.tar.gz",
+      "repositoryPath": "reports/m2/stage48-root-metadata.tar.gz",
+      "sha256": "a433bf3fff9490ca495c77fcd6c3e328502a819b20bd1ee37b57ccf389008508",
+      "bytes": 2917904
+    }
+  ],
+  "metadataMembers": {
+    "platformOriginalPathsAndModes": {
+      "archive": "reports/m2/stage48-root-metadata.tar.gz",
+      "member": "root-publication/selection.json",
+      "sha256": "c52ba8a5ab713344baccacb5f6c291678e819842eccbec617e070d83ac62bb41"
+    },
+    "reviewOriginalPathsAndModes": {
+      "archive": "reports/m2/stage48-root-metadata.tar.gz",
+      "member": "audit-publication/report.json",
+      "sha256": "85fcbfef1125601bfd82b1feff900b4d8d4c61441e862391c1bf4b3e49b1261c"
+    },
+    "rootPackagingReport": {
+      "archive": "reports/m2/stage48-root-metadata.tar.gz",
+      "member": "root-publication/report.json",
+      "sha256": "76bba1b92a319e88eb624e41d71b8a1b873d5847a75dcc80cc69e301d5b7c5ee"
+    }
+  },
+  "runtimeArtifacts": "C01 release04881b69; two source-only typed bootstrap consumer changes are explicitly recorded in bootstrap capture02. No Rust changes after candidate build.",
+  "publicationDoesNotClaimGitCommit": true
+}

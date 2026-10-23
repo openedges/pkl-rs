@@ -62,6 +62,12 @@ pub struct ModuleCapabilities {
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ModuleRequestKind {
+    /// Import-node trust admission. This precedes key/URI cache lookup and is
+    /// distinct from the key's resolve/allowlist check.
+    CheckImport {
+        importer: ModuleIdentity,
+        import_uri: Arc<str>,
+    },
     Capabilities {
         module: ModuleIdentity,
     },
@@ -86,7 +92,8 @@ pub enum ModuleHostError {
     Io(IoFailure),
     /// An already constructed Host rejection; arbitrary text has no guest provenance.
     Denied(PklString),
-    /// Typed `org.pkl.core.SecurityManagerException` from module resolution.
+    /// Typed `org.pkl.core.SecurityManagerException` from import admission,
+    /// module resolution or ModuleKey.hasElement.
     /// The message is the Java exception message, not a formatted diagnostic.
     /// Source loading does not support this completion variant.
     SecurityManagerException {
@@ -111,6 +118,7 @@ impl ModuleHostError {
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ModuleCompletion {
+    ImportChecked(Result<(), ModuleHostError>),
     Capabilities(Result<ModuleCapabilities, ModuleHostError>),
     HasElement(Result<bool, ModuleHostError>),
     Resolved(Result<ResolvedModule, ModuleHostError>),
@@ -133,9 +141,98 @@ pub fn unsupported_completion(request: &ModuleRequest) -> ModuleCompletion {
     let error =
         ModuleHostError::Unsupported("No module resolver/source reader is configured.".into());
     match request.kind {
+        ModuleRequestKind::CheckImport { .. } => ModuleCompletion::ImportChecked(Err(error)),
         ModuleRequestKind::Capabilities { .. } => ModuleCompletion::Capabilities(Err(error)),
         ModuleRequestKind::HasElement { .. } => ModuleCompletion::HasElement(Err(error)),
         ModuleRequestKind::Resolve { .. } => ModuleCompletion::Resolved(Err(error)),
         ModuleRequestKind::LoadSource { .. } => ModuleCompletion::Source(Err(error)),
     }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum StdlibKind {
+    Singleton(&'static str),
+    Cached,
+    Missing,
+}
+
+/// This classification follows ModuleCache's exact switch, independently of
+/// the available source catalog and of which external bindings are implemented.
+pub(crate) fn stdlib_kind(uri: &str) -> Option<StdlibKind> {
+    uri.strip_prefix("pkl:")?;
+    let name = crate::host::resources::decoded_scheme_specific_part(uri);
+    let canonical = [
+        "pkl:analyze",
+        "pkl:base",
+        "pkl:Benchmark",
+        "pkl:Command",
+        "pkl:jsonnet",
+        "pkl:math",
+        "pkl:pklbinary",
+        "pkl:platform",
+        "pkl:project",
+        "pkl:ref",
+        "pkl:reflect",
+        "pkl:release",
+        "pkl:semver",
+        "pkl:settings",
+        "pkl:test",
+        "pkl:xml",
+    ]
+    .into_iter()
+    .find(|candidate| name.as_ref().and_then(PklString::as_str) == Some(&candidate[4..]));
+    Some(if let Some(canonical) = canonical {
+        StdlibKind::Singleton(canonical)
+    } else if include_str!("stdlib/modules.txt")
+        .lines()
+        .any(|candidate| candidate == uri)
+    {
+        StdlibKind::Cached
+    } else {
+        StdlibKind::Missing
+    })
+}
+
+/// Explicit opt-in to the pinned default import trust policy and bundled key
+/// resolution. This helper performs no I/O. A custom Host is never bypassed by
+/// the VM; its caller chooses whether to delegate to this default profile.
+pub fn default_completion(request: &ModuleRequest) -> Option<ModuleCompletion> {
+    match &request.kind {
+        ModuleRequestKind::CheckImport {
+            importer,
+            import_uri,
+        } => {
+            let result = (|| {
+                let from = crate::host::resources::module_trust_level(&importer.resolved_uri)?;
+                let to = crate::host::resources::module_trust_level(import_uri)?;
+                if from < to {
+                    return Err(ModuleHostError::SecurityManagerException { message: Some(format!(
+                        "Refusing to import module `{import_uri}` because importing module `{}` has an insufficient trust level.",
+                        importer.resolved_uri).into()) });
+                }
+                Ok(())
+            })();
+            Some(ModuleCompletion::ImportChecked(result))
+        }
+        ModuleRequestKind::Resolve {
+            import_uri,
+            original_uri,
+            ..
+        } if stdlib_kind(import_uri) == Some(StdlibKind::Cached) && import_uri == original_uri => {
+            // The default allowlist includes the exact lowercase pkl:
+            // scheme. StandardLibrary.resolve returns the same key.
+            Some(ModuleCompletion::Resolved(Ok(ResolvedModule {
+                original_uri: original_uri.clone(),
+                resolved_uri: import_uri.clone(),
+                source_uri: import_uri.clone(),
+            })))
+        }
+        _ => None,
+    }
+}
+
+/// Pure evaluator profile: explicit default policy, with other capabilities
+/// still reported as unavailable rather than attempted by the runtime.
+pub fn default_or_unsupported_completion(request: &ModuleRequest) -> ModuleCompletion {
+    default_completion(request).unwrap_or_else(|| unsupported_completion(request))
 }

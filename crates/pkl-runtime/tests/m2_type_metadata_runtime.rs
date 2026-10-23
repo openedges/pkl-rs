@@ -1,5 +1,7 @@
 //! Declaration identity, expansion, and function metadata. Java byte comparisons
 //! are collected separately by the language and persistent sequence harnesses.
+#[path = "support/module_policy.rs"]
+mod module_policy;
 use pkl_runtime::heap::LazyState;
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::resolve_module;
@@ -12,7 +14,13 @@ fn finish(vm: &mut Vm) -> Result<Value, RuntimeError> {
             VmPoll::Ready(result) => return result,
             VmPoll::Yielded => {}
             VmPoll::Log(_) => panic!("unexpected logger request"),
-            VmPoll::Module(_) => panic!("unexpected module request"),
+            VmPoll::Module(request) => vm
+                .complete_module(
+                    request.id,
+                    pkl_runtime::modules::default_completion(&request)
+                        .expect("default module policy"),
+                )
+                .unwrap(),
             VmPoll::Pending(_) => panic!("unexpected Host request"),
         }
     }
@@ -20,7 +28,8 @@ fn finish(vm: &mut Vm) -> Result<Value, RuntimeError> {
 }
 fn module(source: &str) -> (Vm, ObjectId) {
     let parsed = parse_module(source).unwrap();
-    let program = compile_module(&resolve_module(&parsed).unwrap()).unwrap();
+    let mut program = compile_module(&resolve_module(&parsed).unwrap()).unwrap();
+    module_policy::register(std::sync::Arc::make_mut(&mut program), source);
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     let module = finish(&mut vm).unwrap().as_object().unwrap();

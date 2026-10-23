@@ -1,5 +1,7 @@
 //! Lossless language strings remain distinct before the explicit byte boundary.
 //! Java compatibility is established separately by the recorded oracle comparisons.
+#[path = "support/module_policy.rs"]
+mod module_policy;
 use std::sync::Arc;
 
 use pkl_runtime::host::{HostPoll, HostSession};
@@ -104,6 +106,7 @@ fn program(source: &str) -> (Arc<Program>, [usize; 3]) {
     let mut program = (*compile_module(&resolve_module(&parse_module(source).unwrap()).unwrap())
         .unwrap())
     .clone();
+    module_policy::register(&mut program, source);
     let entries = ["joined", "inspect", "applied"].map(|name| {
         let block = program.blocks.len();
         program
@@ -119,6 +122,14 @@ fn event(session: &mut HostSession, module: &Value, now: u64) -> HostPoll {
         session.collect(std::slice::from_ref(module));
         match session.poll(now, 1) {
             HostPoll::Yielded => {}
+            HostPoll::Module { token, request } => session
+                .complete_module(
+                    &token,
+                    pkl_runtime::modules::default_completion(&request)
+                        .expect("default module policy"),
+                    now,
+                )
+                .unwrap(),
             event => return event,
         }
     }

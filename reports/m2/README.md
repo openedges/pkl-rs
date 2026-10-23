@@ -1,5 +1,42 @@
 # M2 language evidence
 
+The [Stage48 C01 implementation checkpoint](stage48-implementation-checkpoint.json)
+adds shared typed import admission, successful import-site caches, explicit
+default-policy delegation and authored imports for qualified Ref type guards.
+All five required local Rust checks pass, with the recorded source qualifications.
+The frozen candidate binds 53,236 files and 11 literal symbolic links; four early
+intermediate Rust source versions remain hash-only.
+
+Native policy comparisons match Java in 440 selected raw API calls. Another
+212 custom-SPI calls remain unexecuted, and the complete event/counter gate fails
+for all 52 supplied-primary sessions. Actual Node and Chromium each match the
+84 policy API calls while retaining full lifecycle failures in all 12 sessions.
+These overlapping observations are not unique features or completion rates.
+
+Actual Node and Chromium also match 860 renderer, 1,008 Resource and 252 module
+preparation calls per target. ModuleInfo, security and guest-catch comparisons
+retain their individual boundary exclusions. Loader and inheritance API channels
+match, but their strict counter gates fail because new CheckImport requests are
+outside the original resolve/source-only fixture counter scope. Original requests
+and failed outcomes remain intact. The primitive comparison retains both known
+Java regex mismatches.
+
+The typed bootstrap provider uses Resource text completions and the shared read
+cache. On the unchanged 600-call Java input, each portable target has 402 passes,
+144 unsupported observations and 54 mismatches. The earlier legacy-provider
+result, 274/144/182, remains separate. The runtime artifacts are unchanged between
+these two provider experiments.
+
+[Core captures](stage48-core-captures.json) and
+[platform/tooling captures](stage48-platform-captures.json) retain raw failures,
+source and artifact bindings, and independent reviews. General ModuleKey
+factories, key-kind and isCached rules, eager import-clause factory selection,
+primary/query/repl lifecycle, URI equality and import globs remain required work.
+Stage48 full selected regression has not been acquired for this checkpoint.
+The separate Stage47 acquisition runs from its own fixed commit; the latest
+published full selected result remains Stage46's 3,650 of 3,664 cases.
+**M2, full product compatibility and the performance targets remain incomplete.**
+
 The [Stage47 C06 implementation checkpoint](stage47-implementation-checkpoint.json)
 adds shared JSON rendering, RenderDirective and property converters, source-backed
 JSON annotations, collection join, and reference identity used by selected

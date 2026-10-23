@@ -3,6 +3,8 @@
 //! stdlib annotations; transient objects and terminal-zero assertions stay separate.
 #[path = "support/eager_base.rs"]
 mod eager_base;
+#[path = "support/module_policy.rs"]
+mod module_policy;
 use eager_base::Baseline;
 use std::sync::Arc;
 
@@ -33,6 +35,7 @@ checkedValue = checked.getData().text
 fn setup(source: &str, members: &[&str]) -> (HostSession, Value, Vec<usize>) {
     let parsed = parse_module(source).unwrap();
     let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    module_policy::register(&mut program, source);
     let module_entry = program.entry;
     let entries = members
         .iter()
@@ -56,6 +59,12 @@ fn event(session: &mut HostSession, now: u64) -> HostPoll {
     for _ in 0..50_000 {
         match session.poll(now, 1) {
             HostPoll::Yielded => {
+                session.collect(&[]);
+            }
+            HostPoll::Module { token, request } => {
+                let completion = pkl_runtime::modules::default_completion(&request)
+                    .expect("explicit default module policy");
+                session.complete_module(&token, completion, now).unwrap();
                 session.collect(&[]);
             }
             result => return result,
@@ -140,8 +149,10 @@ fn suspended_rendering_preserves_reference_metadata_during_reentry_gc_and_retry(
     // Keep the exact class/annotation/Reference cache closure above this
     // initialized module. Base-owned annotation prototypes and descriptors
     // are shared; transient access lists and custom-this slots are reclaimed.
-    assert_eq!(initialized.added_values(session.collect(&[]), 1), 9);
-    assert_eq!(initialized.added_values(session.collect(&[]), 1), 9);
+    // The module-level Reference type already initialized ref during setup:
+    // its module, two annotations and Access class belong to that baseline.
+    assert_eq!(initialized.added_values(session.collect(&[]), 1), 5);
+    assert_eq!(initialized.added_values(session.collect(&[]), 1), 5);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -177,8 +188,10 @@ fn domain_constraint_continuations_keep_reference_and_custom_this_through_gc() {
     // Keep the exact class/annotation/Reference cache closure above this
     // initialized module. Base-owned annotation prototypes and descriptors
     // are shared; transient access lists and custom-this slots are reclaimed.
-    assert_eq!(initialized.added_values(session.collect(&[]), 4), 8);
-    assert_eq!(initialized.added_values(session.collect(&[]), 4), 8);
+    // The eager Reference type's four ref bootstrap values are in the setup
+    // baseline, while these constraint and value roots remain source-specific.
+    assert_eq!(initialized.added_values(session.collect(&[]), 4), 4);
+    assert_eq!(initialized.added_values(session.collect(&[]), 4), 4);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -291,8 +304,10 @@ fn equality_retains_pending_domain_and_data_comparisons_and_retries_only_failed_
     // Keep the exact class/annotation/Reference cache closure above this
     // initialized module. Base-owned annotation prototypes and descriptors
     // are shared; transient access lists and custom-this slots are reclaimed.
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), 15);
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), 15);
+    // This source has no module-level Reference type: its lazy Domain class
+    // adds the authored ref import-site executable after setup.
+    assert_eq!(initialized.added_values(session.collect(&[]), 1), 15);
+    assert_eq!(initialized.added_values(session.collect(&[]), 1), 15);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);

@@ -78,6 +78,12 @@ fn java_resource_primary_calls_keep_complete_channels_counts_and_gc_roots() {
                     probe.collect();
                     match event.kind {
                         "yield" => (),
+                        "module-request" => assert!(
+                            probe
+                                .complete_default_module(event.token.as_deref().unwrap(), 0)
+                                .unwrap(),
+                            "explicit default module policy"
+                        ),
                         "read" => {
                             let token = event.token.unwrap();
                             let uri = probe.resolved_read_uri(&token).unwrap();

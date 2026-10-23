@@ -45,7 +45,22 @@ pub fn identity(value: Value) -> Result<Value, RuntimeError> {
 pub fn evaluate_member(source: &str, member: &str) -> Result<Value, String> {
     let syntax = crate::parser::parse_module(source).map_err(|e| e.to_string())?;
     let resolved = crate::resolver::resolve_module(&syntax).map_err(|e| e.to_string())?;
-    let program = crate::vm::compile_module(&resolved).map_err(|e| e.to_string())?;
+    let mut program = crate::vm::compile_module(&resolved).map_err(|e| e.to_string())?;
+    let module_name = program.module_name.clone();
+    Arc::make_mut(&mut program)
+        .register_primary_source(
+            Arc::new(crate::value::RuntimeSource {
+                text: source.into(),
+                uri: "repl:text".into(),
+                module_name,
+                line_anchors: false,
+            }),
+            crate::modules::ModuleIdentity {
+                original_uri: "repl:text".into(),
+                resolved_uri: "repl:text".into(),
+            },
+        )
+        .map_err(|e| e.to_string())?;
     let entry = program.entry;
     let mut vm = Vm::new(program);
     vm.start(entry, vec![]).map_err(|e| e.to_string())?;
@@ -64,11 +79,24 @@ pub fn evaluate_member(source: &str, member: &str) -> Result<Value, String> {
 }
 
 fn finish(vm: &mut Vm) -> Result<Value, RuntimeError> {
-    match vm.poll(1_000_000) {
-        VmPoll::Ready(value) => value,
-        VmPoll::Yielded => Err(unsupported("probe instruction limit exceeded")),
-        VmPoll::Pending(_) | VmPoll::Log(_) | VmPoll::Module(_) => {
-            Err(unsupported("use HostSession for asynchronous evaluation"))
+    let start = vm.instructions_executed();
+    loop {
+        let remaining =
+            1_000_000usize.saturating_sub((vm.instructions_executed() - start) as usize);
+        if remaining == 0 {
+            return Err(unsupported("probe instruction limit exceeded"));
+        }
+        match vm.poll(remaining) {
+            VmPoll::Ready(value) => return value,
+            VmPoll::Yielded => return Err(unsupported("probe instruction limit exceeded")),
+            VmPoll::Module(request) => {
+                let completion = crate::modules::default_completion(&request)
+                    .ok_or_else(|| unsupported("use HostSession for asynchronous evaluation"))?;
+                vm.complete_module(request.id, completion)?;
+            }
+            VmPoll::Pending(_) | VmPoll::Log(_) => {
+                return Err(unsupported("use HostSession for asynchronous evaluation"));
+            }
         }
     }
 }
@@ -241,6 +269,21 @@ impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
     fn from(request: crate::modules::ModuleRequest) -> Self {
         use crate::modules::ModuleRequestKind;
         match request.kind {
+            ModuleRequestKind::CheckImport {
+                importer,
+                import_uri,
+            } => Self {
+                id: request.id.to_string(),
+                kind: "check-import",
+                importer_original_uri: Some(importer.original_uri.to_string()),
+                importer_resolved_uri: Some(importer.resolved_uri.to_string()),
+                import_uri: Some(import_uri.to_string()),
+                // No ModuleKey has been selected yet. Keep the transport's
+                // required target field equal to the prepared edge URI.
+                original_uri: import_uri.to_string(),
+                resolved_uri: None,
+                source_uri: None,
+            },
             ModuleRequestKind::Capabilities { module } => Self {
                 id: request.id.to_string(),
                 kind: "capabilities",
@@ -711,6 +754,37 @@ impl SourceProbe {
             )),
             now,
         )
+    }
+
+    pub fn complete_module_import_check(
+        &mut self,
+        token: &str,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.complete_module(
+            token,
+            crate::modules::ModuleCompletion::ImportChecked(Ok(())),
+            now,
+        )
+    }
+
+    pub fn reject_module_import_check(
+        &mut self,
+        token: &str,
+        kind: &str,
+        message: Option<crate::value::PklString>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        let failure = Self::module_failure(kind, message)?;
+        self.complete_module(
+            token,
+            crate::modules::ModuleCompletion::ImportChecked(Err(failure)),
+            now,
+        )
+    }
+
+    pub fn complete_default_module(&mut self, token: &str, now: u32) -> Result<bool, RuntimeError> {
+        self.session.complete_default_module(token, now.into())
     }
     pub fn complete_module_has_element(
         &mut self,

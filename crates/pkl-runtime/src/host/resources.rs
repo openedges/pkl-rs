@@ -138,6 +138,70 @@ pub(crate) fn cache_key(uri: &str) -> CacheKey {
     }
 }
 
+/// SecurityManagers.getDefaultTrustLevel uses the resolved module URI, not a
+/// diagnostic URI or resource-reader key. The nested marker uses decoded SSP;
+/// other jar URLs are peeled without recursion or rewriting the embedded URI.
+pub(crate) fn module_trust_level(uri: &str) -> Result<i32, crate::modules::ModuleHostError> {
+    let mut text = uri;
+    loop {
+        let parsed = ResourceUri::parse(text).map_err(|_| {
+            crate::modules::ModuleHostError::Unsupported(
+                "Default module trust requires a valid absolute URI.".into(),
+            )
+        })?;
+        return Ok(match parsed.scheme.as_deref() {
+            Some("repl") => 40,
+            Some("file") => {
+                if parsed.authority.as_deref().is_some_and(|authority| {
+                    !authority.is_empty() && server_authority(authority).is_some()
+                }) {
+                    10
+                } else {
+                    30
+                }
+            }
+            Some("jar") => {
+                let nested = decoded_scheme_specific_part(text)
+                    .and_then(|part| part.as_str().map(|part| part.starts_with("nested:")))
+                    .unwrap_or(false);
+                text = &text[4..];
+                if nested {
+                    20
+                } else {
+                    continue;
+                }
+            }
+            Some("modulepath") => 20,
+            Some("pkl") => 0,
+            Some(_) => 10,
+            None => {
+                return Err(crate::modules::ModuleHostError::Unsupported(
+                    "Default module trust requires an absolute URI.".into(),
+                ));
+            }
+        });
+    }
+}
+
+/// URI.getSchemeSpecificPart decodes escapes and excludes the fragment. The
+/// original URI spelling remains separate for trust events and cache keys.
+pub(crate) fn decoded_scheme_specific_part(uri: &str) -> Option<crate::value::PklString> {
+    ResourceUri::parse(uri).ok()?;
+    let raw = uri.split_once(':')?.1.split('#').next()?;
+    let mut bytes = Vec::with_capacity(raw.len());
+    let mut index = 0;
+    while index < raw.len() {
+        if raw.as_bytes()[index] == b'%' {
+            bytes.push(u8::from_str_radix(&raw[index + 1..index + 3], 16).ok()?);
+            index += 3;
+        } else {
+            bytes.push(raw.as_bytes()[index]);
+            index += 1;
+        }
+    }
+    Some(crate::resources::decode_utf8(&bytes))
+}
+
 fn fold_escapes(text: &str) -> String {
     let mut bytes = text.as_bytes().to_vec();
     let mut index = 0;

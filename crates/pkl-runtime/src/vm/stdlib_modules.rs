@@ -4,19 +4,17 @@
 use super::*;
 use crate::modules::{ModuleIdentity, UnitId};
 use crate::syntax::ExprKind;
+use crate::value::RuntimeSource;
 
 impl Vm {
-    pub(super) fn import_stdlib(&mut self, uri: &str) -> Result<bool, RuntimeError> {
-        let source = match uri {
+    pub(super) fn stdlib_source(&self, uri: &str) -> Result<Arc<RuntimeSource>, RuntimeError> {
+        Ok(match uri {
             "pkl:base" => crate::stdlib_sources::base(),
             "pkl:test" => crate::stdlib_sources::test(),
             "pkl:ref" => crate::stdlib_sources::reference(),
             "pkl:json" => crate::stdlib_sources::json(),
             _ if uri.starts_with("pkl:") => {
-                if include_str!("../stdlib/modules.txt")
-                    .lines()
-                    .any(|name| name == uri)
-                {
+                if crate::modules::stdlib_kind(uri) != Some(crate::modules::StdlibKind::Missing) {
                     return Err(RuntimeError::new(
                         ErrorKind::Unsupported,
                         format!("Standard-library module `{uri}` is not implemented."),
@@ -24,7 +22,12 @@ impl Vm {
                 }
                 let mut error = RuntimeError::new(
                     ErrorKind::Type,
-                    format!("Cannot find standard library module `{uri}`."),
+                    PklString::from("Cannot find standard library module `pkl:")
+                        .concat(
+                            &crate::host::resources::decoded_scheme_specific_part(uri)
+                                .unwrap_or_else(|| uri.strip_prefix("pkl:").unwrap_or(uri).into()),
+                        )
+                        .concat(&"`.".into()),
                 );
                 error.hint = Some(
                     format!(
@@ -37,16 +40,26 @@ impl Vm {
                 );
                 return Err(error);
             }
-            _ => return Ok(false),
-        };
+            _ => return Err(invalid("not a bundled standard-library URI")),
+        })
+    }
+
+    pub(super) fn stdlib_entry(&mut self, uri: &str) -> Result<usize, RuntimeError> {
+        let source = self.stdlib_source(uri)?;
+        let program = Arc::make_mut(&mut self.program);
+        let unit = append_definition(program, uri, source)?;
+        Ok(program.units[unit.0 as usize].entry)
+    }
+
+    // Implicit prelude bindings are not authored ImportNodes and have no import
+    // edge. Explicit imports go through ModuleRun before reaching this source.
+    pub(super) fn import_stdlib(&mut self, uri: &str) -> Result<bool, RuntimeError> {
         if let Some(cached) = self.modules_original.get(uri).cloned() {
             let value = self.module_cached(cached)?;
             self.stack.push(value);
             return Ok(true);
         }
-        let program = Arc::make_mut(&mut self.program);
-        let unit = append_definition(program, uri, source)?;
-        let entry = program.units[unit.0 as usize].entry;
+        let entry = self.stdlib_entry(uri)?;
         // The ordinary module initializer publishes its receiver before forcing
         // pinned metadata and supported declarations, just like loaded modules.
         self.push_module_initializer(entry, None);
@@ -346,6 +359,20 @@ mod tests {
                 VmPoll::Yielded => {
                     vm.collect(&[]);
                 }
+                VmPoll::Module(request) => {
+                    assert!(
+                        matches!(
+                            request.kind,
+                            crate::modules::ModuleRequestKind::CheckImport { .. }
+                        ),
+                        "singleton imports bypass only key resolution"
+                    );
+                    vm.complete_module(
+                        request.id,
+                        crate::modules::default_completion(&request).unwrap(),
+                    )
+                    .unwrap();
+                }
                 event => panic!("stdlib initialization leaked Host work: {event:?}"),
             }
         }
@@ -353,7 +380,7 @@ mod tests {
     }
 
     #[test]
-    fn pinned_annotations_and_base_output_initialize_in_the_same_heap_without_host_effects() {
+    fn pinned_annotations_and_base_output_share_heap_with_explicit_default_import_policy() {
         let parsed = crate::parser::parse_module(
             "base = import(\"pkl:base\")\ntesting = import(\"pkl:test\")\n",
         )

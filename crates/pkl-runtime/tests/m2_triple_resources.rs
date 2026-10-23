@@ -22,6 +22,13 @@ fn next(p: &mut SourceProbe) -> SourceEvent {
     for _ in 0..100_000 {
         let e = p.poll(0, 1).unwrap();
         p.collect();
+        if e.kind == "module-request"
+            && matches!(e.module.as_ref().unwrap().kind, "check-import" | "resolve")
+            && p.complete_default_module(e.token.as_deref().unwrap(), 0)
+                .unwrap()
+        {
+            continue;
+        }
         if e.kind != "yield" {
             return e;
         }

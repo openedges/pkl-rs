@@ -3,6 +3,7 @@
 import {runResourceCase, compareResourceCase} from './resource-session.mjs';
 
 const requestFields = {
+  'check-import': ['kind', 'originalUri', 'importUri', 'importerOriginalUri', 'importerResolvedUri'],
   capabilities: ['kind', 'originalUri', 'importerOriginalUri', 'importerResolvedUri'],
   'has-element': ['kind', 'originalUri', 'importerOriginalUri', 'importerResolvedUri'],
   resolve: ['kind', 'originalUri', 'importUri', 'importerOriginalUri', 'importerResolvedUri'],
@@ -36,7 +37,13 @@ function failure(value) {
     throw Error('invalid typed module failure');
 }
 function completion(kind, result) {
-  if (result?.kind === 'failure') { failure(result); return; }
+  if (result?.kind === 'failure') {
+    failure(result);
+    if (kind === 'check-import' && !['denied', 'unsupported', 'security-manager-exception'].includes(result.errorKind))
+      throw Error('invalid import-check failure provenance');
+    return;
+  }
+  if (kind === 'check-import' && result?.kind === 'import-checked') return;
   if (kind === 'capabilities' && result?.kind === 'capabilities'
       && ['local', 'hierarchical', 'fragmentPaths'].every(name => typeof result[name] === 'boolean')) return;
   if (kind === 'has-element' && result?.kind === 'has-element' && typeof result.exists === 'boolean') return;
@@ -88,11 +95,13 @@ function tables(fixture) {
 }
 function complete(session, token, request, result) {
   if (result.kind === 'failure') {
-    if (request.kind === 'capabilities' || request.kind === 'has-element')
+    if (request.kind === 'check-import') session.rejectModuleImportCheck(token, result.errorKind, result.message, 0);
+    else if (request.kind === 'capabilities' || request.kind === 'has-element')
       session.rejectModulePreparation(token, request.kind === 'has-element', result.errorKind, result.message, 0);
     else if (request.kind === 'resolve') session.rejectModuleResolution(token, result.errorKind, result.message, 0);
     else session.rejectModuleSource(token, result.errorKind, result.message, 0);
-  } else if (result.kind === 'capabilities')
+  } else if (result.kind === 'import-checked') session.completeModuleImportCheck(token, 0);
+  else if (result.kind === 'capabilities')
     session.completeModuleCapabilities(token, result.local, result.hierarchical, result.fragmentPaths, 0);
   else if (result.kind === 'has-element') session.completeModuleHasElement(token, result.exists, 0);
   else if (result.kind === 'resolve')
@@ -121,7 +130,16 @@ export function runModulePreparationCase(api, fixture, budget = 7) {
           if (typeof request?.id !== 'string' || !/^[0-9]+$/.test(request.id))
             throw Error('invalid decimal module request ID');
           const provider = modules.get(requestKey(request));
-          if (!provider) throw Error('unconfigured exact module request: ' + JSON.stringify(request));
+          if (!provider) {
+            if (request.kind !== 'check-import' && request.kind !== 'resolve')
+              throw Error('unconfigured exact module request: ' + JSON.stringify(request));
+            target.collect(); pendingCollections++;
+            if (target.completeDefaultModule(event.token, 0) !== true)
+              throw Error('unconfigured exact module request: ' + JSON.stringify(request));
+            // These are actual new Host requests, not synthesized Java events.
+            requests[requests.length - 1].provider = 'pkl-0.32.0-default';
+            return {kind: 'yield'};
+          }
           target.collect(); pendingCollections++;
           events[callIndex].push(...provider.observableEvents);
           complete(target, event.token, request, provider.result);
@@ -143,6 +161,7 @@ export function runModulePreparationCase(api, fixture, budget = 7) {
   }}};
   const actual = runResourceCase(wrappedApi, fixture, budget);
   actual.moduleRequests = requests;
+  actual.modulePolicy = 'exact-fixture-providers-then-pkl-0.32.0-default';
   actual.observableEventsByCall = events;
   actual.architecture.pendingModuleOrDeniedReadCollections = pendingCollections;
   for (const call of actual.calls) call.observableEvents = events[call.index];

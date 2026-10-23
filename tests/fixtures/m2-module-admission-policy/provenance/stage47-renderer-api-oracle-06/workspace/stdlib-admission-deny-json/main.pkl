@@ -1,0 +1,9 @@
+import "pkl:json"
+import "pkl:base"
+import "pkl:ref"
+import "pkl:test"
+stable = 7
+jsonClass = json.Property
+baseClass = base.Int
+refClass = ref.Domain
+testMessage = test.catch(() -> throw("test-message"))

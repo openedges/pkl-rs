@@ -202,6 +202,9 @@ impl Host {
                 "log" => self.log(event, probe),
                 "module-request" => {
                     let token = event.token.unwrap();
+                    if probe.complete_default_module(&token, now).unwrap() {
+                        continue;
+                    }
                     let request = event.module.unwrap();
                     assert_eq!(request.original_uri, "catch:/child");
                     match request.kind {
@@ -455,6 +458,13 @@ fn next(probe: &mut SourceProbe, now: u32) -> SourceEvent {
     for _ in 0..200_000 {
         let event = probe.poll(now, 1).unwrap();
         probe.collect();
+        if event.kind == "module-request"
+            && probe
+                .complete_default_module(event.token.as_deref().unwrap(), now)
+                .unwrap()
+        {
+            continue;
+        }
         if event.kind != "yield" {
             return event;
         }

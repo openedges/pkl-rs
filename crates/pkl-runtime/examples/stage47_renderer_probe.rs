@@ -58,6 +58,12 @@ fn capture(
         }
     };
     let shared_resource_bytes: Arc<[u8]> = Arc::from([1u8, 2, 3]);
+    write(
+        out,
+        "module-policy-profile.bin",
+        "shared-default-import-trust-and-bundled-resolution-v1\n",
+    );
+    let mut module_requests = 0usize;
     let mut reads = 0usize;
     let mut attempts = HashMap::<String, usize>::new();
     let mut collections = 0usize;
@@ -110,6 +116,22 @@ fn capture(
                 collections += 1;
                 match event.kind {
                     "yield" => {}
+                    "module-request" => {
+                        let token = event.token.as_deref().expect("module token");
+                        let request = probe.module_request(token).expect("typed module request");
+                        write(
+                            out,
+                            &format!("module-{module_requests}.request.bin"),
+                            format!("{request:?}"),
+                        );
+                        module_requests += 1;
+                        assert!(
+                            probe
+                                .complete_default_module(token, 0)
+                                .expect("default module transport"),
+                            "unsupported request in explicitly configured default module profile"
+                        );
+                    }
                     "read" => {
                         reads += 1;
                         let token = event.token.expect("read token");

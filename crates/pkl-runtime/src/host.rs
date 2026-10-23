@@ -351,6 +351,26 @@ impl HostSession {
         self.vm.complete_module(request, completion)
     }
 
+    /// Explicit default policy delegation. An unsupported request returns false
+    /// without consuming it; stale requests and terminal deadlines still fail.
+    pub fn complete_default_module(
+        &mut self,
+        token: &str,
+        now_ms: u64,
+    ) -> Result<bool, RuntimeError> {
+        self.open()?;
+        self.clock(now_ms)?;
+        if self.expire(now_ms) {
+            return Err(self.terminal.clone().unwrap());
+        }
+        let request = self.module_request(token)?;
+        let Some(completion) = crate::modules::default_completion(&request) else {
+            return Ok(false);
+        };
+        self.vm.complete_module(request.id, completion)?;
+        Ok(true)
+    }
+
     /// Abort inventory for module resolution/source I/O, separate from reads.
     pub fn drain_cancelled_modules(&mut self) -> Vec<String> {
         std::mem::take(&mut self.cancelled_modules)

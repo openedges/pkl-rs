@@ -1,0 +1,47 @@
+{
+  "scope": "Post-audit evidence only; runtime/fixture/index source inputs audited under tree477cfe7a remain unchanged. This publication does not claim an actual Git commit yet.",
+  "recordedUtc": "2026-10-23T17:54:47.296992+00:00",
+  "auditedTree": "477cfe7a84f5134526cb610de8eaf212a4bd82f0",
+  "sourceAuditReportSha256": "2fa9b50a6f082aa7c509409eede42dd953469001ed6934c4b578c91346aec892",
+  "archive": {
+    "path": "reports/m2/stage48-final-closeout.tar.gz",
+    "sha256": "fe1cb06772a32c20e1b4c741a17ef637494bb20a96d4044ba5afdcf5de31c9ff",
+    "bytes": 4981767
+  },
+  "sourceIndexMember": "SOURCE_INDEX.json",
+  "capturedFiles": 69,
+  "commands": [
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-final-closeout-01/staging",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-final-closeout-01/stage48-final-closeout.tar.gz"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-final-closeout-01/stage48-final-closeout.tar.gz"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "originalChanges": [],
+  "postAuditAddedFiles": [
+    {
+      "path": "reports/m2/stage48-final-closeout.tar.gz",
+      "sha256": "fe1cb06772a32c20e1b4c741a17ef637494bb20a96d4044ba5afdcf5de31c9ff",
+      "bytes": 4981767
+    },
+    {
+      "path": "reports/m2/stage48-implementation-source-binding.json",
+      "sha256": "2fa9b50a6f082aa7c509409eede42dd953469001ed6934c4b578c91346aec892",
+      "bytes": 13141
+    }
+  ]
+}

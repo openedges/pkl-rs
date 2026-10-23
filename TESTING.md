@@ -159,6 +159,18 @@ binding artifacts. New browser acquisitions explicitly launch the executable
 whose identity is recorded. Historical default-headless captures do not establish
 that their recorded Chromium installation path was the executed binary.
 
+The [module admission policy fixtures](docs/m2-module-admission.md) preserve
+84 original Java API calls and 280 ordered events, including lifecycle events
+that the current supplied-primary Rust session does not reproduce:
+
+```sh
+python3 tools/module_admission_policy_fixtures.py --fixtures tests/fixtures/m2-module-admission-policy
+python3 -m unittest discover -s tools/tests -p 'test_module_admission_policy_fixtures.py' -v
+```
+
+Fixture integrity, raw API equality and full policy event/counter equality are
+separate checks. Missing lifecycle events remain failed comparisons.
+
 M2 language implementation and verification are in progress. The
 [M2 contract](docs/m2-language.md) separates whole-language requirement accounting
 from the executable selection:

@@ -1128,3 +1128,61 @@ allocating an empty metadata box does not change it. This representation preserv
 the shared diagnostic text, source spans, UTF-16 widths and hint precedence.
 Selected differential regressions do not establish complete reference identity,
 standard-module lifecycle, renderer coverage or the performance targets.
+
+### Import admission and module cache ownership
+
+Authored imports execute a typed `CheckImport` Host request before consulting
+module URI caches. The request retains the importing module's original and
+resolved identities and the prepared target URI. Trust checks use the resolved
+importer. A successful import node caches the returned module in its executable
+state; a later invocation of that same site returns the saved receiver before
+another admission request. Distinct sites still check their edges even when the
+URI cache already contains the module. Failure does not publish a successful
+site result. A site that returned a partial receiver during a cycle can retain
+that success after another initialization path stores a module failure.
+
+Singleton classification and authored edge identity are separate. The pinned
+static-module list includes `pkl:base`, `pkl:ref` and `pkl:test`; those modules
+bypass ModuleKey resolution, but authored imports still check their import
+edges. Decoded scheme-specific names select the canonical singleton receiver,
+so supported escaped names and fragments do not create another singleton.
+General bundled modules such as `pkl:json` use original-key cache lookup,
+`Resolve`, resolved-key cache lookup, and initialization from the internal pinned
+source arena. A resolved-key cache hit does not seed a new original alias.
+Bundled source bytes are not supplied by an external `LoadSource` callback.
+Qualified external Ref types force their authored import alias before applying
+the existing specialized type metadata and constraints.
+
+The native, N-API and Wasm surfaces use the same requests and continuations.
+`completeModuleImportCheck` and `rejectModuleImportCheck` complete admission.
+`completeDefaultModule` is an explicit opt-in to the shared default import trust
+and supported bundled-resolution profile. It returns `false` for an unsupported
+pending request without consuming its token; invalid tokens, deadlines and
+terminal sessions still fail normally. Custom providers run before delegation.
+JavaScript adapters do not implement trust rules or silently allow every import.
+They preserve actual module requests separately from their existing projected
+observations. Raw Host rejection remains distinct from typed
+`SecurityManagerException` completion. Typed security failures from admission,
+resolution and `HasElement` retain guest exception provenance; source and
+capability phases reject that completion kind without consuming the request.
+
+Import continuations and successful executable-site entries trace the imported
+receiver. They do not retain a temporary importing activation. Module URI caches
+and VM-owned static executable descriptors have separate roots. Architectural
+regressions exercise temporary receiver reclamation, repeatable retained graph
+sizes, reentry and error retry, pending-phase cancellation, stale tokens and zero
+slots after closure. Source-specific lifecycle baselines account for qualified
+Ref type initialization occurring before the first user operation. The four-value
+bootstrap attribution is derived from source (module, two annotations and Access
+class), not an object-ID dump. Actual tests separately verify the exact retained
+counts and unchanged Host/deadline/close assertions.
+
+The supplied-primary SourceSession profile does not reproduce the complete Java
+primary-module and per-expression module lifecycle. Custom ModuleKey factories,
+key-kind dispatch independent of URI spelling, complete `isCached` behavior,
+module URI equality, import globs and eager import-clause factory selection remain
+required work. The existing triple-dot preparation protocol does not close the
+clause-factory gap: Java selects a key while constructing an import clause even
+when its runtime edge is never executed. Public evaluator policy counters and
+full ordered event traces remain separate from selected API output comparisons.
+This implementation does not establish full module-policy or M2 compatibility.

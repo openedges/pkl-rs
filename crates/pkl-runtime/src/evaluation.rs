@@ -112,6 +112,20 @@ pub fn scalar_expressions_text_with_options(
         .any(|expression| expression == "output.text")
         .then(|| session::append_output_entry(program_mut, "text"));
     let entry = program.entry;
+    std::sync::Arc::make_mut(&mut program)
+        .register_primary_source(
+            std::sync::Arc::new(crate::value::RuntimeSource {
+                text: source_text.into(),
+                uri: uri.into(),
+                module_name: name.into(),
+                line_anchors: false,
+            }),
+            crate::modules::ModuleIdentity {
+                original_uri: uri.into(),
+                resolved_uri: uri.into(),
+            },
+        )
+        .map_err(|error| runtime_error_text(source, uri, name, expression, error, None))?;
     let mut vm = Vm::with_context(
         program,
         crate::logging::EvaluationContext {
@@ -263,9 +277,10 @@ fn poll(vm: &mut Vm) -> Result<Value, RuntimeError> {
                     "the M2 probe does not supply a Host",
                 ));
             }
-            VmPoll::Module(request) => {
-                vm.complete_module(request.id, crate::modules::unsupported_completion(&request))?
-            }
+            VmPoll::Module(request) => vm.complete_module(
+                request.id,
+                crate::modules::default_or_unsupported_completion(&request),
+            )?,
             VmPoll::Yielded => {}
         }
     }

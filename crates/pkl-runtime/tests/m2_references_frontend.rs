@@ -1,4 +1,6 @@
-//! Import identity and type/name scope prerequisites for deferred references.
+#[path = "support/module_policy.rs"]
+mod module_policy;
+// Import identity and type/name scope prerequisites for deferred references.
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::{Binding, resolve_module};
 use pkl_runtime::source::Span;
@@ -13,7 +15,9 @@ fn span(source: &str, fragment: &str) -> Span {
 // publish or fail before a later unresolved name is reached.
 fn initialize_error(source: &str) -> pkl_runtime::value::RuntimeError {
     use pkl_runtime::vm::{Vm, VmPoll, compile_module};
-    let program = compile_module(&resolve_module(&parse_module(source).unwrap()).unwrap()).unwrap();
+    let mut program =
+        compile_module(&resolve_module(&parse_module(source).unwrap()).unwrap()).unwrap();
+    module_policy::register(std::sync::Arc::make_mut(&mut program), source);
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     for _ in 0..1000 {
@@ -21,7 +25,13 @@ fn initialize_error(source: &str) -> pkl_runtime::value::RuntimeError {
             VmPoll::Ready(result) => return result.unwrap_err(),
             VmPoll::Yielded => {}
             VmPoll::Log(_) => panic!("unexpected logger request"),
-            VmPoll::Module(_) => panic!("unexpected module request"),
+            VmPoll::Module(request) => vm
+                .complete_module(
+                    request.id,
+                    pkl_runtime::modules::default_completion(&request)
+                        .expect("default module policy"),
+                )
+                .unwrap(),
             VmPoll::Pending(_) => panic!("unexpected Host request"),
         }
     }

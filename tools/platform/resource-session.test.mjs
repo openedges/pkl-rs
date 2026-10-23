@@ -126,3 +126,61 @@ test('constructor failures preserve unmatched surrogate error units', () => {
   assert.deepEqual(result.constructorError.units, [98, 97, 100, 0xd800]);
   assert.equal(compareResourceCase(fixture, result).passed, false);
 });
+
+test('default module requests retain their actual context without changing the Java reader plan', () => {
+  class WithModules extends Session {
+    startPath(index) { super.startPath(index); this.moduleStep = 0; }
+    poll() {
+      if (this.index === 0 && this.moduleStep < 2) return {kind: 'module-request', token: 'module-token',
+        module: {id: String(this.moduleStep), kind: this.moduleStep === 0 ? 'check-import' : 'resolve',
+          originalUri: 'pkl:json', importUri: 'pkl:json', importerOriginalUri: 'file:///main.pkl',
+          importerResolvedUri: 'file:///resolved.pkl'}};
+      return super.poll();
+    }
+    completeDefaultModule(token, now) {
+      assert.equal(token, 'module-token'); assert.equal(now, 0); this.moduleStep++; return true;
+    }
+  }
+  const result = run(WithModules);
+  assert.equal(compareResourceCase(fixture, result).passed, true);
+  assert.equal(result.modulePolicy, 'pkl-0.32.0-default');
+  assert.deepEqual(result.moduleRequests.map(row => row.module.kind), ['check-import', 'resolve']);
+  assert.equal(result.moduleRequests[0].module.importerResolvedUri, 'file:///resolved.pkl');
+  assert.deepEqual(result.readerUris, ['res:/text', 'res:/missing', 'res:/retry']);
+});
+
+test('unsupported default module requests and stale-token errors remain acquisition failures', () => {
+  for (const mode of ['unsupported', 'stale']) {
+    class Unhandled extends Session {
+      poll() { return {kind: 'module-request', token: 'module-token', module: {id: '0', kind: 'check-import',
+        originalUri: 'pkl:json', importUri: 'pkl:json', importerOriginalUri: 'file:///main.pkl',
+        importerResolvedUri: 'file:///main.pkl'}}; }
+      completeDefaultModule() { if (mode === 'stale') throw Error('stale module token'); return false; }
+    }
+    const result = run(Unhandled);
+    assert.match(result.acquisitionError.message, mode === 'stale' ? /stale module token/ : /unsupported/);
+    assert.equal(result.moduleRequests.length, 1);
+    assert.equal(result.calls.length, 0);
+    assert.equal(compareResourceCase(fixture, result).passed, false);
+  }
+});
+
+test('missing or contradictory module event context fails before default-policy completion', () => {
+  const request = {id: '0', kind: 'check-import', originalUri: 'pkl:json', importUri: 'pkl:json',
+    importerOriginalUri: 'file:///main.pkl', importerResolvedUri: 'file:///resolved.pkl'};
+  const invalid = ['originalUri', 'importUri', 'importerOriginalUri', 'importerResolvedUri'].map(name => {
+    const copy = {...request}; delete copy[name]; return copy;
+  });
+  invalid.push({...request, kind: 'load-source'}, {...request, sourceUri: 'file:///forged.pkl'},
+    {...request, resolvedUri: 'pkl:json'}, {...request, unexpected: 'metadata'});
+  for (const module of invalid) {
+    class BadContext extends Session {
+      poll() { return {kind: 'module-request', token: 'module-token', module}; }
+      completeDefaultModule() { assert.fail('invalid context must not consume a token'); }
+    }
+    const result = run(BadContext);
+    assert.match(result.acquisitionError.message, /module request context/);
+    assert.deepEqual(result.moduleRequests[0].module, module);
+    assert.equal(result.calls.length, 0);
+  }
+});

@@ -1,0 +1,192 @@
+{
+  "schema": 1,
+  "scope": "Local Stage48 Java oracle, bounded native admission and Node/Chromium observations with complete raw failure history. This is not full evaluator/language/M2 compatibility or a performance result.",
+  "host": "macOS27ARM64 recorded in source captures; pinnedJava0.32.0/Temurin21, RustC01,Node26.10.0/Chromium156 identities remain in raw profiles.",
+  "newJava": {
+    "evaluatorApiCalls": 568,
+    "success": 412,
+    "error": 156,
+    "separateDirectSecurityManagerApiCalls": 392,
+    "directSuccess": 268,
+    "directError": 124,
+    "oldPolicy84ReusedNotReacquired": true
+  },
+  "nativeC01": {
+    "rawApiByteMatches": 440,
+    "successOutcomes": 344,
+    "errorOutcomes": 96,
+    "explicitUnexecutedSpiApiCalls": 212,
+    "fullLifecyclePassSessions": 0,
+    "fullLifecycleFailedSessions": 52,
+    "all52ProcessExit0AndSlots0": true,
+    "edgeOnlyDiagnosticEqualSessions": 48,
+    "edgeOnlyDiagnosticDifferentSessions": 4,
+    "qualification": "Primarysymlink resolvedimporter mismatch preserved; projection is not replacement for full gate. SourceProbe supplied-primary and four-field observer differ from Java lifecycle."
+  },
+  "portableC01": {
+    "nodeRawApiByteMatches": 84,
+    "browserRawApiByteMatches": 84,
+    "statusOutcomesPerTarget": {
+      "success": 80,
+      "error": 4
+    },
+    "sessionsPerTarget": 12,
+    "fullLifecyclePassSessionsPerTarget": 0,
+    "fullLifecycleFailedSessionsPerTarget": 12,
+    "driverExitCode": 1,
+    "wrapperExitCode": 1,
+    "launcherIntegrityPassed": true,
+    "infrastructureErrors": 0,
+    "browserErrors": 0,
+    "changedInputs": 0,
+    "allTerminalSlots0": true,
+    "browserOsPid": "Not captured; explicit executablePath/binarySHA/version recorded."
+  },
+  "preservedHistory": [
+    "16 original query-scope test-name errors did not reach intended guestcatch",
+    "36 original lazy-cycle observations did not reach intended initializationfailure",
+    "corrected100API acquisition uses newsource/URI without replacing originalbytes",
+    "initialexport and stale-input verifier failures",
+    "oldbb4bRust adapter plus exact compilerannotation7d63delta and A-owned compilerfailure reference",
+    "initial nativeconsumer self-output seal flaw and authoritative separate readback audit",
+    "portable01 HTTP/transitiveguard shortcomings and sealed portable02 corrections",
+    "publication01 select.py stdlibshadow failure before publisherprocessspawn; originalscripts and observedtoolreceipt includedcloseout",
+    "Java audit metadata roots and nativepreflight lack originalproducerclosure; selection does not invent historicseals"
+  ],
+  "archiveSelection": {
+    "roots": 18,
+    "payloads": 36596,
+    "rawBytes": 65264715,
+    "safeRegularSymlinkRepresentations": 1,
+    "archives": 5,
+    "compressedBytes": 8402980,
+    "allBelow100MiB": true,
+    "everyDataAndCloseoutMemberReadBack": true,
+    "all10CreateAndSeparateVerifyCommands0": true,
+    "originalSelectedBytesKindsModesPathsetChanges": 0,
+    "unlistedPayload": []
+  },
+  "externalReferences": {
+    "permanentPolicyFixture": "1444files already promoted; exact repo-relative hashes in references.json; final Gitblob/commit binding is root-owned and pending here",
+    "oldStage47JavaPolicyArchive": "Published canonical archive referenced by hash; not repackaged",
+    "C01CoreAndPlatforms": "Canonical compiled Rust/native/NAPI/Wasm and53236source-map inputs remain owned by core/platform archives, explicit release/hash references only"
+  },
+  "prewalkPrune": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-policy84-tools-01/__pycache__",
+      "role": "Generated Python bytecode cache, not sealed evidence",
+      "walked": false,
+      "exists": true,
+      "kind": "directory",
+      "mode": 493,
+      "mtimeNs": 1792773277607820219
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-policy-native-consumer-01/tests-private",
+      "role": "Cleaned temporary fixture/stub-source clones; explicit producer exclusion",
+      "walked": false,
+      "exists": true,
+      "kind": "directory",
+      "mode": 493,
+      "mtimeNs": 1792773454417453119
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-policy-native-consumer-02/tests-private",
+      "role": "Cleaned temporary fixture/stub-source clones; explicit producer exclusion",
+      "walked": false,
+      "exists": true,
+      "kind": "directory",
+      "mode": 493,
+      "mtimeNs": 1792774145719974984
+    }
+  ],
+  "archiveFiles": [
+    {
+      "group": "tooling-history",
+      "archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02/archives/stage48-admission-tooling-history.tar.gz",
+      "fileName": "stage48-admission-tooling-history.tar.gz",
+      "compressedBytes": 1800541,
+      "sha256": "0c248d1e1b35461a461579b87dc65ead12e21af27430b66bdc68cfb49d54970d",
+      "payloadFiles": 738,
+      "selectedSourceFiles": 735,
+      "selectedRawBytes": 35610527,
+      "regularArchiveMembersIncludingEvidence": 739,
+      "everyRawMemberReadBack": true,
+      "everyGatheredAndOriginalSourceByteEqual": true,
+      "restoredPayloadFiles": 738,
+      "below100MiB": true
+    },
+    {
+      "group": "java-controls",
+      "archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02/archives/stage48-java-admission-controls.tar.gz",
+      "fileName": "stage48-java-admission-controls.tar.gz",
+      "compressedBytes": 3011871,
+      "sha256": "4e1aa82e5033198e20e68772890197f8eb6157acf199f4db401574aeda998be0",
+      "payloadFiles": 25830,
+      "selectedSourceFiles": 25827,
+      "selectedRawBytes": 20859405,
+      "regularArchiveMembersIncludingEvidence": 25831,
+      "everyRawMemberReadBack": true,
+      "everyGatheredAndOriginalSourceByteEqual": true,
+      "restoredPayloadFiles": 25830,
+      "below100MiB": true
+    },
+    {
+      "group": "native-c01",
+      "archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02/archives/stage48-admission-native-c01.tar.gz",
+      "fileName": "stage48-admission-native-c01.tar.gz",
+      "compressedBytes": 1017807,
+      "sha256": "00ebd48c94e8c7cbf8dedb697ba7701d38f75e3c34cb0ec6fa4e03cba4add227",
+      "payloadFiles": 9176,
+      "selectedSourceFiles": 9173,
+      "selectedRawBytes": 6361592,
+      "regularArchiveMembersIncludingEvidence": 9177,
+      "everyRawMemberReadBack": true,
+      "everyGatheredAndOriginalSourceByteEqual": true,
+      "restoredPayloadFiles": 9176,
+      "below100MiB": true
+    },
+    {
+      "group": "portable-c01",
+      "archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02/archives/stage48-admission-portable-c01.tar.gz",
+      "fileName": "stage48-admission-portable-c01.tar.gz",
+      "compressedBytes": 267474,
+      "sha256": "48c3c4a7bc641454216796790094bbaca3a428a01943f406ccf758b68e96fb7a",
+      "payloadFiles": 864,
+      "selectedSourceFiles": 861,
+      "selectedRawBytes": 2433191,
+      "regularArchiveMembersIncludingEvidence": 865,
+      "everyRawMemberReadBack": true,
+      "everyGatheredAndOriginalSourceByteEqual": true,
+      "restoredPayloadFiles": 864,
+      "below100MiB": true
+    },
+    {
+      "group": "closeout",
+      "archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-oracle-publication-02/archives/stage48-oracle-publication-closeout.tar.gz",
+      "fileName": "stage48-oracle-publication-closeout.tar.gz",
+      "sha256": "69d8354093f7d893aca91d4caa0c09e0f807a5e260ec11e4e8123b7e3140632b",
+      "compressedBytes": 2305287,
+      "payloadFiles": 56,
+      "everyRawMemberReadBack": true,
+      "below100MiB": true
+    }
+  ],
+  "actualPublicationProcesses": {
+    "failedToolAttempt26265": {
+      "exit": 1,
+      "publisherChildStarted": false
+    },
+    "publisher56019": {
+      "exit": 0,
+      "pid": 48501
+    },
+    "finalizer37802": {
+      "exit": 0,
+      "pid": 49184
+    }
+  },
+  "noJavaNativePortableReexecutionDuringPackaging": true,
+  "mainReportsGitWrites": false,
+  "liveHandles": []
+}

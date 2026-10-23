@@ -21,6 +21,7 @@ function setup(events, options = {}) {
     free() { options.free?.(); }
     drainCancelledModules() { return options.cancelledModules ?? []; }
     drainCancelledReads() { return []; }
+    completeDefaultModule(...args) { calls.push(['completeDefaultModule', ...args]); return options.defaultModule ? options.defaultModule(...args) : false; }
   }
   for (const method of ['startPath','startOutputBytes','completeModuleResolution','completeModuleSource',
     'rejectReadIo','reject','rejectModuleResolution','rejectModuleSource','reenterPath','closeFromCallback','respondString','respondConfigured','acknowledgeLog'])
@@ -65,6 +66,43 @@ test('missing bundle resolution rejects the correct phase and retains UTF16 diag
   assert.equal(row.acquisitionError, null);
   assert.deepEqual(calls.find(c => c[0] === 'rejectModuleResolution'), ['rejectModuleResolution','r','not-found','',0]);
   assert.deepEqual(row.results[0].errorUnits,[0xd800,0,120]);
+});
+
+test('shared default admission handles import checks and bundled resolution without JavaScript URI policy', () => {
+  const edge = resolver('pkl:json'); edge.module.kind = 'check-import'; edge.token = 'edge';
+  edge.module.importerResolvedUri = 'file:///resolved.pkl';
+  const {api, calls} = setup([edge, resolver('pkl:json'), {kind:'value',value:Uint16Array.of(55)}],
+    {defaultModule: () => true});
+  const row = runModuleLoaderCase(api, fixture());
+  assert.equal(row.acquisitionError, null);
+  assert.equal(row.requests[0].importerResolvedUri, 'file:///resolved.pkl');
+  assert.deepEqual(calls.filter(call => call[0] === 'completeDefaultModule'),
+    [['completeDefaultModule', 'edge', 0], ['completeDefaultModule', 'r', 0]]);
+  assert.equal(calls.some(call => call[0] === 'rejectModuleResolution'), false);
+});
+
+test('explicit resolution denial precedes default resolution and helper errors cannot become NotFound', () => {
+  const f = fixture(); f.resolutions[0].failure = {kind: 'denied', message: 'custom denial'};
+  const denied = setup([resolver(), {kind:'error',error:Uint16Array.of(120)}],
+    {defaultModule: () => assert.fail('configured denial must win')});
+  assert.equal(runModuleLoaderCase(denied.api, f).acquisitionError, null);
+  assert.deepEqual(denied.calls.find(call => call[0] === 'rejectModuleResolution'),
+    ['rejectModuleResolution', 'r', 'denied', 'custom denial', 0]);
+  const stale = setup([resolver('pkl:json')], {defaultModule: () => { throw Error('stale token'); }});
+  const result = runModuleLoaderCase(stale.api, fixture());
+  assert.equal(result.acquisitionError, null);
+  assert.equal(result.results[0].kind, 'thrown');
+  assert.equal(result.results[0].error.message, 'stale token');
+  assert.equal(stale.calls.some(call => call[0] === 'rejectModuleResolution'), false);
+});
+
+test('a malformed default completion result cannot trigger the external NotFound fallback', () => {
+  for (const result of [undefined, null, 0, 'unsupported']) {
+    const {api, calls} = setup([resolver('pkl:json')], {defaultModule: () => result});
+    const row = runModuleLoaderCase(api, fixture());
+    assert.match(row.acquisitionError.message, /invalid default module completion result/);
+    assert.equal(calls.some(call => call[0] === 'rejectModuleResolution'), false);
+  }
 });
 
 test('duplicate identities and malformed request contexts are acquisition errors', () => {

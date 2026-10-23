@@ -5,6 +5,8 @@
 #[path = "support/eager_base.rs"]
 mod eager_base;
 use eager_base::Baseline;
+#[path = "support/module_policy.rs"]
+mod module_policy;
 use std::sync::Arc;
 
 use pkl_runtime::host::{HostPoll, HostSession};
@@ -37,6 +39,7 @@ inspect = reference is ref.Reference<D, String> && reference.getPath()[0].proper
 fn setup() -> (HostSession, Value, [usize; 4]) {
     let parsed = parse_module(SOURCE).unwrap();
     let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    module_policy::register(&mut program, SOURCE);
     let module_entry = program.entry;
     let entries = ["parent", "value", "rendered", "inspect"].map(|member| {
         let entry = program.blocks.len();
@@ -59,6 +62,14 @@ fn event(session: &mut HostSession, now: u64) -> HostPoll {
             HostPoll::Yielded => {
                 session.collect(&[]);
             }
+            HostPoll::Module { token, request } => session
+                .complete_module(
+                    &token,
+                    pkl_runtime::modules::default_completion(&request)
+                        .expect("default module policy"),
+                    now,
+                )
+                .unwrap(),
             result => return result,
         }
     }
@@ -129,8 +140,11 @@ fn inherited_fixed_values_keep_the_amended_receiver_across_gc_reentry_and_retry(
     // Exact source-specific class, annotation and completed Reference/cache
     // closure above the initialized base. Access-list temporaries are reclaimed;
     // shared annotation descriptors are already present in the base baseline.
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), 12);
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), 12);
+    // The lazy Domain class first forces its authored ref import here. The
+    // VM roots that static site's executable; the module caches separately
+    // retain module receivers.
+    assert_eq!(initialized.added_values(session.collect(&[]), 1), 12);
+    assert_eq!(initialized.added_values(session.collect(&[]), 1), 12);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -172,9 +186,10 @@ fn inherited_hidden_fixed_reference_metadata_stays_deferred_during_render_retry(
     // Exact source-specific class, annotation and completed Reference/cache
     // closure above the initialized base. Access-list temporaries are reclaimed;
     // shared annotation descriptors are already present in the base baseline.
-    // Calling renderReference adds its parameter-slot descriptor once.
-    assert_eq!(initialized.added_values(session.collect(&[]), 1), 12);
-    assert_eq!(initialized.added_values(session.collect(&[]), 1), 12);
+    // The lazy ref import site and renderReference parameter-slot descriptor
+    // each add one executable above the setup baseline.
+    assert_eq!(initialized.added_values(session.collect(&[]), 2), 12);
+    assert_eq!(initialized.added_values(session.collect(&[]), 2), 12);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);

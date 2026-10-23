@@ -78,6 +78,10 @@ fn drive(
             HostPoll::Ready(result) => return result,
             HostPoll::Module { token, request } => {
                 let completion = match request.kind {
+                    ModuleRequestKind::CheckImport { .. } => {
+                        pkl_runtime::modules::default_completion(&request)
+                            .expect("default import policy")
+                    }
                     ModuleRequestKind::Capabilities { .. }
                     | ModuleRequestKind::HasElement { .. } => {
                         panic!("unexpected ModuleKey preparation in this fixture")
@@ -284,6 +288,10 @@ fn import_declaration_and_inline_failures_keep_exact_phase_specific_java_frames(
                         HostPoll::Ready(result) => break result,
                         HostPoll::Module { token, request } => {
                             let completion = match request.kind {
+                                ModuleRequestKind::CheckImport { .. } => {
+                                    pkl_runtime::modules::default_completion(&request)
+                                        .expect("default import policy")
+                                }
                                 ModuleRequestKind::Capabilities { .. }
                                 | ModuleRequestKind::HasElement { .. } => {
                                     panic!("unexpected ModuleKey preparation in this fixture")

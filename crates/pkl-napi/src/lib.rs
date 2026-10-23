@@ -535,6 +535,46 @@ impl SourceSession {
             .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]
+    pub fn complete_module_import_check(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_module_import_check(&string(&token)?, unsigned(now)?)
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn reject_module_import_check(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        kind: Utf16String,
+        message: Option<Utf16String>,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .reject_module_import_check(
+                &string(&token)?,
+                &string(&kind)?,
+                message.map(|message| PklString::from_utf16(message.to_vec())),
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn complete_default_module(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        now: f64,
+    ) -> Result<bool> {
+        self.inner
+            .complete_default_module(&string(&token)?, unsigned(now)?)
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
     pub fn complete_module_capabilities(
         &mut self,
         env: Env,

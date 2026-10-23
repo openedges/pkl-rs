@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "scope": "Read-only core publication integrity and claim review; no build/runtime/oracle/Git execution.",
+  "handoffSha256": "7d54ff40f1d38641a679ff096e165cc33d71232789a1d3ebc2986cd4006c0924",
+  "archives": [
+    {
+      "name": "stage48-core-artifacts.tar.gz",
+      "sha256": "5af228416a157a8aa837c5d4996687199c4e378cf2d19886302ca168792ffa72",
+      "compressedBytes": 21144614,
+      "payloadFiles": 6,
+      "rawBytes": 99879696
+    },
+    {
+      "name": "stage48-core-checks-history.tar.gz",
+      "sha256": "04e305369ebc519b2656ee673c545ed62013fee92f6da81f28bc36c77985c807",
+      "compressedBytes": 623474,
+      "payloadFiles": 304,
+      "rawBytes": 3349808
+    },
+    {
+      "name": "stage48-core-reviews-analysis.tar.gz",
+      "sha256": "77cc26e57c0808cb79f37b29a07b86d2eaf23288a6f61c50d70e8816f7ee616b",
+      "compressedBytes": 2414359,
+      "payloadFiles": 508,
+      "rawBytes": 15771640
+    },
+    {
+      "name": "stage48-core-source-binding.tar.gz",
+      "sha256": "5cf58e1941f1e20d47aa0658719c1211b655e5be6c7d028fb5c179a154da9d97",
+      "compressedBytes": 6918906,
+      "payloadFiles": 235,
+      "rawBytes": 74241679
+    }
+  ],
+  "publicationFiles": 8,
+  "allArchivesBelow100MiB": true,
+  "currentCandidate": {
+    "sourceFiles": 53236,
+    "literalLinks": 11,
+    "modeAndContentBindingsVerified": true,
+    "rawGitSha1AndArchivedBlobSha256Verified": true,
+    "historicalHashOnlyInCurrentMap": 0
+  },
+  "historicalHashOnly": [
+    {
+      "path": "crates/pkl-runtime/src/vm/modules.rs",
+      "sha256": "fc848f8d47df98b6934ea7222125345df552eeeb8fadee6c8a9dffa29d70f3a1",
+      "kind": "historical-hash-only",
+      "reason": "No exact retained CAS/snapshot bytes or pinned Git blob found. Original hash remains evidence; reconstruction incomplete."
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+      "sha256": "a2f660a66be5f5d2513ee8a46eb4201c11b5a9fe377827093987859c67ee9bbe",
+      "kind": "historical-hash-only",
+      "reason": "No exact retained CAS/snapshot bytes or pinned Git blob found. Original hash remains evidence; reconstruction incomplete."
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_module_admission.rs",
+      "sha256": "070eea73b0302e158aa784a92b876779dc683f414b7b2a75b8b6170becf92153",
+      "kind": "historical-hash-only",
+      "reason": "No exact retained CAS/snapshot bytes or pinned Git blob found. Original hash remains evidence; reconstruction incomplete."
+    },
+    {
+      "path": "crates/pkl-wasm/src/lib.rs",
+      "sha256": "31852d6ef132c14c0d2ec78aff8e0ac7fb393c33f8f4a3dc53d92a5734427232",
+      "kind": "historical-hash-only",
+      "reason": "No exact retained CAS/snapshot bytes or pinned Git blob found. Original hash remains evidence; reconstruction incomplete."
+    }
+  ],
+  "originalSelectedFilesVerified": 825,
+  "checkExitCounts": {
+    "0": 13,
+    "101": 15
+  },
+  "gitHashReuseArchiveVerified": {
+    "table": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-core-publication-proposal-02/git-objects.json",
+    "sha256": "6a0580492a7747b190a8e2f6f28181231278cd9035d73a05bd0f87c80b68ba56",
+    "prior_archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/reports/m2/stage47-core-builds-source-binding.tar.gz",
+    "prior_archive_sha256": "dce9ffcde726f749160db782be20ddf79bfb03337bd904fa6bd71633d188ce52",
+    "scope": "Exact immutable Git object IDs reuse prior streamed raw-byte SHA256/size. New IDs below are streamed now; current pinned tree memberships are always read anew."
+  },
+  "externalBClaimBinding": {
+    "handoffPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-policy-native-c01-audit-01/handoff.json",
+    "sha256": "56d37854a0e3ecd8888534945c1589a16df456988afaf0040ff1156f8eddf45b",
+    "reportPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-policy-native-c01-01/report.json",
+    "reportSha256": "e5c093e9e450a949d32a87c0c2a37a15c67f4c857d8840f3f4d4424d69e92f14",
+    "scope": "Metadata binding only; B owns fullraw review."
+  },
+  "claimAssessment": "No material publication issue found. Narrow earlier check scope, C01 whole-tree binding, four historical gaps, raw failures, heap source-only attribution, cycle-label limit and external B/root ownership are explicit.",
+  "originalChanges": [],
+  "recursiveFilesystemTraversal": false
+}

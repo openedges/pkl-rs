@@ -1,5 +1,7 @@
 //! Bounded native stack and lifecycle stress, separate from Java compatibility.
 //! Potential aborts run in a child process with a fixed timeout.
+#[path = "support/module_policy.rs"]
+mod module_policy;
 use std::process::{Command, Stdio};
 use std::sync::Arc;
 use std::time::{Duration, Instant};
@@ -52,7 +54,10 @@ fn isolated(name: &str, run: impl FnOnce() + Send + 'static) {
 }
 
 fn program(source: &str) -> Arc<Program> {
-    compile_module(&resolve_module(&parse_module(source).unwrap()).unwrap()).unwrap()
+    let mut program =
+        compile_module(&resolve_module(&parse_module(source).unwrap()).unwrap()).unwrap();
+    module_policy::register(Arc::make_mut(&mut program), source);
+    program
 }
 
 fn event(vm: &mut Vm) -> VmPoll {
@@ -63,6 +68,13 @@ fn event(vm: &mut Vm) -> VmPoll {
                     vm.collect(&[]);
                 }
             }
+            VmPoll::Module(request) => vm
+                .complete_module(
+                    request.id,
+                    pkl_runtime::modules::default_completion(&request)
+                        .expect("default module policy"),
+                )
+                .unwrap(),
             event => return event,
         }
     }
