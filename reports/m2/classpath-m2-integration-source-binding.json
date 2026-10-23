@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "commit": "01971d0c0a231132bcb30a7dae6ac244b7fed953",
+  "tree": "f356724b3e2a67679c934c7efa856e6bfbaf4c89",
+  "scope": "Combined captured inputs match actual integration-commit blobs and pinned reference blobs. Original proposal/execution remains historical and its exact differences are explicit. No current README or later HEAD is used for this binding.",
+  "captures": {
+    "original": {
+      "source_paths": 3813,
+      "source_map_sha256": "84d725c8fa638dd6714c5507e48258f4e7add917d8cad864b82f54a4570069a6",
+      "parent_report_sha256": "75bd504811473508a4c673ce094e3383ad855ea9fe9897c9b2453be3b5a0ad19",
+      "child_report_sha256": "511fb73cb51a9970b672d007e2ff9d71a63ebf44bfcb0fdaa114d8e0a2835202",
+      "matches_integration_commit": 3793,
+      "historical_differences": [
+        "compatibility/m2-language.json",
+        "crates/pkl-runtime/src/diagnostic.rs",
+        "crates/pkl-runtime/src/host/errors.rs",
+        "crates/pkl-runtime/src/host/resources.rs",
+        "crates/pkl-runtime/src/modules.rs",
+        "crates/pkl-runtime/src/probe.rs",
+        "crates/pkl-runtime/src/resolver.rs",
+        "crates/pkl-runtime/src/stdlib_sources.rs",
+        "crates/pkl-runtime/src/value.rs",
+        "crates/pkl-runtime/src/vm.rs",
+        "crates/pkl-runtime/src/vm/annotations.rs",
+        "crates/pkl-runtime/src/vm/forcing.rs",
+        "crates/pkl-runtime/src/vm/generics.rs",
+        "crates/pkl-runtime/src/vm/modules.rs",
+        "crates/pkl-runtime/src/vm/primitives.rs",
+        "crates/pkl-runtime/src/vm/session_expressions.rs",
+        "crates/pkl-runtime/src/vm/typecheck.rs",
+        "crates/pkl-runtime/tests/m2_fixed_lifecycle.rs",
+        "crates/pkl-runtime/tests/m2_references_lifecycle.rs",
+        "tools/m2_source_inputs.py"
+      ],
+      "candidate_sha256": "4cc972e67a6f74fb66ab2777b439a800bd1a9ecf1c3b93855805e273fdbf9aab"
+    },
+    "combined": {
+      "source_paths": 3823,
+      "source_map_sha256": "5aaf359c4996dc2f677e7f129afcea3cf935df2174e4467471cbee768cb2a7ec",
+      "parent_report_sha256": "f60a7ecdfb4ddda6c6dea2b584d7a64d6c88190bf9332d56f8e6f36415620286",
+      "child_report_sha256": "7b9db3472e7c088586cea5b0bd93813c7dc3853b7d5381795ec4da161133fea9",
+      "matches_integration_commit": 3823,
+      "historical_differences": [],
+      "candidate_sha256": "d82424c43fdf0ec494dd8bdd83499c50f3545f0a2465cd2dd6c54cc4d96e9c6e"
+    }
+  },
+  "pinned_gitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "committed_change_paths": 20,
+  "committed_change_map_sha256": "edd1b58b1ca8aebd597ffe043af43ed7aeb294614e9518bba4afa2c1498b1a64",
+  "commit_raw_sha256": "97d53b2f8ea4b5e03a500bb2429a0d331352da03a9eba0babde3d7d0b9feb892",
+  "git_writes": false,
+  "full_selected_regression_claimed": false,
+  "full_m2_complete": false
+}

@@ -97,6 +97,22 @@ are provenance, not distinct semantic cases. Full selected/lifecycle regression
 is running separately at combined commit `01971d0`; no result from that run is
 claimed here. Hosted CI, full compatibility, and performance remain unverified.
 
+## JVM profile in the M2 inventory
+
+Integration `01971d0` connects the unchanged original `import1b` case to an
+explicit JVM/classpath execution profile. Its historical blocked CLI contract
+remains unchanged. The [combined focused result](classpath-m2-integration-checkpoint.json)
+requires both raw repetitions to pass and counts the original case once. Case
+IDs, ordering, and the 3,664-case default selection remain unchanged. The
+remaining 3,663 selected cases are outside that focused result.
+
+[Ten published archives](classpath-m2-integration-captures.json) retain the
+original proposal, combined acquisition, independent review, failed validation
+attempts, and metadata recovery. The [source binding](classpath-m2-integration-source-binding.json)
+ties 3,823 combined inputs to actual commit/reference blobs and explicitly
+records the older execution's source differences. The strict full gate still
+fails; source identity and focused success do not establish M2 completion.
+
 ## Native JVM-classpath checkpoint
 
 The [committed source binding](classpath-committed-source-binding.json) verifies

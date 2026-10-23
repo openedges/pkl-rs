@@ -1,0 +1,247 @@
+{
+  "schema": 1,
+  "scope": "Classpath-to-M2 integration publication preparation only. Original and combined focused success do not establish whole-corpus completion.",
+  "integration_commit": "01971d0c0a231132bcb30a7dae6ac244b7fed953",
+  "handoff": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/handoff.json",
+    "sha256": "2607b4475a4e8d1a2cdafce2d347e7aa4d165a05a52db16ee2d6f1313ed715bd"
+  },
+  "source_binding": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/source-binding.json",
+    "sha256": "70f288c2ab4ba19bc50b5bf8672ae9a7ead597840c3256e5ed338af756e66eba"
+  },
+  "selection": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/selection.json",
+    "sha256": "a5a8e136260cf124ba3e11c5333d075a44da4e75bd2735705dee370f911b9cc7"
+  },
+  "integrity": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/integrity.json",
+    "sha256": "32bf7fc845f88d66867c274d11927dad37c512339227bce96db804b6b31d7c5e"
+  },
+  "archives": [
+    {
+      "group": "combined-focused",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/archives/classpath-integration-combined-focused.tar.gz",
+      "sha256": "f24288d931057c4bde256c478db0602941bf6c7b09f421e1fb7b00ceb69b9113",
+      "compressed_bytes": 42763485,
+      "source_payloads": 27134,
+      "source_bytes": 137029462,
+      "derived_group_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 27135
+    },
+    {
+      "group": "combined-promotion",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/archives/classpath-integration-combined-promotion.tar.gz",
+      "sha256": "481211c256499a1a1b3194688e755db63cce7c3216453f6f0392e32400236054",
+      "compressed_bytes": 487096,
+      "source_payloads": 4,
+      "source_bytes": 6758460,
+      "derived_group_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 5
+    },
+    {
+      "group": "combined-review",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/archives/classpath-integration-combined-review.tar.gz",
+      "sha256": "8667c6e79bb3666e7a1f78a94497d10c8b1fb196fcea879e49e1a7d1530b430b",
+      "compressed_bytes": 4345,
+      "source_payloads": 2,
+      "source_bytes": 13136,
+      "derived_group_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 3
+    },
+    {
+      "group": "combined-validation",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/archives/classpath-integration-combined-validation.tar.gz",
+      "sha256": "2900b1abff6cd47ecb5159aa55280e22d7c6ebb5d680bf348ca19c78ef88df2e",
+      "compressed_bytes": 6659,
+      "source_payloads": 38,
+      "source_bytes": 19412,
+      "derived_group_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 39
+    },
+    {
+      "group": "committed-files",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/archives/classpath-integration-committed-files.tar.gz",
+      "sha256": "fbbc057b5732d9999cb9901f9d50947311addda73305648b5c5dfc4deced53b2",
+      "compressed_bytes": 674247,
+      "source_payloads": 20,
+      "source_bytes": 7691747,
+      "derived_group_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 21
+    },
+    {
+      "group": "independent-review",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/archives/classpath-integration-independent-review.tar.gz",
+      "sha256": "227e3c4bc196bb3cb2a189fc77405b9d76dce5c91dd1ac183788bfb53753bb8c",
+      "compressed_bytes": 1359025,
+      "source_payloads": 56,
+      "source_bytes": 15793182,
+      "derived_group_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 57
+    },
+    {
+      "group": "original-focused",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/archives/classpath-integration-original-focused.tar.gz",
+      "sha256": "08ab5592d7b31c1c94da936b8d15d8f8ca71b182794f98a2a416904775259515",
+      "compressed_bytes": 41633062,
+      "source_payloads": 20917,
+      "source_bytes": 127973795,
+      "derived_group_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 20918
+    },
+    {
+      "group": "original-proposal",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/archives/classpath-integration-original-proposal.tar.gz",
+      "sha256": "fdd1a2fceaa30aaa196b2beee1313b9bcf9afe5a05b6fb9e915f4999538c1fe0",
+      "compressed_bytes": 1033236,
+      "source_payloads": 44,
+      "source_bytes": 8717209,
+      "derived_group_metadata_files": 1,
+      "archive_payloads_excluding_evidence_inventory": 45
+    },
+    {
+      "group": "closeout",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/archives/classpath-integration-closeout.tar.gz",
+      "sha256": "871636a029ffbccc256430a48bb443054dfbb399d7ab43bb05292fc81f3e2c39",
+      "compressed_bytes": 2838495,
+      "archive_payloads_excluding_evidence_inventory": 17,
+      "metadata": [
+        {
+          "path": "collect.py",
+          "bytes": 10115,
+          "sha256": "f4c5649047552bd601baaad577a77dca882d02269f698138d9c7556a18d6080c"
+        },
+        {
+          "path": "package.py",
+          "bytes": 5783,
+          "sha256": "c53db8053b67532ec18b0b6732631fb371a95bb6b81eb0ff1dd70c7f419993fc"
+        },
+        {
+          "path": "run_archive.py",
+          "bytes": 1809,
+          "sha256": "a51682235377d112a86456b76990500be908d53c1b0fb9abbd2b479e02358d71"
+        },
+        {
+          "path": "closeout.py",
+          "bytes": 6376,
+          "sha256": "e233ce966850e8935b5fae72bba378562588d0a131d86080e0d9f11579483118"
+        },
+        {
+          "path": "selection.json",
+          "bytes": 27900385,
+          "sha256": "a5a8e136260cf124ba3e11c5333d075a44da4e75bd2735705dee370f911b9cc7"
+        },
+        {
+          "path": "proposal.json",
+          "bytes": 1724,
+          "sha256": "3ac4b067027b6319dd4006e104fda333665a84eb3bcb3a0a10a948670dbef9cf"
+        },
+        {
+          "path": "exclusions.json",
+          "bytes": 1665,
+          "sha256": "6a9da21be0d1316eb084a2b4ddc55206af48add0221ef7eacf96819155dff21f"
+        },
+        {
+          "path": "source-binding.json",
+          "bytes": 2891,
+          "sha256": "70f288c2ab4ba19bc50b5bf8672ae9a7ead597840c3256e5ed338af756e66eba"
+        },
+        {
+          "path": "original-source-map.json",
+          "bytes": 1362201,
+          "sha256": "84d725c8fa638dd6714c5507e48258f4e7add917d8cad864b82f54a4570069a6"
+        },
+        {
+          "path": "combined-source-map.json",
+          "bytes": 1365673,
+          "sha256": "5aaf359c4996dc2f677e7f129afcea3cf935df2174e4467471cbee768cb2a7ec"
+        },
+        {
+          "path": "committed-change-map.json",
+          "bytes": 4500,
+          "sha256": "edd1b58b1ca8aebd597ffe043af43ed7aeb294614e9518bba4afa2c1498b1a64"
+        },
+        {
+          "path": "commit.raw",
+          "bytes": 274,
+          "sha256": "97d53b2f8ea4b5e03a500bb2429a0d331352da03a9eba0babde3d7d0b9feb892"
+        },
+        {
+          "path": "gather-report.json",
+          "bytes": 408,
+          "sha256": "ec24cf09dd8f05640b919ac52a6709f6780423495b1a90a32eaa70425eeb380c"
+        },
+        {
+          "path": "archive-report.json",
+          "bytes": 4614,
+          "sha256": "3a6b40608ee89486281b45d558226a1e71dd4f718e1b04fa4ac3bf272b484bda"
+        },
+        {
+          "path": "archive-process.json",
+          "bytes": 3153,
+          "sha256": "dfbcdd3468d481cfa8ec9be6cdb38ecac0735b52b6397102de892c32825e4f5b"
+        },
+        {
+          "path": "archive.stdout.bin",
+          "bytes": 1504,
+          "sha256": "613d840cbf09ed4964dc413ad64a01f73b1e61fd3534bb234e051f5ba81ce003"
+        },
+        {
+          "path": "archive.stderr.bin",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "group": "closeout-recovery",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-integration-publication-01/archives/classpath-integration-closeout-recovery.tar.gz",
+      "sha256": "96cde0cf247577add893283eaa6f76f2ba813138f41fd0627ecb3cde906b0f7b",
+      "compressed_bytes": 6597,
+      "archive_payloads_excluding_evidence_inventory": 5,
+      "metadata": [
+        {
+          "path": "closeout-failure.json",
+          "sha256": "d1ab6eddee7f8f307b26e5f2d166c3329629f5c69d2285994c02fba7b857f4a9",
+          "bytes": 847
+        },
+        {
+          "path": "resume_closeout.py",
+          "sha256": "deb7131b334c2d83a7f55389fd9804ef026ce4c83027146019c7e4bb93b500f8",
+          "bytes": 6326
+        },
+        {
+          "path": "handoff.json",
+          "sha256": "2607b4475a4e8d1a2cdafce2d347e7aa4d165a05a52db16ee2d6f1313ed715bd",
+          "bytes": 10454
+        },
+        {
+          "path": "integrity.json",
+          "sha256": "32bf7fc845f88d66867c274d11927dad37c512339227bce96db804b6b31d7c5e",
+          "bytes": 648
+        },
+        {
+          "path": "finalize.py",
+          "sha256": "29030cdd42aab19dbd3230adf0cbf571a9d19296f5c763aa98cdf0af5fbcde7a",
+          "bytes": 5948
+        }
+      ]
+    }
+  ],
+  "archive_count": 10,
+  "selected_payloads": 48215,
+  "selected_raw_bytes": 303996403,
+  "archive_payloads_excluding_evidence_inventories": 48245,
+  "archive_raw_payload_bytes_excluding_evidence_inventories": 362595323,
+  "total_compressed_bytes": 90806247,
+  "largest_compressed_bytes": 42763485,
+  "all_archives_below_48_mib": true,
+  "original_pathset_and_bytes_changes": [],
+  "publication_metadata_failure_preserved_and_recovered": true,
+  "original_evidence_changed": false,
+  "production_changed": false,
+  "git_writes": false,
+  "reports_writes": false,
+  "full_selected_regression_claimed": false,
+  "full_m2_complete": false
+}

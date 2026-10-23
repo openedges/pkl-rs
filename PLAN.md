@@ -774,6 +774,8 @@ Stage 43의 canonical 진단 위에 module resolve/source와 resource read의 �
 
 Stage 45 구현 `97b4da0`과 합친 [집중 연결 검증](reports/m2/classpath-m2-integration-checkpoint.json)에서 원본 `import1b` 한 사례의 Java·Rust 두 반복이 모두 일치했습니다. 원래 4,527개 ID·순서와 선택 3,664개를 유지하며 해당 행의 adapter·execution·profile만 바꿨습니다. Python 고유 검사 83개와 목록·profile·corpus freshness 검사가 통과했고, 집중 보고서의 무결성·엄격 선택은 통과, 전체 gate는 나머지 미실행·미구현 조건 5,476개로 실패합니다. 소스 수집기 두 곳에 compile-time `stdlib/modules.txt`를 명시적으로 추가했습니다. 최초 검증 도구의 test-only 입력 범위 오류와 corpus 검사 명령 오류는 원본 기록으로 보존했고, 수정 검사만 새 디렉터리에서 실행했습니다. 새 M1 플랫폼 실행 또는 나머지 선택 사례의 회귀 통과로 주장하지 않습니다.
 
+연결 구현을 `01971d0`에 커밋·푸시했습니다. [원시 증거](reports/m2/classpath-m2-integration-captures.json) 열 개 archive와 [소스 대응](reports/m2/classpath-m2-integration-source-binding.json)은 결합 취득 입력 3,823개를 실제 커밋·고정 참조 blob에 연결하고, 이전 실행의 소스 차이 스무 개를 별도로 보존합니다. 최초 검증 실패 두 건과 게시 metadata 오류·복구 기록도 유지합니다. 전체 선택·순차 평가 회귀는 이 커밋을 고정한 작업 공간에서 별도로 실행 중입니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.
