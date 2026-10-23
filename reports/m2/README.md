@@ -59,6 +59,30 @@ Stage 43 preserves canonical diagnostic strings through the shared engine and
 native/Node/Wasm boundaries, and corrects literal-union type-check equivalence.
 These checkpoints do not complete the language milestone.
 
+## Native JVM-classpath checkpoint
+
+The [checkpoint](classpath-implementation-summary.json) evaluates the unchanged
+original `basic/import1b.pkl` through the pinned JVM API and a Rust directory
+classpath Host using the shared engine. Both fresh-process repetitions match
+raw stdout, stderr, exit status and files. The historical CLI contract and its
+blocked inventory row remain unchanged; this additive profile does not close
+that inventory obligation automatically.
+
+Six additional controls retain three matches, two diagnostic mismatches and one
+unsupported trust-policy case. The missing-resource and imported-error controls
+differ in the standard-library frame URI: the upstream snippet uses an empty
+frame transformer. Full classpath/security behavior and portable adapters remain
+unfinished. The five required Rust checks, 692 workspace harness invocations,
+six example tests and 26 distinct Python tests pass; one workspace invocation
+remains ignored. These counts do not measure feature coverage.
+
+[Raw captures](classpath-captures.json), [source binding](classpath-source-binding.json)
+and the [publication audit](classpath-publication-audit.json) preserve the initial
+acquisition, three corrected verifier defects and all failed controls. The final
+capture includes the root Cargo configuration and stricter path/symlink checks.
+Historical verifier sources and later documentation changes are identified
+separately. See the [profile contract](../../docs/m2-jvm-classpath.md).
+
 ## Stage 44 implementation checkpoint
 
 The [committed source binding](stage44-implementation-source-binding.json) ties

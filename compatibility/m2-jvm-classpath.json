@@ -1,0 +1,284 @@
+{
+  "adapter": "language-jvm-classpath-output",
+  "baseline": "0.32.0",
+  "boundary": {
+    "channels": [
+      "stdout",
+      "stderr",
+      "exit_code",
+      "files"
+    ],
+    "error": "Complete uncolored PklException.getMessage UTF-8; JVM bugs are strict nonpasses.",
+    "historical_cli_command": "Preserved as provenance; not executed or claimed equivalent by this profile.",
+    "limitations": [
+      "Directory classpath and the selected original input only.",
+      "No general JAR classpath, provider API, URI/security or product compatibility claim.",
+      "No automatic original blocked-case promotion or full-M2 completion."
+    ],
+    "loader": "Original modulepath URI, ClassLoader.getResource URL resolved identity, original diagnostic source URI; no file canonicalization.",
+    "success": "Raw evaluateOutputBytes; no upstream golden normalization."
+  },
+  "classpath_resources": {
+    "external/pkl/pkl-core/src/test/resources/META-INF/services/org.junit.platform.engine.TestEngine": {
+      "kind": "file",
+      "sha256": "745e45147be5114d8df7a31471c400ed8e7fcc38e22241570eda1bc5b5505426"
+    },
+    "external/pkl/pkl-core/src/test/resources/META-INF/services/org.pkl.core.module.ModuleKeyFactory": {
+      "kind": "file",
+      "sha256": "1219660fb32e89a0335c0dc1621b4b277a2d50da51c3b17a7ae141b48b217b2f"
+    },
+    "external/pkl/pkl-core/src/test/resources/META-INF/services/org.pkl.core.resource.ResourceReader": {
+      "kind": "file",
+      "sha256": "a3ab2ac75fb3895b25d9def61eae554353136bab1fb5090e1d4048b699ad2bd1"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/EvaluateSchemaTest.pkl": {
+      "kind": "file",
+      "sha256": "c7f7d05856ddb039b6558fa3b43ba21a69c81439a722b08ad5351be7610bbd41"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/EvaluateSchemaTestBaseModule.pkl": {
+      "kind": "file",
+      "sha256": "b9b59b22eb1e609deeb43a3dd67dbb6ff2bcb4da682dbc4df91f15bb1b9a669c"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/EvaluatorTest.pkl": {
+      "kind": "file",
+      "sha256": "a866f338b36bca803fe51e81e57d2513fad034be0a8d8b84c6cb80bbac3fa842"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/PropertyList-1.0.dtd": {
+      "kind": "file",
+      "sha256": "ddb17d259447b422d85da3a545288adb696d499fd0080223cf8b3642e4630b2f"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/brokenModule1.pkl": {
+      "kind": "file",
+      "sha256": "99ad7cd385d733403aeabcec694dfc995c9be755d46986a1a61d199fa61002cc"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/brokenModule2.pkl": {
+      "kind": "file",
+      "sha256": "0b060a224ad4e6b34fd3e3f1e23604d1d7e9d293fbd491a9734c3c9373263c0e"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/module/NamedModuleResolversTest.pkl": {
+      "kind": "file",
+      "sha256": "8ff436def1451285599a1b1ad70800493b8dcafde2912e1a38345633054e4c26"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/module/test.jar": {
+      "kind": "file",
+      "sha256": "8b0b250696492e5cb342f4bd48e95553191eb813961eff27c01321e1bd407049"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/module/testFactoryTest.pkl": {
+      "kind": "file",
+      "sha256": "a1397c2e29e8231af447a842fce6188a3dfd8483709787e9215d8598b5a638c2"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/pklBinaryDecoderTest.msgpack": {
+      "kind": "file",
+      "sha256": "cb57f1951b018675e3c26e5504c8c6d0f74c54d637c889b496a3538603df38e0"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/badProjectChecksum/PklProject": {
+      "kind": "file",
+      "sha256": "c6eb1b32fd8a37a7b6e2bbb9834eb33d6c577e0790a13593d23dc10ccaadbd98"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/badProjectChecksum2/PklProject": {
+      "kind": "file",
+      "sha256": "55a379be45141cba60cd2654746048ef129d973d64d6d445e2026513233914fb"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/badProjectChecksum2/PklProject.deps.json": {
+      "kind": "file",
+      "sha256": "725436974d58fcefadb287bd361eda6e752cfc17e2abbc2b1358f5914455967f"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/badProjectChecksum2/bug.pkl": {
+      "kind": "file",
+      "sha256": "b7b5ebe1d00f8a9db99e84a46287b68676ef2db0a1f5b43e6d5076ece2772e8d"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project1/PklProject": {
+      "kind": "file",
+      "sha256": "1c19ba4e41609cafca1ffb9f97e1c58e72316ec38be2b52685636fd47ec34578"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project2/PklProject": {
+      "kind": "file",
+      "sha256": "8acd472239e0bd657754f1367d4ff4a63ccce80cdab0d7ebc9017d7e55e3946d"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project3/PklProject": {
+      "kind": "file",
+      "sha256": "d3bb827a18ab69e999fe5e24e3b1c828e0b367a2469267a18de186e0fa04dfd9"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project4/PklProject": {
+      "kind": "file",
+      "sha256": "0d6fbd37bf10f005e1359157aa69dc79c5d2f543b1b7a62b8fd687be821aa0f3"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project4/main.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project4/module1.pkl": {
+      "kind": "file",
+      "sha256": "aee895df975e52b4142876a85fcf5dc4b61a3477a2e3997de74e71eae28f1a92"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project4/module2.pkl": {
+      "kind": "file",
+      "sha256": "7786473107c4ec742a986030840d70e2130920f6c35af1eb39077e3f2cb2fb49"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project5/PklProject": {
+      "kind": "file",
+      "sha256": "f5f8e2289be7bc4afa218e39a26ee54d35a408dad1a500bbfb615827d250af77"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project5/PklProject.deps.json": {
+      "kind": "file",
+      "sha256": "06a53ed0141b365bc8700a2949bb3b40df50a07123e6de6e5c8ba94ac7c49197"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project5/main.pkl": {
+      "kind": "file",
+      "sha256": "f5d983a39b6b462c17214510d081962cf8d7ed0ca0080f6ed2d2dee92d4e108f"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project6/PklProject": {
+      "kind": "file",
+      "sha256": "d58b7ffd95e72ec285710601f627f0efc949a388f1e4d0fa0810d5df51cfd21a"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project6/PklProject.deps.json": {
+      "kind": "file",
+      "sha256": "9e995c864dcd821a8c7d3bb3333e57216f8f88ef61efc8018b28937d5be75434"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project6/globIntoDependency.pkl": {
+      "kind": "file",
+      "sha256": "232901081f94dd61dec9121d4c1a7a849abcd93a37dba9d3f43360acb5a9ff54"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project6/globWithinDependency.pkl": {
+      "kind": "file",
+      "sha256": "a9037b77b4de28f21006c694c453c620521c4afe1af6adaceeb35e8765ad59f5"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project7/PklProject": {
+      "kind": "file",
+      "sha256": "4b7765f4b290e198d98683b3cfb73e190610eb8e50291159630c886b60bad75c"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project7/main.pkl": {
+      "kind": "file",
+      "sha256": "db2dee59c729d61770b7d8bf363433db308c2f9fbc46be6bd5f95b32fa94ac11"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project7/moduleA.pkl": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/project7/moduleB.pkl": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/projectCycle1/PklProject": {
+      "kind": "file",
+      "sha256": "0b323f2a176de58a93b9ee2645062f9350f2050796ea29e600aa65a092bd9f2a"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/projectCycle2/PklProject": {
+      "kind": "file",
+      "sha256": "54466b7ed11f30e841f2c86a85e5b853c53aa43341db9002ef17a2878bc1e465"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/projectCycle3/PklProject": {
+      "kind": "file",
+      "sha256": "446203f406bfe4db232a214ca2d0ab6dec7691028984953885b9ace2d870273e"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/project/projectCycle4/PklProject": {
+      "kind": "file",
+      "sha256": "f7c689ff3636e06f4c24df555abbeb871b084c3fb7b2b75a4e25484b3dc3000e"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/propertiesRendererTest.pkl": {
+      "kind": "file",
+      "sha256": "29385f2d8de53addf3091c5515f6933b40cd53ee0d49512093254f527a4f7642"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/propertiesRendererTest.properties": {
+      "kind": "file",
+      "sha256": "e71af0b2563c90f4cdc60a499d8c58451833e6478f1b0f70fd1ffa429940d81d"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.json": {
+      "kind": "file",
+      "sha256": "068c60415bfdc848995759eb1c4ae99dcb04c8b19ab27d19c74e17a90eabed9a"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pcf": {
+      "kind": "file",
+      "sha256": "df0463ea682d3afe7c08f8ca75c5ef982783f83788c6cd906bb39d58ec31d20c"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.pkl": {
+      "kind": "file",
+      "sha256": "466bf168714dd68f9d9d114b5617e499c0ad39f89185aa5df428f83e17673383"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.plist": {
+      "kind": "file",
+      "sha256": "e9f0198df6a1622ff2be0e7012dbc65665b8df6766be9990e8b06acabf0556b5"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/rendererTest.yaml": {
+      "kind": "file",
+      "sha256": "c085011b2f286402d3adacea233cd24b564eec6fd1e4db2d50a9b8c53c344444"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/resource/resource.txt": {
+      "kind": "file",
+      "sha256": "ed7002b439e9ac845f22357d822bac1444730fbdb6016d3ec9432297b9ec9f73"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/resource/resource1.jar": {
+      "kind": "file",
+      "sha256": "1c5652e17c145ab1f0eee7f168ae62cc2f4a329f05398605ee93e38b63c5fba2"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/resource/resource2.zip": {
+      "kind": "file",
+      "sha256": "60288cf2d954793b148c9d287b48e08d44139ac8341af786d7b33ee5bdcd968a"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/snippets/imported.pkl": {
+      "kind": "file",
+      "sha256": "c565a3ebf049042dcee5b2fc456f5f28b0a633b977b1aa20db43b7c69765787b"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/snippets/name with [wierd]! chars~~.pkl": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "external/pkl/pkl-core/src/test/resources/org/pkl/core/stdlib/protobufRendererTest.textproto": {
+      "kind": "file",
+      "sha256": "2005efdc2e213d9cf6c129e0b85f9d2ce28d501f7b0d994a683dfa2ac8c65828"
+    }
+  },
+  "classpath_root": "external/pkl/pkl-core/src/test/resources",
+  "configuration": {
+    "builder": "EvaluatorBuilder.preconfigured",
+    "classpath_services": "Unchanged resource descriptors with source-bound Java companions of the two upstream Kotlin test providers.",
+    "color": false,
+    "environment": {
+      "/foo/bar": "foobar",
+      "NAME1": "value1",
+      "NAME2": "value2",
+      "file:///foo/bar": "file:///foo/bar",
+      "foo bar": "foo bar"
+    },
+    "logger": "Loggers.stdErr",
+    "module_cache_dir": null,
+    "module_source": "ModuleSource.path",
+    "operation": "evaluateOutputBytes",
+    "power_assertions": true,
+    "properties": {
+      "/foo/bar": "foobar",
+      "name1": "value1",
+      "name2": "value2"
+    },
+    "stack_frame_transformer": "StackFrameTransformers.empty",
+    "unused_fixture_setup": "PackageServer TLS/test-port configuration is not installed; the selected input and imported resource perform no HTTP/package operations."
+  },
+  "expected_exit": [
+    0
+  ],
+  "expected_outcome": "success",
+  "input": {
+    "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+    "sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c"
+  },
+  "original_case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+  "original_case_sha256": "f6425afaa980f2e5c39835b018335e16a3c7ebf81ba73a5dffa72d75c2eafd73",
+  "reference": {
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "sources": {
+      "external/pkl/pkl-commons-cli/src/main/kotlin/org/pkl/commons/cli/CliCommand.kt": "c46f1a381452de2a8aad0e83866de4e8bb1174845cba395185ad8b68ae31b87a",
+      "external/pkl/pkl-core/src/main/java/org/pkl/core/EvaluatorBuilder.java": "83e6139f2fcda0ae0019452a3cf5f993b7e5e6366574033a2a4c328a492f822f",
+      "external/pkl/pkl-core/src/main/java/org/pkl/core/SecurityManagers.java": "18d813d8c34fc9837883ca4d8916d3266ec4113a6142f20f6d53d0ad4c4dff15",
+      "external/pkl/pkl-core/src/main/java/org/pkl/core/module/ModuleKeys.java": "137c1635b1bbc0894f30171355c50719a6c0c15b40e92aa44b51104f20103a05",
+      "external/pkl/pkl-core/src/main/java/org/pkl/core/module/ResolvedModuleKeys.java": "4090e69eb4d1eac35e67818242357f581d383c536be1a9499790c18770933964",
+      "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java": "96eb6429a710d0b4db09664b6d84a0cb25a17a3206983183f66a65382ae69d82",
+      "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmUtils.java": "17a5b4a3750ec5ebf9a1bc8ed930cd6165f072ca97ce9d37f4f4043ac8fcce2a",
+      "external/pkl/pkl-core/src/test/kotlin/org/pkl/core/LanguageSnippetTestsEngine.kt": "1878f97ea58832aa1621cd250f7fce7e3d0453b8948c93ce047612b2b1b264a0",
+      "external/pkl/pkl-core/src/test/kotlin/org/pkl/core/module/TestModuleKeyFactory.kt": "29f307c1b4e8ec0613d7fb316e406a418ca09b501f9acdc7ed7e8eb383e85a72",
+      "external/pkl/pkl-core/src/test/kotlin/org/pkl/core/resource/TestResourceReader.kt": "bc342c532d1300336dce490b1e3202189357e0ae102e9e30e46719ca87084613"
+    }
+  },
+  "repetitions": 2,
+  "schema": 1,
+  "scope": "Original import1b whole-file JVM API output with its directory classpath. Additive evidence; the historical CLI command and blocked full-gate obligation remain unchanged."
+}

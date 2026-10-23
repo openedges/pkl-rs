@@ -1,0 +1,56 @@
+{
+  "archive": {
+    "compressed_bytes": 88765340,
+    "path": "reports/m2/classpath-evidence.tar.gz",
+    "payload_bytes": 191921073,
+    "payload_files": 11683,
+    "sha256": "ba5b96dbaf87ded80fe41fe688edc83d2af9222208e5dd0fb42350177db69786"
+  },
+  "closeout_archive": {
+    "bytes": 12555,
+    "path": "reports/m2/classpath-closeout-captures.tar.gz",
+    "qualification": "Contains the canonical implementation summary, derivation script, exact proposed blobs, audit, results prose and the pre-closeout index; the final index necessarily remains outside its own archive.",
+    "sha256": "934a715602eacc7a40ea1d339328ffb3ffe82fa9bfbcbfb835a1c429e0a955f9"
+  },
+  "exact_exclusions_before_walking": [
+    "target/m2/classpath-original-01/build",
+    "target/m2/classpath-original-02/build"
+  ],
+  "final_commit_binding": "Pending root publication; only Git reads/hash-object without writes were used.",
+  "final_tooling": "publication/final-tooling inside the main archive",
+  "publications": {
+    "reports/m2/classpath-checkpoint-summary.json": {
+      "bytes": 17709,
+      "sha256": "751c4f07ffe541d82f260733679e25f76e90300156733baf1b989019b28fe523"
+    },
+    "reports/m2/classpath-implementation-summary.json": {
+      "bytes": 22339,
+      "sha256": "ee4e19d262f6226c040e5a63e4cdd2ff2ec4a92977813ab821d83f4b8e7262db"
+    },
+    "reports/m2/classpath-publication-audit.json": {
+      "bytes": 1292,
+      "sha256": "6f150d2a1c42fab0402c850c5757363474c39062526d4a1fe134698cb6f0b85d"
+    },
+    "reports/m2/classpath-source-binding.json": {
+      "bytes": 4061589,
+      "sha256": "ebf1288362ba1a295a4b263a411996ecf906c261f84564d42189e2bba6c89bb8"
+    }
+  },
+  "raw_source_integrity": "publication/source-integrity.json inside the main archive",
+  "roots": [
+    "target/m2/classpath-original-01",
+    "target/m2/classpath-original-02",
+    "target/m2/classpath-required-checks-01",
+    "target/m2/classpath-tooling-checks-01",
+    "target/m2/classpath-example-tests-01",
+    "target/m2/classpath-controls-java-01",
+    "target/m2/classpath-controls-native-01"
+  ],
+  "schema": 1,
+  "scope": "Native directory-classpath checkpoint publication index; strict nonpasses retained.",
+  "source_binding": "publication/source-binding.json inside the main archive",
+  "symlinks": {
+    "count": 1,
+    "representation": "Exact link-target bytes as regular payloads with symlink-kind metadata; no traversal."
+  }
+}

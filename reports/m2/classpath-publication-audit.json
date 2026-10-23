@@ -1,0 +1,37 @@
+{
+  "archive": {
+    "compressed_bytes": 88765340,
+    "path": "reports/m2/classpath-evidence.tar.gz",
+    "payload_bytes": 191921073,
+    "payload_files": 11683,
+    "sha256": "ba5b96dbaf87ded80fe41fe688edc83d2af9222208e5dd0fb42350177db69786"
+  },
+  "archive_inventory_verified": true,
+  "exact_exclusions_before_walking": [
+    "target/m2/classpath-original-01/build",
+    "target/m2/classpath-original-02/build"
+  ],
+  "final_commit_binding": "Pending root publication; no Git objects/index/gitlinks changed.",
+  "gathered_payloads_exact": true,
+  "original_entries": 12076,
+  "original_evidence_before_after_equal": true,
+  "original_kinds": {
+    "directory": 417,
+    "file": 11658,
+    "symlink": 1
+  },
+  "proposed_git_blobs": 11,
+  "proposed_source_stable": true,
+  "roots": [
+    "target/m2/classpath-original-01",
+    "target/m2/classpath-original-02",
+    "target/m2/classpath-required-checks-01",
+    "target/m2/classpath-tooling-checks-01",
+    "target/m2/classpath-example-tests-01",
+    "target/m2/classpath-controls-java-01",
+    "target/m2/classpath-controls-native-01"
+  ],
+  "schema": 1,
+  "source_binding_sha256": "ebf1288362ba1a295a4b263a411996ecf906c261f84564d42189e2bba6c89bb8",
+  "summary_sha256": "751c4f07ffe541d82f260733679e25f76e90300156733baf1b989019b28fe523"
+}

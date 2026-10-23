@@ -49,7 +49,7 @@ fn load(module: &ResolvedModule) -> Result<ModuleSource, ModuleHostError> {
     })
 }
 
-fn io_error(error: std::io::Error) -> ModuleHostError {
+pub(super) fn io_error(error: std::io::Error) -> ModuleHostError {
     if error.kind() == std::io::ErrorKind::NotFound {
         ModuleHostError::NotFound
     } else {
@@ -57,7 +57,7 @@ fn io_error(error: std::io::Error) -> ModuleHostError {
     }
 }
 
-fn file_path(uri: &str) -> Result<PathBuf, ModuleHostError> {
+pub(super) fn file_path(uri: &str) -> Result<PathBuf, ModuleHostError> {
     let unsupported = || {
         ModuleHostError::Unsupported(
             "This development module Host supports absolute local file URIs only.".into(),
@@ -98,7 +98,7 @@ fn file_path(uri: &str) -> Result<PathBuf, ModuleHostError> {
     Ok(PathBuf::from(text))
 }
 
-fn file_uri(path: &Path) -> Result<String, ModuleHostError> {
+pub(super) fn file_uri(path: &Path) -> Result<String, ModuleHostError> {
     let text = path.to_str().ok_or_else(|| {
         ModuleHostError::Unsupported(
             "Non-UTF-8 module paths are not supported by this development Host.".into(),

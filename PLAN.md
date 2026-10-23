@@ -748,6 +748,14 @@ Stage 43의 canonical 진단 위에 module resolve/source와 resource read의 �
 
 다음 Stage 45는 원본 여섯 사례를 막는 `pkl:base`·`pkl:test`의 실제 모듈 정체성과 VM 내부 `catch`·`catchOrNull`을 구현합니다. 공통 cache·heap·Host를 유지한 제한된 오류 unwind와 Java의 별도 catch 진단 profile을 연결합니다. 원본 전체 입력을 유지하며 Resource·triple-dot·glob 및 나머지 표준 모듈 의존성도 후속 의무로 추적합니다. 런타임은 `gpt-6-astra / xhigh`, 원본 Java 비교와 독립 설계 검토는 각각 `gpt-6.1-sol / high`에 배정합니다.
 
+### 병행 구현 — 원본 JVM classpath snippet 실행
+
+원본 `basic/import1b.pkl`은 JVM API의 classpath loader를 요구하며 native upstream suite에서 제외됩니다. 기존 CLI 명령과 차단 기록은 그대로 두고, 고정 Java의 `EvaluatorBuilder.preconfigured()`·`evaluateOutputBytes`와 Rust 공통 VM의 directory classpath Host를 연결했습니다. 원본 파일·test resource directory·service descriptor를 유지하며, 배포 JAR에 없는 작은 Kotlin test provider 두 개는 출처와 hash를 연결한 Java 검증용 companion으로 제공합니다.
+
+[최종 기록](reports/m2/classpath-implementation-summary.json)에서 원본 전체 입력은 새 Java·Rust 프로세스 두 쌍 모두 출력·오류·종료 코드·파일 바이트가 같습니다. 추가 control 여섯 개는 일치 세 개·불일치 두 개·미지원 한 개입니다. 오류의 표준 라이브러리 frame URI와 import trust 정책은 남은 구현 의무로 유지합니다. 필수 Rust 검사 다섯 개, workspace harness 692회(ignored 1회), example 검사 여섯 개와 Python 검사 26개가 통과했습니다. 이 수치는 고유 기능 커버리지가 아닙니다.
+
+독립 도구 검토에서 찾은 directory symlink 누락·Cargo 설정 source 누락·build 원본 경로 검증 누락을 수정하고 별도 `original02`로 다시 취득했습니다. [원시 증거](reports/m2/classpath-captures.json)는 이전 취득·알려진 실패·정확한 cache 제외와 소스 차이를 보존합니다. 기존 blocked row의 자동 승격, 전체 classpath·Wasm·N-API 호환성, 성능 달성은 주장하지 않습니다. 다음에는 전체 목록에 JVM 실행 계약을 명시적으로 연결하고 공통 진단 transformer·신뢰 정책을 구현해야 합니다. **M2 전체는 진행 중입니다.**
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

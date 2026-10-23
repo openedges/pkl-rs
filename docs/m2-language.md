@@ -23,6 +23,11 @@ portable comparisons select actual output separately with `output-bytes`.
 Original setup-dependent cases remain incomplete when the observed Java outcome
 does not satisfy the original expected exit status, even if raw channels agree.
 
+The [original JVM-classpath profile](m2-jvm-classpath.md) separately compares the
+unchanged `basic/import1b.pkl` input through the upstream JVM API/classloader
+boundary. Its explicit source-bound setup preserves the historical blocked CLI
+contract and does not automatically promote the whole-language inventory row.
+
 `compatibility/m2-language.json` keeps semantic families, pinned source
 declarations, upstream language snippets, selected historical regressions, and
 unmapped historical candidates visible. Declaration and heading counts are
