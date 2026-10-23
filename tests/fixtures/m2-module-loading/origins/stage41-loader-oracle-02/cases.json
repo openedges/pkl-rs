@@ -1,0 +1,271 @@
+[
+  {
+    "actions": [
+      [
+        "eval",
+        "observation0"
+      ],
+      [
+        "eval",
+        "observation1"
+      ],
+      [
+        "eval",
+        "observation2"
+      ],
+      [
+        "eval",
+        "observation3"
+      ],
+      [
+        "eval",
+        "observation4"
+      ]
+    ],
+    "files": {
+      "child.pkl": "const bar = 3\nfoo = bar * 2\nclass C { x = bar }\n",
+      "sub/.keep": ""
+    },
+    "id": "normalized-symlink-identity",
+    "main": "import \"child.pkl\" as a\nimport \"./sub/../child.pkl\" as b\nimport \"link.pkl\" as c\nconst bar=1\nobservation0 = a == b\nobservation1 = a == c\nobservation2 = a.C == c.C\nobservation3 = a.foo\nobservation4 = new a.C {}.x\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity/main.pkl",
+    "sourceSha256": "8b81e4b23640a4766fb48ebbc1220d941296418e8252f141ac6e49cf8d50e702",
+    "symlinks": {
+      "link.pkl": "child.pkl"
+    }
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "observation0"
+      ],
+      [
+        "eval",
+        "observation1"
+      ],
+      [
+        "eval",
+        "observation2"
+      ],
+      [
+        "eval",
+        "observation3"
+      ],
+      [
+        "eval",
+        "observation4"
+      ]
+    ],
+    "files": {
+      "a.pkl": "const bar = 3\nfoo = bar * 2\nclass C { x = bar }\n",
+      "b.pkl": "const bar = 3\nfoo = bar * 2\nclass C { x = bar }\n"
+    },
+    "id": "distinct-same-offset-declarations",
+    "main": "import \"a.pkl\" as a\nimport \"b.pkl\" as b\nconst bar=1\nobservation0 = a == b\nobservation1 = a.C == b.C\nobservation2 = new a.C {} is b.C\nobservation3 = a.foo\nobservation4 = b.foo\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/distinct-same-offset-declarations/main.pkl",
+    "sourceSha256": "1bb811475047a171eed97934db4d58c220516e31d06ea78d72418c655b2d60e7",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "observation0"
+      ],
+      [
+        "eval",
+        "observation1"
+      ]
+    ],
+    "files": {},
+    "id": "unused-malformed-uri",
+    "main": "import \"life:bad space\" as unused\nresult=throw(\"body\")\nobservation0 = result\nobservation1 = result\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-malformed-uri/main.pkl",
+    "sourceSha256": "45ab3319173df16bee2a7709df22c5ea84a0bb2ad77095f0df7382609f769d3d",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "observation0"
+      ],
+      [
+        "eval",
+        "observation1"
+      ]
+    ],
+    "files": {},
+    "id": "unused-missing-load",
+    "main": "import \"missing.pkl\" as unused\nresult=7\nobservation0 = result\nobservation1 = result\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-missing-load/main.pkl",
+    "sourceSha256": "ece245908224dbb50f731a01d3f7262f6bb1a3363ac898c6d8945a5234e1458e",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "observation0"
+      ],
+      [
+        "eval",
+        "observation1"
+      ],
+      [
+        "eval",
+        "observation2"
+      ],
+      [
+        "eval",
+        "observation3"
+      ]
+    ],
+    "files": {},
+    "id": "self-import-publication",
+    "main": "import \"main.pkl\" as self\nclass C { x=7 }\nresult=7\nobservation0 = self == module\nobservation1 = self.C == C\nobservation2 = self.result\nobservation3 = result\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/self-import-publication/main.pkl",
+    "sourceSha256": "4d03dc10cefb793c8167d41b69a4d2de471ec7560adfda65e1353eda759c74c5",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "observation0"
+      ],
+      [
+        "eval",
+        "observation1"
+      ],
+      [
+        "eval",
+        "observation2"
+      ]
+    ],
+    "files": {
+      "child.pkl": "import \"main.pkl\" as back\nresult = back.result + 1\n"
+    },
+    "id": "mutual-import-publication",
+    "main": "import \"child.pkl\" as child\nclass C { x=7 }\nresult=7\nobservation0 = child.back == module\nobservation1 = child.back.C == C\nobservation2 = child.result\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/mutual-import-publication/main.pkl",
+    "sourceSha256": "4d4d94cc3ae02faf780f506666a370bffe6d66cd01851bb71ae012076d015da5",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "observation0"
+      ],
+      [
+        "write",
+        "late.pkl",
+        "x=9\n"
+      ],
+      [
+        "eval",
+        "observation1"
+      ],
+      [
+        "eval",
+        "observation2"
+      ]
+    ],
+    "files": {},
+    "id": "resolve-file-retry",
+    "main": "import \"late.pkl\" as a\nobservation0 = a.x\nobservation1 = a.x\nobservation2 = a.x\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry/main.pkl",
+    "sourceSha256": "408dc0bd42cfd76b49f02fdab115eb7a3296df2c0ac8025de55a156944a5696c",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "observation0"
+      ],
+      [
+        "write",
+        "bad.pkl",
+        "x=9\n"
+      ],
+      [
+        "eval",
+        "observation1"
+      ],
+      [
+        "eval",
+        "observation2"
+      ]
+    ],
+    "files": {
+      "bad.pkl": "x = )\n"
+    },
+    "id": "parse-failure-cache",
+    "main": "import \"bad.pkl\" as a\nother=import(\"bad.pkl\")\nobservation0 = a.x\nobservation1 = other.x\nobservation2 = a.x\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache/main.pkl",
+    "sourceSha256": "7af1651d377c9fd6a055314f4e666972fbdf32a9eca59a3e9c6abde50e5a1c0f",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "observation0"
+      ],
+      [
+        "write",
+        "bad.pkl",
+        "x=9\n"
+      ],
+      [
+        "eval",
+        "observation1"
+      ],
+      [
+        "eval",
+        "observation2"
+      ]
+    ],
+    "files": {
+      "bad.pkl": "@Deprecated { when(throw(\"initialization\")) { message=\"x\" } }\nmodule bad\nx=1\n"
+    },
+    "id": "init-failure-cache",
+    "main": "import \"bad.pkl\" as a\nother=import(\"bad.pkl\")\nobservation0 = a.x\nobservation1 = other.x\nobservation2 = a.x\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache/main.pkl",
+    "sourceSha256": "7af1651d377c9fd6a055314f4e666972fbdf32a9eca59a3e9c6abde50e5a1c0f",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "observation0"
+      ],
+      [
+        "eval",
+        "observation1"
+      ]
+    ],
+    "files": {
+      "source.pkl": "value=9\n"
+    },
+    "id": "spi-source-close",
+    "main": "a=import(\"life:/a\")\nobservation0 = a.value\nobservation1 = a.value\n",
+    "mode": "source-close",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/spi-source-close/main.pkl",
+    "sourceSha256": "b12ea7c320fe671a3ab1468448ff8448d526179ca30fca4fa9d5edebb702b60b",
+    "symlinks": {}
+  }
+]

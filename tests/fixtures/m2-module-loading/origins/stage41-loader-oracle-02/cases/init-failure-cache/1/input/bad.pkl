@@ -1,0 +1,3 @@
+@Deprecated { when(throw("initialization")) { message="x" } }
+module bad
+x=1

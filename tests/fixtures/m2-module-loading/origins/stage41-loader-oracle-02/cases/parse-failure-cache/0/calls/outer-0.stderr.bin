@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Unexpected token `)`.
+
+1 | x = )
+        ^
+at main#a (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache/bad.pkl)
+
+3 | observation0 = a.x
+                   ^
+at main#observation0 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache/main.pkl)
+
+1 | observation0
+    ^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,2803 @@
+[
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+    "input_sha256": "cdd0ae20dcb2a49c117ac669e079ac2c41354d8520e061ddc9653055bf3bea2e",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/comments.pcf",
+          "sha256": "fbc11d425209f5a5b08979c3dc374f4fdd2f15edce67b0af0e0fddce3ca2c510"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "cdd0ae20dcb2a49c117ac669e079ac2c41354d8520e061ddc9653055bf3bea2e"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/comments.pcf",
+          "sha256": "fbc11d425209f5a5b08979c3dc374f4fdd2f15edce67b0af0e0fddce3ca2c510",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl",
+    "input_sha256": "259d752337288dbd89214d1937948e3e2dbca030587bf868343bfc7ede7730cd",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/semicolon.pcf",
+          "sha256": "f755fd11f474c1ea4493a9f3f2cb4ed4b5823ae3f7ea01a08b82a0cae0bcca8e"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "259d752337288dbd89214d1937948e3e2dbca030587bf868343bfc7ede7730cd"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/semicolon.pcf",
+          "sha256": "f755fd11f474c1ea4493a9f3f2cb4ed4b5823ae3f7ea01a08b82a0cae0bcca8e",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl",
+    "input_sha256": "c565a3ebf049042dcee5b2fc456f5f28b0a633b977b1aa20db43b7c69765787b",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/imported.pcf",
+          "sha256": "5a10527e6c44c1120c3f5ddc2fbbc541fc5786510206e61c3053a497bbb3f123"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "c565a3ebf049042dcee5b2fc456f5f28b0a633b977b1aa20db43b7c69765787b"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/imported.pcf",
+          "sha256": "5a10527e6c44c1120c3f5ddc2fbbc541fc5786510206e61c3053a497bbb3f123",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl",
+    "input_sha256": "5f381f782b19c58bc4589b9a9199767eb8e828370927b89b4bd19fb44167c210",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/parser/methodTrailingCommas.pcf",
+          "sha256": "8db0967d71d543473f1a4d98550e61a7db84e3aca19759167144ebc2a3813a00"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "5f381f782b19c58bc4589b9a9199767eb8e828370927b89b4bd19fb44167c210"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/parser/methodTrailingCommas.pcf",
+          "sha256": "8db0967d71d543473f1a4d98550e61a7db84e3aca19759167144ebc2a3813a00",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl",
+    "input_sha256": "cd81315bbd63590ef22afa209b6040055b9b2deb4fb8686bcb66818583270c9e",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/parser/constraintsTrailingComma.pcf",
+          "sha256": "6d783f26cd3da943dbdcdab814048fc855eb1ff3e19022b2aff44ea3410feab0"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "cd81315bbd63590ef22afa209b6040055b9b2deb4fb8686bcb66818583270c9e"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/parser/constraintsTrailingComma.pcf",
+          "sha256": "6d783f26cd3da943dbdcdab814048fc855eb1ff3e19022b2aff44ea3410feab0",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl",
+    "input_sha256": "9c03b9cf5757a1e19f9e982be0164027e3d3b88489dbfdb7630b9d3b0c41dedc",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/parser/trailingCommas.pcf",
+          "sha256": "e91330cb7a12b443ffe8f1784c8e27955f0f28815445b929203605bac39dca0c"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "9c03b9cf5757a1e19f9e982be0164027e3d3b88489dbfdb7630b9d3b0c41dedc"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/parser/trailingCommas.pcf",
+          "sha256": "e91330cb7a12b443ffe8f1784c8e27955f0f28815445b929203605bac39dca0c",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl",
+    "input_sha256": "636c3f9f688dddee63f167bd00b5929df8dee9561e3ec370b28a93cbc28b1988",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/parser/spread.pcf",
+          "sha256": "75ddfa8f092bab5b2ab956a81be4a43e24615c385a1cd91dd92396887f511b74"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "636c3f9f688dddee63f167bd00b5929df8dee9561e3ec370b28a93cbc28b1988"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/parser/spread.pcf",
+          "sha256": "75ddfa8f092bab5b2ab956a81be4a43e24615c385a1cd91dd92396887f511b74",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl",
+    "input_sha256": "470541f6f77653a46b71e754c8ccff3967575c78fbfed1b5f240eac8fd57ceb6",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/pcfRenderer1.pcf",
+          "sha256": "8cee78a7aca131b76410a835ca27af06165a7d1faeac32f0821d6752a714c233"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "470541f6f77653a46b71e754c8ccff3967575c78fbfed1b5f240eac8fd57ceb6"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/pcfRenderer1.pcf",
+          "sha256": "8cee78a7aca131b76410a835ca27af06165a7d1faeac32f0821d6752a714c233",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl",
+    "input_sha256": "142f861c5c45096c9c582832a4df2a5406172afa3bb25d7a0f840346670acf90",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0,
+        1
+      ],
+      "expected_outcome": "observe",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/pcfRenderer8.err",
+          "sha256": "93edfd7673f8cb01ccb59c9a862380cddb335c4b71f9b91cb82089da241e67d9"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "142f861c5c45096c9c582832a4df2a5406172afa3bb25d7a0f840346670acf90"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/pcfRenderer8.err",
+          "sha256": "93edfd7673f8cb01ccb59c9a862380cddb335c4b71f9b91cb82089da241e67d9",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "error-or-logged-diagnostic"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl",
+    "input_sha256": "f151b651b8c47f844f2a8c9ca1a2e4d17bb0992d75d3ffbc397b48dfd6b02af3",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0,
+        1
+      ],
+      "expected_outcome": "observe",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/errors/undefinedProperty1.err",
+          "sha256": "414dbb6eddd699de6ae86f418bc2884cf7447cb465669211ff1bc0a22779034a"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "f151b651b8c47f844f2a8c9ca1a2e4d17bb0992d75d3ffbc397b48dfd6b02af3"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/errors/undefinedProperty1.err",
+          "sha256": "414dbb6eddd699de6ae86f418bc2884cf7447cb465669211ff1bc0a22779034a",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "error-or-logged-diagnostic"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl",
+    "input_sha256": "043f6f60ed72ee6618e127b0d34b33c916afb68498ddddf68aa3bd4b3721a205",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0,
+        1
+      ],
+      "expected_outcome": "observe",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/errors/undefinedProperty4.err",
+          "sha256": "7362330d8d42ea43d1ce7f889119f6031605cae0b7b179c4e3af34642f874781"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "043f6f60ed72ee6618e127b0d34b33c916afb68498ddddf68aa3bd4b3721a205"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/errors/undefinedProperty4.err",
+          "sha256": "7362330d8d42ea43d1ce7f889119f6031605cae0b7b179c4e3af34642f874781",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "error-or-logged-diagnostic"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
+    "input_sha256": "1d4a4ae668a766375b90b7fcc43afe7cd1dc8ee6488869aca01e0e97882d6d4a",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/import1.pcf",
+          "sha256": "aff07973a41b28e1823576165aa6aef807a974fd8634758c2d35dcdd94410d54"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "1d4a4ae668a766375b90b7fcc43afe7cd1dc8ee6488869aca01e0e97882d6d4a"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/import1.pcf",
+          "sha256": "aff07973a41b28e1823576165aa6aef807a974fd8634758c2d35dcdd94410d54",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Requires upstream JVM test classpath/modulepath fixture adapter.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+    "input_sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": "Requires upstream JVM test classpath/modulepath fixture adapter.",
+        "status": "blocked"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/import1b.pcf",
+          "sha256": "aff07973a41b28e1823576165aa6aef807a974fd8634758c2d35dcdd94410d54"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/import1b.pcf",
+          "sha256": "aff07973a41b28e1823576165aa6aef807a974fd8634758c2d35dcdd94410d54",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
+    "input_sha256": "8d030a9afdfa39b08230ce4e1be03c9f5d7dc46862e82f52f5b656a1e782bf9e",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/import2.pcf",
+          "sha256": "24136b60f6eb09b67f0f6926768d08e1ef03a748b31c988f6c57a03d9071dc9f"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "8d030a9afdfa39b08230ce4e1be03c9f5d7dc46862e82f52f5b656a1e782bf9e"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/import2.pcf",
+          "sha256": "24136b60f6eb09b67f0f6926768d08e1ef03a748b31c988f6c57a03d9071dc9f",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
+    "input_sha256": "6c57085f865663ccc3729c02a0d0a4e3feba88cc18c78669e92ef589dbf952f8",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/import3.pcf",
+          "sha256": "9c0975545fe1e5c01ea775a22d9d5afac70f4dacaa4e2fa44e6b6752708ea8b0"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "6c57085f865663ccc3729c02a0d0a4e3feba88cc18c78669e92ef589dbf952f8"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/import3.pcf",
+          "sha256": "9c0975545fe1e5c01ea775a22d9d5afac70f4dacaa4e2fa44e6b6752708ea8b0",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
+    "input_sha256": "efaa1499067829bce0637f4ef78c0bca9c48bb11f148cf6b824f26993d3d0e35",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/modules/extendModule1.pcf",
+          "sha256": "181cbd0c799ee948a7b45a123cbd9a92abce3c7fdf68601ac326219d3915893b"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "efaa1499067829bce0637f4ef78c0bca9c48bb11f148cf6b824f26993d3d0e35"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/modules/extendModule1.pcf",
+          "sha256": "181cbd0c799ee948a7b45a123cbd9a92abce3c7fdf68601ac326219d3915893b",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
+    "input_sha256": "b42f51dc784cfd1c875afdb33db507bfd9b0dde4fd4276ad7129ebf0082796ce",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/modules/amendModule1.pcf",
+          "sha256": "70aab7b96a046ca32557eebadf2b3ea4af37db391478a38c9c34ae1e4fff814d"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "b42f51dc784cfd1c875afdb33db507bfd9b0dde4fd4276ad7129ebf0082796ce"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/modules/amendModule1.pcf",
+          "sha256": "70aab7b96a046ca32557eebadf2b3ea4af37db391478a38c9c34ae1e4fff814d",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
+    "input_sha256": "73a6e0d11b575df36c45ba6d1313347d46a6f10b7caf3881e68e5d96761581ce",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/modules/recursiveModule1.pcf",
+          "sha256": "64899e4f3674f5e1cfd750f90b37ab1b716cfe19ac2d1e87e36b7a35383d743f"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "73a6e0d11b575df36c45ba6d1313347d46a6f10b7caf3881e68e5d96761581ce"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/modules/recursiveModule1.pcf",
+          "sha256": "64899e4f3674f5e1cfd750f90b37ab1b716cfe19ac2d1e87e36b7a35383d743f",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
+    "input_sha256": "a0b843f9313eb386673e8989e1a6ed9cd318a74b04e8ec803e2ab3e0ae757cac",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
+      "resource_set": "pkl",
+      "resources": [],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "a0b843f9313eb386673e8989e1a6ed9cd318a74b04e8ec803e2ab3e0ae757cac"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
+    "input_sha256": "ac38bf68333be901cc1e71bc9b439520f3e311bc6112dafceb01d7e821608087",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/modules/filename with spaces.pcf",
+          "sha256": "ac38bf68333be901cc1e71bc9b439520f3e311bc6112dafceb01d7e821608087"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "ac38bf68333be901cc1e71bc9b439520f3e311bc6112dafceb01d7e821608087"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/modules/filename with spaces.pcf",
+          "sha256": "ac38bf68333be901cc1e71bc9b439520f3e311bc6112dafceb01d7e821608087",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+    "input_sha256": "ce3f51e36ea5d6fee3a6f77a9e483a0889cd341f10711bc7b084dfc07c0529e7",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/modules/\u65e5\u672c\u8a9e.pcf",
+          "sha256": "ed1ce580f6352352e4dfce6d1d6df5dc374d247ced22e2434d938db9152368d9"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "ce3f51e36ea5d6fee3a6f77a9e483a0889cd341f10711bc7b084dfc07c0529e7"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/modules/\u65e5\u672c\u8a9e.pcf",
+          "sha256": "ed1ce580f6352352e4dfce6d1d6df5dc374d247ced22e2434d938db9152368d9",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+    "input_sha256": "3d04c6da9335211b0d1f0586ae9917266a74590f13042b5ca38ccd327683e353",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/moduleOutput.pcf",
+          "sha256": "61d034473102d7dac305902770471fd50f4c5b26f6831a56dd90b5184b3c30fc"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "3d04c6da9335211b0d1f0586ae9917266a74590f13042b5ca38ccd327683e353"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/moduleOutput.pcf",
+          "sha256": "61d034473102d7dac305902770471fd50f4c5b26f6831a56dd90b5184b3c30fc",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+    "input_sha256": "7f132f7babc19ff302c08906afb03bbcd3be5a67831b2f4a8722e1f9e6789d96",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/parser/newline.pcf",
+          "sha256": "aeeaaabf4a1971ee35cf1219fb7920e789357ed48ca35e2fe7fc3ff08d95b69c"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "7f132f7babc19ff302c08906afb03bbcd3be5a67831b2f4a8722e1f9e6789d96"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/parser/newline.pcf",
+          "sha256": "aeeaaabf4a1971ee35cf1219fb7920e789357ed48ca35e2fe7fc3ff08d95b69c",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+    "input_sha256": "997f0647c2c57c06a1e60ac18f1e0e128b9bfe415677d93ed527fa6706bd2076",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/boolean.pcf",
+          "sha256": "2dfb0439b4f5fe9d608d956e9fd4fbf924a4428ceb34c2da92b1e75722c4a8d9"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "997f0647c2c57c06a1e60ac18f1e0e128b9bfe415677d93ed527fa6706bd2076"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/boolean.pcf",
+          "sha256": "2dfb0439b4f5fe9d608d956e9fd4fbf924a4428ceb34c2da92b1e75722c4a8d9",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+    "input_sha256": "9af0950aaaa9057093659b97105e69231dc3d55f09d3bc7710cbe2b7ab5fb001",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/read.pcf",
+          "sha256": "1fd06249e8131e4d1006a7b2729158c49492f3f92275ca7c78b8943fb905d352"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "9af0950aaaa9057093659b97105e69231dc3d55f09d3bc7710cbe2b7ab5fb001"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/read.pcf",
+          "sha256": "1fd06249e8131e4d1006a7b2729158c49492f3f92275ca7c78b8943fb905d352",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+    "input_sha256": "9a037e753e348abac16c43b00a606ed8fe9ae35e6c88d74996d6c92287a0891f",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "resource_set": "pkl",
+      "resources": [],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "9a037e753e348abac16c43b00a606ed8fe9ae35e6c88d74996d6c92287a0891f"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+    "input_sha256": "92b50167ea8b9624ac5c7bf4153cbef77d83ec0a5e975ac191b7d45cc8117caf",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/parser/lineCommentBetween.pcf",
+          "sha256": "5c081677e503e5de17fa50738f4d4a0fde3744cd371688e520652957dd889945"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "92b50167ea8b9624ac5c7bf4153cbef77d83ec0a5e975ac191b7d45cc8117caf"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/parser/lineCommentBetween.pcf",
+          "sha256": "5c081677e503e5de17fa50738f4d4a0fde3744cd371688e520652957dd889945",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
+    "input_sha256": "1195ee09fa9539561a369e95dacfcf5aaf5427db81d0f942ba9abce297fac9a2",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/pcfRenderer2b.pcf",
+          "sha256": "2d5df3594c08607f76de25a8116677283f45f94ace769cf89d07931fcd97e336"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "1195ee09fa9539561a369e95dacfcf5aaf5427db81d0f942ba9abce297fac9a2"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/pcfRenderer2b.pcf",
+          "sha256": "2d5df3594c08607f76de25a8116677283f45f94ace769cf89d07931fcd97e336",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+    "input_sha256": "c3718ee0c368eb13c819a114f8038da22e145e32b07ddf0b8843b31a1c3e00a5",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/pcfRenderer9.pcf",
+          "sha256": "b9b16f279206e300625ca122a271d155a53951ac8efa5bd05126f7540e8a1dcc"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "c3718ee0c368eb13c819a114f8038da22e145e32b07ddf0b8843b31a1c3e00a5"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/pcfRenderer9.pcf",
+          "sha256": "b9b16f279206e300625ca122a271d155a53951ac8efa5bd05126f7540e8a1dcc",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  },
+  {
+    "adapter": null,
+    "execution": {
+      "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
+      "state": "unimplemented"
+    },
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+    "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+    "input_sha256": "be3b5aa79eaa7b71d237c280985d27e7d86823f0e260e56610ef3c5dd7add3cb",
+    "required": true,
+    "requirements": [],
+    "upstream_case": {
+      "assertion_count": null,
+      "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "command": [
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--property",
+        "name1=value1",
+        "--property",
+        "name2=value2",
+        "--property",
+        "/foo/bar=foobar",
+        "--env-var",
+        "NAME1=value1",
+        "--env-var",
+        "NAME2=value2",
+        "--env-var",
+        "/foo/bar=foobar",
+        "--env-var",
+        "foo bar=foo bar",
+        "--env-var",
+        "file:///foo/bar=file:///foo/bar",
+        "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl"
+      ],
+      "cwd": ".",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "TERM": "dumb",
+        "TZ": "UTC"
+      },
+      "execution": {
+        "reason": null,
+        "status": "ready"
+      },
+      "expected_exit": [
+        0
+      ],
+      "expected_outcome": "success",
+      "host_requirements": [
+        "filesystem",
+        "source-tree-resource-set"
+      ],
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+      "resource_set": "pkl",
+      "resources": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/moduleOutput2.pcf",
+          "sha256": "1b4ca09ccdf2430dc24c2bded048779a49330a65747f3ec83da906c9b367b17f"
+        }
+      ],
+      "source": {
+        "path": "pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+        "repository": "pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "sha256": "be3b5aa79eaa7b71d237c280985d27e7d86823f0e260e56610ef3c5dd7add3cb"
+      },
+      "suite": "language-snippet",
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ],
+      "upstream_goldens": [
+        {
+          "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/moduleOutput2.pcf",
+          "sha256": "1b4ca09ccdf2430dc24c2bded048779a49330a65747f3ec83da906c9b367b17f",
+          "use": "provenance-only-normalized-by-upstream"
+        }
+      ],
+      "upstream_outcome": "success"
+    }
+  }
+]

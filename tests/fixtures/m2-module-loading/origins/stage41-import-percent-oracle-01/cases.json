@@ -1,0 +1,42 @@
+[
+  {
+    "id": "relative-encoded-missing",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-missing/main.pkl",
+    "resources": {
+      "child %.pkl": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+    },
+    "source": "child=import(\"child%20%25.pkl\")\noutput { text=child.value.toString() }\n",
+    "sourceSha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f",
+    "target": "child%20%25.pkl"
+  },
+  {
+    "id": "relative-literal-space-percent",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-literal-space-percent/main.pkl",
+    "resources": {
+      "child %.pkl": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+    },
+    "source": "child=import(\"child %.pkl\")\noutput { text=child.value.toString() }\n",
+    "sourceSha256": "ed06c4b7c27c490f943e26b464bfdcae7dad382cbbb2282bd8f856898ffa2015",
+    "target": "child %.pkl"
+  },
+  {
+    "id": "absolute-encoded-target",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/main.pkl",
+    "resources": {
+      "child %.pkl": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+    },
+    "source": "child=import(\"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/child%20%25.pkl\")\noutput { text=child.value.toString() }\n",
+    "sourceSha256": "21b80736ab46a7dda84f6d316b714fcfe4a60f8ae4ba1e6e0db3ebee50629156",
+    "target": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/child%20%25.pkl"
+  },
+  {
+    "id": "relative-encoded-literal-file",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-literal-file/main.pkl",
+    "resources": {
+      "child%20%25.pkl": "b8d7ae3b140b5e727f4948e37c28393fa7e84f4721c4de2354cf9b83fd32f6ac"
+    },
+    "source": "child=import(\"child%20%25.pkl\")\noutput { text=child.value.toString() }\n",
+    "sourceSha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f",
+    "target": "child%20%25.pkl"
+  }
+]

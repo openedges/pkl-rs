@@ -168,7 +168,28 @@ pub fn prepare_module(
             result.phase = FrontendPhase::Compilation;
             result
         })?;
-    Arc::make_mut(&mut program).module_name = name.clone().into();
+    Arc::make_mut(&mut program)
+        .register_primary_source(
+            Arc::new(crate::value::RuntimeSource {
+                text: input.text.into(),
+                uri: input.uri.into(),
+                module_name: name.clone().into(),
+                line_anchors: false,
+            }),
+            crate::modules::ModuleIdentity {
+                original_uri: input.uri.into(),
+                resolved_uri: input.uri.into(),
+            },
+        )
+        .map_err(|error| {
+            render_module_runtime_failure(
+                &source,
+                input.uri,
+                &name,
+                options.diagnostic_profile,
+                error,
+            )
+        })?;
     Ok(PreparedModule {
         program,
         source,
@@ -185,6 +206,30 @@ pub fn render_module_runtime_failure(
     error: crate::value::RuntimeError,
 ) -> ModuleFrontendResult {
     use crate::value::ErrorKind;
+    if let Some(frontend) = &error.frontend {
+        let disposition = frontend.diagnostic.provenance.disposition;
+        let phase = match frontend.diagnostic.provenance.origin {
+            DiagnosticOrigin::Lexer => FrontendPhase::Lexing,
+            DiagnosticOrigin::Parser => FrontendPhase::Parsing,
+            DiagnosticOrigin::DeferredAstValidation => FrontendPhase::AstValidation,
+            DiagnosticOrigin::Resolver => FrontendPhase::Resolution,
+            DiagnosticOrigin::Unclassified => FrontendPhase::Unclassified,
+        };
+        return ModuleFrontendResult {
+            phase,
+            disposition,
+            reason: frontend.diagnostic.provenance.reason,
+            stdout: Vec::new(),
+            stderr: super::runtime_error_with_profile(source, uri, name, "", error, None, profile)
+                .into_bytes(),
+            exit_code: match disposition {
+                FailureDisposition::LanguageError => 1,
+                FailureDisposition::Unsupported => 2,
+                FailureDisposition::LimitExceeded => 3,
+                FailureDisposition::InternalFailure => 4,
+            },
+        };
+    }
     let (disposition, exit_code, reason) = match error.kind {
         ErrorKind::Unsupported => (
             FailureDisposition::Unsupported,
@@ -299,13 +344,38 @@ pub fn evaluate_module_output(
     input: ModuleSourceInput<'_>,
     options: &ModuleEvalOptions,
 ) -> ModuleOutputResult {
-    evaluate_module_output_with_budget(input, options, 1_048_576)
+    evaluate_module_output_with_host(input, options, crate::modules::unsupported_completion)
 }
 
+/// Evaluate actual output with module resolution/source I/O supplied by the Host.
+/// Parsing, code installation, identity, caching and initialization stay in the VM.
+pub fn evaluate_module_output_with_host(
+    input: ModuleSourceInput<'_>,
+    options: &ModuleEvalOptions,
+    module_host: impl FnMut(&crate::modules::ModuleRequest) -> crate::modules::ModuleCompletion,
+) -> ModuleOutputResult {
+    evaluate_module_output_with_budget_and_host(input, options, 1_048_576, module_host)
+}
+
+#[cfg(test)]
 fn evaluate_module_output_with_budget(
     input: ModuleSourceInput<'_>,
     options: &ModuleEvalOptions,
     poll_budget: usize,
+) -> ModuleOutputResult {
+    evaluate_module_output_with_budget_and_host(
+        input,
+        options,
+        poll_budget,
+        crate::modules::unsupported_completion,
+    )
+}
+
+fn evaluate_module_output_with_budget_and_host(
+    input: ModuleSourceInput<'_>,
+    options: &ModuleEvalOptions,
+    poll_budget: usize,
+    mut module_host: impl FnMut(&crate::modules::ModuleRequest) -> crate::modules::ModuleCompletion,
 ) -> ModuleOutputResult {
     use super::session::{SourceSession, SourceSessionOptions};
     use crate::host::HostPoll;
@@ -332,6 +402,9 @@ fn evaluate_module_output_with_budget(
             match session.poll(0, 1024) {
                 HostPoll::Ready(result) => return result.and_then(SourceSession::result_bytes),
                 HostPoll::Yielded => {}
+                HostPoll::Module { token, request } => {
+                    session.complete_module(&token, module_host(&request), 0)?
+                }
                 HostPoll::Read { token, .. } => session.resume_default_read(
                     &token,
                     &options.properties,

@@ -1,0 +1,5 @@
+import "bad.pkl" as a
+other=import("bad.pkl")
+observation0 = a.x
+observation1 = other.x
+observation2 = a.x

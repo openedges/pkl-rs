@@ -1,0 +1,81 @@
+{
+  "archive": {
+    "bytes": 5185168,
+    "path": "reports/m2/stage41-oracle-captures.tar.gz",
+    "payload_files": 4310,
+    "sha256": "7d7fd447778f5d24033555034cc8b08aebac56472771ccc888ff5a16d2ec5a2d",
+    "uncompressed_payload_bytes": 28680427
+  },
+  "archive_integrity_exit": 0,
+  "coverage_union": {
+    "all_declared_adjacent_raw_logs": 28,
+    "all_inside_root_closure_referenced_payloads": 4291,
+    "all_required_closure_referenced_raw_records_covered": true,
+    "historical_original_omission_report": "report.json remains unchanged and records originalarchive missing28adjacentlogs; this separate union-report verifies repair by supplement.",
+    "later_evidence_cutoff": "Corrected let follow-up review/addendum and future final portable acquisition are separate roots, not silently appended to originaloraclearchive.",
+    "mode_and_links": "Originalarchive is canonical0644 and explicitly materializes2symlinks; source linktargets recorded. Supplement ordinarylogs exactbytes. No type/modepreservation claim.",
+    "original_archive": {
+      "bytes": 5185168,
+      "path": "reports/m2/stage41-oracle-captures.tar.gz",
+      "payload_files": 4310,
+      "sha256": "7d7fd447778f5d24033555034cc8b08aebac56472771ccc888ff5a16d2ec5a2d",
+      "uncompressed_payload_bytes": 28680427
+    },
+    "original_archive_unchanged": true,
+    "original_payload_files": 4310,
+    "scope": "Union coverage verification of unchanged original4310payload archive plus exact28adjacent rawfiles copied into this new review root. Not a runtime or compatibility rerun.",
+    "status": "pass",
+    "supplement_bytes": 20718,
+    "supplement_files": 28,
+    "supplement_manifest_sha256": "74c480f7b82971c93ad5cc81e220c4a033e1304c9bf7ae13a5b67762cc4d2ca9",
+    "union_unique_original_paths": 4338
+  },
+  "exact_cache_exclusions_before_traversal": [],
+  "full_m2_complete": false,
+  "historical_findings": "The expression-entry review preserves its unresolved let-source finding. The native environment review preserves two raw-key collision mismatches. Later corrections and whole-platform comparisons require separate evidence.",
+  "materialized_file_symlinks": [
+    {
+      "path": "target/m2/stage41-loader-oracle-01/workspace/normalized-symlink-identity/link.pkl",
+      "target": "child.pkl"
+    },
+    {
+      "path": "target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity/link.pkl",
+      "target": "child.pkl"
+    }
+  ],
+  "publication_correction": "The first archive omitted 28 raw logs referenced outside the closed capture roots. Its bytes remain unchanged. The supplemental archive preserves all 28 exact logs, their original path/hash mappings, the omission audit, union verification, and the later corrected let-source review.",
+  "schema": 1,
+  "scope": "Closed Stage41 pinned Java observations, original failures, fixture provenance, native environment comparison, designs and independent reviews. Includes the unresolved let-source finding before its later correction. These observations do not establish full M2 compatibility.",
+  "source_changes_during_publication": [],
+  "source_roots": [
+    "target/m2/stage41-loader-oracle-01",
+    "target/m2/stage41-loader-oracle-02",
+    "target/m2/stage41-loader-oracle-03",
+    "target/m2/stage41-import-percent-oracle-01",
+    "target/m2/stage41-module-api-oracle-04",
+    "target/m2/stage41-module-fixture-export-01",
+    "target/m2/stage41-native-environment-review-01",
+    "target/m2/stage41-import-frame-oracle-01",
+    "target/m2/stage41-expression-context-oracle-01",
+    "target/m2/stage41-expression-entry-review-01",
+    "target/m2/stage41-module-inheritance-design-01",
+    "target/m2/stage41-module-inheritance-addendum-01",
+    "target/m2/stage41-module-expression-context-addendum-01",
+    "target/m2/stage41-module-driver-review-01",
+    "target/m2/stage41-module-platform-triage-01"
+  ],
+  "supplement": {
+    "bytes": 30219,
+    "path": "reports/m2/stage41-oracle-review-supplement.tar.gz",
+    "payload_files": 45,
+    "sha256": "8ddf9cf9b81edf30379ca7152a8b424138393dc38c3aac106b9ea9e70eab1732",
+    "uncompressed_payload_bytes": 161200
+  },
+  "supplement_integrity_exit": 0,
+  "supplement_source_changes": [],
+  "supplement_source_roots": [
+    "target/m2/stage41-oracle-archive-review-01",
+    "target/m2/stage41-expression-entry-review-addendum-01"
+  ],
+  "symlink_semantics": "The two declared input symlinks are archived as their exact target bytes at the same paths. Their original relative link targets are retained here and in EVIDENCE.json. Tar headers do not recreate symbolic links; reproduction must restore these declared links."
+}

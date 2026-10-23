@@ -83,6 +83,44 @@ pub(crate) fn configured_result(
     )))
 }
 
+/// Shared URI grammar for module imports. Preparation is eager; Host resolution
+/// and source loading remain lazy operations with separate cache boundaries.
+pub(crate) fn prepare_module_uri(
+    authored: &str,
+    base: Option<&str>,
+) -> Result<(String, String), RuntimeError> {
+    let text = if is_uri_like(authored) {
+        authored.to_owned()
+    } else {
+        quote_path(authored)
+    };
+    let parsed = ResourceUri::parse(&text).map_err(|error| match error {
+        ParseError::Syntax(reason) => {
+            let mut error = RuntimeError::new(
+                ErrorKind::Host,
+                format!("Module URI `{authored}` has invalid syntax."),
+            );
+            error.hint = Some(reason.into());
+            error
+        }
+        ParseError::Unsupported(reason) => unsupported(reason),
+    })?;
+    if parsed.path == "..." || parsed.path.starts_with(".../") || parsed.path.starts_with('@') {
+        return Err(unsupported(
+            "Module dependency and triple-dot resolution is not implemented.",
+        ));
+    }
+    // A source-less compiler can retain a relative import until its primary
+    // ModuleKey is registered, while still rejecting malformed URI syntax now.
+    let parsed = if parsed.scheme.is_none() && base.is_none() {
+        parsed
+    } else {
+        parsed.resolve(base)?
+    };
+    let absolute = parsed.text.clone();
+    Ok((absolute, parsed.normalize().text))
+}
+
 #[derive(Clone, Debug)]
 struct ResourceUri {
     text: String,

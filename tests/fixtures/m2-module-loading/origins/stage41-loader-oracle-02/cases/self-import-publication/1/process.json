@@ -1,0 +1,52 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+    "LoaderProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/self-import-publication",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/self-import-publication/1/calls",
+    "files"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/self-import-publication",
+  "environment": {
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "TZ": "UTC"
+  },
+  "finishedUnixNs": 1792712488844717000,
+  "id": "self-import-publication",
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/self-import-publication/main.pkl",
+  "repeat": 1,
+  "result": {
+    "elapsed_ns": 1284339209,
+    "exit_code": 0,
+    "files": {},
+    "sha256": {
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "af7a51b9d7fd4c1c519f506d8ead7b28889b24993aa84da2ba58d98c4736ec1f"
+    },
+    "timed_out": false,
+    "workspace_changes": {}
+  },
+  "sourceSha256": "4d03dc10cefb793c8167d41b69a4d2de471ec7560adfda65e1353eda759c74c5",
+  "startedUnixNs": 1792712487556893000
+}

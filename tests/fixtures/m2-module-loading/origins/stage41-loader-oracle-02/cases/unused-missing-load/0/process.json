@@ -1,0 +1,52 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+    "LoaderProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-missing-load",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/unused-missing-load/0/calls",
+    "files"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-missing-load",
+  "environment": {
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "TZ": "UTC"
+  },
+  "finishedUnixNs": 1792712485001305000,
+  "id": "unused-missing-load",
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-missing-load/main.pkl",
+  "repeat": 0,
+  "result": {
+    "elapsed_ns": 1187546167,
+    "exit_code": 0,
+    "files": {},
+    "sha256": {
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "d219331c69d703e98a9f9e2612a8ee04f76c361c4a40a37dac8b45c4f6c31bf7"
+    },
+    "timed_out": false,
+    "workspace_changes": {}
+  },
+  "sourceSha256": "ece245908224dbb50f731a01d3f7262f6bb1a3363ac898c6d8945a5234e1458e",
+  "startedUnixNs": 1792712483808961000
+}

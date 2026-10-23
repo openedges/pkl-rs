@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Class `main#C` cannot extend itself.
+
+2 | class C extends self.C {}
+                    ^^^^^^
+at main#C (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/self-class-parent-error/main.pkl)
+
+3 | answer=new C {}
+               ^
+at main#answer (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/self-class-parent-error/main.pkl)
+
+1 | answer
+    ^^^^^^
+at  (repl:text)

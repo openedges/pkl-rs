@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Dfile.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-module-fixture-export-01/identity/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-module-fixture-export-01/identity/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-module-fixture-export-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+    "IdentityProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-module-fixture-export-01/identity-requests.tsv"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+  "environment": {
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-module-fixture-export-01/identity/home",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/bin:/usr/bin",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-module-fixture-export-01/identity/tmp",
+    "TZ": "UTC"
+  },
+  "exitCode": 0,
+  "finishedUnixNs": 1792713710200091000,
+  "helperSha256": "1fb2172d77566a29ba612fb4a337978e9f6278dbc244eb875f8ebedf59b615d9",
+  "jarSha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+  "scope": "Pure pinned ModuleResolver/ModuleKey.resolve/VmUtils.loadSource identity metadata. No evaluation or CLI replay. Earlier inherited-HOME exploratory output preserved; controlled run reproduces it byte-for-byte.",
+  "startedUnixNs": 1792713709811905000,
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdoutSha256": "0daa1a68be2bd45490af5e7ce7e26217b5ab281e4222aadb94dbba16fb55aec5"
+}

@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Cannot find module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry/late.pkl`.
+
+1 | import "late.pkl" as a
+    ^^^^^^^^^^^^^^^^^^^^^^
+at main#a (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry/main.pkl)
+
+2 | observation0 = a.x
+                   ^
+at main#observation0 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry/main.pkl)
+
+1 | observation0
+    ^^^^^^^^^^^^
+at  (repl:text)

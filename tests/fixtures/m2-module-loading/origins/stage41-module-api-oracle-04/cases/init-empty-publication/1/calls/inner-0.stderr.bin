@@ -1,0 +1,13 @@
+–– Pkl Error ––
+Cannot find property `value` in module `child`.
+
+1 | a.value
+    ^^^^^^^
+at  (repl:text)
+
+Available properties in module `child`:
+output
+
+1 | a.value
+    ^
+at  (repl:text)

@@ -100,6 +100,7 @@ pub struct Function {
 
 #[derive(Clone, Debug)]
 pub struct Class {
+    pub module: Option<Arc<str>>,
     pub id: usize,
     pub name: Arc<str>,
     pub open: bool,
@@ -190,6 +191,7 @@ pub struct Object {
     pub builtin_type: Option<crate::vm::TypeCheck>,
     pub ref_module: bool,
     pub is_module: bool,
+    pub module_unit: Option<crate::modules::UnitId>,
     pub module_initializing: bool,
     pub published_module_members: std::collections::BTreeSet<usize>,
     pub class_definition: Option<Class>,

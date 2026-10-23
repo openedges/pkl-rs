@@ -1,0 +1,3 @@
+import "child.pkl" as child
+open class C extends child.D {}
+answer=new C {}.recursive == null

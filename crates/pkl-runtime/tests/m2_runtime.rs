@@ -14,6 +14,7 @@ fn done(vm: &mut Vm) -> Result<Value, RuntimeError> {
             VmPoll::Ready(value) => return value,
             VmPoll::Yielded => {}
             VmPoll::Log(_) => panic!("unexpected logger request"),
+            VmPoll::Module(_) => panic!("unexpected module request"),
             VmPoll::Pending(_) => panic!("unexpected Host request"),
         }
     }
@@ -1023,13 +1024,13 @@ fn power_constraint_replay_resumes_and_gc_traces_observed_values() {
         vm.resume(request.id, Ok(Value::string("ok"))).unwrap();
     }
     let error = done(&mut vm).unwrap_err();
-    let Some(diagnostic) = error.type_diagnostic else {
+    let Some(diagnostic) = error.type_diagnostic.as_deref() else {
         panic!("missing diagnostic")
     };
     let pkl_runtime::diagnostic::TypeDiagnostic::Constraint {
         observations: Some(observations),
         ..
-    } = *diagnostic
+    } = diagnostic
     else {
         panic!("missing trace")
     };
@@ -1063,6 +1064,7 @@ fn enabled_union_replays_only_after_all_alternatives_fail_and_type_tests_do_not_
         let outcome = loop {
             match vm.poll(1000) {
                 VmPoll::Log(_) => panic!("unexpected logger request"),
+                VmPoll::Module(_) => panic!("unexpected module request"),
                 VmPoll::Yielded => {}
                 VmPoll::Ready(result) => break result,
                 VmPoll::Pending(request) => {

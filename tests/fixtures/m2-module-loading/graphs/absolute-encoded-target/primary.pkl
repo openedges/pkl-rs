@@ -1,0 +1,2 @@
+child=import("file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/child%20%25.pkl")
+output { text=child.value.toString() }

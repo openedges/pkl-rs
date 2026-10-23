@@ -223,6 +223,9 @@ fn poll(vm: &mut Vm) -> Result<Value, RuntimeError> {
                     "the M2 probe does not supply a Host",
                 ));
             }
+            VmPoll::Module(request) => {
+                vm.complete_module(request.id, crate::modules::unsupported_completion(&request))?
+            }
             VmPoll::Yielded => {}
         }
     }
@@ -314,7 +317,13 @@ pub(crate) fn runtime_error_with_profile(
     let names: Vec<_> = error
         .frames
         .iter()
-        .map(|frame| {
+        .enumerate()
+        .map(|(index, frame)| {
+            if index == 0
+                && let Some(frontend) = &error.frontend
+            {
+                return frontend.member.clone();
+            }
             let module = frame
                 .source
                 .as_ref()
@@ -360,12 +369,20 @@ pub(crate) fn runtime_error_with_profile(
         .iter()
         .zip(&names)
         .zip(uris.iter().zip(&source_ids))
-        .map(|((frame, name), (uri, id))| RenderFrame {
+        .enumerate()
+        .map(|(index, ((frame, name), (uri, id)))| RenderFrame {
             source: id.and_then(|id| sources.get(id)).unwrap_or(source),
             uri,
             member: name,
             span: frame.span,
-            highlight_length_utf16: None,
+            highlight_length_utf16: if index == 0 {
+                error
+                    .frontend
+                    .as_ref()
+                    .and_then(|frontend| frontend.diagnostic.highlight_length_utf16)
+            } else {
+                None
+            },
         })
         .collect();
     let fallback_uri =

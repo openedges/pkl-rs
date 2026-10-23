@@ -1,0 +1,137 @@
+{
+  "archive": {
+    "bytes": 5420734,
+    "path": "reports/m2/stage41-required-checks.tar.gz",
+    "payload_files": 10554,
+    "sha256": "88c892f26649ee12488a7cfad3baa3d94086d31f226c1030ae8607e5144d5b8e"
+  },
+  "archive_integrity_exit": 0,
+  "distinct_test_count_claimed": false,
+  "earlier_failure": "The initial workspace run failed the unchanged foreign declaration-source resource-read regression. The no-fail-fast census found the same sole failure; its correction and both directions of source-vs-key provenance passed checkpoint02. All earlier raw failure records are retained.",
+  "failed_rust_harness_invocations": 0,
+  "full_m2_complete": false,
+  "ignored_rust_harness_invocations": 1,
+  "later_observations": "Actual Node/Chromium module comparisons exposed imported diagnostic-frame mismatches and a general-expression adapter gap. Those corrections require fresh verification; this archive is not relabeled as later candidate evidence.",
+  "passing_rust_harness_invocations": 621,
+  "required_commands": [
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+      "command": [
+        "rustc",
+        "--version",
+        "--verbose"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+      "elapsed_seconds": 0.21466120798140764,
+      "exit_code": 0,
+      "name": "rustc-version"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+      "command": [
+        "cargo",
+        "--version"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+      "elapsed_seconds": 0.06242875009775162,
+      "exit_code": 0,
+      "name": "cargo-version"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+      "command": [
+        "uname",
+        "-a"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+      "elapsed_seconds": 0.004801832605153322,
+      "exit_code": 0,
+      "name": "host"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+      "elapsed_seconds": 1.0762170418165624,
+      "exit_code": 0,
+      "name": "references"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+      "elapsed_seconds": 0.806677124928683,
+      "exit_code": 0,
+      "name": "format"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+      "elapsed_seconds": 4.3209317503497005,
+      "exit_code": 0,
+      "name": "clippy"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+      "elapsed_seconds": 88.65667920792475,
+      "exit_code": 0,
+      "name": "tests"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+      "elapsed_seconds": 1.3182972078211606,
+      "exit_code": 0,
+      "name": "wasm-check"
+    }
+  ],
+  "schema": 1,
+  "scope": "Historical Stage41 checkpoint02 required local checks, before later imported diagnostic and expression-entry corrections. These passes do not verify later changed sources or complete M2.",
+  "source_changes_during_checks": [],
+  "source_changes_during_publication": [],
+  "source_count": 4775,
+  "source_roots": [
+    "target/m2/stage41-required-checks-01",
+    "target/m2/stage41-required-checks-02",
+    "target/m2/stage41-workspace-diagnostics-01",
+    "target/m2/stage41-manifest-refresh-01",
+    "target/m2/stage41-manifest-refresh-02",
+    "target/m2/stage41-tooling-checks-01"
+  ]
+}

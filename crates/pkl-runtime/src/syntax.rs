@@ -623,6 +623,7 @@ pub enum ExprKind {
     /// Loading unsupported module schemes remains an explicit runtime error.
     Import {
         uri: String,
+        uri_span: Span,
     },
     Int(i64),
     Float(f64),

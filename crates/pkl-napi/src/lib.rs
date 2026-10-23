@@ -278,6 +278,31 @@ pub struct SourceLog {
     pub end_column: u32,
 }
 #[napi(object)]
+pub struct SourceModuleRequest {
+    pub id: String,
+    pub kind: String,
+    pub importer_original_uri: Option<String>,
+    pub importer_resolved_uri: Option<String>,
+    pub import_uri: Option<String>,
+    pub original_uri: String,
+    pub resolved_uri: Option<String>,
+    pub source_uri: Option<String>,
+}
+impl From<probe::SourceModuleRequest> for SourceModuleRequest {
+    fn from(request: probe::SourceModuleRequest) -> Self {
+        Self {
+            id: request.id,
+            kind: request.kind.into(),
+            importer_original_uri: request.importer_original_uri,
+            importer_resolved_uri: request.importer_resolved_uri,
+            import_uri: request.import_uri,
+            original_uri: request.original_uri,
+            resolved_uri: request.resolved_uri,
+            source_uri: request.source_uri,
+        }
+    }
+}
+#[napi(object)]
 pub struct SourceEvent {
     pub kind: String,
     pub token: Option<String>,
@@ -287,6 +312,11 @@ pub struct SourceEvent {
     pub error: Option<napi::bindgen_prelude::Uint16Array>,
     pub error_bytes: Option<Uint8Array>,
     pub log: Option<SourceLog>,
+    pub module: Option<SourceModuleRequest>,
+    pub exit_code: Option<i32>,
+    pub phase: Option<String>,
+    pub disposition: Option<String>,
+    pub reason: Option<String>,
 }
 impl From<probe::SourceEvent> for SourceEvent {
     fn from(event: probe::SourceEvent) -> Self {
@@ -299,6 +329,11 @@ impl From<probe::SourceEvent> for SourceEvent {
             bytes: event.bytes.map(Uint8Array::new),
             error: event.error.map(Uint16Array::new),
             error_bytes: event.error_bytes.map(Uint8Array::new),
+            module: event.module.map(Into::into),
+            exit_code: event.exit_code,
+            phase: event.phase.map(Into::into),
+            disposition: event.disposition.map(Into::into),
+            reason: event.reason.map(Into::into),
             log: event.log.map(|log| SourceLog {
                 level: log.level.into(),
                 message: Uint16Array::new(log.message),
@@ -378,6 +413,38 @@ impl SourceSession {
             })?,
         })
     }
+    #[napi(factory)]
+    #[allow(clippy::too_many_arguments)]
+    pub fn for_expressions(
+        source: Utf16String,
+        uri: Utf16String,
+        module_name: Utf16String,
+        paths: Vec<Utf16String>,
+        trace_mode: Option<Utf16String>,
+        host_logger: Option<bool>,
+        host_frame_transformer: Option<bool>,
+        power_assertions: Option<bool>,
+    ) -> Result<Self> {
+        let paths = paths.iter().map(string).collect::<Result<Vec<_>>>()?;
+        let mode = trace_mode
+            .as_ref()
+            .map(string)
+            .transpose()?
+            .unwrap_or_else(|| "compact".into());
+        Ok(Self {
+            inner: probe::SourceProbe::new_expressions(
+                &string(&source)?,
+                &string(&uri)?,
+                &string(&module_name)?,
+                &paths,
+                &mode,
+                host_logger.unwrap_or(false),
+                host_frame_transformer.unwrap_or(false),
+                power_assertions.unwrap_or(false),
+            )
+            .map_err(error)?,
+        })
+    }
     #[napi(constructor)]
     #[allow(clippy::too_many_arguments)]
     pub fn new(
@@ -434,6 +501,78 @@ impl SourceSession {
                 &string(&token)?,
                 unsigned(now)?,
                 timeout.map(unsigned).transpose()?,
+            )
+            .map_err(error)
+    }
+    #[napi]
+    pub fn complete_module_resolution(
+        &mut self,
+        token: Utf16String,
+        original_uri: Utf16String,
+        resolved_uri: Utf16String,
+        source_uri: Utf16String,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_module_resolution(
+                &string(&token)?,
+                &string(&original_uri)?,
+                &string(&resolved_uri)?,
+                &string(&source_uri)?,
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[napi]
+    pub fn complete_module_source(
+        &mut self,
+        token: Utf16String,
+        text: Utf16String,
+        inferred_name: Utf16String,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_module_source(
+                &string(&token)?,
+                &string(&text)?,
+                &string(&inferred_name)?,
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[napi]
+    pub fn reject_module_resolution(
+        &mut self,
+        token: Utf16String,
+        kind: Utf16String,
+        message: Utf16String,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .reject_module(
+                &string(&token)?,
+                false,
+                &string(&kind)?,
+                &string(&message)?,
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[napi]
+    pub fn reject_module_source(
+        &mut self,
+        token: Utf16String,
+        kind: Utf16String,
+        message: Utf16String,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .reject_module(
+                &string(&token)?,
+                true,
+                &string(&kind)?,
+                &string(&message)?,
+                unsigned(now)?,
             )
             .map_err(error)
     }
@@ -542,6 +681,10 @@ impl SourceSession {
         self.inner
             .close_from_callback(&string(&token)?)
             .map_err(error)
+    }
+    #[napi]
+    pub fn drain_cancelled_modules(&mut self) -> Vec<String> {
+        self.inner.drain_cancelled_modules()
     }
     #[napi]
     pub fn drain_cancelled_reads(&mut self) -> Vec<String> {

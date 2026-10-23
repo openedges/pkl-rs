@@ -30,6 +30,7 @@ fn ready(vm: &mut Vm, logs: &mut Vec<Arc<LogEvent>>, reads: &mut Vec<String>) ->
                 vm.resume(request.id, Ok(Value::string("resource")))
                     .unwrap();
             }
+            VmPoll::Module(_) => panic!("unexpected module request"),
             VmPoll::Yielded => {}
         }
     }

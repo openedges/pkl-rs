@@ -88,8 +88,15 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
         match ty {
             TypeCheck::Unknown => output.push_str("unknown"),
             TypeCheck::NamedAlias {
-                name, arguments, ..
+                name,
+                arguments,
+                default_origin,
+                ..
             } => {
+                let module = default_origin
+                    .as_ref()
+                    .and_then(|frame| frame.source.as_ref())
+                    .map_or(module, |source| source.module_name.as_ref());
                 output.push_str(&format!("{module}#{name}"));
                 if !arguments.is_empty() {
                     output.push('<');
@@ -124,11 +131,18 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
             }
             TypeCheck::Class { id: MODULE_ID, .. } => output.push_str(module),
             TypeCheck::Class { id: ACCESS_ID, .. } => output.push_str("pkl.ref#Access"),
-            TypeCheck::Class { id, name } => {
+            TypeCheck::Class {
+                id,
+                name,
+                module: declaring_module,
+            } => {
                 if super::builtins::name(*id).is_some() {
                     output.push_str(name);
                 } else {
-                    output.push_str(&format!("{module}#{name}"));
+                    output.push_str(&format!(
+                        "{}#{name}",
+                        declaring_module.as_deref().unwrap_or(module)
+                    ));
                 }
             }
             TypeCheck::Union { types, .. } => list(types.iter().collect(), " | "),
@@ -846,6 +860,7 @@ impl Vm {
             members,
             builtin_type: Some(ty),
             class_definition: Some(Class {
+                module: None,
                 id,
                 name: Arc::from(name),
                 open: super::builtins::open_class(id),
@@ -882,6 +897,7 @@ impl Vm {
                 }),
                 ("Domain", false) => self.builtin_class(TypeCheck::RefDomain),
                 ("Access", false) => self.builtin_class(TypeCheck::Class {
+                    module: None,
                     id: ACCESS_ID,
                     name: Arc::from("Access"),
                 }),
@@ -1009,6 +1025,7 @@ impl Vm {
                 .builtin_type
                 .clone()
                 .unwrap_or_else(|| TypeCheck::Class {
+                    module: class.module.clone(),
                     id: class.id,
                     name: class.name.clone(),
                 });
@@ -1092,11 +1109,15 @@ impl Vm {
                         referent: Box::new(TypeCheck::Any),
                     }
                 } else if object.is_module {
+                    if object.class_definition.is_some() {
+                        return Ok(Value::Class(*id));
+                    }
                     if let Some(id) = self.heap.find_class(MODULE_ID) {
                         return Ok(Value::Class(id));
                     }
                     let class = self.heap.allocate(Object {
                         class_definition: Some(Class {
+                            module: None,
                             id: MODULE_ID,
                             name: self.program.module_name.clone(),
                             open: false,
@@ -1184,6 +1205,7 @@ impl Vm {
 
     fn reference_access_value(&mut self, property: Option<&str>, key: Option<Value>) -> Value {
         let Value::Class(parent) = self.builtin_class(TypeCheck::Class {
+            module: None,
             id: ACCESS_ID,
             name: Arc::from("Access"),
         }) else {
@@ -1687,6 +1709,7 @@ mod generic_metadata_tests {
     fn shared_exported_metadata_keeps_arrow_alias_and_constraint_identity() {
         assert!(is_subtype(
             &TypeCheck::Class {
+                module: None,
                 id: DOMAIN_ID,
                 name: Arc::from("Domain")
             }

@@ -1,0 +1,72 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+    "org.pkl.cli.Main",
+    "eval",
+    "--no-cache",
+    "--no-project",
+    "--settings",
+    "pkl:settings",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target",
+  "environment": {
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TERM": "dumb",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+    "TZ": "UTC"
+  },
+  "finishedUnixNs": 1792713048457360000,
+  "id": "absolute-encoded-target",
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/main.pkl",
+  "repeat": 0,
+  "result": {
+    "elapsed_ns": 762754375,
+    "exit_code": 0,
+    "files": {},
+    "sha256": {
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    "timed_out": false,
+    "workspace_changes": {}
+  },
+  "sourceSha256": "21b80736ab46a7dda84f6d316b714fcfe4a60f8ae4ba1e6e0db3ebee50629156",
+  "startedUnixNs": 1792713047693045000,
+  "workspaceAfter": {
+    "child %.pkl": {
+      "kind": "file",
+      "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "21b80736ab46a7dda84f6d316b714fcfe4a60f8ae4ba1e6e0db3ebee50629156"
+    }
+  },
+  "workspaceBefore": {
+    "child %.pkl": {
+      "kind": "file",
+      "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "21b80736ab46a7dda84f6d316b714fcfe4a60f8ae4ba1e6e0db3ebee50629156"
+    }
+  }
+}

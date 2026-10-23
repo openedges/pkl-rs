@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find module `life:/child`.
+
+1 | result = import("life:/child").value
+             ^^^^^^^^^^^^^^^^^^^^^
+at main#result (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-frame-oracle-01/workspace/resolve-inline/main.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

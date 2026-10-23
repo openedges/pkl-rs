@@ -81,7 +81,11 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
             } else if heap.get(*id)?.ref_module {
                 "pkl.ref".into()
             } else if heap.get(*id)?.is_module {
-                module.into()
+                heap.get(*id)?
+                    .class_definition
+                    .as_ref()
+                    .map_or(module, |class| class.name.as_ref())
+                    .into()
             } else if heap.get(*id)?.collection_kind == CollectionKind::Dynamic {
                 let mut name = "Dynamic".to_owned();
                 for owner in ancestry(*id, heap)? {
@@ -92,7 +96,7 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
                         ) {
                             "pkl.ref"
                         } else {
-                            module
+                            class.module.as_deref().unwrap_or(module)
                         };
                         name = if crate::vm::builtins::name(class.id).is_some() {
                             class.name.to_string()
@@ -737,6 +741,7 @@ mod tests {
         });
         let class = heap.allocate(Object {
             class_definition: Some(Class {
+                module: None,
                 id: 1,
                 name: "Child".into(),
                 open: false,

@@ -186,6 +186,7 @@ fn main() {
                     }
                     VmPoll::Yielded => panic!("bounded probe exhausted instruction budget"),
                     VmPoll::Log(_) => panic!("bounded lifecycle probe has no logger callback"),
+                    VmPoll::Module(_) => panic!("bounded lifecycle probe has no module callback"),
                 }
             }
         }

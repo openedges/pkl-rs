@@ -20,6 +20,7 @@ fn finish(vm: &mut Vm) -> Result<Value, RuntimeError> {
             VmPoll::Ready(value) => return value,
             VmPoll::Yielded => {}
             VmPoll::Log(_) => panic!("unexpected logger request"),
+            VmPoll::Module(_) => panic!("unexpected module request"),
             VmPoll::Pending(_) => panic!("unexpected Host request"),
         }
     }

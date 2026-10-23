@@ -21,6 +21,7 @@ fn initialize_error(source: &str) -> pkl_runtime::value::RuntimeError {
             VmPoll::Ready(result) => return result.unwrap_err(),
             VmPoll::Yielded => {}
             VmPoll::Log(_) => panic!("unexpected logger request"),
+            VmPoll::Module(_) => panic!("unexpected module request"),
             VmPoll::Pending(_) => panic!("unexpected Host request"),
         }
     }
@@ -38,7 +39,7 @@ fn imports_are_local_const_members_with_authored_namespace_and_source_identity()
         modifier_flags(&import.modifiers),
         ModifierKind::Local.flag() | ModifierKind::Const.flag()
     );
-    assert!(matches!(&import.expr.kind, ExprKind::Import { uri } if uri == "pkl:ref"));
+    assert!(matches!(&import.expr.kind, ExprKind::Import { uri, .. } if uri == "pkl:ref"));
     assert_eq!(
         import.expr.span,
         span(source, "import \"pkl:ref\" as deferred")

@@ -1,0 +1,7 @@
+–– Pkl Error ––
+I/O error loading module `life:/a`.
+IOException: outer-source-after-inner
+
+1 | a.value
+    ^
+at  (repl:text)

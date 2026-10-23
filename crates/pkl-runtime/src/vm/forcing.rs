@@ -168,6 +168,8 @@ impl Vm {
             diagnostic_member: None,
             callsite_hidden: false,
             builders: Vec::new(),
+            module_load: None,
+            module_receiver: None,
         });
         Ok(())
     }

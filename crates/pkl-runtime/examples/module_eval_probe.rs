@@ -1,8 +1,13 @@
 //! Development-only original module-output operation, not a complete product CLI.
 use pkl_runtime::evaluation::frontend::{
-    ModuleSourceInput, arguments::parse_module_eval_args, evaluate_module_output,
+    ModuleSourceInput, arguments::parse_module_eval_args, evaluate_module_output_with_host,
 };
 use std::{io::Write, path::Path};
+
+#[path = "module_eval_probe/environment.rs"]
+mod environment;
+#[path = "support/module_host.rs"]
+mod module_host;
 
 #[derive(Debug)]
 enum ProbeError {
@@ -40,7 +45,7 @@ fn file_uri(path: &Path) -> Result<String, ProbeError> {
 }
 
 fn run(arguments: &[String]) -> Result<i32, ProbeError> {
-    let invocation = parse_module_eval_args(arguments).map_err(ProbeError::Unsupported)?;
+    let mut invocation = parse_module_eval_args(arguments).map_err(ProbeError::Unsupported)?;
     // Resolve against the real process cwd without canonicalizing symlinks or
     // substituting an oracle display URI.
     let path = std::path::absolute(&invocation.source_path)
@@ -54,13 +59,19 @@ fn run(arguments: &[String]) -> Result<i32, ProbeError> {
         .ok_or_else(|| {
             ProbeError::Unsupported("module-eval adapter requires a UTF-8 module name".into())
         })?;
-    let result = evaluate_module_output(
+    // The preconfigured Java CLI inherits the process environment before
+    // applying explicit options. Keep process access at the native boundary.
+    let mut inherited = environment::inherited().map_err(ProbeError::Unsupported)?;
+    inherited.append(&mut invocation.options.environment);
+    invocation.options.environment = inherited;
+    let result = evaluate_module_output_with_host(
         ModuleSourceInput {
             text: &text,
             uri: &uri,
             inferred_name,
         },
         &invocation.options,
+        module_host::complete,
     );
     std::io::stdout()
         .write_all(&result.stdout)

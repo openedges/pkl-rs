@@ -1,0 +1,1159 @@
+{
+  "caseCount": 10,
+  "inputHashes": {
+    ".cache/oracle/pkl-tools-0.32.0.jar": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "target/m2/stage41-loader-oracle-02/LoaderProbe.java": "6cb94442a513e8ec64130266107ffcb2d45b0dd3de2d1ec1f250c7818091e870",
+    "target/m2/stage41-loader-oracle-02/cases.json": "9470f1a903844adf405cd0387ef2b2f978f4adaf89f959629ec6d8fafec8e39f",
+    "target/m2/stage41-loader-oracle-02/classes/LoaderProbe$1.class": "f3cd25663f21c8b3e125ff3127ee97b7a2ba8cbf185d9956e0e9b03f017431ec",
+    "target/m2/stage41-loader-oracle-02/classes/LoaderProbe$Key$1.class": "270abd3f0b4a52f54d60a55c6307d017850ac566a92532e45a7c0ed3db3474e4",
+    "target/m2/stage41-loader-oracle-02/classes/LoaderProbe$Key.class": "cbf318da80e11331016f96f02a9d959e8312dc6c6ef7189469537e961558184f",
+    "target/m2/stage41-loader-oracle-02/classes/LoaderProbe.class": "6f0756622e5b33123e091c824ca6399f78a257eabcbaa9bf3b2eab786eccb4a0",
+    "target/m2/stage41-loader-oracle-02/run.py": "27127127fc2c102a75de5f3abfc687380573219a65e7555d6e9471473eba0fcc"
+  },
+  "inputsStable": true,
+  "observations": {
+    "close": "Source callback close returns first9; later public call is org.graalvm.polyglot.PolyglotException with message Context execution was cancelled, not ordinary Pkl language error.",
+    "distinctIdenticalSourceAndClassIdentity": [
+      "false",
+      "false",
+      "false",
+      "6",
+      "6"
+    ],
+    "mutualScope": "Lexical child import binding back is not a public property (two ordinary rejections retained); child.result traverses back.result and returns8. Fresh03 exposes parent explicitly for identity controls.",
+    "normalizedAndSymlinkIdentity": [
+      "true",
+      "true",
+      "true",
+      "6",
+      "3"
+    ],
+    "parseAndInitFailureCache": "Rewriting imported bad.pkl does not invalidate cached error. All three full error byte payloads match first observation including its original import/property frame.",
+    "resolveRetry": "Actual missing late.pkl error, then write valid file, both later properties return9.",
+    "selfImport": [
+      "true",
+      "true",
+      "7",
+      "7"
+    ],
+    "unusedUriOrdering": "Malformed URI rejected before body throw; unused missing file returns7."
+  },
+  "processCount": 20,
+  "records": [
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/normalized-symlink-identity/0/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712477748464000,
+      "id": "normalized-symlink-identity",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 1910737250,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "c490b2645367ae682e89e13524fac8e43914af3902ebe3a488c7663943995999"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "8b81e4b23640a4766fb48ebbc1220d941296418e8252f141ac6e49cf8d50e702",
+      "startedUnixNs": 1792712475826482000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/normalized-symlink-identity/1/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712479368494000,
+      "id": "normalized-symlink-identity",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 1557344291,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "c490b2645367ae682e89e13524fac8e43914af3902ebe3a488c7663943995999"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "8b81e4b23640a4766fb48ebbc1220d941296418e8252f141ac6e49cf8d50e702",
+      "startedUnixNs": 1792712477807707000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/distinct-same-offset-declarations",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/distinct-same-offset-declarations/0/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/distinct-same-offset-declarations",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712480879591000,
+      "id": "distinct-same-offset-declarations",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/distinct-same-offset-declarations/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 1375148958,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "c490b2645367ae682e89e13524fac8e43914af3902ebe3a488c7663943995999"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "1bb811475047a171eed97934db4d58c220516e31d06ea78d72418c655b2d60e7",
+      "startedUnixNs": 1792712479501113000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/distinct-same-offset-declarations",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/distinct-same-offset-declarations/1/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/distinct-same-offset-declarations",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712482230232000,
+      "id": "distinct-same-offset-declarations",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/distinct-same-offset-declarations/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 1317792042,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "c490b2645367ae682e89e13524fac8e43914af3902ebe3a488c7663943995999"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "1bb811475047a171eed97934db4d58c220516e31d06ea78d72418c655b2d60e7",
+      "startedUnixNs": 1792712480909336000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-malformed-uri",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/unused-malformed-uri/0/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-malformed-uri",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712482905113000,
+      "id": "unused-malformed-uri",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-malformed-uri/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 664185916,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "3533288c1392f0e9a9437f1389652438b6ff3e1adb40f64339c0fad2e280414f"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "45ab3319173df16bee2a7709df22c5ea84a0bb2ad77095f0df7382609f769d3d",
+      "startedUnixNs": 1792712482235441000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-malformed-uri",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/unused-malformed-uri/1/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-malformed-uri",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712483800530000,
+      "id": "unused-malformed-uri",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-malformed-uri/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 691362958,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "3533288c1392f0e9a9437f1389652438b6ff3e1adb40f64339c0fad2e280414f"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "45ab3319173df16bee2a7709df22c5ea84a0bb2ad77095f0df7382609f769d3d",
+      "startedUnixNs": 1792712483105195000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-missing-load",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/unused-missing-load/0/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-missing-load",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712485001305000,
+      "id": "unused-missing-load",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-missing-load/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 1187546167,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "d219331c69d703e98a9f9e2612a8ee04f76c361c4a40a37dac8b45c4f6c31bf7"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "ece245908224dbb50f731a01d3f7262f6bb1a3363ac898c6d8945a5234e1458e",
+      "startedUnixNs": 1792712483808961000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-missing-load",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/unused-missing-load/1/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-missing-load",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712486391666000,
+      "id": "unused-missing-load",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-missing-load/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 1362883542,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "d219331c69d703e98a9f9e2612a8ee04f76c361c4a40a37dac8b45c4f6c31bf7"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "ece245908224dbb50f731a01d3f7262f6bb1a3363ac898c6d8945a5234e1458e",
+      "startedUnixNs": 1792712485024997000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/self-import-publication",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/self-import-publication/0/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/self-import-publication",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712487548219000,
+      "id": "self-import-publication",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/self-import-publication/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 1141578708,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "af7a51b9d7fd4c1c519f506d8ead7b28889b24993aa84da2ba58d98c4736ec1f"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "4d03dc10cefb793c8167d41b69a4d2de471ec7560adfda65e1353eda759c74c5",
+      "startedUnixNs": 1792712486403435000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/self-import-publication",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/self-import-publication/1/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/self-import-publication",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712488844717000,
+      "id": "self-import-publication",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/self-import-publication/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 1284339209,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "af7a51b9d7fd4c1c519f506d8ead7b28889b24993aa84da2ba58d98c4736ec1f"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "4d03dc10cefb793c8167d41b69a4d2de471ec7560adfda65e1353eda759c74c5",
+      "startedUnixNs": 1792712487556893000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/mutual-import-publication",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/mutual-import-publication/0/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/mutual-import-publication",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712490224589000,
+      "id": "mutual-import-publication",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/mutual-import-publication/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 1364374291,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "dce85b9b3b98836ac5d98f8100e2e07466a75cfe90c07b3b7c381852717d2d57"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "4d4d94cc3ae02faf780f506666a370bffe6d66cd01851bb71ae012076d015da5",
+      "startedUnixNs": 1792712488857602000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/mutual-import-publication",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/mutual-import-publication/1/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/mutual-import-publication",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712491435339000,
+      "id": "mutual-import-publication",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/mutual-import-publication/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 1194993250,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "dce85b9b3b98836ac5d98f8100e2e07466a75cfe90c07b3b7c381852717d2d57"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "4d4d94cc3ae02faf780f506666a370bffe6d66cd01851bb71ae012076d015da5",
+      "startedUnixNs": 1792712490238178000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/resolve-file-retry/0/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712492701674000,
+      "id": "resolve-file-retry",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 1230592125,
+        "exit_code": 0,
+        "files": {
+          "workspace/late.pkl": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+        },
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "7598ae53f4e764a958012adbf51fac9f2942b7185dea2e7bff195932268ebd77"
+        },
+        "timed_out": false,
+        "workspace_changes": {
+          "late.pkl": {
+            "after": {
+              "kind": "file",
+              "sha256": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+            },
+            "before": null
+          }
+        }
+      },
+      "sourceSha256": "408dc0bd42cfd76b49f02fdab115eb7a3296df2c0ac8025de55a156944a5696c",
+      "startedUnixNs": 1792712491467738000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/resolve-file-retry/1/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712493880890000,
+      "id": "resolve-file-retry",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 1164003291,
+        "exit_code": 0,
+        "files": {
+          "workspace/late.pkl": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+        },
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "7598ae53f4e764a958012adbf51fac9f2942b7185dea2e7bff195932268ebd77"
+        },
+        "timed_out": false,
+        "workspace_changes": {
+          "late.pkl": {
+            "after": {
+              "kind": "file",
+              "sha256": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+            },
+            "before": null
+          }
+        }
+      },
+      "sourceSha256": "408dc0bd42cfd76b49f02fdab115eb7a3296df2c0ac8025de55a156944a5696c",
+      "startedUnixNs": 1792712492709042000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/parse-failure-cache/0/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712495154155000,
+      "id": "parse-failure-cache",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 1235044125,
+        "exit_code": 0,
+        "files": {
+          "workspace/bad.pkl": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+        },
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "caa8d719744bca09bdb3ff71df2d726aea5cc42ec766b9a9e4e52e6a996f056b"
+        },
+        "timed_out": false,
+        "workspace_changes": {
+          "bad.pkl": {
+            "after": {
+              "kind": "file",
+              "sha256": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+            },
+            "before": {
+              "kind": "file",
+              "sha256": "3ed7958c33bdd9604884676f1ca87da3ecc3d2df084cfb6348779b3a8330603d"
+            }
+          }
+        }
+      },
+      "sourceSha256": "7af1651d377c9fd6a055314f4e666972fbdf32a9eca59a3e9c6abde50e5a1c0f",
+      "startedUnixNs": 1792712493901650000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/parse-failure-cache/1/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712496497822000,
+      "id": "parse-failure-cache",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 1295212500,
+        "exit_code": 0,
+        "files": {
+          "workspace/bad.pkl": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+        },
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "caa8d719744bca09bdb3ff71df2d726aea5cc42ec766b9a9e4e52e6a996f056b"
+        },
+        "timed_out": false,
+        "workspace_changes": {
+          "bad.pkl": {
+            "after": {
+              "kind": "file",
+              "sha256": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+            },
+            "before": {
+              "kind": "file",
+              "sha256": "3ed7958c33bdd9604884676f1ca87da3ecc3d2df084cfb6348779b3a8330603d"
+            }
+          }
+        }
+      },
+      "sourceSha256": "7af1651d377c9fd6a055314f4e666972fbdf32a9eca59a3e9c6abde50e5a1c0f",
+      "startedUnixNs": 1792712495191171000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/init-failure-cache/0/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712497720451000,
+      "id": "init-failure-cache",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 1200667917,
+        "exit_code": 0,
+        "files": {
+          "workspace/bad.pkl": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+        },
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "caa8d719744bca09bdb3ff71df2d726aea5cc42ec766b9a9e4e52e6a996f056b"
+        },
+        "timed_out": false,
+        "workspace_changes": {
+          "bad.pkl": {
+            "after": {
+              "kind": "file",
+              "sha256": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+            },
+            "before": {
+              "kind": "file",
+              "sha256": "73698b440cc6e6ee2cc2e5ae48d531b40b8e1e15e251884046649a1ad7bfdefd"
+            }
+          }
+        }
+      },
+      "sourceSha256": "7af1651d377c9fd6a055314f4e666972fbdf32a9eca59a3e9c6abde50e5a1c0f",
+      "startedUnixNs": 1792712496511611000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/init-failure-cache/1/calls",
+        "files"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712498992723000,
+      "id": "init-failure-cache",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 1251850417,
+        "exit_code": 0,
+        "files": {
+          "workspace/bad.pkl": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+        },
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "caa8d719744bca09bdb3ff71df2d726aea5cc42ec766b9a9e4e52e6a996f056b"
+        },
+        "timed_out": false,
+        "workspace_changes": {
+          "bad.pkl": {
+            "after": {
+              "kind": "file",
+              "sha256": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+            },
+            "before": {
+              "kind": "file",
+              "sha256": "73698b440cc6e6ee2cc2e5ae48d531b40b8e1e15e251884046649a1ad7bfdefd"
+            }
+          }
+        }
+      },
+      "sourceSha256": "7af1651d377c9fd6a055314f4e666972fbdf32a9eca59a3e9c6abde50e5a1c0f",
+      "startedUnixNs": 1792712497732930000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/spi-source-close",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/spi-source-close/0/calls",
+        "source-close"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/spi-source-close",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712500221626000,
+      "id": "spi-source-close",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/spi-source-close/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 1204993625,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "aa1c76e43f81c1ae5af0f85cb290c408f3c70fe8f0c1a33ba87bbcf8179efe3b"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "b12ea7c320fe671a3ab1468448ff8448d526179ca30fca4fa9d5edebb702b60b",
+      "startedUnixNs": 1792712499010118000
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LoaderProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/spi-source-close",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/spi-source-close/1/calls",
+        "source-close"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/spi-source-close",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792712501481554000,
+      "id": "spi-source-close",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/spi-source-close/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 1237034875,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "aa1c76e43f81c1ae5af0f85cb290c408f3c70fe8f0c1a33ba87bbcf8179efe3b"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "b12ea7c320fe671a3ab1468448ff8448d526179ca30fca4fa9d5edebb702b60b",
+      "startedUnixNs": 1792712500237294000
+    }
+  ],
+  "repeatDifferences": [],
+  "scope": "Actual pinned Java API+ModuleKey SPI semantics only; no native or original CLI pass claims. Timeout/abnormal processes and all raw failures retained."
+}

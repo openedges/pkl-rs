@@ -1,0 +1,205 @@
+{
+  "evidence": [
+    "reports/m2/stage41-required-captures.json",
+    "reports/m2/stage41-oracle-captures.json",
+    "reports/m2/stage41-platform-captures.json"
+  ],
+  "full_m2_complete": false,
+  "portable_graphs": {
+    "cases": 22,
+    "experiments_per_target": 44,
+    "graph_statuses": {
+      "browser": {
+        "candidate-unsupported": 8,
+        "pass": 36
+      },
+      "node": {
+        "candidate-unsupported": 8,
+        "pass": 36
+      }
+    },
+    "note": "Two follow-up mismatches per target remain inside self-class-parent-error graphs classified Unsupported. Whole-graph status does not hide those raw mismatches.",
+    "old_six_diagnostic_graphs_all_pass": true,
+    "pending_boundary_controls": [
+      {
+        "id": "unused-malformed-uri",
+        "reason": "Actual Java setup error retained in loader02. SourceSession constructor/setup-failure transport must be compared explicitly before this can join this result-event fixture set."
+      },
+      {
+        "id": "source-timeout",
+        "reason": "Actual timeout and later RejectedExecutionException retained in loader03. Current synchronous browser fixture runner uses fixed clock and has no delayed source completion deadline control."
+      },
+      {
+        "id": "source-close-reentry",
+        "reason": "Actual current9 and closed-context rejections retained in loader03. Cross-API thrown-error mapping is not an ordinary language-error byte contract."
+      },
+      {
+        "id": "relative-encoded-missing",
+        "reason": "Actual CLI error preserved in import-percent oracle. forOutput uses API diagnostic profile; CLI error frames cannot be substituted for API error fixtures."
+      }
+    ],
+    "selected_compatibility_complete": false,
+    "underlying_comparison_statuses": {
+      "browser": {
+        "candidate-unsupported": 8,
+        "mismatch": 2,
+        "pass": 106
+      },
+      "node": {
+        "candidate-unsupported": 8,
+        "mismatch": 2,
+        "pass": 106
+      }
+    }
+  },
+  "recorded_reports": [
+    {
+      "path": "target/m2/stage41-core-checkpoint-03/report.json",
+      "sha256": "8b74595e9562913e254180edc8469aedf48f7ddf559e68bc2044d301e379bc3f"
+    },
+    {
+      "path": "target/m2/stage41-b-adapter-checkpoint-05/report.json",
+      "sha256": "d12aa331240fb505b4002d88c861d5b86cbb8c80d1c5552fd69243b41250d389"
+    },
+    {
+      "path": "target/m2/stage41-platforms-command-03/report.json",
+      "sha256": "9b9495523168e6c68b038c0a1013f64edcf994cdccc587307dacf61d0845105a"
+    },
+    {
+      "path": "target/m2/stage41-platform-final-review-01/report.json",
+      "sha256": "d3fc2ef88ba6b09b5aab3289fb047d07cf6fe30e1b1b14d05d4b8c3c41db35e4"
+    }
+  ],
+  "required_local_checks": {
+    "archive": {
+      "bytes": 2532653,
+      "path": "reports/m2/stage41-final-required-checks.tar.gz",
+      "payload_files": 4995,
+      "sha256": "86b0a15c491b585a012061ad48db387b217e71b470d03e639c113030d6fffe4e"
+    },
+    "archive_integrity_exit": 0,
+    "commands": [
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "rustc",
+          "--version",
+          "--verbose"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 0.06854512495920062,
+        "exit_code": 0,
+        "name": "rustc-version"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "cargo",
+          "--version"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 0.04272974980995059,
+        "exit_code": 0,
+        "name": "cargo-version"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "uname",
+          "-a"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 0.004017166793346405,
+        "exit_code": 0,
+        "name": "host"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 1.0836716671474278,
+        "exit_code": 0,
+        "name": "references"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 0.6432506246492267,
+        "exit_code": 0,
+        "name": "format"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 5.072845333255827,
+        "exit_code": 0,
+        "name": "clippy"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 104.19939775019884,
+        "exit_code": 0,
+        "name": "tests"
+      },
+      {
+        "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-required-cargo",
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+        "elapsed_seconds": 2.2751240828074515,
+        "exit_code": 0,
+        "name": "wasm-check"
+      }
+    ],
+    "distinct_test_count_claimed": false,
+    "failed_harness_invocations": 0,
+    "ignored_harness_invocations": 1,
+    "passing_harness_invocations": 633,
+    "publication_source_changes": [],
+    "source_changes": [],
+    "source_count": 4958
+  },
+  "schema": 1,
+  "status": "Stage41 shared module loading, imported diagnostics and parsed expression implementation checkpoint. Full selected native and persistent regressions are still in progress.",
+  "unverified_or_remaining": [
+    "Final full selected native and persistent evaluator regressions and original30 native03 audit are pending at this checkpoint.",
+    "Module extends/amends, qualified module types and the remaining language inventory stay required.",
+    "The separate raw environment-name collision differences remain unresolved.",
+    "The complete product interfaces, release target combinations, execution time and peak RSS goals remain unverified."
+  ]
+}

@@ -738,7 +738,13 @@ impl Vm {
         }
         let label = class.map_or_else(
             || format!("{kind:?}"),
-            |class| format!("{}#{}", self.program.module_name, class.name),
+            |class| {
+                format!(
+                    "{}#{}",
+                    class.module.as_deref().unwrap_or(&self.program.module_name),
+                    class.name
+                )
+            },
         );
         let mut error = RuntimeError::new(
             ErrorKind::Type,
@@ -963,7 +969,11 @@ impl Vm {
                     80,
                 )?
             } else {
-                format!("{}#{}", self.program.module_name, class.name)
+                format!(
+                    "{}#{}",
+                    class.module.as_deref().unwrap_or(&self.program.module_name),
+                    class.name
+                )
             };
             let mut error = RuntimeError::new(
                 ErrorKind::Type,
@@ -1724,6 +1734,7 @@ impl Vm {
                                 "Cannot iterate over value of type `{}`.\nValue: {}",
                                 reference::type_name(
                                     &TypeCheck::Class {
+                                        module: class.module.clone(),
                                         id: class.id,
                                         name: class.name
                                     },
@@ -1893,7 +1904,13 @@ impl Vm {
                     };
                     let type_label = typed_target.map_or_else(
                         || format!("{target_kind:?}"),
-                        |class| format!("{}#{}", self.program.module_name, class.name),
+                        |class| {
+                            format!(
+                                "{}#{}",
+                                class.module.as_deref().unwrap_or(&self.program.module_name),
+                                class.name
+                            )
+                        },
                     );
                     return Err(self.spread_error(format!("Cannot spread object containing {kind} into object of type `{type_label}`."), &member));
                 }
@@ -1960,7 +1977,13 @@ impl Vm {
                                 format!("{:?}", object.collection_kind)
                             }
                         },
-                        |class| format!("{}#{}", self.program.module_name, class.name),
+                        |class| {
+                            format!(
+                                "{}#{}",
+                                class.module.as_deref().unwrap_or(&self.program.module_name),
+                                class.name
+                            )
+                        },
                     );
                     return Err(RuntimeError::new(
                         ErrorKind::Type,

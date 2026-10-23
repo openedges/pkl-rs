@@ -117,6 +117,7 @@ pub struct RuntimeFrame {
 /// Rendering belongs to the evaluation boundary, which owns the source and URI.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RuntimeError {
+    details: Option<Box<RuntimeErrorDetails>>,
     /// Internal exception provenance; unknown-member failures are never undefined.
     pub(crate) undefined_value: bool,
     pub kind: ErrorKind,
@@ -124,21 +125,45 @@ pub struct RuntimeError {
     pub span: Option<Span>,
     pub frames: Vec<RuntimeFrame>,
     pub hint: Option<String>,
+}
+
+/// Rare structured provenance is detached so the common Result error stays
+/// compact. Field access remains available through RuntimeError's dereference.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub struct RuntimeErrorDetails {
+    pub frontend: Option<Arc<crate::modules::ModuleDiagnostic>>,
+    pub(crate) cached_module_frames: bool,
     pub spread_hint: Option<Box<Span>>,
     pub type_diagnostic: Option<Box<crate::diagnostic::TypeDiagnostic>>,
+}
+const EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
+    frontend: None,
+    cached_module_frames: false,
+    spread_hint: None,
+    type_diagnostic: None,
+};
+impl std::ops::Deref for RuntimeError {
+    type Target = RuntimeErrorDetails;
+    fn deref(&self) -> &Self::Target {
+        self.details.as_deref().unwrap_or(&EMPTY_ERROR_DETAILS)
+    }
+}
+impl std::ops::DerefMut for RuntimeError {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        self.details.get_or_insert_with(Default::default)
+    }
 }
 
 impl RuntimeError {
     pub fn new(kind: ErrorKind, message: impl Into<String>) -> Self {
         Self {
+            details: None,
             undefined_value: false,
             kind,
             message: message.into(),
             span: None,
             frames: Vec::new(),
             hint: None,
-            spread_hint: None,
-            type_diagnostic: None,
         }
     }
 

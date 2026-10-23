@@ -935,7 +935,7 @@ impl<'a> Parser<'a> {
             name,
             name_span: span,
             expr: Expr {
-                kind: ExprKind::Import { uri },
+                kind: ExprKind::Import { uri, uri_span },
                 span,
             },
             span,
@@ -2500,6 +2500,25 @@ impl<'a> Parser<'a> {
                     ExprKind::Module
                 }
             }
+            Kind::Name(name) if name == "import" => {
+                self.advance_constant()?;
+                self.expect('(')?;
+                let (uri, uri_span) = self.string_constant()?;
+                let Some(uri) = uri.as_str() else {
+                    return Err(Diagnostic::unsupported(
+                        DiagnosticOrigin::Parser,
+                        "module-uri-utf16",
+                        uri_span,
+                        "Module URIs containing unmatched UTF-16 surrogates are not implemented.",
+                    ));
+                };
+                let uri = uri.to_owned();
+                let end = self.expect(')')?.span.end;
+                return Ok(Expr {
+                    kind: ExprKind::Import { uri, uri_span },
+                    span: Span::new(span.start, end),
+                });
+            }
             Kind::Name(name) if name == "this" => {
                 self.advance()?;
                 ExprKind::This
@@ -2629,7 +2648,19 @@ pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
     })
 }
 
+/// Expression parser metadata is retained for signed-number and interpolation diagnostics.
+#[derive(Clone, Debug)]
+pub(crate) struct ParsedExpression {
+    pub expression: Expr,
+    pub folded_integer_spans: std::collections::BTreeMap<Span, Span>,
+    pub interpolation_spans: std::collections::BTreeMap<Span, Span>,
+}
+
 pub fn parse_expression(source: &str) -> Result<Expr, Diagnostic> {
+    parse_expression_with_metadata(source).map(|parsed| parsed.expression)
+}
+
+pub(crate) fn parse_expression_with_metadata(source: &str) -> Result<ParsedExpression, Diagnostic> {
     let mut parser = Parser::new(source)?;
     let expression = parser.expression(0)?;
     if parser.token.kind != Kind::Eof {
@@ -2638,7 +2669,11 @@ pub fn parse_expression(source: &str) -> Result<Expr, Diagnostic> {
     if let Some(error) = parser.pending.into_iter().next() {
         return Err(error);
     }
-    Ok(expression)
+    Ok(ParsedExpression {
+        expression,
+        folded_integer_spans: parser.folded_integer_spans,
+        interpolation_spans: parser.interpolation_spans,
+    })
 }
 
 #[cfg(test)]

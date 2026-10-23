@@ -22,6 +22,7 @@ pub(super) fn open_class(id: usize) -> bool {
 }
 pub(super) fn ty(id: usize) -> TypeCheck {
     TypeCheck::Class {
+        module: None,
         id,
         name: name(id).expect("registered builtin class").into(),
     }

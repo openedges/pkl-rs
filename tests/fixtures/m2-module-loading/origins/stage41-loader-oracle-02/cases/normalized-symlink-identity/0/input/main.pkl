@@ -1,0 +1,9 @@
+import "child.pkl" as a
+import "./sub/../child.pkl" as b
+import "link.pkl" as c
+const bar=1
+observation0 = a == b
+observation1 = a == c
+observation2 = a.C == c.C
+observation3 = a.foo
+observation4 = new a.C {}.x

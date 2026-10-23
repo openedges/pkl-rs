@@ -19,6 +19,9 @@ mod converters;
 pub(crate) mod equality;
 mod forcing;
 mod generics;
+mod modules;
+mod session_expressions;
+pub use session_expressions::{SessionExpressionError, compile_session_expression};
 mod output;
 mod pair;
 mod pcf_format;
@@ -33,6 +36,7 @@ use typecheck::{TypeDestination, TypeRun};
 #[derive(Clone, Debug)]
 pub enum Instruction {
     LoadRefModule,
+    ImportModule(modules::ImportSpec),
     CheckModuleOutput,
     EncodeUtf8,
     OutputRenderer,
@@ -330,6 +334,7 @@ pub enum TypeCheck {
     Class {
         id: usize,
         name: Arc<str>,
+        module: Option<Arc<str>>,
     },
     Nullable(Box<TypeCheck>),
     Alias(Box<TypeCheck>),
@@ -610,6 +615,7 @@ impl TypeCheck {
                 matches!(value, Value::Function(id) if heap.get(*id).is_ok_and(|object| parameters.as_ref().is_none_or(|parameters| object.function.as_ref().is_some_and(|function| function.arity == parameters.len()) || object.native_function.as_ref().is_some_and(|function| parameters.len() == match function.name.as_ref() { "Reference" => 3, "containsKey" | "getOrNull" | "contains" => 1, _ => 0 }))))
             }
             Self::RefDomain => Self::Class {
+                module: None,
                 id: reference::DOMAIN_ID,
                 name: Arc::from("Domain"),
             }
@@ -681,6 +687,9 @@ impl TypeCheck {
 /// Source metadata is parallel to bytecode, so diagnostics add no VM dispatches.
 #[derive(Clone, Debug, Default)]
 pub struct BlockMetadata {
+    /// Compiling unit. An explicit source replacement may detach declaration
+    /// provenance from this unit while preserving its executable code index.
+    pub unit: Option<crate::modules::UnitId>,
     /// Bind the actual module input as the lexical receiver of a source entry.
     pub module_receiver_input: Option<usize>,
     pub source: Option<Arc<crate::value::RuntimeSource>>,
@@ -715,6 +724,8 @@ pub(crate) struct LetScope {
 
 #[derive(Clone, Debug)]
 pub struct Program {
+    pub(crate) units: Vec<modules::ModuleUnit>,
+    next_declaration: usize,
     pub module_name: Arc<str>,
     pub module_template: Option<usize>,
     /// Imports, classes and aliases exist before module annotation evaluation.
@@ -802,6 +813,8 @@ impl Program {
         let (amended_function_block, identity_mixin_block) =
             amendment::blocks(&mut blocks, &mut metadata);
         Self {
+            units: Vec::new(),
+            next_declaration: 0,
             module_name: Arc::from(""),
             module_template: None,
             initial_module_members: Vec::new(),
@@ -830,8 +843,9 @@ pub struct ReadRequest {
     pub id: u64,
     /// Authored operand, before a Host profile's URI parsing and resolution.
     pub uri: Arc<str>,
-    /// The read expression's declaration source URI, independent of its receiver
-    /// or caller. This is not a general canonical ModuleKey for imported modules.
+    /// The read declaration's original ModuleKey URI when associated with a
+    /// registered unit; otherwise its explicit source URI. This is independent
+    /// of the caller and is never replaced by the canonical resolved key.
     pub module_uri: Option<Arc<str>>,
     /// Only an absent resource becomes null; parse, policy and reader errors propagate.
     pub nullable: bool,
@@ -842,6 +856,7 @@ pub enum VmPoll {
     Ready(Result<Value, RuntimeError>),
     Pending(ReadRequest),
     Log(LogRequest),
+    Module(crate::modules::ModuleRequest),
     Yielded,
 }
 
@@ -878,11 +893,16 @@ struct Frame {
     diagnostic_member: Option<PklString>,
     callsite_hidden: bool,
     builders: Vec<ObjectId>,
+    module_load: Option<modules::ModuleRun>,
+    module_receiver: Option<ObjectId>,
 }
 
 impl Frame {
     fn hides_callsite(&self) -> bool {
         self.callsite_hidden
+            // Module initialization is invoked from ModuleCache without a guest
+            // call node. Resolve failures still originate at the ImportNode.
+            || self.module_load.as_ref().is_some_and(|run| run.initializing)
             || self
                 .deep_force
                 .as_ref()
@@ -894,18 +914,21 @@ impl Frame {
 pub(crate) enum PendingRequest {
     Read(ReadRequest),
     Log(LogRequest),
+    Module(crate::modules::ModuleRequest),
 }
 impl PendingRequest {
     fn id(&self) -> u64 {
         match self {
             Self::Read(request) => request.id,
             Self::Log(request) => request.id,
+            Self::Module(request) => request.id,
         }
     }
     fn poll(&self) -> VmPoll {
         match self {
             Self::Read(request) => VmPoll::Pending(request.clone()),
             Self::Log(request) => VmPoll::Log(request.clone()),
+            Self::Module(request) => VmPoll::Module(request.clone()),
         }
     }
 }
@@ -946,6 +969,8 @@ pub struct Vm {
     power_assertions: bool,
     /// Keys belong to this immutable Program; values belong only to this evaluator.
     /// Reentering or restarting a declaration retains its first captured environment.
+    modules_original: BTreeMap<Arc<str>, modules::CachedModule>,
+    modules_resolved: BTreeMap<Arc<str>, modules::CachedModule>,
     class_singletons: BTreeMap<usize, ObjectId>,
     alias_singletons: BTreeMap<usize, ObjectId>,
     /// Static call targets own code state, never captured receivers/environments.
@@ -957,7 +982,26 @@ impl Vm {
         Self::with_context(program, EvaluationContext::default())
     }
 
-    pub fn with_context(program: Arc<Program>, context: EvaluationContext) -> Self {
+    pub fn with_context(mut program: Arc<Program>, context: EvaluationContext) -> Self {
+        let registration = if let Some(source) = &context.primary_source {
+            if program
+                .units
+                .first()
+                .is_some_and(|unit| unit.identity.is_none())
+            {
+                Arc::make_mut(&mut program).register_primary_source(
+                    source.clone(),
+                    crate::modules::ModuleIdentity {
+                        original_uri: source.uri.clone(),
+                        resolved_uri: source.uri.clone(),
+                    },
+                )
+            } else {
+                Ok(())
+            }
+        } else {
+            Ok(())
+        };
         // Compiled caches cannot retain evaluator-owned handles. Validate once,
         // independently of repeated evaluation state creation.
         let code_validation = if program
@@ -986,8 +1030,10 @@ impl Vm {
             next_request: 1,
             instructions: 0,
             member_evaluations: 0,
-            code_validation,
+            code_validation: registration.and(code_validation),
             power_assertions: false,
+            modules_original: BTreeMap::new(),
+            modules_resolved: BTreeMap::new(),
             class_singletons: BTreeMap::new(),
             alias_singletons: BTreeMap::new(),
             executable_roots: BTreeMap::new(),
@@ -1085,6 +1131,8 @@ impl Vm {
             diagnostic_member: None,
             callsite_hidden: false,
             builders: Vec::new(),
+            module_load: None,
+            module_receiver: None,
         });
         self.state = State::Running;
         Ok(())
@@ -1296,7 +1344,7 @@ impl Vm {
     }
 
     pub(crate) fn close_from_callback(&mut self, id: u64) -> Result<(), RuntimeError> {
-        if !matches!(&self.state, State::Waiting(PendingRequest::Log(request)) if request.id == id)
+        if !matches!(&self.state, State::Waiting(request @ (PendingRequest::Log(_) | PendingRequest::Module(_))) if request.id() == id)
         {
             return Err(RuntimeError::new(
                 ErrorKind::Host,
@@ -1363,6 +1411,8 @@ impl Vm {
         self.state = State::Closed;
         self.log_buffer = Vec::new();
         self.context = EvaluationContext::default();
+        self.modules_original.clear();
+        self.modules_resolved.clear();
         self.class_singletons.clear();
         self.alias_singletons.clear();
         self.executable_roots.clear();
@@ -1418,6 +1468,15 @@ impl Vm {
     /// Safepoint collection includes suspended frames and externally pinned results.
     pub fn collect(&mut self, external_roots: &[Value]) -> HeapStats {
         let mut roots = external_roots.to_vec();
+        roots.extend(
+            self.modules_original
+                .values()
+                .chain(self.modules_resolved.values())
+                .filter_map(|module| match module {
+                    modules::CachedModule::Value(id) => Some(Value::Object(*id)),
+                    _ => None,
+                }),
+        );
         roots.extend(self.executable_roots.values().map(|owner| owner.root()));
         roots.extend(self.class_singletons.values().copied().map(Value::Class));
         roots.extend(
@@ -1450,6 +1509,14 @@ impl Vm {
                 roots.push(value.clone());
             }
             for frame in frames {
+                roots.extend(frame.module_receiver.map(Value::Object));
+                roots.extend(
+                    frame
+                        .module_load
+                        .as_ref()
+                        .and_then(|run| run.receiver)
+                        .map(Value::Object),
+                );
                 roots.extend(frame.builders.iter().copied().map(Value::Object));
                 roots.extend(frame.prepared_hashes.iter().flatten().cloned());
                 roots.extend(frame.environment.locals.iter().cloned());
@@ -1539,7 +1606,11 @@ impl Vm {
         } else {
             self.frames.len()
         };
-        let diagnostic_frames = &self.frames[..diagnostic_count];
+        let diagnostic_frames = if error.cached_module_frames {
+            &self.frames[..0]
+        } else {
+            &self.frames[..diagnostic_count]
+        };
         // LetExprNode inserts one frame per call target when a body throws.
         // Unwinding replaces inner scopes with the outermost active scope,
         // including across recursive calls. Initializers and type checks are
@@ -1725,10 +1796,12 @@ impl Vm {
         }
         // Callback failures expose callers in suspended contexts without
         // unwinding those contexts or changing their force/cache ownership.
-        for context in self.suspended.iter().rev() {
-            error
-                .frames
-                .extend(context.diagnostic_callers.iter().cloned());
+        if !error.cached_module_frames {
+            for context in self.suspended.iter().rev() {
+                error
+                    .frames
+                    .extend(context.diagnostic_callers.iter().cloned());
+            }
         }
         if error.span.is_none() {
             error.span = error.frames.first().map(|frame| frame.span);
@@ -1752,6 +1825,44 @@ impl Vm {
                 if matches!(object.cache.get(key), Some(LazyState::Evaluating)) {
                     object.cache.remove(key);
                 }
+            }
+        }
+        for frame in &self.frames {
+            if let Some(receiver) = frame.module_receiver
+                && self
+                    .heap
+                    .get(receiver)
+                    .is_ok_and(|module| module.module_initializing)
+                && let Some(unit) = self
+                    .program
+                    .metadata
+                    .get(frame.block)
+                    .and_then(|metadata| metadata.unit)
+                    .and_then(|unit| self.program.units.get(unit.0 as usize))
+                && unit.entry == frame.block
+                && let Some(identity) = &unit.identity
+            {
+                self.modules_original.insert(
+                    identity.original_uri.clone(),
+                    modules::CachedModule::Failed(error.clone()),
+                );
+                self.modules_resolved.insert(
+                    identity.resolved_uri.clone(),
+                    modules::CachedModule::Failed(error.clone()),
+                );
+            }
+            if let Some(run) = &frame.module_load
+                && run.initializing
+                && let Some(resolved) = &run.resolved
+            {
+                self.modules_original.insert(
+                    resolved.original_uri.clone(),
+                    modules::CachedModule::Failed(error.clone()),
+                );
+                self.modules_resolved.insert(
+                    resolved.resolved_uri.clone(),
+                    modules::CachedModule::Failed(error.clone()),
+                );
             }
         }
         self.frames.clear();
@@ -2169,6 +2280,8 @@ impl Vm {
             diagnostic_member: None,
             callsite_hidden: false,
             builders: Vec::new(),
+            module_load: None,
+            module_receiver: None,
             force: Some(Force {
                 entry,
                 receiver,
@@ -2347,12 +2460,26 @@ impl Vm {
         method: bool,
     ) -> Result<RuntimeError, RuntimeError> {
         if self.heap.get(receiver)?.is_module {
+            let module_name = self
+                .heap
+                .get(receiver)?
+                .class_definition
+                .as_ref()
+                .map_or(self.program.module_name.as_ref(), |class| {
+                    class.name.as_ref()
+                });
             let kind = if method { "method" } else { "property" };
             let mut error = RuntimeError::new(
                 ErrorKind::MissingMember,
                 format!(
                     "Cannot find {kind} `{name}` in module `{}`.",
-                    self.program.module_name
+                    self.heap
+                        .get(receiver)?
+                        .class_definition
+                        .as_ref()
+                        .map_or(self.program.module_name.as_ref(), |class| class
+                            .name
+                            .as_ref())
                 ),
             );
             if method {
@@ -2411,7 +2538,7 @@ impl Vm {
                     names.dedup();
                     Some(format!(
                         "Available methods in module `{}`:\n{}",
-                        self.program.module_name,
+                        module_name,
                         names.join("\n")
                     ))
                 });
@@ -2443,7 +2570,7 @@ impl Vm {
             error.hint = Some(format!(
                 "Available {} in module `{}`:\n{}",
                 if method { "methods" } else { "properties" },
-                self.program.module_name,
+                module_name,
                 names.join("\n")
             ));
             return Ok(error);
@@ -2542,6 +2669,7 @@ impl Vm {
             |class| {
                 reference::type_name(
                     &TypeCheck::Class {
+                        module: class.module.clone(),
                         id: class.id,
                         name: class.name,
                     },
@@ -2651,7 +2779,14 @@ impl Vm {
         let parent_name = if parent_class.id == reference::ACCESS_ID {
             "pkl.ref#Access".to_owned()
         } else {
-            format!("{}#{}", self.program.module_name, parent_class.name)
+            format!(
+                "{}#{}",
+                parent_class
+                    .module
+                    .as_deref()
+                    .unwrap_or(&self.program.module_name),
+                parent_class.name
+            )
         };
         // UnresolvedPropertyNode resolves the type, then checks fixed, then const.
         for (modifier, actual, expected) in [
@@ -2790,6 +2925,7 @@ impl Vm {
                     .expect("class metadata");
                 reference::type_name(
                     &TypeCheck::Class {
+                        module: class.module.clone(),
                         id: class.id,
                         name: class_name,
                     },
@@ -2972,11 +3108,20 @@ impl Vm {
             diagnostic_member: None,
             callsite_hidden: false,
             builders: Vec::new(),
+            module_load: None,
+            module_receiver: None,
         });
         Ok(())
     }
 
     fn step(&mut self) -> Result<(), RuntimeError> {
+        if self
+            .frames
+            .last()
+            .is_some_and(|frame| frame.module_load.is_some())
+        {
+            return self.step_module();
+        }
         if self
             .frames
             .last()
@@ -3079,6 +3224,7 @@ impl Vm {
     fn step_instruction(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
         let frame = self.frames.last_mut().expect("active frame");
         match instruction {
+            Instruction::ImportModule(spec) => self.begin_import(spec)?,
             Instruction::CheckModuleOutput => self.check_module_output()?,
             Instruction::EncodeUtf8 => {
                 let Value::String(value) = self.pop()? else {
@@ -3095,10 +3241,12 @@ impl Vm {
                     .last()
                     .ok_or_else(|| invalid("missing module"))?
                     .as_object()?;
-                let template = self
-                    .program
-                    .module_template
-                    .ok_or_else(|| invalid("missing module template"))?;
+                let unit = self
+                    .heap
+                    .get(owner)?
+                    .module_unit
+                    .ok_or_else(|| invalid("missing module unit"))?;
+                let template = self.program.units[unit.0 as usize].template;
                 let member = self.program.objects[template]
                     .iter()
                     .find(|m| m.code == code)
@@ -3198,7 +3346,7 @@ impl Vm {
                         .expect("active frame")
                         .environment
                         .clone();
-                    let name = Arc::from(format!("{}{}", self.program.module_name, name));
+                    let name = Arc::from(format!("{}{}", self.current_module_name(), name));
                     let id = self.heap.allocate(Object {
                         type_alias: Some(name),
                         environment,
@@ -3832,7 +3980,7 @@ impl Vm {
                     ErrorKind::Type,
                     format!(
                         "Cannot invoke abstract {kind} `{}{name}`.",
-                        self.program.module_name
+                        self.current_module_name()
                     ),
                 ));
             }
@@ -3855,7 +4003,12 @@ impl Vm {
                         .environment
                         .clone();
                     let id = self.heap.allocate(Object {
-                        class_definition: Some(class),
+                        class_definition: Some(Class {
+                            module: class
+                                .module
+                                .or_else(|| Some(self.current_module_name().into())),
+                            ..class
+                        }),
                         class_initializing: true,
                         environment,
                         ..Object::default()
@@ -3885,7 +4038,11 @@ impl Vm {
                         ErrorKind::Type,
                         format!(
                             "Class `{}#{}` cannot extend itself.",
-                            self.program.module_name, parent_class.name
+                            parent_class
+                                .module
+                                .as_deref()
+                                .unwrap_or(&self.program.module_name),
+                            parent_class.name
                         ),
                     ));
                 }
@@ -3896,6 +4053,7 @@ impl Vm {
                             "Cannot extend non-open class `{}`.",
                             reference::type_name(
                                 &TypeCheck::Class {
+                                    module: parent_class.module.clone(),
                                     id: parent_class.id,
                                     name: parent_class.name.clone()
                                 },
@@ -3985,7 +4143,11 @@ impl Vm {
                             if builtins::name(class.id).is_some() {
                                 class.name.to_string()
                             } else {
-                                format!("{}#{}", self.program.module_name, class.name)
+                                format!(
+                                    "{}#{}",
+                                    class.module.as_deref().unwrap_or(&self.program.module_name),
+                                    class.name
+                                )
                             }
                         ),
                     );
@@ -4041,9 +4203,15 @@ impl Vm {
                 template,
                 has_parent,
             } => {
+                let module = self
+                    .program
+                    .units
+                    .iter()
+                    .find(|unit| unit.template == template)
+                    .cloned();
                 let parent = if has_parent {
                     Some(self.pop()?.as_object()?)
-                } else if self.program.module_template == Some(template) {
+                } else if module.is_some() {
                     self.builtin_class(builtins::ty(output::MODULE)).heap_id()
                 } else {
                     None
@@ -4053,8 +4221,8 @@ impl Vm {
                 {
                     return Err(collections::external_amendment_error("pkl.ref#Reference"));
                 }
-                let members = if self.program.module_template == Some(template) {
-                    self.program.initial_module_members.clone()
+                let members = if let Some(module) = &module {
+                    module.initial_members.clone()
                 } else {
                     self.program
                         .objects
@@ -4063,7 +4231,7 @@ impl Vm {
                         .clone()
                 };
                 if let Some(parent) = parent
-                    && self.program.module_template != Some(template)
+                    && module.is_none()
                 {
                     self.validate_object_members(parent, &members)?;
                     if members.is_empty() {
@@ -4077,19 +4245,23 @@ impl Vm {
                     .expect("active frame")
                     .environment
                     .clone();
-                let object = self.heap.allocate(Object {
-                    is_module: self.program.module_template == Some(template),
-                    class_definition: (self.program.module_template == Some(template)).then(|| {
-                        Class {
-                            id: reference::MODULE_ID,
-                            name: self.program.module_name.clone(),
-                            open: false,
-                            abstract_: false,
-                        }
+                let definition = Object {
+                    is_module: module.is_some(),
+                    module_unit: module.as_ref().map(|unit| unit.id),
+                    class_definition: (module.is_some()).then(|| Class {
+                        module: None,
+                        id: module.as_ref().unwrap().class_id,
+                        name: if module.as_ref().unwrap().id.0 == 0 {
+                            self.program.module_name.clone()
+                        } else {
+                            module.as_ref().unwrap().name.clone()
+                        },
+                        open: false,
+                        abstract_: false,
                     }),
-                    class_superclass_initialized: self.program.module_template == Some(template),
-                    module_initializing: self.program.module_template == Some(template),
-                    published_module_members: if self.program.module_template == Some(template) {
+                    class_superclass_initialized: module.is_some(),
+                    module_initializing: module.is_some(),
+                    published_module_members: if module.is_some() {
                         members.iter().map(|m| m.code).collect()
                     } else {
                         BTreeSet::new()
@@ -4098,9 +4270,33 @@ impl Vm {
                     members,
                     environment,
                     ..Object::default()
-                });
+                };
+                let existing = self
+                    .frames
+                    .last()
+                    .and_then(|frame| frame.module_receiver)
+                    .filter(|_| module.is_some());
+                let object = if let Some(receiver) = existing {
+                    *self.heap.get_mut(receiver)? = definition;
+                    receiver
+                } else {
+                    self.heap.allocate(definition)
+                };
+                if let Some(unit) = &module {
+                    self.frames.last_mut().unwrap().module_receiver = Some(object);
+                    if let Some(identity) = &unit.identity {
+                        self.modules_original.insert(
+                            identity.original_uri.clone(),
+                            modules::CachedModule::Value(object),
+                        );
+                        self.modules_resolved.insert(
+                            identity.resolved_uri.clone(),
+                            modules::CachedModule::Value(object),
+                        );
+                    }
+                }
                 self.stack.push(Value::Object(object));
-                if self.program.module_template == Some(template) {
+                if module.is_some() {
                     self.frames
                         .last_mut()
                         .expect("module frame")
@@ -4381,9 +4577,31 @@ impl Vm {
                     .frames
                     .last()
                     .and_then(|frame| self.program.metadata.get(frame.block))
-                    .and_then(|metadata| metadata.source.as_ref())
-                    .or(self.context.primary_source.as_ref())
-                    .map(|source| source.uri.clone());
+                    .and_then(|metadata| {
+                        metadata
+                            .unit
+                            .and_then(|unit| self.program.units.get(unit.0 as usize))
+                            // Explicit foreign source metadata can replace a
+                            // primary compiled block's declaration provenance.
+                            // Its old unit ID must not override that source.
+                            .filter(|unit| match (&metadata.source, &unit.source) {
+                                (None, _) => unit.id == crate::modules::UnitId(0),
+                                (Some(source), Some(unit_source)) => {
+                                    Arc::ptr_eq(source, unit_source)
+                                }
+                                _ => false,
+                            })
+                    })
+                    .and_then(|unit| unit.identity.as_ref())
+                    .map(|identity| identity.original_uri.clone())
+                    .or_else(|| {
+                        self.frames
+                            .last()
+                            .and_then(|frame| self.program.metadata.get(frame.block))
+                            .and_then(|metadata| metadata.source.as_ref())
+                            .or(self.context.primary_source.as_ref())
+                            .map(|source| source.uri.clone())
+                    });
                 self.state = State::Waiting(PendingRequest::Read(ReadRequest {
                     id,
                     uri,
@@ -4746,9 +4964,42 @@ fn compile_module_configured(
     {
         return Err(unsupported_type("module inheritance and modifiers").at(declaration.span));
     }
+    let mut program = Program::new(Vec::new());
+    compile_unit_into(&mut program, resolved, options, instrument, None, None)?;
+    Ok(Arc::new(program))
+}
+
+fn compile_unit_into(
+    program: &mut Program,
+    resolved: &crate::resolver::ResolvedModule,
+    options: CompileOptions,
+    instrument: bool,
+    source: Option<Arc<crate::value::RuntimeSource>>,
+    identity: Option<crate::modules::ModuleIdentity>,
+) -> Result<crate::modules::UnitId, RuntimeError> {
+    if let Some(declaration) = &resolved.module.declaration
+        && (declaration.parent.is_some() || !declaration.modifiers.is_empty())
+    {
+        return Err(unsupported_type("module inheritance and modifiers").at(declaration.span));
+    }
+    let unit = crate::modules::UnitId(
+        program
+            .units
+            .len()
+            .try_into()
+            .map_err(|_| invalid("module unit limit"))?,
+    );
+    let declaration_base = program.next_declaration;
+    program.next_declaration = declaration_base
+        .checked_add(resolved.module.source.len() + 2)
+        .ok_or_else(|| invalid("declaration identity limit"))?;
     let mut compiler = Compiler {
         resolved,
-        program: Program::new(Vec::new()),
+        program,
+        unit,
+        declaration_base,
+        source,
+        identity,
         options,
         member: PklString::default(),
         let_members: Vec::new(),
@@ -4768,17 +5019,26 @@ fn compile_module_configured(
         function_names: BTreeMap::new(),
         instrument,
     };
-    compiler.program.module_name = Arc::from(
+    let module_name: Arc<str> = Arc::from(
         resolved
             .module
             .declaration
             .as_ref()
             .and_then(|declaration| declaration.name.as_ref())
             .map(|parts| parts.join("."))
-            .unwrap_or_default(),
+            .unwrap_or_else(|| {
+                compiler
+                    .source
+                    .as_ref()
+                    .map_or_else(String::new, |source| source.module_name.to_string())
+            }),
     );
     let template = compiler.object_template(&resolved.module.members, false, false)?;
-    compiler.program.module_template = Some(template);
+    if unit.0 == 0 {
+        compiler.program.module_template = Some(template);
+        compiler.program.module_name = module_name.clone();
+    }
+    let mut initial_module_members = Vec::new();
     // AstBuilder.doVisitModuleProperties installs declarations before ClassNode
     // executes module annotations, then publishes ordinary properties and methods.
     for kind in 0..3 {
@@ -4790,10 +5050,7 @@ fn compile_module_configured(
                 _ => None,
             };
             if declaration_kind == Some(kind) {
-                compiler
-                    .program
-                    .initial_module_members
-                    .push(compiler.program.objects[template][index].clone());
+                initial_module_members.push(compiler.program.objects[template][index].clone());
             }
         }
     }
@@ -4839,9 +5096,30 @@ fn compile_module_configured(
     entry.push(Instruction::FinishModule);
     compiler.type_scopes.pop();
     entry.push(Instruction::Return);
-    compiler.program.entry = compiler.block(entry, None);
-    compiler.program.constraint_origins = compiler.constraint_origins;
-    Ok(Arc::new(compiler.program))
+    let entry = compiler.block(entry, None);
+    if unit.0 == 0 {
+        compiler.program.entry = entry;
+        compiler.program.initial_module_members = initial_module_members.clone();
+    }
+    compiler
+        .program
+        .constraint_origins
+        .extend(compiler.constraint_origins);
+    compiler.program.units.push(modules::ModuleUnit {
+        id: unit,
+        identity: compiler.identity,
+        source: compiler.source,
+        name: module_name,
+        template,
+        entry,
+        initial_members: initial_module_members,
+        class_id: if unit.0 == 0 {
+            reference::MODULE_ID
+        } else {
+            declaration_base + resolved.module.source.len() + 1
+        },
+    });
+    Ok(unit)
 }
 
 #[derive(Default)]
@@ -4876,7 +5154,11 @@ impl std::ops::DerefMut for Code {
 
 struct Compiler<'a> {
     resolved: &'a crate::resolver::ResolvedModule,
-    program: Program,
+    program: &'a mut Program,
+    unit: crate::modules::UnitId,
+    declaration_base: usize,
+    source: Option<Arc<crate::value::RuntimeSource>>,
+    identity: Option<crate::modules::ModuleIdentity>,
     options: CompileOptions,
     member: PklString,
     let_members: Vec<PklString>,
@@ -5252,8 +5534,9 @@ impl Compiler<'_> {
         let index = self.program.blocks.len();
         self.program.blocks.push(code.instructions);
         self.program.metadata.push(BlockMetadata {
+            unit: Some(self.unit),
             module_receiver_input: None,
-            source: None,
+            source: self.source.clone(),
             hidden: false,
             spans: code.spans,
             member: self.member.clone(),
@@ -5284,13 +5567,16 @@ impl Compiler<'_> {
         use crate::resolver::Binding;
         use crate::syntax::ExprKind;
         match &expression.kind {
-            ExprKind::Import { uri } => {
+            ExprKind::Import { uri, uri_span } => {
                 if uri == "pkl:ref" {
                     output.push(Instruction::LoadRefModule);
                 } else {
-                    output.push(Instruction::Unsupported(Arc::from(format!(
-                        "module import `{uri}` is not implemented"
-                    ))));
+                    output.push(Instruction::ImportModule(modules::ImportSpec::new(
+                        uri.clone().into(),
+                        *uri_span,
+                        self.unit,
+                        self.identity.as_ref(),
+                    )?));
                 }
             }
             ExprKind::Class {
@@ -5303,7 +5589,11 @@ impl Compiler<'_> {
                     return Err(unsupported_type("generic classes"));
                 }
                 let class = Class {
-                    id: expression.span.start,
+                    module: self
+                        .source
+                        .as_ref()
+                        .map(|source| source.module_name.clone()),
+                    id: self.declaration_base + expression.span.start,
                     name: Arc::from(
                         self.member
                             .as_str()
@@ -5452,7 +5742,7 @@ impl Compiler<'_> {
                             .to_owned()
                     });
                 output.push(Instruction::BeginTypeAlias {
-                    declaration: expression.span.start,
+                    declaration: self.declaration_base + expression.span.start,
                     name: Arc::from(declaration_name),
                     end: 0,
                 });
@@ -5542,6 +5832,7 @@ impl Compiler<'_> {
                         let ty = reference::base_type(&name)
                             .or_else(|| {
                                 builtins::id(&name).map(|id| TypeCheck::Class {
+                                    module: None,
                                     id,
                                     name: name.clone(),
                                 })
@@ -5719,11 +6010,15 @@ fn type_name(ty: &TypeCheck, module: &str) -> String {
             TypeCheck::IntegerAlias { name, .. } => name.to_string(),
             TypeCheck::RefDomain => "pkl.ref#Domain".into(),
             TypeCheck::Reference { .. } => "pkl.ref#Reference".into(),
-            TypeCheck::Class { id, name } => {
+            TypeCheck::Class {
+                id,
+                name,
+                module: declaring_module,
+            } => {
                 if builtins::name(*id).is_some() {
                     name.to_string()
                 } else {
-                    format!("{module}#{name}")
+                    format!("{}#{name}", declaring_module.as_deref().unwrap_or(module))
                 }
             }
             TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {
@@ -6060,7 +6355,7 @@ impl Compiler<'_> {
                 error.frames.push(RuntimeFrame {
                     span,
                     member: "".into(),
-                    source: None,
+                    source: self.source.clone(),
                 });
             }
             error.at(ty.span)
@@ -6223,7 +6518,7 @@ impl Compiler<'_> {
                     let mut origin = vec![RuntimeFrame {
                         span: ty.span,
                         member: self.member.clone(),
-                        source: None,
+                        source: self.source.clone(),
                     }];
                     origin.extend(self.alias_frames.iter().rev().cloned());
                     self.constraint_origins
@@ -6293,7 +6588,7 @@ impl Compiler<'_> {
                         )
                         .at(name_spans[0])
                     })?;
-                let ExprKind::Import { uri } = &import.expr.kind else {
+                let ExprKind::Import { uri, .. } = &import.expr.kind else {
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
                         format!(
@@ -6309,6 +6604,7 @@ impl Compiler<'_> {
                 match path[1].as_str() {
                     "Domain" if arguments.is_empty() => TypeCheck::RefDomain,
                     "Access" if arguments.is_empty() => TypeCheck::Class {
+                        module: None,
                         id: reference::ACCESS_ID,
                         name: Arc::from("Access"),
                     },
@@ -6402,7 +6698,11 @@ impl Compiler<'_> {
                                 ));
                             }
                             TypeCheck::Class {
-                                id: member.expr.span.start,
+                                module: self
+                                    .source
+                                    .as_ref()
+                                    .map(|source| source.module_name.clone()),
+                                id: self.declaration_base + member.expr.span.start,
                                 name: Arc::from(member.name),
                             }
                         }
@@ -6486,7 +6786,7 @@ impl Compiler<'_> {
                             self.alias_frames.push(RuntimeFrame {
                                 span: ty.span,
                                 member: previous_member.clone(),
-                                source: None,
+                                source: self.source.clone(),
                             });
                             let result = self
                                 .compile_type_at(aliased, index + 1, aliases, &substitutions)
@@ -6494,7 +6794,7 @@ impl Compiler<'_> {
                                     error.frames.push(RuntimeFrame {
                                         span: aliased.span,
                                         member: format!("#{}", member.name).into(),
-                                        source: None,
+                                        source: self.source.clone(),
                                     });
                                     error
                                 });
@@ -6506,7 +6806,7 @@ impl Compiler<'_> {
                             let result = result?;
                             aliases.remove(&member.expr.span);
                             TypeCheck::NamedAlias {
-                                declaration: member.expr.span.start,
+                                declaration: self.declaration_base + member.expr.span.start,
                                 name: Arc::from(
                                     self.resolved.module.source
                                         [member.name_span.start..member.name_span.end]
@@ -6545,7 +6845,7 @@ impl Compiler<'_> {
                         let mut mixin = amendment::mixin_type(argument);
                         if let TypeCheck::NamedAlias { default_origin, .. } = &mut mixin {
                             *default_origin = arguments.first().map(|argument| RuntimeFrame {
-                                source: None,
+                                source: self.source.clone(),
                                 span: self.type_source_span(argument),
                                 member: self.member.clone(),
                             });
@@ -6681,6 +6981,7 @@ impl Compiler<'_> {
                     }
                     match path[0].as_str() {
                         name if builtins::id(name).is_some() => TypeCheck::Class {
+                            module: None,
                             id: builtins::id(name).expect("annotation class"),
                             name: Arc::from(name),
                         },
@@ -6769,7 +7070,7 @@ impl Compiler<'_> {
         };
         for (index, members) in self.type_scopes.iter().enumerate().rev() {
             if let Some(member) = members.iter().find(|member| {
-                member.expr.span.start == *id
+                self.declaration_base + member.expr.span.start == *id
                     && matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. })
             }) {
                 output.push_at(
@@ -6811,7 +7112,7 @@ impl Compiler<'_> {
         if let Some(ty) = &member.ty {
             let check = self.compile_type(ty)?;
             let origin = RuntimeFrame {
-                source: None,
+                source: self.source.clone(),
                 span: self.type_source_span(ty),
                 member: self.member.concat(&".default".into()),
             };
@@ -6919,7 +7220,7 @@ impl Compiler<'_> {
             }
             TypeCheck::Class { id, .. } => {
                 if self.type_scopes.iter().flatten().any(|member| {
-                    member.expr.span.start == *id
+                    self.declaration_base + member.expr.span.start == *id
                         && matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. })
                         && crate::syntax::modifier_flags(&member.modifiers)
                             & crate::syntax::ModifierKind::Abstract.flag()

@@ -67,7 +67,7 @@ fn finish(vm: &mut Vm) -> Result<Value, RuntimeError> {
     match vm.poll(1_000_000) {
         VmPoll::Ready(value) => value,
         VmPoll::Yielded => Err(unsupported("probe instruction limit exceeded")),
-        VmPoll::Pending(_) | VmPoll::Log(_) => {
+        VmPoll::Pending(_) | VmPoll::Log(_) | VmPoll::Module(_) => {
             Err(unsupported("use HostSession for asynchronous evaluation"))
         }
     }
@@ -148,6 +148,9 @@ impl HostProbe {
             HostPoll::Log { .. } => {
                 unreachable!("fixed-bytecode Host probe has no trace instructions")
             }
+            HostPoll::Module { .. } => {
+                unreachable!("fixed-bytecode Host probe has no module instructions")
+            }
             HostPoll::Ready(Ok(v)) => format!("ready\t{}", encode_value(v)),
             HostPoll::Ready(Err(e)) => {
                 format!("error\t{:?}\t{}", e.kind, hex(e.message.as_bytes()))
@@ -200,7 +203,7 @@ pub struct SourceLog {
     pub end_column: u32,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct SourceEvent {
     pub kind: &'static str,
     pub token: Option<String>,
@@ -210,6 +213,56 @@ pub struct SourceEvent {
     pub error: Option<Vec<u16>>,
     pub error_bytes: Option<Vec<u8>>,
     pub log: Option<SourceLog>,
+    pub module: Option<SourceModuleRequest>,
+    pub exit_code: Option<i32>,
+    pub phase: Option<&'static str>,
+    pub disposition: Option<&'static str>,
+    pub reason: Option<&'static str>,
+}
+
+/// Module URIs are validated UTF-8 identities. The decimal request ID avoids
+/// narrowing the shared u64 counter through a JavaScript Number.
+#[derive(Clone, Debug)]
+pub struct SourceModuleRequest {
+    pub id: String,
+    pub kind: &'static str,
+    pub importer_original_uri: Option<String>,
+    pub importer_resolved_uri: Option<String>,
+    pub import_uri: Option<String>,
+    pub original_uri: String,
+    pub resolved_uri: Option<String>,
+    pub source_uri: Option<String>,
+}
+impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
+    fn from(request: crate::modules::ModuleRequest) -> Self {
+        use crate::modules::ModuleRequestKind;
+        match request.kind {
+            ModuleRequestKind::Resolve {
+                importer,
+                import_uri,
+                original_uri,
+            } => Self {
+                id: request.id.to_string(),
+                kind: "resolve",
+                importer_original_uri: Some(importer.original_uri.to_string()),
+                importer_resolved_uri: Some(importer.resolved_uri.to_string()),
+                import_uri: Some(import_uri.to_string()),
+                original_uri: original_uri.to_string(),
+                resolved_uri: None,
+                source_uri: None,
+            },
+            ModuleRequestKind::LoadSource { resolved } => Self {
+                id: request.id.to_string(),
+                kind: "load-source",
+                importer_original_uri: None,
+                importer_resolved_uri: None,
+                import_uri: None,
+                original_uri: resolved.original_uri.to_string(),
+                resolved_uri: Some(resolved.resolved_uri.to_string()),
+                source_uri: Some(resolved.source_uri.to_string()),
+            },
+        }
+    }
 }
 impl SourceEvent {
     fn new(kind: &'static str) -> Self {
@@ -222,6 +275,11 @@ impl SourceEvent {
             error: None,
             error_bytes: None,
             log: None,
+            module: None,
+            exit_code: None,
+            phase: None,
+            disposition: None,
+            reason: None,
         }
     }
 }
@@ -253,6 +311,35 @@ impl SourceProbe {
                 uri,
                 module_name,
                 paths,
+                Self::options(
+                    trace_mode,
+                    host_logger,
+                    host_frame_transformer,
+                    power_assertions,
+                )?,
+            )?,
+            output: false,
+            properties: Vec::new(),
+            environment: Vec::new(),
+        })
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn new_expressions(
+        source: &str,
+        uri: &str,
+        module_name: &str,
+        expressions: &[String],
+        trace_mode: &str,
+        host_logger: bool,
+        host_frame_transformer: bool,
+        power_assertions: bool,
+    ) -> Result<Self, String> {
+        Ok(Self {
+            session: crate::evaluation::session::SourceSession::compile_expressions(
+                source,
+                uri,
+                module_name,
+                expressions,
                 Self::options(
                     trace_mode,
                     host_logger,
@@ -359,6 +446,12 @@ impl SourceProbe {
                 event.uri = Some(uri.to_string());
                 event
             }
+            HostPoll::Module { token, request } => {
+                let mut event = SourceEvent::new("module-request");
+                event.token = Some(token);
+                event.module = Some(request.into());
+                event
+            }
             HostPoll::Log { token, event: log } => {
                 let mut event = SourceEvent::new("log");
                 event.token = Some(token);
@@ -396,6 +489,9 @@ impl SourceProbe {
             HostPoll::Ready(Ok(Value::Bytes(bytes))) => {
                 let mut event = SourceEvent::new("bytes");
                 event.bytes = Some(bytes.to_vec());
+                event.exit_code = Some(0);
+                event.phase =
+                    Some(crate::evaluation::frontend::FrontendPhase::ModuleOutput.as_str());
                 event
             }
             HostPoll::Ready(Ok(value)) => {
@@ -409,8 +505,16 @@ impl SourceProbe {
                     return Err(error);
                 }
                 let mut event = SourceEvent::new("error");
+                // This is shared implementation classification, not a Java API
+                // process exit. Expression diagnostics retain their raw units.
+                let failure = self.session.output_failure(error.clone());
+                event.phase = Some(failure.phase.as_str());
+                event.disposition = Some(failure.disposition.as_str());
+                event.reason = failure.reason;
                 if self.output {
-                    event.error_bytes = Some(self.session.output_session_error_bytes(error));
+                    let failure = self.session.output_session_failure(error);
+                    event.error_bytes = Some(failure.stderr);
+                    event.exit_code = Some(failure.exit_code);
                 } else {
                     event.error = Some(self.session.format_error(error).encode_utf16().collect());
                 }
@@ -425,6 +529,82 @@ impl SourceProbe {
     pub fn respond_configured(&mut self, token: &str, now: u32) -> Result<(), RuntimeError> {
         self.session
             .resume_default_read(token, &self.properties, &self.environment, now.into())
+    }
+    pub fn complete_module(
+        &mut self,
+        token: &str,
+        completion: crate::modules::ModuleCompletion,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.session.complete_module(token, completion, now.into())
+    }
+    pub fn complete_module_resolution(
+        &mut self,
+        token: &str,
+        original_uri: &str,
+        resolved_uri: &str,
+        source_uri: &str,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.complete_module(
+            token,
+            crate::modules::ModuleCompletion::Resolved(Ok(crate::modules::ResolvedModule {
+                original_uri: original_uri.into(),
+                resolved_uri: resolved_uri.into(),
+                source_uri: source_uri.into(),
+            })),
+            now,
+        )
+    }
+    pub fn complete_module_source(
+        &mut self,
+        token: &str,
+        text: &str,
+        inferred_name: &str,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.complete_module(
+            token,
+            crate::modules::ModuleCompletion::Source(Ok(crate::modules::ModuleSource {
+                text: text.into(),
+                inferred_name: inferred_name.into(),
+            })),
+            now,
+        )
+    }
+    pub fn reject_module(
+        &mut self,
+        token: &str,
+        loading_source: bool,
+        kind: &str,
+        message: &str,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        use crate::modules::{ModuleCompletion, ModuleHostError};
+        let failure = match kind {
+            "not-found" => ModuleHostError::NotFound,
+            "io" => ModuleHostError::Io(message.into()),
+            "denied" => ModuleHostError::Denied(message.into()),
+            "unsupported" => ModuleHostError::Unsupported(message.into()),
+            _ => {
+                return Err(RuntimeError::new(
+                    ErrorKind::Host,
+                    "unknown module Host error kind",
+                ));
+            }
+        };
+        self.complete_module(
+            token,
+            if loading_source {
+                ModuleCompletion::Source(Err(failure))
+            } else {
+                ModuleCompletion::Resolved(Err(failure))
+            },
+            now,
+        )
+    }
+    pub fn drain_cancelled_modules(&mut self) -> Vec<String> {
+        self.session.drain_cancelled_modules()
     }
     pub fn reject(&mut self, token: &str, message: &str, now: u32) -> Result<(), RuntimeError> {
         self.session.resume(

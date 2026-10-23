@@ -1,0 +1,10 @@
+–– Pkl Error ––
+child-init
+
+1 | @Deprecated { when(throw("child-init")) { message = "x" } }
+                       ^^^^^^^^^^^^^^^^^^^
+at child (life:/child)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

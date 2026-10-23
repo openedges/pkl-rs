@@ -1,0 +1,368 @@
+[
+  {
+    "actions": [
+      [
+        "eval",
+        "a == b"
+      ],
+      [
+        "eval",
+        "a == c"
+      ],
+      [
+        "eval",
+        "a.C == c.C"
+      ],
+      [
+        "eval",
+        "a.foo"
+      ],
+      [
+        "eval",
+        "new a.C {}.x"
+      ]
+    ],
+    "files": {
+      "child.pkl": "bar = 3\nfoo = bar * 2\nclass C { x = bar }\n",
+      "sub/.keep": ""
+    },
+    "id": "normalized-symlink-identity",
+    "main": "import \"child.pkl\" as a\nimport \"./sub/../child.pkl\" as b\nimport \"link.pkl\" as c\nbar=1\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/normalized-symlink-identity/main.pkl",
+    "sourceSha256": "1689114ff4a714ea1bfe2cbb4b08657d95f677d1db9855af37e8108836100eef",
+    "symlinks": {
+      "link.pkl": "child.pkl"
+    }
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "a == b"
+      ],
+      [
+        "eval",
+        "a.C == b.C"
+      ],
+      [
+        "eval",
+        "new a.C {} is b.C"
+      ],
+      [
+        "eval",
+        "a.foo"
+      ],
+      [
+        "eval",
+        "b.foo"
+      ]
+    ],
+    "files": {
+      "a.pkl": "bar = 3\nfoo = bar * 2\nclass C { x = bar }\n",
+      "b.pkl": "bar = 3\nfoo = bar * 2\nclass C { x = bar }\n"
+    },
+    "id": "distinct-same-offset-declarations",
+    "main": "import \"a.pkl\" as a\nimport \"b.pkl\" as b\nbar=1\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/distinct-same-offset-declarations/main.pkl",
+    "sourceSha256": "8a697549bad5e3fd5fa70c0e663384b3596cfd60feef7dd9f66af091a261f469",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "result"
+      ],
+      [
+        "eval",
+        "result"
+      ]
+    ],
+    "files": {},
+    "id": "unused-malformed-uri",
+    "main": "import \"life:bad space\" as unused\nresult=throw(\"body\")\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/unused-malformed-uri/main.pkl",
+    "sourceSha256": "0798ce768680fb34798ee5fe93df1542917a5433c358c3ecb56d578b25a07d67",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "result"
+      ],
+      [
+        "eval",
+        "result"
+      ]
+    ],
+    "files": {},
+    "id": "unused-missing-load",
+    "main": "import \"missing.pkl\" as unused\nresult=7\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/unused-missing-load/main.pkl",
+    "sourceSha256": "a1dc9d6f6ee7db26a6f63e920db6c3794088fd6e872405964fc022ba07141571",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "self == module"
+      ],
+      [
+        "eval",
+        "self.C == C"
+      ],
+      [
+        "eval",
+        "self.result"
+      ],
+      [
+        "eval",
+        "result"
+      ]
+    ],
+    "files": {},
+    "id": "self-import-publication",
+    "main": "import \"main.pkl\" as self\nclass C { x=7 }\nresult=7\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/self-import-publication/main.pkl",
+    "sourceSha256": "c340cbaaa9300ff1fe8b5215e75ea5b954bbd43296fc6b64a267733fc57226f5",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "child.back == module"
+      ],
+      [
+        "eval",
+        "child.back.C == C"
+      ],
+      [
+        "eval",
+        "child.result"
+      ]
+    ],
+    "files": {
+      "child.pkl": "import \"main.pkl\" as back\nresult = back.result + 1\n"
+    },
+    "id": "mutual-import-publication",
+    "main": "import \"child.pkl\" as child\nclass C { x=7 }\nresult=7\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/mutual-import-publication/main.pkl",
+    "sourceSha256": "816f2f7f0e6b34be7f14ad3b74e4f2d803d243a6e733a02a4c403cab2ea4a5b9",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "a.x"
+      ],
+      [
+        "write",
+        "late.pkl",
+        "x=9\n"
+      ],
+      [
+        "eval",
+        "a.x"
+      ],
+      [
+        "eval",
+        "a.x"
+      ]
+    ],
+    "files": {},
+    "id": "resolve-file-retry",
+    "main": "import \"late.pkl\" as a\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/resolve-file-retry/main.pkl",
+    "sourceSha256": "74159db2e1d6349fb90103917005495dc1ff06eecee08e6f434343f1cbf62a27",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "a.x"
+      ],
+      [
+        "write",
+        "bad.pkl",
+        "x=9\n"
+      ],
+      [
+        "eval",
+        "other.x"
+      ],
+      [
+        "eval",
+        "a.x"
+      ]
+    ],
+    "files": {
+      "bad.pkl": "x = )\n"
+    },
+    "id": "parse-failure-cache",
+    "main": "import \"bad.pkl\" as a\nother=import(\"bad.pkl\")\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/parse-failure-cache/main.pkl",
+    "sourceSha256": "73ba5cc3f698ca23c27c73ce0431fdd713c755120aeb39989690267f1297838b",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "a.x"
+      ],
+      [
+        "write",
+        "bad.pkl",
+        "x=9\n"
+      ],
+      [
+        "eval",
+        "other.x"
+      ],
+      [
+        "eval",
+        "a.x"
+      ]
+    ],
+    "files": {
+      "bad.pkl": "@Deprecated { when(throw(\"initialization\")) { message=\"x\" } }\nmodule bad\nx=1\n"
+    },
+    "id": "init-failure-cache",
+    "main": "import \"bad.pkl\" as a\nother=import(\"bad.pkl\")\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/init-failure-cache/main.pkl",
+    "sourceSha256": "73ba5cc3f698ca23c27c73ce0431fdd713c755120aeb39989690267f1297838b",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "a.value"
+      ]
+    ],
+    "files": {
+      "source.pkl": "value=9\n"
+    },
+    "id": "spi-resolve-retry",
+    "main": "a=import(\"life:/a\")\n",
+    "mode": "resolve-failure",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/spi-resolve-retry/main.pkl",
+    "sourceSha256": "872fee86f1c1b1f195738f19847d95221e708583c5241e4042d2d9a4147b2433",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "b.value"
+      ],
+      [
+        "eval",
+        "a.value"
+      ]
+    ],
+    "files": {
+      "source.pkl": "value=9\n"
+    },
+    "id": "spi-source-failure-cache",
+    "main": "a=import(\"life:/a\")\nb=import(\"life:/a\")\n",
+    "mode": "source-failure",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/spi-source-failure-cache/main.pkl",
+    "sourceSha256": "edd0cceee030d1d2f85a1f55c3363e7e680d03e6eaac92be19eb9e14b3af250f",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "canonical.value"
+      ],
+      [
+        "eval",
+        "a == canonical"
+      ],
+      [
+        "eval",
+        "b == canonical"
+      ]
+    ],
+    "files": {
+      "source.pkl": "value=9\n"
+    },
+    "id": "spi-resolved-alias-no-original-insert",
+    "main": "canonical=import(\"life:/canonical\")\na=import(\"life:/alias\")\nb=import(\"life:/alias\")\n",
+    "mode": "alias",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/spi-resolved-alias-no-original-insert/main.pkl",
+    "sourceSha256": "36ce2928b4d04d2f2f90e4f69da6e587d4545d8ee922512a1c3a81e9ddf21bc7",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "a.value"
+      ]
+    ],
+    "files": {
+      "callback.txt": "a.value",
+      "source.pkl": "value=trace(9)\n"
+    },
+    "id": "spi-source-same-key-reentry",
+    "main": "a=import(\"life:/a\")\n",
+    "mode": "source-reentry",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/spi-source-same-key-reentry/main.pkl",
+    "sourceSha256": "872fee86f1c1b1f195738f19847d95221e708583c5241e4042d2d9a4147b2433",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "a.value"
+      ]
+    ],
+    "files": {
+      "source.pkl": "value=9\n"
+    },
+    "id": "spi-source-close",
+    "main": "a=import(\"life:/a\")\n",
+    "mode": "source-close",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/spi-source-close/main.pkl",
+    "sourceSha256": "872fee86f1c1b1f195738f19847d95221e708583c5241e4042d2d9a4147b2433",
+    "symlinks": {}
+  }
+]

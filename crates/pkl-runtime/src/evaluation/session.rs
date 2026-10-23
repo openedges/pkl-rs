@@ -1,5 +1,5 @@
-//! Development-only parsed-source Host session. Paths are fixed before execution;
-//! this is not a general REPL or module loader.
+//! Development-only parsed-source Host session. Entries are fixed before execution;
+//! this is not a general REPL. Module I/O is supplied through typed Host effects.
 use super::frontend::{
     DiagnosticProfile, FailureDisposition, FrontendPhase, ModuleEvalOptions, ModuleFrontendResult,
     ModuleSourceInput, prepare_module, render_module_runtime_failure,
@@ -9,6 +9,7 @@ use crate::{
     heap::HeapStats,
     host::{HostPoll, HostSession},
     logging::{EvaluationContext, LogDelivery, LoggerFailure, TraceMode},
+    modules::{ModuleCompletion, ModuleIdentity},
     source::{Source, SourceMap, Span},
     value::{ErrorKind, PklString, RuntimeError, RuntimeSource, Value},
     vm::{BlockMetadata, Instruction, Program},
@@ -79,7 +80,32 @@ impl SourceSession {
             property_paths.first().map_or("", String::as_str),
             options.evaluation,
         )?;
-        Self::from_program(program, source, uri, name, property_paths, options, None)
+        Self::from_program(
+            program,
+            source,
+            uri,
+            name,
+            property_paths,
+            options,
+            None,
+            false,
+        )
+    }
+
+    /// Compile fixed ordinary expressions in synthetic `repl:text` scopes.
+    /// The actual module remains their receiver; this is not a mutable REPL.
+    pub fn compile_expressions(
+        text: &str,
+        uri: &str,
+        module_name: &str,
+        expressions: &[String],
+        options: SourceSessionOptions,
+    ) -> Result<Self, String> {
+        let mut sources = SourceMap::default();
+        let id = sources.add(uri, text);
+        let source = sources.get(id).expect("inserted source").clone();
+        let (program, name) = compile_program(&source, uri, module_name, "", options.evaluation)?;
+        Self::from_program(program, source, uri, name, expressions, options, None, true)
     }
 
     /// Prepare real module output and optional callback property paths on one
@@ -99,6 +125,7 @@ impl SourceSession {
             property_paths,
             options,
             Some(module_options.diagnostic_profile),
+            false,
         )
         .map_err(|message| ModuleFrontendResult {
             phase: FrontendPhase::Configuration,
@@ -110,6 +137,7 @@ impl SourceSession {
         })
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn from_program(
         mut program: Arc<Program>,
         source: Source,
@@ -118,11 +146,74 @@ impl SourceSession {
         property_paths: &[String],
         options: SourceSessionOptions,
         output_profile: Option<DiagnosticProfile>,
+        parsed_expressions: bool,
     ) -> Result<Self, String> {
         let module_entry = program.entry;
         let program_mut = Arc::make_mut(&mut program);
+        let expression_owner = if parsed_expressions {
+            Some(crate::parser::parse_module(source.text()).map_err(|error| error.message)?)
+        } else {
+            None
+        };
         let mut entries = Vec::with_capacity(property_paths.len());
         for expression in property_paths {
+            if parsed_expressions {
+                let entry = match crate::vm::compile_session_expression(
+                    program_mut,
+                    expression_owner.as_ref().expect("parsed source owner"),
+                    expression,
+                    crate::vm::CompileOptions {
+                        fuse_constant_add: true,
+                    },
+                    options.evaluation.power_assertions,
+                ) {
+                    Ok(entry) => entry,
+                    Err(failure) => {
+                        // Java initializes the actual module before parsing this
+                        // call's expression. A rejected fixed entry must not
+                        // prevent earlier calls or move ahead of setup failure.
+                        let source = Arc::new(RuntimeSource {
+                            text: expression.clone().into(),
+                            uri: "repl:text".into(),
+                            module_name: "".into(),
+                            line_anchors: false,
+                        });
+                        let mut error = match failure {
+                            crate::vm::SessionExpressionError::Frontend(diagnostic) => {
+                                let mut error =
+                                    RuntimeError::new(ErrorKind::Type, diagnostic.message.clone());
+                                error.span = Some(diagnostic.span);
+                                error.hint = diagnostic.hint().map(str::to_owned);
+                                error.frontend = Some(Arc::new(crate::modules::ModuleDiagnostic {
+                                    diagnostic: *diagnostic,
+                                    source: source.clone(),
+                                    member: "repl:text".into(),
+                                }));
+                                error
+                            }
+                            crate::vm::SessionExpressionError::Runtime(error) => *error,
+                        };
+                        if error.frames.is_empty() {
+                            error.frames.push(crate::value::RuntimeFrame {
+                                source: Some(source.clone()),
+                                span: error.span.unwrap_or(Span::new(0, expression.len())),
+                                member: "repl:text".into(),
+                            });
+                        }
+                        let entry = program_mut.blocks.len();
+                        program_mut.blocks.push(vec![Instruction::Fail(error)]);
+                        program_mut.metadata.push(BlockMetadata {
+                            source: Some(source),
+                            spans: vec![None],
+                            module_receiver_input: Some(0),
+                            ..Default::default()
+                        });
+                        entry
+                    }
+                };
+                entries.push(entry);
+                continue;
+            }
             let mut block = Vec::new();
             let mut spans = Vec::new();
             let mut prefix_end = 0;
@@ -190,6 +281,19 @@ impl SourceSession {
             log_delivery: options.log_delivery,
             host_frame_transformer: options.host_frame_transformer,
         };
+        Arc::make_mut(&mut program)
+            .register_primary_source(
+                context
+                    .primary_source
+                    .as_ref()
+                    .expect("primary source")
+                    .clone(),
+                ModuleIdentity {
+                    original_uri: uri.into(),
+                    resolved_uri: uri.into(),
+                },
+            )
+            .map_err(|failure| runtime_error(&source, uri, &name, "", failure, None))?;
         let mut host = HostSession::with_context(program, context);
         host.set_power_assertions(options.evaluation.power_assertions);
         Ok(Self {
@@ -456,6 +560,17 @@ impl SourceSession {
     pub fn drain_cancelled_reads(&mut self) -> Vec<String> {
         self.host.drain_cancelled_reads()
     }
+    pub fn complete_module(
+        &mut self,
+        token: &str,
+        completion: ModuleCompletion,
+        now_ms: u64,
+    ) -> Result<(), RuntimeError> {
+        self.host.complete_module(token, completion, now_ms)
+    }
+    pub fn drain_cancelled_modules(&mut self) -> Vec<String> {
+        self.host.drain_cancelled_modules()
+    }
     pub fn heap_stats(&self) -> HeapStats {
         self.host.heap_stats()
     }
@@ -503,11 +618,14 @@ impl SourceSession {
     /// A callback property path still belongs to the expression-string API,
     /// even when its suspended parent is an output operation.
     pub fn output_session_error_bytes(&self, error: RuntimeError) -> Vec<u8> {
+        self.output_session_failure(error).stderr
+    }
+    pub fn output_session_failure(&self, error: RuntimeError) -> ModuleFrontendResult {
+        let mut failure = self.output_failure(error.clone());
         if self.last_expression.is_some() {
-            self.format_error(error).into_bytes()
-        } else {
-            self.output_failure(error).stderr
+            failure.stderr = self.format_error(error).into_bytes();
         }
+        failure
     }
     fn open(&self) -> Result<(), RuntimeError> {
         if self.host.is_closed() {

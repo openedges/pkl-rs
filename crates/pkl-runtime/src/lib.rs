@@ -11,6 +11,7 @@ pub mod evaluation;
 pub mod heap;
 pub mod host;
 pub mod logging;
+pub mod modules;
 pub mod numeric;
 pub mod parser;
 mod pkl_string;

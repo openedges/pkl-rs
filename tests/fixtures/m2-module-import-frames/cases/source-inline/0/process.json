@@ -1,0 +1,86 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-frame-oracle-01/identity/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-frame-oracle-01/identity/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-frame-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+    "ImportFrameProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-frame-oracle-01/workspace/source-inline",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-frame-oracle-01/cases/source-inline/0/calls",
+    "source-failure"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-frame-oracle-01/workspace/source-inline",
+  "environment": {
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-frame-oracle-01/identity/home",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TERM": "dumb",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-frame-oracle-01/identity/tmp",
+    "TZ": "UTC"
+  },
+  "finishedUnixNs": 1792715640264919000,
+  "id": "source-inline",
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-frame-oracle-01/workspace/source-inline/main.pkl",
+  "repeat": 0,
+  "result": {
+    "elapsed_ns": 610387458,
+    "exit_code": 0,
+    "files": {},
+    "sha256": {
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "a0666d969be19c08989f369ad22374dcc8b6013a09ea00352922243467dce1aa"
+    },
+    "timed_out": false,
+    "workspace_changes": {}
+  },
+  "sourceSha256": "3d074687fbb245f8858456a433c9d8b65ffe0b08a3803727b6756d08c1a67449",
+  "startedUnixNs": 1792715639653294000,
+  "workspaceAfter": {
+    "callback.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "3d074687fbb245f8858456a433c9d8b65ffe0b08a3803727b6756d08c1a67449"
+    },
+    "plan.tsv": {
+      "kind": "file",
+      "sha256": "d26ae3f1e3a20b444d38cedfe4671c9c6e7f119f802b86060dea3190db96a395"
+    },
+    "source.pkl": {
+      "kind": "file",
+      "sha256": "39ba6d2e1c4c6e4fdc853d09df8fdc7f96e11d06c3f65dc8a121687698022ef7"
+    }
+  },
+  "workspaceBefore": {
+    "callback.txt": {
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "3d074687fbb245f8858456a433c9d8b65ffe0b08a3803727b6756d08c1a67449"
+    },
+    "plan.tsv": {
+      "kind": "file",
+      "sha256": "d26ae3f1e3a20b444d38cedfe4671c9c6e7f119f802b86060dea3190db96a395"
+    },
+    "source.pkl": {
+      "kind": "file",
+      "sha256": "39ba6d2e1c4c6e4fdc853d09df8fdc7f96e11d06c3f65dc8a121687698022ef7"
+    }
+  }
+}

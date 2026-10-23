@@ -242,7 +242,8 @@ impl Vm {
                         ErrorKind::Type,
                         format!(
                             "Cannot instantiate abstract class `{}#{}`.",
-                            self.program.module_name, class.name
+                            class.module.as_deref().unwrap_or(&self.program.module_name),
+                            class.name
                         ),
                     );
                     error.hint = Some("Abstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.".into());

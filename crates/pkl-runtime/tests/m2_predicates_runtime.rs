@@ -11,6 +11,7 @@ fn done(vm: &mut Vm) -> Result<Value, RuntimeError> {
             VmPoll::Ready(value) => return value,
             VmPoll::Yielded => {}
             VmPoll::Log(_) => panic!("unexpected logger request"),
+            VmPoll::Module(_) => panic!("unexpected module request"),
             VmPoll::Pending(read) => panic!("unexpected read {read:?}"),
         }
     }
@@ -166,6 +167,7 @@ fn failed_predicate_retries_using_completed_source_cache() {
         loop {
             match vm.poll(11) {
                 VmPoll::Log(_) => panic!("unexpected logger request"),
+                VmPoll::Module(_) => panic!("unexpected module request"),
                 VmPoll::Pending(request) => {
                     vm.collect(std::slice::from_ref(&root));
                     if request.uri.as_ref() == "mem:source" {

@@ -1,0 +1,2 @@
+import "main.pkl" as root
+open class D { recursive: root.C? }

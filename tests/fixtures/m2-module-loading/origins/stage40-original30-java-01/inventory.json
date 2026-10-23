@@ -1,0 +1,1770 @@
+{
+  "files": [
+    {
+      "path": "acquire.py",
+      "sha256": "939c8aff2fce322da49dd863653ae836d854e03e329a0848312b7d475c151700",
+      "size": 9634
+    },
+    {
+      "path": "cases/195b1258508a82fdbd3f044d/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/195b1258508a82fdbd3f044d/0/process.json",
+      "sha256": "0bbb0f917db18ec83192a21c0d143f12a876138fe6c766a5bf8025f7fb855d16",
+      "size": 4964
+    },
+    {
+      "path": "cases/195b1258508a82fdbd3f044d/0/result.json",
+      "sha256": "ab1d0e55d79e0ffcefe8459d1e139fef832cc7a636b8f721bae850e8e30d1ceb",
+      "size": 294
+    },
+    {
+      "path": "cases/195b1258508a82fdbd3f044d/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/195b1258508a82fdbd3f044d/0/stdout.bin",
+      "sha256": "8db0967d71d543473f1a4d98550e61a7db84e3aca19759167144ebc2a3813a00",
+      "size": 954
+    },
+    {
+      "path": "cases/195b1258508a82fdbd3f044d/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/195b1258508a82fdbd3f044d/1/process.json",
+      "sha256": "180f5885d7fd3f05ec8829c3b9c785fb795e858bf65f284659f0268bb0223a74",
+      "size": 4964
+    },
+    {
+      "path": "cases/195b1258508a82fdbd3f044d/1/result.json",
+      "sha256": "7d94a731df07d1d388e533b4a9b0d51b28d6959b996ef7f172a7e96622cef049",
+      "size": 294
+    },
+    {
+      "path": "cases/195b1258508a82fdbd3f044d/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/195b1258508a82fdbd3f044d/1/stdout.bin",
+      "sha256": "8db0967d71d543473f1a4d98550e61a7db84e3aca19759167144ebc2a3813a00",
+      "size": 954
+    },
+    {
+      "path": "cases/2118a7daf3ec25c08317f91f/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/2118a7daf3ec25c08317f91f/0/process.json",
+      "sha256": "99a029e8f21a46e68143d5a64ca5c6f42079a2ae613d0a36f46c3601d6709914",
+      "size": 4915
+    },
+    {
+      "path": "cases/2118a7daf3ec25c08317f91f/0/result.json",
+      "sha256": "af1581088f3c9c281d1d7fb10d2450d806447d16275ade73e33d63638de0ca9c",
+      "size": 294
+    },
+    {
+      "path": "cases/2118a7daf3ec25c08317f91f/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/2118a7daf3ec25c08317f91f/0/stdout.bin",
+      "sha256": "1b4ca09ccdf2430dc24c2bded048779a49330a65747f3ec83da906c9b367b17f",
+      "size": 17
+    },
+    {
+      "path": "cases/2118a7daf3ec25c08317f91f/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/2118a7daf3ec25c08317f91f/1/process.json",
+      "sha256": "8823b8568282823da9891a8f363475659b15c24fdf236f6998ae303a6f365aa2",
+      "size": 4915
+    },
+    {
+      "path": "cases/2118a7daf3ec25c08317f91f/1/result.json",
+      "sha256": "4f879297f4abfe6baadd34297a118a679c0be09c9d6dc609bad617879c6a37f8",
+      "size": 294
+    },
+    {
+      "path": "cases/2118a7daf3ec25c08317f91f/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/2118a7daf3ec25c08317f91f/1/stdout.bin",
+      "sha256": "1b4ca09ccdf2430dc24c2bded048779a49330a65747f3ec83da906c9b367b17f",
+      "size": 17
+    },
+    {
+      "path": "cases/28c1d11c8b541aeee2b4fcbb/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/28c1d11c8b541aeee2b4fcbb/0/process.json",
+      "sha256": "12df174f2540dccc672be5016cef683246664a0dba5b816bf56c30afde14fd7d",
+      "size": 4910
+    },
+    {
+      "path": "cases/28c1d11c8b541aeee2b4fcbb/0/result.json",
+      "sha256": "d03383d0a0bf5765c1a4c6ad51a6f224c2372b921a82616c3ad4ad207e3cfe54",
+      "size": 294
+    },
+    {
+      "path": "cases/28c1d11c8b541aeee2b4fcbb/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/28c1d11c8b541aeee2b4fcbb/0/stdout.bin",
+      "sha256": "61d034473102d7dac305902770471fd50f4c5b26f6831a56dd90b5184b3c30fc",
+      "size": 11
+    },
+    {
+      "path": "cases/28c1d11c8b541aeee2b4fcbb/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/28c1d11c8b541aeee2b4fcbb/1/process.json",
+      "sha256": "170e403fa554f1df2b714cfc5ec75dfdb2c00aff794b818296fa8c2fc67beed4",
+      "size": 4910
+    },
+    {
+      "path": "cases/28c1d11c8b541aeee2b4fcbb/1/result.json",
+      "sha256": "b5a358698cde97866c77998cc0080d17853e520e3e64e405c5b5ddcdc5af6084",
+      "size": 294
+    },
+    {
+      "path": "cases/28c1d11c8b541aeee2b4fcbb/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/28c1d11c8b541aeee2b4fcbb/1/stdout.bin",
+      "sha256": "61d034473102d7dac305902770471fd50f4c5b26f6831a56dd90b5184b3c30fc",
+      "size": 11
+    },
+    {
+      "path": "cases/2be2d528519579e629d4de0d/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/2be2d528519579e629d4de0d/0/process.json",
+      "sha256": "753afda679ef66aabf00a082eff0c9623ef2cd4ac2790c98cb41996ae6edcb5e",
+      "size": 4895
+    },
+    {
+      "path": "cases/2be2d528519579e629d4de0d/0/result.json",
+      "sha256": "90b43674c3056bf9ca7e78a5c9d3792ab6c6af46d6ee3149745d436a6b36a87d",
+      "size": 294
+    },
+    {
+      "path": "cases/2be2d528519579e629d4de0d/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/2be2d528519579e629d4de0d/0/stdout.bin",
+      "sha256": "aff07973a41b28e1823576165aa6aef807a974fd8634758c2d35dcdd94410d54",
+      "size": 44
+    },
+    {
+      "path": "cases/2be2d528519579e629d4de0d/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/2be2d528519579e629d4de0d/1/process.json",
+      "sha256": "31c132836e25b74c485a812c95eff74807b19584010ad8630011100a37f10d69",
+      "size": 4895
+    },
+    {
+      "path": "cases/2be2d528519579e629d4de0d/1/result.json",
+      "sha256": "ae1bce8469be336a0b044d533c94b2848046c014cc03b09f496dedcc396a32d4",
+      "size": 294
+    },
+    {
+      "path": "cases/2be2d528519579e629d4de0d/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/2be2d528519579e629d4de0d/1/stdout.bin",
+      "sha256": "aff07973a41b28e1823576165aa6aef807a974fd8634758c2d35dcdd94410d54",
+      "size": 44
+    },
+    {
+      "path": "cases/3d8bef5615d03e4f12eff8e2/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/3d8bef5615d03e4f12eff8e2/0/process.json",
+      "sha256": "e5f0c8c0771c70807fdc9552668bc98ce06152e4c3547e2de2ca4d7dc221dddd",
+      "size": 4918
+    },
+    {
+      "path": "cases/3d8bef5615d03e4f12eff8e2/0/result.json",
+      "sha256": "3124ef9a3f8f733a48b02953a8ad1db126bec7d953a2fb0a5a5a0032f66a09dc",
+      "size": 294
+    },
+    {
+      "path": "cases/3d8bef5615d03e4f12eff8e2/0/stderr.bin",
+      "sha256": "5c359b5cd4b1a481c31942269439e205f83a1d063b9309c8706379584b6cacd1",
+      "size": 1137
+    },
+    {
+      "path": "cases/3d8bef5615d03e4f12eff8e2/0/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/3d8bef5615d03e4f12eff8e2/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/3d8bef5615d03e4f12eff8e2/1/process.json",
+      "sha256": "7cc83042925cd5a4d10859c3299ed8ef1ac249cb8f581216df625a19f7c479ee",
+      "size": 4918
+    },
+    {
+      "path": "cases/3d8bef5615d03e4f12eff8e2/1/result.json",
+      "sha256": "eddf9f8b4f055c9c3074bfb92f8bfc8c89bee064b4b0c1798e1bffb110406269",
+      "size": 294
+    },
+    {
+      "path": "cases/3d8bef5615d03e4f12eff8e2/1/stderr.bin",
+      "sha256": "5c359b5cd4b1a481c31942269439e205f83a1d063b9309c8706379584b6cacd1",
+      "size": 1137
+    },
+    {
+      "path": "cases/3d8bef5615d03e4f12eff8e2/1/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/43d0e3db63fe08092363d0af/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/43d0e3db63fe08092363d0af/0/process.json",
+      "sha256": "fa261e13dbd19b504a535a86b1160407d691953535510984737287dfbd41241d",
+      "size": 4915
+    },
+    {
+      "path": "cases/43d0e3db63fe08092363d0af/0/result.json",
+      "sha256": "ed2e6ccf30bfe36e3fb746aa3ae286904a07b2ba98e58ef04059e4edb86483dc",
+      "size": 294
+    },
+    {
+      "path": "cases/43d0e3db63fe08092363d0af/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/43d0e3db63fe08092363d0af/0/stdout.bin",
+      "sha256": "2d5df3594c08607f76de25a8116677283f45f94ace769cf89d07931fcd97e336",
+      "size": 147
+    },
+    {
+      "path": "cases/43d0e3db63fe08092363d0af/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/43d0e3db63fe08092363d0af/1/process.json",
+      "sha256": "14aa8242e22ba267db3f12166f112300ba280fa36f337f95e084b91153d308bd",
+      "size": 4915
+    },
+    {
+      "path": "cases/43d0e3db63fe08092363d0af/1/result.json",
+      "sha256": "df8c40d2e63b20d9c5b99749cf75a29e3ef91aaddd70127cf911845a617d356a",
+      "size": 294
+    },
+    {
+      "path": "cases/43d0e3db63fe08092363d0af/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/43d0e3db63fe08092363d0af/1/stdout.bin",
+      "sha256": "2d5df3594c08607f76de25a8116677283f45f94ace769cf89d07931fcd97e336",
+      "size": 147
+    },
+    {
+      "path": "cases/513d842f965823a4307f7a57/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/513d842f965823a4307f7a57/0/process.json",
+      "sha256": "d5c670b116e639868cb94627e14a4b4a7e9f7587ab42f5735f32508a5377ad8d",
+      "size": 4904
+    },
+    {
+      "path": "cases/513d842f965823a4307f7a57/0/result.json",
+      "sha256": "f996aa156f825b5baff5e6f5626b4a2e1df306dec0bd1d8396e22a4f6d98cefd",
+      "size": 294
+    },
+    {
+      "path": "cases/513d842f965823a4307f7a57/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/513d842f965823a4307f7a57/0/stdout.bin",
+      "sha256": "f755fd11f474c1ea4493a9f3f2cb4ed4b5823ae3f7ea01a08b82a0cae0bcca8e",
+      "size": 25
+    },
+    {
+      "path": "cases/513d842f965823a4307f7a57/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/513d842f965823a4307f7a57/1/process.json",
+      "sha256": "61bd9f27710164951cad8bf502d41f04c30005dda3f42efe6238658ae20f8f41",
+      "size": 4904
+    },
+    {
+      "path": "cases/513d842f965823a4307f7a57/1/result.json",
+      "sha256": "0e8b6d446a77b9ac1f7776696c6aa08a28f766a2a212aa365423a0410d064fa4",
+      "size": 294
+    },
+    {
+      "path": "cases/513d842f965823a4307f7a57/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/513d842f965823a4307f7a57/1/stdout.bin",
+      "sha256": "f755fd11f474c1ea4493a9f3f2cb4ed4b5823ae3f7ea01a08b82a0cae0bcca8e",
+      "size": 25
+    },
+    {
+      "path": "cases/52e8d8dae4d03ad293daef32/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/52e8d8dae4d03ad293daef32/0/process.json",
+      "sha256": "02d6929d3410edb2a2e6e2aea408ceeec141c737401a0bd85e48dc1d81dc05bb",
+      "size": 4899
+    },
+    {
+      "path": "cases/52e8d8dae4d03ad293daef32/0/result.json",
+      "sha256": "88f365bb2805cfb9858e6b3830b614383f922810ffb5d7cfac03c04d4b56bc32",
+      "size": 294
+    },
+    {
+      "path": "cases/52e8d8dae4d03ad293daef32/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/52e8d8dae4d03ad293daef32/0/stdout.bin",
+      "sha256": "fbc11d425209f5a5b08979c3dc374f4fdd2f15edce67b0af0e0fddce3ca2c510",
+      "size": 28
+    },
+    {
+      "path": "cases/52e8d8dae4d03ad293daef32/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/52e8d8dae4d03ad293daef32/1/process.json",
+      "sha256": "4af34b3be5eed17ec53cc667e644373faf5cd6fc6802f840251137236ba2931a",
+      "size": 4899
+    },
+    {
+      "path": "cases/52e8d8dae4d03ad293daef32/1/result.json",
+      "sha256": "0e84b5e7793763b3e185b92ddce087e398c3f12cbea5a55d025e1abada0a3cd9",
+      "size": 294
+    },
+    {
+      "path": "cases/52e8d8dae4d03ad293daef32/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/52e8d8dae4d03ad293daef32/1/stdout.bin",
+      "sha256": "fbc11d425209f5a5b08979c3dc374f4fdd2f15edce67b0af0e0fddce3ca2c510",
+      "size": 28
+    },
+    {
+      "path": "cases/5321b78f30a08abfd9aaf483/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/5321b78f30a08abfd9aaf483/0/process.json",
+      "sha256": "8936b0b5bf1d4f883ec99e9f8d07c14ea274dbd033cb46d31f8232d4818ca879",
+      "size": 4965
+    },
+    {
+      "path": "cases/5321b78f30a08abfd9aaf483/0/result.json",
+      "sha256": "515eb621aa9feaa7e06b701e845c996d0330c2eec56a59acfde4fb3e07512765",
+      "size": 294
+    },
+    {
+      "path": "cases/5321b78f30a08abfd9aaf483/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/5321b78f30a08abfd9aaf483/0/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/5321b78f30a08abfd9aaf483/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/5321b78f30a08abfd9aaf483/1/process.json",
+      "sha256": "d138e27434111dd5cab3cae589ceb4ef44b5755423b3a50428424e46dfe31798",
+      "size": 4965
+    },
+    {
+      "path": "cases/5321b78f30a08abfd9aaf483/1/result.json",
+      "sha256": "26c8541d3bca6cd0588ebd02358d1d495adf18b1a2cb9c1cac96e9e55412f6a3",
+      "size": 294
+    },
+    {
+      "path": "cases/5321b78f30a08abfd9aaf483/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/5321b78f30a08abfd9aaf483/1/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/5b9bdc1fa8dabbca70f1e2e7/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/5b9bdc1fa8dabbca70f1e2e7/0/process.json",
+      "sha256": "443b9ed19f2a423fd41d78931b3a3e6b5f85bac0fecbfed40a13e955c4f2a7ad",
+      "size": 4909
+    },
+    {
+      "path": "cases/5b9bdc1fa8dabbca70f1e2e7/0/result.json",
+      "sha256": "a397a3481a6d3808b88d2927b13a93966a8e80a1810c83653caf61c5ba9a3d10",
+      "size": 294
+    },
+    {
+      "path": "cases/5b9bdc1fa8dabbca70f1e2e7/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/5b9bdc1fa8dabbca70f1e2e7/0/stdout.bin",
+      "sha256": "8cee78a7aca131b76410a835ca27af06165a7d1faeac32f0821d6752a714c233",
+      "size": 296
+    },
+    {
+      "path": "cases/5b9bdc1fa8dabbca70f1e2e7/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/5b9bdc1fa8dabbca70f1e2e7/1/process.json",
+      "sha256": "e7ba34b466dd290d8f147384459d0321f658aedac0f5aa61026679864dec6359",
+      "size": 4909
+    },
+    {
+      "path": "cases/5b9bdc1fa8dabbca70f1e2e7/1/result.json",
+      "sha256": "c14e48e49f73dc91142dc104f794da5b2b8eb50afbd0c6060f49853707197554",
+      "size": 294
+    },
+    {
+      "path": "cases/5b9bdc1fa8dabbca70f1e2e7/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/5b9bdc1fa8dabbca70f1e2e7/1/stdout.bin",
+      "sha256": "8cee78a7aca131b76410a835ca27af06165a7d1faeac32f0821d6752a714c233",
+      "size": 296
+    },
+    {
+      "path": "cases/6f928a211b2118655557367b/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/6f928a211b2118655557367b/0/process.json",
+      "sha256": "a3c9fcb104b69bcfe49c1c45e84d2e8915f91566afb397e3f95e173f626072cd",
+      "size": 4973
+    },
+    {
+      "path": "cases/6f928a211b2118655557367b/0/result.json",
+      "sha256": "bfe7bde41abcdecd6c02d6a1923e78240745a23d16db3c3f182ba763c88ed9ad",
+      "size": 294
+    },
+    {
+      "path": "cases/6f928a211b2118655557367b/0/stderr.bin",
+      "sha256": "05488935387956ebac6bee0f72ece13cb3191909d54ccfcdb08445ffafffc961",
+      "size": 790
+    },
+    {
+      "path": "cases/6f928a211b2118655557367b/0/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/6f928a211b2118655557367b/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/6f928a211b2118655557367b/1/process.json",
+      "sha256": "a2f298557ac16fe132e95e51218b163110d95137f7559b938281a63ac220ebac",
+      "size": 4973
+    },
+    {
+      "path": "cases/6f928a211b2118655557367b/1/result.json",
+      "sha256": "1e7d7ca465a68e61c3e964f05308c5a4a045075e1a4f279f2ce8bb8e172b8ed7",
+      "size": 294
+    },
+    {
+      "path": "cases/6f928a211b2118655557367b/1/stderr.bin",
+      "sha256": "05488935387956ebac6bee0f72ece13cb3191909d54ccfcdb08445ffafffc961",
+      "size": 790
+    },
+    {
+      "path": "cases/6f928a211b2118655557367b/1/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/7c51e4aea8cd552f96642997/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/7c51e4aea8cd552f96642997/0/process.json",
+      "sha256": "c3d5fbe012488df73fc6ec3ad81b8b0d6256e76155bbd12a6f22aa57dddadc49",
+      "size": 4900
+    },
+    {
+      "path": "cases/7c51e4aea8cd552f96642997/0/result.json",
+      "sha256": "8d53e7bb8e2aef2e36849f3f62c4373fb46b524f9fd4236e4b32075a83f0d3c1",
+      "size": 294
+    },
+    {
+      "path": "cases/7c51e4aea8cd552f96642997/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/7c51e4aea8cd552f96642997/0/stdout.bin",
+      "sha256": "aeeaaabf4a1971ee35cf1219fb7920e789357ed48ca35e2fe7fc3ff08d95b69c",
+      "size": 134
+    },
+    {
+      "path": "cases/7c51e4aea8cd552f96642997/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/7c51e4aea8cd552f96642997/1/process.json",
+      "sha256": "3ae9765163e6701585327514d94cacf3ad0bbf74f54d14cde077be42439079c0",
+      "size": 4900
+    },
+    {
+      "path": "cases/7c51e4aea8cd552f96642997/1/result.json",
+      "sha256": "b056e218f26b45481c3454a0389ca6d9043f2254130f06022d935dd61a6dfbed",
+      "size": 294
+    },
+    {
+      "path": "cases/7c51e4aea8cd552f96642997/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/7c51e4aea8cd552f96642997/1/stdout.bin",
+      "sha256": "aeeaaabf4a1971ee35cf1219fb7920e789357ed48ca35e2fe7fc3ff08d95b69c",
+      "size": 134
+    },
+    {
+      "path": "cases/8a832a6437e73237167e9ab6/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/8a832a6437e73237167e9ab6/0/process.json",
+      "sha256": "6e68f73562c884afe0becb6bc1cc28cdb741ba4e5b8fe5186a27c5d752a384b2",
+      "size": 4934
+    },
+    {
+      "path": "cases/8a832a6437e73237167e9ab6/0/result.json",
+      "sha256": "eab246444cd29083803b1cbc21983c611cd93fc8ef7de0a492b5cc6f1658c385",
+      "size": 294
+    },
+    {
+      "path": "cases/8a832a6437e73237167e9ab6/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/8a832a6437e73237167e9ab6/0/stdout.bin",
+      "sha256": "e91330cb7a12b443ffe8f1784c8e27955f0f28815445b929203605bac39dca0c",
+      "size": 31
+    },
+    {
+      "path": "cases/8a832a6437e73237167e9ab6/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/8a832a6437e73237167e9ab6/1/process.json",
+      "sha256": "fcb081e0a02ee44363fecbb7fa61262aaf655a222739be3c185b817ca0e951da",
+      "size": 4934
+    },
+    {
+      "path": "cases/8a832a6437e73237167e9ab6/1/result.json",
+      "sha256": "32ac4414075fa59859cdad23c08f09a164e2f9b9c8af6fd15a879a62d5ec2bca",
+      "size": 294
+    },
+    {
+      "path": "cases/8a832a6437e73237167e9ab6/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/8a832a6437e73237167e9ab6/1/stdout.bin",
+      "sha256": "e91330cb7a12b443ffe8f1784c8e27955f0f28815445b929203605bac39dca0c",
+      "size": 31
+    },
+    {
+      "path": "cases/8d6402b6faf5a21c2a116dd7/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/8d6402b6faf5a21c2a116dd7/0/process.json",
+      "sha256": "fd726b9620dc2e45637b5857ebceadae44f0e726b4d6d95317d1b3ef4cd2be23",
+      "size": 4955
+    },
+    {
+      "path": "cases/8d6402b6faf5a21c2a116dd7/0/result.json",
+      "sha256": "c7b9047329bac0c36bdf6c3d8bd2bb19b616f5832fcd15313f558add0a429ab6",
+      "size": 294
+    },
+    {
+      "path": "cases/8d6402b6faf5a21c2a116dd7/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/8d6402b6faf5a21c2a116dd7/0/stdout.bin",
+      "sha256": "5c081677e503e5de17fa50738f4d4a0fde3744cd371688e520652957dd889945",
+      "size": 64
+    },
+    {
+      "path": "cases/8d6402b6faf5a21c2a116dd7/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/8d6402b6faf5a21c2a116dd7/1/process.json",
+      "sha256": "1cb84d9554a6c6909cd8ea7308dce95e6b2a158d4a19a4899cd379bf7f4953b0",
+      "size": 4955
+    },
+    {
+      "path": "cases/8d6402b6faf5a21c2a116dd7/1/result.json",
+      "sha256": "f737c4edaa861ead7614167b211be737e6a11692d8720bc9e7368fb22839f203",
+      "size": 294
+    },
+    {
+      "path": "cases/8d6402b6faf5a21c2a116dd7/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/8d6402b6faf5a21c2a116dd7/1/stdout.bin",
+      "sha256": "5c081677e503e5de17fa50738f4d4a0fde3744cd371688e520652957dd889945",
+      "size": 64
+    },
+    {
+      "path": "cases/910cb82ca2ea91a0f6751656/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/910cb82ca2ea91a0f6751656/0/process.json",
+      "sha256": "c6392da1c37648c876481bfde42d97198367a617872c0f76e4281951c4f0ab15",
+      "size": 4927
+    },
+    {
+      "path": "cases/910cb82ca2ea91a0f6751656/0/result.json",
+      "sha256": "97957373c10130392f7c66a536d411fb88c4e069c9fd9eee671ae7317455778a",
+      "size": 294
+    },
+    {
+      "path": "cases/910cb82ca2ea91a0f6751656/0/stderr.bin",
+      "sha256": "4dbe8a965c009586c45611b55e32cf77f3bd442e9afac8350bda103f810e4711",
+      "size": 876
+    },
+    {
+      "path": "cases/910cb82ca2ea91a0f6751656/0/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/910cb82ca2ea91a0f6751656/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/910cb82ca2ea91a0f6751656/1/process.json",
+      "sha256": "566b4c947b6cceb7de9e0bee920997a992b41561efd510615d7d64e759684076",
+      "size": 4927
+    },
+    {
+      "path": "cases/910cb82ca2ea91a0f6751656/1/result.json",
+      "sha256": "55ff8800c2c89319291fe865fda8ba9cd66e089431531ed2a3620e54cf0349fa",
+      "size": 294
+    },
+    {
+      "path": "cases/910cb82ca2ea91a0f6751656/1/stderr.bin",
+      "sha256": "4dbe8a965c009586c45611b55e32cf77f3bd442e9afac8350bda103f810e4711",
+      "size": 876
+    },
+    {
+      "path": "cases/910cb82ca2ea91a0f6751656/1/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/96bb369f5b32dfccb441f22a/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/96bb369f5b32dfccb441f22a/0/process.json",
+      "sha256": "688e44a3484ce60f3db94d6bd82efc85d78effcd895c67382e5e5cd9f670a976",
+      "size": 4984
+    },
+    {
+      "path": "cases/96bb369f5b32dfccb441f22a/0/result.json",
+      "sha256": "39bf56d63359f930caf0016180ae86a38e4bac9b3c01f12a784e318f7552954e",
+      "size": 294
+    },
+    {
+      "path": "cases/96bb369f5b32dfccb441f22a/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/96bb369f5b32dfccb441f22a/0/stdout.bin",
+      "sha256": "6d783f26cd3da943dbdcdab814048fc855eb1ff3e19022b2aff44ea3410feab0",
+      "size": 27
+    },
+    {
+      "path": "cases/96bb369f5b32dfccb441f22a/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/96bb369f5b32dfccb441f22a/1/process.json",
+      "sha256": "e996e308588499dd5750f80bdefb67e5f74e184c92b7f38204f63d8a1cae9517",
+      "size": 4984
+    },
+    {
+      "path": "cases/96bb369f5b32dfccb441f22a/1/result.json",
+      "sha256": "74eb294269076b7211327ab7d145bb5dd729c0244d2b61c219a746346e26dd40",
+      "size": 294
+    },
+    {
+      "path": "cases/96bb369f5b32dfccb441f22a/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/96bb369f5b32dfccb441f22a/1/stdout.bin",
+      "sha256": "6d783f26cd3da943dbdcdab814048fc855eb1ff3e19022b2aff44ea3410feab0",
+      "size": 27
+    },
+    {
+      "path": "cases/9a075caf01e0d4ac4b2d9f0c/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/9a075caf01e0d4ac4b2d9f0c/0/process.json",
+      "sha256": "cfcd9d4bf2fe053085f6fd5a2068c1d0036dc5129042e2535f5edb9d122e46ca",
+      "size": 4974
+    },
+    {
+      "path": "cases/9a075caf01e0d4ac4b2d9f0c/0/result.json",
+      "sha256": "323e422297a68f670f01f4717ab5293f3dad40505949eecd8b733c6ff0aeb7ba",
+      "size": 294
+    },
+    {
+      "path": "cases/9a075caf01e0d4ac4b2d9f0c/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/9a075caf01e0d4ac4b2d9f0c/0/stdout.bin",
+      "sha256": "ac38bf68333be901cc1e71bc9b439520f3e311bc6112dafceb01d7e821608087",
+      "size": 12
+    },
+    {
+      "path": "cases/9a075caf01e0d4ac4b2d9f0c/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/9a075caf01e0d4ac4b2d9f0c/1/process.json",
+      "sha256": "ea960944eb8c70588a4d242bf86da0820079b3beef03d9ad3b9ace967525f67c",
+      "size": 4974
+    },
+    {
+      "path": "cases/9a075caf01e0d4ac4b2d9f0c/1/result.json",
+      "sha256": "790ee093e18c9f4b78a20f020b1c83fc032bbf9369e0201b99bab3ee2e001664",
+      "size": 294
+    },
+    {
+      "path": "cases/9a075caf01e0d4ac4b2d9f0c/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/9a075caf01e0d4ac4b2d9f0c/1/stdout.bin",
+      "sha256": "ac38bf68333be901cc1e71bc9b439520f3e311bc6112dafceb01d7e821608087",
+      "size": 12
+    },
+    {
+      "path": "cases/9d1b8cf34ac8f63eb2f95c76/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/9d1b8cf34ac8f63eb2f95c76/0/process.json",
+      "sha256": "94bb4cbaa7453828fd76c1527f49375327079a25d5c572bb3b9aa058c4b2c760",
+      "size": 4935
+    },
+    {
+      "path": "cases/9d1b8cf34ac8f63eb2f95c76/0/result.json",
+      "sha256": "2ddd28e78cde37dc24a2fab027e7ef9469cfe2e58a76e2a020a28a4e7c442161",
+      "size": 294
+    },
+    {
+      "path": "cases/9d1b8cf34ac8f63eb2f95c76/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/9d1b8cf34ac8f63eb2f95c76/0/stdout.bin",
+      "sha256": "181cbd0c799ee948a7b45a123cbd9a92abce3c7fdf68601ac326219d3915893b",
+      "size": 120
+    },
+    {
+      "path": "cases/9d1b8cf34ac8f63eb2f95c76/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/9d1b8cf34ac8f63eb2f95c76/1/process.json",
+      "sha256": "6dcbc82a1c66011d588922903fee4de201f12cf615da3a10c57ec95700950fb3",
+      "size": 4935
+    },
+    {
+      "path": "cases/9d1b8cf34ac8f63eb2f95c76/1/result.json",
+      "sha256": "b3196df323de4329bd6c52e5dff1f80353644af70b20a65a017741985a9d6771",
+      "size": 294
+    },
+    {
+      "path": "cases/9d1b8cf34ac8f63eb2f95c76/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/9d1b8cf34ac8f63eb2f95c76/1/stdout.bin",
+      "sha256": "181cbd0c799ee948a7b45a123cbd9a92abce3c7fdf68601ac326219d3915893b",
+      "size": 120
+    },
+    {
+      "path": "cases/a33635c52a8ceffd7896ef1b/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/a33635c52a8ceffd7896ef1b/0/process.json",
+      "sha256": "6ce366fcb194cb11eb2989816fb32386c1e037ffd4235998ff3cc8aa0658bf70",
+      "size": 4930
+    },
+    {
+      "path": "cases/a33635c52a8ceffd7896ef1b/0/result.json",
+      "sha256": "d5e7a8ff7d87b19d1019718739af6a1bc75326b4e4c4b2cea486b64eb698dc12",
+      "size": 294
+    },
+    {
+      "path": "cases/a33635c52a8ceffd7896ef1b/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/a33635c52a8ceffd7896ef1b/0/stdout.bin",
+      "sha256": "70aab7b96a046ca32557eebadf2b3ea4af37db391478a38c9c34ae1e4fff814d",
+      "size": 47
+    },
+    {
+      "path": "cases/a33635c52a8ceffd7896ef1b/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/a33635c52a8ceffd7896ef1b/1/process.json",
+      "sha256": "0e01b76592cc0e3549a875b10dbf3926c63122b2cffd83d63c6425db36f7c50b",
+      "size": 4930
+    },
+    {
+      "path": "cases/a33635c52a8ceffd7896ef1b/1/result.json",
+      "sha256": "cbd26be383b7e46f2c2ee505196b8239aa53b3916ea777556f8f3c4a02c685f5",
+      "size": 294
+    },
+    {
+      "path": "cases/a33635c52a8ceffd7896ef1b/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/a33635c52a8ceffd7896ef1b/1/stdout.bin",
+      "sha256": "70aab7b96a046ca32557eebadf2b3ea4af37db391478a38c9c34ae1e4fff814d",
+      "size": 47
+    },
+    {
+      "path": "cases/a7427a661181e77c787dd1df/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/a7427a661181e77c787dd1df/0/process.json",
+      "sha256": "465468011d3e0ab9aba3047488c0bfec3f9520de21fc4bcc56e940a1dce14473",
+      "size": 4894
+    },
+    {
+      "path": "cases/a7427a661181e77c787dd1df/0/result.json",
+      "sha256": "9abd493c35a1839577f9ae04422d8db2a7ad3bbd129d9d949a29b9c3354292be",
+      "size": 294
+    },
+    {
+      "path": "cases/a7427a661181e77c787dd1df/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/a7427a661181e77c787dd1df/0/stdout.bin",
+      "sha256": "75ddfa8f092bab5b2ab956a81be4a43e24615c385a1cd91dd92396887f511b74",
+      "size": 62
+    },
+    {
+      "path": "cases/a7427a661181e77c787dd1df/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/a7427a661181e77c787dd1df/1/process.json",
+      "sha256": "2d75e8f31cbb7ae1008e72f7aed87de850b9f600975ce30deb2a12fe7bcf3c5b",
+      "size": 4894
+    },
+    {
+      "path": "cases/a7427a661181e77c787dd1df/1/result.json",
+      "sha256": "eddae5b5e321d15ad21513f6d5186f866272318b18f07206bb250543281a7e27",
+      "size": 294
+    },
+    {
+      "path": "cases/a7427a661181e77c787dd1df/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/a7427a661181e77c787dd1df/1/stdout.bin",
+      "sha256": "75ddfa8f092bab5b2ab956a81be4a43e24615c385a1cd91dd92396887f511b74",
+      "size": 62
+    },
+    {
+      "path": "cases/ac0aa01a01606087d4c796ce/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/ac0aa01a01606087d4c796ce/0/process.json",
+      "sha256": "efa9af58d09ac83565644a4eff3b8b3a68992c494f1ab83c1a494d7ee3ab73bc",
+      "size": 4895
+    },
+    {
+      "path": "cases/ac0aa01a01606087d4c796ce/0/result.json",
+      "sha256": "fd1890515d09e20c719efb112f4433a25d7426780f56c840f78a25513a7d87d3",
+      "size": 294
+    },
+    {
+      "path": "cases/ac0aa01a01606087d4c796ce/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/ac0aa01a01606087d4c796ce/0/stdout.bin",
+      "sha256": "24136b60f6eb09b67f0f6926768d08e1ef03a748b31c988f6c57a03d9071dc9f",
+      "size": 30
+    },
+    {
+      "path": "cases/ac0aa01a01606087d4c796ce/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/ac0aa01a01606087d4c796ce/1/process.json",
+      "sha256": "fca125836acdfe3c68cc733933da21abe08248db7bd022ace643a5c52cc61869",
+      "size": 4896
+    },
+    {
+      "path": "cases/ac0aa01a01606087d4c796ce/1/result.json",
+      "sha256": "43685545b1558f6df5438df855c5912e85a1a47cab2c80cf07c38090fffeeb5b",
+      "size": 295
+    },
+    {
+      "path": "cases/ac0aa01a01606087d4c796ce/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/ac0aa01a01606087d4c796ce/1/stdout.bin",
+      "sha256": "24136b60f6eb09b67f0f6926768d08e1ef03a748b31c988f6c57a03d9071dc9f",
+      "size": 30
+    },
+    {
+      "path": "cases/ae59ac300a77e6d37a4ba95e/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/ae59ac300a77e6d37a4ba95e/0/process.json",
+      "sha256": "429ee923d3cc98b90581a96b048a1812d0fde29307319077f936731bdc2ccf4e",
+      "size": 4910
+    },
+    {
+      "path": "cases/ae59ac300a77e6d37a4ba95e/0/result.json",
+      "sha256": "4c479f3ed77b7be740f31148530e01e88de53a5fd744ab8a813e50e3e39292da",
+      "size": 294
+    },
+    {
+      "path": "cases/ae59ac300a77e6d37a4ba95e/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/ae59ac300a77e6d37a4ba95e/0/stdout.bin",
+      "sha256": "b9b16f279206e300625ca122a271d155a53951ac8efa5bd05126f7540e8a1dcc",
+      "size": 67
+    },
+    {
+      "path": "cases/ae59ac300a77e6d37a4ba95e/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/ae59ac300a77e6d37a4ba95e/1/process.json",
+      "sha256": "7ad106c500e3a4ef6266493ec65ee77e5c7133f109b52afbf91f942970a4c513",
+      "size": 4910
+    },
+    {
+      "path": "cases/ae59ac300a77e6d37a4ba95e/1/result.json",
+      "sha256": "826ed42f6fc5dd676aef3ec398f9b0f5919b89967be85b51a7ec05a0be37045f",
+      "size": 294
+    },
+    {
+      "path": "cases/ae59ac300a77e6d37a4ba95e/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/ae59ac300a77e6d37a4ba95e/1/stdout.bin",
+      "sha256": "b9b16f279206e300625ca122a271d155a53951ac8efa5bd05126f7540e8a1dcc",
+      "size": 67
+    },
+    {
+      "path": "cases/aed74392f60c8815bc82b50e/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/aed74392f60c8815bc82b50e/0/process.json",
+      "sha256": "ab184fc7c8b7afb082f072276619e2312d2f4bc3e1ec7aeb66c202422d8596e4",
+      "size": 4950
+    },
+    {
+      "path": "cases/aed74392f60c8815bc82b50e/0/result.json",
+      "sha256": "c2494de563d3559bb14adc360c9e59e2e892b00d092ac77cbd3228b353256182",
+      "size": 294
+    },
+    {
+      "path": "cases/aed74392f60c8815bc82b50e/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/aed74392f60c8815bc82b50e/0/stdout.bin",
+      "sha256": "64899e4f3674f5e1cfd750f90b37ab1b716cfe19ac2d1e87e36b7a35383d743f",
+      "size": 53
+    },
+    {
+      "path": "cases/aed74392f60c8815bc82b50e/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/aed74392f60c8815bc82b50e/1/process.json",
+      "sha256": "956e22ad374c1668e5d3f51c8485dcbd98600f69ef03eb7e1f536ab9b98ac753",
+      "size": 4950
+    },
+    {
+      "path": "cases/aed74392f60c8815bc82b50e/1/result.json",
+      "sha256": "82adea212b00f7b548b4d53f9547cfa836168951ad2c31f406fc31a18f5c51b2",
+      "size": 294
+    },
+    {
+      "path": "cases/aed74392f60c8815bc82b50e/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/aed74392f60c8815bc82b50e/1/stdout.bin",
+      "sha256": "64899e4f3674f5e1cfd750f90b37ab1b716cfe19ac2d1e87e36b7a35383d743f",
+      "size": 53
+    },
+    {
+      "path": "cases/b7deb369b54ae6319bc9a49d/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/b7deb369b54ae6319bc9a49d/0/process.json",
+      "sha256": "6d1ebcc70f3c04eec973a886f1a6ed194979d2558cdf7566c4237478544a1a80",
+      "size": 4880
+    },
+    {
+      "path": "cases/b7deb369b54ae6319bc9a49d/0/result.json",
+      "sha256": "b6b7e897639393a2c3fd8ba774a23081206b0aa56bcfff1992a3488196b699a2",
+      "size": 294
+    },
+    {
+      "path": "cases/b7deb369b54ae6319bc9a49d/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/b7deb369b54ae6319bc9a49d/0/stdout.bin",
+      "sha256": "6ad851c6d6498eb2e48345ce555523a1bc0b9910dd184fd1b63e55af33d74b77",
+      "size": 3315
+    },
+    {
+      "path": "cases/b7deb369b54ae6319bc9a49d/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/b7deb369b54ae6319bc9a49d/1/process.json",
+      "sha256": "e6ef08570e1302fb52a16d9cfb1f8ee520ff7f972f15bc0f91d8cb455ace41c5",
+      "size": 4880
+    },
+    {
+      "path": "cases/b7deb369b54ae6319bc9a49d/1/result.json",
+      "sha256": "4fb7bbb1fe6b0c4837eea10792d13f520d6190ec60ea0c2e808a5d885a6d660f",
+      "size": 294
+    },
+    {
+      "path": "cases/b7deb369b54ae6319bc9a49d/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/b7deb369b54ae6319bc9a49d/1/stdout.bin",
+      "sha256": "6ad851c6d6498eb2e48345ce555523a1bc0b9910dd184fd1b63e55af33d74b77",
+      "size": 3315
+    },
+    {
+      "path": "cases/bedf94a094b1d74f85b2c4a6/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/bedf94a094b1d74f85b2c4a6/0/process.json",
+      "sha256": "3224d79eaf002ffb4ce996c8f48e8c2aeb5500882149a52abaa95d0cd54a59ae",
+      "size": 4969
+    },
+    {
+      "path": "cases/bedf94a094b1d74f85b2c4a6/0/result.json",
+      "sha256": "065299e8c740b3e0f449aabde562d4d7eeabcc8e449c4a7c8f6f175b757d5d47",
+      "size": 294
+    },
+    {
+      "path": "cases/bedf94a094b1d74f85b2c4a6/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/bedf94a094b1d74f85b2c4a6/0/stdout.bin",
+      "sha256": "ed1ce580f6352352e4dfce6d1d6df5dc374d247ced22e2434d938db9152368d9",
+      "size": 702
+    },
+    {
+      "path": "cases/bedf94a094b1d74f85b2c4a6/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/bedf94a094b1d74f85b2c4a6/1/process.json",
+      "sha256": "73a2d562da3022a196709cde33f59fee8ec1a1310ef668e800e9d325b4ea5ac4",
+      "size": 4969
+    },
+    {
+      "path": "cases/bedf94a094b1d74f85b2c4a6/1/result.json",
+      "sha256": "04c3f21183737d26dff899bdc964f9cd32b6deebce7f1910a9cd0ae28ea53766",
+      "size": 294
+    },
+    {
+      "path": "cases/bedf94a094b1d74f85b2c4a6/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/bedf94a094b1d74f85b2c4a6/1/stdout.bin",
+      "sha256": "ed1ce580f6352352e4dfce6d1d6df5dc374d247ced22e2434d938db9152368d9",
+      "size": 702
+    },
+    {
+      "path": "cases/e493af5806dbaa712ea03af4/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/e493af5806dbaa712ea03af4/0/process.json",
+      "sha256": "04dffcf9955bc7cbacd11221e3fc07dc574eed92ab5ec8af9a2f9418718a4fed",
+      "size": 4895
+    },
+    {
+      "path": "cases/e493af5806dbaa712ea03af4/0/result.json",
+      "sha256": "9d31ae01267d0df68c5b1161556aab28f637f60002fb38ac6832a6b11a5eabd5",
+      "size": 294
+    },
+    {
+      "path": "cases/e493af5806dbaa712ea03af4/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/e493af5806dbaa712ea03af4/0/stdout.bin",
+      "sha256": "9c0975545fe1e5c01ea775a22d9d5afac70f4dacaa4e2fa44e6b6752708ea8b0",
+      "size": 90
+    },
+    {
+      "path": "cases/e493af5806dbaa712ea03af4/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/e493af5806dbaa712ea03af4/1/process.json",
+      "sha256": "e36f95d2ccb004ec3e04e60419220735368b7ace6e2e90635e20ee1c9c59d0b9",
+      "size": 4895
+    },
+    {
+      "path": "cases/e493af5806dbaa712ea03af4/1/result.json",
+      "sha256": "8365135b9f20373dadab54162ad75e7fe48521cc38bd76e58dff60e4d97b2492",
+      "size": 294
+    },
+    {
+      "path": "cases/e493af5806dbaa712ea03af4/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/e493af5806dbaa712ea03af4/1/stdout.bin",
+      "sha256": "9c0975545fe1e5c01ea775a22d9d5afac70f4dacaa4e2fa44e6b6752708ea8b0",
+      "size": 90
+    },
+    {
+      "path": "cases/f634df26290d8254e770c827/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/f634df26290d8254e770c827/0/process.json",
+      "sha256": "9cf29501b8e2128f818dab8f65d177177c5deb3688cf0db6bb2cc4af5cd2cb1f",
+      "size": 4973
+    },
+    {
+      "path": "cases/f634df26290d8254e770c827/0/result.json",
+      "sha256": "ca6af35daccc1d8d6ce27cc234239b61ef5fa041481823c5e1c3eb48175e1484",
+      "size": 295
+    },
+    {
+      "path": "cases/f634df26290d8254e770c827/0/stderr.bin",
+      "sha256": "740ced52cdc3d032c03e2d7eafa07b5aa14bde0f3e5dae4b450db11e6906c1e4",
+      "size": 1066
+    },
+    {
+      "path": "cases/f634df26290d8254e770c827/0/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/f634df26290d8254e770c827/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/f634df26290d8254e770c827/1/process.json",
+      "sha256": "3933af7a7fbbb457c8193cf88b26f80c3b98ce55a2778b5415fb8829b686c992",
+      "size": 4972
+    },
+    {
+      "path": "cases/f634df26290d8254e770c827/1/result.json",
+      "sha256": "bb7af6844ce63a27d5850df5fd110e7ec6034d24ce4d2936f6605e0a3d35c16b",
+      "size": 294
+    },
+    {
+      "path": "cases/f634df26290d8254e770c827/1/stderr.bin",
+      "sha256": "740ced52cdc3d032c03e2d7eafa07b5aa14bde0f3e5dae4b450db11e6906c1e4",
+      "size": 1066
+    },
+    {
+      "path": "cases/f634df26290d8254e770c827/1/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/f8ba1b843b02bd5c16fd9adc/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/f8ba1b843b02bd5c16fd9adc/0/process.json",
+      "sha256": "6ea3e17b13b43f30ff83f94ca10f6d738893bbc489b9e4a807f02886baae44aa",
+      "size": 4899
+    },
+    {
+      "path": "cases/f8ba1b843b02bd5c16fd9adc/0/result.json",
+      "sha256": "cc4107801f0bb31eb5f456ccf28ba5ae77fc79d844a4942d9b7123d181f4a4ec",
+      "size": 294
+    },
+    {
+      "path": "cases/f8ba1b843b02bd5c16fd9adc/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/f8ba1b843b02bd5c16fd9adc/0/stdout.bin",
+      "sha256": "5a10527e6c44c1120c3f5ddc2fbbc541fc5786510206e61c3053a497bbb3f123",
+      "size": 16
+    },
+    {
+      "path": "cases/f8ba1b843b02bd5c16fd9adc/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/f8ba1b843b02bd5c16fd9adc/1/process.json",
+      "sha256": "b5aade715ce362674fb603f1dd72c00c6fabb06079965317fb91652463778873",
+      "size": 4899
+    },
+    {
+      "path": "cases/f8ba1b843b02bd5c16fd9adc/1/result.json",
+      "sha256": "4437647d459e21b3a52318b623e858eab6f4a7d3540621e684605960bee473f8",
+      "size": 294
+    },
+    {
+      "path": "cases/f8ba1b843b02bd5c16fd9adc/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/f8ba1b843b02bd5c16fd9adc/1/stdout.bin",
+      "sha256": "5a10527e6c44c1120c3f5ddc2fbbc541fc5786510206e61c3053a497bbb3f123",
+      "size": 16
+    },
+    {
+      "path": "cases/fe12a4029bb4e8569bdb7988/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/fe12a4029bb4e8569bdb7988/0/process.json",
+      "sha256": "b8e8d392b03ec1638fcaf75af254ab1332eff505f6e7593fd34fac5d138cd496",
+      "size": 4895
+    },
+    {
+      "path": "cases/fe12a4029bb4e8569bdb7988/0/result.json",
+      "sha256": "9caab6caa6c4b98ddec53878f456f8f3cc7739476527aee2ccd501973c29bb12",
+      "size": 294
+    },
+    {
+      "path": "cases/fe12a4029bb4e8569bdb7988/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/fe12a4029bb4e8569bdb7988/0/stdout.bin",
+      "sha256": "2dfb0439b4f5fe9d608d956e9fd4fbf924a4428ceb34c2da92b1e75722c4a8d9",
+      "size": 897
+    },
+    {
+      "path": "cases/fe12a4029bb4e8569bdb7988/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/fe12a4029bb4e8569bdb7988/1/process.json",
+      "sha256": "b8ad996fe90e1c4ec0cb9af779425c073425d60ffc0e92e4fb4377fa7db86a2a",
+      "size": 4895
+    },
+    {
+      "path": "cases/fe12a4029bb4e8569bdb7988/1/result.json",
+      "sha256": "caf99a35243fd3ba86fc48976189d1d7aa62bb9be725c7f94c25019df5c8e24b",
+      "size": 294
+    },
+    {
+      "path": "cases/fe12a4029bb4e8569bdb7988/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/fe12a4029bb4e8569bdb7988/1/stdout.bin",
+      "sha256": "2dfb0439b4f5fe9d608d956e9fd4fbf924a4428ceb34c2da92b1e75722c4a8d9",
+      "size": 897
+    },
+    {
+      "path": "cases/ffcbc1ead8787f2b765abdd2/0/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/ffcbc1ead8787f2b765abdd2/0/process.json",
+      "sha256": "c1a9c01508a8c2518747e2ca22bd481914d56df70f9259ab753efe2dbe90d3f8",
+      "size": 4950
+    },
+    {
+      "path": "cases/ffcbc1ead8787f2b765abdd2/0/result.json",
+      "sha256": "d20d24805b6fd330d2fb9f84e084e007e2f214ab4d670e50edb736fe449f6272",
+      "size": 294
+    },
+    {
+      "path": "cases/ffcbc1ead8787f2b765abdd2/0/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/ffcbc1ead8787f2b765abdd2/0/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/ffcbc1ead8787f2b765abdd2/1/private-state/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "sha256": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657",
+      "size": 51363
+    },
+    {
+      "path": "cases/ffcbc1ead8787f2b765abdd2/1/process.json",
+      "sha256": "5cc77a10fe63608a2fa7bc5c8b9712d5884f03b7b015d8e9f1f15126976a2ddf",
+      "size": 4950
+    },
+    {
+      "path": "cases/ffcbc1ead8787f2b765abdd2/1/result.json",
+      "sha256": "6c2e4b473a2e22f2328fc7e3842a9ae42a6e0f5caacdeef8d6dbbd41eebede31",
+      "size": 294
+    },
+    {
+      "path": "cases/ffcbc1ead8787f2b765abdd2/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "cases/ffcbc1ead8787f2b765abdd2/1/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "design-inputs/PLAN.ko.md",
+      "sha256": "0941ba52bf721455d5b6f48df87def66d8150ddc90c60ce12365f1d63d92ea6b",
+      "size": 18989
+    },
+    {
+      "path": "design-inputs/closure.json",
+      "sha256": "4db6ed858dca62946ba82872f7f74a5f206612881d5380d72beee0cf3b208b40",
+      "size": 556
+    },
+    {
+      "path": "design-inputs/original-contracts.json",
+      "sha256": "37336ef31590604183b8393877ca4cd77767b9c4a2a57a78bdbe14cfb7c21cee",
+      "size": 108592
+    },
+    {
+      "path": "first.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "first.stdout.log",
+      "sha256": "8f27cd81a96481926ca282c115355107c44809b5fed4bb354b291cd31797bad1",
+      "size": 201
+    },
+    {
+      "path": "input-validation.json",
+      "sha256": "de3837163954fce20e155230aa5e59ccfb29d88699be07a0a64f94f57a576825",
+      "size": 100
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+      "sha256": "3d04c6da9335211b0d1f0586ae9917266a74590f13042b5ca38ccd327683e353",
+      "size": 63
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+      "sha256": "be3b5aa79eaa7b71d237c280985d27e7d86823f0e260e56610ef3c5dd7add3cb",
+      "size": 111
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl",
+      "sha256": "470541f6f77653a46b71e754c8ccff3967575c78fbfed1b5f240eac8fd57ceb6",
+      "size": 479
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
+      "sha256": "1195ee09fa9539561a369e95dacfcf5aaf5427db81d0f942ba9abce297fac9a2",
+      "size": 990
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl",
+      "sha256": "142f861c5c45096c9c582832a4df2a5406172afa3bb25d7a0f840346670acf90",
+      "size": 103
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+      "sha256": "c3718ee0c368eb13c819a114f8038da22e145e32b07ddf0b8843b31a1c3e00a5",
+      "size": 434
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+      "sha256": "997f0647c2c57c06a1e60ac18f1e0e128b9bfe415677d93ed527fa6706bd2076",
+      "size": 1413
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+      "sha256": "cdd0ae20dcb2a49c117ac669e079ac2c41354d8520e061ddc9653055bf3bea2e",
+      "size": 187
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
+      "sha256": "1d4a4ae668a766375b90b7fcc43afe7cd1dc8ee6488869aca01e0e97882d6d4a",
+      "size": 137
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+      "sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c",
+      "size": 205
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
+      "sha256": "8d030a9afdfa39b08230ce4e1be03c9f5d7dc46862e82f52f5b656a1e782bf9e",
+      "size": 72
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
+      "sha256": "6c57085f865663ccc3729c02a0d0a4e3feba88cc18c78669e92ef589dbf952f8",
+      "size": 106
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl",
+      "sha256": "c565a3ebf049042dcee5b2fc456f5f28b0a633b977b1aa20db43b7c69765787b",
+      "size": 22
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+      "sha256": "9af0950aaaa9057093659b97105e69231dc3d55f09d3bc7710cbe2b7ab5fb001",
+      "size": 1303
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl",
+      "sha256": "259d752337288dbd89214d1937948e3e2dbca030587bf868343bfc7ede7730cd",
+      "size": 27
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl",
+      "sha256": "f151b651b8c47f844f2a8c9ca1a2e4d17bb0992d75d3ffbc397b48dfd6b02af3",
+      "size": 46
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl",
+      "sha256": "043f6f60ed72ee6618e127b0d34b33c916afb68498ddddf68aa3bd4b3721a205",
+      "size": 374
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
+      "sha256": "b42f51dc784cfd1c875afdb33db507bfd9b0dde4fd4276ad7129ebf0082796ce",
+      "size": 106
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
+      "sha256": "efaa1499067829bce0637f4ef78c0bca9c48bb11f148cf6b824f26993d3d0e35",
+      "size": 237
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
+      "sha256": "ac38bf68333be901cc1e71bc9b439520f3e311bc6112dafceb01d7e821608087",
+      "size": 12
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
+      "sha256": "73a6e0d11b575df36c45ba6d1313347d46a6f10b7caf3881e68e5d96761581ce",
+      "size": 127
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
+      "sha256": "a0b843f9313eb386673e8989e1a6ed9cd318a74b04e8ec803e2ab3e0ae757cac",
+      "size": 73
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+      "sha256": "ce3f51e36ea5d6fee3a6f77a9e483a0889cd341f10711bc7b084dfc07c0529e7",
+      "size": 239
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl",
+      "sha256": "cd81315bbd63590ef22afa209b6040055b9b2deb4fb8686bcb66818583270c9e",
+      "size": 183
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "sha256": "9a037e753e348abac16c43b00a606ed8fe9ae35e6c88d74996d6c92287a0891f",
+      "size": 822
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "sha256": "92b50167ea8b9624ac5c7bf4153cbef77d83ec0a5e975ac191b7d45cc8117caf",
+      "size": 219
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl",
+      "sha256": "5f381f782b19c58bc4589b9a9199767eb8e828370927b89b4bd19fb44167c210",
+      "size": 2554
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+      "sha256": "7f132f7babc19ff302c08906afb03bbcd3be5a67831b2f4a8722e1f9e6789d96",
+      "size": 295
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl",
+      "sha256": "636c3f9f688dddee63f167bd00b5929df8dee9561e3ec370b28a93cbc28b1988",
+      "size": 139
+    },
+    {
+      "path": "inputs/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl",
+      "sha256": "9c03b9cf5757a1e19f9e982be0164027e3d3b88489dbfdb7630b9d3b0c41dedc",
+      "size": 98
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "01ff475b1e0f60af32ba8c875576cbfe43a5b247e7e067697379f15b76911123",
+      "size": 1598374
+    },
+    {
+      "path": "original30.json",
+      "sha256": "8a5bc753daee6f196798107761157cb6157920adaa07397e93b79368d5afec84",
+      "size": 89025
+    },
+    {
+      "path": "profile.json",
+      "sha256": "f734ff7a54e32e08bd4a905f0b2a629efd29903bd264bfe9c4fc519f8183f1b1",
+      "size": 11010
+    },
+    {
+      "path": "report.json",
+      "sha256": "349f8796cf03abf3cf655c54c1b3ad5b00b4c4e938f92ffd6c196f6a8becedf8",
+      "size": 326531
+    },
+    {
+      "path": "rest.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "rest.stdout.log",
+      "sha256": "8c03aabdea3a216332b6b63060059cec7c97d8bb46ef248cb6088dab4bfdbe47",
+      "size": 12359
+    },
+    {
+      "path": "sources/AGENTS.md",
+      "sha256": "ba9cd354e49ede8ac512af670f737c493d3716861de29bc0dfc598a2b1d8e010",
+      "size": 5692
+    },
+    {
+      "path": "sources/oracle.lock.json",
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+      "size": 4421
+    },
+    {
+      "path": "sources/references.lock",
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+      "size": 648
+    },
+    {
+      "path": "sources/rust-toolchain.toml",
+      "sha256": "04ab0c8ee214f246c7c53bdfba7ba80a93dad65da5b8455edf17c5ec226d5b20",
+      "size": 123
+    },
+    {
+      "path": "sources/tools/compat.py",
+      "sha256": "fa40a0daee29eb078c7b9cb814fc3779556ceaacc2634657c96e3f7810aa5edc",
+      "size": 32186
+    },
+    {
+      "path": "sources/tools/oracle.py",
+      "sha256": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+      "size": 16102
+    },
+    {
+      "path": "staging.json",
+      "sha256": "5a64e1045cb8138a27d46049a52689e2a70551d31dcfdebee17d1dc8872ecc47",
+      "size": 966
+    },
+    {
+      "path": "version.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "version.stdout.bin",
+      "sha256": "874f7b0a6534d6d08c32748ffc9de01e1cf281c60b53230fb41d1495c255ca33",
+      "size": 40
+    },
+    {
+      "path": "workspace-baseline.json",
+      "sha256": "1deb52d6cb3f7241f346573794ee18daf2e7b02283bba0c2d2013957337a9fb1",
+      "size": 2013874
+    }
+  ],
+  "scope": "All regular files recursively, excluding only root inventory.json and root closure.json; nested design closure and private raw files retained."
+}

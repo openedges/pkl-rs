@@ -289,6 +289,18 @@ fn source_event(event: probe::SourceEvent) -> Result<JsValue, JsValue> {
         Reflect::set(object, &JsValue::from_str(key), &value).map(|_| ())
     };
     set(&object, "kind", JsValue::from_str(event.kind))?;
+    if let Some(code) = event.exit_code {
+        set(&object, "exitCode", JsValue::from_f64(f64::from(code)))?;
+    }
+    for (key, value) in [
+        ("phase", event.phase),
+        ("disposition", event.disposition),
+        ("reason", event.reason),
+    ] {
+        if let Some(value) = value {
+            set(&object, key, JsValue::from_str(value))?;
+        }
+    }
     if let Some(token) = event.token {
         set(&object, "token", JsValue::from_str(&token))?;
     }
@@ -310,6 +322,28 @@ fn source_event(event: probe::SourceEvent) -> Result<JsValue, JsValue> {
             "errorBytes",
             Uint8Array::from(value.as_slice()).into(),
         )?;
+    }
+    if let Some(module) = event.module {
+        let record = Object::new();
+        for (key, value) in [
+            ("id", module.id),
+            ("kind", module.kind.into()),
+            ("originalUri", module.original_uri),
+        ] {
+            set(&record, key, JsValue::from_str(&value))?;
+        }
+        for (key, value) in [
+            ("importerOriginalUri", module.importer_original_uri),
+            ("importerResolvedUri", module.importer_resolved_uri),
+            ("importUri", module.import_uri),
+            ("resolvedUri", module.resolved_uri),
+            ("sourceUri", module.source_uri),
+        ] {
+            if let Some(value) = value {
+                set(&record, key, JsValue::from_str(&value))?;
+            }
+        }
+        set(&object, "module", record.into())?;
     }
     if let Some(log) = event.log {
         let record = Object::new();
@@ -417,6 +451,41 @@ impl SourceSession {
             })?,
         })
     }
+    #[wasm_bindgen(js_name = forExpressions)]
+    #[allow(clippy::too_many_arguments)]
+    pub fn for_expressions(
+        source: JsString,
+        uri: JsString,
+        module_name: JsString,
+        paths: js_sys::Array,
+        trace_mode: Option<JsString>,
+        host_logger: Option<bool>,
+        host_frame_transformer: Option<bool>,
+        power_assertions: Option<bool>,
+    ) -> Result<SourceSession, JsValue> {
+        let paths = paths
+            .iter()
+            .map(|value| string(&JsString::from(value)))
+            .collect::<Result<Vec<_>, _>>()?;
+        let mode = trace_mode
+            .as_ref()
+            .map(string)
+            .transpose()?
+            .unwrap_or_else(|| "compact".into());
+        Ok(Self {
+            inner: probe::SourceProbe::new_expressions(
+                &string(&source)?,
+                &string(&uri)?,
+                &string(&module_name)?,
+                &paths,
+                &mode,
+                host_logger.unwrap_or(false),
+                host_frame_transformer.unwrap_or(false),
+                power_assertions.unwrap_or(false),
+            )
+            .map_err(error)?,
+        })
+    }
     #[wasm_bindgen(constructor)]
     #[allow(clippy::too_many_arguments)]
     pub fn new(
@@ -476,6 +545,78 @@ impl SourceSession {
                 &string(&token)?,
                 unsigned(now)?,
                 timeout.map(unsigned).transpose()?,
+            )
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = completeModuleResolution)]
+    pub fn complete_module_resolution(
+        &mut self,
+        token: JsString,
+        original_uri: JsString,
+        resolved_uri: JsString,
+        source_uri: JsString,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_module_resolution(
+                &string(&token)?,
+                &string(&original_uri)?,
+                &string(&resolved_uri)?,
+                &string(&source_uri)?,
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = completeModuleSource)]
+    pub fn complete_module_source(
+        &mut self,
+        token: JsString,
+        text: JsString,
+        inferred_name: JsString,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_module_source(
+                &string(&token)?,
+                &string(&text)?,
+                &string(&inferred_name)?,
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = rejectModuleResolution)]
+    pub fn reject_module_resolution(
+        &mut self,
+        token: JsString,
+        kind: JsString,
+        message: JsString,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .reject_module(
+                &string(&token)?,
+                false,
+                &string(&kind)?,
+                &string(&message)?,
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = rejectModuleSource)]
+    pub fn reject_module_source(
+        &mut self,
+        token: JsString,
+        kind: JsString,
+        message: JsString,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .reject_module(
+                &string(&token)?,
+                true,
+                &string(&kind)?,
+                &string(&message)?,
+                unsigned(now)?,
             )
             .map_err(error)
     }
@@ -610,6 +751,10 @@ impl SourceSession {
         self.inner
             .close_from_callback(&string(&token)?)
             .map_err(error)
+    }
+    #[wasm_bindgen(js_name = drainCancelledModules)]
+    pub fn drain_cancelled_modules(&mut self) -> Vec<String> {
+        self.inner.drain_cancelled_modules()
     }
     #[wasm_bindgen(js_name = drainCancelledReads)]
     pub fn drain_cancelled_reads(&mut self) -> Vec<String> {

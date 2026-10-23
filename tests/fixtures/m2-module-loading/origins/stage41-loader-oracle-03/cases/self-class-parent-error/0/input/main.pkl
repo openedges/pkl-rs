@@ -1,0 +1,3 @@
+import "main.pkl" as self
+class C extends self.C {}
+answer=new C {}

@@ -1,0 +1,2 @@
+child=import("child %.pkl")
+output { text=child.value.toString() }

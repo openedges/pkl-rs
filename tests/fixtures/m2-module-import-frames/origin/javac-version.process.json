@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/usr/bin/javac",
+    "-version"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41",
+  "environment": {
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-frame-oracle-01/identity/home",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TERM": "dumb",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-frame-oracle-01/identity/tmp",
+    "TZ": "UTC"
+  },
+  "result": {
+    "elapsed_ns": 108233000,
+    "exit_code": 0,
+    "files": {},
+    "sha256": {
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "2df6b9c76e710158266aeaae8f3578eaed8ddd747a2272483506ad9a8a5e644a"
+    },
+    "timed_out": false,
+    "workspace_changes": {}
+  }
+}

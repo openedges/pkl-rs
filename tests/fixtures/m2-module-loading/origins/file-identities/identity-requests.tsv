@@ -1,0 +1,55 @@
+original-import1:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-original30-workspace-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl	
+original-import1:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-original30-workspace-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl	aW1wb3J0ZWQucGts
+original-import1:main.pkl:import:1	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-original30-workspace-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl	aW1wb3J0ZWQucGts
+original-import1:imported.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-original30-workspace-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl	
+original-import2:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-original30-workspace-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl	
+original-import2:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-original30-workspace-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl	aW1wb3J0ZWQucGts
+original-import2:imported.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-original30-workspace-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl	
+original-import3:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-original30-workspace-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl	
+original-import3:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-original30-workspace-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl	aW1wb3J0ZWQucGts
+original-import3:main.pkl:import:1	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-original30-workspace-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl	aW1wb3J0ZWQucGts
+original-import3:main.pkl:import:2	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-original30-workspace-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl	aW1wb3J0ZWQucGts
+original-import3:imported.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-original30-workspace-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl	
+normalized-symlink-identity:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity/main.pkl	
+normalized-symlink-identity:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity/main.pkl	Y2hpbGQucGts
+normalized-symlink-identity:main.pkl:import:1	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity/main.pkl	Li9zdWIvLi4vY2hpbGQucGts
+normalized-symlink-identity:main.pkl:import:2	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity/main.pkl	bGluay5wa2w=
+normalized-symlink-identity:child.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/normalized-symlink-identity/child.pkl	
+distinct-same-offset-declarations:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/distinct-same-offset-declarations/main.pkl	
+distinct-same-offset-declarations:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/distinct-same-offset-declarations/main.pkl	YS5wa2w=
+distinct-same-offset-declarations:main.pkl:import:1	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/distinct-same-offset-declarations/main.pkl	Yi5wa2w=
+distinct-same-offset-declarations:a.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/distinct-same-offset-declarations/a.pkl	
+distinct-same-offset-declarations:b.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/distinct-same-offset-declarations/b.pkl	
+unused-missing-load:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-missing-load/main.pkl	
+unused-missing-load:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/unused-missing-load/main.pkl	bWlzc2luZy5wa2w=
+self-import-publication:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/self-import-publication/main.pkl	
+self-import-publication:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/self-import-publication/main.pkl	bWFpbi5wa2w=
+resolve-file-retry:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry/main.pkl	
+resolve-file-retry:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry/main.pkl	bGF0ZS5wa2w=
+parse-failure-cache:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache/main.pkl	
+parse-failure-cache:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache/main.pkl	YmFkLnBrbA==
+parse-failure-cache:main.pkl:import:1	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache/main.pkl	YmFkLnBrbA==
+parse-failure-cache:bad.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/parse-failure-cache/bad.pkl	
+init-failure-cache:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache/main.pkl	
+init-failure-cache:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache/main.pkl	YmFkLnBrbA==
+init-failure-cache:main.pkl:import:1	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache/main.pkl	YmFkLnBrbA==
+init-failure-cache:bad.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache/bad.pkl	
+mutual-exposed-identity:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/mutual-exposed-identity/main.pkl	
+mutual-exposed-identity:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/mutual-exposed-identity/main.pkl	Y2hpbGQucGts
+mutual-exposed-identity:child.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/mutual-exposed-identity/child.pkl	
+mutual-exposed-identity:child.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/mutual-exposed-identity/child.pkl	bWFpbi5wa2w=
+mutual-recursive-class-signature:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/mutual-recursive-class-signature/main.pkl	
+mutual-recursive-class-signature:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/mutual-recursive-class-signature/main.pkl	Y2hpbGQucGts
+mutual-recursive-class-signature:child.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/mutual-recursive-class-signature/child.pkl	
+mutual-recursive-class-signature:child.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/mutual-recursive-class-signature/child.pkl	bWFpbi5wa2w=
+self-class-parent-error:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/self-class-parent-error/main.pkl	
+self-class-parent-error:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/self-class-parent-error/main.pkl	bWFpbi5wa2w=
+relative-literal-space-percent:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-literal-space-percent/main.pkl	
+relative-literal-space-percent:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-literal-space-percent/main.pkl	Y2hpbGQgJS5wa2w=
+relative-literal-space-percent:child %.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-literal-space-percent/child%20%25.pkl	
+absolute-encoded-target:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/main.pkl	
+absolute-encoded-target:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/main.pkl	ZmlsZTovLy9Vc2Vycy9jb2R5LmlqLmh3YW5nL1Byb2plY3RzL3BrbC1ycy5zdGFnZTQxL3RhcmdldC9tMi9zdGFnZTQxLWltcG9ydC1wZXJjZW50LW9yYWNsZS0wMS93b3Jrc3BhY2UvYWJzb2x1dGUtZW5jb2RlZC10YXJnZXQvY2hpbGQlMjAlMjUucGts
+absolute-encoded-target:child %.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/child%20%25.pkl	
+relative-encoded-literal-file:main.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-literal-file/main.pkl	
+relative-encoded-literal-file:main.pkl:import:0	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-literal-file/main.pkl	Y2hpbGQlMjAlMjUucGts
+relative-encoded-literal-file:child%20%25.pkl:primary	file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-literal-file/child%2520%2525.pkl	

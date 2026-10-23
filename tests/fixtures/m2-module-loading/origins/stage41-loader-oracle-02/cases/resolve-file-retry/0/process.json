@@ -1,0 +1,62 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+    "LoaderProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/resolve-file-retry/0/calls",
+    "files"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry",
+  "environment": {
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "TZ": "UTC"
+  },
+  "finishedUnixNs": 1792712492701674000,
+  "id": "resolve-file-retry",
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/resolve-file-retry/main.pkl",
+  "repeat": 0,
+  "result": {
+    "elapsed_ns": 1230592125,
+    "exit_code": 0,
+    "files": {
+      "workspace/late.pkl": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+    },
+    "sha256": {
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "7598ae53f4e764a958012adbf51fac9f2942b7185dea2e7bff195932268ebd77"
+    },
+    "timed_out": false,
+    "workspace_changes": {
+      "late.pkl": {
+        "after": {
+          "kind": "file",
+          "sha256": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+        },
+        "before": null
+      }
+    }
+  },
+  "sourceSha256": "408dc0bd42cfd76b49f02fdab115eb7a3296df2c0ac8025de55a156944a5696c",
+  "startedUnixNs": 1792712491467738000
+}

@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: read·read?와 기본 자원 정책·메서드 진단 확장; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: 실제 모듈 출력·PCF와 원본 비교 확장; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -143,7 +143,7 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 
 핵심 언어 기능을 폭넓게 구현했지만, 전체 호환성 마감에는 상당한 작업이 남아 있습니다. 아래 9개 작업 영역은 모두 일부 종료 조건이 남은 `진행 중` 상태입니다. Stage 번호는 완료한 전체 작업의 비율이 아니라 누적 구현·검증 단계를 나타냅니다. 선택 코퍼스의 높은 성공률도 M2 전체 완료율이 아닙니다.
 
-전체 목록의 요구사항 475개와 부분 mapping 42개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. Stage 39의 실행 연결 기준 ready 3,599개·미구현 888개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. ready는 어댑터로 실행 가능하다는 뜻이며 통과 판정은 별도입니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
+전체 목록의 요구사항 475개와 부분 mapping 42개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. Stage 40의 실행 연결 기준 ready 3,628개·미구현 859개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. ready는 어댑터로 실행 가능하다는 뜻이며 통과 판정은 별도입니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
 
 남은 큰 범위는 annotation·module 초기화와 상속 규칙, 지연·재귀 타입 및 제약, collection·Reference 메타데이터의 나머지 의미론, 전체 오류 메시지·논리적 스택과 원본 upstream 코퍼스 연결입니다. 원본 언어 사례가 요구하는 표준 라이브러리·출력·로딩 기능은 M3·M4와의 의존성으로 유지합니다. 이 조건을 충족하기 전에는 검증만 남은 마감 단계로 보고하지 않습니다.
 
@@ -618,7 +618,55 @@ PCF 출력에는 얕은 강제 평가와 converter·property transformer·member
 
 목록 생성·freshness 검사는 실행 가능 3,628개·미구현 859개·미연결 40개를 기록합니다. 선택 실행 3,629개에는 원래 JVM classpath 조건을 충족하지 못한 `import1b` 시도도 포함됩니다. native 개발 probe의 환경 읽기는 명시적인 `--env-var`만 전달하며, Java CLI의 상속 process environment 병합은 아직 구현하지 않았습니다. 이는 실제 제품 CLI 호환성의 남은 조건으로 유지합니다.
 
-통합 Rust 검사에서 실제 builtin Module 부모 객체가 추가된 뒤의 heap 개수 단언과 사용자 코드만 검사하던 read frontend 테스트를 보완했습니다. 별도 객체 그래프 검사로 module의 실제 부모, 클래스 capture, lazy output, GC 회수와 close 후 해제를 확인한 뒤 baseline을 수정했으며, executable·일시 객체 차이·종료 시 0개 조건은 유지합니다. [구현 체크포인트](reports/m2/stage40-implementation-checkpoint.json)의 수정 후 필수 Rust 검사 5개는 모두 통과했습니다. [검사 원본](reports/m2/stage40-required-checks.tar.gz)은 소스 3,897개와 실행 로그를 포함한 파일 3,924개를 보존합니다. 고정 플랫폼 후보 이후 변경한 전체 파일 해시는 다르지만, 차이는 테스트·테스트 내부 공백이며 비테스트 구현은 같습니다. 전체 선택 코퍼스·순차 평가 회귀와 나머지 증거 게시·최종 마감은 진행 중입니다. **Stage 40과 M2 전체는 아직 완료되지 않았습니다.**
+통합 Rust 검사에서 실제 builtin Module 부모 객체가 추가된 뒤의 heap 개수 단언과 사용자 코드만 검사하던 read frontend 테스트를 보완했습니다. 별도 객체 그래프 검사로 module의 실제 부모, 클래스 capture, lazy output, GC 회수와 close 후 해제를 확인한 뒤 baseline을 수정했으며, executable·일시 객체 차이·종료 시 0개 조건은 유지합니다. [구현 체크포인트](reports/m2/stage40-implementation-checkpoint.json)의 수정 후 필수 Rust 검사 5개는 모두 통과했습니다. [검사 원본](reports/m2/stage40-required-checks.tar.gz)은 소스 3,897개와 실행 로그를 포함한 파일 3,924개를 보존합니다. 고정 플랫폼 후보 이후 변경한 전체 파일 해시는 다르지만, 차이는 테스트·테스트 내부 공백이며 비테스트 구현은 같습니다. 이 구현 체크포인트 뒤 전체 선택 코퍼스·순차 평가 회귀와 증거 게시를 아래 최종 검증으로 마감했습니다. **M2 전체는 계속 진행 중입니다.**
+
+Stage 40의 [출력 비교 증거](reports/m2/stage40-output-captures.json)는 고정 Java 원본·수정 전후 native·실제 Node·Chromium·trace·UTF-16 출력과 독립 검토 파일 21,951개를 보존합니다. 실제 trace Cargo cache의 정확한 경로만 열거 전에 제외했고, archive 무결성 검사와 수집 중 원본 동일성 검사를 통과했습니다. 원본 30개 비교의 미구현·불일치·실행 조건 불충족, Java trace 오류와 정규식 차이는 그대로 남습니다. 전체 선택 코퍼스와 순차 평가의 최종 결과는 아래 마감 기록에 보존합니다.
+
+[구성요소·개발 검증 증거](reports/m2/stage40-component-captures.json)는 출력·primitive·amendment·formatter·uppercase·도구 검사 파일 6,742개를 보존합니다. 초기 실패와 수정 후 결과를 함께 유지했으며, archive 무결성과 수집 중 원본 동일성을 확인했습니다. 구성요소 비교는 해당 경계의 근거로만 사용하고 전체 평가기·제품 호환성으로 확대하지 않습니다.
+
+### Stage 40 최종 로컬 검증
+
+[최종 결과](reports/m2/stage40-final-summary.json)의 native 선택 3,629개는 일치 3,603개·미구현 15개·불일치 9개·원래 Java 실행 조건 불충족 1개·Java 오류 1개입니다. 기존 3,599개의 순서와 통과·실패 상태는 모두 유지됐습니다. 서로 다른 실제 checkout URI와 frame에 따른 원시 채널 차이 3,473개는 정규화하지 않고 개별 기록했습니다. 변형 관계 88개와 순차 평가 334회의 호출 2,782개는 모두 일치하며, 순차 평가의 이전·현재 상태·출력 채널 16,692개도 같습니다.
+
+[최종 회귀 증거](reports/m2/stage40-final-regression-captures.json)는 파일 57,814개를 보존합니다. [소스 대응](reports/m2/stage40-final-source-binding.json)은 검사·native·순차 평가의 사본 8,105개를 구현 커밋 `7c60a2c`와 고정 submodule의 고유 파일 4,259개에 연결합니다. 무결성 검사는 통과하지만 개발·엄격한 선택·전체 언어 gate는 실패하고, 전체 gate 실패 이유 1,874개를 유지합니다. **Stage 40의 모듈 출력 구현·로컬 검증은 마감하며 M2 전체는 계속 진행합니다.** 모듈 로딩·상속, 나머지 언어·출력·제품·플랫폼·성능 의무는 그대로 남습니다.
+
+### Stage 41 — 공유 모듈 로더와 선언 출처
+
+Stage 40 구현 체크포인트 `7c60a2c`에서 별도 작업 공간을 만들어 실제 import 구현을 시작했습니다. Stage 40의 전체 회귀 검증은 기존 소스에서 분리해 마감했습니다. 공통 코드 공간·컴파일러·모듈 캐시·초기화 continuation은 `gpt-6-astra / xhigh`, Host·SourceSession·native·Wasm·N-API 전달은 `gpt-6.1-sol / high`, 고정 Java의 SPI·재진입·캐시 관찰과 독립 검증은 별도의 `gpt-6.1-sol / high`에 배정합니다.
+
+첫 원본은 `basic/import1`, `basic/import2`, `basic/import3`이며 원래 `.pkl` 파일, argv·환경·경로·리소스와 출력 계약을 유지합니다. 모듈별 VM이나 소스 인라인 대신 한 evaluator의 heap과 append-only 코드 공간을 사용합니다. 모듈·선언 identity와 표시 source URI를 구분하고, 가져온 모듈의 변수·클래스·타입 출처를 보존합니다. 이후 `extends`·`amends`와 원본 recursive module 사례를 같은 구조 위에서 구현합니다. 첫 세 사례의 성공이 전체 로더나 M2 완료 조건을 대체하지 않습니다.
+
+모듈 Host에는 URI resolve와 source load를 구분한 typed 요청·완료를 추가합니다. 공통 엔진이 URI 준비, 캐시, parsing·컴파일·초기화와 오류 선택을 담당하고 native Host는 실제 파일을 처리합니다. portable Host는 명시적인 URI·source bundle을 운반하며 JavaScript에서 Pkl을 평가하지 않습니다. imported frontend 오류는 구조화된 진단과 원래 source를 유지한 뒤 최종 경계에서 렌더링합니다.
+
+고정 Java의 실제 ModuleKey SPI 반복 관찰에서 resolve 실패는 재시도하며 source 읽기·초기화 실패는 첫 오류를 캐시하는 차이를 확인했습니다. source를 읽기 전의 동일 URI 재진입은 별도 load를 시작하고, 초기화 직전에 게시된 모듈은 실제 빈 receiver로 관찰됩니다. 중첩 load가 성공한 뒤 바깥 source load가 실패하면 이미 얻은 모듈 값은 유지되지만 새로운 import는 캐시된 바깥 오류를 봅니다. resolved URI cache hit가 새 original URI 별칭을 항상 추가하는 것으로 구현하지 않습니다. close·timeout 뒤의 Java 내부 예외도 정상 성공으로 바꾸지 않습니다.
+
+검증에는 원본 import·상속·재귀 입력의 전체 native 출력 채널, 실제 Node·Chromium의 공통 결과, 같은 byte offset의 서로 다른 클래스 identity, lexical owner, symlink·정규화 별칭, 오류 캐시와 첫 진단, GC·재진입·취소·timeout·close를 포함합니다. 기존 전체 언어·순차 평가·trace·플랫폼·UTF-16 출력 코퍼스도 새 공통 코드 공간에서 다시 확인합니다. 현재는 구현과 집중 검증 중이며, 실행하지 않은 원본이나 미지원 외부 모듈을 목록의 통과로 바꾸지 않습니다.
+
+native 개발 probe의 상속 환경 변수는 명시적 `--env-var`를 적용하기 전에 전달하도록 보완합니다. pinned Unix JDK의 UTF-8 환경 디코딩과 override 순서를 별도 원시 비교로 확인하고, portable 입력과 다른 OS의 실행 조건을 구분합니다. 이 변경도 전체 제품 CLI의 완료를 뜻하지 않습니다.
+
+별도 구성요소 비교의 UTF-8 입력 106,336개는 Java UTF-16·UTF-8 결과와 일치했습니다. 실제 CLI의 상속 값·명시적 override·잘못된 UTF-8 값 비교도 진행했으며, 서로 다른 잘못된 바이트 이름이 같은 문자열로 디코딩되는 사례에서는 Java raw-key `HashMap`의 순회 순서 때문에 값 선택 차이를 확인했습니다. 이 실패와 다른 OS의 비Unicode 환경 입력은 남은 native CLI 조건으로 유지하며, 문자열 디코더 성공을 전체 환경 변수 호환성으로 확대하지 않습니다.
+
+### Stage 41 구현·검증 중간 결과
+
+공통 모듈 로더는 한 VM·heap·코드 공간에서 import를 실행하고 original/resolved cache와 source callback 재진입을 처리합니다. checkpoint02의 원본 30개 × 두 반복은 일치 32회·미구현 24회·불일치 2회·원래 Java 실행 조건 불충족 2회입니다. `import1`, `import2`, `import3`의 여섯 실행만 이전 단계의 미지원에서 일치로 바뀌었고, 이전 통과 사례의 회귀는 없습니다.
+
+[중간 필수 검사](reports/m2/stage41-required-captures.json)의 수정 후 Rust 검사 5개는 모두 통과했습니다. 최초 전체 검사에서 외부 선언의 상대 `read`가 호출자 URI를 사용하는 회귀를 발견했고, 원래 단언을 유지한 채 선언 source와 module key를 구분하도록 수정했습니다. 반대로 실제 imported unit의 original/resolved/display URI가 서로 다른 사례도 검증했습니다. 성공 621회·ignored 1회는 자식 재실행을 포함한 harness 집계이며 독립 기능 수가 아닙니다.
+
+Java-origin 모듈 graph 22개의 실제 Node·Chromium 비교에서는 각 환경의 44회 중 일치 22회·미지원 8회·불일치 12회·어댑터 실행 실패 2회를 기록했습니다. 불일치 여섯 graph는 동일 API·입력에서 import 선언 frame을 추가하는 실제 진단 차이입니다. 별칭 cache graph의 임의 표현식은 속성 경로 전용 session의 제약에 걸렸습니다. 이 결과를 통과로 바꾸거나 원본을 단순화하지 않고, 공통 진단 수정과 실제 parser·resolver·compiler 기반 표현식 진입 경로를 구현합니다. imported qualified type에 의존하는 네 graph의 미지원은 후속 타입·상속 의무로 남습니다.
+
+검증 도구의 누락된 nullable logger member 필드를 정상 `null`로 받아들이는 문제도 독립 검토로 발견해 수정했습니다. 수정 후 JavaScript 검사 46개가 통과했고, Java fixture 도구의 변경 관련 Python 검사 7개도 통과했습니다. 실제 공통 플랫폼 비교는 공유 결과 6,078개·Java 일치 6,076개와 기존 정규식 차이 두 개를 유지합니다. 이 기록은 checkpoint02의 범위이며 이후 변경 소스를 검증한 결과로 재사용하지 않습니다. **Stage 41과 M2 전체는 진행 중입니다.**
+
+후속 native 집중 검사에서는 원래 여섯 graph의 전체 오류 바이트가 일치합니다. 별도 Java 대조군은 선언·inline import와 resolve·source·parse·초기화 실패의 조합 여덟 개를 두 번씩 실행했습니다. 원시 UTF-8·UTF-16 payload와 출처를 별도 fixture에 보존하고, 같은 Host·GC·close 경로를 통과하는 native 비교도 일치했습니다. 기존 22개 graph의 입력과 기대값은 그대로 유지합니다.
+
+임의 표현식은 공통 parser·resolver·compiler로 컴파일하고 실제 모듈 receiver에 대해 실행하도록 연결했습니다. 표현식의 lexical scope와 source key는 Java의 synthetic `repl:text` 문맥을 따릅니다. 독립 검토에서 발견한 조기 컴파일 오류는 각 호출까지 지연하여 module 초기화의 첫 오류와 앞선 정상 호출을 보존하며, frontend와 runtime의 frame 이름도 구분합니다. 집중 session·transport 검사 14개, 관련 Clippy·Wasm 검사와 JavaScript 검사 47개는 통과했습니다. 새 Java 표현식 대조군 여덟 개에 대한 독립 검토와 최종 전체·portable 재검증은 이어서 수행합니다. 모듈 선언 타입·상속과 미지원 URI 기능은 여전히 남아 있습니다.
+
+### Stage 41 구현 체크포인트
+
+독립 검토에서 중첩 `let` 오류가 실제 표현식 대신 primary module source를 사용하던 차이를 발견했습니다. 공통 compiler의 let frame이 선언 source를 직접 보존하도록 수정하고, synthetic 표현식의 중첩 이름과 이름 없는 실행 root를 구분했습니다. 원래 Java 입력·물리 URI·전체 오류 바이트를 유지한 회귀가 통과했습니다. [Java 기준·검토 증거](reports/m2/stage41-oracle-captures.json)는 초기 실패와 수정 검토를 보존하며, 첫 묶음에서 빠진 closure 외부 로그 28개는 원본을 변경하지 않고 보충 묶음과 합집합 검증에 포함했습니다.
+
+[구현 체크포인트](reports/m2/stage41-implementation-checkpoint.json)의 필수 Rust 검사 5개는 수정 후 모두 통과했습니다. 소스·fixture 4,958개의 동일성을 확인했으며 성공 633회·ignored 1회는 자식 재실행을 포함한 harness 집계입니다. 전체 선택 native 3,629개와 순차 평가 2,782개 호출, 원본 30개 native 재비교는 별도 취득 중이며 이 체크포인트에서 완료로 처리하지 않습니다.
+
+실제 Node·Chromium 모듈 graph 비교는 환경별 44회 중 일치 36회·미지원 8회입니다. 이전 여섯 graph의 진단 차이와 별칭 graph의 표현식 진입 실패를 수정했습니다. graph 내부 호출 비교는 환경별 일치 106회·미지원 8회·불일치 2회이며, `self-class-parent-error`의 후속 호출 두 차이는 미지원 graph 내부에서도 그대로 보존합니다. 공통 플랫폼 비교의 6,078개 공유 결과·6,076개 Java 일치와 기존 정규식 차이 두 개도 유지합니다. 같은 최종 artifact의 PCF 문자열 출력은 환경별 384회 모두 일치했고, trace는 일치 58회·Java 오류 32회입니다. **이 구현 체크포인트는 Stage 41 전체 회귀 마감이나 M2 완료 선언이 아닙니다.**
 
 ## M3 — 표준 라이브러리와 출력
 

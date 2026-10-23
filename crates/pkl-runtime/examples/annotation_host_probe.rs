@@ -95,6 +95,9 @@ impl Probe<'_> {
                 HostPoll::Log { .. } => {
                     unreachable!("default annotation adapter uses the no-op logger")
                 }
+                HostPoll::Module { .. } => {
+                    unreachable!("fixed annotation adapter has no module Host capability")
+                }
                 HostPoll::Yielded => unreachable!(),
             }
         }

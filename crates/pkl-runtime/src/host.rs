@@ -15,8 +15,18 @@ static NEXT_SESSION: AtomicU64 = AtomicU64::new(1);
 #[derive(Clone, Debug, PartialEq)]
 pub enum HostPoll {
     Ready(Result<Value, RuntimeError>),
-    Read { token: String, uri: Arc<str> },
-    Log { token: String, event: Arc<LogEvent> },
+    Read {
+        token: String,
+        uri: Arc<str>,
+    },
+    Log {
+        token: String,
+        event: Arc<LogEvent>,
+    },
+    Module {
+        token: String,
+        request: crate::modules::ModuleRequest,
+    },
     Yielded,
 }
 
@@ -34,6 +44,7 @@ pub struct HostSession {
     contexts: Vec<HostContext>,
     next_context: u64,
     cancelled_reads: Vec<String>,
+    cancelled_modules: Vec<String>,
     terminal: Option<RuntimeError>,
     active: bool,
     intermediate_result: Option<Result<Value, RuntimeError>>,
@@ -55,6 +66,7 @@ impl HostSession {
             contexts: Vec::new(),
             next_context: 1,
             cancelled_reads: Vec::new(),
+            cancelled_modules: Vec::new(),
             terminal: None,
             active: false,
             intermediate_result: None,
@@ -205,6 +217,10 @@ impl HostSession {
                 token: self.token(self.contexts.last().expect("active context").id, request.id),
                 event: request.event,
             },
+            VmPoll::Module(request) => HostPoll::Module {
+                token: self.token(self.contexts.last().expect("active context").id, request.id),
+                request,
+            },
             VmPoll::Yielded => HostPoll::Yielded,
         }
     }
@@ -246,6 +262,27 @@ impl HostSession {
         }
         let result = resources::configured_result(&request, properties, environment);
         self.vm.resume(id, result)
+    }
+
+    /// Complete exactly one typed module request owned by the current context.
+    pub fn complete_module(
+        &mut self,
+        token: &str,
+        completion: crate::modules::ModuleCompletion,
+        now_ms: u64,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        self.clock(now_ms)?;
+        if self.expire(now_ms) {
+            return Err(self.terminal.clone().unwrap());
+        }
+        let request = self.request_id(token)?;
+        self.vm.complete_module(request, completion)
+    }
+
+    /// Abort inventory for module resolution/source I/O, separate from reads.
+    pub fn drain_cancelled_modules(&mut self) -> Vec<String> {
+        std::mem::take(&mut self.cancelled_modules)
     }
 
     pub fn acknowledge_log(
@@ -415,6 +452,18 @@ impl HostSession {
                     .zip(self.vm.pending_requests())
                     .filter_map(|(context, request)| match request {
                         Some(PendingRequest::Read(request)) => {
+                            Some(self.token(context.id, request.id))
+                        }
+                        _ => None,
+                    })
+                    .collect::<Vec<_>>(),
+            );
+            self.cancelled_modules.extend(
+                self.contexts
+                    .iter()
+                    .zip(self.vm.pending_requests())
+                    .filter_map(|(context, request)| match request {
+                        Some(PendingRequest::Module(request)) => {
                             Some(self.token(context.id, request.id))
                         }
                         _ => None,

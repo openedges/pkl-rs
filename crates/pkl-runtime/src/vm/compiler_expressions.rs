@@ -347,7 +347,7 @@ impl Compiler<'_> {
                             body: start..output.len(),
                             writes_slot: name != "_",
                             frame: RuntimeFrame {
-                                source: None,
+                                source: self.source.clone(),
                                 span: expression.span,
                                 member: self.member.clone(),
                             },

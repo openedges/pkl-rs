@@ -1,0 +1,6 @@
+import "child.pkl" as child
+class C {x=7}
+result=7
+selfIdentity = child.parent == module
+classIdentity = child.parent.C == C
+answer=child.answer

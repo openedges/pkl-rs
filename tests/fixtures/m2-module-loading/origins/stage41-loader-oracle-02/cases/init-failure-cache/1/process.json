@@ -1,0 +1,65 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+    "LoaderProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/cases/init-failure-cache/1/calls",
+    "files"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache",
+  "environment": {
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/identity/tmp",
+    "TZ": "UTC"
+  },
+  "finishedUnixNs": 1792712498992723000,
+  "id": "init-failure-cache",
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-02/workspace/init-failure-cache/main.pkl",
+  "repeat": 1,
+  "result": {
+    "elapsed_ns": 1251850417,
+    "exit_code": 0,
+    "files": {
+      "workspace/bad.pkl": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+    },
+    "sha256": {
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "caa8d719744bca09bdb3ff71df2d726aea5cc42ec766b9a9e4e52e6a996f056b"
+    },
+    "timed_out": false,
+    "workspace_changes": {
+      "bad.pkl": {
+        "after": {
+          "kind": "file",
+          "sha256": "71d3070b8c08eee06e3752046867aaf0c98044cfc99407ac77f78aedf972887d"
+        },
+        "before": {
+          "kind": "file",
+          "sha256": "73698b440cc6e6ee2cc2e5ae48d531b40b8e1e15e251884046649a1ad7bfdefd"
+        }
+      }
+    }
+  },
+  "sourceSha256": "7af1651d377c9fd6a055314f4e666972fbdf32a9eca59a3e9c6abde50e5a1c0f",
+  "startedUnixNs": 1792712497732930000
+}

@@ -1,0 +1,7 @@
+import "main.pkl" as self
+class C { x=7 }
+result=7
+observation0 = self == module
+observation1 = self.C == C
+observation2 = self.result
+observation3 = result

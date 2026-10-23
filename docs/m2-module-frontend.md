@@ -62,11 +62,21 @@ options remain explicit adapter failures. The output operation passes the
 ordered property and environment maps to the shared read policy. Other missing
 module/resource capabilities remain explicit failures.
 
-The native development probe currently supplies only the explicit `--env-var`
-map. It does not merge the inherited process environment as the Java CLI does.
-The portable API likewise has no inherited native process environment. Captures
-retain each actual environment, but the current adapter does not establish full
-CLI environment inheritance compatibility.
+The native development probe inherits process environment entries before
+applying explicit `--env-var` options. Unix values use the pinned JDK's UTF-8
+replacement behavior, including malformed surrogate encodings. The portable API
+continues to receive explicit environment inputs through its options.
+
+Native environment compatibility remains incomplete when different malformed
+raw names decode to the same string: Java's raw-key `HashMap` iteration can
+select a different value from native environment order. This is a recorded
+raw-output mismatch. Non-Unicode entries on other operating systems also remain
+unsupported. These limitations are separate from verified value decoding and
+ordinary inherited/explicit override behavior.
+
+The [shared module-loading contract](m2-module-loading.md) describes typed
+resolution and source requests, evaluator-owned module identities and caches,
+the initial native file Host, and portable bundle comparisons.
 
 ## Diagnostic meaning and ordering
 

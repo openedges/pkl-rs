@@ -1,0 +1,8 @@
+import "a.pkl" as a
+import "b.pkl" as b
+const bar=1
+observation0 = a == b
+observation1 = a.C == b.C
+observation2 = new a.C {} is b.C
+observation3 = a.foo
+observation4 = b.foo

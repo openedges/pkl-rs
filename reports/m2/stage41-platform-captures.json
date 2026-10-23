@@ -1,0 +1,292 @@
+{
+  "archive": {
+    "bytes": 23179375,
+    "path": "reports/m2/stage41-platform-captures.tar.gz",
+    "payload_files": 17807,
+    "sha256": "5e132a24dae913415e76bc7c4031064b49845022f40f0a55cc34759402c3a8f6",
+    "uncompressed_payload_bytes": 133173257
+  },
+  "archive_integrity_exit": 0,
+  "direct_original_files": [
+    "target/m2/stage41-expression-check-01.stdout.bin",
+    "target/m2/stage41-expression-check-01.stderr.bin"
+  ],
+  "exact_cache_exclusions_before_traversal": [
+    "target/debug",
+    "target/release",
+    "target/wasm32-unknown-unknown",
+    "target/m2/stage41-adapter-cargo"
+  ],
+  "full_m2_complete": false,
+  "gates": {
+    "module_graph_strict_exit": 1,
+    "pcf192_compatibility_complete": true,
+    "pcf192_strict_exit": 0,
+    "standard_architecture_exit": 0,
+    "standard_strict_compatibility_status": "fail (two retained regex cases)",
+    "trace_architecture_passed": true,
+    "trace_compatibility_complete": false,
+    "trace_strict_exit": 1
+  },
+  "independent_archive_membership_review": {
+    "adjacent_log_bytes": 14501,
+    "covered_B_indexed_originals": 14607,
+    "cross_archive": "reports/m2/stage41-oracle-captures.tar.gz",
+    "cross_archive_dependencies_verified": 319,
+    "path": "target/m2/stage41-platform-publication-independent-audit-02/report.json",
+    "preserved_adjacent_logs_in_supplement": 12,
+    "primary_archive_original_bytes_and_membership_match": true,
+    "sha256": "4642a9b7603bb2773fa09d695135e18c43b787089b3e26a833c1dbbc7b737e62",
+    "union_unique_original_paths": 17819,
+    "unresolved_dependencies": 0
+  },
+  "portable_results": {
+    "module22": {
+      "browser": {
+        "executions": 44,
+        "individual_result_callback_comparisons": {
+          "candidate-unsupported": 8,
+          "mismatch": 2,
+          "pass": 106
+        },
+        "nested_mismatches": [
+          {
+            "comparisons": [
+              {
+                "channels": {
+                  "codeUnits": null,
+                  "exitCode": null,
+                  "kind": false,
+                  "payload": false
+                },
+                "group": "results",
+                "index": 1,
+                "indexMatches": true,
+                "rawMatch": false,
+                "status": "mismatch",
+                "stringBoundary": "java-utf8-serialization-only"
+              }
+            ],
+            "id": "self-class-parent-error",
+            "repeat": 0
+          },
+          {
+            "comparisons": [
+              {
+                "channels": {
+                  "codeUnits": null,
+                  "exitCode": null,
+                  "kind": false,
+                  "payload": false
+                },
+                "group": "results",
+                "index": 1,
+                "indexMatches": true,
+                "rawMatch": false,
+                "status": "mismatch",
+                "stringBoundary": "java-utf8-serialization-only"
+              }
+            ],
+            "id": "self-class-parent-error",
+            "repeat": 1
+          }
+        ],
+        "whole_execution_status_counts": {
+          "candidate-unsupported": 8,
+          "pass": 36
+        }
+      },
+      "node": {
+        "executions": 44,
+        "individual_result_callback_comparisons": {
+          "candidate-unsupported": 8,
+          "mismatch": 2,
+          "pass": 106
+        },
+        "nested_mismatches": [
+          {
+            "comparisons": [
+              {
+                "channels": {
+                  "codeUnits": null,
+                  "exitCode": null,
+                  "kind": false,
+                  "payload": false
+                },
+                "group": "results",
+                "index": 1,
+                "indexMatches": true,
+                "rawMatch": false,
+                "status": "mismatch",
+                "stringBoundary": "java-utf8-serialization-only"
+              }
+            ],
+            "id": "self-class-parent-error",
+            "repeat": 0
+          },
+          {
+            "comparisons": [
+              {
+                "channels": {
+                  "codeUnits": null,
+                  "exitCode": null,
+                  "kind": false,
+                  "payload": false
+                },
+                "group": "results",
+                "index": 1,
+                "indexMatches": true,
+                "rawMatch": false,
+                "status": "mismatch",
+                "stringBoundary": "java-utf8-serialization-only"
+              }
+            ],
+            "id": "self-class-parent-error",
+            "repeat": 1
+          }
+        ],
+        "whole_execution_status_counts": {
+          "candidate-unsupported": 8,
+          "pass": 36
+        }
+      }
+    },
+    "pcf192": {
+      "browser": {
+        "executions": 384,
+        "whole_execution_status_counts": {
+          "pass": 384
+        }
+      },
+      "node": {
+        "executions": 384,
+        "whole_execution_status_counts": {
+          "pass": 384
+        }
+      }
+    },
+    "trace45": {
+      "browser": {
+        "executions": 90,
+        "whole_execution_status_counts": {
+          "oracle-error": 32,
+          "pass": 58
+        }
+      },
+      "node": {
+        "executions": 90,
+        "whole_execution_status_counts": {
+          "oracle-error": 32,
+          "pass": 58
+        }
+      }
+    }
+  },
+  "preservation_notes": [
+    "Module whole graph36pass/8Unsupported per target includes individual106pass/8Unsupported/2mismatch comparisons; self-class-parent-error followups remain mismatches inside Unsupported graphs.",
+    "Six imported diagnostic frame graphs and original alias expression graph repaired against unchanged Java inputs/payloads.",
+    "All four qualified type/inheritance graphs and 32 Java trace oracle errors per target remain non-passes.",
+    "Existing Stage40 trace Java source/URI/profile observations reused exactly; no new Java acquisition or artifact build in affected output wrapper.",
+    "PCF192 uses unchanged Java actual-output binary/UTF16 inputs, all384 runs per target pass; no formatter-derived expected bytes.",
+    "No current native fulltrace45 acquisition claimed: affected trace check here is Node/Chromium against same shared compiled source."
+  ],
+  "publication_correction": "The unchanged primary archive omitted twelve closure-adjacent execution logs. Exact original bytes and path/hash mappings, including initial failed stderr, are preserved in the supplement. Copied minimal-fixture closure dependencies are explicitly resolved to the existing oracle archive.",
+  "schema": 1,
+  "scope": "Closed Stage41 implementation, adapter, native checkpoint and actual portable evidence, preserving initial failures and corrected raw comparisons. Four module type graph kinds, their nested follow-up mismatches, known regex differences and Java trace errors remain failures. Full selected native and original30 native03 acquisitions are separate pending records.",
+  "source_changes_during_publication": [],
+  "source_roots": [
+    "target/m2/stage41-adapter-check-01",
+    "target/m2/stage41-adapter-tests-01",
+    "target/m2/stage41-adapter-tests-02",
+    "target/m2/stage41-adapter-validation-03",
+    "target/m2/stage41-adapter-validation-04",
+    "target/m2/stage41-adapter-validation-05",
+    "target/m2/stage41-affected-output-command-01",
+    "target/m2/stage41-b-adapter-checkpoint-01",
+    "target/m2/stage41-b-adapter-checkpoint-02",
+    "target/m2/stage41-b-adapter-checkpoint-03",
+    "target/m2/stage41-b-adapter-checkpoint-04",
+    "target/m2/stage41-b-adapter-checkpoint-05",
+    "target/m2/stage41-examples-check-01",
+    "target/m2/stage41-expression-metadata-validation-01",
+    "target/m2/stage41-js-full-validation-02",
+    "target/m2/stage41-let-diagnostic-baseline-01",
+    "target/m2/stage41-let-diagnostic-correction-01",
+    "target/m2/stage41-let-diagnostic-correction-02",
+    "target/m2/stage41-logger-metadata-validation-01",
+    "target/m2/stage41-logger-metadata-validation-02",
+    "target/m2/stage41-module-callback-close-test-01",
+    "target/m2/stage41-module-platform-development-02",
+    "target/m2/stage41-module-platform-development-03",
+    "target/m2/stage41-pcf-string-output-platform-regression-01",
+    "target/m2/stage41-platform-environment-01",
+    "target/m2/stage41-platform-module-audit-01",
+    "target/m2/stage41-platform-module-audit-02",
+    "target/m2/stage41-platforms-command-01",
+    "target/m2/stage41-platforms-command-02",
+    "target/m2/stage41-platforms-command-03",
+    "target/m2/stage41-platforms-development-01",
+    "target/m2/stage41-platforms-development-02",
+    "target/m2/stage41-platforms-development-03",
+    "target/m2/stage41-session-expression-rollback-01",
+    "target/m2/stage41-session-expression-tests-01",
+    "target/m2/stage41-session-expression-tests-02",
+    "target/m2/stage41-session-expression-tests-03",
+    "target/m2/stage41-session-expression-tests-04",
+    "target/m2/stage41-session-expression-tests-05",
+    "target/m2/stage41-session-expression-tests-06",
+    "target/m2/stage41-session-expression-validation-01",
+    "target/m2/stage41-session-expression-validation-02",
+    "target/m2/stage41-session-expression-validation-03",
+    "target/m2/stage41-trace-platform-regression-01",
+    "target/m2/stage41-wasm-adapter-check-01",
+    "target/m2/stage41-b-final-evidence-index-01",
+    "target/m2/stage41-platform-final-review-01",
+    "target/m2/stage41-core-checkpoint-01",
+    "target/m2/stage41-core-checkpoint-02",
+    "target/m2/stage41-core-checkpoint-03",
+    "target/m2/stage41-module-diagnostics-01",
+    "target/m2/stage41-module-diagnostics-02",
+    "target/m2/stage41-original30-native-01",
+    "target/m2/stage41-original30-native-02",
+    "target/m2/stage41-original30-native-audit-01",
+    "target/m2/stage41-original30-native-audit-02",
+    "target/m2/stage41-qualified-types-next-design-01"
+  ],
+  "standard": {
+    "artifacts": {
+      "pkl_napi.node": "eaaf705ec3ce6aab9c82dd7b2437266d946c6445c51d9d71a67ada5de9f14acf",
+      "semantics_probe": "1e6812d255adfa1cac3497d3852528c40b0006a9cf9accd3c773143c9c7e6e10",
+      "wasm/pkl_wasm.d.ts": "cc1027a0ba0b78d8176dfadca6a1a03e240923b73673c6e0c81a7a2e125cf902",
+      "wasm/pkl_wasm.js": "d41d86bd55339847e3119fde3aee2fc5b1f9d7f6f973362e90a68448b57d8d72",
+      "wasm/pkl_wasm_bg.wasm": "ed43f3af5fc63e5b0f6d088d1da1d797a219b8d69576e7a95d70ed76e9eeaa2b",
+      "wasm/pkl_wasm_bg.wasm.d.ts": "09ca51b31e6c068ef355bcf346d792428ed9e260793e94005bdbbe94f66ce498"
+    },
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "oracle_passed": {
+      "browser": 6076,
+      "node": 6076,
+      "rust": 6076
+    },
+    "shared_engine_passed": 6078,
+    "source_stability": true,
+    "total": 6078
+  },
+  "supplement": {
+    "bytes": 587066,
+    "path": "reports/m2/stage41-platform-review-supplement.tar.gz",
+    "payload_files": 543,
+    "sha256": "4c6e31898d55af0b47902bfd8d7cb8104fe1fae2cb459551c944301c944a0e0b",
+    "uncompressed_payload_bytes": 6328021
+  },
+  "supplement_integrity_exit": 0,
+  "supplement_source_changes": [],
+  "supplement_source_roots": [
+    "target/m2/stage41-platform-publication-independent-audit-01",
+    "target/m2/stage41-platform-publication-independent-audit-02",
+    "target/m2/stage41-git-review-01",
+    "target/m2/stage41-qualified-types-review-plan-01",
+    "target/m2/stage41-qualified-types-lookup-addendum-01"
+  ]
+}

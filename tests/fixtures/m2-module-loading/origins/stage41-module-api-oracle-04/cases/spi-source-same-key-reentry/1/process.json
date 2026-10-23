@@ -1,0 +1,86 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-module-api-oracle-04/identity/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-module-api-oracle-04/identity/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-module-api-oracle-04/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+    "FullLoaderProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/spi-source-same-key-reentry",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-module-api-oracle-04/cases/spi-source-same-key-reentry/1/calls",
+    "source-reentry"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/spi-source-same-key-reentry",
+  "environment": {
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-module-api-oracle-04/identity/home",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TERM": "dumb",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-module-api-oracle-04/identity/tmp",
+    "TZ": "UTC"
+  },
+  "finishedUnixNs": 1792713688105857000,
+  "id": "spi-source-same-key-reentry",
+  "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-01/workspace/spi-source-same-key-reentry/main.pkl",
+  "repeat": 1,
+  "result": {
+    "elapsed_ns": 575263000,
+    "exit_code": 0,
+    "files": {},
+    "sha256": {
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "a8aaec70acad2336e2e2c5a9f34dfb5d631a4f042d2a8dd1f4209c22e5d52e08"
+    },
+    "timed_out": false,
+    "workspace_changes": {}
+  },
+  "sourceSha256": "872fee86f1c1b1f195738f19847d95221e708583c5241e4042d2d9a4147b2433",
+  "startedUnixNs": 1792713687529021000,
+  "workspaceAfter": {
+    "callback.txt": {
+      "kind": "file",
+      "sha256": "79ca5ee955b4364ab692de3e3612281f90f2a026401adcc3ca4cf01ec14e16de"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "872fee86f1c1b1f195738f19847d95221e708583c5241e4042d2d9a4147b2433"
+    },
+    "plan.tsv": {
+      "kind": "file",
+      "sha256": "3ad953189d2c626a90d29011b4e64ddf7f2c98143c78980543eb9e04c76e1792"
+    },
+    "source.pkl": {
+      "kind": "file",
+      "sha256": "04d00c202b5d76d5a37a3cc6054f0c9dfbc9a54a4ca7ac376175de630ff7c05b"
+    }
+  },
+  "workspaceBefore": {
+    "callback.txt": {
+      "kind": "file",
+      "sha256": "79ca5ee955b4364ab692de3e3612281f90f2a026401adcc3ca4cf01ec14e16de"
+    },
+    "main.pkl": {
+      "kind": "file",
+      "sha256": "872fee86f1c1b1f195738f19847d95221e708583c5241e4042d2d9a4147b2433"
+    },
+    "plan.tsv": {
+      "kind": "file",
+      "sha256": "3ad953189d2c626a90d29011b4e64ddf7f2c98143c78980543eb9e04c76e1792"
+    },
+    "source.pkl": {
+      "kind": "file",
+      "sha256": "04d00c202b5d76d5a37a3cc6054f0c9dfbc9a54a4ca7ac376175de630ff7c05b"
+    }
+  }
+}

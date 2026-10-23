@@ -1,0 +1,2 @@
+@Deprecated { when(throw("child-init")) { message = "x" } }
+value = 9

@@ -1,0 +1,184 @@
+[
+  {
+    "actions": [
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "fresh.value"
+      ]
+    ],
+    "files": {
+      "callback.txt": "a.value",
+      "source.pkl": "value=trace(9)\n"
+    },
+    "id": "source-reentry-outer-failure",
+    "main": "a=import(\"life:/a\")\nfresh=import(\"life:/a\")\n",
+    "mode": "source-reentry-outer-failure",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/source-reentry-outer-failure/main.pkl",
+    "sourceSha256": "203d060fc9c73dcdf80d5a04c6b724602fe9d88dee2c10ad478498f1652609a9",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "fresh.value"
+      ]
+    ],
+    "files": {
+      "callback.txt": "a.value",
+      "source.pkl": "value=trace(9)\n"
+    },
+    "id": "source-reentry-inner-failure",
+    "main": "a=import(\"life:/a\")\nfresh=import(\"life:/a\")\n",
+    "mode": "source-reentry-inner-failure",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/source-reentry-inner-failure/main.pkl",
+    "sourceSha256": "203d060fc9c73dcdf80d5a04c6b724602fe9d88dee2c10ad478498f1652609a9",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "fresh.value"
+      ]
+    ],
+    "files": {
+      "callback.txt": "a.value",
+      "source.pkl": "@Deprecated { when(trace(true)) { message=\"setup\" } }\nmodule child\nvalue=9\n"
+    },
+    "id": "init-empty-publication",
+    "main": "a=import(\"life:/a\")\nfresh=import(\"life:/a\")\n",
+    "mode": "init-reentry",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/init-empty-publication/main.pkl",
+    "sourceSha256": "203d060fc9c73dcdf80d5a04c6b724602fe9d88dee2c10ad478498f1652609a9",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "a.value"
+      ]
+    ],
+    "files": {
+      "callback.txt": "a.value",
+      "source.pkl": "value=9\n"
+    },
+    "id": "source-close-reentry",
+    "main": "a=import(\"life:/a\")\n",
+    "mode": "source-close-reentry",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/source-close-reentry/main.pkl",
+    "sourceSha256": "872fee86f1c1b1f195738f19847d95221e708583c5241e4042d2d9a4147b2433",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "a.value"
+      ],
+      [
+        "eval",
+        "a.value"
+      ]
+    ],
+    "files": {
+      "source.pkl": "value=9\n"
+    },
+    "id": "source-timeout",
+    "main": "a=import(\"life:/a\")\n",
+    "mode": "source-timeout",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/source-timeout/main.pkl",
+    "sourceSha256": "872fee86f1c1b1f195738f19847d95221e708583c5241e4042d2d9a4147b2433",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "selfIdentity"
+      ],
+      [
+        "eval",
+        "classIdentity"
+      ],
+      [
+        "eval",
+        "answer"
+      ]
+    ],
+    "files": {
+      "child.pkl": "import \"main.pkl\" as root\nparent=root\nanswer=root.result+1\n"
+    },
+    "id": "mutual-exposed-identity",
+    "main": "import \"child.pkl\" as child\nclass C {x=7}\nresult=7\nselfIdentity = child.parent == module\nclassIdentity = child.parent.C == C\nanswer=child.answer\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/mutual-exposed-identity/main.pkl",
+    "sourceSha256": "d487e18b4998afa96014ed48b1953d0241c2d497ce792dc94b0988f856fde08d",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "answer"
+      ]
+    ],
+    "files": {
+      "child.pkl": "import \"main.pkl\" as root\nopen class D { recursive: root.C? }\n"
+    },
+    "id": "mutual-recursive-class-signature",
+    "main": "import \"child.pkl\" as child\nopen class C extends child.D {}\nanswer=new C {}.recursive == null\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/mutual-recursive-class-signature/main.pkl",
+    "sourceSha256": "5a051e573dbc9f6eb1395770b8eb6791bd3b15e99b654b94bc215b20cdbbeece",
+    "symlinks": {}
+  },
+  {
+    "actions": [
+      [
+        "eval",
+        "answer"
+      ],
+      [
+        "eval",
+        "answer"
+      ]
+    ],
+    "files": {},
+    "id": "self-class-parent-error",
+    "main": "import \"main.pkl\" as self\nclass C extends self.C {}\nanswer=new C {}\n",
+    "mode": "files",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-loader-oracle-03/workspace/self-class-parent-error/main.pkl",
+    "sourceSha256": "8898b4107fd77ca348e67f3e237dbcdb12a52ebcd39b561c50a46e672d05be61",
+    "symlinks": {}
+  }
+]

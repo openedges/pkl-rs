@@ -108,11 +108,13 @@ impl Vm {
                     string_hash(&format!("pkl.base#{name}"))
                 }
             }),
-            Value::Class(id) => {
-                self.heap.get(*id)?.class_definition.as_ref().map(|class| {
-                    string_hash(&format!("{}#{}", self.program.module_name, class.name))
-                })
-            }
+            Value::Class(id) => self.heap.get(*id)?.class_definition.as_ref().map(|class| {
+                string_hash(&format!(
+                    "{}#{}",
+                    class.module.as_deref().unwrap_or(&self.program.module_name),
+                    class.name
+                ))
+            }),
             Value::Object(id) => self.heap.get(*id)?.java_hash.flatten(),
         })
     }

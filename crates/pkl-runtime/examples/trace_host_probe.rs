@@ -161,6 +161,7 @@ impl Driver {
                 error: Some(error.message.encode_utf16().collect()),
                 error_bytes: None,
                 log: None,
+                ..Default::default()
             },
         };
         save_result(&self.out, prefix, event);
@@ -329,6 +330,7 @@ fn main() {
                         error: Some(error.encode_utf16().collect()),
                         error_bytes: None,
                         log: None,
+                        ..Default::default()
                     },
                 );
             }

@@ -11,6 +11,7 @@ fn finish(vm: &mut Vm) -> Result<Value, RuntimeError> {
             VmPoll::Ready(result) => return result,
             VmPoll::Yielded => {}
             VmPoll::Log(_) => panic!("unexpected logger request"),
+            VmPoll::Module(_) => panic!("unexpected module request"),
             VmPoll::Pending(_) => panic!("unexpected Host request"),
         }
     }
@@ -154,7 +155,7 @@ fn parameterized_shadow_union_diagnostics_retain_the_authored_alternative() {
     let (mut vm, module) = module(source);
     let error = member(&mut vm, module, "p").unwrap_err();
     let pkl_runtime::diagnostic::TypeDiagnostic::Union { children, .. } =
-        *error.type_diagnostic.unwrap()
+        error.type_diagnostic.as_deref().unwrap()
     else {
         panic!("expected union diagnostic");
     };

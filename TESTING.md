@@ -121,6 +121,19 @@ continues to report successful preparation as unsupported output evaluation.
 An original case's unmet execution prerequisites or expected exit status cannot
 be satisfied by raw agreement with a setup-dependent Java failure.
 
+The [shared module-loading contract](docs/m2-module-loading.md) adds Java-origin
+module graph fixtures and typed Host continuation checks. Verify fixture
+provenance separately from actual evaluator execution:
+
+```sh
+python3 tools/module_loading_fixtures.py
+cargo test -p pkl-runtime --test m2_module_loading --test m2_module_transport --test m2_module_diagnostics --test m2_session_expressions --locked
+```
+
+These checks do not replace original native process comparisons or actual
+Node/browser execution. Remaining module inheritance, URI and external-capability
+requirements stay in the full language gate.
+
 Class and type-alias initialization have a separate persistent-evaluator contract:
 
 ```sh

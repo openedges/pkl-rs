@@ -1,0 +1,621 @@
+{
+  "caseCount": 4,
+  "helperSha256": "f96196470dc4acf6c284a91098735ab75956ae78718879ad9370dc6be85e6a90",
+  "jarSha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+  "jdkIdentityReuse": {
+    "reportPath": "target/m2/stage41-native-environment-review-01/report.json",
+    "reportSha256": "b59d83d6bff21ffdc80a56c8ce32fa57fc2f4f44391afdc4c9f774dca0c5ccb7",
+    "scope": "Same /usr/bin/java and pinned compiled JAR; exact process Java arguments/HOME/tmp recorded per new invocation. No Java expected bytes reused across input identities."
+  },
+  "observations": [
+    {
+      "exit": 1,
+      "fact": "Relative authored child%20%25.pkl seeks literal percent-encoded filename child%20%25.pkl, displayed as URI child%2520%2525.pkl. Existing child %.pkl does not satisfy it.",
+      "id": "relative-encoded-missing"
+    },
+    {
+      "exit": 0,
+      "fact": "Relative literal child %.pkl is path-escaped and finds the actual space/percent filename.",
+      "id": "relative-literal-space-percent",
+      "stdoutHex": "37"
+    },
+    {
+      "exit": 0,
+      "fact": "Absolute file URI is parsed as URI and its percent escapes identify the space/percent filename.",
+      "id": "absolute-encoded-target",
+      "stdoutHex": "37"
+    },
+    {
+      "exit": 0,
+      "fact": "Relative child%20%25.pkl finds a literal filename containing %20%25.",
+      "id": "relative-encoded-literal-file",
+      "stdoutHex": "38"
+    }
+  ],
+  "pinnedSource": {
+    "fact": "IoUtils.toUri uses raw URI parsing only for uriLike strings; other relative strings are path-escaped, including literal percent.",
+    "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/util/IoUtils.java",
+    "sha256": "e0d14b69e64185c9ef4b771648173d5584b9ab910e717244a6ec889ca43c9e10"
+  },
+  "processCount": 8,
+  "records": [
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "org.pkl.cli.Main",
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-missing/main.pkl"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-missing",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TERM": "dumb",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792713045367852000,
+      "id": "relative-encoded-missing",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-missing/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 1096336000,
+        "exit_code": 1,
+        "files": {},
+        "sha256": {
+          "stderr": "afbf4c7b70df8d199f67c553357f5960d5772f8841b40768ca5ecffd195b2f8f",
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f",
+      "startedUnixNs": 1792713044269821000,
+      "workspaceAfter": {
+        "child %.pkl": {
+          "kind": "file",
+          "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f"
+        }
+      },
+      "workspaceBefore": {
+        "child %.pkl": {
+          "kind": "file",
+          "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "org.pkl.cli.Main",
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-missing/main.pkl"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-missing",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TERM": "dumb",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792713046146208000,
+      "id": "relative-encoded-missing",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-missing/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 776633917,
+        "exit_code": 1,
+        "files": {},
+        "sha256": {
+          "stderr": "afbf4c7b70df8d199f67c553357f5960d5772f8841b40768ca5ecffd195b2f8f",
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f",
+      "startedUnixNs": 1792713045368187000,
+      "workspaceAfter": {
+        "child %.pkl": {
+          "kind": "file",
+          "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f"
+        }
+      },
+      "workspaceBefore": {
+        "child %.pkl": {
+          "kind": "file",
+          "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "org.pkl.cli.Main",
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-literal-space-percent/main.pkl"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-literal-space-percent",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TERM": "dumb",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792713046922164000,
+      "id": "relative-literal-space-percent",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-literal-space-percent/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 773619417,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "ed06c4b7c27c490f943e26b464bfdcae7dad382cbbb2282bd8f856898ffa2015",
+      "startedUnixNs": 1792713046147156000,
+      "workspaceAfter": {
+        "child %.pkl": {
+          "kind": "file",
+          "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "ed06c4b7c27c490f943e26b464bfdcae7dad382cbbb2282bd8f856898ffa2015"
+        }
+      },
+      "workspaceBefore": {
+        "child %.pkl": {
+          "kind": "file",
+          "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "ed06c4b7c27c490f943e26b464bfdcae7dad382cbbb2282bd8f856898ffa2015"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "org.pkl.cli.Main",
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-literal-space-percent/main.pkl"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-literal-space-percent",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TERM": "dumb",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792713047692167000,
+      "id": "relative-literal-space-percent",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-literal-space-percent/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 768376042,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "ed06c4b7c27c490f943e26b464bfdcae7dad382cbbb2282bd8f856898ffa2015",
+      "startedUnixNs": 1792713046922438000,
+      "workspaceAfter": {
+        "child %.pkl": {
+          "kind": "file",
+          "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "ed06c4b7c27c490f943e26b464bfdcae7dad382cbbb2282bd8f856898ffa2015"
+        }
+      },
+      "workspaceBefore": {
+        "child %.pkl": {
+          "kind": "file",
+          "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "ed06c4b7c27c490f943e26b464bfdcae7dad382cbbb2282bd8f856898ffa2015"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "org.pkl.cli.Main",
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/main.pkl"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TERM": "dumb",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792713048457360000,
+      "id": "absolute-encoded-target",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 762754375,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "21b80736ab46a7dda84f6d316b714fcfe4a60f8ae4ba1e6e0db3ebee50629156",
+      "startedUnixNs": 1792713047693045000,
+      "workspaceAfter": {
+        "child %.pkl": {
+          "kind": "file",
+          "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "21b80736ab46a7dda84f6d316b714fcfe4a60f8ae4ba1e6e0db3ebee50629156"
+        }
+      },
+      "workspaceBefore": {
+        "child %.pkl": {
+          "kind": "file",
+          "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "21b80736ab46a7dda84f6d316b714fcfe4a60f8ae4ba1e6e0db3ebee50629156"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "org.pkl.cli.Main",
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/main.pkl"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TERM": "dumb",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792713049225833000,
+      "id": "absolute-encoded-target",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/absolute-encoded-target/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 766779667,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "21b80736ab46a7dda84f6d316b714fcfe4a60f8ae4ba1e6e0db3ebee50629156",
+      "startedUnixNs": 1792713048457657000,
+      "workspaceAfter": {
+        "child %.pkl": {
+          "kind": "file",
+          "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "21b80736ab46a7dda84f6d316b714fcfe4a60f8ae4ba1e6e0db3ebee50629156"
+        }
+      },
+      "workspaceBefore": {
+        "child %.pkl": {
+          "kind": "file",
+          "sha256": "3f488c38714942bc14ef6295f1893c89f2c00036dd1f3538782bdba5ba074a7b"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "21b80736ab46a7dda84f6d316b714fcfe4a60f8ae4ba1e6e0db3ebee50629156"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "org.pkl.cli.Main",
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-literal-file/main.pkl"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-literal-file",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TERM": "dumb",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792713050002740000,
+      "id": "relative-encoded-literal-file",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-literal-file/main.pkl",
+      "repeat": 0,
+      "result": {
+        "elapsed_ns": 774702500,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f",
+      "startedUnixNs": 1792713049226650000,
+      "workspaceAfter": {
+        "child%20%25.pkl": {
+          "kind": "file",
+          "sha256": "b8d7ae3b140b5e727f4948e37c28393fa7e84f4721c4de2354cf9b83fd32f6ac"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f"
+        }
+      },
+      "workspaceBefore": {
+        "child%20%25.pkl": {
+          "kind": "file",
+          "sha256": "b8d7ae3b140b5e727f4948e37c28393fa7e84f4721c4de2354cf9b83fd32f6ac"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/.cache/oracle/pkl-tools-0.32.0.jar",
+        "org.pkl.cli.Main",
+        "eval",
+        "--no-cache",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-literal-file/main.pkl"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-literal-file",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/home",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TERM": "dumb",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/identity/tmp",
+        "TZ": "UTC"
+      },
+      "finishedUnixNs": 1792713050777820000,
+      "id": "relative-encoded-literal-file",
+      "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage41/target/m2/stage41-import-percent-oracle-01/workspace/relative-encoded-literal-file/main.pkl",
+      "repeat": 1,
+      "result": {
+        "elapsed_ns": 773456417,
+        "exit_code": 0,
+        "files": {},
+        "sha256": {
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3"
+        },
+        "timed_out": false,
+        "workspace_changes": {}
+      },
+      "sourceSha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f",
+      "startedUnixNs": 1792713050003019000,
+      "workspaceAfter": {
+        "child%20%25.pkl": {
+          "kind": "file",
+          "sha256": "b8d7ae3b140b5e727f4948e37c28393fa7e84f4721c4de2354cf9b83fd32f6ac"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f"
+        }
+      },
+      "workspaceBefore": {
+        "child%20%25.pkl": {
+          "kind": "file",
+          "sha256": "b8d7ae3b140b5e727f4948e37c28393fa7e84f4721c4de2354cf9b83fd32f6ac"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4756564dc574a0975ecadda52e5079bf77183275c63416010d292794857ef50f"
+        }
+      }
+    }
+  ],
+  "repeatDifferences": [],
+  "scope": "Authored actual pinned Java CLI file-import URI preparation controls. Source/argv/physical URI/resources unchanged between both fresh JVM repeats; no Rust expectations or compatibility claim."
+}

@@ -258,6 +258,7 @@ struct Resolver<'a> {
     diagnostic_path: Vec<crate::value::PklString>,
     diagnostic_owners: diagnostic_owner::OwnerScopes,
     diagnostic_owner_requested: bool,
+    external_type_names: std::collections::BTreeSet<String>,
 }
 
 // Resolver continuations own temporary scope state, never authored AST nodes.
@@ -891,6 +892,14 @@ impl<'a> Resolver<'a> {
                                 }
                                 _ => false,
                             });
+                        if !parameter && self.external_type_names.contains(&path[0]) {
+                            return Err(Diagnostic::unsupported(
+                                DiagnosticOrigin::Resolver,
+                                "session-expression-module-type",
+                                ty.span,
+                                "Module declaration types in session expressions are not implemented.",
+                            ));
+                        }
                         if path.len() > 2 {
                             return Err(Diagnostic::language(
                                 DiagnosticOrigin::Resolver,
@@ -1684,6 +1693,7 @@ fn resolve_module_inner(
         diagnostic_path: Vec::new(),
         diagnostic_owners: diagnostic_owner::OwnerScopes::new(capture_diagnostic_owner),
         diagnostic_owner_requested: false,
+        external_type_names: Default::default(),
     };
     let validation = (|| {
         if let Some(declaration) = &module.declaration {
@@ -1735,4 +1745,53 @@ fn resolve_module_inner(
             custom_functions: resolver.custom_functions,
         });
     (result, diagnostic_owner_requested)
+}
+
+/// Resolve a separately parsed expression in a synthetic module scope. The
+/// actual module is the runtime receiver, not this expression's lexical owner.
+/// Original local/import declarations therefore stay invisible to the expression.
+pub(crate) fn resolve_session_expression(
+    module: &Module,
+    text: &str,
+    parsed: &crate::parser::ParsedExpression,
+) -> Result<ResolvedModule, Diagnostic> {
+    let mut resolver = Resolver {
+        scopes: Vec::new(),
+        folded_integer_spans: &parsed.folded_integer_spans,
+        names: BTreeMap::new(),
+        const_names: Default::default(),
+        custom_this: Default::default(),
+        custom_functions: Default::default(),
+        const_level: ConstLevel::None,
+        object_levels: Vec::new(),
+        object_receiver_lambdas: Vec::new(),
+        receiver_is_lambda: false,
+        const_scopes: Vec::new(),
+        entry_counts: BTreeMap::new(),
+        member_path: Vec::new(),
+        diagnostic_path: Vec::new(),
+        diagnostic_owners: diagnostic_owner::OwnerScopes::new(false),
+        diagnostic_owner_requested: false,
+        external_type_names: module
+            .members
+            .iter()
+            .filter(|member| !is_method(member))
+            .map(|member| member.name.clone())
+            .collect(),
+    };
+    resolver.enter_object(Vec::new());
+    resolver.visit(Work::Expression(&parsed.expression, false))?;
+    Ok(ResolvedModule {
+        module: Module {
+            source: text.into(),
+            declaration: None,
+            members: Vec::new(),
+            folded_integer_spans: parsed.folded_integer_spans.clone(),
+            interpolation_spans: parsed.interpolation_spans.clone(),
+        },
+        names: resolver.names,
+        const_names: resolver.const_names,
+        custom_this: resolver.custom_this,
+        custom_functions: resolver.custom_functions,
+    })
 }

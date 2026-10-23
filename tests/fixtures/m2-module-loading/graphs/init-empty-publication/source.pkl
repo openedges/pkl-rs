@@ -1,0 +1,3 @@
+@Deprecated { when(trace(true)) { message="setup" } }
+module child
+value=9
