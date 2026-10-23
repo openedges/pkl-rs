@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "scope": "Closed Stage48 publication metadata. No acquisition/build/evaluator rerun or new compatibility result.",
+  "archive": {
+    "path": "reports/m2/stage48-final-publication-closeout.tar.gz",
+    "sha256": "2672dd52d1174a47b55dcf40c6a4f6d4b0a120d6ed38a7b509fe35bf5151cbef",
+    "compressed_bytes": 1605871,
+    "payload_files": 38,
+    "payload_bytes": 27067469
+  },
+  "captures": {
+    "path": "reports/m2/stage48-final-regression-captures.json",
+    "sha256": "3018da81f7d8ab4842d3a82075988d521904af19d88cb4fd8043b3cc47eb5677"
+  },
+  "pre_pointer_summary_sha256": "42ade5c5373c75507e9fb21b2db110822f60531c47344656baa08895e757b6c7",
+  "pre_pointer_summary_archive_member": "reviewed-publication/stage48-final-summary.json",
+  "publication_execution": {
+    "report": {
+      "schema": 1,
+      "scope": "Stage48 terminal regression publication only; no reacquisition/build/evaluator/test execution.",
+      "startedUtc": "2026-10-23T21:58:46.114664+00:00",
+      "parentPid": 85106,
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage48-final-publication-01/publish.py"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "pythonSha256": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063",
+      "publisherSha256": "0ca9744417e74394242edfdaceab33ce5d9fff154d07eea82be85f0a09174cb1",
+      "terminal": true,
+      "exitCode": 0,
+      "finishedUtc": "2026-10-23T22:05:29.837137+00:00",
+      "stdoutSha256": "86f67fc55a9ce8dad4153a8a2d9dc4aba333b347f8b585bdd1782833eeca0780",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourceUnchanged": true
+    },
+    "actual_outer_terminal": {
+      "recordedUtc": "2026-10-23T22:05:43.997122+00:00",
+      "qualification": "Late transcription of directly observed actual C tool terminal; recordedUtc is not child finish time.",
+      "session_id": 98642,
+      "exit_code": 0,
+      "terminal_chunk_id": "2c283b",
+      "process_report_sha256": "0318b6cb8031a43f62ef41d71b75f5464632fdb02ee3c3dff0043d775ed780da"
+    },
+    "archive_prefix": "execution/"
+  },
+  "closeout_execution": {
+    "report": {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage48-final-publication-01/closeout.py"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "parentPid": 90396,
+      "scriptSha256": "fa9ee034b586ec46f68443b5b9e1957fcc04fd9b233698e13dcb47359d0e93c8",
+      "terminal": true,
+      "pid": 90398,
+      "exitCode": 0,
+      "stdoutSha256": "1f39a9a07d831370b537452ac9d4734d6e82348644cd9a90e63a0b21a99375e3",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourceUnchanged": true
+    },
+    "actual_outer_terminal": {
+      "recordedUtc": "2026-10-23T22:05:52.300617+00:00",
+      "qualification": "Actual immediate exec_command completion code0, chunk3cd8ae; no long-running tool session ID was issued. RecordedUtc is a later transcription time.",
+      "session_id": null,
+      "exit_code": 0,
+      "terminal_chunk_id": "3cd8ae",
+      "process_report_sha256": "9a04195660f935a503a345f29e788726db287b15cadf6a96f814ae4a0c13bb62"
+    },
+    "stdout": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage48-final-publication-01/closeout-execution/stdout.bin",
+      "bytes": 64,
+      "sha256": "1f39a9a07d831370b537452ac9d4734d6e82348644cd9a90e63a0b21a99375e3",
+      "base64": "Y2xvc2VvdXQgY3JlYXRlIGV4aXQgMApjbG9zZW91dCB2ZXJpZnkgZXhpdCAwCkNMT1NFT1VUIENPTVBMRVRFCg=="
+    },
+    "stderr": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage48-final-publication-01/closeout-execution/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "base64": ""
+    }
+  },
+  "closeout_evidence_commands": [
+    {
+      "result": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "create",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage48-final-publication-01/closeout-gathered",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/reports/m2/stage48-final-publication-closeout.tar.gz"
+        ],
+        "pid": 90399,
+        "exitCode": 0,
+        "stdoutSha256": "675580341fc2c1d75bc65c0b1eae1f8b08fe7ae6650827b3b734252f62c530da",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage48-final-publication-01/closeout-create/stdout.bin",
+        "bytes": 126,
+        "sha256": "675580341fc2c1d75bc65c0b1eae1f8b08fe7ae6650827b3b734252f62c530da",
+        "base64": "VmVyaWZpZWQgMzggZXZpZGVuY2UgZmlsZXM6IC9Vc2Vycy9jb2R5LmlqLmh3YW5nL1Byb2plY3RzL3BrbC1ycy5zdGFnZTUxL3JlcG9ydHMvbTIvc3RhZ2U0OC1maW5hbC1wdWJsaWNhdGlvbi1jbG9zZW91dC50YXIuZ3oK"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage48-final-publication-01/closeout-create/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "base64": ""
+      }
+    },
+    {
+      "result": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/reports/m2/stage48-final-publication-closeout.tar.gz"
+        ],
+        "pid": 90400,
+        "exitCode": 0,
+        "stdoutSha256": "675580341fc2c1d75bc65c0b1eae1f8b08fe7ae6650827b3b734252f62c530da",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage48-final-publication-01/closeout-verify/stdout.bin",
+        "bytes": 126,
+        "sha256": "675580341fc2c1d75bc65c0b1eae1f8b08fe7ae6650827b3b734252f62c530da",
+        "base64": "VmVyaWZpZWQgMzggZXZpZGVuY2UgZmlsZXM6IC9Vc2Vycy9jb2R5LmlqLmh3YW5nL1Byb2plY3RzL3BrbC1ycy5zdGFnZTUxL3JlcG9ydHMvbTIvc3RhZ2U0OC1maW5hbC1wdWJsaWNhdGlvbi1jbG9zZW91dC50YXIuZ3oK"
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage48-final-publication-01/closeout-verify/stderr.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "base64": ""
+      }
+    }
+  ],
+  "closeout_raw_qualification": "The primary packaging process and command raw logs are in the closeout archive. Later closeout process/command raw bytes are retained exactly as base64 here to avoid circular archive recapture.",
+  "source_mode_qualification": "Exact acquisition source paths/kinds/modes/lengths/hashes are recoverable from archived publication/selection.json and publisher/selection.json; deterministic tar headers are0644.",
+  "producer_terminal_qualification": "Late root actual terminal receipt and C actual audit terminal receipt both retained explicitly; late recorded timestamps are not contemporaneous exit timestamps.",
+  "all_create_verify_and_original_readback_passed": true,
+  "original_acquisition_changes": [],
+  "full_m2_complete": false,
+  "root_review_docs_git_pending": true
+}

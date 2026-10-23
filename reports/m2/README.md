@@ -109,10 +109,35 @@ these two provider experiments.
 source and artifact bindings, and independent reviews. General ModuleKey
 factories, key-kind and isCached rules, eager import-clause factory selection,
 primary/query/repl lifecycle, URI equality and import globs remain required work.
-The separate Stage48 full selected acquisition is in progress and is not part
-of this checkpoint. The latest published selected result is Stage47's
-3,652 of 3,664 cases, acquired from its own fixed commit.
+The separate Stage48 full selected acquisition is now closed and recorded below.
+It is bound to the Stage48 implementation commit and does not validate later
+Stage49, Stage50 or Stage51 changes.
 **M2, full product compatibility and the performance targets remain incomplete.**
+
+The [Stage48 final selected regression](stage48-final-summary.json) is bound to
+`5e68c4b`: 3,652 of 3,664 cases match, with two unsupported results, nine
+mismatches and one oracle error. All 4,527 inventory IDs and their order remain
+unchanged, including 823 unimplemented and 40 unmapped accounting rows. There
+are no case-status transitions from Stage47. The development, strict selected
+and full gates fail; the full gate retains 1,825 failure reasons. Acquisition
+and evidence-integrity success do not override these compatibility failures.
+
+All 88 metamorphic relations match. The persistent-evaluator comparison covers
+334 sequences and 2,782 calls per implementation, with exact status, stdout and
+stderr agreement. It separately retains 928 error-class metadata differences;
+those fields are outside that comparison contract. Unexecuted groups remain
+visible. These repeated and overlapping observations are not distinct feature
+counts or a whole-language completion percentage.
+
+The [independent audit](stage48-final-regression-audit.json) rereads 62,164
+declared payloads and binds 4,413 captured source records, representing 4,191
+unique paths, to the fixed implementation and pinned references. The
+[captures](stage48-final-regression-captures.json) and
+[publication closeout](stage48-final-publication-closeout.json) preserve raw
+differences, actual terminal receipts, source identities and packaging checks
+in four archives totalling 50,857,094 compressed bytes. Original acquisition
+files remain unchanged. This is local evidence, not hosted CI or a performance
+result. **All nine M2 workstreams and the full completion gate remain open.**
 
 The [Stage47 C06 implementation checkpoint](stage47-implementation-checkpoint.json)
 adds shared JSON rendering, RenderDirective and property converters, source-backed

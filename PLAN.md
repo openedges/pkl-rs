@@ -1034,11 +1034,76 @@ gate는 미통과이며 반복·플랫폼 수를 독립 기능 수로 더하지 
 일치·정규식 실패 2개입니다.
 
 검증은 macOS 로컬에서 수행했습니다. native 독립 감사와 플랫폼 결과 재비교를
-수행하고 초기 실패·수정 후보를 별도 원문으로 게시합니다. Stage48·49의 전체
-선택 회귀는 각 고정 소스에서 실행 중이며 Stage50 결과로 승계하지 않습니다.
+수행하고 초기 실패·수정 후보를 별도 원문으로 게시했습니다. Stage48의 전체
+선택·순차 evaluator 수집과 독립 감사를 마쳤고 Stage49의 전체 선택 회귀는
+고정 소스에서 실행 중입니다. 이 결과를 Stage50 검증으로 승계하지 않습니다.
 이 체크포인트 뒤에는 `List.map`과 관련 collection callback·중단/재개 의미론을
 Java 기준으로 확장합니다. **전체 M2, 제품 API, 릴리스 플랫폼과 성능 조건은
 계속 미완료입니다.**
+
+Stage50 구현·문서·증거는 `251c6e49`에 커밋·푸시했고 원격 `main` 일치를
+확인했습니다. [게시 기록](reports/m2/stage50-publication.json)은 archive 11개,
+85,114,594 bytes와 원시 파일 재대조·원본 불변 검사를 연결합니다. 현재 입력
+86,571개를 실제 Git blob에 연결했으며, 343개의 원래 byte snapshot과 나머지
+hash-only 취득 기록을 구분합니다. 원본 fixture의 공백·빈 TSV 열 24개 경고를
+보존했고 작성한 코드·도구·문서의 공백 검사는 통과했습니다. 이 커밋을 고정한
+Stage50 전체 선택·순차 evaluator 회귀를 별도로 시작했습니다.
+
+### Stage 48 — 최종 선택 코퍼스 회귀 마감
+
+고정 커밋 `5e68c4b`의 [최종 결과](reports/m2/stage48-final-summary.json)는
+3,664개 중 3,652개 원시 일치, 미지원 2개·불일치 9개·oracle 오류 1개입니다.
+Stage47과 사례 상태 변경은 없고 전체 목록 4,527개 ID·순서·기존 실행 연결을
+유지했습니다. 미구현 823개·미연결 40개와 전체 gate 실패 이유 1,825개도 남습니다.
+개발·엄격한 선택·전체 gate는 실패이며 수집·증거 무결성 성공과 구분합니다.
+
+Metamorphic 관계 88개가 일치했습니다. 순차 evaluator 334개 시퀀스·각 구현
+2,782회 호출의 status·stdout·stderr가 일치하고, 비교 계약 밖의 error-class
+metadata 차이 928개와 미실행 그룹은 별도로 보존합니다. 이 수치는 반복·중복을
+포함하며 독립 기능 수나 M2 전체 완료율이 아닙니다.
+
+[독립 감사](reports/m2/stage48-final-regression-audit.json)는 원시 payload
+62,164개를 재대조하고 캡처 소스 4,413건·고유 경로 4,191개를 구현·참조 Git blob에
+연결했습니다. [게시 마감](reports/m2/stage48-final-publication-closeout.json)의
+archive 네 개는 합계 50,857,094 compressed bytes이며 생성·검증·원본 재대조가
+통과했습니다. 실제 종료 관찰과 늦게 기록한 receipt의 시점은 구분합니다.
+이는 Stage48의 로컬 회귀 마감이며 이후 Stage49·50·51이나 전체 플랫폼·성능의
+검증으로 승계하지 않습니다. **M2의 9개 영역과 전체 완료 조건은 계속 열려 있습니다.**
+
+### Stage 51 — 엄격한 collection 변환과 callback 수명주기
+
+Stage50 전체 회귀의 소스를 유지하면서 `m2/stage51-collection-transforms`의
+별도 작업 공간에서 진행합니다. 공통 Rust 구현은 `gpt-6-astra / xhigh`, Java
+기준 취득·fixture 검증과 독립 검토는 각각 `gpt-6.1-sol / high`에 배정합니다.
+주 에이전트는 native·Node·Chromium 통합, 문서와 커밋·푸시를 담당합니다.
+
+첫 원본 목표는 `annotation-stage35-builtin-source-code-union-and-string.pkl`
+전체 입력입니다. 일반 `List.map`을 구현해 기존 SourceCode 사례를 다시 실행하며,
+해당 입력만 처리하는 특수 경로를 추가하지 않습니다. 같은 묶음에서 List·Set의
+`map`, `mapIndexed`, `mapNonNull`, `mapNonNullIndexed`와 Map의 `map`,
+`mapKeys`, `mapValues`를 연결합니다. 일부 메서드의 성공을 원본 `api/list.pkl`,
+`api/set.pkl`, `api/map.pkl` 전체 또는 나머지 collection 기능의 완료로 계산하지
+않습니다.
+
+callback은 기존 공통 함수 호출·타입 검사·Host continuation을 사용합니다.
+빈 입력의 함수 arity 검사, 입력 순서, null 제거, Map의 순차 key 조회와 Pair
+결과 검사, callback 뒤 Set·Map의 hash/중복 key 삽입과 다음 callback의 순서를
+Java와 대조합니다. Frame 소유 cursor와 중립적인 strict builder를 사용하며,
+재진입·GC·취소·재시도·결과 보존 중 source/callback/executable 수명을 검증합니다.
+결과 collection이 필요 없는 입력·callback owner를 계속 보유하지 않아야 합니다.
+
+Java 기준 취득은 원래 source·expression·reader plan과 실제 logger/read 사건을
+보존합니다. 최초 940회 중 의도한 동작 888회, 잘못 작성된 입력의 의도 미도달
+40회, 종료 뒤 API 경계 12회를 구분합니다. 수정 취득의 88회도 의도한 동작
+72회와 module-local import alias를 query에서 찾지 못한 16회를 구분합니다.
+이전 입력을 고치거나 오류를 통과로 바꾸지 않고 새 입력으로 보완합니다.
+종료 뒤 Java 오류의 비결정적 객체 식별자는 원문으로 보존하며 일반 collection
+golden에 포함하지 않습니다. Rust 또는 플랫폼 일치는 실제 비교 후에만 기록합니다.
+
+이번 묶음의 검증에는 동일 후보의 Java raw 비교, 원본 SourceCode 입력,
+callback 중단·재진입 수명주기, 필수 Rust 검사와 실제 플랫폼 실행이 필요합니다.
+`filter`·`flatMap`·`fold`, 일반 lazy collection, glob·Mixin·reflection과 나머지
+진단·내부 오류·전체 event/counter·성능 조건은 계속 별도 미완료 항목입니다.
 
 ## M3 — 표준 라이브러리와 출력
 

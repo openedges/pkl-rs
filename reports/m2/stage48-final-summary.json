@@ -1,0 +1,598 @@
+{
+  "schema": 1,
+  "scope": "Complete selected native/lifecycle regression at the Stage48 implementation commit. Strict failures, unimplemented/unmapped scope and later Stage49/50/51 work remain open.",
+  "implementation_commit": "5e68c4b3f34096bd4eab8970e95965c856603267",
+  "references": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "selected_regression_acquisition_complete": true,
+  "wrapper_exit_code": 0,
+  "gates": {
+    "language-acquire": 0,
+    "language-verify-report": 0,
+    "language-verify-development": 1,
+    "language-verify-subset": 1,
+    "language-verify-full": 1,
+    "lifecycle-acquire": 0,
+    "lifecycle-verify-report": 0,
+    "lifecycle-verify-contract": 0
+  },
+  "selected": 3664,
+  "status_counts": {
+    "candidate-unsupported": 2,
+    "mismatch": 9,
+    "oracle-error": 1,
+    "pass": 3652
+  },
+  "inventory_counts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3664,
+      "unimplemented": 823,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "selected_adapters": {
+    "language-api-string": {
+      "pass": 3518,
+      "oracle-error": 1,
+      "mismatch": 8
+    },
+    "language-module-eval": {
+      "pass": 133,
+      "mismatch": 1,
+      "candidate-unsupported": 2
+    },
+    "language-jvm-classpath-output": {
+      "pass": 1
+    }
+  },
+  "case_ids_and_order_preserved": 4527,
+  "case_mapping_changes": [],
+  "requirement_source_hash_changes": [
+    {
+      "path": "requirements/8/implementation/links/0/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/8/implementation/links/1/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/8/implementation/links/3/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/8/implementation/links/4/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/8/implementation/links/12/sha256",
+      "before": "6ccfc23c27edf8d90a80c824321b331b50035936bbd222850111e96d1ee96c1b",
+      "after": "fa350f297a9c3fd28618b081845ef8db7b5becc0500ca3e0b9a3ec114eeaeaf6"
+    },
+    {
+      "path": "requirements/9/implementation/links/2/sha256",
+      "before": "6ccfc23c27edf8d90a80c824321b331b50035936bbd222850111e96d1ee96c1b",
+      "after": "fa350f297a9c3fd28618b081845ef8db7b5becc0500ca3e0b9a3ec114eeaeaf6"
+    },
+    {
+      "path": "requirements/10/implementation/links/0/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/10/implementation/links/1/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/11/implementation/links/0/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/11/implementation/links/1/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/11/implementation/links/2/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/11/implementation/links/3/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/12/implementation/links/0/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/12/implementation/links/1/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/12/implementation/links/2/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/12/implementation/links/3/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/13/implementation/links/0/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/13/implementation/links/1/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/13/implementation/links/3/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/13/implementation/links/4/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/17/implementation/links/0/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/17/implementation/links/1/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/17/implementation/links/3/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/17/implementation/links/4/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/17/implementation/links/5/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/17/implementation/links/6/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/18/implementation/links/0/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/18/implementation/links/1/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/18/implementation/links/2/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/18/implementation/links/3/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/18/implementation/links/4/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/18/implementation/links/5/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/18/implementation/links/7/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/18/implementation/links/8/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/19/implementation/links/0/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/19/implementation/links/3/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/19/implementation/links/4/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/20/implementation/links/0/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/20/implementation/links/1/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/20/implementation/links/3/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/20/implementation/links/4/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/24/implementation/links/4/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/25/implementation/links/0/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/25/implementation/links/1/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/25/implementation/links/2/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/26/implementation/links/2/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/26/implementation/links/3/sha256",
+      "before": "58d651216d01063506534ea9bbe74b01b1b3f823159e874573b3606e7d8f5309",
+      "after": "c7da0cc86b994afa533025685ef495e7eb851b65bead3c835592f541a4d5cb97"
+    },
+    {
+      "path": "requirements/26/implementation/links/4/sha256",
+      "before": "d645fe23d21db2969e6209d31290dbdf9f9389219affd82407cf003f46d7f65e",
+      "after": "9bac15a2d3dfbb3e31d98d09d334e10e1b678ac21f5021782a8e4501a9c0b869"
+    },
+    {
+      "path": "requirements/26/implementation/links/5/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/26/implementation/links/6/sha256",
+      "before": "afaa2bc64a151bab8d2045613ecb051a53b0905d98afaae65d395f811af3edd3",
+      "after": "4577f079692b38ebcc16eb211ffcbf61feea62c3a662902f6f0c7dacf2c08da0"
+    },
+    {
+      "path": "requirements/26/implementation/links/7/sha256",
+      "before": "c8bda0cf54a225516d4839292e7de5b80a3d493e590486ff06b7fcbd12d3764a",
+      "after": "0bc98077ee3d695bc5b70bd61dfeb5b193eb6f51026f041d08f3d34e1e45ba31"
+    },
+    {
+      "path": "requirements/27/implementation/links/1/sha256",
+      "before": "e52ebeb0a455d59240c8795b02b189d6b9ec1940a3b66495061ebd9dbd672234",
+      "after": "8a59fb6460c7faeffc07c111c81febb75726c078b40fdd677865ebad8bbb161f"
+    },
+    {
+      "path": "requirements/27/implementation/links/2/sha256",
+      "before": "6ccfc23c27edf8d90a80c824321b331b50035936bbd222850111e96d1ee96c1b",
+      "after": "fa350f297a9c3fd28618b081845ef8db7b5becc0500ca3e0b9a3ec114eeaeaf6"
+    },
+    {
+      "path": "requirements/27/implementation/links/9/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/27/implementation/links/13/sha256",
+      "before": "6ccfc23c27edf8d90a80c824321b331b50035936bbd222850111e96d1ee96c1b",
+      "after": "fa350f297a9c3fd28618b081845ef8db7b5becc0500ca3e0b9a3ec114eeaeaf6"
+    },
+    {
+      "path": "requirements/27/implementation/links/14/sha256",
+      "before": "d645fe23d21db2969e6209d31290dbdf9f9389219affd82407cf003f46d7f65e",
+      "after": "9bac15a2d3dfbb3e31d98d09d334e10e1b678ac21f5021782a8e4501a9c0b869"
+    },
+    {
+      "path": "requirements/27/implementation/links/15/sha256",
+      "before": "58d651216d01063506534ea9bbe74b01b1b3f823159e874573b3606e7d8f5309",
+      "after": "c7da0cc86b994afa533025685ef495e7eb851b65bead3c835592f541a4d5cb97"
+    },
+    {
+      "path": "requirements/28/implementation/links/2/sha256",
+      "before": "58d651216d01063506534ea9bbe74b01b1b3f823159e874573b3606e7d8f5309",
+      "after": "c7da0cc86b994afa533025685ef495e7eb851b65bead3c835592f541a4d5cb97"
+    },
+    {
+      "path": "requirements/33/implementation/links/4/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/109/implementation/links/1/sha256",
+      "before": "d645fe23d21db2969e6209d31290dbdf9f9389219affd82407cf003f46d7f65e",
+      "after": "9bac15a2d3dfbb3e31d98d09d334e10e1b678ac21f5021782a8e4501a9c0b869"
+    },
+    {
+      "path": "requirements/113/implementation/links/4/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/139/implementation/links/1/sha256",
+      "before": "d645fe23d21db2969e6209d31290dbdf9f9389219affd82407cf003f46d7f65e",
+      "after": "9bac15a2d3dfbb3e31d98d09d334e10e1b678ac21f5021782a8e4501a9c0b869"
+    },
+    {
+      "path": "requirements/243/implementation/links/2/sha256",
+      "before": "197e3203efabedf031cf1d41f775c2224a1eaa40055b77b4e080abdcf2136a7e",
+      "after": "5a79dc73c1f68d8033626e2aa034f0763a0e1fca078305b33a64b972fc2c4c27"
+    },
+    {
+      "path": "requirements/244/implementation/links/2/sha256",
+      "before": "197e3203efabedf031cf1d41f775c2224a1eaa40055b77b4e080abdcf2136a7e",
+      "after": "5a79dc73c1f68d8033626e2aa034f0763a0e1fca078305b33a64b972fc2c4c27"
+    },
+    {
+      "path": "requirements/299/implementation/links/4/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/339/implementation/links/0/sha256",
+      "before": "3db96efae302412257d19ce92315f9f92c421979d2748d77ccde6f22f560f26a",
+      "after": "8bc9afb83db23b33116d490fec2143920f7cd5ddffe43e06672c11d1fe2ac5d6"
+    },
+    {
+      "path": "requirements/339/implementation/links/1/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/339/implementation/links/2/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/339/implementation/links/3/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/356/implementation/links/2/sha256",
+      "before": "c615e32aa11c1c92b0c24f540b8190b7db5fd61bb89c3510231786f6fccd8a4f",
+      "after": "ed00b6fc8570c3506d4e9a9785d93da100e0ced56372f7a35d1ab46e17e5f031"
+    },
+    {
+      "path": "requirements/405/implementation/links/2/sha256",
+      "before": "197e3203efabedf031cf1d41f775c2224a1eaa40055b77b4e080abdcf2136a7e",
+      "after": "5a79dc73c1f68d8033626e2aa034f0763a0e1fca078305b33a64b972fc2c4c27"
+    }
+  ],
+  "existing_jvm_profile_mapping_preserved": true,
+  "status_changes": [],
+  "failures": [
+    {
+      "id": "error-cycle",
+      "status": "oracle-error"
+    },
+    {
+      "id": "error-remainder-zero",
+      "status": "mismatch"
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-union-and-string",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-cast-negative",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-max-count",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-uri-unpaired-surrogate",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-opaque",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-invalid-host",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "status": "candidate-unsupported"
+    }
+  ],
+  "current_nonpass_cases": 12,
+  "historical_nonpass_comparison_union": 12,
+  "audit_field_qualification": "Current nonpassing case IDs and the union of Stage47/Stage48 nonpassing IDs are distinct fields. All exact raw differences remain preserved.",
+  "full_gate_failure_reasons": 1825,
+  "metamorphic_relations": 88,
+  "metamorphic_matches": 88,
+  "persistent": {
+    "report_sha256": "c1e7d0dd5a808a56c0bf8150d8db15a55be0d7bb61af36b9b81c3ee199be09bb",
+    "sequences": 334,
+    "calls_each_language": 2782,
+    "status_counts": {
+      "java": {
+        "error": 928,
+        "success": 1854
+      },
+      "rust": {
+        "error": 928,
+        "success": 1854
+      }
+    },
+    "raw_mismatches": [],
+    "comparison_channels": [
+      "status",
+      "stdout",
+      "stderr"
+    ],
+    "error_class_differences_retained_excluded_from_equality": 928,
+    "declared_payloads_verified": 24837,
+    "unexecuted_groups_preserved": true
+  },
+  "unexecuted_lifecycle_groups": [
+    {
+      "group": "P09",
+      "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+    },
+    {
+      "group": "P10",
+      "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+    },
+    {
+      "group": "P11",
+      "reason": "Actual annotation source now reaches Rust Host suspension, callback reentry and GC. Separate Stage 35 Java/Rust Host probes compare class, alias, property and method initialization, successful reads, eager failures and partial-state retries. This persistent scalar sequence adapter does not execute Host callbacks. Complete resource I/O failure, module-cache and product Host behavior remain unverified; native cancellation/timeout/close cleanup tests are separate from Java raw-byte equality."
+    },
+    {
+      "group": "P12",
+      "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+    },
+    {
+      "group": "P05",
+      "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+    }
+  ],
+  "source_binding": {
+    "captured_records": 4413,
+    "unique_paths": 4191,
+    "all_match_commit_blobs": true,
+    "lifecycle_config_directly_captured": true,
+    "config_qualification": "Stage48 schema2 directly captures root.cargo/config.toml and all4Rust Cargo controls, as did Stage47. Stage45 schema1 omission remains historical."
+  },
+  "source_stable": true,
+  "artifact_stable": true,
+  "lifecycle_schema": 2,
+  "lifecycle_cargo_controls_directly_captured": [
+    ".cargo/config.toml",
+    "Cargo.toml",
+    "Cargo.lock",
+    "rust-toolchain.toml"
+  ],
+  "historical_lifecycle_qualification": "Stage45 schema1 did not directly capture root.cargo/config.toml; this Stage48 schema2 result does not retroactively change that evidence.",
+  "raw_reports": {
+    "language": "fe2ea5466613df60f56338fd6cf474ac9dc773df8e2c159e71353f75e13d2329",
+    "lifecycle": "c1e7d0dd5a808a56c0bf8150d8db15a55be0d7bb61af36b9b81c3ee199be09bb"
+  },
+  "audit": {
+    "path": "reports/m2/stage48-final-regression-audit.json",
+    "sha256": "52bbdd8e2a4fda0458ce3619f9317c8fda5e7ee74d9a9c0b8a52a305dc3b8e6a"
+  },
+  "source_map": {
+    "path": "reports/m2/stage48-final-source-map.json",
+    "sha256": "fac9b9341c536741374ee1ee92720a7c5bb7c44bc423280e6310036befe3f3b8"
+  },
+  "case_changes": {
+    "path": "reports/m2/stage48-final-case-changes.json",
+    "sha256": "0c1e50d70e169a25a4c794d81d81d4b16f178bb1696703582074c80341b49a34"
+  },
+  "status_changes_record": {
+    "path": "reports/m2/stage48-final-status-changes.json",
+    "sha256": "6f6ea3b63765acaa069aa77cfb20bd7fd91778dd0409077d03e84e42b02480dd"
+  },
+  "raw_changes": {
+    "path": "reports/m2/stage48-final-raw-changes.json",
+    "sha256": "539b183a33ccaee183f02b575cbb1e3e4c1f8580e3410bd20870407ebcf0f82d"
+  },
+  "captures": {
+    "path": "reports/m2/stage48-final-regression-captures.json",
+    "sha256": "3018da81f7d8ab4842d3a82075988d521904af19d88cb4fd8043b3cc47eb5677"
+  },
+  "implementation_checks_and_platforms": {
+    "path": "reports/m2/stage48-implementation-checkpoint.json",
+    "sha256": "eddf08599a03c648fd2237840068eae383934636137d10a85e13a69fa1d820e0"
+  },
+  "scheduling_comparison": {
+    "baseline_workers": 4,
+    "current_workers": 4,
+    "performance_comparison_claimed": false
+  },
+  "terminal_provenance": {
+    "root_original_receipt_is_late": true,
+    "root_observed_session": 68740,
+    "root_actual_chunk": "5b5d15",
+    "c_audit_actual_session": 95672,
+    "c_audit_actual_exit": 0,
+    "c_audit_actual_chunk": "79d3ee",
+    "qualification": "Late root actual terminal receipt and C actual audit receipt are archived; recorded timestamps are not fabricated contemporaneous terminal observations."
+  },
+  "full_m2_complete": false,
+  "compatibility_complete": false,
+  "hosted_ci_claimed": false,
+  "performance_target_claimed": false,
+  "remaining": [
+    "All current failed, unimplemented, unmapped and unexecuted required language cases.",
+    "Remaining shared language, stdlib/security/producer obligations; later Stage49/50/51 implementation and evidence are separate from this commit.",
+    "Whole product/platform and execution-time/peak-memory requirements.",
+    "Root publication review, planning/docs and Git publication."
+  ],
+  "publication_closeout": {
+    "path": "reports/m2/stage48-final-publication-closeout.json",
+    "sha256": "4d5f39de4eb911ca8dc1dadd56a0a97d21e61329c0e2d60b4469d0a80992e192"
+  }
+}

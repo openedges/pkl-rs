@@ -1,0 +1,870 @@
+{
+  "transitions": [],
+  "all_old_or_new_nonpass": [
+    {
+      "id": "error-cycle",
+      "before": "oracle-error",
+      "after": "oracle-error"
+    },
+    {
+      "id": "error-remainder-zero",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-union-and-string",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-cast-negative",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-max-count",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "read-stage38-uri-unpaired-surrogate",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-opaque",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-invalid-host",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "before": "candidate-unsupported",
+      "after": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "before": "candidate-unsupported",
+      "after": "candidate-unsupported"
+    }
+  ],
+  "current_nonpass": [
+    {
+      "id": "error-cycle",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/cases/error-cycle/java.outcome.bin",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/java",
+          "M2LanguageProbe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/error-cycle.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "outcome_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "352580a8b73dab37de88992e96d5b6a3df815fd13325011ebc1c6abe8f56c883",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/language_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/error-cycle.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "stderr_sha256": "d8f8c1b14addc7e594a26d2624d2a974ccf3f630f094093ee076b8a7de169cfb",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "oracle-error"
+    },
+    {
+      "id": "error-remainder-zero",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/cases/error-remainder-zero/java.outcome.bin",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/java",
+          "M2LanguageProbe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/error-remainder-zero.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "outcome_sha256": "937cc2827528278989a4008d6a26c92d7f4b616cc3e8faf442acc5b7f1ce1517",
+        "stderr_sha256": "0d3cf72de07030d93b802c18c63022e0f95b79913cc51e4b7475dbf39304f504",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "java_repeat": {
+        "command": [
+          "/usr/bin/java",
+          "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/cases/error-remainder-zero/java-repeat/java.outcome.bin",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/java",
+          "M2LanguageProbe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/error-remainder-zero.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "outcome_sha256": "937cc2827528278989a4008d6a26c92d7f4b616cc3e8faf442acc5b7f1ce1517",
+        "stderr_sha256": "0d3cf72de07030d93b802c18c63022e0f95b79913cc51e4b7475dbf39304f504",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/language_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/error-remainder-zero.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "stderr_sha256": "090a3f79e6f6cc385ed0c4c78ca27606d526752c120e71e8c54d17e36d8e7104",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "mismatch"
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-union-and-string",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/cases/annotation-stage35-builtin-source-code-union-and-string/java.outcome.bin",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/java",
+          "M2LanguageProbe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/annotation-stage35-builtin-source-code-union-and-string.pkl",
+          "result"
+        ],
+        "exit_code": 0,
+        "outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "84dbd6175e6b8baebdd50ea08e65e62ee673702e2ad82bd4fd2c2da9a27db677",
+        "timed_out": false
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/language_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/annotation-stage35-builtin-source-code-union-and-string.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "stderr_sha256": "21f218c3b3fa84f690aad1661a3c3e1ea9e1b8d9fc963708b2f09cbacaf49cdf",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-cast-negative",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/cases/trace-stage37-repeat-empty-cast-negative/java.outcome.bin",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/java",
+          "M2LanguageProbe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/trace-stage37-repeat-empty-cast-negative.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "outcome_sha256": "937cc2827528278989a4008d6a26c92d7f4b616cc3e8faf442acc5b7f1ce1517",
+        "stderr_sha256": "57aff3fc381144efb0989fd2f67d7cc498b90cc66cb338a7b45954b85735b675",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/language_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/trace-stage37-repeat-empty-cast-negative.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "stderr_sha256": "ad2d3d4779b5b7ae8bdd7dc378103499319fca64a84f370a31d31b6abcea6f43",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-max-count",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/cases/trace-stage37-repeat-empty-max-count/java.outcome.bin",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/java",
+          "M2LanguageProbe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/trace-stage37-repeat-empty-max-count.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "outcome_sha256": "937cc2827528278989a4008d6a26c92d7f4b616cc3e8faf442acc5b7f1ce1517",
+        "stderr_sha256": "d71be30f0222d4222cd989119eae3fe1b0c4e36c41fdb1124628850be467aa57",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/language_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/trace-stage37-repeat-empty-max-count.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "stderr_sha256": "c8dc1f2a0cfd49ecbf129fedc5c029df505974572f03dc1b0e02ff958c99e7ef",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-uri-unpaired-surrogate",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/cases/read-stage38-uri-unpaired-surrogate/java.outcome.bin",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/java",
+          "M2LanguageProbe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/read-stage38-uri-unpaired-surrogate.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf",
+        "stderr_sha256": "388fe881339a34baff392aee1727b26045edd328b5ef21a53dcca9d485949b87",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/language_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/read-stage38-uri-unpaired-surrogate.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "stderr_sha256": "d214f0cbe125b66166200952f102d607be6579a7b92add32ae7a19d8283a887e",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-opaque",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/cases/read-stage38-edge-http-opaque/java.outcome.bin",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/java",
+          "M2LanguageProbe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/read-stage38-edge-http-opaque.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "outcome_sha256": "937cc2827528278989a4008d6a26c92d7f4b616cc3e8faf442acc5b7f1ce1517",
+        "stderr_sha256": "554b847ce5e64009b33971152a913ca6387016728d836417c757c264d3157158",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/language_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/read-stage38-edge-http-opaque.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "stderr_sha256": "6a1db895212a38a13a54d16dd6f70b836978e0543a61e71fbfc910bb1509ffc3",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-invalid-host",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/cases/read-stage38-edge-http-invalid-host/java.outcome.bin",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/java",
+          "M2LanguageProbe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/read-stage38-edge-http-invalid-host.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "outcome_sha256": "937cc2827528278989a4008d6a26c92d7f4b616cc3e8faf442acc5b7f1ce1517",
+        "stderr_sha256": "964ad3d0bab068ed04289f4a0096de1d50aad059fb482063d388a9784b87508a",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/language_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/read-stage38-edge-http-invalid-host.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "stderr_sha256": "827593dfaa2e19cfc806b87d3249c64c9df3913ca5fe89aca44d4788882f3f91",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/cases/read-stage38-edge-http-nonnumeric-port/java.outcome.bin",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/java",
+          "M2LanguageProbe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/read-stage38-edge-http-nonnumeric-port.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "outcome_sha256": "937cc2827528278989a4008d6a26c92d7f4b616cc3e8faf442acc5b7f1ce1517",
+        "stderr_sha256": "fb405659bf3811027f06003ba8ded81bdc93c7e6fa57e093f94a2d3654d5501a",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/language_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/tests/fixtures/m2/read-stage38-edge-http-nonnumeric-port.pkl",
+          "result"
+        ],
+        "exit_code": 1,
+        "stderr_sha256": "88b734a9025deb81b7df87be2da6d4328362200476bae828721a7b103b62b3f5",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "mismatch"
+    },
+    {
+      "adapter": "language-module-eval",
+      "directory": "bedf94a094b1d74f85b2c4a6",
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/bedf94a094b1d74f85b2c4a6/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/bedf94a094b1d74f85b2c4a6/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar",
+          "org.pkl.cli.Main",
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "--property",
+          "name1=value1",
+          "--property",
+          "name2=value2",
+          "--property",
+          "/foo/bar=foobar",
+          "--env-var",
+          "NAME1=value1",
+          "--env-var",
+          "NAME2=value2",
+          "--env-var",
+          "/foo/bar=foobar",
+          "--env-var",
+          "foo bar=foo bar",
+          "--env-var",
+          "file:///foo/bar=file:///foo/bar",
+          "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/bedf94a094b1d74f85b2c4a6/home",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "NO_COLOR": "1",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/bedf94a094b1d74f85b2c4a6/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/bedf94a094b1d74f85b2c4a6/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/bedf94a094b1d74f85b2c4a6/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "files_sha256": {},
+        "private_files_comparison": "Host-private state retained as provenance, excluded from original public files comparison.",
+        "private_files_sha256": {
+          "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+        },
+        "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/%E6%97%A5%E6%9C%AC%E8%AA%9E.pkl",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "ed1ce580f6352352e4dfce6d1d6df5dc374d247ced22e2434d938db9152368d9",
+        "timed_out": false,
+        "upstream_case_sha256": "841cde5058b5c89a07a7bf9fa0894aaa0abb60e436533f60f693298abc1d4dad",
+        "watchdog_seconds": 60,
+        "workspace_after_sha256": "d13f4d41d721d97ab4baa1b25a041c110371f2d9b7c62470adb41d27a683fc46",
+        "workspace_before_sha256": "d13f4d41d721d97ab4baa1b25a041c110371f2d9b7c62470adb41d27a683fc46",
+        "workspace_changes": {}
+      },
+      "raw_channels_match": false,
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/module_eval_probe",
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "--property",
+          "name1=value1",
+          "--property",
+          "name2=value2",
+          "--property",
+          "/foo/bar=foobar",
+          "--env-var",
+          "NAME1=value1",
+          "--env-var",
+          "NAME2=value2",
+          "--env-var",
+          "/foo/bar=foobar",
+          "--env-var",
+          "foo bar=foo bar",
+          "--env-var",
+          "file:///foo/bar=file:///foo/bar",
+          "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/bedf94a094b1d74f85b2c4a6/home",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "NO_COLOR": "1",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/bedf94a094b1d74f85b2c4a6/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/bedf94a094b1d74f85b2c4a6/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/bedf94a094b1d74f85b2c4a6/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 1,
+        "files_sha256": {},
+        "private_files_comparison": "Host-private state retained as provenance, excluded from original public files comparison.",
+        "private_files_sha256": {},
+        "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/%E6%97%A5%E6%9C%AC%E8%AA%9E.pkl",
+        "stderr_sha256": "a3845070cef7b16fba3d80bc256589b9da67741360fb6c796e31cda79b7f58eb",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false,
+        "upstream_case_sha256": "841cde5058b5c89a07a7bf9fa0894aaa0abb60e436533f60f693298abc1d4dad",
+        "watchdog_seconds": 60,
+        "workspace_after_sha256": "d13f4d41d721d97ab4baa1b25a041c110371f2d9b7c62470adb41d27a683fc46",
+        "workspace_before_sha256": "d13f4d41d721d97ab4baa1b25a041c110371f2d9b7c62470adb41d27a683fc46",
+        "workspace_changes": {}
+      },
+      "status": "mismatch",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "adapter": "language-module-eval",
+      "directory": "5321b78f30a08abfd9aaf483",
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/5321b78f30a08abfd9aaf483/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/5321b78f30a08abfd9aaf483/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar",
+          "org.pkl.cli.Main",
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "--property",
+          "name1=value1",
+          "--property",
+          "name2=value2",
+          "--property",
+          "/foo/bar=foobar",
+          "--env-var",
+          "NAME1=value1",
+          "--env-var",
+          "NAME2=value2",
+          "--env-var",
+          "/foo/bar=foobar",
+          "--env-var",
+          "foo bar=foo bar",
+          "--env-var",
+          "file:///foo/bar=file:///foo/bar",
+          "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/5321b78f30a08abfd9aaf483/home",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "NO_COLOR": "1",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/5321b78f30a08abfd9aaf483/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/5321b78f30a08abfd9aaf483/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/5321b78f30a08abfd9aaf483/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "files_sha256": {},
+        "private_files_comparison": "Host-private state retained as provenance, excluded from original public files comparison.",
+        "private_files_sha256": {
+          "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+        },
+        "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false,
+        "upstream_case_sha256": "dd3f15ebe515c2b98448d8e7d70023486d4194178336aa30d0648d477564d811",
+        "watchdog_seconds": 60,
+        "workspace_after_sha256": "d13f4d41d721d97ab4baa1b25a041c110371f2d9b7c62470adb41d27a683fc46",
+        "workspace_before_sha256": "d13f4d41d721d97ab4baa1b25a041c110371f2d9b7c62470adb41d27a683fc46",
+        "workspace_changes": {}
+      },
+      "raw_channels_match": false,
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/module_eval_probe",
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "--property",
+          "name1=value1",
+          "--property",
+          "name2=value2",
+          "--property",
+          "/foo/bar=foobar",
+          "--env-var",
+          "NAME1=value1",
+          "--env-var",
+          "NAME2=value2",
+          "--env-var",
+          "/foo/bar=foobar",
+          "--env-var",
+          "foo bar=foo bar",
+          "--env-var",
+          "file:///foo/bar=file:///foo/bar",
+          "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/5321b78f30a08abfd9aaf483/home",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "NO_COLOR": "1",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/5321b78f30a08abfd9aaf483/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/5321b78f30a08abfd9aaf483/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/5321b78f30a08abfd9aaf483/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 2,
+        "files_sha256": {},
+        "private_files_comparison": "Host-private state retained as provenance, excluded from original public files comparison.",
+        "private_files_sha256": {},
+        "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+        "stderr_sha256": "b8bbc7aa9fdf51ef02e8288bb475b94eefdb54126d668bdad5fc500582981d2e",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false,
+        "upstream_case_sha256": "dd3f15ebe515c2b98448d8e7d70023486d4194178336aa30d0648d477564d811",
+        "watchdog_seconds": 60,
+        "workspace_after_sha256": "d13f4d41d721d97ab4baa1b25a041c110371f2d9b7c62470adb41d27a683fc46",
+        "workspace_before_sha256": "d13f4d41d721d97ab4baa1b25a041c110371f2d9b7c62470adb41d27a683fc46",
+        "workspace_changes": {}
+      },
+      "status": "candidate-unsupported",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "adapter": "language-module-eval",
+      "directory": "8d6402b6faf5a21c2a116dd7",
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/8d6402b6faf5a21c2a116dd7/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/8d6402b6faf5a21c2a116dd7/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar",
+          "org.pkl.cli.Main",
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "--property",
+          "name1=value1",
+          "--property",
+          "name2=value2",
+          "--property",
+          "/foo/bar=foobar",
+          "--env-var",
+          "NAME1=value1",
+          "--env-var",
+          "NAME2=value2",
+          "--env-var",
+          "/foo/bar=foobar",
+          "--env-var",
+          "foo bar=foo bar",
+          "--env-var",
+          "file:///foo/bar=file:///foo/bar",
+          "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/8d6402b6faf5a21c2a116dd7/home",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "NO_COLOR": "1",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/8d6402b6faf5a21c2a116dd7/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/8d6402b6faf5a21c2a116dd7/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/8d6402b6faf5a21c2a116dd7/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "files_sha256": {},
+        "private_files_comparison": "Host-private state retained as provenance, excluded from original public files comparison.",
+        "private_files_sha256": {
+          "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+        },
+        "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "5c081677e503e5de17fa50738f4d4a0fde3744cd371688e520652957dd889945",
+        "timed_out": false,
+        "upstream_case_sha256": "6b503b138d6278893e4da50c2ac865e617e491c748ad8cf578fc74adc299d818",
+        "watchdog_seconds": 60,
+        "workspace_after_sha256": "d13f4d41d721d97ab4baa1b25a041c110371f2d9b7c62470adb41d27a683fc46",
+        "workspace_before_sha256": "d13f4d41d721d97ab4baa1b25a041c110371f2d9b7c62470adb41d27a683fc46",
+        "workspace_changes": {}
+      },
+      "raw_channels_match": false,
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01/artifacts/module_eval_probe",
+          "eval",
+          "--no-cache",
+          "--no-project",
+          "--settings",
+          "pkl:settings",
+          "--property",
+          "name1=value1",
+          "--property",
+          "name2=value2",
+          "--property",
+          "/foo/bar=foobar",
+          "--env-var",
+          "NAME1=value1",
+          "--env-var",
+          "NAME2=value2",
+          "--env-var",
+          "/foo/bar=foobar",
+          "--env-var",
+          "foo bar=foo bar",
+          "--env-var",
+          "file:///foo/bar=file:///foo/bar",
+          "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/8d6402b6faf5a21c2a116dd7/home",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "NO_COLOR": "1",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/8d6402b6faf5a21c2a116dd7/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/8d6402b6faf5a21c2a116dd7/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/.state/8d6402b6faf5a21c2a116dd7/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 2,
+        "files_sha256": {},
+        "private_files_comparison": "Host-private state retained as provenance, excluded from original public files comparison.",
+        "private_files_sha256": {},
+        "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-language-final-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+        "stderr_sha256": "423d649add004fecd2b4da07454d54078ccf5075118109e9ffc2c098881634c2",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false,
+        "upstream_case_sha256": "6b503b138d6278893e4da50c2ac865e617e491c748ad8cf578fc74adc299d818",
+        "watchdog_seconds": 60,
+        "workspace_after_sha256": "d13f4d41d721d97ab4baa1b25a041c110371f2d9b7c62470adb41d27a683fc46",
+        "workspace_before_sha256": "d13f4d41d721d97ab4baa1b25a041c110371f2d9b7c62470adb41d27a683fc46",
+        "workspace_changes": {}
+      },
+      "status": "candidate-unsupported",
+      "upstream_expected_exit_match": true
+    }
+  ],
+  "historical_union_is_not_current_nonpass": true
+}
