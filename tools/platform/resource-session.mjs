@@ -3,8 +3,7 @@
 // Module admission delegates explicitly to the shared Pkl 0.32.0 default policy.
 const same = (left, right) => left.length === right.length
   && left.every((value, index) => value === right[index]);
-const moduleContextFields = ['originalUri', 'importUri', 'importerOriginalUri', 'importerResolvedUri'];
-const moduleRequestFields = new Set(['kind', 'id', ...moduleContextFields, 'resolvedUri', 'sourceUri']);
+import {completeDefaultModuleRequest} from './module-policy-session.mjs';
 function vector(value, maximum, name) {
   if (!Array.isArray(value) || value.some(unit => !Number.isInteger(unit) || unit < 0 || unit > maximum))
     throw Error(`invalid ${name}`);
@@ -70,15 +69,7 @@ export function runResourceCase(api, fixture, budget = 7) {
           if (event.kind === 'module-request') {
             const request = event.module;
             moduleRequests.push({callIndex: index, token: event.token, module: {...request}});
-            if (typeof event.token !== 'string' || !event.token.length
-                || typeof request?.id !== 'string' || !/^[0-9]+$/.test(request.id))
-              throw Error('invalid default-policy module request');
-            if (!['check-import', 'resolve'].includes(request.kind)
-                || moduleContextFields.some(name => typeof request[name] !== 'string')
-                || Object.keys(request).some(name => !moduleRequestFields.has(name))
-                || request.resolvedUri != null || request.sourceUri != null)
-              throw Error('invalid default-policy module request context');
-            if (session.completeDefaultModule(event.token, 0) !== true)
+            if (!completeDefaultModuleRequest(session, event))
               throw Error('module request is unsupported by the shared default policy');
             continue;
           }

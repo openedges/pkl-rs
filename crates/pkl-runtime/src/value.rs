@@ -163,7 +163,7 @@ pub struct RuntimeErrorDetails {
     pub(crate) unavailable_origin: bool,
     pub frontend: Option<Arc<crate::modules::ModuleDiagnostic>>,
     pub(crate) cached_module_frames: bool,
-    pub(crate) module_failure_key: Option<Arc<str>>,
+    pub(crate) module_failure_id: Option<u64>,
     pub spread_hint: Option<Box<Span>>,
     pub type_diagnostic: Option<Box<crate::diagnostic::TypeDiagnostic>>,
 }
@@ -174,7 +174,7 @@ const EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
     unavailable_origin: false,
     frontend: None,
     cached_module_frames: false,
-    module_failure_key: None,
+    module_failure_id: None,
     spread_hint: None,
     type_diagnostic: None,
 };

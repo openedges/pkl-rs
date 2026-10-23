@@ -1,0 +1,100 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/custom-key-pkl-uri-not-stdlib-kind/0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/custom-key-pkl-uri-not-stdlib-kind/0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar",
+    "AdmissionProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/cases/custom-key-pkl-uri-not-stdlib-kind/0/calls",
+    "allow",
+    "main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/custom-key-pkl-uri-not-stdlib-kind/0/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/custom-key-pkl-uri-not-stdlib-kind/0/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/custom-key-pkl-uri-not-stdlib-kind/0/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/custom-key-pkl-uri-not-stdlib-kind/0/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 16792,
+  "startedUnixNs": 1792772278140414000,
+  "pid": 16985,
+  "exitCode": 0,
+  "timedOut": false,
+  "finishedUnixNs": 1792772279051710000,
+  "stdoutSha256": "1384b80499a158f9a2a589d7724daa2097a229bc3577ba6143ae38170cd66038",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "case": "custom-key-pkl-uri-not-stdlib-kind",
+  "repeat": 0,
+  "workspaceBefore": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "16b340e696f40765b2ccd118dd099347171e4555e94e6325af0d1b6edbd36cbc",
+      "bytes": 50,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "0a07cfab6a8235f8327788c340c5e468ed3e75005503b3be04fe093b7b8e6264",
+      "bytes": 193,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "15f5c75772c211a755c901f7e6918a78fdd5504c5b1657946a66fcb36ab3a04c",
+      "bytes": 111,
+      "mode": 420
+    },
+    "custom-base.pkl": {
+      "kind": "regular",
+      "sha256": "8e47badc9bdc320c1f4eef1ccb26661feede0a5b04223a677b47407890cd3e64",
+      "bytes": 9,
+      "mode": 420
+    }
+  },
+  "workspaceAfter": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "16b340e696f40765b2ccd118dd099347171e4555e94e6325af0d1b6edbd36cbc",
+      "bytes": 50,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "0a07cfab6a8235f8327788c340c5e468ed3e75005503b3be04fe093b7b8e6264",
+      "bytes": 193,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "15f5c75772c211a755c901f7e6918a78fdd5504c5b1657946a66fcb36ab3a04c",
+      "bytes": 111,
+      "mode": 420
+    },
+    "custom-base.pkl": {
+      "kind": "regular",
+      "sha256": "8e47badc9bdc320c1f4eef1ccb26661feede0a5b04223a677b47407890cd3e64",
+      "bytes": 9,
+      "mode": 420
+    }
+  }
+}

@@ -78,6 +78,33 @@ test('module tables are reusable unordered input facts without a consume-all req
     result: {kind: 'has-element', exists: false}, observableEvents: ['unused']});
   assert.equal(compareModulePreparationCase(input, run(input)).passed, true);
 });
+
+test('new factory and cache-policy effects retain raw requests without inventing Java projected events', () => {
+  const keyId = '18446744073709551615', descriptor = {keyId, keyKind: 'host', keyHandle: `fixture-key:${keyId}`};
+  class Keys extends Session {
+    constructor() {
+      super(); this.programs[0].splice(2, 0,
+        {kind: 'select-key', originalUri: 'file:///dep.pkl', keyId, selectionPhase: 'runtime-import'},
+        {kind: 'query-cache-policy', originalUri: 'file:///dep.pkl', ...descriptor});
+      this.programs[0][4] = {...resolve, ...descriptor, resolvedKeyId: '9'};
+      this.programs[0][5] = {...source, ...descriptor, resolvedKeyId: '9', resolvedKeyHandle: 'resolved-dep'};
+    }
+    completeDefaultModule() { assert.fail('configured factory must precede default selection'); }
+    completeModuleKey(token, id, uri, kind, handle, now) {
+      assert.deepEqual([id, uri, kind, handle, now], [keyId, 'file:///dep.pkl', 'host', descriptor.keyHandle, 0]);
+      this.finish(token, 'select-key');
+    }
+    completeModuleCachePolicy(token, id, cached, now) {
+      assert.deepEqual([id, cached, now], [keyId, true, 0]); this.finish(token, 'query-cache-policy');
+    }
+  }
+  const result = run(fixture, Keys);
+  assert.equal(result.acquisitionError, null);
+  assert.equal(compareModulePreparationCase(fixture, result).passed, true);
+  assert.deepEqual(result.moduleRequests.filter(row => row.provider === 'configured-fixture-key')
+    .map(row => row.module.kind), ['select-key', 'query-cache-policy']);
+  assert.equal(result.moduleRequests.length, 8);
+});
 test('duplicate module/read identities and incomplete importer context are rejected before execution', () => {
   let input = structuredClone(fixture); input.moduleProviders.push(input.moduleProviders[0]);
   assert.throws(() => run(input), /duplicate module/);

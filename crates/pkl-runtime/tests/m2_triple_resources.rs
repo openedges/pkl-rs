@@ -23,7 +23,14 @@ fn next(p: &mut SourceProbe) -> SourceEvent {
         let e = p.poll(0, 1).unwrap();
         p.collect();
         if e.kind == "module-request"
-            && matches!(e.module.as_ref().unwrap().kind, "check-import" | "resolve")
+            && matches!(
+                e.module.as_ref().unwrap().kind,
+                "check-import"
+                    | "resolve"
+                    | "select-key"
+                    | "query-cache-policy"
+                    | "query-fragment-paths"
+            )
             && p.complete_default_module(e.token.as_deref().unwrap(), 0)
                 .unwrap()
         {

@@ -6,6 +6,59 @@ use crate::value::RuntimeSource;
 use crate::vm::{Vm, VmPoll, compile_module};
 use std::sync::Arc;
 
+#[test]
+fn module_key_resolution_is_generic_and_preserves_already_parsed_escapes() {
+    // IoUtils.resolve(URI, URI): module keys are not limited by the bounded
+    // default resource reader's file-only relative resolution profile.
+    for (base, operand, expected) in [
+        (
+            "memo:/selected/holder.pkl",
+            "./child.pkl",
+            "memo:/selected/child.pkl",
+        ),
+        (
+            "memo:/selected/holder.pkl",
+            "./a%20b.pkl",
+            "memo:/selected/a%20b.pkl",
+        ),
+        (
+            "https://example.test",
+            "child.pkl",
+            "https://example.test/child.pkl",
+        ),
+        (
+            "memo:/selected/holder.pkl",
+            "/a/../b.pkl",
+            "memo:/a/../b.pkl",
+        ),
+        (
+            "memo:/selected/holder.pkl?q",
+            "#part",
+            "memo:/selected/holder.pkl?q#part",
+        ),
+        (
+            "jar:file:///archive.jar!/dir/holder.pkl",
+            "../child.pkl",
+            "jar:file:///archive.jar!/child.pkl",
+        ),
+        ("pkl:base", "child.pkl", "child.pkl"),
+    ] {
+        assert_eq!(resolve_module_key_uri(operand, base).unwrap(), expected);
+    }
+    assert_eq!(
+        prepare_module_uri("./a b.pkl", Some("memo:/selected/holder.pkl"))
+            .unwrap()
+            .0,
+        "memo:/selected/a%20b.pkl"
+    );
+    assert!(
+        ResourceUri::from_authored("child.pkl")
+            .unwrap()
+            .resolve(Some("memo:/selected/holder.pkl"))
+            .is_err()
+    );
+}
+
 // Pinned IoUtils/java.net.URI observations from Stage38's Java acquisition.
 #[test]
 fn authored_uri_path_escaping_and_normalization_are_separate() {

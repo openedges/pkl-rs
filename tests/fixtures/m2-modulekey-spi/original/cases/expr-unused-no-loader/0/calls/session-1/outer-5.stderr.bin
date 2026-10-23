@@ -1,0 +1,6 @@
+–– Pkl Error ––
+No module loader is registered for module `noLoader:x`.
+
+1 | import("noLoader:x")
+    ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

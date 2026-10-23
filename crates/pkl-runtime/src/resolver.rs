@@ -200,6 +200,7 @@ pub enum Binding {
 #[derive(Clone, Debug)]
 pub(crate) enum AstPreparation {
     Import {
+        clause: bool,
         uri: String,
         span: Span,
         member: crate::value::PklString,
@@ -1314,6 +1315,7 @@ impl<'a> Resolver<'a> {
                 Work::Expression(expression, contextual_new) => match &expression.kind {
                     ExprKind::Import { uri, uri_span, .. } => {
                         self.preparation.push(AstPreparation::Import {
+                            clause: false,
                             uri: uri.clone(),
                             span: *uri_span,
                             member: self.diagnostic_owners.name().unwrap_or_default(),
@@ -2146,6 +2148,7 @@ fn resolve_module_inner(
                     unreachable!()
                 };
                 resolver.preparation.push(AstPreparation::Import {
+                    clause: true,
                     uri: uri.clone(),
                     span: *uri_span,
                     member: Default::default(),
@@ -2159,6 +2162,7 @@ fn resolve_module_inner(
                 ))?;
                 if let Some(parent) = &declaration.parent {
                     resolver.preparation.push(AstPreparation::Import {
+                        clause: false,
                         uri: parent.uri.clone(),
                         span: parent.span,
                         member: Default::default(),

@@ -1,4 +1,6 @@
 //! Exact Java guest catch payloads. Terminal and constructor boundaries are explicit.
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use pkl_runtime::{
     probe::{SourceEvent, SourceProbe},
     value::{ErrorKind, PklString, Value},
@@ -202,7 +204,7 @@ impl Host {
                 "log" => self.log(event, probe),
                 "module-request" => {
                     let token = event.token.unwrap();
-                    if probe.complete_default_module(&token, now).unwrap() {
+                    if module_keys::complete_probe(probe, &token, now).unwrap() {
                         continue;
                     }
                     let request = event.module.unwrap();
@@ -459,9 +461,7 @@ fn next(probe: &mut SourceProbe, now: u32) -> SourceEvent {
         let event = probe.poll(now, 1).unwrap();
         probe.collect();
         if event.kind == "module-request"
-            && probe
-                .complete_default_module(event.token.as_deref().unwrap(), now)
-                .unwrap()
+            && module_keys::complete_probe(probe, event.token.as_deref().unwrap(), now).unwrap()
         {
             continue;
         }

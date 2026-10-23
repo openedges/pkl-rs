@@ -1,4 +1,6 @@
 //! Original module-type and inheritance contracts use the same evaluator and Host.
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use pkl_runtime::evaluation::frontend::{
     ModuleEvalOptions, ModuleSourceInput, evaluate_module_output_with_host,
 };
@@ -49,8 +51,15 @@ fn evaluate_original(name: &str, expected: &[u8]) -> Vec<String> {
         },
         &ModuleEvalOptions::default(),
         |request| match &request.kind {
+            ModuleRequestKind::ResolveKey { .. } => {
+                panic!("public lifecycle request in supplied-source test")
+            }
+            ModuleRequestKind::SelectKey { .. }
+            | ModuleRequestKind::QueryCachePolicy { .. }
+            | ModuleRequestKind::QueryFragmentPaths { .. }
+            | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
             ModuleRequestKind::CheckImport { .. } => {
-                pkl_runtime::modules::default_completion(request).expect("default import policy")
+                module_keys::defaults(request).expect("default import policy")
             }
             ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
                 panic!("unexpected ModuleKey preparation in this fixture")

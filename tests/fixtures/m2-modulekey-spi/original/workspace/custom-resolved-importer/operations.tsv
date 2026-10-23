@@ -1,0 +1,7 @@
+main.pkl	stable
+main.pkl	alias().child().tag
+main.pkl	alias().child().tag
+main.pkl	import("memo:/aliased.pkl").child().tag
+GC
+main.pkl	alias().child().tag
+main.pkl	stable

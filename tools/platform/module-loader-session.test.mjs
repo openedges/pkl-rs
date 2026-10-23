@@ -23,7 +23,7 @@ function setup(events, options = {}) {
     drainCancelledReads() { return []; }
     completeDefaultModule(...args) { calls.push(['completeDefaultModule', ...args]); return options.defaultModule ? options.defaultModule(...args) : false; }
   }
-  for (const method of ['startPath','startOutputBytes','completeModuleResolution','completeModuleSource',
+  for (const method of ['startPath','startOutputBytes','completeModuleKey','completeModuleCachePolicy','completeModuleResolution','completeModuleSource',
     'rejectReadIo','reject','rejectModuleResolution','rejectModuleSource','reenterPath','closeFromCallback','respondString','respondConfigured','acknowledgeLog'])
     SourceSession.prototype[method] = (...args) => calls.push([method, ...args]);
   return { api: { SourceSession }, calls };
@@ -58,6 +58,62 @@ test('source callback reenters before completing the suspended original source t
   assert.deepEqual(calls.filter(c => ['reenterPath','completeModuleSource'].includes(c[0])), [
     ['reenterPath','s',1,0], ['completeModuleSource','s','value=7','child',0],
   ]);
+});
+
+test('configured key selection and cache-policy queries preserve identities before source resolution', () => {
+  const keyId = '18446744073709551615', uri = 'file:///child%2520.pkl';
+  const descriptor = {keyId, keyKind: 'host', keyHandle: `fixture-key:${keyId}`};
+  const select = {kind: 'module-request', token: 'select', module: {id: '10', kind: 'select-key',
+    originalUri: uri, keyId, selectionPhase: 'runtime-import'}};
+  const policy = {kind: 'module-request', token: 'policy', module: {id: '11', kind: 'query-cache-policy',
+    originalUri: uri, ...descriptor}};
+  const resolve = resolver(); Object.assign(resolve.module, descriptor, {resolvedKeyId: '9223372036854775808'});
+  const source = loader(); Object.assign(source.module, descriptor,
+    {resolvedKeyId: '9223372036854775808', resolvedKeyHandle: 'resolved-fixture'});
+  const {api, calls} = setup([select, policy, resolve, source, {kind: 'value', value: Uint16Array.of(55)}],
+    {defaultModule: () => assert.fail('configured factory and loader must take precedence')});
+  const row = runModuleLoaderCase(api, fixture());
+  assert.equal(row.acquisitionError, null);
+  assert.deepEqual(row.requests.map(request => request.kind), ['select-key', 'query-cache-policy', 'resolve', 'load-source']);
+  assert.deepEqual(calls.filter(call => call[0].startsWith('complete')).slice(0, 2), [
+    ['completeModuleKey', 'select', keyId, uri, 'host', `fixture-key:${keyId}`, 0],
+    ['completeModuleCachePolicy', 'policy', keyId, true, 0],
+  ]);
+  assert.equal(row.requests[3].resolvedKeyHandle, 'resolved-fixture');
+});
+
+test('malformed selected-key identity fails before fixture resolution consumes the token', () => {
+  const malformed = resolver(); malformed.module.keyId = '7';
+  const {api, calls} = setup([malformed]);
+  const row = runModuleLoaderCase(api, fixture());
+  assert.match(row.acquisitionError.message, /module request context/);
+  assert.equal(calls.some(call => call[0] === 'completeModuleResolution'), false);
+});
+
+test('hierarchical file factory selection is independent of source existence and main-module resolution entries', () => {
+  for (const uri of ['file:///missing.pkl', 'FILE:/missing.pkl', 'file:///main.pkl']) {
+    const event = {kind: 'module-request', token: 'select', module: {id: '1', kind: 'select-key',
+      originalUri: uri, keyId: '9', selectionPhase: 'clause-preparation'}};
+    const {api, calls} = setup([event, {kind: 'value', value: Uint16Array.of(55)}],
+      {defaultModule: () => assert.fail('file key selection must precede default fallback')});
+    const row = runModuleLoaderCase(api, fixture({resolutions: [], sources: []}));
+    assert.equal(row.acquisitionError, null);
+    assert.deepEqual(calls.filter(call => call[0].startsWith('complete')), [
+      ['completeModuleKey', 'select', '9', uri, 'host', 'fixture-key:9', 0],
+    ]);
+    assert.deepEqual(row.results[0].valueUnits, [55]);
+  }
+});
+
+test('unconfigured non-file and opaque file keys stay explicit adapter failures', () => {
+  for (const uri of ['unknown:/missing', 'file:opaque']) {
+    const event = {kind: 'module-request', token: 'select', module: {id: '1', kind: 'select-key',
+      originalUri: uri, keyId: '9', selectionPhase: 'runtime-import'}};
+    const {api, calls} = setup([event]);
+    const row = runModuleLoaderCase(api, fixture({resolutions: [], sources: []}));
+    assert.match(row.acquisitionError.message, /not configured/);
+    assert.equal(calls.some(call => call[0] === 'completeModuleKey'), false);
+  }
 });
 
 test('missing bundle resolution rejects the correct phase and retains UTF16 diagnostics', () => {
@@ -112,7 +168,7 @@ test('duplicate identities and malformed request contexts are acquisition errors
   const malformed = resolver(); delete malformed.module.importerOriginalUri;
   const b = setup([malformed]);
   const row = runModuleLoaderCase(b.api,fixture());
-  assert.match(row.acquisitionError.message,/incomplete resolver context/);
+  assert.equal(row.acquisitionError.message, 'invalid default-policy module request context');
   assert.equal(row.results.length,0);
 });
 

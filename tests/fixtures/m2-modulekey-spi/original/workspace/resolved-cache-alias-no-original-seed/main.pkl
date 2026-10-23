@@ -1,0 +1,4 @@
+function first() = import("memo:/aliasA.pkl")
+function second() = import("memo:/aliasB.pkl")
+function third() = import("memo:/aliasB.pkl")
+stable = 7

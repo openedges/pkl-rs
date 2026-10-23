@@ -1,0 +1,140 @@
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl resource=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+policy-resolve-module repl:text
+outer-0 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl -> memo:/jarNested.pkl
+factory-custom memo:/jarNested.pkl
+factory-custom-hit memo:/jarNested.pkl
+key-is-cached memo:/jarNested.pkl true
+key-resolve memo:/jarNested.pkl
+policy-resolve-module memo:/jarNested.pkl
+key-resolved memo:/jarNested.pkl -> jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl
+load-source memo:/jarNested.pkl -> jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl load=0
+policy-import jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl
+actual-import-denied jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl denial=0
+outer-1 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl -> pkl:base
+factory-custom pkl:base
+factory-0 pkl:base
+factory-hit-0 pkl:base key=org.pkl.core.module.ModuleKeys$StandardLibrary stdlib=true
+outer-2 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl -> memo:/peer.pkl
+factory-custom memo:/peer.pkl
+factory-custom-hit memo:/peer.pkl
+key-is-cached memo:/peer.pkl true
+key-resolve memo:/peer.pkl
+policy-resolve-module memo:/peer.pkl
+key-resolved memo:/peer.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/real/peer.pkl
+load-source memo:/peer.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/real/peer.pkl load=1
+outer-3 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl
+actual-import-denied jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl denial=1
+outer-4 error org.pkl.core.PklException
+system-gc-request
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-5 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+secure-path file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl resource=false
+policy-resolve-module file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+policy-resolve-module repl:text
+outer-0 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl -> memo:/jarNested.pkl
+factory-custom memo:/jarNested.pkl
+factory-custom-hit memo:/jarNested.pkl
+key-is-cached memo:/jarNested.pkl true
+key-resolve memo:/jarNested.pkl
+policy-resolve-module memo:/jarNested.pkl
+key-resolved memo:/jarNested.pkl -> jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl
+load-source memo:/jarNested.pkl -> jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl load=0
+policy-import jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl
+actual-import-denied jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl denial=0
+outer-1 error org.pkl.core.PklException
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl -> pkl:base
+factory-custom pkl:base
+factory-0 pkl:base
+factory-hit-0 pkl:base key=org.pkl.core.module.ModuleKeys$StandardLibrary stdlib=true
+outer-2 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl -> memo:/peer.pkl
+factory-custom memo:/peer.pkl
+factory-custom-hit memo:/peer.pkl
+key-is-cached memo:/peer.pkl true
+key-resolve memo:/peer.pkl
+policy-resolve-module memo:/peer.pkl
+key-resolved memo:/peer.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/real/peer.pkl
+load-source memo:/peer.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/real/peer.pkl load=1
+outer-3 success
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+policy-import jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl
+actual-import-denied jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl -> file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl denial=1
+outer-4 error org.pkl.core.PklException
+system-gc-request
+factory-custom file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-0 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-1 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl
+factory-hit-2 file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl key=org.pkl.core.module.ModuleKeys$File stdlib=false
+policy-resolve-module repl:text
+outer-5 success

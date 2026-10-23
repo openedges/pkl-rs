@@ -1,4 +1,6 @@
 //! Actual pinned Java SPI failures and producer diagnostics, with exact units.
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use pkl_runtime::{
     probe::SourceProbe,
     value::{PklString, Value},
@@ -80,9 +82,12 @@ fn case(id: &str, mode: &str, cause: &str) {
                 match event.kind {
                     "yield" => {}
                     "module-request" => {
-                        if probe
-                            .complete_default_module(event.token.as_deref().unwrap(), 0)
-                            .unwrap()
+                        if module_keys::complete_probe(
+                            &mut probe,
+                            event.token.as_deref().unwrap(),
+                            0,
+                        )
+                        .unwrap()
                         {
                             continue;
                         }
@@ -189,9 +194,7 @@ fn next(probe: &mut SourceProbe) -> pkl_runtime::probe::SourceEvent {
         let event = probe.poll(0, 1).unwrap();
         probe.collect();
         if event.kind == "module-request"
-            && probe
-                .complete_default_module(event.token.as_deref().unwrap(), 0)
-                .unwrap()
+            && module_keys::complete_probe(probe, event.token.as_deref().unwrap(), 0).unwrap()
         {
             continue;
         }

@@ -1,0 +1,100 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/resolved-cache-alias-no-original-seed/1/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/resolved-cache-alias-no-original-seed/1/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar",
+    "AdmissionProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/cases/resolved-cache-alias-no-original-seed/1/calls",
+    "allow",
+    "main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/resolved-cache-alias-no-original-seed/1/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/resolved-cache-alias-no-original-seed/1/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/resolved-cache-alias-no-original-seed/1/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/resolved-cache-alias-no-original-seed/1/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 16792,
+  "startedUnixNs": 1792772262366634000,
+  "pid": 16845,
+  "exitCode": 0,
+  "timedOut": false,
+  "finishedUnixNs": 1792772263391044000,
+  "stdoutSha256": "cea5db1b615897b5e598af3fa3a8adc5700df7ffcc9aa73d250b04cb36c450c9",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "case": "resolved-cache-alias-no-original-seed",
+  "repeat": 1,
+  "workspaceBefore": {
+    "shared.pkl": {
+      "kind": "regular",
+      "sha256": "1e2543362da1a917545bcf5643178552d198c4f181091bf12fb94d713ae6af6d",
+      "bytes": 19,
+      "mode": 420
+    },
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "365da208073ea70379af309cf5ec13c340f29119c32c6bec0ab536eda5e827ef",
+      "bytes": 150,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "bd92559bfc4b6fd8ddf0ff061886eadfdfdc595e05ed3c5ce19c432b3be3834d",
+      "bytes": 388,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "6be176dbee8bdd20e62b22636880dbf97efc0c9ef633da448d38abcb48a67acb",
+      "bytes": 182,
+      "mode": 420
+    }
+  },
+  "workspaceAfter": {
+    "shared.pkl": {
+      "kind": "regular",
+      "sha256": "1e2543362da1a917545bcf5643178552d198c4f181091bf12fb94d713ae6af6d",
+      "bytes": 19,
+      "mode": 420
+    },
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "365da208073ea70379af309cf5ec13c340f29119c32c6bec0ab536eda5e827ef",
+      "bytes": 150,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "bd92559bfc4b6fd8ddf0ff061886eadfdfdc595e05ed3c5ce19c432b3be3834d",
+      "bytes": 388,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "6be176dbee8bdd20e62b22636880dbf97efc0c9ef633da448d38abcb48a67acb",
+      "bytes": 182,
+      "mode": 420
+    }
+  }
+}

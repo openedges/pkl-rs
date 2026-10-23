@@ -138,6 +138,64 @@ pub(crate) fn cache_key(uri: &str) -> CacheKey {
     }
 }
 
+pub(crate) fn module_name_needs_fragment_paths(uri: &str) -> bool {
+    !uri.split_once(':')
+        .is_some_and(|(scheme, _)| scheme.eq_ignore_ascii_case("jar"))
+}
+pub(crate) fn infer_module_name(uri: &str, fragment_paths: bool) -> Result<String, RuntimeError> {
+    fn basename(path: &str) -> String {
+        let leaf = path.rsplit('/').next().unwrap_or(path);
+        leaf.rsplit_once('.')
+            .map_or(leaf, |(base, _)| base)
+            .to_owned()
+    }
+    let parsed = ResourceUri::parse(uri).map_err(|_| {
+        RuntimeError::new(
+            crate::value::ErrorKind::Host,
+            "Invalid selected ModuleKey URI.",
+        )
+    })?;
+    if parsed
+        .scheme
+        .as_ref()
+        .is_some_and(|scheme| scheme.eq_ignore_ascii_case("jar"))
+    {
+        return Ok(basename(uri.rsplit_once('!').map_or(uri, |(_, path)| path)));
+    }
+    if fragment_paths {
+        let fragment = parsed
+            .fragment
+            .as_deref()
+            .ok_or_else(|| unsupported("ModuleKey fragment paths require a URI fragment."))?;
+        return Ok(basename(&decode_escapes(fragment)));
+    }
+    if parsed.opaque {
+        let text = decoded_scheme_specific_part(uri)
+            .ok_or_else(|| unsupported("Missing ModuleKey scheme specific part."))?
+            .to_java_utf8();
+        let unversioned = text
+            .rsplit_once(':')
+            .map_or(text.as_str(), |(name, _)| name);
+        return Ok(unversioned
+            .rsplit('.')
+            .next()
+            .unwrap_or(unversioned)
+            .to_owned());
+    }
+    Ok(basename(&decode_escapes(&parsed.path)))
+}
+
+pub(crate) fn validate_module_key_uri(uri: &str) -> Result<(), RuntimeError> {
+    if ResourceUri::parse(uri).is_ok_and(|parsed| parsed.scheme.is_some()) {
+        Ok(())
+    } else {
+        Err(RuntimeError::new(
+            crate::value::ErrorKind::Host,
+            "ModuleKey requires a valid absolute URI.",
+        ))
+    }
+}
+
 /// SecurityManagers.getDefaultTrustLevel uses the resolved module URI, not a
 /// diagnostic URI or resource-reader key. The nested marker uses decoded SSP;
 /// other jar URLs are peeled without recursion or rewriting the embedded URI.
@@ -436,10 +494,19 @@ pub(crate) fn prepare_module_uri(
     let parsed = if parsed.scheme.is_none() && base.is_none() {
         parsed
     } else {
-        parsed.resolve(base)?
+        parsed.resolve_module(base)?
     };
     let absolute = parsed.text.clone();
     Ok((absolute, parsed.normalize().text))
+}
+
+/// ModuleKey.resolveUri receives an already parsed URI, not an authored path.
+/// In particular, its percent escapes must not be quoted a second time.
+pub(crate) fn resolve_module_key_uri(uri: &str, base: &str) -> Result<String, RuntimeError> {
+    ResourceUri::parse(uri)
+        .map_err(|_| unsupported("Invalid parsed module URI."))?
+        .resolve_module(Some(base))
+        .map(|uri| uri.text)
 }
 
 #[derive(Clone, Debug)]
@@ -595,6 +662,55 @@ impl ResourceUri {
             fragment: fragment.map(str::to_owned),
             opaque,
         })
+    }
+
+    fn resolve_module(mut self, module_uri: Option<&str>) -> Result<Self, RuntimeError> {
+        if self.scheme.is_some() {
+            return Ok(self);
+        }
+        let base_text = module_uri.ok_or_else(|| {
+            unsupported("Relative module imports require declaration module URI metadata.")
+        })?;
+        let base =
+            Self::parse(base_text).map_err(|_| unsupported("Invalid declaration module URI."))?;
+        // IoUtils.resolve handles jar paths before java.net.URI.resolve, which
+        // otherwise treats an opaque base as unable to resolve relative paths.
+        if base
+            .scheme
+            .as_deref()
+            .is_some_and(|scheme| scheme.eq_ignore_ascii_case("jar"))
+        {
+            let bang = base_text
+                .find('!')
+                .ok_or_else(|| unsupported("Invalid jar module URI (missing `!`)."))?;
+            let path = self.resolve_module(Some(&base_text[bang + 1..]))?;
+            return Self::parse(&format!("{}{}", &base_text[..=bang], path.text))
+                .map_err(|_| unsupported("Invalid resolved jar module URI."));
+        }
+        if base.opaque {
+            return Ok(self);
+        }
+        if self.authority.is_none() {
+            self.authority = base.authority;
+            if self.path.is_empty() && self.fragment.is_some() && self.query.is_none() {
+                self.path = base.path;
+                self.query = base.query;
+            } else if !self.path.starts_with('/') {
+                let directory = base
+                    .path
+                    .rfind('/')
+                    .map_or("", |slash| &base.path[..=slash]);
+                let separator = if directory.is_empty() && self.authority.is_some() {
+                    "/"
+                } else {
+                    ""
+                };
+                self.path = normalize_path(&format!("{directory}{separator}{}", self.path));
+            }
+        }
+        self.scheme = base.scheme;
+        self.rebuild();
+        Ok(self)
     }
 
     fn resolve(mut self, module_uri: Option<&str>) -> Result<Self, RuntimeError> {

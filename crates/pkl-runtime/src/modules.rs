@@ -10,6 +10,56 @@ use crate::{
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord)]
 pub struct UnitId(pub u32);
 
+/// Evaluator-owned identities. They identify key objects, never URI cache entries.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub struct ModuleKeyId(pub u64);
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub struct ResolvedKeyId(pub u64);
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ModuleKeyKind {
+    StandardLibrary,
+    Host,
+    SuppliedText,
+    Synthetic,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct ModuleKey {
+    pub id: ModuleKeyId,
+    pub uri: Arc<str>,
+    pub kind: ModuleKeyKind,
+    /// The Host owns the object behind this handle. It is not a source or a cache.
+    pub handle: Arc<str>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct ResolvedModuleKey {
+    pub id: ResolvedKeyId,
+    pub key: ModuleKey,
+    pub handle: Arc<str>,
+    pub module: ResolvedModule,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum SelectionPhase {
+    RuntimeImport,
+    ClausePreparation,
+    Primary,
+}
+
+/// A public evaluation input. Construction performs no factory lookup or I/O.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct ModuleSourceSpec {
+    pub uri: Arc<str>,
+    pub contents: Option<Arc<str>>,
+}
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ResolutionPhase {
+    Primary,
+    Query,
+}
+
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ModuleIdentity {
     pub original_uri: Arc<str>,
@@ -68,19 +118,44 @@ pub enum ModuleRequestKind {
         importer: ModuleIdentity,
         import_uri: Arc<str>,
     },
+    SelectKey {
+        id: ModuleKeyId,
+        uri: Arc<str>,
+        phase: SelectionPhase,
+    },
+    QueryCachePolicy {
+        key: ModuleKey,
+    },
+    QueryFragmentPaths {
+        key: ModuleKey,
+    },
+    ResolveImportUri {
+        key: ModuleKey,
+        authored_uri: Arc<str>,
+    },
     Capabilities {
+        key: Option<ModuleKey>,
         module: ModuleIdentity,
     },
     HasElement {
+        key: Option<ModuleKey>,
         module: ModuleIdentity,
         element_uri: Arc<str>,
     },
     Resolve {
+        key: ModuleKey,
+        resolved_key_id: ResolvedKeyId,
         importer: ModuleIdentity,
         import_uri: Arc<str>,
         original_uri: Arc<str>,
     },
+    ResolveKey {
+        key: ModuleKey,
+        resolved_key_id: ResolvedKeyId,
+        phase: ResolutionPhase,
+    },
     LoadSource {
+        key: ResolvedModuleKey,
         resolved: ResolvedModule,
     },
 }
@@ -88,6 +163,13 @@ pub enum ModuleRequestKind {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ModuleHostError {
     NotFound,
+    NoLoader,
+    UriSyntax {
+        reason: PklString,
+    },
+    ExternalReaderProcess {
+        message: Option<PklString>,
+    },
     /// Raw I/O exception message; shared diagnostics add the IOException type.
     Io(IoFailure),
     /// An already constructed Host rejection; arbitrary text has no guest provenance.
@@ -103,9 +185,36 @@ pub enum ModuleHostError {
 }
 
 impl ModuleHostError {
+    pub(crate) fn into_factory_runtime(self, uri: &str) -> RuntimeError {
+        match self {
+            // The pinned ModuleResolver passes no message argument for this template.
+            Self::Io(cause) => cause.into_runtime("loading module", "{0}"),
+            other => other.into_runtime(uri),
+        }
+    }
     pub(crate) fn into_runtime(self, uri: &str) -> RuntimeError {
         match self {
             Self::NotFound => RuntimeError::host_language(format!("Cannot find module `{uri}`.")),
+            Self::NoLoader => RuntimeError::host_language(format!(
+                "No module loader is registered for module `{uri}`."
+            )),
+            Self::UriSyntax { reason } => {
+                let mut error =
+                    RuntimeError::host_language(format!("Module URI `{uri}` has invalid syntax."));
+                error.hint = Some(reason);
+                error
+            }
+            Self::ExternalReaderProcess { message } => {
+                let headline =
+                    PklString::from("Failed to communicate with external reader process.");
+                let message = match message {
+                    Some(message) if message != headline => headline
+                        .concat(&"\nExternalReaderProcessException: ".into())
+                        .concat(&message),
+                    _ => headline,
+                };
+                RuntimeError::host_language(message)
+            }
             Self::Io(cause) => cause.into_runtime("loading module", uri),
             Self::Denied(message) => RuntimeError::new(ErrorKind::Host, message),
             Self::SecurityManagerException { message } => RuntimeError::host_language(
@@ -119,9 +228,14 @@ impl ModuleHostError {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ModuleCompletion {
     ImportChecked(Result<(), ModuleHostError>),
+    KeySelected(Result<ModuleKey, ModuleHostError>),
+    CachePolicy(Result<bool, ModuleHostError>),
+    FragmentPaths(Result<bool, ModuleHostError>),
+    ImportUri(Result<Arc<str>, ModuleHostError>),
     Capabilities(Result<ModuleCapabilities, ModuleHostError>),
     HasElement(Result<bool, ModuleHostError>),
     Resolved(Result<ResolvedModule, ModuleHostError>),
+    KeyResolved(Result<ResolvedModuleKey, ModuleHostError>),
     Source(Result<ModuleSource, ModuleHostError>),
 }
 
@@ -142,9 +256,15 @@ pub fn unsupported_completion(request: &ModuleRequest) -> ModuleCompletion {
         ModuleHostError::Unsupported("No module resolver/source reader is configured.".into());
     match request.kind {
         ModuleRequestKind::CheckImport { .. } => ModuleCompletion::ImportChecked(Err(error)),
+        ModuleRequestKind::SelectKey { .. } => ModuleCompletion::KeySelected(Err(error)),
+        ModuleRequestKind::QueryCachePolicy { .. } => ModuleCompletion::CachePolicy(Err(error)),
+        ModuleRequestKind::QueryFragmentPaths { .. } => ModuleCompletion::FragmentPaths(Err(error)),
+        ModuleRequestKind::ResolveImportUri { .. } => ModuleCompletion::ImportUri(Err(error)),
         ModuleRequestKind::Capabilities { .. } => ModuleCompletion::Capabilities(Err(error)),
         ModuleRequestKind::HasElement { .. } => ModuleCompletion::HasElement(Err(error)),
-        ModuleRequestKind::Resolve { .. } => ModuleCompletion::Resolved(Err(error)),
+        ModuleRequestKind::Resolve { .. } | ModuleRequestKind::ResolveKey { .. } => {
+            ModuleCompletion::Resolved(Err(error))
+        }
         ModuleRequestKind::LoadSource { .. } => ModuleCompletion::Source(Err(error)),
     }
 }
@@ -198,6 +318,29 @@ pub(crate) fn stdlib_kind(uri: &str) -> Option<StdlibKind> {
 /// the VM; its caller chooses whether to delegate to this default profile.
 pub fn default_completion(request: &ModuleRequest) -> Option<ModuleCompletion> {
     match &request.kind {
+        ModuleRequestKind::SelectKey { id, uri, .. } if uri.starts_with("pkl:") => {
+            Some(ModuleCompletion::KeySelected(Ok(ModuleKey {
+                id: *id,
+                uri: uri.clone(),
+                kind: ModuleKeyKind::StandardLibrary,
+                handle: Arc::from(""),
+            })))
+        }
+        ModuleRequestKind::QueryCachePolicy { key }
+            if key.kind == ModuleKeyKind::StandardLibrary =>
+        {
+            Some(ModuleCompletion::CachePolicy(Ok(true)))
+        }
+        ModuleRequestKind::ResolveImportUri { key, authored_uri } => {
+            Some(ModuleCompletion::ImportUri(
+                crate::host::resources::resolve_module_key_uri(authored_uri, &key.uri)
+                    .map(Into::into)
+                    .map_err(|error| ModuleHostError::Unsupported(error.message)),
+            ))
+        }
+        ModuleRequestKind::QueryFragmentPaths { .. } => {
+            Some(ModuleCompletion::FragmentPaths(Ok(false)))
+        }
         ModuleRequestKind::CheckImport {
             importer,
             import_uri,
@@ -214,17 +357,21 @@ pub fn default_completion(request: &ModuleRequest) -> Option<ModuleCompletion> {
             })();
             Some(ModuleCompletion::ImportChecked(result))
         }
-        ModuleRequestKind::Resolve {
-            import_uri,
-            original_uri,
-            ..
-        } if stdlib_kind(import_uri) == Some(StdlibKind::Cached) && import_uri == original_uri => {
-            // The default allowlist includes the exact lowercase pkl:
-            // scheme. StandardLibrary.resolve returns the same key.
+        ModuleRequestKind::Resolve { key, .. } | ModuleRequestKind::ResolveKey { key, .. }
+            if key.kind == ModuleKeyKind::StandardLibrary
+                && stdlib_kind(&key.uri) == Some(StdlibKind::Cached) =>
+        {
             Some(ModuleCompletion::Resolved(Ok(ResolvedModule {
-                original_uri: original_uri.clone(),
-                resolved_uri: import_uri.clone(),
-                source_uri: import_uri.clone(),
+                original_uri: key.uri.clone(),
+                resolved_uri: key.uri.clone(),
+                source_uri: key.uri.clone(),
+            })))
+        }
+        ModuleRequestKind::ResolveKey { key, .. } if key.kind == ModuleKeyKind::Synthetic => {
+            Some(ModuleCompletion::Resolved(Ok(ResolvedModule {
+                original_uri: key.uri.clone(),
+                resolved_uri: key.uri.clone(),
+                source_uri: key.uri.clone(),
             })))
         }
         _ => None,

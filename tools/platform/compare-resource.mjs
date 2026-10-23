@@ -15,6 +15,7 @@ if (args.length !== 5)
   throw Error('usage: compare-resource.mjs OUTPUT WASM_DIR ADDON FIXTURES_DIR PINNED_PACKAGE_JSON');
 const [output, wasm, addon, fixtureRoot, packagePath] = args.map(path => resolve(path));
 const script = fileURLToPath(import.meta.url), helper = resolve(dirname(script), 'resource-session.mjs');
+const policyHelper = resolve(dirname(script), 'module-policy-session.mjs');
 const verifier = resolve(dirname(script), '../resource_fixtures.py');
 const exporter = resolve(dirname(verifier), 'export_resource_portable.py');
 const json = value => JSON.stringify(value, null, 2) + '\n';
@@ -66,10 +67,11 @@ if (!/^\d+\.\d+\.\d+$/.test(pin) || require('playwright/package.json').version !
     || lock.packages['node_modules/playwright'].version !== pin
     || lock.packages['node_modules/playwright-core'].version !== pin)
   throw Error('unpinned browser tooling');
-for (const path of [script, helper, addon, process.execPath]) await read(path);
+for (const path of [script, helper, policyHelper, addon, process.execPath]) await read(path);
 await tree(wasm);
 await writeFile(resolve(output, 'fixtures.json'), json(bundle));
 await writeFile(resolve(output, 'resource-session.mjs'), await read(helper));
+await writeFile(resolve(output, 'module-policy-session.mjs'), await read(policyHelper));
 await writeFile(resolve(output, 'compare-resource.mjs'), await read(script));
 const report = {schema: 1, startedAt, preflight, scope:
   'Typed Resource reader sessions on actual Node/Chromium. Complete status/stdout/stderr UTF16 and Java UTF8, per-call reader counts, exact reader URI order and owned payloads. No CLI/files, whole language or performance claim.',
@@ -114,10 +116,10 @@ const server = createServer(async (request, response) => {
   try {
     const url = new URL(request.url, 'http://127.0.0.1');
     if (url.pathname === '/') { response.end('<!doctype html><title>Resource verification</title>'); return; }
-    const isHelper = url.pathname === '/resource-session.mjs';
-    const path = isHelper ? resolve(output, 'resource-session.mjs') : resolve(wasm, '.' + decodeURIComponent(url.pathname));
+    const isHelper = ['/resource-session.mjs', '/module-policy-session.mjs'].includes(url.pathname);
+    const path = isHelper ? resolve(output, '.' + url.pathname) : resolve(wasm, '.' + decodeURIComponent(url.pathname));
     if (!isHelper && !path.startsWith(wasm + sep)) throw Error('invalid artifact path');
-    const assetBytes = await readFile(path); response.writeHead(200, {'Content-Type': extname(path) === '.wasm' ? 'application/wasm' : 'text/javascript'});
+    const assetBytes = await read(path); response.writeHead(200, {'Content-Type': extname(path) === '.wasm' ? 'application/wasm' : 'text/javascript'});
     response.end(assetBytes);
   } catch { if (!response.headersSent) { response.writeHead(404); response.end(); } else response.destroy(); }
 });
@@ -132,7 +134,7 @@ try {
   if (missingAssetResponse.status !== 404 || missingAssetBody.length !== 0)
     throw Error('missing artifact must return an empty 404 response');
   report.browserExecutable = chromium.executablePath();
-  report.browserExecutableSha256 = hash(await readFile(report.browserExecutable));
+  report.browserExecutableSha256 = hash(await read(report.browserExecutable));
   report.browserLaunchOptions = {headless: true, executablePath: report.browserExecutable};
   browser = await chromium.launch(report.browserLaunchOptions);
   report.browser = browser.version();

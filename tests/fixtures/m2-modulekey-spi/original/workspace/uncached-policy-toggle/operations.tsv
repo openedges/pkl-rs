@@ -1,0 +1,12 @@
+main.pkl	stable
+CACHE	off
+main.pkl	one().tag
+main.pkl	two().tag
+CACHE	on
+main.pkl	three().tag
+main.pkl	four().tag
+CACHE	off
+main.pkl	three().tag
+main.pkl	import("memo:/toggle.pkl").tag
+GC
+main.pkl	stable

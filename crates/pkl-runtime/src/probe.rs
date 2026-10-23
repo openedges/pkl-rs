@@ -254,7 +254,7 @@ pub struct SourceEvent {
 
 /// Module URIs are validated UTF-8 identities. The decimal request ID avoids
 /// narrowing the shared u64 counter through a JavaScript Number.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct SourceModuleRequest {
     pub id: String,
     pub kind: &'static str,
@@ -264,6 +264,13 @@ pub struct SourceModuleRequest {
     pub original_uri: String,
     pub resolved_uri: Option<String>,
     pub source_uri: Option<String>,
+    pub key_id: Option<String>,
+    pub key_kind: Option<&'static str>,
+    pub key_handle: Option<String>,
+    pub resolved_key_id: Option<String>,
+    pub resolved_key_handle: Option<String>,
+    pub selection_phase: Option<&'static str>,
+    pub resolution_phase: Option<&'static str>,
 }
 impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
     fn from(request: crate::modules::ModuleRequest) -> Self {
@@ -283,45 +290,120 @@ impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
                 original_uri: import_uri.to_string(),
                 resolved_uri: None,
                 source_uri: None,
+                ..Default::default()
             },
-            ModuleRequestKind::Capabilities { module } => Self {
+            ModuleRequestKind::SelectKey { id, uri, phase } => Self {
+                id: request.id.to_string(),
+                kind: "select-key",
+                original_uri: uri.to_string(),
+                key_id: Some(id.0.to_string()),
+                selection_phase: Some(match phase {
+                    crate::modules::SelectionPhase::RuntimeImport => "runtime-import",
+                    crate::modules::SelectionPhase::ClausePreparation => "clause-preparation",
+                    crate::modules::SelectionPhase::Primary => "primary",
+                }),
+                ..Default::default()
+            },
+            ModuleRequestKind::ResolveImportUri { key, authored_uri } => Self {
+                id: request.id.to_string(),
+                kind: "resolve-import-uri",
+                original_uri: key.uri.to_string(),
+                import_uri: Some(authored_uri.to_string()),
+                key_id: Some(key.id.0.to_string()),
+                key_kind: Some(key_kind_name(key.kind)),
+                key_handle: Some(key.handle.to_string()),
+                ..Default::default()
+            },
+            ModuleRequestKind::QueryFragmentPaths { key } => Self {
+                id: request.id.to_string(),
+                kind: "query-fragment-paths",
+                original_uri: key.uri.to_string(),
+                key_id: Some(key.id.0.to_string()),
+                key_kind: Some(key_kind_name(key.kind)),
+                key_handle: Some(key.handle.to_string()),
+                ..Default::default()
+            },
+            ModuleRequestKind::QueryCachePolicy { key } => Self {
+                id: request.id.to_string(),
+                kind: "query-cache-policy",
+                original_uri: key.uri.to_string(),
+                key_id: Some(key.id.0.to_string()),
+                key_kind: Some(key_kind_name(key.kind)),
+                key_handle: Some(key.handle.to_string()),
+                ..Default::default()
+            },
+            ModuleRequestKind::Capabilities { module, key } => Self {
                 id: request.id.to_string(),
                 kind: "capabilities",
+                key_id: key.as_ref().map(|key| key.id.0.to_string()),
+                key_kind: key.as_ref().map(|key| key_kind_name(key.kind)),
+                key_handle: key.as_ref().map(|key| key.handle.to_string()),
                 importer_original_uri: Some(module.original_uri.to_string()),
                 importer_resolved_uri: Some(module.resolved_uri.to_string()),
                 import_uri: None,
                 original_uri: module.original_uri.to_string(),
                 resolved_uri: None,
                 source_uri: None,
+                ..Default::default()
             },
             ModuleRequestKind::HasElement {
                 module,
+                key,
                 element_uri,
             } => Self {
                 id: request.id.to_string(),
                 kind: "has-element",
+                key_id: key.as_ref().map(|key| key.id.0.to_string()),
+                key_kind: key.as_ref().map(|key| key_kind_name(key.kind)),
+                key_handle: key.as_ref().map(|key| key.handle.to_string()),
                 importer_original_uri: Some(module.original_uri.to_string()),
                 importer_resolved_uri: Some(module.resolved_uri.to_string()),
                 import_uri: None,
                 original_uri: element_uri.to_string(),
                 resolved_uri: None,
                 source_uri: None,
+                ..Default::default()
             },
             ModuleRequestKind::Resolve {
                 importer,
                 import_uri,
                 original_uri,
+                key,
+                resolved_key_id,
             } => Self {
                 id: request.id.to_string(),
                 kind: "resolve",
+                key_id: Some(key.id.0.to_string()),
+                key_kind: Some(key_kind_name(key.kind)),
+                key_handle: Some(key.handle.to_string()),
+                resolved_key_id: Some(resolved_key_id.0.to_string()),
                 importer_original_uri: Some(importer.original_uri.to_string()),
                 importer_resolved_uri: Some(importer.resolved_uri.to_string()),
                 import_uri: Some(import_uri.to_string()),
                 original_uri: original_uri.to_string(),
                 resolved_uri: None,
                 source_uri: None,
+                ..Default::default()
             },
-            ModuleRequestKind::LoadSource { resolved } => Self {
+            ModuleRequestKind::ResolveKey {
+                key,
+                resolved_key_id,
+                phase,
+            } => Self {
+                id: request.id.to_string(),
+                kind: "resolve-key",
+                original_uri: key.uri.to_string(),
+                key_id: Some(key.id.0.to_string()),
+                key_kind: Some(key_kind_name(key.kind)),
+                key_handle: Some(key.handle.to_string()),
+                resolved_key_id: Some(resolved_key_id.0.to_string()),
+                resolution_phase: Some(match phase {
+                    crate::modules::ResolutionPhase::Primary => "primary",
+                    crate::modules::ResolutionPhase::Query => "query",
+                }),
+                ..Default::default()
+            },
+            ModuleRequestKind::LoadSource { resolved, key } => Self {
                 id: request.id.to_string(),
                 kind: "load-source",
                 importer_original_uri: None,
@@ -330,10 +412,26 @@ impl From<crate::modules::ModuleRequest> for SourceModuleRequest {
                 original_uri: resolved.original_uri.to_string(),
                 resolved_uri: Some(resolved.resolved_uri.to_string()),
                 source_uri: Some(resolved.source_uri.to_string()),
+                key_id: Some(key.key.id.0.to_string()),
+                key_kind: Some(key_kind_name(key.key.kind)),
+                key_handle: Some(key.key.handle.to_string()),
+                resolved_key_id: Some(key.id.0.to_string()),
+                resolved_key_handle: Some(key.handle.to_string()),
+                ..Default::default()
             },
         }
     }
 }
+fn key_kind_name(kind: crate::modules::ModuleKeyKind) -> &'static str {
+    use crate::modules::ModuleKeyKind;
+    match kind {
+        ModuleKeyKind::StandardLibrary => "standard-library",
+        ModuleKeyKind::Host => "host",
+        ModuleKeyKind::SuppliedText => "supplied-text",
+        ModuleKeyKind::Synthetic => "synthetic",
+    }
+}
+
 impl SourceEvent {
     fn new(kind: &'static str) -> Self {
         Self {
@@ -364,6 +462,66 @@ pub struct SourceProbe {
     environment: Vec<(String, String)>,
 }
 impl SourceProbe {
+    pub fn new_module_evaluator(
+        trace_mode: &str,
+        host_logger: bool,
+        host_frame_transformer: bool,
+        power_assertions: bool,
+    ) -> Result<Self, PklString> {
+        Ok(Self {
+            session: crate::evaluation::session::SourceSession::module_evaluator(
+                Self::options(
+                    trace_mode,
+                    host_logger,
+                    host_frame_transformer,
+                    power_assertions,
+                )
+                .map_err(PklString::from)?,
+            ),
+            output: false,
+            properties: Vec::new(),
+            environment: Vec::new(),
+        })
+    }
+    pub fn evaluate_module_source(
+        &mut self,
+        uri: &str,
+        contents: Option<&str>,
+        expression: &str,
+        now: u32,
+        timeout: Option<u32>,
+    ) -> Result<(), RuntimeError> {
+        self.session.start_evaluation(
+            crate::modules::ModuleSourceSpec {
+                uri: uri.into(),
+                contents: contents.map(Into::into),
+            },
+            expression,
+            now.into(),
+            timeout.map(Into::into),
+        )
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn reenter_module_source(
+        &mut self,
+        token: &str,
+        uri: &str,
+        contents: Option<&str>,
+        expression: &str,
+        now: u32,
+        timeout: Option<u32>,
+    ) -> Result<(), RuntimeError> {
+        self.session.reenter_evaluation(
+            token,
+            crate::modules::ModuleSourceSpec {
+                uri: uri.into(),
+                contents: contents.map(Into::into),
+            },
+            expression,
+            now.into(),
+            timeout.map(Into::into),
+        )
+    }
     /// Legacy constructor; Java UTF-8 conversion is explicit at this boundary.
     #[allow(clippy::too_many_arguments)]
     pub fn new(
@@ -735,6 +893,173 @@ impl SourceProbe {
     ) -> Result<(), RuntimeError> {
         self.session.complete_module(token, completion, now.into())
     }
+    #[allow(clippy::too_many_arguments)]
+    pub fn complete_module_key(
+        &mut self,
+        token: &str,
+        key_id: &str,
+        uri: &str,
+        kind: &str,
+        handle: &str,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        use crate::modules::{ModuleCompletion, ModuleKey, ModuleKeyId, ModuleKeyKind};
+        let kind = match kind {
+            "host" => ModuleKeyKind::Host,
+            "standard-library" => ModuleKeyKind::StandardLibrary,
+            "supplied-text" => ModuleKeyKind::SuppliedText,
+            "synthetic" => ModuleKeyKind::Synthetic,
+            _ => return Err(RuntimeError::new(ErrorKind::Host, "unknown ModuleKey kind")),
+        };
+        let id = key_id
+            .parse()
+            .map_err(|_| RuntimeError::new(ErrorKind::Host, "invalid ModuleKey ID"))?;
+        self.complete_module(
+            token,
+            ModuleCompletion::KeySelected(Ok(ModuleKey {
+                id: ModuleKeyId(id),
+                uri: uri.into(),
+                kind,
+                handle: handle.into(),
+            })),
+            now,
+        )
+    }
+    pub fn complete_module_cache_policy(
+        &mut self,
+        token: &str,
+        key_id: &str,
+        cached: bool,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        let request = self.module_request(token)?;
+        if !matches!(&request.kind, crate::modules::ModuleRequestKind::QueryCachePolicy { key } if key.id.0.to_string() == key_id)
+        {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "stale or unexpected ModuleKey completion",
+            ));
+        }
+        self.complete_module(
+            token,
+            crate::modules::ModuleCompletion::CachePolicy(Ok(cached)),
+            now,
+        )
+    }
+    pub fn complete_import_uri(
+        &mut self,
+        token: &str,
+        key_id: &str,
+        uri: &str,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        let request = self.module_request(token)?;
+        if !matches!(&request.kind, crate::modules::ModuleRequestKind::ResolveImportUri { key, .. } if key.id.0.to_string() == key_id)
+        {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "stale or unexpected ModuleKey completion",
+            ));
+        }
+        self.complete_module(
+            token,
+            crate::modules::ModuleCompletion::ImportUri(Ok(uri.into())),
+            now,
+        )
+    }
+    pub fn complete_module_fragment_paths(
+        &mut self,
+        token: &str,
+        key_id: &str,
+        fragment_paths: bool,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        let request = self.module_request(token)?;
+        if !matches!(&request.kind, crate::modules::ModuleRequestKind::QueryFragmentPaths { key } if key.id.0.to_string() == key_id)
+        {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "stale or unexpected ModuleKey completion",
+            ));
+        }
+        self.complete_module(
+            token,
+            crate::modules::ModuleCompletion::FragmentPaths(Ok(fragment_paths)),
+            now,
+        )
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub fn complete_module_resolved_key(
+        &mut self,
+        token: &str,
+        key_id: &str,
+        resolved_key_id: &str,
+        handle: &str,
+        original_uri: &str,
+        resolved_uri: &str,
+        source_uri: &str,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        use crate::modules::{
+            ModuleCompletion, ModuleRequestKind, ResolvedModule, ResolvedModuleKey,
+        };
+        let request = self.module_request(token)?;
+        let (ModuleRequestKind::Resolve {
+            key,
+            resolved_key_id: id,
+            ..
+        }
+        | ModuleRequestKind::ResolveKey {
+            key,
+            resolved_key_id: id,
+            ..
+        }) = request.kind
+        else {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "stale or unexpected resolved ModuleKey completion",
+            ));
+        };
+        if key.id.0.to_string() != key_id || id.0.to_string() != resolved_key_id {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "stale or unexpected resolved ModuleKey identity",
+            ));
+        }
+        self.complete_module(
+            token,
+            ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
+                id,
+                key,
+                handle: handle.into(),
+                module: ResolvedModule {
+                    original_uri: original_uri.into(),
+                    resolved_uri: resolved_uri.into(),
+                    source_uri: source_uri.into(),
+                },
+            })),
+            now,
+        )
+    }
+    pub fn reject_module_key(
+        &mut self,
+        token: &str,
+        cache_policy: bool,
+        kind: &str,
+        message: Option<PklString>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        let error = Self::module_failure(kind, message)?;
+        self.complete_module(
+            token,
+            if cache_policy {
+                crate::modules::ModuleCompletion::CachePolicy(Err(error))
+            } else {
+                crate::modules::ModuleCompletion::KeySelected(Err(error))
+            },
+            now,
+        )
+    }
     pub fn complete_module_capabilities(
         &mut self,
         token: &str,
@@ -870,6 +1195,13 @@ impl SourceProbe {
         use crate::modules::ModuleHostError;
         Ok(match kind {
             "not-found" => ModuleHostError::NotFound,
+            "no-loader" => ModuleHostError::NoLoader,
+            "uri-syntax" => ModuleHostError::UriSyntax {
+                reason: message.ok_or_else(|| {
+                    RuntimeError::new(ErrorKind::Host, "URI syntax reason is required")
+                })?,
+            },
+            "external-reader-process" => ModuleHostError::ExternalReaderProcess { message },
             "io" => ModuleHostError::Io(crate::host::IoFailure::new(message)),
             "security-manager-exception" => ModuleHostError::SecurityManagerException { message },
             "denied" | "unsupported" => {

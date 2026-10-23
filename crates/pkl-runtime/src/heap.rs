@@ -33,6 +33,9 @@ pub struct Environment {
     /// Persistent cloned executable identity, independent of the receiver slot.
     /// None keeps the canonical code template implicit across every branch.
     pub executable_owner: Option<ExecutableOwnerId>,
+    /// Traced lifetime of dynamically compiled code captured by this environment.
+    #[doc(hidden)]
+    pub code_owner: Option<ExecutableOwnerId>,
     /// Lexical substitutions captured by reusable generic constraint bodies.
     /// Runtime values are immutable shared type DAGs; environment clones copy handles.
     pub type_arguments: BTreeMap<(usize, Arc<str>), crate::vm::TypeCheck>,
@@ -307,6 +310,7 @@ pub(crate) enum ExecutionSite {
 
 #[derive(Default)]
 struct ExecutableState {
+    code_roots: Vec<Value>,
     children: BTreeMap<ExecutionSite, ExecutableOwnerId>,
     // ObjectMember belongs to the declaration, whereas owner/receiver are read
     // from the current frame on every invocation. Never retain the first receiver.
@@ -449,6 +453,16 @@ impl Heap {
                 "invalid executable owner",
             )),
         }
+    }
+
+    pub(crate) fn executable_is_live(&self, owner: ExecutableOwnerId) -> bool {
+        self.executable(owner).is_ok()
+    }
+
+    pub(crate) fn set_code_roots(&mut self, owner: ExecutableOwnerId, roots: Vec<Value>) {
+        self.executable_mut(owner)
+            .expect("live code owner")
+            .code_roots = roots;
     }
 
     fn executable_mut(
@@ -660,6 +674,7 @@ impl Heap {
                     continue;
                 }
                 Entry::Executable(state) => {
+                    pending.extend(state.code_roots.iter().filter_map(Value::heap_id));
                     pending.extend(state.children.values().map(|owner| owner.0));
                     pending.extend(state.imported_modules.values().copied());
                     continue;
@@ -728,6 +743,7 @@ impl Heap {
             {
                 pending.extend(environment.custom_this.map(|slot| slot.0));
                 pending.extend(environment.executable_owner.map(|owner| owner.0));
+                pending.extend(environment.code_owner.map(|owner| owner.0));
                 pending.extend(environment.local_owners.values().map(|(owner, _)| owner.0));
                 for scope in &environment.scopes {
                     pending.push(scope.receiver);
@@ -744,6 +760,7 @@ impl Heap {
             }
             pending.extend(object.environment.custom_this.map(|slot| slot.0));
             pending.extend(object.environment.executable_owner.map(|owner| owner.0));
+            pending.extend(object.environment.code_owner.map(|owner| owner.0));
             pending.extend(
                 object
                     .environment

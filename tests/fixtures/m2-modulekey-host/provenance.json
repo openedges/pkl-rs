@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "scope": "Source-derived bounded Host inputs; not Java expected API results or event/counter parity.",
+  "baseline": "Pkl 0.32.0",
+  "pklRevision": "e51fb2f91774265666f94980ec630db794a4db2d",
+  "sidecar": {
+    "path": "host-metadata.json",
+    "sha256": "1ba947f9d3935cf3424f85e9dc19a6e220f5f8cf482206ad42e087ef9ac0b3d7",
+    "bytes": 89401,
+    "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-spi-host-profile-03/host-metadata.json",
+    "unchanged": true
+  },
+  "javaFixture": {
+    "path": "../m2-modulekey-spi",
+    "manifestSha256": "ebd3591361efc0a03e98e38695b120e9c625d9c09d0438fc641de420114aab97",
+    "verifierSha256": "14b95a5cf0b9268b7072a0070d1b2f289c00f67c8212ca0b5ace3aa5174306c8"
+  },
+  "sourceCopies": [
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/util/IoUtils.java",
+      "upstreamPath": "pkl-core/src/main/java/org/pkl/core/util/IoUtils.java",
+      "repository": "https://github.com/apple/pkl.git",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "gitBlob": "c784a07801e7ad2660febe8fda8823db92cce87d",
+      "bytes": 32137,
+      "sha256": "e0d14b69e64185c9ef4b771648173d5584b9ab910e717244a6ec889ca43c9e10",
+      "originalCopy": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-spi-host-profile-03/upstream/pkl-core/src/main/java/org/pkl/core/util/IoUtils.java",
+      "unchanged": true
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKeys.java",
+      "upstreamPath": "pkl-core/src/main/java/org/pkl/core/module/ModuleKeys.java",
+      "repository": "https://github.com/apple/pkl.git",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "gitBlob": "1702ab85c4f2124a45ad8dfc7fd481b250a5b8a5",
+      "bytes": 27158,
+      "sha256": "137c1635b1bbc0894f30171355c50719a6c0c15b40e92aa44b51104f20103a05",
+      "originalCopy": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-spi-host-profile-03/upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKeys.java",
+      "unchanged": true
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKey.java",
+      "upstreamPath": "pkl-core/src/main/java/org/pkl/core/module/ModuleKey.java",
+      "repository": "https://github.com/apple/pkl.git",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "gitBlob": "f74169d5c73a4af4c3a69fabb52eaa3499dea63c",
+      "bytes": 3066,
+      "sha256": "4cada0267fa1013d602b5594b04bbb8f150e942af48d01ae94398f9b3f7915f9",
+      "originalCopy": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-spi-host-profile-03/upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKey.java",
+      "unchanged": true
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/ReaderBase.java",
+      "upstreamPath": "pkl-core/src/main/java/org/pkl/core/runtime/ReaderBase.java",
+      "repository": "https://github.com/apple/pkl.git",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "gitBlob": "e1f461d25429f0d1bb74057b98324e46c6865e80",
+      "bytes": 3083,
+      "sha256": "940086123ed49c72568dcd809cfd0d3bf8627de5bf5b55d8a61fae9f4fc71a62",
+      "originalCopy": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-spi-host-profile-03/upstream/pkl-core/src/main/java/org/pkl/core/runtime/ReaderBase.java",
+      "unchanged": true
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "upstreamPath": "pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "repository": "https://github.com/apple/pkl.git",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "gitBlob": "3467a381cb5908fd03bfbb1a1f64558cdefc4ca7",
+      "bytes": 8387,
+      "sha256": "96eb6429a710d0b4db09664b6d84a0cb25a17a3206983183f66a65382ae69d82",
+      "originalCopy": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-spi-host-profile-03/upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "unchanged": true
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleResolver.java",
+      "upstreamPath": "pkl-core/src/main/java/org/pkl/core/runtime/ModuleResolver.java",
+      "repository": "https://github.com/apple/pkl.git",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "gitBlob": "fa925081a606defbaa59b74d7141911bda224415",
+      "bytes": 3739,
+      "sha256": "f0f7d42b9b9f85362efd31ec3631df123f192e864e0d86a647502a7485c25db0",
+      "originalCopy": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-spi-host-profile-03/upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleResolver.java",
+      "unchanged": true
+    },
+    {
+      "path": "upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKeyFactories.java",
+      "upstreamPath": "pkl-core/src/main/java/org/pkl/core/module/ModuleKeyFactories.java",
+      "repository": "https://github.com/apple/pkl.git",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "gitBlob": "fed1a3644b107627f1529c90d90d8d9e7fafcd2b",
+      "bytes": 10432,
+      "sha256": "6360af26c7011bcd24d28ca9acb90dc817f9e93bc19e1c82a987db52a17ec08d",
+      "originalCopy": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-spi-host-profile-03/upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKeyFactories.java",
+      "unchanged": true
+    }
+  ],
+  "licenseAndNotice": [
+    {
+      "path": "LICENSE.txt",
+      "upstreamPath": "LICENSE.txt",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "gitBlob": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "unchanged": true
+    },
+    {
+      "path": "NOTICE.txt",
+      "upstreamPath": "NOTICE.txt",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "gitBlob": "289bbcda33c5cfc3e8ef589dc4db7d1f1cbde05e",
+      "bytes": 8952,
+      "sha256": "d03b8db1a0d36ba65550ba30a51c7897f4b48b0eae7582d3f0576ea41e23d48e",
+      "unchanged": true
+    }
+  ],
+  "historicalPaths": "Absolute source/proof paths inside the original sidecar are retained as provenance. Readers use the unchanged relative copy paths.",
+  "newJavaEvaluations": 0
+}

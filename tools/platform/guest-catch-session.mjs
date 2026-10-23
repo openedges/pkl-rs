@@ -1,5 +1,5 @@
 // Browser-safe Host transport only: Pkl parsing, catch, caches and unwind stay in Rust.
-import {completeDefaultModuleRequest} from './module-policy-session.mjs';
+import {completeDefaultModuleRequest, completeFixtureModuleKey, validateModuleRequest} from './module-policy-session.mjs';
 function units(value) {
   if (!(value instanceof Uint16Array)) throw Error('expected Uint16Array');
   return Array.from(value);
@@ -15,6 +15,7 @@ function asString(value) {
 }
 export function runGuestCatchCase(api, fixture) {
   let session, callbacksDone=false, polls=0;
+  const moduleUris=new Set(['catch:/child']);
   const calls=[],events=[],logs=[],retained=[];
   const counts={resolve:0,source:0,read:0,log:0,callback:0,event:0};
   const architecture={collections:0,terminalSlots:null,ownedResultsStable:true,cancelledReads:[],cancelledModules:[]};
@@ -41,6 +42,12 @@ export function runGuestCatchCase(api, fixture) {
       if(event.kind==='module-request'){
         const request=event.module;
         result.moduleRequests.push({token:event.token,module:{...request}});
+        if(['select-key','query-cache-policy','query-fragment-paths','resolve-import-uri'].includes(request.kind)){
+          if(!completeFixtureModuleKey(session,event,moduleUris)&&!completeDefaultModuleRequest(session,event))
+            throw Error('unsupported guest-catch module key');
+          continue;
+        }
+        if(request.originalUri==='catch:/child')validateModuleRequest(event);
         if(request.kind==='check-import'||(request.kind==='resolve'&&request.originalUri!=='catch:/child')){
           if(!completeDefaultModuleRequest(session,event))throw Error('unsupported guest-catch module request');
           continue;

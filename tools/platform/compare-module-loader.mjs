@@ -90,14 +90,18 @@ export async function compareModuleLoader(args){
   const pin=manifest.devDependencies.playwright,playwright=require('playwright/package.json').version,playwrightCore=require('playwright-core/package.json').version;
   if(!/^\d+\.\d+\.\d+$/.test(pin)||playwright!==pin||playwrightCore!==pin||lock.packages[''].devDependencies.playwright!==pin
     ||lock.packages['node_modules/playwright'].version!==pin||lock.packages['node_modules/playwright-core'].version!==pin)throw Error('Playwright pin mismatch');
-  const hashes={};const record=async path=>{hashes[path]=hash(await readFile(path));};
+  const hashes={};
+  const read=async path=>{const data=await readFile(path),digest=hash(data);
+    if(hashes[path]!=null&&hashes[path]!==digest)throw Error('input changed during acquisition: '+path);
+    hashes[path]=digest;return data;};
+  const record=async path=>{await read(path);};
   async function tree(path){for(const entry of await readdir(path,{withFileTypes:true})){
     const child=resolve(path,entry.name);if(entry.isDirectory())await tree(child);else if(entry.isFile())await record(child);else throw Error('unexpected artifact entry: '+child);
   }}
-  for(const path of [script,resolve(dirname(script),'module-loader-session.mjs'),verifier,packagePath,lockPath,addon])await record(path);
+  for(const path of [script,resolve(dirname(script),'module-loader-session.mjs'),resolve(dirname(script),'module-policy-session.mjs'),verifier,packagePath,lockPath,addon])await record(path);
   await tree(wasm);await tree(fixtureDir);
   await writeFile(resolve(output,'fixtures.json'),json(fixtures));
-  for(const name of ['compare-module-loader.mjs','module-loader-session.mjs'])await writeFile(resolve(output,name),await readFile(resolve(dirname(script),name)));
+  for(const name of ['compare-module-loader.mjs','module-loader-session.mjs','module-policy-session.mjs'])await writeFile(resolve(output,name),await read(resolve(dirname(script),name)));
   const report={schema:1,scope:'Two fresh shared SourceSessions per exact Java-backed module graph on actual Node/Chromium. Raw output/diagnostics, UTF16 when captured, callbacks, logs and typed request counts are separate comparisons. API observations are not native CLI process/files parity.',
     argv:process.argv,cwd:process.cwd(),cases:fixtures.length,repetitions:2,unexecutedBoundaryControls:data.unexecutedBoundaryControls,
     ...(stringSelection?{orderedApiCallsPerSession:stringSelection.caseCount,
@@ -160,14 +164,14 @@ export async function compareModuleLoader(args){
   try{report.targets.node=await save('node',execute(require(addon),fixtures));}catch(error){report.infrastructureErrors.push({target:'node',message:error.message,stack:error.stack});}
   const server=createServer(async(request,response)=>{try{
     const url=new URL(request.url,'http://127.0.0.1');if(url.pathname==='/'){response.end('<!doctype html><title>Module Host verification</title>');return;}
-    const helper=url.pathname==='/module-loader-session.mjs';
-    const path=helper?resolve(dirname(script),'module-loader-session.mjs'):resolve(wasm,'.'+decodeURIComponent(url.pathname));
+    const helper=['/module-loader-session.mjs','/module-policy-session.mjs'].includes(url.pathname);
+    const path=helper?resolve(output,'.'+url.pathname):resolve(wasm,'.'+decodeURIComponent(url.pathname));
     if(!helper&&!path.startsWith(wasm+sep))throw Error('invalid Wasm path');
-    const assetBytes = await readFile(path); response.writeHead(200,{'Content-Type':extname(path)==='.wasm'?'application/wasm':'text/javascript'});response.end(assetBytes);
+    const assetBytes = await read(path); response.writeHead(200,{'Content-Type':extname(path)==='.wasm'?'application/wasm':'text/javascript'});response.end(assetBytes);
   }catch{if (!response.headersSent) { response.writeHead(404); response.end(); } else response.destroy();}});
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));let browser;
   try{
-    const executable=chromium.executablePath();report.browserExecutable=executable;report.browserExecutableSha256=hash(await readFile(executable));
+    const executable=chromium.executablePath();report.browserExecutable=executable;report.browserExecutableSha256=hash(await read(executable));
     report.browserLaunchOptions={headless:true,executablePath:executable};browser=await chromium.launch(report.browserLaunchOptions);report.browser=browser.version();const page=await browser.newPage();
     page.on('pageerror',error=>report.browserErrors.push({message:error.message,stack:error.stack}));await page.goto(`http://127.0.0.1:${server.address().port}`);
     const rows=await page.evaluate(async fixtures=>{const api=await import('/pkl_wasm.js');await api.default();const {runModuleLoaderCase}=await import('/module-loader-session.mjs');

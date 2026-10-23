@@ -9,9 +9,8 @@ pub(super) struct TypeRecipe {
     pub span: Span,
     pub argument_spans: Vec<Span>,
     pub builtin: Option<Result<TypeCheck, RuntimeError>>,
-    /// The specialized external type checker follows this import-only guard.
-    /// It forces the actual lazy import member without replacing type metadata.
-    pub import_guard: bool,
+    /// Selected only after forcing the actual canonical ref-module receiver.
+    pub reference: Option<Result<TypeCheck, RuntimeError>>,
 }
 
 #[derive(Clone, Debug)]
@@ -267,7 +266,7 @@ impl Vm {
                         match value {
                             DeclarationValue::Builtin(ty) => {
                                 work.push(Work::Changed);
-                                work.push(Work::Visit(ty.clone(), context));
+                                work.push(Work::Visit(ty.substituted(&context.1)?, context));
                             }
                             DeclarationValue::Value(Value::Class(id)) => {
                                 if !arguments.is_empty() {
@@ -640,10 +639,17 @@ impl Vm {
                 let module = self.pop()?.as_object()?;
                 run.imported = Some(module);
                 let recipe = &self.program.type_recipes[run.need.recipe];
-                if recipe.import_guard {
+                if self.heap.get(module)?.ref_module
+                    && let Some(reference) = &recipe.reference
+                {
                     self.resolved_declarations.insert(
                         (run.need.recipe, run.need.owner),
-                        DeclarationValue::Builtin(TypeCheck::Unknown),
+                        DeclarationValue::Builtin(reference.clone().map_err(|mut error| {
+                            if !error.frames.is_empty() {
+                                error.unavailable_origin = true;
+                            }
+                            error.at(recipe.span)
+                        })?),
                     );
                     if run.retry_instruction {
                         self.frames.last_mut().expect("type frame").pc -= 1;
@@ -721,7 +727,7 @@ impl Compiler<'_> {
                     span,
                     argument_spans: Vec::new(),
                     builtin: None,
-                    import_guard: false,
+                    reference: None,
                 });
                 recipe
             });
@@ -766,20 +772,11 @@ impl Compiler<'_> {
                     span: ty.span,
                     argument_spans: actuals.iter().map(|argument| argument.span).collect(),
                     builtin: None,
-                    import_guard: false,
+                    reference: None,
                 });
                 id
             });
         TypeCheck::Declared { recipe, arguments }
-    }
-
-    pub(super) fn imported_type_guard(&mut self, ty: &crate::syntax::Type) -> TypeCheck {
-        let declared = self.declared_type(ty, Vec::new());
-        let TypeCheck::Declared { recipe, .. } = &declared else {
-            unreachable!()
-        };
-        self.program.type_recipes[*recipe].import_guard = true;
-        declared
     }
 }
 
@@ -816,6 +813,14 @@ impl Vm {
             }
             Instruction::ResolveType(_) => {}
             Instruction::ResolvedClass(ty) => {
+                if matches!(
+                    ty.unaliased(),
+                    TypeCheck::RefDomain | TypeCheck::Reference { .. }
+                ) {
+                    let value = self.builtin_class(ty);
+                    self.stack.push(value);
+                    return Ok(());
+                }
                 let TypeCheck::Class { id, .. } = ty.unaliased() else {
                     return Err(RuntimeError::new(ErrorKind::Type, "Expected a class type."));
                 };
@@ -895,7 +900,7 @@ mod tests {
                     span: Span::new(0, 1),
                     argument_spans: Vec::new(),
                     builtin: None,
-                    import_guard: false,
+                    reference: None,
                 });
                 let mut vm = Vm::new(Arc::new(program));
                 let owner = vm.heap.allocate(Object {

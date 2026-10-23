@@ -4,7 +4,7 @@ import {runSecurityDenialCase} from './security-denial-session.mjs';
 const fixture={id:'denial',repeat:0,source:'source',moduleUri:'file:///original/main.pkl',deniedUri:'file:///original/child.pkl',expressions:['caught','nullable','ordinary','stable','caught'],causes:Array.from({length:3},()=>({uri:'file:///original/child.pkl',errorClass:'org.pkl.core.SecurityManagerException',units:[65,0xd800]}))};
 class Session{
  startPath(index){this.index=index;this.pending=index<3;}
- poll(){if(this.pending){this.pending=false;return {kind:'module-request',token:'request-'+this.index,module:{kind:'resolve',originalUri:fixture.deniedUri}};}return {kind:this.index===2?'error':'value',value:Uint16Array.from([55]),error:Uint16Array.from([69]),disposition:this.index===2?'language-error':null};}
+ poll(){if(this.pending){this.pending=false;return {kind:'module-request',token:'request-'+this.index,module:{id:String(this.index),kind:'resolve',originalUri:fixture.deniedUri,importUri:fixture.deniedUri,importerOriginalUri:fixture.moduleUri,importerResolvedUri:fixture.moduleUri}};}return {kind:this.index===2?'error':'value',value:Uint16Array.from([55]),error:Uint16Array.from([69]),disposition:this.index===2?'language-error':null};}
  rejectModuleResolution(token,kind,message){assert.equal(token,'request-'+this.index);assert.equal(kind,'security-manager-exception');assert.deepEqual(Array.from({length:message.length},(_,i)=>message.charCodeAt(i)),[65,0xd800]);}
  close(){}collect(){}free(){}heapSlots(){return 0;}
 }

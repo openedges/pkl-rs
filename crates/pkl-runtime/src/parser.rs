@@ -921,7 +921,8 @@ impl<'a> Parser<'a> {
             ));
         };
         let uri = uri.to_owned();
-        let (name, _) = if self.is_name("as") {
+        let explicit_alias = self.is_name("as");
+        let (name, _) = if explicit_alias {
             self.advance()?;
             self.identifier()?
         } else {
@@ -937,13 +938,18 @@ impl<'a> Parser<'a> {
             };
             (name.to_owned(), uri_span)
         };
+        let clause_alias = Some(explicit_alias.then(|| name.clone()));
         let span = Span::new(start, self.previous_end);
         Ok(Member {
             annotations: Vec::new(),
             name,
             name_span: span,
             expr: Expr {
-                kind: ExprKind::Import { uri, uri_span },
+                kind: ExprKind::Import {
+                    uri,
+                    uri_span,
+                    clause_alias,
+                },
                 span,
             },
             span,
@@ -2528,7 +2534,11 @@ impl<'a> Parser<'a> {
                 let uri = uri.to_owned();
                 let end = self.expect(')')?.span.end;
                 return Ok(Expr {
-                    kind: ExprKind::Import { uri, uri_span },
+                    kind: ExprKind::Import {
+                        uri,
+                        uri_span,
+                        clause_alias: None,
+                    },
                     span: Span::new(span.start, end),
                 });
             }

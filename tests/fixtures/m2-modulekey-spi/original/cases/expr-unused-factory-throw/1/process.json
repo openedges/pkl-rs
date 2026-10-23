@@ -1,0 +1,88 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/expr-unused-factory-throw/1/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/expr-unused-factory-throw/1/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar",
+    "AdmissionProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-factory-throw",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/cases/expr-unused-factory-throw/1/calls",
+    "allow",
+    "main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-factory-throw",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/expr-unused-factory-throw/1/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/expr-unused-factory-throw/1/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/expr-unused-factory-throw/1/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/expr-unused-factory-throw/1/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 16792,
+  "startedUnixNs": 1792772274569487000,
+  "pid": 16946,
+  "exitCode": 0,
+  "timedOut": false,
+  "finishedUnixNs": 1792772275493671000,
+  "stdoutSha256": "350a0cc79a10950cb1b52eb0d28680751f550289d0664ccc64d44a0f5857f377",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "case": "expr-unused-factory-throw",
+  "repeat": 1,
+  "workspaceBefore": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "efdbd22302fd1ab77d09b0418ff98456b1f1f5eb2e97b3e49934ed98176fa467",
+      "bytes": 41,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "ca9d688c8638f37b62863e825bf072baef05728a21f4bd8a33642306e3367ee9",
+      "bytes": 113,
+      "mode": 420
+    }
+  },
+  "workspaceAfter": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "efdbd22302fd1ab77d09b0418ff98456b1f1f5eb2e97b3e49934ed98176fa467",
+      "bytes": 41,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "ca9d688c8638f37b62863e825bf072baef05728a21f4bd8a33642306e3367ee9",
+      "bytes": 113,
+      "mode": 420
+    }
+  }
+}

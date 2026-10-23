@@ -1,0 +1,17 @@
+org.pkl.core.PklException: –– Pkl Error ––
+No module loader is registered for module `noLoader:x`.
+
+1 | unused = import("noLoader:x")
+             ^^^^^^^^^^^^^^^^^^^^
+at main#unused (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-no-loader/main.pkl)
+
+1 | unused
+    ^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at AdmissionProbe.capture(AdmissionProbe.java:55)
+	at AdmissionProbe.main(AdmissionProbe.java:75)

@@ -879,9 +879,9 @@ Bootstrap의 이전 provider는 텍스트 응답에 legacy `respondString`을 �
 
 정책 84회 영구 fixture의 검증·변조 회귀 여덟 개와 별도 위치의 독립 검증은 통과했습니다.
 같은 C01의 실제 Node·Chromium에서도 각각 정책 API 84회의 원시 결과가 일치했지만,
-전체 이벤트·카운터 비교는 환경별 12개 세션 모두 실패입니다. 독립 감사와 증거 게시·커밋을
-이어갑니다. Stage 47 전체
-선택 회귀는 별도 고정 커밋에서 실행 중이며, 그 결과를 C01 결과로 재사용하지 않습니다.
+전체 이벤트·카운터 비교는 환경별 12개 세션 모두 실패입니다. 독립 감사와 증거 게시를 마치고
+`5e68c4b`에 커밋·푸시했으며 원격 `main`과의 일치를 확인했습니다. Stage 47 전체
+선택 회귀는 위 최종 기록에 게시했으며, 그 결과를 C01 결과로 재사용하지 않습니다.
 전체 M2와 성능·제품 API 완료 조건은 열려 있습니다.
 
 후속 구현은 현재 미실행인 Java SPI 212회와 원래 이벤트를 기준으로 진행합니다.
@@ -893,6 +893,81 @@ query/repl lifecycle 진입점을 공통 엔진에 구현하며, supplied-source
 callback을 삽입하지 않습니다. 각 단계에서 기존 raw 결과·오류 순서, GC·취소·재진입과
 실제 portable 동작을 다시 검증합니다. 새 인터페이스 이름은 설계안이며 아직 구현한
 API로 문서화하지 않습니다.
+
+### Stage 49 — 일반 ModuleKey와 평가 진입점
+
+`5e68c4b`에서 `m2/stage49-modulekey` 브랜치로 후속 구현을 시작했습니다.
+Stage 47과 Stage 48의 검증 checkout은 각각의 커밋에 고정합니다. Stage 48도 별도
+출력 디렉터리에서 전체 선택·순차 evaluator 회귀를 시작했으며, 완료 전에는 결과를
+통과로 집계하지 않습니다. 두 취득 모두 expression worker 네 개를 사용하며 성능
+비교가 아닙니다.
+
+공통 런타임·native·Wasm·N-API 구현은 `gpt-6-astra / xhigh`, Java 관찰과 독립 검토는
+각각 `gpt-6.1-sol / high`에 배정합니다. 주 에이전트는 JS provider·통합 검증·문서와
+커밋을 담당합니다. 첫 구현 경계는 URI와 별개의 선택 key·resolved key identity,
+별도의 `isCached` 효과와 uncached 조회·갱신 규칙입니다. 기존 SPI 132회와 새 실패·재시도
+대조군을 연결한 뒤, import clause의 factory 선택·이름 추론 80회와 실제 primary/query
+진입점을 같은 모델 위에서 구현합니다. 일부 경계의 성공으로 나머지 의무를 종료하지 않습니다.
+
+원문 검토에 따라 정적 표준 singleton 저장소를 일반 URI cache와 분리합니다. 일반
+`pkl:json`과 custom key의 URI cache 공유는 유지하고, custom `pkl:base`·`pkl:ref`를
+URI만 보고 builtin으로 분류하지 않습니다. 이름 추론 getter의 호출 순서, selected key의
+URI와 진단 source URI, cache를 거치는 synthetic primary와 cache를 거치지 않는
+synthetic query도 구분합니다. 각 경계를 실제 Java 결과·오류·이벤트와 대조하고
+Host 중단·GC·재진입·취소·종료 및 플랫폼 검증을 이어갑니다.
+
+첫 native 후보의 실제 SPI 비교에서 132회 모두 Java의 전체 결과·오류와 일치했습니다.
+나머지 factory 80회는 해당 후보에서 미실행이고, 실제 primary/query를 실행하지 않는
+제공-source 경계이므로 전체 lifecycle 비교는 20개 세션 모두 실패로 유지했습니다.
+이후 clause 준비·이름 추론과 public primary/query 경로를 확장하며 첫 후보의 통과를
+후속 소스에 재사용하지 않습니다. [영구 Java fixture](docs/m2-module-keys.md)는 원래
+212회·36세션·2,248개 이벤트를 두 cohort로 보존합니다. 새 getter·실패 identity·supplied
+contents·repl 대조군은 별도 Java 관찰로 유지하며 원본 실패와 의도에 도달하지 못한 입력도
+제외하지 않습니다.
+
+후속 build02 후보는 소스 입력 225개와 실행 파일을 고정하고 원래 212회 전체를 다시
+비교했습니다. 제공-source 경계와 실제 public URI 경계 각각 212/212회의 원시 결과·오류가
+일치했으며 각 36개 native 프로세스가 정상 종료했습니다. 전체 Java 이벤트·카운터 계약은
+두 경계 모두 36개 세션에서 실패로 유지합니다. 새 쿼리의 코드 메모리 회수와 추가 Java
+대조군, 최종 Rust 필수 검사·실제 Node/브라우저 검증은 별도 후속 작업입니다. JS provider는
+키 소유권과 실제 factory 실패·정확한 no-loader 입력을 검증하도록 보완했고 mock 검사
+174개가 통과했습니다. 이 결과를 실제 binding 실행이나 M2 전체 완료로 집계하지 않습니다.
+
+### Stage 49 — build05 구현·검증 결과
+
+공통 엔진의 실제 public URI·제공 contents·query 진입점과 선택 key·resolved key의
+별도 identity를 연결했습니다. 동적 query·module의 실행 코드 owner를 GC와 연결하여
+살아 있는 closure·클래스·별칭이 이전 코드를 유지하고, 도달할 수 없는 코드·source·type
+payload를 회수합니다. 기존 메모리 제한과 살아 있는 값의 기대치를 유지했습니다.
+다만 non-tail vector의 빈 슬롯과 일부 내부 capacity가 누적되므로 **총 메모리가
+유한하게 유지된다는 조건은 아직 충족하지 못했습니다**. 다음 저장 구조 작업에서는
+살아 있는 논리 ID를 보존하면서 이 공간까지 회수해야 합니다.
+
+확대 Java 대조군 944회에 대한 build04 결과는 904회 일치·일반 불일치 32회·Java 내부
+오류 경계 8회였습니다. 일반 module URI 해석과 제한된 resource reader 정책을 분리하고,
+`pkl:ref`의 일반 `toString` 조회와 누락 속성의 method 힌트를 보완했습니다. 같은 Java
+바이트를 사용한 build05는 936회 일치하며 일반 불일치 32회가 모두 해소됐습니다.
+이 중 100회는 최초 입력이 의도한 기능에 도달하지 못한 진단 일치이고, 의도한 일반
+관찰 836회와 구분합니다. 내부 오류 8회와 전체 이벤트·카운터 실패는 그대로 유지합니다.
+
+최종 후보의 원래 212회도 native·Node·Chromium에서 제공-source와 public URI
+진입점 각각 원시 결과·오류가 일치했습니다. 환경별 36개 세션의 전체 Java lifecycle
+계약은 여전히 실패입니다. Node·Chromium의 renderer 860회·Resource 1,008회·모듈
+준비 252회도 환경별로 일치했습니다. File factory가 source 존재 확인 전에 key를
+선택하도록 제한된 JS Host를 보완하여 loader·상속의 취득 오류를 해소했습니다.
+두 suite의 결과·callback 바이트와 별개로 loader 12회·상속 6회의 요청 횟수 비교는
+환경별 실패로 남습니다. ModuleInfo·보안·guest-catch의 기존 미실행·부분 경계도 유지합니다.
+
+build05에서 필수 Rust 검사 다섯 개가 모두 통과했고 입력 53,487개의 실행 전후 동일성을
+확인했습니다. 실제 공통 primitive 비교는 세 플랫폼 간 6,078회 일치, Java 대비 환경별
+6,076회 일치와 기존 정규식 실패 두 개를 유지합니다. 생성 목록 변경은 구현 source hash
+갱신뿐이며 4,527개 원래 행과 475개 요구사항·mapping 상태는 보존합니다.
+[구현 체크포인트](reports/m2/stage49-implementation-checkpoint.json)와
+[원시 증거·독립 검토](reports/m2/stage49-publication.json)를 게시했습니다.
+실행 입력 중 53,594개를 실제 Git blob에 연결했고, 원래 검사 수집기에 포함된 생성
+Python cache 하나는 원시 자료로 별도 보존하며 Git source로 집계하지 않습니다.
+고정 커밋의 전체 선택 회귀는 별도로 취득합니다.
+**M2의 9개 영역과 전체 호환성·성능 조건은 계속 진행 중입니다.**
 
 ## M3 — 표준 라이브러리와 출력
 

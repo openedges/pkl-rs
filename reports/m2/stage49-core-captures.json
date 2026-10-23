@@ -1,0 +1,234 @@
+{
+  "scope": "Exact-byte publication of closed captures and preserved histories. Raw compatibility failures remain failures.",
+  "originalControl": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives.json",
+    "sha256": "c0706923886b8822a6127c3d5da9f9eced064703e927c3d737c2d3b7358f5a6c"
+  },
+  "files": [
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-modulekey-build01.tar.gz",
+      "repositoryPath": "reports/m2/stage49-modulekey-build01.tar.gz",
+      "sha256": "e1d0d44a97e725ee9d431f934bad77695dee49f929aea6104f361e73a99ec52c",
+      "bytes": 4262856,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-modulekey-build01.tar.gz"
+        ],
+        "pid": 20087,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-modulekey-build02.tar.gz",
+      "repositoryPath": "reports/m2/stage49-modulekey-build02.tar.gz",
+      "sha256": "e095778492307d7af1f4eb33b5e6c20298318bad6fd594b13c1ef80308dcf595",
+      "bytes": 4347432,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-modulekey-build02.tar.gz"
+        ],
+        "pid": 20088,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-modulekey-build03.tar.gz",
+      "repositoryPath": "reports/m2/stage49-modulekey-build03.tar.gz",
+      "sha256": "8b62c28bd4287a8164f52495660ec3b9f9d18679f85c08972ee82252c432aca8",
+      "bytes": 4456379,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-modulekey-build03.tar.gz"
+        ],
+        "pid": 20089,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-modulekey-build04.tar.gz",
+      "repositoryPath": "reports/m2/stage49-modulekey-build04.tar.gz",
+      "sha256": "0dbb11938cec853bdbdb43298e6c623c4ffbc9404861fcb06f807568ab5c9d59",
+      "bytes": 4464953,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-modulekey-build04.tar.gz"
+        ],
+        "pid": 20090,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-modulekey-build05.tar.gz",
+      "repositoryPath": "reports/m2/stage49-modulekey-build05.tar.gz",
+      "sha256": "c15da15240e3a4014264420077f2e2bd8899dee910db2ecf063ddeb406b5193f",
+      "bytes": 4470350,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-modulekey-build05.tar.gz"
+        ],
+        "pid": 20091,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-required-rust-01.tar.gz",
+      "repositoryPath": "reports/m2/stage49-required-rust-01.tar.gz",
+      "sha256": "ef3a5e30a729e695f2a0c0a7cdd16b5c50ee02d71e216559e77ee6b9ee102f74",
+      "bytes": 1985864,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-required-rust-01.tar.gz"
+        ],
+        "pid": 20092,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-required-rust-02.tar.gz",
+      "repositoryPath": "reports/m2/stage49-required-rust-02.tar.gz",
+      "sha256": "f3168e52007525c74c27b8a8fb12fa3a925a4f36ffbdb000dc356bae16b352cb",
+      "bytes": 1985991,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-required-rust-02.tar.gz"
+        ],
+        "pid": 20093,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-probe-checks-01.tar.gz",
+      "repositoryPath": "reports/m2/stage49-probe-checks-01.tar.gz",
+      "sha256": "f5493a134a3151744b5cff930ad5a8b3623d990ddfb1a56283155ec95b451854",
+      "bytes": 13253,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-probe-checks-01.tar.gz"
+        ],
+        "pid": 20094,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-ordinary-mismatch-fixes-01.tar.gz",
+      "repositoryPath": "reports/m2/stage49-ordinary-mismatch-fixes-01.tar.gz",
+      "sha256": "7e38e037593f4b555863e0cd5986c5c373ce4d7037c86c75c378e81c86835da4",
+      "bytes": 1176,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-ordinary-mismatch-fixes-01.tar.gz"
+        ],
+        "pid": 20095,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-runtime-debug-02.tar.gz",
+      "repositoryPath": "reports/m2/stage49-runtime-debug-02.tar.gz",
+      "sha256": "efef52092472e647603dce0b1298a247df07c7296fb7ba2b0be37999d3124aa0",
+      "bytes": 102555,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-runtime-debug-02.tar.gz"
+        ],
+        "pid": 20096,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-admission-test-migration-01.tar.gz",
+      "repositoryPath": "reports/m2/stage49-admission-test-migration-01.tar.gz",
+      "sha256": "0e88c0b559fd27138ef0ec0e38fb04494daaf26cccdc818259f13b35853b86b1",
+      "bytes": 29242,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-admission-test-migration-01.tar.gz"
+        ],
+        "pid": 20097,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-admission-test-migration-02.tar.gz",
+      "repositoryPath": "reports/m2/stage49-admission-test-migration-02.tar.gz",
+      "sha256": "f1ba99281593800ad0a975d728bfd1e5ae3d2538beaa530877f4d8fec5fefcca",
+      "bytes": 27560,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-admission-test-migration-02.tar.gz"
+        ],
+        "pid": 20098,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-runtime-handoff-01.tar.gz",
+      "repositoryPath": "reports/m2/stage49-runtime-handoff-01.tar.gz",
+      "sha256": "4f916cdef9d681dcea2b1f17b8f3d69c23f280e6eadf58cfb6b3aed51a251dcf",
+      "bytes": 1585,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-runtime-handoff-01.tar.gz"
+        ],
+        "pid": 20099,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-runtime-handoff-02.tar.gz",
+      "repositoryPath": "reports/m2/stage49-runtime-handoff-02.tar.gz",
+      "sha256": "182d0ecc8bb4ff4ba6964886528ad8cb776c027b1247e2a2f35257eb596b4136",
+      "bytes": 2338,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-core-evidence-proposal-01/archives/stage49-runtime-handoff-02.tar.gz"
+        ],
+        "pid": 20100,
+        "exitCode": 0
+      }
+    }
+  ],
+  "implementationCommitNotYetClaimed": true
+}

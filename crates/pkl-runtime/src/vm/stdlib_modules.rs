@@ -54,7 +54,15 @@ impl Vm {
     // Implicit prelude bindings are not authored ImportNodes and have no import
     // edge. Explicit imports go through ModuleRun before reaching this source.
     pub(super) fn import_stdlib(&mut self, uri: &str) -> Result<bool, RuntimeError> {
-        if let Some(cached) = self.modules_original.get(uri).cloned() {
+        let cache = if matches!(
+            crate::modules::stdlib_kind(uri),
+            Some(crate::modules::StdlibKind::Singleton(_))
+        ) {
+            &self.modules_stdlib
+        } else {
+            &self.modules_original
+        };
+        if let Some(cached) = cache.get(uri).cloned() {
             let value = self.module_cached(cached)?;
             self.stack.push(value);
             return Ok(true);
@@ -87,9 +95,11 @@ fn append_definition(
     source: Arc<crate::value::RuntimeSource>,
 ) -> Result<UnitId, RuntimeError> {
     if let Some(unit) = program.units.iter().find(|unit| {
-        unit.identity
-            .as_ref()
-            .is_some_and(|identity| identity.original_uri.as_ref() == uri)
+        unit.standard_library
+            && unit
+                .identity
+                .as_ref()
+                .is_some_and(|identity| identity.original_uri.as_ref() == uri)
     }) {
         return Ok(unit.id);
     }
@@ -100,7 +110,9 @@ fn append_definition(
         )
     })?;
     let checkpoint = modules::ArenaCheckpoint::new(program);
-    let result = append_members(program, uri, source, &parsed);
+    let result = append_members(program, uri, source, &parsed).inspect(|unit| {
+        program.units[unit.0 as usize].standard_library = true;
+    });
     if result.is_err() {
         checkpoint.rollback(program);
     }
@@ -364,8 +376,9 @@ mod tests {
                         matches!(
                             request.kind,
                             crate::modules::ModuleRequestKind::CheckImport { .. }
+                                | crate::modules::ModuleRequestKind::SelectKey { .. }
                         ),
-                        "singleton imports bypass only key resolution"
+                        "singleton imports require admission and actual key selection"
                     );
                     vm.complete_module(
                         request.id,

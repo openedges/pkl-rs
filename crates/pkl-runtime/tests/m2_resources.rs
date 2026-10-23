@@ -1,5 +1,7 @@
 //! Resource cache/Host/GC development regressions. Pinned Java acquisition is
 //! separate evidence; these tests do not manufacture compatibility expectations.
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use pkl_runtime::{
     host::ReadFailure,
     probe::{SourceEvent, SourceProbe},
@@ -24,9 +26,7 @@ fn next(probe: &mut SourceProbe) -> SourceEvent {
         let event = probe.poll(0, 1).unwrap();
         probe.collect();
         if event.kind == "module-request"
-            && probe
-                .complete_default_module(event.token.as_deref().unwrap(), 0)
-                .unwrap()
+            && module_keys::complete_probe(probe, event.token.as_deref().unwrap(), 0).unwrap()
         {
             continue;
         }

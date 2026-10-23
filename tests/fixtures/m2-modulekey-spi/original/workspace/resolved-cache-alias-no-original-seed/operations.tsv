@@ -1,0 +1,9 @@
+main.pkl	stable
+main.pkl	first().tag
+main.pkl	second().tag
+main.pkl	third().tag
+main.pkl	second().tag
+main.pkl	import("memo:/aliasB.pkl").tag
+GC
+main.pkl	third().tag
+main.pkl	stable

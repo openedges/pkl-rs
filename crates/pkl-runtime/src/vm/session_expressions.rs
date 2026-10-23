@@ -17,6 +17,24 @@ pub fn compile_session_expression(
     options: CompileOptions,
     power_assertions: bool,
 ) -> Result<usize, SessionExpressionError> {
+    compile_session_expression_for_unit(
+        program,
+        module,
+        expression_source,
+        options,
+        power_assertions,
+        crate::modules::UnitId(0),
+    )
+}
+
+pub(super) fn compile_session_expression_for_unit(
+    program: &mut Program,
+    module: &crate::syntax::Module,
+    expression_source: &str,
+    options: CompileOptions,
+    power_assertions: bool,
+    primary: crate::modules::UnitId,
+) -> Result<usize, SessionExpressionError> {
     let parsed = crate::parser::parse_expression_for_evaluation(expression_source)
         .map_err(|error| SessionExpressionError::Frontend(Box::new(error)))?;
     let resolved = crate::resolver::resolve_session_expression(module, expression_source, &parsed)
@@ -32,6 +50,7 @@ pub fn compile_session_expression(
         &identity,
         options,
         power_assertions,
+        primary,
     )
     .map_err(|error| SessionExpressionError::Runtime(Box::new(error)))
 }
@@ -43,6 +62,7 @@ fn append_guarded(
     identity: &crate::modules::ModuleIdentity,
     options: CompileOptions,
     power_assertions: bool,
+    primary: crate::modules::UnitId,
 ) -> Result<usize, RuntimeError> {
     let checkpoint = modules::ArenaCheckpoint::new(program);
     let result = append(
@@ -52,6 +72,7 @@ fn append_guarded(
         identity,
         options,
         power_assertions,
+        primary,
     );
     if result.is_err() {
         checkpoint.rollback(program);
@@ -66,10 +87,11 @@ fn append(
     identity: &crate::modules::ModuleIdentity,
     options: CompileOptions,
     instrument: bool,
+    primary: crate::modules::UnitId,
 ) -> Result<usize, RuntimeError> {
     let primary = program
         .units
-        .first()
+        .get(primary.0 as usize)
         .cloned()
         .ok_or_else(|| invalid("missing session module"))?;
     let unit = crate::modules::UnitId(
@@ -139,6 +161,11 @@ fn append(
     compiler.program.units.push(modules::ModuleUnit {
         id: unit,
         identity: Some(identity.clone()),
+        standard_library: false,
+        key: None,
+        delegate_key: None,
+        build: None,
+        syntax: None,
         source: Some(source),
         name: "".into(),
         template: primary.template,
@@ -196,6 +223,7 @@ mod tests {
             &identity,
             CompileOptions::default(),
             false,
+            crate::modules::UnitId(0),
         )
         .unwrap_err();
         assert_eq!(error.kind, ErrorKind::InvalidBytecode);
@@ -223,7 +251,8 @@ mod tests {
                 &parsed.expression,
                 &identity,
                 CompileOptions::default(),
-                false
+                false,
+                crate::modules::UnitId(0),
             )
             .is_err()
         );

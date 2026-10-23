@@ -1,5 +1,44 @@
 # M2 language evidence
 
+The [Stage49 implementation checkpoint](stage49-implementation-checkpoint.json)
+adds selected/resolved key identities, independent cache-policy requests, eager
+import-clause factory selection, public ModuleSource operations, and traced
+query/module executable ownership. Actual key kind distinguishes custom keys
+from builtin singletons even when their URI spelling is identical. The shared
+engine and native/Wasm/N-API bindings use the same continuation model.
+
+All five required Rust checks pass on build05, with 53,487 captured inputs
+unchanged. Native, Node and Chromium each match the original 212 API calls under
+both supplied-primary and public-URI profiles. The full Java event/counter gate
+still fails in all 36 sessions per profile and target. These repeated observations
+are not independent features or a language completion rate.
+
+The extended native comparison matches 936 of 944 Java observations. It fixes
+all 32 ordinary build04 mismatches in module URI resolution, Ref module method
+lookup and missing-property hints. Eight Java internal-error boundaries remain
+unmatched. Of the 936 matches, 100 preserve diagnostics from inputs that did not
+reach their intended alias behavior; 836 cover the intended ordinary operations.
+These extended controls have not run on Node or Chromium.
+
+Actual portable comparisons also retain 860 renderer, 1,008 Resource and 252
+module-preparation matches per target. The corrected virtual File provider
+selects hierarchical file keys before checking source existence. Loader and
+inheritance result/callback payloads match Java, while 12 loader and six
+inheritance executions per target still fail exact request-counter comparisons.
+ModuleInfo, security and guest-catch retain their existing partial, internal and
+unexecuted boundaries. The primitive experiment matches all 6,078 cases across
+the shared engine targets and 6,076 against Java, preserving both regex failures.
+
+[Core captures](stage49-core-captures.json), [oracle/native captures](stage49-oracle-captures.json)
+and [platform/tooling captures](stage49-platform-captures.json) preserve earlier
+failed candidates, exact inputs and raw channels, artifact/source bindings and
+independent reviews. Unreachable executable payloads are reclaimed, but non-tail
+slots and nested capacities can still accumulate. Bounded total memory, complete
+ordered lifecycle behavior, import globs and the whole-language gate remain open.
+No full selected regression has yet been acquired for this final candidate.
+Stage48's separate acquisition and Stage47's published result are not build05
+evidence. **M2, complete products and performance targets remain incomplete.**
+
 The [Stage48 C01 implementation checkpoint](stage48-implementation-checkpoint.json)
 adds shared typed import admission, successful import-site caches, explicit
 default-policy delegation and authored imports for qualified Ref type guards.

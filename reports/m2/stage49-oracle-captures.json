@@ -1,0 +1,213 @@
+{
+  "scope": "Root independent archive verification and exact-byte promotion. No evaluator run or compatibility reclassification.",
+  "recordedUtc": "2026-10-23T20:11:56.078424+00:00",
+  "files": [
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-driver-mock-tooling.tar.gz",
+      "repositoryPath": "reports/m2/stage49-driver-mock-tooling.tar.gz",
+      "sha256": "50d43da5720fa786903d941626b9e9213b00dce84ad58b4f6a39d7407d424d4e",
+      "bytes": 1096917,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-driver-mock-tooling.tar.gz"
+        ],
+        "pid": 21365,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-java-audits-transport.tar.gz",
+      "repositoryPath": "reports/m2/stage49-java-audits-transport.tar.gz",
+      "sha256": "1362c09e01f133dc6ab4a0794692ee39aa25d4af08bfbcc8c699fe8972597acc",
+      "bytes": 93853,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-java-audits-transport.tar.gz"
+        ],
+        "pid": 21366,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-java-controls01-03.tar.gz",
+      "repositoryPath": "reports/m2/stage49-java-controls01-03.tar.gz",
+      "sha256": "f86adbbced1d8fa918f3671557f435dc8135a3a91921a25d627756e9521ae126",
+      "bytes": 3412494,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-java-controls01-03.tar.gz"
+        ],
+        "pid": 21367,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-java-controls04-07.tar.gz",
+      "repositoryPath": "reports/m2/stage49-java-controls04-07.tar.gz",
+      "sha256": "769a0b2ae8e200abd21b0266a0cf9a38669d00255ac06f79a0aaca3c84173071",
+      "bytes": 1716924,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-java-controls04-07.tar.gz"
+        ],
+        "pid": 21368,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native212-build02.tar.gz",
+      "repositoryPath": "reports/m2/stage49-native212-build02.tar.gz",
+      "sha256": "0e9d1368b2d0310eea45e373d9e765ea9bd05b3fee9a508bff35750ef1664b25",
+      "bytes": 1866034,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native212-build02.tar.gz"
+        ],
+        "pid": 21369,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native212-build05.tar.gz",
+      "repositoryPath": "reports/m2/stage49-native212-build05.tar.gz",
+      "sha256": "95dd5d4f42286770960b6893d88ca86d83e36c63b613c17913bc07e669be4422",
+      "bytes": 2115970,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native212-build05.tar.gz"
+        ],
+        "pid": 21377,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native944-build04-failures.tar.gz",
+      "repositoryPath": "reports/m2/stage49-native944-build04-failures.tar.gz",
+      "sha256": "6fab32a433eaa14cef9c99a33738eeda0d006f76bd4e81dcdbc9839329feb25b",
+      "bytes": 5404673,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native944-build04-failures.tar.gz"
+        ],
+        "pid": 21381,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native944-build05-correction.tar.gz",
+      "repositoryPath": "reports/m2/stage49-native944-build05-correction.tar.gz",
+      "sha256": "8beb3d34243f06436523c4efcaa90ea08762c6f6d26b0db52fca5314c4b8c0d4",
+      "bytes": 5488796,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native944-build05-correction.tar.gz"
+        ],
+        "pid": 21383,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native944-consumers-audits.tar.gz",
+      "repositoryPath": "reports/m2/stage49-native944-consumers-audits.tar.gz",
+      "sha256": "e358d8551233efd537f43343da9ba0ac69c5c01381bb182acd2c5fbc842f1877",
+      "bytes": 20029,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native944-consumers-audits.tar.gz"
+        ],
+        "pid": 21431,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-spi-reuse-tooling-initial-history.tar.gz",
+      "repositoryPath": "reports/m2/stage49-spi-reuse-tooling-initial-history.tar.gz",
+      "sha256": "8ede9dafd09ef3cee19d9fb929341ed1d1efda4e33bdeb90e0691b414a947dd1",
+      "bytes": 879961,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-spi-reuse-tooling-initial-history.tar.gz"
+        ],
+        "pid": 21432,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-oracle-publication-closeout.tar.gz",
+      "repositoryPath": "reports/m2/stage49-oracle-publication-closeout.tar.gz",
+      "sha256": "7cc63334e5802adf1dc3882c338bc15b6228dcf0956c6969823ea80fb50a621a",
+      "bytes": 6690390,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-oracle-publication-closeout.tar.gz"
+        ],
+        "pid": 21433,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/summary.json",
+      "repositoryPath": "reports/m2/stage49-oracle-summary.json",
+      "sha256": "d167f86a78460144f3f39024216690c6477f878720d2039763041551fedae7a7",
+      "bytes": 2742
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/handoff.json",
+      "repositoryPath": "reports/m2/stage49-oracle-handoff.json",
+      "sha256": "7d82d0009d62e2582aa939ce97a57ff29a1816f47d51a9fba2f02095416e2eba",
+      "bytes": 8226
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/final-index.json",
+      "repositoryPath": "reports/m2/stage49-oracle-index.json",
+      "sha256": "13abcf2688d1bcab08ab427a315f6733f52290aa198affb417c081df9029f976",
+      "bytes": 5748
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/closure.json",
+      "repositoryPath": "reports/m2/stage49-oracle-closure.json",
+      "sha256": "e3d5b7c204b24bf3a118d43c2254b8f7aa3a8a7537edb9c7c8ecc79086896f48",
+      "bytes": 409
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/finalize-terminal.json",
+      "repositoryPath": "reports/m2/stage49-oracle-terminal.json",
+      "sha256": "ae20bce088a855169bcb579cff8a8bebec99ca7ad655bda09c299749a63382e3",
+      "bytes": 1031
+    }
+  ],
+  "complete": true
+}

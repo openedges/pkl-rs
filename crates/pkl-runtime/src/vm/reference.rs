@@ -902,6 +902,9 @@ impl Vm {
                     id: ACCESS_ID,
                     name: Arc::from("Access"),
                 }),
+                // The module still inherits ordinary Module methods. Ref's
+                // specialized members must not intercept Typed.toString.
+                ("toString", true) => return Ok(false),
                 _ => {
                     return Err(RuntimeError::new(
                         ErrorKind::Unsupported,

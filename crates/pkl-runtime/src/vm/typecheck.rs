@@ -229,6 +229,7 @@ pub(super) fn environment_roots(environment: &Environment, roots: &mut Vec<Value
     roots.extend(environment.outer_value.iter().cloned());
     roots.extend(environment.custom_this.map(|slot| slot.root()));
     roots.extend(environment.executable_owner.map(|owner| owner.root()));
+    roots.extend(environment.code_owner.map(|owner| owner.root()));
     roots.extend(
         environment
             .local_owners

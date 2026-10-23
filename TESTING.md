@@ -171,6 +171,20 @@ python3 -m unittest discover -s tools/tests -p 'test_module_admission_policy_fix
 Fixture integrity, raw API equality and full policy event/counter equality are
 separate checks. Missing lifecycle events remain failed comparisons.
 
+The [ModuleKey reference fixtures](docs/m2-module-keys.md) separately preserve
+212 Java API calls, 36 sessions and 2,248 ordered events. Their key/cache and
+factory-failure cohorts retain original inputs, raw output/error channels,
+counter bytes and exception metadata:
+
+```sh
+python3 tools/modulekey_fixtures.py --fixtures tests/fixtures/m2-modulekey-spi
+python3 -W error::ResourceWarning -m unittest discover -s tools/tests -p 'test_modulekey_fixtures.py' -v
+```
+
+Offline fixture integrity does not establish native or portable execution.
+Supplied-primary and public-entrypoint experiments must retain distinct results;
+raw API agreement cannot replace full ordered lifecycle observations.
+
 M2 language implementation and verification are in progress. The
 [M2 contract](docs/m2-language.md) separates whole-language requirement accounting
 from the executable selection:

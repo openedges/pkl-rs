@@ -1,0 +1,88 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/clause-unused-no-loader/1/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/clause-unused-no-loader/1/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage48/.cache/oracle/pkl-tools-0.32.0.jar",
+    "AdmissionProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-no-loader",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/cases/clause-unused-no-loader/1/calls",
+    "allow",
+    "main.pkl"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-no-loader",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/clause-unused-no-loader/1/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/clause-unused-no-loader/1/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/clause-unused-no-loader/1/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/runtime-private/clause-unused-no-loader/1/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 16792,
+  "startedUnixNs": 1792772269290688000,
+  "pid": 16934,
+  "exitCode": 0,
+  "timedOut": false,
+  "finishedUnixNs": 1792772269976090000,
+  "stdoutSha256": "ca4497ced8ed7dc2bf25a81a416f5258b977b2f221e08ffcb88b5e8687134b6c",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "case": "clause-unused-no-loader",
+  "repeat": 1,
+  "workspaceBefore": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "19841fbdb6d909e404fc4b1be5a82089f34964ab6b3e0b29430b3c54db1655d1",
+      "bytes": 41,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "4ddab3852311023bf51acbe40fd131db5577185512d02beea4bfe8ff5c6aef64",
+      "bytes": 67,
+      "mode": 420
+    }
+  },
+  "workspaceAfter": {
+    "main.pkl": {
+      "kind": "regular",
+      "sha256": "19841fbdb6d909e404fc4b1be5a82089f34964ab6b3e0b29430b3c54db1655d1",
+      "bytes": 41,
+      "mode": 420
+    },
+    "module-plan.tsv": {
+      "kind": "regular",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420
+    },
+    "operations.tsv": {
+      "kind": "regular",
+      "sha256": "4ddab3852311023bf51acbe40fd131db5577185512d02beea4bfe8ff5c6aef64",
+      "bytes": 67,
+      "mode": 420
+    }
+  }
+}

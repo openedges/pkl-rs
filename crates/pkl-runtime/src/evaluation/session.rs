@@ -49,6 +49,8 @@ impl Call {
 /// Raw heap handles stay inside the runtime or native caller's explicit roots.
 pub struct SourceSession {
     host: HostSession,
+    public_lifecycle: bool,
+    public_queries: Vec<Option<usize>>,
     source: Source,
     uri: String,
     name: String,
@@ -67,6 +69,120 @@ pub struct SourceSession {
 }
 
 impl SourceSession {
+    /// Configure an evaluator without parsing a module, selecting a key, or doing I/O.
+    pub fn module_evaluator(options: SourceSessionOptions) -> Self {
+        let mut sources = SourceMap::default();
+        let id = sources.add("repl:text", "");
+        let source = sources.get(id).unwrap().clone();
+        let program = Arc::new(Program::new(vec![vec![Instruction::Return]]));
+        let mut host = HostSession::with_context(
+            program,
+            EvaluationContext {
+                primary_source: None,
+                trace_mode: options.trace_mode,
+                log_delivery: options.log_delivery,
+                host_frame_transformer: options.host_frame_transformer,
+            },
+        );
+        host.set_power_assertions(options.evaluation.power_assertions);
+        Self {
+            host,
+            public_lifecycle: true,
+            public_queries: Vec::new(),
+            source,
+            uri: "repl:text".into(),
+            name: "".into(),
+            paths: Vec::new(),
+            entries: Vec::new(),
+            output_text_entries: Vec::new(),
+            output_entry: None,
+            output_profile: DiagnosticProfile::ApiIdentity,
+            module_entry: 0,
+            module: None,
+            module_started: false,
+            setup_failure: None,
+            initialization_failed: false,
+            calls: Vec::new(),
+            last_expression: None,
+        }
+    }
+
+    pub fn start_evaluation(
+        &mut self,
+        source: crate::modules::ModuleSourceSpec,
+        expression: &str,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        if !self.public_lifecycle {
+            return Err(error(
+                "ModuleSource operations require the public lifecycle profile",
+            ));
+        }
+        let entry = self
+            .host
+            .append_public_operation(source.clone(), expression.into())?;
+        self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
+        self.retain_active_query_text();
+        let mut sources = SourceMap::default();
+        let id = sources.add(
+            source.uri.as_ref(),
+            source.contents.as_deref().unwrap_or(""),
+        );
+        self.source = sources.get(id).unwrap().clone();
+        self.uri = source.uri.to_string();
+        self.name.clear();
+        let index = self.paths.len();
+        self.paths.push(expression.into());
+        self.calls.push(if expression == "output.text" {
+            Call::OutputText
+        } else {
+            Call::Path(index)
+        });
+        self.public_queries.push(None);
+        self.last_expression = None;
+        Ok(())
+    }
+
+    pub fn reenter_evaluation(
+        &mut self,
+        token: &str,
+        source: crate::modules::ModuleSourceSpec,
+        expression: &str,
+        now: u64,
+        timeout: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        if !self.public_lifecycle {
+            return Err(error(
+                "ModuleSource operations require the public lifecycle profile",
+            ));
+        }
+        self.host
+            .reenter_public_operation(token, source, expression.into(), now, timeout)?;
+        self.retain_active_query_text();
+        let index = self.paths.len();
+        self.paths.push(expression.into());
+        self.calls.push(if expression == "output.text" {
+            Call::OutputText
+        } else {
+            Call::Path(index)
+        });
+        self.public_queries.push(None);
+        self.last_expression = None;
+        Ok(())
+    }
+    fn retain_active_query_text(&mut self) {
+        // A completed diagnostic remains available until the next admitted
+        // operation. Suspended calls keep their own source text for reentry.
+        let retained = self
+            .calls
+            .iter()
+            .filter_map(|call| call.expression())
+            .max()
+            .map_or(0, |index| index + 1);
+        self.paths.truncate(retained);
+    }
     /// Legacy constructor encoding diagnostic text at the Java UTF-8 boundary.
     pub fn compile(
         text: &str,
@@ -334,6 +450,8 @@ impl SourceSession {
         host.set_power_assertions(options.evaluation.power_assertions);
         Ok(Self {
             host,
+            public_lifecycle: false,
+            public_queries: Vec::new(),
             source,
             uri: uri.to_owned(),
             name,
@@ -358,6 +476,11 @@ impl SourceSession {
         timeout_ms: Option<u64>,
     ) -> Result<(), RuntimeError> {
         self.open()?;
+        if self.public_lifecycle {
+            return Err(error(
+                "Public ModuleSource evaluation requires a source and expression",
+            ));
+        }
         if self.module_started {
             return Err(error("module setup has already started"));
         }
@@ -489,8 +612,28 @@ impl SourceSession {
     }
 
     pub fn poll(&mut self, now_ms: u64, budget: usize) -> HostPoll {
+        if self.public_lifecycle {
+            self.last_expression = self.public_queries.last().copied().flatten();
+        }
         let previous_depth = self.host.context_depth();
         let event = self.host.poll(now_ms, budget);
+        if self.public_lifecycle {
+            if let Some(source) = self.host.public_primary_source() {
+                let mut sources = SourceMap::default();
+                let id = sources.add(source.uri.as_ref(), source.text.as_ref());
+                self.source = sources.get(id).unwrap().clone();
+                self.uri = source.uri.to_string();
+                self.name = source.module_name.to_string();
+            }
+            if matches!(&event, HostPoll::Module { request, .. } if matches!(request.kind,
+                crate::modules::ModuleRequestKind::ResolveKey { phase: crate::modules::ResolutionPhase::Query, .. }))
+            {
+                self.last_expression = self.calls.last().copied().and_then(Call::expression);
+                if let Some(active) = self.public_queries.last_mut() {
+                    *active = self.last_expression;
+                }
+            }
+        }
         if let Some(result) = self.host.take_intermediate_result() {
             match result {
                 Ok(module) => {
@@ -512,6 +655,9 @@ impl SourceSession {
         if let HostPoll::Ready(result) = &event {
             let completed = self.host.context_depth() < previous_depth;
             if let Some(call) = completed.then(|| self.calls.pop()).flatten() {
+                if self.public_lifecycle {
+                    self.last_expression = self.public_queries.pop().flatten();
+                }
                 match call {
                     Call::Module => {
                         self.last_expression = None;
@@ -530,7 +676,11 @@ impl SourceSession {
                             }
                         }
                     }
-                    Call::Path(index) => self.last_expression = Some(index),
+                    Call::Path(index) => {
+                        if !self.public_lifecycle {
+                            self.last_expression = Some(index);
+                        }
+                    }
                     Call::OutputBytes
                     | Call::InitialOutputBytes
                     | Call::OutputText
@@ -741,8 +891,12 @@ impl SourceSession {
     fn release_module(&mut self) {
         self.module = None;
         self.calls.clear();
+        self.public_queries.clear();
         self.setup_failure = None;
         self.last_expression = None;
+        if self.public_lifecycle {
+            self.paths.clear();
+        }
     }
 }
 
@@ -765,4 +919,79 @@ pub(super) fn append_output_entry(program: &mut Program, member: &str) -> usize 
         ..Default::default()
     });
     entry
+}
+
+#[cfg(test)]
+mod public_query_storage_tests {
+    use super::*;
+    use crate::modules::{ModuleKey, ModuleKeyKind, ModuleRequestKind, ModuleSourceSpec};
+    fn source() -> ModuleSourceSpec {
+        ModuleSourceSpec {
+            uri: "memo:/main.pkl".into(),
+            contents: Some("stable=7".into()),
+        }
+    }
+    fn event(session: &mut SourceSession) -> HostPoll {
+        for _ in 0..100_000 {
+            let event = session.poll(0, 1);
+            session.collect(&[]);
+            match event {
+                HostPoll::Yielded => {}
+                HostPoll::Module { token, request } => {
+                    let completion =
+                        if let ModuleRequestKind::SelectKey { id, uri, .. } = &request.kind {
+                            ModuleCompletion::KeySelected(Ok(ModuleKey {
+                                id: *id,
+                                uri: uri.clone(),
+                                kind: ModuleKeyKind::Host,
+                                handle: "fixture".into(),
+                            }))
+                        } else {
+                            crate::modules::default_completion(&request).unwrap()
+                        };
+                    session.complete_module(&token, completion, 0).unwrap();
+                }
+                event => return event,
+            }
+        }
+        panic!("event poll bound")
+    }
+    #[test]
+    fn public_expression_text_tracks_only_active_calls_and_the_current_diagnostic() {
+        let mut session = SourceSession::module_evaluator(SourceSessionOptions::default());
+        for _ in 0..8 {
+            session
+                .start_evaluation(source(), "throw(\"ordinary failure\")", 0, None)
+                .unwrap();
+            let HostPoll::Ready(Err(error)) = event(&mut session) else {
+                panic!("query failure")
+            };
+            assert!(session.format_error(error).contains("ordinary failure"));
+            assert_eq!(session.paths.len(), 1);
+        }
+        session
+            .start_evaluation(source(), "read(\"prop:pause\")", 0, None)
+            .unwrap();
+        let HostPoll::Read { token, .. } = event(&mut session) else {
+            panic!("parent callback")
+        };
+        for _ in 0..8 {
+            session
+                .reenter_evaluation(&token, source(), "throw(\"child failure\")", 0, None)
+                .unwrap();
+            let HostPoll::Ready(Err(error)) = event(&mut session) else {
+                panic!("child failure")
+            };
+            assert!(session.format_error(error).contains("child failure"));
+            assert_eq!(session.paths.len(), 2);
+        }
+        session
+            .resume(&token, Ok(Value::string("parent")), 0)
+            .unwrap();
+        assert!(
+            matches!(event(&mut session), HostPoll::Ready(Ok(value)) if value == Value::string("parent"))
+        );
+        session.close();
+        assert!(session.paths.is_empty());
+    }
 }

@@ -1,0 +1,20 @@
+{
+  "actualToolHandle": 95890,
+  "observedExitCode": 0,
+  "start": {
+    "pid": 21001,
+    "parentPid": 67399,
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/finalize.py"
+    ],
+    "startedUtc": "2026-10-23T20:11:00.207439+00:00",
+    "sourceSha256": "252fa970eb7c91705ee61bf367535c5d321f781c85290570439eaea9ee2b273a"
+  },
+  "stdoutSha256": "95d29279c667815480aa8484dad4a7f82078c0c8eb9ae28ba53f8756093adcf5",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "handoffSha256": "7d82d0009d62e2582aa939ce97a57ff29a1816f47d51a9fba2f02095416e2eba",
+  "finalIndexSha256": "13abcf2688d1bcab08ab427a315f6733f52290aa198affb417c081df9029f976",
+  "summarySha256": "d167f86a78460144f3f39024216690c6477f878720d2039763041551fedae7a7",
+  "qualification": "Finalizer completed closeout create+separateverify+everymemberreadback. This receipt is subsequent metadata outside its own closed archive."
+}

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+No module loader is registered for module `noLoader:x`.
+
+1 | unused = import("noLoader:x")
+             ^^^^^^^^^^^^^^^^^^^^
+at main#unused (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-no-loader/main.pkl)
+
+1 | unused
+    ^^^^^^
+at  (repl:text)

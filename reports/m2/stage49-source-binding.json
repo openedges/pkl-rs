@@ -1,0 +1,30 @@
+{
+  "scope": "Actual staged Git objects for current code/test/tool inputs, with one captured generated Python cache retained separately as evidence rather than added to Git.",
+  "recordedUtc": "2026-10-23T20:16:41.308183+00:00",
+  "parent": "9f6baa274a7f00b538c8eeb81f7f67636062c227",
+  "sourceMap": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-final-source-input-c-audit-01/current-source-map.json",
+    "sha256": "443e4e039f154ca3584d393dda8f791ed4c08b7af0e1adbbeafd8c2ec6f25ade"
+  },
+  "sourcePaths": 53595,
+  "gitBoundSourcePaths": 53594,
+  "untrackedCapturedArtifacts": [
+    {
+      "path": "tests/__pycache__/test_regressions.cpython-314.pyc",
+      "sha256": "7bfe529659707f6fe2d2a10ab3da98af3465d4e5207abf31231fdcbc6b40e6ca",
+      "bytes": 8267,
+      "archiveMember": "source-index-binding/untracked-captured-artifacts/tests/__pycache__/test_regressions.cpython-314.pyc",
+      "reason": "Ignored generated Python cache included by the original broad required-check input collector; no source-tree or compatibility pass claimed for this file."
+    }
+  ],
+  "differences": [],
+  "preservedInitialFailedJoin": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-git-publication-01/source-index-binding.json",
+    "sha256": "a7141ba58f670e7d8abb3e3367a1488d81d1d56d3b7d51f15eec3fc1efb25763"
+  },
+  "fullBinding": {
+    "archive": "reports/m2/stage49-publication-metadata.tar.gz",
+    "member": "source-index-binding/source-index-binding.json"
+  },
+  "implementationCommitNotYetClaimed": true
+}

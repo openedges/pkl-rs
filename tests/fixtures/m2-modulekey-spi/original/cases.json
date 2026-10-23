@@ -1,0 +1,925 @@
+[
+  {
+    "id": "site-cache-query-and-closure-sharing",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/site-cache-query-and-closure-sharing",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/site-cache-query-and-closure-sharing/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "two().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:json\").Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:json\").Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "c1.apply(0).Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "c2.apply(0).Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "c1.apply(0).Property.toString()"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "two().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "c2.apply(0).Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Same authored site versus other site and freshquery AST; closures fromsame FunctionLiteralNode; URIcache andsitecache effects separated byactualtrace.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "resolve-denial-retry-catch",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolve-denial-retry-catch",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolve-denial-retry-catch/main.pkl",
+    "mode": "deny-json",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "test.catch(() -> one().Property.toString())"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "test.catchOrNull(() -> one().Property.toString())"
+      },
+      {
+        "kind": "policy",
+        "value": "allow"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "two().Property.toString()"
+      },
+      {
+        "kind": "policy",
+        "value": "deny-json"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "three().Property.toString()"
+      },
+      {
+        "kind": "policy",
+        "value": "trust-json"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "four().Property.toString()"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "ActualStandardSecurityManager allowlistdenial, retry, guestcatch, laterURIcache andsitecache underpolicychanges. No sourceerror rewriting.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "singleton-edge-trust",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/singleton-edge-trust",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/singleton-edge-trust/main.pkl",
+    "mode": "trust-base",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().Int.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "test.catch(() -> one().Int.toString())"
+      },
+      {
+        "kind": "policy",
+        "value": "allow"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().Int.toString()"
+      },
+      {
+        "kind": "policy",
+        "value": "trust-base"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().Int.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "two().Int.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "test.catchOrNull(() -> two().Int.toString())"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Actualcustomtrustfunction deniespklbaseedge whileallowlistpermits; standardkeys keptunwrapped; singletonresolve bypass distinct.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "file-symlink-resolved-importer",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/file-symlink-resolved-importer",
+    "entry": "entry.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/file-symlink-resolved-importer/entry.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "entry.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "entry.pkl",
+        "expression": "child().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "entry.pkl",
+        "expression": "child().tag"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "entry.pkl",
+        "expression": "import(\"pkl:base\").Int.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "entry.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "ActualFile symlink primary: originalbase relativepreparation andresolvedURI edgeimporter distinguished; no customkey.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv",
+      "child.pkl",
+      "actual/main.pkl",
+      "actual/child.pkl",
+      "entry.pkl"
+    ]
+  },
+  {
+    "id": "custom-resolved-importer",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "alias().child().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "alias().child().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"memo:/aliased.pkl\").child().tag"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "alias().child().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Publiccustomkey originalmemo(trust10)\u2192resolvedfile(trust30),absolutechildfile30: actualedgeimporter resolvedidentity; customfactory/native support separate.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "alias-source.pkl",
+      "operations.tsv",
+      "actual/child.pkl"
+    ]
+  },
+  {
+    "id": "resolved-cache-alias-no-original-seed",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "first().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "second().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "third().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "second().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"memo:/aliasB.pkl\").tag"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "third().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Twooriginalaliasesonesame resolvedURI; resolved-cache hitdoesnotseedneworiginalalias. Exactsource/getter/resolve logs retained.",
+    "inputPaths": [
+      "shared.pkl",
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "uncached-policy-toggle",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "cache",
+        "value": "off"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "one().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "two().tag"
+      },
+      {
+        "kind": "cache",
+        "value": "on"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "three().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "four().tag"
+      },
+      {
+        "kind": "cache",
+        "value": "off"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "three().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"memo:/toggle.pkl\").tag"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "RealcustomModuleKey.isCached snapshotperfactorycreate; uncached-load cachepublication andlatercachedlookup separately observed. UnimplementednativeSPI scope remains.",
+    "inputPaths": [
+      "shared.pkl",
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "cycle-partial-return-later-init-failure",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/cycle-partial-return-later-init-failure",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/cycle-partial-return-later-init-failure/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "a().Good.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "b().saved().Good.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "b().fresh().Good.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "b().saved().Good.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "a().Good.toString()"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "b().saved().Good.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "b().fresh().Good.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "IntendedA.Good\u2192Bclass(superproperty callsgetA)\u2192Apartialreturned/sitecached, thenA laterMissingtype initfails; cachedgetA vsnewfreshsite. Intentreachmustbea uditedfromactualtrace/results, neverassumed.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv",
+      "a.pkl",
+      "b.pkl"
+    ]
+  },
+  {
+    "id": "clause-unused-no-loader",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-no-loader",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-no-loader/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "unused"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Importclausealways performsASTfactoryselection beforestable,evenwithalias; unknownfactoryoractualIOException cause captured; no earlyedge fabrication.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "expr-unused-no-loader",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-no-loader",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-no-loader/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "unused"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "unused"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"noLoader:x\")"
+      }
+    ],
+    "scope": "UnusedImportExprhasnoASTfactoryselection; forcednodeedge precedesfactory. Directfreshquery distinguished fromcachedproperty/site.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "clause-unused-factory-throw",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-factory-throw",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-factory-throw/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "unused"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Importclausealways performsASTfactoryselection beforestable,evenwithalias; unknownfactoryoractualIOException cause captured; no earlyedge fabrication.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "expr-unused-factory-throw",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-factory-throw",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-factory-throw/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "unused"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "unused"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"throwing:x\")"
+      }
+    ],
+    "scope": "UnusedImportExprhasnoASTfactoryselection; forcednodeedge precedesfactory. Directfreshquery distinguished fromcachedproperty/site.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "stdlib-uri-spelling-singleton-vs-catalog",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/stdlib-uri-spelling-singleton-vs-catalog",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/stdlib-uri-spelling-singleton-vs-catalog/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:base\") == import(\"pkl:base#tag\")"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:base\") == import(\"pkl:%62ase\")"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:ref\") == import(\"pkl:ref#tag\")"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:ref\") == import(\"pkl:%72ef\")"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:test\") == import(\"pkl:test#tag\")"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:test\") == import(\"pkl:%74est\")"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:json#tag\").Property.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:%6ason\").Property.toString()"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Actualstdkeykind, rawedgeURI spelling versuscanonicalsingletonreceiver identity; decodedSSP ignoresfragment forsingleton, exactcatalog forjson. No outputnormalization.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv"
+    ]
+  },
+  {
+    "id": "custom-key-pkl-uri-not-stdlib-kind",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "custom().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "custom().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "import(\"pkl:base\").tag"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Prioritypublicfactory returnsnonstdlibkey withpkl:baseURI; keykind isnot inferredfromstring. Generalfactoryprofile separatelyunsupportednative untilimplemented.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv",
+      "custom-base.pkl"
+    ]
+  },
+  {
+    "id": "resolved-nested-jar-default-trust",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl",
+    "mode": "allow",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "alias().file().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "alias().base().Int.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "alias().peer().tag"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "alias().file().tag"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Actualresolvedjar:nested importertrust via publiccustomkey, no jar/network I/O. Filetargetdenial versuspkl/memo targets fullraw. Directtrustmatrix separateAPI.",
+    "inputPaths": [
+      "peer.pkl",
+      "main.pkl",
+      "jar-source.pkl",
+      "module-plan.tsv",
+      "operations.tsv",
+      "actual/child.pkl"
+    ]
+  },
+  {
+    "id": "qualified-ref-nullable-type-init-denial",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/qualified-ref-nullable-type-init-denial",
+    "entry": "main.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/qualified-ref-nullable-type-init-denial/main.pkl",
+    "mode": "trust-ref",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "x"
+      },
+      {
+        "kind": "policy",
+        "value": "allow"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "x"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "x"
+      },
+      {
+        "kind": "evaluate",
+        "source": "main.pkl",
+        "expression": "stable"
+      }
+    ],
+    "scope": "Arequestedexactsource: authoredrefimport whilequalifiednullabletype initializes; denial followedallow mustrevealmodule-initializerfailurecache vsordinarylazyretry. No assumedreach/result.",
+    "inputPaths": [
+      "main.pkl",
+      "module-plan.tsv",
+      "operations.tsv"
+    ]
+  }
+]

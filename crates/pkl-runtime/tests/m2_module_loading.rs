@@ -1,3 +1,5 @@
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use std::sync::Arc;
 
 use pkl_runtime::evaluation::frontend::{
@@ -53,9 +55,15 @@ fn original_three_import_sources_use_actual_output_and_shared_imported_scope() {
             },
             &ModuleEvalOptions::default(),
             |request| match &request.kind {
+                ModuleRequestKind::ResolveKey { .. } => {
+                    panic!("public lifecycle request in supplied-source test")
+                }
+                ModuleRequestKind::SelectKey { .. }
+                | ModuleRequestKind::QueryCachePolicy { .. }
+                | ModuleRequestKind::QueryFragmentPaths { .. }
+                | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
                 ModuleRequestKind::CheckImport { .. } => {
-                    pkl_runtime::modules::default_completion(request)
-                        .expect("default import policy")
+                    module_keys::defaults(request).expect("default import policy")
                 }
                 ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
                     panic!("unexpected ModuleKey preparation in this fixture")
@@ -105,8 +113,7 @@ fn settle(
         match session.poll(0, 16) {
             HostPoll::Ready(value) => return value,
             HostPoll::Module { token, request } => {
-                let completion = pkl_runtime::modules::default_completion(&request)
-                    .unwrap_or_else(|| host(&request));
+                let completion = module_keys::defaults(&request).unwrap_or_else(|| host(&request));
                 session.complete_module(&token, completion, 0).unwrap()
             }
             HostPoll::Read { token, .. } => {
@@ -130,8 +137,15 @@ fn canonical_alias_hit_does_not_add_an_original_alias_and_cache_roots_survive_gc
     let mut loads = 0;
     session.start_path(0, 0, None).unwrap();
     let value = settle(&mut session, &mut |request| match &request.kind {
+        ModuleRequestKind::ResolveKey { .. } => {
+            panic!("public lifecycle request in supplied-source test")
+        }
+        ModuleRequestKind::SelectKey { .. }
+        | ModuleRequestKind::QueryCachePolicy { .. }
+        | ModuleRequestKind::QueryFragmentPaths { .. }
+        | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
         ModuleRequestKind::CheckImport { .. } => {
-            pkl_runtime::modules::default_completion(request).expect("default import policy")
+            module_keys::defaults(request).expect("default import policy")
         }
         ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
             panic!("unexpected ModuleKey preparation in this fixture")
@@ -165,9 +179,15 @@ fn resolution_failures_retry_but_source_and_frontend_failures_replay_the_first_e
         for index in [0, 1, 0] {
             session.start_path(index, 0, None).unwrap();
             let error = settle(&mut session, &mut |request| match &request.kind {
+                ModuleRequestKind::ResolveKey { .. } => {
+                    panic!("public lifecycle request in supplied-source test")
+                }
+                ModuleRequestKind::SelectKey { .. }
+                | ModuleRequestKind::QueryCachePolicy { .. }
+                | ModuleRequestKind::QueryFragmentPaths { .. }
+                | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
                 ModuleRequestKind::CheckImport { .. } => {
-                    pkl_runtime::modules::default_completion(request)
-                        .expect("default import policy")
+                    module_keys::defaults(request).expect("default import policy")
                 }
                 ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
                     panic!("unexpected ModuleKey preparation in this fixture")
@@ -222,9 +242,14 @@ fn malformed_unused_import_prepares_before_evaluation_but_missing_unused_file_is
                 inferred_name: "main",
             },
             &ModuleEvalOptions::default(),
-            |_| {
-                requests += 1;
-                ModuleCompletion::Resolved(Err(ModuleHostError::NotFound))
+            |request| {
+                if let ModuleRequestKind::SelectKey { .. } = &request.kind {
+                    requests += 1;
+                    module_keys::complete(request)
+                } else {
+                    module_keys::defaults(request)
+                        .expect("unused import must not resolve or load source")
+                }
             },
         );
         assert_eq!(
@@ -237,7 +262,7 @@ fn malformed_unused_import_prepares_before_evaluation_but_missing_unused_file_is
             assert_eq!(result.stdout, b"result = 7\n");
         }
     }
-    assert_eq!(requests, 0);
+    assert_eq!(requests, 1);
 }
 
 #[test]
@@ -252,8 +277,15 @@ fn appended_units_preserve_self_identity_and_distinguish_same_offset_declaration
         },
         &ModuleEvalOptions::default(),
         |request| match &request.kind {
+            ModuleRequestKind::ResolveKey { .. } => {
+                panic!("public lifecycle request in supplied-source test")
+            }
+            ModuleRequestKind::SelectKey { .. }
+            | ModuleRequestKind::QueryCachePolicy { .. }
+            | ModuleRequestKind::QueryFragmentPaths { .. }
+            | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
             ModuleRequestKind::CheckImport { .. } => {
-                pkl_runtime::modules::default_completion(request).expect("default import policy")
+                module_keys::defaults(request).expect("default import policy")
             }
             ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
                 panic!("unexpected ModuleKey preparation in this fixture")
@@ -283,7 +315,7 @@ fn next_module(session: &mut SourceSession) -> (String, ModuleRequest) {
     for _ in 0..100_000 {
         match session.poll(0, 8) {
             HostPoll::Module { token, request } => {
-                if let Some(completion) = pkl_runtime::modules::default_completion(&request) {
+                if let Some(completion) = module_keys::defaults(&request) {
                     session.complete_module(&token, completion, 0).unwrap();
                 } else {
                     return (token, request);
@@ -317,8 +349,15 @@ fn source_callback_publication_survives_outer_failure_while_fresh_import_replays
     let mut child_resolves = 0;
     let mut child_loads = 0;
     let child = settle(&mut session, &mut |request| match request.kind {
+        ModuleRequestKind::ResolveKey { .. } => {
+            panic!("public lifecycle request in supplied-source test")
+        }
+        ModuleRequestKind::SelectKey { .. }
+        | ModuleRequestKind::QueryCachePolicy { .. }
+        | ModuleRequestKind::QueryFragmentPaths { .. }
+        | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
         ModuleRequestKind::CheckImport { .. } => {
-            pkl_runtime::modules::default_completion(request).expect("default import policy")
+            module_keys::defaults(request).expect("default import policy")
         }
         ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
             panic!("unexpected ModuleKey preparation in this fixture")
@@ -422,14 +461,21 @@ fn failed_append_keeps_existing_closures(bad_source: &str, kind: pkl_runtime::va
         &["first", "bad", "last"],
     );
     let mut host = |request: &ModuleRequest| match &request.kind {
+        ModuleRequestKind::ResolveKey { .. } => {
+            panic!("public lifecycle request in supplied-source test")
+        }
+        ModuleRequestKind::SelectKey { .. }
+        | ModuleRequestKind::QueryCachePolicy { .. }
+        | ModuleRequestKind::QueryFragmentPaths { .. }
+        | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
         ModuleRequestKind::CheckImport { .. } => {
-            pkl_runtime::modules::default_completion(request).expect("default import policy")
+            module_keys::defaults(request).expect("default import policy")
         }
         ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
             panic!("unexpected ModuleKey preparation in this fixture")
         }
         ModuleRequestKind::Resolve { .. } => resolve(request, None),
-        ModuleRequestKind::LoadSource { resolved } => {
+        ModuleRequestKind::LoadSource { resolved, .. } => {
             if resolved.original_uri.ends_with("bad.pkl") {
                 source(bad_source)
             } else {
@@ -489,7 +535,9 @@ fn failed_self_superclass_preserves_the_original_followup_method_error() {
     ] {
         session.start_path(0, 0, None).unwrap();
         let failure = settle(&mut session, &mut |request| match request.kind {
-            ModuleRequestKind::CheckImport { .. } => pkl_runtime::modules::default_completion(request).expect("default import policy"),
+            ModuleRequestKind::ResolveKey { .. } => panic!("public lifecycle request in supplied-source test"),
+                ModuleRequestKind::SelectKey { .. } | ModuleRequestKind::QueryCachePolicy { .. } | ModuleRequestKind::QueryFragmentPaths { .. } | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
+                ModuleRequestKind::CheckImport { .. } => module_keys::defaults(request).expect("default import policy"),
             ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => panic!("unexpected ModuleKey preparation in this fixture"),
             ModuleRequestKind::Resolve { .. } => resolve(request, None),
             ModuleRequestKind::LoadSource { .. } => panic!("primary source already exists"),
@@ -507,8 +555,15 @@ fn imported_error_keeps_declared_module_and_original_display_source() {
     let mut session = session("first=import(\"alias.pkl\").value\n", &["first"]);
     session.start_path(0, 0, None).unwrap();
     let error = settle(&mut session, &mut |request| match &request.kind {
+        ModuleRequestKind::ResolveKey { .. } => {
+            panic!("public lifecycle request in supplied-source test")
+        }
+        ModuleRequestKind::SelectKey { .. }
+        | ModuleRequestKind::QueryCachePolicy { .. }
+        | ModuleRequestKind::QueryFragmentPaths { .. }
+        | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
         ModuleRequestKind::CheckImport { .. } => {
-            pkl_runtime::modules::default_completion(request).expect("default import policy")
+            module_keys::defaults(request).expect("default import policy")
         }
         ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
             panic!("unexpected ModuleKey preparation in this fixture")
@@ -581,8 +636,15 @@ fn outer_source_success_replaces_callback_source_failure() {
     let (outer, _) = next_module(&mut session);
     session.reenter_path(&outer, 0, 0, None).unwrap();
     let error = settle(&mut session, &mut |request| match request.kind {
+        ModuleRequestKind::ResolveKey { .. } => {
+            panic!("public lifecycle request in supplied-source test")
+        }
+        ModuleRequestKind::SelectKey { .. }
+        | ModuleRequestKind::QueryCachePolicy { .. }
+        | ModuleRequestKind::QueryFragmentPaths { .. }
+        | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
         ModuleRequestKind::CheckImport { .. } => {
-            pkl_runtime::modules::default_completion(request).expect("default import policy")
+            module_keys::defaults(request).expect("default import policy")
         }
         ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
             panic!("unexpected ModuleKey preparation in this fixture")
@@ -695,6 +757,11 @@ fn imported_resource_read_keeps_module_key_separate_from_display_and_resolved_ur
         .unwrap();
     let token = loop {
         match session.poll(0, 8) {
+            HostPoll::Module { token, request } => {
+                session
+                    .complete_module(&token, module_keys::complete(&request), 0)
+                    .unwrap();
+            }
             HostPoll::Read { token, uri } => {
                 assert_eq!(uri.as_ref(), "../data/value.txt");
                 break token;

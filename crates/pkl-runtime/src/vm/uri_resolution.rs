@@ -10,10 +10,13 @@ use std::collections::VecDeque;
 struct Import {
     spec: modules::ImportSpec,
     origin: RuntimeFrame,
+    clause: bool,
+    prepared_uri: Option<Arc<str>>,
 }
 #[derive(Clone, Debug)]
 pub(super) enum PreparationStep {
     Import {
+        clause: bool,
         uri: String,
         span: Span,
         member: PklString,
@@ -37,6 +40,9 @@ pub(super) struct Resolution {
     module: ModuleIdentity,
     path: String,
     candidates: VecDeque<String>,
+    selected: Option<crate::modules::ModuleKey>,
+    declaration_key: Option<crate::modules::ModuleKey>,
+    wrapper_fragment_paths: bool,
     target: Target,
 }
 impl Resolution {
@@ -84,11 +90,13 @@ impl Vm {
             )
         })?;
         let module = self
-            .program
-            .units
-            .iter()
-            .filter_map(|unit| unit.identity.as_ref())
-            .find(|identity| identity.original_uri == uri)
+            .frames
+            .last()
+            .and_then(|frame| self.program.metadata.get(frame.block))
+            .and_then(|metadata| metadata.unit)
+            .and_then(|id| self.program.units.get(id.0 as usize))
+            .and_then(|unit| unit.identity.as_ref())
+            .filter(|identity| identity.original_uri == uri)
             .cloned()
             .unwrap_or(ModuleIdentity {
                 original_uri: uri.clone(),
@@ -98,6 +106,9 @@ impl Vm {
             module,
             path,
             candidates: VecDeque::new(),
+            selected: None,
+            declaration_key: None,
+            wrapper_fragment_paths: false,
             target: Target::Read(request),
         })
     }
@@ -127,7 +138,12 @@ impl Vm {
 
         for step in &declaration.import_order {
             match step {
-                PreparationStep::Import { uri, span, member } => {
+                PreparationStep::Import {
+                    uri,
+                    span,
+                    member,
+                    clause,
+                } => {
                     let mut origin = RuntimeFrame {
                         source: declaration
                             .source
@@ -168,6 +184,8 @@ impl Vm {
                             original_uri: uri.as_str().into(),
                         },
                         origin,
+                        clause: *clause,
+                        prepared_uri: None,
                     }));
                 }
                 PreparationStep::Failure(diagnostic) => {
@@ -232,9 +250,50 @@ impl Vm {
             match step {
                 Preparation::Failure(error) => return Err(error),
                 Preparation::Import(mut current) => {
+                    // AstBuilder creates the operand URI before calling the
+                    // declaration key's resolver, including for custom keys.
+                    let (parsed_authored, _) =
+                        crate::host::resources::prepare_module_uri(&current.spec.authored, None)
+                            .map_err(|mut error| {
+                                error.frames.insert(0, current.origin.clone());
+                                error.span = Some(current.spec.span);
+                                error
+                            })?;
+                    if current.prepared_uri.is_none()
+                        && crate::host::resources::import_triple_path(&parsed_authored)?.is_none()
+                        && let Some(key) = self.program.units[current.spec.unit.0 as usize]
+                            .key
+                            .as_ref()
+                        && key.kind == crate::modules::ModuleKeyKind::Host
+                    {
+                        let key = key.clone();
+                        let authored_uri = parsed_authored.clone().into();
+                        self.frames.last_mut().unwrap().uri_resolution = Some(Resolution {
+                            module: module
+                                .clone()
+                                .ok_or_else(|| invalid("missing declaration identity"))?,
+                            path: String::new(),
+                            candidates: VecDeque::new(),
+                            selected: None,
+                            declaration_key: None,
+                            wrapper_fragment_paths: false,
+                            target: Target::Import { current, remaining },
+                        });
+                        return self.wait_module(ModuleRequestKind::ResolveImportUri {
+                            key,
+                            authored_uri,
+                        });
+                    }
                     let (absolute, original) = crate::host::resources::prepare_module_uri(
-                        &current.spec.authored,
-                        module.as_ref().map(|m| m.original_uri.as_ref()),
+                        current
+                            .prepared_uri
+                            .as_deref()
+                            .unwrap_or(&current.spec.authored),
+                        if current.prepared_uri.is_some() {
+                            None
+                        } else {
+                            module.as_ref().map(|m| m.original_uri.as_ref())
+                        },
                     )
                     .map_err(|mut error| {
                         error.frames.insert(0, current.origin.clone());
@@ -243,8 +302,7 @@ impl Vm {
                     })?;
                     current.spec.absolute_uri = absolute.clone().into();
                     current.spec.original_uri = original.clone().into();
-                    let Some(path) =
-                        crate::host::resources::import_triple_path(&current.spec.authored)?
+                    let Some(path) = crate::host::resources::import_triple_path(&parsed_authored)?
                     else {
                         for code in &mut Arc::make_mut(&mut self.program).blocks {
                             for instruction in code {
@@ -256,6 +314,9 @@ impl Vm {
                                     spec.original_uri = original.clone().into();
                                 }
                             }
+                        }
+                        if current.clause {
+                            return self.start_clause_selection(module, current, remaining);
                         }
                         continue;
                     };
@@ -269,17 +330,256 @@ impl Vm {
                         module,
                         path,
                         candidates: VecDeque::new(),
+                        selected: None,
+                        declaration_key: None,
+                        wrapper_fragment_paths: false,
                         target: Target::Import { current, remaining },
                     });
                 }
             }
         }
+        self.finish_module_build()?;
         self.state = State::Running;
         Ok(())
     }
 
-    fn start_uri_resolution(&mut self, run: Resolution) -> Result<(), RuntimeError> {
+    pub(super) fn resolved_import_uri(
+        &mut self,
+        result: Result<Arc<str>, ModuleHostError>,
+    ) -> Result<(), RuntimeError> {
+        let run = self
+            .frames
+            .last_mut()
+            .and_then(|frame| frame.uri_resolution.take())
+            .ok_or_else(|| invalid("missing declaration URI continuation"))?;
+        let uri = result.map_err(|failure| run.host_failure(failure))?;
+        let Target::Import {
+            mut current,
+            mut remaining,
+        } = run.target
+        else {
+            return Err(invalid("wrong declaration URI target"));
+        };
+        current.prepared_uri = Some(uri);
+        remaining.push_front(Preparation::Import(current));
+        self.next_import_preparation(Some(run.module), remaining)
+    }
+    fn start_clause_selection(
+        &mut self,
+        module: Option<ModuleIdentity>,
+        current: Import,
+        remaining: VecDeque<Preparation>,
+    ) -> Result<(), RuntimeError> {
+        let uri = current.spec.original_uri.clone();
+        let module =
+            module.ok_or_else(|| invalid("import clause requires a declaration ModuleKey"))?;
+        self.frames.last_mut().unwrap().uri_resolution = Some(Resolution {
+            module,
+            path: String::new(),
+            candidates: VecDeque::new(),
+            selected: None,
+            declaration_key: None,
+            wrapper_fragment_paths: false,
+            target: Target::Import { current, remaining },
+        });
+        self.wait_module(ModuleRequestKind::SelectKey {
+            id: crate::modules::ModuleKeyId(modules::next_key_id()?),
+            uri,
+            phase: crate::modules::SelectionPhase::ClausePreparation,
+        })
+    }
+    pub(super) fn selected_clause_key(
+        &mut self,
+        result: Result<crate::modules::ModuleKey, ModuleHostError>,
+    ) -> Result<(), RuntimeError> {
+        let mut run = self
+            .frames
+            .last_mut()
+            .and_then(|frame| frame.uri_resolution.take())
+            .ok_or_else(|| invalid("missing clause key continuation"))?;
+        let key = result.map_err(|failure| match &run.target {
+            Target::Import { current, .. } => {
+                // ModuleResolver.resolve(uri) has no optional ImportNode here.
+                failure.into_factory_runtime(&current.spec.absolute_uri)
+            }
+            _ => invalid("clause key completion without a clause"),
+        })?;
+        let Target::Import { current, .. } = &run.target else {
+            return Err(invalid("missing import clause"));
+        };
+        let unit = &self.program.units[current.spec.unit.0 as usize];
+        let alias = unit
+            .build
+            .as_ref()
+            .and_then(|build| {
+                build
+                    .module
+                    .members
+                    .iter()
+                    .find_map(|member| match &member.expr.kind {
+                        crate::syntax::ExprKind::Import {
+                            uri_span,
+                            clause_alias: Some(alias),
+                            ..
+                        } if *uri_span == current.spec.span => Some(alias.clone()),
+                        _ => None,
+                    })
+            })
+            .ok_or_else(|| invalid("missing import clause metadata"))?;
+        run.selected = Some(key.clone());
+        if let Some(alias) = alias {
+            return self.finish_clause_name(run, alias);
+        }
+        if !crate::host::resources::module_name_needs_fragment_paths(&key.uri) {
+            let name = crate::host::resources::infer_module_name(&key.uri, false)?;
+            return self.finish_clause_name(run, name);
+        }
+        self.frames.last_mut().unwrap().uri_resolution = Some(run);
+        self.wait_module(ModuleRequestKind::QueryFragmentPaths { key })
+    }
+    pub(super) fn resolved_name_fragment_paths(
+        &mut self,
+        result: Result<bool, ModuleHostError>,
+    ) -> Result<(), RuntimeError> {
+        let run = self
+            .frames
+            .last_mut()
+            .and_then(|frame| frame.uri_resolution.take())
+            .ok_or_else(|| invalid("missing name inference continuation"))?;
+        let fragment_paths = result.map_err(|failure| run.host_failure(failure))?;
+        let key = run
+            .selected
+            .as_ref()
+            .ok_or_else(|| invalid("missing inferred-name key"))?;
+        let name = crate::host::resources::infer_module_name(&key.uri, fragment_paths)?;
+        self.finish_clause_name(run, name)
+    }
+    fn finish_clause_name(&mut self, run: Resolution, name: String) -> Result<(), RuntimeError> {
+        let Target::Import { current, remaining } = run.target else {
+            return Err(invalid("missing name inference clause"));
+        };
+        let unit = &mut Arc::make_mut(&mut self.program).units[current.spec.unit.0 as usize];
+        let build = unit
+            .build
+            .as_mut()
+            .ok_or_else(|| invalid("missing module build continuation"))?;
+        let member = build.module.members.iter_mut().find(|member| matches!(&member.expr.kind,
+            crate::syntax::ExprKind::Import { uri_span, clause_alias: Some(_), .. } if *uri_span == current.spec.span))
+            .ok_or_else(|| invalid("missing import member"))?;
+        member.name = name;
+        build.prepared.insert(
+            current.spec.span,
+            (
+                current.spec.absolute_uri.clone(),
+                current.spec.original_uri.clone(),
+            ),
+        );
+        self.next_import_preparation(Some(run.module), remaining)
+    }
+    fn finish_module_build(&mut self) -> Result<(), RuntimeError> {
+        let Some(unit) = self
+            .frames
+            .last()
+            .and_then(|frame| self.program.metadata.get(frame.block))
+            .and_then(|m| m.unit)
+        else {
+            return Ok(());
+        };
+        let declaration = self.program.units[unit.0 as usize].clone();
+        let Some(build) = declaration.build else {
+            return Ok(());
+        };
+        let mut resolved = crate::resolver::resolve_module_for_evaluation(&build.module);
+        resolved.preparation.retain(|step| {
+            !matches!(
+                step,
+                crate::resolver::AstPreparation::Import { clause: true, .. }
+            )
+        });
+        let code_owner = self
+            .frames
+            .last()
+            .and_then(|frame| frame.environment.code_owner);
+        let program = Arc::make_mut(&mut self.program);
+        let checkpoint = modules::ArenaCheckpoint::new(program);
+        let arena = code_owner.map(|_| query_lifecycle::CodeArena::begin(program));
+        let result = if resolved.preparation_failure.is_some() {
+            let mut shell = resolved.clone();
+            shell.module.members.clear();
+            shell.module.deferred_diagnostics.clear();
+            if let Some(decl) = &mut shell.module.declaration {
+                decl.annotations.clear();
+                decl.parent = None;
+                decl.modifiers.clear();
+            }
+            shell.preparation.clear();
+            shell.preparation_failure = None;
+            compile_unit_body_at(
+                Some(unit),
+                program,
+                &shell,
+                build.options,
+                build.instrument,
+                declaration.source.clone(),
+                declaration.identity.clone(),
+            )
+            .inspect(|_| {
+                program.units[unit.0 as usize].import_order = module_import_order(&resolved)
+            })
+        } else {
+            compile_unit_body_at(
+                Some(unit),
+                program,
+                &resolved,
+                build.options,
+                build.instrument,
+                declaration.source.clone(),
+                declaration.identity.clone(),
+            )
+        };
+        if let Err(error) = result {
+            checkpoint.rollback(program);
+            return Err(error);
+        }
+        if let (Some(arena), Some(owner)) = (arena, code_owner) {
+            self.code_arenas.push(arena.finish(program, owner, false));
+        }
+        for code in &mut program.blocks {
+            for instruction in code {
+                if let Instruction::ImportModule(spec) = instruction
+                    && spec.unit == unit
+                    && let Some((absolute, original)) = build.prepared.get(&spec.span)
+                {
+                    spec.absolute_uri = absolute.clone();
+                    spec.original_uri = original.clone();
+                }
+            }
+        }
+        program.units[unit.0 as usize].key = declaration.key;
+        program.units[unit.0 as usize].delegate_key = declaration.delegate_key;
+        program.units[unit.0 as usize].standard_library = declaration.standard_library;
+        let entry = program.units[unit.0 as usize].entry;
+        let frame = self.frames.last_mut().unwrap();
+        frame.block = entry;
+        frame.pc = if unit.0 == 0 { 2 } else { 0 };
+        Ok(())
+    }
+
+    fn start_uri_resolution(&mut self, mut run: Resolution) -> Result<(), RuntimeError> {
+        let unit = match &run.target {
+            Target::Import { current, .. } => Some(current.spec.unit),
+            Target::Read(_) => self
+                .frames
+                .last()
+                .and_then(|frame| self.program.metadata.get(frame.block))
+                .and_then(|metadata| metadata.unit),
+        };
+        if let Some(unit) = unit.and_then(|id| self.program.units.get(id.0 as usize)) {
+            run.wrapper_fragment_paths = unit.delegate_key.is_some();
+            run.declaration_key = unit.delegate_key.clone().or_else(|| unit.key.clone());
+        }
         let request = ModuleRequestKind::Capabilities {
+            key: run.declaration_key.clone(),
             module: run.module.clone(),
         };
         self.frames
@@ -298,7 +598,12 @@ impl Vm {
             .last_mut()
             .and_then(|frame| frame.uri_resolution.take())
             .ok_or_else(|| invalid("missing URI capabilities continuation"))?;
-        let caps = result.map_err(|error| run.host_failure(error))?;
+        let mut caps = result.map_err(|error| run.host_failure(error))?;
+        // CachedModuleKey delegates locality/hierarchy and hasElement, but
+        // inherits ModuleKey.hasFragmentPaths=false from its own class.
+        if run.wrapper_fragment_paths {
+            caps.fragment_paths = false;
+        }
         run.candidates =
             crate::host::resources::triple_candidates(&run.module.original_uri, &run.path, caps)
                 .map_err(|error| run.failure(error))?
@@ -310,6 +615,7 @@ impl Vm {
             return Err(run.host_failure(ModuleHostError::NotFound));
         };
         let request = ModuleRequestKind::HasElement {
+            key: run.declaration_key.clone(),
             module: run.module.clone(),
             element_uri: uri.into(),
         };
@@ -353,7 +659,14 @@ impl Vm {
                         }
                     }
                 }
-                self.next_import_preparation(Some(run.module), remaining)
+                if current.clause {
+                    let mut current = current;
+                    current.spec.absolute_uri = absolute.into();
+                    current.spec.original_uri = original.into();
+                    self.start_clause_selection(Some(run.module), current, remaining)
+                } else {
+                    self.next_import_preparation(Some(run.module), remaining)
+                }
             }
         }
     }
@@ -367,13 +680,17 @@ pub(super) fn module_import_order(
         .preparation
         .iter()
         .map(|step| match step {
-            crate::resolver::AstPreparation::Import { uri, span, member } => {
-                PreparationStep::Import {
-                    uri: uri.clone(),
-                    span: *span,
-                    member: member.clone(),
-                }
-            }
+            crate::resolver::AstPreparation::Import {
+                uri,
+                span,
+                member,
+                clause,
+            } => PreparationStep::Import {
+                clause: *clause,
+                uri: uri.clone(),
+                span: *span,
+                member: member.clone(),
+            },
         })
         .collect::<Vec<_>>();
     if let Some(error) = &resolved.preparation_failure {

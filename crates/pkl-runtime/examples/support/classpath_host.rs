@@ -23,14 +23,22 @@ impl DirectoryClassPath {
 
     pub fn complete(&self, request: &ModuleRequest) -> ModuleCompletion {
         match &request.kind {
-            ModuleRequestKind::Resolve {
-                import_uri,
-                original_uri,
-                ..
-            } if import_uri.starts_with("modulepath:") => {
-                ModuleCompletion::Resolved(self.resolve(import_uri, original_uri))
+            ModuleRequestKind::SelectKey { id, uri, .. } if uri.starts_with("modulepath:") => {
+                ModuleCompletion::KeySelected(Self::resource_path(uri).map(|_| {
+                    pkl_runtime::modules::ModuleKey {
+                        id: *id,
+                        uri: uri.clone(),
+                        kind: pkl_runtime::modules::ModuleKeyKind::Host,
+                        handle: "classpath".into(),
+                    }
+                }))
             }
-            ModuleRequestKind::LoadSource { resolved }
+            ModuleRequestKind::Resolve { key, .. } | ModuleRequestKind::ResolveKey { key, .. }
+                if key.uri.starts_with("modulepath:") =>
+            {
+                ModuleCompletion::Resolved(self.resolve(&key.uri, &key.uri))
+            }
+            ModuleRequestKind::LoadSource { resolved, .. }
                 if resolved.original_uri.starts_with("modulepath:") =>
             {
                 ModuleCompletion::Source(self.load(resolved))

@@ -75,6 +75,43 @@ impl HostSession {
         }
     }
 
+    pub(crate) fn append_public_operation(
+        &mut self,
+        source: crate::modules::ModuleSourceSpec,
+        expression: Arc<str>,
+    ) -> Result<usize, RuntimeError> {
+        self.open()?;
+        if self.active {
+            return Err(error(ErrorKind::Busy, "evaluation is already active"));
+        }
+        self.vm.append_public_operation(source, expression)
+    }
+    pub(crate) fn reenter_public_operation(
+        &mut self,
+        token: &str,
+        source: crate::modules::ModuleSourceSpec,
+        expression: Arc<str>,
+        now: u64,
+        timeout: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        self.clock(now)?;
+        if self.expire(now) {
+            return Err(self.terminal.clone().unwrap());
+        }
+        self.admit_new()?;
+        let request = self.request_id(token)?;
+        self.vm.validate_pending_request(request)?;
+        if self.contexts.len() >= 64 {
+            return Err(error(ErrorKind::Busy, "experiment context limit exceeded"));
+        }
+        let entry = self.vm.append_public_operation(source, expression)?;
+        self.reenter(token, entry, Vec::new(), now, timeout)
+    }
+    pub(crate) fn public_primary_source(&self) -> Option<Arc<crate::value::RuntimeSource>> {
+        self.vm.public_primary_source()
+    }
+
     pub fn start(
         &mut self,
         entry: usize,

@@ -1,0 +1,5 @@
+function one() = import("memo:/toggle.pkl")
+function two() = import("memo:/toggle.pkl")
+function three() = import("memo:/toggle.pkl")
+function four() = import("memo:/toggle.pkl")
+stable = 7

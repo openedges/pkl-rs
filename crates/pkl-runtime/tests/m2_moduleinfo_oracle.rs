@@ -1,4 +1,6 @@
 //! Pinned Java ModuleInfo values/errors. JVM internal/version and API continuity gaps stay explicit.
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use pkl_runtime::{
     probe::{SourceEvent, SourceProbe},
     value::PklString,
@@ -44,9 +46,7 @@ fn next(probe: &mut SourceProbe) -> SourceEvent {
         let event = probe.poll(0, 1).unwrap();
         probe.collect();
         if event.kind == "module-request"
-            && probe
-                .complete_default_module(event.token.as_deref().unwrap(), 0)
-                .unwrap()
+            && module_keys::complete_probe(probe, event.token.as_deref().unwrap(), 0).unwrap()
         {
             continue;
         }

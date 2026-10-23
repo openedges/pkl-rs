@@ -1,7 +1,8 @@
 use super::*;
 use crate::modules::{
-    ModuleCompletion, ModuleIdentity, ModuleRequest, ModuleRequestKind, ModuleSource,
-    ResolvedModule, UnitId,
+    ModuleCompletion, ModuleIdentity, ModuleKey, ModuleKeyId, ModuleKeyKind, ModuleRequest,
+    ModuleRequestKind, ModuleSource, ResolvedKeyId, ResolvedModule, ResolvedModuleKey,
+    SelectionPhase, UnitId,
 };
 use crate::value::RuntimeSource;
 
@@ -18,6 +19,11 @@ pub(crate) enum ModuleMode {
 pub(crate) struct ModuleUnit {
     pub id: UnitId,
     pub identity: Option<ModuleIdentity>,
+    pub standard_library: bool,
+    pub key: Option<ModuleKey>,
+    pub delegate_key: Option<ModuleKey>,
+    pub build: Option<ModuleBuild>,
+    pub syntax: Option<Arc<crate::syntax::Module>>,
     pub source: Option<Arc<RuntimeSource>>,
     pub name: Arc<str>,
     pub template: usize,
@@ -27,6 +33,26 @@ pub(crate) struct ModuleUnit {
     pub class_id: usize,
     pub mode: ModuleMode,
     pub modifiers: u32,
+}
+
+#[derive(Clone, Debug)]
+pub(crate) struct ModuleBuild {
+    pub module: crate::syntax::Module,
+    pub options: CompileOptions,
+    pub instrument: bool,
+    pub prepared: BTreeMap<Span, (Arc<str>, Arc<str>)>,
+}
+
+impl ModuleUnit {
+    pub(super) fn is_singleton(&self) -> bool {
+        self.standard_library
+            && self.identity.as_ref().is_some_and(|identity| {
+                matches!(
+                    crate::modules::stdlib_kind(&identity.original_uri),
+                    Some(crate::modules::StdlibKind::Singleton(_))
+                )
+            })
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -93,25 +119,284 @@ pub(super) enum CachedModule {
     Failed(RuntimeError),
 }
 
+/// Module URI equality shares the Java URI.equals rules already used by resources.
+#[derive(Default)]
+pub(super) struct ModuleCache(BTreeMap<crate::host::resources::CacheKey, CachedModule>);
+impl ModuleCache {
+    pub fn get(&self, uri: &str) -> Option<&CachedModule> {
+        self.0.get(&crate::host::resources::cache_key(uri))
+    }
+    pub fn insert(&mut self, uri: Arc<str>, value: CachedModule) {
+        self.0
+            .insert(crate::host::resources::cache_key(&uri), value);
+    }
+    pub fn clear(&mut self) {
+        self.0.clear();
+    }
+    pub fn values(&self) -> impl Iterator<Item = &CachedModule> {
+        self.0.values()
+    }
+    pub fn values_mut(&mut self) -> impl Iterator<Item = &mut CachedModule> {
+        self.0.values_mut()
+    }
+}
+
+static NEXT_KEY: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
+pub(super) fn next_key_id() -> Result<u64, RuntimeError> {
+    NEXT_KEY
+        .fetch_update(
+            std::sync::atomic::Ordering::Relaxed,
+            std::sync::atomic::Ordering::Relaxed,
+            |n| n.checked_add(1),
+        )
+        .map_err(|_| invalid("ModuleKey identity exhausted"))
+}
+
+pub(super) fn next_failure_id() -> u64 {
+    next_key_id().expect("cached exception identity exhausted")
+}
+
 pub(super) struct ModuleRun {
     pub spec: ImportSpec,
-    site: (ExecutableOwnerId, usize, usize),
+    site: Option<(ExecutableOwnerId, usize, usize)>,
+    purpose: ModulePurpose,
+    supplied: Option<Arc<str>>,
+    internal_key: bool,
     phase: ModulePhase,
-    bundled: bool,
+    key: Option<ModuleKey>,
+    delegate_key: Option<ModuleKey>,
+    resolved_key: Option<ResolvedModuleKey>,
+    cached: bool,
     pub resolved: Option<ResolvedModule>,
     pub receiver: Option<ObjectId>,
     pub initializing: bool,
+    parsed: Option<crate::syntax::Module>,
+    source: Option<Arc<RuntimeSource>>,
+}
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum ModulePurpose {
+    Import,
+    Primary,
+    Query,
+}
+
+impl ModuleRun {
+    pub(super) fn is_singleton(&self) -> bool {
+        self.key.as_ref().is_some_and(|key| {
+            key.kind == ModuleKeyKind::StandardLibrary
+                && matches!(
+                    crate::modules::stdlib_kind(&key.uri),
+                    Some(crate::modules::StdlibKind::Singleton(_))
+                )
+        })
+    }
 }
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum ModulePhase {
     ImportCheck,
+    SelectKey,
+    CachePolicy,
     Resolve,
     Source,
+    Name,
     Initializer,
 }
 
 impl Vm {
+    pub(crate) fn append_public_operation(
+        &mut self,
+        source: crate::modules::ModuleSourceSpec,
+        expression: Arc<str>,
+    ) -> Result<usize, RuntimeError> {
+        crate::host::resources::validate_module_key_uri(&source.uri)?;
+        let program = Arc::make_mut(&mut self.program);
+        let entry = program.blocks.len();
+        let mut code = vec![Instruction::LoadPrimary(Arc::new(source))];
+        if expression.as_ref() == "output.text" {
+            code.extend([
+                Instruction::GetMember("output".into()),
+                Instruction::CheckModuleOutput,
+                Instruction::GetMember("text".into()),
+            ]);
+        } else {
+            code.push(Instruction::EvaluateQuery(expression));
+        }
+        code.push(Instruction::Return);
+        program.blocks.push(code);
+        program.metadata.push(BlockMetadata::default());
+        self.public_operation_entries.insert(entry);
+        Ok(entry)
+    }
+    fn fresh_module_run(
+        &self,
+        uri: Arc<str>,
+        purpose: ModulePurpose,
+        supplied: Option<Arc<str>>,
+    ) -> ModuleRun {
+        ModuleRun {
+            spec: ImportSpec {
+                authored: uri.clone(),
+                absolute_uri: uri.clone(),
+                original_uri: uri,
+                span: Span::default(),
+                unit: UnitId(u32::MAX),
+            },
+            site: None,
+            purpose,
+            supplied,
+            internal_key: false,
+            phase: ModulePhase::SelectKey,
+            key: None,
+            delegate_key: None,
+            resolved_key: None,
+            cached: true,
+            resolved: None,
+            receiver: None,
+            initializing: false,
+            parsed: None,
+            source: None,
+        }
+    }
+    pub(super) fn begin_primary(
+        &mut self,
+        source: Arc<crate::modules::ModuleSourceSpec>,
+    ) -> Result<(), RuntimeError> {
+        self.public_primary = None;
+        let (_, normalized) = crate::host::resources::prepare_module_uri(&source.uri, None)?;
+        let mut run = self.fresh_module_run(
+            source.uri.clone(),
+            ModulePurpose::Primary,
+            source.contents.clone(),
+        );
+        run.spec.original_uri = normalized.clone().into();
+        self.frames.last_mut().unwrap().module_load = Some(run);
+        let id = ModuleKeyId(next_key_id()?);
+        if source.uri.as_ref() == "repl:text" && source.contents.is_some() {
+            self.frames
+                .last_mut()
+                .unwrap()
+                .module_load
+                .as_mut()
+                .unwrap()
+                .internal_key = true;
+            return self.selected_module_key(Ok(ModuleKey {
+                id,
+                uri: source.uri.clone(),
+                kind: ModuleKeyKind::Synthetic,
+                handle: "".into(),
+            }));
+        }
+        self.wait_module(ModuleRequestKind::SelectKey {
+            id,
+            uri: normalized.into(),
+            phase: SelectionPhase::Primary,
+        })
+    }
+    pub(super) fn begin_query(&mut self, expression: Arc<str>) -> Result<(), RuntimeError> {
+        let receiver = self.pop()?.as_object()?;
+        let mut run =
+            self.fresh_module_run("repl:text".into(), ModulePurpose::Query, Some(expression));
+        run.receiver = Some(receiver);
+        run.phase = ModulePhase::Resolve;
+        run.internal_key = true;
+        let key = ModuleKey {
+            id: ModuleKeyId(next_key_id()?),
+            uri: "repl:text".into(),
+            kind: ModuleKeyKind::Synthetic,
+            handle: "".into(),
+        };
+        run.key = Some(key.clone());
+        self.frames.last_mut().unwrap().module_load = Some(run);
+        self.wait_module(ModuleRequestKind::ResolveKey {
+            key,
+            resolved_key_id: ResolvedKeyId(next_key_id()?),
+            phase: crate::modules::ResolutionPhase::Query,
+        })
+    }
+    fn compile_public_query(&mut self) -> Result<(), RuntimeError> {
+        let run = self
+            .frames
+            .last_mut()
+            .unwrap()
+            .module_load
+            .take()
+            .ok_or_else(|| invalid("missing query continuation"))?;
+        let receiver = run
+            .receiver
+            .ok_or_else(|| invalid("missing query receiver"))?;
+        let unit = self
+            .heap
+            .get(receiver)?
+            .module_unit
+            .ok_or_else(|| invalid("query receiver has no module unit"))?;
+        let declaration = self.program.units[unit.0 as usize].clone();
+        let source = declaration
+            .source
+            .ok_or_else(|| invalid("query module has no source"))?;
+        let module = declaration
+            .syntax
+            .map_or_else(
+                || crate::parser::parse_module_for_evaluation(&source.text),
+                |syntax| Ok((*syntax).clone()),
+            )
+            .map_err(|error| imported_diagnostic(error, source.clone(), "".into()))?;
+        let expression = run
+            .supplied
+            .ok_or_else(|| invalid("missing query source"))?;
+        let program = Arc::make_mut(&mut self.program);
+        let arena = query_lifecycle::CodeArena::begin(program);
+        let entry = session_expressions::compile_session_expression_for_unit(
+            program,
+            &module,
+            &expression,
+            CompileOptions {
+                fuse_constant_add: true,
+            },
+            self.power_assertions,
+            unit,
+        )
+        .map_err(|failure| match failure {
+            SessionExpressionError::Frontend(error) => imported_diagnostic(
+                *error,
+                Arc::new(RuntimeSource {
+                    text: expression.clone(),
+                    uri: "repl:text".into(),
+                    module_name: "".into(),
+                    line_anchors: false,
+                }),
+                "repl:text".into(),
+            ),
+            SessionExpressionError::Runtime(error) => *error,
+        })?;
+        self.push_module_initializer(entry, None);
+        // The synthetic query owns its executable state for this operation.
+        // Frames and escaped environments trace this owner; the evaluator's
+        // permanent static-root table must not retain a completed query site.
+        let owner = self.heap.allocate_executable();
+        self.code_arenas
+            .push(arena.finish(&self.program, owner, true));
+        self.frames.last_mut().unwrap().environment.executable_owner = Some(owner);
+        self.frames.last_mut().unwrap().environment.code_owner = Some(owner);
+        self.frames
+            .last_mut()
+            .unwrap()
+            .environment
+            .scopes
+            .push(Scope {
+                receiver,
+                owner: receiver,
+            });
+        self.state = State::Running;
+        Ok(())
+    }
+    pub(crate) fn public_primary_source(&self) -> Option<Arc<RuntimeSource>> {
+        self.public_primary
+            .and_then(|id| self.heap.get(id).ok())
+            .and_then(|object| object.module_unit)
+            .and_then(|unit| self.program.units[unit.0 as usize].source.clone())
+    }
     pub(super) fn current_module_name(&self) -> &str {
         self.frames
             .last()
@@ -157,13 +442,21 @@ impl Vm {
             import_uri: spec.absolute_uri.clone(),
         };
         self.frames.last_mut().expect("import frame").module_load = Some(ModuleRun {
-            site: (owner, site.0, site.1),
+            site: Some((owner, site.0, site.1)),
+            purpose: ModulePurpose::Import,
+            supplied: None,
+            internal_key: false,
             phase: ModulePhase::ImportCheck,
-            bundled: crate::modules::stdlib_kind(&spec.absolute_uri).is_some(),
+            key: None,
+            delegate_key: None,
+            resolved_key: None,
+            cached: true,
             spec,
             resolved: None,
             receiver: None,
             initializing: false,
+            parsed: None,
+            source: None,
         });
         self.wait_module(request)
     }
@@ -181,40 +474,137 @@ impl Vm {
             return Err(invalid("unexpected import admission phase"));
         }
         result.map_err(|error| error.into_runtime(&run.spec.absolute_uri))?;
-        let spec = run.spec.clone();
-        match crate::modules::stdlib_kind(&spec.absolute_uri) {
-            Some(crate::modules::StdlibKind::Missing) => {
-                return Err(self.stdlib_source(&spec.absolute_uri).unwrap_err());
-            }
-            Some(crate::modules::StdlibKind::Singleton(canonical)) => {
-                if let Some(cached) = self.modules_original.get(canonical).cloned() {
-                    let value = self.module_cached(cached)?;
-                    return self.finish_import(value);
-                }
-                return self.initialize_bundled(ResolvedModule {
-                    original_uri: canonical.into(),
-                    resolved_uri: canonical.into(),
-                    source_uri: canonical.into(),
-                });
-            }
-            _ => {}
-        }
-        if let Some(cached) = self.modules_original.get(&spec.original_uri).cloned() {
-            let value = self.module_cached(cached)?;
-            return self.finish_import(value);
-        }
-        let importer = self.program.units[spec.unit.0 as usize]
-            .identity
-            .clone()
-            .ok_or_else(|| invalid("import identity disappeared"))?;
+        let uri = run.spec.original_uri.clone();
         self.frames
             .last_mut()
             .unwrap()
             .module_load
             .as_mut()
             .unwrap()
-            .phase = ModulePhase::Resolve;
+            .phase = ModulePhase::SelectKey;
+        self.wait_module(ModuleRequestKind::SelectKey {
+            id: ModuleKeyId(next_key_id()?),
+            uri,
+            phase: SelectionPhase::RuntimeImport,
+        })
+    }
+
+    fn selected_module_key(
+        &mut self,
+        result: Result<ModuleKey, crate::modules::ModuleHostError>,
+    ) -> Result<(), RuntimeError> {
+        let run = self
+            .frames
+            .last_mut()
+            .and_then(|frame| frame.module_load.as_mut())
+            .ok_or_else(|| invalid("missing key selection continuation"))?;
+        let key = result.map_err(|error| error.into_factory_runtime(&run.spec.absolute_uri))?;
+        let key =
+            if run.purpose == ModulePurpose::Primary && run.supplied.is_some() && !run.internal_key
+            {
+                run.delegate_key = Some(key.clone());
+                run.internal_key = true;
+                ModuleKey {
+                    id: ModuleKeyId(next_key_id()?),
+                    uri: key.uri,
+                    kind: ModuleKeyKind::SuppliedText,
+                    handle: "".into(),
+                }
+            } else {
+                key
+            };
+        run.spec.original_uri = key.uri.clone();
+        run.key = Some(key.clone());
+        if key.kind == ModuleKeyKind::StandardLibrary {
+            match crate::modules::stdlib_kind(&key.uri) {
+                Some(crate::modules::StdlibKind::Missing) => {
+                    return Err(self.stdlib_source(&key.uri).unwrap_err());
+                }
+                Some(crate::modules::StdlibKind::Singleton(canonical)) => {
+                    if let Some(cached) = self.modules_stdlib.get(canonical).cloned() {
+                        let value = self.module_cached(cached)?;
+                        return self.finish_import(value);
+                    }
+                    return self.initialize_bundled(ResolvedModule {
+                        original_uri: canonical.into(),
+                        resolved_uri: canonical.into(),
+                        source_uri: canonical.into(),
+                    });
+                }
+                Some(crate::modules::StdlibKind::Cached) => {}
+                None => return Err(invalid("StandardLibrary key requires the pkl scheme")),
+            }
+        }
+        let internal_key = run.internal_key;
+        self.frames
+            .last_mut()
+            .unwrap()
+            .module_load
+            .as_mut()
+            .unwrap()
+            .phase = ModulePhase::CachePolicy;
+        if internal_key {
+            return self.queried_module_cache_policy(Ok(key.kind == ModuleKeyKind::SuppliedText));
+        }
+        self.wait_module(ModuleRequestKind::QueryCachePolicy { key })
+    }
+
+    fn queried_module_cache_policy(
+        &mut self,
+        result: Result<bool, crate::modules::ModuleHostError>,
+    ) -> Result<(), RuntimeError> {
+        let run = self
+            .frames
+            .last_mut()
+            .and_then(|frame| frame.module_load.as_mut())
+            .ok_or_else(|| invalid("missing cache policy continuation"))?;
+        run.cached = result.map_err(|error| error.into_runtime(&run.spec.original_uri))?;
+        let spec = run.spec.clone();
+        let key = run
+            .key
+            .clone()
+            .ok_or_else(|| invalid("missing selected ModuleKey"))?;
+        if run.cached
+            && let Some(cached) = self.modules_original.get(&key.uri).cloned()
+        {
+            let value = self.module_cached(cached)?;
+            return self.finish_import(value);
+        }
+        let run = self
+            .frames
+            .last_mut()
+            .unwrap()
+            .module_load
+            .as_mut()
+            .unwrap();
+        run.phase = ModulePhase::Resolve;
+        if run.internal_key && key.kind == ModuleKeyKind::SuppliedText {
+            return self.resolved_module(Ok(ResolvedModuleKey {
+                id: ResolvedKeyId(next_key_id()?),
+                key: key.clone(),
+                handle: "".into(),
+                module: ResolvedModule {
+                    original_uri: key.uri.clone(),
+                    resolved_uri: key.uri.clone(),
+                    source_uri: key.uri.clone(),
+                },
+            }));
+        }
+        let resolved_key_id = ResolvedKeyId(next_key_id()?);
+        if run.purpose == ModulePurpose::Primary {
+            return self.wait_module(ModuleRequestKind::ResolveKey {
+                key,
+                resolved_key_id,
+                phase: crate::modules::ResolutionPhase::Primary,
+            });
+        }
+        let importer = self.program.units[spec.unit.0 as usize]
+            .identity
+            .clone()
+            .ok_or_else(|| invalid("import identity disappeared"))?;
         self.wait_module(ModuleRequestKind::Resolve {
+            key,
+            resolved_key_id,
             importer,
             import_uri: spec.absolute_uri,
             original_uri: spec.original_uri,
@@ -228,8 +618,13 @@ impl Vm {
             .last_mut()
             .and_then(|frame| frame.module_load.take())
             .ok_or_else(|| invalid("missing import result continuation"))?;
-        self.heap
-            .publish_imported_module(run.site.0, (run.site.1, run.site.2), receiver)?;
+        if let Some(site) = run.site {
+            self.heap
+                .publish_imported_module(site.0, (site.1, site.2), receiver)?;
+        }
+        if run.purpose == ModulePurpose::Primary {
+            self.public_primary = Some(receiver);
+        }
         self.stack.push(value);
         self.state = State::Running;
         Ok(())
@@ -276,14 +671,26 @@ impl Vm {
                     ModuleRequestKind::CheckImport { .. },
                     ModuleCompletion::ImportChecked(_)
                 ) | (
+                    ModuleRequestKind::SelectKey { .. },
+                    ModuleCompletion::KeySelected(_)
+                ) | (
+                    ModuleRequestKind::QueryCachePolicy { .. },
+                    ModuleCompletion::CachePolicy(_)
+                ) | (
+                    ModuleRequestKind::QueryFragmentPaths { .. },
+                    ModuleCompletion::FragmentPaths(_)
+                ) | (
+                    ModuleRequestKind::ResolveImportUri { .. },
+                    ModuleCompletion::ImportUri(_)
+                ) | (
                     ModuleRequestKind::Capabilities { .. },
                     ModuleCompletion::Capabilities(_)
                 ) | (
                     ModuleRequestKind::HasElement { .. },
                     ModuleCompletion::HasElement(_)
                 ) | (
-                    ModuleRequestKind::Resolve { .. },
-                    ModuleCompletion::Resolved(_)
+                    ModuleRequestKind::Resolve { .. } | ModuleRequestKind::ResolveKey { .. },
+                    ModuleCompletion::Resolved(_) | ModuleCompletion::KeyResolved(_)
                 ) | (
                     ModuleRequestKind::LoadSource { .. },
                     ModuleCompletion::Source(_)
@@ -294,30 +701,86 @@ impl Vm {
         }
         if matches!(
             &completion,
-            ModuleCompletion::ImportChecked(Err(
-                crate::modules::ModuleHostError::NotFound | crate::modules::ModuleHostError::Io(_)
-            ))
+            ModuleCompletion::ImportChecked(Err(crate::modules::ModuleHostError::NotFound
+                | crate::modules::ModuleHostError::NoLoader
+                | crate::modules::ModuleHostError::UriSyntax { .. }
+                | crate::modules::ModuleHostError::ExternalReaderProcess { .. }
+                | crate::modules::ModuleHostError::Io(_)))
         ) {
             return Err(invalid(
                 "Import admission does not accept module lookup or I/O failures.",
             ));
         }
-        if let (
-            ModuleRequestKind::Resolve {
-                import_uri,
-                original_uri,
-                ..
-            },
-            ModuleCompletion::Resolved(Ok(resolved)),
-        ) = (&request.kind, &completion)
-            && crate::modules::stdlib_kind(import_uri) == Some(crate::modules::StdlibKind::Cached)
-            && (resolved.original_uri != *original_uri
-                || resolved.resolved_uri != *import_uri
-                || resolved.source_uri != *import_uri)
-        {
+        use crate::modules::ModuleHostError as Failure;
+        if matches!(
+            &completion,
+            ModuleCompletion::KeySelected(Err(
+                Failure::NotFound | Failure::SecurityManagerException { .. }
+            )) | ModuleCompletion::FragmentPaths(Err(Failure::NotFound
+                | Failure::NoLoader
+                | Failure::Io(_)
+                | Failure::UriSyntax { .. }
+                | Failure::ExternalReaderProcess { .. }
+                | Failure::SecurityManagerException { .. }))
+                | ModuleCompletion::CachePolicy(Err(Failure::NotFound
+                    | Failure::NoLoader
+                    | Failure::Io(_)
+                    | Failure::UriSyntax { .. }
+                    | Failure::ExternalReaderProcess { .. }
+                    | Failure::SecurityManagerException { .. }))
+                | ModuleCompletion::Resolved(Err(Failure::NoLoader))
+                | ModuleCompletion::KeyResolved(Err(Failure::NoLoader))
+                | ModuleCompletion::Source(Err(Failure::NoLoader
+                    | Failure::UriSyntax { .. }
+                    | Failure::ExternalReaderProcess { .. }))
+                | ModuleCompletion::Capabilities(Err(Failure::NoLoader))
+                | ModuleCompletion::HasElement(Err(Failure::NoLoader))
+                | ModuleCompletion::ImportUri(Err(Failure::NoLoader
+                    | Failure::NotFound
+                    | Failure::SecurityManagerException { .. }))
+        ) {
             return Err(invalid(
-                "Bundled module resolution must retain its pinned key and source identity.",
+                "Module Host failure does not belong to this phase.",
             ));
+        }
+        match (&request.kind, &completion) {
+            (ModuleRequestKind::ResolveImportUri { .. }, ModuleCompletion::ImportUri(Ok(uri))) => {
+                crate::host::resources::validate_module_key_uri(uri)?;
+            }
+            (ModuleRequestKind::SelectKey { id, .. }, ModuleCompletion::KeySelected(Ok(key))) => {
+                if key.id != *id {
+                    return Err(stale_module());
+                }
+                crate::host::resources::validate_module_key_uri(&key.uri)?;
+                if key.kind == ModuleKeyKind::StandardLibrary
+                    && crate::modules::stdlib_kind(&key.uri).is_none()
+                {
+                    return Err(invalid("StandardLibrary key requires the pkl scheme"));
+                }
+            }
+            (
+                ModuleRequestKind::Resolve {
+                    key,
+                    resolved_key_id,
+                    ..
+                }
+                | ModuleRequestKind::ResolveKey {
+                    key,
+                    resolved_key_id,
+                    ..
+                },
+                ModuleCompletion::KeyResolved(Ok(resolved)),
+            ) => {
+                if resolved.id != *resolved_key_id || resolved.key != *key {
+                    return Err(stale_module());
+                }
+                validate_resolution(key, &resolved.module)?;
+            }
+            (
+                ModuleRequestKind::Resolve { key, .. } | ModuleRequestKind::ResolveKey { key, .. },
+                ModuleCompletion::Resolved(Ok(resolved)),
+            ) => validate_resolution(key, resolved)?,
+            _ => {}
         }
         if matches!(
             &completion,
@@ -343,9 +806,59 @@ impl Vm {
         }
         let result = match completion {
             ModuleCompletion::ImportChecked(result) => self.checked_import(result),
+            ModuleCompletion::KeySelected(result) => {
+                if matches!(
+                    &request.kind,
+                    ModuleRequestKind::SelectKey {
+                        phase: SelectionPhase::ClausePreparation,
+                        ..
+                    }
+                ) {
+                    self.selected_clause_key(result)
+                } else {
+                    self.selected_module_key(result)
+                }
+            }
+            ModuleCompletion::FragmentPaths(result) => {
+                if self
+                    .frames
+                    .last()
+                    .and_then(|frame| frame.module_load.as_ref())
+                    .is_some_and(|run| run.phase == ModulePhase::Name)
+                {
+                    self.resolved_module_name(result)
+                } else {
+                    self.resolved_name_fragment_paths(result)
+                }
+            }
+            ModuleCompletion::ImportUri(result) => self.resolved_import_uri(result),
+            ModuleCompletion::CachePolicy(result) => self.queried_module_cache_policy(result),
             ModuleCompletion::Capabilities(result) => self.resolved_capabilities(result),
             ModuleCompletion::HasElement(result) => self.resolved_element(result),
-            ModuleCompletion::Resolved(result) => self.resolved_module(result),
+            ModuleCompletion::Resolved(result) => {
+                let (ModuleRequestKind::Resolve {
+                    key,
+                    resolved_key_id,
+                    ..
+                }
+                | ModuleRequestKind::ResolveKey {
+                    key,
+                    resolved_key_id,
+                    ..
+                }) = &request.kind
+                else {
+                    unreachable!()
+                };
+                let key = key.clone();
+                let id = *resolved_key_id;
+                self.resolved_module(result.map(|module| ResolvedModuleKey {
+                    id,
+                    key,
+                    module,
+                    handle: "".into(),
+                }))
+            }
+            ModuleCompletion::KeyResolved(result) => self.resolved_module(result),
             ModuleCompletion::Source(result) => self.loaded_module(result),
         };
         if let Err(error) = result {
@@ -356,23 +869,29 @@ impl Vm {
 
     fn resolved_module(
         &mut self,
-        result: Result<ResolvedModule, crate::modules::ModuleHostError>,
+        result: Result<ResolvedModuleKey, crate::modules::ModuleHostError>,
     ) -> Result<(), RuntimeError> {
         let run = self
             .frames
             .last_mut()
             .and_then(|frame| frame.module_load.as_mut())
             .ok_or_else(|| invalid("missing import continuation"))?;
-        let resolved = result.map_err(|error| error.into_runtime(&run.spec.original_uri))?;
+        let resolved_key = result.map_err(|error| error.into_runtime(&run.spec.original_uri))?;
+        let resolved = resolved_key.module.clone();
         if resolved.original_uri != run.spec.original_uri {
             return Err(invalid("module resolver changed original key"));
         }
-        if let Some(cached) = self.modules_resolved.get(&resolved.resolved_uri).cloned() {
+        if run.purpose == ModulePurpose::Query {
+            return self.compile_public_query();
+        }
+        if run.cached
+            && let Some(cached) = self.modules_resolved.get(&resolved.resolved_uri).cloned()
+        {
             let value = self.module_cached(cached)?;
             // A resolved-key hit does not seed the original alias cache.
             return self.finish_import(value);
         }
-        if run.bundled {
+        if resolved_key.key.kind == ModuleKeyKind::StandardLibrary {
             return self.initialize_bundled(resolved);
         }
         // VmTyped exists before source I/O but is not cache-visible until that
@@ -380,8 +899,18 @@ impl Vm {
         let receiver = self.heap.allocate(Object::default());
         run.receiver = Some(receiver);
         run.resolved = Some(resolved.clone());
+        run.resolved_key = Some(resolved_key.clone());
         run.phase = ModulePhase::Source;
-        self.wait_module(ModuleRequestKind::LoadSource { resolved })
+        if let Some(text) = run.supplied.clone() {
+            return self.loaded_module(Ok(ModuleSource {
+                text,
+                inferred_name: "".into(),
+            }));
+        }
+        self.wait_module(ModuleRequestKind::LoadSource {
+            key: resolved_key,
+            resolved,
+        })
     }
 
     fn loaded_module(
@@ -400,7 +929,7 @@ impl Vm {
         // From this boundary onward failure is cached, including source errors.
         run.initializing = true;
         run.phase = ModulePhase::Initializer;
-        let input = result.map_err(|error| error.into_runtime(&resolved.original_uri))?;
+        let input = result.map_err(|error| error.into_runtime(&resolved.source_uri))?;
         let receiver = run
             .receiver
             .ok_or_else(|| invalid("missing empty module"))?;
@@ -429,13 +958,83 @@ impl Vm {
             .map_err(|error| imported_diagnostic(error, source.clone(), member.clone()))?;
         if let Some(name) = parsed.declaration.as_ref().and_then(|d| d.name.as_ref()) {
             Arc::make_mut(&mut source).module_name = name.join(".").into();
+            return self.compile_loaded_module(parsed, source, receiver);
         }
+        let run = self
+            .frames
+            .last_mut()
+            .unwrap()
+            .module_load
+            .as_mut()
+            .unwrap();
+        let key = run
+            .key
+            .clone()
+            .ok_or_else(|| invalid("missing loaded ModuleKey"))?;
+        if !crate::host::resources::module_name_needs_fragment_paths(&key.uri) {
+            Arc::make_mut(&mut source).module_name =
+                crate::host::resources::infer_module_name(&key.uri, false)?.into();
+            return self.compile_loaded_module(parsed, source, receiver);
+        }
+        run.parsed = Some(parsed);
+        run.source = Some(source);
+        run.phase = ModulePhase::Name;
+        self.wait_module(ModuleRequestKind::QueryFragmentPaths { key })
+    }
+
+    fn resolved_module_name(
+        &mut self,
+        result: Result<bool, crate::modules::ModuleHostError>,
+    ) -> Result<(), RuntimeError> {
+        let run = self
+            .frames
+            .last_mut()
+            .and_then(|frame| frame.module_load.as_mut())
+            .ok_or_else(|| invalid("missing module name continuation"))?;
+        let key = run
+            .key
+            .as_ref()
+            .ok_or_else(|| invalid("missing name ModuleKey"))?;
+        let fragments = result.map_err(|error| error.into_runtime(&key.uri))?;
+        let name = crate::host::resources::infer_module_name(&key.uri, fragments)?;
+        let mut source = run
+            .source
+            .take()
+            .ok_or_else(|| invalid("missing module name source"))?;
+        Arc::make_mut(&mut source).module_name = name.into();
+        let parsed = run
+            .parsed
+            .take()
+            .ok_or_else(|| invalid("missing module name AST"))?;
+        let receiver = run
+            .receiver
+            .ok_or_else(|| invalid("missing module receiver"))?;
+        self.compile_loaded_module(parsed, source, receiver)
+    }
+
+    fn compile_loaded_module(
+        &mut self,
+        parsed: crate::syntax::Module,
+        source: Arc<RuntimeSource>,
+        receiver: ObjectId,
+    ) -> Result<(), RuntimeError> {
+        let run = self
+            .frames
+            .last_mut()
+            .and_then(|frame| frame.module_load.as_mut())
+            .ok_or_else(|| invalid("missing module compilation continuation"))?;
+        run.phase = ModulePhase::Initializer;
+        let resolved = run
+            .resolved
+            .clone()
+            .ok_or_else(|| invalid("missing resolved module"))?;
         let resolved_ast = crate::resolver::resolve_module_for_evaluation(&parsed);
         // The evaluator owns one append-only code arena. Clone only while an
         // external prepared-program snapshot shares it; subsequent modules
         // append in place. Failed compilation retracts only its uncommitted tail.
         let program = Arc::make_mut(&mut self.program);
         let checkpoint = ArenaCheckpoint::new(program);
+        let arena = query_lifecycle::CodeArena::begin(program);
         let compiled = compile_unit_into(program, &resolved_ast, CompileOptions { fuse_constant_add: true }, self.power_assertions,
             Some(source.clone()), Some(ModuleIdentity { original_uri: resolved.original_uri, resolved_uri: resolved.resolved_uri }))
             .and_then(|unit| {
@@ -461,9 +1060,23 @@ impl Vm {
                 return Err(error);
             }
         };
+        program.units[unit.0 as usize].key = self
+            .frames
+            .last()
+            .and_then(|frame| frame.module_load.as_ref())
+            .and_then(|run| run.key.clone());
+        program.units[unit.0 as usize].delegate_key = self
+            .frames
+            .last()
+            .and_then(|frame| frame.module_load.as_ref())
+            .and_then(|run| run.delegate_key.clone());
         let entry = program.units[unit.0 as usize].entry;
+        let owner = self.heap.allocate_executable();
+        self.code_arenas.push(arena.finish(program, owner, false));
+        self.heap.get_mut(receiver)?.environment.code_owner = Some(owner);
         self.state = State::Running;
         self.push_module_initializer(entry, Some(receiver));
+        self.frames.last_mut().unwrap().environment.code_owner = Some(owner);
         Ok(())
     }
 
@@ -513,12 +1126,16 @@ impl Vm {
         if self.stack.last().and_then(Value::heap_id) != run.receiver {
             return Err(invalid("module initializer result mismatch"));
         }
-        self.heap.publish_imported_module(
-            run.site.0,
-            (run.site.1, run.site.2),
-            run.receiver
-                .ok_or_else(|| invalid("missing initialized module"))?,
-        )?;
+        let receiver = run
+            .receiver
+            .ok_or_else(|| invalid("missing initialized module"))?;
+        if let Some(site) = run.site {
+            self.heap
+                .publish_imported_module(site.0, (site.1, site.2), receiver)?;
+        }
+        if run.purpose == ModulePurpose::Primary {
+            self.public_primary = Some(receiver);
+        }
         Ok(())
     }
 }
@@ -590,4 +1207,19 @@ impl ArenaCheckpoint {
             .constraint_origins
             .retain(|block, _| *block < self.blocks);
     }
+}
+
+fn validate_resolution(key: &ModuleKey, resolved: &ResolvedModule) -> Result<(), RuntimeError> {
+    if resolved.original_uri != key.uri {
+        return Err(invalid("module resolver changed original key"));
+    }
+    crate::host::resources::validate_module_key_uri(&resolved.resolved_uri)?;
+    if key.kind == ModuleKeyKind::StandardLibrary
+        && (resolved.resolved_uri != key.uri || resolved.source_uri != key.uri)
+    {
+        return Err(invalid(
+            "Bundled module resolution must retain its pinned key and source identity.",
+        ));
+    }
+    Ok(())
 }

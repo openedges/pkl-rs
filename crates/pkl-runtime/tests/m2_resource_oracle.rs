@@ -1,5 +1,7 @@
 //! Exact Java 0.32.0 primary-root Resource observations. These calls do not
 //! represent the separately retained 224 independent-root/URI-policy controls.
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use pkl_runtime::{
     host::ReadFailure,
     probe::SourceProbe,
@@ -79,9 +81,12 @@ fn java_resource_primary_calls_keep_complete_channels_counts_and_gc_roots() {
                     match event.kind {
                         "yield" => (),
                         "module-request" => assert!(
-                            probe
-                                .complete_default_module(event.token.as_deref().unwrap(), 0)
-                                .unwrap(),
+                            module_keys::complete_probe(
+                                &mut probe,
+                                event.token.as_deref().unwrap(),
+                                0
+                            )
+                            .unwrap(),
                             "explicit default module policy"
                         ),
                         "read" => {

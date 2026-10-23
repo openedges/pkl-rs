@@ -318,6 +318,13 @@ pub struct SourceModuleRequest {
     pub original_uri: String,
     pub resolved_uri: Option<String>,
     pub source_uri: Option<String>,
+    pub key_id: Option<String>,
+    pub key_kind: Option<String>,
+    pub key_handle: Option<String>,
+    pub resolved_key_id: Option<String>,
+    pub resolved_key_handle: Option<String>,
+    pub selection_phase: Option<String>,
+    pub resolution_phase: Option<String>,
 }
 impl From<probe::SourceModuleRequest> for SourceModuleRequest {
     fn from(request: probe::SourceModuleRequest) -> Self {
@@ -330,6 +337,13 @@ impl From<probe::SourceModuleRequest> for SourceModuleRequest {
             original_uri: request.original_uri,
             resolved_uri: request.resolved_uri,
             source_uri: request.source_uri,
+            key_id: request.key_id,
+            key_kind: request.key_kind.map(Into::into),
+            key_handle: request.key_handle,
+            resolved_key_id: request.resolved_key_id,
+            resolved_key_handle: request.resolved_key_handle,
+            selection_phase: request.selection_phase.map(Into::into),
+            resolution_phase: request.resolution_phase.map(Into::into),
         }
     }
 }
@@ -439,6 +453,51 @@ impl SourceSession {
             )
             .map_err(|failure| text_error(&env, failure.text))?,
         })
+    }
+    #[napi(factory)]
+    pub fn module_evaluator(
+        env: Env,
+        trace_mode: Option<Utf16String>,
+        host_logger: Option<bool>,
+        host_frame_transformer: Option<bool>,
+        power_assertions: Option<bool>,
+    ) -> Result<Self> {
+        let mode = trace_mode
+            .as_ref()
+            .map(string)
+            .transpose()?
+            .unwrap_or_else(|| "compact".into());
+        Ok(Self {
+            inner: probe::SourceProbe::new_module_evaluator(
+                &mode,
+                host_logger.unwrap_or(false),
+                host_frame_transformer.unwrap_or(false),
+                power_assertions.unwrap_or(false),
+            )
+            .map_err(|text| text_error(&env, text))?,
+        })
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[napi]
+    pub fn evaluate_module_source(
+        &mut self,
+        env: Env,
+        uri: Utf16String,
+        contents: Option<Utf16String>,
+        expression: Utf16String,
+        now: f64,
+        timeout: Option<f64>,
+    ) -> Result<()> {
+        let contents = contents.as_ref().map(string).transpose()?;
+        self.inner
+            .evaluate_module_source(
+                &string(&uri)?,
+                contents.as_deref(),
+                &string(&expression)?,
+                unsigned(now)?,
+                timeout.map(unsigned).transpose()?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi(factory)]
     #[allow(clippy::too_many_arguments)]
@@ -572,6 +631,157 @@ impl SourceSession {
     ) -> Result<bool> {
         self.inner
             .complete_default_module(&string(&token)?, unsigned(now)?)
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[napi]
+    pub fn complete_module_key(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        key_id: Utf16String,
+        uri: Utf16String,
+        kind: Utf16String,
+        handle: Utf16String,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_module_key(
+                &string(&token)?,
+                &string(&key_id)?,
+                &string(&uri)?,
+                &string(&kind)?,
+                &string(&handle)?,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[napi]
+    pub fn complete_module_cache_policy(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        key_id: Utf16String,
+        cached: bool,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_module_cache_policy(
+                &string(&token)?,
+                &string(&key_id)?,
+                cached,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn complete_import_uri(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        key_id: Utf16String,
+        uri: Utf16String,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_import_uri(
+                &string(&token)?,
+                &string(&key_id)?,
+                &string(&uri)?,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[napi]
+    pub fn reenter_module_source(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        uri: Utf16String,
+        contents: Option<Utf16String>,
+        expression: Utf16String,
+        now: f64,
+        timeout: Option<f64>,
+    ) -> Result<()> {
+        let contents = contents.as_ref().map(string).transpose()?;
+        self.inner
+            .reenter_module_source(
+                &string(&token)?,
+                &string(&uri)?,
+                contents.as_deref(),
+                &string(&expression)?,
+                unsigned(now)?,
+                timeout.map(unsigned).transpose()?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[napi]
+    pub fn complete_module_fragment_paths(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        key_id: Utf16String,
+        fragment_paths: bool,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_module_fragment_paths(
+                &string(&token)?,
+                &string(&key_id)?,
+                fragment_paths,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[napi]
+    pub fn complete_module_resolved_key(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        key_id: Utf16String,
+        resolved_key_id: Utf16String,
+        handle: Utf16String,
+        original_uri: Utf16String,
+        resolved_uri: Utf16String,
+        source_uri: Utf16String,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_module_resolved_key(
+                &string(&token)?,
+                &string(&key_id)?,
+                &string(&resolved_key_id)?,
+                &string(&handle)?,
+                &string(&original_uri)?,
+                &string(&resolved_uri)?,
+                &string(&source_uri)?,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[napi]
+    pub fn reject_module_key(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        cache_policy: bool,
+        kind: Utf16String,
+        message: Option<Utf16String>,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .reject_module_key(
+                &string(&token)?,
+                cache_policy,
+                &string(&kind)?,
+                message.map(|value| PklString::from_utf16(value.to_vec())),
+                unsigned(now)?,
+            )
             .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]

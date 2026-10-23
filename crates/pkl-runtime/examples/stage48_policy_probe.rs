@@ -264,6 +264,21 @@ fn capture(out: &Path, input: &CaptureInput<'_>) {
                         write(out, &format!("{req}.policy.bin"), &mode);
                         // These events arise only from actual typed Host requests. No primary, repl, factory, secure-path or API-outcome event is synthesized.
                         match &request.kind {
+                            ModuleRequestKind::ResolveImportUri { .. } => {
+                                write(out, &format!("{req}.kind.bin"), "resolve-import-uri")
+                            }
+                            ModuleRequestKind::ResolveKey { .. } => {
+                                write(out, &format!("{req}.kind.bin"), "resolve-key")
+                            }
+                            ModuleRequestKind::SelectKey { .. } => {
+                                write(out, &format!("{req}.kind.bin"), "select-key")
+                            }
+                            ModuleRequestKind::QueryCachePolicy { .. } => {
+                                write(out, &format!("{req}.kind.bin"), "query-cache-policy")
+                            }
+                            ModuleRequestKind::QueryFragmentPaths { .. } => {
+                                write(out, &format!("{req}.kind.bin"), "query-fragment-paths")
+                            }
                             ModuleRequestKind::CheckImport {
                                 importer,
                                 import_uri,
@@ -294,6 +309,7 @@ fn capture(out: &Path, input: &CaptureInput<'_>) {
                                 importer,
                                 import_uri,
                                 original_uri,
+                                ..
                             } => {
                                 resolves += 1;
                                 write(out, &format!("{req}.kind.bin"), "resolve");
@@ -319,7 +335,7 @@ fn capture(out: &Path, input: &CaptureInput<'_>) {
                                     &format!("policy-resolve-module {import_uri}"),
                                 );
                             }
-                            ModuleRequestKind::LoadSource { resolved } => {
+                            ModuleRequestKind::LoadSource { resolved, .. } => {
                                 write(out, &format!("{req}.kind.bin"), "source");
                                 write(
                                     out,

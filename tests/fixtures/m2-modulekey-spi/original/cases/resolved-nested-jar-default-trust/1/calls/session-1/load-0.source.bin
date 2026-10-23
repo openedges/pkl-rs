@@ -1,0 +1,3 @@
+function file() = import("file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl")
+function base() = import("pkl:base")
+function peer() = import("memo:/peer.pkl")

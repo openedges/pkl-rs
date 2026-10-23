@@ -1,4 +1,6 @@
 //! Actual Java Standard-policy SecurityManagerException cause through typed resolve completion.
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use pkl_runtime::{
     probe::{SourceEvent, SourceProbe},
     value::PklString,
@@ -45,10 +47,7 @@ fn next(probe: &mut SourceProbe, expected: &Path, denials: &mut usize) -> Source
         match event.kind {
             "yield" => {}
             "module-request" => {
-                if probe
-                    .complete_default_module(event.token.as_deref().unwrap(), 0)
-                    .unwrap()
-                {
+                if module_keys::complete_probe(probe, event.token.as_deref().unwrap(), 0).unwrap() {
                     continue;
                 }
                 let request = event.module.unwrap();

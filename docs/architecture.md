@@ -1141,11 +1141,13 @@ URI cache already contains the module. Failure does not publish a successful
 site result. A site that returned a partial receiver during a cycle can retain
 that success after another initialization path stores a module failure.
 
-Singleton classification and authored edge identity are separate. The pinned
-static-module list includes `pkl:base`, `pkl:ref` and `pkl:test`; those modules
-bypass ModuleKey resolution, but authored imports still check their import
-edges. Decoded scheme-specific names select the canonical singleton receiver,
-so supported escaped names and fragments do not create another singleton.
+Singleton classification and authored edge identity are separate. For selected
+standard-library keys, the pinned static-module list includes `pkl:base`,
+`pkl:ref` and `pkl:test`; those modules bypass ModuleKey resolution, but authored
+imports still check their import edges. Decoded scheme-specific names select the
+canonical singleton receiver, so supported escaped names and fragments do not
+create another singleton. A custom Host key with the same URI spelling remains
+a custom key and uses the ordinary cache path.
 General bundled modules such as `pkl:json` use original-key cache lookup,
 `Resolve`, resolved-key cache lookup, and initialization from the internal pinned
 source arena. A resolved-key cache hit does not seed a new original alias.
@@ -1177,12 +1179,17 @@ bootstrap attribution is derived from source (module, two annotations and Access
 class), not an object-ID dump. Actual tests separately verify the exact retained
 counts and unchanged Host/deadline/close assertions.
 
-The supplied-primary SourceSession profile does not reproduce the complete Java
-primary-module and per-expression module lifecycle. Custom ModuleKey factories,
-key-kind dispatch independent of URI spelling, complete `isCached` behavior,
-module URI equality, import globs and eager import-clause factory selection remain
-required work. The existing triple-dot preparation protocol does not close the
-clause-factory gap: Java selects a key while constructing an import clause even
-when its runtime edge is never executed. Public evaluator policy counters and
-full ordered event traces remain separate from selected API output comparisons.
-This implementation does not establish full module-policy or M2 compatibility.
+The Stage48 supplied-primary profile does not reproduce the complete Java
+primary-module and per-expression module lifecycle. Stage49 adds separate key
+selection and cache-policy requests, key-kind dispatch independent of URI
+spelling, eager clause-factory preparation, and public ModuleSource operations.
+Clause preparation can select a key even when the runtime import edge is never
+executed. Query and module executable owners follow active and captured heap
+environments; unreachable payloads can be retired without invalidating surviving
+declarations. Non-tail storage slots still require reclamation for bounded total
+memory. See [module keys and public evaluation](m2-module-keys.md).
+
+Complete factory behavior, URI semantics, import globs and public evaluator
+policy counters remain required work. Full ordered event traces are separate
+from selected API output comparisons. This implementation does not establish
+full module-policy or M2 compatibility.

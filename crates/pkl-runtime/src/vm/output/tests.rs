@@ -145,7 +145,7 @@ fn unrooted_module_is_reclaimed_while_base_keeps_the_shared_parent() {
     assert!(vm.class_singletons.is_empty());
     // The initialized base module roots the same canonical Module prototype.
     // Releasing the user module must not release that shared parent.
-    let base = match vm.modules_original.get("pkl:base").unwrap() {
+    let base = match vm.modules_stdlib.get("pkl:base").unwrap() {
         modules::CachedModule::Value(id) => *id,
         _ => panic!("base was initialized successfully"),
     };

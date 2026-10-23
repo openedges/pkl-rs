@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+I/O error loading module `{0}`.
+IOException: stage48-factory-create
+
+1 | import("throwing:x")
+    ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at AdmissionProbe.capture(AdmissionProbe.java:55)
+	at AdmissionProbe.main(AdmissionProbe.java:75)

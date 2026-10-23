@@ -1,5 +1,6 @@
 // Browser-safe capability adapter. The engine prepares import URIs, owns caches,
 // compiles sources and evaluates modules; this Host performs exact bundle lookups.
+import {completeDefaultModuleRequest, completeFixtureModuleKey, validateModuleRequest, ModuleTransportError} from './module-policy-session.mjs';
 class TransportError extends Error {}
 const failureKinds = new Set(['not-found', 'io', 'denied', 'unsupported']);
 function failure(entry) {
@@ -90,6 +91,7 @@ export function runModuleLoaderCase(api, fixture, budget = 7) {
   try {
     if (!Number.isSafeInteger(budget) || budget <= 0) throw Error('invalid polling budget');
     const resolutions = table(fixture.resolutions, resolution, 'importUri');
+    const moduleUris = new Set(resolutions.keys());
     const sources = table(fixture.sources, source, 'resolvedUri');
     const resources = table(fixture.resources, resource, 'uri');
     const callbackCounts = new Map(), loadCounts = new Map(), resolveCounts = new Map(), readCounts = new Map();
@@ -137,10 +139,22 @@ export function runModuleLoaderCase(api, fixture, budget = 7) {
               || !/^[0-9]+$/.test(request.id) || typeof request.originalUri !== 'string')
             throw new TransportError('invalid typed module request');
           requests.push({ token: event.token, ...request });
-          if (request.kind === 'check-import') {
+          validateModuleRequest(event);
+          if (['select-key', 'query-cache-policy', 'query-fragment-paths', 'resolve-import-uri'].includes(request.kind)) {
+            // The upstream File factory selects a key before checking whether
+            // its path exists. This bounded virtual Host admits hierarchical
+            // file URIs, including unused missing paths and the supplied main
+            // module. Resolution/source lookup still happens only on request.
+            // See ModuleKeyFactories.File.create and IoUtils.validateFileUri.
+            if (request.kind === 'select-key' && /^file:\//i.test(request.originalUri))
+              moduleUris.add(request.originalUri);
+            if (!completeFixtureModuleKey(session, event, moduleUris)
+                && !completeDefaultModuleRequest(session, event))
+              throw new TransportError('module key is not configured by this fixture');
+          } else if (request.kind === 'check-import') {
             if (typeof request.importUri !== 'string' || typeof request.importerOriginalUri !== 'string'
                 || typeof request.importerResolvedUri !== 'string') throw new TransportError('incomplete import-check context');
-            if (session.completeDefaultModule(event.token, 0) !== true)
+            if (!completeDefaultModuleRequest(session, event))
               throw new TransportError('import check is unsupported by the shared default policy');
           } else if (request.kind === 'resolve') {
             if (typeof request.importUri !== 'string' || typeof request.importerOriginalUri !== 'string'
@@ -153,8 +167,7 @@ export function runModuleLoaderCase(api, fixture, budget = 7) {
               entry = {...entry, ...entry.resolves[index], resolves: undefined};
             }
             if (!entry) {
-              const completed = session.completeDefaultModule(event.token, 0);
-              if (typeof completed !== 'boolean') throw new TransportError('invalid default module completion result');
+              const completed = completeDefaultModuleRequest(session, event);
               if (!completed) session.rejectModuleResolution(event.token, 'not-found', '', 0);
             }
             else if (entry.originalUri != null && entry.originalUri !== request.originalUri)
@@ -259,7 +272,7 @@ export function runModuleLoaderCase(api, fixture, budget = 7) {
         else session.startOutputBytes(0);
         results.push({ actionIndex: index, ...settle(0) });
       } catch (error) {
-        if (error instanceof TransportError) throw error;
+        if (error instanceof TransportError || error instanceof ModuleTransportError) throw error;
         results.push({ actionIndex: index, kind: 'thrown', error: thrown(error) });
       }
     }

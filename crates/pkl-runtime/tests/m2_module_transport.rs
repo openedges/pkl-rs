@@ -1,5 +1,7 @@
 //! Typed module Host transport uses the existing evaluator and callback stack.
 //! Java loader02 provides the separate cache/reentry compatibility observations.
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use pkl_runtime::{
     modules::{ModuleRequest, ModuleRequestKind},
     probe::{SourceEvent, SourceModuleRequest, SourceProbe},
@@ -24,9 +26,7 @@ fn next(probe: &mut SourceProbe) -> SourceEvent {
         let event = probe.poll(0, 1).unwrap();
         probe.collect();
         if event.kind == "module-request"
-            && probe
-                .complete_default_module(event.token.as_deref().unwrap(), 0)
-                .unwrap()
+            && module_keys::complete_probe(probe, event.token.as_deref().unwrap(), 0).unwrap()
         {
             continue;
         }
@@ -178,6 +178,21 @@ fn request_identifier_transport_preserves_all_u64_bits() {
     let request = SourceModuleRequest::from(ModuleRequest {
         id: u64::MAX,
         kind: ModuleRequestKind::LoadSource {
+            key: pkl_runtime::modules::ResolvedModuleKey {
+                id: pkl_runtime::modules::ResolvedKeyId(u64::MAX),
+                key: pkl_runtime::modules::ModuleKey {
+                    id: pkl_runtime::modules::ModuleKeyId(u64::MAX - 1),
+                    uri: "life:/original".into(),
+                    kind: pkl_runtime::modules::ModuleKeyKind::Host,
+                    handle: "opaque".into(),
+                },
+                handle: "resolved-opaque".into(),
+                module: pkl_runtime::modules::ResolvedModule {
+                    original_uri: "life:/original".into(),
+                    resolved_uri: "life:/resolved".into(),
+                    source_uri: "life:/display".into(),
+                },
+            },
             resolved: pkl_runtime::modules::ResolvedModule {
                 original_uri: "life:/original".into(),
                 resolved_uri: "life:/resolved".into(),

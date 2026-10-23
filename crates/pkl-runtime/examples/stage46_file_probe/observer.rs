@@ -79,6 +79,11 @@ impl<'a> Observer<'a> {
     pub fn module(&mut self, request: &ModuleRequest) -> ModuleCompletion {
         self.module_requests += 1;
         match &request.kind {
+            ModuleRequestKind::ResolveKey { .. } => super::module_host::complete(request),
+            ModuleRequestKind::SelectKey { .. }
+            | ModuleRequestKind::QueryCachePolicy { .. }
+            | ModuleRequestKind::QueryFragmentPaths { .. }
+            | ModuleRequestKind::ResolveImportUri { .. } => super::module_host::complete(request),
             ModuleRequestKind::CheckImport {
                 importer,
                 import_uri,
@@ -89,7 +94,7 @@ impl<'a> Observer<'a> {
                 ));
                 super::module_host::complete(request)
             }
-            ModuleRequestKind::Capabilities { module } => {
+            ModuleRequestKind::Capabilities { module, .. } => {
                 self.event(format!("module-capabilities {}", module.original_uri));
                 if self.mode == "cap-nonlocal" || self.mode == "cap-nonhierarchical" {
                     ModuleCompletion::Capabilities(Ok(ModuleCapabilities {
@@ -104,6 +109,7 @@ impl<'a> Observer<'a> {
             ModuleRequestKind::HasElement {
                 module,
                 element_uri,
+                ..
             } => {
                 self.event(format!(
                     "module-has-element {} -> {element_uri}",
@@ -118,6 +124,7 @@ impl<'a> Observer<'a> {
                 importer,
                 import_uri,
                 original_uri,
+                ..
             } => {
                 self.event(format!(
                     "module-resolve {} -> {import_uri}",
@@ -135,7 +142,7 @@ impl<'a> Observer<'a> {
                     Err(e) => ModuleCompletion::Resolved(Err(e)),
                 }
             }
-            ModuleRequestKind::LoadSource { resolved } => {
+            ModuleRequestKind::LoadSource { resolved, .. } => {
                 self.event(format!("module-source {}", resolved.original_uri));
                 match self.module_policy(&resolved.original_uri) {
                     Ok(()) => super::module_host::complete(request),

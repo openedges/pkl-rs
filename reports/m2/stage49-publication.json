@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "scope": "Closed Stage49 build05 implementation evidence; repeated calls, captured files and archives are not feature completion counts. Full M2, complete lifecycle and performance targets remain open.",
+  "recordedUtc": "2026-10-23T20:17:49.678127+00:00",
+  "archiveCount": 29,
+  "archiveBytes": 117625709,
+  "indices": {
+    "stage49-core-captures.json": "ed51a57435f4aa693b30da38a167c0517a0bfeba2db4727043bd5e4f7a229df9",
+    "stage49-oracle-captures.json": "52c0fd753573cd0238f2a0387065191258903c34dae4f164c5c2e761eaed6076",
+    "stage49-platform-captures.json": "893b38e57c65d62563eacfde52bee787ed13b9f3a9b3d784008fc3002cadb0d0"
+  },
+  "checkpointSha256": "2955756e366f32425bc08308f0ab7f8eb6c971c4ecf6195ae2611bee2b71d9d8",
+  "sourceBindingSha256": "0fcabce485815cd74f636f2715d79878e320b721c6b29bfe52bd34572f093496",
+  "metadataArchive": {
+    "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-publication-metadata-01/stage49-publication-metadata.tar.gz",
+    "repositoryPath": "reports/m2/stage49-publication-metadata.tar.gz",
+    "sha256": "4566c460b3186682caf622d7b11a47742785bbddb72877d05ae134e027bd7051",
+    "bytes": 32403778
+  },
+  "metadataVerification": {
+    "createSession": 98437,
+    "createExitCode": 0,
+    "createChunk": "726a79",
+    "separateVerifyExitCode": 0,
+    "separateVerifyChunk": "b75ba6"
+  },
+  "gitBoundSourceInputs": 53594,
+  "separatelyArchivedGeneratedInputs": 1,
+  "sourceCaptureQualification": "The required-check producer recorded hashes for53487 paths. Candidate/platform source byte snapshots are separate. One ignored generated Python cache is retained as captured evidence, with no current-source correspondence claim.",
+  "independentFinalPlatformReview": {
+    "archive": "reports/m2/stage49-independent-reviews.tar.gz",
+    "member": "stage49-platform05-c-review-01/report.json",
+    "sha256": "7bfc28fde19f6f383db86b0c0221f0b4d92dcaa10c24587661b2493ac0a76ab3"
+  },
+  "independentCheckpointReview": {
+    "archive": "reports/m2/stage49-publication-metadata.tar.gz",
+    "member": "checkpoint-review/report.json",
+    "sha256": "11898e7067a4f2ffbda03a91dd212b50830b6b73877c913a37c34998e76d5f17"
+  },
+  "fullM2Complete": false,
+  "hostedCiClaimed": false,
+  "performanceTargetClaimed": false
+}

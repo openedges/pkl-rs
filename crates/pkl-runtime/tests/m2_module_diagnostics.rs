@@ -1,5 +1,7 @@
 //! Full-byte imported diagnostics use the unchanged pinned Java fixture origins.
 //! URI strings deliberately retain those observations' actual source identities.
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use std::path::{Path, PathBuf};
 
 use pkl_runtime::{
@@ -78,9 +80,15 @@ fn drive(
             HostPoll::Ready(result) => return result,
             HostPoll::Module { token, request } => {
                 let completion = match request.kind {
+                    ModuleRequestKind::ResolveKey { .. } => {
+                        panic!("public lifecycle request in supplied-source test")
+                    }
+                    ModuleRequestKind::SelectKey { .. }
+                    | ModuleRequestKind::QueryCachePolicy { .. }
+                    | ModuleRequestKind::QueryFragmentPaths { .. }
+                    | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(&request),
                     ModuleRequestKind::CheckImport { .. } => {
-                        pkl_runtime::modules::default_completion(&request)
-                            .expect("default import policy")
+                        module_keys::defaults(&request).expect("default import policy")
                     }
                     ModuleRequestKind::Capabilities { .. }
                     | ModuleRequestKind::HasElement { .. } => {
@@ -288,9 +296,17 @@ fn import_declaration_and_inline_failures_keep_exact_phase_specific_java_frames(
                         HostPoll::Ready(result) => break result,
                         HostPoll::Module { token, request } => {
                             let completion = match request.kind {
+                                ModuleRequestKind::ResolveKey { .. } => {
+                                    panic!("public lifecycle request in supplied-source test")
+                                }
+                                ModuleRequestKind::SelectKey { .. }
+                                | ModuleRequestKind::QueryCachePolicy { .. }
+                                | ModuleRequestKind::QueryFragmentPaths { .. }
+                                | ModuleRequestKind::ResolveImportUri { .. } => {
+                                    module_keys::complete(&request)
+                                }
                                 ModuleRequestKind::CheckImport { .. } => {
-                                    pkl_runtime::modules::default_completion(&request)
-                                        .expect("default import policy")
+                                    module_keys::defaults(&request).expect("default import policy")
                                 }
                                 ModuleRequestKind::Capabilities { .. }
                                 | ModuleRequestKind::HasElement { .. } => {

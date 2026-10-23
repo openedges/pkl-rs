@@ -1,0 +1,11 @@
+–– Pkl Error ––
+I/O error loading module `{0}`.
+IOException: stage48-factory-create
+
+1 | unused = import("throwing:x")
+             ^^^^^^^^^^^^^^^^^^^^
+at main#unused (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-factory-throw/main.pkl)
+
+1 | unused
+    ^^^^^^
+at  (repl:text)

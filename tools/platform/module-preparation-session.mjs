@@ -1,6 +1,7 @@
 // Exact fixture-backed Host operations. URI search, caching and Pkl evaluation
 // remain in the shared runtime. Provider tables are unordered input facts.
 import {runResourceCase, compareResourceCase} from './resource-session.mjs';
+import {completeDefaultModuleRequest, completeFixtureModuleKey, validateModuleRequest} from './module-policy-session.mjs';
 
 const requestFields = {
   'check-import': ['kind', 'originalUri', 'importUri', 'importerOriginalUri', 'importerResolvedUri'],
@@ -9,7 +10,8 @@ const requestFields = {
   resolve: ['kind', 'originalUri', 'importUri', 'importerOriginalUri', 'importerResolvedUri'],
   'load-source': ['kind', 'originalUri', 'resolvedUri', 'sourceUri'],
 };
-const allRequestFields = new Set(['id', ...Object.values(requestFields).flat()]);
+const descriptorFields = new Set(['keyId', 'keyKind', 'keyHandle', 'resolvedKeyId', 'resolvedKeyHandle', 'selectionPhase', 'resolutionPhase']);
+const allRequestFields = new Set(['id', ...Object.values(requestFields).flat(), ...descriptorFields]);
 const same = (left, right) => Array.isArray(left) && Array.isArray(right)
   && left.length === right.length && left.every((value, index) => value === right[index]);
 function strings(value, name) {
@@ -24,7 +26,7 @@ function requestKey(request, provider = false) {
   if (provider && !same(Object.keys(request).sort(), [...fields].sort()))
     throw Error('unexpected provider request fields');
   if (!provider && (Object.keys(request).some(name => !allRequestFields.has(name))
-      || [...allRequestFields].some(name => !fields.includes(name) && name !== 'id'
+      || [...allRequestFields].some(name => !fields.includes(name) && name !== 'id' && !descriptorFields.has(name)
         && request[name] != null))) throw Error('unexpected module request fields');
   return JSON.stringify(fields.map(name => request[name]));
 }
@@ -91,7 +93,10 @@ function tables(fixture) {
         || !same(value.bytes, provider.result.bytes))
       throw Error('counted reader plan differs from File provider inputs');
   }
-  return {modules, reads};
+  // These are configured factory inputs, independent of source lookup or caches.
+  const moduleUris = new Set(fixture.moduleProviders.filter(entry => entry.request.kind === 'resolve')
+    .map(entry => entry.request.originalUri));
+  return {modules, reads, moduleUris};
 }
 function complete(session, token, request, result) {
   if (result.kind === 'failure') {
@@ -110,7 +115,7 @@ function complete(session, token, request, result) {
 }
 
 export function runModulePreparationCase(api, fixture, budget = 7) {
-  const {modules, reads} = tables(fixture), events = [], requests = [];
+  const {modules, reads, moduleUris} = tables(fixture), events = [], requests = [];
   let callIndex = -1, pendingCollections = 0;
   const wrappedApi = {SourceSession: {forExpressions(...arguments_) {
     const session = api.SourceSession.forExpressions(...arguments_);
@@ -129,12 +134,22 @@ export function runModulePreparationCase(api, fixture, budget = 7) {
           requests.push({callIndex, token: event.token, kind: event.kind, module: {...request}});
           if (typeof request?.id !== 'string' || !/^[0-9]+$/.test(request.id))
             throw Error('invalid decimal module request ID');
+          validateModuleRequest(event);
+          if (['select-key', 'query-cache-policy', 'query-fragment-paths', 'resolve-import-uri'].includes(request.kind)) {
+            target.collect(); pendingCollections++;
+            if (completeFixtureModuleKey(target, event, moduleUris))
+              requests[requests.length - 1].provider = 'configured-fixture-key';
+            else if (completeDefaultModuleRequest(target, event))
+              requests[requests.length - 1].provider = 'pkl-0.32.0-default';
+            else throw Error('unconfigured exact module key request: ' + JSON.stringify(request));
+            return {kind: 'yield'};
+          }
           const provider = modules.get(requestKey(request));
           if (!provider) {
             if (request.kind !== 'check-import' && request.kind !== 'resolve')
               throw Error('unconfigured exact module request: ' + JSON.stringify(request));
             target.collect(); pendingCollections++;
-            if (target.completeDefaultModule(event.token, 0) !== true)
+            if (!completeDefaultModuleRequest(target, event))
               throw Error('unconfigured exact module request: ' + JSON.stringify(request));
             // These are actual new Host requests, not synthesized Java events.
             requests[requests.length - 1].provider = 'pkl-0.32.0-default';

@@ -1,4 +1,6 @@
 //! Exact pinned Java API observations. Fixture bytes are copied from closed Java captures.
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use pkl_runtime::probe::SourceProbe;
 fn compare(
     source: &str,
@@ -32,8 +34,7 @@ fn compare(
             match event.kind {
                 "yield" => {}
                 "module-request" => {
-                    if probe
-                        .complete_default_module(event.token.as_deref().unwrap(), 0)
+                    if module_keys::complete_probe(&mut probe, event.token.as_deref().unwrap(), 0)
                         .unwrap()
                     {
                         continue;

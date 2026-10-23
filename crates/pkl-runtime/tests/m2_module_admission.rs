@@ -1,5 +1,7 @@
 //! Admission architecture regressions. Pinned Java policy observations are
 //! consumed separately; these assertions do not manufacture oracle outputs.
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use pkl_runtime::{
     modules::{ModuleCompletion, ModuleRequest, ModuleRequestKind, ModuleSource, ResolvedModule},
     probe::{SourceEvent, SourceProbe},
@@ -35,6 +37,58 @@ fn value(event: SourceEvent) -> String {
     String::from_utf16(&event.value.unwrap()).unwrap()
 }
 
+fn phase(request: &ModuleRequest) -> &'static str {
+    use pkl_runtime::modules::SelectionPhase;
+    match &request.kind {
+        ModuleRequestKind::CheckImport { .. } => "check-import",
+        ModuleRequestKind::SelectKey { phase, .. } => match phase {
+            SelectionPhase::RuntimeImport => "select-runtime",
+            SelectionPhase::ClausePreparation => "select-clause",
+            SelectionPhase::Primary => "select-primary",
+        },
+        ModuleRequestKind::QueryCachePolicy { .. } => "cache-policy",
+        ModuleRequestKind::QueryFragmentPaths { .. } => "fragment-paths",
+        ModuleRequestKind::ResolveImportUri { .. } => "resolve-import-uri",
+        ModuleRequestKind::Resolve { .. } => "resolve",
+        ModuleRequestKind::ResolveKey { .. } => "resolve-key",
+        ModuleRequestKind::LoadSource { .. } => "source",
+        ModuleRequestKind::Capabilities { .. } => "capabilities",
+        ModuleRequestKind::HasElement { .. } => "has-element",
+    }
+}
+
+fn phases(requests: &[ModuleRequest]) -> Vec<&'static str> {
+    requests.iter().map(phase).collect()
+}
+
+// Explicit stateless Host for the child used by pending-phase lifecycle tests.
+// The caller asserts each phase before this supplies its matching completion.
+fn child_completion(request: &ModuleRequest) -> ModuleCompletion {
+    match &request.kind {
+        ModuleRequestKind::Resolve { original_uri, .. } => {
+            ModuleCompletion::Resolved(Ok(ResolvedModule {
+                original_uri: original_uri.clone(),
+                resolved_uri: original_uri.clone(),
+                source_uri: original_uri.clone(),
+            }))
+        }
+        ModuleRequestKind::LoadSource { .. } => ModuleCompletion::Source(Ok(ModuleSource {
+            text: "value=7".into(),
+            inferred_name: "child".into(),
+        })),
+        _ => module_keys::complete(request),
+    }
+}
+
+const CHILD_PHASES: [&str; 6] = [
+    "check-import",
+    "select-runtime",
+    "cache-policy",
+    "resolve",
+    "source",
+    "fragment-paths",
+];
+
 fn run_default(
     probe: &mut SourceProbe,
     index: u32,
@@ -65,31 +119,31 @@ fn successful_site_cache_precedes_admission_and_uri_cache_does_not_skip_other_si
     );
     let mut requests = Vec::new();
     assert_eq!(value(run_default(&mut probe, 0, &mut requests)), "true");
-    assert_eq!(requests.len(), 2);
-    assert!(matches!(
-        requests[0].kind,
-        ModuleRequestKind::CheckImport { .. }
-    ));
-    assert!(matches!(
-        requests[1].kind,
-        ModuleRequestKind::Resolve { .. }
-    ));
+    assert_eq!(
+        phases(&requests),
+        ["check-import", "select-runtime", "cache-policy", "resolve"]
+    );
     assert_eq!(value(run_default(&mut probe, 1, &mut requests)), "true");
     assert_eq!(
         requests.len(),
-        2,
+        4,
         "the same function import node is already successful"
     );
     assert_eq!(value(run_default(&mut probe, 2, &mut requests)), "true");
     assert_eq!(
         requests.len(),
-        3,
-        "a distinct import node still checks its edge"
+        7,
+        "a distinct import node checks its edge, selects a key and queries policy before the URI hit"
+    );
+    assert_eq!(
+        &phases(&requests)[4..],
+        ["check-import", "select-runtime", "cache-policy"]
     );
     assert_eq!(value(run_default(&mut probe, 3, &mut requests)), "true");
-    assert_eq!(requests.len(), 4);
+    assert_eq!(requests.len(), 9);
+    assert_eq!(&phases(&requests)[7..], ["check-import", "select-runtime"]);
     assert!(
-        matches!(&requests[3].kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri.as_ref()=="pkl:base")
+        matches!(&requests[7].kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri.as_ref()=="pkl:base")
     );
     probe.close();
     assert_eq!(probe.collect().slots, 0);
@@ -124,13 +178,13 @@ fn singleton_aliases_share_canonical_receivers_but_keep_authored_edge_spelling()
     }
     let edges: Vec<_> = requests
         .iter()
-        .map(|request| {
-            let ModuleRequestKind::CheckImport { import_uri, .. } = &request.kind else {
-                panic!(
-                    "singleton aliases and invalid catalog entries must not resolve: {request:?}"
-                );
-            };
-            import_uri.as_ref()
+        .filter_map(|request| {
+            if let ModuleRequestKind::CheckImport { import_uri, .. } = &request.kind {
+                Some(import_uri.as_ref())
+            } else {
+                assert_eq!(phase(request), "select-runtime", "{request:?}");
+                None
+            }
         })
         .collect();
     assert_eq!(
@@ -148,6 +202,11 @@ fn singleton_aliases_share_canonical_receivers_but_keep_authored_edge_spelling()
             "pkl:json#tag",
             "pkl:%6ason"
         ]
+    );
+    assert_eq!(
+        phases(&requests),
+        ["check-import", "select-runtime"].repeat(11),
+        "singleton and missing-catalog selection never query cache policy or resolve"
     );
     probe.close();
     assert_eq!(probe.collect().slots, 0);
@@ -197,9 +256,12 @@ fn reference_singleton_aliases_use_the_same_external_type_binding_after_admissio
         let mut requests = Vec::new();
         assert_eq!(value(run_default(&mut probe, 0, &mut requests)), "null");
         assert_eq!(value(run_default(&mut probe, 1, &mut requests)), "true");
-        assert_eq!(requests.len(), 1);
+        assert_eq!(
+            phases(&requests),
+            ["select-clause", "check-import", "select-runtime"]
+        );
         assert!(
-            matches!(&requests[0].kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri.as_ref() == uri)
+            matches!(&requests[1].kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri.as_ref() == uri)
         );
         probe.close();
         assert_eq!(probe.collect().slots, 0);
@@ -214,6 +276,7 @@ fn qualified_reference_type_forces_the_authored_import_before_applying_its_bindi
             &["x", "x", "stable"],
         );
         let mut checks = 0;
+        let mut requests = Vec::new();
         let mut first_error = None;
         for index in 0..3 {
             probe.start_path(index, 0, None).unwrap();
@@ -240,8 +303,18 @@ fn qualified_reference_type_forces_the_authored_import_before_applying_its_bindi
                     break;
                 }
                 let token = event.token.unwrap();
+                let request = probe.module_request(&token).unwrap();
+                requests.push(request.clone());
+                if !matches!(request.kind, ModuleRequestKind::CheckImport { .. }) {
+                    assert!(matches!(
+                        phase(&request),
+                        "select-clause" | "fragment-paths" | "select-runtime"
+                    ));
+                    assert!(probe.complete_default_module(&token, 0).unwrap());
+                    continue;
+                }
                 assert!(
-                    matches!(&probe.module_request(&token).unwrap().kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri.as_ref() == "pkl:ref")
+                    matches!(&request.kind, ModuleRequestKind::CheckImport { import_uri, .. } if import_uri.as_ref() == "pkl:ref")
                 );
                 checks += 1;
                 if denied {
@@ -259,6 +332,20 @@ fn qualified_reference_type_forces_the_authored_import_before_applying_its_bindi
             }
         }
         assert_eq!(checks, 1);
+        assert_eq!(
+            phases(&requests),
+            if denied {
+                vec!["select-clause", "fragment-paths", "check-import"]
+            } else {
+                vec![
+                    "select-clause",
+                    "fragment-paths",
+                    "check-import",
+                    "select-runtime",
+                ]
+            },
+            "clause selection precedes the one runtime edge; a denial prevents runtime factory selection"
+        );
         probe.close();
         assert_eq!(probe.collect().slots, 0);
     }
@@ -370,8 +457,11 @@ fn import_admission_survives_callback_reentry_and_default_delegation_checks_dead
     assert_eq!(value(next(&mut probe)), "7");
     assert_eq!(next(&mut probe).token.as_deref(), Some(outer.as_str()));
     assert!(probe.complete_default_module(&outer, 0).unwrap());
-    let resolved = next(&mut probe).token.unwrap();
-    assert!(probe.complete_default_module(&resolved, 0).unwrap());
+    for expected in ["select-runtime", "cache-policy", "resolve"] {
+        let token = next(&mut probe).token.unwrap();
+        assert_eq!(phase(&probe.module_request(&token).unwrap()), expected);
+        assert!(probe.complete_default_module(&token, 0).unwrap());
+    }
     assert_eq!(value(next(&mut probe)), "true");
     probe.close();
     assert_eq!(probe.collect().slots, 0);
@@ -381,7 +471,11 @@ fn import_admission_survives_callback_reentry_and_default_delegation_checks_dead
     let token = next(&mut timed).token.unwrap();
     assert!(timed.complete_default_module(&token, 0).unwrap());
     let token = next(&mut timed).token.unwrap();
-    // External Resolve is unsupported by default delegation, but an expired
+    assert_eq!(
+        phase(&timed.module_request(&token).unwrap()),
+        "select-runtime"
+    );
+    // External key selection is unsupported by default delegation, but an expired
     // request must still terminate instead of returning false.
     assert!(timed.complete_default_module(&token, 2).is_err());
     assert_eq!(timed.collect().slots, 0);
@@ -401,6 +495,40 @@ fn wrong_phase_and_bundled_identity_cannot_consume_the_pending_token() {
             .reject_module_import_check(&token, "io", Some("not an edge cause".into()), 0)
             .is_err()
     );
+    assert_eq!(next(&mut probe).token.as_deref(), Some(token.as_str()));
+    assert!(probe.complete_default_module(&token, 0).unwrap());
+    let event = next(&mut probe);
+    let token = event.token.unwrap();
+    let request = probe.module_request(&token).unwrap();
+    assert_eq!(phase(&request), "select-runtime");
+    let ModuleRequestKind::SelectKey { id, .. } = request.kind else {
+        unreachable!()
+    };
+    let wrong_id = if id.0 == 0 { "1" } else { "0" };
+    assert!(
+        probe
+            .complete_module_key(&token, wrong_id, "pkl:json", "standard-library", "", 0)
+            .is_err()
+    );
+    assert!(
+        probe
+            .complete_module_cache_policy(&token, &id.0.to_string(), true, 0)
+            .is_err()
+    );
+    assert_eq!(next(&mut probe).token.as_deref(), Some(token.as_str()));
+    assert!(probe.complete_default_module(&token, 0).unwrap());
+    let event = next(&mut probe);
+    let token = event.token.unwrap();
+    assert_eq!(
+        phase(&probe.module_request(&token).unwrap()),
+        "cache-policy"
+    );
+    assert!(
+        probe
+            .complete_module_cache_policy(&token, wrong_id, true, 0)
+            .is_err()
+    );
+    assert!(probe.complete_module_source(&token, "", "json", 0).is_err());
     assert_eq!(next(&mut probe).token.as_deref(), Some(token.as_str()));
     assert!(probe.complete_default_module(&token, 0).unwrap());
     let event = next(&mut probe);
@@ -430,6 +558,7 @@ fn resolved_importer_trust_is_independent_of_original_and_diagnostic_uri() {
     let mut probe = probe("child=import(\"child.pkl\")", &["child.value"]);
     probe.start_path(0, 0, None).unwrap();
     let mut sources = 0;
+    let mut prepared_uris = 0;
     let mut observed_inner = false;
     loop {
         let event = next(&mut probe);
@@ -440,6 +569,21 @@ fn resolved_importer_trust_is_independent_of_original_and_diagnostic_uri() {
         }
         let token = event.token.expect("module request");
         match probe.module_request(&token).unwrap().kind {
+            ModuleRequestKind::SelectKey { .. }
+            | ModuleRequestKind::QueryCachePolicy { .. }
+            | ModuleRequestKind::QueryFragmentPaths { .. } => {
+                assert!(module_keys::complete_probe(&mut probe, &token, 0).unwrap());
+            }
+            ModuleRequestKind::ResolveImportUri { key, authored_uri } => {
+                assert_eq!(key.uri.as_ref(), "file:///admission/child.pkl");
+                assert_eq!(authored_uri.as_ref(), "file:///secret.pkl");
+                assert!(
+                    !observed_inner,
+                    "AST URI preparation precedes the denied runtime edge"
+                );
+                prepared_uris += 1;
+                assert!(module_keys::complete_probe(&mut probe, &token, 0).unwrap());
+            }
             ModuleRequestKind::CheckImport {
                 importer,
                 import_uri,
@@ -490,6 +634,10 @@ fn resolved_importer_trust_is_independent_of_original_and_diagnostic_uri() {
     }
     assert!(observed_inner);
     assert_eq!(sources, 1);
+    assert_eq!(
+        prepared_uris, 1,
+        "the original declaration key resolves even an absolute operand"
+    );
     probe.close();
     assert_eq!(probe.collect().slots, 0);
 }
@@ -513,6 +661,10 @@ fn resolved_alias_hits_do_not_seed_original_alias_cache() {
             let token = event.token.unwrap();
             let request = probe.module_request(&token).unwrap();
             let completion = match request.kind {
+                ModuleRequestKind::SelectKey { .. }
+                | ModuleRequestKind::QueryCachePolicy { .. }
+                | ModuleRequestKind::QueryFragmentPaths { .. }
+                | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(&request),
                 ModuleRequestKind::CheckImport { .. } => ModuleCompletion::ImportChecked(Ok(())),
                 ModuleRequestKind::Resolve { original_uri, .. } => {
                     resolved.push(original_uri.to_string());
@@ -567,19 +719,25 @@ fn successful_cycle_site_keeps_its_partial_receiver_after_module_initialization_
         ],
     );
     let mut sources = Vec::new();
-    let mut requests = 0;
+    let mut requests = Vec::new();
+    let mut phases_by_call = Vec::new();
     let mut partial_class = None;
     for index in 0..9 {
+        let request_start = requests.len();
         probe.start_path(index, 0, None).unwrap();
         let settled = loop {
             let event = next(&mut probe);
             if event.kind != "module-request" {
                 break event;
             }
-            requests += 1;
             let token = event.token.unwrap();
             let request = probe.module_request(&token).unwrap();
+            requests.push(request.clone());
             let completion = match request.kind {
+                ModuleRequestKind::SelectKey { .. }
+                | ModuleRequestKind::QueryCachePolicy { .. }
+                | ModuleRequestKind::QueryFragmentPaths { .. }
+                | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(&request),
                 ModuleRequestKind::CheckImport { .. } => ModuleCompletion::ImportChecked(Ok(())),
                 ModuleRequestKind::Resolve { original_uri, .. } => {
                     ModuleCompletion::Resolved(Ok(ResolvedModule {
@@ -588,7 +746,7 @@ fn successful_cycle_site_keeps_its_partial_receiver_after_module_initialization_
                         original_uri,
                     }))
                 }
-                ModuleRequestKind::LoadSource { resolved } => {
+                ModuleRequestKind::LoadSource { resolved, .. } => {
                     let (name, text) = match resolved.original_uri.as_ref() {
                         "file:///admission/a.pkl" => (
                             "a",
@@ -619,17 +777,53 @@ fn successful_cycle_site_keeps_its_partial_receiver_after_module_initialization_
             }
             _ => assert_eq!(settled.kind, "error", "{settled:?}"),
         }
+        phases_by_call.push(phases(&requests[request_start..]));
         probe.collect();
     }
     assert_eq!(sources, ["a", "b"], "failed initialization is cached");
-    assert_eq!(requests, 11, "successful sites skip later edge checks");
+    assert_eq!(
+        phases_by_call,
+        [
+            vec![],
+            vec![
+                "check-import",
+                "select-runtime",
+                "cache-policy",
+                "resolve",
+                "source",
+                "fragment-paths",
+                "resolve-import-uri",
+                "select-clause",
+                "check-import",
+                "select-runtime",
+                "cache-policy",
+                "resolve",
+                "source",
+                "fragment-paths",
+                "resolve-import-uri",
+                "select-clause",
+                "resolve-import-uri",
+                "check-import",
+                "select-runtime",
+                "cache-policy",
+            ],
+            vec!["check-import", "select-runtime", "cache-policy"],
+            vec!["check-import", "select-runtime", "cache-policy"],
+            vec![],
+            vec!["check-import", "select-runtime", "cache-policy"],
+            vec![],
+            vec!["check-import", "select-runtime", "cache-policy"],
+            vec![],
+        ],
+        "source name getters, declaration-key URI preparation and unused clause selection precede initialization; successful partial sites stay cached while fresh failed sites retry admission and key selection"
+    );
     probe.close();
     assert_eq!(probe.collect().slots, 0);
 }
 
 #[test]
 fn close_and_cancel_in_each_pending_phase_keep_stale_tokens_and_release_all_roots() {
-    for phase in 0..3 {
+    for (pending_phase, expected_phase) in CHILD_PHASES.iter().enumerate() {
         for terminal in [false, true] {
             let mut probe = probe(
                 "child=import(\"child.pkl\")\nstable=7",
@@ -637,28 +831,20 @@ fn close_and_cancel_in_each_pending_phase_keep_stale_tokens_and_release_all_root
             );
             probe.start_path(0, 0, None).unwrap();
             let mut event = next(&mut probe);
-            if phase > 0 {
-                assert!(
-                    probe
-                        .complete_default_module(event.token.as_deref().unwrap(), 0)
-                        .unwrap()
-                );
-                event = next(&mut probe);
-            }
-            if phase > 1 {
-                let uri = event.module.as_ref().unwrap().original_uri.clone();
+            for expected in CHILD_PHASES.iter().take(pending_phase) {
+                let token = event.token.unwrap();
+                let request = probe.module_request(&token).unwrap();
+                assert_eq!(phase(&request), *expected);
                 probe
-                    .complete_module_resolution(
-                        event.token.as_deref().unwrap(),
-                        &uri,
-                        &uri,
-                        &uri,
-                        0,
-                    )
+                    .complete_module(&token, child_completion(&request), 0)
                     .unwrap();
                 event = next(&mut probe);
             }
             let token = event.token.unwrap();
+            assert_eq!(
+                phase(&probe.module_request(&token).unwrap()),
+                *expected_phase
+            );
             if terminal {
                 probe.close();
             } else {
@@ -760,9 +946,9 @@ fn successful_import_site_does_not_retain_temporary_importing_receivers() {
         plateau = Some((stats.live, stats.executable_live));
     }
     assert_eq!(
-        requests.len(),
-        2,
-        "one successful shared AST site and one bundled resolution"
+        phases(&requests),
+        ["check-import", "select-runtime", "cache-policy", "resolve"],
+        "one successful shared AST site, selected key and bundled resolution"
     );
     vm.close();
     assert_eq!(vm.collect(&[]).slots, 0);
@@ -804,7 +990,7 @@ fn vm_nonterminal_cancellation_retries_an_unpublished_import_site() {
         }
         panic!("VM did not settle");
     }
-    for phase in 0..3 {
+    for (pending_phase, expected_phase) in CHILD_PHASES.iter().enumerate() {
         let mut vm = Vm::new(program.clone());
         vm.start(program.entry, vec![]).unwrap();
         let VmPoll::Ready(Ok(module)) = settle(&mut vm, &[]) else {
@@ -815,29 +1001,16 @@ fn vm_nonterminal_cancellation_retries_an_unpublished_import_site() {
         let VmPoll::Module(mut request) = settle(&mut vm, &roots) else {
             panic!("import admission")
         };
-        if phase > 0 {
-            vm.complete_module(request.id, ModuleCompletion::ImportChecked(Ok(())))
+        for expected in CHILD_PHASES.iter().take(pending_phase) {
+            assert_eq!(phase(&request), *expected);
+            vm.complete_module(request.id, child_completion(&request))
                 .unwrap();
             let VmPoll::Module(next) = settle(&mut vm, &roots) else {
-                panic!("resolution")
+                panic!("next module phase")
             };
             request = next;
         }
-        if phase > 1 {
-            vm.complete_module(
-                request.id,
-                ModuleCompletion::Resolved(Ok(ResolvedModule {
-                    original_uri: "file:///child.pkl".into(),
-                    resolved_uri: "file:///child.pkl".into(),
-                    source_uri: "file:///child.pkl".into(),
-                })),
-            )
-            .unwrap();
-            let VmPoll::Module(next) = settle(&mut vm, &roots) else {
-                panic!("source")
-            };
-            request = next;
-        }
+        assert_eq!(phase(&request), *expected_phase);
         let old = request.id;
         vm.cancel();
         vm.collect(&roots);

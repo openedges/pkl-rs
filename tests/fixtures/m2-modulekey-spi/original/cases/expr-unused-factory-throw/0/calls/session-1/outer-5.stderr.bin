@@ -1,0 +1,7 @@
+–– Pkl Error ––
+I/O error loading module `{0}`.
+IOException: stage48-factory-create
+
+1 | import("throwing:x")
+    ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

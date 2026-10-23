@@ -1,0 +1,58 @@
+{
+  "scope": "Exact-byte publication of closed captures and preserved histories. Raw compatibility failures remain failures.",
+  "originalControl": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-root-publication-proposal-01/report.json",
+    "sha256": "015c74384d404495980bb67dbec665e9d548595ea967d7e0090b9cd94caf5039"
+  },
+  "files": [
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-root-publication-proposal-01/stage49-platform-captures.tar.gz",
+      "repositoryPath": "reports/m2/stage49-platform-captures.tar.gz",
+      "sha256": "2415ff3410fdd0b59e1c75db494a5373fb28d5815aaa9a05d58d9dfa8d35d68f",
+      "bytes": 25075865,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-root-publication-proposal-01/stage49-platform-captures.tar.gz"
+        ],
+        "pid": 20101,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-root-publication-proposal-01/stage49-tooling-captures.tar.gz",
+      "repositoryPath": "reports/m2/stage49-tooling-captures.tar.gz",
+      "sha256": "0e28cf6867e4d5e0a02eff944dcd25603c9f5297dfb307c7f31fd4010b032e8c",
+      "bytes": 3552997,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-root-publication-proposal-01/stage49-tooling-captures.tar.gz"
+        ],
+        "pid": 20154,
+        "exitCode": 0
+      }
+    },
+    {
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-root-publication-proposal-01/stage49-independent-reviews.tar.gz",
+      "repositoryPath": "reports/m2/stage49-independent-reviews.tar.gz",
+      "sha256": "f4711a9b5633660066f064d9d61310df97180900f92d584d98c79a4d8c22afd7",
+      "bytes": 1655494,
+      "validation": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-root-publication-proposal-01/stage49-independent-reviews.tar.gz"
+        ],
+        "pid": 20155,
+        "exitCode": 0
+      }
+    }
+  ],
+  "implementationCommitNotYetClaimed": true
+}

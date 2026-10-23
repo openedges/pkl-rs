@@ -635,6 +635,8 @@ pub enum ExprKind {
     Import {
         uri: String,
         uri_span: Span,
+        /// None denotes an expression; Some(None) is a clause requiring key-based inference.
+        clause_alias: Option<Option<String>>,
     },
     Int(i64),
     Float(f64),

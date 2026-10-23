@@ -11,10 +11,25 @@ pub fn complete(request: &ModuleRequest) -> ModuleCompletion {
         return completion;
     }
     match &request.kind {
+        ModuleRequestKind::ResolveImportUri { .. } => {
+            unreachable!("explicit default handles inherited URI resolution")
+        }
+        ModuleRequestKind::SelectKey { id, uri, .. } => ModuleCompletion::KeySelected(
+            file_path(uri)
+                .map_err(|_| ModuleHostError::NoLoader)
+                .map(|_| pkl_runtime::modules::ModuleKey {
+                    id: *id,
+                    uri: uri.clone(),
+                    kind: pkl_runtime::modules::ModuleKeyKind::Host,
+                    handle: "file".into(),
+                }),
+        ),
+        ModuleRequestKind::QueryCachePolicy { .. } => ModuleCompletion::CachePolicy(Ok(true)),
+        ModuleRequestKind::QueryFragmentPaths { .. } => ModuleCompletion::FragmentPaths(Ok(false)),
         ModuleRequestKind::CheckImport { .. } => {
             unreachable!("default policy handles import admission")
         }
-        ModuleRequestKind::Capabilities { module } => {
+        ModuleRequestKind::Capabilities { module, .. } => {
             ModuleCompletion::Capabilities(file_path(&module.original_uri).map(|_| {
                 pkl_runtime::modules::ModuleCapabilities {
                     local: true,
@@ -26,17 +41,19 @@ pub fn complete(request: &ModuleRequest) -> ModuleCompletion {
         ModuleRequestKind::HasElement {
             module,
             element_uri,
+            ..
         } => ModuleCompletion::HasElement(
             file_path(&module.original_uri)
                 .and_then(|_| file_path(element_uri))
                 .map(|path| path.exists()),
         ),
-        ModuleRequestKind::Resolve {
-            import_uri,
-            original_uri,
-            ..
-        } => ModuleCompletion::Resolved(resolve(import_uri, original_uri)),
-        ModuleRequestKind::LoadSource { resolved } => ModuleCompletion::Source(load(resolved)),
+        ModuleRequestKind::ResolveKey { key, .. } => {
+            ModuleCompletion::Resolved(resolve(&key.uri, &key.uri))
+        }
+        ModuleRequestKind::Resolve { key, .. } => {
+            ModuleCompletion::Resolved(resolve(&key.uri, &key.uri))
+        }
+        ModuleRequestKind::LoadSource { resolved, .. } => ModuleCompletion::Source(load(resolved)),
     }
 }
 

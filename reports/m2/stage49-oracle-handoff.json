@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "selectionSha256": "5cf033c86ab35f94f26cd06f2e312c4c9619d9b59b460e4ed31999a3af67138a",
+  "publisherReportSha256": "c17c20b33661031cc67e9cdd2204b91f7a16f0198e50e7312c76b2df42a2f82c",
+  "publisherActualTerminalSha256": "c49fe7b5a6539b6f7919dea19a0d6685049e5c106d8ff9dd6babc0140ce3cc06",
+  "finalIndexSha256": "13abcf2688d1bcab08ab427a315f6733f52290aa198affb417c081df9029f976",
+  "summarySha256": "d167f86a78460144f3f39024216690c6477f878720d2039763041551fedae7a7",
+  "referencesSha256": "8685dd07f07b9b8a999180d4b2384b4a3c4f0ea1f4870440c0df5f1eef87bf91",
+  "closeoutCommands": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/gathered/closeout",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-oracle-publication-closeout.tar.gz"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "parentPid": 21001,
+      "startedUtc": "2026-10-23T20:11:00.767825+00:00",
+      "pid": 21006,
+      "exitCode": 0,
+      "finishedUtc": "2026-10-23T20:11:02.144055+00:00",
+      "stdoutSha256": "14e1303583dc5041bd99a91445e8cc52fa84a3be5a2489bf2c45e229b22f7788",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-oracle-publication-closeout.tar.gz"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "parentPid": 21001,
+      "startedUtc": "2026-10-23T20:11:02.144865+00:00",
+      "pid": 21055,
+      "exitCode": 0,
+      "finishedUtc": "2026-10-23T20:11:02.351994+00:00",
+      "stdoutSha256": "14e1303583dc5041bd99a91445e8cc52fa84a3be5a2489bf2c45e229b22f7788",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "finalizerSourceSha256": "252fa970eb7c91705ee61bf367535c5d321f781c85290570439eaea9ee2b273a",
+  "archives": [
+    {
+      "group": "driver-mock-tooling",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-driver-mock-tooling.tar.gz",
+      "fileName": "stage49-driver-mock-tooling.tar.gz",
+      "sha256": "50d43da5720fa786903d941626b9e9213b00dce84ad58b4f6a39d7407d424d4e",
+      "compressedBytes": 1096917,
+      "sourceFiles": 220,
+      "sourceRawBytes": 18386935,
+      "payloadFiles": 223,
+      "allRawMembersReadBack": true,
+      "below100MB": true
+    },
+    {
+      "group": "java-audits-transport",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-java-audits-transport.tar.gz",
+      "fileName": "stage49-java-audits-transport.tar.gz",
+      "sha256": "1362c09e01f133dc6ab4a0794692ee39aa25d4af08bfbcc8c699fe8972597acc",
+      "compressedBytes": 93853,
+      "sourceFiles": 225,
+      "sourceRawBytes": 595876,
+      "payloadFiles": 228,
+      "allRawMembersReadBack": true,
+      "below100MB": true
+    },
+    {
+      "group": "java-controls01-03",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-java-controls01-03.tar.gz",
+      "fileName": "stage49-java-controls01-03.tar.gz",
+      "sha256": "f86adbbced1d8fa918f3671557f435dc8135a3a91921a25d627756e9521ae126",
+      "compressedBytes": 3412494,
+      "sourceFiles": 23968,
+      "sourceRawBytes": 21044988,
+      "payloadFiles": 23971,
+      "allRawMembersReadBack": true,
+      "below100MB": true
+    },
+    {
+      "group": "java-controls04-07",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-java-controls04-07.tar.gz",
+      "fileName": "stage49-java-controls04-07.tar.gz",
+      "sha256": "769a0b2ae8e200abd21b0266a0cf9a38669d00255ac06f79a0aaca3c84173071",
+      "compressedBytes": 1716924,
+      "sourceFiles": 9318,
+      "sourceRawBytes": 8025541,
+      "payloadFiles": 9321,
+      "allRawMembersReadBack": true,
+      "below100MB": true
+    },
+    {
+      "group": "native212-build02",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native212-build02.tar.gz",
+      "fileName": "stage49-native212-build02.tar.gz",
+      "sha256": "0e9d1368b2d0310eea45e373d9e765ea9bd05b3fee9a508bff35750ef1664b25",
+      "compressedBytes": 1866034,
+      "sourceFiles": 18126,
+      "sourceRawBytes": 4965263,
+      "payloadFiles": 18129,
+      "allRawMembersReadBack": true,
+      "below100MB": true
+    },
+    {
+      "group": "native212-build05",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native212-build05.tar.gz",
+      "fileName": "stage49-native212-build05.tar.gz",
+      "sha256": "95dd5d4f42286770960b6893d88ca86d83e36c63b613c17913bc07e669be4422",
+      "compressedBytes": 2115970,
+      "sourceFiles": 17993,
+      "sourceRawBytes": 5483472,
+      "payloadFiles": 17996,
+      "allRawMembersReadBack": true,
+      "below100MB": true
+    },
+    {
+      "group": "native944-build04-failures",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native944-build04-failures.tar.gz",
+      "fileName": "stage49-native944-build04-failures.tar.gz",
+      "sha256": "6fab32a433eaa14cef9c99a33738eeda0d006f76bd4e81dcdbc9839329feb25b",
+      "compressedBytes": 5404673,
+      "sourceFiles": 45107,
+      "sourceRawBytes": 16040768,
+      "payloadFiles": 45110,
+      "allRawMembersReadBack": true,
+      "below100MB": true
+    },
+    {
+      "group": "native944-build05-correction",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native944-build05-correction.tar.gz",
+      "fileName": "stage49-native944-build05-correction.tar.gz",
+      "sha256": "8beb3d34243f06436523c4efcaa90ea08762c6f6d26b0db52fca5314c4b8c0d4",
+      "compressedBytes": 5488796,
+      "sourceFiles": 45723,
+      "sourceRawBytes": 16184005,
+      "payloadFiles": 45726,
+      "allRawMembersReadBack": true,
+      "below100MB": true
+    },
+    {
+      "group": "native944-consumers-audits",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-native944-consumers-audits.tar.gz",
+      "fileName": "stage49-native944-consumers-audits.tar.gz",
+      "sha256": "e358d8551233efd537f43343da9ba0ac69c5c01381bb182acd2c5fbc842f1877",
+      "compressedBytes": 20029,
+      "sourceFiles": 30,
+      "sourceRawBytes": 96152,
+      "payloadFiles": 33,
+      "allRawMembersReadBack": true,
+      "below100MB": true
+    },
+    {
+      "group": "spi-reuse-tooling-initial-history",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-spi-reuse-tooling-initial-history.tar.gz",
+      "fileName": "stage49-spi-reuse-tooling-initial-history.tar.gz",
+      "sha256": "8ede9dafd09ef3cee19d9fb929341ed1d1efda4e33bdeb90e0691b414a947dd1",
+      "compressedBytes": 879961,
+      "sourceFiles": 4714,
+      "sourceRawBytes": 8187340,
+      "payloadFiles": 4717,
+      "allRawMembersReadBack": true,
+      "below100MB": true
+    },
+    {
+      "group": "closeout",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage49-oracle-publication-03/archives/stage49-oracle-publication-closeout.tar.gz",
+      "fileName": "stage49-oracle-publication-closeout.tar.gz",
+      "sha256": "7cc63334e5802adf1dc3882c338bc15b6228dcf0956c6969823ea80fb50a621a",
+      "compressedBytes": 6690390,
+      "sourceFiles": 141,
+      "payloadFiles": 142,
+      "allRawMembersReadBack": true,
+      "below100MB": true
+    }
+  ],
+  "scope": "Selected Stage49 Java, native ModuleKey and mocked driver verification evidence only; full Java events/counters, invalid Host SPI internal errors and full M2 remain open.",
+  "originalChanges": [],
+  "liveHandles": []
+}

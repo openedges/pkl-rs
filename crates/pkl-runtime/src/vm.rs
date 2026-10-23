@@ -21,6 +21,7 @@ mod forcing;
 mod generics;
 mod guest_exceptions;
 mod modules;
+mod query_lifecycle;
 mod session_expressions;
 mod stdlib_modules;
 pub use session_expressions::{SessionExpressionError, compile_session_expression};
@@ -50,6 +51,8 @@ pub enum Instruction {
         or_null: bool,
     },
     ImportModule(modules::ImportSpec),
+    LoadPrimary(Arc<crate::modules::ModuleSourceSpec>),
+    EvaluateQuery(Arc<str>),
     PrepareModuleImports(crate::modules::UnitId),
     CheckModuleOutput,
     /// Eager initialization in the private standard-library profile.
@@ -1042,6 +1045,7 @@ enum State {
 }
 
 struct SuspendedContext {
+    public_primary: Option<ObjectId>,
     /// Caller locations captured at the Host boundary, innermost first. The
     /// pending reader has no language call node for a callback evaluation.
     diagnostic_callers: Vec<RuntimeFrame>,
@@ -1069,14 +1073,18 @@ pub struct Vm {
     power_assertions: bool,
     /// Keys belong to this immutable Program; values belong only to this evaluator.
     /// Reentering or restarting a declaration retains its first captured environment.
-    modules_original: BTreeMap<Arc<str>, modules::CachedModule>,
-    modules_resolved: BTreeMap<Arc<str>, modules::CachedModule>,
+    public_primary: Option<ObjectId>,
+    modules_original: modules::ModuleCache,
+    modules_stdlib: modules::ModuleCache,
+    modules_resolved: modules::ModuleCache,
     resources: BTreeMap<crate::host::resources::CacheKey, Option<Value>>,
     class_singletons: BTreeMap<usize, ObjectId>,
     alias_singletons: BTreeMap<usize, ObjectId>,
     resolved_declarations: BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
     /// Static call targets own code state, never captured receivers/environments.
     executable_roots: BTreeMap<usize, ExecutableOwnerId>,
+    code_arenas: Vec<query_lifecycle::CodeArena>,
+    public_operation_entries: BTreeSet<usize>,
 }
 
 impl Vm {
@@ -1134,13 +1142,17 @@ impl Vm {
             member_evaluations: 0,
             code_validation: registration.and(code_validation),
             power_assertions: false,
-            modules_original: BTreeMap::new(),
-            modules_resolved: BTreeMap::new(),
+            public_primary: None,
+            modules_original: modules::ModuleCache::default(),
+            modules_stdlib: modules::ModuleCache::default(),
+            modules_resolved: modules::ModuleCache::default(),
             resources: BTreeMap::new(),
             class_singletons: BTreeMap::new(),
             alias_singletons: BTreeMap::new(),
             resolved_declarations: BTreeMap::new(),
             executable_roots: BTreeMap::new(),
+            code_arenas: Vec::new(),
+            public_operation_entries: BTreeSet::new(),
         }
     }
 
@@ -1259,6 +1271,16 @@ impl Vm {
 
     /// Enter a callback evaluation while the current context waits for Host I/O.
     /// The program, heap and successful member cache belong to the evaluator.
+    pub(crate) fn validate_pending_request(&self, id: u64) -> Result<(), RuntimeError> {
+        if matches!(&self.state, State::Waiting(request) if request.id() == id) {
+            Ok(())
+        } else {
+            Err(RuntimeError::new(
+                ErrorKind::Host,
+                "stale or unexpected Host completion",
+            ))
+        }
+    }
     pub(crate) fn reenter(
         &mut self,
         request: u64,
@@ -1299,6 +1321,7 @@ impl Vm {
             })
             .collect();
         self.suspended.push(SuspendedContext {
+            public_primary: self.public_primary.take(),
             diagnostic_callers,
             frames: std::mem::take(&mut self.frames),
             stack: std::mem::take(&mut self.stack),
@@ -1321,6 +1344,7 @@ impl Vm {
 
     fn restore_context(&mut self) {
         if let Some(context) = self.suspended.pop() {
+            self.public_primary = context.public_primary;
             self.frames = context.frames;
             self.stack = context.stack;
             self.inputs = context.inputs;
@@ -1523,13 +1547,17 @@ impl Vm {
         self.state = State::Closed;
         self.log_buffer = Vec::new();
         self.context = EvaluationContext::default();
+        self.public_primary = None;
         self.modules_original.clear();
+        self.modules_stdlib.clear();
         self.modules_resolved.clear();
         self.resources.clear();
         self.class_singletons.clear();
         self.alias_singletons.clear();
         self.resolved_declarations.clear();
         self.executable_roots.clear();
+        self.code_arenas.clear();
+        self.public_operation_entries.clear();
         self.heap.release();
         self.program = Arc::new(Program::new(Vec::new()));
     }
@@ -1583,29 +1611,24 @@ impl Vm {
     pub fn collect(&mut self, external_roots: &[Value]) -> HeapStats {
         let mut roots = external_roots.to_vec();
         roots.extend(self.resources.values().filter_map(Clone::clone));
+        roots.extend(self.public_primary.map(Value::Object));
+        roots.extend(
+            self.suspended
+                .iter()
+                .filter_map(|context| context.public_primary)
+                .map(Value::Object),
+        );
         roots.extend(
             self.modules_original
                 .values()
                 .chain(self.modules_resolved.values())
+                .chain(self.modules_stdlib.values())
                 .filter_map(|module| match module {
                     modules::CachedModule::Value(id) => Some(Value::Object(*id)),
                     _ => None,
                 }),
         );
-        for ((_, owner), value) in &self.resolved_declarations {
-            roots.push(Value::Object(*owner));
-            if let type_resolution::DeclarationValue::Value(value) = value {
-                roots.push(value.clone());
-            }
-        }
-        roots.extend(self.executable_roots.values().map(|owner| owner.root()));
-        roots.extend(self.class_singletons.values().copied().map(Value::Class));
-        roots.extend(
-            self.alias_singletons
-                .values()
-                .copied()
-                .map(Value::TypeAlias),
-        );
+        self.declaration_code_roots(&mut roots);
         for (stack, inputs, frames, state) in self
             .suspended
             .iter()
@@ -1648,6 +1671,7 @@ impl Vm {
                 roots.extend(frame.environment.outer_value.iter().cloned());
                 roots.extend(frame.environment.custom_this.map(|slot| slot.root()));
                 roots.extend(frame.environment.executable_owner.map(|owner| owner.root()));
+                roots.extend(frame.environment.code_owner.map(|owner| owner.root()));
                 roots.extend(
                     frame
                         .environment
@@ -1700,7 +1724,9 @@ impl Vm {
                 }
             }
         }
-        self.heap.collect(&roots)
+        let stats = self.heap.collect(&roots);
+        self.retire_unreachable_code();
+        stats
     }
 
     fn fail(&mut self, mut error: RuntimeError) {
@@ -1987,15 +2013,16 @@ impl Vm {
         // Truffle retains the same source/initialization exception in every
         // module-cache alias. Its lazy stack keeps unwinding across guest catches;
         // the first uncaught rendering freezes the completed stack.
-        if !error.cached_module_frames && error.module_failure_key.is_some() {
+        if !error.cached_module_frames && error.module_failure_id.is_some() {
             error.cached_module_frames = catch_boundary.is_none();
-            if let Some(key) = &error.module_failure_key {
+            if let Some(key) = &error.module_failure_id {
                 for cached in self
                     .modules_original
                     .values_mut()
                     .chain(self.modules_resolved.values_mut())
+                    .chain(self.modules_stdlib.values_mut())
                 {
-                    if matches!(cached, modules::CachedModule::Failed(previous) if previous.module_failure_key.as_ref() == Some(key))
+                    if matches!(cached, modules::CachedModule::Failed(previous) if previous.module_failure_id.as_ref() == Some(key))
                     {
                         *cached = modules::CachedModule::Failed(error.clone());
                     }
@@ -2017,35 +2044,49 @@ impl Vm {
                 && unit.entry == frame.block
                 && let Some(identity) = &unit.identity
             {
-                if error.module_failure_key.is_none() {
-                    error.module_failure_key = Some(identity.original_uri.clone());
+                if error.module_failure_id.is_none() {
+                    error.module_failure_id = Some(modules::next_failure_id());
                     error.cached_module_frames = catch_boundary.is_none();
                 }
-                self.modules_original.insert(
-                    identity.original_uri.clone(),
-                    modules::CachedModule::Failed(error.clone()),
-                );
-                self.modules_resolved.insert(
-                    identity.resolved_uri.clone(),
-                    modules::CachedModule::Failed(error.clone()),
-                );
+                if unit.is_singleton() {
+                    self.modules_stdlib.insert(
+                        identity.original_uri.clone(),
+                        modules::CachedModule::Failed(error.clone()),
+                    );
+                } else {
+                    self.modules_original.insert(
+                        identity.original_uri.clone(),
+                        modules::CachedModule::Failed(error.clone()),
+                    );
+                    self.modules_resolved.insert(
+                        identity.resolved_uri.clone(),
+                        modules::CachedModule::Failed(error.clone()),
+                    );
+                }
             }
             if let Some(run) = &frame.module_load
                 && run.initializing
                 && let Some(resolved) = &run.resolved
             {
-                if error.module_failure_key.is_none() {
-                    error.module_failure_key = Some(resolved.original_uri.clone());
+                if error.module_failure_id.is_none() {
+                    error.module_failure_id = Some(modules::next_failure_id());
                     error.cached_module_frames = catch_boundary.is_none();
                 }
-                self.modules_original.insert(
-                    resolved.original_uri.clone(),
-                    modules::CachedModule::Failed(error.clone()),
-                );
-                self.modules_resolved.insert(
-                    resolved.resolved_uri.clone(),
-                    modules::CachedModule::Failed(error.clone()),
-                );
+                if run.is_singleton() {
+                    self.modules_stdlib.insert(
+                        resolved.original_uri.clone(),
+                        modules::CachedModule::Failed(error.clone()),
+                    );
+                } else {
+                    self.modules_original.insert(
+                        resolved.original_uri.clone(),
+                        modules::CachedModule::Failed(error.clone()),
+                    );
+                    self.modules_resolved.insert(
+                        resolved.resolved_uri.clone(),
+                        modules::CachedModule::Failed(error.clone()),
+                    );
+                }
             }
         }
         if let Some(index) = catch_boundary {
@@ -2696,7 +2737,7 @@ impl Vm {
                             .as_ref())
                 ),
             );
-            if method {
+            {
                 let mut properties = vec!["output".to_owned()];
                 let mut methods = Vec::new();
                 let mut current = Some(receiver);
@@ -2730,36 +2771,41 @@ impl Vm {
                         ((*name).to_owned(), (*signature).to_owned(), *arity)
                     },
                 ));
-                let arity = self
-                    .frames
-                    .last()
-                    .and_then(|frame| {
-                        self.program.metadata.get(frame.block).and_then(|metadata| {
-                            metadata.method_arities.get(&frame.pc.saturating_sub(1))
+                let arity = if method {
+                    self.frames
+                        .last()
+                        .and_then(|frame| {
+                            self.program.metadata.get(frame.block).and_then(|metadata| {
+                                metadata.method_arities.get(&frame.pc.saturating_sub(1))
+                            })
                         })
-                    })
-                    .copied()
-                    .unwrap_or(0);
-                error.hint = crate::diagnostic::member_suggestions(
-                    name,
-                    arity as isize,
-                    &properties,
-                    &methods,
-                )
-                .or_else(|| {
-                    let mut names: Vec<_> = methods.into_iter().map(|method| method.0).collect();
-                    names.sort_by(|a, b| a.encode_utf16().cmp(b.encode_utf16()));
-                    names.dedup();
-                    Some(
-                        format!(
-                            "Available methods in module `{}`:\n{}",
-                            module_name,
-                            names.join("\n")
-                        )
-                        .into(),
-                    )
-                });
-                return Ok(error);
+                        .copied()
+                        .unwrap_or(0) as isize
+                } else {
+                    -1
+                };
+                error.hint =
+                    crate::diagnostic::member_suggestions(name, arity, &properties, &methods)
+                        .or_else(|| {
+                            if !method {
+                                return None;
+                            }
+                            let mut names: Vec<_> =
+                                methods.into_iter().map(|method| method.0).collect();
+                            names.sort_by(|a, b| a.encode_utf16().cmp(b.encode_utf16()));
+                            names.dedup();
+                            Some(
+                                format!(
+                                    "Available methods in module `{}`:\n{}",
+                                    module_name,
+                                    names.join("\n")
+                                )
+                                .into(),
+                            )
+                        });
+                if method || error.hint.is_some() {
+                    return Ok(error);
+                }
             }
             let mut names = self
                 .heap
@@ -3538,6 +3584,8 @@ impl Vm {
             }
             Instruction::ImportModule(spec) => self.begin_import(spec)?,
             Instruction::PrepareModuleImports(unit) => self.prepare_module_imports(unit)?,
+            Instruction::LoadPrimary(source) => self.begin_primary(source)?,
+            Instruction::EvaluateQuery(expression) => self.begin_query(expression)?,
             Instruction::InitializeModuleParent => self.initialize_module_parent()?,
             Instruction::CheckModuleOutput => self.check_module_output()?,
             Instruction::BootstrapStdlib => self.bootstrap_stdlib()?,
@@ -4560,10 +4608,13 @@ impl Vm {
                     .environment
                     .clone();
                 let definition = Object {
-                    ref_module: module
-                        .as_ref()
-                        .and_then(|unit| unit.identity.as_ref())
-                        .is_some_and(|identity| identity.original_uri.as_ref() == "pkl:ref"),
+                    ref_module: module.as_ref().is_some_and(|unit| {
+                        unit.standard_library
+                            && unit
+                                .identity
+                                .as_ref()
+                                .is_some_and(|identity| identity.original_uri.as_ref() == "pkl:ref")
+                    }),
                     is_module: module
                         .as_ref()
                         .is_some_and(|unit| unit.mode != modules::ModuleMode::Amends),
@@ -4615,14 +4666,21 @@ impl Vm {
                 if let Some(unit) = &module {
                     self.frames.last_mut().unwrap().module_receiver = Some(object);
                     if let Some(identity) = &unit.identity {
-                        self.modules_original.insert(
-                            identity.original_uri.clone(),
-                            modules::CachedModule::Value(object),
-                        );
-                        self.modules_resolved.insert(
-                            identity.resolved_uri.clone(),
-                            modules::CachedModule::Value(object),
-                        );
+                        if unit.is_singleton() {
+                            self.modules_stdlib.insert(
+                                identity.original_uri.clone(),
+                                modules::CachedModule::Value(object),
+                            );
+                        } else {
+                            self.modules_original.insert(
+                                identity.original_uri.clone(),
+                                modules::CachedModule::Value(object),
+                            );
+                            self.modules_resolved.insert(
+                                identity.resolved_uri.clone(),
+                                modules::CachedModule::Value(object),
+                            );
+                        }
                     }
                 }
                 self.stack.push(Value::Object(object));
@@ -5339,6 +5397,38 @@ fn compile_unit_into(
     source: Option<Arc<crate::value::RuntimeSource>>,
     identity: Option<crate::modules::ModuleIdentity>,
 ) -> Result<crate::modules::UnitId, RuntimeError> {
+    if resolved.preparation_is_evaluation
+        && resolved.preparation.iter().any(|step| {
+            matches!(
+                step,
+                crate::resolver::AstPreparation::Import { clause: true, .. }
+            )
+        })
+    {
+        let mut shell = resolved.clone();
+        shell.module.members.clear();
+        shell.module.deferred_diagnostics.clear();
+        if let Some(declaration) = &mut shell.module.declaration {
+            declaration.annotations.clear();
+            declaration.parent = None;
+            declaration.modifiers.clear();
+        }
+        shell.preparation.retain(|step| {
+            matches!(
+                step,
+                crate::resolver::AstPreparation::Import { clause: true, .. }
+            )
+        });
+        shell.preparation_failure = None;
+        let unit = compile_unit_body(program, &shell, options, instrument, source, identity)?;
+        program.units[unit.0 as usize].build = Some(modules::ModuleBuild {
+            module: resolved.module.clone(),
+            options,
+            instrument,
+            prepared: BTreeMap::new(),
+        });
+        return Ok(unit);
+    }
     if resolved.preparation_failure.is_none() {
         return compile_unit_body(program, resolved, options, instrument, source, identity);
     }
@@ -5367,6 +5457,20 @@ fn compile_unit_body(
     source: Option<Arc<crate::value::RuntimeSource>>,
     identity: Option<crate::modules::ModuleIdentity>,
 ) -> Result<crate::modules::UnitId, RuntimeError> {
+    compile_unit_body_at(
+        None, program, resolved, options, instrument, source, identity,
+    )
+}
+
+fn compile_unit_body_at(
+    replacement: Option<crate::modules::UnitId>,
+    program: &mut Program,
+    resolved: &crate::resolver::ResolvedModule,
+    options: CompileOptions,
+    instrument: bool,
+    source: Option<Arc<crate::value::RuntimeSource>>,
+    identity: Option<crate::modules::ModuleIdentity>,
+) -> Result<crate::modules::UnitId, RuntimeError> {
     // Development adapters may append raw blocks without source metadata.
     // Preserve their missing provenance while aligning the append-only arenas
     // before compiling an imported or standard-library unit into this program.
@@ -5375,13 +5479,13 @@ fn compile_unit_body(
             .metadata
             .resize_with(program.blocks.len(), BlockMetadata::default);
     }
-    let unit = crate::modules::UnitId(
+    let unit = replacement.unwrap_or(crate::modules::UnitId(
         program
             .units
             .len()
             .try_into()
             .map_err(|_| invalid("module unit limit"))?,
-    );
+    ));
     let declaration_base = program.next_declaration;
     program.next_declaration = declaration_base
         .checked_add(resolved.module.source.len() + 2)
@@ -5560,9 +5664,14 @@ fn compile_unit_body(
         .program
         .constraint_origins
         .extend(compiler.constraint_origins);
-    compiler.program.units.push(modules::ModuleUnit {
+    let built_unit = modules::ModuleUnit {
         id: unit,
         identity: compiler.identity,
+        standard_library: false,
+        key: None,
+        delegate_key: None,
+        build: None,
+        syntax: Some(Arc::new(resolved.module.clone())),
         source: compiler.source,
         name: module_name,
         template,
@@ -5576,7 +5685,12 @@ fn compile_unit_body(
         } else {
             declaration_base + resolved.module.source.len() + 1
         },
-    });
+    };
+    if let Some(id) = replacement {
+        compiler.program.units[id.0 as usize] = built_unit;
+    } else {
+        compiler.program.units.push(built_unit);
+    }
     Ok(unit)
 }
 
@@ -6052,7 +6166,7 @@ impl Compiler<'_> {
         use crate::resolver::Binding;
         use crate::syntax::ExprKind;
         match &expression.kind {
-            ExprKind::Import { uri, uri_span } => {
+            ExprKind::Import { uri, uri_span, .. } => {
                 let spec = if self.resolved.preparation_is_evaluation {
                     modules::ImportSpec::authored(uri.clone().into(), *uri_span, self.unit)
                 } else {
@@ -6691,6 +6805,91 @@ fn unsupported_type(feature: &str) -> RuntimeError {
 }
 
 impl Compiler<'_> {
+    fn compile_reference_type(
+        &self,
+        ty: &crate::syntax::Type,
+        arguments: &[TypeCheck],
+    ) -> Result<TypeCheck, RuntimeError> {
+        let crate::syntax::TypeKind::Named {
+            path, name_spans, ..
+        } = &ty.kind
+        else {
+            unreachable!()
+        };
+        Ok(match path[1].as_str() {
+            "Domain" if arguments.is_empty() => TypeCheck::RefDomain,
+            "Access" if arguments.is_empty() => TypeCheck::Class {
+                module: None,
+                id: reference::ACCESS_ID,
+                name: Arc::from("Access"),
+            },
+            "Reference" if arguments.is_empty() => TypeCheck::Reference {
+                domain: Box::new(TypeCheck::Unknown),
+                referent: Box::new(TypeCheck::Unknown),
+            },
+            "Reference" if arguments.len() == 2 => {
+                let domain = arguments[0].clone();
+                let referent = arguments[1].clone();
+                if let Some(TypeCheck::Constrained { constraints, .. }) =
+                    reference_constrained_type(&referent)
+                {
+                    let mut error = RuntimeError::new(
+                        ErrorKind::Type,
+                        "`Reference` referent type argument may not include type constraints.",
+                    )
+                    .at(ty.span);
+                    if let Some((mut frames, origin_aliases)) = constraints
+                        .first()
+                        .and_then(|constraint| self.constraint_origins.get(&constraint.block))
+                        .cloned()
+                    {
+                        // Aliases first expanded inside this Reference have
+                        // not yet adopted their outermost node when initial
+                        // validation runs. Already substituted type arguments
+                        // retain the alias tree from their use site instead.
+                        if origin_aliases.starts_with(&self.alias_frames) {
+                            frames.truncate(
+                                origin_aliases
+                                    .len()
+                                    .saturating_sub(self.alias_frames.len() + 1),
+                            );
+                        }
+                        frames.retain(|frame| {
+                            std::iter::once(ty.span)
+                                .chain(self.alias_frames.iter().map(|alias| alias.span))
+                                .all(|usage| {
+                                    frame.span.start < usage.start || frame.span.end > usage.end
+                                })
+                        });
+                        error.frames = frames;
+                    }
+                    return Err(error);
+                }
+                TypeCheck::Reference {
+                    domain: Box::new(domain),
+                    referent: Box::new(referent),
+                }
+            }
+            "Domain" | "Reference" | "Access" => {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!(
+                        "Expected {} type argument(s) but got {}.",
+                        if path[1] == "Reference" { 2 } else { 0 },
+                        arguments.len()
+                    ),
+                ));
+            }
+            _ => {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!("Cannot find type `{}` in module `pkl.ref`.", path[1]),
+                )
+                .at(name_spans[1]));
+            }
+        })
+    }
+
     fn find_type(&self, name: &str, _limit: usize) -> Option<(crate::syntax::Member, usize)> {
         // ResolveSimpleDeclaredTypeNode starts at the enclosing module. Ordinary
         // module properties can shadow types, but locals/parameters/class members cannot.
@@ -6768,26 +6967,58 @@ impl Compiler<'_> {
         output: &mut Code,
     ) -> Result<(), Box<(RuntimeError, Span)>> {
         use crate::syntax::{ExprKind, TypeKind};
-        if let TypeKind::Named { path, .. } = &ty.kind
-            && path.len() == 2
-            && self.resolved.module.members.iter().any(|member| {
-                member.local
-                    && member.name == path[0]
-                    && matches!(&member.expr.kind, ExprKind::Import { uri, .. } if matches!(crate::modules::stdlib_kind(uri), Some(crate::modules::StdlibKind::Singleton("pkl:ref"))))
-            })
-        {
-            // External ref types keep their specialized checks and argument
-            // diagnostics, but first force the same authored import member as
-            // every other qualified type. This is evaluator work, not a second
-            // import site or a compile-time policy decision.
-            let guard = self.imported_type_guard(ty);
-            output.push_at(Instruction::ResolveType(guard), ty.span);
-        }
-        if let Ok(check) =
-            self.compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), parameters)
+        let reference_start = self.program.type_recipes.len();
+        let check =
+            self.compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), parameters);
+        self.reference_usage_context(reference_start, ty);
+        if let Ok(check) = check
             && check.has_declared()
         {
-            output.push_at(Instruction::ResolveType(check), ty.span);
+            // Resolve a parameterized qualified class before its arguments,
+            // then execute the authored argument plans. A statically known
+            // local class still needs initialization; materializing its
+            // TypeCheck alone does not force that declaration.
+            if let TypeKind::Named {
+                path, arguments, ..
+            } = &ty.kind
+                && path.len() > 1
+                && !arguments.is_empty()
+            {
+                let mut base = ty.clone();
+                let TypeKind::Named {
+                    arguments: placeholders,
+                    ..
+                } = &mut base.kind
+                else {
+                    unreachable!()
+                };
+                for argument in placeholders {
+                    argument.kind = TypeKind::Unknown;
+                }
+                let base = self
+                    .compile_type_at(
+                        &base,
+                        self.type_scopes.len(),
+                        &mut BTreeSet::new(),
+                        parameters,
+                    )
+                    .map_err(|error| Box::new((error, ty.span)))?;
+                output.push_at(Instruction::ResolveType(base), ty.span);
+                for argument in arguments {
+                    self.type_resolution_plan(argument, parameters, output)?;
+                }
+            }
+            output.push_at(Instruction::ResolveType(check.clone()), ty.span);
+            // The actual receiver determines whether this is Reference. Its
+            // substituted arguments must be validated at the authored type
+            // use, before evaluating the value being tested or cast.
+            output.push_at(
+                Instruction::ValidateTypeArguments {
+                    ty: check,
+                    aliases: self.alias_frames.clone(),
+                },
+                ty.span,
+            );
             return Ok(());
         }
         match &ty.kind {
@@ -6913,6 +7144,39 @@ impl Compiler<'_> {
                 self.initialize_type_resolution(ty, output);
                 output.push_at(Instruction::Fail(error.at(ty.span)), ty.span);
                 None
+            }
+        }
+    }
+
+    fn reference_usage_context(&mut self, start: usize, ty: &crate::syntax::Type) {
+        for recipe in &mut self.program.type_recipes[start..] {
+            if let Some(Err(error)) = &mut recipe.reference
+                && !error.frames.is_empty()
+            {
+                let span = if error.message
+                    == "`Reference` referent type argument may not include type constraints."
+                {
+                    match &ty.kind {
+                        crate::syntax::TypeKind::Named {
+                            path,
+                            name_spans,
+                            arguments,
+                        } if path.len() == 1
+                            && !arguments.iter().any(authored_type_constraints) =>
+                        {
+                            name_spans[0]
+                        }
+                        _ => ty.span,
+                    }
+                } else {
+                    ty.span
+                };
+                error.frames.push(RuntimeFrame {
+                    span,
+                    member: "".into(),
+                    source: self.source.clone(),
+                });
+                error.span = Some(ty.span);
             }
         }
     }
@@ -7194,123 +7458,24 @@ impl Compiler<'_> {
                 default: *default,
             },
             TypeKind::Named {
-                path,
-                arguments,
-                name_spans,
+                path, arguments, ..
             } if path.len() == 2 => {
-                let import = self
-                    .resolved
-                    .module
-                    .members
+                let actuals = arguments
                     .iter()
-                    .find(|member| member.name == path[0] && member.local);
-                if import.is_none()
-                    || !matches!(&import.unwrap().expr.kind, ExprKind::Import { uri, .. } if matches!(crate::modules::stdlib_kind(uri), Some(crate::modules::StdlibKind::Singleton("pkl:ref"))))
-                {
-                    let arguments = arguments
-                        .iter()
-                        .map(|argument| self.compile_type_at(argument, limit, aliases, parameters))
-                        .collect::<Result<Vec<_>, _>>()?;
-                    return Ok(self.declared_type(ty, arguments));
-                }
-                let import = import.unwrap();
-                let ExprKind::Import { uri, .. } = &import.expr.kind else {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Type,
-                        format!(
-                            "Expected `{}` to be a module import, but it is not.",
-                            path[0]
-                        ),
-                    )
-                    .at(name_spans[0]));
+                    .map(|argument| self.compile_type_at(argument, limit, aliases, parameters))
+                    .collect::<Result<Vec<_>, _>>()?;
+                let reference = self.compile_reference_type(ty, &actuals);
+                let declared = self.declared_type(ty, actuals);
+                let TypeCheck::Declared { recipe, arguments } = declared else {
+                    unreachable!()
                 };
-                if !matches!(
-                    crate::modules::stdlib_kind(uri),
-                    Some(crate::modules::StdlibKind::Singleton("pkl:ref"))
-                ) {
-                    let arguments = arguments
-                        .iter()
-                        .map(|argument| self.compile_type_at(argument, limit, aliases, parameters))
-                        .collect::<Result<Vec<_>, _>>()?;
-                    return Ok(self.declared_type(ty, arguments));
-                }
-                match path[1].as_str() {
-                    "Domain" if arguments.is_empty() => TypeCheck::RefDomain,
-                    "Access" if arguments.is_empty() => TypeCheck::Class {
-                        module: None,
-                        id: reference::ACCESS_ID,
-                        name: Arc::from("Access"),
-                    },
-                    "Reference" if arguments.is_empty() => TypeCheck::Reference {
-                        domain: Box::new(TypeCheck::Unknown),
-                        referent: Box::new(TypeCheck::Unknown),
-                    },
-                    "Reference" if arguments.len() == 2 => {
-                        let domain =
-                            self.compile_type_at(&arguments[0], limit, aliases, parameters)?;
-                        let referent =
-                            self.compile_type_at(&arguments[1], limit, aliases, parameters)?;
-                        if let Some(TypeCheck::Constrained { constraints, .. }) =
-                            reference_constrained_type(&referent)
-                        {
-                            let mut error = RuntimeError::new(
-                                ErrorKind::Type,
-                                "`Reference` referent type argument may not include type constraints.",
-                            ).at(ty.span);
-                            if let Some((mut frames, origin_aliases)) = constraints
-                                .first()
-                                .and_then(|constraint| {
-                                    self.constraint_origins.get(&constraint.block)
-                                })
-                                .cloned()
-                            {
-                                // Aliases first expanded inside this Reference have
-                                // not yet adopted their outermost node when initial
-                                // validation runs. Already substituted type arguments
-                                // retain the alias tree from their use site instead.
-                                if origin_aliases.starts_with(&self.alias_frames) {
-                                    frames.truncate(
-                                        origin_aliases
-                                            .len()
-                                            .saturating_sub(self.alias_frames.len() + 1),
-                                    );
-                                }
-                                frames.retain(|frame| {
-                                    std::iter::once(ty.span)
-                                        .chain(self.alias_frames.iter().map(|alias| alias.span))
-                                        .all(|usage| {
-                                            frame.span.start < usage.start
-                                                || frame.span.end > usage.end
-                                        })
-                                });
-                                error.frames = frames;
-                            }
-                            return Err(error);
-                        }
-                        TypeCheck::Reference {
-                            domain: Box::new(domain),
-                            referent: Box::new(referent),
-                        }
-                    }
-                    "Domain" | "Reference" | "Access" => {
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            format!(
-                                "Expected {} type argument(s) but got {}.",
-                                if path[1] == "Reference" { 2 } else { 0 },
-                                arguments.len()
-                            ),
-                        ));
-                    }
-                    _ => {
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            format!("Cannot find type `{}` in module `pkl.ref`.", path[1]),
-                        )
-                        .at(name_spans[1]));
-                    }
-                }
+                let mut specialized = self.program.type_recipes[recipe].clone();
+                specialized.reference = Some(reference);
+                let recipe = self.program.type_recipes.len();
+                self.program.type_recipes.push(specialized);
+                TypeCheck::Declared { recipe, arguments }
             }
+
             TypeKind::Named {
                 path,
                 arguments,
@@ -7431,6 +7596,7 @@ impl Compiler<'_> {
                                 member: previous_member.clone(),
                                 source: self.source.clone(),
                             });
+                            let reference_start = self.program.type_recipes.len();
                             let result = self
                                 .compile_type_at(aliased, index + 1, aliases, &substitutions)
                                 .map_err(|mut error| {
@@ -7441,6 +7607,15 @@ impl Compiler<'_> {
                                     });
                                     error
                                 });
+                            for recipe in &mut self.program.type_recipes[reference_start..] {
+                                if let Some(Err(error)) = &mut recipe.reference {
+                                    error.frames.push(RuntimeFrame {
+                                        span: aliased.span,
+                                        member: format!("#{}", member.name).into(),
+                                        source: self.source.clone(),
+                                    });
+                                }
+                            }
                             self.alias_frames.pop();
                             self.constraint_module = previous_module;
                             self.member = previous_member;

@@ -184,3 +184,43 @@ test('missing or contradictory module event context fails before default-policy 
     assert.equal(result.calls.length, 0);
   }
 });
+
+
+test('Resource adapter shares new key transport validation and preserves full request identities', () => {
+  const events = [
+    {id: '9007199254740993', kind: 'select-key', originalUri: 'pkl:json',
+      keyId: '18446744073709551615', selectionPhase: 'runtime-import'},
+    {id: '9007199254740994', kind: 'query-cache-policy', originalUri: 'pkl:json',
+      keyId: '18446744073709551615', keyKind: 'standard-library', keyHandle: 'bundled-json'},
+    {id: '9007199254740995', kind: 'resolve', originalUri: 'pkl:json', importUri: 'pkl:json',
+      importerOriginalUri: 'file:///main.pkl', importerResolvedUri: 'file:///resolved.pkl',
+      keyId: '18446744073709551615', keyKind: 'standard-library', keyHandle: 'bundled-json',
+      resolvedKeyId: '9007199254740996'},
+  ];
+  class WithKeys extends Session {
+    startPath(index) { super.startPath(index); this.moduleStep = 0; }
+    poll() {
+      if (this.index === 0 && this.moduleStep < events.length)
+        return {kind: 'module-request', token: 'key-token', module: events[this.moduleStep]};
+      return super.poll();
+    }
+    completeDefaultModule(token, now) {
+      assert.equal(token, 'key-token'); assert.equal(now, 0); this.moduleStep++; return true;
+    }
+  }
+  const result = run(WithKeys);
+  assert.equal(compareResourceCase(fixture, result).passed, true);
+  assert.deepEqual(result.moduleRequests.map(row => row.module), events);
+  assert.deepEqual(result.readerUris, ['res:/text', 'res:/missing', 'res:/retry']);
+  for (const bad of [{...events[1], keyId: 1}, {...events[2], keyHandle: undefined},
+    {...events[0], selectionPhase: 'query'}, {...events[1], resolvedKeyId: '1'}]) {
+    class InvalidKey extends WithKeys {
+      poll() { return {kind: 'module-request', token: 'key-token', module: bad}; }
+      completeDefaultModule() { assert.fail('invalid key metadata consumed a token'); }
+    }
+    const invalid = run(InvalidKey);
+    assert.match(invalid.acquisitionError.message, /module request context/);
+    assert.deepEqual(invalid.moduleRequests[0].module, bad);
+    assert.equal(invalid.readerUris.length, 0);
+  }
+});

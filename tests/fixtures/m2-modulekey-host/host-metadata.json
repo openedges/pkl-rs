@@ -1,0 +1,1575 @@
+{
+  "schema": 2,
+  "fixtureManifestSha256": "ebd3591361efc0a03e98e38695b120e9c625d9c09d0438fc641de420114aab97",
+  "fixtureVerifierSha256": "14b95a5cf0b9268b7072a0070d1b2f289c00f67c8212ca0b5ace3aa5174306c8",
+  "sourceProof": {
+    "pkl-core/src/main/java/org/pkl/core/util/IoUtils.java": {
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs/external/pkl/pkl-core/src/main/java/org/pkl/core/util/IoUtils.java",
+      "sha256": "e0d14b69e64185c9ef4b771648173d5584b9ab910e717244a6ec889ca43c9e10",
+      "copy": "upstream/pkl-core/src/main/java/org/pkl/core/util/IoUtils.java",
+      "copySha256": "e0d14b69e64185c9ef4b771648173d5584b9ab910e717244a6ec889ca43c9e10"
+    },
+    "pkl-core/src/main/java/org/pkl/core/module/ModuleKeys.java": {
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs/external/pkl/pkl-core/src/main/java/org/pkl/core/module/ModuleKeys.java",
+      "sha256": "137c1635b1bbc0894f30171355c50719a6c0c15b40e92aa44b51104f20103a05",
+      "copy": "upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKeys.java",
+      "copySha256": "137c1635b1bbc0894f30171355c50719a6c0c15b40e92aa44b51104f20103a05"
+    },
+    "pkl-core/src/main/java/org/pkl/core/module/ModuleKey.java": {
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs/external/pkl/pkl-core/src/main/java/org/pkl/core/module/ModuleKey.java",
+      "sha256": "4cada0267fa1013d602b5594b04bbb8f150e942af48d01ae94398f9b3f7915f9",
+      "copy": "upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKey.java",
+      "copySha256": "4cada0267fa1013d602b5594b04bbb8f150e942af48d01ae94398f9b3f7915f9"
+    },
+    "pkl-core/src/main/java/org/pkl/core/runtime/ReaderBase.java": {
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/ReaderBase.java",
+      "sha256": "940086123ed49c72568dcd809cfd0d3bf8627de5bf5b55d8a61fae9f4fc71a62",
+      "copy": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/ReaderBase.java",
+      "copySha256": "940086123ed49c72568dcd809cfd0d3bf8627de5bf5b55d8a61fae9f4fc71a62"
+    },
+    "pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java": {
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "sha256": "96eb6429a710d0b4db09664b6d84a0cb25a17a3206983183f66a65382ae69d82",
+      "copy": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "copySha256": "96eb6429a710d0b4db09664b6d84a0cb25a17a3206983183f66a65382ae69d82"
+    },
+    "pkl-core/src/main/java/org/pkl/core/runtime/ModuleResolver.java": {
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleResolver.java",
+      "sha256": "f0f7d42b9b9f85362efd31ec3631df123f192e864e0d86a647502a7485c25db0",
+      "copy": "upstream/pkl-core/src/main/java/org/pkl/core/runtime/ModuleResolver.java",
+      "copySha256": "f0f7d42b9b9f85362efd31ec3631df123f192e864e0d86a647502a7485c25db0",
+      "authority": "Copied original Java01 pinned inventory entry, not current live implementation."
+    },
+    "pkl-core/src/main/java/org/pkl/core/module/ModuleKeyFactories.java": {
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKeyFactories.java",
+      "sha256": "6360af26c7011bcd24d28ca9acb90dc817f9e93bc19e1c82a987db52a17ec08d",
+      "copy": "upstream/pkl-core/src/main/java/org/pkl/core/module/ModuleKeyFactories.java",
+      "copySha256": "6360af26c7011bcd24d28ca9acb90dc817f9e93bc19e1c82a987db52a17ec08d",
+      "authority": "Copied original Java01 pinned inventory entry, not current live implementation."
+    }
+  },
+  "profiles": [
+    {
+      "id": "custom-resolved-importer",
+      "customModules": [
+        {
+          "requestedUri": "memo:/aliased.pkl",
+          "selectedUri": "memo:/aliased.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/real/aliased.pkl",
+          "source": "original/workspace/custom-resolved-importer/alias-source.pkl",
+          "sourceText": "function child() = import(\"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/actual/child.pkl\")\nstable = 7\n",
+          "originalAbsoluteSource": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/alias-source.pkl",
+          "cacheMode": "true",
+          "keyKind": "host",
+          "getterContract": "Snapshot cached bool on actual factory construction; observe isCached getter separately. No Host URI/site cache.",
+          "sourceUri": "memo:/aliased.pkl",
+          "inferredName": "aliased",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": false,
+          "metadataProvenance": "Source-derived old PlannedKey contract plus pinned IoUtils.inferModuleName, NOT directly observed Java name/getter output; no expected bytes/events changed."
+        }
+      ],
+      "fileModules": [
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/main.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/main.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/main.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/main.pkl",
+          "sourceText": "function alias() = import(\"memo:/aliased.pkl\")\nstable = 7\n",
+          "inferredName": "main",
+          "sourcePath": "original/workspace/custom-resolved-importer/main.pkl",
+          "sourceSha256": "c64c412aa25972174b90a398b93201f7c7f161b46514833b612323bfa6108c23",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/main.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        },
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/alias-source.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/alias-source.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/alias-source.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/alias-source.pkl",
+          "sourceText": "function child() = import(\"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/actual/child.pkl\")\nstable = 7\n",
+          "inferredName": "alias-source",
+          "sourcePath": "original/workspace/custom-resolved-importer/alias-source.pkl",
+          "sourceSha256": "bed6a64edfab2d3ac19db74fb6e5d806ca5c493cc242e3752b84b6e1b9598cfe",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/alias-source.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        },
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/actual/child.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/actual/child.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/actual/child.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/actual/child.pkl",
+          "sourceText": "tag = \"resolved-child\"\n",
+          "inferredName": "child",
+          "sourcePath": "original/workspace/custom-resolved-importer/actual/child.pkl",
+          "sourceSha256": "33bf966102eee6dbbebd92729bb4499f34d8805d67ce55f414646b509a9012ee",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-resolved-importer/actual/child.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        }
+      ],
+      "factoryIOExceptionScheme": "throwing",
+      "factoryIOExceptionMessage": "stage48-factory-create",
+      "noLoaderScheme": "noLoader",
+      "profile": "Original Java helper custom-first registry; all unlisted custom requests delegate shared default explicitly. No Host semantic URI/site cache.",
+      "factoryFailures": [
+        {
+          "scheme": "throwing",
+          "errorKind": "io",
+          "message": "stage48-factory-create"
+        }
+      ],
+      "noLoaderUris": []
+    },
+    {
+      "id": "resolved-cache-alias-no-original-seed",
+      "customModules": [
+        {
+          "requestedUri": "memo:/aliasA.pkl",
+          "selectedUri": "memo:/aliasA.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/real/shared.pkl",
+          "source": "original/workspace/resolved-cache-alias-no-original-seed/shared.pkl",
+          "sourceText": "tag = 7\nclass C {}\n",
+          "originalAbsoluteSource": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/shared.pkl",
+          "cacheMode": "true",
+          "keyKind": "host",
+          "getterContract": "Snapshot cached bool on actual factory construction; observe isCached getter separately. No Host URI/site cache.",
+          "sourceUri": "memo:/aliasA.pkl",
+          "inferredName": "aliasA",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": false,
+          "metadataProvenance": "Source-derived old PlannedKey contract plus pinned IoUtils.inferModuleName, NOT directly observed Java name/getter output; no expected bytes/events changed."
+        },
+        {
+          "requestedUri": "memo:/aliasB.pkl",
+          "selectedUri": "memo:/aliasB.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/real/shared.pkl",
+          "source": "original/workspace/resolved-cache-alias-no-original-seed/shared.pkl",
+          "sourceText": "tag = 7\nclass C {}\n",
+          "originalAbsoluteSource": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/shared.pkl",
+          "cacheMode": "true",
+          "keyKind": "host",
+          "getterContract": "Snapshot cached bool on actual factory construction; observe isCached getter separately. No Host URI/site cache.",
+          "sourceUri": "memo:/aliasB.pkl",
+          "inferredName": "aliasB",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": false,
+          "metadataProvenance": "Source-derived old PlannedKey contract plus pinned IoUtils.inferModuleName, NOT directly observed Java name/getter output; no expected bytes/events changed."
+        }
+      ],
+      "fileModules": [
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/shared.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/shared.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/shared.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/shared.pkl",
+          "sourceText": "tag = 7\nclass C {}\n",
+          "inferredName": "shared",
+          "sourcePath": "original/workspace/resolved-cache-alias-no-original-seed/shared.pkl",
+          "sourceSha256": "1e2543362da1a917545bcf5643178552d198c4f181091bf12fb94d713ae6af6d",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/shared.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        },
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/main.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/main.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/main.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/main.pkl",
+          "sourceText": "function first() = import(\"memo:/aliasA.pkl\")\nfunction second() = import(\"memo:/aliasB.pkl\")\nfunction third() = import(\"memo:/aliasB.pkl\")\nstable = 7\n",
+          "inferredName": "main",
+          "sourcePath": "original/workspace/resolved-cache-alias-no-original-seed/main.pkl",
+          "sourceSha256": "365da208073ea70379af309cf5ec13c340f29119c32c6bec0ab536eda5e827ef",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-cache-alias-no-original-seed/main.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        }
+      ],
+      "factoryIOExceptionScheme": "throwing",
+      "factoryIOExceptionMessage": "stage48-factory-create",
+      "noLoaderScheme": "noLoader",
+      "profile": "Original Java helper custom-first registry; all unlisted custom requests delegate shared default explicitly. No Host semantic URI/site cache.",
+      "factoryFailures": [
+        {
+          "scheme": "throwing",
+          "errorKind": "io",
+          "message": "stage48-factory-create"
+        }
+      ],
+      "noLoaderUris": []
+    },
+    {
+      "id": "uncached-policy-toggle",
+      "customModules": [
+        {
+          "requestedUri": "memo:/toggle.pkl",
+          "selectedUri": "memo:/toggle.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/real/shared.pkl",
+          "source": "original/workspace/uncached-policy-toggle/shared.pkl",
+          "sourceText": "tag = 7\nclass C {}\n",
+          "originalAbsoluteSource": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/shared.pkl",
+          "cacheMode": "dynamic",
+          "keyKind": "host",
+          "getterContract": "Snapshot cached bool on actual factory construction; observe isCached getter separately. No Host URI/site cache.",
+          "sourceUri": "memo:/toggle.pkl",
+          "inferredName": "toggle",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": false,
+          "metadataProvenance": "Source-derived old PlannedKey contract plus pinned IoUtils.inferModuleName, NOT directly observed Java name/getter output; no expected bytes/events changed."
+        }
+      ],
+      "fileModules": [
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/shared.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/shared.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/shared.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/shared.pkl",
+          "sourceText": "tag = 7\nclass C {}\n",
+          "inferredName": "shared",
+          "sourcePath": "original/workspace/uncached-policy-toggle/shared.pkl",
+          "sourceSha256": "1e2543362da1a917545bcf5643178552d198c4f181091bf12fb94d713ae6af6d",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/shared.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        },
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/main.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/main.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/main.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/main.pkl",
+          "sourceText": "function one() = import(\"memo:/toggle.pkl\")\nfunction two() = import(\"memo:/toggle.pkl\")\nfunction three() = import(\"memo:/toggle.pkl\")\nfunction four() = import(\"memo:/toggle.pkl\")\nstable = 7\n",
+          "inferredName": "main",
+          "sourcePath": "original/workspace/uncached-policy-toggle/main.pkl",
+          "sourceSha256": "b318d81315b5a671ef1b6e4bc5b81c98be058eac793f30132dbdea17c1665268",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/uncached-policy-toggle/main.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        }
+      ],
+      "factoryIOExceptionScheme": "throwing",
+      "factoryIOExceptionMessage": "stage48-factory-create",
+      "noLoaderScheme": "noLoader",
+      "profile": "Original Java helper custom-first registry; all unlisted custom requests delegate shared default explicitly. No Host semantic URI/site cache.",
+      "factoryFailures": [
+        {
+          "scheme": "throwing",
+          "errorKind": "io",
+          "message": "stage48-factory-create"
+        }
+      ],
+      "noLoaderUris": []
+    },
+    {
+      "id": "clause-unused-no-loader",
+      "customModules": [],
+      "fileModules": [
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-no-loader/main.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-no-loader/main.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-no-loader/main.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-no-loader/main.pkl",
+          "sourceText": "import \"noLoader:x\" as unused\nstable = 7\n",
+          "inferredName": "main",
+          "sourcePath": "original/workspace/clause-unused-no-loader/main.pkl",
+          "sourceSha256": "19841fbdb6d909e404fc4b1be5a82089f34964ab6b3e0b29430b3c54db1655d1",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-no-loader/main.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        }
+      ],
+      "factoryIOExceptionScheme": "throwing",
+      "factoryIOExceptionMessage": "stage48-factory-create",
+      "noLoaderScheme": "noLoader",
+      "profile": "Original Java helper custom-first registry; all unlisted custom requests delegate shared default explicitly. No Host semantic URI/site cache.",
+      "factoryFailures": [
+        {
+          "scheme": "throwing",
+          "errorKind": "io",
+          "message": "stage48-factory-create"
+        }
+      ],
+      "noLoaderUris": [
+        "noLoader:x"
+      ]
+    },
+    {
+      "id": "expr-unused-no-loader",
+      "customModules": [],
+      "fileModules": [
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-no-loader/main.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-no-loader/main.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-no-loader/main.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-no-loader/main.pkl",
+          "sourceText": "unused = import(\"noLoader:x\")\nstable = 7\n",
+          "inferredName": "main",
+          "sourcePath": "original/workspace/expr-unused-no-loader/main.pkl",
+          "sourceSha256": "cf94c8f87685bbcd10f1a7fd934162d26364ad956d8c839648f19576c66d9b3a",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-no-loader/main.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        }
+      ],
+      "factoryIOExceptionScheme": "throwing",
+      "factoryIOExceptionMessage": "stage48-factory-create",
+      "noLoaderScheme": "noLoader",
+      "profile": "Original Java helper custom-first registry; all unlisted custom requests delegate shared default explicitly. No Host semantic URI/site cache.",
+      "factoryFailures": [
+        {
+          "scheme": "throwing",
+          "errorKind": "io",
+          "message": "stage48-factory-create"
+        }
+      ],
+      "noLoaderUris": [
+        "noLoader:x"
+      ]
+    },
+    {
+      "id": "clause-unused-factory-throw",
+      "customModules": [],
+      "fileModules": [
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-factory-throw/main.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-factory-throw/main.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-factory-throw/main.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-factory-throw/main.pkl",
+          "sourceText": "import \"throwing:x\" as unused\nstable = 7\n",
+          "inferredName": "main",
+          "sourcePath": "original/workspace/clause-unused-factory-throw/main.pkl",
+          "sourceSha256": "62024668d3a7bf230feecfa8e14df3a630780bbf2a1a0ed109d18308d14997ba",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/clause-unused-factory-throw/main.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        }
+      ],
+      "factoryIOExceptionScheme": "throwing",
+      "factoryIOExceptionMessage": "stage48-factory-create",
+      "noLoaderScheme": "noLoader",
+      "profile": "Original Java helper custom-first registry; all unlisted custom requests delegate shared default explicitly. No Host semantic URI/site cache.",
+      "factoryFailures": [
+        {
+          "scheme": "throwing",
+          "errorKind": "io",
+          "message": "stage48-factory-create"
+        }
+      ],
+      "noLoaderUris": []
+    },
+    {
+      "id": "expr-unused-factory-throw",
+      "customModules": [],
+      "fileModules": [
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-factory-throw/main.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-factory-throw/main.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-factory-throw/main.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-factory-throw/main.pkl",
+          "sourceText": "unused = import(\"throwing:x\")\nstable = 7\n",
+          "inferredName": "main",
+          "sourcePath": "original/workspace/expr-unused-factory-throw/main.pkl",
+          "sourceSha256": "efdbd22302fd1ab77d09b0418ff98456b1f1f5eb2e97b3e49934ed98176fa467",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-factory-throw/main.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        }
+      ],
+      "factoryIOExceptionScheme": "throwing",
+      "factoryIOExceptionMessage": "stage48-factory-create",
+      "noLoaderScheme": "noLoader",
+      "profile": "Original Java helper custom-first registry; all unlisted custom requests delegate shared default explicitly. No Host semantic URI/site cache.",
+      "factoryFailures": [
+        {
+          "scheme": "throwing",
+          "errorKind": "io",
+          "message": "stage48-factory-create"
+        }
+      ],
+      "noLoaderUris": []
+    },
+    {
+      "id": "custom-key-pkl-uri-not-stdlib-kind",
+      "customModules": [
+        {
+          "requestedUri": "pkl:base",
+          "selectedUri": "pkl:base",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/real/custom-base.pkl",
+          "source": "original/workspace/custom-key-pkl-uri-not-stdlib-kind/custom-base.pkl",
+          "sourceText": "tag = 99\n",
+          "originalAbsoluteSource": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/custom-base.pkl",
+          "cacheMode": "true",
+          "keyKind": "host",
+          "getterContract": "Snapshot cached bool on actual factory construction; observe isCached getter separately. No Host URI/site cache.",
+          "sourceUri": "pkl:base",
+          "inferredName": "base",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": false,
+          "metadataProvenance": "Source-derived old PlannedKey contract plus pinned IoUtils.inferModuleName, NOT directly observed Java name/getter output; no expected bytes/events changed."
+        }
+      ],
+      "fileModules": [
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/main.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/main.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/main.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/main.pkl",
+          "sourceText": "function custom() = import(\"pkl:base\")\nstable = 7\n",
+          "inferredName": "main",
+          "sourcePath": "original/workspace/custom-key-pkl-uri-not-stdlib-kind/main.pkl",
+          "sourceSha256": "16b340e696f40765b2ccd118dd099347171e4555e94e6325af0d1b6edbd36cbc",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/main.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        },
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/custom-base.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/custom-base.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/custom-base.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/custom-base.pkl",
+          "sourceText": "tag = 99\n",
+          "inferredName": "custom-base",
+          "sourcePath": "original/workspace/custom-key-pkl-uri-not-stdlib-kind/custom-base.pkl",
+          "sourceSha256": "8e47badc9bdc320c1f4eef1ccb26661feede0a5b04223a677b47407890cd3e64",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/custom-key-pkl-uri-not-stdlib-kind/custom-base.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        }
+      ],
+      "factoryIOExceptionScheme": "throwing",
+      "factoryIOExceptionMessage": "stage48-factory-create",
+      "noLoaderScheme": "noLoader",
+      "profile": "Original Java helper custom-first registry; all unlisted custom requests delegate shared default explicitly. No Host semantic URI/site cache.",
+      "factoryFailures": [
+        {
+          "scheme": "throwing",
+          "errorKind": "io",
+          "message": "stage48-factory-create"
+        }
+      ],
+      "noLoaderUris": []
+    },
+    {
+      "id": "resolved-nested-jar-default-trust",
+      "customModules": [
+        {
+          "requestedUri": "memo:/jarNested.pkl",
+          "selectedUri": "memo:/jarNested.pkl",
+          "resolvedUri": "jar:nested:/stage48/app.jar/!BOOT-INF/classes!/jarNested.pkl",
+          "source": "original/workspace/resolved-nested-jar-default-trust/jar-source.pkl",
+          "sourceText": "function file() = import(\"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl\")\nfunction base() = import(\"pkl:base\")\nfunction peer() = import(\"memo:/peer.pkl\")\n",
+          "originalAbsoluteSource": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/jar-source.pkl",
+          "cacheMode": "true",
+          "keyKind": "host",
+          "getterContract": "Snapshot cached bool on actual factory construction; observe isCached getter separately. No Host URI/site cache.",
+          "sourceUri": "memo:/jarNested.pkl",
+          "inferredName": "jarNested",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": false,
+          "metadataProvenance": "Source-derived old PlannedKey contract plus pinned IoUtils.inferModuleName, NOT directly observed Java name/getter output; no expected bytes/events changed."
+        },
+        {
+          "requestedUri": "memo:/peer.pkl",
+          "selectedUri": "memo:/peer.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/real/peer.pkl",
+          "source": "original/workspace/resolved-nested-jar-default-trust/peer.pkl",
+          "sourceText": "tag = \"peer\"\n",
+          "originalAbsoluteSource": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/peer.pkl",
+          "cacheMode": "true",
+          "keyKind": "host",
+          "getterContract": "Snapshot cached bool on actual factory construction; observe isCached getter separately. No Host URI/site cache.",
+          "sourceUri": "memo:/peer.pkl",
+          "inferredName": "peer",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": false,
+          "metadataProvenance": "Source-derived old PlannedKey contract plus pinned IoUtils.inferModuleName, NOT directly observed Java name/getter output; no expected bytes/events changed."
+        }
+      ],
+      "fileModules": [
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/peer.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/peer.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/peer.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/peer.pkl",
+          "sourceText": "tag = \"peer\"\n",
+          "inferredName": "peer",
+          "sourcePath": "original/workspace/resolved-nested-jar-default-trust/peer.pkl",
+          "sourceSha256": "160dedbada480be4025f634a39b04350a7d54765292bd33994dd8a85af96a1fb",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/peer.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        },
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl",
+          "sourceText": "function alias() = import(\"memo:/jarNested.pkl\")\nstable = 7\n",
+          "inferredName": "main",
+          "sourcePath": "original/workspace/resolved-nested-jar-default-trust/main.pkl",
+          "sourceSha256": "d2903ace47dfb7f10f1f8ae2eb442c6f50ec3090ac854b775b50e4f5d4208a81",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/main.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        },
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/jar-source.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/jar-source.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/jar-source.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/jar-source.pkl",
+          "sourceText": "function file() = import(\"file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl\")\nfunction base() = import(\"pkl:base\")\nfunction peer() = import(\"memo:/peer.pkl\")\n",
+          "inferredName": "jar-source",
+          "sourcePath": "original/workspace/resolved-nested-jar-default-trust/jar-source.pkl",
+          "sourceSha256": "ed5569219910648e48dbf432831503c8551664d8561f3ab3dc9726f7eebd57c8",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/jar-source.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        },
+        {
+          "requestedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl",
+          "selectedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl",
+          "resolvedUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl",
+          "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl",
+          "sourceText": "tag = \"file\"\n",
+          "inferredName": "child",
+          "sourcePath": "original/workspace/resolved-nested-jar-default-trust/actual/child.pkl",
+          "sourceSha256": "e61147bc013f465c8f15d4753a95422c27a71161caf182196b1e3ec1ff1fa0e4",
+          "originalAbsolutePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/resolved-nested-jar-default-trust/actual/child.pkl",
+          "local": true,
+          "hierarchical": true,
+          "fragmentPaths": false,
+          "isGlobbable": true,
+          "isCached": true,
+          "metadataProvenance": "Source-derived pinned ModuleKeys.File/getOriginal and IoUtils.inferModuleName; physical declared regular input realpath, NOT a synthetic Java callback or observed expected event."
+        }
+      ],
+      "factoryIOExceptionScheme": "throwing",
+      "factoryIOExceptionMessage": "stage48-factory-create",
+      "noLoaderScheme": "noLoader",
+      "profile": "Original Java helper custom-first registry; all unlisted custom requests delegate shared default explicitly. No Host semantic URI/site cache.",
+      "factoryFailures": [
+        {
+          "scheme": "throwing",
+          "errorKind": "io",
+          "message": "stage48-factory-create"
+        }
+      ],
+      "noLoaderUris": []
+    }
+  ],
+  "scope": [
+    "Additional Host source/configuration metadata only; Java expected API channels/events/counters remain unchanged.",
+    "No primary/repl/factory/default implementation-class events fabricated.",
+    "ModuleName inference is a bounded source specialization for this old input set, not a general URI parser/resolver.",
+    "Physical file bindings enumerate original declared source files only; no cache/source tree traversal or network.",
+    "Factory failures are actual authored Host IOException inputs; Pkl error text/frame generation remains shared engine responsibility.",
+    "NoLoader input is exact URI registry-miss membership from authenticated source literals + actual empty factory trace, only after shared default returns false. Other unconfigured URIs remain acquisition failures."
+  ],
+  "factoryFailureProof": {
+    "sourcePath": "original/AdmissionProbe.java",
+    "sha256": "7509222bebfbbea487ae20548671d827a68bff364a7f10e5df30bb9dcd6a6346",
+    "exactRuleUtf8Hex": "6966287572692e676574536368656d6528292e657175616c7328227468726f77696e672229297468726f77206e657720494f457863657074696f6e2822737461676534382d666163746f72792d63726561746522293b",
+    "predicate": "URI.getScheme().equals(\"throwing\"), case-sensitive; no URI normalization or expected-message inference.",
+    "placement": "Actual select-key callback before configured custom/default selection",
+    "originalSourceBinding": "Pinned fixture original helper source, authenticated by literal original inventory."
+  },
+  "noLoaderProofs": [
+    {
+      "id": "clause-unused-no-loader",
+      "uri": "noLoader:x",
+      "authoredSource": "original/workspace/clause-unused-no-loader/main.pkl",
+      "authoredSourceSha256": "19841fbdb6d909e404fc4b1be5a82089f34964ab6b3e0b29430b3c54db1655d1",
+      "sourceLiteralUtf8Hex": "226e6f4c6f616465723a7822",
+      "actualEmptyFactoryTrace": [
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-0/event-8",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-0/event-9",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-0/event-10",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-0/event-11",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-0/event-12",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-0/event-13",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-0/event-14",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-0/event-15",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-1/event-8",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-1/event-9",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-1/event-10",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-1/event-11",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-1/event-12",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-1/event-13",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-1/event-14",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/0/calls/session-1/event-15",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-0/event-8",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-0/event-9",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-0/event-10",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-0/event-11",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-0/event-12",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-0/event-13",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-0/event-14",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-0/event-15",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-1/event-8",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-1/event-9",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-1/event-10",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-1/event-11",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-1/event-12",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-1/event-13",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-1/event-14",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/clause-unused-no-loader/1/calls/session-1/event-15",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        }
+      ],
+      "noFactoryHitObserved": true,
+      "sourceRule": "Original ModuleResolver iterates configured factories and raises NoLoader only after all Optional.empty. No expected diagnostic/API status was inspected."
+    },
+    {
+      "id": "expr-unused-no-loader",
+      "uri": "noLoader:x",
+      "authoredSource": "original/workspace/expr-unused-no-loader/main.pkl",
+      "authoredSourceSha256": "cf94c8f87685bbcd10f1a7fd934162d26364ad956d8c839648f19576c66d9b3a",
+      "sourceLiteralUtf8Hex": "226e6f4c6f616465723a7822",
+      "actualEmptyFactoryTrace": [
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-24",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-25",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-26",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-27",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-28",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-29",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-30",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-31",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-40",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-41",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-42",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-43",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-44",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-45",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-46",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-47",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-64",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-65",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-66",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-67",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-68",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-69",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-70",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-0/event-71",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-24",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-25",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-26",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-27",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-28",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-29",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-30",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-31",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-40",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-41",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-42",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-43",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-44",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-45",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-46",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-47",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-64",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-65",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-66",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-67",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-68",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-69",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-70",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 0,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/0/calls/session-1/event-71",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-24",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-25",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-26",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-27",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-28",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-29",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-30",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-31",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-40",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-41",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-42",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-43",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-44",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-45",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-46",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-47",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-64",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-65",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-66",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-67",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-68",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-69",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-70",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 0,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-0/event-71",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-24",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-25",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-26",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-27",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-28",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-29",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-30",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-31",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-40",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-41",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-42",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-43",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-44",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-45",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-46",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-47",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-64",
+          "utf8Hex": "666163746f72792d637573746f6d206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d0063007500730074006f006d0020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-65",
+          "utf8Hex": "666163746f72792d30206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00300020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-66",
+          "utf8Hex": "666163746f72792d31206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00310020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-67",
+          "utf8Hex": "666163746f72792d32206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00320020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-68",
+          "utf8Hex": "666163746f72792d33206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00330020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-69",
+          "utf8Hex": "666163746f72792d34206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00340020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-70",
+          "utf8Hex": "666163746f72792d35206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00350020006e006f004c006f0061006400650072003a0078"
+        },
+        {
+          "repeat": 1,
+          "session": 1,
+          "rawPrefix": "cases/expr-unused-no-loader/1/calls/session-1/event-71",
+          "utf8Hex": "666163746f72792d36206e6f4c6f616465723a78",
+          "utf16BEHex": "0066006100630074006f00720079002d00360020006e006f004c006f0061006400650072003a0078"
+        }
+      ],
+      "noFactoryHitObserved": true,
+      "sourceRule": "Original ModuleResolver iterates configured factories and raises NoLoader only after all Optional.empty. No expected diagnostic/API status was inspected."
+    }
+  ]
+}

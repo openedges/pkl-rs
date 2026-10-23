@@ -15,10 +15,11 @@ returns `false` without consuming a valid unsupported request. Stale tokens and
 expired or closed sessions remain errors. Custom providers choose whether to
 delegate; JavaScript does not implement a second trust policy.
 
-The pinned singleton module list bypasses key resolution, while authored import
-edges still require admission. General bundled modules such as `pkl:json` resolve
-before their internal source is initialized. Qualified Ref type guards force
-their authored import. The [architecture](architecture.md#import-admission-and-module-cache-ownership)
+Selected standard-library keys in the pinned singleton list bypass key resolution,
+while authored import edges still require admission. Custom keys with the same
+URI spelling retain their own key kind. General bundled modules such as
+`pkl:json` resolve before their internal source is initialized. Qualified Ref type
+guards force their authored import. The [architecture](architecture.md#import-admission-and-module-cache-ownership)
 describes cache ownership, partial initialization and remaining boundaries.
 
 ## Pinned Java policy fixtures
@@ -57,10 +58,11 @@ must separately bind the exact native or portable artifact, inputs, provider
 configuration and complete actual channels. Selected API output equality does
 not establish full ordered policy events or counter equality.
 
-The current supplied-primary session does not reproduce Java's complete primary
-and query/repl lifecycle. General ModuleKey factories, key-kind dispatch,
-`isCached` behavior, eager import-clause factory selection, full URI key equality
-and import globs remain required work. Unsupported profiles and missing lifecycle
-events remain unexecuted or failed comparisons. Neither this fixture nor the
-current admission implementation completes M2 or establishes the performance
-targets.
+The supplied-primary policy fixture does not establish Java's complete primary
+and query/repl lifecycle. The separate [ModuleKey work](m2-module-keys.md) adds
+key-kind dispatch, explicit cache-policy queries, eager import-clause factory
+selection and public evaluation operations. Its selected results do not close
+the full factory, URI equality, import-glob or ordered-event requirements.
+Unsupported profiles and missing lifecycle events remain unexecuted or failed
+comparisons. Neither this fixture nor the current admission implementation
+completes M2 or establishes the performance targets.

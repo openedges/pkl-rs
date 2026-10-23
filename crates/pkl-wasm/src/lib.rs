@@ -379,6 +379,13 @@ fn source_event(event: probe::SourceEvent) -> Result<JsValue, JsValue> {
             ("importUri", module.import_uri),
             ("resolvedUri", module.resolved_uri),
             ("sourceUri", module.source_uri),
+            ("keyId", module.key_id),
+            ("keyKind", module.key_kind.map(Into::into)),
+            ("keyHandle", module.key_handle),
+            ("resolvedKeyId", module.resolved_key_id),
+            ("resolvedKeyHandle", module.resolved_key_handle),
+            ("selectionPhase", module.selection_phase.map(Into::into)),
+            ("resolutionPhase", module.resolution_phase.map(Into::into)),
         ] {
             if let Some(value) = value {
                 set(&record, key, JsValue::from_str(&value))?;
@@ -486,6 +493,49 @@ impl SourceSession {
             )
             .map_err(|failure| text_error(failure.text))?,
         })
+    }
+    #[wasm_bindgen(js_name = moduleEvaluator)]
+    pub fn module_evaluator(
+        trace_mode: Option<JsString>,
+        host_logger: Option<bool>,
+        host_frame_transformer: Option<bool>,
+        power_assertions: Option<bool>,
+    ) -> Result<SourceSession, JsValue> {
+        let mode = trace_mode
+            .as_ref()
+            .map(string)
+            .transpose()?
+            .unwrap_or_else(|| "compact".into());
+        Ok(Self {
+            inner: probe::SourceProbe::new_module_evaluator(
+                &mode,
+                host_logger.unwrap_or(false),
+                host_frame_transformer.unwrap_or(false),
+                power_assertions.unwrap_or(false),
+            )
+            .map_err(text_error)?,
+        })
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[wasm_bindgen(js_name = evaluateModuleSource)]
+    pub fn evaluate_module_source(
+        &mut self,
+        uri: JsString,
+        contents: Option<JsString>,
+        expression: JsString,
+        now: f64,
+        timeout: Option<f64>,
+    ) -> Result<(), JsValue> {
+        let contents = contents.as_ref().map(string).transpose()?;
+        self.inner
+            .evaluate_module_source(
+                &string(&uri)?,
+                contents.as_deref(),
+                &string(&expression)?,
+                unsigned(now)?,
+                timeout.map(unsigned).transpose()?,
+            )
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = forExpressions)]
     #[allow(clippy::too_many_arguments)]
@@ -615,6 +665,150 @@ impl SourceSession {
     pub fn complete_default_module(&mut self, token: JsString, now: f64) -> Result<bool, JsValue> {
         self.inner
             .complete_default_module(&string(&token)?, unsigned(now)?)
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[wasm_bindgen(js_name = completeModuleKey)]
+    pub fn complete_module_key(
+        &mut self,
+        token: JsString,
+        key_id: JsString,
+        uri: JsString,
+        kind: JsString,
+        handle: JsString,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_module_key(
+                &string(&token)?,
+                &string(&key_id)?,
+                &string(&uri)?,
+                &string(&kind)?,
+                &string(&handle)?,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[wasm_bindgen(js_name = completeModuleCachePolicy)]
+    pub fn complete_module_cache_policy(
+        &mut self,
+        token: JsString,
+        key_id: JsString,
+        cached: bool,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_module_cache_policy(
+                &string(&token)?,
+                &string(&key_id)?,
+                cached,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[wasm_bindgen(js_name = completeImportUri)]
+    pub fn complete_import_uri(
+        &mut self,
+        token: JsString,
+        key_id: JsString,
+        uri: JsString,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_import_uri(
+                &string(&token)?,
+                &string(&key_id)?,
+                &string(&uri)?,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[wasm_bindgen(js_name = reenterModuleSource)]
+    pub fn reenter_module_source(
+        &mut self,
+        token: JsString,
+        uri: JsString,
+        contents: Option<JsString>,
+        expression: JsString,
+        now: f64,
+        timeout: Option<f64>,
+    ) -> Result<(), JsValue> {
+        let contents = contents.as_ref().map(string).transpose()?;
+        self.inner
+            .reenter_module_source(
+                &string(&token)?,
+                &string(&uri)?,
+                contents.as_deref(),
+                &string(&expression)?,
+                unsigned(now)?,
+                timeout.map(unsigned).transpose()?,
+            )
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[wasm_bindgen(js_name = completeModuleFragmentPaths)]
+    pub fn complete_module_fragment_paths(
+        &mut self,
+        token: JsString,
+        key_id: JsString,
+        fragment_paths: bool,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_module_fragment_paths(
+                &string(&token)?,
+                &string(&key_id)?,
+                fragment_paths,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[wasm_bindgen(js_name = completeModuleResolvedKey)]
+    pub fn complete_module_resolved_key(
+        &mut self,
+        token: JsString,
+        key_id: JsString,
+        resolved_key_id: JsString,
+        handle: JsString,
+        original_uri: JsString,
+        resolved_uri: JsString,
+        source_uri: JsString,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .complete_module_resolved_key(
+                &string(&token)?,
+                &string(&key_id)?,
+                &string(&resolved_key_id)?,
+                &string(&handle)?,
+                &string(&original_uri)?,
+                &string(&resolved_uri)?,
+                &string(&source_uri)?,
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[allow(clippy::too_many_arguments)]
+    #[wasm_bindgen(js_name = rejectModuleKey)]
+    pub fn reject_module_key(
+        &mut self,
+        token: JsString,
+        cache_policy: bool,
+        kind: JsString,
+        message: Option<JsString>,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .reject_module_key(
+                &string(&token)?,
+                cache_policy,
+                &string(&kind)?,
+                message.as_ref().map(pkl_text).transpose()?,
+                unsigned(now)?,
+            )
             .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = completeModuleCapabilities)]

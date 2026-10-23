@@ -1,13 +1,13 @@
 //! Full Java bytes and actual callback identities from closed inheritance observations.
+#[path = "support/module_keys.rs"]
+mod module_keys;
 use pkl_runtime::probe::{SourceEvent, SourceProbe};
 fn next(probe: &mut SourceProbe) -> SourceEvent {
     for _ in 0..100_000 {
         let event = probe.poll(0, 1).unwrap();
         probe.collect();
         if event.kind == "module-request"
-            && probe
-                .complete_default_module(event.token.as_deref().unwrap(), 0)
-                .unwrap()
+            && module_keys::complete_probe(probe, event.token.as_deref().unwrap(), 0).unwrap()
         {
             continue;
         }
@@ -136,8 +136,15 @@ fn original_invalid_amendment_uses_the_adopted_module_diagnostic_name() {
         },
         &ModuleEvalOptions::default(),
         |request| match &request.kind {
+            ModuleRequestKind::ResolveKey { .. } => {
+                panic!("public lifecycle request in supplied-source test")
+            }
+            ModuleRequestKind::SelectKey { .. }
+            | ModuleRequestKind::QueryCachePolicy { .. }
+            | ModuleRequestKind::QueryFragmentPaths { .. }
+            | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
             ModuleRequestKind::CheckImport { .. } => {
-                pkl_runtime::modules::default_completion(request).expect("default import policy")
+                module_keys::defaults(request).expect("default import policy")
             }
             ModuleRequestKind::Capabilities { .. } | ModuleRequestKind::HasElement { .. } => {
                 panic!("unexpected ModuleKey preparation in this fixture")

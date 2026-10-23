@@ -1,0 +1,18 @@
+org.pkl.core.PklException: –– Pkl Error ––
+I/O error loading module `{0}`.
+IOException: stage48-factory-create
+
+1 | unused = import("throwing:x")
+             ^^^^^^^^^^^^^^^^^^^^
+at main#unused (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage48/target/m2/stage48-module-admission-oracle-01/workspace/expr-unused-factory-throw/main.pkl)
+
+1 | unused
+    ^^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at AdmissionProbe.capture(AdmissionProbe.java:55)
+	at AdmissionProbe.main(AdmissionProbe.java:75)

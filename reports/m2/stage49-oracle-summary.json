@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "scope": "Selected Stage49 Java, native ModuleKey and mocked driver verification evidence only; full Java events/counters, invalid Host SPI internal errors and full M2 remain open.",
+  "extraJava": {
+    "apiCalls": 944,
+    "success": 760,
+    "error": 184,
+    "intentNotReachedQueryAliasDiagnosticCalls": 100,
+    "invalidFragmentInternalApiBoundaries": 8,
+    "original01To07Preserved": true
+  },
+  "old212Native": {
+    "originalOrderedJavaEvents": 2248,
+    "eventEncodingQualification": "Original UTF8/ASCII provenance retained; derived units are not fresh independent Java encoding captures.",
+    "build02": {
+      "providedRawMatches": 212,
+      "publicRawMatches": 212
+    },
+    "build05": {
+      "providedRawMatches": 212,
+      "publicRawMatches": 212
+    },
+    "fullLifecyclePassSessionsPerProfile": 0,
+    "fullLifecycleFailedSessionsPerProfile": 36
+  },
+  "extendedNative944": {
+    "build04": {
+      "rawMatches": 904,
+      "ordinaryMismatches": 32,
+      "internalBoundaryMismatches": 8
+    },
+    "build05": {
+      "rawMatches": 936,
+      "intendedOrdinaryMatches": 836,
+      "preservedInitialDiagnosticMatches": 100,
+      "ordinaryMismatches": 0,
+      "internalBoundaryMismatches": 8
+    },
+    "processesPerBuild": 140,
+    "allProcessesZeroAndSlotsZero": true,
+    "unchangedJavaExpectations": true
+  },
+  "driverProposal04": {
+    "syntaxChecks": 2,
+    "unitTests": 9,
+    "realInstalledFixtureMockPreflight": true,
+    "engineExecutions": 0,
+    "browserLaunches": 0
+  },
+  "selection": {
+    "selectedRoots": 53,
+    "selectedPayloads": 165424,
+    "selectedRawBytes": 99010340,
+    "originalChanges": []
+  },
+  "archives": 11,
+  "compressedBytes": 28786041,
+  "allBelow100MB": true,
+  "allCreateAndSeparateVerifyCommandsZero": true,
+  "allRawMembersIndependentlyReadBack": true,
+  "fullJavaEventCounterParityPassed": false,
+  "preservedHistory": [
+    "Initial native132 relativeSOURCE launch failure before guest execution",
+    "Wrong consumer config pin rejection",
+    "Initial nativeaudit custom/default key classification failure",
+    "Native944 audit01 metadata field-name KeyError before audit result",
+    "Original query-scope alias intent failures100",
+    "Java invalid-SPI internal errors8",
+    "Initial fixture test expectation failure",
+    "Initial sidecarV2 builder failure",
+    "Driver mocked-test aliasing expectation failure and metadata parser failure",
+    "Unsealed historical roots remain without invented producer closures",
+    "Draft publication02 was stopped for missing exact prewalk cache exclusions; failed publisher SIGTERM/241 retained"
+  ],
+  "noJavaOrNativeEvaluationDuringPackaging": true,
+  "mainReportsGitWrites": false,
+  "liveHandles": []
+}
