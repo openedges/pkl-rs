@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "scope": "Immutable intermediate Stage47 C05 actual native/Node/Chromium comparisons, acquired before the later diagnostic layout correction. This is not the final Stage47 or full-M2 gate.",
+  "candidateReleaseSha256": "93439249df0358843498ff16f62e80616a9916aa0c2faad257ad464fe1f55221",
+  "candidateBaseCommit": "674d3cabdd0e9c421a2cb9b820a22f2456755629",
+  "actualPlatformWrapper": {
+    "sessionId": 51839,
+    "exitCode": 0
+  },
+  "baseline": {
+    "sharedEngineMatches": 6078,
+    "javaMatchesEachTarget": 6076,
+    "knownFailures": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "architectureContractPassed": true,
+    "strictCompatibilityPassed": false
+  },
+  "apiMatchesEachOfNodeAndChromium": {
+    "renderer": 860,
+    "resource": 1008,
+    "modulePreparation": 252
+  },
+  "apiCallsBothTargets": 4240,
+  "terminalSessions": 176,
+  "candidateSourceFilesVerified": 47909,
+  "setup": {
+    "originalSession": 94291,
+    "originalExitCode": 1,
+    "reason": "Regular-file snapshot omitted 11 tracked reference symlinks. No platform execution started in this setup.",
+    "repairSession": 24154,
+    "repairExitCode": 0,
+    "pinnedGitSymlinksRestored": 11
+  },
+  "archives": [
+    {
+      "path": "reports/m2/stage47-c05-platform-build-baseline.tar.gz",
+      "sha256": "d9ed4e630d5e0670f697544030e8e66b0f656a5f82caae87e707437894c81148",
+      "bytes": 7617273
+    },
+    {
+      "path": "reports/m2/stage47-c05-platform-module-preparation.tar.gz",
+      "sha256": "c05ec2f78b19fa866954722c1ef4c8829e8fdc8030e043d1f4f3810461dbd942",
+      "bytes": 552985
+    },
+    {
+      "path": "reports/m2/stage47-c05-platform-renderer.tar.gz",
+      "sha256": "0960b74a940ff19c324e967a9cee289e74a82a43e9ca37f0177b17bcc191c3f0",
+      "bytes": 1111651
+    },
+    {
+      "path": "reports/m2/stage47-c05-platform-resource.tar.gz",
+      "sha256": "c9fa72a7719f43d3b59ada503e68c0bd26d4566deeffcf299f6ba18fc0af6fbd",
+      "bytes": 945683
+    },
+    {
+      "path": "reports/m2/stage47-c05-platform-setup-audit.tar.gz",
+      "sha256": "98bdbb32fe0c1cea74976baad709f3b9c3c925983e78bbb17cb24808d03dfdd1",
+      "bytes": 3287266
+    },
+    {
+      "path": "reports/m2/stage47-c05-platform-publication-closeout.tar.gz",
+      "sha256": "5a7f5922e2e22b776497453ef65792e40cd92e7f883c2cea9b91a32a7eee8543",
+      "bytes": 2522349
+    },
+    {
+      "path": "reports/m2/stage47-c05-platform-publication.json",
+      "sha256": "c22f41c65c666f5fb017e0850a77072aa73e7704ad754cc3d21795afd92fa35f",
+      "bytes": 12629
+    },
+    {
+      "path": "reports/m2/stage47-c05-platform-captures.json",
+      "sha256": "e471a246c534cd934d1c2ad8bd9d730c55573b8ed03a61fd9ca98133c3a2e448",
+      "bytes": 2354
+    },
+    {
+      "path": "reports/m2/stage47-c05-platform-closeout.json",
+      "sha256": "7170f03e0046c5ae726ff9c2c1e356058c9c26335e26983aa8ab8f3c0fbc5bd7",
+      "bytes": 634
+    },
+    {
+      "path": "reports/m2/stage47-c05-platform-audit.json",
+      "sha256": "0e85c8d437f9c2174858b6617a35445002e48f2356c26e770443a8c1fa7c0d9e",
+      "bytes": 11354
+    }
+  ],
+  "remaining": [
+    "Later RuntimeError/Diagnostic layout changes require a new candidate and applicable native/platform verification.",
+    "Additional 980 renderer calls per portable target have separate acquisition/audit records and are outside these archives.",
+    "Final workspace checks and new whole-selected regression are separate obligations.",
+    "Standard-module admission, complete scalar/String producer identity, full API/lifecycle and performance requirements remain open."
+  ],
+  "fullM2Complete": false,
+  "hostedCiClaimed": false,
+  "performanceTargetClaimed": false
+}

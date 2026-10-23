@@ -482,6 +482,8 @@ struct ExpressionMachine {
 enum ExpressionFlow {
     Continue,
     Primary,
+    TypeOperand { cast: bool },
+    New { start: usize },
     Done,
 }
 
@@ -1509,15 +1511,7 @@ impl<'a> Parser<'a> {
             }
             if self.is_name("new") {
                 self.advance()?;
-                let ty = if self.is_symbol('{') {
-                    None
-                } else {
-                    Some(self.type_expression_expected(Some("{"))?)
-                };
-                let missing_delimiter = ty.is_none();
-                machine.object_build =
-                    Some(self.start_object(None, ty, span.start, missing_delimiter, true)?);
-                return Ok(ExpressionFlow::Continue);
+                return Ok(ExpressionFlow::New { start: span.start });
             }
             if self.is_name("if") {
                 self.enter_expression_scope()?;
@@ -1691,24 +1685,10 @@ impl<'a> Parser<'a> {
             if (self.is_name("is") || self.is_name("as")) && machine.minimum <= 6 {
                 let cast = self.is_name("as");
                 self.advance()?;
-                let ty = self.type_expression()?;
-                let span = Span::new(left.span.start, ty.span.end);
-                left = Expr {
-                    kind: if cast {
-                        ExprKind::TypeCast {
-                            value: Box::new(left),
-                            ty,
-                        }
-                    } else {
-                        ExprKind::TypeCheck {
-                            value: Box::new(left),
-                            ty,
-                        }
-                    },
-                    span,
-                };
+                // The type may contain constraint expressions. Leave this
+                // large dispatch frame before entering the type machine.
                 machine.current = Some(left);
-                return Ok(ExpressionFlow::Continue);
+                return Ok(ExpressionFlow::TypeOperand { cast });
             }
             if self.is_symbol('{') {
                 // Pkl requires an explicitly parenthesized amendment parent.

@@ -55,7 +55,7 @@ impl Vm {
             )?);
             return Err(RuntimeError::new(ErrorKind::Type, message.finish()));
         };
-        if let Some(point) = usize::try_from(index)
+        if let Some(point) = usize::try_from(index.get())
             .ok()
             .and_then(|i| text.code_point_at(i))
         {
@@ -65,7 +65,7 @@ impl Vm {
         let mut message = crate::pkl_string::PklStringBuilder::default();
         message.push_str(&format!(
             "Character index `{}` is out of range `0`..`{}`.\nString: ",
-            diagnostic_integer(index),
+            diagnostic_integer(*index),
             diagnostic_integer(last)
         ));
         message.push_value(&crate::diagnostic_values::render_string(
@@ -148,7 +148,7 @@ impl Vm {
         let length = i64::try_from(text.encode_utf16().count())
             .map_err(|_| invalid("String length exceeds Int"))?;
         let total = length
-            .checked_mul(count)
+            .checked_mul(*count)
             .ok_or_else(|| numeric_error(crate::numeric::NumericError::IntegerOverflow))?;
         if total > i32::MAX as i64 {
             let digits = total.to_string();
@@ -166,7 +166,7 @@ impl Vm {
         }
         // The checked length precedes Java's long-to-int count narrowing. For an
         // empty receiver this can expose a negative Java implementation count.
-        let narrowed = count as i32;
+        let narrowed = count.get() as i32;
         if narrowed < 0 {
             return Err(RuntimeError::new(
                 ErrorKind::Unsupported,
@@ -196,7 +196,7 @@ impl Vm {
 }
 
 // Java MessageFormat formats numeric error arguments with grouping separators.
-fn diagnostic_integer(value: i64) -> String {
+pub(super) fn diagnostic_integer(value: i64) -> String {
     let digits = value.unsigned_abs().to_string();
     let mut output = String::with_capacity(digits.len() + digits.len() / 3 + 1);
     if value < 0 {

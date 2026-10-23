@@ -418,8 +418,10 @@ fn authored_frontend_program_survives_host_reentry_retry_cancel_and_terminal_rel
                 .reenter(&outer, entries[1], vec![module.clone()], 3, None)
                 .unwrap();
             let retry = host_read(&mut session, 3, "mem:leaf");
-            session.resume(&retry, Ok(Value::Int(42)), 3).unwrap();
-            assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(42)));
+            session
+                .resume(&retry, Ok(Value::Int(42.into())), 3)
+                .unwrap();
+            assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(42.into())));
             assert_eq!(host_read(&mut session, 3, "mem:outer"), outer);
             session.cancel();
             assert_eq!(

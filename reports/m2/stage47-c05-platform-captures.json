@@ -1,0 +1,54 @@
+{
+  "archives": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-build-baseline.tar.gz",
+      "sha256": "d9ed4e630d5e0670f697544030e8e66b0f656a5f82caae87e707437894c81148",
+      "compressedBytes": 7617273,
+      "evidencePayloads": 254,
+      "payloadBytes": 48001316,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 253,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-module-preparation.tar.gz",
+      "sha256": "c05ec2f78b19fa866954722c1ef4c8829e8fdc8030e043d1f4f3810461dbd942",
+      "compressedBytes": 552985,
+      "evidencePayloads": 2171,
+      "payloadBytes": 13619211,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 2170,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-renderer.tar.gz",
+      "sha256": "0960b74a940ff19c324e967a9cee289e74a82a43e9ca37f0177b17bcc191c3f0",
+      "compressedBytes": 1111651,
+      "evidencePayloads": 7154,
+      "payloadBytes": 17496414,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 7153,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-resource.tar.gz",
+      "sha256": "c9fa72a7719f43d3b59ada503e68c0bd26d4566deeffcf299f6ba18fc0af6fbd",
+      "compressedBytes": 945683,
+      "evidencePayloads": 8194,
+      "payloadBytes": 18247949,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 8193,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-setup-audit.tar.gz",
+      "sha256": "98bdbb32fe0c1cea74976baad709f3b9c3c925983e78bbb17cb24808d03dfdd1",
+      "compressedBytes": 3287266,
+      "evidencePayloads": 78,
+      "payloadBytes": 53636437,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 77,
+      "allDeterministicHeadersChecked": true
+    }
+  ]
+}

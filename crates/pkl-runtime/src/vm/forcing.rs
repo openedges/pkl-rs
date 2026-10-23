@@ -170,6 +170,7 @@ impl Vm {
             generic_default: None,
             equality_run: None,
             pcf_render: None,
+            collection_join: None,
             function_owner: None,
             amendment_end: None,
             deep_force: Some(ForceRun {
@@ -191,6 +192,7 @@ impl Vm {
             diagnostic_member: None,
             callsite_hidden: false,
             builders: Vec::new(),
+            generator_scopes: Vec::new(),
             module_load: None,
             uri_resolution: None,
             module_receiver: None,

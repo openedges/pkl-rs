@@ -1,5 +1,37 @@
 # M2 language evidence
 
+The [Stage47 C06 implementation checkpoint](stage47-implementation-checkpoint.json)
+adds shared JSON rendering, RenderDirective and property converters, source-backed
+JSON annotations, collection join, and reference identity used by selected
+diagnostics. It also preserves descriptor and activation-slot history through
+generator copies and compacts optional diagnostic metadata. All five required
+local Rust checks pass. The unchanged upstream `moduleOutput2.pkl` and
+`pcfRenderer9.pkl` each match Java twice across complete CLI channels.
+
+Selected renderer API comparisons match Java in 1,840 calls per native, Node and
+Chromium target. Actual Node and Chromium also pass 1,008 Resource and 252
+module-preparation calls each. The shared primitive experiment retains 6,078
+cross-target matches, 6,076 Java matches per target and the two known regex
+failures. These overlapping calls are not unique features or a completion rate.
+The permanent frame-identity fixture preserves 240 Java observations and is
+consumed under two Rust instrumentation settings, yielding 480 comparisons.
+
+Core, native/oracle and platform archives retain raw channels, source/artifact
+bindings, reviews and earlier failures. All 51,745 C06 source inputs are bound;
+seven early intermediate source versions remain explicitly hash-only. The
+subsequent documentation and publication files are separate from the frozen
+runtime candidate. Stage47 full selected regression, standard-module admission,
+remaining identity semantics and the strict M2 gate remain open. The latest
+published full selected result is still Stage46's 3,650 of 3,664 cases.
+
+The [Stage47 C05 platform record](stage47-c05-platform-summary.json) preserves
+an intermediate shared renderer/identity candidate: 860 renderer, 1,008 Resource
+and 252 module-preparation API calls per actual Node/Chromium target. Baseline
+strict comparison retains the two known regex failures. The six archives include
+raw results, source/build binding, independent review and the original failed
+workspace setup followed by pinned-reference symlink restoration. Later common
+diagnostic layout changes and the final Stage47 checks require separate evidence.
+
 M2 is **in progress**. Stage 1 added expressions, strings, recursive methods,
 closures, primitive type checks, and source diagnostics. Stage 2 adds selected
 class, inheritance, generic alias, default-value, and modifier semantics to the

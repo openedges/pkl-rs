@@ -57,13 +57,19 @@ fn failed_class_keeps_prefix_and_wrapper_retries_without_reinitialization() {
         vm.member_state(module, "Child").unwrap(),
         LazyState::Completed(class)
     );
-    assert_eq!(member(&mut vm, module, "early"), Ok(Value::Int(10)));
-    assert_eq!(member(&mut vm, module, "inherited"), Ok(Value::Int(42)));
+    assert_eq!(member(&mut vm, module, "early"), Ok(Value::Int(10.into())));
+    assert_eq!(
+        member(&mut vm, module, "inherited"),
+        Ok(Value::Int(42.into()))
+    );
     assert_eq!(
         member(&mut vm, module, "later").unwrap_err().kind,
         ErrorKind::MissingMember
     );
-    assert_eq!(member(&mut vm, module, "assigned"), Ok(Value::Int(99)));
+    assert_eq!(
+        member(&mut vm, module, "assigned"),
+        Ok(Value::Int(99.into()))
+    );
     assert_eq!(
         member(&mut vm, module, "fixedAssignment")
             .unwrap_err()
@@ -82,8 +88,11 @@ fn properties_publish_before_methods_and_failed_method_keeps_only_method_prefix(
         "Cannot find type `Missing`."
     );
     assert!(matches!(member(&mut vm, module, "C"), Ok(Value::Class(_))));
-    assert_eq!(member(&mut vm, module, "property"), Ok(Value::Int(42)));
-    assert_eq!(member(&mut vm, module, "early"), Ok(Value::Int(5)));
+    assert_eq!(
+        member(&mut vm, module, "property"),
+        Ok(Value::Int(42.into()))
+    );
+    assert_eq!(member(&mut vm, module, "early"), Ok(Value::Int(5.into())));
     assert_eq!(
         member(&mut vm, module, "later").unwrap_err().kind,
         ErrorKind::MissingMember
@@ -125,7 +134,10 @@ fn superclass_failures_leave_an_empty_singleton_before_parent_linking() {
         let class = member(&mut vm, module, "C").unwrap();
         assert!(matches!(class, Value::Class(_)));
         assert_eq!(member(&mut vm, module, "C"), Ok(class));
-        assert_eq!(member(&mut vm, module, "assigned"), Ok(Value::Int(42)));
+        assert_eq!(
+            member(&mut vm, module, "assigned"),
+            Ok(Value::Int(42.into()))
+        );
         assert_eq!(
             member(&mut vm, module, "own").unwrap_err().kind,
             ErrorKind::MissingMember
@@ -193,7 +205,7 @@ fn late_superclass_metadata_remains_distinct_from_prototype_override() {
         "open class A { b: B? = null; fixed p = 42 }\nclass B extends A { p = 2 }\ntrigger = A == A\nvalue = new B {}.p\nassignment = new B { p = 3 }.p",
     );
     assert_eq!(member(&mut vm, module, "trigger"), Ok(Value::Bool(true)));
-    assert_eq!(member(&mut vm, module, "value"), Ok(Value::Int(2)));
+    assert_eq!(member(&mut vm, module, "value"), Ok(Value::Int(2.into())));
     assert_eq!(
         member(&mut vm, module, "assignment").unwrap_err().message,
         "Cannot assign to fixed property `p`."

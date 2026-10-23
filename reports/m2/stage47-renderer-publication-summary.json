@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "scope": "C06 renderer implementation checkpoint raw evidence only; notfullM2/renderer/identity/performance completion.",
+  "nativeRawApis": 1840,
+  "portableRawApisPerTarget": 980,
+  "original860PortableSeparatelyPackagedByC": true,
+  "rawMismatchCount": 0,
+  "archiveCount": 4,
+  "archiveCompressedBytes": 6366441,
+  "archivePayloadFiles": 1238,
+  "archiveMembersIncludingInventories": 1242,
+  "selectedOriginalFiles": 51090,
+  "selectedOriginalBytes": 190677038,
+  "anchoredRootCatalogue": 20,
+  "sparseInvalidMetadataFixtureRoots": 1,
+  "totalPhysicalSelectedRoots": 21,
+  "originalSourceChanges": [],
+  "globalIndexSha256": "109b2636e339afe3313849be14f4678a9c122e03e9cdf1b06a798948735cd5ff",
+  "archiveIndexSha256": "760c2ebe4bd2d77f5448c3427a7961b4c8cdc0d7b80e7362475e3d50bb6fbea3",
+  "actualPublisherHandle": 20483,
+  "actualPublisherExit": 0,
+  "actualFinalizeHandle": 33736,
+  "actualFinalizeExit": 0,
+  "allCreateVerifyRestoreOfflineChecksZero": true,
+  "gitFixture": {
+    "commit": "674d3cabdd0e9c421a2cb9b820a22f2456755629",
+    "repositoryPath": "tests/fixtures/m2-renderer-portable",
+    "manifestSha256": "90f6694ff7637cfbe86e0a1a99f1a2351baba9537018022ffa8e3ff17c52cd77",
+    "files": 14996,
+    "payloadCopies": 0,
+    "qualification": "Rootprovidedcommit, byte-equaloriginal/installedfixture andcomputedGitblob IDs; noBgitcommand."
+  },
+  "canonicalNativeAndPlatformArtifactCopies": 0,
+  "sourcePruning": "ExactknownCargo/temp/gather paths declared; originalselection read onlypinnedinventory/manifestpaths. No genericbuild/cache basename filters.",
+  "limitations": {
+    "wrongMethod16": "Rawcomparisons preserved; excluded intendedidentity.",
+    "policy84": "separateunexecutednative/portabledefaultscope",
+    "close28": "separateunexecuted ordinaryadapter; originalrawretainedinclosedJava07/08roots",
+    "sharedBacking": "Portablecopiedcompletions notJava/native samebackingbranch",
+    "instrumentation": "OneactualJava powertrue; defaultconsumeronly, twoRustmodes separatelyownedA",
+    "gc": "Requests/collectionschedule distinction",
+    "broader": "No fullidentity/renderer/M2/platformrelease/performance claim"
+  },
+  "mainReportsGitWrites": 0,
+  "archives": [
+    {
+      "group": "native",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-native.tar.gz",
+      "sha256": "eae340d1d92d922e416e7f4b44192478ea22eaed1e64b4dcae20f0e0ad55ecb3",
+      "bytes": 1443134,
+      "payloadFiles": 577,
+      "membersIncludingEvidence": 578
+    },
+    {
+      "group": "portable",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-portable.tar.gz",
+      "sha256": "75120a103a63f84ca7d0ddd88565ac8a181b0339fcd8a5288ade8570444344b8",
+      "bytes": 560519,
+      "payloadFiles": 177,
+      "membersIncludingEvidence": 178
+    },
+    {
+      "group": "oracles-tools",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-oracles-tools.tar.gz",
+      "sha256": "9ea79ec774b79d4e0535d6b79523a5fb5cc4bf05c8359c7a8b111fa9dea41192",
+      "bytes": 3157993,
+      "payloadFiles": 428,
+      "membersIncludingEvidence": 429
+    },
+    {
+      "group": "closeout",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-closeout.tar.gz",
+      "sha256": "dd5eaa79207861fdf67a2bae2930ba5ed3f916c6500e35a2463f659603f36d9c",
+      "bytes": 1204795,
+      "payloadFiles": 56,
+      "membersIncludingEvidence": 57
+    }
+  ]
+}

@@ -45,7 +45,10 @@ fn let_barriers_begin_after_initializers_and_annotations() {
         "let (n = 0) this.value",
         "let (n = 0) let (m = 0) (() -> threshold).apply()",
     ] {
-        assert_eq!(result(&format!("const result = {body}")), Ok(Value::Int(2)));
+        assert_eq!(
+            result(&format!("const result = {body}")),
+            Ok(Value::Int(2.into()))
+        );
     }
     for body in [
         "let (n = threshold) n",
@@ -71,7 +74,7 @@ fn for_bodies_add_a_barrier_without_removing_inherited_const_level() {
             result(&format!(
                 "const xs = new Listing {{ {body} }}\nresult = xs[0]"
             )),
-            Ok(Value::Int(2)),
+            Ok(Value::Int(2.into())),
             "{body}"
         );
     }
@@ -102,7 +105,7 @@ fn eager_generator_inputs_keep_their_own_lookup_depth() {
             result(&format!(
                 "const xs = new Listing {{ {body} }}\nresult = xs[0]"
             )),
-            Ok(Value::Int(2))
+            Ok(Value::Int(2.into()))
         );
     }
     for body in [
@@ -135,7 +138,7 @@ fn finished_body_barriers_do_not_leak_into_siblings_or_module_lookups() {
         result(
             "class C { local threshold = 3; const x = let (n = 0) threshold }\nresult = new C {}.x"
         ),
-        Ok(Value::Int(3))
+        Ok(Value::Int(3.into()))
     );
     non_const(
         "class C { xs = new Listing { for (n in List(0)) { value } } }\nresult = new C {}.xs[0]",

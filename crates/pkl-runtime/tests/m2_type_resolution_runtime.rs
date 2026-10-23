@@ -89,7 +89,7 @@ fn generic_parameters_shadow_bare_names_but_not_parameterized_base_names() {
     let (mut vm, module) = module(
         "typealias T<X> = X\ntypealias Bare<T> = List<T>\ntypealias Applied<T> = T<String>\nbare: Bare<Int> = List(3)\napplied: Applied<Int> = \"ok\"\nresult = bare[0]",
     );
-    assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(3)));
+    assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(3.into())));
     assert_eq!(member(&mut vm, module, "applied"), Ok(Value::string("ok")));
 }
 

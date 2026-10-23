@@ -148,7 +148,7 @@ fn recursive_generic_reentry_preserves_arguments_and_suspended_capture_on_failur
         assert_ne!(token, failed);
         session.resume(&token, Ok(Value::string("ok")), 4).unwrap();
     }
-    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(7)));
+    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(7.into())));
     assert_eq!(host_read(&mut session, 4), parent);
     assert_eq!(
         session
@@ -164,7 +164,7 @@ fn recursive_generic_reentry_preserves_arguments_and_suspended_capture_on_failur
             token = host_read(&mut session, 5);
         }
     }
-    assert_eq!(host_ready(&mut session, 5), Ok(Value::Int(42)));
+    assert_eq!(host_ready(&mut session, 5), Ok(Value::Int(42.into())));
     assert_eq!(session.context_depth(), 0);
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
@@ -176,6 +176,8 @@ fn changing_recursive_arguments_remain_finite_and_repeated_cancel_reclaims_activ
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     let module = vm_ready(&mut vm).unwrap();
+    let initialized = vm.collect(&[]);
+    let initialized_values = initialized.live - initialized.executable_live;
     let object = module.as_object().unwrap();
     let mut retained = None;
     for _ in 0..24 {
@@ -197,7 +199,7 @@ fn changing_recursive_arguments_remain_finite_and_repeated_cancel_reclaims_activ
         let stats = vm.collect(std::slice::from_ref(&module));
         // Separate ordinary values from persistent executable/type-use nodes.
         // Only the module, its Module parent and initialized Grow alias survive a canceled call.
-        assert_eq!(stats.live - stats.executable_live, 3);
+        assert_eq!(stats.live - stats.executable_live, initialized_values + 1);
         assert!(stats.executable_live > 0);
         if let Some(expected) = retained {
             assert_eq!(stats.executable_live, expected);
@@ -210,7 +212,7 @@ fn changing_recursive_arguments_remain_finite_and_repeated_cancel_reclaims_activ
         let token = vm_read(&mut vm, "mem:grow");
         vm.resume(token, Ok(Value::string("ok"))).unwrap();
     }
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(5)));
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(5.into())));
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -247,7 +249,7 @@ fn nonterminal_cancel_preserves_alias_identity_and_retries_deep_generic_prefix()
         );
         vm.resume(token, Ok(Value::string("ok"))).unwrap();
     }
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42)));
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42.into())));
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -286,7 +288,7 @@ fn shared_compilation_keeps_generic_state_and_pending_reads_evaluator_local() {
             token = vm_read(&mut left, "mem:step");
         }
     }
-    assert_eq!(vm_ready(&mut left), Ok(Value::Int(42)));
+    assert_eq!(vm_ready(&mut left), Ok(Value::Int(42.into())));
     left.close();
     assert_eq!(left.heap_stats().slots, 0);
 }
@@ -421,6 +423,9 @@ fn default_read(session: &mut HostSession, now: u64) -> String {
 #[test]
 fn generic_default_objects_keep_class_parents_and_receivers_across_host_retry_and_reentry() {
     let (mut session, module, [outer, inner]) = default_setup();
+    // Both annotated members have resolved ViaDefault and DefaultValue.
+    let initialized = session.collect(&[]);
+    let initialized_values = initialized.live - initialized.executable_live;
     session.start(outer, vec![module.clone()], 1, None).unwrap();
     let parent = default_read(&mut session, 1);
     session
@@ -445,8 +450,8 @@ fn generic_default_objects_keep_class_parents_and_receivers_across_host_retry_an
         .reenter(&parent, inner, vec![module], 3, None)
         .unwrap();
     let child = default_read(&mut session, 3);
-    session.resume(&child, Ok(Value::Int(7)), 3).unwrap();
-    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(7)));
+    session.resume(&child, Ok(Value::Int(7.into())), 3).unwrap();
+    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(7.into())));
     assert_eq!(default_read(&mut session, 3), parent);
     assert_eq!(
         session
@@ -455,11 +460,13 @@ fn generic_default_objects_keep_class_parents_and_receivers_across_host_retry_an
             .kind,
         ErrorKind::Host
     );
-    session.resume(&parent, Ok(Value::Int(42)), 4).unwrap();
-    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(42)));
+    session
+        .resume(&parent, Ok(Value::Int(42.into())), 4)
+        .unwrap();
+    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(42.into())));
     // The temporary amended defaults and Mapping objects have no persistent value cache.
     let stats = session.collect(&[]);
-    assert_eq!(stats.live - stats.executable_live, 4);
+    assert_eq!(stats.live - stats.executable_live, initialized_values);
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
 }

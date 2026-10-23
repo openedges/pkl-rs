@@ -7,6 +7,10 @@ pub(super) enum TypeDestination {
     Stack,
     Test,
     Return,
+    Local {
+        depth: Option<usize>,
+        policy: identity::SlotPolicy,
+    },
 }
 
 #[derive(Clone)]
@@ -225,6 +229,12 @@ pub(super) fn environment_roots(environment: &Environment, roots: &mut Vec<Value
     roots.extend(environment.outer_value.iter().cloned());
     roots.extend(environment.custom_this.map(|slot| slot.root()));
     roots.extend(environment.executable_owner.map(|owner| owner.root()));
+    roots.extend(
+        environment
+            .local_owners
+            .values()
+            .map(|(owner, _)| owner.root()),
+    );
     for scope in &environment.scopes {
         roots.extend([Value::Object(scope.receiver), Value::Object(scope.owner)]);
     }
@@ -590,6 +600,14 @@ impl Vm {
             self.heap
                 .executable_child(node.0, ExecutionSite::Constraint(constraint.block))?
         };
+        if self
+            .program
+            .metadata
+            .get(constraint.block)
+            .is_some_and(|metadata| metadata.constraint_root.is_some())
+        {
+            self.copy_captured_locals(&mut environment, owner)?;
+        }
         environment.executable_owner = Some(owner);
         let member = self
             .program
@@ -619,6 +637,7 @@ impl Vm {
             equality_run: None,
             deep_force: None,
             pcf_render: None,
+            collection_join: None,
             function_owner: None,
             amendment_end: None,
             prepared_hashes: None,
@@ -627,6 +646,7 @@ impl Vm {
             diagnostic_member: Some(member),
             callsite_hidden: false,
             builders: Vec::new(),
+            generator_scopes: Vec::new(),
             module_load: None,
             uri_resolution: None,
             module_receiver: None,
@@ -695,6 +715,9 @@ impl Vm {
                 (Ok(_), TypeDestination::Test) => self.stack.push(Value::Bool(true)),
                 (Err(_), TypeDestination::Test) => self.stack.push(Value::Bool(false)),
                 (Ok(value), TypeDestination::Stack) => self.stack.push(value),
+                (Ok(value), TypeDestination::Local { depth, policy }) => {
+                    self.bind_local(depth, policy, value)?
+                }
                 (Ok(value), TypeDestination::Return) => {
                     self.stack.push(value);
                     self.frames.last_mut().expect("type frame").pc -= 1;
@@ -1499,6 +1522,7 @@ impl Vm {
                 let object = self.heap.get(id)?;
                 let mut environment = run.environment.clone();
                 environment.locals.clear();
+                environment.local_owners.clear();
                 let wrapper = Object {
                     parent: Some(id),
                     environment: object.environment.clone(),

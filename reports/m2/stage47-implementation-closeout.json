@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "scope": "Root source/index binding, exact installation receipts and independent claim reviews; no new evaluation or CI result.",
+  "archives": [
+    {
+      "path": "reports/m2/stage47-implementation-closeout.tar.gz",
+      "sha256": "78ba2a6e9792c2051c25e7c4fb4ae1311092e063178b4a35db235d946742e5f5",
+      "bytes": 3942823
+    }
+  ],
+  "selectedOriginalFiles": 48,
+  "selectionSha256": "ba56bb204c5c1666b362674d4fe4e42724bcf66c39428a6c4caf276be3418862",
+  "commands": [
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-root-publication-01/staging/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-root-publication-01/staging",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-implementation-closeout.tar.gz"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47",
+      "pid": 91529,
+      "exitCode": 0,
+      "startedUtc": "2026-10-23T15:34:45.493775+00:00",
+      "finishedUtc": "2026-10-23T15:34:46.245690+00:00",
+      "stdoutBase64": "VmVyaWZpZWQgNTEgZXZpZGVuY2UgZmlsZXM6IC9Vc2Vycy9jb2R5LmlqLmh3YW5nL1Byb2plY3RzL3BrbC1ycy5zdGFnZTQ3L3JlcG9ydHMvbTIvc3RhZ2U0Ny1pbXBsZW1lbnRhdGlvbi1jbG9zZW91dC50YXIuZ3oK",
+      "stderrBase64": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-root-publication-01/staging/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-implementation-closeout.tar.gz"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47",
+      "pid": 91535,
+      "exitCode": 0,
+      "startedUtc": "2026-10-23T15:34:46.245740+00:00",
+      "finishedUtc": "2026-10-23T15:34:46.359729+00:00",
+      "stdoutBase64": "VmVyaWZpZWQgNTEgZXZpZGVuY2UgZmlsZXM6IC9Vc2Vycy9jb2R5LmlqLmh3YW5nL1Byb2plY3RzL3BrbC1ycy5zdGFnZTQ3L3JlcG9ydHMvbTIvc3RhZ2U0Ny1pbXBsZW1lbnRhdGlvbi1jbG9zZW91dC50YXIuZ3oK",
+      "stderrBase64": ""
+    }
+  ],
+  "allOriginalInputsStable": true,
+  "candidateRuntimeInputsUnchanged": true,
+  "sourceIndexBinding": {
+    "path": "reports/m2/stage47-implementation-source-binding.json",
+    "sha256": "42070659e2fd725f9f9b5bcaae61027c04c20b1582cfb7943584b26a571fd3e1"
+  },
+  "claimReview": {
+    "path": "reports/m2/stage47-implementation-review.json",
+    "sha256": "904ccb65ac4258638b1e5327dfb0d4586b5661f7eb66893955b092984f48710c"
+  },
+  "actualCommitBinding": "The recorded staged code/fixture inputs are checked against the actual commit after committing. This publication adds reports only."
+}

@@ -59,11 +59,14 @@ scalar = 0
         assert_eq!(annotations.len(), 1);
         let annotation = annotations[0].as_object().unwrap();
         assert!(vm.heap.get(annotation).unwrap().cache.is_empty());
-        assert_eq!(member(&mut vm, &module, "scalar"), Ok(Value::Int(0)));
+        assert_eq!(member(&mut vm, &module, "scalar"), Ok(Value::Int(0.into())));
         vm.collect(&[]);
         assert!(vm.heap.get(annotation).is_ok());
         let captured = member(&mut vm, &annotations[0], "captured").unwrap();
-        assert_eq!(member(&mut vm, &captured, "number"), Ok(Value::Int(42)));
+        assert_eq!(
+            member(&mut vm, &captured, "number"),
+            Ok(Value::Int(42.into()))
+        );
         assert_eq!(member(&mut vm, &module, "Target"), Ok(target));
         if declaration.starts_with("typealias") {
             assert!(!vm.heap.get(id).unwrap().type_alias_initialized);
@@ -96,7 +99,7 @@ scalar = 0
         .unwrap();
     let mut observed = BTreeSet::new();
     let failure = loop {
-        for value in &vm.stack {
+        for value in vm.stack.iter() {
             if let Some(id) = value.heap_id() {
                 observed.extend(
                     vm.heap
@@ -144,7 +147,7 @@ scalar = 0
             .filter(|id| *id != retained)
             .all(|id| vm.heap.get(id).is_err())
     );
-    assert_eq!(member(&mut vm, &module, "scalar"), Ok(Value::Int(0)));
+    assert_eq!(member(&mut vm, &module, "scalar"), Ok(Value::Int(0.into())));
 }
 
 #[test]
@@ -164,7 +167,7 @@ class Owner {}
         .unwrap();
     let annotation = vm.heap.get(owner).unwrap().annotations[0].clone();
     let child = member(&mut vm, &annotation, "child").unwrap();
-    assert_eq!(member(&mut vm, &child, "number"), Ok(Value::Int(71)));
+    assert_eq!(member(&mut vm, &child, "number"), Ok(Value::Int(71.into())));
     assert_eq!(
         vm.member_state(annotation.as_object().unwrap(), "unused")
             .unwrap(),
@@ -424,7 +427,7 @@ invalid = known.names[1]
         member(&mut vm, &module, "language").unwrap_err().message,
         "Tried to read property `language` but its value is undefined."
     );
-    assert_eq!(member(&mut vm, &module, "size"), Ok(Value::Int(2)));
+    assert_eq!(member(&mut vm, &module, "size"), Ok(Value::Int(2.into())));
     let error = member(&mut vm, &module, "invalid").unwrap_err();
     assert!(error.message.contains("Expected value of type `String`"));
     let origin = &error.frames[0];

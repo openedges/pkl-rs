@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "scope": "C06 aggregate/documentation publication claim review against sealed existing records; no new evaluation/build/tests or production/Git writes.",
+  "materialFindings": [],
+  "reviewedAggregatePath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-implementation-checkpoint.json",
+  "reviewedAggregateSha256": "372c5c7df78c8e3cd3d006603e26cdd185466b237ec8c26dc173ecac573d5c7c",
+  "claimSourceHashes": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/README.md",
+      "sha256": "ef4bf9af4161f08df22dc0d647af83a026f1175cc6865e7cda37f12b49795128"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/PLAN.md",
+      "sha256": "011eb5ebda11a99881cd132c08281eadf807ba5a8657fcb07822ddcb49529496"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/README.md",
+      "sha256": "9e1e7d35b171be564b8c44cd91512f95fb2d92867a8110e341d6d783280fd401"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/docs/m2-json-rendering.md",
+      "sha256": "497d130bd78dfcda77779e4c919aed758be5e21c5a2024b786567773b3b8076c"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/docs/architecture.md",
+      "sha256": "37f6236a2804b7c9f9265f7bb9aa8ac832df43495dd2864c69aee1ae1b217afe"
+    }
+  ],
+  "evidencePointersChecked": 10,
+  "BInstalledFilesExact": 9,
+  "BArchiveNamesMapped": 4,
+  "validatedClaims": {
+    "rustCommands": 5,
+    "originalCliMatches": 4,
+    "rendererPerNativeNodeBrowser": 1840,
+    "resourcePerNodeBrowser": 1008,
+    "modulePreparationPerNodeBrowser": 252,
+    "sharedMatches": 6078,
+    "javaMatchesPerTarget": 6076,
+    "preservedRegexMismatches": 2,
+    "oneJavaBaselineObservations": 240,
+    "twoRustConfigurationComparisons": 480,
+    "C06SourceInputsBound": 51745,
+    "historicalHashOnlyVersions": 7
+  },
+  "qualificationsConfirmed": [
+    "API totals overlap repeats/platforms/configurations; no overall M2 completion percentage.",
+    "Default renderer consumer scope does not complete policy84,close28,shared-backing-array equivalence or JavaGC/portable collection equivalence.",
+    "Wrong-method16 observations retained without intended-identity branch proof.",
+    "240\u00d72 consumes one actual Java powertrue baseline; no Java off/on comparison.",
+    "Stage46 3650/3664 is explicitly not C06 full-selected result.",
+    "Stdlib admission/import-edge policy, complete identity, fresh full-selected/persistent regression and wholeM2/performance/release obligations remain open.",
+    "Post-C06 docs/publication delta is separate from immutable tested candidate; future index/commit binding is not inferred by this review."
+  ],
+  "pendingPublicationStep": "Root final staged index/actual commit binding may add report-only pointers; reviewed aggregate bytes are preserved here.",
+  "inputChanges": [],
+  "newRuntimeExecutions": 0
+}

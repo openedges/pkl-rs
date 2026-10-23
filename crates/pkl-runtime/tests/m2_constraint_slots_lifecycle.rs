@@ -124,11 +124,11 @@ fn nested_check_slot_mutation_survives_gc_and_separate_host_reentry() {
     let child = read(&mut session, 2, "mem:inner");
     session.resume(&child, Ok(Value::string("ok")), 3).unwrap();
     // Successful checks return their original input, even though their slot changed.
-    assert_eq!(ready(&mut session, 3), Ok(Value::Int(2)));
+    assert_eq!(ready(&mut session, 3), Ok(Value::Int(2.into())));
     assert_eq!(session.context_depth(), 1);
     assert_eq!(read(&mut session, 3, "mem:outer"), parent);
     session.resume(&parent, Ok(Value::string("ok")), 4).unwrap();
-    assert_eq!(ready(&mut session, 4), Ok(Value::Int(1)));
+    assert_eq!(ready(&mut session, 4), Ok(Value::Int(1.into())));
     assert_eq!(session.context_depth(), 0);
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
@@ -142,9 +142,9 @@ fn lambda_receiver_is_a_creation_snapshot_and_let_root_mutation_stays_local() {
         .unwrap();
     let token = read(&mut session, 1, "mem:snapshot");
     session.resume(&token, Ok(Value::string("ok")), 2).unwrap();
-    assert_eq!(ready(&mut session, 2), Ok(Value::Int(3)));
+    assert_eq!(ready(&mut session, 2), Ok(Value::Int(3.into())));
     session.start(let_root, vec![module], 3, None).unwrap();
-    assert_eq!(ready(&mut session, 3), Ok(Value::Int(4)));
+    assert_eq!(ready(&mut session, 3), Ok(Value::Int(4.into())));
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
 }
@@ -186,14 +186,14 @@ fn failed_child_retries_with_fresh_slots_and_rejects_old_read_tokens() {
                 assert_eq!(error.message, "slot retry\0\r\n🙂");
             }
             3 => assert_eq!(result.unwrap_err().kind, ErrorKind::Type),
-            4 => assert_eq!(result, Ok(Value::Int(2))),
+            4 => assert_eq!(result, Ok(Value::Int(2.into()))),
             _ => unreachable!(),
         }
         assert_eq!(read(&mut session, now, "mem:outer"), parent);
         old = Some(child);
     }
     session.resume(&parent, Ok(Value::string("ok")), 5).unwrap();
-    assert_eq!(ready(&mut session, 5), Ok(Value::Int(1)));
+    assert_eq!(ready(&mut session, 5), Ok(Value::Int(1.into())));
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
 }
@@ -253,19 +253,23 @@ fn cancelling_reclaims_slot_capture_cycles_and_retry_keeps_alias_identity() {
     let scalar = program.blocks.len();
     program
         .blocks
-        .push(vec![I::Constant(Value::Int(0)), I::Return]);
+        .push(vec![I::Constant(Value::Int(0.into())), I::Return]);
     let mut vm = Vm::new(Arc::new(program));
     vm.start(entry, vec![]).unwrap();
     let module = vm_ready(&mut vm).unwrap();
+    let initialized_executables = vm.collect(&[]).executable_live;
     let object = module.as_object().unwrap();
     vm.start_member(object, "identity").unwrap();
     let alias = vm_ready(&mut vm).unwrap();
-    let baseline = vm.collect(&[]).live;
+    let baseline = {
+        let stats = vm.collect(&[]);
+        stats.live - stats.executable_live
+    };
     let mut previous = None;
     for _ in 0..8 {
         vm.start_member(object, "outerResult").unwrap();
         let token = vm_read(&mut vm, "mem:outer");
-        assert!(retained_values(vm.collect(&[]), 7) > baseline);
+        assert!(retained_values(vm.collect(&[]), initialized_executables + 7) > baseline);
         if let Some(old) = previous {
             assert_ne!(old, token);
             assert_eq!(
@@ -285,9 +289,12 @@ fn cancelling_reclaims_slot_capture_cycles_and_retry_keeps_alias_identity() {
             ErrorKind::Host
         );
         vm.start(scalar, vec![]).unwrap();
-        assert_eq!(vm_ready(&mut vm), Ok(Value::Int(0)));
+        assert_eq!(vm_ready(&mut vm), Ok(Value::Int(0.into())));
         let collected = vm.collect(&[]);
-        assert_eq!(retained_values(collected, 7), baseline);
+        assert_eq!(
+            retained_values(collected, initialized_executables + 7),
+            baseline
+        );
         previous = Some(token);
     }
     vm.start_member(object, "identity").unwrap();
@@ -295,10 +302,13 @@ fn cancelling_reclaims_slot_capture_cycles_and_retry_keeps_alias_identity() {
     vm.start_member(object, "outerResult").unwrap();
     let token = vm_read(&mut vm, "mem:outer");
     vm.resume(token, Ok(Value::string("ok"))).unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(1)));
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(1.into())));
     vm.start(scalar, vec![]).unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(0)));
-    assert_eq!(retained_values(vm.collect(&[]), 10), baseline);
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(0.into())));
+    assert_eq!(
+        retained_values(vm.collect(&[]), initialized_executables + 10),
+        baseline
+    );
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -329,11 +339,11 @@ fn shared_immutable_program_keeps_mutated_slots_and_read_ids_per_vm() {
     left.collect(&[]);
     right.collect(&[]);
     right.resume(inner, Ok(Value::string("ok"))).unwrap();
-    assert_eq!(vm_ready(&mut right), Ok(Value::Int(2)));
+    assert_eq!(vm_ready(&mut right), Ok(Value::Int(2.into())));
     right.close();
     assert_eq!(right.heap_stats().slots, 0);
     left.resume(outer, Ok(Value::string("ok"))).unwrap();
-    assert_eq!(vm_ready(&mut left), Ok(Value::Int(1)));
+    assert_eq!(vm_ready(&mut left), Ok(Value::Int(1.into())));
     left.close();
     assert_eq!(left.heap_stats().slots, 0);
 }

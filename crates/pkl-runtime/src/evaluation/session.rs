@@ -675,7 +675,7 @@ impl SourceSession {
     }
     pub fn result_bytes(value: Value) -> Result<Arc<[u8]>, RuntimeError> {
         match value {
-            Value::Bytes(bytes) => Ok(bytes),
+            Value::Bytes(bytes) => Ok(bytes.into_data()),
             _ => Err(RuntimeError::new(
                 ErrorKind::InvalidBytecode,
                 "module output operation did not return bytes",

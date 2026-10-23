@@ -110,7 +110,7 @@ fn pending_logger_keeps_value_roots_and_callback_errors_do_not_finish_parent() {
             event: snapshot.clone()
         }
     );
-    assert!(host.resume(&token, Ok(Value::Int(99)), 0).is_err());
+    assert!(host.resume(&token, Ok(Value::Int(99.into())), 0).is_err());
     host.reenter(&token, entries[1], vec![module.clone()], 0, None)
         .unwrap();
     let error = ready(&mut host, &roots).unwrap_err();
@@ -184,7 +184,7 @@ fn pending_same_member_and_ancestor_publish_before_older_log_attempt_finishes() 
                                     host.acknowledge_log(&token, Ok(()), 0).unwrap();
                                 }
                                 HostPoll::Ready(result) => {
-                                    assert_eq!(result, Ok(Value::Int(value)));
+                                    assert_eq!(result, Ok(Value::Int(value.into())));
                                     break;
                                 }
                                 other => panic!("unexpected {other:?}"),
@@ -204,7 +204,7 @@ fn pending_same_member_and_ancestor_publish_before_older_log_attempt_finishes() 
             if fail_outer {
                 assert_eq!(result.unwrap_err().kind, ErrorKind::Host);
             } else {
-                assert_eq!(result, Ok(Value::Int(value)));
+                assert_eq!(result, Ok(Value::Int(value.into())));
             }
             let expected = if fail_outer && expected.len() == 4 {
                 &expected[..3]
@@ -213,7 +213,7 @@ fn pending_same_member_and_ancestor_publish_before_older_log_attempt_finishes() 
             };
             assert_eq!(messages, expected);
             start(&mut host, entries[0], &module);
-            assert_eq!(ready(&mut host, &roots), Ok(Value::Int(value)));
+            assert_eq!(ready(&mut host, &roots), Ok(Value::Int(value.into())));
             host.close();
             assert_eq!(host.heap_stats().slots, 0);
         }
@@ -242,7 +242,7 @@ fn failed_callback_attempt_preserves_parent_evaluating_state_and_current_cycles(
         .unwrap();
     assert_eq!(ready(&mut host, &roots).unwrap_err().kind, ErrorKind::Cycle);
     host.acknowledge_log(&outer, Ok(()), 0).unwrap();
-    assert_eq!(ready(&mut host, &roots), Ok(Value::Int(1)));
+    assert_eq!(ready(&mut host, &roots), Ok(Value::Int(1.into())));
 }
 
 #[test]
@@ -260,7 +260,10 @@ fn mixed_log_read_log_cancellation_aborts_only_the_correct_read_context() {
     let (inner, _) = log(&mut host, &roots);
     assert_eq!(host.context_depth(), 3);
     assert!(host.acknowledge_log(&outer, Ok(()), 0).is_err());
-    assert!(host.resume(&read_token, Ok(Value::Int(1)), 0).is_err());
+    assert!(
+        host.resume(&read_token, Ok(Value::Int(1.into())), 0)
+            .is_err()
+    );
     host.cancel();
     assert_eq!(
         host.drain_cancelled_reads(),
@@ -271,7 +274,10 @@ fn mixed_log_read_log_cancellation_aborts_only_the_correct_read_context() {
     assert_eq!(host.heap_stats().slots, 0);
     assert!(host.acknowledge_log(&inner, Ok(()), 0).is_err());
     assert!(host.acknowledge_log(&outer, Ok(()), 0).is_err());
-    assert!(host.resume(&read_token, Ok(Value::Int(1)), 0).is_err());
+    assert!(
+        host.resume(&read_token, Ok(Value::Int(1.into())), 0)
+            .is_err()
+    );
     assert_eq!(outer_snapshot.message, "1 = 1");
 }
 
@@ -304,7 +310,7 @@ fn callback_close_finishes_already_issued_ancestor_reads_and_logs() {
                 .is_err()
         );
         host.acknowledge_log(&inner, Ok(()), 0).unwrap();
-        assert_eq!(ready(&mut host, &roots), Ok(Value::Int(9)));
+        assert_eq!(ready(&mut host, &roots), Ok(Value::Int(9.into())));
         assert_eq!(host.context_depth(), 1);
         if outer_read {
             host.resume(&outer, Ok(Value::string("R")), 0).unwrap();
@@ -316,7 +322,7 @@ fn callback_close_finishes_already_issued_ancestor_reads_and_logs() {
             Ok(if outer_read {
                 Value::string("Rtail")
             } else {
-                Value::Int(3)
+                Value::Int(3.into())
             })
         );
         assert!(host.is_closed());
@@ -342,7 +348,7 @@ fn pretty_preserves_authored_crlf_and_compact_truncates_only_rendered_value() {
         ["result=trace(new Dynamic {", "  x=1", "}).x"]
     );
     host.acknowledge_log(&token, Ok(()), 0).unwrap();
-    assert_eq!(ready(&mut host, &[module]), Ok(Value::Int(1)));
+    assert_eq!(ready(&mut host, &[module]), Ok(Value::Int(1.into())));
 
     let (mut host, module, entries) = setup(
         "value=read(\"life:long\")\nresult=trace(value).length\n",
@@ -361,7 +367,10 @@ fn pretty_preserves_authored_crlf_and_compact_truncates_only_rendered_value() {
         &"...".encode_utf16().collect::<Vec<_>>()
     );
     host.acknowledge_log(&token, Ok(()), 0).unwrap();
-    assert_eq!(ready(&mut host, &[module]), Ok(Value::Int(1_000_010)));
+    assert_eq!(
+        ready(&mut host, &[module]),
+        Ok(Value::Int(1_000_010.into()))
+    );
 }
 
 #[test]
@@ -387,7 +396,10 @@ fn noop_logger_still_delivers_custom_transformer_and_timeout_releases_active_tre
     assert_eq!(host.context_depth(), 0);
     assert_eq!(host.heap_stats().slots, 0);
     assert!(host.acknowledge_log(&log_token, Ok(()), 10).is_err());
-    assert!(host.resume(&read_token, Ok(Value::Int(8)), 10).is_err());
+    assert!(
+        host.resume(&read_token, Ok(Value::Int(8.into())), 10)
+            .is_err()
+    );
     assert_eq!(snapshot.message, "1 = 1");
     assert_eq!(snapshot.frame.source_lines.as_ref(), ["first=trace(1)"]);
 }
@@ -452,7 +464,7 @@ fn string_repeat_retains_receiver_across_host_count_and_preserves_utf16_boundari
     let roots = [module.clone()];
     start(&mut host, entries[0], &module);
     let count = read(&mut host, &roots);
-    host.resume(&count, Ok(Value::Int(2)), 0).unwrap();
+    host.resume(&count, Ok(Value::Int(2.into())), 0).unwrap();
     let (token, event) = log(&mut host, &roots);
     let units: Vec<_> = event.message.encode_utf16().collect();
     assert_eq!(
@@ -461,9 +473,9 @@ fn string_repeat_retains_receiver_across_host_count_and_preserves_utf16_boundari
     );
     host.acknowledge_log(&token, Ok(()), 0).unwrap();
     // Repeating pairs the middle high/low units without replacing the unmatched ends.
-    assert_eq!(ready(&mut host, &roots), Ok(Value::Int(3)));
+    assert_eq!(ready(&mut host, &roots), Ok(Value::Int(3.into())));
     start(&mut host, entries[0], &module);
-    assert_eq!(ready(&mut host, &roots), Ok(Value::Int(3)));
+    assert_eq!(ready(&mut host, &roots), Ok(Value::Int(3.into())));
 }
 
 #[test]
@@ -495,11 +507,11 @@ fn initial_path_continuation_preserves_log_buffer_and_the_published_module() {
     host.acknowledge_log(&token, Ok(()), 0).unwrap();
     assert_eq!(
         ready(&mut host, std::slice::from_ref(&module)),
-        Ok(Value::Int(8))
+        Ok(Value::Int(8.into()))
     );
     start(&mut host, entries[0], &module);
     assert!(host.vm_for_test().log_buffer.is_empty());
-    assert_eq!(ready(&mut host, &[module]), Ok(Value::Int(8)));
+    assert_eq!(ready(&mut host, &[module]), Ok(Value::Int(8.into())));
 }
 
 #[test]
@@ -519,7 +531,7 @@ fn callback_completion_cannot_consume_parent_continuation_and_close_allows_exist
         // follows stable's publication. Neither callback owns the initial path.
         let callback = ready(&mut host, &[]);
         if source.starts_with("stable") {
-            assert_eq!(callback, Ok(Value::Int(7)));
+            assert_eq!(callback, Ok(Value::Int(7.into())));
         } else {
             assert_eq!(callback.unwrap_err().kind, ErrorKind::MissingMember);
         }
@@ -540,7 +552,7 @@ fn callback_completion_cannot_consume_parent_continuation_and_close_allows_exist
                 break result.unwrap();
             }
         };
-        assert_eq!(ready(&mut host, &[published]), Ok(Value::Int(8)));
+        assert_eq!(ready(&mut host, &[published]), Ok(Value::Int(8.into())));
         assert!(host.is_closed());
         assert_eq!(host.context_depth(), 0);
         assert_eq!(host.heap_stats().slots, 0);
@@ -566,7 +578,7 @@ fn continuation_intermediate_roots_survive_path_failure_and_deadline_stays_share
     start(&mut host, entries[1], &module);
     assert_eq!(
         ready(&mut host, std::slice::from_ref(&module)),
-        Ok(Value::Int(7))
+        Ok(Value::Int(7.into()))
     );
 
     for cancel in [false, true] {
@@ -600,7 +612,7 @@ fn continuation_intermediate_roots_survive_path_failure_and_deadline_stays_share
         );
         assert_eq!(host.drain_cancelled_reads(), vec![token.clone()]);
         assert!(host.take_intermediate_result().is_none());
-        assert!(host.resume(&token, Ok(Value::Int(1)), 10).is_err());
+        assert!(host.resume(&token, Ok(Value::Int(1.into())), 10).is_err());
         assert_eq!(host.heap_stats().slots, 0);
     }
 }

@@ -86,7 +86,7 @@ fn constrained_entry_initializes_once_and_returns_the_original_checked_value() {
                 &format!("typealias A = Int({constraint})\nresult: A = 2"),
                 false
             ),
-            Ok(Value::Int(2)),
+            Ok(Value::Int(2.into())),
         );
     }
     rejection(
@@ -134,7 +134,7 @@ fn aliases_and_union_alternatives_keep_the_callers_slot_identity() {
         "typealias A = Int(((this - 1) is (Int(false) | Int(this == 1))) && this == 1)\nresult: A = 2",
         "typealias A = Int(((this - 1) is Int(false) || this == 1))\nresult: A = 2",
     ] {
-        assert_eq!(evaluate(source, false), Ok(Value::Int(2)));
+        assert_eq!(evaluate(source, false), Ok(Value::Int(2.into())));
     }
 }
 
@@ -146,6 +146,6 @@ fn lambda_receiver_is_a_creation_snapshot_and_real_calls_get_their_own_slot() {
         "const function check(x: Int): Boolean = (x - 1) is Int(true)\ntypealias A = Int(check(this) && this == 2)\nresult: A = 2",
         "const holder = new { checked = 1 is Int(true) }\ntypealias A = Int(holder.checked && this == 2)\nresult: A = 2",
     ] {
-        assert_eq!(evaluate(source, false), Ok(Value::Int(2)));
+        assert_eq!(evaluate(source, false), Ok(Value::Int(2.into())));
     }
 }

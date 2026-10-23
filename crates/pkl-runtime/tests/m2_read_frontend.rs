@@ -114,7 +114,7 @@ fn quoted_read_names_remain_ordinary_user_methods() {
         let module = settle(&mut vm, &mut requests);
         vm.start_member(module.as_object().unwrap(), "result")
             .unwrap();
-        assert_eq!(settle(&mut vm, &mut requests), Value::Int(42));
+        assert_eq!(settle(&mut vm, &mut requests), Value::Int(42.into()));
         assert!(requests.is_empty());
     }
 }

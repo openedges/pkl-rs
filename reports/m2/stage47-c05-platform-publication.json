@@ -1,0 +1,254 @@
+{
+  "schema": 1,
+  "closed": true,
+  "scope": "Target-only publication proposal of intermediate C05 actual platform evidence. No main reports/docs/Git mutation; no latest live-test/full M2 claim.",
+  "mainReport": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/report.json",
+    "sha256": "c330f78ff14963c3e14ca3a942751991be2295f783383d88f710593f2f99113e"
+  },
+  "archiveIndex": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archive-index.json",
+    "sha256": "e471a246c534cd934d1c2ad8bd9d730c55573b8ed03a61fd9ca98133c3a2e448"
+  },
+  "closeoutIndex": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/closeout-index.json",
+    "sha256": "7170f03e0046c5ae726ff9c2c1e356058c9c26335e26983aa8ab8f3c0fbc5bd7"
+  },
+  "archives": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-build-baseline.tar.gz",
+      "sha256": "d9ed4e630d5e0670f697544030e8e66b0f656a5f82caae87e707437894c81148",
+      "compressedBytes": 7617273,
+      "evidencePayloads": 254,
+      "payloadBytes": 48001316,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 253,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-module-preparation.tar.gz",
+      "sha256": "c05ec2f78b19fa866954722c1ef4c8829e8fdc8030e043d1f4f3810461dbd942",
+      "compressedBytes": 552985,
+      "evidencePayloads": 2171,
+      "payloadBytes": 13619211,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 2170,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-renderer.tar.gz",
+      "sha256": "0960b74a940ff19c324e967a9cee289e74a82a43e9ca37f0177b17bcc191c3f0",
+      "compressedBytes": 1111651,
+      "evidencePayloads": 7154,
+      "payloadBytes": 17496414,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 7153,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-resource.tar.gz",
+      "sha256": "c9fa72a7719f43d3b59ada503e68c0bd26d4566deeffcf299f6ba18fc0af6fbd",
+      "compressedBytes": 945683,
+      "evidencePayloads": 8194,
+      "payloadBytes": 18247949,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 8193,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-setup-audit.tar.gz",
+      "sha256": "98bdbb32fe0c1cea74976baad709f3b9c3c925983e78bbb17cb24808d03dfdd1",
+      "compressedBytes": 3287266,
+      "evidencePayloads": 78,
+      "payloadBytes": 53636437,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 77,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-publication-closeout.tar.gz",
+      "sha256": "5a7f5922e2e22b776497453ef65792e40cd92e7f883c2cea9b91a32a7eee8543",
+      "compressedBytes": 2522349,
+      "payloads": 44,
+      "allMembersIndependentlyCompared": true,
+      "reviewedReportSha256": "c330f78ff14963c3e14ca3a942751991be2295f783383d88f710593f2f99113e",
+      "qualification": "Closeout archive preserves the main five-archive index and pre-outer-terminal report. Actual packaging wrapper terminal is a subsequent external receipt; no self-referential terminal claim."
+    }
+  ],
+  "archivesCount": 6,
+  "compressedBytes": 16037207,
+  "largestCompressedBytes": 7617273,
+  "selectedOriginalPayloads": 17846,
+  "selectedOriginalBytes": 143266174,
+  "literalLinksSerialized": 11,
+  "canonicalCapturedSourceInputs": 178,
+  "gitFixtureFilesReused": 26826,
+  "originalContentKindModeChanges": [],
+  "originalPathSetChanges": [],
+  "allCreateAndSeparateVerifyCommands": [
+    {
+      "label": "build-baseline-create",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/groups/build-baseline",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-build-baseline.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "57b2f27c3cfad6aabf4dc9799e5c5b760eb66521182aca232e753929520af458",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "build-baseline-verify",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-build-baseline.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "57b2f27c3cfad6aabf4dc9799e5c5b760eb66521182aca232e753929520af458",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "module-preparation-create",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/groups/module-preparation",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-module-preparation.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "3e8cf02e9b14565682e8722f8b64ea9d4eb05f2479a77f869a641317bc2575ad",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "module-preparation-verify",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-module-preparation.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "3e8cf02e9b14565682e8722f8b64ea9d4eb05f2479a77f869a641317bc2575ad",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "renderer-create",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/groups/renderer",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-renderer.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "bfec1f263b992a02c6871b8bd8652d56b442807f7cb341639e7097ff8d9c4e37",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "renderer-verify",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-renderer.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "bfec1f263b992a02c6871b8bd8652d56b442807f7cb341639e7097ff8d9c4e37",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "resource-create",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/groups/resource",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-resource.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "ef8aa4847e37a3edf3d99d24c194acc42205bd306147aa6b93e7a2f72df15d2b",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "resource-verify",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-resource.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "ef8aa4847e37a3edf3d99d24c194acc42205bd306147aa6b93e7a2f72df15d2b",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "setup-audit-create",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/groups/setup-audit",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-setup-audit.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e9047bc7692c014d9c712fb1891cbe4a9b1d20acdbdb174be15f217c227e8354",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "setup-audit-verify",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-setup-audit.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e9047bc7692c014d9c712fb1891cbe4a9b1d20acdbdb174be15f217c227e8354",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "closeout-create",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/closeout-source",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-publication-closeout.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "2b9f4b14dfab8e2f2e6656f3ac77ccaf32ae7ff807ff4a07de6f45e9fd6c7918",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "closeout-verify",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/archives/stage47-c05-platform-publication-closeout.tar.gz"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "2b9f4b14dfab8e2f2e6656f3ac77ccaf32ae7ff807ff4a07de6f45e9fd6c7918",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "allMembersIndependentReadback": true,
+  "actualPackagingWrapper": {
+    "sessionId": 66048,
+    "actualExitCode": 0,
+    "observedUtc": "2026-10-23T14:29:34.394915+00:00",
+    "executionReportSha256": "82379b3e72ea041573aaa959ea34bd8def99f2add83a780dfa70fb085b14c132",
+    "packageReportSha256": "c330f78ff14963c3e14ca3a942751991be2295f783383d88f710593f2f99113e",
+    "observation": "tools.write_stdin returned actual terminal exit_code0 for the packaging wrapper."
+  },
+  "finalPathCoverage": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-publication-01/final-path-coverage.json",
+    "sha256": "79f6131737a875836a7199fbd1d18699a1a188258d9ec3804e71ccc439c1759f"
+  },
+  "qualification": "Closeout archive captures report/index and original verification logs before the subsequent outer terminal receipt. This handoff binds the actual terminal and final source path-set readback without asserting a self-referential archive."
+}

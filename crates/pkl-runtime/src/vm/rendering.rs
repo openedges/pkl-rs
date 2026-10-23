@@ -1,7 +1,21 @@
-//! PCF output is an evaluator-owned continuation, separate from diagnostic rendering.
+//! Value renderers share evaluator-owned forcing, conversion and Host continuations.
 use super::converters::{Converters, PathPart};
 use super::*;
 use crate::heap::{CollectionKind, CollectionMember, CollectionMemberKind};
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub(super) enum Format {
+    Pcf,
+    Json,
+}
+impl Format {
+    fn name(self) -> &'static str {
+        match self {
+            Self::Pcf => "Pcf",
+            Self::Json => "JSON",
+        }
+    }
+}
 
 struct Members {
     path: Vec<PathPart>,
@@ -16,6 +30,7 @@ struct Members {
     document_root: bool,
     emitted: bool,
     strict: bool,
+    array: bool,
 }
 struct MemberRun {
     members: Members,
@@ -63,6 +78,7 @@ enum Task {
         document_root: bool,
         emitted: bool,
         strict: bool,
+        array: bool,
     },
 }
 enum Await {
@@ -74,12 +90,20 @@ enum Await {
     PropertyTransformer,
     PropertyFunction,
     PropertyResult,
-    ConverterMember { key: bool },
+    ConverterMember {
+        key: bool,
+    },
+    Directive {
+        receiver: ObjectId,
+        path: Vec<PathPart>,
+    },
 }
 pub(super) struct RenderRun {
     receiver: ObjectId,
     root: Value,
+    document_original: Option<Value>,
     document: bool,
+    format: Format,
     option: usize,
     options: Vec<Value>,
     await_: Option<Await>,
@@ -97,9 +121,14 @@ impl RenderRun {
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
         roots.push(Value::Object(self.receiver));
         roots.push(self.root.clone());
+        roots.extend(self.document_original.iter().cloned());
         roots.extend(self.options.iter().cloned());
         roots.extend(self.active.iter().copied().map(Value::Object));
         self.converters.roots(roots);
+        if let Some(Await::Directive { receiver, path }) = &self.await_ {
+            roots.push(Value::Object(*receiver));
+            path_roots(path, roots);
+        }
         for task in &self.tasks {
             match task {
                 Task::Visit { value, path, .. } => {
@@ -161,6 +190,12 @@ impl RenderRun {
     fn append(&mut self, text: &str) {
         self.output.push_str(text);
     }
+    fn json_newline(&mut self, depth: usize) {
+        if !self.indent.is_empty() {
+            self.append("\n");
+            self.output.push_value(&self.indentation(depth));
+        }
+    }
     fn value(
         &mut self,
         value: Value,
@@ -182,6 +217,48 @@ impl RenderRun {
     }
 }
 impl Vm {
+    /// An outer renderDocument overwrites inner hints while unwinding. The
+    /// top-level converter call itself is outside Java's render try/catch.
+    pub(super) fn document_conversion_hint(
+        &self,
+        unwind_start: usize,
+    ) -> Result<Option<PklString>, RuntimeError> {
+        for frame in &self.frames[unwind_start..] {
+            let Some(run) = &frame.pcf_render else {
+                continue;
+            };
+            let Some(original) = &run.document_original else {
+                continue;
+            };
+            match same_render_reference(original, &run.root) {
+                Some(true) => continue,
+                None => {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Unsupported,
+                        "Java reference identity for this unchanged scalar or byte-payload conversion is not preserved; renderDocument conversion hints are not implemented for this boundary.",
+                    ));
+                }
+                Some(false) => (),
+            }
+            let render = |value: &Value| {
+                crate::diagnostic_values::render_string(
+                    value,
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )
+            };
+            let mut hint = crate::pkl_string::PklStringBuilder::default();
+            hint.push_str("This value was converted during rendering. Previous: ");
+            hint.push_value(&render(original)?);
+            hint.push_str(". After: ");
+            hint.push_value(&render(&run.root)?);
+            hint.push('.');
+            return Ok(Some(hint.finish()));
+        }
+        Ok(None)
+    }
+
     pub(super) fn pcf_undefined_hint(&self) -> Option<PklString> {
         let force = self
             .frames
@@ -192,26 +269,36 @@ impl Vm {
             let Some(run) = &frame.pcf_render else {
                 continue;
             };
-            if !matches!(run.await_, Some(Await::Shallow)) {
-                continue;
-            }
-            let Some(Task::OpenObject { receiver, path, .. }) = run.tasks.last() else {
-                continue;
+            let path = match &run.await_ {
+                Some(Await::Directive { receiver, path }) if *receiver == force.receiver => {
+                    // VmUndefinedValueException.fillInHint appends the missing
+                    // member key even when the receiver is a RenderDirective.
+                    let mut path = path.clone();
+                    path.push(PathPart::Property(force.name.as_ref().into()));
+                    path
+                }
+                Some(Await::Shallow) => {
+                    let Some(Task::OpenObject { receiver, path, .. }) = run.tasks.last() else {
+                        continue;
+                    };
+                    if *receiver != force.receiver {
+                        continue;
+                    }
+                    let mut path = path.clone();
+                    if force.entry {
+                        let object = self.heap.get(force.owner).ok()?;
+                        let descriptor = object
+                            .collection_members
+                            .iter()
+                            .find(|member| member.name == force.name)?;
+                        path.push(PathPart::Entry(descriptor.key.clone()));
+                    } else {
+                        path.push(PathPart::Property(force.name.as_ref().into()));
+                    }
+                    path
+                }
+                _ => continue,
             };
-            if *receiver != force.receiver {
-                continue;
-            }
-            let mut path = path.clone();
-            if force.entry {
-                let object = self.heap.get(force.owner).ok()?;
-                let descriptor = object
-                    .collection_members
-                    .iter()
-                    .find(|member| member.name == force.name)?;
-                path.push(PathPart::Entry(descriptor.key.clone()));
-            } else {
-                path.push(PathPart::Property(force.name.as_ref().into()));
-            }
             let mut text = crate::pkl_string::PklStringBuilder::default();
             let mut trailing = false;
             for part in path {
@@ -265,13 +352,19 @@ impl Vm {
         }
         None
     }
-    pub(super) fn begin_pcf(&mut self, document: bool) -> Result<(), RuntimeError> {
+    pub(super) fn begin_render(
+        &mut self,
+        document: bool,
+        format: Format,
+    ) -> Result<(), RuntimeError> {
         let root = self.pop()?;
         let receiver = self.scope(0)?.receiver;
         self.frames.last_mut().expect("renderer frame").pcf_render = Some(RenderRun {
             receiver,
             root,
+            document_original: None,
             document,
+            format,
             option: 0,
             options: Vec::new(),
             await_: None,
@@ -346,6 +439,12 @@ impl Vm {
                 Await::Shallow => {
                     self.pop()?;
                 }
+                Await::Directive { .. } => {
+                    let Value::String(text) = self.pop()? else {
+                        return Err(invalid("checked render directive text"));
+                    };
+                    run.output.push_value(&text);
+                }
                 Await::KeyEquality => {
                     let Value::Bool(equal) = self.pop()? else {
                         return Err(invalid("renderer key equality"));
@@ -366,14 +465,23 @@ impl Vm {
                 }
             }
         }
-        if run.option < 5 {
-            let names = [
+        let names: &[&str] = if run.format == Format::Pcf {
+            &[
                 "indent",
                 "omitNullProperties",
                 "useCustomStringDelimiters",
                 "converters",
                 "convertPropertyTransformers",
-            ];
+            ]
+        } else {
+            &[
+                "indent",
+                "omitNullProperties",
+                "converters",
+                "convertPropertyTransformers",
+            ]
+        };
+        if run.option < names.len() {
             let index = run.option;
             run.option += 1;
             run.await_ = Some(Await::Option(index));
@@ -387,7 +495,7 @@ impl Vm {
             )?;
             return Ok(false);
         }
-        if run.option < 7 {
+        if run.option < names.len() + 2 {
             let index = run.option - 2;
             run.option += 1;
             run.await_ = Some(Await::Mapping);
@@ -404,12 +512,14 @@ impl Vm {
                 return Err(invalid("renderer omit type"));
             };
             run.omit_null = omit;
-            let Value::Bool(custom) = run.options[2] else {
-                return Err(invalid("renderer delimiter type"));
-            };
-            run.custom = custom;
+            if run.format == Format::Pcf {
+                let Value::Bool(custom) = run.options[2] else {
+                    return Err(invalid("renderer delimiter type"));
+                };
+                run.custom = custom;
+            }
             let (Value::Object(mapping), Value::Object(transformers)) =
-                (&run.options[3], &run.options[4])
+                (&run.options[names.len() - 2], &run.options[names.len() - 1])
             else {
                 return Err(invalid("renderer mappings"));
             };
@@ -426,7 +536,7 @@ impl Vm {
             return Ok(false);
         }
         let Some(task) = run.tasks.pop() else {
-            if run.document && !run.output.is_empty() {
+            if run.document && (run.format == Format::Json || !run.output.is_empty()) {
                 run.append("\n");
             }
             return Ok(true);
@@ -460,8 +570,14 @@ impl Vm {
                     return Ok(false);
                 }
                 if root {
+                    if run.document && converted {
+                        run.document_original = Some(run.root.clone());
+                    }
                     run.root = value.clone();
-                    if run.document && !self.pcf_document_value(&value)? {
+                    if run.format == Format::Pcf
+                        && run.document
+                        && !self.pcf_document_value(&value)?
+                    {
                         let ty = crate::diagnostic_values::type_name(
                             &value,
                             &self.heap,
@@ -483,13 +599,38 @@ impl Vm {
                     Value::Null | Value::NullWithDefault(_) => run.append("null"),
                     Value::Bool(value) => run.append(if value { "true" } else { "false" }),
                     Value::Int(value) => run.append(&value.to_string()),
-                    Value::Float(value) => run.append(&crate::numeric::double_to_string(value)),
-                    Value::String(value) => run.output.push_value(&super::pcf_format::string(
-                        &value,
-                        &run.indentation(depth + usize::from(!string_element)),
-                        run.custom,
-                    )),
+                    Value::Float(value) => {
+                        let text = crate::numeric::double_to_string(*value);
+                        if run.format == Format::Json && !value.is_finite() {
+                            // ErrorMessages uses Java MessageFormat for the
+                            // numeric argument, unlike the rendered value form.
+                            let diagnostic = if value.is_nan() {
+                                "NaN"
+                            } else if value.is_sign_negative() {
+                                "-∞"
+                            } else {
+                                "∞"
+                            };
+                            return Err(RuntimeError::new(
+                                ErrorKind::Type,
+                                format!("Cannot render value `{diagnostic}` as JSON."),
+                            ));
+                        }
+                        run.append(&text);
+                    }
+                    Value::String(value) => run.output.push_value(&if run.format == Format::Json {
+                        json_string(&value)
+                    } else {
+                        super::pcf_format::string(
+                            &value,
+                            &run.indentation(depth + usize::from(!string_element)),
+                            run.custom,
+                        )
+                    }),
                     Value::Bytes(value) => {
+                        if run.format == Format::Json {
+                            return self.pcf_unrenderable(run, &Value::Bytes(value));
+                        }
                         run.append("Bytes(");
                         for (index, byte) in value.iter().enumerate() {
                             if index != 0 {
@@ -500,7 +641,15 @@ impl Vm {
                         run.append(")");
                     }
                     Value::Object(id) => {
+                        if self.is_render_directive(id)? {
+                            run.await_ = Some(Await::Directive { receiver: id, path });
+                            self.force(id, id, "text".into(), false, true, false)?;
+                            return Ok(false);
+                        }
                         if let Some(pair) = self.heap.get(id)?.pair.clone() {
+                            if run.format == Format::Json {
+                                return self.pcf_unrenderable(run, &Value::Object(id));
+                            }
                             run.append("Pair(");
                             run.tasks.push(Task::Text(")".into()));
                             run.value(pair[1].clone(), depth, true, false, false, path.clone());
@@ -523,10 +672,15 @@ impl Vm {
                             CollectionKind::List | CollectionKind::Map | CollectionKind::Set
                         );
                         if strict {
-                            run.append(match kind {
-                                CollectionKind::List => "List(",
-                                CollectionKind::Map => "Map(",
-                                _ => "Set(",
+                            let array = kind != CollectionKind::Map;
+                            run.append(if run.format == Format::Json {
+                                if array { "[" } else { "{" }
+                            } else {
+                                match kind {
+                                    CollectionKind::List => "List(",
+                                    CollectionKind::Map => "Map(",
+                                    _ => "Set(",
+                                }
                             });
                             let members = collections::ordered_members(&self.heap, id)?
                                 .into_iter()
@@ -544,10 +698,11 @@ impl Vm {
                                 compare: 0,
                                 prepared: false,
                                 hash: None,
-                                depth,
+                                depth: depth + usize::from(run.format == Format::Json),
                                 document_root: false,
                                 emitted: false,
                                 strict: true,
+                                array,
                                 path,
                             }));
                         } else {
@@ -572,16 +727,25 @@ impl Vm {
                 root,
                 path,
             } => {
-                let doc = run.document && root;
+                let members = collections::render_members(&self.heap, receiver)?;
+                let array = self.heap.get(receiver)?.collection_kind == CollectionKind::Listing
+                    || members
+                        .iter()
+                        .any(|m| !m.skip && m.descriptor.kind == CollectionMemberKind::Element);
+                let doc = run.format == Format::Pcf && run.document && root;
                 if !doc {
-                    if standalone {
+                    if run.format == Format::Pcf && standalone {
                         run.append("new ");
                     }
-                    run.append("{");
+                    run.append(if run.format == Format::Json && array {
+                        "["
+                    } else {
+                        "{"
+                    });
                 }
                 run.tasks.push(Task::Members(Members {
                     receiver,
-                    members: collections::render_members(&self.heap, receiver)?,
+                    members,
                     next: 0,
                     seen: Vec::new(),
                     compare: 0,
@@ -591,6 +755,7 @@ impl Vm {
                     document_root: doc,
                     emitted: false,
                     strict: false,
+                    array,
                     path,
                 }));
             }
@@ -600,8 +765,13 @@ impl Vm {
                         receiver: m.receiver,
                         depth: m.depth,
                         document_root: m.document_root,
-                        emitted: m.emitted,
+                        emitted: m.emitted
+                            || (run.format == Format::Json
+                                && m.strict
+                                && !m.array
+                                && !m.members.is_empty()),
                         strict: m.strict,
+                        array: m.array,
                     });
                     return Ok(false);
                 }
@@ -638,6 +808,19 @@ impl Vm {
                 if item.skip {
                     run.tasks.push(Task::Members(m));
                     return Ok(false);
+                }
+                if run.format == Format::Json
+                    && m.array
+                    && descriptor.kind != CollectionMemberKind::Element
+                {
+                    let rendered = crate::diagnostic_values::render(
+                        &Value::Object(m.receiver),
+                        &self.heap,
+                        &self.program.module_name,
+                        80,
+                    )?;
+                    return Err(RuntimeError::new(ErrorKind::Type,
+                        PklString::from("Cannot render object with both elements and properties/entries as JSON.\nObject: ").concat(&rendered)));
                 }
                 let value = collections::cached_render_value(&self.heap, m.receiver, descriptor)?
                     .ok_or_else(|| invalid("shallow-forced member is uncached"))?;
@@ -739,7 +922,9 @@ impl Vm {
                     previous_source,
                     ..
                 } = member;
-                if descriptor.kind == CollectionMemberKind::Property
+                if (descriptor.kind == CollectionMemberKind::Property
+                    || (run.format == Format::Json
+                        && descriptor.kind == CollectionMemberKind::Entry))
                     && run.omit_null
                     && value.is_null()
                 {
@@ -748,7 +933,35 @@ impl Vm {
                     return Ok(false);
                 }
                 let depth = m.depth;
-                if m.strict {
+                if run.format == Format::Json {
+                    if m.emitted {
+                        run.append(",");
+                    }
+                    run.json_newline(depth);
+                    m.emitted = true;
+                    let kind = descriptor.kind;
+                    if kind == CollectionMemberKind::Entry
+                        && !matches!(key, Value::String(_))
+                        && !matches!(key, Value::Object(id) if self.is_render_directive(id)?)
+                    {
+                        return self.json_non_string_key(m.receiver, &key);
+                    }
+                    run.tasks.push(Task::Members(m));
+                    run.tasks.push(Task::RestoreSource(previous_source));
+                    run.value(value, depth, false, false, false, path);
+                    if kind != CollectionMemberKind::Element {
+                        run.tasks.push(Task::Text(
+                            if run.indent.is_empty() { ":" } else { ": " }.into(),
+                        ));
+                        if kind == CollectionMemberKind::Property {
+                            run.tasks.push(Task::Text(json_string(
+                                &output_name.unwrap_or_else(|| descriptor.name.into()),
+                            )));
+                        } else {
+                            run.value(key, depth, false, false, false, Vec::new());
+                        }
+                    }
+                } else if m.strict {
                     if m.emitted {
                         run.append(", ");
                     }
@@ -886,8 +1099,14 @@ impl Vm {
                 document_root,
                 emitted,
                 strict,
+                array,
             } => {
-                if strict {
+                if run.format == Format::Json {
+                    if emitted {
+                        run.json_newline(depth - 1);
+                    }
+                    run.append(if array { "]" } else { "}" });
+                } else if strict {
                     run.append(")");
                 } else if !document_root {
                     if emitted {
@@ -977,14 +1196,69 @@ impl Vm {
         let mut error = RuntimeError::new(
             ErrorKind::Type,
             PklString::from(format!(
-                "Cannot render value of type `{ty}` as Pcf.\nValue: "
+                "Cannot render value of type `{ty}` as {}.\nValue: ",
+                run.format.name()
             ))
             .concat(&rendered),
         );
-        error.hint = Some("Consider adding a converter to `output.converters`.".into());
+        error.set_template_hint("Consider adding a converter to `output.converters`.");
         error.frames.extend(run.source.clone());
         Err(error)
     }
+    fn is_render_directive(&self, id: ObjectId) -> Result<bool, RuntimeError> {
+        Ok(collections::typed_class(&self.heap, id)?
+            .is_some_and(|class| class.id == output::RENDER_DIRECTIVE))
+    }
+    fn json_non_string_key(&self, receiver: ObjectId, key: &Value) -> Result<bool, RuntimeError> {
+        let map = self.heap.get(receiver)?.collection_kind == CollectionKind::Map;
+        let render = |value: &Value| {
+            crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)
+        };
+        Err(RuntimeError::new(
+            ErrorKind::Type,
+            PklString::from(if map {
+                "Cannot render map with non-string key as JSON.\nMap: "
+            } else {
+                "Cannot render object with non-string key as JSON.\nObject: "
+            })
+            .concat(&render(&Value::Object(receiver))?)
+            .concat(&if map { "\nKey: " } else { "\nKey   : " }.into())
+            .concat(&render(key)?),
+        ))
+    }
+}
+
+/// Reference identity is independent of Pkl payload equality and backing buffers.
+fn same_render_reference(left: &Value, right: &Value) -> Option<bool> {
+    Some(left.reference()? == right.reference()?)
+}
+
+/// The pinned JsonEscaper operates on Java chars, including unpaired surrogates.
+fn json_string(value: &PklString) -> PklString {
+    let mut units = vec![b'"' as u16];
+    for unit in value.encode_utf16() {
+        let replacement = match unit {
+            0x22 => Some("\\\""),
+            0x5c => Some("\\\\"),
+            8 => Some("\\b"),
+            9 => Some("\\t"),
+            10 => Some("\\n"),
+            12 => Some("\\f"),
+            13 => Some("\\r"),
+            0x2028 => Some("\\u2028"),
+            0x2029 => Some("\\u2029"),
+            _ => None,
+        };
+        if let Some(text) = replacement {
+            units.extend(text.encode_utf16());
+        } else if unit < 0x20 {
+            units.extend(format!("\\u{unit:04x}").encode_utf16());
+        } else {
+            units.push(unit);
+        }
+    }
+    units.push(b'"' as u16);
+    PklString::from_utf16(units)
 }
 
 fn path_roots(path: &[PathPart], roots: &mut Vec<Value>) {

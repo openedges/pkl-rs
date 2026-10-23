@@ -1,5 +1,8 @@
 //! Suspended predicate values and lazy replacement captures are heap roots.
 use std::sync::Arc;
+#[path = "support/eager_base.rs"]
+mod eager_base;
+use eager_base::Baseline;
 
 use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
@@ -97,6 +100,8 @@ fn finish_inner(session: &mut HostSession, now: u64) -> Value {
 #[test]
 fn suspended_predicates_preserve_for_let_and_replacement_this_captures() {
     let (mut session, root, outer_entry, inner_entry) = session();
+    let initialized = Baseline::new(session.collect(&[]));
+    let stale_root = root.clone();
     session
         .start(outer_entry, vec![root.clone()], 1, None)
         .unwrap();
@@ -117,13 +122,25 @@ fn suspended_predicates_preserve_for_let_and_replacement_this_captures() {
         .unwrap();
     assert_eq!(ready(&mut session, 3), Ok(Value::string("outer:Ab")));
     assert_eq!(session.context_depth(), 0);
-    assert_eq!(session.collect(&[]).live, 0);
+    // Only evaluator-owned base values and the exact lexical descriptors survive.
+    assert_eq!(initialized.added_values(session.collect(&[]), 5), -1);
+    assert_eq!(
+        session
+            .start(outer_entry, vec![stale_root], 10, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::StaleHandle
+    );
+    session.close();
+    assert_eq!(session.heap_stats().slots, 0);
     assert!(session.drain_cancelled_reads().is_empty());
 }
 
 #[test]
 fn failed_predicate_retries_from_a_fresh_target_with_fresh_captured_values() {
     let (mut session, root, outer_entry, inner_entry) = session();
+    let initialized = Baseline::new(session.collect(&[]));
+    let stale_root = root.clone();
     session
         .start(outer_entry, vec![root.clone()], 1, None)
         .unwrap();
@@ -165,6 +182,16 @@ fn failed_predicate_retries_from_a_fresh_target_with_fresh_captured_values() {
         .unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer:Ab")));
     assert!(!session.is_closed());
-    assert_eq!(session.collect(&[]).live, 0);
+    // Only evaluator-owned base values and the exact lexical descriptors survive.
+    assert_eq!(initialized.added_values(session.collect(&[]), 5), -1);
+    assert_eq!(
+        session
+            .start(outer_entry, vec![stale_root], 10, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::StaleHandle
+    );
+    session.close();
+    assert_eq!(session.heap_stats().slots, 0);
     assert!(session.drain_cancelled_reads().is_empty());
 }

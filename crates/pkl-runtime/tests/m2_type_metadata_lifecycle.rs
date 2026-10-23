@@ -3,6 +3,9 @@
 //! Retained module graphs include their one builtin Module parent; executable
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
+#[path = "support/eager_base.rs"]
+mod eager_base;
+use eager_base::Baseline;
 
 use pkl_runtime::heap::LazyState;
 use pkl_runtime::host::{HostPoll, HostSession};
@@ -47,7 +50,7 @@ fn alias_singleton_roots_its_declaration_graph_and_releases_temporary_values() {
     let scalar = program.blocks.len();
     program
         .blocks
-        .push(vec![I::Constant(Value::Int(7)), I::Return]);
+        .push(vec![I::Constant(Value::Int(7.into())), I::Return]);
     let template = program.objects.len();
     program.objects.push(vec![]);
     let transient_entry = program.blocks.len();
@@ -62,29 +65,34 @@ fn alias_singleton_roots_its_declaration_graph_and_releases_temporary_values() {
     let mut vm = Vm::new(Arc::new(program));
     vm.start(entry, vec![]).unwrap();
     let module = vm_ready(&mut vm).unwrap();
+    // The result annotation has already initialized Answer in this module graph.
+    let initialized = Baseline::new(vm.collect(&[]));
     let alias = member(&mut vm, &module, "Answer").unwrap();
     assert!(matches!(alias, Value::TypeAlias(_)));
-    assert_eq!(vm.collect(&[]).live, 3);
-    assert_eq!(member(&mut vm, &module, "result"), Ok(Value::Int(42)));
+    assert_eq!(initialized.added_values(vm.collect(&[]), 0), 0);
+    assert_eq!(
+        member(&mut vm, &module, "result"),
+        Ok(Value::Int(42.into()))
+    );
     // The singleton's declaration module now also retains the captured object.
-    assert_eq!(retained_values(vm.collect(&[]), 5), 4);
+    assert_eq!(initialized.added_values(vm.collect(&[]), 5), 1);
     vm.start(scalar, vec![]).unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(7)));
-    assert_eq!(retained_values(vm.collect(&[]), 5), 4);
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(7.into())));
+    assert_eq!(initialized.added_values(vm.collect(&[]), 5), 1);
     assert_eq!(member(&mut vm, &module, "Answer"), Ok(alias.clone()));
     vm.start_member(module.as_object().unwrap(), "temporary")
         .unwrap();
     let temporary = vm_ready(&mut vm).unwrap();
     // A completed module property deliberately remains in the declaration graph.
-    assert_eq!(retained_values(vm.collect(&[]), 5), 5);
+    assert_eq!(initialized.added_values(vm.collect(&[]), 5), 2);
     assert_eq!(member(&mut vm, &module, "Answer"), Ok(alias));
     vm.start(transient_entry, vec![]).unwrap();
     let transient = vm_ready(&mut vm).unwrap();
-    assert_eq!(retained_values(vm.collect(&[]), 5), 6);
+    assert_eq!(initialized.added_values(vm.collect(&[]), 5), 3);
     vm.start(scalar, vec![]).unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(7)));
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(7.into())));
     let collected = vm.collect(&[]);
-    assert_eq!(retained_values(collected, 5), 5);
+    assert_eq!(initialized.added_values(collected, 5), 2);
     assert!(collected.reclaimed > 0);
     assert_eq!(
         vm.start(scalar, vec![transient]).unwrap_err().kind,
@@ -106,8 +114,10 @@ fn immutable_program_shares_no_alias_handles_between_evaluators() {
     let mut right = Vm::new(program.clone());
     left.start(program.entry, vec![]).unwrap();
     let left_module = vm_ready(&mut left).unwrap();
+    let left_initialized = Baseline::new(left.collect(&[]));
     right.start(program.entry, vec![]).unwrap();
     let right_module = vm_ready(&mut right).unwrap();
+    let right_initialized = Baseline::new(right.collect(&[]));
     let left_alias = member(&mut left, &left_module, "Callback").unwrap();
     let right_alias = member(&mut right, &right_module, "Callback").unwrap();
     assert!(matches!(left_alias, Value::TypeAlias(_)));
@@ -127,8 +137,8 @@ fn immutable_program_shares_no_alias_handles_between_evaluators() {
         member(&mut left, &second_module, "Callback"),
         Ok(left_alias)
     );
-    assert_eq!(left.collect(&[]).live, 3);
-    assert_eq!(right.collect(&[]).live, 3);
+    assert_eq!(left_initialized.added_values(left.collect(&[]), 0), 1);
+    assert_eq!(right_initialized.added_values(right.collect(&[]), 0), 1);
     left.close();
     right.close();
     assert_eq!(left.heap_stats().slots, 0);
@@ -195,6 +205,7 @@ fn request(session: &mut HostSession, now: u64, expected_uri: &str) -> String {
 #[test]
 fn generic_function_and_nested_alias_checks_keep_captures_across_gc_and_host_reentry() {
     let (mut session, module, [outer_entry, inner_entry, alias_entry, bad_arity]) = setup();
+    let initialized = Baseline::new(session.collect(&[]));
     session
         .start(alias_entry, vec![module.clone()], 0, None)
         .unwrap();
@@ -203,12 +214,12 @@ fn generic_function_and_nested_alias_checks_keep_captures_across_gc_and_host_ree
         .start(outer_entry, vec![module.clone()], 1, None)
         .unwrap();
     let outer = request(&mut session, 1, "mem:outer");
-    let suspended = retained_values(session.collect(&[]), 3);
+    let suspended = initialized.added_values(session.collect(&[]), 3);
     session
         .reenter(&outer, inner_entry, vec![module.clone()], 2, None)
         .unwrap();
     let inner = request(&mut session, 2, "mem:inner");
-    assert!(retained_values(session.collect(&[]), 11) > suspended);
+    assert!(initialized.added_values(session.collect(&[]), 11) > suspended);
     session
         .reenter(&inner, alias_entry, vec![module.clone()], 2, None)
         .unwrap();
@@ -224,9 +235,10 @@ fn generic_function_and_nested_alias_checks_keep_captures_across_gc_and_host_ree
     assert_eq!(request(&mut session, 3, "mem:outer"), outer);
     session.collect(&[]);
     session.resume(&outer, Ok(Value::string("ok")), 4).unwrap();
-    assert_eq!(ready(&mut session, 4), Ok(Value::Int(42)));
+    assert_eq!(ready(&mut session, 4), Ok(Value::Int(42.into())));
     assert_eq!(session.context_depth(), 0);
-    assert!(retained_values(session.collect(&[]), 11) < suspended);
+    // Completing callback.apply initializes its parameter-slot descriptor once.
+    assert!(initialized.added_values(session.collect(&[]), 12) < suspended);
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
     assert!(session.drain_cancelled_reads().is_empty());
@@ -283,7 +295,7 @@ fn ordinary_alias_check_failures_retry_without_losing_identity_or_parent_cursor(
         .unwrap();
     assert!(matches!(ready(&mut session, 5), Ok(Value::TypeAlias(_))));
     session.resume(&outer, Ok(Value::string("ok")), 5).unwrap();
-    assert_eq!(ready(&mut session, 5), Ok(Value::Int(42)));
+    assert_eq!(ready(&mut session, 5), Ok(Value::Int(42.into())));
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
 }
@@ -292,6 +304,7 @@ fn ordinary_alias_check_failures_retry_without_losing_identity_or_parent_cursor(
 fn terminal_actions_release_aliases_function_captures_and_all_pending_metadata_reads() {
     for termination in [ErrorKind::Cancelled, ErrorKind::Closed, ErrorKind::Timeout] {
         let (mut session, module, [outer_entry, inner_entry, _, _]) = setup();
+        let initialized = Baseline::new(session.collect(&[]));
         session
             .start(
                 outer_entry,
@@ -306,7 +319,7 @@ fn terminal_actions_release_aliases_function_captures_and_all_pending_metadata_r
             .unwrap();
         let inner = request(&mut session, 2, "mem:inner");
         assert_eq!(session.context_depth(), 2);
-        assert!(retained_values(session.collect(&[]), 11) > 0);
+        assert!(initialized.added_values(session.collect(&[]), 11) > 0);
         match termination {
             ErrorKind::Cancelled => session.cancel(),
             ErrorKind::Closed => session.close(),
@@ -347,11 +360,12 @@ fn development_cancel_retries_function_type_checks_and_preserves_alias_identity(
     let scalar = program.blocks.len();
     program
         .blocks
-        .push(vec![I::Constant(Value::Int(0)), I::Return]);
+        .push(vec![I::Constant(Value::Int(0.into())), I::Return]);
     let entry = program.entry;
     let mut vm = Vm::new(Arc::new(program));
     vm.start(entry, vec![]).unwrap();
     let module = vm_ready(&mut vm).unwrap();
+    let initialized = Baseline::new(vm.collect(&[]));
     let alias = member(&mut vm, &module, "Callback").unwrap();
     vm.start_member(module.as_object().unwrap(), "outerResult")
         .unwrap();
@@ -364,7 +378,7 @@ fn development_cancel_retries_function_type_checks_and_preserves_alias_identity(
             event => panic!("expected function constraint read, got {event:?}"),
         }
     };
-    let suspended = retained_values(vm.collect(&[]), 3);
+    let suspended = initialized.added_values(vm.collect(&[]), 3);
     vm.cancel();
     assert_eq!(vm_ready(&mut vm).unwrap_err().kind, ErrorKind::Cancelled);
     assert!(!vm.is_closed());
@@ -378,20 +392,9 @@ fn development_cancel_retries_function_type_checks_and_preserves_alias_identity(
         ErrorKind::Host
     );
     vm.start(scalar, vec![]).unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(0)));
-    assert!(retained_values(vm.collect(&[]), 3) < suspended);
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(0.into())));
+    assert!(initialized.added_values(vm.collect(&[]), 3) < suspended);
     assert_eq!(member(&mut vm, &module, "Callback"), Ok(alias));
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
-}
-
-// Persistent executable/type nodes have their own exact bound. The returned
-// count preserves the original object and custom-this-slot assertions.
-#[track_caller]
-fn retained_values(stats: pkl_runtime::heap::HeapStats, expected_executables: usize) -> usize {
-    assert_eq!(
-        stats.executable_live, expected_executables,
-        "persistent executable graph"
-    );
-    stats.live - stats.executable_live
 }

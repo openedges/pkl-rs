@@ -52,7 +52,7 @@ fn alias_declarations_keep_distinct_identity_names_and_mapping_keys() {
         Ok(Value::string("alias=metadata#A"))
     );
     for name in ["lookup", "length"] {
-        assert_eq!(member(&mut vm, module, name), Ok(Value::Int(2)));
+        assert_eq!(member(&mut vm, module, name), Ok(Value::Int(2.into())));
     }
 }
 
@@ -95,8 +95,8 @@ fn omitted_generic_alias_arguments_are_unknown_and_explicit_arguments_validate()
     let (mut vm, module) = module(
         "typealias Identity<T> = T\nloose: Identity = 42\nstrict: Identity<String> = 42\nvalue: Identity<List<Int>> = List(1, 2)\nfirst = value[0]",
     );
-    assert_eq!(member(&mut vm, module, "loose"), Ok(Value::Int(42)));
-    assert_eq!(member(&mut vm, module, "first"), Ok(Value::Int(1)));
+    assert_eq!(member(&mut vm, module, "loose"), Ok(Value::Int(42.into())));
+    assert_eq!(member(&mut vm, module, "first"), Ok(Value::Int(1.into())));
     assert_eq!(
         member(&mut vm, module, "strict").unwrap_err().message,
         "Expected value of type `String`, but got type `Int`.\nValue: 42"
@@ -110,9 +110,12 @@ fn function_types_check_arity_and_leave_lambda_annotations_responsible_for_calls
     );
     assert_eq!(
         member(&mut vm, module, "uncheckedResult"),
-        Ok(Value::Int(3))
+        Ok(Value::Int(3.into()))
     );
-    assert_eq!(member(&mut vm, module, "anyResult"), Ok(Value::Int(2)));
+    assert_eq!(
+        member(&mut vm, module, "anyResult"),
+        Ok(Value::Int(2.into()))
+    );
     assert_eq!(member(&mut vm, module, "kind"), Ok(Value::Bool(true)));
     assert_eq!(
         member(&mut vm, module, "text"),
@@ -198,7 +201,7 @@ lookup = mapping[sameConstraint]
     for name in ["aliasDistinct", "constraintEqual", "constraintDistinct"] {
         assert_eq!(member(&mut vm, module, name), Ok(Value::Bool(true)));
     }
-    assert_eq!(member(&mut vm, module, "lookup"), Ok(Value::Int(7)));
+    assert_eq!(member(&mut vm, module, "lookup"), Ok(Value::Int(7.into())));
 }
 
 #[test]
@@ -206,7 +209,10 @@ fn string_constraint_members_count_codepoints_through_custom_and_explicit_this()
     let (mut vm, module) = module(
         "typealias Text = String(length == 2, !isEmpty)\nvalue: Text = \"a😀\"\nexplicit = value.length\nwrong: Text = \"abc\"",
     );
-    assert_eq!(member(&mut vm, module, "explicit"), Ok(Value::Int(2)));
+    assert_eq!(
+        member(&mut vm, module, "explicit"),
+        Ok(Value::Int(2.into()))
+    );
     assert!(member(&mut vm, module, "wrong").is_err());
 }
 

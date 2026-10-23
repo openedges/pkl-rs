@@ -269,8 +269,10 @@ child = x["\u{d800}"][0]
                 matches!(event(&mut session, &module, now), HostPoll::Read { token, .. } if token == outer)
             );
         }
-        session.resume(&outer, Ok(Value::Int(42)), 4).unwrap();
-        assert_eq!(ready(&mut session, &module, 4), Ok(Value::Int(42)));
+        session
+            .resume(&outer, Ok(Value::Int(42.into())), 4)
+            .unwrap();
+        assert_eq!(ready(&mut session, &module, 4), Ok(Value::Int(42.into())));
         session.close();
         assert_eq!(session.heap_stats().slots, 0);
         let detached = detached.unwrap();

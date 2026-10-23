@@ -11,6 +11,7 @@ impl Vm {
             "pkl:base" => crate::stdlib_sources::base(),
             "pkl:test" => crate::stdlib_sources::test(),
             "pkl:ref" => crate::stdlib_sources::reference(),
+            "pkl:json" => crate::stdlib_sources::json(),
             _ if uri.starts_with("pkl:") => {
                 if include_str!("../stdlib/modules.txt")
                     .lines()
@@ -102,7 +103,11 @@ fn append_members(
     // Compile the real authored annotation/initialization path. External member
     // bodies are bound below; they are not rewritten into Pkl source strings.
     let mut header = parsed.clone();
-    header.members.clear();
+    // Pure Pkl declarations keep their actual bodies, annotations, class identity
+    // and source owners. The JSON parser's external binding remains explicit.
+    header
+        .members
+        .retain(|member| uri == "pkl:json" && matches!(member.name.as_str(), "Property" | "Value"));
     let resolved = crate::resolver::resolve_module(&header)
         .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;
     let unit = compile_unit_into(
@@ -118,8 +123,16 @@ fn append_members(
             resolved_uri: uri.into(),
         }),
     )?;
+    let compiled_members = program.units[unit.0 as usize].initial_members.clone();
     let mut members = Vec::new();
     for declaration in &parsed.members {
+        if let Some(member) = compiled_members
+            .iter()
+            .find(|member| member.name.as_ref() == declaration.name)
+        {
+            members.push(member.clone());
+            continue;
+        }
         let method = matches!(
             declaration.expr.kind,
             ExprKind::Function { method: true, .. }
@@ -128,6 +141,8 @@ fn append_members(
         let mut type_span = None;
         let mut body = if uri == "pkl:base" {
             base_binding(declaration)
+        } else if uri == "pkl:json" {
+            unsupported_binding(uri, declaration)
         } else if uri == "pkl:ref" {
             match declaration.name.as_str() {
                 "Reference" if !method => vec![Instruction::BuiltinClass(TypeCheck::Reference {
@@ -300,9 +315,9 @@ fn base_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
         }
         _ if matches!(name, "NaN" | "Infinity") => {
             return vec![Instruction::Constant(Value::Float(if name == "NaN" {
-                f64::NAN
+                f64::NAN.into()
             } else {
-                f64::INFINITY
+                f64::INFINITY.into()
             }))];
         }
         _ => {}

@@ -2,6 +2,9 @@
 //! Retained module graphs include their one builtin Module parent; executable
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
+#[path = "support/eager_base.rs"]
+mod eager_base;
+use eager_base::Baseline;
 
 use pkl_runtime::heap::LazyState;
 use pkl_runtime::host::{HostPoll, HostSession};
@@ -100,6 +103,7 @@ fn host_setup() -> (HostSession, Value, [usize; 2]) {
 #[test]
 fn recursive_constraints_reenter_retry_and_keep_suspended_values_alive() {
     let (mut session, module, [outer, inner]) = host_setup();
+    let initialized = Baseline::new(session.collect(&[]));
     session.start(outer, vec![module.clone()], 1, None).unwrap();
     let parent = host_read(&mut session, 1);
     session
@@ -127,7 +131,7 @@ fn recursive_constraints_reenter_retry_and_keep_suspended_values_alive() {
         session.collect(&[]);
         session.resume(&child, Ok(Value::string("ok")), 3).unwrap();
     }
-    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(7)));
+    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(7.into())));
     assert_eq!(host_read(&mut session, 3), parent);
     assert_eq!(
         session
@@ -146,8 +150,8 @@ fn recursive_constraints_reenter_retry_and_keep_suspended_values_alive() {
             request = host_read(&mut session, 4);
         }
     }
-    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(42)));
-    assert_eq!(retained_values(session.collect(&[]), 30), 3);
+    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(42.into())));
+    assert_eq!(initialized.added_values(session.collect(&[]), 30), 1);
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
 }
@@ -158,12 +162,13 @@ fn cancelling_recursive_check_reclaims_temporaries_and_preserves_retry_identity(
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     let module = vm_ready(&mut vm).unwrap();
+    let initialized = Baseline::new(vm.collect(&[]));
     let object = module.as_object().unwrap();
     vm.start_member(object, "identity").unwrap();
     let alias = vm_ready(&mut vm).unwrap();
     vm.start_member(object, "outerResult").unwrap();
     let old = vm_read(&mut vm);
-    assert!(retained_values(vm.collect(&[]), 5) > 2);
+    assert!(initialized.added_values(vm.collect(&[]), 5) > 0);
     vm.cancel();
     assert_eq!(vm_ready(&mut vm).unwrap_err().kind, ErrorKind::Cancelled);
     assert!(!vm.is_closed());
@@ -171,7 +176,7 @@ fn cancelling_recursive_check_reclaims_temporaries_and_preserves_retry_identity(
         vm.member_state(object, "outerResult").unwrap(),
         LazyState::Unevaluated
     );
-    assert_eq!(retained_values(vm.collect(&[]), 5), 3);
+    assert_eq!(initialized.added_values(vm.collect(&[]), 5), 1);
     vm.start_member(object, "identity").unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(alias));
     vm.start_member(object, "outerResult").unwrap();
@@ -184,8 +189,8 @@ fn cancelling_recursive_check_reclaims_temporaries_and_preserves_retry_identity(
         );
         vm.resume(request, Ok(Value::string("ok"))).unwrap();
     }
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42)));
-    assert_eq!(retained_values(vm.collect(&[]), 17), 3);
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42.into())));
+    assert_eq!(initialized.added_values(vm.collect(&[]), 17), 1);
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -194,6 +199,7 @@ fn cancelling_recursive_check_reclaims_temporaries_and_preserves_retry_identity(
 fn terminal_actions_release_recursive_parent_and_child_reads() {
     for termination in [ErrorKind::Cancelled, ErrorKind::Closed, ErrorKind::Timeout] {
         let (mut session, module, [outer, inner]) = host_setup();
+        let initialized = Baseline::new(session.collect(&[]));
         session
             .start(
                 outer,
@@ -208,7 +214,7 @@ fn terminal_actions_release_recursive_parent_and_child_reads() {
             .unwrap();
         let child = host_read(&mut session, 2);
         assert_eq!(session.context_depth(), 2);
-        assert!(retained_values(session.collect(&[]), 10) > 2);
+        assert!(initialized.added_values(session.collect(&[]), 10) > 0);
         match termination {
             ErrorKind::Cancelled => session.cancel(),
             ErrorKind::Closed => session.close(),
@@ -240,15 +246,4 @@ fn terminal_actions_release_recursive_parent_and_child_reads() {
         session.close();
         assert!(session.drain_cancelled_reads().is_empty());
     }
-}
-
-// Persistent executable/type nodes have their own exact bound. The returned
-// count preserves the original object and custom-this-slot assertions.
-#[track_caller]
-fn retained_values(stats: pkl_runtime::heap::HeapStats, expected_executables: usize) -> usize {
-    assert_eq!(
-        stats.executable_live, expected_executables,
-        "persistent executable graph"
-    );
-    stats.live - stats.executable_live
 }

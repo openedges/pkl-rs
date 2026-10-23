@@ -375,7 +375,7 @@ impl Renderer<'_> {
             Value::Null | Value::NullWithDefault(_) => self.append("null"),
             Value::Bool(value) => self.append(if *value { "true" } else { "false" }),
             Value::Int(value) => self.append(&value.to_string()),
-            Value::Float(value) => self.append(&crate::numeric::double_to_string(*value)),
+            Value::Float(value) => self.append(&crate::numeric::double_to_string(**value)),
             Value::String(value) => {
                 self.append_units(value.quoted().encode_utf16());
             }
@@ -776,7 +776,7 @@ mod tests {
                 name: "a".into(),
                 method: false,
             },
-            LazyState::Completed(Value::Int(1)),
+            LazyState::Completed(Value::Int(1.into())),
         );
         let before = heap.get(object).unwrap().cache.clone();
         assert_eq!(

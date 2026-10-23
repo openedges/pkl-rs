@@ -271,13 +271,15 @@ fn suspended_numeric_constraint_frames_survive_reentry_retry_gc_and_close() {
         session
             .resume(&token, Ok(Value::String("yes".into())), 4)
             .unwrap();
-        assert_eq!(ready(&mut session, &module, 4), Ok(Value::Int(-1)));
+        assert_eq!(ready(&mut session, &module, 4), Ok(Value::Int((-1).into())));
         session
             .reenter(&outer, result, vec![module.clone()], 5, None)
             .unwrap();
-        assert_eq!(ready(&mut session, &module, 5), Ok(Value::Int(-1)));
-        session.resume(&outer, Ok(Value::Int(42)), 6).unwrap();
-        assert_eq!(ready(&mut session, &module, 6), Ok(Value::Int(42)));
+        assert_eq!(ready(&mut session, &module, 5), Ok(Value::Int((-1).into())));
+        session
+            .resume(&outer, Ok(Value::Int(42.into())), 6)
+            .unwrap();
+        assert_eq!(ready(&mut session, &module, 6), Ok(Value::Int(42.into())));
         session.close();
         assert_eq!(session.heap_stats().slots, 0);
         assert!(
@@ -308,7 +310,7 @@ fn signed_values_keep_minint_and_negative_zero_across_collection_and_reuse() {
             vm.start_member(module.as_object().unwrap(), name).unwrap();
             assert_eq!(
                 finish(&mut vm, std::slice::from_ref(&module)),
-                Ok(Value::Int(expected))
+                Ok(Value::Int(expected.into()))
             );
         }
         vm.start_member(module.as_object().unwrap(), "zero")

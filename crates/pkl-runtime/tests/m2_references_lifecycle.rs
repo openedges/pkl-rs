@@ -1,6 +1,9 @@
 //! Shared Host and tracing regressions; Java byte comparisons are recorded separately.
 //! Retained module graphs include their builtin Module parent and source-backed
 //! stdlib annotations; transient objects and terminal-zero assertions stay separate.
+#[path = "support/eager_base.rs"]
+mod eager_base;
+use eager_base::Baseline;
 use std::sync::Arc;
 
 use pkl_runtime::host::{HostPoll, HostSession};
@@ -84,6 +87,7 @@ fn suspended_rendering_preserves_reference_metadata_during_reentry_gc_and_retry(
     let [parent, rendered, inspect] = entries[..] else {
         unreachable!()
     };
+    let initialized = Baseline::new(session.collect(&[]));
     session
         .start(parent, vec![module.clone()], 1, None)
         .unwrap();
@@ -133,12 +137,11 @@ fn suspended_rendering_preserves_reference_metadata_during_reentry_gc_and_retry(
     );
     session.resume(&outer, Ok(Value::Null), 5).unwrap();
     assert_eq!(ready(&mut session, 5), Ok(Value::Null));
-    // Evaluator-owned class roots retain the captured module's completed cache
-    // closure, including pkl:ref's two annotation instances, three annotation
-    // class prototypes, and three constraint execution nodes. Repeated GC
-    // must settle at this exact source-specific size.
-    assert_eq!(session.collect(&[]).live, 19);
-    assert_eq!(session.collect(&[]).live, 19);
+    // Keep the exact class/annotation/Reference cache closure above this
+    // initialized module. Base-owned annotation prototypes and descriptors
+    // are shared; transient access lists and custom-this slots are reclaimed.
+    assert_eq!(initialized.added_values(session.collect(&[]), 1), 9);
+    assert_eq!(initialized.added_values(session.collect(&[]), 1), 9);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -151,6 +154,7 @@ fn domain_constraint_continuations_keep_reference_and_custom_this_through_gc() {
     let [parent, checked, inspect] = entries[..] else {
         unreachable!()
     };
+    let initialized = Baseline::new(session.collect(&[]));
     session
         .start(parent, vec![module.clone()], 1, None)
         .unwrap();
@@ -170,12 +174,11 @@ fn domain_constraint_continuations_keep_reference_and_custom_this_through_gc() {
     assert_eq!(ready(&mut session, 3), Ok(Value::string("payload/")));
     session.resume(&outer, Ok(Value::Null), 4).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::Null));
-    // Evaluator-owned class roots retain the captured module's completed cache
-    // closure, including pkl:ref's two annotation instances, three annotation
-    // class prototypes, and three constraint execution nodes. Repeated GC
-    // must settle at this exact source-specific size.
-    assert_eq!(retained_values(session.collect(&[]), 7), 15);
-    assert_eq!(retained_values(session.collect(&[]), 7), 15);
+    // Keep the exact class/annotation/Reference cache closure above this
+    // initialized module. Base-owned annotation prototypes and descriptors
+    // are shared; transient access lists and custom-this slots are reclaimed.
+    assert_eq!(initialized.added_values(session.collect(&[]), 4), 8);
+    assert_eq!(initialized.added_values(session.collect(&[]), 4), 8);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -253,6 +256,7 @@ fn equality_retains_pending_domain_and_data_comparisons_and_retries_only_failed_
     let [parent, compare, inspect] = entries[..] else {
         unreachable!()
     };
+    let initialized = Baseline::new(session.collect(&[]));
     session
         .start(parent, vec![module.clone()], 1, None)
         .unwrap();
@@ -284,24 +288,12 @@ fn equality_retains_pending_domain_and_data_comparisons_and_retries_only_failed_
     assert_eq!(ready(&mut session, 4), Ok(Value::Bool(true)));
     session.resume(&outer, Ok(Value::Null), 5).unwrap();
     assert_eq!(ready(&mut session, 5), Ok(Value::Null));
-    // Evaluator-owned class roots retain the captured module's completed cache
-    // closure, including pkl:ref's two annotation instances, three annotation
-    // class prototypes, and three constraint execution nodes. Repeated GC
-    // must settle at this exact source-specific size.
-    assert_eq!(session.collect(&[]).live, 23);
-    assert_eq!(session.collect(&[]).live, 23);
+    // Keep the exact class/annotation/Reference cache closure above this
+    // initialized module. Base-owned annotation prototypes and descriptors
+    // are shared; transient access lists and custom-this slots are reclaimed.
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), 15);
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), 15);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
-}
-
-// Persistent executable/type nodes have their own exact bound. The returned
-// count preserves the original object and custom-this-slot assertions.
-#[track_caller]
-fn retained_values(stats: pkl_runtime::heap::HeapStats, expected_executables: usize) -> usize {
-    assert_eq!(
-        stats.executable_live, expected_executables,
-        "persistent executable graph"
-    );
-    stats.live - stats.executable_live
 }

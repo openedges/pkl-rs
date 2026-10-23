@@ -1163,7 +1163,7 @@ impl Vm {
                 fixed: false,
             });
             object.collection_members.push(CollectionMember {
-                key: Value::Int(index as i64),
+                key: Value::Int((index as i64).into()),
                 name: name.clone(),
                 kind: CollectionMemberKind::Element,
             });

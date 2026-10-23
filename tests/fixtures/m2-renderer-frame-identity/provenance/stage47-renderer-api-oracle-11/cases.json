@@ -1,0 +1,136 @@
+[
+  {
+    "id": "tagged-instances-numeric-constant-identity",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-11/workspace/tagged-instances-numeric-constant-identity",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-api-oracle-11/workspace/tagged-instances-numeric-constant-identity/main.pkl",
+    "mode": "allow",
+    "operations": [
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "a.tag"
+      ],
+      [
+        "main.pkl",
+        "b.tag"
+      ],
+      [
+        "main.pkl",
+        "fa.tag"
+      ],
+      [
+        "main.pkl",
+        "fb.tag"
+      ],
+      [
+        "main.pkl",
+        "d.tag"
+      ],
+      [
+        "main.pkl",
+        "gd.tag"
+      ],
+      [
+        "main.pkl",
+        "a == b"
+      ],
+      [
+        "main.pkl",
+        "fa == fb"
+      ],
+      [
+        "main.pkl",
+        "a.getClass() == b.getClass()"
+      ],
+      [
+        "main.pkl",
+        "fa.getClass() == fb.getClass()"
+      ],
+      [
+        "main.pkl",
+        "a.getClass() == d.getClass()"
+      ],
+      [
+        "main.pkl",
+        "fa.getClass() == gd.getClass()"
+      ],
+      [
+        "main.pkl",
+        "a.n"
+      ],
+      [
+        "main.pkl",
+        "b.n"
+      ],
+      [
+        "main.pkl",
+        "fa.n"
+      ],
+      [
+        "main.pkl",
+        "fb.n"
+      ],
+      [
+        "main.pkl",
+        "d.n"
+      ],
+      [
+        "main.pkl",
+        "gd.n"
+      ],
+      [
+        "main.pkl",
+        "pOther.renderDocument(a.n)"
+      ],
+      [
+        "main.pkl",
+        "pSelf.renderDocument(a.n)"
+      ],
+      [
+        "main.pkl",
+        "pDifferent.renderDocument(a.n)"
+      ],
+      [
+        "main.pkl",
+        "pFloatOther.renderDocument(fa.n)"
+      ],
+      [
+        "main.pkl",
+        "pFloatSelf.renderDocument(fa.n)"
+      ],
+      [
+        "main.pkl",
+        "pFloatDifferent.renderDocument(fa.n)"
+      ],
+      "GC",
+      [
+        "main.pkl",
+        "pOther.renderDocument(a.n)"
+      ],
+      [
+        "main.pkl",
+        "pDifferent.renderDocument(a.n)"
+      ],
+      [
+        "main.pkl",
+        "pFloatOther.renderDocument(fa.n)"
+      ],
+      [
+        "main.pkl",
+        "pFloatDifferent.renderDocument(fa.n)"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ]
+    ],
+    "scope": "Nonempty taggedC/Finstances distinguish numericconstant sharing fromemptyliteralprototype reuse. DistinctD/GinitializerAST controls same numericpayload without assumingidentitybyvalue. Public raw only, noRust expectations.",
+    "javaSettings": {
+      "powerAssertionsEnabled": true
+    },
+    "rustObserveModes": "separate native options, notJavaoff/on"
+  }
+]

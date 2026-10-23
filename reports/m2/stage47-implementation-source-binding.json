@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "scope": "C06 project code, fixtures and control inputs bound to actual staged Git blobs; new report artifacts checked as exact staged bytes. No runtime/build/test execution.",
+  "createdUtc": "2026-10-23T15:33:06.131472+00:00",
+  "baseCommit": "4facad294bedc3393f7dfbccc2f82439fb0734af",
+  "candidateSourceMapSha256": "f736de4eef08949b42bca21b276da80ee1c914b5ce6dbd442fcc636feb5738f1",
+  "candidateProjectInputsMatched": 45375,
+  "postCandidateDocumentationDelta": [
+    {
+      "path": "PLAN.md",
+      "candidateSha256": "f9cbcb81875dd7b7311033a14f00e43c20fe0d2666bce1d7192c39b9c5dd160c",
+      "stagedSha256": "011eb5ebda11a99881cd132c08281eadf807ba5a8657fcb07822ddcb49529496",
+      "gitBlob": "2593004caa05e5c016ff3184cb1f4283aa53d30a"
+    },
+    {
+      "path": "docs/architecture.md",
+      "candidateSha256": "480ac2cea8f92bfccd40a43c475cf399122da507989b18104ae74b4a6759616a",
+      "stagedSha256": "37f6236a2804b7c9f9265f7bb9aa8ac832df43495dd2864c69aee1ae1b217afe",
+      "gitBlob": "84d904119cedc75bdd3e0de8d076dd9fc3a033ed"
+    },
+    {
+      "path": "docs/m2-json-rendering.md",
+      "candidateSha256": "f25e2e2fc186e0306002679c21687de27c016286f28c6a708bec19083f6814f1",
+      "stagedSha256": "497d130bd78dfcda77779e4c919aed758be5e21c5a2024b786567773b3b8076c",
+      "gitBlob": "353d6843ccd7f7f8505c98e47edb459cacfede38"
+    }
+  ],
+  "otherCandidateInputs": "Captured external sources and historical reports retain their separate full source/archive audits; reference gitlinks are checked here.",
+  "changedStagedFiles": 3957,
+  "stagedAllBytesEqualWorkingTree": true,
+  "allChangedObjectsBelow100MiB": true,
+  "referenceGitlinks": {
+    "external/pkl": {
+      "mode": "160000",
+      "oid": "e51fb2f91774265666f94980ec630db794a4db2d"
+    },
+    "external/pkl-pantry": {
+      "mode": "160000",
+      "oid": "904a68184e54da378b0a0e8a911a3fab3956f693"
+    }
+  },
+  "diffCheckPassed": true,
+  "bindingsSha256": "bfa025425222ed53c39c1fac327a086c1ca7743f906b470e4e666ab6cd13a8c3",
+  "stagedFilesSha256": "10fdbb709b7088ea3c6391ec8e0577e64cccbf6ebc6f8e4bcdf416fd7ba68dc7",
+  "followupPublication": "This audit and subsequent review/binding reports are additional documentation artifacts, not C06 runtime inputs. Actual commit binding follows separately."
+}

@@ -48,14 +48,14 @@ fn atom(heap: &Heap, value: &Value) -> Result<Atom, RuntimeError> {
     Ok(match value {
         Value::Null | Value::NullWithDefault(_) => Atom::Null,
         Value::Bool(v) => Atom::Bool(*v),
-        Value::Int(v) => Atom::Int(*v),
+        Value::Int(v) => Atom::Int(**v),
         Value::Float(v) => Atom::Float(if v.is_nan() {
             f64::NAN.to_bits()
         } else {
             v.to_bits()
         }),
         Value::String(v) => Atom::String(v.clone()),
-        Value::Bytes(v) => Atom::Bytes(v.clone()),
+        Value::Bytes(v) => Atom::Bytes(v.clone().into_data()),
         Value::Function(v) => Atom::Function(*v),
         Value::Class(v) => Atom::Class(*v),
         Value::TypeAlias(v) => Atom::TypeAlias(*v),
@@ -85,7 +85,7 @@ impl Vm {
         Ok(match value {
             Value::Null | Value::NullWithDefault(_) => Some(0),
             Value::Bool(value) => Some(if *value { 1231 } else { 1237 }),
-            Value::Int(value) => Some((*value as u64 ^ ((*value as u64) >> 32)) as i32),
+            Value::Int(value) => Some((value.get() as u64 ^ ((value.get() as u64) >> 32)) as i32),
             Value::Float(value) => {
                 let bits = if value.is_nan() {
                     0x7ff8000000000000
@@ -971,8 +971,8 @@ impl Vm {
             }
             Task::Compare(left, right, semantic) => {
                 let equal = match (&left, &right) {
-                    (Value::Int(a), Value::Float(b)) if semantic => Some(*a as f64 == *b),
-                    (Value::Float(a), Value::Int(b)) if semantic => Some(*a == *b as f64),
+                    (Value::Int(a), Value::Float(b)) if semantic => Some(a.get() as f64 == **b),
+                    (Value::Float(a), Value::Int(b)) if semantic => Some(*a == b.get() as f64),
                     (Value::Float(a), Value::Float(b)) if semantic => Some(a == b),
                     (Value::Object(a), Value::Object(b)) if a == b => Some(true),
                     (Value::Object(a), Value::Object(b)) => {

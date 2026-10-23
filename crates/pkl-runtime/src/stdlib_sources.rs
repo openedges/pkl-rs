@@ -45,8 +45,31 @@ pub(crate) fn test() -> Arc<RuntimeSource> {
         .clone()
 }
 
+pub(crate) fn json() -> Arc<RuntimeSource> {
+    static SOURCE: OnceLock<Arc<RuntimeSource>> = OnceLock::new();
+    SOURCE
+        .get_or_init(|| {
+            Arc::new(RuntimeSource {
+                text: include_str!("stdlib/json.pkl").into(),
+                uri: "https://github.com/apple/pkl/blob/0.32.0/stdlib/json.pkl".into(),
+                module_name: "pkl.json".into(),
+                line_anchors: true,
+            })
+        })
+        .clone()
+}
+
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn bundled_json_source_matches_the_pinned_checkout() {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../external/pkl/stdlib/json.pkl");
+        assert_eq!(
+            include_bytes!("stdlib/json.pkl").as_slice(),
+            std::fs::read(path).unwrap()
+        );
+    }
     #[test]
     fn bundled_base_source_matches_the_pinned_checkout() {
         let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))

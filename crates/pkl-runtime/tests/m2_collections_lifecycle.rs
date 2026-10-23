@@ -1,6 +1,9 @@
 //! Collection continuation roots and Host lifecycle checks, separate from Java
 //! language compatibility and resource-cache evidence.
 use std::sync::Arc;
+#[path = "support/eager_base.rs"]
+mod eager_base;
+use eager_base::Baseline;
 
 use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
@@ -94,6 +97,8 @@ fn finish_inner(session: &mut HostSession, now: u64, prefix: &str) -> Value {
 #[test]
 fn reentered_spread_and_suspended_for_preserve_temporary_iterables_and_captures() {
     let (mut session, root, outer_entry, inner_entry) = session();
+    let initialized = Baseline::new(session.collect(&[]));
+    let stale_root = root.clone();
     session
         .start(outer_entry, vec![root.clone()], 1, None)
         .unwrap();
@@ -110,7 +115,17 @@ fn reentered_spread_and_suspended_for_preserve_temporary_iterables_and_captures(
     session.resume(&outer, Ok(inner_value), 3).unwrap();
     assert_eq!(ready(&mut session, 3), Ok(Value::string("aAbcB")));
     assert_eq!(session.context_depth(), 0);
-    assert_eq!(session.collect(&[]).live, 0);
+    // Only evaluator-owned base values and the exact lexical descriptors survive.
+    assert_eq!(initialized.added_values(session.collect(&[]), 6), -1);
+    assert_eq!(
+        session
+            .start(outer_entry, vec![stale_root], 10, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::StaleHandle
+    );
+    session.close();
+    assert_eq!(session.heap_stats().slots, 0);
     assert!(session.drain_cancelled_reads().is_empty());
 }
 
@@ -215,6 +230,8 @@ fn terminal_reentry_releases_partial_builders_iterators_and_reader_tokens() {
 #[test]
 fn failed_child_spread_retries_from_a_fresh_builder_while_parent_for_stays_pending() {
     let (mut session, root, outer_entry, inner_entry) = session();
+    let initialized = Baseline::new(session.collect(&[]));
+    let stale_root = root.clone();
     session
         .start(outer_entry, vec![root.clone()], 1, None)
         .unwrap();
@@ -253,6 +270,16 @@ fn failed_child_spread_retries_from_a_fresh_builder_while_parent_for_stays_pendi
     session.resume(&outer, Ok(inner_value), 4).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("aAfreshcB")));
     assert!(!session.is_closed());
-    assert_eq!(session.collect(&[]).live, 0);
+    // Only evaluator-owned base values and the exact lexical descriptors survive.
+    assert_eq!(initialized.added_values(session.collect(&[]), 6), -1);
+    assert_eq!(
+        session
+            .start(outer_entry, vec![stale_root], 10, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::StaleHandle
+    );
+    session.close();
+    assert_eq!(session.heap_stats().slots, 0);
     assert!(session.drain_cancelled_reads().is_empty());
 }

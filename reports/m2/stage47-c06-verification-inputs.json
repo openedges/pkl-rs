@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "scope": "C06 implementation checkpoint verification inputs; read-only existing-record audit, no evaluator/test/build executions.",
+  "candidate": {
+    "releaseSha256": "59543feca57c4994116708f9950fdabec97c3d7f3cbc261feafc2d8f074899c9",
+    "sourceMapSha256": "f736de4eef08949b42bca21b276da80ee1c914b5ce6dbd442fcc636feb5738f1",
+    "sourcePaths": 51745
+  },
+  "completed": {
+    "requiredRustCommands": 5,
+    "untouchedOriginalCliCalls": 4,
+    "nativeRendererApiComparisons": 1840,
+    "primaryPortableApiComparisonsPerTarget": {
+      "renderer": 860,
+      "resource": 1008,
+      "module": 252
+    },
+    "supplementaryRendererApiComparisonsPerTarget": 980,
+    "baselineSharedTargets": 6078,
+    "baselineJavaMatchesPerTarget": 6076,
+    "baselineKnownRegexMismatches": 2
+  },
+  "verificationAttribution": {
+    "C": "Four originalCLI raw captures directly compared; Rust5 report/raw hash bindings; primary platform full raw/source/artifact audit sealed separately.",
+    "B": "Native1840 and supplementary portable980 full readback attributed to exact sealed independent B audit records; this script checks their metadata and report hashes."
+  },
+  "sourceQualification": "Immutable C06 map remains unchanged; later docs-only3-file delta explicitly recorded. No later commit/index source binding inferred.",
+  "overlapQualification": "API/call totals overlap fixtures, modes and platforms; they are not unique feature counts or a completion percentage.",
+  "pending": [
+    "Stage47 full-selected regression acquisition and closure",
+    "Final implementation commit/index binding",
+    "Core/native/primary platform final publication handoffs until separately closed",
+    "Required stdlib admission/security and remaining identity/semantic obligations",
+    "M2 strict completion gate and all broader performance/release requirements"
+  ],
+  "historicalFailures": "C01-C05 failures, setup failures, prior layout/clippy/heap/stack records and exact2regex gaps remain preserved in their original records. No historical result promoted to C06."
+}

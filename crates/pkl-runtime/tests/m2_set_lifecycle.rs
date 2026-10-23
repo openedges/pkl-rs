@@ -4,6 +4,9 @@
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::process::{Command, Stdio};
 use std::sync::Arc;
+#[path = "support/eager_base.rs"]
+mod eager_base;
+use eager_base::Baseline;
 use std::time::{Duration, Instant};
 
 use pkl_runtime::heap::LazyState;
@@ -121,22 +124,22 @@ hashOrdered = Map(Set(new Dynamic { p = read("mem:first") },
     let object = module.as_object().unwrap();
     vm.start_member(object, "result").unwrap();
     for (uri, response) in [
-        ("mem:item-evaluation", Value::Int(1)),
-        ("mem:item-hash", Value::Int(2)),
+        ("mem:item-evaluation", Value::Int(1.into())),
+        ("mem:item-hash", Value::Int(2.into())),
         ("mem:next-item", Value::string("retained next item")),
     ] {
         let token = vm_read(&mut vm, uri);
         vm.resume(token, Ok(response)).unwrap();
     }
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(2)));
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(2.into())));
     vm.start_member(object, "check").unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(12)));
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(12.into())));
     vm.start_member(object, "hashOrdered").unwrap();
     for uri in ["mem:first", "mem:second"] {
         let token = vm_read(&mut vm, uri);
-        vm.resume(token, Ok(Value::Int(7))).unwrap();
+        vm.resume(token, Ok(Value::Int(7.into()))).unwrap();
     }
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(1)));
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(1.into())));
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -158,6 +161,8 @@ fn contains_query_and_comparison_operands_survive_failed_reentry_and_gc() {
         let mut session = HostSession::new(program);
         session.start(entry, vec![], 0, None).unwrap();
         let module = host_ready(&mut session, 0).unwrap();
+        let initialized = Baseline::new(session.collect(&[]));
+        let stale_module = module.clone();
         session
             .start(parent, vec![module.clone()], 1, None)
             .unwrap();
@@ -184,14 +189,22 @@ fn contains_query_and_comparison_operands_survive_failed_reentry_and_gc() {
                 .kind,
             ErrorKind::Host
         );
-        session.resume(&token, Ok(Value::Int(7)), 3).unwrap();
+        session.resume(&token, Ok(Value::Int(7.into())), 3).unwrap();
         assert_eq!(
             host_ready(&mut session, 3),
             Ok(Value::Bool(!expression.contains("!=")))
         );
         session.resume(&outer, Ok(Value::Null), 3).unwrap();
         assert_eq!(host_ready(&mut session, 3), Ok(Value::Null));
-        assert_eq!(session.collect(&[]).live, 0);
+        // User values are reclaimed; the private base and exact executable graph remain.
+        assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+        assert_eq!(
+            session
+                .start(parent, vec![stale_module], 10, None)
+                .unwrap_err()
+                .kind,
+            ErrorKind::StaleHandle
+        );
         session.close();
         assert_eq!(session.heap_stats().slots, 0);
     }
@@ -200,6 +213,8 @@ fn contains_query_and_comparison_operands_survive_failed_reentry_and_gc() {
 #[test]
 fn nested_set_hash_failure_retries_unpublished_builder_during_parent_reentry() {
     let (mut session, module, [parent, child, inspect]) = setup();
+    let initialized = Baseline::new(session.collect(&[]));
+    let stale_module = module.clone();
     session
         .start(parent, vec![module.clone()], 1, None)
         .unwrap();
@@ -218,9 +233,9 @@ fn nested_set_hash_failure_retries_unpublished_builder_during_parent_reentry() {
             );
         }
         if success {
-            session.resume(&key, Ok(Value::Int(7)), 2).unwrap();
+            session.resume(&key, Ok(Value::Int(7.into())), 2).unwrap();
             let next = host_read(&mut session, 2, "mem:next");
-            session.resume(&next, Ok(Value::Int(42)), 2).unwrap();
+            session.resume(&next, Ok(Value::Int(42.into())), 2).unwrap();
             assert_eq!(host_ready(&mut session, 2), Ok(Value::Bool(true)));
         } else {
             let error = RuntimeError::new(ErrorKind::Host, "strict Set hash retry\0\r\n🙂");
@@ -235,10 +250,18 @@ fn nested_set_hash_failure_retries_unpublished_builder_during_parent_reentry() {
     session
         .reenter(&outer, inspect, vec![module], 3, None)
         .unwrap();
-    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(3)));
+    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(3.into())));
     session.resume(&outer, Ok(Value::Null), 3).unwrap();
     assert_eq!(host_ready(&mut session, 3), Ok(Value::Null));
-    assert_eq!(session.collect(&[]).live, 0);
+    // User values are reclaimed; the private base and exact executable graph remain.
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+    assert_eq!(
+        session
+            .start(parent, vec![stale_module], 10, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::StaleHandle
+    );
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
 }
@@ -249,6 +272,7 @@ fn repeated_nonterminal_cancel_reclaims_set_builder_and_hash_operands() {
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     let module = vm_ready(&mut vm).unwrap();
+    let initialized = Baseline::new(vm.collect(std::slice::from_ref(&module)));
     let object = module.as_object().unwrap();
     let mut retained = None;
     for _ in 0..24 {
@@ -269,7 +293,7 @@ fn repeated_nonterminal_cancel_reclaims_set_builder_and_hash_operands() {
         );
         let stats = vm.collect(std::slice::from_ref(&module));
         let live = (stats.live - stats.executable_live, stats.executable_live);
-        assert_eq!(live.0, 2);
+        assert_eq!(initialized.added_values(stats, 0), 0);
         if let Some(expected) = retained {
             assert_eq!(live, expected);
         } else {
@@ -278,9 +302,9 @@ fn repeated_nonterminal_cancel_reclaims_set_builder_and_hash_operands() {
     }
     vm.start_member(object, "child").unwrap();
     let key = vm_read(&mut vm, "mem:key");
-    vm.resume(key, Ok(Value::Int(7))).unwrap();
+    vm.resume(key, Ok(Value::Int(7.into()))).unwrap();
     let next = vm_read(&mut vm, "mem:next");
-    vm.resume(next, Ok(Value::Int(42))).unwrap();
+    vm.resume(next, Ok(Value::Int(42.into()))).unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(Value::Bool(true)));
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
@@ -294,6 +318,8 @@ fn sets_and_pending_hashes_are_evaluator_local_and_reclaimed_handles_stay_stale(
     let mut right = Vm::new(program.clone());
     left.start(program.entry, vec![]).unwrap();
     let left_module = vm_ready(&mut left).unwrap();
+    let initialized = Baseline::new(left.collect(&[]));
+    let stale_module = left_module.clone();
     right.start(program.entry, vec![]).unwrap();
     let right_module = vm_ready(&mut right).unwrap();
     left.start_member(left_module.as_object().unwrap(), "parent")
@@ -307,14 +333,19 @@ fn sets_and_pending_hashes_are_evaluator_local_and_reclaimed_handles_stay_stale(
     let left_read = vm_read(&mut left, "mem:leaf");
     right.start(child, vec![right_module]).unwrap();
     let right_read = vm_read(&mut right, "mem:leaf");
-    right.resume(right_read, Ok(Value::Int(8))).unwrap();
-    assert_eq!(vm_ready(&mut right), Ok(Value::Int(1)));
+    right.resume(right_read, Ok(Value::Int(8.into()))).unwrap();
+    assert_eq!(vm_ready(&mut right), Ok(Value::Int(1.into())));
     right.close();
     assert_eq!(right.heap_stats().slots, 0);
     left.collect(std::slice::from_ref(&left_module));
-    left.resume(left_read, Ok(Value::Int(7))).unwrap();
-    assert_eq!(vm_ready(&mut left), Ok(Value::Int(1)));
-    assert_eq!(left.collect(&[]).live, 0);
+    left.resume(left_read, Ok(Value::Int(7.into()))).unwrap();
+    assert_eq!(vm_ready(&mut left), Ok(Value::Int(1.into())));
+    // User values are reclaimed; the private base and exact executable graph remain.
+    assert_eq!(initialized.added_values(left.collect(&[]), 0), -1);
+    assert_eq!(
+        left.start(inspect, vec![stale_module]).unwrap_err().kind,
+        ErrorKind::StaleHandle
+    );
     assert_eq!(
         left.start(inspect, vec![set]).unwrap_err().kind,
         ErrorKind::StaleHandle
@@ -404,6 +435,7 @@ function again() = new Check {}.check(set)
         let mut session = HostSession::new(program);
         session.start(entry, vec![], 0, None).unwrap();
         let module = host_ready(&mut session, 0).unwrap();
+        let initialized = Baseline::new(session.collect(&[]));
         session
             .start(parent, vec![module.clone()], 1, None)
             .unwrap();
@@ -426,38 +458,43 @@ function again() = new Check {}.check(set)
         session
             .reenter(&outer, inspect, vec![module.clone()], 3, None)
             .unwrap();
-        assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(1)));
+        assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(1.into())));
         session
             .reenter(&outer, child, vec![module.clone()], 3, None)
             .unwrap();
         let token = host_read(&mut session, 3, "mem:check");
         assert_ne!(token, failed);
         session.resume(&token, Ok(Value::string("ok")), 3).unwrap();
-        assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(1)));
+        assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(1.into())));
         session
             .reenter(&outer, child, vec![module.clone()], 4, None)
             .unwrap();
-        assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(1)));
+        assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(1.into())));
         session.resume(&outer, Ok(Value::Null), 4).unwrap();
         assert_eq!(host_ready(&mut session, 4), Ok(Value::Null));
         let stats = session.collect(&[]);
         println!("Set eager check retained heap for {check_type}: {stats:?}");
         // Initialized declarations retain their module and successful caches.
         // Ordinary values and persistent executable entries have separate bounds.
+        // The initial module has not forced Check or Items. Both paths retain
+        // Check's class/prototype and the cached Set/Listing; only the Items
+        // path also initializes its alias. Keep the exact executable bound
+        // separate from these five or four additional user values.
+        let (added_values, added_executables) = if check_type.starts_with("Items") {
+            (5, 7)
+        } else {
+            (4, 5)
+        };
         assert_eq!(
-            (stats.live - stats.executable_live, stats.executable_live),
-            if check_type.starts_with("Items") {
-                (7, 7)
-            } else {
-                (6, 5)
-            }
+            initialized.added_values(stats, added_executables),
+            added_values
         );
         let mut retained = None;
         for _ in 0..12 {
             session.start(again, vec![module.clone()], 5, None).unwrap();
             let token = host_read(&mut session, 5, "mem:check");
             session.resume(&token, Ok(Value::string("ok")), 5).unwrap();
-            assert_eq!(host_ready(&mut session, 5), Ok(Value::Int(1)));
+            assert_eq!(host_ready(&mut session, 5), Ok(Value::Int(1.into())));
             let stats = session.collect(&[]);
             let live = (stats.live - stats.executable_live, stats.executable_live);
             if let Some(expected) = retained {
@@ -530,9 +567,9 @@ fn deep_nested_set_hash_yields_suspends_and_releases_on_small_stack() {
                     result => panic!("expected stress read, got {result:?}"),
                 };
                 assert!(vm.instructions_executed() > DEPTH as u64);
-                vm.resume(token, Ok(Value::Int(7))).unwrap();
+                vm.resume(token, Ok(Value::Int(7.into()))).unwrap();
                 match event(&mut vm) {
-                    VmPoll::Ready(value) => assert_eq!(value, Ok(Value::Int(1))),
+                    VmPoll::Ready(value) => assert_eq!(value, Ok(Value::Int(1.into()))),
                     result => panic!("expected stress result, got {result:?}"),
                 }
                 vm.collect(std::slice::from_ref(&module));

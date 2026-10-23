@@ -63,10 +63,7 @@ fn pending_constraint_contexts_abort_together_and_reject_late_completions() {
         };
         let mut session = HostSession::new(Arc::new(program));
         session.start(root_entry, vec![], 0, None).unwrap();
-        let module = match session.poll(0, 1_000) {
-            HostPoll::Ready(Ok(value)) => value,
-            event => panic!("module construction unexpectedly suspended: {event:?}"),
-        };
+        let module = initialized_module(&mut session);
         let outer_timeout = match termination {
             Termination::AncestorTimeout => Some(9),
             _ => None,
@@ -155,4 +152,18 @@ fn pending_constraint_contexts_abort_together_and_reject_late_completions() {
         assert_eq!(terminal_error(&mut session, now + 1), terminal);
         assert!(session.drain_cancelled_reads().is_empty());
     }
+}
+
+// Eager base initialization is resumable and remains under the same VM budget.
+fn initialized_module(session: &mut HostSession) -> Value {
+    for _ in 0..100_000 {
+        match session.poll(0, 1) {
+            HostPoll::Yielded => {
+                session.collect(&[]);
+            }
+            HostPoll::Ready(Ok(module)) => return module,
+            event => panic!("module construction unexpectedly suspended: {event:?}"),
+        }
+    }
+    panic!("module initialization did not finish");
 }

@@ -60,6 +60,10 @@ fn captured_module_keeps_exactly_one_real_parent_until_terminal_release() {
         LazyState::Unevaluated
     );
 
+    // The private base bootstrap and its renderer call targets are evaluator
+    // roots. This test counts only the two new user class objects beyond that
+    // established graph, and still checks the exact four user handles below.
+    let initialized_live = vm.collect(&[]).live;
     vm.start_member(module, "Child").unwrap();
     assert_eq!(ready(&mut vm).unwrap_err().kind, ErrorKind::Type);
     assert_eq!(vm.class_singletons.len(), 2);
@@ -114,10 +118,10 @@ fn captured_module_keeps_exactly_one_real_parent_until_terminal_release() {
             .len(),
         4
     );
-    assert_eq!(vm.collect(&[]).live, 4);
+    assert_eq!(vm.collect(&[]).live, initialized_live + 2);
     vm.start_member(module, "scalar").unwrap();
-    assert_eq!(ready(&mut vm), Ok(Value::Int(7)));
-    assert_eq!(vm.collect(&[]).live, 4);
+    assert_eq!(ready(&mut vm), Ok(Value::Int(7.into())));
+    assert_eq!(vm.collect(&[]).live, initialized_live + 2);
     assert!(vm.heap.get(parent).unwrap().cache.is_empty());
     vm.close();
     assert_eq!(vm.heap_stats().live, 0);
@@ -129,27 +133,39 @@ fn captured_module_keeps_exactly_one_real_parent_until_terminal_release() {
 }
 
 #[test]
-fn unrooted_module_and_builtin_parent_are_reclaimed_together() {
+fn unrooted_module_is_reclaimed_while_base_keeps_the_shared_parent() {
     let program = compiled("scalar = 7\n");
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     let module = ready(&mut vm).unwrap().as_object().unwrap();
     let parent = vm.heap.get(module).unwrap().parent.unwrap();
-    assert_eq!(vm.collect(&[]).live, 2);
+    let initialized_live = vm.collect(&[]).live;
     vm.start_member(module, "scalar").unwrap();
-    assert_eq!(ready(&mut vm), Ok(Value::Int(7)));
+    assert_eq!(ready(&mut vm), Ok(Value::Int(7.into())));
     assert!(vm.class_singletons.is_empty());
-    assert_eq!(vm.collect(&[]).live, 0);
-    for id in [module, parent] {
-        assert_eq!(vm.heap.get(id).unwrap_err().kind, ErrorKind::StaleHandle);
-    }
+    // The initialized base module roots the same canonical Module prototype.
+    // Releasing the user module must not release that shared parent.
+    let base = match vm.modules_original.get("pkl:base").unwrap() {
+        modules::CachedModule::Value(id) => *id,
+        _ => panic!("base was initialized successfully"),
+    };
+    assert_eq!(vm.heap.get(base).unwrap().parent, Some(parent));
+    assert_eq!(vm.collect(&[]).live, initialized_live - 1);
+    assert_eq!(
+        vm.heap.get(module).unwrap_err().kind,
+        ErrorKind::StaleHandle
+    );
+    assert!(vm.heap.get(parent).unwrap().cache.is_empty());
     vm.start(program.entry, vec![]).unwrap();
     let replacement = ready(&mut vm).unwrap().as_object().unwrap();
     let replacement_parent = vm.heap.get(replacement).unwrap().parent.unwrap();
     assert_ne!(replacement, module);
-    assert_ne!(replacement_parent, parent);
-    assert_eq!(vm.collect(&[]).live, 2);
+    assert_eq!(replacement_parent, parent);
+    assert_eq!(vm.collect(&[]).live, initialized_live);
     vm.close();
     assert_eq!(vm.heap_stats().live, 0);
     assert_eq!(vm.heap_stats().slots, 0);
+    for id in [module, parent, base, replacement] {
+        assert_eq!(vm.heap.get(id).unwrap_err().kind, ErrorKind::StaleHandle);
+    }
 }

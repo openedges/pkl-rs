@@ -103,7 +103,7 @@ fn source_transport_preserves_utf16_log_snapshot_and_explicit_ack() {
         snapshot.module_uri,
         "file:///trace.pkl".encode_utf16().collect::<Vec<_>>()
     );
-    assert!(probe.respond(&token, Value::Int(9), 0).is_err());
+    assert!(probe.respond(&token, Value::Int(9.into()), 0).is_err());
     probe.reenter_path(&token, 1, 0, None).unwrap();
     let inner = loop {
         let event = probe.poll(0, 1).unwrap();

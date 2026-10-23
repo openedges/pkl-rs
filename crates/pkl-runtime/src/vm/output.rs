@@ -9,6 +9,8 @@ pub(crate) const VALUE_RENDERER: usize = MODULE - 4;
 pub(crate) const BYTES_RENDERER: usize = MODULE - 5;
 pub(crate) const PCF_RENDERER: usize = MODULE - 6;
 pub(crate) const CONVERT_PROPERTY: usize = MODULE - 7;
+pub(crate) const JSON_RENDERER: usize = MODULE - 8;
+pub(crate) const RENDER_DIRECTIVE: usize = MODULE - 9;
 const NAMES: &[&str] = &[
     "Module",
     "FileOutput",
@@ -18,6 +20,8 @@ const NAMES: &[&str] = &[
     "BytesRenderer",
     "PcfRenderer",
     "ConvertProperty",
+    "JsonRenderer",
+    "RenderDirective",
 ];
 pub(crate) fn class_id(name: &str) -> Option<usize> {
     NAMES
@@ -33,7 +37,7 @@ pub(super) fn class_parent(id: usize) -> Option<usize> {
         CONVERT_PROPERTY => Some(annotations::ANNOTATION_ID),
         MODULE_OUTPUT => Some(FILE_OUTPUT),
         VALUE_RENDERER | BYTES_RENDERER => Some(BASE_RENDERER),
-        PCF_RENDERER => Some(VALUE_RENDERER),
+        PCF_RENDERER | JSON_RENDERER => Some(VALUE_RENDERER),
         _ => None,
     }
 }
@@ -142,13 +146,21 @@ impl Definitions<'_> {
                 .expect("method");
         let end = start + self.source.text[start..].find('\n').unwrap();
         let body_block = self.blocks.len();
-        self.blocks
-            .push(vec![Instruction::LoadLocal(0), body, Instruction::Return]);
+        self.blocks.push(vec![
+            Instruction::LoadLocal(0),
+            Instruction::BindLocal {
+                depth: Some(0),
+                ty: TypeCheck::Any,
+            },
+            Instruction::LoadLocal(0),
+            body,
+            Instruction::Return,
+        ]);
         self.metadata.push(BlockMetadata {
             source: Some(self.source.clone()),
             member: format!("#{class}.{name}").into(),
             declaration: Some(Span::new(start, end)),
-            spans: vec![None; 3],
+            spans: vec![None; 5],
             ..Default::default()
         });
         let block = self.blocks.len();
@@ -579,6 +591,69 @@ pub(super) fn builtin_members(
         "renderValue",
         Instruction::RenderPcf { document: false },
     );
+    let json_indent = d.member(
+        "JsonRenderer",
+        "indent",
+        TypeCheck::String,
+        vec![Instruction::Constant(Value::string("  "))],
+        false,
+    );
+    let json_omit = d.member(
+        "JsonRenderer",
+        "omitNullProperties",
+        TypeCheck::Boolean,
+        vec![Instruction::Constant(Value::Bool(true))],
+        false,
+    );
+    let mut json_extension = extension.clone();
+    json_extension.code = d.blocks.len();
+    d.blocks.push(vec![
+        Instruction::Constant(Value::string("json")),
+        Instruction::Return,
+    ]);
+    let json_class = d.source.text.find("class JsonRenderer extends").unwrap();
+    let json_extension_start =
+        json_class + d.source.text[json_class..].find("extension =").unwrap();
+    let json_literal = json_extension_start + "extension = ".len();
+    let json_value_span = Span::new(json_literal, json_literal + "\"json\"".len());
+    d.metadata.push(BlockMetadata {
+        source: Some(d.source.clone()),
+        member: "#JsonRenderer.extension".into(),
+        declaration: Some(Span::new(json_extension_start, json_value_span.end)),
+        value_span: Some(json_value_span),
+        spans: vec![Some(json_value_span), None],
+        ..Default::default()
+    });
+    let json_document = d.method(
+        "JsonRenderer",
+        "renderDocument",
+        Instruction::RenderJson { document: true },
+    );
+    let json_value = d.method(
+        "JsonRenderer",
+        "renderValue",
+        Instruction::RenderJson { document: false },
+    );
+    let directive_text = d.member(
+        "RenderDirective",
+        "text",
+        TypeCheck::String,
+        vec![Instruction::Undefined("text".into())],
+        false,
+    );
+    let directive_bytes = d.member(
+        "RenderDirective",
+        "bytes",
+        TypeCheck::Bytes,
+        vec![property("text"), Instruction::EncodeUtf8],
+        false,
+    );
+    let directive_start = d.metadata[directive_bytes.code].declaration.unwrap().start;
+    d.metadata[directive_bytes.code].spans = d.expression_spans(
+        directive_start,
+        &d.blocks[directive_bytes.code],
+        &["text", "text.encodeToBytes(\"UTF-8\")", "Bytes", ""],
+    );
     BTreeMap::from([
         (MODULE, vec![output_value]),
         (CONVERT_PROPERTY, vec![render]),
@@ -587,6 +662,17 @@ pub(super) fn builtin_members(
         (BASE_RENDERER, vec![converters, transformers, extension]),
         (VALUE_RENDERER, vec![]),
         (BYTES_RENDERER, vec![]),
+        (
+            JSON_RENDERER,
+            vec![
+                json_extension,
+                json_indent,
+                json_omit,
+                json_document,
+                json_value,
+            ],
+        ),
+        (RENDER_DIRECTIVE, vec![directive_text, directive_bytes]),
         (
             PCF_RENDERER,
             vec![ext, indent, omit, custom, document, render_value],
@@ -648,8 +734,13 @@ impl Vm {
     }
     pub(super) fn output_renderer(&mut self) -> Result<(), RuntimeError> {
         let format = self.pop()?;
-        if format.is_null() || format == Value::string("pcf") {
-            let value = self.builtin_class(builtins::ty(PCF_RENDERER));
+        if format.is_null() || format == Value::string("pcf") || format == Value::string("json") {
+            let renderer = if format == Value::string("json") {
+                JSON_RENDERER
+            } else {
+                PCF_RENDERER
+            };
+            let value = self.builtin_class(builtins::ty(renderer));
             self.stack
                 .push(Value::Object(value.heap_id().expect("class")));
             return Ok(());
@@ -659,16 +750,7 @@ impl Vm {
         };
         if matches!(
             format.as_str(),
-            Some(
-                "json"
-                    | "jsonnet"
-                    | "plist"
-                    | "properties"
-                    | "textproto"
-                    | "xml"
-                    | "yaml"
-                    | "pkl-binary"
-            )
+            Some("jsonnet" | "plist" | "properties" | "textproto" | "xml" | "yaml" | "pkl-binary")
         ) {
             return Err(RuntimeError::new(
                 ErrorKind::Unsupported,

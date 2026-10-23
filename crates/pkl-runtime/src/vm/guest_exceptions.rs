@@ -54,31 +54,7 @@ impl Vm {
     }
 
     pub(super) fn guest_catch_boundary(&self, error: &RuntimeError) -> Option<usize> {
-        use crate::diagnostic::FailureDisposition;
-        if let Some(frontend) = &error.frontend
-            && frontend.diagnostic.provenance.disposition != FailureDisposition::LanguageError
-        {
-            return None;
-        }
-        let ordinary = match error.kind {
-            ErrorKind::Type
-            | ErrorKind::MissingMember
-            | ErrorKind::MissingType
-            | ErrorKind::Arithmetic => true,
-            ErrorKind::Cycle => !matches!(
-                error.message.as_str(),
-                Some("evaluation frame limit exceeded" | "experiment frame limit exceeded")
-            ),
-            ErrorKind::Host => error.host_language_exception,
-            ErrorKind::InvalidBytecode
-            | ErrorKind::StaleHandle
-            | ErrorKind::Busy
-            | ErrorKind::Cancelled
-            | ErrorKind::Timeout
-            | ErrorKind::Closed
-            | ErrorKind::Unsupported => false,
-        };
-        ordinary
+        is_guest_exception(error)
             .then(|| {
                 self.frames
                     .iter()
@@ -143,4 +119,32 @@ fn single_line(rendered: &PklString) -> PklString {
             .take_while(|unit| whitespace(unit))
             .count();
     PklString::from_utf16(output[start..end].to_vec())
+}
+
+/// Ordinary VmException provenance, shared by handlers and renderer unwinding.
+pub(super) fn is_guest_exception(error: &RuntimeError) -> bool {
+    use crate::diagnostic::FailureDisposition;
+    if let Some(frontend) = &error.frontend
+        && frontend.diagnostic.provenance.disposition != FailureDisposition::LanguageError
+    {
+        return false;
+    }
+    match error.kind {
+        ErrorKind::Type
+        | ErrorKind::MissingMember
+        | ErrorKind::MissingType
+        | ErrorKind::Arithmetic => true,
+        ErrorKind::Cycle => !matches!(
+            error.message.as_str(),
+            Some("evaluation frame limit exceeded" | "experiment frame limit exceeded")
+        ),
+        ErrorKind::Host => error.host_language_exception,
+        ErrorKind::InvalidBytecode
+        | ErrorKind::StaleHandle
+        | ErrorKind::Busy
+        | ErrorKind::Cancelled
+        | ErrorKind::Timeout
+        | ErrorKind::Closed
+        | ErrorKind::Unsupported => false,
+    }
 }

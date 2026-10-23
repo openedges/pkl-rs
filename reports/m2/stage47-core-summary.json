@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "status": "proposal-for-root-review-not-published",
+  "created_utc": "2026-10-23T15:11:40.583926+00:00",
+  "candidate_release": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-candidate-build-06/release.json",
+  "candidate_release_sha256": "59543feca57c4994116708f9950fdabec97c3d7f3cbc261feafc2d8f074899c9",
+  "base_commit": "4facad294bedc3393f7dfbccc2f82439fb0734af",
+  "source_maps": 140,
+  "source_path_versions": 51993,
+  "git_bound_versions": 47916,
+  "archived_source_blobs": 445,
+  "unresolved_historical_source_versions": 7,
+  "selected_raw_files": 854,
+  "selected_raw_bytes": 1626302349,
+  "check_exit_counts": {
+    "101": 36,
+    "0": 31,
+    "1": 2
+  },
+  "final": {
+    "rust5_report_sha256": "c0d053b20146ebd74e0bb1642b1a7a8f0f00e6e15484985bc79d314d17a0c3fe",
+    "rust5_binding_sha256": "023779f35269983101028e992bad8e04f3d327bfce663a4e63c4cfc95251084f",
+    "original_cli_report_sha256": "3f8870b2199bdf78ca3fa6eeba52713f232f58f8a73e7d5d7ed1c940b80f0275",
+    "original_cli_comparisons": 4,
+    "source_entries_bound": 51745,
+    "source_unresolved": 0
+  },
+  "qualifications": [
+    "Recorded failures, SIGABRT/stack observations, compiler/setup mistakes and blocked debugger launch remain failed or qualified exactly as captured.",
+    "Historical source maps are complete; any source-version reconstruction or unresolved bytes are listed explicitly, never counted as exact build provenance.",
+    "Small-stack tests retain 256 KiB and original depth/workload limits. Two runtime and one constraints setup loop now poll 1 instruction up to 100000 with GC instead of a single 1000-instruction setup poll; subsequent callback/timeouts/workload budgets remain unchanged.",
+    "Initialized base graph is a shared semantic root. Lifecycle tests use exact source-specific value deltas and independent descriptor counts, preserve original positive/plateau checks where those were the original contract, stale-user-handle rejection and terminal slots zero. No node-by-node dump was acquired for fixed/reference closure counts.",
+    "Optional diagnostic fields moved into existing boxed details/provenance. A hint-only error can allocate a details carrier; no performance or exact-size measurement is claimed.",
+    "Permanent generator/constant fixture is one actual Java powerAssertions=true baseline: 240 original observations consumed under two distinct Rust instrumentation settings (480 comparisons), not two Java acquisitions.",
+    "C05 actual platform evidence is separately published and remains intermediate. C06 platform and B native/API acquisitions have independent owners/archives and are not folded into this core package.",
+    "Evaluator-owned stdlib admission remains required: singleton base/ref/test bypass ModuleKey resolution, not import-edge trust checks. Complete scalar/String/constant-collection identity, full selected regression, whole M2 and performance gates remain open.",
+    "Seven early intermediate source versions have hash-only reconstruction; exact affected checks are listed. All 51,745 C06 input entries are bound, with six separately published report archives referenced rather than nested.",
+    "The preparation02 body records completion at 2026-10-23T15:11:43.337280+00:00; its outer tool session identifier was unavailable after context handoff. This does not invent an outer process exit receipt. Archive create and separate verify receive new direct process receipts."
+  ],
+  "source_freeze": "No source/Git edits and no new evaluation were performed by this publication preparation.",
+  "resolved_basename_metadata_versions": 8,
+  "authoritative_source_catalog": "source-bindings-final.json",
+  "historical_reconstruction_gaps": "unresolved-source-bindings-final.json"
+}

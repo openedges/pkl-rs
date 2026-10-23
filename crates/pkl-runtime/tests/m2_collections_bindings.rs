@@ -16,7 +16,7 @@ fn list_constructor_dispatch_uses_method_bindings_and_ignores_property_shadows()
     ] {
         assert_eq!(
             evaluate_member(source, "result"),
-            Ok(Value::Int(42)),
+            Ok(Value::Int(42.into())),
             "{source}"
         );
     }

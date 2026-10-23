@@ -1,0 +1,76 @@
+[
+  {
+    "path": "crates/pkl-runtime/src/vm.rs",
+    "sha256": "61b1dac88cfd414a638916f55a257f029cde032d5dc4c9d144140f1b32fc4c84",
+    "kind": "unresolved-historical-source",
+    "recorded_maps": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-check-01/source-after.json",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-check-01/source-before.json"
+    ],
+    "qualification": "Historical reconstruction incomplete: only recorded SHA and original outcomes are retained for this version. No bytes inferred; not a source-complete historical verification claim."
+  },
+  {
+    "path": "crates/pkl-runtime/src/vm/collections.rs",
+    "sha256": "6fc414244dde078718b82c06644964e5eef100f751cb09d5a8858c65a343f043",
+    "kind": "unresolved-historical-source",
+    "recorded_maps": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/collection-join-tests-01/source-after.json",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/collection-join-tests-01/source-before.json",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/collection-join-tests-02/source-after.json",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/collection-join-tests-02/source-before.json",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/collection-join-tests-03/source-after.json",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/collection-join-tests-03/source-before.json"
+    ],
+    "qualification": "Historical reconstruction incomplete: only recorded SHA and original outcomes are retained for this version. No bytes inferred; not a source-complete historical verification claim."
+  },
+  {
+    "path": "crates/pkl-runtime/src/vm/output.rs",
+    "sha256": "19ce78e468d22b3c02fe636452d17abd3e85400d5164a77a8c52f18dea1f396a",
+    "kind": "unresolved-historical-source",
+    "recorded_maps": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-check-01/source-after.json",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-check-01/source-before.json"
+    ],
+    "qualification": "Historical reconstruction incomplete: only recorded SHA and original outcomes are retained for this version. No bytes inferred; not a source-complete historical verification claim."
+  },
+  {
+    "path": "crates/pkl-runtime/src/vm/rendering.rs",
+    "sha256": "dd98135c1aeeffb38c4e1743fea1913623d093af1f4d405a3ea22117889e9484",
+    "kind": "unresolved-historical-source",
+    "recorded_maps": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-check-01/source-after.json",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-check-01/source-before.json"
+    ],
+    "qualification": "Historical reconstruction incomplete: only recorded SHA and original outcomes are retained for this version. No bytes inferred; not a source-complete historical verification claim."
+  },
+  {
+    "path": "crates/pkl-runtime/src/vm/rendering.rs",
+    "sha256": "f7f083cae5a992bae8ed128d9d1cfdc48bde9a0d1cf15610aef58d9d8761c820",
+    "kind": "unresolved-historical-source",
+    "recorded_maps": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/document-hint-tests-03/source-after.json",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/document-hint-tests-03/source-before.json"
+    ],
+    "qualification": "Historical reconstruction incomplete: only recorded SHA and original outcomes are retained for this version. No bytes inferred; not a source-complete historical verification claim."
+  },
+  {
+    "path": "crates/pkl-runtime/tests/m2_json_rendering.rs",
+    "sha256": "8e89990108f885cf33275da697e46a425f986d8f7dff7d12fdd6512a4021841e",
+    "kind": "unresolved-historical-source",
+    "recorded_maps": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/json-property-tests-01/source-after.json",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/json-property-tests-01/source-before.json"
+    ],
+    "qualification": "Historical reconstruction incomplete: only recorded SHA and original outcomes are retained for this version. No bytes inferred; not a source-complete historical verification claim."
+  },
+  {
+    "path": "crates/pkl-runtime/tests/m2_json_rendering.rs",
+    "sha256": "d68d6afadb762ca76d62e5610f88433177b1ae3cb3addf5d79e811b8bf2c391d",
+    "kind": "unresolved-historical-source",
+    "recorded_maps": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/document-hint-tests-02/source-after.json",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/document-hint-tests-02/source-before.json"
+    ],
+    "qualification": "Historical reconstruction incomplete: only recorded SHA and original outcomes are retained for this version. No bytes inferred; not a source-complete historical verification claim."
+  }
+]

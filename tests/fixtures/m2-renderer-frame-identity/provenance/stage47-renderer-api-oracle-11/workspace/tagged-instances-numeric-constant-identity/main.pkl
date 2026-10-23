@@ -1,0 +1,17 @@
+class C { n = 1000; tag: Int }
+class D { n = 1000; tag: Int }
+class F { n = 1.5; tag: Int }
+class G { n = 1.5; tag: Int }
+a = new C { tag = 1 }
+b = new C { tag = 2 }
+d = new D { tag = 3 }
+fa = new F { tag = 1 }
+fb = new F { tag = 2 }
+gd = new G { tag = 3 }
+pOther = new PcfRenderer { converters { [Int] = (_) -> b.n } }
+pSelf = new PcfRenderer { converters { [Int] = (_) -> a.n } }
+pDifferent = new PcfRenderer { converters { [Int] = (_) -> d.n } }
+pFloatOther = new PcfRenderer { converters { [Float] = (_) -> fb.n } }
+pFloatSelf = new PcfRenderer { converters { [Float] = (_) -> fa.n } }
+pFloatDifferent = new PcfRenderer { converters { [Float] = (_) -> gd.n } }
+stable = 7

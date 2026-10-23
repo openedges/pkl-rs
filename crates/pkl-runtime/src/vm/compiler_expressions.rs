@@ -327,10 +327,8 @@ impl Compiler<'_> {
                         } else {
                             None
                         };
-                        if let Some((check, span)) = check {
-                            output.push_at(Instruction::CheckType(check), span);
-                        }
-                        output.push(Instruction::PushLocal);
+                        let (ty, span) = check.unwrap_or((TypeCheck::Unknown, expression.span));
+                        output.push_at(Instruction::BindLocal { depth: None, ty }, span);
                         let previous = self.member.clone();
                         if self.let_members.last() != Some(&self.member) {
                             self.member = self.member.concat(&".<let expr>".into());
@@ -446,17 +444,19 @@ impl Compiler<'_> {
                                 }
                             }
                             for (index, parameter) in parameters.iter().enumerate() {
-                                if let Some(ty) = &parameter.ty {
-                                    instructions
-                                        .push(Instruction::LoadLocal(parameters.len() - 1 - index));
-                                    instructions.push_at(
-                                        Instruction::CheckType(self.compile_type(ty)?),
-                                        self.type_source_span(ty),
-                                    );
-                                    instructions.push(Instruction::StoreLocal(
-                                        parameters.len() - 1 - index,
-                                    ));
-                                }
+                                let depth = parameters.len() - 1 - index;
+                                instructions.push(Instruction::LoadLocal(depth));
+                                let (ty, span) = match &parameter.ty {
+                                    Some(ty) => (self.compile_type(ty)?, self.type_source_span(ty)),
+                                    None => (TypeCheck::Unknown, parameter.span),
+                                };
+                                instructions.push_at(
+                                    Instruction::BindLocal {
+                                        depth: Some(depth),
+                                        ty,
+                                    },
+                                    span,
+                                );
                             }
                             pending_spans.extend(
                                 (emitted_start..output.len())
@@ -652,6 +652,9 @@ impl Compiler<'_> {
                             pending,
                         } = *state;
                         let mut instructions = std::mem::replace(output, parent);
+                        let constant_member = !(member.local && member.ty.is_some())
+                            && self.constant_member_body(&member.expr)
+                            && instructions.box_constant_result();
                         let property_typecheck = member.ty.as_ref().map(|_| instructions.len());
                         if let Some(ty) = &member.ty {
                             instructions.push_at(
@@ -675,6 +678,7 @@ impl Compiler<'_> {
                             .modifiers
                             .iter()
                             .any(|m| m.kind == crate::syntax::ModifierKind::Hidden);
+                        self.program.metadata[code].constant_member = constant_member;
                         self.program.metadata[code].value_span =
                             Some(self.property_value_span(member));
                         self.program.metadata[code].member_span = Some(member.span);

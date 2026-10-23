@@ -1,5 +1,8 @@
 //! Reentrant predicate cursors use the ordinary Host lifecycle and heap roots.
 use std::sync::Arc;
+#[path = "support/eager_base.rs"]
+mod eager_base;
+use eager_base::Baseline;
 
 use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
@@ -69,6 +72,8 @@ fn request(session: &mut HostSession, now: u64, expected: &str) -> String {
 #[test]
 fn nested_predicate_reentry_and_retry_preserve_parent_cursor_and_custom_this() {
     let (mut session, root, parent, child) = session();
+    let initialized = Baseline::new(session.collect(&[]));
+    let stale_root = root.clone();
     session.start(parent, vec![root.clone()], 1, None).unwrap();
     let outer = request(&mut session, 1, "mem:outer");
     for success in [false, true] {
@@ -90,7 +95,7 @@ fn nested_predicate_reentry_and_retry_preserve_parent_cursor_and_custom_this() {
             .unwrap();
         let result = ready(&mut session, 2);
         if success {
-            assert_eq!(result, Ok(Value::Int(7)));
+            assert_eq!(result, Ok(Value::Int(7.into())));
         } else {
             assert_eq!(result.unwrap_err().kind, ErrorKind::Host);
         }
@@ -101,7 +106,17 @@ fn nested_predicate_reentry_and_retry_preserve_parent_cursor_and_custom_this() {
         .resume(&outer, Ok(Value::string("select")), 3)
         .unwrap();
     assert_eq!(ready(&mut session, 3), Ok(Value::string("keep42")));
-    assert_eq!(session.collect(&[]).live, 0);
+    // Only evaluator-owned base values and the exact lexical descriptors survive.
+    assert_eq!(initialized.added_values(session.collect(&[]), 2), -1);
+    assert_eq!(
+        session
+            .start(parent, vec![stale_root], 10, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::StaleHandle
+    );
+    session.close();
+    assert_eq!(session.heap_stats().slots, 0);
     assert!(session.drain_cancelled_reads().is_empty());
 }
 

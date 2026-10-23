@@ -1,0 +1,164 @@
+{
+  "schema": 1,
+  "scope": "FreshC06native1840+portable980 actualoriginalraw/tool/golden publication; no new evaluator/build/Java/Node/browser acquisition.",
+  "archives": [
+    {
+      "group": "native",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-native.tar.gz",
+      "sha256": "eae340d1d92d922e416e7f4b44192478ea22eaed1e64b4dcae20f0e0ad55ecb3",
+      "bytes": 1443134,
+      "payloadFiles": 577,
+      "membersIncludingEvidence": 578
+    },
+    {
+      "group": "portable",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-portable.tar.gz",
+      "sha256": "75120a103a63f84ca7d0ddd88565ac8a181b0339fcd8a5288ade8570444344b8",
+      "bytes": 560519,
+      "payloadFiles": 177,
+      "membersIncludingEvidence": 178
+    },
+    {
+      "group": "oracles-tools",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-oracles-tools.tar.gz",
+      "sha256": "9ea79ec774b79d4e0535d6b79523a5fb5cc4bf05c8359c7a8b111fa9dea41192",
+      "bytes": 3157993,
+      "payloadFiles": 428,
+      "membersIncludingEvidence": 429
+    },
+    {
+      "group": "closeout",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-closeout.tar.gz",
+      "sha256": "dd5eaa79207861fdf67a2bae2930ba5ed3f916c6500e35a2463f659603f36d9c",
+      "bytes": 1204795,
+      "payloadFiles": 56,
+      "membersIncludingEvidence": 57
+    }
+  ],
+  "totalCompressedBytes": 6366441,
+  "allCreateAndSeparateVerifyExitsZero": true,
+  "allRawMembersReadback": true,
+  "allArchiveMemberRestorationVerified": true,
+  "offlineRawVerificationFromActualArchives": {
+    "counts": {
+      "native": 1840,
+      "node": 980,
+      "browser": 980
+    },
+    "portableSessions": 112,
+    "evaluations": 0,
+    "rawMismatchCount": 0,
+    "scope": "Default configurations only; wrongmethod16,sharedbacking,GC,instrumentation,policy84/close28 and broadergates remain as captured."
+  },
+  "selectedOriginalFiles": 51090,
+  "selectedOriginalBytes": 190677038,
+  "selectedPhysicalRootLabels": 21,
+  "anchoredRootCatalogue": 20,
+  "additionalSparseHistoricalRoots": [
+    "stage47-renderer-identity-regression-fixtures-01"
+  ],
+  "storedUniqueContentObjects": 1173,
+  "storedContentObjectBytes": 55878361,
+  "originalSourceChanges": [],
+  "originalBeforeAfterProofSha256": "7243a4ee2e82ba055a209b20f7d2e6498e962464fc14ffc02e62eb79b22d8f81",
+  "gitFixturePayloadCopies": 0,
+  "canonicalCompiledArtifactCopies": 0,
+  "producerTerminalSha256": "a090bd84fa82239cfe17e32a6afa766645f87a518f4c44ad583e5297a9fab749",
+  "producerActualToolHandle": 20483,
+  "producerActualExitCode": 0,
+  "primaryCommandCount": 8,
+  "closeoutCommands": [
+    {
+      "name": "archive-restore",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archive-member-source/oracles-tools/restore.py",
+        "--index",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archive-member-source/oracles-tools/selection.json",
+        "--objects",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archive-member-source",
+        "--output",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/restored-from-archives",
+        "--git-fixture",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2-renderer-portable",
+        "--external-map",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/external-live-map.json"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01",
+      "startedUtc": "2026-10-23T15:26:53.576859+00:00",
+      "parentPid": 88744,
+      "pid": 88794,
+      "exitCode": 0,
+      "finishedUtc": "2026-10-23T15:27:06.573731+00:00",
+      "stdoutSha256": "f0c5562117cfed156f404d56ee70dbf658944279a5c97656cbcee6c162ee0acb",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "archive-offline-raw-verify",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archive-member-source/oracles-tools/verify_raw.py",
+        "--restored",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/restored-from-archives"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01",
+      "startedUtc": "2026-10-23T15:27:06.574694+00:00",
+      "parentPid": 88744,
+      "pid": 88901,
+      "exitCode": 0,
+      "finishedUtc": "2026-10-23T15:27:23.845331+00:00",
+      "stdoutSha256": "dadd07a381486ae7e5e5c951fc6ce7326842ea7c5dcec762f92bb6892779edef",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "closeout-create",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/evidence.py",
+        "create",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/closeout-source",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-closeout.tar.gz"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01",
+      "startedUtc": "2026-10-23T15:27:46.679130+00:00",
+      "parentPid": 88744,
+      "pid": 89125,
+      "exitCode": 0,
+      "finishedUtc": "2026-10-23T15:27:47.026226+00:00",
+      "stdoutSha256": "0ebe306980ed37deabea417faa1df3361c2fbd46f485f512dd066b9563fb2377",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "closeout-verify",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/evidence.py",
+        "verify",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-closeout.tar.gz"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01",
+      "startedUtc": "2026-10-23T15:27:47.027243+00:00",
+      "parentPid": 88744,
+      "pid": 89127,
+      "exitCode": 0,
+      "finishedUtc": "2026-10-23T15:27:47.108857+00:00",
+      "stdoutSha256": "0ebe306980ed37deabea417faa1df3361c2fbd46f485f512dd066b9563fb2377",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "finalArchiveIndexSha256": "760c2ebe4bd2d77f5448c3427a7961b4c8cdc0d7b80e7362475e3d50bb6fbea3",
+  "globalIndexArchive": "renderer-c06-oracles-tools.tar.gz/selection.json",
+  "globalIndexSha256": "109b2636e339afe3313849be14f4678a9c122e03e9cdf1b06a798948735cd5ff",
+  "limitations": {
+    "wrongMethod16": "Rawcomparisons preserved; excluded intendedidentity.",
+    "policy84": "separateunexecutednative/portabledefaultscope",
+    "close28": "separateunexecuted ordinaryadapter; originalrawretainedinclosedJava07/08roots",
+    "sharedBacking": "Portablecopiedcompletions notJava/native samebackingbranch",
+    "instrumentation": "OneactualJava powertrue; defaultconsumeronly, twoRustmodes separatelyownedA",
+    "gc": "Requests/collectionschedule distinction",
+    "broader": "No fullidentity/renderer/M2/platformrelease/performance claim"
+  },
+  "mainReportsGitWrites": 0,
+  "finishedUtc": "2026-10-23T15:27:47.205760+00:00",
+  "liveHandles": []
+}

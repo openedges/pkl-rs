@@ -1,0 +1,317 @@
+{
+  "schema": 1,
+  "scope": "Read-only independent audit of original C05 isolated platform captures. No evaluator/browser/Java/native/Rust/build/test rerun, no original evidence/source/Git mutation.",
+  "outcome": {
+    "newBlockingFindings": [],
+    "selectedExistingRawContractAuditPassed": true,
+    "fullCompatibilityOrM2Passed": false
+  },
+  "candidate": {
+    "releaseSha256": "93439249df0358843498ff16f62e80616a9916aa0c2faad257ad464fe1f55221",
+    "sourceMapSha256": "24e362fcbd1610e8ce9710178b3ac39464c26656014822c85e649bd99d8840d8",
+    "directSnapshotAndBuildWorkspaceSourcePaths": 47909,
+    "exactModesChecked": true
+  },
+  "originalWrapper": {
+    "sessionId": 51839,
+    "actualExitCode": 0,
+    "reportSha256": "864cee13fff317cd477db294a03a46e335e0a88a82945afa4eafd63da1152fa3"
+  },
+  "baseline": {
+    "total": 6078,
+    "sharedEqual": 6078,
+    "oracleMatches": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "rawKnownGaps": [
+      {
+        "id": "regex-unicode-15-vs-16",
+        "oracle_matches": {
+          "rust": false,
+          "node": false,
+          "browser": false
+        },
+        "shared_engine_match": true,
+        "sha256": {
+          "java": "dd07e407a26848c0d37e1fb61a7fd42c43e29e91f4394e50917e35d85cb0eced",
+          "rust": "377a6091614d419693847a0ee8aac133c59f18d2dba26db9a3776be252806cf5",
+          "node": "377a6091614d419693847a0ee8aac133c59f18d2dba26db9a3776be252806cf5",
+          "browser": "377a6091614d419693847a0ee8aac133c59f18d2dba26db9a3776be252806cf5"
+        },
+        "mismatched_bytes_hex": {
+          "java": "6d617463683a312c332c66303931626338320a656e640a",
+          "rust": "6d617463683a302c332c65316232383966303931626338320a656e640a",
+          "node": "6d617463683a302c332c65316232383966303931626338320a656e640a",
+          "browser": "6d617463683a302c332c65316232383966303931626338320a656e640a"
+        }
+      },
+      {
+        "id": "regex-zero-width-supplementary",
+        "oracle_matches": {
+          "rust": false,
+          "node": false,
+          "browser": false
+        },
+        "shared_engine_match": true,
+        "sha256": {
+          "java": "d853e545c6e19f2158f3c59c8a542fe16dc1d7466e253aee7056625639e5e8a7",
+          "rust": "61b22f7a8af0277c95872406adcdbc7b287016c2e72bb3e5d4f891a4c2f5fc9d",
+          "node": "61b22f7a8af0277c95872406adcdbc7b287016c2e72bb3e5d4f891a4c2f5fc9d",
+          "browser": "61b22f7a8af0277c95872406adcdbc7b287016c2e72bb3e5d4f891a4c2f5fc9d"
+        },
+        "mismatched_bytes_hex": {
+          "java": "6d617463683a302c302c0a6d617463683a312c312c0a6d617463683a322c322c0a656e640a",
+          "rust": "6d617463683a302c302c0a6d617463683a322c322c0a656e640a",
+          "node": "6d617463683a302c302c0a6d617463683a322c322c0a656e640a",
+          "browser": "6d617463683a302c302c0a6d617463683a322c322c0a656e640a"
+        }
+      }
+    ],
+    "capturedCommands": [
+      {
+        "name": "bindgen-version",
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c05-platform-workspace-01/.cache/m1-tools/bin/wasm-bindgen",
+          "--version"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "rust-version",
+        "command": [
+          "rustc",
+          "-Vv"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "native-build",
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "semantics_probe",
+          "--locked"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "napi-build",
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-napi",
+          "--release",
+          "--locked"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "wasm-build",
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-wasm",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--release",
+          "--locked"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "wasm-bindgen",
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c05-platform-workspace-01/.cache/m1-tools/bin/wasm-bindgen",
+          "--target",
+          "web",
+          "--out-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c05-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/wasm",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c05-platform-workspace-01/target/wasm32-unknown-unknown/release/pkl_wasm.wasm"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "oracle-native",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m1_semantics.py",
+          "--candidate",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c05-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/semantics_probe",
+          "--output",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c05-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/oracle-native"
+        ],
+        "exit_code": 1
+      },
+      {
+        "name": "platforms",
+        "command": [
+          "node",
+          "tools/platform/run.mjs",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c05-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/execution",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c05-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/wasm",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c05-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/pkl_napi.node",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c05-platform-workspace-01/tests/fixtures/m1/semantics/cases.json"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  "supplemental": [
+    {
+      "group": "renderer",
+      "executionSha256": "13bad083789ee958ee6a5c9484d666decf209be91df66b8245667be9fbe29daa",
+      "sessionsPerTarget": 44,
+      "callsPerTarget": 860,
+      "counts": {
+        "node": {
+          "success": 652,
+          "error": 208
+        },
+        "browser": {
+          "success": 652,
+          "error": 208
+        }
+      },
+      "readerRequests": {
+        "node": 212,
+        "browser": 212
+      },
+      "observableProjectionEvents": {
+        "node": 0,
+        "browser": 0
+      },
+      "terminalSlotsAllZero": true,
+      "missingAsset404EmptyBody": true
+    },
+    {
+      "group": "resource",
+      "executionSha256": "7d9834e1764e56029409b6c066d558e58c4b34f751a321ecfb8a377fc7e27b32",
+      "sessionsPerTarget": 20,
+      "callsPerTarget": 1008,
+      "counts": {
+        "node": {
+          "success": 812,
+          "error": 196
+        },
+        "browser": {
+          "success": 812,
+          "error": 196
+        }
+      },
+      "readerRequests": {
+        "node": 324,
+        "browser": 324
+      },
+      "observableProjectionEvents": {
+        "node": 0,
+        "browser": 0
+      },
+      "terminalSlotsAllZero": true,
+      "missingAsset404EmptyBody": true
+    },
+    {
+      "group": "module-preparation",
+      "executionSha256": "70ad8b23f75aa69d7faf26231d0d16b364f32439f821ecf5d8bf3626802076fe",
+      "sessionsPerTarget": 24,
+      "callsPerTarget": 252,
+      "counts": {
+        "node": {
+          "success": 136,
+          "error": 116
+        },
+        "browser": {
+          "success": 136,
+          "error": 116
+        }
+      },
+      "readerRequests": {
+        "node": 44,
+        "browser": 44
+      },
+      "observableProjectionEvents": {
+        "node": 740,
+        "browser": 740
+      },
+      "terminalSlotsAllZero": true,
+      "missingAsset404EmptyBody": true
+    }
+  ],
+  "fullChannelCalls": 4240,
+  "terminalSessions": 176,
+  "moduleProviderRequests": [
+    {
+      "target": "node",
+      "requestCounts": {
+        "capabilities": 144,
+        "has-element": 392,
+        "counted-read": 44,
+        "resolve": 36,
+        "load-source": 36,
+        "uncounted-denied-read": 28
+      }
+    },
+    {
+      "target": "browser",
+      "requestCounts": {
+        "capabilities": 144,
+        "has-element": 392,
+        "counted-read": 44,
+        "resolve": 36,
+        "load-source": 36,
+        "uncounted-denied-read": 28
+      }
+    }
+  ],
+  "preparation": {
+    "initialFailedActualSession": 94291,
+    "initialActualExitCode": 1,
+    "repairActualSession": 24154,
+    "repairActualExitCode": 0,
+    "restoredReferenceSymlinkPaths": 11,
+    "candidateRegularMapUnchanged": true,
+    "retroactiveCandidateLinkCoverageClaimed": false
+  },
+  "stability": {
+    "explicitRegularInputs": 113609,
+    "explicitLiteralLinks": 23,
+    "changes": []
+  },
+  "ownAuditExecution": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c05-platform-audit-01/execution-01/execution.json",
+    "sha256": "d1f29988b888905c27e5efd606379861bd5fa3f1ab03b7561ea15aed3628ec7b",
+    "sessionId": 44970,
+    "actualExitCode": 0
+  },
+  "qualification": [
+    "C05 intermediate platform evidence only; current live test edits/final workspace/Rust5 not covered",
+    "renderer policy84/Java07-and-later supplements separate; Resource264 and Module48 unselected remain",
+    "owned-result/collection observations are source-bound driver measurements, not Java GC parity",
+    "installed Playwright version and lock pinned; no independent full installed package-code hash claim",
+    "initial own output field-name correction is preserved separately; original producer records unchanged"
+  ],
+  "artifacts": {
+    "FINDINGS.ko.md": "049b87e0c5228ecbd07acc329a48a479283448a49bebcd163b9f38ea094cd7af",
+    "candidate-source-binding.json": "3c564ef6911d7f2e90745b8ec841bb9cca3ff5b616567f86f7dc7fd8b04e10be",
+    "traversal-policy.json": "2a6f3debcab4948cbc9797efdf33ebc801b3e8b6d20667c846991f7ada00ba59",
+    "preparation-binding.json": "bee4267103a87bdab96a859fdc209dd2b0f48172549c92105a3156e2bf7dd7e5",
+    "baseline-raw-audit.json": "07a8c0d74db79168783ce9437092ac3d37586c5fae5970bd0b6328c2126a543e",
+    "supplemental-raw-audit.json": "c88a7cd66971686cea9d23af6c9b569ed98481efd69c9c2749d6649996425872",
+    "inputs-before.json": "f28124ca81ed91b958dfddb0564f09651edf872f44ef128209c8972bc210c90d",
+    "literal-links-before.json": "244bcb96f129ade6504fe0f80c8f46196472d0a1381c5bfb8e29b55c7920e5b1",
+    "source-stability.json": "e37b4b6e6bde233e3366f12d0e8223b9ff7dd7a06c98e4a51532c9f29a414e2a",
+    "copied-driver-binding.json": "57008985f633d634fc9bb0b592e525fe9e260b021557ff0f8d3134fc2a4b171e",
+    "module-provider-readback.json": "d58a597f193d46375700225c1e8112f5a2e83a5f02b97d9a8850975494215571",
+    "audit.py": "2bf7ee07e4baf04223977b82a36d84bbda8c2d32bdd377ac5c83be9426ed2003",
+    "finalize.py": "9e2f5cf56e9e5abd4aaf18cd596c79a22d0a3eb49b9f87b6a23fc2c56049ef35",
+    "module_provider_readback.py": "385e81796069626772ab024743b37b5f4aab6b1d7b03a5523580da6541543b45",
+    "finalize-execution.json": "abd65912df937ea01053ef7d386c19d89b6c223566fcb78af357406fc9a36b2a",
+    "module-provider-execution.json": "f4d1d9b0fb34d8f35253232151ff92c1f27e0377b638228a55cc337f43e077db"
+  }
+}

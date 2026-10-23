@@ -93,6 +93,35 @@ impl<'a> Parser<'a> {
                             machine.current = Some(self.primary()?);
                         }
                     }
+                    ExpressionFlow::New { start } => {
+                        let ty = if self.is_symbol('{') {
+                            None
+                        } else {
+                            Some(self.type_expression_expected(Some("{"))?)
+                        };
+                        let missing_delimiter = ty.is_none();
+                        machine.object_build =
+                            Some(self.start_object(None, ty, start, missing_delimiter, true)?);
+                    }
+                    ExpressionFlow::TypeOperand { cast } => {
+                        let ty = self.type_expression()?;
+                        let left = machine.current.take().expect("type operand");
+                        let span = Span::new(left.span.start, ty.span.end);
+                        machine.current = Some(Expr {
+                            kind: if cast {
+                                ExprKind::TypeCast {
+                                    value: Box::new(left),
+                                    ty,
+                                }
+                            } else {
+                                ExprKind::TypeCheck {
+                                    value: Box::new(left),
+                                    ty,
+                                }
+                            },
+                            span,
+                        });
+                    }
                     ExpressionFlow::Done => {
                         let expression = machine.current.take().expect("completed expression");
                         if frames.is_empty() {

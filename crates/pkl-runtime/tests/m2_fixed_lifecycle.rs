@@ -2,6 +2,9 @@
 //! Java byte compatibility for selected sources is recorded separately.
 //! Retained module graphs include their builtin Module parent and source-backed
 //! stdlib annotations; transient objects and terminal-zero assertions stay separate.
+#[path = "support/eager_base.rs"]
+mod eager_base;
+use eager_base::Baseline;
 use std::sync::Arc;
 
 use pkl_runtime::host::{HostPoll, HostSession};
@@ -82,6 +85,7 @@ fn request(session: &mut HostSession, now: u64, uri: &str) -> String {
 #[test]
 fn inherited_fixed_values_keep_the_amended_receiver_across_gc_reentry_and_retry() {
     let (mut session, module, [parent, value, _, inspect]) = setup();
+    let initialized = Baseline::new(session.collect(&[]));
     session
         .start(parent, vec![module.clone()], 1, None)
         .unwrap();
@@ -122,13 +126,11 @@ fn inherited_fixed_values_keep_the_amended_receiver_across_gc_reentry_and_retry(
     assert_eq!(ready(&mut session, 5), Ok(Value::string("prefix/amended")));
     session.resume(&outer, Ok(Value::Null), 6).unwrap();
     assert_eq!(ready(&mut session, 6), Ok(Value::Null));
-    // Published classes retain their captured module and its completed caches.
-    // The source-backed pkl:ref header adds ModuleInfo and Since instances,
-    // their three class prototypes, and three constraint execution nodes.
-    // Reference path temporaries have been collected. Keep the exact closure.
-    assert_eq!(session.collect(&[]).live, 20);
-    assert_eq!(session.heap_stats().executable_live, 3);
-    assert_eq!(session.collect(&[]).live, 20);
+    // Exact source-specific class, annotation and completed Reference/cache
+    // closure above the initialized base. Access-list temporaries are reclaimed;
+    // shared annotation descriptors are already present in the base baseline.
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), 12);
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), 12);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -138,6 +140,7 @@ fn inherited_fixed_values_keep_the_amended_receiver_across_gc_reentry_and_retry(
 #[test]
 fn inherited_hidden_fixed_reference_metadata_stays_deferred_during_render_retry() {
     let (mut session, module, [parent, _, rendered, inspect]) = setup();
+    let initialized = Baseline::new(session.collect(&[]));
     session
         .start(parent, vec![module.clone()], 1, None)
         .unwrap();
@@ -166,13 +169,12 @@ fn inherited_hidden_fixed_reference_metadata_stays_deferred_during_render_retry(
     assert_eq!(ready(&mut session, 4), Ok(Value::string("path/secret")));
     session.resume(&outer, Ok(Value::Null), 5).unwrap();
     assert_eq!(ready(&mut session, 5), Ok(Value::Null));
-    // Published classes retain their captured module and its completed caches.
-    // The source-backed pkl:ref header adds ModuleInfo and Since instances,
-    // their three class prototypes, and three constraint execution nodes.
-    // Reference path temporaries have been collected. Keep the exact closure.
-    assert_eq!(session.collect(&[]).live, 20);
-    assert_eq!(session.heap_stats().executable_live, 3);
-    assert_eq!(session.collect(&[]).live, 20);
+    // Exact source-specific class, annotation and completed Reference/cache
+    // closure above the initialized base. Access-list temporaries are reclaimed;
+    // shared annotation descriptors are already present in the base baseline.
+    // Calling renderReference adds its parameter-slot descriptor once.
+    assert_eq!(initialized.added_values(session.collect(&[]), 1), 12);
+    assert_eq!(initialized.added_values(session.collect(&[]), 1), 12);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);

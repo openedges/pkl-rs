@@ -232,8 +232,8 @@ pub fn roundtrip_string(input: JsString) -> Result<String, JsValue> {
 }
 #[wasm_bindgen(js_name = roundtripInteger)]
 pub fn roundtrip_integer(input: JsValue) -> Result<BigInt, JsValue> {
-    match probe::identity(Value::Int(integer(input)?)).map_err(error)? {
-        Value::Int(value) => Ok(BigInt::from(value)),
+    match probe::identity(Value::Int(integer(input)?.into())).map_err(error)? {
+        Value::Int(value) => Ok(BigInt::from(value.get())),
         _ => Err(error("invalid engine result")),
     }
 }
@@ -287,7 +287,7 @@ impl HostProbe {
         self.inner
             .respond(
                 &string(&token)?,
-                Value::Int(integer(value)?),
+                Value::Int(integer(value)?.into()),
                 unsigned(now)?,
             )
             .map_err(error)
@@ -868,7 +868,7 @@ impl SourceSession {
         self.inner
             .respond(
                 &string(&token)?,
-                Value::Int(integer(value)?),
+                Value::Int(integer(value)?.into()),
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(failure.message))

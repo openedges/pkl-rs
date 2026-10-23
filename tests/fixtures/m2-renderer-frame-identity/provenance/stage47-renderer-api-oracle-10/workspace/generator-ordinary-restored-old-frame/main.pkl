@@ -1,0 +1,11 @@
+cachedA = 1000
+cachedB = 1001
+captured = new Listing {
+  for (x in List(cachedA, "warm", cachedB)) { (_) -> x }
+}
+old = captured[0]
+fresh = captured[2]
+pOld = new PcfRenderer { converters { [Int] = old } }
+pFresh = new PcfRenderer { converters { [Int] = fresh } }
+
+stable = 7

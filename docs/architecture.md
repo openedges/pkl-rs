@@ -1093,3 +1093,38 @@ instruction locations and power-assertion observations retain their original
 identities. This metadata rule does not change arithmetic, evaluation order or
 declaration ownership. Java's unavailable source sections for empty collection
 calls remain a separate diagnostic gap.
+
+### Shared JSON rendering and reference identity
+
+JSON and PCF use the same frame-owned renderer continuation, lazy forcing,
+converter calls, Host suspension and tracing heap. Render directives force their
+text through that path. The pinned `pkl:json.Property` and `Value` declarations
+provide annotation and converter behavior through the ordinary module arena.
+The [renderer contract](m2-json-rendering.md) records ordering, UTF-16 handling
+and the remaining parser and module-admission boundaries.
+
+Numeric, String and Bytes carriers retain a semantic reference token separately
+from payload equality and hashing. Shared Bytes storage does not imply the same
+language wrapper. Primitive local-slot representation belongs to an activation;
+descriptor history belongs to its executable. Boxing a primitive read follows
+the pinned Java Long-cache and Double-allocation rules. Generalizing a descriptor
+does not retrospectively replace old captured primitive slots. Generator copies
+preserve the applicable descriptor and physical-slot distinction. Constant
+property references are independent of optional Observe instructions.
+
+Private source-backed base initialization warms ordinary PCF output before user
+module execution. Architectural GC checks distinguish this retained base graph
+from reclaimable user modules and transient values. They separately check
+executable retention, stale user handles and zero slots after closure. Source
+module initialization may yield before the first user operation; its polling
+conditions are recorded independently of later Host deadlines and stack limits.
+
+Optional runtime hints and synthetic diagnostic underline widths live in the
+existing boxed metadata types. A hint-only runtime error can allocate its optional
+details box; the diagnostic provenance box already exists. These layout changes
+do not establish an execution-time or memory improvement. The detached logical
+error fields determine equality;
+allocating an empty metadata box does not change it. This representation preserves
+the shared diagnostic text, source spans, UTF-16 widths and hint precedence.
+Selected differential regressions do not establish complete reference identity,
+standard-module lifecycle, renderer coverage or the performance targets.

@@ -111,7 +111,7 @@ impl HostProbe {
                 Instruction::Return,
             ],
             "add" => vec![
-                Instruction::Constant(Value::Int(40)),
+                Instruction::Constant(Value::Int(40.into())),
                 Instruction::Input(0),
                 Instruction::ReadResource,
                 Instruction::Add,
@@ -124,7 +124,7 @@ impl HostProbe {
             session: HostSession::new(Arc::new(Program::new(vec![
                 code,
                 vec![
-                    Instruction::Constant(Value::Int(100)),
+                    Instruction::Constant(Value::Int(100.into())),
                     Instruction::Input(0),
                     Instruction::ReadResource,
                     Instruction::Add,

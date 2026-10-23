@@ -1,6 +1,6 @@
 //! Evaluator-owned tracing arena. No object edge uses reference counting.
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering};
 
@@ -17,6 +17,16 @@ pub struct Scope {
 #[derive(Clone, Debug, Default)]
 pub struct Environment {
     pub locals: Vec<Value>,
+    /// Source descriptor for materialized physical slots retained by closures.
+    #[doc(hidden)]
+    pub local_owners: BTreeMap<usize, (ExecutableOwnerId, (usize, usize))>,
+    /// Parameters, let bindings and generator bindings in the current lexical
+    /// frame. Enclosing function captures are not copied into a new descriptor.
+    #[doc(hidden)]
+    pub copy_locals: BTreeSet<usize>,
+    /// Generated members restore their saved generator activation on forcing.
+    #[doc(hidden)]
+    pub restore_for_bindings: bool,
     pub this_value: Option<Value>,
     pub outer_value: Option<Value>,
     pub custom_this: Option<CustomThisSlot>,
@@ -291,6 +301,7 @@ pub(crate) enum ExecutionSite {
     TypeChild(usize),
     Constraint(usize),
     Function { block: usize, instruction: usize },
+    Generator { block: usize, instruction: usize },
     Member(usize),
 }
 
@@ -300,6 +311,7 @@ struct ExecutableState {
     // ObjectMember belongs to the declaration, whereas owner/receiver are read
     // from the current frame on every invocation. Never retain the first receiver.
     local_properties: BTreeMap<(usize, usize), Member>,
+    local_kinds: BTreeMap<(usize, usize), crate::vm::identity::SlotKind>,
 }
 
 impl ExecutableOwnerId {
@@ -458,6 +470,24 @@ impl Heap {
         let child = self.allocate_executable();
         self.executable_mut(owner)?.children.insert(site, child);
         Ok(child)
+    }
+
+    pub(crate) fn local_kind(
+        &self,
+        owner: ExecutableOwnerId,
+        slot: (usize, usize),
+    ) -> Result<Option<crate::vm::identity::SlotKind>, RuntimeError> {
+        Ok(self.executable(owner)?.local_kinds.get(&slot).copied())
+    }
+
+    pub(crate) fn set_local_kind(
+        &mut self,
+        owner: ExecutableOwnerId,
+        slot: (usize, usize),
+        kind: crate::vm::identity::SlotKind,
+    ) -> Result<(), RuntimeError> {
+        self.executable_mut(owner)?.local_kinds.insert(slot, kind);
+        Ok(())
     }
 
     pub(crate) fn resolved_local(
@@ -673,6 +703,7 @@ impl Heap {
             {
                 pending.extend(environment.custom_this.map(|slot| slot.0));
                 pending.extend(environment.executable_owner.map(|owner| owner.0));
+                pending.extend(environment.local_owners.values().map(|(owner, _)| owner.0));
                 for scope in &environment.scopes {
                     pending.push(scope.receiver);
                     pending.push(scope.owner);
@@ -688,6 +719,13 @@ impl Heap {
             }
             pending.extend(object.environment.custom_this.map(|slot| slot.0));
             pending.extend(object.environment.executable_owner.map(|owner| owner.0));
+            pending.extend(
+                object
+                    .environment
+                    .local_owners
+                    .values()
+                    .map(|(owner, _)| owner.0),
+            );
             for scope in &object.environment.scopes {
                 pending.push(scope.receiver);
                 pending.push(scope.owner);
@@ -798,10 +836,10 @@ mod tests {
     #[test]
     fn nullable_defaults_are_null_values_with_checked_private_heap_edges() {
         let mut heap = Heap::new();
-        let value = heap.allocate_null(Some(Value::Int(7)));
+        let value = heap.allocate_null(Some(Value::Int(7.into())));
         assert_eq!(value, Value::Null);
         let id = value.heap_id().expect("default payload is traced");
-        assert_eq!(heap.null_default(id), Ok(Value::Int(7)));
+        assert_eq!(heap.null_default(id), Ok(Value::Int(7.into())));
         assert_eq!(heap.get(id).unwrap_err().kind, ErrorKind::StaleHandle);
         assert_eq!(
             Heap::new().null_default(id).unwrap_err().kind,
@@ -809,7 +847,7 @@ mod tests {
         );
         assert_eq!(heap.collect(std::slice::from_ref(&value)).live, 1);
         assert_eq!(heap.collect(&[]).live, 0);
-        let replacement = heap.allocate_null(Some(Value::Int(8)));
+        let replacement = heap.allocate_null(Some(Value::Int(8.into())));
         assert_ne!(replacement.heap_id(), Some(id));
         assert_eq!(
             heap.null_default(id).unwrap_err().kind,

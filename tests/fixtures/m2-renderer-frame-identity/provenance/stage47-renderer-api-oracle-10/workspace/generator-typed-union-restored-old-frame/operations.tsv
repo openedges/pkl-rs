@@ -1,0 +1,16 @@
+main.pkl	stable
+main.pkl	old.apply(0)
+main.pkl	captured[1].apply(0)
+main.pkl	fresh.apply(0)
+main.pkl	pOld.renderDocument(cachedA)
+main.pkl	pFresh.renderDocument(cachedB)
+main.pkl	pOld.renderDocument(old.apply(0))
+main.pkl	pOld.renderDocument(old.apply(0))
+main.pkl	pFresh.renderDocument(fresh.apply(0))
+main.pkl	pFresh.renderDocument(fresh.apply(0))
+GC
+main.pkl	pOld.renderDocument(old.apply(0))
+main.pkl	pFresh.renderDocument(fresh.apply(0))
+main.pkl	old.apply(0)
+main.pkl	fresh.apply(0)
+main.pkl	stable

@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "publicationRoot": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c06-platform-publication-02",
+  "scope": "Existing C06 primary actual platform evidence and setup/audit publication proposal only; no source/reports/docs/Git writes or evaluator reruns. Native examples/core and B supplementary980 remain separate canonical packages.",
+  "reportSha256": "0cb706840557d2e316f58eb4a00e833c311891ce06b1714cf81b25494127c9cb",
+  "archiveIndexSha256": "c6a7d346fb7fbc2d53a9aa52edb705a8bec3c853f8fffa96e3728578cc18e2cc",
+  "closeoutIndexSha256": "f9cf31b11e6bd1210c251308c799679b6b858bb49153b675342cd58d1c35676a",
+  "outerTerminalSha256": "c6e75f5716b9b070597913f01fd80cfe3f4ef8151562228b6d7a283c6e782dd8",
+  "archives": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c06-platform-publication-02/archives/stage47-c06-platform-build-baseline.tar.gz",
+      "sha256": "f36df1c7b22f8da2cbfd6b69fedc73fcec5c1e6bfee30f731cfe4a644b0e9f2f",
+      "compressedBytes": 7757034,
+      "evidencePayloads": 254,
+      "payloadBytes": 50609802,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 253,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c06-platform-publication-02/archives/stage47-c06-platform-module-preparation.tar.gz",
+      "sha256": "68e0118773769949875af386b5cddc48af93e4ad5994d74006ba2e7051ccb6dc",
+      "compressedBytes": 552966,
+      "evidencePayloads": 2171,
+      "payloadBytes": 13619208,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 2170,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c06-platform-publication-02/archives/stage47-c06-platform-renderer.tar.gz",
+      "sha256": "4476962d406b7df5db46f6fcb24ebb86007e12b2706ea3c61003dab6c5178c99",
+      "compressedBytes": 1111615,
+      "evidencePayloads": 7154,
+      "payloadBytes": 17496411,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 7153,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c06-platform-publication-02/archives/stage47-c06-platform-resource.tar.gz",
+      "sha256": "9e8d285dcf199b7e1d332c1469afad7254b03a541ebcb0298d78ada907496dbf",
+      "compressedBytes": 945688,
+      "evidencePayloads": 8194,
+      "payloadBytes": 18247946,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 8193,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c06-platform-publication-02/archives/stage47-c06-platform-setup-audit.tar.gz",
+      "sha256": "2024fbd8e406b638f16420a5b5a57b0ed6565a72fd8e256513e03abcfa53b601",
+      "compressedBytes": 3831164,
+      "evidencePayloads": 75,
+      "payloadBytes": 65600263,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 74,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c06-platform-publication-02/archives/stage47-c06-platform-publication-closeout.tar.gz",
+      "sha256": "ae6283a4a990dba6da737de694d967c2930cfd987067945655d8651211bd5dcd",
+      "compressedBytes": 2521426,
+      "payloads": 39,
+      "allMembersIndependentlyCompared": true,
+      "reviewedReportSha256": "0cb706840557d2e316f58eb4a00e833c311891ce06b1714cf81b25494127c9cb",
+      "qualification": "Closeout archive preserves the main five-archive index and pre-outer-terminal report. Actual packaging wrapper terminal is a subsequent external receipt; no self-referential terminal claim."
+    }
+  ],
+  "archiveCount": 6,
+  "compressedBytes": 16719893,
+  "selectedRawPayloads": 17843,
+  "rawBytes": 157839353,
+  "literalLinksSerialized": 11,
+  "gitFixtureFilesReused": 26826,
+  "canonicalPlatformSourceInputs": 178,
+  "originalChanges": [],
+  "allOriginalKindsModesBytesAndDeclaredRootPathsetsEqual": true,
+  "actualPackagingSession": 68402,
+  "actualPackagingExitCode": 0,
+  "failedOwnAttempt": "publication01 guarded on missing scope.txt before archives; original failure and original selection archived in setup-audit.",
+  "compatibilityQualification": "Baseline6078 shared/6076 vsJava retains2regex mismatches. EachNode/browser original860 renderer,Resource1008,module252 only; all UTF16/JavaUTF8/reader/slots read back in sealed independent C06 audit. No subsequent full-selected regression, M2 completion, hostedCI or performance claim."
+}

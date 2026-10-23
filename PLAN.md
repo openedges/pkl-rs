@@ -808,11 +808,29 @@ Stage 46 구현을 `a3eb363`에 커밋·푸시했습니다. [구현 체크포인
 
 구현은 `gpt-6-astra / xhigh`, Java 관찰과 독립 검토는 `gpt-6.1-sol / high`로 배정합니다. Stage 46 회귀 소스를 고정한 채 `a3eb363`에서 별도 worktree로 구현을 시작했습니다. 기존 상속·리소스 사례는 Stage 46 전체 회귀의 새 판정에 따라 후속 범위를 결정하며 통과를 미리 가정하지 않습니다. 원본 두 사례의 성공만으로 전체 renderer·표준 라이브러리·M2 완료를 선언하지 않습니다.
 
-`pkl:json.Property`와 `Value`의 원래 선언도 공통 loader에 연결하되 초기 후보는 기본 접근 정책 범위입니다. 다음 필수 체크포인트에서 evaluator별 표준 모듈의 typed resolve·접근 허용·캐시를 pure frontend·native Host·Node/Wasm provider까지 함께 연결합니다. Java `ModuleCache`의 singleton 조기 반환을 쓰는 `pkl:base`·`pkl:ref`·`pkl:test`와 일반 resolve/security 경로의 `pkl:json`을 구분해야 합니다. 모든 표준 모듈에 접근 검사를 일괄 추가하거나 `pkl:json`만 무조건 허용하지 않습니다. 이 의무는 M2 전체 완료 기준에 남습니다.
+`pkl:json.Property`와 `Value`의 원래 선언도 공통 loader에 연결하되 초기 후보는 기본 접근 정책 범위입니다. 다음 필수 체크포인트에서 evaluator별 표준 모듈의 typed resolve·접근 허용·캐시를 pure frontend·native Host·Node/Wasm provider까지 함께 연결합니다. Java `ModuleCache`의 singleton 조기 반환을 쓰는 `pkl:base`·`pkl:ref`·`pkl:test`와 일반 resolve/security 경로의 `pkl:json`을 구분해야 합니다. singleton 우회는 ModuleKey resolve에만 적용하며 import-edge trust/security 검사는 유지합니다. 모든 표준 모듈에 동일한 resolve 절차를 일괄 적용하거나 `pkl:json`만 무조건 허용하지 않습니다. 이 의무는 M2 전체 완료 기준에 남습니다.
 
 Stage 47의 [Java renderer 기준 데이터](docs/m2-renderer-oracle.md)를 런타임과 별도 체크포인트로 정리했습니다. 고정 Java에서 관찰한 860회 API 호출·44개 순차 세션의 입력·전체 출력·오류·UTF-16·Java UTF-8·reader 순서를 보존합니다. 최초 컴파일 실패, 의도한 기능에 도달하지 못한 authored 사례, 별도 정책 84회와 후속 identity·종료 관찰은 구분하며 통과로 계산하지 않습니다. fixture의 payload 14,995개와 manifest는 원래 취득 데이터와 바이트가 같습니다.
 
 [설치 검증](reports/m2/renderer-portable-fixtures.json)에서 Python 검사 27개, 공통 JS 세션 단위 검사 12개, fixture CLI·JS 문법·목록 freshness·저장소 검사가 통과했습니다. 독립 검토에 따라 미선언 디렉터리는 탐색 전에, link·특수 파일은 읽기 전에 거부하도록 보완했습니다. 원래 staging 도구와 초기 설치 검증은 별도 원시 기록으로 보존합니다. 실제 Node·Chromium renderer 실행은 새 드라이버와 고정된 binding artifact를 연결해 별도로 검증해야 합니다. 공통 참조 identity·slot 표현의 런타임 구현, 표준 모듈 접근 정책과 전체 M2 종료 조건은 계속 진행합니다.
+
+### Stage 47 — 참조 identity·회귀 보완과 최종 후보 준비
+
+공통 숫자·String·Bytes에 값 비교와 분리된 참조 identity를 연결하고 executable descriptor와 호출별 physical slot을 구분했습니다. generator의 반복 frame 복사·복원, Observe 유무와 무관한 숫자 상수 property identity, UTF-16 `String.dropLast`를 보완했습니다. source-backed base 초기화와 PCF 실행을 공유하며 기존 작은 stack 검사의 한도는 유지했습니다. source module setup의 일부 단발 poll은 초기화 중 yield를 허용하는 bounded loop로 바뀌었으므로 모든 poll 조건이 같다고 주장하지 않습니다.
+
+[중간 C05 실제 플랫폼 결과](reports/m2/stage47-c05-platform-summary.json)는 공통 primitive 6,078개가 native·Node·Chromium에서 일치하고 Java 대비 각 6,076개 일치·기존 regex 실패 2개를 유지합니다. Node·Chromium 각각 renderer 860회·Resource 1,008회·모듈 준비 252회의 전체 채널과 reader 계약이 통과했습니다. 독립 감사와 원본 기록 archive 6개를 보존하며, 처음 작업 디렉터리 준비에서 누락된 reference symlink 11개와 고정 Git blob 복구를 구분합니다.
+
+Java의 generator·명시적 tagged instance 원본 3개·세션 12개·240회 관찰을 영구 fixture로 추가했습니다. Rust의 Observe 비활성·활성 양쪽에서 같은 전체 결과를 비교하는 480회 회귀가 통과했고 fixture 설치 검사 7개·무결성 CLI도 통과했습니다. Java는 power assertion 활성 설정 한 종류만 실제 실행했으며 Java off/on을 비교했다고 주장하지 않습니다. 별도 C05 native 및 추가 portable 관찰은 고유 기능 수나 M2 완료율에 합산하지 않습니다.
+
+표준 base graph와 사용자 객체를 구분하도록 수명주기 검사를 보완했습니다. stale user handle·취소/재시도·종료 후 슬롯 0을 유지하고 source별 executable 경계를 별도로 확인합니다. 정적 검사에서 드러난 공통 오류 구조체 크기는 optional hint·underline 정보를 기존 boxed metadata로 옮겨 줄였습니다. C05 이후의 production 변경이므로 기존 플랫폼 결과를 최종 후보의 결과로 대체 표기하지 않습니다. 최종 후보의 Rust 필수 검사·실제 플랫폼·원본 비교를 검증해 구현 체크포인트를 커밋합니다. 이어 새 전체 선택 회귀를 별도로 취득·검토하며, 그 결과와 남은 의미론·정책 의무를 해결하기 전에는 Stage 47의 모든 후속 작업이나 M2 전체를 완료로 표시하지 않습니다. **M2의 9개 영역과 전체 완료 gate는 계속 열려 있습니다.**
+
+### Stage 47 — C06 구현 체크포인트 검증
+
+[C06 구현 검증 기록](reports/m2/stage47-implementation-checkpoint.json)에서 필수 Rust 검사 다섯 개가 모두 통과했습니다. 원본 `moduleOutput2.pkl`·`pcfRenderer9.pkl`은 각각 두 번의 CLI stdout·stderr·종료·생성 파일 비교가 일치했습니다. renderer API는 native·Node·Chromium 각각 1,840회 일치했고 실제 Node·Chromium의 Resource 1,008회·모듈 준비 252회도 환경별 통과했습니다. 공통 primitive의 Java 일치 6,076개와 기존 정규식 실패 두 개는 그대로 유지합니다. 이 수치는 반복·설정·환경 간 중복이 있어 기능 완료율로 계산하지 않습니다.
+
+최종 후보의 입력 51,745개를 고정 Git blob·보존 소스·별도 archive에 연결했습니다. 초기 중간 후보의 소스 버전 일곱 개는 해시만 남아 있어 완전한 소스 재구성을 주장하지 않으며, 최종 C06 입력의 누락은 없습니다. 이전 stack·heap·clippy·취득·게시 도구 실패를 원본과 함께 보존합니다. 검증 뒤 문서·게시 기록 변경은 고정 런타임 입력과 구분합니다.
+
+이 구현 체크포인트를 커밋·푸시한 뒤 깨끗한 고정 커밋에서 전체 선택·순차 evaluator 회귀를 취득합니다. 원래 Stage 46의 3,650/3,664 결과를 최신 후보의 전체 결과로 재사용하지 않습니다. 표준 모듈 import-edge trust·resolve·캐시 정책과 나머지 identity·의미론 보완을 계속 진행하며 **M2 전체와 성능·릴리스 조건은 미완료**입니다.
 
 ## M3 — 표준 라이브러리와 출력
 

@@ -2,6 +2,9 @@
 //! Retained module graphs include their one builtin Module parent; executable
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
+#[path = "support/eager_base.rs"]
+mod eager_base;
+use eager_base::Baseline;
 
 use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
@@ -99,6 +102,8 @@ fn suspended_parent_constraint_keeps_reentry_eager_until_it_finishes() {
     let mut session = HostSession::new(Arc::new(program));
     session.start(module_entry, vec![], 0, None).unwrap();
     let root = ready(&mut session, 0).unwrap();
+    let initialized = Baseline::new(session.collect(&[]));
+    let stale_root = root.clone();
     session
         .start(entries[0], vec![root.clone()], 1, None)
         .unwrap();
@@ -111,12 +116,21 @@ fn suspended_parent_constraint_keeps_reentry_eager_until_it_finishes() {
     assert_eq!(request(&mut session, 2, "mem:outer"), outer);
     session.collect(std::slice::from_ref(&root));
     session.resume(&outer, Ok(Value::string("ok")), 3).unwrap();
-    assert_eq!(ready(&mut session, 3), Ok(Value::Int(1)));
+    assert_eq!(ready(&mut session, 3), Ok(Value::Int(1.into())));
     // After the parent constraint exits, the failed child property's retry
     // creates a lazy wrapper and length does not force the invalid element.
     session.start(entries[1], vec![root], 4, None).unwrap();
-    assert_eq!(ready(&mut session, 4), Ok(Value::Int(2)));
-    assert_eq!(retained_values(session.collect(&[]), 3), 0);
+    assert_eq!(ready(&mut session, 4), Ok(Value::Int(2.into())));
+    assert_eq!(initialized.added_values(session.collect(&[]), 3), -1);
+    assert_eq!(
+        session
+            .start(module_entry, vec![stale_root], 10, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::StaleHandle
+    );
+    session.close();
+    assert_eq!(session.heap_stats().slots, 0);
     assert!(session.drain_cancelled_reads().is_empty());
 }
 
@@ -143,16 +157,21 @@ fn parameter_and_let_bindings_publish_checked_wrappers_before_the_body_runs() {
         let mut session = HostSession::new(Arc::new(program));
         session.start(module_entry, vec![], 0, None).unwrap();
         let root = ready(&mut session, 0).unwrap();
+        let initialized = Baseline::new(session.collect(&[]));
+        let stale_root = root.clone();
         session.start(result_entry, vec![root], 1, None).unwrap();
         let token = request(&mut session, 1, "mem:parameter");
-        assert!(retained_values(session.collect(&[]), [4, 5, 4, 4][index]) > 0);
+        assert!(initialized.added_values(session.collect(&[]), [4, 5, 4, 4][index]) > 0);
         session.resume(&token, Ok(Value::string("ok")), 2).unwrap();
         assert_eq!(
             ready(&mut session, 2),
             Ok(Value::string("prefix:value")),
             "{source}"
         );
-        assert_eq!(retained_values(session.collect(&[]), [4, 5, 4, 4][index]), 0);
+        assert_eq!(initialized.added_values(session.collect(&[]), [4, 5, 4, 4][index]), -1);
+    assert_eq!(session.start(module_entry, vec![stale_root], 10, None).unwrap_err().kind, ErrorKind::StaleHandle);
+    session.close();
+    assert_eq!(session.heap_stats().slots, 0);
     }
 }
 
@@ -182,6 +201,8 @@ fn failed_cast_of_cached_source_retries_and_successful_wrapper_cache_is_shared()
     let mut session = HostSession::new(Arc::new(program));
     session.start(module_entry, vec![], 0, None).unwrap();
     let root = ready(&mut session, 0).unwrap();
+    let initialized = Baseline::new(session.collect(&[]));
+    let stale_root = root.clone();
     session
         .start(entries[0], vec![root.clone()], 1, None)
         .unwrap();
@@ -215,23 +236,33 @@ fn failed_cast_of_cached_source_retries_and_successful_wrapper_cache_is_shared()
     assert_eq!(ready(&mut session, 3), Ok(Value::string("cached")));
     session.start(entries[2], vec![root], 4, None).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("cached")));
-    assert_eq!(retained_values(session.collect(&[]), 4), 0);
+    assert_eq!(initialized.added_values(session.collect(&[]), 4), -1);
+    assert_eq!(
+        session
+            .start(module_entry, vec![stale_root], 10, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::StaleHandle
+    );
+    session.close();
+    assert_eq!(session.heap_stats().slots, 0);
     assert!(session.drain_cancelled_reads().is_empty());
 }
 
 #[test]
 fn nested_wrappers_keep_temporary_check_receivers_across_gc_and_reentry() {
     let (mut session, root, outer_entry, inner_entry) = session();
+    let initialized = Baseline::new(session.collect(&[]));
     session
         .start(outer_entry, vec![root.clone()], 1, None)
         .unwrap();
     let outer = request(&mut session, 1, "mem:outer");
-    assert!(retained_values(session.collect(&[]), 4) > 0);
+    assert!(initialized.added_values(session.collect(&[]), 4) > 0);
     session
         .reenter(&outer, inner_entry, vec![root], 2, None)
         .unwrap();
     let inner = request(&mut session, 2, "mem:inner");
-    assert!(retained_values(session.collect(&[]), 9) > 0);
+    assert!(initialized.added_values(session.collect(&[]), 9) > 0);
     session
         .resume(&inner, Ok(Value::string("inner")), 3)
         .unwrap();
@@ -246,8 +277,8 @@ fn nested_wrappers_keep_temporary_check_receivers_across_gc_and_reentry() {
     assert_eq!(session.context_depth(), 0);
     // Only Check, its captured module and builtin Module parent survive. Temporary receivers,
     // Listings, Mappings and wrappers must all have been reclaimed.
-    assert_eq!(retained_values(session.collect(&[]), 9), 3);
-    assert_eq!(retained_values(session.collect(&[]), 9), 3);
+    assert_eq!(initialized.added_values(session.collect(&[]), 9), 1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 9), 1);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -257,6 +288,7 @@ fn nested_wrappers_keep_temporary_check_receivers_across_gc_and_reentry() {
 #[test]
 fn failed_wrapper_predicate_retries_without_publishing_a_successful_member() {
     let (mut session, root, outer_entry, inner_entry) = session();
+    let initialized = Baseline::new(session.collect(&[]));
     session
         .start(outer_entry, vec![root.clone()], 1, None)
         .unwrap();
@@ -296,8 +328,8 @@ fn failed_wrapper_predicate_retries_without_publishing_a_successful_member() {
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer")));
     // Only Check, its captured module and builtin Module parent survive. Temporary receivers,
     // Listings, Mappings and wrappers must all have been reclaimed.
-    assert_eq!(retained_values(session.collect(&[]), 9), 3);
-    assert_eq!(retained_values(session.collect(&[]), 9), 3);
+    assert_eq!(initialized.added_values(session.collect(&[]), 9), 1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 9), 1);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -320,6 +352,7 @@ fn terminal_reentry_releases_wrapper_checks_and_cancels_both_pending_reads() {
         Termination::ChildTimeoutOnResume,
     ] {
         let (mut session, root, outer_entry, inner_entry) = session();
+        let initialized = Baseline::new(session.collect(&[]));
         let deadline = matches!(termination, Termination::AncestorTimeout).then_some(9);
         session
             .start(outer_entry, vec![root.clone()], 1, deadline)
@@ -331,7 +364,7 @@ fn terminal_reentry_releases_wrapper_checks_and_cancels_both_pending_reads() {
             .unwrap();
         let inner = request(&mut session, 2, "mem:inner");
         assert_eq!(session.context_depth(), 2);
-        assert!(retained_values(session.collect(&[]), 9) > 0);
+        assert!(initialized.added_values(session.collect(&[]), 9) > 0);
         let (now, kind) = match termination {
             Termination::Close => {
                 session.close();
@@ -384,15 +417,4 @@ fn terminal_reentry_releases_wrapper_checks_and_cancels_both_pending_reads() {
         assert_eq!(ready(&mut session, now + 1).unwrap_err(), error);
         assert!(session.drain_cancelled_reads().is_empty());
     }
-}
-
-// Persistent executable/type nodes have their own exact bound. The returned
-// count preserves the original object and custom-this-slot assertions.
-#[track_caller]
-fn retained_values(stats: pkl_runtime::heap::HeapStats, expected_executables: usize) -> usize {
-    assert_eq!(
-        stats.executable_live, expected_executables,
-        "persistent executable graph"
-    );
-    stats.live - stats.executable_live
 }

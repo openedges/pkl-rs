@@ -1,0 +1,330 @@
+{
+  "schema": 1,
+  "status": "proposal-ready-for-root-review",
+  "created_utc": "2026-10-23T15:22:00.472168+00:00",
+  "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-core-publication-proposal-02",
+  "actual_tool_session": 74144,
+  "actual_exit_code": 0,
+  "archives": [
+    {
+      "name": "stage47-core-builds-source-binding.tar.gz",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-core-publication-proposal-02/stage47-core-builds-source-binding.tar.gz",
+      "sha256": "dce9ffcde726f749160db782be20ddf79bfb03337bd904fa6bd71633d188ce52",
+      "bytes": 76810540,
+      "files": 552,
+      "raw_bytes": 475425349
+    },
+    {
+      "name": "stage47-core-carrier-stack-checks.tar.gz",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-core-publication-proposal-02/stage47-core-carrier-stack-checks.tar.gz",
+      "sha256": "54b087bf936612109ba41fbfa89cbaf19957936d7d20893371dc6e8867b6ea16",
+      "bytes": 63944177,
+      "files": 170,
+      "raw_bytes": 523442872
+    },
+    {
+      "name": "stage47-core-lifecycle-layout-checks.tar.gz",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-core-publication-proposal-02/stage47-core-lifecycle-layout-checks.tar.gz",
+      "sha256": "74ba9cb90f693608f620477b6c7f63c0f0604feb99c7315b102f3bfeb3c0d899",
+      "bytes": 62275682,
+      "files": 158,
+      "raw_bytes": 546768509
+    },
+    {
+      "name": "stage47-core-originals-rust5-reviews.tar.gz",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-core-publication-proposal-02/stage47-core-originals-rust5-reviews.tar.gz",
+      "sha256": "0cc2bed59382587a340eaf128a498c21e98ba61645f65df287d6ae064d96041c",
+      "bytes": 2061405,
+      "files": 351,
+      "raw_bytes": 21507672
+    },
+    {
+      "name": "stage47-core-renderer-checks-proposals.tar.gz",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-core-publication-proposal-02/stage47-core-renderer-checks-proposals.tar.gz",
+      "sha256": "c5a49a4c12984362d0f603cb86f301d0bccbea15db0a1b7198fb8182d1a80b8e",
+      "bytes": 21564314,
+      "files": 108,
+      "raw_bytes": 147649434
+    }
+  ],
+  "total_archive_bytes": 226656118,
+  "archive_index_sha256": "b6658f93551ebcb3e5c496e68469c579ffee87fab89e6d61478bdcfccbc4bd0b",
+  "summary_sha256": "0fb4c9c4a5ece4814dcf7b0afe843249b528413e338fb448de43dac7e5edac87",
+  "source_catalog_sha256": "98f02d7a22d7af5188ff4913c7a5da8ffea148876a2e5fa12e7aac777bf266d9",
+  "sidecars": [
+    {
+      "path": "archive-index.json",
+      "bytes": 17605,
+      "sha256": "b6658f93551ebcb3e5c496e68469c579ffee87fab89e6d61478bdcfccbc4bd0b"
+    },
+    {
+      "path": "archive-inputs-final.json",
+      "bytes": 272742,
+      "sha256": "6bda74115523aff654cbad8fd85ce745b411cf81e61724a4a629ab92774dfdb6"
+    },
+    {
+      "path": "summary-final.json",
+      "bytes": 3794,
+      "sha256": "0fb4c9c4a5ece4814dcf7b0afe843249b528413e338fb448de43dac7e5edac87"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3273,
+      "sha256": "cda4fdd8f296d134049c144328b0c84f83648072ce1c2356cf62572d1fe6c43b"
+    },
+    {
+      "path": "final-c06-binding.json",
+      "bytes": 946,
+      "sha256": "4d3871c98ecefd43b98c21f793553e9c4dd87b63243f9249e0ca63838039e0ce"
+    },
+    {
+      "path": "source-bindings-final.json",
+      "bytes": 30849967,
+      "sha256": "98f02d7a22d7af5188ff4913c7a5da8ffea148876a2e5fa12e7aac777bf266d9"
+    },
+    {
+      "path": "unresolved-source-bindings-final.json",
+      "bytes": 5309,
+      "sha256": "9ceec54cf5a9f867945728113d5109262b68442e8952c3b84121f63b1387a3cb"
+    },
+    {
+      "path": "basename-binding-addendum.json",
+      "bytes": 8711,
+      "sha256": "092a7d1293d38b85584a28cadf7395e250e583f5265c205101e0161cb3b0cafc"
+    },
+    {
+      "path": "selected-files.json",
+      "bytes": 338058,
+      "sha256": "4b18b3a7bfc3bbcdcfd74588271d38373e36e78d345aea6ce7dd12986abcde56"
+    },
+    {
+      "path": "selection-plan.json",
+      "bytes": 11668,
+      "sha256": "753a19dd3635868ef76ccb20c054d546902c57be0a50166233fe128ebddcf632"
+    },
+    {
+      "path": "source-map-index.json",
+      "bytes": 35499,
+      "sha256": "98d1260d565e483d86d3847881ef3c843977ae857b065785d6080eb62a69d14e"
+    },
+    {
+      "path": "packaging-report.json",
+      "bytes": 432,
+      "sha256": "652a26c0dff7ba9caa7325ed4d5fb7250c3f5bbf27a7140a9ab5b2afd14de219"
+    },
+    {
+      "path": "packaging-commands.json",
+      "bytes": 12450,
+      "sha256": "10d9fc67f386109acf24709227fbdd37598090ad767e907b02cd80732201d42b"
+    },
+    {
+      "path": "packaging-environment.json",
+      "bytes": 745,
+      "sha256": "8b4324fe442d4c70421c948cec5a8a3152e764cd7aad40d42006a444bb5d1958"
+    },
+    {
+      "path": "actual-terminal.json",
+      "bytes": 400,
+      "sha256": "494286a9604faae83b1951fb578f8304c77a94e85f99b847bf75c21f8944459c"
+    },
+    {
+      "path": "package.stdout.bin",
+      "bytes": 730,
+      "sha256": "f386fd59676ee9e3f6052e71657f7245ecca0c4794d005a5ff852adc28264354"
+    },
+    {
+      "path": "package.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "package.py",
+      "bytes": 6734,
+      "sha256": "d1d8d97600eadc45fcb74ca2b99700c2e73bcbbc50acc6236e98dbdc8e795333"
+    },
+    {
+      "path": "finalize_selection.py",
+      "bytes": 12379,
+      "sha256": "d61ef0b7e2e2a7b523ec04068e782037e4502824a882ba68f8401a5d0841f7bf"
+    },
+    {
+      "path": "finalization-report.json",
+      "bytes": 271,
+      "sha256": "9b844f56d2dd50538eaf917ac223441507d6c286c7fa5c981eaf52117b5f4eee"
+    },
+    {
+      "path": "finalize.stdout.bin",
+      "bytes": 255,
+      "sha256": "278442b857d2dd2812314339c7722ee6e0a93b8153952b9be39cadf1cac97d2a"
+    },
+    {
+      "path": "finalize.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "finalization-actual-terminal.json",
+      "bytes": 161,
+      "sha256": "001ea98e1e828abd6f5cd3ce0e615cbf60fee3eb68df41040e7bc10c6c0e6446"
+    },
+    {
+      "path": "preparation-report.json",
+      "bytes": 787,
+      "sha256": "ec881f4fcb0296780c0b8e0fc09e0dab7ffb319a9753e7c6d2cc0ab75009b213"
+    },
+    {
+      "path": "prepare.stdout.bin",
+      "bytes": 532,
+      "sha256": "3f780f6d69532fd5157299ee8d6f350b612cdb6e805bebf63d51b5449541ecca"
+    },
+    {
+      "path": "prepare.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "preparation-completion-observation.json",
+      "bytes": 544,
+      "sha256": "0fb8d01192b820e25f36db7637f5cc0ce232a751e046524bec7f805b4cea650d"
+    },
+    {
+      "path": "git-object-hash-reuse.json",
+      "bytes": 561,
+      "sha256": "5358a34671f08080af8576a4670971f4e898187f41cc85a591281ffc33d00839"
+    },
+    {
+      "path": "previous-attempt.json",
+      "bytes": 468,
+      "sha256": "b8f02a50f255b7334e21dfb3069b8e5f65ed0221c13d89a0aee51592c0913e6a"
+    },
+    {
+      "path": "packaging-captures/builds-source-binding-create.stdout.bin",
+      "bytes": 163,
+      "sha256": "6b6756dd71313e33274f3345a09a2a9c8bd25c39be6e34b2b887a4c1bc6a1958"
+    },
+    {
+      "path": "packaging-captures/builds-source-binding-create.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "packaging-captures/builds-source-binding-verify.stdout.bin",
+      "bytes": 163,
+      "sha256": "6b6756dd71313e33274f3345a09a2a9c8bd25c39be6e34b2b887a4c1bc6a1958"
+    },
+    {
+      "path": "packaging-captures/builds-source-binding-verify.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "packaging-captures/carrier-stack-checks-create.stdout.bin",
+      "bytes": 162,
+      "sha256": "e9816b25e18c2cb59d2d9e8dc3442330c110402021b6f2a0796df4a12908b2fd"
+    },
+    {
+      "path": "packaging-captures/carrier-stack-checks-create.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "packaging-captures/carrier-stack-checks-verify.stdout.bin",
+      "bytes": 162,
+      "sha256": "e9816b25e18c2cb59d2d9e8dc3442330c110402021b6f2a0796df4a12908b2fd"
+    },
+    {
+      "path": "packaging-captures/carrier-stack-checks-verify.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "packaging-captures/lifecycle-layout-checks-create.stdout.bin",
+      "bytes": 165,
+      "sha256": "df9b525fec715f638f3012ebe57bdb8f525f71403b9c57215f88f048e8e404b6"
+    },
+    {
+      "path": "packaging-captures/lifecycle-layout-checks-create.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "packaging-captures/lifecycle-layout-checks-verify.stdout.bin",
+      "bytes": 165,
+      "sha256": "df9b525fec715f638f3012ebe57bdb8f525f71403b9c57215f88f048e8e404b6"
+    },
+    {
+      "path": "packaging-captures/lifecycle-layout-checks-verify.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "packaging-captures/originals-rust5-reviews-create.stdout.bin",
+      "bytes": 165,
+      "sha256": "6c517241e5f236bd80b8f3117965821dae8c2ba0c49382742a34e56f504e8e7b"
+    },
+    {
+      "path": "packaging-captures/originals-rust5-reviews-create.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "packaging-captures/originals-rust5-reviews-verify.stdout.bin",
+      "bytes": 165,
+      "sha256": "6c517241e5f236bd80b8f3117965821dae8c2ba0c49382742a34e56f504e8e7b"
+    },
+    {
+      "path": "packaging-captures/originals-rust5-reviews-verify.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "packaging-captures/renderer-checks-proposals-create.stdout.bin",
+      "bytes": 167,
+      "sha256": "8bff1ca92a46975a60db7a7dafe7a3a266c1f6628c9601d015eb760561ee0c0b"
+    },
+    {
+      "path": "packaging-captures/renderer-checks-proposals-create.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "packaging-captures/renderer-checks-proposals-verify.stdout.bin",
+      "bytes": 167,
+      "sha256": "8bff1ca92a46975a60db7a7dafe7a3a266c1f6628c9601d015eb760561ee0c0b"
+    },
+    {
+      "path": "packaging-captures/renderer-checks-proposals-verify.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "final_scope": {
+    "candidate": "C06",
+    "source_entries": 51745,
+    "unresolved_final_source_entries": 0,
+    "rust5_all_five_exit_zero": true,
+    "untouched_original_cli_raw_comparisons": 4
+  },
+  "historical_qualification": {
+    "hash_only_source_versions": 7,
+    "resolved_basename_source_versions": 8,
+    "full_original_maps_retained": 140,
+    "earlier_failed_outcomes_unchanged": true,
+    "preparation01_failed_tooling_retained": true,
+    "preparation02_outer_session_unavailable_qualified": true
+  },
+  "separate_owners": {
+    "native_renderer_1840": "B separate C06 native handoff",
+    "actual_platforms": "C/root separate final platform evidence",
+    "existing_C05_platform_archives": "Six previously published archives are referenced, not copied again"
+  },
+  "remaining_scope": [
+    "Evaluator-owned standard-module admission and import-edge trust/cache policy",
+    "Complete scalar/String/constant-collection reference identity",
+    "Stage47 full selected regression",
+    "Whole M2 and performance gates"
+  ],
+  "source_writes": false,
+  "git_writes": false,
+  "new_evaluations": 0
+}

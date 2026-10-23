@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "scope": "Read-only core publication/archive/source binding review; no runtime/build/test/oracle execution, Git/source edits, or directory/cache traversal.",
+  "blockers": [],
+  "handoffSha256": "6f68202ecf3a81569ab705139e0dd9cabc52c4caec549b1153417d90e98edb30",
+  "archiveIndexSha256": "b6658f93551ebcb3e5c496e68469c579ffee87fab89e6d61478bdcfccbc4bd0b",
+  "authoritativeSummary": "summary-final.json",
+  "archives": [
+    {
+      "name": "stage47-core-builds-source-binding.tar.gz",
+      "bytes": 76810540,
+      "sha256": "dce9ffcde726f749160db782be20ddf79bfb03337bd904fa6bd71633d188ce52",
+      "payloads": 552,
+      "allPayloadHashesAndPathsEqual": true,
+      "below100MiB": true
+    },
+    {
+      "name": "stage47-core-carrier-stack-checks.tar.gz",
+      "bytes": 63944177,
+      "sha256": "54b087bf936612109ba41fbfa89cbaf19957936d7d20893371dc6e8867b6ea16",
+      "payloads": 170,
+      "allPayloadHashesAndPathsEqual": true,
+      "below100MiB": true
+    },
+    {
+      "name": "stage47-core-lifecycle-layout-checks.tar.gz",
+      "bytes": 62275682,
+      "sha256": "74ba9cb90f693608f620477b6c7f63c0f0604feb99c7315b102f3bfeb3c0d899",
+      "payloads": 158,
+      "allPayloadHashesAndPathsEqual": true,
+      "below100MiB": true
+    },
+    {
+      "name": "stage47-core-originals-rust5-reviews.tar.gz",
+      "bytes": 2061405,
+      "sha256": "0cc2bed59382587a340eaf128a498c21e98ba61645f65df287d6ae064d96041c",
+      "payloads": 351,
+      "allPayloadHashesAndPathsEqual": true,
+      "below100MiB": true
+    },
+    {
+      "name": "stage47-core-renderer-checks-proposals.tar.gz",
+      "bytes": 21564314,
+      "sha256": "c5a49a4c12984362d0f603cb86f301d0bccbea15db0a1b7198fb8182d1a80b8e",
+      "payloads": 108,
+      "allPayloadHashesAndPathsEqual": true,
+      "below100MiB": true
+    }
+  ],
+  "totalArchiveBytes": 226656118,
+  "largestArchiveBytes": 76810540,
+  "allArchivesBelow100MiB": true,
+  "selectedOriginalRawFilesVerified": 854,
+  "selectedOriginalRawBytesVerified": 1626302349,
+  "C06SourcePathsDirectlyRehashed": 51745,
+  "C06BindingCounts": {
+    "pinned-git-blob": 47821,
+    "archived-source-blob": 3918,
+    "separately-published-report-archive": 6
+  },
+  "historicalHashOnlyVersions": [
+    {
+      "path": "crates/pkl-runtime/src/vm.rs",
+      "sha256": "61b1dac88cfd414a638916f55a257f029cde032d5dc4c9d144140f1b32fc4c84",
+      "historicalMapCount": 2,
+      "affectsC06": false
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/collections.rs",
+      "sha256": "6fc414244dde078718b82c06644964e5eef100f751cb09d5a8858c65a343f043",
+      "historicalMapCount": 6,
+      "affectsC06": false
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/output.rs",
+      "sha256": "19ce78e468d22b3c02fe636452d17abd3e85400d5164a77a8c52f18dea1f396a",
+      "historicalMapCount": 2,
+      "affectsC06": false
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/rendering.rs",
+      "sha256": "dd98135c1aeeffb38c4e1743fea1913623d093af1f4d405a3ea22117889e9484",
+      "historicalMapCount": 2,
+      "affectsC06": false
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/rendering.rs",
+      "sha256": "f7f083cae5a992bae8ed128d9d1cfdc48bde9a0d1cf15610aef58d9d8761c820",
+      "historicalMapCount": 2,
+      "affectsC06": false
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_json_rendering.rs",
+      "sha256": "8e89990108f885cf33275da697e46a425f986d8f7dff7d12fdd6512a4021841e",
+      "historicalMapCount": 2,
+      "affectsC06": false
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_json_rendering.rs",
+      "sha256": "d68d6afadb762ca76d62e5610f88433177b1ae3cb3addf5d79e811b8bf2c391d",
+      "historicalMapCount": 2,
+      "affectsC06": false
+    }
+  ],
+  "resolvedBasenameVersions": 8,
+  "originalKindsModesBytesEqual": true,
+  "sourceAndGitWrites": false,
+  "newRuntimeExecutions": 0,
+  "qualifications": [
+    "Old preparation summary.json is historical; index points explicitly to authoritative summary-final.json with7 historical hash-only versions.",
+    "Hash-only historical versions have original map SHA and outcomes; source-complete historical verification is not claimed.",
+    "C06 pinned Git object identifiers were checked from exact captured bytes; this review does not rerun Git commit-tree extraction.",
+    "Native1840, supplementary portable980 and actual primary platform evidence are separate owners/packages.",
+    "Full-selected Stage47 regression, stdlib admission, complete identity, wholeM2 and performance gates remain open."
+  ],
+  "elapsedSeconds": 19.23247433407232,
+  "installationReadback": "installation-and-outcomes.json",
+  "historicalCheckOutcomeCount": 69,
+  "historicalCheckExitCounts": {
+    "101": 36,
+    "0": 31,
+    "1": 2
+  }
+}

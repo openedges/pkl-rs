@@ -43,11 +43,11 @@ fn recursive_methods_and_argument_shadowing() {
         evaluate(
             "n = 500\nfunction factorial(n: Int): Int = if (n <= 1) 1 else n * factorial(n - 1)\nresult = factorial(10)"
         ),
-        Ok(Value::Int(3_628_800))
+        Ok(Value::Int(3_628_800.into()))
     );
     assert_eq!(
         evaluate("function choose(a, b, c) = let (b = a + c) b\nresult = choose(3, 90, 4)"),
-        Ok(Value::Int(7))
+        Ok(Value::Int(7.into()))
     );
 }
 
@@ -57,13 +57,13 @@ fn closures_capture_parameters_lets_and_nested_object_scopes() {
         evaluate(
             "function make(x) = (y) -> let (z = 2) (w) -> x + y + z + w\nresult = make(10).apply(20).apply(30)"
         ),
-        Ok(Value::Int(62))
+        Ok(Value::Int(62.into()))
     );
     assert_eq!(
         evaluate(
             "base = new { offset = 5; local function make(x) = (y) -> offset + x + y; factory = make(2) }\nchild = (base) { offset = 20 }\nresult = child.factory.apply(3)"
         ),
-        Ok(Value::Int(25))
+        Ok(Value::Int(25.into()))
     );
 }
 
@@ -71,7 +71,7 @@ fn closures_capture_parameters_lets_and_nested_object_scopes() {
 fn property_and_method_namespaces_are_distinct() {
     assert_eq!(
         evaluate("f = 9\nfunction f(x) = x + 1\nresult = f + f(2)"),
-        Ok(Value::Int(12))
+        Ok(Value::Int(12.into()))
     );
     assert_eq!(
         evaluate("function f() = 2\nresult = f").unwrap_err().kind,
@@ -85,7 +85,7 @@ fn property_and_method_namespaces_are_distinct() {
         evaluate(
             "base = new { local function apply(x) = x + 1; value = apply(2) }\nresult = base.value"
         ),
-        Ok(Value::Int(3))
+        Ok(Value::Int(3.into()))
     );
 }
 
@@ -95,7 +95,7 @@ fn inherited_method_receiver_and_lexical_owner_are_preserved() {
         evaluate(
             "base = new { local k = 10; x = 1; local function get() = k + x; value = get() }\nchild = (base) { local k = 100; x = 2; value = super.value + k }\nresult = child.value"
         ),
-        Ok(Value::Int(112))
+        Ok(Value::Int(112.into()))
     );
 }
 
@@ -109,7 +109,7 @@ fn branches_and_short_circuits_skip_failing_lazy_members() {
         "result = 42 ?? missing",
         "result = null ?? 42",
     ] {
-        assert_eq!(evaluate(source), Ok(Value::Int(42)), "{source}");
+        assert_eq!(evaluate(source), Ok(Value::Int(42.into())), "{source}");
     }
     for source in ["result = true && 42", "result = false || 42"] {
         assert_eq!(evaluate(source).unwrap_err().kind, ErrorKind::Type);
@@ -156,11 +156,11 @@ fn primitive_checks_apply_to_properties_parameters_and_returns() {
 #[test]
 fn scalar_operators_preserve_types_and_overflow() {
     for (source, expected) in [
-        ("result = 2 ** 10", Value::Int(1024)),
-        ("result = -7 ~/ 2", Value::Int(-3)),
-        ("result = -7 % 2", Value::Int(-1)),
-        ("result = 7.5 ~/ 2", Value::Int(3)),
-        ("result = 2 ** -1", Value::Float(0.5)),
+        ("result = 2 ** 10", Value::Int(1024.into())),
+        ("result = -7 ~/ 2", Value::Int((-3).into())),
+        ("result = -7 % 2", Value::Int((-1).into())),
+        ("result = 7.5 ~/ 2", Value::Int(3.into())),
+        ("result = 2 ** -1", Value::Float(0.5.into())),
         ("result = 2 == 2.0", Value::Bool(true)),
         ("result = 2 != \"2\"", Value::Bool(true)),
         ("result = !false && 2 >= 2 && 3 > 2", Value::Bool(true)),
@@ -258,10 +258,7 @@ fn nested_host_contexts_share_closure_captures_and_survive_collection() {
     let entry = program.entry;
     let mut session = HostSession::new(Arc::new(program));
     session.start(entry, vec![], 0, None).unwrap();
-    let object = match session.poll(0, 1000) {
-        HostPoll::Ready(Ok(value)) => value,
-        result => panic!("expected module object, got {result:?}"),
-    };
+    let object = initialized_module(&mut session);
     session
         .start(result_entry, vec![object.clone()], 0, None)
         .unwrap();
@@ -323,21 +320,24 @@ fn interpolation_raw_strings_multiline_and_utf16_string_order() {
 fn nullable_calls_skip_arguments_and_outer_scope_follows_lambda_owner() {
     assert_eq!(
         evaluate("result = null?.missing(missingArgument) ?? 42"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
-    assert_eq!(evaluate("result = null?.missing ?? 42"), Ok(Value::Int(42)));
+    assert_eq!(
+        evaluate("result = null?.missing ?? 42"),
+        Ok(Value::Int(42.into()))
+    );
     assert_eq!(
         evaluate(
             "x = 2\nobj = new { x = 3; f = () -> outer.x; result = f.apply() + outer.x + module.x }\nresult = obj.result"
         ),
-        Ok(Value::Int(7))
+        Ok(Value::Int(7.into()))
     );
     assert_eq!(
         evaluate("result = (3 as Number) is Int"),
         Ok(Value::Bool(true))
     );
     assert_eq!(evaluate("result = null is Int?"), Ok(Value::Bool(true)));
-    assert_eq!(evaluate("result = 2!!"), Ok(Value::Int(2)));
+    assert_eq!(evaluate("result = 2!!"), Ok(Value::Int(2.into())));
     let error = evaluate("result = null!!").unwrap_err();
     assert_eq!(error.message, "Expected a non-null value, but got `null`.");
     assert_eq!(
@@ -405,7 +405,7 @@ fn power_and_truncating_division_follow_java_special_value_rules() {
     }
     assert_eq!(
         evaluate("result = (0.0 / 0.0) ** 0.0"),
-        Ok(Value::Float(1.0))
+        Ok(Value::Float(1.0.into()))
     );
     assert_eq!(
         evaluate("result = 1.0 ~/ 0.0").unwrap_err().message,
@@ -423,13 +423,13 @@ fn class_methods_preserve_subclass_receiver_and_super_owner() {
         evaluate(
             "open class A { x: Int = 1; function f() = x + 2 }\nclass B extends A { x = 3; function f() = super.f() + x }\nb = new B {}\nresult = b.f()"
         ),
-        Ok(Value::Int(8))
+        Ok(Value::Int(8.into()))
     );
     assert_eq!(
         evaluate(
             "class C { x: Int = 2; function make(y) = (z) -> x + y + z }\nc = new C { x = 5 }\nresult = c.make(2).apply(3)"
         ),
-        Ok(Value::Int(10))
+        Ok(Value::Int(10.into()))
     );
 }
 
@@ -452,11 +452,11 @@ fn class_type_checks_follow_ancestry_and_inherited_property_annotations() {
 fn type_aliases_resolve_lexically_and_contextual_new_uses_declared_class() {
     assert_eq!(
         evaluate("typealias Num = Int\nresult: Num = 42"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     assert_eq!(
         evaluate("class C { x = 42 }\ntypealias Alias = C\nc: Alias = new {}\nresult = c.x"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     for (source, kind, message) in [
         (
@@ -484,15 +484,15 @@ fn type_aliases_resolve_lexically_and_contextual_new_uses_declared_class() {
 fn undefined_typed_properties_are_lazy_and_supported_defaults_are_values() {
     assert_eq!(
         evaluate("class C { missing: Int }\nresult = 42"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     assert_eq!(
         evaluate("class C { x: Int }\nc = new C { x = 42 }\nresult = c.x"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     assert_eq!(
         evaluate("class C { x = 42 }\nc: C\nresult = c.x"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     assert_eq!(evaluate("x: Int?\nresult = x"), Ok(Value::Null));
     assert_eq!(
@@ -521,11 +521,11 @@ fn generic_alias_arguments_substitute_at_use_site_and_defaults_survive_expansion
         evaluate(
             "typealias Identity<T> = T\nclass C { x = 42 }\nc: Identity<C> = new Identity<C> {}\nresult = c.x"
         ),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     assert_eq!(
         evaluate("typealias Identity<T> = T\nresult: Identity<Identity<Int>> = 42"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     assert_eq!(
         evaluate("typealias Choice<T> = *\"default\" | T\nvalue: Choice<Int>\nresult = value"),
@@ -535,11 +535,11 @@ fn generic_alias_arguments_substitute_at_use_site_and_defaults_survive_expansion
         evaluate(
             "class C { x = 42 }\nclass D { C = 2; value: C = new C {} }\nd = new D {}\nresult = d.value.x"
         ),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     assert_eq!(
         evaluate("function f(Int) = let (x: Int = 42) x\nresult = f(\"not a type\")"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
 }
 
@@ -551,7 +551,7 @@ fn unused_invalid_type_declarations_do_not_force_their_definitions() {
         "class A {}\nclass B extends A {}\nresult = 42",
         "class B extends Missing {}\nresult = 42",
     ] {
-        assert_eq!(evaluate(source), Ok(Value::Int(42)));
+        assert_eq!(evaluate(source), Ok(Value::Int(42.into())));
     }
 }
 
@@ -559,7 +559,7 @@ fn unused_invalid_type_declarations_do_not_force_their_definitions() {
 fn const_barriers_are_checked_on_reads_and_keep_unused_class_members_lazy() {
     assert_eq!(
         evaluate("x = 1\nclass C { value = x }\nresult = 42"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     let error =
         evaluate("x = 1\nclass C { value = x }\nc = new C {}\nresult = c.value").unwrap_err();
@@ -570,13 +570,13 @@ fn const_barriers_are_checked_on_reads_and_keep_unused_class_members_lazy() {
     );
     assert_eq!(
         evaluate("const x = 2\nclass C { value = x }\nc = new C {}\nresult = c.value"),
-        Ok(Value::Int(2))
+        Ok(Value::Int(2.into()))
     );
     assert_eq!(
         evaluate(
             "const function f(x) = x + 1\nclass C { function g() = f(2) }\nc = new C {}\nresult = c.g()"
         ),
-        Ok(Value::Int(3))
+        Ok(Value::Int(3.into()))
     );
     let error = evaluate("class C { const x = 1 }\nc = new C { x = 2 }\nresult = c.x").unwrap_err();
     assert_eq!(error.message, "Cannot assign to const property `x`.");
@@ -595,17 +595,21 @@ fn class_handles_and_prototype_captures_are_traced_and_reject_foreign_heaps() {
     let mut vm = Vm::new(program.clone());
     vm.start(entry, vec![]).unwrap();
     let module = done(&mut vm).unwrap();
+    let initialized = vm.collect(&[]);
     vm.start_member(module.as_object().unwrap(), "result")
         .unwrap();
     let class = done(&mut vm).unwrap();
     assert!(matches!(class, Value::Class(_)));
     // C captures its module, which retains the builtin Module prototype.
-    assert_eq!(vm.collect(std::slice::from_ref(&class)).live, 3);
+    assert_eq!(
+        vm.collect(std::slice::from_ref(&class)).live,
+        initialized.live + 1
+    );
     vm.start(instantiate, vec![class.clone()]).unwrap();
     let instance = done(&mut vm).unwrap();
     vm.start_member(instance.as_object().unwrap(), "value")
         .unwrap();
-    assert_eq!(done(&mut vm), Ok(Value::Int(42)));
+    assert_eq!(done(&mut vm), Ok(Value::Int(42.into())));
     let mut other = Vm::new(program);
     assert_eq!(
         other.start(instantiate, vec![class]).unwrap_err().kind,
@@ -684,7 +688,7 @@ fn class_type_initialization_is_eager_for_declarations_and_lazy_for_expressions(
     );
     assert_eq!(
         evaluate("result = if (false) let (x: Missing = 1) x else 42"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
 }
 
@@ -753,7 +757,7 @@ fn abstract_members_fail_lazily_before_defaults_and_keep_qualified_identity() {
         );
         assert_eq!(
             evaluate(&format!("{prefix}result = 42")),
-            Ok(Value::Int(42))
+            Ok(Value::Int(42.into()))
         );
         let call = if declaration.contains("function") {
             "()"
@@ -797,7 +801,7 @@ fn repeated_modifier_flags_preserve_upstream_addition_semantics() {
     );
     assert_eq!(
         evaluate("open open class A { x = 42 }\nresult = (new A {}).x"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     let error =
         evaluate("open open class A { x = 42 }\nclass B extends A {}\nresult = (new B {}).x")
@@ -812,19 +816,19 @@ fn repeated_modifier_flags_preserve_upstream_addition_semantics() {
 fn pipeline_preserves_precedence_capture_and_left_to_right_failure_order() {
     assert_eq!(
         evaluate("result = 1 + 2 |> (x) -> x * 3"),
-        Ok(Value::Int(9))
+        Ok(Value::Int(9.into()))
     );
     assert_eq!(
         evaluate("result = let (add = 4) 2 |> (x) -> x + add"),
-        Ok(Value::Int(6))
+        Ok(Value::Int(6.into()))
     );
     assert_eq!(
         evaluate("result = 1 |> ((x) -> x + 2) |> ((x) -> x * 3)"),
-        Ok(Value::Int(9))
+        Ok(Value::Int(9.into()))
     );
     assert_eq!(
         evaluate("result = 42 ?? missing |> missingToo"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     assert_eq!(
         evaluate("result = throw(\"left\") |> throw(\"right\")")
@@ -859,7 +863,7 @@ fn constraints_execute_in_order_with_custom_receivers_aliases_and_recoverable_un
         "result = let (x: Int(this > 0) = 42) x",
         "function f(x: Int(this > 0)): Int(this < 100) = x\nresult = f(42)",
     ] {
-        assert_eq!(evaluate(source), Ok(Value::Int(42)), "{source}");
+        assert_eq!(evaluate(source), Ok(Value::Int(42.into())), "{source}");
     }
     assert_eq!(
         evaluate("result = 42 is Int(false)"),
@@ -883,20 +887,20 @@ fn constraint_receivers_preserve_lambda_outer_and_declaration_owner() {
         "class C {value=5}\nv:C((ignored)->value==5)=new C{}\nresult=v.value",
         "value=99\nclass C{value=5}\nv:C(value==99 && this.value==5)=new C{}\nresult=v.value",
     ] {
-        assert_eq!(evaluate(source), Ok(Value::Int(5)), "{source}");
+        assert_eq!(evaluate(source), Ok(Value::Int(5.into())), "{source}");
     }
     for source in [
         "open class Base{local limit=4; value:Int(this>limit)=5}\nclass C extends Base{value=6}\nresult=(new C{}).value",
         "class C{local limit=4; value:Int(this>limit)=5}\nresult=(new C{value=6}).value",
     ] {
-        assert_eq!(evaluate(source), Ok(Value::Int(6)), "{source}");
+        assert_eq!(evaluate(source), Ok(Value::Int(6.into())), "{source}");
     }
     assert_eq!(evaluate("typealias Identity<T> = T\nclass C{limit=4;value:Identity<Int(this>limit)> = 5}\nresult=(new C{}).value").unwrap_err().kind, ErrorKind::MissingMember);
     assert_eq!(
         evaluate(
             "typealias Identity<T> = T\nfunction f(limit:Int,value:Identity<Int(this>limit)>)=value\nresult=f(4,5)"
         ),
-        Ok(Value::Int(5))
+        Ok(Value::Int(5.into()))
     );
 }
 
@@ -934,10 +938,10 @@ fn constraint_host_suspension_cancellation_failure_and_retry_preserve_lazy_state
     };
     vm.collect(&[]);
     vm.resume(retry.id, Ok(Value::string("ok"))).unwrap();
-    assert_eq!(done(&mut vm), Ok(Value::Int(5)));
+    assert_eq!(done(&mut vm), Ok(Value::Int(5.into())));
     // A completed check is cached; forcing again cannot issue another read.
     vm.start_member(object_id, "result").unwrap();
-    assert_eq!(done(&mut vm), Ok(Value::Int(5)));
+    assert_eq!(done(&mut vm), Ok(Value::Int(5.into())));
     assert_eq!(
         evaluate("result:Int(false,read(\"mem:must-not-read\")==\"ok\")=5")
             .unwrap_err()
@@ -967,10 +971,7 @@ fn constraint_host_reentry_roots_both_continuations() {
     ]);
     let mut session = HostSession::new(Arc::new(program));
     session.start(root_entry, vec![], 0, None).unwrap();
-    let object = match session.poll(0, 1000) {
-        HostPoll::Ready(Ok(value)) => value,
-        other => panic!("{other:?}"),
-    };
+    let object = initialized_module(&mut session);
     session
         .start(outer_entry, vec![object.clone()], 0, None)
         .unwrap();
@@ -996,10 +997,16 @@ fn constraint_host_reentry_roots_both_continuations() {
     // reads after collection prove retention without assuming an allocation.
     session.collect(&[]);
     session.resume(&inner, Ok(Value::string("ok")), 0).unwrap();
-    assert_eq!(session.poll(0, 1000), HostPoll::Ready(Ok(Value::Int(7))));
+    assert_eq!(
+        session.poll(0, 1000),
+        HostPoll::Ready(Ok(Value::Int(7.into())))
+    );
     session.collect(&[]);
     session.resume(&outer, Ok(Value::string("ok")), 0).unwrap();
-    assert_eq!(session.poll(0, 1000), HostPoll::Ready(Ok(Value::Int(5))));
+    assert_eq!(
+        session.poll(0, 1000),
+        HostPoll::Ready(Ok(Value::Int(5.into())))
+    );
     session.close();
     assert_eq!(session.heap_stats().live, 0);
 }
@@ -1189,4 +1196,20 @@ fn inherited_invalid_constraint_results_preserve_fatal_validation_frames() {
             assert_eq!(done(&mut vm), Err(error));
         }
     }
+}
+
+// The eager private base initializer may yield before returning the module.
+// Keep every yield as a GC safepoint rather than increasing a one-shot budget.
+fn initialized_module(session: &mut pkl_runtime::host::HostSession) -> Value {
+    use pkl_runtime::host::HostPoll;
+    for _ in 0..100_000 {
+        match session.poll(0, 1) {
+            HostPoll::Ready(Ok(value)) => return value,
+            HostPoll::Yielded => {
+                session.collect(&[]);
+            }
+            event => panic!("unexpected initialization event {event:?}"),
+        }
+    }
+    panic!("module initialization did not settle");
 }

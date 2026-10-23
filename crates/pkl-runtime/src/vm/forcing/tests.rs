@@ -182,7 +182,7 @@ callback = nested.toString()
     vm.start_member(module.as_object().unwrap(), "first")
         .unwrap();
     let retry = read(&mut vm);
-    vm.resume(retry, Ok(Value::Int(9))).unwrap();
+    vm.resume(retry, Ok(Value::Int(9.into()))).unwrap();
     assert!(ready(&mut vm).is_ok());
     vm.close();
     assert_eq!(vm.heap_stats().live, 0);
@@ -285,7 +285,10 @@ childString=child.toString()
         member(&mut vm, &module, "coldString"),
         Ok(Value::string("new Hidden { x = 1 }"))
     );
-    assert_eq!(member(&mut vm, &module, "warmValue"), Ok(Value::Int(1)));
+    assert_eq!(
+        member(&mut vm, &module, "warmValue"),
+        Ok(Value::Int(1.into()))
+    );
     assert_eq!(
         member(&mut vm, &module, "warmString"),
         Ok(Value::string("new Hidden { x = 1 }"))
@@ -293,7 +296,10 @@ childString=child.toString()
     let (mut fresh, module) = setup(
         "open class Base { x=1 }; class Child extends Base { hidden x=2 }; obj=new Child {}; value=obj.x; result=obj.toString()",
     );
-    assert_eq!(member(&mut fresh, &module, "value"), Ok(Value::Int(2)));
+    assert_eq!(
+        member(&mut fresh, &module, "value"),
+        Ok(Value::Int(2.into()))
+    );
     assert_eq!(
         member(&mut fresh, &module, "result"),
         Ok(Value::string("new Child { x = 2 }"))
@@ -317,7 +323,10 @@ fn builtin_integer_alias_values_have_stable_evaluator_local_identity_and_shadowi
     }
     assert_ne!(values[0], values[1]);
     let (mut vm, module) = setup("Int8=17\nresult=Int8\n");
-    assert_eq!(member(&mut vm, &module, "result"), Ok(Value::Int(17)));
+    assert_eq!(
+        member(&mut vm, &module, "result"),
+        Ok(Value::Int(17.into()))
+    );
 }
 
 #[test]
@@ -331,7 +340,7 @@ fn deep_force_and_render_are_iterative_and_render_cycles_are_bounded() {
                 Instruction::Return,
             ]]));
             let mut vm = Vm::new(p);
-            let mut value = Value::Int(1);
+            let mut value = Value::Int(1.into());
             for _ in 0..2000 {
                 let mut object = Object::default();
                 object.members.push(Member {
@@ -598,9 +607,9 @@ output { value = obj }
     // Retry consumes successful callback caches without issuing a new read.
     assert_eq!(
         member(&mut vm, &output, "bytes"),
-        Ok(Value::Bytes(Arc::from(
-            b"x = \"inner\"\nnested {\n  y = 7\n}\n".as_slice()
-        )))
+        Ok(Value::Bytes(
+            Arc::<[u8]>::from(b"x = \"inner\"\nnested {\n  y = 7\n}\n".as_slice()).into()
+        ))
     );
     assert!(!vm.heap.get(object_id).unwrap().forced);
     vm.close();

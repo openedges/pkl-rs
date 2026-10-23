@@ -189,7 +189,7 @@ pub fn scalar_expressions_text_with_options(
                     Value::Null | Value::NullWithDefault(_) => Ok("null".into()),
                     Value::Bool(value) => Ok(value.to_string().into()),
                     Value::Int(value) => Ok(value.to_string().into()),
-                    Value::Float(value) => Ok(crate::numeric::double_to_string(value).into()),
+                    Value::Float(value) => Ok(crate::numeric::double_to_string(*value).into()),
                     Value::String(value) => Ok(value),
                     _ => Err(render_error_text(
                         &"the M2 probe does not yet stringify compound values".into(),

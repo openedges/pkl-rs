@@ -205,6 +205,8 @@ pub struct DiagnosticProvenance {
     pub origin: DiagnosticOrigin,
     pub disposition: FailureDisposition,
     pub reason: Option<&'static str>,
+    /// Synthetic JVM underline width (not a source byte length), e.g. at EOF.
+    pub highlight_length_utf16: Option<usize>,
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -213,8 +215,6 @@ pub struct Diagnostic {
     pub provenance: Box<DiagnosticProvenance>,
     pub span: Span,
     pub message: PklString,
-    /// Synthetic JVM underline width (not a source byte length), e.g. at EOF.
-    pub highlight_length_utf16: Option<usize>,
     /// Authored member path for delayed AST validation (e.g. `result` or `C.x`).
     /// The evaluation boundary inserts `#` between the module and this path.
     /// Syntax errors retain a module frame and leave this unset.
@@ -230,6 +230,18 @@ struct DiagnosticDetails {
     hint: PklString,
 }
 
+impl std::ops::Deref for Diagnostic {
+    type Target = DiagnosticProvenance;
+    fn deref(&self) -> &Self::Target {
+        &self.provenance
+    }
+}
+impl std::ops::DerefMut for Diagnostic {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.provenance
+    }
+}
+
 impl Diagnostic {
     pub fn new(kind: DiagnosticKind, span: Span, message: impl Into<PklString>) -> Self {
         Self {
@@ -238,10 +250,10 @@ impl Diagnostic {
                 origin: DiagnosticOrigin::Unclassified,
                 disposition: FailureDisposition::InternalFailure,
                 reason: Some("unclassified-legacy-diagnostic"),
+                highlight_length_utf16: None,
             }),
             span,
             message: message.into(),
-            highlight_length_utf16: None,
             member: None,
             module_name: None,
             frames: Box::default(),

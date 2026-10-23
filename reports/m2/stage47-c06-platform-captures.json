@@ -1,0 +1,54 @@
+{
+  "archives": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c06-platform-publication-02/archives/stage47-c06-platform-build-baseline.tar.gz",
+      "sha256": "f36df1c7b22f8da2cbfd6b69fedc73fcec5c1e6bfee30f731cfe4a644b0e9f2f",
+      "compressedBytes": 7757034,
+      "evidencePayloads": 254,
+      "payloadBytes": 50609802,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 253,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c06-platform-publication-02/archives/stage47-c06-platform-module-preparation.tar.gz",
+      "sha256": "68e0118773769949875af386b5cddc48af93e4ad5994d74006ba2e7051ccb6dc",
+      "compressedBytes": 552966,
+      "evidencePayloads": 2171,
+      "payloadBytes": 13619208,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 2170,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c06-platform-publication-02/archives/stage47-c06-platform-renderer.tar.gz",
+      "sha256": "4476962d406b7df5db46f6fcb24ebb86007e12b2706ea3c61003dab6c5178c99",
+      "compressedBytes": 1111615,
+      "evidencePayloads": 7154,
+      "payloadBytes": 17496411,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 7153,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c06-platform-publication-02/archives/stage47-c06-platform-resource.tar.gz",
+      "sha256": "9e8d285dcf199b7e1d332c1469afad7254b03a541ebcb0298d78ada907496dbf",
+      "compressedBytes": 945688,
+      "evidencePayloads": 8194,
+      "payloadBytes": 18247946,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 8193,
+      "allDeterministicHeadersChecked": true
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-c06-platform-publication-02/archives/stage47-c06-platform-setup-audit.tar.gz",
+      "sha256": "2024fbd8e406b638f16420a5b5a57b0ed6565a72fd8e256513e03abcfa53b601",
+      "compressedBytes": 3831164,
+      "evidencePayloads": 75,
+      "payloadBytes": 65600263,
+      "independentAllMemberBytesEqual": true,
+      "originalPayloads": 74,
+      "allDeterministicHeadersChecked": true
+    }
+  ]
+}

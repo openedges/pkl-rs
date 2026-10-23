@@ -5,6 +5,7 @@ use std::sync::Arc;
 
 pub use crate::pkl_string::PklString;
 use crate::source::Span;
+pub use crate::value_identity::{Bytes, Number};
 
 /// A generation prevents a reclaimed slot from aliasing its next occupant.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -20,10 +21,10 @@ pub enum Value {
     /// A language null retaining the default used when it is amended.
     NullWithDefault(ObjectId),
     Bool(bool),
-    Int(i64),
-    Float(f64),
+    Int(Number<i64>),
+    Float(Number<f64>),
     String(PklString),
-    Bytes(Arc<[u8]>),
+    Bytes(Bytes),
     Object(ObjectId),
     Function(ObjectId),
     Class(ObjectId),
@@ -49,6 +50,27 @@ impl PartialEq for Value {
 }
 
 impl Value {
+    pub(crate) fn boxed(self) -> Self {
+        match self {
+            Self::Int(value) => Self::Int(value.boxed()),
+            Self::Float(value) => Self::Float(value.boxed()),
+            value => value,
+        }
+    }
+
+    pub(crate) fn reference(&self) -> Option<crate::value_identity::Reference> {
+        use crate::value_identity::{Reference, Token};
+        match self {
+            Self::Int(value) => value.reference().map(Reference::Scalar),
+            Self::Float(value) => value.reference().map(Reference::Scalar),
+            Self::Bytes(value) => Some(Reference::Scalar(value.reference())),
+            Self::String(value) => Some(Reference::Scalar(value.reference())),
+            Self::Bool(value) => Some(Reference::Scalar(Token::boolean(*value))),
+            Self::Null => Some(Reference::Scalar(Token::null())),
+            value => value.heap_id().map(Reference::Heap),
+        }
+    }
+
     pub fn is_null(&self) -> bool {
         matches!(self, Self::Null | Self::NullWithDefault(_))
     }
@@ -115,7 +137,7 @@ pub struct RuntimeFrame {
 
 /// Runtime failures carry authored source locations separately from their message.
 /// Rendering belongs to the evaluation boundary, which owns the source and URI.
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug)]
 pub struct RuntimeError {
     details: Option<Box<RuntimeErrorDetails>>,
     /// Internal exception provenance; unknown-member failures are never undefined.
@@ -124,13 +146,16 @@ pub struct RuntimeError {
     pub message: PklString,
     pub span: Option<Span>,
     pub frames: Vec<RuntimeFrame>,
-    pub hint: Option<PklString>,
 }
 
 /// Rare structured provenance is detached so the common Result error stays
 /// compact. Field access remains available through RuntimeError's dereference.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct RuntimeErrorDetails {
+    /// Optional rendered hint; retained with rare provenance, outside the common error.
+    pub hint: Option<PklString>,
+    /// External ErrorMessages template paragraphs have priority over dynamic hints.
+    pub(crate) hint_from_template: bool,
     /// A typed Host SPI mapping produced an ordinary guest exception.
     pub(crate) host_language_exception: bool,
     /// The throwing helper has neither a guest node nor a source section.
@@ -143,6 +168,8 @@ pub struct RuntimeErrorDetails {
     pub type_diagnostic: Option<Box<crate::diagnostic::TypeDiagnostic>>,
 }
 const EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
+    hint: None,
+    hint_from_template: false,
     host_language_exception: false,
     unavailable_origin: false,
     frontend: None,
@@ -151,6 +178,20 @@ const EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
     spread_hint: None,
     type_diagnostic: None,
 };
+// Allocation of an empty details carrier is not part of an error's payload.
+// In particular, assigning an absent dynamic hint must preserve equality.
+impl PartialEq for RuntimeError {
+    fn eq(&self, other: &Self) -> bool {
+        self.undefined_value == other.undefined_value
+            && self.kind == other.kind
+            && self.message == other.message
+            && self.span == other.span
+            && self.frames == other.frames
+            && **self == **other
+    }
+}
+impl Eq for RuntimeError {}
+
 impl std::ops::Deref for RuntimeError {
     type Target = RuntimeErrorDetails;
     fn deref(&self) -> &Self::Target {
@@ -164,6 +205,11 @@ impl std::ops::DerefMut for RuntimeError {
 }
 
 impl RuntimeError {
+    pub(crate) fn set_template_hint(&mut self, hint: impl Into<PklString>) {
+        self.hint = Some(hint.into());
+        self.hint_from_template = true;
+    }
+
     pub fn new(kind: ErrorKind, message: impl Into<PklString>) -> Self {
         Self {
             details: None,
@@ -172,7 +218,6 @@ impl RuntimeError {
             message: message.into(),
             span: None,
             frames: Vec::new(),
-            hint: None,
         }
     }
 
@@ -204,3 +249,31 @@ impl fmt::Display for RuntimeError {
 }
 
 impl std::error::Error for RuntimeError {}
+
+#[cfg(test)]
+mod error_tests {
+    use super::{ErrorKind, PklString, RuntimeError};
+
+    #[test]
+    fn absent_hint_assignment_preserves_error_payload_and_clones_detach_hints() {
+        let plain = RuntimeError::new(ErrorKind::Type, "failed");
+        let mut error = plain.clone();
+        error.hint = None;
+        assert_eq!(error, plain);
+        error.set_template_hint(PklString::from_utf16(vec![0xD800, 0, 0xDC00]));
+        let detached = error.clone();
+        error.hint = Some("replacement".into());
+        assert_ne!(error, detached);
+        assert!(detached.hint_from_template);
+        assert_eq!(
+            detached
+                .hint
+                .as_ref()
+                .unwrap()
+                .encode_utf16()
+                .collect::<Vec<_>>(),
+            [0xD800, 0, 0xDC00]
+        );
+        assert_eq!(detached, detached.clone());
+    }
+}

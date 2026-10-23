@@ -24,6 +24,7 @@ mod modules;
 mod session_expressions;
 mod stdlib_modules;
 pub use session_expressions::{SessionExpressionError, compile_session_expression};
+pub(crate) mod identity;
 mod output;
 mod pair;
 mod pcf_format;
@@ -43,6 +44,7 @@ use typecheck::{TypeDestination, TypeRun};
 #[derive(Clone, Debug)]
 pub enum Instruction {
     LoadRefModule,
+    LoadBaseModule,
     /// Invoke a checked Function0 under a guest exception handler.
     GuestCatch {
         or_null: bool,
@@ -58,6 +60,9 @@ pub enum Instruction {
     EncodeUtf8,
     OutputRenderer,
     RenderPcf {
+        document: bool,
+    },
+    RenderJson {
         document: bool,
     },
     CheckAnnotationClass,
@@ -99,8 +104,17 @@ pub enum Instruction {
     Input(usize),
     LoadLocal(usize),
     StoreLocal(usize),
+    /// Check first, then store using the declaration's frame-slot representation.
+    BindLocal {
+        depth: Option<usize>,
+        ty: TypeCheck,
+    },
     PushLocal,
     PopLocal,
+    EnterForScope {
+        bindings: usize,
+    },
+    LeaveForScope,
     Swap,
     BeginCollection {
         kind: crate::heap::CollectionKind,
@@ -169,6 +183,7 @@ pub enum Instruction {
     },
     ToString,
     StringRepeat,
+    CollectionJoin,
     StringEncode,
     Primitive(primitives::Operation),
     MakePair,
@@ -756,6 +771,7 @@ pub struct BlockMetadata {
     pub source: Option<Arc<crate::value::RuntimeSource>>,
     pub hidden: bool,
     pub(crate) stdlib_bootstrap: bool,
+    pub(crate) constant_member: bool,
     pub spans: Vec<Option<Span>>,
     pub member: PklString,
     pub declaration: Option<Span>,
@@ -802,6 +818,7 @@ pub struct Program {
     pub(crate) reference_render_block: usize,
     pub(crate) typed_string_block: usize,
     pub(crate) string_repeat_block: usize,
+    pub(crate) collection_join_blocks: [usize; 2],
     pub(crate) string_encode_block: usize,
     pub(crate) pair_constructor_block: usize,
     primitive_methods: BTreeMap<(Arc<str>, Arc<str>), usize>,
@@ -872,6 +889,7 @@ impl Program {
             &mut objects,
         ));
         let string_repeat_block = strings::repeat_block(&mut blocks, &mut metadata);
+        let collection_join_blocks = collections::join_blocks(&mut blocks, &mut metadata);
         let string_encode_block = strings::encode_block(&mut blocks, &mut metadata);
         let pair_constructor_block = pair::constructor_block(&mut blocks, &mut metadata);
         let primitive_methods = primitives::blocks(&mut blocks, &mut metadata);
@@ -893,6 +911,7 @@ impl Program {
             reference_render_block,
             typed_string_block,
             string_repeat_block,
+            collection_join_blocks,
             string_encode_block,
             pair_constructor_block,
             primitive_methods,
@@ -963,6 +982,7 @@ struct Frame {
     equality_run: Option<equality::EqualityRun>,
     deep_force: Option<forcing::ForceRun>,
     pcf_render: Option<rendering::RenderRun>,
+    collection_join: Option<collections::JoinRun>,
     function_owner: Option<ObjectId>,
     amendment_end: Option<usize>,
     prepared_hashes: Option<Vec<Value>>,
@@ -971,6 +991,7 @@ struct Frame {
     diagnostic_member: Option<PklString>,
     callsite_hidden: bool,
     builders: Vec<ObjectId>,
+    generator_scopes: Vec<identity::GeneratorScope>,
     module_load: Option<modules::ModuleRun>,
     uri_resolution: Option<uri_resolution::Resolution>,
     module_receiver: Option<ObjectId>,
@@ -1025,7 +1046,7 @@ struct SuspendedContext {
     /// pending reader has no language call node for a callback evaluation.
     diagnostic_callers: Vec<RuntimeFrame>,
     frames: Vec<Frame>,
-    stack: Vec<Value>,
+    stack: identity::OperandStack,
     inputs: Vec<Value>,
     state: State,
 }
@@ -1037,7 +1058,7 @@ pub struct Vm {
     log_buffer: Vec<u16>,
     heap: Heap,
     frames: Vec<Frame>,
-    stack: Vec<Value>,
+    stack: identity::OperandStack,
     inputs: Vec<Value>,
     state: State,
     suspended: Vec<SuspendedContext>,
@@ -1104,7 +1125,7 @@ impl Vm {
             log_buffer: Vec::new(),
             heap: Heap::new(),
             frames: Vec::new(),
-            stack: Vec::new(),
+            stack: identity::OperandStack::default(),
             inputs: Vec::new(),
             state: State::Idle,
             suspended: Vec::new(),
@@ -1208,6 +1229,7 @@ impl Vm {
             equality_run: None,
             deep_force: None,
             pcf_render: None,
+            collection_join: None,
             function_owner: None,
             amendment_end: None,
             prepared_hashes: None,
@@ -1216,6 +1238,7 @@ impl Vm {
             diagnostic_member: None,
             callsite_hidden: false,
             builders: Vec::new(),
+            generator_scopes: Vec::new(),
             module_load: None,
             uri_resolution: None,
             module_receiver: None,
@@ -1495,7 +1518,7 @@ impl Vm {
     pub fn close(&mut self) {
         self.suspended = Vec::new();
         self.frames = Vec::new();
-        self.stack = Vec::new();
+        self.stack = identity::OperandStack::default();
         self.inputs = Vec::new();
         self.state = State::Closed;
         self.log_buffer = Vec::new();
@@ -1616,16 +1639,29 @@ impl Vm {
                         .map(Value::Object),
                 );
                 roots.extend(frame.builders.iter().copied().map(Value::Object));
+                for scope in &frame.generator_scopes {
+                    scope.roots(&mut roots);
+                }
                 roots.extend(frame.prepared_hashes.iter().flatten().cloned());
                 roots.extend(frame.environment.locals.iter().cloned());
                 roots.extend(frame.environment.this_value.iter().cloned());
                 roots.extend(frame.environment.outer_value.iter().cloned());
                 roots.extend(frame.environment.custom_this.map(|slot| slot.root()));
                 roots.extend(frame.environment.executable_owner.map(|owner| owner.root()));
+                roots.extend(
+                    frame
+                        .environment
+                        .local_owners
+                        .values()
+                        .map(|(owner, _)| owner.root()),
+                );
                 if let Some(run) = &frame.key_search {
                     run.roots(&mut roots);
                 }
                 roots.extend(frame.function_owner.map(Value::Function));
+                if let Some(run) = &frame.collection_join {
+                    run.roots(&mut roots);
+                }
                 if let Some(run) = &frame.pcf_render {
                     run.roots(&mut roots);
                 }
@@ -1682,6 +1718,25 @@ impl Vm {
             error.unavailable_origin = false;
         }
         let unwind_start = catch_boundary.map_or(0, |index| index + 1);
+        if guest_exceptions::is_guest_exception(&error) && !error.hint_from_template {
+            match self.document_conversion_hint(unwind_start) {
+                Ok(Some(hint)) => error.hint = Some(hint),
+                Ok(None) => (),
+                // Guest catch renders message only; reference-sensitive hints
+                // are observed only at the uncaught diagnostic boundary.
+                Err(boundary) if catch_boundary.is_none() => {
+                    error.kind = boundary.kind;
+                    error.message = boundary
+                        .message
+                        .concat(&"\nOriginal failure: ".into())
+                        .concat(&error.message);
+                    error.hint = None;
+                    error.type_diagnostic = None;
+                    error.frontend = None;
+                }
+                Err(_) => (),
+            }
+        }
         self.reset_force_marks(unwind_start);
         // Inferred properties read their class prototype without type checks.
         // An undefined prototype value is caught by the inference node, whose
@@ -2248,12 +2303,11 @@ impl Vm {
             ));
         }
         if local
-            && self.program.blocks.get(member.code).is_some_and(|block| {
-                matches!(
-                    block.as_slice(),
-                    [Instruction::Constant(_), Instruction::Return]
-                )
-            })
+            && self
+                .program
+                .metadata
+                .get(member.code)
+                .is_some_and(|metadata| metadata.constant_member)
         {
             memoize = false;
         }
@@ -2392,6 +2446,13 @@ impl Vm {
                     .executable_child(parent, ExecutionSite::Member(member.code))
             })
             .transpose()?;
+        if environment.restore_for_bindings {
+            let target = environment
+                .executable_owner
+                .unwrap_or_else(|| self.executable_root(member.code));
+            self.copy_captured_locals(&mut environment, target)?;
+            environment.restore_for_bindings = false;
+        }
         environment.scopes.insert(0, Scope { receiver, owner });
         if memoize {
             self.heap
@@ -2424,6 +2485,7 @@ impl Vm {
             equality_run: None,
             deep_force: None,
             pcf_render: None,
+            collection_join: None,
             function_owner: None,
             amendment_end: None,
             prepared_hashes: None,
@@ -2432,6 +2494,7 @@ impl Vm {
             diagnostic_member: None,
             callsite_hidden: false,
             builders: Vec::new(),
+            generator_scopes: Vec::new(),
             module_load: None,
             uri_resolution: None,
             module_receiver: None,
@@ -3270,7 +3333,11 @@ impl Vm {
         // A function call creates a logical frame, unlike a constraint bytecode
         // continuation. Its lexical capture must not supply the mutable slot.
         environment.custom_this = None;
-        environment.locals.extend(arguments);
+        environment.copy_locals.clear();
+        environment.restore_for_bindings = false;
+        environment
+            .locals
+            .extend(arguments.into_iter().map(Value::boxed));
         self.frames.push(Frame {
             guest_catch: None,
             block: function.block,
@@ -3285,6 +3352,7 @@ impl Vm {
             equality_run: None,
             deep_force: None,
             pcf_render: None,
+            collection_join: None,
             function_owner: Some(id),
             amendment_end: None,
             prepared_hashes: None,
@@ -3293,6 +3361,7 @@ impl Vm {
             diagnostic_member: None,
             callsite_hidden: false,
             builders: Vec::new(),
+            generator_scopes: Vec::new(),
             module_load: None,
             uri_resolution: None,
             module_receiver: None,
@@ -3353,6 +3422,13 @@ impl Vm {
         {
             return self.step_pcf();
         }
+        if self
+            .frames
+            .last()
+            .is_some_and(|frame| frame.collection_join.is_some())
+        {
+            return self.step_collection_join();
+        }
         let frame = self
             .frames
             .last_mut()
@@ -3379,7 +3455,14 @@ impl Vm {
             return Ok(());
         };
         let frame_index = self.frames.len() - 1;
-        let result = if matches!(
+        // Compiling pinned bundled declarations must not retain the large
+        // general instruction-dispatch frame on the native stack. Evaluation
+        // still starts in the ordinary module initializer and can yield there.
+        let result = if matches!(instruction, Instruction::LoadBaseModule) {
+            self.import_stdlib("pkl:base").map(|_| ())
+        } else if matches!(instruction, Instruction::LoadRefModule) {
+            self.import_stdlib("pkl:ref").map(|_| ())
+        } else if matches!(
             &instruction,
             Instruction::Swap
                 | Instruction::BeginCollection { .. }
@@ -3394,6 +3477,8 @@ impl Vm {
                 | Instruction::CheckMapSpread
                 | Instruction::OpenIterator { .. }
                 | Instruction::IteratorNext { .. }
+                | Instruction::EnterForScope { .. }
+                | Instruction::LeaveForScope
                 | Instruction::SpreadMember
                 | Instruction::OpenPredicate
                 | Instruction::PredicateNext { .. }
@@ -3417,6 +3502,7 @@ impl Vm {
                 | Instruction::ResolvedClass(_)
                 | Instruction::ResolvedDefault { .. }
                 | Instruction::ResolveClassType { .. }
+                | Instruction::BindLocal { .. }
                 | Instruction::CheckType(_)
         ) {
             self.type_instruction(instruction)
@@ -3446,6 +3532,7 @@ impl Vm {
             | Instruction::ResolvedClass(_)
             | Instruction::ResolvedDefault { .. }
             | Instruction::ResolveClassType { .. }
+            | Instruction::BindLocal { .. }
             | Instruction::CheckType(_) => {
                 unreachable!("type instruction uses its bounded dispatcher")
             }
@@ -3472,7 +3559,12 @@ impl Vm {
             }
             Instruction::ResourceProperty(property) => self.resource_property(property)?,
             Instruction::OutputRenderer => self.output_renderer()?,
-            Instruction::RenderPcf { document } => self.begin_pcf(document)?,
+            Instruction::RenderPcf { document } => {
+                self.begin_render(document, rendering::Format::Pcf)?
+            }
+            Instruction::RenderJson { document } => {
+                self.begin_render(document, rendering::Format::Json)?
+            }
             Instruction::PublishModuleMember { code } => {
                 let owner = self
                     .stack
@@ -3633,8 +3725,8 @@ impl Vm {
             Instruction::GuestCatch { or_null } => {
                 self.begin_guest_catch(or_null)?;
             }
-            Instruction::LoadRefModule => {
-                self.import_stdlib("pkl:ref")?;
+            Instruction::LoadBaseModule | Instruction::LoadRefModule => {
+                unreachable!("bundled module preparation is dispatched before this frame")
             }
 
             Instruction::ReferenceRenderMethod => {
@@ -3669,6 +3761,8 @@ impl Vm {
             | Instruction::CheckMapSpread
             | Instruction::OpenIterator { .. }
             | Instruction::IteratorNext { .. }
+            | Instruction::EnterForScope { .. }
+            | Instruction::LeaveForScope
             | Instruction::SpreadMember
             | Instruction::OpenPredicate
             | Instruction::PredicateNext { .. }
@@ -3726,14 +3820,17 @@ impl Vm {
             }
             Instruction::PushLocal => {
                 let value = self.pop()?;
-                self.frames
-                    .last_mut()
-                    .expect("active frame")
-                    .environment
-                    .locals
-                    .push(value);
+                self.bind_local(None, identity::SlotPolicy::Adaptive, value)?;
             }
             Instruction::PopLocal => {
+                frame
+                    .environment
+                    .copy_locals
+                    .remove(&frame.environment.locals.len().saturating_sub(1));
+                frame
+                    .environment
+                    .local_owners
+                    .remove(&frame.environment.locals.len().saturating_sub(1));
                 if frame.environment.locals.pop().is_none() {
                     return Err(invalid("lexical stack underflow"));
                 }
@@ -3812,6 +3909,7 @@ impl Vm {
                 return Err(RuntimeError::new(ErrorKind::Type, message));
             }
             Instruction::StringRepeat => self.repeat_string()?,
+            Instruction::CollectionJoin => self.begin_collection_join()?,
             Instruction::StringEncode => self.encode_string()?,
             Instruction::Primitive(operation) => self.primitive(operation)?,
             Instruction::BeginFunctionAmendment { end } => self.begin_function_amendment(end)?,
@@ -3950,6 +4048,13 @@ impl Vm {
                     self.string_encode_method(receiver);
                     return Ok(());
                 }
+                if method
+                    && name.as_ref() == "join"
+                    && (self.is_list(&receiver) || self.is_set(&receiver))
+                {
+                    self.collection_join_method(receiver);
+                    return Ok(());
+                }
                 if method && name.as_ref() == "repeat" && matches!(receiver, Value::String(_)) {
                     self.string_repeat_method(receiver);
                 } else if !method
@@ -3957,7 +4062,7 @@ impl Vm {
                     && matches!(name.as_ref(), "length" | "isEmpty")
                 {
                     self.stack.push(if name.as_ref() == "length" {
-                        Value::Int(text.code_point_len() as i64)
+                        Value::Int((text.code_point_len() as i64).into())
                     } else {
                         Value::Bool(text.is_empty())
                     });
@@ -4648,10 +4753,12 @@ impl Vm {
             }
             Instruction::Negate => {
                 let value = match self.pop()? {
-                    Value::Int(value) => {
-                        Value::Int(crate::numeric::subtract(0, value).map_err(numeric_error)?)
-                    }
-                    Value::Float(value) => Value::Float(-value),
+                    Value::Int(value) => Value::Int(
+                        crate::numeric::subtract(0, *value)
+                            .map_err(numeric_error)?
+                            .into(),
+                    ),
+                    Value::Float(value) => Value::Float((-value.get()).into()),
                     value => return Err(unary_error("-", &value)),
                 };
                 self.stack.push(value);
@@ -4705,11 +4812,13 @@ impl Vm {
             Instruction::AddIntConstant(right) => {
                 let left = self.pop()?;
                 let value = match left {
-                    Value::Int(left) => {
-                        Value::Int(crate::numeric::add(left, right).map_err(numeric_error)?)
-                    }
-                    Value::Float(left) => Value::Float(left + right as f64),
-                    left => return Err(binary_error("+", &left, &Value::Int(right))),
+                    Value::Int(left) => Value::Int(
+                        crate::numeric::add(*left, right)
+                            .map_err(numeric_error)?
+                            .into(),
+                    ),
+                    Value::Float(left) => Value::Float((left.get() + right as f64).into()),
+                    left => return Err(binary_error("+", &left, &Value::Int(right.into()))),
                 };
                 self.stack.push(value);
             }
@@ -5026,8 +5135,8 @@ fn invalid(message: &str) -> RuntimeError {
 fn binary(instruction: &Instruction, left: Value, right: Value) -> Result<Value, RuntimeError> {
     if matches!(instruction, Instruction::Equal | Instruction::NotEqual) {
         let equal = match (&left, &right) {
-            (Value::Int(a), Value::Float(b)) => *a as f64 == *b,
-            (Value::Float(a), Value::Int(b)) => *a == *b as f64,
+            (Value::Int(a), Value::Float(b)) => a.get() as f64 == **b,
+            (Value::Float(a), Value::Int(b)) => *a == b.get() as f64,
             (Value::Object(_), Value::Object(_)) => {
                 return Err(RuntimeError::new(
                     ErrorKind::Unsupported,
@@ -5046,28 +5155,42 @@ fn binary(instruction: &Instruction, left: Value, right: Value) -> Result<Value,
     }
     match (left, right) {
         (Value::Int(left), Value::Int(right)) => Ok(match instruction {
-            Instruction::Add => {
-                Value::Int(crate::numeric::add(left, right).map_err(numeric_error)?)
-            }
-            Instruction::Subtract => {
-                Value::Int(crate::numeric::subtract(left, right).map_err(numeric_error)?)
-            }
-            Instruction::Multiply => {
-                Value::Int(crate::numeric::multiply(left, right).map_err(numeric_error)?)
-            }
-            Instruction::Divide => Value::Float(left as f64 / right as f64),
+            Instruction::Add => Value::Int(
+                crate::numeric::add(*left, *right)
+                    .map_err(numeric_error)?
+                    .into(),
+            ),
+            Instruction::Subtract => Value::Int(
+                crate::numeric::subtract(*left, *right)
+                    .map_err(numeric_error)?
+                    .into(),
+            ),
+            Instruction::Multiply => Value::Int(
+                crate::numeric::multiply(*left, *right)
+                    .map_err(numeric_error)?
+                    .into(),
+            ),
+            Instruction::Divide => Value::Float((left.get() as f64 / right.get() as f64).into()),
             Instruction::Less => Value::Bool(left < right),
             Instruction::LessEqual => Value::Bool(left <= right),
             Instruction::Greater => Value::Bool(left > right),
             Instruction::GreaterEqual => Value::Bool(left >= right),
-            Instruction::IntegerDivide => {
-                Value::Int(crate::numeric::divide(left, right).map_err(numeric_error)?)
+            Instruction::IntegerDivide => Value::Int(
+                crate::numeric::divide(*left, *right)
+                    .map_err(numeric_error)?
+                    .into(),
+            ),
+            Instruction::Remainder => Value::Int(
+                crate::numeric::remainder(*left, *right)
+                    .map_err(numeric_error)?
+                    .into(),
+            ),
+            Instruction::Power if right >= 0 => {
+                Value::Int(integer_power(*left, right.get() as u64)?.into())
             }
-            Instruction::Remainder => {
-                Value::Int(crate::numeric::remainder(left, right).map_err(numeric_error)?)
+            Instruction::Power => {
+                Value::Float(float_power(left.get() as f64, right.get() as f64).into())
             }
-            Instruction::Power if right >= 0 => Value::Int(integer_power(left, right as u64)?),
-            Instruction::Power => Value::Float(float_power(left as f64, right as f64)),
             _ => return Err(invalid("invalid binary instruction")),
         }),
         (Value::String(left), Value::String(right)) if matches!(instruction, Instruction::Add) => {
@@ -5089,25 +5212,29 @@ fn binary(instruction: &Instruction, left: Value, right: Value) -> Result<Value,
                 }
             }))
         }
-        (Value::Int(left), Value::Float(right)) => float_binary(instruction, left as f64, right),
-        (Value::Float(left), Value::Int(right)) => float_binary(instruction, left, right as f64),
-        (Value::Float(left), Value::Float(right)) => float_binary(instruction, left, right),
+        (Value::Int(left), Value::Float(right)) => {
+            float_binary(instruction, left.get() as f64, *right)
+        }
+        (Value::Float(left), Value::Int(right)) => {
+            float_binary(instruction, *left, right.get() as f64)
+        }
+        (Value::Float(left), Value::Float(right)) => float_binary(instruction, *left, *right),
         (left, right) => Err(binary_error(operator_name(instruction), &left, &right)),
     }
 }
 
 fn float_binary(instruction: &Instruction, left: f64, right: f64) -> Result<Value, RuntimeError> {
     Ok(match instruction {
-        Instruction::Add => Value::Float(left + right),
-        Instruction::Subtract => Value::Float(left - right),
-        Instruction::Multiply => Value::Float(left * right),
-        Instruction::Divide => Value::Float(left / right),
+        Instruction::Add => Value::Float((left + right).into()),
+        Instruction::Subtract => Value::Float((left - right).into()),
+        Instruction::Multiply => Value::Float((left * right).into()),
+        Instruction::Divide => Value::Float((left / right).into()),
         Instruction::Less => Value::Bool(left < right),
         Instruction::LessEqual => Value::Bool(left <= right),
         Instruction::Greater => Value::Bool(left > right),
         Instruction::GreaterEqual => Value::Bool(left >= right),
-        Instruction::Remainder => Value::Float(left % right),
-        Instruction::Power => Value::Float(float_power(left, right)),
+        Instruction::Remainder => Value::Float((left % right).into()),
+        Instruction::Power => Value::Float(float_power(left, right).into()),
         Instruction::IntegerDivide => {
             let result = (left / right).trunc();
             if !result.is_finite()
@@ -5128,7 +5255,7 @@ fn float_binary(instruction: &Instruction, left: f64, right: f64) -> Result<Valu
                     },
                 ));
             }
-            Value::Int(result as i64)
+            Value::Int((result as i64).into())
         }
         _ => return Err(invalid("invalid numeric instruction")),
     })
@@ -5346,6 +5473,14 @@ fn compile_unit_body(
             crate::syntax::modifier_flags(&declaration.modifiers)
         });
     let mut entry = Code::default();
+    if unit.0 == 0 {
+        // Java initializes and eagerly forces the private base module before a
+        // user module runs. Its output also initializes PcfRenderer's shared
+        // method slots through an ordinary Module-valued renderDocument call.
+        entry.push(Instruction::LoadBaseModule);
+        entry.push(Instruction::Pop);
+    }
+
     entry.push(Instruction::PrepareModuleImports(unit));
     entry.push(Instruction::MakeObject {
         template,
@@ -5454,6 +5589,19 @@ struct Code {
     method_arities: BTreeMap<usize, usize>,
 }
 impl Code {
+    /// Instrumentation observes a literal without changing its ConstantNode
+    /// allocation. Box that declaration result once, not once per receiver.
+    fn box_constant_result(&mut self) -> bool {
+        let mut body = self
+            .instructions
+            .iter_mut()
+            .filter(|instruction| !matches!(instruction, Instruction::Observe(_)));
+        let (Some(Instruction::Constant(value)), None) = (body.next(), body.next()) else {
+            return false;
+        };
+        *value = value.clone().boxed();
+        true
+    }
     fn push(&mut self, instruction: Instruction) {
         self.instructions.push(instruction);
         self.spans.push(None);
@@ -5784,6 +5932,9 @@ impl Compiler<'_> {
         } else {
             self.expression_with_property_parent(&member.expr, &mut instructions, Some(member))?;
         }
+        let constant_member = !(member.local && member.ty.is_some())
+            && self.constant_member_body(&member.expr)
+            && instructions.box_constant_result();
         let property_typecheck = member.ty.as_ref().map(|_| instructions.len());
         if let Some(ty) = &member.ty {
             instructions.push_at(
@@ -5805,6 +5956,7 @@ impl Compiler<'_> {
             .modifiers
             .iter()
             .any(|m| m.kind == crate::syntax::ModifierKind::Hidden);
+        self.program.metadata[code].constant_member = constant_member;
         self.program.metadata[code].value_span = Some(self.property_value_span(member));
         self.program.metadata[code].member_span = Some(member.span);
         self.program.metadata[code].initialization_error = initialization_error;
@@ -5870,6 +6022,7 @@ impl Compiler<'_> {
             source: self.source.clone(),
             hidden: false,
             stdlib_bootstrap: false,
+            constant_member: false,
             spans: code.spans,
             member: self.member.clone(),
             declaration,
@@ -6149,11 +6302,13 @@ impl Compiler<'_> {
                 name: self.member.clone(),
                 method: true,
             }),
-            ExprKind::Int(value) => output.push(Instruction::Constant(Value::Int(*value))),
-            ExprKind::Float(value) => output.push(Instruction::Constant(Value::Float(*value))),
+            ExprKind::Int(value) => output.push(Instruction::Constant(Value::Int((*value).into()))),
+            ExprKind::Float(value) => {
+                output.push(Instruction::Constant(Value::Float((*value).into())))
+            }
             ExprKind::Null => output.push(Instruction::Constant(Value::Null)),
             ExprKind::String(value) => {
-                output.push(Instruction::Constant(Value::string(value.clone())))
+                output.push(Instruction::Constant(Value::string(value.source_literal())))
             }
             ExprKind::Bool(value) => output.push(Instruction::Constant(Value::Bool(*value))),
             ExprKind::This => {
@@ -6214,9 +6369,9 @@ impl Compiler<'_> {
                     }
                     Binding::BaseConstant => output.push(Instruction::Constant(Value::Float(
                         if name.as_ref() == "NaN" {
-                            f64::NAN
+                            f64::NAN.into()
                         } else {
-                            f64::INFINITY
+                            f64::INFINITY.into()
                         },
                     ))),
                     Binding::Lexical { depth, slot: 0 } => {
@@ -6283,7 +6438,7 @@ fn scalar_string(value: &Value) -> Result<PklString, RuntimeError> {
         Value::Null | Value::NullWithDefault(_) => "null".into(),
         Value::Bool(value) => value.to_string().into(),
         Value::Int(value) => value.to_string().into(),
-        Value::Float(value) => crate::numeric::double_to_string(*value).into(),
+        Value::Float(value) => crate::numeric::double_to_string(**value).into(),
         Value::String(value) => value.clone(),
         _ => {
             return Err(RuntimeError::new(

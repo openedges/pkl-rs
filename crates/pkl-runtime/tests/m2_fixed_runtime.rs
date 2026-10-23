@@ -33,7 +33,7 @@ fn fixed_declarations_remain_virtual_and_keep_bodies_lazy() {
         evaluate(
             "open class A { n = 1; fixed p = n }\nclass B extends A { fixed p = super.p + 1 }\nresult = new B { n = 40 }.p"
         ),
-        Ok(Value::Int(41))
+        Ok(Value::Int(41.into()))
     );
     assert_eq!(
         evaluate("class A { fixed p: Int = throw(\"unused\") }\nresult = A == A"),
@@ -41,7 +41,7 @@ fn fixed_declarations_remain_virtual_and_keep_bodies_lazy() {
     );
     assert_eq!(
         evaluate("open class A { fixed p = 1 }\nclass B extends A { p = 2 }\nresult = 42"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
 }
 
@@ -59,7 +59,7 @@ fn fixed_overrides_use_immediate_superclass_and_preserve_const_rules() {
         evaluate(
             "open class A { const p = 1 }\nclass B extends A { const p = 2 }\nresult = new B {}.p"
         ),
-        Ok(Value::Int(2))
+        Ok(Value::Int(2.into()))
     );
     assert_eq!(
         evaluate("open class A { fixed p = 1 }\nclass B extends A { const p = 2 }\nresult = B")
@@ -114,11 +114,11 @@ fn fixed_assignment_and_amendment_fail_during_construction_before_bodies() {
         evaluate(
             "class A { fixed p = new { n = 1 } }\nlocal a = new A {}\nresult = (a.p) { n = 2 }.n"
         ),
-        Ok(Value::Int(2))
+        Ok(Value::Int(2.into()))
     );
     assert_eq!(
         evaluate("class A { fixed p = 1; q = p }\nresult = new A { local p = 2 }.q"),
-        Ok(Value::Int(1))
+        Ok(Value::Int(1.into()))
     );
 }
 

@@ -32,7 +32,7 @@ fn fixture(source: &str, expected: i64) {
     let (mut vm, object) = module(source);
     vm.start_member(object.as_object().unwrap(), "result")
         .unwrap();
-    assert_eq!(done(&mut vm), Ok(Value::Int(expected)));
+    assert_eq!(done(&mut vm), Ok(Value::Int(expected.into())));
 }
 
 #[test]
@@ -185,7 +185,7 @@ fn pending_frames_are_gc_roots_and_memoize_completed_host_values() {
     };
     assert_eq!(vm.collect(&[]).live, 1);
     assert!(vm.start(0, vec![]).is_err());
-    let bytes = Value::Bytes(Arc::from([0, 255, 128]));
+    let bytes = Value::Bytes(Arc::<[u8]>::from([0, 255, 128]).into());
     vm.resume(request.id, Ok(bytes.clone())).unwrap();
     assert_eq!(done(&mut vm), Ok(bytes.clone()));
     assert!(vm.resume(request.id, Ok(Value::Null)).is_err());
@@ -201,7 +201,7 @@ fn pending_frames_are_gc_roots_and_memoize_completed_host_values() {
 fn cancellation_is_bounded_at_instruction_safepoints_and_rejects_stale_resume() {
     let program = Arc::new(Program::new(vec![
         vec![I::Jump(0)],
-        vec![I::Constant(Value::Int(42)), I::Return],
+        vec![I::Constant(Value::Int(42.into())), I::Return],
     ]));
     let mut vm = Vm::new(program);
     vm.start(0, vec![]).unwrap();
@@ -210,7 +210,7 @@ fn cancellation_is_bounded_at_instruction_safepoints_and_rejects_stale_resume() 
     vm.cancel();
     assert_eq!(done(&mut vm).unwrap_err().kind, ErrorKind::Cancelled);
     vm.start(1, vec![]).unwrap();
-    assert_eq!(done(&mut vm), Ok(Value::Int(42)));
+    assert_eq!(done(&mut vm), Ok(Value::Int(42.into())));
     let mut waiting = Vm::new(resource_program());
     waiting.start(0, vec![]).unwrap();
     let object = done(&mut waiting).unwrap().as_object().unwrap();
@@ -238,17 +238,17 @@ fn cancellation_is_bounded_at_instruction_safepoints_and_rejects_stale_resume() 
 fn compiled_program_reuse_never_reuses_evaluation_state() {
     let program = Arc::new(Program::new(vec![vec![
         I::Input(0),
-        I::Constant(Value::Int(1)),
+        I::Constant(Value::Int(1.into())),
         I::Add,
         I::Return,
     ]]));
     let mut first = Vm::new(program.clone());
     let mut second = Vm::new(program);
-    first.start(0, vec![Value::Int(4)]).unwrap();
-    second.start(0, vec![Value::Int(90)]).unwrap();
-    assert_eq!(done(&mut first), Ok(Value::Int(5)));
-    assert_eq!(done(&mut second), Ok(Value::Int(91)));
-    first.start(0, vec![Value::Int(i64::MAX)]).unwrap();
+    first.start(0, vec![Value::Int(4.into())]).unwrap();
+    second.start(0, vec![Value::Int(90.into())]).unwrap();
+    assert_eq!(done(&mut first), Ok(Value::Int(5.into())));
+    assert_eq!(done(&mut second), Ok(Value::Int(91.into())));
+    first.start(0, vec![Value::Int(i64::MAX.into())]).unwrap();
     assert_eq!(done(&mut first).unwrap_err().kind, ErrorKind::Arithmetic);
 }
 
@@ -256,12 +256,12 @@ fn compiled_program_reuse_never_reuses_evaluation_state() {
 fn malformed_bytecode_is_an_error_and_cannot_leak_a_running_thunk() {
     let mut vm = Vm::new(Arc::new(Program::new(vec![
         vec![I::Add],
-        vec![I::Constant(Value::Int(1)), I::Return],
+        vec![I::Constant(Value::Int(1.into())), I::Return],
     ])));
     vm.start(0, vec![]).unwrap();
     assert_eq!(done(&mut vm).unwrap_err().kind, ErrorKind::InvalidBytecode);
     vm.start(1, vec![]).unwrap();
-    assert_eq!(done(&mut vm), Ok(Value::Int(1)));
+    assert_eq!(done(&mut vm), Ok(Value::Int(1.into())));
     let mut program = Program::new(vec![
         vec![
             I::MakeObject {
@@ -271,8 +271,8 @@ fn malformed_bytecode_is_an_error_and_cannot_leak_a_running_thunk() {
             I::Return,
         ],
         vec![
-            I::Constant(Value::Int(1)),
-            I::Constant(Value::Int(2)),
+            I::Constant(Value::Int(1.into())),
+            I::Constant(Value::Int(2.into())),
             I::Return,
         ],
     ]);
@@ -304,7 +304,7 @@ fn mixed_numeric_execution_uses_ieee_division_and_checked_integer_arithmetic() {
     let (mut vm, object) = module("result = 1 / 2 + 1\n");
     vm.start_member(object.as_object().unwrap(), "result")
         .unwrap();
-    assert_eq!(done(&mut vm), Ok(Value::Float(1.5)));
+    assert_eq!(done(&mut vm), Ok(Value::Float(1.5.into())));
 }
 
 #[test]
@@ -365,9 +365,9 @@ fn super_reads_preserve_receiver_but_do_not_memoize_parent_body() {
         let VmPoll::Pending(request) = vm.poll(100) else {
             panic!("expected uncached super read")
         };
-        vm.resume(request.id, Ok(Value::Int(value))).unwrap();
+        vm.resume(request.id, Ok(Value::Int(value.into()))).unwrap();
     }
-    assert_eq!(done(&mut vm), Ok(Value::Int(42)));
+    assert_eq!(done(&mut vm), Ok(Value::Int(42.into())));
     assert_eq!(
         vm.member_state(child, "answer").unwrap(),
         LazyState::Unevaluated
@@ -409,14 +409,14 @@ fn compiler_fusion_preserves_checked_overflow_types_and_first_error() {
         assert_eq!(variants[0], variants[1], "fusion changed {source}");
         results.push(variants.remove(0));
     }
-    assert_eq!(results[0], Ok(Value::Int(i64::MAX)));
+    assert_eq!(results[0], Ok(Value::Int(i64::MAX.into())));
     assert_eq!(results[1].as_ref().unwrap_err().kind, ErrorKind::Arithmetic);
     assert_eq!(
         results[2].as_ref().unwrap_err().message,
         "Cannot find property `missingFirst`."
     );
     assert_eq!(results[3].as_ref().unwrap_err().kind, ErrorKind::Type);
-    assert_eq!(results[4], Ok(Value::Float(1.5)));
+    assert_eq!(results[4], Ok(Value::Float(1.5.into())));
 }
 
 #[test]
@@ -494,20 +494,20 @@ fn transient_failures_retry_in_order_while_successful_dependencies_stay_cached()
     vm.start_member(object, "result").unwrap();
     let retry = read(&mut vm, "memory:first");
     assert_ne!(first, retry);
-    vm.resume(retry, Ok(Value::Int(40))).unwrap();
+    vm.resume(retry, Ok(Value::Int(40.into()))).unwrap();
     let second = read(&mut vm, "memory:second");
     vm.resume(second, Err(failure.clone())).unwrap();
     assert_eq!(done(&mut vm), Err(failure));
     assert_eq!(
         vm.member_state(object, "first").unwrap(),
-        LazyState::Completed(Value::Int(40))
+        LazyState::Completed(Value::Int(40.into()))
     );
     vm.start_member(object, "result").unwrap();
     let retry = read(&mut vm, "memory:second");
-    vm.resume(retry, Ok(Value::Int(2))).unwrap();
-    assert_eq!(done(&mut vm), Ok(Value::Int(42)));
+    vm.resume(retry, Ok(Value::Int(2.into()))).unwrap();
+    assert_eq!(done(&mut vm), Ok(Value::Int(42.into())));
     let evaluations = vm.member_evaluations();
     vm.start_member(object, "result").unwrap();
-    assert_eq!(done(&mut vm), Ok(Value::Int(42)));
+    assert_eq!(done(&mut vm), Ok(Value::Int(42.into())));
     assert_eq!(vm.member_evaluations(), evaluations);
 }

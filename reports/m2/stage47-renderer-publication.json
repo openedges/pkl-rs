@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "publicationRoot": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01",
+  "summaryPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/summary.json",
+  "summarySha256": "e3b82c24969c9aa1fb309648f2ee16f949db941a32d0cfccfc7403c738781120",
+  "reportPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/final-report.json",
+  "reportSha256": "c5f59a9ce81c6378db4379fb6d7b4350b3828037f2cfeae343f5166df33e13c2",
+  "archiveIndexPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/final-archive-index.json",
+  "archiveIndexSha256": "760c2ebe4bd2d77f5448c3427a7961b4c8cdc0d7b80e7362475e3d50bb6fbea3",
+  "archives": [
+    {
+      "group": "native",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-native.tar.gz",
+      "sha256": "eae340d1d92d922e416e7f4b44192478ea22eaed1e64b4dcae20f0e0ad55ecb3",
+      "bytes": 1443134,
+      "payloadFiles": 577,
+      "membersIncludingEvidence": 578
+    },
+    {
+      "group": "portable",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-portable.tar.gz",
+      "sha256": "75120a103a63f84ca7d0ddd88565ac8a181b0339fcd8a5288ade8570444344b8",
+      "bytes": 560519,
+      "payloadFiles": 177,
+      "membersIncludingEvidence": 178
+    },
+    {
+      "group": "oracles-tools",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-oracles-tools.tar.gz",
+      "sha256": "9ea79ec774b79d4e0535d6b79523a5fb5cc4bf05c8359c7a8b111fa9dea41192",
+      "bytes": 3157993,
+      "payloadFiles": 428,
+      "membersIncludingEvidence": 429
+    },
+    {
+      "group": "closeout",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/archives/renderer-c06-closeout.tar.gz",
+      "sha256": "dd5eaa79207861fdf67a2bae2930ba5ed3f916c6500e35a2463f659603f36d9c",
+      "bytes": 1204795,
+      "payloadFiles": 56,
+      "membersIncludingEvidence": 57
+    }
+  ],
+  "globalCaptureIndex": {
+    "archive": "renderer-c06-oracles-tools.tar.gz",
+    "member": "selection.json",
+    "sha256": "109b2636e339afe3313849be14f4678a9c122e03e9cdf1b06a798948735cd5ff",
+    "records": 51090,
+    "originalBytes": 190677038,
+    "physicalRoots": 21,
+    "anchorCatalogue": 20,
+    "sparseHistoricalRoots": 1
+  },
+  "externalReferencesPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/external-reference-summary.json",
+  "externalReferencesSha256": "a46cb3f55b094d64a28186cf844a88aa8b8cd287a0b2e8f5eb8bd588bb11cbfe",
+  "actualTerminalReceipts": {
+    "publisher": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/publisher.terminal.json",
+    "publisherSha256": "a090bd84fa82239cfe17e32a6afa766645f87a518f4c44ad583e5297a9fab749",
+    "finalize": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-oracle-publication-01/finalize-outer-terminal.json",
+    "finalizeSha256": "644f4c6e4ebb8519a3c43e5b058ba2a23b646c6fb1fe1453658e7bf6a6bd9b92"
+  },
+  "all4ArchivesCreatedSeparatelyVerifiedAndRawReadback": true,
+  "actualArchiveMemberRestoreAndOfflineRawVerification": {
+    "native": 1840,
+    "node": 980,
+    "browser": 980,
+    "mismatches": 0,
+    "evaluations": 0
+  },
+  "originalSourceChanges": [],
+  "publicationOwnership": "Root copies/commits/pushes. A coreRust/CLI and C primaryplatformcanonicalassets referenced, notduplicated. All B work remainsnewtargetonly.",
+  "finishedUtc": "2026-10-23T15:30:07.703793+00:00",
+  "liveHandles": []
+}

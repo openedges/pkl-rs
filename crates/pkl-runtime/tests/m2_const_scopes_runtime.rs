@@ -33,13 +33,13 @@ fn const_methods_allow_lexical_reads_and_signature_constraints() {
         let source = format!(
             "local x = 7\ny = 7\nfunction other() = 7\nconst function f() = {body}\nresult = f()"
         );
-        assert_eq!(result(&source), Ok(Value::Int(7)), "{body}");
+        assert_eq!(result(&source), Ok(Value::Int(7.into())), "{body}");
     }
     assert_eq!(
         result(
             "local limit = 7\nconst function f(n: Int(this < limit)): Int(this < limit) = n\nresult = f(2)"
         ),
-        Ok(Value::Int(2))
+        Ok(Value::Int(2.into()))
     );
 }
 
@@ -61,7 +61,7 @@ fn lambdas_do_not_add_method_const_barriers() {
         result(
             "local x = 7\nconst function f() = new Dynamic { local function g() = x; z = g() }.z\nresult = f()"
         ),
-        Ok(Value::Int(7))
+        Ok(Value::Int(7.into()))
     );
 }
 
@@ -91,7 +91,7 @@ fn outer_uses_the_immediate_lexical_const_scope() {
             result(&format!(
                 "threshold = 0\nconst function f() = {body}\nresult = f().apply(0){suffix}"
             )),
-            Ok(Value::Int(0))
+            Ok(Value::Int(0.into()))
         );
     }
     assert_eq!(

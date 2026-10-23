@@ -3,6 +3,9 @@
 //! Retained module graphs include their one builtin Module parent; executable
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
+#[path = "support/eager_base.rs"]
+mod eager_base;
+use eager_base::Baseline;
 
 use pkl_runtime::heap::LazyState;
 use pkl_runtime::host::{HostPoll, HostSession};
@@ -49,7 +52,11 @@ fn first_missing_type_leaves_later_declarations_unpublished_and_collectible() {
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     let module = ready(&mut vm).unwrap();
-    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 2);
+    let initialized = Baseline::new(vm.collect(&[]));
+    assert_eq!(
+        initialized.added_values(vm.collect(std::slice::from_ref(&module)), 0),
+        0
+    );
     for _ in 0..2 {
         let error = member(&mut vm, &module, "before").unwrap_err();
         assert_eq!(error.kind, ErrorKind::MissingType);
@@ -59,20 +66,32 @@ fn first_missing_type_leaves_later_declarations_unpublished_and_collectible() {
                 .unwrap(),
             LazyState::Unevaluated
         );
-        assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 2);
+        assert_eq!(
+            initialized.added_values(vm.collect(std::slice::from_ref(&module)), 0),
+            0
+        );
     }
     let error = member(&mut vm, &module, "after").unwrap_err();
     assert_eq!(error.kind, ErrorKind::MissingType);
     assert_eq!(error.message, "Cannot find type `MissingInside`.");
     // Failure publishes exactly one alias singleton and its module environment.
-    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 3);
+    assert_eq!(
+        initialized.added_values(vm.collect(std::slice::from_ref(&module)), 0),
+        1
+    );
     let alias = member(&mut vm, &module, "Poison").unwrap();
     assert!(matches!(alias, Value::TypeAlias(_)));
     assert_eq!(member(&mut vm, &module, "Poison"), Ok(alias.clone()));
-    assert_eq!(member(&mut vm, &module, "temporary"), Ok(Value::Int(42)));
-    assert_eq!(member(&mut vm, &module, "scalar"), Ok(Value::Int(7)));
+    assert_eq!(
+        member(&mut vm, &module, "temporary"),
+        Ok(Value::Int(42.into()))
+    );
+    assert_eq!(member(&mut vm, &module, "scalar"), Ok(Value::Int(7.into())));
     // The temporary source object does not become a declaration root.
-    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 3);
+    assert_eq!(
+        initialized.added_values(vm.collect(std::slice::from_ref(&module)), 1),
+        1
+    );
     assert_eq!(member(&mut vm, &module, "Poison"), Ok(alias));
     vm.close();
     assert_eq!(vm.heap_stats().live, 0);
@@ -85,6 +104,7 @@ fn failed_generic_shadow_preserves_only_its_own_published_alias() {
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     let module = ready(&mut vm).unwrap();
+    let initialized = Baseline::new(vm.collect(&[]));
     let error = member(&mut vm, &module, "Shadow").unwrap_err();
     assert_eq!(error.kind, ErrorKind::MissingType);
     assert_eq!(error.message, "Cannot find type `MissingGeneric`.");
@@ -93,13 +113,19 @@ fn failed_generic_shadow_preserves_only_its_own_published_alias() {
             .unwrap(),
         LazyState::Unevaluated
     );
-    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 3);
+    assert_eq!(
+        initialized.added_values(vm.collect(std::slice::from_ref(&module)), 0),
+        1
+    );
     let shadow = member(&mut vm, &module, "Shadow").unwrap();
     assert!(matches!(shadow, Value::TypeAlias(_)));
     assert_eq!(member(&mut vm, &module, "Shadow"), Ok(shadow));
     let error = member(&mut vm, &module, "Poison").unwrap_err();
     assert_eq!(error.message, "Cannot find type `MissingInside`.");
-    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 4);
+    assert_eq!(
+        initialized.added_values(vm.collect(std::slice::from_ref(&module)), 0),
+        2
+    );
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -111,16 +137,24 @@ fn shared_program_does_not_share_failure_publication_or_generic_bindings() {
     let mut right = Vm::new(program.clone());
     left.start(program.entry, vec![]).unwrap();
     let left_module = ready(&mut left).unwrap();
+    let left_initialized = Baseline::new(left.collect(&[]));
     right.start(program.entry, vec![]).unwrap();
     let right_module = ready(&mut right).unwrap();
+    let right_initialized = Baseline::new(right.collect(&[]));
     assert_eq!(
         member(&mut left, &left_module, "Shadow")
             .unwrap_err()
             .message,
         "Cannot find type `MissingGeneric`."
     );
-    assert_eq!(left.collect(std::slice::from_ref(&left_module)).live, 3);
-    assert_eq!(right.collect(std::slice::from_ref(&right_module)).live, 2);
+    assert_eq!(
+        left_initialized.added_values(left.collect(std::slice::from_ref(&left_module)), 0),
+        1
+    );
+    assert_eq!(
+        right_initialized.added_values(right.collect(std::slice::from_ref(&right_module)), 0),
+        0
+    );
     assert_eq!(
         right
             .member_state(right_module.as_object().unwrap(), "Shadow")
@@ -141,7 +175,10 @@ fn shared_program_does_not_share_failure_publication_or_generic_bindings() {
             .message,
         "Cannot find type `MissingFirst`."
     );
-    assert_eq!(right.collect(std::slice::from_ref(&right_module)).live, 2);
+    assert_eq!(
+        right_initialized.added_values(right.collect(std::slice::from_ref(&right_module)), 0),
+        0
+    );
     left.close();
     right.close();
     assert_eq!(left.heap_stats().slots, 0);
@@ -241,13 +278,14 @@ fn host_read(session: &mut HostSession, now: u64, uri: &str) -> String {
 #[test]
 fn nested_generic_bindings_survive_host_reentry_failures_and_gc() {
     let (mut session, module, [outer, inner, bad, identity]) = host_setup();
+    let initialized = Baseline::new(session.collect(&[]));
     session
         .start(identity, vec![module.clone()], 0, None)
         .unwrap();
     let alias = host_ready(&mut session, 0).unwrap();
     session.start(outer, vec![module.clone()], 1, None).unwrap();
     let parent = host_read(&mut session, 1, "mem:outer");
-    let suspended = retained_values(session.collect(&[]), 8);
+    let suspended = initialized.added_values(session.collect(&[]), 8);
     for (now, response) in [
         (
             2,
@@ -291,8 +329,8 @@ fn nested_generic_bindings_survive_host_reentry_failures_and_gc() {
         .unwrap();
     assert_eq!(host_ready(&mut session, 5), Ok(alias));
     session.resume(&parent, Ok(Value::string("ok")), 5).unwrap();
-    assert_eq!(host_ready(&mut session, 5), Ok(Value::Int(42)));
-    assert!(retained_values(session.collect(&[]), 23) < suspended);
+    assert_eq!(host_ready(&mut session, 5), Ok(Value::Int(42.into())));
+    assert!(initialized.added_values(session.collect(&[]), 23) < suspended);
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
 }
@@ -301,6 +339,7 @@ fn nested_generic_bindings_survive_host_reentry_failures_and_gc() {
 fn terminal_actions_release_nested_generic_captures_and_both_reads() {
     for termination in [ErrorKind::Cancelled, ErrorKind::Closed, ErrorKind::Timeout] {
         let (mut session, module, [outer, inner, _, _]) = host_setup();
+        let initialized = Baseline::new(session.collect(&[]));
         session
             .start(
                 outer,
@@ -315,7 +354,7 @@ fn terminal_actions_release_nested_generic_captures_and_both_reads() {
             .unwrap();
         let child = host_read(&mut session, 2, "mem:inner");
         assert_eq!(session.context_depth(), 2);
-        assert!(retained_values(session.collect(&[]), 16) > 0);
+        assert!(initialized.added_values(session.collect(&[]), 16) > 0);
         match termination {
             ErrorKind::Cancelled => session.cancel(),
             ErrorKind::Closed => session.close(),
@@ -356,6 +395,7 @@ fn nonterminal_cancel_keeps_alias_roots_and_retries_nested_bindings() {
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     let module = ready(&mut vm).unwrap();
+    let initialized = Baseline::new(vm.collect(&[]));
     let alias = member(&mut vm, &module, "identity").unwrap();
     let mut cancelled_request = None;
     for attempt in 0..2 {
@@ -374,7 +414,7 @@ fn nonterminal_cancel_keeps_alias_roots_and_retries_nested_bindings() {
             }
         };
         if attempt == 0 {
-            assert!(retained_values(vm.collect(&[]), 8) > 3);
+            assert!(initialized.added_values(vm.collect(&[]), 8) > 1);
             vm.cancel();
             assert_eq!(ready(&mut vm).unwrap_err().kind, ErrorKind::Cancelled);
             assert!(!vm.is_closed());
@@ -386,7 +426,7 @@ fn nonterminal_cancel_keeps_alias_roots_and_retries_nested_bindings() {
             assert_eq!(member(&mut vm, &module, "identity"), Ok(alias.clone()));
             // Nested, Gate, their declaration module and its Module parent survive cancellation;
             // the captured object and collection check temporaries do not.
-            assert_eq!(retained_values(vm.collect(&[]), 8), 4);
+            assert_eq!(initialized.added_values(vm.collect(&[]), 8), 2);
             cancelled_request = Some(pending);
         } else {
             assert_ne!(Some(pending), cancelled_request);
@@ -397,22 +437,11 @@ fn nonterminal_cancel_keeps_alias_roots_and_retries_nested_bindings() {
                 ErrorKind::Host
             );
             vm.resume(pending, Ok(Value::string("ok"))).unwrap();
-            assert_eq!(ready(&mut vm), Ok(Value::Int(42)));
+            assert_eq!(ready(&mut vm), Ok(Value::Int(42.into())));
         }
     }
     assert_eq!(member(&mut vm, &module, "identity"), Ok(alias));
-    assert_eq!(retained_values(vm.collect(&[]), 8), 4);
+    assert_eq!(initialized.added_values(vm.collect(&[]), 8), 2);
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
-}
-
-// Persistent executable/type nodes have their own exact bound. The returned
-// count preserves the original object and custom-this-slot assertions.
-#[track_caller]
-fn retained_values(stats: pkl_runtime::heap::HeapStats, expected_executables: usize) -> usize {
-    assert_eq!(
-        stats.executable_live, expected_executables,
-        "persistent executable graph"
-    );
-    stats.live - stats.executable_live
 }

@@ -1,0 +1,311 @@
+{
+  "schema": 1,
+  "scope": "Read-only independent audit of original actual C06 platform captures; no new evaluator/build/test or production/original/Git mutation.",
+  "outcome": {
+    "newBlockingFindings": [],
+    "selectedRawContractAuditPassed": true,
+    "fullM2OrPerformancePassed": false
+  },
+  "candidate": {
+    "releaseSha256": "59543feca57c4994116708f9950fdabec97c3d7f3cbc261feafc2d8f074899c9",
+    "sourceMapSha256": "f736de4eef08949b42bca21b276da80ee1c914b5ce6dbd442fcc636feb5738f1",
+    "directBothSnapshotAndBuildWorkspacePaths": 51745,
+    "exactModesChecked": true
+  },
+  "actualWrapper": {
+    "sessionId": 37946,
+    "exitCode": 0,
+    "reportSha256": "b85f4b2c5aba32e20fd264071ec6a2300b4d450ce5f7e81f7c63a2294083dffd"
+  },
+  "baseline": {
+    "total": 6078,
+    "sharedEqual": 6078,
+    "oracleMatches": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "rawKnownGaps": [
+      {
+        "id": "regex-unicode-15-vs-16",
+        "oracle_matches": {
+          "rust": false,
+          "node": false,
+          "browser": false
+        },
+        "shared_engine_match": true,
+        "sha256": {
+          "java": "dd07e407a26848c0d37e1fb61a7fd42c43e29e91f4394e50917e35d85cb0eced",
+          "rust": "377a6091614d419693847a0ee8aac133c59f18d2dba26db9a3776be252806cf5",
+          "node": "377a6091614d419693847a0ee8aac133c59f18d2dba26db9a3776be252806cf5",
+          "browser": "377a6091614d419693847a0ee8aac133c59f18d2dba26db9a3776be252806cf5"
+        },
+        "mismatched_bytes_hex": {
+          "java": "6d617463683a312c332c66303931626338320a656e640a",
+          "rust": "6d617463683a302c332c65316232383966303931626338320a656e640a",
+          "node": "6d617463683a302c332c65316232383966303931626338320a656e640a",
+          "browser": "6d617463683a302c332c65316232383966303931626338320a656e640a"
+        }
+      },
+      {
+        "id": "regex-zero-width-supplementary",
+        "oracle_matches": {
+          "rust": false,
+          "node": false,
+          "browser": false
+        },
+        "shared_engine_match": true,
+        "sha256": {
+          "java": "d853e545c6e19f2158f3c59c8a542fe16dc1d7466e253aee7056625639e5e8a7",
+          "rust": "61b22f7a8af0277c95872406adcdbc7b287016c2e72bb3e5d4f891a4c2f5fc9d",
+          "node": "61b22f7a8af0277c95872406adcdbc7b287016c2e72bb3e5d4f891a4c2f5fc9d",
+          "browser": "61b22f7a8af0277c95872406adcdbc7b287016c2e72bb3e5d4f891a4c2f5fc9d"
+        },
+        "mismatched_bytes_hex": {
+          "java": "6d617463683a302c302c0a6d617463683a312c312c0a6d617463683a322c322c0a656e640a",
+          "rust": "6d617463683a302c302c0a6d617463683a322c322c0a656e640a",
+          "node": "6d617463683a302c302c0a6d617463683a322c322c0a656e640a",
+          "browser": "6d617463683a302c302c0a6d617463683a322c322c0a656e640a"
+        }
+      }
+    ],
+    "capturedCommands": [
+      {
+        "name": "bindgen-version",
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/.cache/m1-tools/bin/wasm-bindgen",
+          "--version"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "rust-version",
+        "command": [
+          "rustc",
+          "-Vv"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "native-build",
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "semantics_probe",
+          "--locked"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "napi-build",
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-napi",
+          "--release",
+          "--locked"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "wasm-build",
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-wasm",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--release",
+          "--locked"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "wasm-bindgen",
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/.cache/m1-tools/bin/wasm-bindgen",
+          "--target",
+          "web",
+          "--out-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/wasm",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/wasm32-unknown-unknown/release/pkl_wasm.wasm"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "oracle-native",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m1_semantics.py",
+          "--candidate",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/semantics_probe",
+          "--output",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/oracle-native"
+        ],
+        "exit_code": 1
+      },
+      {
+        "name": "platforms",
+        "command": [
+          "node",
+          "tools/platform/run.mjs",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/execution",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/wasm",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/pkl_napi.node",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/tests/fixtures/m1/semantics/cases.json"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  "supplemental": [
+    {
+      "group": "renderer",
+      "executionSha256": "38cb6628836cc1ae3332556e37872e6146919f681e3f928d18aafcc317ce1556",
+      "sessionsPerTarget": 44,
+      "callsPerTarget": 860,
+      "counts": {
+        "node": {
+          "success": 652,
+          "error": 208
+        },
+        "browser": {
+          "success": 652,
+          "error": 208
+        }
+      },
+      "readerRequests": {
+        "node": 212,
+        "browser": 212
+      },
+      "observableProjectionEvents": {
+        "node": 0,
+        "browser": 0
+      },
+      "terminalSlotsAllZero": true,
+      "missingAsset404EmptyBody": true
+    },
+    {
+      "group": "resource",
+      "executionSha256": "d25b1be68ad3590304ff7e8ba4d0f2aed81b20a8e536b72520583004f1007187",
+      "sessionsPerTarget": 20,
+      "callsPerTarget": 1008,
+      "counts": {
+        "node": {
+          "success": 812,
+          "error": 196
+        },
+        "browser": {
+          "success": 812,
+          "error": 196
+        }
+      },
+      "readerRequests": {
+        "node": 324,
+        "browser": 324
+      },
+      "observableProjectionEvents": {
+        "node": 0,
+        "browser": 0
+      },
+      "terminalSlotsAllZero": true,
+      "missingAsset404EmptyBody": true
+    },
+    {
+      "group": "module-preparation",
+      "executionSha256": "c7c5febb420f0ba262456f1e130f5d9a5be3230608cfe8f719643d99c4079840",
+      "sessionsPerTarget": 24,
+      "callsPerTarget": 252,
+      "counts": {
+        "node": {
+          "success": 136,
+          "error": 116
+        },
+        "browser": {
+          "success": 136,
+          "error": 116
+        }
+      },
+      "readerRequests": {
+        "node": 44,
+        "browser": 44
+      },
+      "observableProjectionEvents": {
+        "node": 740,
+        "browser": 740
+      },
+      "terminalSlotsAllZero": true,
+      "missingAsset404EmptyBody": true
+    }
+  ],
+  "fullChannelCalls": 4240,
+  "terminalSessions": 176,
+  "actualModuleRequests": [
+    {
+      "target": "node",
+      "requestCounts": {
+        "capabilities": 144,
+        "has-element": 392,
+        "counted-read": 44,
+        "resolve": 36,
+        "load-source": 36,
+        "uncounted-denied-read": 28
+      }
+    },
+    {
+      "target": "browser",
+      "requestCounts": {
+        "capabilities": 144,
+        "has-element": 392,
+        "counted-read": 44,
+        "resolve": 36,
+        "load-source": 36,
+        "uncounted-denied-read": 28
+      }
+    }
+  ],
+  "preparation": {
+    "actualSession": 74277,
+    "exitCode": 0,
+    "restoredReferenceSymlinks": 11,
+    "c06FailedSetupClaimed": false,
+    "priorC05SetupFailuresRemainSeparate": true
+  },
+  "stability": {
+    "explicitRegularInputs": 121273,
+    "explicitLiteralLinks": 23,
+    "changes": []
+  },
+  "ownReadback": {
+    "sessionId": 92252,
+    "actualExitCode": 0,
+    "executionSha256": "70d741bca0bf63e2e413d6ad6e24c9e05debb892a3cc82c8fa16dd7c9f4ac25e"
+  },
+  "qualifications": [
+    "This platform subset only; additional980portable/native1840/CLI4/Rust5 are separate records",
+    "wrongmethod/policy/close/GC and fullM2/performance obligations are not waived",
+    "owned view/collection data are source-bound measurements, no JavaGC trace equivalence",
+    "post-C06 live documentation-only delta does not alter frozen candidate or isolated build evidence"
+  ],
+  "artifacts": {
+    "FINDINGS.ko.md": "5fe2ba11482534f07b9c0235eaae778384fb29c7252e3c73b45904fa6483d764",
+    "candidate-source-binding.json": "9bfbf7c479f7a516e9c62576e5d033f1e8f4a8d2aa84cc83306aea1c2de01e78",
+    "traversal-policy.json": "10eb8d0f297583082d41a5f7871669ce6377e6cb30a304064069672f6c9086d5",
+    "preparation-binding.json": "a9433432884c27a2c51f08594ea5616c92f418c5ca7c15d9a469d3f924de8526",
+    "baseline-raw-audit.json": "3788acbf50b1d386ec79742fcafcca9b292c17b638584509e44d9e7fcc902a94",
+    "supplemental-raw-audit.json": "6fcb7f79598444fce124d986aca5b673d74b6c8194f3a712ec506fb7ca058444",
+    "inputs-before.json": "86cf02e0fe41d25fffd87477cdbc2beab31c45ae4cfe03c62dea3b1e1083fee6",
+    "literal-links-before.json": "307f3a2c53927aff715fb8879a73496a76dce7709f27ec5c89050cf90e65cc09",
+    "source-stability.json": "c7af4e619b9f70afe2c76265c5379123dd823391c6295b3fb432478e8390f38c",
+    "copied-driver-binding.json": "88a7da8e421397f21f3559f8b8d9f2258c1b2bc3f12544aac4d9df9af87bfc5e",
+    "module-provider-readback.json": "d58a597f193d46375700225c1e8112f5a2e83a5f02b97d9a8850975494215571",
+    "audit.py": "ad1d64e7f4c829a4321d3832a65bc3d67a25ecd5df4ab9d49a4a8a862e8f4d41",
+    "module_provider_readback.py": "b21db263255e6e7a04f6bc4e9bacbb17694c4685d7f4c7dc77d804357c39fd53",
+    "module-provider-execution.json": "8fd8e4156cbcfa0b35431b52451a6883c075f444c8b405cd7185b087a419f05a"
+  }
+}

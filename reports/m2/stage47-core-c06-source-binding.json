@@ -1,0 +1,16 @@
+{
+  "release_sha256": "59543feca57c4994116708f9950fdabec97c3d7f3cbc261feafc2d8f074899c9",
+  "source_map_sha256": "f736de4eef08949b42bca21b276da80ee1c914b5ce6dbd442fcc636feb5738f1",
+  "source_modes_sha256": "05b40b66f7b352be834c7701f1dfb6f90dd7a19cd5b8361087a04a035da3b8da",
+  "entries": 51745,
+  "binding_counts": {
+    "pinned-git-blob": 47821,
+    "archived-source-blob": 3918,
+    "separately-published-report-archive": 6
+  },
+  "unresolved": 0,
+  "catalog": "source-bindings-final.json",
+  "catalog_sha256": "98f02d7a22d7af5188ff4913c7a5da8ffea148876a2e5fa12e7aac777bf266d9",
+  "mode_qualification": "Captured executable/source modes remain separate metadata. evidence.py intentionally writes tar mode 0644; archive mode is not claimed as original filesystem mode.",
+  "separate_report_archives": "Six C05 report archives remain separately published, with exact digest/size/source pointers. Their bytes are not recursively included again."
+}

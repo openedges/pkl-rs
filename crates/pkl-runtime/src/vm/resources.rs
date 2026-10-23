@@ -187,7 +187,7 @@ impl Vm {
         let value = match property {
             Property::Uri => Value::String(resource.uri.clone()),
             Property::Text => Value::String(crate::resources::decode_utf8(&resource.bytes)),
-            Property::Bytes => Value::Bytes(resource.bytes.clone()),
+            Property::Bytes => Value::Bytes(resource.bytes.clone().into()),
         };
         self.stack.push(value);
         Ok(())

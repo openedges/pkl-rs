@@ -54,7 +54,7 @@ fn class_argument_arity_precedes_child_resolution_and_shadowing_is_preserved() {
         "Expected 1 type argument(s) but got 2."
     );
     let (mut vm, module) = self::module("typealias Class<T> = T\nshadow: Class<Int> = 42");
-    assert_eq!(member(&mut vm, module, "shadow"), Ok(Value::Int(42)));
+    assert_eq!(member(&mut vm, module, "shadow"), Ok(Value::Int(42.into())));
 }
 
 #[test]
@@ -70,10 +70,13 @@ fn recursive_constraints_compile_as_deferred_blocks_and_check_finite_values() {
     let (mut vm, module) = module(
         "typealias A = Int(this < 0 || (this - 1) is A)\nunused = 42\nidentity = A == A\nshort: A = -1\nfinite: A = 4\nnegative = \"text\" is A",
     );
-    assert_eq!(member(&mut vm, module, "unused"), Ok(Value::Int(42)));
+    assert_eq!(member(&mut vm, module, "unused"), Ok(Value::Int(42.into())));
     assert_eq!(member(&mut vm, module, "identity"), Ok(Value::Bool(true)));
-    assert_eq!(member(&mut vm, module, "short"), Ok(Value::Int(-1)));
-    assert_eq!(member(&mut vm, module, "finite"), Ok(Value::Int(4)));
+    assert_eq!(
+        member(&mut vm, module, "short"),
+        Ok(Value::Int((-1).into()))
+    );
+    assert_eq!(member(&mut vm, module, "finite"), Ok(Value::Int(4.into())));
     assert_eq!(member(&mut vm, module, "negative"), Ok(Value::Bool(false)));
 }
 
@@ -82,8 +85,8 @@ fn mutually_recursive_constraints_and_let_roots_use_the_same_vm_scheduler() {
     let (mut vm, module) = module(
         "typealias A = Int(let (n = this) n < 0 || (n - 1) is B)\ntypealias B = Int(this < 0 || (this - 1) is A)\nvalue: A = 4\nother: B = 3",
     );
-    assert_eq!(member(&mut vm, module, "value"), Ok(Value::Int(4)));
-    assert_eq!(member(&mut vm, module, "other"), Ok(Value::Int(3)));
+    assert_eq!(member(&mut vm, module, "value"), Ok(Value::Int(4.into())));
+    assert_eq!(member(&mut vm, module, "other"), Ok(Value::Int(3.into())));
 }
 
 #[test]
@@ -102,9 +105,12 @@ fn recursively_expanding_generic_constraints_can_be_cancelled_after_bounded_prog
     let (mut vm, module) = module(
         "typealias A<T> = Int(this < 0 || this is A<List<T>>)\nunused = 42\nidentity = A == A\nshort: A<Int> = -1\nunsupported: A<Int> = 1",
     );
-    assert_eq!(member(&mut vm, module, "unused"), Ok(Value::Int(42)));
+    assert_eq!(member(&mut vm, module, "unused"), Ok(Value::Int(42.into())));
     assert_eq!(member(&mut vm, module, "identity"), Ok(Value::Bool(true)));
-    assert_eq!(member(&mut vm, module, "short"), Ok(Value::Int(-1)));
+    assert_eq!(
+        member(&mut vm, module, "short"),
+        Ok(Value::Int((-1).into()))
+    );
     // Preserve the original nonterminating input. Generic expansion now runs;
     // bounded progress and cancellation are the contract of this regression.
     // Unbounded by-value argument growth is a separately recorded stack limit,
@@ -114,9 +120,12 @@ fn recursively_expanding_generic_constraints_can_be_cancelled_after_bounded_prog
         assert!(matches!(vm.poll(100), VmPoll::Yielded));
     }
     vm.cancel();
-    assert_eq!(member(&mut vm, module, "unused"), Ok(Value::Int(42)));
+    assert_eq!(member(&mut vm, module, "unused"), Ok(Value::Int(42.into())));
     assert_eq!(member(&mut vm, module, "identity"), Ok(Value::Bool(true)));
-    assert_eq!(member(&mut vm, module, "short"), Ok(Value::Int(-1)));
+    assert_eq!(
+        member(&mut vm, module, "short"),
+        Ok(Value::Int((-1).into()))
+    );
 }
 
 #[test]
@@ -124,7 +133,7 @@ fn recursive_constraint_type_names_keep_the_alias_declaration_scope() {
     let (mut vm, module) = module(
         "typealias A = Int(this < 0 || (this - 1) is A)\ntypealias B = A\nclass Holder { local A = 42; value: B = 2 }\nresult = new Holder {}.value",
     );
-    assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(2)));
+    assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(2.into())));
 }
 
 #[test]

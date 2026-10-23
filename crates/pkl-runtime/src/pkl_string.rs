@@ -5,8 +5,15 @@
 //! UTF-8 writer is an explicit boundary operation, never a value conversion.
 use std::{cmp::Ordering, fmt, sync::Arc};
 
-#[derive(Clone, PartialEq, Eq)]
-pub struct PklString(Repr);
+#[derive(Clone)]
+pub struct PklString(Repr, crate::value_identity::Token);
+
+impl PartialEq for PklString {
+    fn eq(&self, other: &Self) -> bool {
+        self.0 == other.0
+    }
+}
+impl Eq for PklString {}
 
 #[derive(Clone, PartialEq, Eq)]
 enum Repr {
@@ -15,6 +22,21 @@ enum Repr {
 }
 
 impl PklString {
+    /// AstBuilder emits Java's canonical empty literal for an empty source
+    /// string. Host-provided empty Strings keep their own allocation identity.
+    pub(crate) fn source_literal(&self) -> Self {
+        if self.is_empty() {
+            Self(
+                Repr::Utf8("".into()),
+                crate::value_identity::Token::empty_string(),
+            )
+        } else {
+            self.clone()
+        }
+    }
+    pub(crate) fn reference(&self) -> crate::value_identity::Token {
+        self.1
+    }
     pub(crate) fn join(values: &[Self], separator: &str) -> Self {
         let mut builder = PklStringBuilder::default();
         for (index, value) in values.iter().enumerate() {
@@ -30,7 +52,10 @@ impl PklString {
         let units = units.into();
         match String::from_utf16(&units) {
             Ok(text) => text.into(),
-            Err(_) => Self(Repr::Utf16(units.into())),
+            Err(_) => Self(
+                Repr::Utf16(units.into()),
+                crate::value_identity::Token::fresh(),
+            ),
         }
     }
 
@@ -71,6 +96,34 @@ impl PklString {
                     })
             }
         }
+    }
+
+    /// Java String.substring preserves the receiver for the full interval and
+    /// returns the canonical empty literal for an empty proper substring.
+    pub(crate) fn drop_last_code_points(&self, mut count: u64) -> Self {
+        if count == 0 {
+            return self.clone();
+        }
+        let mut units = self.encode_utf16().collect::<Vec<_>>();
+        let mut end = units.len();
+        while end > 0 && count > 0 {
+            end -= 1;
+            if (0xdc00..=0xdfff).contains(&units[end])
+                && end > 0
+                && (0xd800..=0xdbff).contains(&units[end - 1])
+            {
+                end -= 1;
+            }
+            count -= 1;
+        }
+        if end == 0 {
+            return Self(
+                Repr::Utf8("".into()),
+                crate::value_identity::Token::empty_string(),
+            );
+        }
+        units.truncate(end);
+        Self::from_utf16(units)
     }
 
     pub fn is_empty(&self) -> bool {
@@ -129,19 +182,25 @@ impl Default for PklString {
 
 impl From<&str> for PklString {
     fn from(text: &str) -> Self {
-        Self(Repr::Utf8(text.into()))
+        Self(
+            Repr::Utf8(text.into()),
+            crate::value_identity::Token::fresh(),
+        )
     }
 }
 
 impl From<String> for PklString {
     fn from(text: String) -> Self {
-        Self(Repr::Utf8(text.into()))
+        Self(
+            Repr::Utf8(text.into()),
+            crate::value_identity::Token::fresh(),
+        )
     }
 }
 
 impl From<Arc<str>> for PklString {
     fn from(text: Arc<str>) -> Self {
-        Self(Repr::Utf8(text))
+        Self(Repr::Utf8(text), crate::value_identity::Token::fresh())
     }
 }
 

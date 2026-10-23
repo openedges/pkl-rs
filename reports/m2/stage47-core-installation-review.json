@@ -1,0 +1,75 @@
+{
+  "installationReceiptPath": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage47-core-installation-01/report.json",
+  "installationReceiptSha256": "fa000d991476689fc3d4d55d4d909c121b139dc00d39126691383e2807e59a15",
+  "installedPayloads": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-core-builds-source-binding.tar.gz",
+      "sha256": "dce9ffcde726f749160db782be20ddf79bfb03337bd904fa6bd71633d188ce52",
+      "bytes": 76810540
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-core-carrier-stack-checks.tar.gz",
+      "sha256": "54b087bf936612109ba41fbfa89cbaf19957936d7d20893371dc6e8867b6ea16",
+      "bytes": 63944177
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-core-lifecycle-layout-checks.tar.gz",
+      "sha256": "74ba9cb90f693608f620477b6c7f63c0f0604feb99c7315b102f3bfeb3c0d899",
+      "bytes": 62275682
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-core-originals-rust5-reviews.tar.gz",
+      "sha256": "0cc2bed59382587a340eaf128a498c21e98ba61645f65df287d6ae064d96041c",
+      "bytes": 2061405
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-core-renderer-checks-proposals.tar.gz",
+      "sha256": "c5a49a4c12984362d0f603cb86f301d0bccbea15db0a1b7198fb8182d1a80b8e",
+      "bytes": 21564314
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-core-publication.json",
+      "sha256": "6f68202ecf3a81569ab705139e0dd9cabc52c4caec549b1153417d90e98edb30",
+      "bytes": 12060
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-core-captures.json",
+      "sha256": "b6658f93551ebcb3e5c496e68469c579ffee87fab89e6d61478bdcfccbc4bd0b",
+      "bytes": 17605
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-core-summary.json",
+      "sha256": "0fb4c9c4a5ece4814dcf7b0afe843249b528413e338fb448de43dac7e5edac87",
+      "bytes": 3794
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-core-historical-source-gaps.json",
+      "sha256": "9ceec54cf5a9f867945728113d5109262b68442e8952c3b84121f63b1387a3cb",
+      "bytes": 5309
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-core-c06-source-binding.json",
+      "sha256": "4d3871c98ecefd43b98c21f793553e9c4dd87b63243f9249e0ca63838039e0ce",
+      "bytes": 946
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-core-publication-terminal.json",
+      "sha256": "494286a9604faae83b1951fb578f8304c77a94e85f99b847bf75c21f8944459c",
+      "bytes": 400
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/reports/m2/stage47-core-evidence.md",
+      "sha256": "cda4fdd8f296d134049c144328b0c84f83648072ce1c2356cf62572d1fe6c43b",
+      "bytes": 3273
+    }
+  ],
+  "copied12FilesEqualSourceBytes": true,
+  "historicalCheckExitCounts": {
+    "101": 36,
+    "0": 31,
+    "1": 2
+  },
+  "historicalOutcomeRecordsCompared": 69,
+  "originalRecordedFailuresUnchanged": true,
+  "runtimeReruns": 0
+}

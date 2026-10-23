@@ -54,10 +54,10 @@ fn inline_and_lambda_type_uses_publish_independent_read_nodes() {
             const_failure(member(&mut vm, module, name), "property", "threshold");
         }
         for (name, value) in [
-            ("first", Value::Int(-1)),
-            ("second", Value::Int(-2)),
+            ("first", Value::Int((-1).into())),
+            ("second", Value::Int((-2).into())),
             ("test", Value::Bool(true)),
-            ("cast", Value::Int(-4)),
+            ("cast", Value::Int((-4).into())),
         ] {
             assert_eq!(member(&mut vm, module, name), Ok(value));
         }
@@ -71,10 +71,10 @@ fn let_root_shares_its_read_node_across_distinct_type_uses() {
     );
     const_failure(member(&mut vm, module, "first"), "property", "threshold");
     for (name, value) in [
-        ("second", Value::Int(-2)),
+        ("second", Value::Int((-2).into())),
         ("test", Value::Bool(true)),
-        ("cast", Value::Int(-4)),
-        ("first", Value::Int(-1)),
+        ("cast", Value::Int((-4).into())),
+        ("first", Value::Int((-1).into())),
     ] {
         assert_eq!(member(&mut vm, module, name), Ok(value));
     }
@@ -85,16 +85,16 @@ fn recursive_type_uses_retain_distinct_reached_depths() {
     let (mut vm, module) = module(
         "local threshold=0\ntypealias A=Int(this<0||((this-1)is A&&this<threshold))\nvalue:A=2\nother:A=0\nstable=42",
     );
-    assert_eq!(member(&mut vm, module, "stable"), Ok(Value::Int(42)));
+    assert_eq!(member(&mut vm, module, "stable"), Ok(Value::Int(42.into())));
     for _ in 0..3 {
         const_failure(member(&mut vm, module, "value"), "property", "threshold");
     }
     for _ in 0..3 {
-        assert_eq!(member(&mut vm, module, "value"), Ok(Value::Int(2)));
+        assert_eq!(member(&mut vm, module, "value"), Ok(Value::Int(2.into())));
     }
     const_failure(member(&mut vm, module, "other"), "property", "threshold");
-    assert_eq!(member(&mut vm, module, "other"), Ok(Value::Int(0)));
-    assert_eq!(member(&mut vm, module, "stable"), Ok(Value::Int(42)));
+    assert_eq!(member(&mut vm, module, "other"), Ok(Value::Int(0.into())));
+    assert_eq!(member(&mut vm, module, "stable"), Ok(Value::Int(42.into())));
 }
 
 #[test]
@@ -120,7 +120,7 @@ fn resolved_local_member_does_not_turn_its_failed_value_into_a_success() {
             member(&mut vm, module, "value").unwrap_err().message,
             "body"
         );
-        assert_eq!(member(&mut vm, module, "stable"), Ok(Value::Int(42)));
+        assert_eq!(member(&mut vm, module, "stable"), Ok(Value::Int(42.into())));
     }
 }
 
@@ -141,8 +141,8 @@ fn lazy_collection_elements_share_the_annotation_argument_node() {
             "local threshold=0\ntypealias A=Int(this<threshold)\nvalues:{collection}<{arguments}> =new {collection}{{{body}}}\none=values[{first}]\ntwo=values[{second}]"
         ));
         const_failure(member(&mut vm, module, "one"), "property", "threshold");
-        assert_eq!(member(&mut vm, module, "two"), Ok(Value::Int(-2)));
-        assert_eq!(member(&mut vm, module, "one"), Ok(Value::Int(-1)));
+        assert_eq!(member(&mut vm, module, "two"), Ok(Value::Int((-2).into())));
+        assert_eq!(member(&mut vm, module, "one"), Ok(Value::Int((-1).into())));
     }
 }
 
@@ -152,8 +152,8 @@ fn inherited_annotation_uses_the_declaring_property_node() {
         "local threshold=0\ntypealias A=Int(this<threshold)\nopen class Base{value:A=-1}\nclass Child extends Base{value=-2}\na=new Child{}\nb=new Base{}\none=a.value\ntwo=b.value",
     );
     const_failure(member(&mut vm, module, "one"), "property", "threshold");
-    assert_eq!(member(&mut vm, module, "two"), Ok(Value::Int(-1)));
-    assert_eq!(member(&mut vm, module, "one"), Ok(Value::Int(-2)));
+    assert_eq!(member(&mut vm, module, "two"), Ok(Value::Int((-1).into())));
+    assert_eq!(member(&mut vm, module, "one"), Ok(Value::Int((-2).into())));
 }
 
 #[test]
@@ -168,8 +168,8 @@ fn shared_constraint_code_does_not_elide_a_distinct_lazy_cast_node() {
     let second = member(&mut vm, module, "cast").unwrap();
     assert_ne!(first, second);
     const_failure(member(&mut vm, module, "one"), "property", "threshold");
-    assert_eq!(member(&mut vm, module, "one"), Ok(Value::Int(-1)));
-    assert_eq!(member(&mut vm, module, "two"), Ok(Value::Int(-1)));
+    assert_eq!(member(&mut vm, module, "one"), Ok(Value::Int((-1).into())));
+    assert_eq!(member(&mut vm, module, "two"), Ok(Value::Int((-1).into())));
 }
 
 #[test]
@@ -186,7 +186,7 @@ fn earlier_conditional_checks_do_not_change_later_literal_ownership() {
             let result = if access.starts_with(".apply") {
                 Value::Bool(true)
             } else {
-                Value::Int(-1)
+                Value::Int((-1).into())
             };
             const_failure(member(&mut vm, module, "first"), "property", "threshold");
             assert_eq!(member(&mut vm, module, "first"), Ok(result.clone()));

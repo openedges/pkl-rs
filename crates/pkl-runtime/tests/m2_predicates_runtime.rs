@@ -39,17 +39,17 @@ fn selects_only_parent_entries_and_keeps_replacements_lazy() {
         evaluate(
             "p = new Dynamic { local unused = throw(\"local\"); default = throw(\"default\"); ordinary = throw(\"property\"); [\"x\"] = 1; 2 }; q=(p) { [[this == 1]] = 40; 3 }; result=q[\"x\"]+q[0]+q[1]"
         ),
-        Ok(Value::Int(45))
+        Ok(Value::Int(45.into()))
     );
     assert_eq!(
         evaluate(
             "p=new Listing {1;2}; q=(p){3; [[this==3]]=throw(\"new member\"); [[this==1]]=throw(\"lazy\")}; result=q[1]+q[2]+q.length"
         ),
-        Ok(Value::Int(8))
+        Ok(Value::Int(8.into()))
     );
     assert_eq!(
         evaluate("result=new Listing { [[throw(\"empty\")]]=9 }.length"),
-        Ok(Value::Int(0))
+        Ok(Value::Int(0.into()))
     );
 }
 
@@ -66,7 +66,7 @@ fn predicates_interleave_child_first_forcing_and_condition_execution() {
     assert_eq!(error.message, "forced despite false");
     assert_eq!(
         evaluate("p:Listing<Int> =new Listing {1;\"bad\"};q=(p){[[false]]=9};result=q.length"),
-        Ok(Value::Int(2))
+        Ok(Value::Int(2.into()))
     );
 }
 
@@ -76,23 +76,23 @@ fn predicate_custom_this_closures_lexical_captures_and_nested_contexts() {
         evaluate(
             "limit=1;p=new Listing {1;2};q=(p){for(n in List(1,2)){when(n==1){[[let(v=this) (() -> this==v && this==limit).apply()]]=n+40}}};result=q[0]+q[1]"
         ),
-        Ok(Value::Int(43))
+        Ok(Value::Int(43.into()))
     );
     assert_eq!(
         evaluate(
             "p=new Listing {1;2};q=(p){[[(p){[[this==2]]=4}[1]==4 && this==1]]=9};result=q[0]+q[1]"
         ),
-        Ok(Value::Int(11))
+        Ok(Value::Int(11.into()))
     );
     assert_eq!(
         evaluate(
             "p=new Mapping {[\"a\"] {x=1};[\"b\"] {x=2}};q=(p){[[x==1]] {x=40}};result=q[\"a\"].x+q[\"b\"].x"
         ),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     assert_eq!(
         evaluate("p=new Dynamic {x=1;2};q=(p){x=40;[[true]]=this.x};result=q[0]"),
-        Ok(Value::Int(40))
+        Ok(Value::Int(40.into()))
     );
 }
 
@@ -118,11 +118,11 @@ fn duplicates_are_reported_at_selection_and_conditions_require_boolean() {
     );
     assert_eq!(
         evaluate("class C {x=42};q=new C {when(false){[[throw(\"unreachable\")]]=9}};result=q.x"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     assert_eq!(
         evaluate("q=(null){[[throw(\"empty\")]]=9; x=42};result=q.x"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
 }
 
@@ -130,7 +130,7 @@ fn duplicates_are_reported_at_selection_and_conditions_require_boolean() {
 fn predicate_owner_caches_are_reused_by_other_derived_receivers() {
     assert_eq!(
         evaluate("p=new Dynamic {x=1;x};c=(p){x=2};q=(c){[[false]]=9};result=let(unused=q) p[0]"),
-        Ok(Value::Int(2))
+        Ok(Value::Int(2.into()))
     );
 }
 
@@ -153,7 +153,7 @@ fn suspended_source_and_condition_keep_nested_predicate_state_live() {
         vm.collect(std::slice::from_ref(&root));
         vm.resume(request.id, Ok(Value::string("yes"))).unwrap();
     }
-    assert_eq!(done(&mut vm), Ok(Value::Int(42)));
+    assert_eq!(done(&mut vm), Ok(Value::Int(42.into())));
 }
 
 #[test]
@@ -191,7 +191,7 @@ fn failed_predicate_retries_using_completed_source_cache() {
                 VmPoll::Yielded => {}
                 VmPoll::Ready(value) => {
                     if success {
-                        assert_eq!(value, Ok(Value::Int(42)));
+                        assert_eq!(value, Ok(Value::Int(42.into())));
                     } else {
                         assert_eq!(value.unwrap_err().kind, ErrorKind::Host);
                     }

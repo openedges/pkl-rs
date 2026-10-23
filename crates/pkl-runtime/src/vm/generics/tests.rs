@@ -133,7 +133,7 @@ fn shared_nullable_traversals_and_concurrent_last_release_are_stack_safe() {
             for _ in 0..20_000 {
                 ty = TypeCheck::Nullable(Box::new(ty)).shared();
             }
-            assert!(ty.accepts(&Value::Int(1), &Heap::new()));
+            assert!(ty.accepts(&Value::Int(1.into()), &Heap::new()));
             assert!(!ty.accepts(&Value::Bool(false), &Heap::new()));
             assert_eq!(type_name(&ty, ""), format!("Int{}", "?".repeat(20_000)));
             let other = ty.clone();

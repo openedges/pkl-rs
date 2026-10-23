@@ -214,8 +214,8 @@ pub fn roundtrip_string(input: Utf16String) -> Result<String> {
 }
 #[napi]
 pub fn roundtrip_integer(input: BigInt) -> Result<BigInt> {
-    match probe::identity(Value::Int(integer(input)?)).map_err(error)? {
-        Value::Int(value) => Ok(BigInt::from(value)),
+    match probe::identity(Value::Int(integer(input)?.into())).map_err(error)? {
+        Value::Int(value) => Ok(BigInt::from(value.get())),
         _ => Err(error("invalid engine result")),
     }
 }
@@ -264,7 +264,7 @@ impl HostProbe {
         self.inner
             .respond(
                 &string(&token)?,
-                Value::Int(integer(value)?),
+                Value::Int(integer(value)?.into()),
                 unsigned(now)?,
             )
             .map_err(error)
@@ -818,7 +818,7 @@ impl SourceSession {
         self.inner
             .respond(
                 &string(&token)?,
-                Value::Int(integer(value)?),
+                Value::Int(integer(value)?.into()),
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(&env, failure.message))

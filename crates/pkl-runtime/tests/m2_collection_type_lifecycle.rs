@@ -116,12 +116,12 @@ fn list_checks_retain_lazy_nested_wrappers_while_set_checks_are_eager() {
             let token = host_read(&mut session, 1, "mem:check");
             session.resume(&token, Ok(Value::string("ok")), 1).unwrap();
         }
-        assert_eq!(host_ready(&mut session, 1), Ok(Value::Int(1)));
+        assert_eq!(host_ready(&mut session, 1), Ok(Value::Int(1.into())));
         if constructor == "List" {
             session.start(inspect, vec![module], 2, None).unwrap();
             let token = host_read(&mut session, 2, "mem:check");
             session.resume(&token, Ok(Value::string("ok")), 2).unwrap();
-            assert_eq!(host_ready(&mut session, 2), Ok(Value::Int(7)));
+            assert_eq!(host_ready(&mut session, 2), Ok(Value::Int(7.into())));
         }
         session.close();
         assert_eq!(session.heap_stats().slots, 0);
@@ -151,9 +151,9 @@ inspect = child
     assert_eq!(session.context_depth(), 1);
     assert_eq!(host_read(&mut session, 2, "mem:outer"), outer);
     session.resume(&outer, Ok(Value::string("ok")), 3).unwrap();
-    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(1)));
+    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(1.into())));
     session.start(child, vec![module], 4, None).unwrap();
-    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(1)));
+    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(1.into())));
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
 }
@@ -173,7 +173,7 @@ inspect = checked[0][0]
 "#;
     let (mut session, module, [parent, child, inspect]) = setup(source);
     session.start(child, vec![module.clone()], 1, None).unwrap();
-    assert_eq!(host_ready(&mut session, 1), Ok(Value::Int(1)));
+    assert_eq!(host_ready(&mut session, 1), Ok(Value::Int(1.into())));
     session.collect(std::slice::from_ref(&module));
     session
         .start(parent, vec![module.clone()], 2, None)
@@ -227,11 +227,11 @@ fn failed_eager_check_retries_cached_set_during_parent_reentry() {
         ErrorKind::Host
     );
     session.resume(&retry, Ok(Value::string("ok")), 3).unwrap();
-    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(1)));
+    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(1.into())));
     session
         .reenter(&outer, child, vec![module], 4, None)
         .unwrap();
-    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(1)));
+    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(1.into())));
     session.resume(&outer, Ok(Value::Null), 4).unwrap();
     assert_eq!(host_ready(&mut session, 4), Ok(Value::Null));
     session.close();
@@ -245,6 +245,9 @@ fn repeated_nonterminal_cancel_reclaims_active_collection_type_checks() {
         let mut vm = Vm::new(program.clone());
         vm.start(program.entry, vec![]).unwrap();
         let module = vm_ready(&mut vm).unwrap();
+        // Items is initialized by the checked property annotation.
+        let initialized = vm.collect(&[]);
+        let initialized_values = initialized.live - initialized.executable_live;
         let member = if constructor == "List" {
             "inspect"
         } else {
@@ -273,7 +276,13 @@ fn repeated_nonterminal_cancel_reclaims_active_collection_type_checks() {
             );
             let stats = vm.collect(std::slice::from_ref(&module));
             let live = (stats.live - stats.executable_live, stats.executable_live);
-            assert_eq!(live, (if constructor == "List" { 8 } else { 5 }, 7));
+            assert_eq!(
+                live,
+                (
+                    initialized_values + if constructor == "List" { 5 } else { 2 },
+                    initialized.executable_live + 7
+                )
+            );
             if let Some(expected) = retained {
                 assert_eq!(live, expected);
             } else {
@@ -286,7 +295,11 @@ fn repeated_nonterminal_cancel_reclaims_active_collection_type_checks() {
         vm.resume(token, Ok(Value::string("ok"))).unwrap();
         assert_eq!(
             vm_ready(&mut vm),
-            Ok(Value::Int(if constructor == "List" { 7 } else { 1 }))
+            Ok(Value::Int(if constructor == "List" {
+                7.into()
+            } else {
+                1.into()
+            }))
         );
         vm.close();
         assert_eq!(vm.heap_stats().live, 0);
@@ -315,11 +328,11 @@ fn collection_wrappers_and_pending_actual_arguments_are_evaluator_local() {
     right.start(inspect, vec![right_module]).unwrap();
     let right_read = vm_read(&mut right, "mem:check");
     right.resume(right_read, Ok(Value::string("ok"))).unwrap();
-    assert_eq!(vm_ready(&mut right), Ok(Value::Int(7)));
+    assert_eq!(vm_ready(&mut right), Ok(Value::Int(7.into())));
     right.close();
     left.collect(std::slice::from_ref(&left_module));
     left.resume(left_read, Ok(Value::string("ok"))).unwrap();
-    assert_eq!(vm_ready(&mut left), Ok(Value::Int(7)));
+    assert_eq!(vm_ready(&mut left), Ok(Value::Int(7.into())));
     left.close();
     assert_eq!(left.heap_stats().slots, 0);
     assert_eq!(right.heap_stats().slots, 0);

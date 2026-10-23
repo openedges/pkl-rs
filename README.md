@@ -53,6 +53,12 @@ Complete modifier and type semantics, remaining collection and Reference rules,
 the remaining inheritance and imported-type rules, reflection metadata, and the remaining language corpus are
 required before M2 can close.
 
+The [shared JSON renderer](docs/m2-json-rendering.md) adds render directives,
+property annotation transforms, collection joining and selected boxed-value
+identity rules to the common engine. Its Java fixtures and bounded comparisons
+remain separate from the Stage 46 whole-selection result above. Standard-module
+admission policies, the JSON parser and complete renderer coverage remain open.
+
 ## Goals
 
 - Compatibility with the Pkl 0.32.0 language, standard library, CLI, REPL, server, and public APIs.

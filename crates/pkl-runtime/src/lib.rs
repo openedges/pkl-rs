@@ -25,6 +25,7 @@ mod stdlib_sources;
 mod string_case;
 pub mod syntax;
 pub mod value;
+mod value_identity;
 pub mod vm;
 
 mod strict_map;

@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "status": "verified-local-implementation-checkpoint-awaiting-commit",
+  "createdUtc": "2026-10-23T15:30:04.138907+00:00",
+  "scope": "Shared JSON/PCF rendering, directives/converters, selected reference identity and generator frame history, compact diagnostic metadata, and source-specific lifecycle regression checks. This checkpoint does not complete Stage47 follow-up work or M2.",
+  "candidate": {
+    "name": "C06",
+    "baseCommit": "4facad294bedc3393f7dfbccc2f82439fb0734af",
+    "releaseSha256": "59543feca57c4994116708f9950fdabec97c3d7f3cbc261feafc2d8f074899c9",
+    "sourceMapSha256": "f736de4eef08949b42bca21b276da80ee1c914b5ce6dbd442fcc636feb5738f1",
+    "sourcePaths": 51745,
+    "fullyBoundInputs": 51745,
+    "unresolvedFinalInputs": 0
+  },
+  "provenance": {
+    "execution": "recorded-local",
+    "host": "Darwin arm64",
+    "rust": "1.98.1",
+    "pklBaseline": "0.32.0",
+    "hostedCiClaimed": false
+  },
+  "checks": {
+    "requiredRustCommands": {
+      "passed": 5,
+      "failed": 0,
+      "commands": [
+        "cargo xtask verify",
+        "cargo fmt --all -- --check",
+        "cargo clippy --workspace --all-targets --locked -- -D warnings",
+        "cargo test --workspace --locked",
+        "cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked"
+      ]
+    },
+    "originalCli": {
+      "cases": [
+        "moduleOutput2.pkl",
+        "pcfRenderer9.pkl"
+      ],
+      "repetitionsPerCase": 2,
+      "rawMatches": 4,
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit",
+        "generated-files",
+        "managed-workspace"
+      ]
+    },
+    "rendererApi": {
+      "native": 1840,
+      "node": 1840,
+      "chromium": 1840,
+      "primaryCohort": 860,
+      "supplementaryCohorts": [
+        424,
+        436,
+        120
+      ],
+      "allRawChannelsMatched": true
+    },
+    "resourceApi": {
+      "node": 1008,
+      "chromium": 1008
+    },
+    "modulePreparationApi": {
+      "node": 252,
+      "chromium": 252
+    },
+    "sharedPrimitives": {
+      "crossTargetMatches": 6078,
+      "javaMatchesPerTarget": 6076,
+      "knownRegexMismatches": 2,
+      "strictCompatibilityPassed": false,
+      "architectureContractPassed": true
+    },
+    "permanentIdentityRegression": {
+      "actualJavaObservations": 240,
+      "javaPowerAssertions": true,
+      "rustInstrumentationConfigurations": 2,
+      "rawComparisons": 480,
+      "fixturePythonTestsPassed": 7,
+      "fixtureIntegrityCliPassed": true
+    }
+  },
+  "publishedFullSelectedBaseline": {
+    "stage": 46,
+    "matched": 3650,
+    "selected": 3664,
+    "unsupported": 4,
+    "mismatched": 9,
+    "oracleError": 1,
+    "isC06Result": false
+  },
+  "evidence": {
+    "core": {
+      "path": "reports/m2/stage47-core-captures.json",
+      "sha256": "b6658f93551ebcb3e5c496e68469c579ffee87fab89e6d61478bdcfccbc4bd0b"
+    },
+    "coreSummary": {
+      "path": "reports/m2/stage47-core-summary.json",
+      "sha256": "0fb4c9c4a5ece4814dcf7b0afe843249b528413e338fb448de43dac7e5edac87"
+    },
+    "coreReview": {
+      "path": "reports/m2/stage47-core-publication-review.json",
+      "sha256": "d9affee9432b8659fbf0e670556758146a7160c61130a13414d040c9948b2d4f"
+    },
+    "primaryPlatform": {
+      "path": "reports/m2/stage47-c06-platform-captures.json",
+      "sha256": "c6a7d346fb7fbc2d53a9aa52edb705a8bec3c853f8fffa96e3728578cc18e2cc"
+    },
+    "primaryPlatformCloseout": {
+      "path": "reports/m2/stage47-c06-platform-closeout.json",
+      "sha256": "f9cf31b11e6bd1210c251308c799679b6b858bb49153b675342cd58d1c35676a"
+    },
+    "primaryPlatformAudit": {
+      "path": "reports/m2/stage47-c06-platform-audit.json",
+      "sha256": "4da7aa4a376fca19ddd3568ecb53b5467fdfdcde6c85e4040fa3d98d50d274d1"
+    },
+    "verificationInputs": {
+      "path": "reports/m2/stage47-c06-verification-inputs.json",
+      "sha256": "26c08e86ad6dce72eb6201c17ec93ddcc12f950ed85e5f3ade876eedfe6dc045"
+    },
+    "intermediateC05": {
+      "path": "reports/m2/stage47-c05-platform-summary.json",
+      "sha256": "26972580d07836cb020cf5544f85c8129ea9343997e62c7468c0dbd31f856123"
+    },
+    "nativeAndSupplementaryPortable": {
+      "path": "reports/m2/stage47-renderer-captures.json",
+      "sha256": "760c2ebe4bd2d77f5448c3427a7961b4c8cdc0d7b80e7362475e3d50bb6fbea3"
+    },
+    "rendererPublication": {
+      "path": "reports/m2/stage47-renderer-publication-summary.json",
+      "sha256": "e3b82c24969c9aa1fb309648f2ee16f949db941a32d0cfccfc7403c738781120"
+    }
+  },
+  "qualifications": [
+    "API totals overlap fixtures, repeats, modes and platforms; they are not unique features or an M2 completion percentage.",
+    "Wrong-method 16-call cohort preserves raw observations without proving the intended identity branch.",
+    "Portable reader completions copy bytes and do not preserve the Java/native same-backing-array branch.",
+    "One actual Java power-assertions-enabled baseline is consumed by two Rust instrumentation configurations; no Java off/on comparison is claimed.",
+    "Three source-module initialization polling loops changed to bounded polling with GC; original small-stack limits and subsequent workloads/deadlines remain.",
+    "Hint-only errors can allocate boxed details. No measured size, speed or memory improvement is claimed.",
+    "Seven early intermediate source versions remain hash-only; all C06 inputs are fully bound. Earlier failures remain preserved.",
+    "Post-C06 documentation/publication files are separate from the immutable runtime candidate; final index/commit binding is recorded separately."
+  ],
+  "pending": [
+    "Fresh full selected and persistent regression on the committed Stage47 implementation.",
+    "Evaluator-owned standard-module import-edge trust, resolve/admission and cache policy across shared Host and all bindings.",
+    "Policy 84-call and close 28-call comparison obligations outside the default renderer consumer scope.",
+    "Complete scalar/String/constant-collection identity and remaining language/diagnostic semantics.",
+    "Strict M2 completion gate, release platform matrix and full performance/memory targets."
+  ],
+  "fullM2Complete": false,
+  "performanceTargetsEstablished": false,
+  "archiveInstallation": [
+    {
+      "sourceBasename": "renderer-c06-native.tar.gz",
+      "repositoryPath": "reports/m2/stage47-renderer-c06-native.tar.gz",
+      "sha256": "eae340d1d92d922e416e7f4b44192478ea22eaed1e64b4dcae20f0e0ad55ecb3"
+    },
+    {
+      "sourceBasename": "renderer-c06-portable.tar.gz",
+      "repositoryPath": "reports/m2/stage47-renderer-c06-portable.tar.gz",
+      "sha256": "75120a103a63f84ca7d0ddd88565ac8a181b0339fcd8a5288ade8570444344b8"
+    },
+    {
+      "sourceBasename": "renderer-c06-oracles-tools.tar.gz",
+      "repositoryPath": "reports/m2/stage47-renderer-c06-oracles-tools.tar.gz",
+      "sha256": "9ea79ec774b79d4e0535d6b79523a5fb5cc4bf05c8359c7a8b111fa9dea41192"
+    },
+    {
+      "sourceBasename": "renderer-c06-closeout.tar.gz",
+      "repositoryPath": "reports/m2/stage47-renderer-c06-closeout.tar.gz",
+      "sha256": "dd5eaa79207861fdf67a2bae2930ba5ed3f916c6500e35a2463f659603f36d9c"
+    }
+  ]
+}

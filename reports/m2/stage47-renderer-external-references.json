@@ -1,0 +1,208 @@
+{
+  "gitFixture": {
+    "rootLabel": "stage47-renderer-portable-fixtures-02",
+    "commit": "674d3cabdd0e9c421a2cb9b820a22f2456755629",
+    "manifestSha256": "90f6694ff7637cfbe86e0a1a99f1a2351baba9537018022ffa8e3ff17c52cd77",
+    "authority": "Root-provided committed fixture checkpoint; B confirms exact current original/installed bytes and computes Git blob IDs without invoking Git. Root staged-source binding/capture report is published separately.",
+    "localFixtureRoot": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2-renderer-portable"
+  },
+  "gitFiles": 14996,
+  "canonicalReferences": {
+    "59543feca57c4994116708f9950fdabec97c3d7f3cbc261feafc2d8f074899c9": {
+      "owner": "A-core",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-candidate-build-06/release.json",
+      "sha256": "59543feca57c4994116708f9950fdabec97c3d7f3cbc261feafc2d8f074899c9",
+      "bytes": 3409,
+      "mode": 420,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "f736de4eef08949b42bca21b276da80ee1c914b5ce6dbd442fcc636feb5738f1": {
+      "owner": "A-core",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-candidate-build-06/source-after.json",
+      "sha256": "f736de4eef08949b42bca21b276da80ee1c914b5ce6dbd442fcc636feb5738f1",
+      "bytes": 9909669,
+      "mode": 420,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "05b40b66f7b352be834c7701f1dfb6f90dd7a19cd5b8361087a04a035da3b8da": {
+      "owner": "A-core",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-candidate-build-06/source-modes.json",
+      "sha256": "05b40b66f7b352be834c7701f1dfb6f90dd7a19cd5b8361087a04a035da3b8da",
+      "bytes": 6649734,
+      "mode": 420,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "e38027110d6fa1456d8914082eaea5a875d08276c2f1b9303f63d879a13f53da": {
+      "owner": "A-core",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-candidate-build-06/report.json",
+      "sha256": "e38027110d6fa1456d8914082eaea5a875d08276c2f1b9303f63d879a13f53da",
+      "bytes": 930,
+      "mode": 420,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "caf85e15136091fea7eae984244afa417cfe7cdf44b837c9ad8381cbc425da01": {
+      "owner": "A-core",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-candidate-build-06/environment.json",
+      "sha256": "caf85e15136091fea7eae984244afa417cfe7cdf44b837c9ad8381cbc425da01",
+      "bytes": 1182,
+      "mode": 420,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "395c5bc294a92f0ff31306f174998eb78f5a0594b9705056fec966ebcdd750f6": {
+      "owner": "A-core",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-candidate-build-06/artifacts/module_eval_probe",
+      "sha256": "395c5bc294a92f0ff31306f174998eb78f5a0594b9705056fec966ebcdd750f6",
+      "bytes": 15710816,
+      "mode": 493,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "108a51fb5dd29861132a98383d930a78083a284dfd0bdebd5cd64870b53810c4": {
+      "owner": "A-core",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-candidate-build-06/artifacts/stage45_annotation_probe",
+      "sha256": "108a51fb5dd29861132a98383d930a78083a284dfd0bdebd5cd64870b53810c4",
+      "bytes": 16487016,
+      "mode": 493,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "c29d2fd88e8505bd5478a69cd7cd60929a7fa86900c0b8431d1c850de870c3f6": {
+      "owner": "A-core",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-implementation-01/renderer-candidate-build-06/artifacts/stage47_renderer_probe",
+      "sha256": "c29d2fd88e8505bd5478a69cd7cd60929a7fa86900c0b8431d1c850de870c3f6",
+      "bytes": 16675096,
+      "mode": 493,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "b85f4b2c5aba32e20fd264071ec6a2300b4d450ce5f7e81f7c63a2294083dffd": {
+      "owner": "C-primary-platform",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/report.json",
+      "sha256": "b85f4b2c5aba32e20fd264071ec6a2300b4d450ce5f7e81f7c63a2294083dffd",
+      "bytes": 6821,
+      "mode": 420,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "8dde87e2011d1f43693c0dea007f0f3e5fb5083c849486f13c5edc6efc71ee23": {
+      "owner": "C-primary-platform",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/outer-terminal.json",
+      "sha256": "8dde87e2011d1f43693c0dea007f0f3e5fb5083c849486f13c5edc6efc71ee23",
+      "bytes": 181,
+      "mode": 420,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "8007819e2e65d8e44babde7518b1966074894997592fcd3bd14e38a8fd826dd6": {
+      "owner": "C-primary-platform",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/report.json",
+      "sha256": "8007819e2e65d8e44babde7518b1966074894997592fcd3bd14e38a8fd826dd6",
+      "bytes": 3382168,
+      "mode": 420,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "5215cf99ec2c211c6cc0c2894b46ddec9ab0af2227052722fa06ae964b266062": {
+      "owner": "C-primary-platform",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/sources.json",
+      "sha256": "5215cf99ec2c211c6cc0c2894b46ddec9ab0af2227052722fa06ae964b266062",
+      "bytes": 20152,
+      "mode": 420,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "c6628a82d9aa7babda3f1808aa766936fd2554dae22dff42974bcf3e66eef4ff": {
+      "owner": "C-primary-platform",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/pkl_napi.node",
+      "sha256": "c6628a82d9aa7babda3f1808aa766936fd2554dae22dff42974bcf3e66eef4ff",
+      "bytes": 4226032,
+      "mode": 420,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "5b2b3cf35e7bd73027888716aa5d4ce04f94a5832a5f96c575b768b25e96b880": {
+      "owner": "C-primary-platform",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/wasm/pkl_wasm.js",
+      "sha256": "5b2b3cf35e7bd73027888716aa5d4ce04f94a5832a5f96c575b768b25e96b880",
+      "bytes": 34493,
+      "mode": 420,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    },
+    "fd0965145639448612202cb4fae9403fb07ee55f9adf13aad01477e40041e09a": {
+      "owner": "C-primary-platform",
+      "canonicalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-c06-platform-workspace-01/target/m2/stage47-platform-acquisition-01/baseline/wasm/pkl_wasm_bg.wasm",
+      "sha256": "fd0965145639448612202cb4fae9403fb07ee55f9adf13aad01477e40041e09a",
+      "bytes": 3393243,
+      "mode": 420,
+      "scope": "Externally packaged canonical capture/artifact. Exact hash+length required; no B artifact/source-snapshot copy."
+    }
+  },
+  "priorPublishedArchives": [
+    {
+      "commit": "674d3cabdd0e9c421a2cb9b820a22f2456755629",
+      "repositoryPath": "reports/m2/renderer-tooling-originals.tar.gz",
+      "sha256": "4b2f00a3d51cd14d19adc8f20393bc1200ff1660cbecfd1c5f52695e467c4721",
+      "bytes": 1065097,
+      "scope": "Already published initialjavac/toolfailures,sourceversions,actualchecks andstagedfixturebinding; referencednotduplicated."
+    },
+    {
+      "commit": "674d3cabdd0e9c421a2cb9b820a22f2456755629",
+      "repositoryPath": "reports/m2/renderer-portable-fixture-captures.tar.gz",
+      "sha256": "01c8989733378cacf526dec4e268991b24dab31aea75dd3ff6464a6abc940b92",
+      "bytes": 2170033,
+      "scope": "Already published initialjavac/toolfailures,sourceversions,actualchecks andstagedfixturebinding; referencednotduplicated."
+    }
+  ],
+  "historicalReferences": [
+    {
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-native-c03-01",
+      "reportSha256": "69da380e1b2538ee35e4dd06128a259ede6b4244b9a47d7afef1cda6ce51a7e5",
+      "inventorySha256": "9d33a8874faf9d3067195f178e91053eaa076f6e9ebaeed44b5717cecf5d7244",
+      "closureSha256": "c6f72c0f8331b4d28fbff35e2a29b131b6b17409e1a6d2bcb06381c74287abe1",
+      "selectedFiles": 804,
+      "completeOldRawArchived": false,
+      "scope": "Oldrawcaptures preservedat originalroot andanchoredinventory; selectedmetadata plusall72C03and4C04mismatchingprefix rawfiles archived. C05 remains intermediate, not relabelled C06."
+    },
+    {
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-supplementary-native-c04-01",
+      "reportSha256": "5ce3b5227e466fb43cca8a6c53910ecfba94bb5fb6533f225fbeb03925956b09",
+      "inventorySha256": "17eae114bfa4e8240a3ab5ba17bb3615d1ede62f7a037e412368596686a398d5",
+      "closureSha256": "6cc0bc7e269be1b48745b06f6fd9045f4728b4dde1afaf6f7006c9ca1212da2a",
+      "selectedFiles": 51,
+      "completeOldRawArchived": false,
+      "scope": "Oldrawcaptures preservedat originalroot andanchoredinventory; selectedmetadata plusall72C03and4C04mismatchingprefix rawfiles archived. C05 remains intermediate, not relabelled C06."
+    },
+    {
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-c04-audit-01",
+      "reportSha256": "ffce174e94e24c735da0cddf259beaacf039dc6f4ed0c1cb1bbefa4678eb9662",
+      "inventorySha256": "76e52f744cfe6e8d1bcc4bfa5309dda333ae0f448ed28f92b04c2ccecf3b17ab",
+      "closureSha256": "3da38a270e87ff692958db672dc6c576c4cfc7f0ebcfe1b53e8ca0913a4d2f9a",
+      "selectedFiles": 9,
+      "completeOldRawArchived": false,
+      "scope": "Oldrawcaptures preservedat originalroot andanchoredinventory; selectedmetadata plusall72C03and4C04mismatchingprefix rawfiles archived. C05 remains intermediate, not relabelled C06."
+    },
+    {
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-c05-audit-01",
+      "reportSha256": "b8d6129f056688e3934b9cd0f0bb1243cdef3c70d138bafd583612075db40972",
+      "inventorySha256": "70d83c296a8d625b6cd1453721fa594ea70ebfe1b129e7f1330ee24f79c17ad6",
+      "closureSha256": "0ff138760bdbf4fbff7aac020c3edab01b39d522e986d9b5d9fc02a78a4d472e",
+      "selectedFiles": 8,
+      "completeOldRawArchived": false,
+      "scope": "Oldrawcaptures preservedat originalroot andanchoredinventory; selectedmetadata plusall72C03and4C04mismatchingprefix rawfiles archived. C05 remains intermediate, not relabelled C06."
+    },
+    {
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-oracle11-c05-audit-01",
+      "reportSha256": "0c61ef08cf55c9e58130ed13af0ee22f850be2c5d9ea2b6d3d15acd3f3365b3b",
+      "inventorySha256": "b585a45af19a34bdc9023915137e59859e00a8506915fc50cefc010ebb02c7ef",
+      "closureSha256": "cc01a47612fe6b0b85906748a47f605670d5e44ade5e012ce9a06d2b63cf54a0",
+      "selectedFiles": 8,
+      "completeOldRawArchived": false,
+      "scope": "Oldrawcaptures preservedat originalroot andanchoredinventory; selectedmetadata plusall72C03and4C04mismatchingprefix rawfiles archived. C05 remains intermediate, not relabelled C06."
+    },
+    {
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage47/target/m2/stage47-renderer-supplementary-portable-c05-audit-01",
+      "reportSha256": "f08dc51330c1cdd2f917a6b0965ec77c5d90b694de6ed6f92bd9c0bbe2a7700d",
+      "inventorySha256": "d0010b329573a681c88c1f8390fddaccbc0978e0aa52e9f9175d28f553350963",
+      "closureSha256": "772a28826d2d3da686927d483c46942323f4f2742ce4c0b67e5f63385f193947",
+      "selectedFiles": 13,
+      "completeOldRawArchived": false,
+      "scope": "Oldrawcaptures preservedat originalroot andanchoredinventory; selectedmetadata plusall72C03and4C04mismatchingprefix rawfiles archived. C05 remains intermediate, not relabelled C06."
+    }
+  ],
+  "fullIndexArchive": "renderer-c06-oracles-tools.tar.gz/selection.json",
+  "fullIndexSha256": "109b2636e339afe3313849be14f4678a9c122e03e9cdf1b06a798948735cd5ff",
+  "noBgitCommands": true,
+  "actualModesAndBytes": "AllselectedoriginalfileSHA/size/mode storedinindex. Gitblobs computedfromrawbytecontent; actualGitcommit association is rootprovided."
+}

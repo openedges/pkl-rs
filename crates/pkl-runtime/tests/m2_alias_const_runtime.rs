@@ -37,14 +37,20 @@ fn alias_const_barrier_runs_only_when_the_lexical_read_executes() {
         "local threshold = 0\ntypealias A = Int(this < 0 || this > threshold)\nidentity = A == A\nshort: A = -1\nforced: A = 2\nordinary = threshold",
     );
     assert_eq!(member(&mut vm, module, "identity"), Ok(Value::Bool(true)));
-    assert_eq!(member(&mut vm, module, "short"), Ok(Value::Int(-1)));
+    assert_eq!(
+        member(&mut vm, module, "short"),
+        Ok(Value::Int((-1).into()))
+    );
     let error = member(&mut vm, module, "forced").unwrap_err();
     assert_eq!(
         error.message,
         "Cannot reference property `threshold` from here because it is not `const`."
     );
     assert_eq!(member(&mut vm, module, "identity"), Ok(Value::Bool(true)));
-    assert_eq!(member(&mut vm, module, "ordinary"), Ok(Value::Int(0)));
+    assert_eq!(
+        member(&mut vm, module, "ordinary"),
+        Ok(Value::Int(0.into()))
+    );
 }
 
 #[test]
@@ -56,8 +62,11 @@ fn alias_const_barrier_distinguishes_methods_and_custom_input_properties() {
         member(&mut vm, module, "forced").unwrap_err().message,
         "Cannot call method `threshold` from here because it is not `const`."
     );
-    assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(42)));
-    assert_eq!(member(&mut vm, module, "ordinary"), Ok(Value::Int(0)));
+    assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(42.into())));
+    assert_eq!(
+        member(&mut vm, module, "ordinary"),
+        Ok(Value::Int(0.into()))
+    );
 }
 
 #[test]
@@ -65,5 +74,5 @@ fn alias_const_properties_and_methods_remain_usable_in_nested_constraints() {
     let (mut vm, module) = module(
         "local const threshold = 0\nlocal const function allowed(n) = n > threshold\ntypealias A = Int((value) -> allowed(value))\ntypealias B = A\nresult: B = 42",
     );
-    assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(42)));
+    assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(42.into())));
 }

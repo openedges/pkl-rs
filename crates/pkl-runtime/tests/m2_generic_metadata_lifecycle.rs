@@ -125,9 +125,15 @@ fn original_infinite_growth_yields_cancels_retries_and_drops_on_small_stack() {
                         .unwrap(),
                     LazyState::Unevaluated
                 );
-                assert_eq!(member(&mut vm, &module, "unused"), Ok(Value::Int(42)));
+                assert_eq!(
+                    member(&mut vm, &module, "unused"),
+                    Ok(Value::Int(42.into()))
+                );
                 assert_eq!(member(&mut vm, &module, "identity"), Ok(Value::Bool(true)));
-                assert_eq!(member(&mut vm, &module, "short"), Ok(Value::Int(-1)));
+                assert_eq!(
+                    member(&mut vm, &module, "short"),
+                    Ok(Value::Int((-1).into()))
+                );
                 let stats = vm.collect(std::slice::from_ref(&module));
                 let counts = (stats.live, stats.executable_live);
                 if let Some(previous) = retained {
@@ -144,7 +150,10 @@ fn original_infinite_growth_yields_cancels_retries_and_drops_on_small_stack() {
             drop(vm);
             let mut fresh = Vm::new(program.clone());
             let module = start_module(&mut fresh, program.entry);
-            assert_eq!(member(&mut fresh, &module, "short"), Ok(Value::Int(-1)));
+            assert_eq!(
+                member(&mut fresh, &module, "short"),
+                Ok(Value::Int((-1).into()))
+            );
             fresh.close();
             assert_eq!(fresh.heap_stats().slots, 0);
         },
@@ -179,7 +188,7 @@ fn deep_arguments_survive_captured_closures_gc_failure_retry_and_evaluator_isola
                 .unwrap();
             let right_read = read(&mut right, "mem:leaf");
             right.resume(right_read, Ok(Value::string("ok"))).unwrap();
-            assert_eq!(ready(&mut right), Ok(Value::Int(-1)));
+            assert_eq!(ready(&mut right), Ok(Value::Int((-1).into())));
             right.close();
             assert_eq!(right.heap_stats().slots, 0);
             left.resume(failed, Err(RuntimeError::new(ErrorKind::Host, "deep\0🙂")))
@@ -203,7 +212,7 @@ fn deep_arguments_survive_captured_closures_gc_failure_retry_and_evaluator_isola
             let token = read(&mut left, "mem:leaf");
             assert_ne!(token, failed);
             left.resume(token, Ok(Value::string("ok"))).unwrap();
-            assert_eq!(ready(&mut left), Ok(Value::Int(DEPTH as i64)));
+            assert_eq!(ready(&mut left), Ok(Value::Int((DEPTH as i64).into())));
             left.close();
             assert_eq!(left.heap_stats().slots, 0);
         },
@@ -223,12 +232,12 @@ fn deep_default_and_reference_consumers_are_stack_safe() {
             let module = start_module(&mut vm, program.entry);
             assert_eq!(
                 member(&mut vm, &module, "defaults"),
-                Ok(Value::Int(DEPTH as i64))
+                Ok(Value::Int((DEPTH as i64).into()))
             );
             vm.collect(std::slice::from_ref(&module));
             assert_eq!(
                 member(&mut vm, &module, "references"),
-                Ok(Value::Int(DEPTH as i64))
+                Ok(Value::Int((DEPTH as i64).into()))
             );
             vm.collect(std::slice::from_ref(&module));
             vm.close();

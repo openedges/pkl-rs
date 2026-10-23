@@ -7,7 +7,8 @@ use pkl_runtime::value::Value;
 use pkl_runtime::vm::{Instruction, Program, Vm, VmPoll};
 
 fn call(vm: &mut Vm, seed: i64) -> String {
-    vm.start(0, vec![Value::Int(black_box(seed))]).unwrap();
+    vm.start(0, vec![Value::Int(black_box(seed.into()))])
+        .unwrap();
     match vm.poll(1024) {
         VmPoll::Ready(Ok(Value::Int(value))) => black_box(value).to_string(),
         other => panic!("unexpected bounded workload result: {other:?}"),
@@ -54,7 +55,10 @@ fn main() {
         if specialized {
             block.push(Instruction::AddIntConstant(value));
         } else {
-            block.extend([Instruction::Constant(Value::Int(value)), Instruction::Add]);
+            block.extend([
+                Instruction::Constant(Value::Int(value.into())),
+                Instruction::Add,
+            ]);
         }
     }
     block.push(Instruction::Return);

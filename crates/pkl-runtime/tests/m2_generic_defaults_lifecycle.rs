@@ -134,8 +134,8 @@ fn nullable_defaults_keep_distinct_actual_classes_during_failed_child_reentry_an
         .unwrap();
     let child = host_read(&mut session, 3, "mem:inner");
     assert_ne!(child, failed);
-    session.resume(&child, Ok(Value::Int(7)), 3).unwrap();
-    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(7)));
+    session.resume(&child, Ok(Value::Int(7.into())), 3).unwrap();
+    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(7.into())));
     assert_eq!(host_read(&mut session, 3, "mem:outer"), parent);
     assert_eq!(
         session
@@ -144,8 +144,10 @@ fn nullable_defaults_keep_distinct_actual_classes_during_failed_child_reentry_an
             .kind,
         ErrorKind::Host
     );
-    session.resume(&parent, Ok(Value::Int(42)), 4).unwrap();
-    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(42)));
+    session
+        .resume(&parent, Ok(Value::Int(42.into())), 4)
+        .unwrap();
+    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(42.into())));
     assert_eq!(session.context_depth(), 0);
     session.collect(&[]);
     session.close();
@@ -158,6 +160,9 @@ fn repeated_nonterminal_cancel_reclaims_nullable_defaults_without_losing_type_ro
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     let module = vm_ready(&mut vm).unwrap();
+    // Module property types already initialize both classes and aliases.
+    let initialized = vm.collect(&[]);
+    let initialized_values = initialized.live - initialized.executable_live;
     let object = module.as_object().unwrap();
     let mut retained = None;
     for _ in 0..24 {
@@ -178,7 +183,7 @@ fn repeated_nonterminal_cancel_reclaims_nullable_defaults_without_losing_type_ro
         let live = (stats.live - stats.executable_live, stats.executable_live);
         // Only the module, its Module parent, two classes and two aliases survive.
         // Nullable wrappers, amended defaults, and intermediate collections are temporary.
-        assert_eq!(live.0, 6);
+        assert_eq!(live.0, initialized_values);
         assert!(live.1 > 0);
         if let Some(expected) = retained {
             assert_eq!(live, expected);
@@ -188,8 +193,8 @@ fn repeated_nonterminal_cancel_reclaims_nullable_defaults_without_losing_type_ro
     }
     vm.start_member(object, "outerResult").unwrap();
     let token = vm_read(&mut vm, "mem:outer");
-    vm.resume(token, Ok(Value::Int(42))).unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42)));
+    vm.resume(token, Ok(Value::Int(42.into()))).unwrap();
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42.into())));
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -217,13 +222,13 @@ fn nullable_default_parents_and_reads_are_evaluator_local() {
         .start_member(right_module.as_object().unwrap(), "innerResult")
         .unwrap();
     let right_token = vm_read(&mut right, "mem:inner");
-    right.resume(right_token, Ok(Value::Int(7))).unwrap();
-    assert_eq!(vm_ready(&mut right), Ok(Value::Int(7)));
+    right.resume(right_token, Ok(Value::Int(7.into()))).unwrap();
+    assert_eq!(vm_ready(&mut right), Ok(Value::Int(7.into())));
     right.close();
     assert_eq!(right.heap_stats().slots, 0);
     left.collect(std::slice::from_ref(&left_module));
-    left.resume(left_token, Ok(Value::Int(42))).unwrap();
-    assert_eq!(vm_ready(&mut left), Ok(Value::Int(42)));
+    left.resume(left_token, Ok(Value::Int(42.into()))).unwrap();
+    assert_eq!(vm_ready(&mut left), Ok(Value::Int(42.into())));
     left.close();
     assert_eq!(left.heap_stats().slots, 0);
 }
@@ -264,8 +269,8 @@ result = saved.apply(0)
     vm.start_member(object, "result").unwrap();
     let token = vm_read(&mut vm, "mem:captured");
     assert_ne!(token, failed);
-    vm.resume(token, Ok(Value::Int(42))).unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42)));
+    vm.resume(token, Ok(Value::Int(42.into()))).unwrap();
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42.into())));
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -296,7 +301,7 @@ fn nullable_default_handles_cross_vm_inputs_and_host_completions_with_heap_valid
     program.blocks.push(vec![I::Input(0), I::Return]);
     let transient = program.blocks.len();
     program.blocks.push(vec![
-        I::Constant(Value::Int(1)),
+        I::Constant(Value::Int(1.into())),
         I::WrapNullableDefault { defined: true },
         I::Return,
     ]);
@@ -324,7 +329,7 @@ fn nullable_default_handles_cross_vm_inputs_and_host_completions_with_heap_valid
         .unwrap();
     let right_nullable = vm_ready(&mut right).unwrap();
     left.start(amend, vec![nullable.clone()]).unwrap();
-    assert_eq!(vm_ready(&mut left), Ok(Value::Int(42)));
+    assert_eq!(vm_ready(&mut left), Ok(Value::Int(42.into())));
     left.start(read, vec![]).unwrap();
     let token = vm_read(&mut left, "mem:wrapper");
     left.collect(&[module, nullable.clone()]);
@@ -333,7 +338,7 @@ fn nullable_default_handles_cross_vm_inputs_and_host_completions_with_heap_valid
         ErrorKind::StaleHandle
     );
     left.resume(token, Ok(nullable.clone())).unwrap();
-    assert_eq!(vm_ready(&mut left), Ok(Value::Int(42)));
+    assert_eq!(vm_ready(&mut left), Ok(Value::Int(42.into())));
     // A separate temporary wrapper is not retained by a module member cache.
     left.start(transient, vec![]).unwrap();
     let stale = vm_ready(&mut left).unwrap();

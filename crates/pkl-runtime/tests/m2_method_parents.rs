@@ -75,7 +75,11 @@ fn method_defaults_follow_return_type_aliases_nullable_unions_and_body_paths() {
             11,
         ),
     ] {
-        assert_eq!(evaluate(source), Ok(Value::Int(expected)), "{source}");
+        assert_eq!(
+            evaluate(source),
+            Ok(Value::Int(expected.into())),
+            "{source}"
+        );
     }
 }
 
@@ -115,7 +119,11 @@ fn inherited_and_local_methods_keep_their_return_type_owner_and_captures() {
             9,
         ),
     ] {
-        assert_eq!(evaluate(source), Ok(Value::Int(expected)), "{source}");
+        assert_eq!(
+            evaluate(source),
+            Ok(Value::Int(expected.into())),
+            "{source}"
+        );
     }
 }
 
@@ -124,7 +132,7 @@ fn missing_defaults_remain_lazy_and_first_errors_precede_amendment_members() {
     for ty in ["Int", "Any", "String", "C | Int", "A", "Abstract"] {
         let prefix = "class C {}\nabstract class Abstract {}\ntypealias A = unknown\n";
         let unused = format!("{prefix}function make(): {ty} = new {{}}\nresult = 7");
-        assert_eq!(evaluate(&unused), Ok(Value::Int(7)), "{ty}");
+        assert_eq!(evaluate(&unused), Ok(Value::Int(7.into())), "{ty}");
         let used = format!(
             "{prefix}function make(): {ty} = new {{ x = throw(\"body\") }}\nresult = make()"
         );
@@ -148,7 +156,7 @@ fn missing_defaults_remain_lazy_and_first_errors_precede_amendment_members() {
     }
     assert_eq!(
         evaluate("function make(): Any = if (false) new {} else 7\nresult = make()"),
-        Ok(Value::Int(7))
+        Ok(Value::Int(7.into()))
     );
     let source = "class C {}\nfunction make(): C = if (new {}) new {} else new {}\nresult = make()";
     let error = evaluate(source).unwrap_err();
@@ -269,8 +277,8 @@ result = (new Factory {}).make(2)[0].value
     let VmPoll::Pending(read) = event(&mut vm) else {
         panic!("expected retry Host read")
     };
-    vm.resume(read.id, Ok(Value::Int(30))).unwrap();
-    assert_eq!(ready(&mut vm), Ok(Value::Int(42)));
+    vm.resume(read.id, Ok(Value::Int(30.into()))).unwrap();
+    assert_eq!(ready(&mut vm), Ok(Value::Int(42.into())));
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }

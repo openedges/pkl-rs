@@ -7,7 +7,7 @@ use std::sync::Arc;
 
 fn reader() -> HostSession {
     HostSession::new(Arc::new(Program::new(vec![vec![
-        I::Constant(Value::Int(40)),
+        I::Constant(Value::Int(40.into())),
         I::Input(0),
         I::ReadResource,
         I::Add,
@@ -45,27 +45,35 @@ fn suspended_stack_survives_and_completions_are_exactly_once() {
         session.start(0, vec![], 12, None).unwrap_err().kind,
         ErrorKind::Busy
     );
-    session.resume(&token, Ok(Value::Int(2)), 13).unwrap();
+    session
+        .resume(&token, Ok(Value::Int(2.into())), 13)
+        .unwrap();
     assert_eq!(
         session
-            .resume(&token, Ok(Value::Int(5)), 13)
+            .resume(&token, Ok(Value::Int(5.into())), 13)
             .unwrap_err()
             .kind,
         ErrorKind::Host
     );
-    assert_eq!(session.poll(13, 100), HostPoll::Ready(Ok(Value::Int(42))));
+    assert_eq!(
+        session.poll(13, 100),
+        HostPoll::Ready(Ok(Value::Int(42.into())))
+    );
     start(&mut session, 14, 100);
     let next = request(&mut session, 14);
     assert_ne!(token, next);
     assert_eq!(
         session
-            .resume(&token, Ok(Value::Int(2)), 14)
+            .resume(&token, Ok(Value::Int(2.into())), 14)
             .unwrap_err()
             .kind,
         ErrorKind::Host
     );
-    session.resume(&next, Ok(Value::Int(3)), 14).unwrap();
-    assert_eq!(session.poll(14, 100), HostPoll::Ready(Ok(Value::Int(43))));
+    session.resume(&next, Ok(Value::Int(3.into())), 14).unwrap();
+    assert_eq!(
+        session.poll(14, 100),
+        HostPoll::Ready(Ok(Value::Int(43.into())))
+    );
 }
 
 #[test]
@@ -78,12 +86,14 @@ fn request_identity_cannot_cross_evaluators_or_accept_noncanonical_tokens() {
     let bt = request(&mut b, 0);
     for token in [at, format!("0{bt}"), "invalid".into()] {
         assert_eq!(
-            b.resume(&token, Ok(Value::Int(2)), 1).unwrap_err().kind,
+            b.resume(&token, Ok(Value::Int(2.into())), 1)
+                .unwrap_err()
+                .kind,
             ErrorKind::Host
         );
     }
-    b.resume(&bt, Ok(Value::Int(2)), 1).unwrap();
-    assert_eq!(b.poll(1, 100), HostPoll::Ready(Ok(Value::Int(42))));
+    b.resume(&bt, Ok(Value::Int(2.into())), 1).unwrap();
+    assert_eq!(b.poll(1, 100), HostPoll::Ready(Ok(Value::Int(42.into()))));
 }
 
 #[test]
@@ -93,7 +103,7 @@ fn timeout_wins_at_deadline_even_while_waiting_and_closes_permanently() {
     let token = request(&mut session, 1);
     assert_eq!(
         session
-            .resume(&token, Ok(Value::Int(2)), 10)
+            .resume(&token, Ok(Value::Int(2.into())), 10)
             .unwrap_err()
             .kind,
         ErrorKind::Timeout
@@ -106,7 +116,7 @@ fn timeout_wins_at_deadline_even_while_waiting_and_closes_permanently() {
     );
     assert_eq!(
         session
-            .resume(&token, Ok(Value::Int(2)), 11)
+            .resume(&token, Ok(Value::Int(2.into())), 11)
             .unwrap_err()
             .kind,
         ErrorKind::Closed
@@ -136,7 +146,7 @@ fn cancellation_close_and_host_failures_have_distinct_lifetimes() {
         );
         assert_eq!(
             session
-                .resume(&token, Ok(Value::Int(2)), 1)
+                .resume(&token, Ok(Value::Int(2.into())), 1)
                 .unwrap_err()
                 .kind,
             ErrorKind::Closed
@@ -190,7 +200,7 @@ fn adapters_use_real_frontend_and_vm_and_reject_dangling_objects() {
     use pkl_runtime::probe::evaluate_member;
     assert_eq!(
         evaluate_member("answer = 40 + 2", "answer"),
-        Ok(Value::Int(42))
+        Ok(Value::Int(42.into()))
     );
     assert!(evaluate_member("answer = new { value = 1 }", "answer").is_err());
     assert!(evaluate_member("answer = 1 +", "answer").is_err());
@@ -274,7 +284,7 @@ fn nested_contexts_share_member_cache_preserve_parent_and_reject_out_of_order_co
     assert_eq!(session.context_depth(), 2);
     assert_eq!(
         session
-            .resume(&outer, Ok(Value::Int(500)), 1)
+            .resume(&outer, Ok(Value::Int(500.into())), 1)
             .unwrap_err()
             .kind,
         ErrorKind::Host
@@ -286,30 +296,41 @@ fn nested_contexts_share_member_cache_preserve_parent_and_reject_out_of_order_co
             .kind,
         ErrorKind::Host
     );
-    session.resume(&inner, Ok(Value::Int(2)), 2).unwrap();
+    session.resume(&inner, Ok(Value::Int(2.into())), 2).unwrap();
     // Even after resume, the inner continuation must finish before the parent can resume.
     assert_eq!(
         session
-            .resume(&outer, Ok(Value::Int(500)), 2)
+            .resume(&outer, Ok(Value::Int(500.into())), 2)
             .unwrap_err()
             .kind,
         ErrorKind::Host
     );
-    assert_eq!(session.poll(2, 100), HostPoll::Ready(Ok(Value::Int(2))));
+    assert_eq!(
+        session.poll(2, 100),
+        HostPoll::Ready(Ok(Value::Int(2.into())))
+    );
     assert_eq!(session.context_depth(), 1);
     assert_eq!(request(&mut session, 2), outer);
     assert_eq!(
         session
-            .resume(&inner, Ok(Value::Int(3)), 2)
+            .resume(&inner, Ok(Value::Int(3.into())), 2)
             .unwrap_err()
             .kind,
         ErrorKind::Host
     );
-    session.resume(&outer, Ok(Value::Int(40)), 2).unwrap();
+    session
+        .resume(&outer, Ok(Value::Int(40.into())), 2)
+        .unwrap();
     // No additional shared-member read: the inner completion populated this same object.
-    assert_eq!(session.poll(2, 100), HostPoll::Ready(Ok(Value::Int(42))));
+    assert_eq!(
+        session.poll(2, 100),
+        HostPoll::Ready(Ok(Value::Int(42.into())))
+    );
     session.start(2, vec![object], 3, None).unwrap();
-    assert_eq!(session.poll(3, 100), HostPoll::Ready(Ok(Value::Int(2))));
+    assert_eq!(
+        session.poll(3, 100),
+        HostPoll::Ready(Ok(Value::Int(2.into())))
+    );
     assert!(session.drain_cancelled_reads().is_empty());
 }
 
@@ -341,10 +362,18 @@ fn nested_failure_retries_and_failed_callback_attempt_preserves_parent_lazy_mark
     session.reenter(&outer, 2, vec![object], 0, None).unwrap();
     let retry = request(&mut session, 0);
     assert_ne!(failed, retry);
-    session.resume(&retry, Ok(Value::Int(2)), 0).unwrap();
-    assert_eq!(session.poll(0, 100), HostPoll::Ready(Ok(Value::Int(2))));
-    session.resume(&outer, Ok(Value::Int(40)), 0).unwrap();
-    assert_eq!(session.poll(0, 100), HostPoll::Ready(Ok(Value::Int(42))));
+    session.resume(&retry, Ok(Value::Int(2.into())), 0).unwrap();
+    assert_eq!(
+        session.poll(0, 100),
+        HostPoll::Ready(Ok(Value::Int(2.into())))
+    );
+    session
+        .resume(&outer, Ok(Value::Int(40.into())), 0)
+        .unwrap();
+    assert_eq!(
+        session.poll(0, 100),
+        HostPoll::Ready(Ok(Value::Int(42.into())))
+    );
 }
 
 #[test]
@@ -356,12 +385,24 @@ fn suspended_parent_roots_survive_collection_in_child() {
     session.reenter(&outer, 4, vec![], 0, None).unwrap();
     let inner = request(&mut session, 0);
     assert_eq!(session.collect(&[]).live, 1);
-    session.resume(&inner, Ok(Value::Int(99)), 0).unwrap();
-    assert_eq!(session.poll(0, 100), HostPoll::Ready(Ok(Value::Int(99))));
-    session.resume(&outer, Ok(Value::Int(40)), 0).unwrap();
+    session
+        .resume(&inner, Ok(Value::Int(99.into())), 0)
+        .unwrap();
+    assert_eq!(
+        session.poll(0, 100),
+        HostPoll::Ready(Ok(Value::Int(99.into())))
+    );
+    session
+        .resume(&outer, Ok(Value::Int(40.into())), 0)
+        .unwrap();
     let shared = request(&mut session, 0);
-    session.resume(&shared, Ok(Value::Int(2)), 0).unwrap();
-    assert_eq!(session.poll(0, 100), HostPoll::Ready(Ok(Value::Int(42))));
+    session
+        .resume(&shared, Ok(Value::Int(2.into())), 0)
+        .unwrap();
+    assert_eq!(
+        session.poll(0, 100),
+        HostPoll::Ready(Ok(Value::Int(42.into())))
+    );
     assert_eq!(session.collect(&[]).live, 0);
 }
 
@@ -426,7 +467,7 @@ fn terminal_lifecycle_releases_all_contexts_and_drains_pending_reads_once() {
         for token in tokens {
             assert_eq!(
                 session
-                    .resume(&token, Ok(Value::Int(1)), 10)
+                    .resume(&token, Ok(Value::Int(1.into())), 10)
                     .unwrap_err()
                     .kind,
                 ErrorKind::Closed
@@ -492,8 +533,11 @@ fn bounded_context_stack_rejects_overflow_without_losing_any_parent() {
     );
     assert_eq!(request(&mut session, 0), *tokens.last().unwrap());
     for token in tokens.into_iter().rev() {
-        session.resume(&token, Ok(Value::Int(2)), 0).unwrap();
-        assert_eq!(session.poll(0, 100), HostPoll::Ready(Ok(Value::Int(42))));
+        session.resume(&token, Ok(Value::Int(2.into())), 0).unwrap();
+        assert_eq!(
+            session.poll(0, 100),
+            HostPoll::Ready(Ok(Value::Int(42.into())))
+        );
     }
     assert_eq!(session.context_depth(), 0);
     assert!(session.drain_cancelled_reads().is_empty());

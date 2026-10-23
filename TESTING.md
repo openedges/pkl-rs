@@ -122,6 +122,27 @@ python3 -W error::ResourceWarning -m unittest discover -s tools/tests -p 'test_r
 The renderer platform driver requires separately recorded binding artifacts.
 Offline fixture success does not establish runtime or platform compatibility.
 
+The compact frame-identity fixture preserves three unchanged Java programs,
+12 evaluator sessions and 240 complete API observations. It covers ordinary and
+typed-union generator frame restoration and numeric constants in distinct tagged
+instances. Its verifier authenticates the original Java records and both TSV
+indexes before accepting their exact file set:
+
+```sh
+python3 tools/renderer_identity_fixtures.py --fixtures tests/fixtures/m2-renderer-frame-identity
+python3 -m unittest discover -s tools/tests -p 'test_renderer_identity_fixtures.py' -v
+cargo test -p pkl-runtime --locked --test m2_renderer_frame_identity_oracle
+```
+
+The Rust regression consumes the same 240 observations with Observe disabled and
+enabled, comparing status, complete UTF-16 channels and Java UTF-8 bytes. The
+actual Java acquisition used power assertions enabled only. These are two Rust
+configurations, not two Java baselines. Every unexpected Host effect fails the
+test; collection runs after each poll and closure must release all slots. The
+fixture is a subset of separately acquired renderer observations and does not
+add independent whole-language coverage. Policy profiles, explicit-close API
+parity, complete producer identity and equivalent GC event traces remain separate.
+
 The [module preparation platform contract](docs/m2-module-preparation-platforms.md)
 adds exact provider-input lookup and ordered Java-observable policy comparisons.
 Its 252 selected calls distinguish resource policy denial from a counted reader

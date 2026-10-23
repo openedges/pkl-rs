@@ -146,11 +146,17 @@ fn host_setup() -> (HostSession, Value, [usize; 6]) {
 fn same_site_reentry_publishes_local_resolution_without_completing_parent_value() {
     let (mut session, module, [same, _, _, _, _, _]) = host_setup();
     session
-        .start(same, vec![module.clone(), Value::Int(2)], 1, None)
+        .start(same, vec![module.clone(), Value::Int(2.into())], 1, None)
         .unwrap();
     let parent = host_read(&mut session, 1, "mem:gate");
     session
-        .reenter(&parent, same, vec![module.clone(), Value::Int(3)], 2, None)
+        .reenter(
+            &parent,
+            same,
+            vec![module.clone(), Value::Int(3.into())],
+            2,
+            None,
+        )
         .unwrap();
     let child = host_read(&mut session, 2, "mem:gate");
     session.resume(&child, Ok(Value::string("ok")), 2).unwrap();
@@ -184,7 +190,7 @@ fn different_inline_and_lambda_sites_keep_resolution_independent_but_let_root_sh
             (right, false),
         ] {
             session
-                .start(entry, vec![module.clone(), Value::Int(2)], 1, None)
+                .start(entry, vec![module.clone(), Value::Int(2.into())], 1, None)
                 .unwrap();
             let token = host_read(&mut session, 1, uri);
             session.resume(&token, Ok(Value::string("ok")), 1).unwrap();
@@ -204,12 +210,18 @@ fn different_inline_and_lambda_sites_keep_resolution_independent_but_let_root_sh
 fn failed_different_site_reentry_does_not_publish_parent_site_resolution() {
     let (mut session, module, [same, other, _, _, _, _]) = host_setup();
     session
-        .start(same, vec![module.clone(), Value::Int(2)], 1, None)
+        .start(same, vec![module.clone(), Value::Int(2.into())], 1, None)
         .unwrap();
     let parent = host_read(&mut session, 1, "mem:gate");
     for must_fail in [true, false] {
         session
-            .reenter(&parent, other, vec![module.clone(), Value::Int(3)], 2, None)
+            .reenter(
+                &parent,
+                other,
+                vec![module.clone(), Value::Int(3.into())],
+                2,
+                None,
+            )
             .unwrap();
         let child = host_read(&mut session, 2, "mem:gate");
         session.resume(&child, Ok(Value::string("ok")), 2).unwrap();
@@ -237,7 +249,8 @@ fn host_failure_and_nonterminal_cancel_preserve_only_published_node_state() {
     // Reads fail or cancel before reaching local lookup, so neither should skip
     // the first const error when the source finally reaches that lookup.
     for cancel in [false, true] {
-        vm.start(same, vec![module.clone(), Value::Int(2)]).unwrap();
+        vm.start(same, vec![module.clone(), Value::Int(2.into())])
+            .unwrap();
         let token = vm_read(&mut vm, "mem:gate");
         if cancel {
             vm.cancel();
@@ -255,7 +268,8 @@ fn host_failure_and_nonterminal_cancel_preserve_only_published_node_state() {
         }
         old.push(token);
     }
-    vm.start(same, vec![module.clone(), Value::Int(2)]).unwrap();
+    vm.start(same, vec![module.clone(), Value::Int(2.into())])
+        .unwrap();
     let token = vm_read(&mut vm, "mem:gate");
     vm.resume(token, Ok(Value::string("ok"))).unwrap();
     assert_const_error(vm_ready(&mut vm));
@@ -264,14 +278,15 @@ fn host_failure_and_nonterminal_cancel_preserve_only_published_node_state() {
     // the same retained graph after each canceled call, including GC at yields.
     let retained = vm.collect(std::slice::from_ref(&module)).live;
     for _ in 0..32 {
-        vm.start(same, vec![module.clone(), Value::Int(2)]).unwrap();
+        vm.start(same, vec![module.clone(), Value::Int(2.into())])
+            .unwrap();
         let token = vm_read(&mut vm, "mem:gate");
         vm.cancel();
         assert_eq!(vm_ready(&mut vm).unwrap_err().kind, ErrorKind::Cancelled);
         assert_eq!(vm.collect(std::slice::from_ref(&module)).live, retained);
         old.push(token);
     }
-    vm.start(same, vec![module, Value::Int(2)]).unwrap();
+    vm.start(same, vec![module, Value::Int(2.into())]).unwrap();
     let token = vm_read(&mut vm, "mem:gate");
     for stale in old {
         assert_ne!(stale, token);
@@ -314,7 +329,7 @@ stable = 42
     let module = vm_ready(&mut vm).unwrap();
     let object = module.as_object().unwrap();
     vm.start_member(object, "stable").unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42)));
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42.into())));
     for attempt in 0..6 {
         vm.start_member(object, "value").unwrap();
         let result = vm_ready(&mut vm);
@@ -325,24 +340,27 @@ stable = 42
                 LazyState::Unevaluated
             );
         } else {
-            assert_eq!(result, Ok(Value::Int(2)));
+            assert_eq!(result, Ok(Value::Int(2.into())));
         }
     }
     // A separate function type use owns its own recursively discovered prefix.
     for _ in 0..3 {
-        vm.start(call, vec![module.clone(), Value::Int(2)]).unwrap();
+        vm.start(call, vec![module.clone(), Value::Int(2.into())])
+            .unwrap();
         assert_const_error(vm_ready(&mut vm));
     }
-    vm.start(call, vec![module.clone(), Value::Int(2)]).unwrap();
+    vm.start(call, vec![module.clone(), Value::Int(2.into())])
+        .unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(Value::Bool(true)));
     let retained = vm.collect(std::slice::from_ref(&module)).live;
     for _ in 0..32 {
-        vm.start(call, vec![module.clone(), Value::Int(2)]).unwrap();
+        vm.start(call, vec![module.clone(), Value::Int(2.into())])
+            .unwrap();
         assert_eq!(vm_ready(&mut vm), Ok(Value::Bool(true)));
         assert_eq!(vm.collect(std::slice::from_ref(&module)).live, retained);
     }
     vm.start_member(object, "stable").unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42)));
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42.into())));
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -366,7 +384,7 @@ fn lazy_wrapper_argument_node_survives_failure_and_is_shared_across_members() {
         vm.resume(read, Ok(Value::string("ok"))).unwrap();
         let result = vm_ready(&mut vm);
         if let Some(value) = expected {
-            assert_eq!(result, Ok(Value::Int(value)));
+            assert_eq!(result, Ok(Value::Int(value.into())));
         } else {
             assert_const_error(result);
             assert_eq!(
@@ -389,21 +407,23 @@ fn shared_program_local_resolution_and_heap_handles_are_evaluator_local() {
     right.start(program.entry, vec![]).unwrap();
     let right_module = vm_ready(&mut right).unwrap();
     for (vm, module) in [(&mut left, &left_module), (&mut right, &right_module)] {
-        vm.start(same, vec![module.clone(), Value::Int(2)]).unwrap();
+        vm.start(same, vec![module.clone(), Value::Int(2.into())])
+            .unwrap();
         let token = vm_read(vm, "mem:gate");
         vm.resume(token, Ok(Value::string("ok"))).unwrap();
         assert_const_error(vm_ready(vm));
     }
     assert_eq!(
         right
-            .start(same, vec![left_module.clone(), Value::Int(2)])
+            .start(same, vec![left_module.clone(), Value::Int(2.into())])
             .unwrap_err()
             .kind,
         ErrorKind::StaleHandle
     );
     right.close();
     assert_eq!(right.heap_stats().slots, 0);
-    left.start(same, vec![left_module, Value::Int(2)]).unwrap();
+    left.start(same, vec![left_module, Value::Int(2.into())])
+        .unwrap();
     let token = vm_read(&mut left, "mem:gate");
     left.resume(token, Ok(Value::string("ok"))).unwrap();
     assert_eq!(vm_ready(&mut left), Ok(Value::Bool(true)));
@@ -443,7 +463,7 @@ fn earlier_branch_checks_do_not_split_later_lambda_owners_during_host_reentry() 
         session.start(entry, vec![], 0, None).unwrap();
         let module = host_ready(&mut session, 0).unwrap();
         session
-            .start(first, vec![module.clone(), Value::Int(2)], 1, None)
+            .start(first, vec![module.clone(), Value::Int(2.into())], 1, None)
             .unwrap();
         let initial = host_read(&mut session, 1, "mem:gate");
         session
@@ -451,14 +471,14 @@ fn earlier_branch_checks_do_not_split_later_lambda_owners_during_host_reentry() 
             .unwrap();
         assert_const_error(host_ready(&mut session, 1));
         session
-            .start(first, vec![module.clone(), Value::Int(2)], 2, None)
+            .start(first, vec![module.clone(), Value::Int(2.into())], 2, None)
             .unwrap();
         let parent = host_read(&mut session, 2, "mem:gate");
         session
             .reenter(
                 &parent,
                 second,
-                vec![module.clone(), Value::Int(3)],
+                vec![module.clone(), Value::Int(3.into())],
                 3,
                 None,
             )
@@ -477,7 +497,7 @@ fn earlier_branch_checks_do_not_split_later_lambda_owners_during_host_reentry() 
         );
         assert_eq!(host_read(&mut session, 3, "mem:gate"), parent);
         session
-            .reenter(&parent, second, vec![module, Value::Int(3)], 4, None)
+            .reenter(&parent, second, vec![module, Value::Int(3.into())], 4, None)
             .unwrap();
         let retry = host_read(&mut session, 4, "mem:gate");
         assert_eq!(
@@ -505,14 +525,14 @@ fn branch_independent_lambda_cache_survives_cancellation_without_graph_growth() 
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     let module = vm_ready(&mut vm).unwrap();
-    vm.start(first, vec![module.clone(), Value::Int(2)])
+    vm.start(first, vec![module.clone(), Value::Int(2.into())])
         .unwrap();
     let read = vm_read(&mut vm, "mem:gate");
     vm.resume(read, Ok(Value::string("ok"))).unwrap();
     assert_const_error(vm_ready(&mut vm));
     let mut retained = None;
     for _ in 0..16 {
-        vm.start(second, vec![module.clone(), Value::Int(3)])
+        vm.start(second, vec![module.clone(), Value::Int(3.into())])
             .unwrap();
         let read = vm_read(&mut vm, "mem:gate");
         vm.cancel();
@@ -529,7 +549,8 @@ fn branch_independent_lambda_cache_survives_cancellation_without_graph_growth() 
             ErrorKind::Host
         );
     }
-    vm.start(second, vec![module, Value::Int(3)]).unwrap();
+    vm.start(second, vec![module, Value::Int(3.into())])
+        .unwrap();
     let read = vm_read(&mut vm, "mem:gate");
     vm.resume(read, Ok(Value::string("ok"))).unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(Value::Bool(true)));
@@ -544,14 +565,14 @@ fn terminal_events_release_node_graphs_and_both_pending_contexts() {
         session
             .start(
                 same,
-                vec![module.clone(), Value::Int(2)],
+                vec![module.clone(), Value::Int(2.into())],
                 1,
                 (kind == ErrorKind::Timeout).then_some(5),
             )
             .unwrap();
         let parent = host_read(&mut session, 1, "mem:gate");
         session
-            .reenter(&parent, other, vec![module, Value::Int(3)], 2, None)
+            .reenter(&parent, other, vec![module, Value::Int(3.into())], 2, None)
             .unwrap();
         let child = host_read(&mut session, 2, "mem:gate");
         assert_eq!(session.context_depth(), 2);

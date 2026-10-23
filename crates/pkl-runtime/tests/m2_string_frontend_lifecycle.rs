@@ -301,7 +301,9 @@ fn nested_lexical_host_reentry_read_failure_retry_cancel_and_terminal_cleanup() 
                 .unwrap();
             let retry = read(&mut session, 3, "mem:leaf");
             assert_ne!(failed, retry);
-            session.resume(&retry, Ok(Value::Int(42)), 3).unwrap();
+            session
+                .resume(&retry, Ok(Value::Int(42.into())), 3)
+                .unwrap();
             assert_eq!(ready(&mut session, 3), Ok(Value::String("42".into())));
             assert_eq!(read(&mut session, 3, "mem:outer"), outer);
             session

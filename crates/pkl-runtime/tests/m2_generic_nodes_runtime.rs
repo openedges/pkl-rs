@@ -48,14 +48,14 @@ fn recursive_generic_parameter_shadows_module_alias() {
     let (mut vm, module) = module(
         "typealias T=ShadowMissing\ntypealias A<T> =Int(this<0||(this-1)is A<T>)\nresult:A<String> =2",
     );
-    assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(2)));
+    assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(2.into())));
 }
 
 #[test]
 fn recursive_generic_arguments_change_without_specializing_bytecode() {
     let (mut vm, module) =
         module("typealias A<T> =Int(this<0||(this-1)is A<List<T>>)\nresult:A<String> =2");
-    assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(2)));
+    assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(2.into())));
 }
 
 #[test]
@@ -74,9 +74,18 @@ fn generic_let_root_shares_resolution_across_argument_types() {
         "local threshold=0\ntypealias A<T> =T(let(n=this)n<threshold)\nfirst:A<Int> =-1\nsecond:A<Int> =-2\nother:A<Float> =-3.0",
     );
     const_failure(member(&mut vm, module, "first"), "property", "threshold");
-    assert_eq!(member(&mut vm, module, "second"), Ok(Value::Int(-2)));
-    assert_eq!(member(&mut vm, module, "other"), Ok(Value::Float(-3.0)));
-    assert_eq!(member(&mut vm, module, "first"), Ok(Value::Int(-1)));
+    assert_eq!(
+        member(&mut vm, module, "second"),
+        Ok(Value::Int((-2).into()))
+    );
+    assert_eq!(
+        member(&mut vm, module, "other"),
+        Ok(Value::Float((-3.0).into()))
+    );
+    assert_eq!(
+        member(&mut vm, module, "first"),
+        Ok(Value::Int((-1).into()))
+    );
 }
 
 #[test]
@@ -106,7 +115,7 @@ fn generic_collection_amendments_instantiate_actual_class_defaults() {
         let (mut vm, module) = module(&format!(
             "class C {{ p=1 }}\ntypealias A<T> = Int({body})\nresult: A<C> = 1"
         ));
-        assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(1)));
+        assert_eq!(member(&mut vm, module, "result"), Ok(Value::Int(1.into())));
     }
 }
 

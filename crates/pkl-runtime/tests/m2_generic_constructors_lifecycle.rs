@@ -139,8 +139,8 @@ fn direct_constructors_keep_distinct_actual_classes_during_failed_child_reentry_
         .unwrap();
     let child = host_read(&mut session, 3, "mem:inner");
     assert_ne!(child, failed);
-    session.resume(&child, Ok(Value::Int(7)), 3).unwrap();
-    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(7)));
+    session.resume(&child, Ok(Value::Int(7.into())), 3).unwrap();
+    assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(7.into())));
     assert_eq!(host_read(&mut session, 3, "mem:outer"), parent);
     assert_eq!(
         session
@@ -149,8 +149,10 @@ fn direct_constructors_keep_distinct_actual_classes_during_failed_child_reentry_
             .kind,
         ErrorKind::Host
     );
-    session.resume(&parent, Ok(Value::Int(42)), 4).unwrap();
-    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(42)));
+    session
+        .resume(&parent, Ok(Value::Int(42.into())), 4)
+        .unwrap();
+    assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(42.into())));
     assert_eq!(session.context_depth(), 0);
     session.collect(&[]);
     session.close();
@@ -163,6 +165,9 @@ fn repeated_nonterminal_cancel_reclaims_direct_constructor_instances_without_los
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     let module = vm_ready(&mut vm).unwrap();
+    // Module property types already initialize both classes and aliases.
+    let initialized = vm.collect(&[]);
+    let initialized_values = initialized.live - initialized.executable_live;
     let object = module.as_object().unwrap();
     let mut retained = None;
     for _ in 0..24 {
@@ -183,7 +188,7 @@ fn repeated_nonterminal_cancel_reclaims_direct_constructor_instances_without_los
         let live = (stats.live - stats.executable_live, stats.executable_live);
         // Only the module, its Module parent, two classes and two aliases survive.
         // Instances and their amendment environments are temporary.
-        assert_eq!(live.0, 6);
+        assert_eq!(live.0, initialized_values);
         assert!(live.1 > 0);
         if let Some(expected) = retained {
             assert_eq!(live, expected);
@@ -193,8 +198,8 @@ fn repeated_nonterminal_cancel_reclaims_direct_constructor_instances_without_los
     }
     vm.start_member(object, "outerResult").unwrap();
     let token = vm_read(&mut vm, "mem:outer");
-    vm.resume(token, Ok(Value::Int(42))).unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42)));
+    vm.resume(token, Ok(Value::Int(42.into()))).unwrap();
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42.into())));
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -222,13 +227,13 @@ fn direct_constructor_instances_and_reads_are_evaluator_local() {
         .start_member(right_module.as_object().unwrap(), "innerResult")
         .unwrap();
     let right_token = vm_read(&mut right, "mem:inner");
-    right.resume(right_token, Ok(Value::Int(7))).unwrap();
-    assert_eq!(vm_ready(&mut right), Ok(Value::Int(7)));
+    right.resume(right_token, Ok(Value::Int(7.into()))).unwrap();
+    assert_eq!(vm_ready(&mut right), Ok(Value::Int(7.into())));
     right.close();
     assert_eq!(right.heap_stats().slots, 0);
     left.collect(std::slice::from_ref(&left_module));
-    left.resume(left_token, Ok(Value::Int(42))).unwrap();
-    assert_eq!(vm_ready(&mut left), Ok(Value::Int(42)));
+    left.resume(left_token, Ok(Value::Int(42.into()))).unwrap();
+    assert_eq!(vm_ready(&mut left), Ok(Value::Int(42.into())));
     left.close();
     assert_eq!(left.heap_stats().slots, 0);
 }
@@ -257,13 +262,13 @@ other: A<Inner> = 7
     assert_eq!(vm_ready(&mut vm).unwrap_err().kind, ErrorKind::Host);
     vm.collect(std::slice::from_ref(&module));
     vm.start_member(object, "other").unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(7)));
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(7.into())));
     vm.collect(std::slice::from_ref(&module));
     vm.start_member(object, "result").unwrap();
     let token = vm_read(&mut vm, "mem:captured");
     assert_ne!(token, failed);
-    vm.resume(token, Ok(Value::Int(42))).unwrap();
-    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42)));
+    vm.resume(token, Ok(Value::Int(42.into()))).unwrap();
+    assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42.into())));
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -352,7 +357,7 @@ fn deep_direct_constructor_defaults_yield_and_release_on_small_stack() {
                         event => panic!("unexpected constructor event: {event:?}"),
                     }
                 };
-                assert_eq!(result, Ok(Value::Int(DEPTH as i64)));
+                assert_eq!(result, Ok(Value::Int((DEPTH as i64).into())));
                 assert!(yields > DEPTH);
                 vm.collect(std::slice::from_ref(&module));
                 vm.close();

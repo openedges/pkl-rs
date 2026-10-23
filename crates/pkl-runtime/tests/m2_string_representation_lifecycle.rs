@@ -55,7 +55,7 @@ pairDistinct = Set(pair, "😀", joined, interpolated).length
     ] {
         assert_eq!(
             pkl_runtime::probe::evaluate_member(source, name),
-            Ok(Value::Int(expected)),
+            Ok(Value::Int(expected.into())),
             "{name}"
         );
     }
@@ -94,7 +94,7 @@ sameKey = Map(pair, 42)[scalar]
     for (name, expected) in [("count", 3), ("lookup", 22), ("sameKey", 42)] {
         assert_eq!(
             pkl_runtime::probe::evaluate_member(source, name),
-            Ok(Value::Int(expected)),
+            Ok(Value::Int(expected.into())),
             "{name}"
         );
     }
@@ -165,7 +165,7 @@ applied = closure.apply()
         session
             .reenter(&outer, inspect, vec![module.clone()], 2, None)
             .unwrap();
-        assert_eq!(ready(&mut session, &module, 2), Ok(Value::Int(110)));
+        assert_eq!(ready(&mut session, &module, 2), Ok(Value::Int(110.into())));
         assert_eq!(read(&mut session, &module, 2, "mem:tail"), outer);
 
         session
@@ -208,7 +208,7 @@ applied = closure.apply()
         session
             .start(inspect, vec![module.clone()], 6, None)
             .unwrap();
-        assert_eq!(ready(&mut session, &module, 6), Ok(Value::Int(110)));
+        assert_eq!(ready(&mut session, &module, 6), Ok(Value::Int(110.into())));
         session.close();
         assert_eq!(
             session.heap_stats().slots,

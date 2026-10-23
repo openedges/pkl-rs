@@ -23,6 +23,169 @@ pub(super) fn typed_class(heap: &Heap, mut id: ObjectId) -> Result<Option<Class>
 
 use super::equality::same_key;
 
+pub(super) fn join_blocks(
+    blocks: &mut Vec<Vec<Instruction>>,
+    metadata: &mut Vec<BlockMetadata>,
+) -> [usize; 2] {
+    let source = crate::stdlib_sources::base();
+    ["List", "Set"].map(|class| {
+        let class_start = source
+            .text
+            .find(&format!("external class {class}<"))
+            .expect("pinned collection class");
+        let declaration = "external function join(separator: String): String";
+        let start = class_start
+            + source.text[class_start..]
+                .find(declaration)
+                .expect("pinned collection join");
+        let parameter = start + "external function join(separator: ".len();
+        let block = blocks.len();
+        blocks.push(vec![
+            Instruction::LoadLocal(0),
+            Instruction::CheckType(TypeCheck::String),
+            Instruction::CollectionJoin,
+            Instruction::Return,
+        ]);
+        metadata.push(BlockMetadata {
+            source: Some(source.clone()),
+            member: format!("#{class}.join").into(),
+            declaration: Some(Span::new(start, start + declaration.len())),
+            spans: vec![None, Some(Span::new(parameter, parameter + 6)), None, None],
+            ..BlockMetadata::default()
+        });
+        block
+    })
+}
+
+pub(super) struct JoinRun {
+    values: Vec<Value>,
+    separator: PklString,
+    next: usize,
+    awaiting: bool,
+    output: crate::pkl_string::PklStringBuilder,
+}
+impl JoinRun {
+    pub(super) fn roots(&self, roots: &mut Vec<Value>) {
+        roots.extend(self.values.iter().cloned());
+    }
+}
+
+impl Vm {
+    pub(super) fn collection_join_method(&mut self, receiver: Value) {
+        let block = self.program.collection_join_blocks[usize::from(self.is_set(&receiver))];
+        let id = self.heap.allocate(Object {
+            function: Some(Function {
+                block,
+                arity: 1,
+                method: true,
+                captured_this: Some(receiver),
+            }),
+            ..Object::default()
+        });
+        self.stack.push(Value::Function(id));
+    }
+
+    pub(super) fn begin_collection_join(&mut self) -> Result<(), RuntimeError> {
+        let Value::String(separator) = self.pop()? else {
+            return Err(invalid("unchecked collection join separator"));
+        };
+        let receiver = self
+            .frames
+            .last()
+            .and_then(|f| f.environment.this_value.clone())
+            .ok_or_else(|| invalid("collection join without receiver"))?
+            .as_object()?;
+        let values = ordered_members(&self.heap, receiver)?
+            .iter()
+            .map(|member| {
+                cached_render_value(&self.heap, receiver, member)?
+                    .ok_or_else(|| invalid("uncached strict collection element"))
+            })
+            .collect::<Result<Vec<_>, _>>()?;
+        self.frames
+            .last_mut()
+            .expect("active join frame")
+            .collection_join = Some(JoinRun {
+            values,
+            separator,
+            next: 0,
+            awaiting: false,
+            output: crate::pkl_string::PklStringBuilder::default(),
+        });
+        Ok(())
+    }
+
+    pub(super) fn step_collection_join(&mut self) -> Result<(), RuntimeError> {
+        let frame = self.frames.len() - 1;
+        let mut run = self.frames[frame]
+            .collection_join
+            .take()
+            .expect("active join");
+        if run.awaiting {
+            let Value::String(text) = self.pop()? else {
+                return Err(invalid("non-string collection element rendering"));
+            };
+            run.output.push_value(&text);
+        }
+        let Some(value) = run.values.get(run.next).cloned() else {
+            self.stack.push(Value::String(run.output.finish()));
+            return Ok(());
+        };
+        if run.next != 0 {
+            run.output.push_value(&run.separator);
+        }
+        run.next += 1;
+        run.awaiting = true;
+        self.frames[frame].collection_join = Some(run);
+
+        // StringBuilder.append(Object) invokes Java value stringification, not
+        // Pkl's virtual Typed.toString. Objects force deeply; strict collections
+        // render their cached contents without forcing nested objects.
+        if let Value::Object(id) = value
+            && self.heap.get(id)?.reference.is_some()
+        {
+            self.render_reference(id)?;
+        } else if self.is_list(&value) || self.is_set(&value) {
+            let text = crate::diagnostic_values::render_multiline(
+                &value,
+                &self.heap,
+                &self.program.module_name,
+            )?;
+            self.stack.push(Value::String(text));
+        } else if let Value::Bytes(bytes) = &value {
+            // VmBytes.toString is not the diagnostic renderer's eight-byte preview.
+            let mut text = crate::pkl_string::PklStringBuilder::default();
+            text.push_str("Bytes(");
+            for (index, byte) in bytes.iter().enumerate() {
+                if index != 0 {
+                    text.push_str(", ");
+                }
+                text.push_str(&byte.to_string());
+            }
+            text.push(')');
+            self.stack.push(Value::String(text.finish()));
+        } else if self.is_map(&value)
+            || matches!(
+                value,
+                Value::Class(_) | Value::TypeAlias(_) | Value::Function(_)
+            )
+        {
+            let text = crate::diagnostic_values::render_string(
+                &value,
+                &self.heap,
+                &self.program.module_name,
+                usize::MAX,
+            )?;
+            self.stack.push(Value::String(text));
+        } else if matches!(value, Value::Object(_)) {
+            self.begin_object_string(value)?;
+        } else {
+            self.stack.push(Value::String(scalar_string(&value)?));
+        }
+        Ok(())
+    }
+}
+
 fn same_member(heap: &Heap, left: &CollectionMember, right: &CollectionMember) -> bool {
     (left.kind == CollectionMemberKind::Property) == (right.kind == CollectionMemberKind::Property)
         && same_key(heap, &left.key, &right.key)
@@ -832,7 +995,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
             object.length
         };
         let value = match name {
-            "length" => Value::Int(length as i64),
+            "length" => Value::Int((length as i64).into()),
             "isEmpty" => Value::Bool(length == 0),
             _ => return Ok(false),
         };
@@ -953,7 +1116,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         let collection_kind = object.collection_kind;
         let parent = object.parent;
         let length = object.length;
-        let key = key.unwrap_or(Value::Int(length as i64));
+        let key = key.unwrap_or(Value::Int((length as i64).into()));
         if kind != CollectionMemberKind::Property
             && let Some(class) = typed_class(&self.heap, target)?
         {
@@ -1025,7 +1188,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                 .map(|id| self.heap.get(id).map(|o| o.length))
                 .transpose()?
                 .unwrap_or(0);
-            if index < 0 || index as usize >= parent_length {
+            if index < 0 || index.get() as usize >= parent_length {
                 return Err(RuntimeError::new(
                     ErrorKind::Type,
                     format!(
@@ -1105,12 +1268,9 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         if let Some(parent) = parent {
             self.validate_object_members(parent, std::slice::from_ref(&member))?;
         }
-        let environment = self
-            .frames
-            .last()
-            .expect("active frame")
-            .environment
-            .clone();
+        let frame = self.frames.last().expect("active frame");
+        let mut environment = frame.environment.clone();
+        environment.restore_for_bindings = !frame.generator_scopes.is_empty();
         let cache_key = CacheKey {
             owner: None,
             name: member.name.clone(),
@@ -1350,7 +1510,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                 if object.collection_kind != CollectionKind::Mapping
                     && typed_class(&self.heap, self.builder()?)?.is_none()
                 {
-                    let key = Value::Int(object.length as i64);
+                    let key = Value::Int((object.length as i64).into());
                     if self.prepare_insertion(&key, CollectionMemberKind::Element)? {
                         return Ok(());
                     }
@@ -1396,7 +1556,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                             ),
                         ));
                     };
-                    if index < 0 || index as usize >= length {
+                    if index < 0 || index.get() as usize >= length {
                         return Err(RuntimeError::new(
                             ErrorKind::Type,
                             format!(
@@ -1549,7 +1709,7 @@ crate::diagnostic_values::render(
                                 )?], ""),
                         ));
                     };
-                    if index < 0 || index as usize >= object.length {
+                    if index < 0 || index.get() as usize >= object.length {
                         return Err(RuntimeError::new(
                             ErrorKind::Type,
                             format!(
@@ -1812,6 +1972,8 @@ crate::diagnostic_values::render(
                 });
                 self.stack.push(Value::Object(id));
             }
+            Instruction::EnterForScope { bindings } => self.enter_for_scope(bindings)?,
+            Instruction::LeaveForScope => self.leave_for_scope()?,
             Instruction::IteratorNext { end } => {
                 let id = self
                     .stack
@@ -1972,7 +2134,7 @@ crate::diagnostic_values::render(
                     }
                 }
                 let insertion_key = if source_member.kind == CollectionMemberKind::Element {
-                    Value::Int(self.heap.get(target)?.length as i64)
+                    Value::Int((self.heap.get(target)?.length as i64).into())
                 } else {
                     key.clone()
                 };
@@ -2451,6 +2613,13 @@ impl Compiler<'_> {
         } else {
             self.expression(value, &mut code)?;
         }
+        if self.constant_member_body(value) {
+            for instruction in &mut code.instructions {
+                if let Instruction::Constant(value) = instruction {
+                    *value = value.clone().boxed();
+                }
+            }
+        }
         code.push(Instruction::Return);
         let block = self.block(code, Some(span));
         self.program.metadata[block].member_span = Some(span);
@@ -2583,30 +2752,37 @@ impl Compiler<'_> {
                     );
                     let start = output.len();
                     output.push_at(Instruction::IteratorNext { end: 0 }, iterable.span);
+                    output.push(Instruction::EnterForScope {
+                        bindings: parameters.len(),
+                    });
                     if parameters.len() == 1 {
                         output.push(Instruction::Swap);
                         output.push(Instruction::Pop);
-                        if let (Some(ty), Some(check)) = (&parameters[0].ty, &checks[0]) {
-                            output.push_at(Instruction::CheckType(check.clone()), ty.span);
-                        }
-                        output.push(Instruction::PushLocal);
+                        let ty = checks[0].clone().unwrap_or(TypeCheck::Unknown);
+                        let span = parameters[0]
+                            .ty
+                            .as_ref()
+                            .map_or(parameters[0].span, |ty| ty.span);
+                        output.push_at(Instruction::BindLocal { depth: None, ty }, span);
                     } else if parameters.len() == 2 {
                         output.push(Instruction::Swap);
-                        if let (Some(ty), Some(check)) = (&parameters[0].ty, &checks[0]) {
-                            output.push_at(Instruction::CheckType(check.clone()), ty.span);
-                        }
-                        output.push(Instruction::PushLocal);
-                        if let (Some(ty), Some(check)) = (&parameters[1].ty, &checks[1]) {
-                            output.push_at(Instruction::CheckType(check.clone()), ty.span);
-                        }
-                        output.push(Instruction::PushLocal);
+                        let ty = checks[0].clone().unwrap_or(TypeCheck::Unknown);
+                        let span = parameters[0]
+                            .ty
+                            .as_ref()
+                            .map_or(parameters[0].span, |ty| ty.span);
+                        output.push_at(Instruction::BindLocal { depth: None, ty }, span);
+                        let ty = checks[1].clone().unwrap_or(TypeCheck::Unknown);
+                        let span = parameters[1]
+                            .ty
+                            .as_ref()
+                            .map_or(parameters[1].span, |ty| ty.span);
+                        output.push_at(Instruction::BindLocal { depth: None, ty }, span);
                     } else {
                         return Err(unsupported_type("this generator parameter count").at(*span));
                     }
                     self.collection_members(members, false, output)?;
-                    for _ in parameters {
-                        output.push(Instruction::PopLocal);
-                    }
+                    output.push(Instruction::LeaveForScope);
                     output.push(Instruction::Jump(start));
                     output[start] = Instruction::IteratorNext { end: output.len() };
                     output.push(Instruction::Pop);

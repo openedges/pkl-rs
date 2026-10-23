@@ -7,6 +7,9 @@
 //! lifecycle; their callbacks do not constitute Java/Rust byte comparisons.
 
 use std::sync::Arc;
+#[path = "support/eager_base.rs"]
+mod eager_base;
+use eager_base::Baseline;
 
 use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
@@ -66,16 +69,28 @@ fn zero_hash_cached_lookup_returns_to_eager_collection_typecheck() {
           mapping[new Listing { 4 }], mapping is Mapping<Listing, Int>)[5]
     "#;
     let (mut session, root, parent, child, _, _) = session_source(source);
+    let initialized = Baseline::new(session.collect(&[]));
+    let stale_module = root.clone();
     session.start(parent, vec![root.clone()], 1, None).unwrap();
     let outer = request(&mut session, 1, "mem:outer");
     session.reenter(&outer, child, vec![root], 2, None).unwrap();
     let value = request(&mut session, 2, "mem:value");
     session.collect(&[]);
-    session.resume(&value, Ok(Value::Int(4)), 2).unwrap();
+    session.resume(&value, Ok(Value::Int(4.into())), 2).unwrap();
     assert_eq!(ready(&mut session, 2), Ok(Value::Bool(true)));
     session.resume(&outer, Ok(Value::Null), 3).unwrap();
     assert_eq!(ready(&mut session, 3), Ok(Value::Null));
-    assert_eq!(session.collect(&[]).live, 0);
+    // User values are reclaimed; the private base and exact executable graph remain.
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+    assert_eq!(
+        session
+            .start(parent, vec![stale_module], 10, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::StaleHandle
+    );
+    session.close();
+    assert_eq!(session.heap_stats().slots, 0);
 }
 
 #[test]
@@ -92,13 +107,15 @@ fn inherited_mapping_length_retries_key_count_without_forcing_entry_values() {
         inspect = mapping.isEmpty
     "#;
     let (mut session, root, parent, child, inspect, _) = session_source(source);
+    let initialized = Baseline::new(session.collect(&[]));
+    let stale_module = root.clone();
     session.start(parent, vec![root.clone()], 1, None).unwrap();
     let outer = request(&mut session, 1, "mem:outer");
     session
         .reenter(&outer, child, vec![root.clone()], 2, None)
         .unwrap();
     let first = request(&mut session, 2, "mem:firstKey");
-    session.resume(&first, Ok(Value::Int(0)), 2).unwrap();
+    session.resume(&first, Ok(Value::Int(0.into())), 2).unwrap();
     let failed_last = request(&mut session, 2, "mem:lastKey");
     session.collect(&[]);
     let failure = RuntimeError::new(ErrorKind::Host, "retry Mapping key count\0\r\n🙂");
@@ -121,13 +138,13 @@ fn inherited_mapping_length_retries_key_count_without_forcing_entry_values() {
     assert_ne!(last, failed_last);
     assert_eq!(
         session
-            .resume(&failed_last, Ok(Value::Int(0)), 3)
+            .resume(&failed_last, Ok(Value::Int(0.into())), 3)
             .unwrap_err()
             .kind,
         ErrorKind::Host
     );
-    session.resume(&last, Ok(Value::Int(0)), 3).unwrap();
-    assert_eq!(ready(&mut session, 3), Ok(Value::Int(1)));
+    session.resume(&last, Ok(Value::Int(0.into())), 3).unwrap();
+    assert_eq!(ready(&mut session, 3), Ok(Value::Int(1.into())));
     session.collect(&[]);
     session
         .reenter(&outer, inspect, vec![root], 3, None)
@@ -135,8 +152,18 @@ fn inherited_mapping_length_retries_key_count_without_forcing_entry_values() {
     assert_eq!(ready(&mut session, 3), Ok(Value::Bool(false)));
     session.resume(&outer, Ok(Value::Null), 4).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::Null));
-    assert_eq!(session.collect(&[]).live, 0);
+    // User values are reclaimed; the private base and exact executable graph remain.
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+    assert_eq!(
+        session
+            .start(parent, vec![stale_module], 10, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::StaleHandle
+    );
     assert!(session.drain_cancelled_reads().is_empty());
+    session.close();
+    assert_eq!(session.heap_stats().slots, 0);
 }
 
 fn event(session: &mut HostSession, now: u64) -> HostPoll {
@@ -177,6 +204,8 @@ fn fifth_cache_insertion_suspends_after_value_and_retries_hidden_slots_after_fai
 
 fn cache_retry(key_value: i64) {
     let (mut session, root, outer_entry, child, inspect, compare) = session();
+    let initialized = Baseline::new(session.collect(&[]));
+    let stale_module = root.clone();
     session
         .start(outer_entry, vec![root.clone()], 1, None)
         .unwrap();
@@ -219,7 +248,7 @@ fn cache_retry(key_value: i64) {
         ErrorKind::Host
     );
     session
-        .resume(&retried_key, Ok(Value::Int(key_value)), 3)
+        .resume(&retried_key, Ok(Value::Int(key_value.into())), 3)
         .unwrap();
     let retried_value = request(&mut session, 3, "mem:value");
     assert_ne!(retried_value, value);
@@ -237,7 +266,7 @@ fn cache_retry(key_value: i64) {
     session
         .reenter(&outer, inspect, vec![root.clone()], 3, None)
         .unwrap();
-    assert_eq!(ready(&mut session, 3), Ok(Value::Int(42)));
+    assert_eq!(ready(&mut session, 3), Ok(Value::Int(42.into())));
     session.collect(&[]);
     session
         .reenter(&outer, compare, vec![root], 3, None)
@@ -249,8 +278,18 @@ fn cache_retry(key_value: i64) {
         .resume(&outer, Ok(Value::string("outer")), 4)
         .unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer")));
-    assert_eq!(session.collect(&[]).live, 0);
+    // User values are reclaimed; the private base and exact executable graph remain.
+    assert_eq!(initialized.added_values(session.collect(&[]), 2), -1);
+    assert_eq!(
+        session
+            .start(outer_entry, vec![stale_module], 10, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::StaleHandle
+    );
     assert!(session.drain_cancelled_reads().is_empty());
+    session.close();
+    assert_eq!(session.heap_stats().slots, 0);
 }
 
 #[test]
@@ -292,7 +331,10 @@ fn terminal_transitions_release_pending_cache_rebuild_and_all_host_reads() {
             }
             "child timeout" => {
                 assert_eq!(
-                    session.resume(&key, Ok(Value::Int(7)), 6).unwrap_err().kind,
+                    session
+                        .resume(&key, Ok(Value::Int(7.into())), 6)
+                        .unwrap_err()
+                        .kind,
                     ErrorKind::Timeout
                 );
                 ErrorKind::Timeout

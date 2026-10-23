@@ -122,6 +122,7 @@ fn is_base_class(name: &str) -> bool {
             | "ValueRenderer"
             | "BytesRenderer"
             | "PcfRenderer"
+            | "JsonRenderer"
             | "ConvertProperty"
             | "RenderDirective"
             | "PcfRenderDirective"

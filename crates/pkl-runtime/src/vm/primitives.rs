@@ -6,6 +6,7 @@ pub enum Operation {
     Between,
     Uppercase,
     Contains,
+    DropLast,
     BooleanXor,
     BooleanImplies,
 }
@@ -59,6 +60,13 @@ pub(super) fn blocks(
             Operation::Contains,
             1,
         ),
+        (
+            "String",
+            "dropLast",
+            "external function dropLast(n: Int): String",
+            Operation::DropLast,
+            1,
+        ),
     ] {
         let class_start = source
             .text
@@ -83,6 +91,10 @@ pub(super) fn blocks(
                     start + signature.find(parameter).unwrap() + parameter.find("Number").unwrap();
                 code.push(Instruction::CheckType(TypeCheck::Number));
                 spans.push(Some(Span::new(offset, offset + 6)));
+            } else if matches!(operation, Operation::DropLast) {
+                let offset = start + signature.find("Int").unwrap();
+                code.push(Instruction::CheckType(TypeCheck::Int));
+                spans.push(Some(Span::new(offset, offset + 3)));
             } else if matches!(operation, Operation::BooleanXor | Operation::BooleanImplies) {
                 let offset = start + signature.find("Boolean").unwrap();
                 code.push(Instruction::CheckType(TypeCheck::Boolean));
@@ -143,7 +155,7 @@ impl Vm {
                     PklString::join(&[message.into(), "\nString: ".into(), rendered], ""),
                 )
             })?;
-            self.stack.push(Value::Bytes(bytes));
+            self.stack.push(Value::Bytes(bytes.into()));
             return Ok(true);
         }
         let class = match receiver {
@@ -163,7 +175,7 @@ impl Vm {
             };
             let arity = match name {
                 "isBetween" => 2,
-                "contains" | "xor" | "implies" => 1,
+                "contains" | "dropLast" | "xor" | "implies" => 1,
                 _ => 0,
             };
             let id = self.heap.allocate(Object {
@@ -183,8 +195,8 @@ impl Vm {
                 "isPositive" => Some(*value >= 0),
                 "isFinite" => Some(true),
                 "isInfinite" | "isNaN" => Some(false),
-                "isEven" => Some(value & 1 == 0),
-                "isOdd" => Some(value & 1 != 0),
+                "isEven" => Some(value.get() & 1 == 0),
+                "isOdd" => Some(value.get() & 1 != 0),
                 "isNonZero" => Some(*value != 0),
                 _ => None,
             },
@@ -237,8 +249,8 @@ impl Vm {
                     }
                     _ => {
                         let number = |v: &Value| match v {
-                            Value::Int(n) => *n as f64,
-                            Value::Float(n) => *n,
+                            Value::Int(n) => n.get() as f64,
+                            Value::Float(n) => **n,
                             _ => unreachable!("checked Number"),
                         };
                         let (a, b) = (number(a), number(b));
@@ -247,6 +259,26 @@ impl Vm {
                 };
                 self.stack.push(Value::Bool(
                     ordered(&receiver, &start, true) && ordered(&receiver, &end, false),
+                ));
+            }
+            Operation::DropLast => {
+                let Value::String(text) = receiver else {
+                    return Err(invalid("String.dropLast receiver"));
+                };
+                let Value::Int(count) = self.pop()? else {
+                    return Err(invalid("checked String.dropLast count"));
+                };
+                if count < 0 {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        format!(
+                            "Expected a positive number, but got `{}`.",
+                            strings::diagnostic_integer(count.get())
+                        ),
+                    ));
+                }
+                self.stack.push(Value::String(
+                    text.drop_last_code_points(count.get() as u64),
                 ));
             }
             Operation::Uppercase => {

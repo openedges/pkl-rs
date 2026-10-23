@@ -145,7 +145,7 @@ fn trace_preserves_let_and_property_inferred_parents() {
     ];
     for (text, value, message, position) in cases {
         let (values, logs, reads) = evaluate(text, LogDelivery::Host, 1);
-        assert_eq!(values, [Value::Int(value)]);
+        assert_eq!(values, [Value::Int(value.into())]);
         assert!(reads.is_empty());
         assert_eq!(logs.len(), 1);
         assert_eq!(logs[0].message, message);
@@ -177,7 +177,7 @@ fn grouping_inside_trace_still_blocks_inferred_new() {
 fn nested_trace_logs_inner_then_outer_with_distinct_operand_sections() {
     let text = "result=trace( (trace( (1 + 2) )) )\n";
     let (values, logs, reads) = evaluate(text, LogDelivery::Host, 1);
-    assert_eq!(values, [Value::Int(3)]);
+    assert_eq!(values, [Value::Int(3.into())]);
     assert!(reads.is_empty());
     assert_eq!(
         logs.iter()

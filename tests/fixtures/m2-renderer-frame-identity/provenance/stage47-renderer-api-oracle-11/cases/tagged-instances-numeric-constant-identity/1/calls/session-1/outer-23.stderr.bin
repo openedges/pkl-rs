@@ -1,0 +1,7 @@
+–– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `Float`.
+Value: 1.5
+
+1 | pFloatSelf.renderDocument(fa.n)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

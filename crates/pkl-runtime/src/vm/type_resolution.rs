@@ -483,6 +483,7 @@ impl Vm {
             Instruction::ResolveType(ty)
             | Instruction::ResolvedClass(ty)
             | Instruction::BuiltinClass(ty)
+            | Instruction::BindLocal { ty, .. }
             | Instruction::CheckType(ty)
             | Instruction::TestType(ty)
             | Instruction::ResolvedDefault { ty, .. }
@@ -817,6 +818,16 @@ impl Vm {
                         .as_object()?,
                 };
                 self.force(module, module, name, local, true, false)?;
+            }
+            Instruction::BindLocal { depth, ty } => {
+                let policy = identity::SlotPolicy::from_type(&ty);
+                let value = self.pop()?;
+                self.begin_type(
+                    ty,
+                    value,
+                    TypeDestination::Local { depth, policy },
+                    Vec::new(),
+                )?;
             }
             Instruction::CheckType(ty) => {
                 let frame = self.frames.last().expect("active frame");
