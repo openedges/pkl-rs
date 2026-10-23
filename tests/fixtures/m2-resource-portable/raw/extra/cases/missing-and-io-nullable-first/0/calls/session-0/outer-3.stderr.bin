@@ -1,0 +1,11 @@
+–– Pkl Error ––
+I/O error reading resource `res:/retry`.
+IOException: reader-first
+
+4 | retryQFirst = read?("res:/retry")
+                  ^^^^^^^^^^^^^^^^^^^
+at main#retryQFirst (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-extra-oracle-01/workspace/missing-and-io-nullable-first/main.pkl)
+
+1 | retryQFirst
+    ^^^^^^^^^^^
+at  (repl:text)

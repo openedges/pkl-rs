@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Input byte array has incorrect ending byte at 4
+String: "AA==\n"
+
+26 | v12 = r12.base64DecodedBytes.base64
+           ^^^^^^^^^^^^^^^^^^^^^^
+at main#v12 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-base64-oracle-01/workspace/base64-decoder/main.pkl)
+
+1 | v12
+    ^^^
+at  (repl:text)

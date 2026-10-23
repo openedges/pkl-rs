@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find resource `res:/./missing`.
+
+3 | missingReadOther = read("res:/./missing")
+                       ^^^^^^^^^^^^^^^^^^^^^^
+at main#missingReadOther (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-extra-oracle-01/workspace/missing-and-io-nullable-first/main.pkl)
+
+1 | missingReadOther
+    ^^^^^^^^^^^^^^^^
+at  (repl:text)

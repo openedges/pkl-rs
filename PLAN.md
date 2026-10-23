@@ -788,6 +788,8 @@ Stage 45 구현 `97b4da0`과 합친 [집중 연결 검증](reports/m2/classpath-
 
 공통 구현은 `gpt-6-astra / xhigh`, Java 관찰과 독립 소스 검토는 각각 `gpt-6.1-sol / high`로 진행합니다. 첫 후보의 미지원 네 건·진단 불일치 네 건과 후속 URI 검증 지적은 별도 기록으로 보존합니다. 수정 후보의 선택 API 비교 1,008회가 일치했고, 세 번째 고정 후보에서 원본 `basic/read.pkl` 두 반복의 stdout·stderr·종료·생성 파일이 Java와 일치했습니다. 이는 아직 커밋한 전체 제품의 지원 범위나 Stage 46 마감이 아닙니다. 나머지 AST 오류·효과 순서, 실제 File/triple 대조군, native·Node·Chromium 검증과 필수 검사, 전체 선택 회귀를 완료한 뒤 구현·증거를 게시합니다. **Stage 46과 M2 전체는 진행 중입니다.**
 
+Stage 46의 Java 비교 입력은 런타임과 별도 체크포인트로 정리했습니다. [portable Resource fixture](docs/m2-resource-portable-fixtures.md)는 원래 Java API 1,272회 중 선택한 1,008회·20개 세션과 미선택 264회를 구분합니다. 원본 payload 11,507개와 manifest 한 개를 보존하며, 독립 봉인 해시·읽기 횟수·원본 호출과 이벤트 연결·정확한 파일 집합을 검증합니다. 저장소 승격 뒤 변조 회귀를 포함한 Python 검사 27개, fixture CLI와 전체 목록 freshness가 통과했습니다. 첫 파일 수 검사의 payload·총파일 혼동은 실패 기록으로 남기고 바이트 변경 없이 정정했습니다. [검증 기록](reports/m2/resource-portable-fixtures.json)은 실제 Node·Chromium 실행 및 Stage 46 런타임 마감과 구분합니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+I/O error reading resource `res:/retry`.
+IOException: reader-first
+
+8 | retry = read("res:/retry")
+            ^^^^^^^^^^^^^^^^^^
+at main#retry (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-oracle-01/workspace/cache-text-resource-missing-retry/main.pkl)
+
+1 | retry
+    ^^^^^
+at  (repl:text)

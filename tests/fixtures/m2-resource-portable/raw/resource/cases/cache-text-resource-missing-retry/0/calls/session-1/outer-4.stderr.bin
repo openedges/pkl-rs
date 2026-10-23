@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find resource `res:/missing`.
+
+6 | missingOrdinary = read("res:/missing")
+                      ^^^^^^^^^^^^^^^^^^^^
+at main#missingOrdinary (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-oracle-01/workspace/cache-text-resource-missing-retry/main.pkl)
+
+1 | missingOrdinary
+    ^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,16 @@
+–– Pkl Error ––
+Tried to read property `uri` but its value is undefined.
+
+677 | uri: Uri
+      ^^^
+at pkl.base#Resource.uri (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L677)
+
+The above error occurred when rendering path `uri`.
+
+132 | undefinedRender = renderer.renderValue(undefined)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#undefinedRender (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-oracle-01/workspace/resource-bytes-utf8/main.pkl)
+
+1 | undefinedRender
+    ^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,89 @@
+[
+  {
+    "id": "missing-and-io-nullable-first",
+    "mode": "cache",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-extra-oracle-01/workspace/missing-and-io-nullable-first",
+    "operations": [
+      [
+        "main.pkl",
+        "missingReadFirst"
+      ],
+      [
+        "main.pkl",
+        "missingQ"
+      ],
+      [
+        "main.pkl",
+        "missingReadOther"
+      ],
+      [
+        "main.pkl",
+        "retryQFirst"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ],
+      [
+        "main.pkl",
+        "retry"
+      ],
+      [
+        "main.pkl",
+        "retryQOther"
+      ]
+    ],
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-extra-oracle-01/workspace/missing-and-io-nullable-first/main.pkl",
+    "sourceKind": "actual file ModuleSource + custom counted res ResourceReader"
+  },
+  {
+    "id": "triple-dot-nonlocal",
+    "mode": "cap-nonlocal",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-extra-oracle-01/workspace/triple-dot-nonlocal",
+    "operations": [
+      [
+        "main.pkl",
+        "r"
+      ],
+      [
+        "main.pkl",
+        "rq"
+      ],
+      [
+        "main.pkl",
+        "i"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ]
+    ],
+    "sourceUri": "virt:/a/b/main.pkl",
+    "sourceKind": "actual custom ModuleKey SPI with specified local/hierarchical flags"
+  },
+  {
+    "id": "triple-dot-nonhierarchical",
+    "mode": "cap-nonhierarchical",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-extra-oracle-01/workspace/triple-dot-nonhierarchical",
+    "operations": [
+      [
+        "main.pkl",
+        "r"
+      ],
+      [
+        "main.pkl",
+        "rq"
+      ],
+      [
+        "main.pkl",
+        "i"
+      ],
+      [
+        "main.pkl",
+        "stable"
+      ]
+    ],
+    "sourceUri": "virt:/a/b/main.pkl",
+    "sourceKind": "actual custom ModuleKey SPI with specified local/hierarchical flags"
+  }
+]

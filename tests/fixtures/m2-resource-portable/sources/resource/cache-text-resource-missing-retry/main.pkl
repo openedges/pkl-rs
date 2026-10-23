@@ -1,0 +1,22 @@
+b = import("pkl:base")
+a = read("res:/a/../key")
+bb = read("res:/key")
+c = read?("res:/./key")
+missingNullable = read?("res:/x/../missing").toString()
+missingOrdinary = read("res:/missing")
+missingOtherSpelling = read("res:/./missing")
+retry = read("res:/retry")
+retryNullable = read?("res:/./retry")
+r = read("res:/resource")
+rAlias = read("res:/x/../resource")
+rUri = r.uri
+rText = r.text
+rBase64 = r.base64
+rBytesBase64 = r.bytes.base64
+rClass = r.getClass().toString()
+rType = (r is Resource).toString()
+rClassEquality = (r.getClass() == b.Resource).toString()
+rEquality = (r == rAlias).toString()
+renderer = new PcfRenderer {}
+rRender = renderer.renderValue(r)
+stable = "stable"

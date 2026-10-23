@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Input byte array has wrong 4-byte ending unit
+String: "AAAA=="
+
+16 | v7 = r7.base64DecodedBytes.base64
+          ^^^^^^^^^^^^^^^^^^^^^
+at main#v7 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-base64-oracle-01/workspace/base64-decoder/main.pkl)
+
+1 | v7
+    ^^
+at  (repl:text)

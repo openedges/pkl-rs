@@ -59,6 +59,17 @@ Stage 43 preserves canonical diagnostic strings through the shared engine and
 native/Node/Wasm boundaries, and corrects literal-union type-check equivalence.
 These checkpoints do not complete the language milestone.
 
+## Resource reference-fixture checkpoint
+
+The [portable Java fixtures](../../docs/m2-resource-portable-fixtures.md) retain
+1,008 selected API observations in 20 sessions, with 264 unselected boundaries
+recorded separately. Their [verification record](resource-portable-fixtures.json)
+covers independent oracle pins, original output/code-unit/counter bindings,
+11,507 payloads plus the manifest, and 27 passing Python regressions including
+real fixture forgeries. The promoted fixture CLI and inventory freshness check
+also pass. This checkpoint adds no native, Node or Chromium evaluation result;
+Stage 46 runtime work and the full M2 gate remain open.
+
 ## Stage 45 final selected regression
 
 The [combined native result](stage45-final-summary.json) is bound to `01971d0`:

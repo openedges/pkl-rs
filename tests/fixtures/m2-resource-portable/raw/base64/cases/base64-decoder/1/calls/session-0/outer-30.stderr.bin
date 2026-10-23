@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Illegal base64 character 3f
+String: "AA?="
+
+32 | v15 = r15.base64DecodedBytes.base64
+           ^^^^^^^^^^^^^^^^^^^^^^
+at main#v15 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-base64-oracle-01/workspace/base64-decoder/main.pkl)
+
+1 | v15
+    ^^^
+at  (repl:text)

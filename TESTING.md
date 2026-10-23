@@ -98,6 +98,16 @@ checks preserve both channels; historical byte-only fixtures do not establish
 string-unit equality. SourceSession, scalar helpers, frontend constructors, and
 N-API error callbacks have distinct recorded boundaries.
 
+The [portable Resource reference fixtures](docs/m2-resource-portable-fixtures.md)
+retain 1,008 selected Java API observations and their original bytes, UTF-16
+units, ordered reader inputs and counters. Their offline verifier and tamper
+tests establish fixture integrity; they do not execute Rust, Node or a browser:
+
+```sh
+python3 tools/resource_fixtures.py --fixtures tests/fixtures/m2-resource-portable
+python3 -W error::ResourceWarning -m unittest discover -s tools/tests -p 'test_resource_portable_fixtures.py' -v
+```
+
 M2 language implementation and verification are in progress. The
 [M2 contract](docs/m2-language.md) separates whole-language requirement accounting
 from the executable selection:

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Illegal base64 character 20
+String: " A A=="
+
+28 | v13 = r13.base64DecodedBytes.base64
+           ^^^^^^^^^^^^^^^^^^^^^^
+at main#v13 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-base64-oracle-01/workspace/base64-decoder/main.pkl)
+
+1 | v13
+    ^^^
+at  (repl:text)

@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "scope": "Java-derived portable Resource reference fixtures and offline verifier; no evaluator or platform acquisition in this checkpoint.",
+  "baseline": "Pkl 0.32.0",
+  "fixture": "tests/fixtures/m2-resource-portable",
+  "fixtureManifestSha256": "df35f5b49f28ecd1b9e70111862001ddbd3052978026a9b67fa143573a62f369",
+  "fixturePayloadFiles": 11507,
+  "fixtureTotalRegularFiles": 11508,
+  "sessions": 20,
+  "selectedJavaApiCalls": 1008,
+  "allJavaApiCalls": 1272,
+  "unexecutedJavaApiBoundaries": 264,
+  "javaVsJsUtf8DifferentChannels": 16,
+  "toolSources": {
+    "tools/export_resource_portable.py": "9a96b1437d5c9164451b4e86d1181dd7ce004b04f46e616c1d6a71e9132d3905",
+    "tools/resource_fixtures.py": "9f6bed0d58ab8c34caf0eca718ee2ff1152524c9565cfb592164bed17e18c931",
+    "tools/tests/test_resource_portable_fixtures.py": "12f49311ce9aafca27b54c12f39d4c9db035d51c62640dbf0f793799e569b429"
+  },
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "pythonExecutable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+  "pythonExecutableSha256": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063",
+  "verification": {
+    "testsPassed": 27,
+    "reblessedFixtureForgeryTests": 14,
+    "fixtureCliExitCode": 0,
+    "inventoryFreshnessExitCode": 0,
+    "wrapperExitCode": 0,
+    "sourceChanges": [],
+    "recordSha256": "0bf57fa4c14bf3b8e21d0da5cea843ae28aa438c21c8564e9e55bbe1940178eb",
+    "recordedCommands": [
+      {
+        "name": "tests",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-W",
+          "error::ResourceWarning",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-p",
+          "test_resource_portable_fixtures.py",
+          "-v"
+        ],
+        "exitCode": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "6c3575e0998cfad7b495cc31cfab6e76cc0e0e63fc85f50973ce031d36ce063b"
+      },
+      {
+        "name": "fixture",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/resource_fixtures.py",
+          "--fixtures",
+          "tests/fixtures/m2-resource-portable"
+        ],
+        "exitCode": 0,
+        "stdoutSha256": "5fff8c6fd2e9d71a6f629756a9471f76dae7ac68c63c169395013e1f5e3f8941",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "inventory",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "exitCode": 0,
+        "stdoutSha256": "9478840e45652d07c257b8151019713675c818441c78f56786fcfd83b89fc800",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "oracleRerun": false,
+    "nativeRun": false,
+    "nodeRun": false,
+    "browserRun": false
+  },
+  "independentVerifierReview": {
+    "recordSha256": "8e9d39c63b8df55d2fcf8b5c1a23b293691018ab5de9a9c631dc4584d38de018",
+    "findings": []
+  },
+  "qualification": [
+    "Java reader return inputs are derived from independently pinned helper rules and observed URI/attempt/count; the trace does not directly capture return payloads.",
+    "UTF16 words and original Java UTF8 bytes remain separate; no normalization or Rust-derived expected output.",
+    "The initial promotion count assertion confused payload files with total files. Its exit1 is preserved; the copied fixture remained byte-identical.",
+    "The full M2, Stage46 runtime, actual platform comparisons and 264 unselected API boundaries remain open."
+  ],
+  "inventoryCounts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3664,
+      "unimplemented": 823,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "captures": {
+    "path": "reports/m2/resource-portable-fixture-captures.tar.gz",
+    "sha256": "4379fd70e8cd20363dde58fa5619ccdc03651d5c0578c86de9f04d3833e4eab5",
+    "payloadFiles": 59,
+    "bytes": 1119893
+  },
+  "independentPromotionReview": {
+    "archivePath": "independent-promotion/report.json",
+    "sha256": "318debc0a6f9f3b41e469441e9a8e3b9f0f81ba13fee764d29a2e515f6e4868b",
+    "reviewedSummarySha256": "bc9e805d5b4b6239353d838802576163700d22d8039b8bc44a2fc913c29b9472",
+    "findings": []
+  },
+  "stagedSourceBinding": {
+    "archivePath": "integration/staged-source-binding.json",
+    "sha256": "d6d64d5a3006c5c10121533c52bd001614359ebc04144cb302c5d3f9dcad56c7",
+    "verifiedFiles": 11511
+  }
+}

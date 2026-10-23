@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Illegal base64 character 3f
+String: "中文"
+
+44 | v21 = r21.base64DecodedBytes.base64
+           ^^^^^^^^^^^^^^^^^^^^^^
+at main#v21 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-base64-oracle-01/workspace/base64-decoder/main.pkl)
+
+1 | v21
+    ^^^
+at  (repl:text)

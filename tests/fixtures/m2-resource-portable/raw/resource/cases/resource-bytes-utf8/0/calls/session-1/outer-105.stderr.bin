@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 7
+
+1694 | typealias Uri = String
+                       ^^^^^^
+at pkl.base#Resource.uri (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1694)
+
+133 | bad = new Resource { uri = 7; text = "t"; base64 = "" }
+                                 ^
+at main#bad.uri (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-oracle-01/workspace/resource-bytes-utf8/main.pkl)
+
+135 | badUri = bad.uri
+               ^^^^^^^
+at main#badUri (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-oracle-01/workspace/resource-bytes-utf8/main.pkl)
+
+1 | badUri
+    ^^^^^^
+at  (repl:text)
