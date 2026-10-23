@@ -1,0 +1,306 @@
+{
+  "scope": "Stage46 core/platform evidence archives; full language/persistent regression is excluded and remains separate. No hosted CI, whole M2/platform/performance completion claim.",
+  "coreArchiveIndexSha256": "041f22fb0e2b3fdde9254919aee7c54d8a34b47236e209a4b614bbdeb6331723",
+  "independentVerificationSha256": "3efd4993b2b6ec48eb6ec64baf0faf11cf2955247da54f11b7ee57073d3341dc",
+  "publicationActualExitCode": 0,
+  "publicationToolSessionId": 95048,
+  "independentReadbackActualExitCode": 0,
+  "independentReadbackToolSessionId": 85905,
+  "archives": [
+    {
+      "group": "closeout-draft-documentation",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-closeout-draft-documentation.tar.gz",
+      "sha256": "c7eff0d4ae9f6b921922816f58435d308ba4d8555938310b13be4dbb04d0f7be",
+      "compressedBytes": 144883,
+      "originalFiles": 4,
+      "rawPayloadFiles": 4,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "closeout-metadata",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-closeout-metadata.tar.gz",
+      "sha256": "3586fc8ae4c5d9342914adc9f4ae50a9c720a647b14f52163d3d44b9777e1b05",
+      "compressedBytes": 9217,
+      "originalFiles": 20,
+      "rawPayloadFiles": 20,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "implementation-checks-proposals-01",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-01.tar.gz",
+      "sha256": "d107ec7a947113d0f11c64702e9e3746a6c22facf872d2fc57108a0634412caf",
+      "compressedBytes": 5072957,
+      "originalFiles": 55,
+      "rawPayloadFiles": 45,
+      "gitMappedFiles": 10
+    },
+    {
+      "group": "implementation-checks-proposals-02",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-02.tar.gz",
+      "sha256": "2ec0ff9797b6f00dca1d73dfea0313b656745865c492e16f6032ecdb925ed262",
+      "compressedBytes": 4872375,
+      "originalFiles": 20,
+      "rawPayloadFiles": 20,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "implementation-checks-proposals-03",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-03.tar.gz",
+      "sha256": "07e67bf3046be876553e3b1028509c168a3675798190fb560a55f7f832e2ae9d",
+      "compressedBytes": 4853731,
+      "originalFiles": 20,
+      "rawPayloadFiles": 20,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "implementation-checks-proposals-04",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-04.tar.gz",
+      "sha256": "b1d3d6f03810149b52385da55d3df9bce09a7c80804f60ffcb82a7b9ba39927d",
+      "compressedBytes": 5281476,
+      "originalFiles": 28,
+      "rawPayloadFiles": 23,
+      "gitMappedFiles": 5
+    },
+    {
+      "group": "implementation-checks-proposals-05",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-05.tar.gz",
+      "sha256": "dfbdf9f129dff0f41e6fe44ec62817924acfdaf4d64499a8f54d72ccbbdc73d8",
+      "compressedBytes": 4029543,
+      "originalFiles": 21,
+      "rawPayloadFiles": 18,
+      "gitMappedFiles": 3
+    },
+    {
+      "group": "implementation-checks-proposals-06",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-06.tar.gz",
+      "sha256": "1105d809a7c8f40f6ee7b136d2bf89dc0c1a7e7f4f71ff24ce17b7afb3ed3e5e",
+      "compressedBytes": 4826865,
+      "originalFiles": 15,
+      "rawPayloadFiles": 15,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "implementation-checks-proposals-07",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-07.tar.gz",
+      "sha256": "e9a3b3330754c510de1c3f8087f3d3e6bb2aa199d145efff24d9c9c4e5d381f5",
+      "compressedBytes": 5223002,
+      "originalFiles": 26,
+      "rawPayloadFiles": 26,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "implementation-checks-proposals-08",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-08.tar.gz",
+      "sha256": "ff8688b1a9672468b8618f77713848d05b83ab83f61a514404e0113a0227bbf3",
+      "compressedBytes": 4818450,
+      "originalFiles": 20,
+      "rawPayloadFiles": 20,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "implementation-checks-proposals-09",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-09.tar.gz",
+      "sha256": "ebb1a2b81aaa2d43298ec2bba676806c45a5e09a435dacc5d540367b3cde0a7f",
+      "compressedBytes": 5419933,
+      "originalFiles": 22,
+      "rawPayloadFiles": 22,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "implementation-checks-proposals-10",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-10.tar.gz",
+      "sha256": "46e483d2c04ff92604309b54752d4da42b9dde898c345163e414afb9aaf39874",
+      "compressedBytes": 4918677,
+      "originalFiles": 36,
+      "rawPayloadFiles": 32,
+      "gitMappedFiles": 4
+    },
+    {
+      "group": "implementation-checks-proposals-11",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-11.tar.gz",
+      "sha256": "9067ca1b2ba3ebdd76c8f37e193d750663afd099e1e2bf1aa7f478bc3033f7a9",
+      "compressedBytes": 3611420,
+      "originalFiles": 15,
+      "rawPayloadFiles": 15,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "implementation-resource-candidate-build-01",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-resource-candidate-build-01.tar.gz",
+      "sha256": "8046fee87ebd026cf5efb31038bab25ad86eb268d7fabc534d68854f9a62d793",
+      "compressedBytes": 4956511,
+      "originalFiles": 20855,
+      "rawPayloadFiles": 70,
+      "gitMappedFiles": 20785
+    },
+    {
+      "group": "implementation-resource-candidate-build-02",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-resource-candidate-build-02.tar.gz",
+      "sha256": "c7c3bef7207ab1534b05f769db834efbe5374da0770d861a89d539b1d3d6eddc",
+      "compressedBytes": 4873505,
+      "originalFiles": 20906,
+      "rawPayloadFiles": 56,
+      "gitMappedFiles": 20850
+    },
+    {
+      "group": "implementation-resource-candidate-build-03",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-resource-candidate-build-03.tar.gz",
+      "sha256": "af855e9b499e26d7185be8a26a9572d668f4a34bdac3dd43b8f5b19c93e75f3d",
+      "compressedBytes": 6297272,
+      "originalFiles": 20910,
+      "rawPayloadFiles": 48,
+      "gitMappedFiles": 20862
+    },
+    {
+      "group": "implementation-resource-candidate-build-04",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-resource-candidate-build-04.tar.gz",
+      "sha256": "55b8a9a6c2524b3f226d0ee588381d0a9ef42568b1c7872a806ae967e0c68beb",
+      "compressedBytes": 13520322,
+      "originalFiles": 20954,
+      "rawPayloadFiles": 39,
+      "gitMappedFiles": 20915
+    },
+    {
+      "group": "implementation-resource-candidate-build-05",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-resource-candidate-build-05.tar.gz",
+      "sha256": "869b3825de8cd3879464f4aa716ffb1135f05e40339dee96df8522d92f0195b3",
+      "compressedBytes": 14259516,
+      "originalFiles": 32529,
+      "rawPayloadFiles": 30,
+      "gitMappedFiles": 32499
+    },
+    {
+      "group": "implementation-resource-candidate-build-06",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-resource-candidate-build-06.tar.gz",
+      "sha256": "53188b9fab7f66d9c4a6f9eb42172627438ed3d1a649247881954abe03387c2e",
+      "compressedBytes": 13720625,
+      "originalFiles": 32859,
+      "rawPayloadFiles": 20,
+      "gitMappedFiles": 32839
+    },
+    {
+      "group": "independent-reviews",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-independent-reviews.tar.gz",
+      "sha256": "d6446be6790990c7813d5b8fd56117708b421347c4b223ccb806030a3c72f4ff",
+      "compressedBytes": 52535,
+      "originalFiles": 23,
+      "rawPayloadFiles": 18,
+      "gitMappedFiles": 5
+    },
+    {
+      "group": "original-read-native",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-original-read-native.tar.gz",
+      "sha256": "eb73facd49a0aefdb992c24aab17e460fee89cb6923c85c631b8ca01e25f5378",
+      "compressedBytes": 19259,
+      "originalFiles": 56,
+      "rawPayloadFiles": 56,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "platform-baseline-01",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-platform-baseline-01.tar.gz",
+      "sha256": "67beae7e41cf3fe5bdec8138871bcfeb976a2ceaeb4256042f7ee4c38bfe105c",
+      "compressedBytes": 4408851,
+      "originalFiles": 225,
+      "rawPayloadFiles": 48,
+      "gitMappedFiles": 177
+    },
+    {
+      "group": "platform-baseline-02",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-platform-baseline-02.tar.gz",
+      "sha256": "09cac0380f05f5de1b89f28150d536239bc8d1182334106463cd164bbd51df48",
+      "compressedBytes": 4375358,
+      "originalFiles": 229,
+      "rawPayloadFiles": 46,
+      "gitMappedFiles": 183
+    },
+    {
+      "group": "required-rust-checks",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-required-rust-checks.tar.gz",
+      "sha256": "6162e9f0491c3f6e39762029bbb9a1960d6895b749e640006c97a4e9bf36c03a",
+      "compressedBytes": 3303787,
+      "originalFiles": 57,
+      "rawPayloadFiles": 57,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "source-commit-push-binding",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-source-commit-push-binding.tar.gz",
+      "sha256": "a9b76675c1a4595494348a7d0b30ad1e4ee698e2b642f1f94bb6a7a86441d4f2",
+      "compressedBytes": 4146020,
+      "originalFiles": 133,
+      "rawPayloadFiles": 133,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "supplemental-platforms",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-supplemental-platforms.tar.gz",
+      "sha256": "02a5bcfdb59e6dde423ef4c94790e80a99e1520718b770e204d7a5434b8b483d",
+      "compressedBytes": 4495420,
+      "originalFiles": 25919,
+      "rawPayloadFiles": 25919,
+      "gitMappedFiles": 0
+    },
+    {
+      "group": "tooling-integration-reviews",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-tooling-integration-reviews.tar.gz",
+      "sha256": "b7bec837615f31676a065bdfced078deb5ae80304b178cfa91e91a93edae39b5",
+      "compressedBytes": 4713856,
+      "originalFiles": 271,
+      "rawPayloadFiles": 255,
+      "gitMappedFiles": 16
+    },
+    {
+      "group": "selection-metadata",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-selection-metadata.tar.gz",
+      "sha256": "6e01bc1d66e29a63b5990c8b9b697b0ccc5f08057f4db987a4f99bf45f72ffd5",
+      "compressedBytes": 9654127
+    },
+    {
+      "group": "publication-closeout",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-publication-closeout.tar.gz",
+      "sha256": "64b27b7dc04a4d7cb603bfd18271c1c4d40f048f4a856aa27ea76d35de638967",
+      "compressedBytes": 24559,
+      "payloadFiles": 128,
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+            "create",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/gathered/publication-closeout",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-publication-closeout.tar.gz"
+          ],
+          "exitCode": 0,
+          "stdoutSha256": "38e0cb34bede9b9d1b9b6fac411fe72700bafebdf181481c157f1a9ebbe7e9b2",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/tools/evidence.py",
+            "verify",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-publication-closeout.tar.gz"
+          ],
+          "exitCode": 0,
+          "stdoutSha256": "38e0cb34bede9b9d1b9b6fac411fe72700bafebdf181481c157f1a9ebbe7e9b2",
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    }
+  ],
+  "archiveCount": 29,
+  "totalCompressedBytes": 145904052,
+  "producerOriginalFiles": 176228,
+  "producerOriginalBytes": 22213858964,
+  "rawOriginals": 27075,
+  "gitMappedOriginals": 149153,
+  "originalChanges": [],
+  "selectionRoots": 57,
+  "bRootsDisjoint": 83,
+  "producerSeals": "Historical original closure-null and browser provenance qualifications remain unchanged. These archives are current publication seals, not retrospective acquisition seals.",
+  "fullSelectedRegressionExcluded": true,
+  "hostedCiClaimed": false,
+  "fullM2Complete": false,
+  "publicGitOrReportsMutations": []
+}

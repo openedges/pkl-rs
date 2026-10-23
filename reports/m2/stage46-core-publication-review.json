@@ -1,0 +1,162 @@
+{
+  "scope": "Independent readback only; no evaluator, test, Java, build, platform or Git mutation.",
+  "archiveIndexSha256": "041f22fb0e2b3fdde9254919aee7c54d8a34b47236e209a4b614bbdeb6331723",
+  "archiveCount": 28,
+  "declaredArchivePayloadsVerified": 27168,
+  "declaredArchivePayloadBytes": 1109340966,
+  "archiveEvidenceInventoriesVerified": 28,
+  "allHeaderMetadataDeterministic": true,
+  "originalsRehashed": 176228,
+  "rawOriginalsVerified": 27075,
+  "gitSourceMappingsVerified": 149153,
+  "allOriginalsCoveredExactlyOnce": true,
+  "originalHashModeKindChanges": [],
+  "beforeAfterOriginalPathSetsEqual": true,
+  "compressedBytes": 145879493,
+  "maxArchiveBytes": 14259516,
+  "findings": [],
+  "archives": [
+    {
+      "group": "closeout-draft-documentation",
+      "payloadFiles": 6,
+      "payloadBytes": 530135
+    },
+    {
+      "group": "closeout-metadata",
+      "payloadFiles": 22,
+      "payloadBytes": 33832
+    },
+    {
+      "group": "implementation-checks-proposals-01",
+      "payloadFiles": 47,
+      "payloadBytes": 28299669
+    },
+    {
+      "group": "implementation-checks-proposals-02",
+      "payloadFiles": 22,
+      "payloadBytes": 27131243
+    },
+    {
+      "group": "implementation-checks-proposals-03",
+      "payloadFiles": 22,
+      "payloadBytes": 27048240
+    },
+    {
+      "group": "implementation-checks-proposals-04",
+      "payloadFiles": 25,
+      "payloadBytes": 31577663
+    },
+    {
+      "group": "implementation-checks-proposals-05",
+      "payloadFiles": 20,
+      "payloadBytes": 24624134
+    },
+    {
+      "group": "implementation-checks-proposals-06",
+      "payloadFiles": 17,
+      "payloadBytes": 33394556
+    },
+    {
+      "group": "implementation-checks-proposals-07",
+      "payloadFiles": 28,
+      "payloadBytes": 31329289
+    },
+    {
+      "group": "implementation-checks-proposals-08",
+      "payloadFiles": 22,
+      "payloadBytes": 26909664
+    },
+    {
+      "group": "implementation-checks-proposals-09",
+      "payloadFiles": 24,
+      "payloadBytes": 30306152
+    },
+    {
+      "group": "implementation-checks-proposals-10",
+      "payloadFiles": 34,
+      "payloadBytes": 27465381
+    },
+    {
+      "group": "implementation-checks-proposals-11",
+      "payloadFiles": 17,
+      "payloadBytes": 20175126
+    },
+    {
+      "group": "implementation-resource-candidate-build-01",
+      "payloadFiles": 72,
+      "payloadBytes": 41555006
+    },
+    {
+      "group": "implementation-resource-candidate-build-02",
+      "payloadFiles": 58,
+      "payloadBytes": 41001758
+    },
+    {
+      "group": "implementation-resource-candidate-build-03",
+      "payloadFiles": 50,
+      "payloadBytes": 44209893
+    },
+    {
+      "group": "implementation-resource-candidate-build-04",
+      "payloadFiles": 41,
+      "payloadBytes": 85104120
+    },
+    {
+      "group": "implementation-resource-candidate-build-05",
+      "payloadFiles": 32,
+      "payloadBytes": 102282605
+    },
+    {
+      "group": "implementation-resource-candidate-build-06",
+      "payloadFiles": 22,
+      "payloadBytes": 95561091
+    },
+    {
+      "group": "independent-reviews",
+      "payloadFiles": 20,
+      "payloadBytes": 188519
+    },
+    {
+      "group": "original-read-native",
+      "payloadFiles": 58,
+      "payloadBytes": 160510
+    },
+    {
+      "group": "platform-baseline-01",
+      "payloadFiles": 50,
+      "payloadBytes": 19205392
+    },
+    {
+      "group": "platform-baseline-02",
+      "payloadFiles": 48,
+      "payloadBytes": 19007446
+    },
+    {
+      "group": "required-rust-checks",
+      "payloadFiles": 59,
+      "payloadBytes": 22634519
+    },
+    {
+      "group": "source-commit-push-binding",
+      "payloadFiles": 135,
+      "payloadBytes": 46591104
+    },
+    {
+      "group": "supplemental-platforms",
+      "payloadFiles": 25921,
+      "payloadBytes": 85490949
+    },
+    {
+      "group": "tooling-integration-reviews",
+      "payloadFiles": 257,
+      "payloadBytes": 44341479
+    },
+    {
+      "group": "selection-metadata",
+      "payloadFiles": 39,
+      "payloadBytes": 153181491
+    }
+  ],
+  "seconds": 35.036458015441895,
+  "qualification": "Original producer closure-null/internal failure/publication01 size-boundary records remain preserved, not relabeled. Core/full selected regression and M2 completion are separate scopes. No final publication/Git commitment is claimed."
+}

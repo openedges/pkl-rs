@@ -1,0 +1,226 @@
+{
+  "schema": 1,
+  "scope": "Stage46 B oracle/native/tool/fixture raw evidence publication only; no new evaluator/build/Git execution",
+  "archives": 10,
+  "compressedBytes": 46122349,
+  "largestArchiveBytes": 12464542,
+  "archiveLimitBytes": 100000000,
+  "allArchivesBelowLimit": true,
+  "createVerifyProcesses": [
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/consumer-tools-early-create.terminal.json",
+      "sha256": "cabab21fa6548f54022bbab94ea49391f73544a8a5d3fba6ce1ecaebdc47ed2c",
+      "pid": 87068,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755111440337000,
+      "stdoutSha256": "27ee1d2417590efb4fd3618d17725ef60b021c3160e734ce689f5cd596b1bab4",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/consumer-tools-early-verify.terminal.json",
+      "sha256": "6abe51403fd9e4297ee8996c06c711c8e3554ae2754b51f206474a15aec0512b",
+      "pid": 87073,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755111529349000,
+      "stdoutSha256": "27ee1d2417590efb4fd3618d17725ef60b021c3160e734ce689f5cd596b1bab4",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/java-file-order-producers-create.terminal.json",
+      "sha256": "f50a175b387b76f0924f4b2f0a7ea32285ed70eb631cd63b013585f94e9a62a8",
+      "pid": 87121,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755125559868000,
+      "stdoutSha256": "66e0d620bfe10630f022b1e8cf791a89b98e2a6aeda2fe60788208c2b1cefb78",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/java-file-order-producers-verify.terminal.json",
+      "sha256": "2cdfdbcff4d2cec8b6cbec4872382a9dfdc23ca6ad554f8225c5433e52b691dc",
+      "pid": 87190,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755126137051000,
+      "stdoutSha256": "66e0d620bfe10630f022b1e8cf791a89b98e2a6aeda2fe60788208c2b1cefb78",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/java-original-cli-inputs-create.terminal.json",
+      "sha256": "916d08927d0e601b2e7c01419d0ac408abc384fbdfd890c099f0e5cab3545e24",
+      "pid": 87075,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755112308575000,
+      "stdoutSha256": "4852e85b9f2458a16377aa2d797ceaaa9bb38fdb2c3a9f984969dfeafa287cc2",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/java-original-cli-inputs-verify.terminal.json",
+      "sha256": "7dc67b3f8d2e4a1fb4af721c0dd13405b232ca2791c414c53a30e3ba071abce5",
+      "pid": 87080,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755112445990000,
+      "stdoutSha256": "4852e85b9f2458a16377aa2d797ceaaa9bb38fdb2c3a9f984969dfeafa287cc2",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/java-resource-uri-base64-create.terminal.json",
+      "sha256": "a93a7b2d2a93ecd1ddf968bbc74c8f7e75a2bca519c7d811f9e4329d678662a2",
+      "pid": 87205,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755137868394000,
+      "stdoutSha256": "9c6e4d4cfbaa1df52d9049c76c4bb284897cb0e5ecb762b738c5e773f93cc7b6",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/java-resource-uri-base64-verify.terminal.json",
+      "sha256": "a219979680115554a633858194904fa1c2f8d2c1f98cbc2fc06a7214478cc3e6",
+      "pid": 87272,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755138732258000,
+      "stdoutSha256": "9c6e4d4cfbaa1df52d9049c76c4bb284897cb0e5ecb762b738c5e773f93cc7b6",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/launch-audit-handoff-create.terminal.json",
+      "sha256": "b75734fe19cf9233555b1c809db335ba26e41e85e63887c3a55aabb331905fa5",
+      "pid": 87194,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755127671819000,
+      "stdoutSha256": "1e013d3f36b69d12d3020ac557c089d5a78edaddfa690e70fac86cd268f4cc42",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/launch-audit-handoff-verify.terminal.json",
+      "sha256": "f7d67985960b9d17a2f0fe649b9c5f4d5825039c456bde6927b3ea8a27bb2d04",
+      "pid": 87198,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755127747791000,
+      "stdoutSha256": "1e013d3f36b69d12d3020ac557c089d5a78edaddfa690e70fac86cd268f4cc42",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/native-c01-c02-history-create.terminal.json",
+      "sha256": "7819a20a20eede4f22b4d9282b4582f92f9db33daba9a9c05bca82c698bffc38",
+      "pid": 87271,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755142907968000,
+      "stdoutSha256": "79d29262164c1521107ef93c29fb889eb784a3111207f30c280f8876d6b75854",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/native-c01-c02-history-verify.terminal.json",
+      "sha256": "e1909e6f03c1776b45151f2b6625b1a61ca94d774a9d5325fee67c3d22b8e64a",
+      "pid": 87371,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755143582845000,
+      "stdoutSha256": "79d29262164c1521107ef93c29fb889eb784a3111207f30c280f8876d6b75854",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/native-c04-create.terminal.json",
+      "sha256": "7e097baaf702568ad1fa4a24c9050fe3169228cc8fd744325283e44214394702",
+      "pid": 87406,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755155608264000,
+      "stdoutSha256": "29854e9f1a927b77a10aa27340dcf8988711319f7eeeb992d46b78c6e4d14895",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/native-c04-verify.terminal.json",
+      "sha256": "5ae4c4a4b76622234c0f97345febc959ba7665aff3ed4943415bfde2bd9b354a",
+      "pid": 87469,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755156331720000,
+      "stdoutSha256": "29854e9f1a927b77a10aa27340dcf8988711319f7eeeb992d46b78c6e4d14895",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/native-c05-create.terminal.json",
+      "sha256": "07cac95fd451320e363f8f134d2a0fc48211a5b0517da99b4248d98a42a788de",
+      "pid": 87521,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755173132259000,
+      "stdoutSha256": "4ce2f63a8527cf3b86becd932c24e6857b3efaadf6c5032a653d50ea065888c9",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/native-c05-verify.terminal.json",
+      "sha256": "380a53425b54d8df81d80853ef6de291542cdc14d5cfd0f526c222a0e05bce6c",
+      "pid": 87675,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755174340790000,
+      "stdoutSha256": "4ce2f63a8527cf3b86becd932c24e6857b3efaadf6c5032a653d50ea065888c9",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/native-c06-create.terminal.json",
+      "sha256": "193568c2743757139b5d956ba68272ee9340d950dd9dca36d6a03f1afd32ff09",
+      "pid": 87687,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755185122418000,
+      "stdoutSha256": "3d6b92bf8397ad63682629b7c8b2f0d144cc17d1c5d6e828ce37f81f4f638c5c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/native-c06-verify.terminal.json",
+      "sha256": "5789cf4d886bec0442329964e9b7c1a13db186555e8cef7766dd7c6e895ffb74",
+      "pid": 87753,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755186343770000,
+      "stdoutSha256": "3d6b92bf8397ad63682629b7c8b2f0d144cc17d1c5d6e828ce37f81f4f638c5c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/portable-golden-tools-create.terminal.json",
+      "sha256": "9877489a0a4f8639e189b1535462c499be8c2132b97b17b41cafbfc5ae8e54f2",
+      "pid": 87686,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755176324585000,
+      "stdoutSha256": "7401324692eeb5b45e4892d78fe8ca5671a792144348276051e4264ce6b6b51c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "terminal": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/processes/portable-golden-tools-verify.terminal.json",
+      "sha256": "ac15dfdcad8333b1fd931d33359427078280e876689402b89b90c28232086320",
+      "pid": 87688,
+      "exitCode": 0,
+      "finishedUnixNs": 1792755176437283000,
+      "stdoutSha256": "7401324692eeb5b45e4892d78fe8ca5671a792144348276051e4264ce6b6b51c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "allArchiveMembersIndependentlyReadBack": true,
+  "allArchivePayloadsJoinedToOriginalPathHash": true,
+  "originalRoots": 83,
+  "historicalSealedRoots": 67,
+  "historicallyUnsealedRoots": 16,
+  "fullOriginalRegularFiles": 174946,
+  "fullOriginalSymlinks": 14,
+  "fullOriginalRegularBytes": 356045042,
+  "rawArchiveRegularFiles": 131928,
+  "rawArchiveRegularBytes": 267399864,
+  "symlinksRepresentedAsLiteralRegularPayload": 14,
+  "gitReconstructionEntries": 43018,
+  "gitReconstructionBytes": 88645178,
+  "gitMainCommit": "a3eb3634558cef6f36189320498fe7e013296c48",
+  "gitMainTree": "b559dbaf8895408503e4ed14d994766d71f6e833",
+  "gitMappingProofSha256": "4a7b142fd8c383938e904e49bd484bec5397006c7192be1d7e1d34867a662862",
+  "twoActualCRLFOriginalsPreserved": true,
+  "finalOriginalReadback": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/final-original-readback.json",
+  "finalOriginalReadbackSha256": "08fe6c7c0f8d6c82d405059a5940b85ba048491e6374c57b76a85ca526ba10bc",
+  "originalPathKindModeContentChanges": 0,
+  "selectionScriptsAndTerminals": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/selection-metadata-binding.json",
+  "selectionMetadataBindingSha256": "196594515a966b4c2179ad90789cbd5876b56c658f9240c5a7ff104611b50cb6",
+  "packagingScript": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/package.py",
+  "packagingScriptSha256": "1819adcea56ac95a41c89da0f60f59c66f6e9eab4c350fb053a03df0929c281b",
+  "evidenceTool": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/tools/evidence.py",
+  "evidenceToolSha256": "b3224aa21497c955c865e143faefb8ebdc9c70ea48983eb678b5972be17fe62e",
+  "toolHandle": 72085,
+  "actualPackagingPid": 87027,
+  "observedFinalExitCode": 0,
+  "sourceFailBoundaryPolicy": "C01 incomplete results,C02pre-nativePythonfailures,C04mismatches,constructor16,Resource264unselected,SPIprojection24,oldnullseals/missingterminalmetadata and tooling corrections retained; later success never rewrites earlier outcomes. Embedded209 prior-stage fixture receipts are separate from667 directStage46 process/tool metadata records.",
+  "remainingScope": "Core/root/C review archives, later full-regression and Stage47 captures are separate ownership. M2fullcompletion is not claimed.",
+  "indexSha256": "768f99cb8106b1dbebaec1bfad279a3439ad65e1dafd75c258221fefd97dd4e7",
+  "reportSha256": "a723fa696a7a9ba4634f9806ed5b31afd1b024d31a2f5659e0a4d59b87520cd4",
+  "originalChanges": [],
+  "liveHandles": []
+}

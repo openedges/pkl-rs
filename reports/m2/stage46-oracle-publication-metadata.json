@@ -1,0 +1,36 @@
+{
+  "scope": "Root-created archive of oracle selection, packaging scripts and terminal metadata; separate from the original ten oracle/native payload archives.",
+  "capture": {
+    "archive": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-oracle-publication-metadata-01/stage46-oracle-publication-metadata.tar.gz",
+    "sha256": "c7cbef70aaa938cf339bf958023467c97ea7de5fe6c28104cc98aef86bc34306",
+    "bytes": 22806209,
+    "originalMetadataFiles": 155,
+    "allOriginalBytesUnchanged": true,
+    "commands": [
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "create",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-oracle-publication-metadata-01/gathered",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-oracle-publication-metadata-01/stage46-oracle-publication-metadata.tar.gz"
+        ],
+        "exitCode": 0
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-oracle-publication-metadata-01/stage46-oracle-publication-metadata.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    ]
+  },
+  "observedToolTerminal": {
+    "tool": "exec_command/write_stdin",
+    "sessionId": 12191,
+    "actualExitCode": 0
+  }
+}

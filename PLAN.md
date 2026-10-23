@@ -792,6 +792,20 @@ Stage 46의 Java 비교 입력은 런타임과 별도 체크포인트로 정리�
 
 C05 후보에서 원본 `basic/read.pkl` 두 반복, native Resource API 1,008회와 File·논리식·capability API 716회가 원시 결과로 일치했습니다. File 생성자 단계의 미실행 16회와 SPI 정책 이벤트의 별도 경계는 유지합니다. 실제 Node·Chromium의 Resource API도 환경별 1,008회가 일치했고, 추가 모듈 탐색·정책·함수 owner 대조군 252회는 환경별 출력·오류·읽기 횟수와 명시한 정책 이벤트 투영이 일치했습니다. Java가 직접 기록하지 않은 capabilities·has-element 요청 순서나 전체 SPI 일치를 주장하지 않습니다. C05 필수 검사에서 Clippy 경고가 발견되어 최소 교정을 적용했으며, 새 도구·fixture와 목록 source hash를 함께 고정한 C06에서 필수 검사와 실제 플랫폼 검증을 다시 수행합니다. C05 브라우저 기록은 기본 설치 경로와 실제 headless 실행 파일의 연결이 증명되지 않아 원본에 별도 설명을 붙입니다. 후속 실행은 기록한 실행 파일을 명시적으로 선택하는 새 조건이며 이전 증거를 덮어쓰지 않습니다.
 
+Stage 46 구현을 `a3eb363`에 커밋·푸시했습니다. [구현 체크포인트](reports/m2/stage46-implementation-checkpoint.json)에서 원본 `basic/read.pkl` 두 반복과 native API 1,724회가 일치합니다. 실제 Node·Chromium에서는 환경별 Resource 1,008회·모듈 준비 252회가 일치합니다. 필수 Rust 검사 다섯 개는 C06에서 통과했고, 보고서의 C05 표기 오류는 별도 정정 기록으로 보존합니다. 이후 HTTP 검증 도구 여섯 개만 수정했으며 엔진·빌드 설정은 같습니다. 초기 서버 실패와 browser 실행 파일 식별의 역사적 한계는 유지하고 새 실행에서 명시적으로 선택한 Chromium을 검증했습니다.
+
+커밋 대상의 입력 32,847개를 Git blob·고정 참조에 연결했습니다. `.bat` 두 파일의 upstream checkout 줄바꿈, 원래 source map 밖의 symlink 11개, snapshot 실행 권한 차이 여덟 개는 바이트 일치와 별도로 기록했습니다. 생성자 경계 16회·Resource 미선택 264회, 기존 File 정책 비교기의 capability projection 불일치 24회와 정규식 실패 두 개는 계속 남습니다. 구현 커밋을 고정한 전체 선택 3,664개·순차 evaluator 회귀를 별도로 시작했으며, 결과가 나오기 전에 전체 회귀 또는 M2 완료로 보고하지 않습니다.
+
+[원시 검증 자료](reports/m2/stage46-implementation-captures.json) 40개 archive와 [실제 커밋 소스 대응](reports/m2/stage46-implementation-source-binding.json)을 정리했습니다. 동일한 과거 source snapshot은 검증된 Git blob으로 복원할 수 있게 연결하고, 다른 소스 바이트·실행 artifact·원시 결과·초기 실패는 그대로 보존합니다. 게시 패키징과 독립 재검증, root 승격의 바이트 동일성을 확인했으며 실행 중인 전체 회귀와 Stage 47 결과는 이 집계에 포함하지 않습니다.
+
+### Stage 47 — 공유 JSON 출력과 RenderDirective
+
+원본 `moduleOutput2.pkl`과 `pcfRenderer9.pkl`의 전체 입력·helper·표준 라이브러리 의존성을 유지하며 공통 `ValueRenderer` 경로의 JSON 출력, `RenderDirective`, `ConvertProperty`와 annotation transformer 순서를 구현합니다. 기존 `RenderRun`의 지연 평가·Host 중단·재개·GC root를 재사용하고, 플랫폼별 renderer나 별도 eager 변환 경로를 만들지 않습니다. JSON 옵션을 읽는 순서, annotation 변환 뒤 일반 converter와 null 생략, 경로·클래스 converter 우선순위, 문서 개행·들여쓰기·오류·UTF-16 동작을 고정 Java와 비교합니다.
+
+구현은 `gpt-6-astra / xhigh`, Java 관찰과 독립 검토는 `gpt-6.1-sol / high`로 배정합니다. Stage 46 회귀 소스를 고정한 채 `a3eb363`에서 별도 worktree로 구현을 시작했습니다. 기존 상속·리소스 사례는 Stage 46 전체 회귀의 새 판정에 따라 후속 범위를 결정하며 통과를 미리 가정하지 않습니다. 원본 두 사례의 성공만으로 전체 renderer·표준 라이브러리·M2 완료를 선언하지 않습니다.
+
+`pkl:json.Property`와 `Value`의 원래 선언도 공통 loader에 연결하되 초기 후보는 기본 접근 정책 범위입니다. 다음 필수 체크포인트에서 evaluator별 표준 모듈의 typed resolve·접근 허용·캐시를 pure frontend·native Host·Node/Wasm provider까지 함께 연결합니다. Java `ModuleCache`의 singleton 조기 반환을 쓰는 `pkl:base`·`pkl:ref`·`pkl:test`와 일반 resolve/security 경로의 `pkl:json`을 구분해야 합니다. 모든 표준 모듈에 접근 검사를 일괄 추가하거나 `pkl:json`만 무조건 허용하지 않습니다. 이 의무는 M2 전체 완료 기준에 남습니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

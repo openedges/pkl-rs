@@ -1,0 +1,239 @@
+{
+  "schema": 1,
+  "scope": "Stage46 shared Resource, evaluator cache and module URI preparation implementation checkpoint. Focused local comparisons; not full selected regression or M2 completion.",
+  "createdUtc": "2026-10-23T11:15:05.763810+00:00",
+  "implementationCommit": "a3eb3634558cef6f36189320498fe7e013296c48",
+  "implementationTree": "b559dbaf8895408503e4ed14d994766d71f6e833",
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "requiredRustChecks": [
+    {
+      "argv": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "rustEvidenceQualification": "The original Rust5 report's scope text says C05 in error. Its release, environment, source map and separate immutable erratum bind the actual C06 checks. Six subsequent HTTP verification-tool edits changed no runtime or build configuration and were independently checked and exercised in fresh platform acquisitions.",
+  "originalRead": {
+    "unchangedWholeProgram": "basic/read.pkl",
+    "rawMatches": 2,
+    "workspaceAndArtifactsStable": true
+  },
+  "native": {
+    "selectedRawApiMatches": 1724,
+    "resource": 1008,
+    "fileLogicalCapability": 716,
+    "constructorJavaApiCallsUnexecuted": 16,
+    "resourceJavaApiCallsUnselected": 264,
+    "filePolicyProjectionPass": 692,
+    "capabilityPolicyProjectionUnrecognized": 24,
+    "projectionQualification": "The historical File-only checker retains 24 capability SPI admission mismatches. Raw API agreement does not turn that projection into a pass. The new portable module contract separately declares admission events outside its observable projection."
+  },
+  "sharedPlatformBaseline": {
+    "total": 6078,
+    "shared_engine_passed": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "compatibility_status": "fail",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "experiment_contract_status": "pass"
+  },
+  "portable": {
+    "resource": {
+      "selectedApiCallsPerTarget": 1008,
+      "javaApiCalls": 1272,
+      "unexecutedApiBoundaries": 264,
+      "rawCountsByTarget": {
+        "node": {
+          "pass": 1008
+        },
+        "browser": {
+          "pass": 1008
+        }
+      },
+      "browserExecutableSha256": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+      "browserExecutableExplicitlySelected": true,
+      "missingAssetProbe": {
+        "path": "/__pkl_verification_missing_asset__.js",
+        "status": 404,
+        "bodyHex": ""
+      }
+    },
+    "modulePreparation": {
+      "selectedApiCallsPerTarget": 252,
+      "javaApiCalls": 300,
+      "unexecutedApiBoundaries": 48,
+      "rawCountsByTarget": {
+        "node": {
+          "pass": 252
+        },
+        "browser": {
+          "pass": 252
+        }
+      },
+      "browserExecutableSha256": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+      "browserExecutableExplicitlySelected": true,
+      "missingAssetProbe": {
+        "path": "/__pkl_verification_missing_asset__.js",
+        "status": 404,
+        "bodyHex": ""
+      }
+    }
+  },
+  "tooling": {
+    "pythonTestsPassed": 26,
+    "javascriptProtocolTestsPassed": 21,
+    "fixtureCliAndInventoryFreshnessPassed": true,
+    "earlierResourceFixtureCheckpointTests": 27,
+    "earlierResourceTestsRepeatedHere": false
+  },
+  "sourceBinding": {
+    "capturedRegularFiles": 32847,
+    "unbound": 0,
+    "postBuildHttpToolChanges": [
+      "tools/platform/compare-module-eval.mjs",
+      "tools/platform/compare-module-loader.mjs",
+      "tools/platform/compare-module-preparation.mjs",
+      "tools/platform/compare-moduleinfo.mjs",
+      "tools/platform/compare-resource.mjs",
+      "tools/platform/compare-trace-sessions.mjs"
+    ],
+    "declaredBatCheckoutTransforms": 2,
+    "pinnedSymlinksOutsideSourceMap": 11,
+    "snapshotExecutableModeDifferences": 8,
+    "qualification": "Raw Git, checkout and C06 bytes, symlink targets and snapshot permission metadata are recorded separately. No evaluation output was normalized."
+  },
+  "historicalFailures": [
+    "Initial Resource and URI behavior failures remain in their original captures.",
+    "Initial required-check failures remain separate from the successful C06 checks.",
+    "The first C06 supplemental platform acquisitions failed in their HTTP harness; corrected fresh acquisitions pass.",
+    "Older browser captures record a full-Chrome executable hash without proving that Playwright launched that executable. Historical results retain this provenance limitation; current captures explicitly select the recorded executable.",
+    "Index audits 01 and 02 retain their metadata and checkout-transform assertions; audit03 records the exact boundaries and succeeds."
+  ],
+  "fullSelectedRegression": {
+    "status": "Started separately on the implementation commit; no completed result is claimed by this implementation checkpoint.",
+    "output": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-full-regression-01"
+  },
+  "remainingScope": [
+    "Forced read*/import* glob execution, Resource digests/full Bytes API and other unselected boundaries.",
+    "Remaining language/type/annotation/reflection/diagnostic and original-program dependencies.",
+    "Complete product APIs, release platforms and speed/memory targets."
+  ],
+  "fullM2Complete": false,
+  "hostedCiClaimed": false,
+  "performanceTargetClaimed": false,
+  "evidence": {
+    "candidate_release": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-implementation-01/resource-candidate-build-06/release.json",
+      "sha256": "e9eb9341344a2db28f1b020cc8081bb3e8dfe67158c8eb932a00211832b3c807"
+    },
+    "rust_checks": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-rust5-02/report.json",
+      "sha256": "f569c1d15091c4a9c5fe6415ad3859f064c8681e6e1b510933100c71dff1e3cb"
+    },
+    "rust_scope_erratum": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-rust5-02/scope-erratum.json",
+      "sha256": "bb8d6fc8e435aae5746d3b9108c70b74b7690011159dc12943625cc44f8b8052"
+    },
+    "native_summary": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-native-c06-audit-01/comparison-summary.json",
+      "sha256": "c2b59b0c26ee7bccae59770f57938ae0772a478b98d069315548ac7c9e85938e"
+    },
+    "native_handoff": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-native-c06-audit-01/handoff.json",
+      "sha256": "9762ee75cdbd12d2e6450c252d8439da992fea7beb5199298a0949fe46f17444"
+    },
+    "original_read": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-original-read-native-04/report.json",
+      "sha256": "fe421a1707d7abeab4a88fa0a3de7fd05339a04a5b12c1e38322fcea5f2e6d83"
+    },
+    "platform_baseline": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-platform-baseline-02/report.json",
+      "sha256": "f11c8c86766f9e030483cb0a4c167d2c4c527228b5126b540f8a9cbfd0878656"
+    },
+    "portable_resource": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-resource-platform-03/execution.json",
+      "sha256": "40a8694f243e23ccebb397c3544ba3b5149a529e23f3dc96dca917c30cb0b78e"
+    },
+    "portable_module": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-platform-03/execution.json",
+      "sha256": "9ab312abcd4c59a050bcfbaa4c95a0ff401865999a54f16f664cf2bd20cb808f"
+    },
+    "platform_http_followup": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-platform-http-followup-01/report.json",
+      "sha256": "ad0ce9cca5f6354b1a820c42ddda710f5f78483fed5fa0296c507fca60f075e9"
+    },
+    "tool_integration": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-module-portable-integration-01/report.json",
+      "sha256": "c27346b9ca9eef0da0ddc0542a846bfaab8f20938f8f02f506db1d4139cbf687"
+    },
+    "index_binding": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-index-binding-03/report.json",
+      "sha256": "d3f33e65f425beee50bceff5441699464b262d42252574d2ed14ff0b9eb1b527"
+    },
+    "implementation_commit": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-commit-01/report.json",
+      "sha256": "c4a8d209aab3b700938b84fd0d669599c4715c51daf8f03032104f7fd6435db7"
+    },
+    "implementation_push": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-implementation-push-01/report.json",
+      "sha256": "cc2cf955c8e3e0fee0279fdbf9a25aadc433b40032f378d3859eab5b516797d7"
+    },
+    "independent_platform_review": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-server-tooling-review-01/followup-review.json",
+      "sha256": "5d94c597dd0be04c0a04e616b5a9756b1591648973d429876defb076e13574cb"
+    }
+  }
+}

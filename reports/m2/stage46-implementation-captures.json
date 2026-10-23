@@ -1,0 +1,349 @@
+{
+  "schema": 1,
+  "scope": "Stage46 implementation evidence publication. Focused results, historical failures, source/fixture reconstruction and verification receipts; excludes the ongoing full selected/persistent regression and Stage47 implementation results.",
+  "implementationCommit": "a3eb3634558cef6f36189320498fe7e013296c48",
+  "archives": [
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-closeout-draft-documentation.tar.gz",
+      "sha256": "c7eff0d4ae9f6b921922816f58435d308ba4d8555938310b13be4dbb04d0f7be",
+      "bytes": 144883,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-closeout-draft-documentation.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-closeout-metadata.tar.gz",
+      "sha256": "3586fc8ae4c5d9342914adc9f4ae50a9c720a647b14f52163d3d44b9777e1b05",
+      "bytes": 9217,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-closeout-metadata.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-checks-proposals-01.tar.gz",
+      "sha256": "d107ec7a947113d0f11c64702e9e3746a6c22facf872d2fc57108a0634412caf",
+      "bytes": 5072957,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-01.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-checks-proposals-02.tar.gz",
+      "sha256": "2ec0ff9797b6f00dca1d73dfea0313b656745865c492e16f6032ecdb925ed262",
+      "bytes": 4872375,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-02.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-checks-proposals-03.tar.gz",
+      "sha256": "07e67bf3046be876553e3b1028509c168a3675798190fb560a55f7f832e2ae9d",
+      "bytes": 4853731,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-03.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-checks-proposals-04.tar.gz",
+      "sha256": "b1d3d6f03810149b52385da55d3df9bce09a7c80804f60ffcb82a7b9ba39927d",
+      "bytes": 5281476,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-04.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-checks-proposals-05.tar.gz",
+      "sha256": "dfbdf9f129dff0f41e6fe44ec62817924acfdaf4d64499a8f54d72ccbbdc73d8",
+      "bytes": 4029543,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-05.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-checks-proposals-06.tar.gz",
+      "sha256": "1105d809a7c8f40f6ee7b136d2bf89dc0c1a7e7f4f71ff24ce17b7afb3ed3e5e",
+      "bytes": 4826865,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-06.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-checks-proposals-07.tar.gz",
+      "sha256": "e9a3b3330754c510de1c3f8087f3d3e6bb2aa199d145efff24d9c9c4e5d381f5",
+      "bytes": 5223002,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-07.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-checks-proposals-08.tar.gz",
+      "sha256": "ff8688b1a9672468b8618f77713848d05b83ab83f61a514404e0113a0227bbf3",
+      "bytes": 4818450,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-08.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-checks-proposals-09.tar.gz",
+      "sha256": "ebb1a2b81aaa2d43298ec2bba676806c45a5e09a435dacc5d540367b3cde0a7f",
+      "bytes": 5419933,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-09.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-checks-proposals-10.tar.gz",
+      "sha256": "46e483d2c04ff92604309b54752d4da42b9dde898c345163e414afb9aaf39874",
+      "bytes": 4918677,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-10.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-checks-proposals-11.tar.gz",
+      "sha256": "9067ca1b2ba3ebdd76c8f37e193d750663afd099e1e2bf1aa7f478bc3033f7a9",
+      "bytes": 3611420,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-checks-proposals-11.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-resource-candidate-build-01.tar.gz",
+      "sha256": "8046fee87ebd026cf5efb31038bab25ad86eb268d7fabc534d68854f9a62d793",
+      "bytes": 4956511,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-resource-candidate-build-01.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-resource-candidate-build-02.tar.gz",
+      "sha256": "c7c3bef7207ab1534b05f769db834efbe5374da0770d861a89d539b1d3d6eddc",
+      "bytes": 4873505,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-resource-candidate-build-02.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-resource-candidate-build-03.tar.gz",
+      "sha256": "af855e9b499e26d7185be8a26a9572d668f4a34bdac3dd43b8f5b19c93e75f3d",
+      "bytes": 6297272,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-resource-candidate-build-03.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-resource-candidate-build-04.tar.gz",
+      "sha256": "55b8a9a6c2524b3f226d0ee588381d0a9ef42568b1c7872a806ae967e0c68beb",
+      "bytes": 13520322,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-resource-candidate-build-04.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-resource-candidate-build-05.tar.gz",
+      "sha256": "869b3825de8cd3879464f4aa716ffb1135f05e40339dee96df8522d92f0195b3",
+      "bytes": 14259516,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-resource-candidate-build-05.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-implementation-resource-candidate-build-06.tar.gz",
+      "sha256": "53188b9fab7f66d9c4a6f9eb42172627438ed3d1a649247881954abe03387c2e",
+      "bytes": 13720625,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-implementation-resource-candidate-build-06.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-independent-reviews.tar.gz",
+      "sha256": "d6446be6790990c7813d5b8fd56117708b421347c4b223ccb806030a3c72f4ff",
+      "bytes": 52535,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-independent-reviews.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-original-read-native.tar.gz",
+      "sha256": "eb73facd49a0aefdb992c24aab17e460fee89cb6923c85c631b8ca01e25f5378",
+      "bytes": 19259,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-original-read-native.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-platform-baseline-01.tar.gz",
+      "sha256": "67beae7e41cf3fe5bdec8138871bcfeb976a2ceaeb4256042f7ee4c38bfe105c",
+      "bytes": 4408851,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-platform-baseline-01.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-platform-baseline-02.tar.gz",
+      "sha256": "09cac0380f05f5de1b89f28150d536239bc8d1182334106463cd164bbd51df48",
+      "bytes": 4375358,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-platform-baseline-02.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-required-rust-checks.tar.gz",
+      "sha256": "6162e9f0491c3f6e39762029bbb9a1960d6895b749e640006c97a4e9bf36c03a",
+      "bytes": 3303787,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-required-rust-checks.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-source-commit-push-binding.tar.gz",
+      "sha256": "a9b76675c1a4595494348a7d0b30ad1e4ee698e2b642f1f94bb6a7a86441d4f2",
+      "bytes": 4146020,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-source-commit-push-binding.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-supplemental-platforms.tar.gz",
+      "sha256": "02a5bcfdb59e6dde423ef4c94790e80a99e1520718b770e204d7a5434b8b483d",
+      "bytes": 4495420,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-supplemental-platforms.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-tooling-integration-reviews.tar.gz",
+      "sha256": "b7bec837615f31676a065bdfced078deb5ae80304b178cfa91e91a93edae39b5",
+      "bytes": 4713856,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-tooling-integration-reviews.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-selection-metadata.tar.gz",
+      "sha256": "6e01bc1d66e29a63b5990c8b9b697b0ccc5f08057f4db987a4f99bf45f72ffd5",
+      "bytes": 9654127,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-selection-metadata.tar.gz"
+    },
+    {
+      "group": "core",
+      "path": "reports/m2/stage46-core-publication-closeout.tar.gz",
+      "sha256": "64b27b7dc04a4d7cb603bfd18271c1c4d40f048f4a856aa27ea76d35de638967",
+      "bytes": 24559,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-core-publication-02/stage46-core-publication-closeout.tar.gz"
+    },
+    {
+      "group": "oracle-native",
+      "path": "reports/m2/stage46-consumer-tools-early.tar.gz",
+      "sha256": "26937f30d26c50a4346f4468617d35540f6c10360a26d914842d63a762dc85bd",
+      "bytes": 383086,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/archives/stage46-consumer-tools-early.tar.gz"
+    },
+    {
+      "group": "oracle-native",
+      "path": "reports/m2/stage46-java-file-order-producers.tar.gz",
+      "sha256": "5c47eee0528f931c786c968173a7537f7425eac80cd713b18c498321130f20f0",
+      "bytes": 1790948,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/archives/stage46-java-file-order-producers.tar.gz"
+    },
+    {
+      "group": "oracle-native",
+      "path": "reports/m2/stage46-java-original-cli-inputs.tar.gz",
+      "sha256": "392f8b7d9bc4689daa40d3063850acec1fdf98916fb2c0e88cd5528962225dc1",
+      "bytes": 2613325,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/archives/stage46-java-original-cli-inputs.tar.gz"
+    },
+    {
+      "group": "oracle-native",
+      "path": "reports/m2/stage46-java-resource-uri-base64.tar.gz",
+      "sha256": "ee58722b701065e46be06db748aa4e1e0199faac24eecfa1fc8c3169005056ee",
+      "bytes": 2608238,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/archives/stage46-java-resource-uri-base64.tar.gz"
+    },
+    {
+      "group": "oracle-native",
+      "path": "reports/m2/stage46-launch-audit-handoff.tar.gz",
+      "sha256": "680ff0fb98f230bd29898a69760f23b62f58ee14bab8a97b2c9d0cca6d4e4021",
+      "bytes": 66036,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/archives/stage46-launch-audit-handoff.tar.gz"
+    },
+    {
+      "group": "oracle-native",
+      "path": "reports/m2/stage46-native-c01-c02-history.tar.gz",
+      "sha256": "f0d4c957079486d5845a7cbe06409f666b639a7e6797ab92e3a4064c8fe06f5f",
+      "bytes": 6628194,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/archives/stage46-native-c01-c02-history.tar.gz"
+    },
+    {
+      "group": "oracle-native",
+      "path": "reports/m2/stage46-native-c04.tar.gz",
+      "sha256": "2d6f26aa1855788cfc9bdc55f63f099632c0ea71bacb2f146567855ad24d58f3",
+      "bytes": 5843869,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/archives/stage46-native-c04.tar.gz"
+    },
+    {
+      "group": "oracle-native",
+      "path": "reports/m2/stage46-native-c05.tar.gz",
+      "sha256": "498474df315655d192c1edd356d47d6276efd81fb45b293cd629503e671b36b0",
+      "bytes": 12266344,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/archives/stage46-native-c05.tar.gz"
+    },
+    {
+      "group": "oracle-native",
+      "path": "reports/m2/stage46-native-c06.tar.gz",
+      "sha256": "766d6c0a0ffe725726838e8d14f05cadf2f67d19224bca7502fa85f26b72ced8",
+      "bytes": 12464542,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/archives/stage46-native-c06.tar.gz"
+    },
+    {
+      "group": "oracle-native",
+      "path": "reports/m2/stage46-portable-golden-tools.tar.gz",
+      "sha256": "add83a6cfdedbd913c8dc57bc91bd14a040732d7b31bea7e9acba30508b1ced7",
+      "bytes": 1457767,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-oracle-native-publication-01/archives/stage46-portable-golden-tools.tar.gz"
+    },
+    {
+      "group": "oracle-publication-metadata",
+      "path": "reports/m2/stage46-oracle-publication-metadata.tar.gz",
+      "sha256": "c7cbef70aaa938cf339bf958023467c97ea7de5fe6c28104cc98aef86bc34306",
+      "bytes": 22806209,
+      "original": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage46-oracle-publication-metadata-01/stage46-oracle-publication-metadata.tar.gz"
+    }
+  ],
+  "archiveCount": 40,
+  "compressedBytes": 214832610,
+  "allPublishedBytesEqualVerifiedPreparation": true,
+  "sourceOriginalsByGroup": {
+    "core": {
+      "regularFiles": 176228,
+      "bytes": 22213858964,
+      "rawOriginals": 27075,
+      "gitReconstructedOriginals": 149153
+    },
+    "oracle-native": {
+      "regularFiles": 174946,
+      "symlinks": 14,
+      "regularBytes": 356045042,
+      "rawRegularOriginals": 131928,
+      "gitReconstructedOriginals": 43018
+    }
+  },
+  "countScope": "Original capture/file occurrences include duplicate source snapshots; they are not independent features or compatibility tests. Publication metadata payloads are counted separately by each archive inventory.",
+  "sourceBinding": {
+    "path": "reports/m2/stage46-implementation-source-binding.json",
+    "sha256": "b182b2f8dfa73e64a13e084cf18935b43fbccb050f65fffe06b935709ca13062"
+  },
+  "checkpoint": {
+    "path": "reports/m2/stage46-implementation-checkpoint.json",
+    "sha256": "a159edc667d6fd972fa258cc1ad74f77977f6c93f5fb67db87210cf308bd7ea4"
+  },
+  "corePublication": {
+    "path": "reports/m2/stage46-core-publication.json",
+    "sha256": "f8525996e282c02006c53857bc87a42dc271a8279939d49a1f71b352b81b55d0"
+  },
+  "coreIndependentReview": {
+    "path": "reports/m2/stage46-core-publication-review.json",
+    "sha256": "3efd4993b2b6ec48eb6ec64baf0faf11cf2955247da54f11b7ee57073d3341dc"
+  },
+  "oraclePublication": {
+    "path": "reports/m2/stage46-oracle-native-publication.json",
+    "sha256": "4ce6dacb3e3fc6de93836cdac07543e9c353120ee4de27f781f6c820a11a694a"
+  },
+  "oracleCloseout": {
+    "path": "reports/m2/stage46-oracle-native-publication-closeout.json",
+    "sha256": "a089f597b7780900c574097d02e7e29c905653caa221545738da724a5f7ecaaf"
+  },
+  "oraclePublicationMetadata": {
+    "path": "reports/m2/stage46-oracle-publication-metadata.json",
+    "sha256": "d9235129495e943a287be85eb9a97364016fc210f0e2aeeedd65f07ab1e0fe50"
+  },
+  "originalEvidenceChangesDuringAcquisitionAndPackaging": [],
+  "sourceReconstruction": "Only independently byte-equal committed/pinned Git blobs replace duplicate captured source payloads. Per-file original paths, sizes, modes and hashes remain mapped. Historical source differences, compiled artifacts, raw comparisons and checkout-transformed bytes remain raw payloads.",
+  "symlinkRepresentation": "Literal link target bytes plus original metadata are regular archive payloads; archive extraction does not create symlinks.",
+  "historicalQualifications": [
+    "Known behavioral failures, constructor/API omissions and original null seals remain preserved. Current publication seals do not invent retrospective acquisition seals.",
+    "Historical browser captures lack proof of the actually launched executable. Current C06 Node/Chromium comparisons explicitly choose the recorded executable.",
+    "C06 runtime checks precede six declared HTTP verification-driver edits; corrected supplemental acquisitions use the same frozen runtime artifacts.",
+    "Initial selection/name-shadow and archive-size assertion failures are preserved. Later success does not rewrite their outcomes.",
+    "Core captures include explicitly labeled prepublication draft documents. Final planning adds the mandatory evaluator-owned standard-module admission followup without changing the tested runtime."
+  ],
+  "fullSelectedRegression": "Running separately on the implementation commit; no completed result claimed here.",
+  "fullM2Complete": false,
+  "hostedCiClaimed": false,
+  "performanceTargetClaimed": false,
+  "createdUtc": "2026-10-23T11:43:17.285932+00:00"
+}

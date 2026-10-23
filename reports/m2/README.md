@@ -59,6 +59,48 @@ Stage 43 preserves canonical diagnostic strings through the shared engine and
 native/Node/Wasm boundaries, and corrects literal-union type-check equivalence.
 These checkpoints do not complete the language milestone.
 
+## Stage 46 implementation checkpoint
+
+The shared Resource value, evaluator-local successful/Missing cache and typed
+module URI preparation are committed in `a3eb363`. The [local implementation
+record](stage46-implementation-checkpoint.json) separates focused comparisons
+from the full selected regression, which is being acquired separately on that
+commit. This checkpoint does not complete M2.
+
+The unchanged original `basic/read.pkl` matches Java twice across output, errors,
+exit status and generated files. Native focused comparisons match 1,724 selected
+API calls: 1,008 Resource calls and 716 File/logical/capability calls. Sixteen
+constructor-boundary calls and 264 Resource calls remain unexecuted or unselected.
+The older File-policy checker also retains 24 capability-policy projection
+mismatches; raw API matches do not reclassify those projection outcomes.
+
+Actual Node and Chromium runs each match 1,008 Resource calls and 252 selected
+module-preparation calls, including raw UTF-16/Java UTF-8 results, reader counts
+and declared observable events. The current drivers explicitly launch the browser
+executable whose hash is recorded. Older captures without that explicit selector
+retain their browser-identity limitation. Failed supplemental HTTP acquisitions
+are preserved; corrected runs use fresh directories and verify a missing asset
+returns 404 without terminating the server.
+
+All five required Rust checks pass on the frozen C06 runtime. The initial report's
+incorrect C05 scope label is corrected by a separate erratum. Subsequent changes
+affect six HTTP verification drivers, with no runtime or build-configuration
+changes. The common platform baseline still has 6,078 equal Rust-target results,
+6,076 Java matches and the two existing regex failures. Forced glob evaluation,
+remaining Resource APIs and the full language, product, platform and performance
+requirements remain open.
+
+The [source binding](stage46-implementation-source-binding.json) connects the
+32,847 captured regular inputs to the actual implementation commit, retaining
+checkout transformations, symlinks and snapshot permission differences as
+separate boundaries. The [published captures](stage46-implementation-captures.json)
+contain 40 archives, including original failures and packaging receipts. Exact
+Git blob mappings avoid duplicating identical historical source snapshots;
+compiled artifacts and differing source bytes remain raw payloads. The
+[core review](stage46-core-publication-review.json) and
+[oracle/native closeout](stage46-oracle-native-publication-closeout.json) retain
+their actual process exits and historical provenance limitations.
+
 ## Resource reference-fixture checkpoint
 
 The [portable Java fixtures](../../docs/m2-resource-portable-fixtures.md) retain

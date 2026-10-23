@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "scope": "Actual committed tree binding of the already audited C06 capture. Git checkout transformations, postbuild verification-tool changes, symlinks and snapshot mode boundaries remain separate.",
+  "implementationCommit": "a3eb3634558cef6f36189320498fe7e013296c48",
+  "actualCommitTree": "b559dbaf8895408503e4ed14d994766d71f6e833",
+  "capturedRegularSources": 32847,
+  "unboundSourcePaths": [],
+  "unexpectedDifferences": [],
+  "candidateReleaseSha256": "e9eb9341344a2db28f1b020cc8081bb3e8dfe67158c8eb932a00211832b3c807",
+  "candidateSourceMapSha256": "8df1d6bb56a4467088d8e07a4e12ee39b651d6a91a1c0ab1a11c64ff95c93370",
+  "indexAudit": {
+    "original": "/Users/cody.ij.hwang/Projects/pkl-rs.stage46/target/m2/stage46-index-binding-03/report.json",
+    "sha256": "d3f33e65f425beee50bceff5441699464b262d42252574d2ed14ff0b9eb1b527",
+    "fileBindingsSha256": "d2b6ea6369af0f6345e068b58983fe53f1503522b9a65a813056b271317a13b4",
+    "symlinkBindingsSha256": "f986f55424a8a8fa455aad3fcaeed9c2ae77d7e9e594d039d8ac75e1de455b6d"
+  },
+  "postBuildVerificationToolChanges": [
+    "tools/platform/compare-module-eval.mjs",
+    "tools/platform/compare-module-loader.mjs",
+    "tools/platform/compare-module-preparation.mjs",
+    "tools/platform/compare-moduleinfo.mjs",
+    "tools/platform/compare-resource.mjs",
+    "tools/platform/compare-trace-sessions.mjs"
+  ],
+  "postBuildCorrectionSha256": "34d0b08a76a3e9fbee9b1c2ec1b9bd83ff179b6b4959d5793430498b9815b9be",
+  "declaredGitCheckoutTransforms": {
+    "external/pkl/gradlew.bat": {
+      "rawGitBlobSha256": "59328c7a17f673b1a63040bfb380a0c749e5d6df3406f7f18641060314cd9aa1",
+      "rawGitBlobBytes": 2766,
+      "checkoutSha256": "d539676c48b596afda64c963ec8f7ee56c7b3fe7e3b81d1dbe2d1a1e3dd9e9f8",
+      "checkoutBytes": 2848,
+      "c06Sha256": "d539676c48b596afda64c963ec8f7ee56c7b3fe7e3b81d1dbe2d1a1e3dd9e9f8",
+      "lfCount": 82,
+      "exactDeclaredCheckoutTransformVerified": true,
+      "pinnedGitattributesSha256": "b3cd03e76f6054838885547ba210c21717c4850a8479aad3194393816709a0ee",
+      "boundary": "Pinned *.bat text eol=crlf checkout conversion. Raw Git, checkout and C06 bytes are separately retained; no evaluator outputs or source files were normalized or edited."
+    },
+    "external/pkl-pantry/gradlew.bat": {
+      "rawGitBlobSha256": "59328c7a17f673b1a63040bfb380a0c749e5d6df3406f7f18641060314cd9aa1",
+      "rawGitBlobBytes": 2766,
+      "checkoutSha256": "d539676c48b596afda64c963ec8f7ee56c7b3fe7e3b81d1dbe2d1a1e3dd9e9f8",
+      "checkoutBytes": 2848,
+      "c06Sha256": "d539676c48b596afda64c963ec8f7ee56c7b3fe7e3b81d1dbe2d1a1e3dd9e9f8",
+      "lfCount": 82,
+      "exactDeclaredCheckoutTransformVerified": true,
+      "pinnedGitattributesSha256": "79e37eda80a9c368c631ad00b168bca508ebc6bc33684e57faba9b79ea100e55",
+      "boundary": "Pinned *.bat text eol=crlf checkout conversion. Raw Git, checkout and C06 bytes are separately retained; no evaluator outputs or source files were normalized or edited."
+    }
+  },
+  "pinnedSymlinksOutsideCapturedRegularSources": 11,
+  "snapshotModeBoundaries": [
+    {
+      "path": "tests/fixtures/m2-security-denial/oracle/runtime-private/0/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "indexMode": "100755",
+      "liveMode": "100755",
+      "snapshotMode": "100644",
+      "boundary": "The C06 source map binds bytes, not permissions; snapshot metadata is separately recorded and not silently counted as equal."
+    },
+    {
+      "path": "tests/fixtures/m2-security-denial/oracle/runtime-private/1/home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib",
+      "indexMode": "100755",
+      "liveMode": "100755",
+      "snapshotMode": "100644",
+      "boundary": "The C06 source map binds bytes, not permissions; snapshot metadata is separately recorded and not silently counted as equal."
+    },
+    {
+      "path": "external/pkl/.githooks/pre-commit",
+      "indexMode": "100755",
+      "liveMode": "100755",
+      "snapshotMode": "100644",
+      "boundary": "The C06 source map binds bytes, not permissions; snapshot metadata is separately recorded and not silently counted as equal."
+    },
+    {
+      "path": "external/pkl/.github/scripts/cc_macos_amd64.sh",
+      "indexMode": "100755",
+      "liveMode": "100755",
+      "snapshotMode": "100644",
+      "boundary": "The C06 source map binds bytes, not permissions; snapshot metadata is separately recorded and not silently counted as equal."
+    },
+    {
+      "path": "external/pkl/gradlew",
+      "indexMode": "100755",
+      "liveMode": "100755",
+      "snapshotMode": "100644",
+      "boundary": "The C06 source map binds bytes, not permissions; snapshot metadata is separately recorded and not silently counted as equal."
+    },
+    {
+      "path": "external/pkl-pantry/gradlew",
+      "indexMode": "100755",
+      "liveMode": "100755",
+      "snapshotMode": "100644",
+      "boundary": "The C06 source map binds bytes, not permissions; snapshot metadata is separately recorded and not silently counted as equal."
+    },
+    {
+      "path": "external/pkl-pantry/packages/pkl.tar/examples/test_examples.sh",
+      "indexMode": "100755",
+      "liveMode": "100755",
+      "snapshotMode": "100644",
+      "boundary": "The C06 source map binds bytes, not permissions; snapshot metadata is separately recorded and not silently counted as equal."
+    },
+    {
+      "path": "external/pkl-pantry/scripts/generate-github.sh",
+      "indexMode": "100755",
+      "liveMode": "100755",
+      "snapshotMode": "100644",
+      "boundary": "The C06 source map binds bytes, not permissions; snapshot metadata is separately recorded and not silently counted as equal."
+    }
+  ],
+  "pins": [
+    {
+      "path": "external/pkl",
+      "rootIndexGitlink": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "actualHead": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "commitObjectSha1Verified": true,
+      "pinnedTree": "130860af2b4a3130bed26ae3af0baf8e400bcf21",
+      "completeTreeReconstructedFromBlobsAndModes": true,
+      "treeEntryCount": 5109,
+      "treeListingSha256": "a95ca8c2d89d606ba2b6c4e53a23c003e5da574bcf1bc5d5f02a91bd6e9e124b"
+    },
+    {
+      "path": "external/pkl-pantry",
+      "rootIndexGitlink": "904a68184e54da378b0a0e8a911a3fab3956f693",
+      "actualHead": "904a68184e54da378b0a0e8a911a3fab3956f693",
+      "commitObjectSha1Verified": true,
+      "pinnedTree": "6ce53d80eb71df2722e400fa6b28ca7e81a994ff",
+      "completeTreeReconstructedFromBlobsAndModes": true,
+      "treeEntryCount": 475,
+      "treeListingSha256": "604738b30f9d03c722a4513d17acc85aeef39d4ade31d76d4ad7b446ac1864be"
+    }
+  ],
+  "commitReceiptSha256": "c4a8d209aab3b700938b84fd0d669599c4715c51daf8f03032104f7fd6435db7",
+  "pushReceiptSha256": "cc2cf955c8e3e0fee0279fdbf9a25aadc433b40032f378d3859eab5b516797d7",
+  "sameAsAuditedTree": true,
+  "repeatedEvaluationClaimed": false,
+  "fullM2Complete": false
+}
