@@ -1,0 +1,342 @@
+{
+  "compatibility_complete": false,
+  "distinct_rust_test_count_claimed": false,
+  "failures": [
+    {
+      "id": "error-cycle",
+      "status": "oracle-error"
+    },
+    {
+      "id": "error-remainder-zero",
+      "status": "mismatch"
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-union-and-string",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-cast-negative",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-max-count",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-uri-unpaired-surrogate",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-opaque",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-invalid-host",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+      "status": "oracle-contract-mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+      "status": "candidate-unsupported"
+    }
+  ],
+  "final_closeout_review": {
+    "bytes": 5749,
+    "path": "reports/m2/stage40-closeout-review.json",
+    "sha256": "ad5d02df98f6bc24275f4ed32325e776d121c612852bc99cbba724ec9c1364cf"
+  },
+  "full_gate_failure_reasons": 1874,
+  "gates": {
+    "acquire": 0,
+    "development": 1,
+    "full": 1,
+    "integrity": 0,
+    "subset": 1
+  },
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "hosted_ci_claimed": false,
+  "implementation_commit": "7c60a2c43f3aa64306709c5dac4be3dce7ea4a6c",
+  "independent_regression_audit": {
+    "bytes": 4498,
+    "path": "target/m2/stage40-final-regression-audit-01/report.json",
+    "sha256": "a1c171c6331f6372d3ec9d7beee07c1f49cf62494ff61a8df0e37013e7990939"
+  },
+  "inventory_counts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3628,
+      "unimplemented": 859,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "metamorphic_matches": 88,
+  "metamorphic_relations": 88,
+  "old_raw_channel_records_changed": 3473,
+  "old_raw_channel_records_equal": 10923,
+  "old_selected_order_preserved": true,
+  "old_selected_statuses_unchanged": 3599,
+  "original30_calls_each_target": 60,
+  "original30_status_counts_each_target": {
+    "candidate-unsupported": 30,
+    "mismatch": 2,
+    "oracle-contract-mismatch": 2,
+    "pass": 26
+  },
+  "pcf_matches_each_portable_target": 384,
+  "pcf_repeated_calls_each_portable_target": 384,
+  "pcf_string_output_cases": 192,
+  "performance_target_claimed": false,
+  "persistent_call_status_counts": {
+    "pass": 2782
+  },
+  "persistent_prior_current_channels_changed": 0,
+  "persistent_prior_current_channels_equal": 16692,
+  "persistent_sequence_definitions": 167,
+  "persistent_sequence_executions": 334,
+  "portable_source_boundary": "Portable/checkpoint02 candidate predates final test-only corrections; archived independent audits classify exact differences and do not claim whole-file equality. Final Rust/native/persistent sources are bound to the implementation commit.",
+  "preservation_indices": [
+    {
+      "bytes": 8509,
+      "path": "reports/m2/stage40-implementation-checkpoint.json",
+      "sha256": "ab35eb69fb9db0633a6d3292dfe6a5616b1bffe44ed7e7ef4dd52a5c865b3cf4"
+    },
+    {
+      "bytes": 2921,
+      "path": "reports/m2/stage40-output-captures.json",
+      "sha256": "7fe58c870a8e9146f157d866133dfeacc3169484df7ff2d5c364165c75e5ba5e"
+    },
+    {
+      "bytes": 4487,
+      "path": "reports/m2/stage40-component-captures.json",
+      "sha256": "a5d72efbf1e0bda7843d25566b9fde54e9e4100e1ac43d1c7ee7e097ac3fb943"
+    },
+    {
+      "bytes": 1421,
+      "path": "reports/m2/stage40-final-regression-captures.json",
+      "sha256": "513b26967787d1f74d4faa5a38c7566787cbd8caffabe0daacb24de9c4a86cbd"
+    }
+  ],
+  "raw_comparison_note": "Cross-checkout physical URI/frame differences remain exact captured bytes, individually enumerated without path normalization. Status agreement is separate from raw identity.",
+  "remaining": [
+    "All retained native unsupported, mismatch and oracle failure conditions, including original import1b execution prerequisites.",
+    "Module loading, inheritance and remaining language/type/collection/Reference/metadata semantics.",
+    "Complete diagnostics, full upstream execution and strict whole-language gate.",
+    "Complete output formats, file output, resource capabilities and product APIs.",
+    "Actual release environments and execution-time/peak-RSS targets."
+  ],
+  "required_check_commands": [
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-required-cargo",
+      "command": [
+        "rustc",
+        "--version",
+        "--verbose"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40",
+      "elapsed_seconds": 0.177024417091161,
+      "exit_code": 0,
+      "name": "rustc-version"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-required-cargo",
+      "command": [
+        "cargo",
+        "--version"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40",
+      "elapsed_seconds": 0.04191662464290857,
+      "exit_code": 0,
+      "name": "cargo-version"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-required-cargo",
+      "command": [
+        "uname",
+        "-a"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40",
+      "elapsed_seconds": 0.003952416125684977,
+      "exit_code": 0,
+      "name": "host"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-required-cargo",
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40",
+      "elapsed_seconds": 0.8074619579128921,
+      "exit_code": 0,
+      "name": "references"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-required-cargo",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40",
+      "elapsed_seconds": 0.6716252081096172,
+      "exit_code": 0,
+      "name": "format"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-required-cargo",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40",
+      "elapsed_seconds": 3.534884999971837,
+      "exit_code": 0,
+      "name": "clippy"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-required-cargo",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40",
+      "elapsed_seconds": 84.40100633399561,
+      "exit_code": 0,
+      "name": "tests"
+    },
+    {
+      "cargo_target_dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-required-cargo",
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40",
+      "elapsed_seconds": 0.8207522919401526,
+      "exit_code": 0,
+      "name": "wasm-check"
+    }
+  ],
+  "required_rust_checks_passed": true,
+  "rust_harness_pass_invocations": 601,
+  "rust_ignored_invocations": 1,
+  "schema": 1,
+  "scope": "Actual ModuleOutput/PCF, selected primitive and amendment semantics, full selected native regressions and shared portable comparisons. This checkpoint is not full renderer/module-loading/product compatibility.",
+  "selected_native_cases": 3629,
+  "selected_status_counts": {
+    "candidate-unsupported": 15,
+    "mismatch": 9,
+    "oracle-contract-mismatch": 1,
+    "oracle-error": 1,
+    "pass": 3603
+  },
+  "source_binding": {
+    "bytes": 1482501,
+    "path": "reports/m2/stage40-final-source-binding.json",
+    "sha256": "128e74b10224b8c6e4b3bab89b53ecdcce86e328df0e6d7c920681b3f85ab190"
+  },
+  "source_copies": 8105,
+  "source_files": 4259,
+  "standard_platform": {
+    "java_matches_each_target": 6076,
+    "known_regex_differences_each_target": 2,
+    "lifecycle_scenarios_each_target": 92,
+    "scope": "Actual Node and Chromium; architecture success is separate from strict compatibility.",
+    "shared_results": 6078
+  },
+  "status": "Stage40 local module-output checkpoint verified; M2 remains in progress.",
+  "trace_calls_each_target": 90,
+  "trace_status_counts_each_target": {
+    "oracle-error": 32,
+    "pass": 58
+  }
+}

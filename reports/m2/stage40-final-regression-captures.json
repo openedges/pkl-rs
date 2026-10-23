@@ -1,0 +1,37 @@
+{
+  "archive_integrity_exit": 0,
+  "archives": [
+    {
+      "bytes": 13986932,
+      "path": "reports/m2/stage40-final-regressions.tar.gz",
+      "payload_files": 57814,
+      "sha256": "376fa92f7959f92c5f66d16cab3653ea0aba7cb3a70799eb419da3ad044a49bd",
+      "uncompressed_payload_bytes": 100740263
+    }
+  ],
+  "exact_cache_exclusions_before_traversal": [
+    "target/m2/stage40-class-lifecycle-final-01/build"
+  ],
+  "full_m2_complete": false,
+  "schema": 1,
+  "scope": "Final Stage40 selected native language and persistent evaluator regressions, original raw failures, unchanged contracts, independent audits and exact committed source bindings. Strict whole-language gate remains failed.",
+  "source_changes_during_publication": [],
+  "source_roots": [
+    "target/m2/stage40-language-final-01",
+    "target/m2/stage40-language-command-final-01",
+    "target/m2/stage40-class-lifecycle-final-01",
+    "target/m2/stage40-class-lifecycle-command-final-01",
+    "target/m2/stage40-final-regression-audit-01",
+    "target/m2/stage40-final-source-binding-01"
+  ],
+  "verification": {
+    "command": [
+      "python3",
+      "tools/evidence.py",
+      "verify",
+      "reports/m2/stage40-final-regressions.tar.gz"
+    ],
+    "stderr_hex": "",
+    "stdout_hex": "56657269666965642035373831342065766964656e63652066696c65733a207265706f7274732f6d322f737461676534302d66696e616c2d72656772657373696f6e732e7461722e677a0a"
+  }
+}

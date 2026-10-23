@@ -27,8 +27,11 @@ The [M2 verification contract](docs/m2-language.md)
 keeps the complete language inventory separate from selected executable probes.
 The [original module frontend adapter](docs/m2-module-frontend.md) also compares
 registered upstream commands with their original inputs, arguments, resources,
-and complete process output. Successful frontend preparation currently stops at
-explicitly unsupported module-output evaluation.
+and complete process output. The output operation evaluates actual `ModuleOutput`
+properties and PCF through the shared VM; the separate frontend-only operation
+still stops after preparation. The [Stage 40 result](reports/m2/stage40-final-summary.json)
+records 3,603 matching native cases out of 3,629 attempts, with all remaining
+unsupported cases, mismatches and oracle failures retained.
 Complete modifier and type semantics, remaining collection and Reference rules,
 module loading, reflection metadata, and the remaining language corpus are
 required before M2 can close.

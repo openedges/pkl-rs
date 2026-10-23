@@ -1,0 +1,143 @@
+{
+  "compatibility_complete": false,
+  "publication": {
+    "archive": {
+      "bytes": 7212,
+      "path": "reports/m2/stage40-closeout-review.tar.gz",
+      "sha256": "7033006617004b39b64c29ed5c389f1d43cb2497059d624331dc0694cff1e884"
+    },
+    "archived_files": 13,
+    "changed_source_files": [],
+    "elapsed_seconds": 0.06754824984818697,
+    "exact_cache_exclusions": [],
+    "scope": "Independent Stage40 final raw archive/source/count audit, canonical tar mode limitation, and preserved initial reviewer assertions.",
+    "source_roots": [
+      "target/m2/stage40-closeout-review-01"
+    ],
+    "uncompressed_payload_bytes": 27096,
+    "verify_command": [
+      "python3",
+      "tools/evidence.py",
+      "verify",
+      "reports/m2/stage40-closeout-review.tar.gz"
+    ],
+    "verify_exit": 0
+  },
+  "required_check_count_review": {
+    "actual_report_sha256": "aa239389f3f2bb95c789a15df0f3d7b902b84b17f390850ce6ea4ba90cc8983c",
+    "all_terminal_exit_zero": true,
+    "harness_ignored_invocations": 1,
+    "harness_pass_invocations": 601,
+    "harness_result_lines": 88,
+    "initial_review_failures": "Initial local assertion incorrectly required executable modes; second assertion did not account for two explicitly packaged publication helper files. Both retained in terminal logs. Final audit accounts for canonical0644 modes and exact two extras; original evidence unchanged.",
+    "required_commands": 8,
+    "scope": "Supplement to immutable report.json; actual required Rust check status and harness summary invocations, not distinct tests or compatibility.",
+    "source_changes": [],
+    "tests_stderr_sha256": "37c0836c1aa8f7a0768c38e8ddf056a13d52cc61aef96cc449cc1d4e3bf40586",
+    "tests_stdout_sha256": "1dead589b9c014ad02fa9a4b84d2e16bbce53559085c7b109c64fd5c339b84ed"
+  },
+  "review": {
+    "additional_archive_provenance_files": [
+      "target/m2/stage40-final-regression-publication-01/configuration.json",
+      "target/m2/stage40-final-regression-publication-01/package.py"
+    ],
+    "all_bytes_membership_match": true,
+    "archive": {
+      "bytes": 13986932,
+      "path": "reports/m2/stage40-final-regressions.tar.gz",
+      "payload_files": 57814,
+      "sha256": "376fa92f7959f92c5f66d16cab3653ea0aba7cb3a70799eb419da3ad044a49bd",
+      "uncompressed_payload_bytes": 100740263
+    },
+    "archive_metadata_files": 1,
+    "archive_modes": "tools/evidence.py canonical0644, not original permissions",
+    "documents": "Reviewed final Stage40 PLAN and reports/m2 README: bounded checkpoint, retained failures, open M2 scope and source distinction agree with records.",
+    "exact_current_origin_files": 57814,
+    "full_gate_reasons": 1874,
+    "gates": {
+      "stage40-class-lifecycle-command-final-01": {
+        "acquire": 0,
+        "contract": 0,
+        "integrity": 0
+      },
+      "stage40-language-command-final-01": {
+        "acquire": 0,
+        "development": 1,
+        "full": 1,
+        "integrity": 0,
+        "subset": 1
+      }
+    },
+    "git_blob_binding_verified": true,
+    "git_commit": "7c60a2c43f3aa64306709c5dac4be3dce7ea4a6c",
+    "inputs": {
+      "PLAN.md": {
+        "bytes": 207910,
+        "sha256": "49ebce5f160cc1acd1653b4a00e109a4a25d956514c79a4d659e0e3785e44977"
+      },
+      "reports/m2/README.md": {
+        "bytes": 223468,
+        "sha256": "af46705ad66c1f0c4f6c2170191c6ad6eecea7b9f66c797d7e5d6df4f5bae381"
+      },
+      "reports/m2/stage40-final-regression-captures.json": {
+        "bytes": 1421,
+        "sha256": "513b26967787d1f74d4faa5a38c7566787cbd8caffabe0daacb24de9c4a86cbd"
+      },
+      "reports/m2/stage40-final-source-binding.json": {
+        "bytes": 1482501,
+        "sha256": "128e74b10224b8c6e4b3bab89b53ecdcce86e328df0e6d7c920681b3f85ab190"
+      },
+      "reports/m2/stage40-final-summary.json": {
+        "bytes": 11407,
+        "sha256": "7268a60ab8f6f6c2afac802a96a80322c8ae437f6848302f842e0a2bfaf436e1"
+      }
+    },
+    "language_counts": {
+      "candidate-unsupported": 15,
+      "mismatch": 9,
+      "oracle-contract-mismatch": 1,
+      "oracle-error": 1,
+      "pass": 3603
+    },
+    "material_findings": [],
+    "mode_differences": [
+      {
+        "archive_mode": 420,
+        "current_mode": 493,
+        "path": "target/m2/stage40-class-lifecycle-final-01/binaries/class_lifecycle_probe"
+      },
+      {
+        "archive_mode": 420,
+        "current_mode": 493,
+        "path": "target/m2/stage40-language-final-01/artifacts/language_probe"
+      },
+      {
+        "archive_mode": 420,
+        "current_mode": 493,
+        "path": "target/m2/stage40-language-final-01/artifacts/module_eval_probe"
+      }
+    ],
+    "old_raw_channel_changes_retained": 3473,
+    "old_statuses_preserved": 3599,
+    "payload_bytes": 100740263,
+    "persistent_calls": 2782,
+    "persistent_definitions": 167,
+    "persistent_executions": 334,
+    "pretraversal_exclusions": [
+      "target/m2/stage40-class-lifecycle-final-01/build"
+    ],
+    "scope": "Bounded independent offline Stage40 final closeout review. No evaluation/build/Java rerun, no old-origin edits.",
+    "source_boundary": "Final required/native/persistent sources only; earlier portable checkpoint source differences remain explicit. No whole-stage or whole-tree equality claim.",
+    "source_copies": 8105,
+    "source_groups": {
+      "stage40-class-lifecycle-final-01": 500,
+      "stage40-language-final-01": 3708,
+      "stage40-required-checks-02": 3897
+    },
+    "status": "pass",
+    "unique_sources": 4259
+  },
+  "review_report_sha256": "acaf6781e6db35a79225e3c8d8ebd6f2d326440dd531c0e8404c4d60763a5517",
+  "schema": 1,
+  "scope": "Independent Stage40 final raw archive/source/count audit, canonical tar mode limitation, and preserved initial reviewer assertions."
+}

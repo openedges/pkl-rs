@@ -53,7 +53,7 @@ Stage 40 connects actual module output, PCF continuations and lossless string
 output across the shared engine and bindings.
 These checkpoints do not complete the language milestone.
 
-## Stage 40 implementation and output comparisons
+## Stage 40 local module-output checkpoint
 
 The [implementation checkpoint](stage40-implementation-checkpoint.json) records
 commit `7c60a2c`, with all five required local Rust checks passing. The
@@ -84,9 +84,27 @@ compatibility passes.
 The comparison candidate predates the final test-only corrections. Archived
 audits retain the exact changed file hashes and identify the differences; they
 do not claim current whole-source equality. Required checks ran the final files.
-The complete native language acquisition, remaining evidence publication and
-Stage 40 closeout are still in progress. M2 and product/performance gates remain
-open.
+The [final summary](stage40-final-summary.json) records 3,603 raw native matches
+out of 3,629 attempts, with 15 unsupported cases, nine mismatches, one unmet
+original Java execution contract and one Java oracle error retained. All 3,599
+previous result statuses and their order are unchanged. The audit enumerates
+3,473 cross-checkout raw-channel differences without normalizing physical URIs.
+All 88 metamorphic relations and 2,782 calls across 334 persistent sequences
+match. The persistent comparison also preserves all 16,692 prior/current raw
+status and output channels exactly.
+
+The [final regression archive](stage40-final-regression-captures.json) retains
+57,814 files, including source snapshots, artifacts, full failed observations,
+actual gate exits and independent audits. The [committed source binding](stage40-final-source-binding.json)
+connects 8,105 source copies to 4,259 exact files in the implementation commit
+and pinned submodules. Archive integrity passes; development, strict selected
+and full language gates still fail, with 1,874 full-gate reasons.
+The [independent closeout review](stage40-closeout-review.json) verifies those
+raw bytes, archive membership, committed sources, counts and gate results.
+Archive members use canonical mode `0644`; executable permission preservation
+is not claimed. The review's initial mode assertion is retained with its correction.
+Stage 40's local module-output checkpoint is verified. M2 and the remaining
+language, product, release-platform and performance gates remain open.
 
 ## Stage 39 local verification checkpoint
 
