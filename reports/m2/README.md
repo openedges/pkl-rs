@@ -61,6 +61,10 @@ These checkpoints do not complete the language milestone.
 
 ## Stage 43 implementation checkpoint
 
+The [committed source binding](stage43-implementation-source-binding.json) verifies
+7,093 source, fixture, and configuration paths against implementation commit
+`f201028`, including all recorded required-check and platform-build inputs.
+
 The [publication review](stage43-publication-review.json) verifies all seven
 implementation archives and the exact staged implementation sources. Its raw audit,
 publisher records, and staged-source proof are retained in the

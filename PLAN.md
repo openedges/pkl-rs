@@ -724,6 +724,8 @@ N-API 오류 전환에서 JavaScript의 `toString`·`cause` getter를 호출하�
 
 수정 후 필수 Rust 검사 다섯 개를 모두 다시 실행해 통과했습니다. 소스·fixture·설정 7,026개는 검사 전후 같고, workspace 테스트는 harness 호출 685개 통과·실패 0개·ignored 1개입니다. 실제 Node·Chromium에서도 literal reuse 48회, producer·hint 20회, 생성자 24회와 scalar·N-API callback 대조군이 환경별 통과했습니다. 기존 모듈 graph·상속·owner·문자열 및 PCF 출력도 일치했고, 종전 문자열 오류 두 사례는 이제 UTF-16과 Java UTF-8이 모두 일치합니다. 공통 primitive 비교는 6,078개 중 Java 일치 6,076개와 기존 정규식 차이 두 개를 유지하며, trace는 환경별 일치 58회·Java 내부 오류 32회입니다. 역사적인 UTF-8 전용 fixture 세 그룹은 원래 기대 바이트와 실제 JS 단위를 별도로 보존하고 문자열 단위 호환성으로 세지 않습니다. 전체 선택 코퍼스 재실행과 M2 전체 마감은 남습니다.
 
+구현을 `f201028`에 커밋하고 [소스 대응](reports/m2/stage43-implementation-source-binding.json)에서 검증 입력 7,093개를 실제 커밋의 Git blob 4,581개와 대조했습니다. [독립 게시 검토](reports/m2/stage43-publication-review.json)는 구현 증거 일곱 묶음과 모든 입력의 동일성을 확인했습니다. 이 체크포인트의 마감과 별도로 수정 후 전체 코퍼스 회귀와 M2 종료 조건은 계속 열려 있습니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.
