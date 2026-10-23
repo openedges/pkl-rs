@@ -49,7 +49,62 @@ initialization and first-path evaluation within one admitted Host context.
 Stage 38 adds resource-read syntax, the shared scalar default policy,
 and generic method-lookup diagnostics.
 Stage 39 connects original module frontend commands and typed failure origins.
+Stage 40 connects actual module output, PCF continuations and lossless string
+output across the shared engine and bindings.
 These checkpoints do not complete the language milestone.
+
+## Stage 40 local module-output checkpoint
+
+The [implementation checkpoint](stage40-implementation-checkpoint.json) records
+commit `7c60a2c`, with all five required local Rust checks passing. The
+[check archive](stage40-required-checks.tar.gz) preserves 3,897 source files and
+raw command results. The 601 passing Rust harness invocations include child
+invocations and are not a distinct feature or test count.
+
+The [output comparison captures](stage40-output-captures.json) preserve 21,951
+files from original Java/native module runs, actual Node and Chromium execution,
+the full output trace selection and independent audits. The earlier native
+candidate's failures remain alongside the corrected candidate. Of 60 original
+module calls per target, 26 match, 30 are unsupported, two differ at `read*`
+syntax, and two retain unmet original Java execution prerequisites. Each portable
+target matches all 384 repeated UTF-16 output cases.
+
+The [component and development captures](stage40-component-captures.json)
+preserve 6,742 files from focused output, primitive, amendment, formatter,
+uppercase and tooling checks. The archive retains earlier failed checks and
+Java internal errors alongside corrected runs. Component comparisons establish
+only their recorded boundaries; they do not replace full evaluator comparisons.
+
+The standard platform corpus retains 6,076 Java matches out of 6,078 results,
+including the two existing regex gaps, and 92 passing lifecycle scenarios per
+portable target. Each target's 90 full-trace executions contain 58 matches and
+32 Java oracle errors. Integrity success does not change these failures into
+compatibility passes.
+
+The comparison candidate predates the final test-only corrections. Archived
+audits retain the exact changed file hashes and identify the differences; they
+do not claim current whole-source equality. Required checks ran the final files.
+The [final summary](stage40-final-summary.json) records 3,603 raw native matches
+out of 3,629 attempts, with 15 unsupported cases, nine mismatches, one unmet
+original Java execution contract and one Java oracle error retained. All 3,599
+previous result statuses and their order are unchanged. The audit enumerates
+3,473 cross-checkout raw-channel differences without normalizing physical URIs.
+All 88 metamorphic relations and 2,782 calls across 334 persistent sequences
+match. The persistent comparison also preserves all 16,692 prior/current raw
+status and output channels exactly.
+
+The [final regression archive](stage40-final-regression-captures.json) retains
+57,814 files, including source snapshots, artifacts, full failed observations,
+actual gate exits and independent audits. The [committed source binding](stage40-final-source-binding.json)
+connects 8,105 source copies to 4,259 exact files in the implementation commit
+and pinned submodules. Archive integrity passes; development, strict selected
+and full language gates still fail, with 1,874 full-gate reasons.
+The [independent closeout review](stage40-closeout-review.json) verifies those
+raw bytes, archive membership, committed sources, counts and gate results.
+Archive members use canonical mode `0644`; executable permission preservation
+is not claimed. The review's initial mode assertion is retained with its correction.
+Stage 40's local module-output checkpoint is verified. M2 and the remaining
+language, product, release-platform and performance gates remain open.
 
 ## Stage 39 local verification checkpoint
 
