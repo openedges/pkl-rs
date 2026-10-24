@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage59/duration-values-bits.pkl",
+  "boundary": "exported-duration-bits",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "int-beyond-f64-exact",
+      "expression": "9007199254740993.s"
+    },
+    {
+      "id": "int-max",
+      "expression": "9223372036854775807.s"
+    },
+    {
+      "id": "same-unit-day",
+      "expression": "0.1.d.toUnit(\"d\")"
+    },
+    {
+      "id": "same-unit-minute",
+      "expression": "0.1.min.toUnit(\"min\")"
+    },
+    {
+      "id": "same-unit-huge-day",
+      "expression": "(1e300).d.toUnit(\"d\")"
+    },
+    {
+      "id": "negative-zero-convert",
+      "expression": "(-0.0).s.toUnit(\"min\")"
+    },
+    {
+      "id": "negative-zero-direct",
+      "expression": "(-0.0).s"
+    },
+    {
+      "id": "min-subnormal",
+      "expression": "(5e-324).ns"
+    },
+    {
+      "id": "min-subnormal-to-day",
+      "expression": "(5e-324).ns.toUnit(\"d\")"
+    },
+    {
+      "id": "pow-fraction",
+      "expression": "2.2.s ** 3.3"
+    },
+    {
+      "id": "nan-convert",
+      "expression": "(0.0/0.0).s.toUnit(\"d\")"
+    },
+    {
+      "id": "overflow-convert",
+      "expression": "(1e308).d.toUnit(\"ns\")"
+    },
+    {
+      "id": "same-unit-second",
+      "expression": "1.s.toUnit(\"s\")"
+    },
+    {
+      "id": "same-unit-fraction-second",
+      "expression": "0.1.s.toUnit(\"s\")"
+    },
+    {
+      "id": "fraction-second",
+      "expression": "0.1.s"
+    }
+  ]
+}

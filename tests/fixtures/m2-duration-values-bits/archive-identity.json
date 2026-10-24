@@ -1,0 +1,16 @@
+{
+  "archive_sha256": "a4a36e80520fb77137a9325832d71789c16d62956c16c4cde5ec68c2480c39db",
+  "capture": "stage59-duration-bits-oracle-01",
+  "fileset_sha256": "5b16d0ed105e373ed6d78bc1ab929dd1e881113f33b2c727417b3f23b52932a9",
+  "members": 419,
+  "oracle_input_sha256": {
+    "DurationValuesBitsOracle.java": "2b3831eac4e22b3620a2c8ed474343e70936d55b4791f182f1b61f2d0e8ed632",
+    "audit.json": "4c3fdc1f858cec4a8cb1828800954266db19ccb14dcbd268bef539b12d6107d2",
+    "cases.json": "481891130a18b54c2a5245d0ce964ecda0450fa7e64570a95599e01b69cefdbb",
+    "module.pkl": "dde62a917a4401a2e2e33a0bd9d24ae70de78aca1bbcf6a764fcc21b606ef035",
+    "provenance.json": "9402e6a42df53e0260c9592190c66e64a5e1338e00c73cf8d6707f1798c50258",
+    "queries.tsv": "e7efc43a9c909ea463514b7c30cd50255bd42be7fa4745acb2f3f2f60ce77c8f",
+    "run.py": "9594aa5dd4c5af69fa7efbc06201cb53fe0b350084f52edf9d6fea092fd68a5d"
+  },
+  "schema": 1
+}

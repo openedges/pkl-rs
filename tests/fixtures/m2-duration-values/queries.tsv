@@ -1,0 +1,274 @@
+int-ns	7.ns
+float-ns	7.25.ns
+negative-ns	(-3).ns
+value-ns	7.25.ns.value
+unit-ns	7.25.ns.unit
+iso-ns	7.25.ns.isoString
+positive-ns	7.25.ns.isPositive
+int-to-duration-ns	7.toDuration("ns")
+float-to-duration-ns	7.25.toDuration("ns")
+int-us	7.us
+float-us	7.25.us
+negative-us	(-3).us
+value-us	7.25.us.value
+unit-us	7.25.us.unit
+iso-us	7.25.us.isoString
+positive-us	7.25.us.isPositive
+int-to-duration-us	7.toDuration("us")
+float-to-duration-us	7.25.toDuration("us")
+int-ms	7.ms
+float-ms	7.25.ms
+negative-ms	(-3).ms
+value-ms	7.25.ms.value
+unit-ms	7.25.ms.unit
+iso-ms	7.25.ms.isoString
+positive-ms	7.25.ms.isPositive
+int-to-duration-ms	7.toDuration("ms")
+float-to-duration-ms	7.25.toDuration("ms")
+int-s	7.s
+float-s	7.25.s
+negative-s	(-3).s
+value-s	7.25.s.value
+unit-s	7.25.s.unit
+iso-s	7.25.s.isoString
+positive-s	7.25.s.isPositive
+int-to-duration-s	7.toDuration("s")
+float-to-duration-s	7.25.toDuration("s")
+int-min	7.min
+float-min	7.25.min
+negative-min	(-3).min
+value-min	7.25.min.value
+unit-min	7.25.min.unit
+iso-min	7.25.min.isoString
+positive-min	7.25.min.isPositive
+int-to-duration-min	7.toDuration("min")
+float-to-duration-min	7.25.toDuration("min")
+int-h	7.h
+float-h	7.25.h
+negative-h	(-3).h
+value-h	7.25.h.value
+unit-h	7.25.h.unit
+iso-h	7.25.h.isoString
+positive-h	7.25.h.isPositive
+int-to-duration-h	7.toDuration("h")
+float-to-duration-h	7.25.toDuration("h")
+int-d	7.d
+float-d	7.25.d
+negative-d	(-3).d
+value-d	7.25.d.value
+unit-d	7.25.d.unit
+iso-d	7.25.d.isoString
+positive-d	7.25.d.isPositive
+int-to-duration-d	7.toDuration("d")
+float-to-duration-d	7.25.toDuration("d")
+ns-to-ns	1.25.ns.toUnit("ns")
+ns-to-us	1.25.ns.toUnit("us")
+ns-to-ms	1.25.ns.toUnit("ms")
+ns-to-s	1.25.ns.toUnit("s")
+ns-to-min	1.25.ns.toUnit("min")
+ns-to-h	1.25.ns.toUnit("h")
+ns-to-d	1.25.ns.toUnit("d")
+us-to-ns	1.25.us.toUnit("ns")
+us-to-us	1.25.us.toUnit("us")
+us-to-ms	1.25.us.toUnit("ms")
+us-to-s	1.25.us.toUnit("s")
+us-to-min	1.25.us.toUnit("min")
+us-to-h	1.25.us.toUnit("h")
+us-to-d	1.25.us.toUnit("d")
+ms-to-ns	1.25.ms.toUnit("ns")
+ms-to-us	1.25.ms.toUnit("us")
+ms-to-ms	1.25.ms.toUnit("ms")
+ms-to-s	1.25.ms.toUnit("s")
+ms-to-min	1.25.ms.toUnit("min")
+ms-to-h	1.25.ms.toUnit("h")
+ms-to-d	1.25.ms.toUnit("d")
+s-to-ns	1.25.s.toUnit("ns")
+s-to-us	1.25.s.toUnit("us")
+s-to-ms	1.25.s.toUnit("ms")
+s-to-s	1.25.s.toUnit("s")
+s-to-min	1.25.s.toUnit("min")
+s-to-h	1.25.s.toUnit("h")
+s-to-d	1.25.s.toUnit("d")
+min-to-ns	1.25.min.toUnit("ns")
+min-to-us	1.25.min.toUnit("us")
+min-to-ms	1.25.min.toUnit("ms")
+min-to-s	1.25.min.toUnit("s")
+min-to-min	1.25.min.toUnit("min")
+min-to-h	1.25.min.toUnit("h")
+min-to-d	1.25.min.toUnit("d")
+h-to-ns	1.25.h.toUnit("ns")
+h-to-us	1.25.h.toUnit("us")
+h-to-ms	1.25.h.toUnit("ms")
+h-to-s	1.25.h.toUnit("s")
+h-to-min	1.25.h.toUnit("min")
+h-to-h	1.25.h.toUnit("h")
+h-to-d	1.25.h.toUnit("d")
+d-to-ns	1.25.d.toUnit("ns")
+d-to-us	1.25.d.toUnit("us")
+d-to-ms	1.25.d.toUnit("ms")
+d-to-s	1.25.d.toUnit("s")
+d-to-min	1.25.d.toUnit("min")
+d-to-h	1.25.d.toUnit("h")
+d-to-d	1.25.d.toUnit("d")
+positive-zero	0.0.s
+negative-zero	(-0.0).s
+min-subnormal	(5e-324).s
+negative-subnormal	(-5e-324).s
+max-finite	(1.7976931348623157e308).s
+huge-finite-day	(1.7976931348623157e308).d
+positive-infinity	(1.0/0.0).s
+negative-infinity	(-1.0/0.0).s
+nan	(0.0/0.0).s
+positive-zero-value	0.0.s.value
+negative-zero-value	(-0.0).s.value
+nan-value	(0.0/0.0).s.value
+inf-value	(1.0/0.0).s.value
+nan-positive	(0.0/0.0).s.isPositive
+negative-zero-positive	(-0.0).s.isPositive
+negative-positive	(-1).s.isPositive
+subnormal-to-days	(5e-324).ns.toUnit("d")
+max-day-to-ns	(1.7976931348623157e308).d.toUnit("ns")
+max-ns-to-day	(1.7976931348623157e308).ns.toUnit("d")
+negative-zero-to-ns	(-0.0).s.toUnit("ns")
+nan-to-min	(0.0/0.0).s.toUnit("min")
+inf-to-day	(1.0/0.0).s.toUnit("d")
+iso-zero	0.s.isoString
+iso-negative-zero	(-0.0).s.isoString
+iso-sub-ns	(5e-324).ns.isoString
+iso-negative-sub-ns	(-5e-324).ns.isoString
+iso-fractional-ns	1.5.ns.isoString
+iso-fractional-us	1.234567.us.isoString
+iso-fractional-ms	1.234567.ms.isoString
+iso-59-999	59.999999999.s.isoString
+iso-60	60.s.isoString
+iso-3600	3600.s.isoString
+iso-negative-fraction	(-1.5).h.isoString
+iso-precision-boundary	1000000000.1234567.s.isoString
+iso-huge-seconds	(1e20).s.isoString
+iso-huge-days	(1e20).d.isoString
+iso-max-finite-ns	(1.7976931348623157e308).ns.isoString
+iso-max-finite-days	(1.7976931348623157e308).d.isoString
+iso-overflow-days	(1e308).d.isoString
+iso-nan	(0.0/0.0).s.isoString
+iso-pos-inf	(1.0/0.0).s.isoString
+iso-neg-inf	(-1.0/0.0).s.isoString
+iso-huge-finite-s	(1e100).s.isoString
+iso-huge-finite-ns	(1e300).ns.isoString
+iso-one-nanosecond-s	(1e-9).s.isoString
+iso-one-nanosecond-ns	1.ns.isoString
+iso-just-below-second	0.999999999.s.isoString
+iso-just-above-second	1.000000001.s.isoString
+add-s-min	1.s + 1.min
+add-min-s	1.min + 1.s
+subtract-s-min	1.s - 1.min
+subtract-min-s	1.min - 1.s
+add-ns-d	1.ns + 1.d
+add-d-ns	1.d + 1.ns
+cancel-coarse	1.d + (-86400).s
+cancel-fine	(-86400).s + 1.d
+add-near-max	(1e308).d + (1e308).d
+add-inf-neg-inf	(1.0/0.0).s + (-1.0/0.0).s
+multiply-int	1.5.s * 2
+multiply-float	1.5.s * 2.5
+multiply-reverse	2 * 1.5.s
+multiply-negative-zero	(-0.0).s * (-1)
+divide-int	3.s / 2
+divide-float	3.s / 2.0
+ratio-s-min	1.s / 1.min
+ratio-min-s	1.min / 1.s
+ratio-zero	1.s / 0.s
+divide-zero	1.s / 0
+trunc-int	3.s ~/ 2
+trunc-float	3.s ~/ 2.0
+trunc-ratio	1.min ~/ 1.s
+trunc-ratio-reverse	1.s ~/ 1.min
+trunc-zero	1.s ~/ 0
+trunc-ratio-zero	1.s ~/ 0.s
+remainder-int	5.s % 2
+remainder-float	5.s % 2.5
+remainder-zero	5.s % 0
+remainder-negative	(-5).s % 2
+pow-two	2.s ** 3
+pow-half	4.s ** 0.5
+pow-neg	2.s ** -1
+pow-nan-zero	(0.0/0.0).s ** 0
+pow-negative-zero	(-0.0).s ** 3
+unary-plus	+1.s
+unary-minus	-1.s
+unary-minus-zero	-0.0.s
+equal-mixed	1.min == 60.s
+unequal-mixed	1.min == 59.s
+equal-signed-zero	(-0.0).s == 0.0.s
+nan-self	nanDuration == nanDuration
+nan-fresh	(0.0/0.0).s == (0.0/0.0).s
+less-mixed	59.s < 1.min
+greater-mixed	1.min > 59.s
+less-equal	60.s <= 1.min
+greater-equal	1.min >= 60.s
+less-zero	(-0.0).s < 0.0.s
+greater-zero	(-0.0).s > 0.0.s
+less-nan	(0.0/0.0).s < 1.s
+greater-nan	(0.0/0.0).s > 1.s
+between-mixed	1.min.isBetween(59.s,61.s)
+between-equal	1.min.isBetween(60.s,60.s)
+between-reverse	1.min.isBetween(2.min,0.min)
+between-zero	(-0.0).s.isBetween(0.0.s,0.0.s)
+between-nan	(0.0/0.0).s.isBetween(0.s,1.s)
+between-throw-first	1.s.isBetween(throw("first"),throw("second"))
+between-throw-second	1.s.isBetween(0.s,throw("second"))
+set-equal	Set(1.min,60.s).length
+set-zero	Set((-0.0).s,0.0.s).length
+set-nan-self	Set(nanDuration,nanDuration).length
+set-nan-fresh	Set((0.0/0.0).s,(0.0/0.0).s).length
+map-equal	Map(1.min,"a",60.s,"b").length
+map-zero	Map((-0.0).s,"a",0.0.s,"b").length
+map-nan	Map(nanDuration,"a",nanDuration,"b").length
+set-threshold-four	Set(1.min,2.s,3.s,60.s).length
+set-threshold-five	Set(1.min,2.s,3.s,4.s,60.s).length
+map-threshold-four	Map(1.min,1,2.s,2,3.s,3,60.s,4).length
+map-threshold-five	Map(1.min,1,2.s,2,3.s,3,4.s,4,60.s,5).length
+same-unit-fresh	Set(1.s,1.s.toUnit("s")).length
+same-unit-equal	1.s == 1.s.toUnit("s")
+nan-converted-self	nanDuration == nanDuration.toUnit("s")
+nan-between-nan	nanDuration.isBetween(nanDuration,nanDuration)
+nan-less-equal-self	nanDuration <= nanDuration
+nan-greater-equal-self	nanDuration >= nanDuration
+between-nan-lower	1.s.isBetween((0.0/0.0).s,2.s)
+between-nan-upper	1.s.isBetween(0.s,(0.0/0.0).s)
+between-arg-first-throw	1.s.isBetween(throw("lower"),throw("upper"))
+between-arg-upper-throw	1.s.isBetween(0.s,throw("upper"))
+set-zero-threshold-four	Set((-0.0).s,1.s,2.s,0.0.s).length
+set-zero-threshold-five	Set((-0.0).s,1.s,2.s,3.s,0.0.s).length
+map-zero-threshold-four	Map((-0.0).s,1,1.s,2,2.s,3,0.0.s,4).length
+map-zero-threshold-five	Map((-0.0).s,1,1.s,2,2.s,3,3.s,4,0.0.s,5).length
+duration-unit-alias	DurationUnit
+duration-unit-alias-type	DurationUnit is TypeAlias
+duration-unit-alias-string	DurationUnit.toString()
+default	Duration.default
+duration-class	1.s.getClass().simpleName
+duration-string	1.25.s.toString()
+duration-if-non-null	1.s.ifNonNull((it) -> it.toUnit("min"))
+duration-if-non-null-lazy	1.s.ifNonNull((it) -> it.value)
+nullable-duration	Null(1.s)
+type-test	1.s is Duration
+type-mismatch	1.s is DataSize
+to-unit-invalid	1.s.toUnit("fortnight")
+to-unit-case	1.s.toUnit("S")
+to-unit-surrogate	1.s.toUnit("\uD800")
+to-unit-int	1.s.toUnit(1)
+to-unit-no-arg	1.s.toUnit()
+to-unit-extra	1.s.toUnit("s","h")
+between-int	1.s.isBetween(0,2.s)
+between-no-arg	1.s.isBetween()
+between-one-arg	1.s.isBetween(0.s)
+between-extra	1.s.isBetween(0.s,2.s,3.s)
+to-duration-invalid	1.toDuration("fortnight")
+to-duration-int	1.toDuration(1)
+to-duration-no-arg	1.toDuration()
+to-duration-extra	1.toDuration("s","h")
+add-wrong	1.s + 1
+subtract-wrong	1.s - 1
+divide-wrong	1 / 1.s
+remainder-wrong	1.s % 1.s
+pow-wrong	1.s ** 1.s
+property-wrong	1.s.noSuchProperty

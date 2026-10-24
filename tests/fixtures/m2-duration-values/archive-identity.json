@@ -1,0 +1,16 @@
+{
+  "archive_sha256": "7250661447adfeabdc5134ec883b786c90c8698e1260b8150b5492940cff59f7",
+  "capture": "stage59-duration-oracle-02",
+  "fileset_sha256": "90bcb267170872f4bc53e8c9d9263c8f910557228ac12c3f027c9653f41dbd7e",
+  "members": 4961,
+  "oracle_input_sha256": {
+    "DurationValuesOracle.java": "a43092f36f9a476af1061b0d83b292a55137b0e93d3b8f12df0d22ba5819d54c",
+    "audit.json": "027589f7fe4a1a2a9af5970bb1c02f6de3737f05b5580ec2f58d6df774aaeb38",
+    "cases.json": "5350939174115c15e671547ffa6e9d3eafb57d464b4a35fcbce4c6344deda7bb",
+    "module.pkl": "0225905b404e3290b4ea72c104128d91f4f89451ce721b18b227fe062c0764fc",
+    "provenance.json": "994b4c4810e1e9bb5f2a3013d434cfb92b09211d916c255f4312ff8b5a9ef168",
+    "queries.tsv": "b81f94def71ad51bedce0a3368a8c17465df0fc69c210233b63d358af7e88c85",
+    "run.py": "b98fc012e36286addd1fc135f2957d127ef9c7d4610905fd510b5d8e0a71405c"
+  },
+  "schema": 1
+}

@@ -1654,6 +1654,48 @@ Stage 58 구현·검증 자료를 `b0b6143ac978e14e80e6c3f7229640a6734d7f59`에 
 검증했습니다. 중복 소스 수를 기능 완료 수로 합산하지 않으며 원래 precommit
 체크포인트를 수정하지 않고 별도 연결 증거를 게시합니다.
 
+### Stage 59 — `Duration` 공통 값·연산
+
+Stage 58의 원본 `basic/duration.pkl`·`api/duration.pkl` 실패에서 이어진 `Duration`
+값을 공통 VM에 연결합니다. 일곱 단위의 생성·값·단위·부호와 49개 단위 변환,
+혼합 단위 산술·역방향 곱셈·나눗셈·버림 나눗셈·나머지·거듭제곱·비교,
+`isoString`의 큰 유한값·극소값·NaN·무한대, 음수 0과 NaN의 동등성·해시·
+Set/Map 경계, `isBetween`의 평가 순서와 타입·인자 개수 오류를 다룹니다.
+`Any` 상속 메서드와 `DurationUnit` 별칭도 같은 공통 resolver·값 경로에서
+검증합니다. Rust 내부 `f64` 원시 비트 회귀는 Java의 공개 export 관찰과
+대조하되 이 내부 검사를 제품의 typed export API 통과로 확대하지 않습니다.
+
+고정 Java 0.32.0의 [봉인된 문자열 기준](tests/fixtures/m2-duration-values/README.md)은
+순서 있는 274개 식을 독립 JVM 두 개에서 각각 실행한 기록입니다. 각 반복의
+**240개 성공·34개 Pkl 오류**와 상태·UTF-8·UTF-16BE·전체 오류·프로세스
+protocol 원시 바이트를 보존하며 두 반복은 파일별로 일치합니다. 별도의
+[15개 공개 export 원시 비트 관찰](tests/fixtures/m2-duration-values-bits/README.md)은
+두 JVM에서 모두 성공하고 동일하게 반복되었습니다. 정수의 `f64` 확대,
+같은 단위의 거대 유한값 변환에서 생긴 무한대, 음수 0, 최소 subnormal과
+`StrictMath.pow` 결과를 문자열 표현과 별도로 기록합니다. 앞선 263개 탐색
+자료는 잘못 작성한 `===` 구문·서로 다른 단위 키의 해시 경계 사례를 포함하므로
+[별도 역사 archive](reports/m2/stage59-java-history.tar.gz)에 남기고 274개
+기준으로 대체하지 않습니다.
+
+[Java 기준 체크포인트](reports/m2/stage59-java-checkpoint.json)와
+[검증 archive](reports/m2/stage59-java-validation.tar.gz)는 고정 JAR·실제
+JDK 실행 파일·입력과 소스의 전후 해시, 원시 결과·검사 출력을 구분합니다.
+봉인된 문자열 기준의 소스 사본에는 원래 `basic/duration.pkl`·`api/duration.pkl`
+대신 관련 없는 `reference.pkl` 두 파일이 포함됐습니다. 원래 Duration
+프로그램은 이 작성된 공개 API 식의 입력이 아니며, 원본 파일은 별도 검증
+소스 사본에 기록했습니다. 따라서 이 Java 관찰을 원래 snippet suite의
+실행이나 Rust 호환 결과로 표시하지 않습니다.
+
+다음 검증은 같은 274개 식을 공통 평가기에서 native·Node·실제 Chromium으로
+각각 두 번 실행하여 순서·상태·출력·오류의 모든 원시 채널과 프로세스
+protocol을 Java와 대조하고, 15개 원시 비트에 대응하는 Rust 내부 값 회귀를
+확인합니다. 원본 `basic/duration.pkl`·`api/duration.pkl`의 Java·Rust 실행,
+기존 DataSize·M1 회귀, 필수 Rust 검사 다섯 개, 도구 검사와 독립 검토는
+각각 별도 결과로 기록합니다. 현재 Java 기준·도구 무결성만 확보됐으며
+native·Node·Chromium의 Stage 59 일치나 원본 snippet 통과는 아직 판정하지
+않습니다. M2의 아홉 작업 영역, typed export·제품 API·릴리스 플랫폼과
+성능 목표도 계속 열려 있습니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

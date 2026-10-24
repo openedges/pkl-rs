@@ -1,0 +1,261 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical": {
+    "archive_identity": {
+      "bytes": 160339,
+      "sha256": "7250661447adfeabdc5134ec883b786c90c8698e1260b8150b5492940cff59f7"
+    },
+    "archive_members": 4961,
+    "fixture": "tests/fixtures/m2-duration-values",
+    "pids": [
+      72350,
+      72356
+    ],
+    "raw_files_per_repetition": 2468,
+    "repetitions": 2,
+    "rows": 274,
+    "statuses_per_session": {
+      "error": 34,
+      "success": 240
+    }
+  },
+  "history": {
+    "archive": "reports/m2/stage59-java-history.tar.gz",
+    "embedded_manifest_sha256": "733a555f8593b440f655743fcb858481ba78c96abd5715be968f3d282248028a",
+    "identity": {
+      "bytes": 259174,
+      "sha256": "852965a5c3f45a94dfa290bf9a9aa0cfe79ccfe2fbb0099f87a0c3d775034ab3"
+    },
+    "member_hash_readback": true,
+    "members": 4764,
+    "pids": [
+      71671,
+      71677
+    ],
+    "reason_superseded": "Source `===` parser errors and distinct rather than equal mixed-unit threshold keys; canonical cohort corrects these controls.",
+    "rows": 263,
+    "statuses_per_session": {
+      "error": 36,
+      "success": 227
+    }
+  },
+  "java_runtime": {
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "bits_artifact_before_after_equal": true,
+    "canonical_artifact_before_after_equal": true,
+    "jdk_executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+    "jdk_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "jdk_release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+    "reference_revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "kind": "stage59-duration-java-authority-checkpoint",
+  "limits": [
+    "The original upstream basic/duration.pkl and api/duration.pkl programs were reviewed but are not inputs to these authored public API calls; original snippet suite replay remains separate.",
+    "The canonical Java source snapshot includes unrelated basic/api reference.pkl files instead of duration.pkl. Java producer, authored inputs, pinned JAR/JDK, and complete raw call captures are present; the duration source files are captured in the separate validation source snapshot.",
+    "No Rust candidate, browser, Node, typed product API, full M2, or performance compatibility is established by this Java authority checkpoint."
+  ],
+  "raw_bits_supplement": {
+    "archive_identity": {
+      "bytes": 52420,
+      "sha256": "a4a36e80520fb77137a9325832d71789c16d62956c16c4cde5ec68c2480c39db"
+    },
+    "archive_members": 419,
+    "fixture": "tests/fixtures/m2-duration-values-bits",
+    "pids": [
+      73571,
+      73576
+    ],
+    "raw_files_per_repetition": 197,
+    "repetitions": 2,
+    "rows": 15,
+    "statuses_per_session": {
+      "success": 15
+    }
+  },
+  "schema": 1,
+  "validation": {
+    "archive": "reports/m2/stage59-java-validation.tar.gz",
+    "checks": [
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/duration_values_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792836479.3759658,
+        "name": "canonical-verifier",
+        "started_epoch": 1792836479.124949,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 331,
+          "sha256": "103d14a57e7d7bd9ca5a919df9389d140bae7616c1f8359256acd92c181ba6e7"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/duration_values_bits_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792836479.663935,
+        "name": "bits-verifier",
+        "started_epoch": 1792836479.378527,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 316,
+          "sha256": "a7522e6e2d5f352df5c219ae14afc868305e3e2f89075b4887ad205de0d8243b"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "tools/duration_values_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792836480.151121,
+        "name": "canonical-verifier-O",
+        "started_epoch": 1792836479.6706262,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 331,
+          "sha256": "103d14a57e7d7bd9ca5a919df9389d140bae7616c1f8359256acd92c181ba6e7"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "tools/duration_values_bits_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792836480.710399,
+        "name": "bits-verifier-O",
+        "started_epoch": 1792836480.2710981,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 316,
+          "sha256": "a7522e6e2d5f352df5c219ae14afc868305e3e2f89075b4887ad205de0d8243b"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "tools.tests.test_duration_values_fixtures",
+          "tools.tests.test_duration_values_bits_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792836483.399756,
+        "name": "fixture-tests",
+        "started_epoch": 1792836480.715946,
+        "stderr": {
+          "bytes": 1939,
+          "sha256": "f79f67f488caaeeb33ff12004264cf482a4b37070dc957ba3540855d29b83390"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "-m",
+          "unittest",
+          "tools.tests.test_duration_values_fixtures",
+          "tools.tests.test_duration_values_bits_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792836486.302748,
+        "name": "fixture-tests-O",
+        "started_epoch": 1792836483.427649,
+        "stderr": {
+          "bytes": 1939,
+          "sha256": "b3bb04992547725a0da162b9b99dd65d82ecbe18cb4f3a460ac093873027b24f"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/inventory.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792836498.423813,
+        "name": "source-inventory",
+        "started_epoch": 1792836486.3257432,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 926,
+          "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792836507.287154,
+        "name": "m2-manifest",
+        "started_epoch": 1792836498.469225,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 231,
+          "sha256": "9eb043eed64a997a50c295ceaeaf22c94a1f9b4076d0e809c793460b394260e3"
+        }
+      }
+    ],
+    "directory": "target/m2/stage59-java-validation-01",
+    "embedded_manifest_sha256": "3015eb9d0d9702b7ba76b1809a6795a8ee10b179438267a888e1aac9ef6f4546",
+    "identity": {
+      "bytes": 943574,
+      "sha256": "ecae5d87c87f33c25ef01ef1ca8ccbcf82a518be9637d1d2206624055f48ac06"
+    },
+    "member_hash_readback": true,
+    "members": 83,
+    "record": "target/m2/stage59-java-validation-01/validation.json",
+    "record_identity": {
+      "bytes": 18890,
+      "sha256": "b10bcbfe0374342c5dbeece3920a84b02e1382449890106b6fa39f89514a7c27"
+    },
+    "source_stable": true
+  }
+}

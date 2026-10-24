@@ -1,0 +1,1379 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage59/duration-values.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "int-ns",
+      "group": "unit-literals",
+      "expression": "7.ns"
+    },
+    {
+      "id": "float-ns",
+      "group": "unit-literals",
+      "expression": "7.25.ns"
+    },
+    {
+      "id": "negative-ns",
+      "group": "unit-literals",
+      "expression": "(-3).ns"
+    },
+    {
+      "id": "value-ns",
+      "group": "unit-surface",
+      "expression": "7.25.ns.value"
+    },
+    {
+      "id": "unit-ns",
+      "group": "unit-surface",
+      "expression": "7.25.ns.unit"
+    },
+    {
+      "id": "iso-ns",
+      "group": "unit-surface",
+      "expression": "7.25.ns.isoString"
+    },
+    {
+      "id": "positive-ns",
+      "group": "unit-surface",
+      "expression": "7.25.ns.isPositive"
+    },
+    {
+      "id": "int-to-duration-ns",
+      "group": "number-construction",
+      "expression": "7.toDuration(\"ns\")"
+    },
+    {
+      "id": "float-to-duration-ns",
+      "group": "number-construction",
+      "expression": "7.25.toDuration(\"ns\")"
+    },
+    {
+      "id": "int-us",
+      "group": "unit-literals",
+      "expression": "7.us"
+    },
+    {
+      "id": "float-us",
+      "group": "unit-literals",
+      "expression": "7.25.us"
+    },
+    {
+      "id": "negative-us",
+      "group": "unit-literals",
+      "expression": "(-3).us"
+    },
+    {
+      "id": "value-us",
+      "group": "unit-surface",
+      "expression": "7.25.us.value"
+    },
+    {
+      "id": "unit-us",
+      "group": "unit-surface",
+      "expression": "7.25.us.unit"
+    },
+    {
+      "id": "iso-us",
+      "group": "unit-surface",
+      "expression": "7.25.us.isoString"
+    },
+    {
+      "id": "positive-us",
+      "group": "unit-surface",
+      "expression": "7.25.us.isPositive"
+    },
+    {
+      "id": "int-to-duration-us",
+      "group": "number-construction",
+      "expression": "7.toDuration(\"us\")"
+    },
+    {
+      "id": "float-to-duration-us",
+      "group": "number-construction",
+      "expression": "7.25.toDuration(\"us\")"
+    },
+    {
+      "id": "int-ms",
+      "group": "unit-literals",
+      "expression": "7.ms"
+    },
+    {
+      "id": "float-ms",
+      "group": "unit-literals",
+      "expression": "7.25.ms"
+    },
+    {
+      "id": "negative-ms",
+      "group": "unit-literals",
+      "expression": "(-3).ms"
+    },
+    {
+      "id": "value-ms",
+      "group": "unit-surface",
+      "expression": "7.25.ms.value"
+    },
+    {
+      "id": "unit-ms",
+      "group": "unit-surface",
+      "expression": "7.25.ms.unit"
+    },
+    {
+      "id": "iso-ms",
+      "group": "unit-surface",
+      "expression": "7.25.ms.isoString"
+    },
+    {
+      "id": "positive-ms",
+      "group": "unit-surface",
+      "expression": "7.25.ms.isPositive"
+    },
+    {
+      "id": "int-to-duration-ms",
+      "group": "number-construction",
+      "expression": "7.toDuration(\"ms\")"
+    },
+    {
+      "id": "float-to-duration-ms",
+      "group": "number-construction",
+      "expression": "7.25.toDuration(\"ms\")"
+    },
+    {
+      "id": "int-s",
+      "group": "unit-literals",
+      "expression": "7.s"
+    },
+    {
+      "id": "float-s",
+      "group": "unit-literals",
+      "expression": "7.25.s"
+    },
+    {
+      "id": "negative-s",
+      "group": "unit-literals",
+      "expression": "(-3).s"
+    },
+    {
+      "id": "value-s",
+      "group": "unit-surface",
+      "expression": "7.25.s.value"
+    },
+    {
+      "id": "unit-s",
+      "group": "unit-surface",
+      "expression": "7.25.s.unit"
+    },
+    {
+      "id": "iso-s",
+      "group": "unit-surface",
+      "expression": "7.25.s.isoString"
+    },
+    {
+      "id": "positive-s",
+      "group": "unit-surface",
+      "expression": "7.25.s.isPositive"
+    },
+    {
+      "id": "int-to-duration-s",
+      "group": "number-construction",
+      "expression": "7.toDuration(\"s\")"
+    },
+    {
+      "id": "float-to-duration-s",
+      "group": "number-construction",
+      "expression": "7.25.toDuration(\"s\")"
+    },
+    {
+      "id": "int-min",
+      "group": "unit-literals",
+      "expression": "7.min"
+    },
+    {
+      "id": "float-min",
+      "group": "unit-literals",
+      "expression": "7.25.min"
+    },
+    {
+      "id": "negative-min",
+      "group": "unit-literals",
+      "expression": "(-3).min"
+    },
+    {
+      "id": "value-min",
+      "group": "unit-surface",
+      "expression": "7.25.min.value"
+    },
+    {
+      "id": "unit-min",
+      "group": "unit-surface",
+      "expression": "7.25.min.unit"
+    },
+    {
+      "id": "iso-min",
+      "group": "unit-surface",
+      "expression": "7.25.min.isoString"
+    },
+    {
+      "id": "positive-min",
+      "group": "unit-surface",
+      "expression": "7.25.min.isPositive"
+    },
+    {
+      "id": "int-to-duration-min",
+      "group": "number-construction",
+      "expression": "7.toDuration(\"min\")"
+    },
+    {
+      "id": "float-to-duration-min",
+      "group": "number-construction",
+      "expression": "7.25.toDuration(\"min\")"
+    },
+    {
+      "id": "int-h",
+      "group": "unit-literals",
+      "expression": "7.h"
+    },
+    {
+      "id": "float-h",
+      "group": "unit-literals",
+      "expression": "7.25.h"
+    },
+    {
+      "id": "negative-h",
+      "group": "unit-literals",
+      "expression": "(-3).h"
+    },
+    {
+      "id": "value-h",
+      "group": "unit-surface",
+      "expression": "7.25.h.value"
+    },
+    {
+      "id": "unit-h",
+      "group": "unit-surface",
+      "expression": "7.25.h.unit"
+    },
+    {
+      "id": "iso-h",
+      "group": "unit-surface",
+      "expression": "7.25.h.isoString"
+    },
+    {
+      "id": "positive-h",
+      "group": "unit-surface",
+      "expression": "7.25.h.isPositive"
+    },
+    {
+      "id": "int-to-duration-h",
+      "group": "number-construction",
+      "expression": "7.toDuration(\"h\")"
+    },
+    {
+      "id": "float-to-duration-h",
+      "group": "number-construction",
+      "expression": "7.25.toDuration(\"h\")"
+    },
+    {
+      "id": "int-d",
+      "group": "unit-literals",
+      "expression": "7.d"
+    },
+    {
+      "id": "float-d",
+      "group": "unit-literals",
+      "expression": "7.25.d"
+    },
+    {
+      "id": "negative-d",
+      "group": "unit-literals",
+      "expression": "(-3).d"
+    },
+    {
+      "id": "value-d",
+      "group": "unit-surface",
+      "expression": "7.25.d.value"
+    },
+    {
+      "id": "unit-d",
+      "group": "unit-surface",
+      "expression": "7.25.d.unit"
+    },
+    {
+      "id": "iso-d",
+      "group": "unit-surface",
+      "expression": "7.25.d.isoString"
+    },
+    {
+      "id": "positive-d",
+      "group": "unit-surface",
+      "expression": "7.25.d.isPositive"
+    },
+    {
+      "id": "int-to-duration-d",
+      "group": "number-construction",
+      "expression": "7.toDuration(\"d\")"
+    },
+    {
+      "id": "float-to-duration-d",
+      "group": "number-construction",
+      "expression": "7.25.toDuration(\"d\")"
+    },
+    {
+      "id": "ns-to-ns",
+      "group": "conversions",
+      "expression": "1.25.ns.toUnit(\"ns\")"
+    },
+    {
+      "id": "ns-to-us",
+      "group": "conversions",
+      "expression": "1.25.ns.toUnit(\"us\")"
+    },
+    {
+      "id": "ns-to-ms",
+      "group": "conversions",
+      "expression": "1.25.ns.toUnit(\"ms\")"
+    },
+    {
+      "id": "ns-to-s",
+      "group": "conversions",
+      "expression": "1.25.ns.toUnit(\"s\")"
+    },
+    {
+      "id": "ns-to-min",
+      "group": "conversions",
+      "expression": "1.25.ns.toUnit(\"min\")"
+    },
+    {
+      "id": "ns-to-h",
+      "group": "conversions",
+      "expression": "1.25.ns.toUnit(\"h\")"
+    },
+    {
+      "id": "ns-to-d",
+      "group": "conversions",
+      "expression": "1.25.ns.toUnit(\"d\")"
+    },
+    {
+      "id": "us-to-ns",
+      "group": "conversions",
+      "expression": "1.25.us.toUnit(\"ns\")"
+    },
+    {
+      "id": "us-to-us",
+      "group": "conversions",
+      "expression": "1.25.us.toUnit(\"us\")"
+    },
+    {
+      "id": "us-to-ms",
+      "group": "conversions",
+      "expression": "1.25.us.toUnit(\"ms\")"
+    },
+    {
+      "id": "us-to-s",
+      "group": "conversions",
+      "expression": "1.25.us.toUnit(\"s\")"
+    },
+    {
+      "id": "us-to-min",
+      "group": "conversions",
+      "expression": "1.25.us.toUnit(\"min\")"
+    },
+    {
+      "id": "us-to-h",
+      "group": "conversions",
+      "expression": "1.25.us.toUnit(\"h\")"
+    },
+    {
+      "id": "us-to-d",
+      "group": "conversions",
+      "expression": "1.25.us.toUnit(\"d\")"
+    },
+    {
+      "id": "ms-to-ns",
+      "group": "conversions",
+      "expression": "1.25.ms.toUnit(\"ns\")"
+    },
+    {
+      "id": "ms-to-us",
+      "group": "conversions",
+      "expression": "1.25.ms.toUnit(\"us\")"
+    },
+    {
+      "id": "ms-to-ms",
+      "group": "conversions",
+      "expression": "1.25.ms.toUnit(\"ms\")"
+    },
+    {
+      "id": "ms-to-s",
+      "group": "conversions",
+      "expression": "1.25.ms.toUnit(\"s\")"
+    },
+    {
+      "id": "ms-to-min",
+      "group": "conversions",
+      "expression": "1.25.ms.toUnit(\"min\")"
+    },
+    {
+      "id": "ms-to-h",
+      "group": "conversions",
+      "expression": "1.25.ms.toUnit(\"h\")"
+    },
+    {
+      "id": "ms-to-d",
+      "group": "conversions",
+      "expression": "1.25.ms.toUnit(\"d\")"
+    },
+    {
+      "id": "s-to-ns",
+      "group": "conversions",
+      "expression": "1.25.s.toUnit(\"ns\")"
+    },
+    {
+      "id": "s-to-us",
+      "group": "conversions",
+      "expression": "1.25.s.toUnit(\"us\")"
+    },
+    {
+      "id": "s-to-ms",
+      "group": "conversions",
+      "expression": "1.25.s.toUnit(\"ms\")"
+    },
+    {
+      "id": "s-to-s",
+      "group": "conversions",
+      "expression": "1.25.s.toUnit(\"s\")"
+    },
+    {
+      "id": "s-to-min",
+      "group": "conversions",
+      "expression": "1.25.s.toUnit(\"min\")"
+    },
+    {
+      "id": "s-to-h",
+      "group": "conversions",
+      "expression": "1.25.s.toUnit(\"h\")"
+    },
+    {
+      "id": "s-to-d",
+      "group": "conversions",
+      "expression": "1.25.s.toUnit(\"d\")"
+    },
+    {
+      "id": "min-to-ns",
+      "group": "conversions",
+      "expression": "1.25.min.toUnit(\"ns\")"
+    },
+    {
+      "id": "min-to-us",
+      "group": "conversions",
+      "expression": "1.25.min.toUnit(\"us\")"
+    },
+    {
+      "id": "min-to-ms",
+      "group": "conversions",
+      "expression": "1.25.min.toUnit(\"ms\")"
+    },
+    {
+      "id": "min-to-s",
+      "group": "conversions",
+      "expression": "1.25.min.toUnit(\"s\")"
+    },
+    {
+      "id": "min-to-min",
+      "group": "conversions",
+      "expression": "1.25.min.toUnit(\"min\")"
+    },
+    {
+      "id": "min-to-h",
+      "group": "conversions",
+      "expression": "1.25.min.toUnit(\"h\")"
+    },
+    {
+      "id": "min-to-d",
+      "group": "conversions",
+      "expression": "1.25.min.toUnit(\"d\")"
+    },
+    {
+      "id": "h-to-ns",
+      "group": "conversions",
+      "expression": "1.25.h.toUnit(\"ns\")"
+    },
+    {
+      "id": "h-to-us",
+      "group": "conversions",
+      "expression": "1.25.h.toUnit(\"us\")"
+    },
+    {
+      "id": "h-to-ms",
+      "group": "conversions",
+      "expression": "1.25.h.toUnit(\"ms\")"
+    },
+    {
+      "id": "h-to-s",
+      "group": "conversions",
+      "expression": "1.25.h.toUnit(\"s\")"
+    },
+    {
+      "id": "h-to-min",
+      "group": "conversions",
+      "expression": "1.25.h.toUnit(\"min\")"
+    },
+    {
+      "id": "h-to-h",
+      "group": "conversions",
+      "expression": "1.25.h.toUnit(\"h\")"
+    },
+    {
+      "id": "h-to-d",
+      "group": "conversions",
+      "expression": "1.25.h.toUnit(\"d\")"
+    },
+    {
+      "id": "d-to-ns",
+      "group": "conversions",
+      "expression": "1.25.d.toUnit(\"ns\")"
+    },
+    {
+      "id": "d-to-us",
+      "group": "conversions",
+      "expression": "1.25.d.toUnit(\"us\")"
+    },
+    {
+      "id": "d-to-ms",
+      "group": "conversions",
+      "expression": "1.25.d.toUnit(\"ms\")"
+    },
+    {
+      "id": "d-to-s",
+      "group": "conversions",
+      "expression": "1.25.d.toUnit(\"s\")"
+    },
+    {
+      "id": "d-to-min",
+      "group": "conversions",
+      "expression": "1.25.d.toUnit(\"min\")"
+    },
+    {
+      "id": "d-to-h",
+      "group": "conversions",
+      "expression": "1.25.d.toUnit(\"h\")"
+    },
+    {
+      "id": "d-to-d",
+      "group": "conversions",
+      "expression": "1.25.d.toUnit(\"d\")"
+    },
+    {
+      "id": "positive-zero",
+      "group": "numeric-extremes",
+      "expression": "0.0.s"
+    },
+    {
+      "id": "negative-zero",
+      "group": "numeric-extremes",
+      "expression": "(-0.0).s"
+    },
+    {
+      "id": "min-subnormal",
+      "group": "numeric-extremes",
+      "expression": "(5e-324).s"
+    },
+    {
+      "id": "negative-subnormal",
+      "group": "numeric-extremes",
+      "expression": "(-5e-324).s"
+    },
+    {
+      "id": "max-finite",
+      "group": "numeric-extremes",
+      "expression": "(1.7976931348623157e308).s"
+    },
+    {
+      "id": "huge-finite-day",
+      "group": "numeric-extremes",
+      "expression": "(1.7976931348623157e308).d"
+    },
+    {
+      "id": "positive-infinity",
+      "group": "numeric-extremes",
+      "expression": "(1.0/0.0).s"
+    },
+    {
+      "id": "negative-infinity",
+      "group": "numeric-extremes",
+      "expression": "(-1.0/0.0).s"
+    },
+    {
+      "id": "nan",
+      "group": "numeric-extremes",
+      "expression": "(0.0/0.0).s"
+    },
+    {
+      "id": "positive-zero-value",
+      "group": "numeric-extremes",
+      "expression": "0.0.s.value"
+    },
+    {
+      "id": "negative-zero-value",
+      "group": "numeric-extremes",
+      "expression": "(-0.0).s.value"
+    },
+    {
+      "id": "nan-value",
+      "group": "numeric-extremes",
+      "expression": "(0.0/0.0).s.value"
+    },
+    {
+      "id": "inf-value",
+      "group": "numeric-extremes",
+      "expression": "(1.0/0.0).s.value"
+    },
+    {
+      "id": "nan-positive",
+      "group": "numeric-extremes",
+      "expression": "(0.0/0.0).s.isPositive"
+    },
+    {
+      "id": "negative-zero-positive",
+      "group": "numeric-extremes",
+      "expression": "(-0.0).s.isPositive"
+    },
+    {
+      "id": "negative-positive",
+      "group": "numeric-extremes",
+      "expression": "(-1).s.isPositive"
+    },
+    {
+      "id": "subnormal-to-days",
+      "group": "numeric-extremes",
+      "expression": "(5e-324).ns.toUnit(\"d\")"
+    },
+    {
+      "id": "max-day-to-ns",
+      "group": "numeric-extremes",
+      "expression": "(1.7976931348623157e308).d.toUnit(\"ns\")"
+    },
+    {
+      "id": "max-ns-to-day",
+      "group": "numeric-extremes",
+      "expression": "(1.7976931348623157e308).ns.toUnit(\"d\")"
+    },
+    {
+      "id": "negative-zero-to-ns",
+      "group": "numeric-extremes",
+      "expression": "(-0.0).s.toUnit(\"ns\")"
+    },
+    {
+      "id": "nan-to-min",
+      "group": "numeric-extremes",
+      "expression": "(0.0/0.0).s.toUnit(\"min\")"
+    },
+    {
+      "id": "inf-to-day",
+      "group": "numeric-extremes",
+      "expression": "(1.0/0.0).s.toUnit(\"d\")"
+    },
+    {
+      "id": "iso-zero",
+      "group": "iso",
+      "expression": "0.s.isoString"
+    },
+    {
+      "id": "iso-negative-zero",
+      "group": "iso",
+      "expression": "(-0.0).s.isoString"
+    },
+    {
+      "id": "iso-sub-ns",
+      "group": "iso",
+      "expression": "(5e-324).ns.isoString"
+    },
+    {
+      "id": "iso-negative-sub-ns",
+      "group": "iso",
+      "expression": "(-5e-324).ns.isoString"
+    },
+    {
+      "id": "iso-fractional-ns",
+      "group": "iso",
+      "expression": "1.5.ns.isoString"
+    },
+    {
+      "id": "iso-fractional-us",
+      "group": "iso",
+      "expression": "1.234567.us.isoString"
+    },
+    {
+      "id": "iso-fractional-ms",
+      "group": "iso",
+      "expression": "1.234567.ms.isoString"
+    },
+    {
+      "id": "iso-59-999",
+      "group": "iso",
+      "expression": "59.999999999.s.isoString"
+    },
+    {
+      "id": "iso-60",
+      "group": "iso",
+      "expression": "60.s.isoString"
+    },
+    {
+      "id": "iso-3600",
+      "group": "iso",
+      "expression": "3600.s.isoString"
+    },
+    {
+      "id": "iso-negative-fraction",
+      "group": "iso",
+      "expression": "(-1.5).h.isoString"
+    },
+    {
+      "id": "iso-precision-boundary",
+      "group": "iso",
+      "expression": "1000000000.1234567.s.isoString"
+    },
+    {
+      "id": "iso-huge-seconds",
+      "group": "iso",
+      "expression": "(1e20).s.isoString"
+    },
+    {
+      "id": "iso-huge-days",
+      "group": "iso",
+      "expression": "(1e20).d.isoString"
+    },
+    {
+      "id": "iso-max-finite-ns",
+      "group": "iso",
+      "expression": "(1.7976931348623157e308).ns.isoString"
+    },
+    {
+      "id": "iso-max-finite-days",
+      "group": "iso",
+      "expression": "(1.7976931348623157e308).d.isoString"
+    },
+    {
+      "id": "iso-overflow-days",
+      "group": "iso",
+      "expression": "(1e308).d.isoString"
+    },
+    {
+      "id": "iso-nan",
+      "group": "iso",
+      "expression": "(0.0/0.0).s.isoString"
+    },
+    {
+      "id": "iso-pos-inf",
+      "group": "iso",
+      "expression": "(1.0/0.0).s.isoString"
+    },
+    {
+      "id": "iso-neg-inf",
+      "group": "iso",
+      "expression": "(-1.0/0.0).s.isoString"
+    },
+    {
+      "id": "iso-huge-finite-s",
+      "group": "iso",
+      "expression": "(1e100).s.isoString"
+    },
+    {
+      "id": "iso-huge-finite-ns",
+      "group": "iso",
+      "expression": "(1e300).ns.isoString"
+    },
+    {
+      "id": "iso-one-nanosecond-s",
+      "group": "iso",
+      "expression": "(1e-9).s.isoString"
+    },
+    {
+      "id": "iso-one-nanosecond-ns",
+      "group": "iso",
+      "expression": "1.ns.isoString"
+    },
+    {
+      "id": "iso-just-below-second",
+      "group": "iso",
+      "expression": "0.999999999.s.isoString"
+    },
+    {
+      "id": "iso-just-above-second",
+      "group": "iso",
+      "expression": "1.000000001.s.isoString"
+    },
+    {
+      "id": "add-s-min",
+      "group": "arithmetic",
+      "expression": "1.s + 1.min"
+    },
+    {
+      "id": "add-min-s",
+      "group": "arithmetic",
+      "expression": "1.min + 1.s"
+    },
+    {
+      "id": "subtract-s-min",
+      "group": "arithmetic",
+      "expression": "1.s - 1.min"
+    },
+    {
+      "id": "subtract-min-s",
+      "group": "arithmetic",
+      "expression": "1.min - 1.s"
+    },
+    {
+      "id": "add-ns-d",
+      "group": "arithmetic",
+      "expression": "1.ns + 1.d"
+    },
+    {
+      "id": "add-d-ns",
+      "group": "arithmetic",
+      "expression": "1.d + 1.ns"
+    },
+    {
+      "id": "cancel-coarse",
+      "group": "arithmetic",
+      "expression": "1.d + (-86400).s"
+    },
+    {
+      "id": "cancel-fine",
+      "group": "arithmetic",
+      "expression": "(-86400).s + 1.d"
+    },
+    {
+      "id": "add-near-max",
+      "group": "arithmetic",
+      "expression": "(1e308).d + (1e308).d"
+    },
+    {
+      "id": "add-inf-neg-inf",
+      "group": "arithmetic",
+      "expression": "(1.0/0.0).s + (-1.0/0.0).s"
+    },
+    {
+      "id": "multiply-int",
+      "group": "arithmetic",
+      "expression": "1.5.s * 2"
+    },
+    {
+      "id": "multiply-float",
+      "group": "arithmetic",
+      "expression": "1.5.s * 2.5"
+    },
+    {
+      "id": "multiply-reverse",
+      "group": "arithmetic",
+      "expression": "2 * 1.5.s"
+    },
+    {
+      "id": "multiply-negative-zero",
+      "group": "arithmetic",
+      "expression": "(-0.0).s * (-1)"
+    },
+    {
+      "id": "divide-int",
+      "group": "arithmetic",
+      "expression": "3.s / 2"
+    },
+    {
+      "id": "divide-float",
+      "group": "arithmetic",
+      "expression": "3.s / 2.0"
+    },
+    {
+      "id": "ratio-s-min",
+      "group": "arithmetic",
+      "expression": "1.s / 1.min"
+    },
+    {
+      "id": "ratio-min-s",
+      "group": "arithmetic",
+      "expression": "1.min / 1.s"
+    },
+    {
+      "id": "ratio-zero",
+      "group": "arithmetic",
+      "expression": "1.s / 0.s"
+    },
+    {
+      "id": "divide-zero",
+      "group": "arithmetic",
+      "expression": "1.s / 0"
+    },
+    {
+      "id": "trunc-int",
+      "group": "arithmetic",
+      "expression": "3.s ~/ 2"
+    },
+    {
+      "id": "trunc-float",
+      "group": "arithmetic",
+      "expression": "3.s ~/ 2.0"
+    },
+    {
+      "id": "trunc-ratio",
+      "group": "arithmetic",
+      "expression": "1.min ~/ 1.s"
+    },
+    {
+      "id": "trunc-ratio-reverse",
+      "group": "arithmetic",
+      "expression": "1.s ~/ 1.min"
+    },
+    {
+      "id": "trunc-zero",
+      "group": "arithmetic",
+      "expression": "1.s ~/ 0"
+    },
+    {
+      "id": "trunc-ratio-zero",
+      "group": "arithmetic",
+      "expression": "1.s ~/ 0.s"
+    },
+    {
+      "id": "remainder-int",
+      "group": "arithmetic",
+      "expression": "5.s % 2"
+    },
+    {
+      "id": "remainder-float",
+      "group": "arithmetic",
+      "expression": "5.s % 2.5"
+    },
+    {
+      "id": "remainder-zero",
+      "group": "arithmetic",
+      "expression": "5.s % 0"
+    },
+    {
+      "id": "remainder-negative",
+      "group": "arithmetic",
+      "expression": "(-5).s % 2"
+    },
+    {
+      "id": "pow-two",
+      "group": "arithmetic",
+      "expression": "2.s ** 3"
+    },
+    {
+      "id": "pow-half",
+      "group": "arithmetic",
+      "expression": "4.s ** 0.5"
+    },
+    {
+      "id": "pow-neg",
+      "group": "arithmetic",
+      "expression": "2.s ** -1"
+    },
+    {
+      "id": "pow-nan-zero",
+      "group": "arithmetic",
+      "expression": "(0.0/0.0).s ** 0"
+    },
+    {
+      "id": "pow-negative-zero",
+      "group": "arithmetic",
+      "expression": "(-0.0).s ** 3"
+    },
+    {
+      "id": "unary-plus",
+      "group": "arithmetic",
+      "expression": "+1.s"
+    },
+    {
+      "id": "unary-minus",
+      "group": "arithmetic",
+      "expression": "-1.s"
+    },
+    {
+      "id": "unary-minus-zero",
+      "group": "arithmetic",
+      "expression": "-0.0.s"
+    },
+    {
+      "id": "equal-mixed",
+      "group": "equality-identity",
+      "expression": "1.min == 60.s"
+    },
+    {
+      "id": "unequal-mixed",
+      "group": "equality-identity",
+      "expression": "1.min == 59.s"
+    },
+    {
+      "id": "equal-signed-zero",
+      "group": "equality-identity",
+      "expression": "(-0.0).s == 0.0.s"
+    },
+    {
+      "id": "nan-self",
+      "group": "equality-identity",
+      "expression": "nanDuration == nanDuration"
+    },
+    {
+      "id": "nan-fresh",
+      "group": "equality-identity",
+      "expression": "(0.0/0.0).s == (0.0/0.0).s"
+    },
+    {
+      "id": "less-mixed",
+      "group": "equality-identity",
+      "expression": "59.s < 1.min"
+    },
+    {
+      "id": "greater-mixed",
+      "group": "equality-identity",
+      "expression": "1.min > 59.s"
+    },
+    {
+      "id": "less-equal",
+      "group": "equality-identity",
+      "expression": "60.s <= 1.min"
+    },
+    {
+      "id": "greater-equal",
+      "group": "equality-identity",
+      "expression": "1.min >= 60.s"
+    },
+    {
+      "id": "less-zero",
+      "group": "equality-identity",
+      "expression": "(-0.0).s < 0.0.s"
+    },
+    {
+      "id": "greater-zero",
+      "group": "equality-identity",
+      "expression": "(-0.0).s > 0.0.s"
+    },
+    {
+      "id": "less-nan",
+      "group": "equality-identity",
+      "expression": "(0.0/0.0).s < 1.s"
+    },
+    {
+      "id": "greater-nan",
+      "group": "equality-identity",
+      "expression": "(0.0/0.0).s > 1.s"
+    },
+    {
+      "id": "between-mixed",
+      "group": "equality-identity",
+      "expression": "1.min.isBetween(59.s,61.s)"
+    },
+    {
+      "id": "between-equal",
+      "group": "equality-identity",
+      "expression": "1.min.isBetween(60.s,60.s)"
+    },
+    {
+      "id": "between-reverse",
+      "group": "equality-identity",
+      "expression": "1.min.isBetween(2.min,0.min)"
+    },
+    {
+      "id": "between-zero",
+      "group": "equality-identity",
+      "expression": "(-0.0).s.isBetween(0.0.s,0.0.s)"
+    },
+    {
+      "id": "between-nan",
+      "group": "equality-identity",
+      "expression": "(0.0/0.0).s.isBetween(0.s,1.s)"
+    },
+    {
+      "id": "between-throw-first",
+      "group": "equality-identity",
+      "expression": "1.s.isBetween(throw(\"first\"),throw(\"second\"))"
+    },
+    {
+      "id": "between-throw-second",
+      "group": "equality-identity",
+      "expression": "1.s.isBetween(0.s,throw(\"second\"))"
+    },
+    {
+      "id": "set-equal",
+      "group": "equality-identity",
+      "expression": "Set(1.min,60.s).length"
+    },
+    {
+      "id": "set-zero",
+      "group": "equality-identity",
+      "expression": "Set((-0.0).s,0.0.s).length"
+    },
+    {
+      "id": "set-nan-self",
+      "group": "equality-identity",
+      "expression": "Set(nanDuration,nanDuration).length"
+    },
+    {
+      "id": "set-nan-fresh",
+      "group": "equality-identity",
+      "expression": "Set((0.0/0.0).s,(0.0/0.0).s).length"
+    },
+    {
+      "id": "map-equal",
+      "group": "equality-identity",
+      "expression": "Map(1.min,\"a\",60.s,\"b\").length"
+    },
+    {
+      "id": "map-zero",
+      "group": "equality-identity",
+      "expression": "Map((-0.0).s,\"a\",0.0.s,\"b\").length"
+    },
+    {
+      "id": "map-nan",
+      "group": "equality-identity",
+      "expression": "Map(nanDuration,\"a\",nanDuration,\"b\").length"
+    },
+    {
+      "id": "set-threshold-four",
+      "group": "equality-identity",
+      "expression": "Set(1.min,2.s,3.s,60.s).length"
+    },
+    {
+      "id": "set-threshold-five",
+      "group": "equality-identity",
+      "expression": "Set(1.min,2.s,3.s,4.s,60.s).length"
+    },
+    {
+      "id": "map-threshold-four",
+      "group": "equality-identity",
+      "expression": "Map(1.min,1,2.s,2,3.s,3,60.s,4).length"
+    },
+    {
+      "id": "map-threshold-five",
+      "group": "equality-identity",
+      "expression": "Map(1.min,1,2.s,2,3.s,3,4.s,4,60.s,5).length"
+    },
+    {
+      "id": "same-unit-fresh",
+      "group": "equality-identity",
+      "expression": "Set(1.s,1.s.toUnit(\"s\")).length"
+    },
+    {
+      "id": "same-unit-equal",
+      "group": "equality-identity",
+      "expression": "1.s == 1.s.toUnit(\"s\")"
+    },
+    {
+      "id": "nan-converted-self",
+      "group": "equality-identity",
+      "expression": "nanDuration == nanDuration.toUnit(\"s\")"
+    },
+    {
+      "id": "nan-between-nan",
+      "group": "equality-identity",
+      "expression": "nanDuration.isBetween(nanDuration,nanDuration)"
+    },
+    {
+      "id": "nan-less-equal-self",
+      "group": "equality-identity",
+      "expression": "nanDuration <= nanDuration"
+    },
+    {
+      "id": "nan-greater-equal-self",
+      "group": "equality-identity",
+      "expression": "nanDuration >= nanDuration"
+    },
+    {
+      "id": "between-nan-lower",
+      "group": "equality-identity",
+      "expression": "1.s.isBetween((0.0/0.0).s,2.s)"
+    },
+    {
+      "id": "between-nan-upper",
+      "group": "equality-identity",
+      "expression": "1.s.isBetween(0.s,(0.0/0.0).s)"
+    },
+    {
+      "id": "between-arg-first-throw",
+      "group": "equality-identity",
+      "expression": "1.s.isBetween(throw(\"lower\"),throw(\"upper\"))"
+    },
+    {
+      "id": "between-arg-upper-throw",
+      "group": "equality-identity",
+      "expression": "1.s.isBetween(0.s,throw(\"upper\"))"
+    },
+    {
+      "id": "set-zero-threshold-four",
+      "group": "equality-identity",
+      "expression": "Set((-0.0).s,1.s,2.s,0.0.s).length"
+    },
+    {
+      "id": "set-zero-threshold-five",
+      "group": "equality-identity",
+      "expression": "Set((-0.0).s,1.s,2.s,3.s,0.0.s).length"
+    },
+    {
+      "id": "map-zero-threshold-four",
+      "group": "equality-identity",
+      "expression": "Map((-0.0).s,1,1.s,2,2.s,3,0.0.s,4).length"
+    },
+    {
+      "id": "map-zero-threshold-five",
+      "group": "equality-identity",
+      "expression": "Map((-0.0).s,1,1.s,2,2.s,3,3.s,4,0.0.s,5).length"
+    },
+    {
+      "id": "duration-unit-alias",
+      "group": "type-errors-any",
+      "expression": "DurationUnit"
+    },
+    {
+      "id": "duration-unit-alias-type",
+      "group": "type-errors-any",
+      "expression": "DurationUnit is TypeAlias"
+    },
+    {
+      "id": "duration-unit-alias-string",
+      "group": "type-errors-any",
+      "expression": "DurationUnit.toString()"
+    },
+    {
+      "id": "default",
+      "group": "type-errors-any",
+      "expression": "Duration.default"
+    },
+    {
+      "id": "duration-class",
+      "group": "type-errors-any",
+      "expression": "1.s.getClass().simpleName"
+    },
+    {
+      "id": "duration-string",
+      "group": "type-errors-any",
+      "expression": "1.25.s.toString()"
+    },
+    {
+      "id": "duration-if-non-null",
+      "group": "type-errors-any",
+      "expression": "1.s.ifNonNull((it) -> it.toUnit(\"min\"))"
+    },
+    {
+      "id": "duration-if-non-null-lazy",
+      "group": "type-errors-any",
+      "expression": "1.s.ifNonNull((it) -> it.value)"
+    },
+    {
+      "id": "nullable-duration",
+      "group": "type-errors-any",
+      "expression": "Null(1.s)"
+    },
+    {
+      "id": "type-test",
+      "group": "type-errors-any",
+      "expression": "1.s is Duration"
+    },
+    {
+      "id": "type-mismatch",
+      "group": "type-errors-any",
+      "expression": "1.s is DataSize"
+    },
+    {
+      "id": "to-unit-invalid",
+      "group": "type-errors-any",
+      "expression": "1.s.toUnit(\"fortnight\")"
+    },
+    {
+      "id": "to-unit-case",
+      "group": "type-errors-any",
+      "expression": "1.s.toUnit(\"S\")"
+    },
+    {
+      "id": "to-unit-surrogate",
+      "group": "type-errors-any",
+      "expression": "1.s.toUnit(\"\\uD800\")"
+    },
+    {
+      "id": "to-unit-int",
+      "group": "type-errors-any",
+      "expression": "1.s.toUnit(1)"
+    },
+    {
+      "id": "to-unit-no-arg",
+      "group": "type-errors-any",
+      "expression": "1.s.toUnit()"
+    },
+    {
+      "id": "to-unit-extra",
+      "group": "type-errors-any",
+      "expression": "1.s.toUnit(\"s\",\"h\")"
+    },
+    {
+      "id": "between-int",
+      "group": "type-errors-any",
+      "expression": "1.s.isBetween(0,2.s)"
+    },
+    {
+      "id": "between-no-arg",
+      "group": "type-errors-any",
+      "expression": "1.s.isBetween()"
+    },
+    {
+      "id": "between-one-arg",
+      "group": "type-errors-any",
+      "expression": "1.s.isBetween(0.s)"
+    },
+    {
+      "id": "between-extra",
+      "group": "type-errors-any",
+      "expression": "1.s.isBetween(0.s,2.s,3.s)"
+    },
+    {
+      "id": "to-duration-invalid",
+      "group": "type-errors-any",
+      "expression": "1.toDuration(\"fortnight\")"
+    },
+    {
+      "id": "to-duration-int",
+      "group": "type-errors-any",
+      "expression": "1.toDuration(1)"
+    },
+    {
+      "id": "to-duration-no-arg",
+      "group": "type-errors-any",
+      "expression": "1.toDuration()"
+    },
+    {
+      "id": "to-duration-extra",
+      "group": "type-errors-any",
+      "expression": "1.toDuration(\"s\",\"h\")"
+    },
+    {
+      "id": "add-wrong",
+      "group": "type-errors-any",
+      "expression": "1.s + 1"
+    },
+    {
+      "id": "subtract-wrong",
+      "group": "type-errors-any",
+      "expression": "1.s - 1"
+    },
+    {
+      "id": "divide-wrong",
+      "group": "type-errors-any",
+      "expression": "1 / 1.s"
+    },
+    {
+      "id": "remainder-wrong",
+      "group": "type-errors-any",
+      "expression": "1.s % 1.s"
+    },
+    {
+      "id": "pow-wrong",
+      "group": "type-errors-any",
+      "expression": "1.s ** 1.s"
+    },
+    {
+      "id": "property-wrong",
+      "group": "type-errors-any",
+      "expression": "1.s.noSuchProperty"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+int-beyond-f64-exact	9007199254740993.s
+int-max	9223372036854775807.s
+same-unit-day	0.1.d.toUnit("d")
+same-unit-minute	0.1.min.toUnit("min")
+same-unit-huge-day	(1e300).d.toUnit("d")
+negative-zero-convert	(-0.0).s.toUnit("min")
+negative-zero-direct	(-0.0).s
+min-subnormal	(5e-324).ns
+min-subnormal-to-day	(5e-324).ns.toUnit("d")
+pow-fraction	2.2.s ** 3.3
+nan-convert	(0.0/0.0).s.toUnit("d")
+overflow-convert	(1e308).d.toUnit("ns")
+same-unit-second	1.s.toUnit("s")
+same-unit-fraction-second	0.1.s.toUnit("s")
+fraction-second	0.1.s
