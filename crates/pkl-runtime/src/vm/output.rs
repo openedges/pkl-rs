@@ -232,15 +232,20 @@ pub(super) fn builtin_members(
     let text_code = vec![
         property("renderer"),
         Instruction::TestType(builtins::ty(VALUE_RENDERER)),
-        Instruction::JumpIfFalse(8),
+        Instruction::JumpIfFalse(9),
         property("renderer"),
         Instruction::GetMethod("renderDocument".into()),
+        Instruction::PrepareMethodCall {
+            lookup: 4,
+            arity: 0,
+            after_arguments: false,
+        },
         property("value"),
         Instruction::Call {
             arity: 1,
             method: true,
         },
-        Instruction::Jump(10),
+        Instruction::Jump(11),
         Instruction::Constant(Value::string(
             "unabled to render text when renderer is a BytesRenderer",
         )),
@@ -250,15 +255,20 @@ pub(super) fn builtin_members(
     let bytes_code = vec![
         property("renderer"),
         Instruction::TestType(builtins::ty(BYTES_RENDERER)),
-        Instruction::JumpIfFalse(8),
+        Instruction::JumpIfFalse(9),
         property("renderer"),
         Instruction::GetMethod("renderDocument".into()),
+        Instruction::PrepareMethodCall {
+            lookup: 4,
+            arity: 0,
+            after_arguments: false,
+        },
         property("value"),
         Instruction::Call {
             arity: 1,
             method: true,
         },
-        Instruction::Jump(10),
+        Instruction::Jump(11),
         property("text"),
         Instruction::EncodeUtf8,
     ];
@@ -278,6 +288,7 @@ pub(super) fn builtin_members(
                 "",
                 "renderer",
                 "renderer.renderDocument(value)",
+                "renderer.renderDocument(value)",
                 "value",
                 "renderer.renderDocument(value)",
                 "",
@@ -294,6 +305,7 @@ pub(super) fn builtin_members(
                 "renderer is BytesRenderer",
                 "",
                 "renderer",
+                "renderer.renderDocument(value)",
                 "renderer.renderDocument(value)",
                 "value",
                 "renderer.renderDocument(value)",
@@ -387,7 +399,7 @@ pub(super) fn builtin_members(
     let mut t = text.clone();
     let tblock = d.blocks.len();
     let mut tc = d.blocks[text.code].clone();
-    tc[8] = Instruction::Constant(Value::string(
+    tc[9] = Instruction::Constant(Value::string(
         "Unable to render text when renderer is a BytesRenderer",
     ));
     d.blocks.push(tc);
@@ -402,6 +414,7 @@ pub(super) fn builtin_members(
             "renderer is ValueRenderer",
             "",
             "renderer",
+            "renderer.renderDocument(value)",
             "renderer.renderDocument(value)",
             "value",
             "renderer.renderDocument(value)",
@@ -428,6 +441,7 @@ pub(super) fn builtin_members(
             "renderer is BytesRenderer",
             "",
             "renderer",
+            "renderer.renderDocument(value)",
             "renderer.renderDocument(value)",
             "value",
             "renderer.renderDocument(value)",

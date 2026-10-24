@@ -1,5 +1,10 @@
 # M2 language verification
 
+The [method-deprecation contract](m2-deprecation.md) adds independent Java logger
+observations, including implicit method calls and sequential evaluator lifetimes.
+Its reference checkpoint and ongoing candidate implementation do not close the
+whole-language requirements or the strict completion gate below.
+
 M2 extends the shared Rust engine established in M1. Its completion gate covers
 the language scope in [PLAN.md](../PLAN.md), including classes, generators,
 constraints, generics, `Reference`, and complete diagnostics. The first executable

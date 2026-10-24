@@ -16,6 +16,7 @@ pub(crate) mod builtins;
 mod code_storage;
 mod collection_transforms;
 pub mod collections;
+pub(crate) mod deprecation;
 pub use code_storage::CodeStorage;
 mod compiler_expressions;
 mod converters;
@@ -83,6 +84,12 @@ pub enum Instruction {
     AppendAnnotation,
     BeginMemberAnnotations,
     InitializeDeprecation,
+    StoreDeprecation,
+    PrepareMethodCall {
+        lookup: usize,
+        arity: usize,
+        after_arguments: bool,
+    },
     PublishMemberAnnotations {
         code: usize,
     },
@@ -899,6 +906,11 @@ impl Program {
         blocks.push(vec![
             Instruction::LoadLocal(0),
             Instruction::ReferenceRenderMethod,
+            Instruction::PrepareMethodCall {
+                lookup: 1,
+                arity: 0,
+                after_arguments: false,
+            },
             Instruction::LoadLocal(0),
             Instruction::Call {
                 arity: 1,
@@ -911,6 +923,11 @@ impl Program {
         blocks.push(vec![
             Instruction::LoadLocal(0),
             Instruction::GetMethod("toString".into()),
+            Instruction::PrepareMethodCall {
+                lookup: 1,
+                arity: 0,
+                after_arguments: false,
+            },
             Instruction::Call {
                 arity: 0,
                 method: true,
@@ -933,6 +950,7 @@ impl Program {
         metadata[reference_render_block] = BlockMetadata {
             source: Some(source),
             spans: vec![
+                Some(span),
                 Some(span),
                 Some(span),
                 Some(span),
@@ -1090,6 +1108,8 @@ struct Frame {
     generic_default: Option<generics::GenericDefaultRun>,
     equality_run: Option<equality::EqualityRun>,
     deep_force: Option<forcing::ForceRun>,
+    warning: Option<deprecation::PendingWarning>,
+    method_call_site: Option<Box<deprecation::CallSite>>,
     pcf_render: Option<rendering::RenderRun>,
     collection_join: Option<collections::JoinRun>,
     collection_transform: Option<collection_transforms::TransformRun>,
@@ -1352,6 +1372,8 @@ impl Vm {
             generic_default: None,
             equality_run: None,
             deep_force: None,
+            warning: None,
+            method_call_site: None,
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
@@ -1575,12 +1597,20 @@ impl Vm {
         }
         match completion {
             Ok(()) => {
-                self.frames
-                    .last_mut()
-                    .and_then(|frame| frame.deep_force.as_mut())
-                    .ok_or_else(|| invalid("log outside trace continuation"))?
-                    .acknowledge_log()?;
                 self.state = State::Running;
+                if let Some(warning) = self
+                    .frames
+                    .last_mut()
+                    .and_then(|frame| frame.warning.take())
+                {
+                    self.publish_method_call(warning)?;
+                } else {
+                    self.frames
+                        .last_mut()
+                        .and_then(|frame| frame.deep_force.as_mut())
+                        .ok_or_else(|| invalid("log outside logger continuation"))?
+                        .acknowledge_log()?;
+                }
             }
             Err(error) => self.fail(RuntimeError::new(ErrorKind::Host, error.message)),
         }
@@ -1810,6 +1840,15 @@ impl Vm {
                 }
                 if let Some(run) = &frame.deep_force {
                     run.roots(&mut roots);
+                }
+                roots.extend(
+                    frame
+                        .method_call_site
+                        .as_ref()
+                        .map(|site| site.executable.root()),
+                );
+                if let Some(warning) = &frame.warning {
+                    warning.roots(&mut roots);
                 }
                 if let Some(run) = &frame.equality_run {
                     run.roots(&mut roots);
@@ -2657,6 +2696,8 @@ impl Vm {
             generic_default: None,
             equality_run: None,
             deep_force: None,
+            warning: None,
+            method_call_site: None,
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
@@ -3551,6 +3592,8 @@ impl Vm {
             generic_default: None,
             equality_run: None,
             deep_force: None,
+            warning: None,
+            method_call_site: None,
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
@@ -3845,6 +3888,14 @@ impl Vm {
                 self.stack.push(Value::Object(id));
             }
             Instruction::InitializeDeprecation => self.initialize_deprecation()?,
+            Instruction::StoreDeprecation => self.store_deprecation()?,
+            Instruction::PrepareMethodCall {
+                lookup,
+                arity,
+                after_arguments,
+            } => {
+                self.prepare_method_call(lookup, arity, after_arguments)?;
+            }
             Instruction::PublishMemberAnnotations { code } => {
                 self.publish_member_annotations(code)?
             }
@@ -3866,11 +3917,7 @@ impl Vm {
                 if let Some(parent) = self.heap.get(owner)?.parent {
                     self.validate_class_override(parent, &member)?;
                 }
-                let values = self.heap.get(annotations)?.annotations.clone();
-                self.heap
-                    .get_mut(owner)?
-                    .member_annotations
-                    .insert(member.code, values);
+                self.publish_annotations(owner, annotations, member.code)?;
                 self.heap.get_mut(owner)?.members.push(member);
             }
             Instruction::BeginTypeAlias {
@@ -3944,6 +3991,7 @@ impl Vm {
                     .ok_or_else(|| invalid("reference render receiver"))?
                     .domain
                     .as_object()?;
+                self.retire_saturated_method_cache(&Value::Object(domain), "renderReference")?;
                 self.force(
                     domain,
                     domain,
@@ -4187,6 +4235,13 @@ impl Vm {
                     {
                         // Pkl interpolation virtually invokes Typed.toString; user
                         // overrides can avoid forcing the receiver altogether.
+                        let site = self.current_method_call_site()?;
+                        let code_owner = self
+                            .frames
+                            .last()
+                            .expect("ToString frame")
+                            .environment
+                            .code_owner;
                         let function = self.heap.allocate(Object {
                             function: Some(Function {
                                 block: self.program.typed_string_block,
@@ -4196,11 +4251,16 @@ impl Vm {
                             }),
                             environment: Environment {
                                 locals: vec![Value::Object(id)],
+                                code_owner,
                                 ..Environment::default()
                             },
                             ..Object::default()
                         });
                         self.invoke_function(function, Vec::new(), true)?;
+                        self.frames
+                            .last_mut()
+                            .expect("implicit ToString call")
+                            .method_call_site = Some(Box::new(site));
                     } else {
                         self.begin_object_string(Value::Object(id))?;
                     }
@@ -4267,6 +4327,9 @@ impl Vm {
                     Instruction::GetConstMember(_) | Instruction::GetConstMethod(_)
                 );
                 let receiver = self.pop()?;
+                if method {
+                    self.retire_saturated_method_cache(&receiver, name)?;
+                }
                 if self.primitive_member(&receiver, name, method)? {
                     return Ok(());
                 }
@@ -4365,6 +4428,9 @@ impl Vm {
             } => {
                 let method = matches!(instruction, Instruction::GetMethodProperty { .. });
                 let scope = self.scope(owner_depth)?;
+                if method {
+                    self.retire_saturated_method_cache(&Value::Object(scope.receiver), name)?;
+                }
                 let frame = self.frames.last().expect("active frame");
                 let resolved = if local && !method {
                     frame
@@ -4394,6 +4460,9 @@ impl Vm {
             | Instruction::GetImplicitMethod(ref name) => {
                 let method = matches!(instruction, Instruction::GetImplicitMethod(_));
                 let receiver = self.this_receiver()?;
+                if method {
+                    self.retire_saturated_method_cache(&receiver, name)?;
+                }
                 if self.primitive_member(&receiver, name, method)? {
                     return Ok(());
                 }
@@ -4911,6 +4980,13 @@ impl Vm {
                 } else {
                     None
                 };
+                let method_declaration = method
+                    .then(|| {
+                        self.frames.last().and_then(|frame| {
+                            frame.force.as_ref().map(|force| (force.owner, frame.block))
+                        })
+                    })
+                    .flatten();
                 let id = self.heap.allocate(Object {
                     function: Some(Function {
                         block,
@@ -4918,6 +4994,7 @@ impl Vm {
                         method,
                         captured_this,
                     }),
+                    method_declaration,
                     environment,
                     ..Object::default()
                 });
@@ -5824,7 +5901,7 @@ fn compile_unit_body_at(
             if annotated {
                 if method {
                     entry.push(Instruction::InitializeDeprecation);
-                    entry.push(Instruction::Pop);
+                    entry.push(Instruction::StoreDeprecation);
                 }
                 entry.push(Instruction::PublishMemberAnnotations {
                     code: compiled.code,
@@ -6478,7 +6555,7 @@ impl Compiler<'_> {
                         self.initialize_member_types(std::slice::from_ref(member), output)?;
                         if annotated && method {
                             output.push(Instruction::InitializeDeprecation);
-                            output.push(Instruction::Pop);
+                            output.push(Instruction::StoreDeprecation);
                         }
                         output.push_at(
                             if annotated {

@@ -1126,6 +1126,8 @@ impl Vm {
             generic_default: None,
             equality_run: None,
             deep_force: None,
+            warning: None,
+            method_call_site: None,
             pcf_render: None,
             collection_join: None,
             collection_transform: None,

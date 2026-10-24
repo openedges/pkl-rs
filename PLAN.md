@@ -1369,6 +1369,19 @@ Java 동작을 확인했습니다. 후보의 evaluator 간 동작, close 뒤 새
 custom transformer의 원래 표준 모듈 URI는 미완료 범위로 유지합니다. 주 비교를
 새 프로세스·Wasm instance에서 실행해도 이 별도 수명주기 조건은 닫히지 않습니다.
 
+Java 기준선·검증 자료를 `33dea66`에 커밋·푸시하고 원격 `main`을 확인했습니다.
+검증 입력 34개의 바이트가 해당 커밋의 blob과 일치했습니다. 후속 경계 관찰
+11개 사례·22개 JVM에서는 close 뒤 deprecated inner 호출이 경고 전달 전에
+Java 내부 오류가 되는 반면 일반 inner 호출은 성공함을 확인했습니다.
+custom transformer는 원래 `pkl:ref`·`pkl:base` URI를 받습니다. 이는 기본
+transformer의 GitHub URI와 별도 계약이며 후보의 나머지 구현 의무로 남습니다.
+
+공통 런타임 18개 파일을 고정했고 경고 관련 Rust 검사 11개·영향받은 기존
+수명주기 검사 40개가 통과했습니다. 새 실제 플랫폼 회귀는 공통 결과 6,078개가
+세 환경에서 일치했고, Java 대비 환경별 6,076개 일치·기존 regex 실패 2개를
+유지합니다. Node·Chromium의 기존 시나리오도 각각 92개 통과했습니다.
+필수 workspace 검사와 경고 전용 세 환경 비교는 별도로 마감합니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

@@ -83,10 +83,19 @@ sequential evaluators are:
 Do not infer the initial cache occupancy from these counts. Candidate parity
 across evaluator instances remains an open M2 requirement. Fresh processes or
 Wasm instances for the main matrix do not verify that separate lifecycle.
-Further open boundaries include a new deprecated invocation reached after
-callback closure and the raw standard-library frame delivered to an arbitrary
-custom frame transformer. The default-transformer observations do not cover
-those boundaries.
+A separate boundary acquisition records 11 cases in 22 fresh JVM runs, with
+identical repetition bytes. When closing in an outer deprecated method's logger,
+a subsequent deprecated inner call produces a Java internal error before its
+warning reaches Logger. A plain inner method completes successfully; without
+closure, both deprecated calls warn and complete. These controls preserve the
+internal-error boundary rather than treating it as an ordinary guest exception.
+
+The boundary acquisition also confirms that a custom frame transformer receives
+raw `pkl:ref` or `pkl:base` URIs. Logger receives the frame returned by that
+transformer, while the default transformer produces the GitHub URLs above.
+Candidate custom-transformer parity for these standard-library frames remains
+unimplemented. The main matrix uses the default transformer and cannot establish
+this separate contract.
 
 ## Offline verification
 

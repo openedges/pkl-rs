@@ -234,6 +234,13 @@ The full gate must fail while required language implementations, mappings,
 adapters, or passing executions are missing. It cannot be replaced with the
 selected-case gate.
 
+The [method-deprecation contract](docs/m2-deprecation.md) records the pinned Java
+logger matrix and a separate experiment with sequential evaluators in one JVM.
+Its independent fixture verifier checks raw UTF-8, UTF-16, frame, and callback
+observations. Java internal failures and API exceptions remain nonpasses;
+evidence integrity does not establish candidate compatibility. Final candidate
+comparison and the separate evaluator-lifetime obligations remain in progress.
+
 The [standard-module and guest-catch contract](docs/m2-stdlib-bootstrap.md)
 records Java-origin catch, ModuleInfo, and typed security-denial fixtures, native
 consumers, and actual Node/browser comparisons. It distinguishes full ordered

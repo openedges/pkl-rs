@@ -143,7 +143,7 @@ fn indent(units: &[u16], output: &mut Vec<u16>) {
     }
 }
 
-fn source_frame(source: &RuntimeSource, span: Span) -> Result<LogFrame, RuntimeError> {
+pub(super) fn source_frame(source: &RuntimeSource, span: Span) -> Result<LogFrame, RuntimeError> {
     if span.start >= span.end || !source.text.is_char_boundary(span.end) {
         return Err(invalid("trace operand source span"));
     }
@@ -179,7 +179,11 @@ fn source_frame(source: &RuntimeSource, span: Span) -> Result<LogFrame, RuntimeE
         .get(start.line - 1..end.line)
         .ok_or_else(|| invalid("trace source lines"))?;
     Ok(LogFrame {
-        module_uri: source.uri.clone().into(),
+        module_uri: if source.line_anchors {
+            format!("{}#L{}", source.uri, start.line).into()
+        } else {
+            source.uri.clone().into()
+        },
         member_name: None,
         source_lines: lines.to_vec().into(),
         start_line: start.line,

@@ -1,6 +1,7 @@
 //! Shared Host and tracing regressions; Java byte comparisons are recorded separately.
 //! Retained module graphs include their builtin Module parent and source-backed
 //! stdlib annotations; transient objects and terminal-zero assertions stay separate.
+//! Exact executable bounds also include reached virtual method-call owners.
 #[path = "support/eager_base.rs"]
 mod eager_base;
 #[path = "support/module_policy.rs"]
@@ -151,8 +152,8 @@ fn suspended_rendering_preserves_reference_metadata_during_reentry_gc_and_retry(
     // are shared; transient access lists and custom-this slots are reclaimed.
     // The module-level Reference type already initialized ref during setup:
     // its module, two annotations and Access class belong to that baseline.
-    assert_eq!(initialized.added_values(session.collect(&[]), 1), 5);
-    assert_eq!(initialized.added_values(session.collect(&[]), 1), 5);
+    assert_eq!(initialized.added_values(session.collect(&[]), 4), 5);
+    assert_eq!(initialized.added_values(session.collect(&[]), 4), 5);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -190,8 +191,8 @@ fn domain_constraint_continuations_keep_reference_and_custom_this_through_gc() {
     // are shared; transient access lists and custom-this slots are reclaimed.
     // The eager Reference type's four ref bootstrap values are in the setup
     // baseline, while these constraint and value roots remain source-specific.
-    assert_eq!(initialized.added_values(session.collect(&[]), 4), 4);
-    assert_eq!(initialized.added_values(session.collect(&[]), 4), 4);
+    assert_eq!(initialized.added_values(session.collect(&[]), 7), 4);
+    assert_eq!(initialized.added_values(session.collect(&[]), 7), 4);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -306,8 +307,8 @@ fn equality_retains_pending_domain_and_data_comparisons_and_retries_only_failed_
     // are shared; transient access lists and custom-this slots are reclaimed.
     // This source has no module-level Reference type: its lazy Domain class
     // adds the authored ref import-site executable after setup.
-    assert_eq!(initialized.added_values(session.collect(&[]), 1), 15);
-    assert_eq!(initialized.added_values(session.collect(&[]), 1), 15);
+    assert_eq!(initialized.added_values(session.collect(&[]), 4), 15);
+    assert_eq!(initialized.added_values(session.collect(&[]), 4), 15);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);

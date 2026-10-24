@@ -197,7 +197,13 @@ fn query_hash_and_map_equality_resume_after_failed_reentry_without_losing_operan
         session.resume(&outer, Ok(Value::Null), 3).unwrap();
         assert_eq!(host_ready(&mut session, 3), Ok(Value::Null));
         // User values are reclaimed; the private base and exact executable graph remain.
-        assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+        assert_eq!(
+            initialized.added_values(
+                session.collect(&[]),
+                usize::from(expression.starts_with("map."))
+            ),
+            -1
+        );
         assert_eq!(
             session
                 .start(parent, vec![stale_module], 10, None)
@@ -536,7 +542,7 @@ child = map.getOrNull(a).p
             session.resume(&outer, Ok(Value::Null), 3).unwrap();
             assert_eq!(host_ready(&mut session, 3), Ok(Value::Null));
             // User values are reclaimed; the private base and exact executable graph remain.
-            assert_eq!(initialized.added_values(session.collect(&[]), 1), -1);
+            assert_eq!(initialized.added_values(session.collect(&[]), 2), -1);
             assert_eq!(
                 session
                     .start(parent, vec![stale_module], 10, None)

@@ -197,7 +197,13 @@ fn contains_query_and_comparison_operands_survive_failed_reentry_and_gc() {
         session.resume(&outer, Ok(Value::Null), 3).unwrap();
         assert_eq!(host_ready(&mut session, 3), Ok(Value::Null));
         // User values are reclaimed; the private base and exact executable graph remain.
-        assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+        assert_eq!(
+            initialized.added_values(
+                session.collect(&[]),
+                usize::from(expression == "set.contains(query)")
+            ),
+            -1
+        );
         assert_eq!(
             session
                 .start(parent, vec![stale_module], 10, None)
@@ -254,7 +260,7 @@ fn nested_set_hash_failure_retries_unpublished_builder_during_parent_reentry() {
     session.resume(&outer, Ok(Value::Null), 3).unwrap();
     assert_eq!(host_ready(&mut session, 3), Ok(Value::Null));
     // User values are reclaimed; the private base and exact executable graph remain.
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 1), -1);
     assert_eq!(
         session
             .start(parent, vec![stale_module], 10, None)
@@ -479,11 +485,12 @@ function again() = new Check {}.check(set)
         // The initial module has not forced Check or Items. Both paths retain
         // Check's class/prototype and the cached Set/Listing; only the Items
         // path also initializes its alias. Keep the exact executable bound
-        // separate from these five or four additional user values.
+        // separate from these five or four additional user values. The explicit
+        // check() call additionally owns its receiver-class cache.
         let (added_values, added_executables) = if check_type.starts_with("Items") {
-            (5, 7)
+            (5, 8)
         } else {
-            (4, 5)
+            (4, 6)
         };
         assert_eq!(
             initialized.added_values(stats, added_executables),

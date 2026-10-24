@@ -175,6 +175,8 @@ impl Vm {
             function_owner: None,
             amendment_arguments: None,
             amendment_end: None,
+            warning: None,
+            method_call_site: None,
             deep_force: Some(ForceRun {
                 pending_render_key: None,
                 pending_render_comparison: None,

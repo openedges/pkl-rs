@@ -1,0 +1,1255 @@
+{
+  "schema": 1,
+  "stage": 54,
+  "recorded_at": "2026-10-24T03:38:55.028748+00:00",
+  "kind": "bounded-implementation-and-local-evidence-checkpoint",
+  "status": "Local bounded implementation and evidence recorded; strict main comparison failed, whole M2 open, post-commit Git binding pending.",
+  "baseline": {
+    "version": "Pkl 0.32.0",
+    "pkl_revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "pantry_revision": "904a68184e54da378b0a0e8a911a3fab3956f693",
+    "oracle_artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "oracle_lock": {
+      "path": "oracle.lock.json",
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+      "bytes": 4421
+    },
+    "references_lock": {
+      "path": "references.lock",
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+      "bytes": 648
+    },
+    "references_updated": false
+  },
+  "provenance": {
+    "execution": "Local macOS evidence, not hosted CI",
+    "host": {
+      "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+      "uname": {
+        "system": "Darwin",
+        "node": "research-macmini1.local",
+        "release": "27.0.0",
+        "version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:27 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8103",
+        "machine": "arm64",
+        "processor": "arm"
+      }
+    },
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54",
+    "current_reference_commit": "33dea66a304c32b77615acd49d44f201bd20c4bd",
+    "implementation_commit": null,
+    "post_commit_git_binding": "pending; requires actual implementation commit and separate closeout evidence",
+    "python": {
+      "executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "version": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+      "sha256": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+    },
+    "rust_toolchain": "1.98.1",
+    "java": {
+      "executable": "/usr/bin/java",
+      "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+      "runtime_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+      "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+      "properties": {
+        "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+        "java.runtime.version": "21.0.12.1+1-LTS",
+        "java.vendor": "Eclipse Adoptium",
+        "java.version": "21.0.12.1",
+        "java.vm.name": "OpenJDK 64-Bit Server VM",
+        "java.vm.version": "21.0.12.1+1-LTS",
+        "os.arch": "aarch64",
+        "os.name": "Mac OS X",
+        "os.version": "27.0"
+      }
+    },
+    "node": {
+      "executable": "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+      "version": "v26.10.0",
+      "versions": {
+        "node": "26.10.0",
+        "acorn": "8.18.0",
+        "ada": "4.0.0",
+        "amaro": "1.1.11",
+        "ares": "1.34.8",
+        "brotli": "1.2.0",
+        "cldr": "48.0",
+        "icu": "78.3",
+        "libffi": "3.8.0",
+        "llhttp": "9.4.3",
+        "merve": "1.2.2",
+        "modules": "147",
+        "napi": "10",
+        "nbytes": "0.1.4",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.70.0",
+        "nghttp3": "",
+        "ngtcp2": "",
+        "openssl": "3.6.5",
+        "simdjson": "4.6.11",
+        "simdutf": "9.2.1",
+        "sqlite": "3.53.4",
+        "tz": "2026a",
+        "undici": "8.10.2",
+        "unicode": "17.0",
+        "uv": "1.53.0",
+        "uvwasi": "0.0.23",
+        "v8": "14.6.202.34-node.35",
+        "zlib": "1.2.12",
+        "zstd": "1.5.7"
+      }
+    },
+    "chromium": {
+      "version": "156.0.8078.4",
+      "executable": "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+      "sha256": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef"
+    },
+    "playwright_pin": "1.64.1",
+    "source_freeze": {
+      "manifest": {
+        "path": "target/m2/stage54-adapter-recheck-01/sources.json",
+        "sha256": "b58205fa27b06c9de0d6afb3508d554a606a680245454824af72d2471bf0aa02",
+        "bytes": 618047
+      },
+      "files": 4577,
+      "changed_sources": [],
+      "prior_manifest": {
+        "path": "target/m2/stage54-validation-02/sources.json",
+        "sha256": "a5acdd5e265c09f0968b703a2c62072dfbc0c0045b7ea8ab0932bc6a6a5b4e0f",
+        "bytes": 618047
+      },
+      "reuse_proof": {
+        "path": "target/m2/stage54-adapter-recheck-01/artifact-reuse.json",
+        "sha256": "60b4be3bbb528a8249b5dd59cc4247a8f1c8ba519da6915775a5a9c4a8e766d1",
+        "bytes": 1485
+      },
+      "only_changes_since_native_build": [
+        "tools/platform/deprecation-session.mjs",
+        "tools/platform/deprecation-session.test.mjs"
+      ]
+    },
+    "comparison_source_catalog": {
+      "manifest": {
+        "path": "target/m2/stage54-deprecation-final-02/source-catalog.json",
+        "sha256": "5b21a4650b9809506188ff72488598263c4f51811a671530ded6c1a265c42a16",
+        "bytes": 311186
+      },
+      "files": 4476,
+      "all_captured_sources_match_final_full_freeze": true,
+      "benchmark_py_included": false
+    },
+    "full_source_freeze_includes_benchmark_py": false,
+    "native_build_binding": {
+      "report": {
+        "path": "target/m2/stage54-validation-02/report.json",
+        "sha256": "9f58ceaabc6af641d9a3009939c77a02584f11c5344e5af49a121a55deed0957",
+        "bytes": 5349
+      },
+      "build_command": {
+        "name": "native-build",
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "deprecation_fixture_probe",
+          "--release",
+          "--locked"
+        ],
+        "started_utc": "2026-10-24T02:57:47.772773+00:00",
+        "pid": 58282,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T02:57:48.041522+00:00",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "1ff8bbcb4151dc887e69b78a29bc241d5062cba4757aa5f4639926ae712a8181",
+        "stdout": {
+          "path": "target/m2/stage54-validation-02/native-build.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "path": "target/m2/stage54-validation-02/native-build.stderr.bin",
+          "sha256": "1ff8bbcb4151dc887e69b78a29bc241d5062cba4757aa5f4639926ae712a8181",
+          "bytes": 62
+        }
+      },
+      "artifact": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/release/examples/deprecation_fixture_probe",
+        "sha256": "733e5ec8e5e9090bc75f0f5dd6d8998c3c0c5d259954eb6a3bb31bb5a8bbcfd4",
+        "bytes": 3934592
+      },
+      "scope": "Recorded native build under the prior 4577-file freeze; the later two JS-only changes are explicitly accounted for by the reuse proof. The comparator itself claims supplied artifacts, not a recorded build."
+    }
+  },
+  "implementation": {
+    "scope": "Method deprecation metadata and source-aware warning bindings in the shared VM/heap/Host and native/Wasm/N-API transports.",
+    "changes": [
+      "Preserve the first exact Deprecated message, lazy forcing and declaration/type initialization order.",
+      "Share lexical, virtual, super and implicit-base call preparation and Warn delivery through the common Host continuation.",
+      "Retain executable-owner/site state across calls, closures and real code clones; count actual receiver classes, including nondeprecated/builtin calls, before the indirect transition.",
+      "Publish warning bindings only after acknowledgement, preserving rejected callbacks, retry, reentry, expected-head CAS/ABA behavior and traced receiver/declaration roots.",
+      "Carry authored Typed interpolation/public stringify and Reference/FileOutput/ModuleOutput callback sites through the same prepared-call path.",
+      "Preserve UTF-16 messages, nullable member identity, inclusive source coordinates, source lines and default stdlib frame display identities.",
+      "Validate supplied-text module-key ownership in the JS capture adapter without changing the engine or frozen candidate artifacts."
+    ],
+    "core_freeze": {
+      "path": "target/m2/stage54-core-checks-01/core-freeze.json",
+      "sha256": "642012100ff062e7651d677d6799baca630b3d8f5e5ea92e68d24b5fb4029fa3",
+      "bytes": 2935
+    },
+    "core_files": 18,
+    "source_names_and_warning_counts_are_not_language_completion_metrics": true
+  },
+  "main_raw_comparison": {
+    "report": {
+      "path": "target/m2/stage54-deprecation-final-02/report.json",
+      "sha256": "6e71e18f3744cbf8602e540a1d7d0c106b068446d44e60c08dac7454b0988649",
+      "bytes": 8244866
+    },
+    "wrapper_report": {
+      "path": "target/m2/stage54-comparison-run-02/report.json",
+      "sha256": "cb64ad36212350d0f5a67e49fc403eb9b1224b3a898b5f66f8756a7b471e2e54",
+      "bytes": 3279
+    },
+    "sessions": 56,
+    "repetitions": 2,
+    "targets": [
+      "native",
+      "napi",
+      "chromium"
+    ],
+    "raw_execution_rows": 336,
+    "status_counts": {
+      "pass": 306,
+      "oracle-error": 30
+    },
+    "per_target": {
+      "native": {
+        "rows": 112,
+        "statuses": {
+          "pass": 102,
+          "oracle-error": 10
+        }
+      },
+      "napi": {
+        "rows": 112,
+        "statuses": {
+          "pass": 102,
+          "oracle-error": 10
+        }
+      },
+      "chromium": {
+        "rows": 112,
+        "statuses": {
+          "pass": 102,
+          "oracle-error": 10
+        }
+      }
+    },
+    "strict_main_comparison_passed": false,
+    "record_only_and_integrity_exit_codes": [
+      0,
+      0
+    ],
+    "strict_verify_full_exit_code": 1,
+    "preserved_nonpass_cases": [
+      "closed-throw-once",
+      "open-throw-once",
+      "super-throw-once",
+      "logger-close",
+      "logger-close-reenter"
+    ],
+    "java_reference": {
+      "sessions": 56,
+      "java_processes": 112,
+      "repeated_raw_equal": 56,
+      "public_calls": 310,
+      "warning_callbacks": 158,
+      "trace_callbacks": 118,
+      "oracle_error_calls": 10,
+      "supplemental_cycles": {
+        "sessions": 6,
+        "java_processes": 12,
+        "evaluator_instances": 48,
+        "repeated_raw_equal": 6,
+        "public_calls": 96,
+        "warning_callbacks": 38,
+        "compatibility_passes_claimed": 0
+      },
+      "compatibility_passes_claimed": 0
+    },
+    "comparison_boundary": {
+      "compared": "Every public payload .bin file and complete ordered protocol bytes, including Java UTF-8 and UTF-16, with exact filename coverage.",
+      "java_provenance": "Only Java *.error-class.bin files are producer provenance; no Java exception classes are synthesized by candidates.",
+      "candidate_provenance": "Only per-call disposition/phase/reason/api-error-kind .bin files are candidate metadata; N-API process.stdout.bin/process.stderr.bin are separate process provenance. Trace and process captures remain separate evidence.",
+      "nonpasses": "Java oracle-error and API-exception observations remain nonpasses even when their compared bytes agree. Candidate unsupported, limits, internal failures and missing captures never pass.",
+      "cycles": "Supplemental same-JVM evaluator cycles are independently verified Java authority but are not executed by this main comparison. Their parity remains a separate M2 obligation."
+    },
+    "source_changes": [],
+    "artifact_changes": [],
+    "infrastructure_errors": [],
+    "actual_isolation": {
+      "native": "112 recorded fresh native process invocations",
+      "napi": "112 recorded successful Node child invocations, fresh spawnSync per captured driver; child argv/runtime identities verified; OS PIDs not recorded in child metadata",
+      "chromium": "112 new browser contexts/pages/Wasm instances within one headless browser launch; not112 independent browser OS processes",
+      "node": {
+        "executable": "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+        "version": "v26.10.0",
+        "versions": {
+          "node": "26.10.0",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.8",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "libffi": "3.8.0",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "147",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.6.5",
+          "simdjson": "4.6.11",
+          "simdutf": "9.2.1",
+          "sqlite": "3.53.4",
+          "tz": "2026a",
+          "undici": "8.10.2",
+          "unicode": "17.0",
+          "uv": "1.53.0",
+          "uvwasi": "0.0.23",
+          "v8": "14.6.202.34-node.35",
+          "zlib": "1.2.12",
+          "zstd": "1.5.7"
+        }
+      },
+      "browser": {
+        "version": "156.0.8078.4",
+        "executable": "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+        "sha256": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef"
+      },
+      "playwright": "1.64.1",
+      "browser_launch_options_from_captured_source": {
+        "headless": true
+      }
+    },
+    "nonpass_scope": "Thirty rows retain real Java internal-error/API lifecycle observations. Candidate error/status/protocol differences remain recorded, including six Java API-exception calls per reference matrix. Java exception class names are producer provenance and are not synthesized by candidates.",
+    "candidate_artifacts": {
+      "native": {
+        "sha256": "733e5ec8e5e9090bc75f0f5dd6d8998c3c0c5d259954eb6a3bb31bb5a8bbcfd4",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/release/examples/deprecation_fixture_probe",
+        "frozen": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-deprecation-final-02/artifacts/deprecation_fixture_probe"
+      },
+      "wasm/pkl_wasm.d.ts": {
+        "sha256": "946cefb176d233adc7a972680105834c353b99d847d0d70b3cfe3b56d878c68a",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-platforms-01/wasm/pkl_wasm.d.ts",
+        "frozen": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-deprecation-final-02/artifacts/wasm/pkl_wasm.d.ts"
+      },
+      "wasm/pkl_wasm.js": {
+        "sha256": "cf7bef7a717c2c3da60a49645b2deb3af721de15d8843321238f4f79804a9df9",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-platforms-01/wasm/pkl_wasm.js",
+        "frozen": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-deprecation-final-02/artifacts/wasm/pkl_wasm.js"
+      },
+      "wasm/pkl_wasm_bg.wasm": {
+        "sha256": "2dab993a7580bbb5cda43bf7797bd664134d21974fc20cfabc9e30e256861e48",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-platforms-01/wasm/pkl_wasm_bg.wasm",
+        "frozen": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-deprecation-final-02/artifacts/wasm/pkl_wasm_bg.wasm"
+      },
+      "wasm/pkl_wasm_bg.wasm.d.ts": {
+        "sha256": "ebc113ff7ecd9f6b8551c3df2c8fed2ee97353d2541d8b5ec4b6e663f5d54ff6",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-platforms-01/wasm/pkl_wasm_bg.wasm.d.ts",
+        "frozen": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-deprecation-final-02/artifacts/wasm/pkl_wasm_bg.wasm.d.ts"
+      },
+      "napi": {
+        "sha256": "9162388c9e2ee1186e352d86d523052eec996ea30185be47065b0d99aedab765",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-platforms-01/pkl_napi.node",
+        "frozen": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-deprecation-final-02/artifacts/deprecation.node"
+      }
+    }
+  },
+  "original_eight_cli": {
+    "report": {
+      "path": "target/m2/stage54-original-deprecation-01/report.json",
+      "sha256": "d4d10f6f9a6bee2c005744db6be7fea0ca60f5e8d257611adb6962b2d5f9a1ad",
+      "bytes": 1181908
+    },
+    "audit": {
+      "path": "target/m2/stage54-original-deprecation-audit-01/audit.json",
+      "sha256": "8f434643c72abadcacd8b0be89cba1683f6713e44429c6032de3bd7d616f5e5a",
+      "bytes": 55902
+    },
+    "status_counts": {
+      "pass": 8
+    },
+    "case_ids": [
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/annotation/deprecated1.pkl",
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/annotation/deprecated2.pkl",
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/annotation/deprecated3.pkl",
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/annotation/deprecatedNoRepeatedWarnings.pkl",
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/annotation/deprecatedWithMessage1.pkl",
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/annotation/deprecatedWithMessage2.pkl",
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/annotation/deprecatedWithMessage3.pkl",
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/annotation/deprecationSuperMethod.pkl"
+    ],
+    "actual_guest_processes": {
+      "java": 8,
+      "rust": 8
+    },
+    "guest_repetitions_per_runtime_per_case": 1,
+    "integrity_verifications_per_case": 2,
+    "comparison": "Exact original argv, cwd, controlled environment, source/resource identities, raw stdout/stderr/exit, public file bytes and workspace transitions in one managed physical workspace.",
+    "workspace_profile": {
+      "profile": "upstream-original-modules-v1",
+      "project_fixtures": "exclude",
+      "retained_sources": [
+        {
+          "path": "external/pkl",
+          "repository": "pkl",
+          "resource_set_sha256": "caaece316d09ffdce01e29871c8accbcf2783b1d1557b515ca7f117f1eaaf3c2",
+          "revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+        },
+        {
+          "path": "external/pkl-pantry",
+          "repository": "pkl-pantry",
+          "resource_set_sha256": "ce8902c934fb21aea92bdfad78edb3194863f90b30c73585e84b8c6363518ab0",
+          "revision": "904a68184e54da378b0a0e8a911a3fab3956f693"
+        }
+      ],
+      "schema_version": 1
+    },
+    "build_artifact": {
+      "build": {
+        "argv": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--locked",
+          "--release",
+          "--example",
+          "module_eval_probe",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54",
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T02:59:42.511889+00:00",
+        "name": "build",
+        "started_utc": "2026-10-24T02:59:09.017611+00:00",
+        "stderr_sha256": "53e7f86012b20e4606edf587c36b109b4aaf80ea2d064645f9ba81f9cdad2e49",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false,
+        "timeout_seconds": 1200
+      },
+      "frozen_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-original-deprecation-01/artifacts/module_eval_probe",
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/release/examples/module_eval_probe",
+      "sha256": "65e24342f5c15057fcf8885b7da07018f8d24f374183c9e842fc7576c54d3b0c",
+      "source_binding": "recorded-build"
+    },
+    "no_extra_guest_repetitions_claimed": "Two verification passes and Java identity/version probes are not additional CLI guest repetitions.",
+    "scope": "Only the eight original annotation CLI cases; full language and API compatibility remain open."
+  },
+  "required_rust_checks": {
+    "report": {
+      "path": "target/m2/stage54-rust-validation-01/report.json",
+      "sha256": "99e2abc077adb1da12005d7a51981067264bdc2589362643bd029a1083c188e8",
+      "bytes": 3118
+    },
+    "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "commands": [
+      {
+        "name": "references",
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "started_utc": "2026-10-24T02:44:25.478390+00:00",
+        "pid": 51705,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T02:44:27.786828+00:00",
+        "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+        "stderr_sha256": "02f3235d699965541f423442daa80958a2e24210ad2adf4d21001275141b3202",
+        "stdout": {
+          "path": "target/m2/stage54-rust-validation-01/references.stdout.bin",
+          "sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+          "bytes": 40
+        },
+        "stderr": {
+          "path": "target/m2/stage54-rust-validation-01/references.stderr.bin",
+          "sha256": "02f3235d699965541f423442daa80958a2e24210ad2adf4d21001275141b3202",
+          "bytes": 192
+        }
+      },
+      {
+        "name": "format",
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "started_utc": "2026-10-24T02:44:27.787905+00:00",
+        "pid": 51737,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T02:44:28.912164+00:00",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": {
+          "path": "target/m2/stage54-rust-validation-01/format.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "path": "target/m2/stage54-rust-validation-01/format.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "started_utc": "2026-10-24T02:44:28.913101+00:00",
+        "pid": 51741,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T02:44:38.522611+00:00",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "4735bbf9102844d7baf71b4c37e6c3fe546c110f43393b62a75261067a8e6c77",
+        "stdout": {
+          "path": "target/m2/stage54-rust-validation-01/clippy.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "path": "target/m2/stage54-rust-validation-01/clippy.stderr.bin",
+          "sha256": "4735bbf9102844d7baf71b4c37e6c3fe546c110f43393b62a75261067a8e6c77",
+          "bytes": 1280
+        }
+      },
+      {
+        "name": "workspace-tests",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "started_utc": "2026-10-24T02:44:38.524385+00:00",
+        "pid": 51925,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T02:48:05.632322+00:00",
+        "stdout_sha256": "9280ca1ae2f765268d4b38b788ed7b9e9692e320fd98f9ff7b6ed5d1d94a8293",
+        "stderr_sha256": "8c9b7626ee4fbf4c196f76f61db89a6b6d6efa53c4bb0cd197708db09df1e4d1",
+        "stdout": {
+          "path": "target/m2/stage54-rust-validation-01/workspace-tests.stdout.bin",
+          "sha256": "9280ca1ae2f765268d4b38b788ed7b9e9692e320fd98f9ff7b6ed5d1d94a8293",
+          "bytes": 98284
+        },
+        "stderr": {
+          "path": "target/m2/stage54-rust-validation-01/workspace-tests.stderr.bin",
+          "sha256": "8c9b7626ee4fbf4c196f76f61db89a6b6d6efa53c4bb0cd197708db09df1e4d1",
+          "bytes": 12332
+        }
+      },
+      {
+        "name": "wasm-runtime",
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "started_utc": "2026-10-24T02:48:05.641189+00:00",
+        "pid": 54464,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T02:48:12.343232+00:00",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "8b01c859704047910fc761e2690f0aef2d3b91c8be4f324b52dfc5042e0ed6ce",
+        "stdout": {
+          "path": "target/m2/stage54-rust-validation-01/wasm-runtime.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "path": "target/m2/stage54-rust-validation-01/wasm-runtime.stderr.bin",
+          "sha256": "8b01c859704047910fc761e2690f0aef2d3b91c8be4f324b52dfc5042e0ed6ce",
+          "bytes": 382
+        }
+      }
+    ],
+    "all_five_exit_zero": true,
+    "workspace_test_summary": {
+      "passed": 884,
+      "failed": 0,
+      "ignored": 1,
+      "raw_summary_lines": 126
+    },
+    "ignored_is_not_a_pass": true,
+    "source_manifest": {
+      "path": "target/m2/stage54-rust-validation-01/sources.json",
+      "sha256": "fdc8e3fba7307ba6a239a3c0f5369f23da8b85a275c1d0fa7349705610228ed2",
+      "bytes": 32522295
+    },
+    "captured_source_payload_files": 162919,
+    "changed_sources": [],
+    "publication_omission": {
+      "files": 162919,
+      "local_preserved_path": "target/m2/stage54-rust-validation-01/sources/",
+      "published_evidence": "Full path/hash manifest and raw command logs are in the validation v2 archive; source payloads are omitted from that archive, not deleted locally.",
+      "source_manifest_sha256": "fdc8e3fba7307ba6a239a3c0f5369f23da8b85a275c1d0fa7349705610228ed2",
+      "reconstruction_git_binding": "pending separate actual-implementation-commit verification; not established by this precommit checkpoint."
+    }
+  },
+  "tooling_and_freshness": {
+    "report": {
+      "path": "target/m2/stage54-validation-02/report.json",
+      "sha256": "9f58ceaabc6af641d9a3009939c77a02584f11c5344e5af49a121a55deed0957",
+      "bytes": 5349
+    },
+    "commands": [
+      {
+        "name": "native-build",
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "deprecation_fixture_probe",
+          "--release",
+          "--locked"
+        ],
+        "started_utc": "2026-10-24T02:57:47.772773+00:00",
+        "pid": 58282,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T02:57:48.041522+00:00",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "1ff8bbcb4151dc887e69b78a29bc241d5062cba4757aa5f4639926ae712a8181",
+        "stdout": {
+          "path": "target/m2/stage54-validation-02/native-build.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "path": "target/m2/stage54-validation-02/native-build.stderr.bin",
+          "sha256": "1ff8bbcb4151dc887e69b78a29bc241d5062cba4757aa5f4639926ae712a8181",
+          "bytes": 62
+        }
+      },
+      {
+        "name": "m2-freshness",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "started_utc": "2026-10-24T02:57:48.046012+00:00",
+        "pid": 58283,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T02:57:53.675834+00:00",
+        "stdout_sha256": "9eb043eed64a997a50c295ceaeaf22c94a1f9b4076d0e809c793460b394260e3",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": {
+          "path": "target/m2/stage54-validation-02/m2-freshness.stdout.bin",
+          "sha256": "9eb043eed64a997a50c295ceaeaf22c94a1f9b4076d0e809c793460b394260e3",
+          "bytes": 231
+        },
+        "stderr": {
+          "path": "target/m2/stage54-validation-02/m2-freshness.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      {
+        "name": "source-inventory",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/inventory.py",
+          "--check"
+        ],
+        "started_utc": "2026-10-24T02:57:53.676739+00:00",
+        "pid": 58329,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T02:57:56.881738+00:00",
+        "stdout_sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": {
+          "path": "target/m2/stage54-validation-02/source-inventory.stdout.bin",
+          "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b",
+          "bytes": 926
+        },
+        "stderr": {
+          "path": "target/m2/stage54-validation-02/source-inventory.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      {
+        "name": "module-registry",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_module_eval.py",
+          "--check"
+        ],
+        "started_utc": "2026-10-24T02:57:56.882546+00:00",
+        "pid": 58335,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T02:57:57.489588+00:00",
+        "stdout_sha256": "4c1d0acc701c3bab7140a1496e1877763a88b5c75c2f352ab2150f410bfb146f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": {
+          "path": "target/m2/stage54-validation-02/module-registry.stdout.bin",
+          "sha256": "4c1d0acc701c3bab7140a1496e1877763a88b5c75c2f352ab2150f410bfb146f",
+          "bytes": 43
+        },
+        "stderr": {
+          "path": "target/m2/stage54-validation-02/module-registry.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      {
+        "name": "fixture",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/deprecation_fixtures.py"
+        ],
+        "started_utc": "2026-10-24T02:57:57.490425+00:00",
+        "pid": 58337,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T02:58:06.936977+00:00",
+        "stdout_sha256": "4e53594b24b0ab419e907948d94b2693a8da40efc9de72fa091323352a86ff70",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": {
+          "path": "target/m2/stage54-validation-02/fixture.stdout.bin",
+          "sha256": "4e53594b24b0ab419e907948d94b2693a8da40efc9de72fa091323352a86ff70",
+          "bytes": 392
+        },
+        "stderr": {
+          "path": "target/m2/stage54-validation-02/fixture.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      {
+        "name": "m2-tooling",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-p",
+          "test_m2_*.py"
+        ],
+        "started_utc": "2026-10-24T02:58:06.937876+00:00",
+        "pid": 58400,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T03:01:44.632094+00:00",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "ac83f246ec9763d03a5776cccaee7fe21c1064d9745282e83045c278a8b96fa4",
+        "stdout": {
+          "path": "target/m2/stage54-validation-02/m2-tooling.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "path": "target/m2/stage54-validation-02/m2-tooling.stderr.bin",
+          "sha256": "ac83f246ec9763d03a5776cccaee7fe21c1064d9745282e83045c278a8b96fa4",
+          "bytes": 267
+        }
+      },
+      {
+        "name": "deprecation-tooling",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-p",
+          "test_deprecation_*.py"
+        ],
+        "started_utc": "2026-10-24T03:01:44.633915+00:00",
+        "pid": 59927,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T03:02:28.680116+00:00",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "917b60092cabe5eec13e2d5ea3c103d52d5ca7439f437b20356fbc67b96d942c",
+        "stdout": {
+          "path": "target/m2/stage54-validation-02/deprecation-tooling.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "path": "target/m2/stage54-validation-02/deprecation-tooling.stderr.bin",
+          "sha256": "917b60092cabe5eec13e2d5ea3c103d52d5ca7439f437b20356fbc67b96d942c",
+          "bytes": 144
+        }
+      },
+      {
+        "name": "portable-transport-tests",
+        "command": [
+          "node",
+          "--test",
+          "tools/platform/deprecation-session.test.mjs",
+          "tools/platform/capture-deprecation.test.mjs"
+        ],
+        "started_utc": "2026-10-24T03:02:28.681485+00:00",
+        "pid": 60171,
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T03:02:29.922863+00:00",
+        "stdout_sha256": "252707be412b6813598eea1ae39c4167d1f272dbc9790afa8e4a143b49f3da84",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": {
+          "path": "target/m2/stage54-validation-02/portable-transport-tests.stdout.bin",
+          "sha256": "252707be412b6813598eea1ae39c4167d1f272dbc9790afa8e4a143b49f3da84",
+          "bytes": 1148
+        },
+        "stderr": {
+          "path": "target/m2/stage54-validation-02/portable-transport-tests.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    ],
+    "python_m2_tests": 165,
+    "python_deprecation_tests": 44,
+    "python_test_failures": 0,
+    "portable_transport_before_adapter_fix": {
+      "passed": 12,
+      "report": {
+        "path": "target/m2/stage54-validation-02/report.json",
+        "sha256": "9f58ceaabc6af641d9a3009939c77a02584f11c5344e5af49a121a55deed0957",
+        "bytes": 5349
+      }
+    },
+    "portable_transport_after_adapter_fix": {
+      "passed": 13,
+      "report": {
+        "path": "target/m2/stage54-adapter-recheck-01/report.json",
+        "sha256": "ec59216527378a3fc6cb6187738a1888d807c5318594d8a826afcee885869361",
+        "bytes": 941
+      }
+    },
+    "source_inventory": "Freshness check passed; inventories are accounting, not language test coverage.",
+    "inventory_preservation": {
+      "path": "target/m2/stage54-validation-02/inventory-preservation.json",
+      "sha256": "21d05a26521e3d3f4cee8121eb510159ce7c7d07bb4117612c1ffafbebc45867",
+      "bytes": 29701
+    }
+  },
+  "M1_shared_primitive_experiment": {
+    "report": {
+      "path": "target/m2/stage54-platforms-01/report.json",
+      "sha256": "ec9f51b7c511631d688969488603054102a0736f27ee019d5e5a5ed6b5154bc7",
+      "bytes": 3385900
+    },
+    "shared_engine_matches": 6078,
+    "java_matches_per_target": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "known_failed_regex_cases": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "strict_compatibility_status": "fail",
+    "architecture_experiment_contract_status": "pass",
+    "actual_platforms": "Native Rust, real Node N-API and headless Chromium Wasm on the recorded macOS host.",
+    "compiled_source_records": 209,
+    "artifact_reuse": {
+      "report": "target/m2/stage54-platforms-01/report.json",
+      "report_sha256": "ec9f51b7c511631d688969488603054102a0736f27ee019d5e5a5ed6b5154bc7",
+      "artifact_reuse_record_sha256": "60b4be3bbb528a8249b5dd59cc4247a8f1c8ba519da6915775a5a9c4a8e766d1",
+      "captured_source_files": 209,
+      "current_non_engine_differences": [
+        "tools/platform/deprecation-session.mjs",
+        "tools/platform/deprecation-session.test.mjs"
+      ],
+      "compatibility_status": "fail",
+      "experiment_contract_status": "pass",
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "scope": "Bounded shared-primitive/architecture experiment, not complete product API compatibility or a performance result."
+  },
+  "independent_audits": [
+    {
+      "record": {
+        "path": "target/m2/stage54-semantics-review-01/final-core-review.json",
+        "sha256": "77dae1853366e5194891098f2605691290baf3692d3b2bf28a7fed987cdcd35d",
+        "bytes": 670
+      },
+      "scope": "Static review of eighteen frozen core files; no reviewer Rust or candidate executions."
+    },
+    {
+      "record": {
+        "path": "target/m2/stage54-comparator-review-01/final-review.json",
+        "sha256": "d349b39b3da4150bfbd977573f25751c82460be70ca497ae3d78d0a720835945",
+        "bytes": 2839
+      },
+      "scope": "Independent comparator/source review and 34 synthetic tooling tests; no Pkl compatibility execution."
+    },
+    {
+      "record": {
+        "path": "target/m2/stage54-js-key-wrapper-review-01/review.json",
+        "sha256": "2a4a6e20df255b0f4cefba3db91b6d6d16e06e56f61a1e2c0d37341801b9d305",
+        "bytes": 4645
+      },
+      "scope": "JS ownership/routing review and actual transport tests; final three-target matrix is separate."
+    },
+    {
+      "record": {
+        "path": "target/m2/stage54-original-deprecation-audit-01/audit.json",
+        "sha256": "8f434643c72abadcacd8b0be89cba1683f6713e44429c6032de3bd7d616f5e5a",
+        "bytes": 55902
+      },
+      "scope": "Read-only audit of all eight original raw CLI pairs, artifacts, inputs and workspace; no new guest evaluation."
+    },
+    {
+      "record": {
+        "path": "target/m2/stage54-original-deprecation-audit-01/oracle-contract-audit.json",
+        "sha256": "2b38408a14bcd180c2015a6a3fd0dc588b540537aa6fe8b5a744f889623025f9",
+        "bytes": 1339
+      },
+      "scope": "Pinned oracle JVM argv and full deterministic environment checked without starting Java."
+    },
+    {
+      "record": {
+        "path": "target/m2/stage54-final02-audit-01/audit.json",
+        "sha256": "28cfb662c2fcbf2ffb5379500b5e34fbc9bc269ef19549905c880fb5016a6b21",
+        "bytes": 4942359
+      },
+      "scope": "Independent audit of all 336 final02 raw rows, source and artifact identities, memory/depth cleanup and explicit nonpasses; no new guest execution."
+    },
+    {
+      "record": {
+        "path": "target/m2/stage54-final02-audit-01/relocation-02-audit.json",
+        "sha256": "59a37917648a0e22a386769c14125cb6ffbf502d611ba5ffb3c601cb4a31991f",
+        "bytes": 9020
+      },
+      "scope": "Read-only relocated offline verify-report; no actual candidate/Java/Node/browser execution. Original project/JDK/Node/browser paths denied by Python I/O guards and all subprocess creation denied.",
+      "copy_unchanged": true,
+      "direct_captured_tools_result": "Missing benchmark import dependency, preserved as failed packaging admission.",
+      "with_dependency_result": "Offline evidence integrity verified; strict matrix remains failed.",
+      "strict_main_comparison_passed": false
+    },
+    {
+      "record": {
+        "path": "target/m2/stage54-publication-review-01/audit.json",
+        "sha256": "89084c7d1a46598fa382205f435340c304c67eaa3702e27d43de58d57accc772",
+        "bytes": 5758
+      },
+      "scope": "Original streaming archive/source review; its v1 README defect is historical and preserved."
+    },
+    {
+      "record": {
+        "path": "target/m2/stage54-publication-review-02/audit.json",
+        "sha256": "0d8c1ae99d9ca9037fcf342cc19bcdd1b9bf1280722c733cae0a394c92831695",
+        "bytes": 905
+      },
+      "scope": "Publication v2 streaming audit: only readable README changed; all other 9323 payloads and source/execution evidence remain identical."
+    }
+  ],
+  "verification_tools_supplement": {
+    "catalog_4476_did_not_capture_benchmark_py": true,
+    "full_freeze_4577_did_not_capture_benchmark_py": true,
+    "packaging_admission_failure_preserved": "Missing benchmark import dependency, preserved as failed packaging admission.",
+    "published_archive": "reports/m2/stage54-validation-review-evidence-v2.tar.gz",
+    "member": "verification-tools/benchmark.py",
+    "sha256": "a3822a1702abf7a6a385b1d8173d45e3ba941b5fb7e80cb66a0b86adf1681604",
+    "bytes": 33908,
+    "provenance_member": "verification-tools/PROVENANCE.json",
+    "provenance_sha256": "ca0d71fbfd5ab879526ed3f14ef0e2292be1beedcc7d59ee4159c146cb1219c2",
+    "provenance": {
+      "scope": "Additional transitive verifier import, absent from the candidate source catalog; supplied exactly from the independently pinned Java authority, not reconstructed from candidate outputs",
+      "authority": "tests/fixtures/m2-deprecation/oracle-evidence.tar.gz",
+      "authority_sha256": "e0e78f3f55c680ae4a37620dd3355f9efd6158d4f0ba141852c8825070de2fae",
+      "member": "main/sources/tools/benchmark.py",
+      "sha256": "a3822a1702abf7a6a385b1d8173d45e3ba941b5fb7e80cb66a0b86adf1681604",
+      "bytes": 33908
+    },
+    "exact_bytes_match_independent_fixture_member": true,
+    "offline_usage": "Add extracted verification-tools to PYTHONPATH and run the captured comparator with Python -B --verify-report; original project/JDK/Node/browser paths and subprocess creation were denied in the successful relocated audit.",
+    "integrity_does_not_mean_strict_compatibility": true,
+    "performance_benchmark_executed": false
+  },
+  "published_evidence_archives": [
+    {
+      "kind": "candidate-and-original-contract-evidence",
+      "path": "reports/m2/stage54-candidate-evidence.tar.gz",
+      "sha256": "2982fcc37f9936a39894a11dca220ae0b23a687bec38691eebbd4b95dd64bdb6",
+      "bytes": 49311270,
+      "publication_report": {
+        "path": "target/m2/stage54-candidate-publication-01/report.json",
+        "sha256": "95eb25f294a08490272b03a3e3d05130e77c77bc5d828d8980fd6d2724ce1ccf",
+        "bytes": 338
+      },
+      "payload_files": 59522,
+      "manifest_sha256": "3f0391de8326394a8f5f86c6e9d6973a726018f746c144e5d61060ceefe7464d",
+      "re_read_verified": true
+    },
+    {
+      "kind": "Java-historical-and-boundary-evidence",
+      "path": "reports/m2/stage54-java-history-evidence.tar.gz",
+      "sha256": "531067f15fb99d18c98803ec35220675ef52b5f570b3af690b191f87bb556b38",
+      "bytes": 1302707,
+      "publication_report": {
+        "path": "target/m2/stage54-java-history-publication-01/report.json",
+        "sha256": "8391f41b12bd9658eadd038441ec39e1b6b253cf52d506812a6a1dd5e08d336f",
+        "bytes": 792
+      },
+      "payload_files": 13779,
+      "manifest_sha256": "3a7b07f0480b70062e6c5beface486a91d7e512688ecb68e491655d743b0b160",
+      "re_read_verified": true
+    },
+    {
+      "kind": "validation-review-and-offline-verifier-evidence-v2",
+      "path": "reports/m2/stage54-validation-review-evidence-v2.tar.gz",
+      "sha256": "3cfad66335476b2a0ba9b6c154d8f46fbb5f8794a209288536eca58c5fc88ce4",
+      "bytes": 12629523,
+      "publication_report": {
+        "path": "target/m2/stage54-validation-publication-02/report.json",
+        "sha256": "d4f89e57060ee71c51647ef01c3006abe23171b268421629678e1f3d37dcfc90",
+        "bytes": 933
+      },
+      "payload_files": 9324,
+      "manifest_sha256": "b8a516ed5548b76ad64486003017b9efc2305f793b3713e988e22f6054220a4b",
+      "re_read_verified": true,
+      "source_publication_policy": {
+        "scope": "Original Rust validation inputs remain intact locally. This archive publishes the full path/hash manifest and raw check logs; duplicate source payloads are omitted from publication and require a separate actual-commit Git binding for reproducible reconstruction. No original evidence was deleted.",
+        "omitted_prefix": "stage54-rust-validation-01/sources/",
+        "omitted_files": 162919,
+        "source_manifest_sha256": "fdc8e3fba7307ba6a239a3c0f5369f23da8b85a275c1d0fa7349705610228ed2",
+        "git_binding_status": "separate post-commit closeout evidence required"
+      }
+    }
+  ],
+  "preserved_prior_failures": {
+    "preparation_failure": {
+      "record": {
+        "path": "target/m2/stage54-validation-01/preparation-failure.json",
+        "sha256": "2665eb3b32474b8bd1f76b336adfb4752aea225abb54d54967d5dbc3ae52b4df",
+        "bytes": 308
+      },
+      "outcome": {
+        "observed_session": 95598,
+        "tool_chunk": "9748ff",
+        "exit_code": 2,
+        "reason": "Preparation incorrectly required all non-sources top-level inventory fields unchanged; implementation links legitimately embed changed Rust source SHA256 values. No validation run.py or final acquisition was started."
+      },
+      "replaced_or_normalized": false
+    },
+    "first_adapter_capture": {
+      "report": {
+        "path": "target/m2/stage54-deprecation-final-01/report.json",
+        "sha256": "b0d0f4149f1ed432572f00892365826189f776cb7ced3b49495a533286db6ae0",
+        "bytes": 8238933
+      },
+      "per_target_statuses": {
+        "native": {
+          "pass": 102,
+          "oracle-error": 10
+        },
+        "napi": {
+          "pass": 100,
+          "acquisition-failed": 2,
+          "oracle-error": 10
+        },
+        "chromium": {
+          "pass": 100,
+          "acquisition-failed": 2,
+          "oracle-error": 10
+        }
+      },
+      "failure": "N-API and Chromium each retained two amended-module-local-ignored acquisition failures when a supplied-text fragment-path request was routed as the primary Host key.",
+      "changed_only": [
+        "tools/platform/deprecation-session.mjs",
+        "tools/platform/deprecation-session.test.mjs"
+      ],
+      "fresh_final02_rerun": "First captures remain in the candidate archive; final02 is a new directory, not an overwritten result."
+    },
+    "historical_Java_authoring_and_internal_failures": {
+      "archive": "reports/m2/stage54-java-history-evidence.tar.gz",
+      "historical_payload_files": 13776,
+      "recorded_Java_runs": 275,
+      "scope": "Repeated acquisitions and failed authoring controls are historical observations, not independent language coverage counts."
+    },
+    "offline_missing_tool_import": {
+      "audit": {
+        "path": "target/m2/stage54-final02-audit-01/relocation-02-audit.json",
+        "sha256": "59a37917648a0e22a386769c14125cb6ffbf502d611ba5ffb3c601cb4a31991f",
+        "bytes": 9020
+      },
+      "recovered_from_independent_authority_not_candidate_output": true
+    },
+    "publication_v1_readme": {
+      "historical_review": {
+        "path": "target/m2/stage54-publication-review-01/historical-readme-limitation.json",
+        "sha256": "69be81a10d7fd5f0ecbaa00067718d4a7e2a0815c5511815cf760e2f8e6871d6",
+        "bytes": 582
+      },
+      "preservation": {
+        "path": "target/m2/stage54-validation-publication-01/preservation.json",
+        "sha256": "4d851e32d38ddf4b6652c04f43d72632884095d6eb902031c25980a02d51c47f",
+        "bytes": 450
+      },
+      "record": {
+        "original_path": "reports/m2/stage54-validation-review-evidence.tar.gz",
+        "preserved_path": "target/m2/stage54-validation-publication-01/original-publication.tar.gz",
+        "sha256": "8339afd998ffd1cdadcca1afaf5ce5d938bdc3b1666c43bc8dbc096c701e0bff",
+        "reason": "Publication metadata README used Python repr text; replacement v2 changes only README and its manifest entry. Original bytes preserved here; source and execution evidence unchanged."
+      },
+      "correction": "Only README packaging metadata changed in a new v2 archive; no source, execution result or other payload was changed."
+    }
+  },
+  "known_incomplete_semantics": [
+    {
+      "requirement": "Java internal-error and API exception parity",
+      "status": "open/nonpass",
+      "evidence": {
+        "path": "target/m2/stage54-final02-audit-01/audit.json",
+        "sha256": "28cfb662c2fcbf2ffb5379500b5e34fbc9bc269ef19549905c880fb5016a6b21",
+        "bytes": 4942359
+      },
+      "details": "The five throw/close cases retain Java PklBugException status/diagnostic/stack and subsequent API exception differences on every target/repetition. No Java error class synthesis, fallback or exception exemption is used."
+    },
+    {
+      "requirement": "Same-JVM standard-module executable/cache lifetime across evaluators",
+      "status": "Java observed; candidate parity unexecuted and incomplete",
+      "java_evidence": {
+        "path": "target/m2/stage54-deprecation-cycles-oracle-01/report.json",
+        "sha256": "ac03b44fe26bd77c9effb250d33b4ef144ee791c42d840683f21f659d93b254d",
+        "bytes": 583850
+      },
+      "cycles": {
+        "sessions": 6,
+        "JVM_processes": 12,
+        "evaluator_instances": 48,
+        "public_calls": 96
+      },
+      "warning_vectors": {
+        "user_retained_method": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "user_typed_interpolation": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "Reference.renderReference": [
+          1,
+          1,
+          1,
+          0
+        ],
+        "ModuleOutput.text": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "FileOutput.text": [
+          1,
+          1,
+          1,
+          0
+        ],
+        "ModuleOutput.bytes": [
+          1,
+          1,
+          1,
+          0
+        ]
+      },
+      "details": "Rust executable owner/heap/module state is evaluator-local. Pinned Java shares selected stdlib singleton nodes across evaluators and retains real receiver/declaration graphs. Do not emulate these observations with a global method-name counter or assume every pkl module is a singleton."
+    },
+    {
+      "requirement": "Raw StackFrameTransformer input and full transformed frame behavior",
+      "status": "open",
+      "java_evidence": {
+        "path": "target/m2/stage54-boundary-oracle-01/report.json",
+        "sha256": "0b4e5749f87a7534a8cba1652b003975d1077e2d872ea9cab0a1474cb20182ab",
+        "bytes": 213613
+      },
+      "details": "Custom Java transformers receive original pkl:base/pkl:ref URIs, while default loggers receive pinned GitHub display URLs. Current Rust sources already carry display URLs. Full original/display URI separation, arbitrary returned frames, transformer/noop/buffer/failure/reentry ordering remain obligations; default URI matches do not close them."
+    },
+    {
+      "requirement": "Callback close followed by later calls and API errors",
+      "status": "open",
+      "details": "Supplemental Java close-then-new-deprecated call records PklBugException/VmContext logger NPE; close-then-plain call returns 42, followed by a real API exception on later evaluation. Main capture cleanup success does not establish those Java lifecycle/API bytes."
+    },
+    {
+      "requirement": "Implicit-base deprecated-method positive Java control",
+      "status": "source-reviewed only",
+      "details": "The pinned base.pkl has no deprecated implicit-base method to exercise that positive warning route; no fabricated Java event is counted."
+    },
+    {
+      "requirement": "Whole M2 language/API inventory and release targets",
+      "status": "open",
+      "recorded_full_gate_failures": 5477,
+      "inventory": {
+        "cases": 4527,
+        "cases_by_execution": {
+          "ready": 4416,
+          "unimplemented": 71,
+          "unmapped": 40
+        },
+        "requirements": 475,
+        "requirements_by_kind": {
+          "language_parser": 137,
+          "language_token": 109,
+          "semantic-family": 31,
+          "specification": 198
+        }
+      },
+      "details": "Inventory freshness, selected raw success, builds, source integrity and architecture contracts do not close unimplemented/unmapped requirements or the whole-language gate. Linux/Windows, full product API/lifecycle, complete stdlib/renderers and performance/memory release requirements remain separately required."
+    }
+  ],
+  "followup_design": {
+    "path": "target/m2/stage54-followup-design-01/PLAN.ko.md",
+    "identity": {
+      "path": "target/m2/stage54-followup-design-01/PLAN.ko.md",
+      "sha256": "593827624b5eabb2287090bcaad080e5035499cc7e8f66e307ebcc9493378329",
+      "bytes": 22515
+    },
+    "status": "Design only; no implementation or additional verification claimed."
+  },
+  "completion_boundary": {
+    "whole_M2_complete": false,
+    "whole_language_or_API_compatibility": false,
+    "strict_main_gate_passed": false,
+    "performance_or_memory_targets_achieved": false,
+    "performance_comparison_run": false,
+    "hosted_CI_result_claimed": false,
+    "post_commit_source_Git_binding_complete": false,
+    "statement": "This is a bounded, locally verified implementation checkpoint. Known failures, historical adapter/packaging failures, unexecuted requirements and missing Git closeout remain explicit; no complete compatibility or speed/memory claim is made."
+  }
+}

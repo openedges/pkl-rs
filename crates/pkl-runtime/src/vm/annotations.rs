@@ -336,6 +336,7 @@ impl Vm {
             (class.id == DEPRECATED_ID).then_some(id)
         });
         if let Some(id) = annotation {
+            self.heap.get_mut(owner)?.deprecation = Some(PklString::default());
             let caller = self.frames.len() - 1;
             self.force(id, id, Arc::from("message"), false, true, false)?;
             if self.frames.len() > caller + 1 {
@@ -355,11 +356,35 @@ impl Vm {
             .ok_or_else(|| invalid("missing annotation owner"))?
             .heap_id()
             .ok_or_else(|| invalid("annotation owner is not a declaration"))?;
+        self.publish_annotations(owner, annotations, code)
+    }
+
+    pub(super) fn store_deprecation(&mut self) -> Result<(), RuntimeError> {
+        let message = self.pop()?;
+        let owner = self
+            .stack
+            .last()
+            .ok_or_else(|| invalid("missing annotation list"))?
+            .as_object()?;
+        if let Value::String(message) = message {
+            self.heap.get_mut(owner)?.deprecation = Some(message);
+        }
+        Ok(())
+    }
+
+    pub(super) fn publish_annotations(
+        &mut self,
+        owner: ObjectId,
+        annotations: ObjectId,
+        code: usize,
+    ) -> Result<(), RuntimeError> {
         let values = self.heap.get(annotations)?.annotations.clone();
-        self.heap
-            .get_mut(owner)?
-            .member_annotations
-            .insert(code, values);
+        let deprecation = self.heap.get(annotations)?.deprecation.clone();
+        let owner = self.heap.get_mut(owner)?;
+        owner.member_annotations.insert(code, values);
+        if let Some(message) = deprecation {
+            owner.member_deprecations.insert(code, message);
+        }
         Ok(())
     }
 }

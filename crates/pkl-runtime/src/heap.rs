@@ -210,6 +210,15 @@ pub struct Object {
     pub annotations: Vec<Value>,
     /// Published property/method annotation metadata, keyed by declaration code.
     pub member_annotations: BTreeMap<usize, Vec<Value>>,
+    /// First exact Deprecated annotation's forced message, published with its method.
+    #[doc(hidden)]
+    pub member_deprecations: BTreeMap<usize, crate::value::PklString>,
+    /// Temporary annotation-list metadata, before declaration publication.
+    #[doc(hidden)]
+    pub deprecation: Option<crate::value::PklString>,
+    /// Actual declaration of a materialized method call target.
+    #[doc(hidden)]
+    pub method_declaration: Option<(ObjectId, usize)>,
     pub builtin_type: Option<crate::vm::TypeCheck>,
     pub ref_module: bool,
     pub is_module: bool,
@@ -319,6 +328,7 @@ struct ExecutableState {
     // ImportNode caches its successful result, not the importing receiver or
     // activation. Distinct executable clones retain distinct node state.
     imported_modules: BTreeMap<(usize, usize), ObjectId>,
+    method_calls: BTreeMap<(usize, usize), crate::vm::deprecation::CallCache>,
 }
 
 impl ExecutableOwnerId {
@@ -487,6 +497,26 @@ impl Heap {
         let child = self.allocate_executable();
         self.executable_mut(owner)?.children.insert(site, child);
         Ok(child)
+    }
+
+    pub(crate) fn existing_method_call_cache(
+        &self,
+        owner: ExecutableOwnerId,
+        site: (usize, usize),
+    ) -> Result<Option<&crate::vm::deprecation::CallCache>, RuntimeError> {
+        Ok(self.executable(owner)?.method_calls.get(&site))
+    }
+
+    pub(crate) fn method_call_cache(
+        &mut self,
+        owner: ExecutableOwnerId,
+        site: (usize, usize),
+    ) -> Result<&mut crate::vm::deprecation::CallCache, RuntimeError> {
+        Ok(self
+            .executable_mut(owner)?
+            .method_calls
+            .entry(site)
+            .or_default())
     }
 
     pub(crate) fn local_kind(
@@ -677,6 +707,9 @@ impl Heap {
                     pending.extend(state.code_roots.iter().filter_map(Value::heap_id));
                     pending.extend(state.children.values().map(|owner| owner.0));
                     pending.extend(state.imported_modules.values().copied());
+                    for cache in state.method_calls.values() {
+                        cache.trace(&mut pending);
+                    }
                     continue;
                 }
                 Entry::CustomThis(value) => {
@@ -686,6 +719,7 @@ impl Heap {
                 Entry::Object(object) => object,
             };
             pending.extend(object.parent);
+            pending.extend(object.method_declaration.map(|(owner, _)| owner));
             if let Some(amendment) = &object.amendment {
                 pending.extend(amendment.parent.heap_id());
             }

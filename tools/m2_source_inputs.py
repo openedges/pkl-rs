@@ -23,6 +23,12 @@ def source_paths(root: Path):
         'tools/platform/parameterized-object-session.test.mjs',
         'tools/tests/test_parameterized_object_fixtures.py',
         'tools/tests/test_parameterized_object_compare.py',
+        'tools/deprecation_fixtures.py', 'tools/deprecation_compare.py', 'tools/m2_deprecation.py',
+        'tools/java/M2DeprecationProbe.java', 'tools/java/M2DeprecationCyclesProbe.java',
+        'tools/tests/test_deprecation_fixtures.py', 'tools/tests/test_deprecation_compare.py',
+        'tools/platform/deprecation-session.mjs', 'tools/platform/deprecation-session.test.mjs',
+        'tools/platform/capture-deprecation.mjs', 'tools/platform/capture-deprecation.test.mjs',
+        'tools/platform/resource-session.mjs',
         'tools/m2_identifier_tables.py', 'tools/java/M2IdentifierProbe.java',
         'tools/m2_unicode_escape_tables.py', 'tools/java/M2UnicodeEscapeProbe.java',
         'tools/java/M2LanguageProbe.java', 'tools/oracle.py', 'oracle.lock.json',
@@ -34,6 +40,7 @@ def source_paths(root: Path):
         'docs/m2-jvm-classpath.md', 'crates/pkl-runtime/src/stdlib/modules.txt'}
     for directory, pattern in [('crates', '*.rs'), ('crates', '*.pkl'), ('crates', 'Cargo.toml'),
                                ('tests/fixtures/m2', '*'),
+                               ('tests/fixtures/m2-deprecation', '*'),
                                ('tests/fixtures/m2-parameterized-object-bodies', '*')]:
         paths.update(path.relative_to(root).as_posix() for path in (root / directory).rglob(pattern) if path.is_file())
     profile = json.loads((root / PROFILE).read_bytes())

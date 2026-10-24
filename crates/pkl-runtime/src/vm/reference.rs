@@ -1073,6 +1073,25 @@ impl Vm {
         Ok(())
     }
 
+    pub(super) fn function_arity(&self, id: ObjectId) -> Result<usize, RuntimeError> {
+        let object = self.heap.get(id)?;
+        object
+            .function
+            .as_ref()
+            .map(|function| function.arity)
+            .or_else(|| {
+                object
+                    .native_function
+                    .as_ref()
+                    .map(|function| match function.name.as_ref() {
+                        "Reference" => 3,
+                        "containsKey" | "getOrNull" | "contains" => 1,
+                        _ => 0,
+                    })
+            })
+            .ok_or_else(|| invalid("function metadata missing"))
+    }
+
     pub(super) fn reference_get_class(&mut self, value: &Value) -> Result<Value, RuntimeError> {
         let ty = match value {
             Value::Null | Value::NullWithDefault(_) => TypeCheck::Null,
@@ -1085,22 +1104,7 @@ impl Vm {
             Value::TypeAlias(_) => TypeCheck::MetaClass(Arc::from("TypeAlias")),
             Value::Class(_) => TypeCheck::MetaClass(Arc::from("Class")),
             Value::Function(id) => {
-                let object = self.heap.get(*id)?;
-                let arity = object
-                    .function
-                    .as_ref()
-                    .map(|f| f.arity)
-                    .or_else(|| {
-                        object
-                            .native_function
-                            .as_ref()
-                            .map(|f| match f.name.as_ref() {
-                                "Reference" => 3,
-                                "containsKey" | "getOrNull" | "contains" => 1,
-                                _ => 0,
-                            })
-                    })
-                    .ok_or_else(|| invalid("function metadata missing"))?;
+                let arity = self.function_arity(*id)?;
                 TypeCheck::Function {
                     parameters: Some(vec![TypeCheck::Unknown; arity]),
                     result: Box::new(TypeCheck::Unknown),

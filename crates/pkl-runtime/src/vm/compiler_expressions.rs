@@ -44,7 +44,7 @@ enum Work<'a> {
     LogicalEnd(BinaryOp, usize),
     NullableMember(&'a Expr, &'a str),
     Lookup(&'a Expr, &'a Expr, &'a [Expr], usize),
-    CallEnd(usize, bool, Option<usize>),
+    CallEnd(usize, bool, Option<usize>, Option<(usize, Span)>),
     Cast(TypeCheck, Span),
     IfThen(&'a Expr, &'a Expr, &'a Expr),
     IfElse(&'a Expr, usize),
@@ -265,6 +265,7 @@ impl Compiler<'_> {
                                 true
                             }
                         };
+                        let mut method_site = None;
                         if matches!(
                             callee.kind,
                             ExprKind::Name(_) | ExprKind::Member(..) | ExprKind::NullableMember(..)
@@ -283,16 +284,42 @@ impl Compiler<'_> {
                         {
                             let lookup = lookup_start + lookup;
                             output.method_arities.insert(lookup, arguments.len());
+                            method_site = Some((lookup, expression.span));
                             if matches!(callee.kind, ExprKind::Name(_)) {
                                 // The pinned implicit InvokeMethodVirtualNode
                                 // owns the full call, including its arguments.
                                 output.spans[lookup] = Some(expression.span);
                             }
                         }
-                        work.push(Work::CallEnd(arguments.len(), method, nullable_branch));
+                        if let Some((lookup, span)) = method_site {
+                            output.push_at(
+                                Instruction::PrepareMethodCall {
+                                    lookup,
+                                    arity: 0,
+                                    after_arguments: false,
+                                },
+                                span,
+                            );
+                        }
+                        work.push(Work::CallEnd(
+                            arguments.len(),
+                            method,
+                            nullable_branch,
+                            method_site,
+                        ));
                         work.extend(arguments.iter().rev().map(Work::Visit));
                     }
-                    Work::CallEnd(arity, method, nullable_branch) => {
+                    Work::CallEnd(arity, method, nullable_branch, method_site) => {
+                        if let Some((lookup, span)) = method_site {
+                            output.push_at(
+                                Instruction::PrepareMethodCall {
+                                    lookup,
+                                    arity,
+                                    after_arguments: true,
+                                },
+                                span,
+                            );
+                        }
                         output.push(Instruction::Call { arity, method });
                         if let Some(branch) = nullable_branch {
                             output[branch] = Instruction::JumpIfNull(output.len());
@@ -1257,14 +1284,18 @@ impl Compiler<'_> {
                     work.push(Work::Emit(Instruction::Add, None));
                     work.push(Work::Emit(
                         Instruction::ToString,
-                        Some(
+                        Some(if parts.len() == 1 {
+                            // AstBuilder reuses the complete string literal's
+                            // source section for its sole interpolation child.
+                            expression.span
+                        } else {
                             self.resolved
                                 .module
                                 .interpolation_spans
                                 .get(&part.span)
                                 .copied()
-                                .unwrap_or(expression.span),
-                        ),
+                                .unwrap_or(expression.span)
+                        }),
                     ));
                     work.push(Work::Visit(part));
                 }

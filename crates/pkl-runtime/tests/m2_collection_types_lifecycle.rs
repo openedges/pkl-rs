@@ -16,6 +16,8 @@ fn session() -> (HostSession, Value, usize, usize) {
     // Each method returns a wrapper that outlives its checking frame. Its
     // temporary class receiver supplies the predicate's lexical properties.
     // The nested List additionally has to retain the newly wrapped element.
+    // Each explicit virtual method site adds one persistent executable owner;
+    // its class target never roots the temporary Check instance.
     let parsed = parse_module(
         r#"
         class Check {
@@ -257,12 +259,12 @@ fn nested_wrappers_keep_temporary_check_receivers_across_gc_and_reentry() {
         .start(outer_entry, vec![root.clone()], 1, None)
         .unwrap();
     let outer = request(&mut session, 1, "mem:outer");
-    assert!(initialized.added_values(session.collect(&[]), 4) > 0);
+    assert!(initialized.added_values(session.collect(&[]), 5) > 0);
     session
         .reenter(&outer, inner_entry, vec![root], 2, None)
         .unwrap();
     let inner = request(&mut session, 2, "mem:inner");
-    assert!(initialized.added_values(session.collect(&[]), 9) > 0);
+    assert!(initialized.added_values(session.collect(&[]), 11) > 0);
     session
         .resume(&inner, Ok(Value::string("inner")), 3)
         .unwrap();
@@ -277,8 +279,8 @@ fn nested_wrappers_keep_temporary_check_receivers_across_gc_and_reentry() {
     assert_eq!(session.context_depth(), 0);
     // Only Check, its captured module and builtin Module parent survive. Temporary receivers,
     // Listings, Mappings and wrappers must all have been reclaimed.
-    assert_eq!(initialized.added_values(session.collect(&[]), 9), 1);
-    assert_eq!(initialized.added_values(session.collect(&[]), 9), 1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 11), 1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 11), 1);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -328,8 +330,8 @@ fn failed_wrapper_predicate_retries_without_publishing_a_successful_member() {
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer")));
     // Only Check, its captured module and builtin Module parent survive. Temporary receivers,
     // Listings, Mappings and wrappers must all have been reclaimed.
-    assert_eq!(initialized.added_values(session.collect(&[]), 9), 1);
-    assert_eq!(initialized.added_values(session.collect(&[]), 9), 1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 11), 1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 11), 1);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -364,7 +366,7 @@ fn terminal_reentry_releases_wrapper_checks_and_cancels_both_pending_reads() {
             .unwrap();
         let inner = request(&mut session, 2, "mem:inner");
         assert_eq!(session.context_depth(), 2);
-        assert!(initialized.added_values(session.collect(&[]), 9) > 0);
+        assert!(initialized.added_values(session.collect(&[]), 11) > 0);
         let (now, kind) = match termination {
             Termination::Close => {
                 session.close();

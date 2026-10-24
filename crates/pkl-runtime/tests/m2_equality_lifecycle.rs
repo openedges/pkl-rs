@@ -426,10 +426,11 @@ fn key_comparison_forces_wrappers_with_temporary_declaration_receivers() {
     session.collect(&[]);
     session.resume(&outer, Ok(Value::string("ok")), 3).unwrap();
     assert_eq!(ready(&mut session, 3), Ok(Value::Bool(true)));
+    // Both explicit values() sites retain their executable class caches.
     // Only Check, its captured module and builtin Module parent remain; temporary class
     // receivers, wrapper Listings and structural-key Mapping were released.
-    assert_eq!(initialized.added_values(session.collect(&[]), 4), 1);
-    assert_eq!(initialized.added_values(session.collect(&[]), 4), 1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 6), 1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 6), 1);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
