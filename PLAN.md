@@ -2134,6 +2134,19 @@ archive에 없음을 검출했습니다. 기존 자료를 수정하지 않고 �
 generator amendment와 원본이 요구하는 `Listing.fold`의 평가 순서입니다.
 **M2 아홉 영역과 전체 호환성·제품 API·릴리스 플랫폼·성능 조건은 계속 열려 있습니다.**
 
+#### Stage 63 C — 실제 구현 커밋과 검증 소스 연결
+
+구현과 검증 자료를 `1f1142b6b8d61d09825e44ed0e7efd6f239d4020`에 커밋·푸시했고
+원격 `main` 일치를 확인했습니다. [소스 연결](reports/m2/stage63-source-binding.json)은
+45개 분류의 183,764개 기록을 대조합니다. 183,531개는 실제 B 커밋과 일치하고,
+230개는 별도로 보관한 실행 도구이며, 세 문서는 검증 당시의 base Git 바이트를
+유지합니다. 실행 도구나 이전 문서를 현재 B 소스라고 표시하지 않습니다.
+
+56-member archive에는 실제 publication·assembly 명령의 원시 출력과 실패한
+첫 assembly 기록도 포함합니다. [독립 검토](reports/m2/stage63-source-binding-review.json)는
+Git 객체·원시 기록·archive 전체 member를 확인했습니다. 이 대조는 guest를 다시
+실행하지 않으며 기존 원본·Regex 실패와 **M2 전체 미완료 상태를 유지합니다.**
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

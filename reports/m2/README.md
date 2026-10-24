@@ -57,6 +57,18 @@ in verified archives and claims no compatibility result.
 These results are recorded local macOS arm64 evidence. Full M2, typed exports,
 product APIs, release platform coverage and speed/memory targets remain open.
 
+The implementation and evidence were committed and pushed as
+`1f1142b6b8d61d09825e44ed0e7efd6f239d4020`. The separate
+[source binding](stage63-source-binding.json),
+[binding evidence](stage63-source-binding-evidence.tar.gz), and
+[independent review](stage63-source-binding-review.json) connect actual Git
+objects with the recorded inputs. Across 45 categories, 183,531 rows match B,
+230 identify explicitly archived execution tools, and three retain verified
+base-document bytes. These repeated source rows are not feature counts.
+The 56-member binding archive includes the real publication and assembly
+process logs, preserving the failed first assembly and successful successor.
+This audit reruns no guest evaluations and does not close the remaining gates.
+
 ### Stage63 collection addition — independent Java authority
 
 The [Java checkpoint](stage63-java-checkpoint.json) seals 125 ordered public

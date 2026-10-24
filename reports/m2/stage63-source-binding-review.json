@@ -1,0 +1,80 @@
+{
+  "B_commit": "1f1142b6b8d61d09825e44ed0e7efd6f239d4020",
+  "approved": true,
+  "archive_member_count": 56,
+  "candidate_compatibility_passes_claimed": 0,
+  "checks": {
+    "C_archive_full_member_sha_size_mode_readback": "passed",
+    "actual_B_git_archive_publication_checkpoint_blobs": "15 exact SHA/size/OID independently checked",
+    "actual_execution_exit_stdout_stderr_and_no_guest": "passed",
+    "binding_row_gzip_status_accounting": "passed",
+    "historical_documents": "exactly three base Git blobs independently checked",
+    "original_failure_and_full_M2_limits": "retained",
+    "public_report_embeds_full_internal_report": "passed",
+    "reviewed_B_docs_and_four_portable_inputs": "8 exact B blobs independently checked"
+  },
+  "complete": true,
+  "inputs": {
+    "target/m2/stage63-publication-review-01/report.json": {
+      "bytes": 18261,
+      "path": "target/m2/stage63-publication-review-01/report.json",
+      "sha256": "6bb78617f40f5b71d2e5dac5ab5db02599345173219f4b799ef34198e0f32f9b"
+    },
+    "target/m2/stage63-source-binding-02/bind.py": {
+      "bytes": 62891,
+      "path": "target/m2/stage63-source-binding-02/bind.py",
+      "sha256": "71935a6a898f98fd54a8523ed897c52bb39b0942dcd82e6ad92621b296e57551"
+    },
+    "target/m2/stage63-source-binding-02/layout-verified.json": {
+      "bytes": 8868,
+      "path": "target/m2/stage63-source-binding-02/layout-verified.json",
+      "sha256": "bd4818a57d9179bd47cd4fc0c23ca3d98ddc20d23dc0fef774678234cb59fef2"
+    },
+    "target/m2/stage63-source-binding-02/report.json": {
+      "bytes": 343468,
+      "path": "target/m2/stage63-source-binding-02/report.json",
+      "sha256": "84658eb0ac16d53babc984911d9c207b67ada3328a78273768a01894072384e6"
+    },
+    "target/m2/stage63-source-binding-02/stage63-source-binding-evidence.tar.gz": {
+      "bytes": 8751733,
+      "path": "target/m2/stage63-source-binding-02/stage63-source-binding-evidence.tar.gz",
+      "sha256": "90cf12762cdb755c56e520fcef84210a0acfac9034e1e93c5fa356da24f7d48e"
+    },
+    "target/m2/stage63-source-binding-02/stage63-source-binding.json": {
+      "bytes": 356663,
+      "path": "target/m2/stage63-source-binding-02/stage63-source-binding.json",
+      "sha256": "9e8fe8b3a75874acdf642e49f2dbe26a29c417f1782f70f4edf002e14c2e3b76"
+    },
+    "target/m2/stage63-source-binding-run-01/report.json": {
+      "bytes": 4378,
+      "path": "target/m2/stage63-source-binding-run-01/report.json",
+      "sha256": "9842acfb630db50a7e2de971cc0f72934be4d1d59328042c8e1532ee7c2b8f5a"
+    },
+    "target/m2/stage63-source-binding-run-01/stderr.bin": {
+      "bytes": 0,
+      "path": "target/m2/stage63-source-binding-run-01/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage63-source-binding-run-01/stdout.bin": {
+      "bytes": 3530,
+      "path": "target/m2/stage63-source-binding-run-01/stdout.bin",
+      "sha256": "d97ec258ab90ca3353a1944ca499884f6017f01a75057c1059365c86d91c0cc7"
+    }
+  },
+  "kind": "stage63-independent-C-source-binding-review",
+  "limits": [
+    "Source binding audits recorded inputs and actual B Git objects; it does not rerun guest evaluations.",
+    "Original selection remains failed; Any and M1 Regex compatibility gaps remain failures.",
+    "Full M2, public API, release platforms and performance remain open."
+  ],
+  "publication_archive_members": 227302,
+  "row_count": 183764,
+  "schema": 1,
+  "source_category_count": 45,
+  "source_stable": true,
+  "source_status_totals": {
+    "archived_execution_tool_not_B": 230,
+    "historical_document_from_base": 3,
+    "matches_B": 183531
+  }
+}
