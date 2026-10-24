@@ -1166,6 +1166,35 @@ ISO output, DataSize and typed product transport require further implementation.
 The [collection transform contract](m2-collection-transforms.md) separates
 these language behaviors from capture-Host policy and evidence boundaries.
 
+### Object conversions and optional lookup
+
+Object-to-strict-collection conversions first shallow-force visible members from
+child to parent, including Dynamic member kinds that the result later omits.
+They then enumerate declarations from parent to child, retaining the first
+declaration's kind and position while reading the final receiver's cached value.
+List/Set selector maps call the key extractor, then the value extractor, before
+hashing and insertion. Duplicate keys retain their first position and last value.
+Pending source, builder, key and callback values remain traced across Host
+suspension, reentry, cancellation and retry; completed strict results release
+unneeded source environments.
+
+Lazy conversion objects retain a traced source delegate and the appropriate
+receiver. Absent source members can use the target prototype's default; explicit
+Pkl null remains a present value. Listing/Mapping `getOrDefault` force and check
+the inherited `Function1` default only when a key is absent. Its type error keeps
+the standard declaration frame and authored default frame. Dynamic property
+queries preserve Java's distinction between member declarations and cached
+string entries, including the cache-dependent `hasProperty` result.
+
+Synthetic property identifiers are internal lookup keys. Member descriptors keep
+the original `PklString` name for conversion, diagnostics and rendering, so lone
+UTF-16 surrogates, U+FFFD and NUL are not conflated. Authored quoted identifiers
+can contain NUL. Synthetic names use an LF prefix, which authored identifiers
+cannot contain; LF-bearing String keys use the same injective UTF-16 encoding
+so they cannot collide with synthetic surrogate names. The six independent Stage62
+Java fixtures exercise these paths at the public string boundary; full typed
+export, wrapper identity and whole-language compatibility remain separate gates.
+
 ### Import admission and module cache ownership
 
 Authored imports execute a typed `CheckImport` Host request before consulting

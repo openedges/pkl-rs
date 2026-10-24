@@ -1,5 +1,39 @@
 # M2 language verification
 
+Stage 62 connects strict object materialization, lazy object/collection adapters,
+selector-based maps, Dynamic property queries, Listing/Mapping optional and
+defaulted lookup, Dynamic length, Set addition, and Bytes iteration/spread to
+the shared VM. Its [implementation checkpoint](../reports/m2/stage62-implementation-checkpoint.json)
+records six independent Java authorities with 485 expressions. Every native,
+N-API, and Chromium target matches all 970 observations across two fresh
+sessions, comparing seven raw channels and the complete process protocol.
+UTF-16 channels distinguish lone surrogates from U+FFFD even when Java UTF-8
+replaces them with the same `?` byte. Typed exports and complete wrapper
+identity remain separate requirements.
+
+Conversions preserve shallow forcing order, inherited declaration order,
+duplicate-key position, receiver-sensitive fallback, and explicit null values.
+`getOrDefault` checks the inherited default only when a missing key requires it.
+Source, builder, callback and pending values stay rooted through Host
+suspension, reentry, GC, cancellation and retry. Authored quoted identifiers
+can contain NUL: a rejected earlier candidate collided with synthetic property
+names. The corrected namespace uses LF, which authored identifiers cannot
+contain, and also encodes LF-bearing String keys injectively. Earlier passing
+matrices and Rust checks do not validate the corrected source automatically;
+the final candidate has separate recorded workspace and platform checks.
+
+IntSeq, Bytes, Duration and DataSize retain 474, 600, 548 and 510 matches per
+target. Any portable retains 170 matches and two Regex mismatches per target;
+its strict gate remains failed. The expanded original selection has 35 matches,
+22 mismatches, 32 unsupported results and one Java heap error among 90 programs.
+The prior 62 improve from 26 to 30 matches with no pass regression. The four new
+matches are `elementGenerators.pkl`, `spreadSyntaxListing.pkl`,
+`spreadSyntaxMapping.pkl`, and `objects/hashCode.pkl`. The prior 17 still have
+15 matches; their two Binary-path failures now reach unsupported `pkl:pklbinary`.
+The Java `api/list.pkl` run fails at the recorded `-Xmx512m`; it is not a pass.
+Two further required package/HTTP/TLS cases remain unexecuted. All nine M2
+workstreams and the strict full-language gate remain open.
+
 Stage 61 adds shared `IntSeq` values and the prerequisites of unchanged original
 programs. Its [implementation checkpoint](../reports/m2/stage61-implementation-checkpoint.json)
 records all 474 selected string observations matching on each of native,

@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "profiles": [
+    {
+      "module_uri": "file:///stage62/collection-conversions.pkl",
+      "fixture": "tests/fixtures/m2-collection-conversions",
+      "rows": 236,
+      "repetitions": 2,
+      "validator_module": "collection_conversions_fixtures",
+      "validator_script": "tools/collection_conversions_fixtures.py",
+      "archive_prefix": "capture-04",
+      "input_hashes": {
+        "cases.json": "a45146b0387754d879109cfed5dd280bf6aad215c9e4197e10644d432a444c3b",
+        "module.pkl": "a24a1e717919fd710c219f7c7e27e6c9baa93b575749c840d96a58ae0f886b4a",
+        "queries.tsv": "39416e2d5adb7db5fe531289ff736a14f8926af3af8bf64fcbf9aad2ad3021cc"
+      },
+      "tool_sources": [
+        "tools/collection_conversions_fixtures.py",
+        "tools/collection_conversions_oracle.py",
+        "tools/tests/test_collection_conversions_fixtures.py",
+        "tools/java/CollectionConversionsOracle.java"
+      ]
+    },
+    {
+      "module_uri": "file:///stage62/collection-conversion-controls.pkl",
+      "fixture": "tests/fixtures/m2-collection-conversion-controls",
+      "rows": 58,
+      "repetitions": 2,
+      "validator_module": "collection_conversion_controls_fixtures",
+      "validator_script": "tools/collection_conversion_controls_fixtures.py",
+      "archive_prefix": "capture-02",
+      "input_hashes": {
+        "cases.json": "2dbd453c55268cf80fdb8765d6bcea44535eed917f418eff27d3566f78f0d453",
+        "module.pkl": "90c2a9ef0fabcc8f8b22e4abf036caedbe7773663e605363ebecf9a16a7d9102",
+        "queries.tsv": "f7affd443c1fa5d0287b820e3ede1eb0d67782edf80000c4518b72f35aad1c09"
+      },
+      "tool_sources": [
+        "tools/collection_conversion_controls_fixtures.py",
+        "tools/collection_conversion_controls_oracle.py",
+        "tools/tests/test_collection_conversion_controls_fixtures.py",
+        "tools/java/CollectionConversionsOracle.java"
+      ]
+    },
+    {
+      "module_uri": "file:///stage62/collection-lookups.pkl",
+      "fixture": "tests/fixtures/m2-collection-lookups",
+      "rows": 133,
+      "repetitions": 2,
+      "validator_module": "collection_lookups_fixtures",
+      "validator_script": "tools/collection_lookups_fixtures.py",
+      "archive_prefix": "capture-03",
+      "input_hashes": {
+        "cases.json": "a95d66add782756fbd2b0533fe2b4660de872f172abde76f56a712f7b12eab32",
+        "module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+        "queries.tsv": "1096a8cd0bdf65b615c104fd25592ddb58fbe4e7ca3b12a3e0f8ac2a5b971f18"
+      },
+      "tool_sources": [
+        "tools/collection_lookups_fixtures.py",
+        "tools/collection_lookups_oracle.py",
+        "tools/tests/test_collection_lookups_fixtures.py",
+        "tools/java/CollectionConversionsOracle.java"
+      ]
+    },
+    {
+      "module_uri": "file:///stage62/collection-default-contracts.pkl",
+      "fixture": "tests/fixtures/m2-collection-default-contracts",
+      "rows": 22,
+      "repetitions": 2,
+      "validator_module": "collection_default_contracts_fixtures",
+      "validator_script": "tools/collection_default_contracts_fixtures.py",
+      "archive_prefix": "capture-01",
+      "input_hashes": {
+        "cases.json": "15cb06a0db6c9e6c90edf2afa199c1d86734920d5ff4432c6cb3de1c521d9e0a",
+        "module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+        "queries.tsv": "375fc16968ee997b25d7223380398205ed756352c07b0d6e443c457f4b1ea143"
+      },
+      "tool_sources": [
+        "tools/collection_default_contracts_fixtures.py",
+        "tools/collection_default_contracts_oracle.py",
+        "tools/tests/test_collection_default_contracts_fixtures.py",
+        "tools/java/CollectionConversionsOracle.java"
+      ]
+    },
+    {
+      "module_uri": "file:///stage62/dynamic-render.pkl",
+      "fixture": "tests/fixtures/m2-collection-dynamic-render",
+      "rows": 10,
+      "repetitions": 2,
+      "validator_module": "collection_dynamic_render_fixtures",
+      "validator_script": "tools/collection_dynamic_render_fixtures.py",
+      "archive_prefix": "capture-01",
+      "input_hashes": {
+        "cases.json": "cc2a09354e1e2c7907fd2ad993bff28dd0bf793058c939f5154d549800b66dae",
+        "module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+        "queries.tsv": "d0ab652f9c4f422fc0392c9e1a3adb985ee9f77cb601cf2b9ba72aa2bfe07bdc"
+      },
+      "tool_sources": [
+        "tools/collection_dynamic_render_fixtures.py",
+        "tools/collection_dynamic_render_oracle.py",
+        "tools/tests/test_collection_dynamic_render_fixtures.py",
+        "tools/java/CollectionConversionsOracle.java"
+      ]
+    },
+    {
+      "module_uri": "file:///stage62/collection-property-names.pkl",
+      "fixture": "tests/fixtures/m2-collection-property-names",
+      "rows": 26,
+      "repetitions": 2,
+      "validator_module": "collection_property_names_fixtures",
+      "validator_script": "tools/collection_property_names_fixtures.py",
+      "archive_prefix": "capture-02",
+      "input_hashes": {
+        "cases.json": "341f6b953b8dcd39e623dc6d1a04a0ac0a2aa786f7f13dce7f6f81a98bba50b4",
+        "module.pkl": "7f80ba30b4248cff7cca4b036bde2f5a7f3a215408765e622b2b124eb5a5b1ce",
+        "queries.tsv": "59e7145df48a51493f10fb16ea9093711c18e9ff50a30a67c3f81043a0b1b239"
+      },
+      "tool_sources": [
+        "tools/collection_property_names_fixtures.py",
+        "tools/collection_property_names_oracle.py",
+        "tools/tests/test_collection_property_names_fixtures.py",
+        "tools/java/CollectionConversionsOracle.java"
+      ]
+    }
+  ]
+}

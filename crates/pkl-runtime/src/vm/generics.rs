@@ -189,14 +189,18 @@ impl GenericDefaultRun {
             origin,
         }
     }
-    pub(super) fn constructor(ty: TypeCheck, source: TypeArgumentSource) -> Self {
+    pub(super) fn constructor(
+        ty: TypeCheck,
+        source: TypeArgumentSource,
+        origin: Option<RuntimeFrame>,
+    ) -> Self {
         Self {
             tasks: vec![
                 DefaultTask::Constructor(ty.clone(), source),
                 DefaultTask::Visit(ty),
             ],
             value: None,
-            origin: None,
+            origin,
         }
     }
     pub(super) fn new(target: ObjectId, ty: TypeCheck, origin: Option<RuntimeFrame>) -> Self {

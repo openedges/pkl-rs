@@ -12,6 +12,9 @@ pub(super) fn typed_class(heap: &Heap, mut id: ObjectId) -> Result<Option<Class>
         }
         let object = heap.get(id)?;
         if let Some(class) = &object.class_definition {
+            if matches!(object.builtin_type, Some(TypeCheck::Collection(_))) {
+                return Ok(None);
+            }
             return Ok(Some(class.clone()));
         }
         let Some(parent) = object.parent else {
@@ -451,15 +454,14 @@ pub(crate) fn render_members(
             if member.local || member.method {
                 continue;
             }
-            let descriptor = if member.entry {
-                let Some(descriptor) = object
-                    .collection_members
-                    .iter()
-                    .find(|descriptor| descriptor.name == member.name)
-                else {
-                    continue;
-                };
+            let descriptor = if let Some(descriptor) =
+                object.collection_members.iter().find(|descriptor| {
+                    descriptor.name == member.name
+                        && (descriptor.kind != CollectionMemberKind::Property) == member.entry
+                }) {
                 descriptor.clone()
+            } else if member.entry {
+                continue;
             } else {
                 CollectionMember {
                     key: Value::string(member.name.clone()),
@@ -539,7 +541,7 @@ impl Vm {
             .collect())
     }
 
-    fn set_contains(&self, id: ObjectId, value: &Value) -> Result<bool, RuntimeError> {
+    pub(super) fn set_contains(&self, id: ObjectId, value: &Value) -> Result<bool, RuntimeError> {
         // Paguro's empty root returns before hashing even a primitive probe.
         if self.heap.get(id)?.set_entries.is_empty() {
             return Ok(false);
@@ -550,7 +552,11 @@ impl Vm {
             .any(|candidate| same_key(&self.heap, value, candidate)))
     }
 
-    fn prepare_set_lookup(&mut self, id: ObjectId, value: &Value) -> Result<bool, RuntimeError> {
+    pub(super) fn prepare_set_lookup(
+        &mut self,
+        id: ObjectId,
+        value: &Value,
+    ) -> Result<bool, RuntimeError> {
         if self.heap.get(id)?.set_entries.is_empty() {
             return Ok(false);
         }
@@ -619,7 +625,7 @@ impl Vm {
         Ok(())
     }
 
-    fn add_set_element(&mut self) -> Result<(), RuntimeError> {
+    pub(super) fn add_set_element(&mut self) -> Result<(), RuntimeError> {
         let present = self.pop()?;
         let value = self.pop()?;
         if present == Value::Bool(true) {
@@ -920,6 +926,11 @@ impl Vm {
             .last()
             .ok_or_else(|| invalid("missing spread source"))?;
         let (source_label, allowed, hint) = match value {
+            Value::Bytes(_) => (
+                "Bytes",
+                CollectionKind::Listing,
+                "`Bytes` can only be spread into objects of type `Dynamic` and `Listing`.",
+            ),
             Value::IntSeq(_) => (
                 "IntSeq",
                 CollectionKind::Listing,
@@ -1057,7 +1068,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
 
     /// Stable-hash declaration maps use the pinned bucket chain order. Maps
     /// containing JVM identity-dependent keys retain the explicit linear fallback.
-    fn declaration_candidates(
+    pub(super) fn declaration_candidates(
         &self,
         owner: ObjectId,
         key: &Value,
@@ -1132,7 +1143,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         Ok(())
     }
 
-    fn prepare_insertion(
+    pub(super) fn prepare_insertion(
         &mut self,
         key: &Value,
         kind: CollectionMemberKind,
@@ -1551,10 +1562,32 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                 let environment = &self.frames.last().expect("active frame").environment;
                 let source = ty.argument_source(environment).unwrap_or(source);
                 let ty = ty.substituted(environment)?;
+                let frame = self.frames.last().expect("active frame");
+                let metadata = &self.program.metadata[frame.block];
+                let origin = metadata
+                    .spans
+                    .get(frame.pc.saturating_sub(1))
+                    .copied()
+                    .flatten()
+                    .map(|span| RuntimeFrame {
+                        source: metadata.source.clone(),
+                        span,
+                        member: if metadata.member.is_empty() {
+                            metadata
+                                .source
+                                .as_ref()
+                                .map(|source| PklString::from(source.uri.clone()))
+                                .unwrap_or_default()
+                        } else {
+                            metadata.member.clone()
+                        }
+                        .concat(&".default".into()),
+                    });
                 self.frames
                     .last_mut()
                     .expect("active frame")
-                    .generic_default = Some(generics::GenericDefaultRun::constructor(ty, source));
+                    .generic_default =
+                    Some(generics::GenericDefaultRun::constructor(ty, source, origin));
             }
 
             Instruction::EndCollection => self.end_collection()?,
@@ -1915,6 +1948,14 @@ crate::diagnostic_values::render(
             }
             Instruction::OpenIterator { nullable, spread } => {
                 let value = self.pop()?;
+                if let Value::Bytes(bytes) = value {
+                    let id = self.heap.allocate(Object {
+                        bytes_iterator: Some(Box::new((bytes, 0, spread))),
+                        ..Default::default()
+                    });
+                    self.stack.push(Value::Object(id));
+                    return Ok(());
+                }
                 if let Value::IntSeq(sequence) = value {
                     let id = self.heap.allocate(Object {
                         int_seq_iterator: Some(Box::new(sequence.cursor(!spread))),
@@ -2068,11 +2109,30 @@ crate::diagnostic_values::render(
                     .filter_map(Value::heap_id)
                     .find(|id| {
                         self.heap.get(*id).is_ok_and(|object| {
-                            object.iterator.is_some() || object.int_seq_iterator.is_some()
+                            object.iterator.is_some()
+                                || object.int_seq_iterator.is_some()
+                                || object.bytes_iterator.is_some()
                         })
                     })
                     .or_else(|| self.stack.last().and_then(Value::heap_id))
                     .ok_or_else(|| invalid("missing iterator"))?;
+                if let Some(cursor) = self.heap.get_mut(id)?.bytes_iterator.as_mut() {
+                    if let Some(byte) = cursor.0.get(cursor.1).copied() {
+                        let value = if cursor.2 {
+                            i64::from(byte)
+                        } else {
+                            i64::from(byte as i8)
+                        };
+                        self.stack.extend([
+                            Value::Int((cursor.1 as i64).into()),
+                            Value::Int(value.into()),
+                        ]);
+                        cursor.1 += 1;
+                    } else {
+                        self.jump(end)?;
+                    }
+                    return Ok(());
+                }
                 if let Some(cursor) = self.heap.get_mut(id)?.int_seq_iterator.as_mut() {
                     if let Some((index, value)) = cursor.next() {
                         self.stack
@@ -2171,7 +2231,9 @@ crate::diagnostic_values::render(
                     .last()
                     .ok_or_else(|| invalid("missing spread iterator"))?
                     .as_object()?;
-                if self.heap.get(iterator)?.int_seq_iterator.is_some() {
+                if self.heap.get(iterator)?.int_seq_iterator.is_some()
+                    || self.heap.get(iterator)?.bytes_iterator.is_some()
+                {
                     self.stack.push(value);
                     self.append_strict_element()?;
                     return Ok(());

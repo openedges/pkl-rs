@@ -266,6 +266,8 @@ pub struct Object {
     pub member_values: BTreeMap<CacheKey, Value>,
     pub iterator: Option<CollectionIterator>,
     pub int_seq_iterator: Option<Box<crate::int_seq::Cursor>>,
+    pub bytes_iterator: Option<Box<(crate::value::Bytes, usize, bool)>>,
+    pub conversion_delegate: Option<Box<crate::vm::collection_conversions::Delegate>>,
     pub predicate_iterator: Option<PredicateIterator>,
     pub collection_cast: Option<CollectionCast>,
     /// Inherited default value for inferred element/entry objects. `Some(None)`
@@ -936,6 +938,12 @@ impl Heap {
                 for member in iterator.members.iter().chain(&iterator.force_members) {
                     pending.extend(self.traced_id(&member.key));
                 }
+            }
+            if let Some(delegate) = &object.conversion_delegate {
+                pending.push(delegate.source);
+            }
+            if let Some(iterator) = &object.bytes_iterator {
+                pending.extend(self.traced_id(&crate::value::Value::Bytes(iterator.0.clone())));
             }
             if let Some(iterator) = &object.predicate_iterator {
                 pending.push(iterator.source);

@@ -1975,6 +1975,44 @@ U+2028·U+2029 키의 구분을 유지하며, 원래 여섯 fixture의 선택 �
 String 키도 같은 UTF-16 인코딩으로 구분합니다. 수정 후 전체 선택·Host·플랫폼·
 원본 비교를 새로 취득하며, M2의 나머지 종료 조건은 계속 유지합니다.
 
+### Stage 62 — 수정 후보의 구현·플랫폼·원본 검증
+
+[구현 체크포인트](reports/m2/stage62-implementation-checkpoint.json)는 객체·collection
+변환과 조회를 공통 VM에 연결합니다. 엄격한 변환의 강제 평가·선언 순서와 중복 키,
+지연 변환의 receiver·기본값·null 구분, default 함수의 타입·원래 오류 frame을
+보존합니다. Host 중단·재진입·GC·취소·재시도 검사와 기존 256 KiB 입력 조건을
+유지하며, NUL 식별자 충돌을 고친 후보를 별도 소스와 실행 파일로 검증했습니다.
+
+여섯 독립 Java 기준의 식 485개를 두 번씩 실행하여 native·실제 N-API·Chromium
+각각 **970개 관찰이 일치**합니다. 일곱 원시 채널과 전체 process protocol을
+비교했습니다. 기존 IntSeq 474회·Bytes 600회·Duration 548회·DataSize 510회도
+각 환경에서 일치합니다. Any portable은 환경별 170회 일치·기존 Regex 두 회
+불일치로 strict gate가 실패하며, M1의 두 Regex 차이도 그대로 남습니다.
+
+필수 Rust 검사 다섯 개가 통과했고 최종 workspace는 고유 테스트 **964개 통과·
+실패 0개·ignored 2개**입니다. 원시 harness 합계 969개에는 부모 결과에 포함된
+frontend 자식 프로세스 검사 다섯 개가 중복됩니다. Python은 61개를 일반·`-O`로,
+JavaScript는 16개를 실행했습니다. 소스 165,344개를 재구성할 수 있도록 기록했으며
+입력 22개는 직접 복사했습니다. 목록은 구현 연결 hash 102개만 달라졌고
+4,527개 행·475개 요구사항·ready 4,416개·미구현 71개·미연결 40개는 그대로입니다.
+
+수정하지 않은 원본 90개는 **35개 일치·22개 불일치·32개 미지원·Java 오류 1개**입니다.
+기존 62개는 26개에서 30개 일치로 늘었고 기존 성공의 회귀는 없습니다.
+`generators/elementGenerators.pkl`·`generators/spreadSyntaxListing.pkl`·
+`generators/spreadSyntaxMapping.pkl`·`objects/hashCode.pkl`이 새로 일치했습니다.
+기존 17개 부분집합은 15개 일치를 유지하며 Binary 두 사례는 미지원
+`pkl:pklbinary`까지 도달한 실패로 남습니다. Stage 60 이후의 누적 비교와 이번
+Stage 61→62의 진척을 분리합니다. `api/list.pkl`은 기록된 `-Xmx512m`에서 Java
+힙 오류가 났으며 Rust의 첫 실패는 `List.isNotEmpty` 미구현입니다. heap 조건을
+바꿔 기존 실패를 대체하지 않았고 package·HTTP·TLS가 필요한 두 사례도 미실행
+의무로 보존합니다.
+
+독립 검토는 원본 미통과 55개의 첫 바이트 차이·첫 진단과 이전 코퍼스의 변화를
+대조했습니다. 초기 NUL 충돌 후보·잘못된 test URI·도구 실행 중단과 기존 실패는
+증거에서 제거하지 않습니다. 다음 구현은 남은 collection 멤버, renderer·표준
+모듈 의존성과 타입·진단 차이를 원본 첫 실패에 따라 해결합니다. **M2의 아홉
+영역·전체 완료 조건과 제품 API·릴리스 플랫폼·성능 목표는 계속 열려 있습니다.**
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

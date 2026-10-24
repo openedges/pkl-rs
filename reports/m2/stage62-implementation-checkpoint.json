@@ -1,0 +1,2051 @@
+{
+  "any_if_non_null": {
+    "chromium": {
+      "mismatch": 2,
+      "pass": 170
+    },
+    "napi": {
+      "mismatch": 2,
+      "pass": 170
+    }
+  },
+  "assembly": {
+    "all_four_publications_fully_read_back": true,
+    "all_terminal_target_inputs_match_published_members": true,
+    "preparer": {
+      "bytes": 49111,
+      "path": "target/m2/stage62-checkpoint-01/prepare.py",
+      "sha256": "50031bc7bc6884b01a78457ff32a036ac776b4be5607edff778f1b924ac97e72"
+    }
+  },
+  "baseline": "Pkl 0.32.0",
+  "collection": {
+    "collection-conversion-controls": {
+      "chromium": {
+        "pass": 116
+      },
+      "expected_compared_rows_per_target": 116,
+      "module_uri": "file:///stage62/collection-conversion-controls.pkl",
+      "napi": {
+        "pass": 116
+      },
+      "native": {
+        "pass": 116
+      },
+      "native_report": {
+        "bytes": 76165,
+        "path": "target/m2/stage62-collection-conversion-controls-native-comparison-01/report.json",
+        "sha256": "71801de0ac84aa077c956fb0a01faf7c851f23930ae91e5180dec70dd9fd6654"
+      },
+      "portable_report": {
+        "bytes": 42086,
+        "path": "target/m2/stage62-collection-conversion-controls-portable-capture-01/report.json",
+        "sha256": "77c00fd2daeba38e7ac720df2d7ed3d24f418779d19da92c127a0d8cc102f2e6"
+      },
+      "rows": 58
+    },
+    "collection-conversions": {
+      "chromium": {
+        "pass": 472
+      },
+      "expected_compared_rows_per_target": 472,
+      "module_uri": "file:///stage62/collection-conversions.pkl",
+      "napi": {
+        "pass": 472
+      },
+      "native": {
+        "pass": 472
+      },
+      "native_report": {
+        "bytes": 123703,
+        "path": "target/m2/stage62-collection-conversions-native-comparison-01/report.json",
+        "sha256": "ee906b2b96ed564bffa016cef6a9b58d7269a6b9b048611009d878d7ead2207f"
+      },
+      "portable_report": {
+        "bytes": 46492,
+        "path": "target/m2/stage62-collection-conversions-portable-capture-01/report.json",
+        "sha256": "5b401b08657d2ec4857b6d459c78f070c5417a7e455a0bfbb743e81d7ccdb430"
+      },
+      "rows": 236
+    },
+    "collection-default-contracts": {
+      "chromium": {
+        "pass": 44
+      },
+      "expected_compared_rows_per_target": 44,
+      "module_uri": "file:///stage62/collection-default-contracts.pkl",
+      "napi": {
+        "pass": 44
+      },
+      "native": {
+        "pass": 44
+      },
+      "native_report": {
+        "bytes": 66115,
+        "path": "target/m2/stage62-collection-default-contracts-native-comparison-01/report.json",
+        "sha256": "a07f217c47b55e80dad1d61a14fa3e74ccc9f23bb6fbbbe38f1d89aff26d112f"
+      },
+      "portable_report": {
+        "bytes": 40829,
+        "path": "target/m2/stage62-collection-default-contracts-portable-capture-01/report.json",
+        "sha256": "f08f0f856bca4aa907788b7767b5865c3907374b29d66f62f31f4243c573fa88"
+      },
+      "rows": 22
+    },
+    "collection-dynamic-render": {
+      "chromium": {
+        "pass": 20
+      },
+      "expected_compared_rows_per_target": 20,
+      "module_uri": "file:///stage62/dynamic-render.pkl",
+      "napi": {
+        "pass": 20
+      },
+      "native": {
+        "pass": 20
+      },
+      "native_report": {
+        "bytes": 62511,
+        "path": "target/m2/stage62-collection-dynamic-render-native-comparison-01/report.json",
+        "sha256": "0ec5c44f819aab11859ea3a0e604c73ba1da4e49d795eab3576ef90b67c14243"
+      },
+      "portable_report": {
+        "bytes": 40081,
+        "path": "target/m2/stage62-collection-dynamic-render-portable-capture-01/report.json",
+        "sha256": "a4137fb6fc31fe42222322fbf481cc53b071c0c2791a6dd40b05c5bc740c22dc"
+      },
+      "rows": 10
+    },
+    "collection-lookups": {
+      "chromium": {
+        "pass": 266
+      },
+      "expected_compared_rows_per_target": 266,
+      "module_uri": "file:///stage62/collection-lookups.pkl",
+      "napi": {
+        "pass": 266
+      },
+      "native": {
+        "pass": 266
+      },
+      "native_report": {
+        "bytes": 95978,
+        "path": "target/m2/stage62-collection-lookups-native-comparison-01/report.json",
+        "sha256": "ee3b12cc490de43b225e39d473eae5f562d7adb57cd4848a87a0ca75735d3a8c"
+      },
+      "portable_report": {
+        "bytes": 43476,
+        "path": "target/m2/stage62-collection-lookups-portable-capture-01/report.json",
+        "sha256": "ea57d90079ffe9b0baed9dc15bcc863c69a717734b6b20fbd404a4975e5b749c"
+      },
+      "rows": 133
+    },
+    "collection-property-names": {
+      "chromium": {
+        "pass": 52
+      },
+      "expected_compared_rows_per_target": 52,
+      "module_uri": "file:///stage62/collection-property-names.pkl",
+      "napi": {
+        "pass": 52
+      },
+      "native": {
+        "pass": 52
+      },
+      "native_report": {
+        "bytes": 66671,
+        "path": "target/m2/stage62-collection-property-names-native-comparison-01/report.json",
+        "sha256": "929742af6fa9ec195a9d1b12a830d57ed775b1b106e02950ac9ebca86d4e7c19"
+      },
+      "portable_report": {
+        "bytes": 40477,
+        "path": "target/m2/stage62-collection-property-names-portable-capture-01/report.json",
+        "sha256": "7914f3b0e619c425544f07387a3224205d35772a179774dcef721b94081a246f"
+      },
+      "rows": 26
+    }
+  },
+  "comparison": {
+    "boundary": "two native, N-API and Chromium complete string sessions per fixture; seven exact common channels and whole process protocol",
+    "report": {
+      "bytes": 31310,
+      "path": "target/m2/stage62-comparison-validation-01/report.json",
+      "sha256": "958d719b4322d7e156c26e5afd7857a91c1976698521cbdfc2ff6b2f4a67fe96"
+    }
+  },
+  "evidence": {
+    "closeout": {
+      "archive": {
+        "bytes": 17528887,
+        "path": "reports/m2/stage62-closeout-evidence.tar.gz",
+        "sha256": "896646708dd0cb0b0a5aea3cf0af1ec636d6787bd51b3ab92a7194866054adc8"
+      },
+      "full_member_readback_verified": true,
+      "members": 6334,
+      "publication": {
+        "bytes": 1562222,
+        "path": "reports/m2/stage62-closeout-publication.json",
+        "sha256": "3e6fb5496c30173e76c407f0496d6f0eeca92a3075e90b786f4c66616fe89fe1"
+      }
+    },
+    "native": {
+      "archive": {
+        "bytes": 96038306,
+        "path": "reports/m2/stage62-native-evidence.tar.gz",
+        "sha256": "5e5d768b5afe5a5e735490f263c590d1ee3d946b503d39feac01c3c99f5a867a"
+      },
+      "full_member_readback_verified": true,
+      "members": 37445,
+      "publication": {
+        "bytes": 9258642,
+        "path": "reports/m2/stage62-native-publication.json",
+        "sha256": "a194581a4d4dd48f252289b6d4c34394380da87b3c7e99726d850023d7a3f7b6"
+      }
+    },
+    "platform": {
+      "archive": {
+        "bytes": 15777951,
+        "path": "reports/m2/stage62-platform-evidence.tar.gz",
+        "sha256": "3ed9c1814794171e484386962aebe8661b6183fb249245da590fbc2f27d616cf"
+      },
+      "full_member_readback_verified": true,
+      "members": 73306,
+      "publication": {
+        "bytes": 18391484,
+        "path": "reports/m2/stage62-platform-publication.json",
+        "sha256": "f6dbe53871849bd6bcc4666b2e33988bc3d1f460e7929df95154abbd08bab61e"
+      }
+    },
+    "validation": {
+      "archive": {
+        "bytes": 44866659,
+        "path": "reports/m2/stage62-validation-evidence.tar.gz",
+        "sha256": "ffcfc8af338d43e72e083572c2c50c940617409922e84d5ecce45fcfabf57b4d"
+      },
+      "full_member_readback_verified": true,
+      "members": 43492,
+      "publication": {
+        "bytes": 9942903,
+        "path": "reports/m2/stage62-validation-publication.json",
+        "sha256": "0218cfdf6656d1af6616360e993edfa15adcb026876f6d1805f7454869c630ba"
+      }
+    }
+  },
+  "full_m2_complete": false,
+  "full_public_api_comparison_passed": false,
+  "independent_final_review": {
+    "bytes": 7663,
+    "path": "target/m2/stage62-review-02/review.json",
+    "sha256": "1a2f4fb86fa085f0d71070f892376008b4ce257d0c7ff4651a48aaea12839f40"
+  },
+  "java_authority": {
+    "file:///stage62/collection-conversion-controls.pkl": {
+      "boundary": "seven common raw UTF-8/UTF-16/status channels; Java exception and cause metadata remain producer-only",
+      "checkpoint": {
+        "bytes": 9684,
+        "path": "reports/m2/stage62-controls-java-checkpoint.json",
+        "sha256": "02e8632e3cf85ccdf06253a9b54831cec97c2ce22ebab6109e20b6dfb665a86a"
+      },
+      "fixture": "tests/fixtures/m2-collection-conversion-controls",
+      "fixture_archive": {
+        "bytes": 223024,
+        "path": "tests/fixtures/m2-collection-conversion-controls/oracle-evidence.tar.gz",
+        "sha256": "c254f3cad568223c1da8f75bd5dad0a74f64867132a292bf1f1a312414f7f9da"
+      },
+      "independent_java_publications": [
+        {
+          "bytes": 1294054,
+          "path": "reports/m2/stage62-controls-java-evidence.tar.gz",
+          "sha256": "5fee552fc2b5812d4724ef311e4f1698a69264f679b1d4aa6364f2351b4b8779"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 58,
+      "statuses_per_jvm": {
+        "error": 14,
+        "success": 44
+      }
+    },
+    "file:///stage62/collection-conversions.pkl": {
+      "boundary": "seven common raw UTF-8/UTF-16/status channels; Java exception and cause metadata remain producer-only",
+      "checkpoint": {
+        "bytes": 13204,
+        "path": "reports/m2/stage62-java-checkpoint.json",
+        "sha256": "1fa10f11d7162442becb15a80adbe96f2e63505a9f84442e6727f63f4ba8d45d"
+      },
+      "fixture": "tests/fixtures/m2-collection-conversions",
+      "fixture_archive": {
+        "bytes": 513094,
+        "path": "tests/fixtures/m2-collection-conversions/oracle-evidence.tar.gz",
+        "sha256": "e2e7db0435308cd2b3ff0656e0ba799e621535054a67c45ef0fd08594b00d8f6"
+      },
+      "independent_java_publications": [
+        {
+          "bytes": 1031529,
+          "path": "reports/m2/stage62-java-validation.tar.gz",
+          "sha256": "b07a7a1318d36a266e22c0be162406289286768b0fdd8b6fe53328f818e62fce"
+        },
+        {
+          "bytes": 2288928,
+          "path": "reports/m2/stage62-java-history.tar.gz",
+          "sha256": "22dc68f3faa35d6f0ee41b4a3959b4bda0705adb6b3dc9806356fe11eb287d2f"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 236,
+      "statuses_per_jvm": {
+        "error": 78,
+        "success": 158
+      }
+    },
+    "file:///stage62/collection-default-contracts.pkl": {
+      "boundary": "seven common raw UTF-8/UTF-16/status channels; Java exception and cause metadata remain producer-only",
+      "checkpoint": {
+        "bytes": 9873,
+        "path": "reports/m2/stage62-default-contracts-java-checkpoint.json",
+        "sha256": "7600fc9bc84892bcfdf2a70dd5555a71180efd4714b10312b3c6fbeb18faed80"
+      },
+      "fixture": "tests/fixtures/m2-collection-default-contracts",
+      "fixture_archive": {
+        "bytes": 155316,
+        "path": "tests/fixtures/m2-collection-default-contracts/oracle-evidence.tar.gz",
+        "sha256": "0c7ed42e1f786ea02086f6cf1c736b1c326835801221512568ed695dfc96c126"
+      },
+      "independent_java_publications": [
+        {
+          "bytes": 1278026,
+          "path": "reports/m2/stage62-default-contracts-java-evidence.tar.gz",
+          "sha256": "fb0d44010780fda76fbbce8248256f692a10535029caf7e9207786f60ffd60e5"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 22,
+      "statuses_per_jvm": {
+        "error": 10,
+        "success": 12
+      }
+    },
+    "file:///stage62/collection-lookups.pkl": {
+      "boundary": "seven common raw UTF-8/UTF-16/status channels; Java exception and cause metadata remain producer-only",
+      "checkpoint": {
+        "bytes": 10741,
+        "path": "reports/m2/stage62-lookups-java-checkpoint.json",
+        "sha256": "f97ba22d7062daaec7a124c6b0ccd4e4d22808fa9487c77432dfbb765de8a85e"
+      },
+      "fixture": "tests/fixtures/m2-collection-lookups",
+      "fixture_archive": {
+        "bytes": 371632,
+        "path": "tests/fixtures/m2-collection-lookups/oracle-evidence.tar.gz",
+        "sha256": "2c75876849e8b9d0f87a72c1b4aa874c0f613d2d40cbdbb3e03fd23d48fa6317"
+      },
+      "independent_java_publications": [
+        {
+          "bytes": 4213019,
+          "path": "reports/m2/stage62-lookups-java-evidence.tar.gz",
+          "sha256": "35a27812180afd101301e73caf32cd20843d4ace01909256941bf37ff2ee9928"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 133,
+      "statuses_per_jvm": {
+        "error": 51,
+        "success": 82
+      }
+    },
+    "file:///stage62/collection-property-names.pkl": {
+      "boundary": "seven common raw UTF-8/UTF-16/status channels; Java exception and cause metadata remain producer-only",
+      "checkpoint": {
+        "bytes": 10941,
+        "path": "reports/m2/stage62-property-names-java-checkpoint.json",
+        "sha256": "fed36269559335503b6436e44525e68049231c11e01595e51a55401c22275a50"
+      },
+      "fixture": "tests/fixtures/m2-collection-property-names",
+      "fixture_archive": {
+        "bytes": 158570,
+        "path": "tests/fixtures/m2-collection-property-names/oracle-evidence.tar.gz",
+        "sha256": "4fd0bab6188625485f311e592a4e02303ddfcf05d63a86d9c30ec668ed875ac2"
+      },
+      "independent_java_publications": [
+        {
+          "bytes": 1462251,
+          "path": "reports/m2/stage62-property-names-java-evidence.tar.gz",
+          "sha256": "2b06905374dd1cb2eeaf81b1aef9bc5b4ba509e041590b4e902c6564998a8336"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 26,
+      "statuses_per_jvm": {
+        "success": 26
+      }
+    },
+    "file:///stage62/dynamic-render.pkl": {
+      "boundary": "seven common raw UTF-8/UTF-16/status channels; Java exception and cause metadata remain producer-only",
+      "checkpoint": {
+        "bytes": 9415,
+        "path": "reports/m2/stage62-dynamic-render-java-checkpoint.json",
+        "sha256": "b34aee47774773601688415f555ab3e7260c6933257706b00b2b0f2e7076adca"
+      },
+      "fixture": "tests/fixtures/m2-collection-dynamic-render",
+      "fixture_archive": {
+        "bytes": 147108,
+        "path": "tests/fixtures/m2-collection-dynamic-render/oracle-evidence.tar.gz",
+        "sha256": "29344c12e72341e574e8da0e20d56a43818a75872afecb997c6a062d787cd483"
+      },
+      "independent_java_publications": [
+        {
+          "bytes": 1072150,
+          "path": "reports/m2/stage62-dynamic-render-java-evidence.tar.gz",
+          "sha256": "db3a47bf661708c86eb01a6645ea551a97874e49d32578b33178bfd5f1cee885"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 10,
+      "statuses_per_jvm": {
+        "success": 10
+      }
+    }
+  },
+  "kind": "stage62-collection-conversions-implementation-checkpoint",
+  "native_and_platform": {
+    "m1_platform_contract": {
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "oracle_passed": {
+        "browser": 6076,
+        "node": 6076,
+        "rust": 6076
+      },
+      "report": {
+        "bytes": 3390273,
+        "path": "target/m2/stage62-m1-platform-contract-01/report.json",
+        "sha256": "05e154e1a66562ee5417e28e5ee1ed706aea7f4b801e5c4ed85727fd2706c966"
+      },
+      "shared_engine_passed": 6078
+    },
+    "native_acquisition": {
+      "bytes": 13247,
+      "path": "target/m2/stage62-native-acquisition-01/report.json",
+      "sha256": "484d6abb8a32ec1fbdc0faa8e4e2ccc4db11b05f3ee7f7999a6b9e7d784cb250"
+    },
+    "native_build": {
+      "bytes": 4757,
+      "path": "target/m2/stage62-native-build-01/build.json",
+      "sha256": "e05bd6e443fa8cb4eea6b59033965cf706fb53c7ce5cf9c4d18d5b38dd074ec1"
+    },
+    "platform_wrapper": {
+      "bytes": 26874,
+      "path": "target/m2/stage62-platform-validation-01/report.json",
+      "sha256": "96371eceb71b2f5c77633ea29c9572d6a8c60311c4109e18db6f209aa3f03d16"
+    }
+  },
+  "original_modules": {
+    "blocked_required": 2,
+    "failure_audit": {
+      "bytes": 494023,
+      "path": "target/m2/stage62-original-failure-audit-01/report.json",
+      "sha256": "4595a9d165a9344e461435dc81d266ae3a2a0f4cc4dc241bfbc307c035c7bfb6"
+    },
+    "full_m2_complete": false,
+    "historical_baseline_addendum": {
+      "bytes": 5888,
+      "path": "target/m2/stage62-original-failure-audit-addendum-01/report.json",
+      "sha256": "d847121cd70c6de12f1230500249e32cf8ebad95687ba08bf454892c25336fe9"
+    },
+    "launch": {
+      "bytes": 2344,
+      "path": "target/m2/stage62-original-conversions-launch-01/report.json",
+      "sha256": "d479745b2934f5705d00f7987a1cf979448483296b3718ac56dfdb52b895a875"
+    },
+    "prior17_stage61_to_stage62_transitions": {
+      "mismatch->candidate-unsupported": 2,
+      "pass->pass": 15
+    },
+    "prior17_status_transitions": {
+      "candidate-unsupported->pass": 1,
+      "mismatch->candidate-unsupported": 2,
+      "mismatch->pass": 2,
+      "pass->pass": 12
+    },
+    "prior17_transition_baseline": "Stage60 to Stage62 historical comparison",
+    "prior62_status_transitions": {
+      "candidate-unsupported->candidate-unsupported": 21,
+      "mismatch->candidate-unsupported": 3,
+      "mismatch->mismatch": 8,
+      "mismatch->pass": 4,
+      "pass->pass": 26
+    },
+    "report": {
+      "bytes": 1760929,
+      "path": "target/m2/stage62-original-conversions-01/report.json",
+      "sha256": "52e0b381d9b5ef71a64d1bcb6d010d26b42f8c6ef7b8a60b3c028c55bab06aca"
+    },
+    "selected": 90,
+    "selected_status": "failed",
+    "selection": {
+      "bytes": 290463,
+      "path": "target/m2/stage62-original-conversions-01/selection.json",
+      "sha256": "9774e21b651d90177527b346703ed5ff60770148595efdd03b7c11b5126e863a"
+    },
+    "selection_origin": {
+      "bytes": 42609,
+      "path": "target/m2/stage62-original-selection-02/selection-origin.json",
+      "sha256": "043ebe41886a5653517e8dff6f821b0cdf6ae06e4a06ee869a2f44b10446e8cf"
+    },
+    "statuses": {
+      "candidate-unsupported": 32,
+      "mismatch": 22,
+      "oracle-error": 1,
+      "pass": 35
+    }
+  },
+  "performance_targets_achieved": false,
+  "prior_candidate_supersession": {
+    "bytes": 408,
+    "path": "target/m2/stage62-candidate-supersession-01/attempt.json",
+    "sha256": "3068a94111465f0570d98d48b6631a69d4513db55618eecde0235fc423091666"
+  },
+  "prior_required_rust_attempt": {
+    "bytes": 5485,
+    "path": "target/m2/stage62-rust-validation-01/report.json",
+    "sha256": "9624ceb85d2e20427a705e8641d1a84566f97cf66250716e55381c872ef9a141"
+  },
+  "remaining": [
+    "The strict whole-language M2 completion gate and unmapped or unimplemented inventory items remain open.",
+    "Selected original module failures and two blocked package/HTTP/TLS originals remain required and are not passes.",
+    "The two known M1 Regex failures and portable Any scalar-regex mismatch remain failed compatibility cases.",
+    "Typed export behavior, Java wrapper/reference identity and broader public API metadata remain separate obligations.",
+    "Release platform coverage and Java-compatible speed and peak-memory targets remain open."
+  ],
+  "rust_validation": {
+    "base_commit": "b262208ccc537af2845d2107226bb4dac0ba7ecf",
+    "checks": [
+      {
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0,
+        "name": "references"
+      },
+      {
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "name": "format"
+      },
+      {
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "name": "clippy"
+      },
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "name": "workspace-tests"
+      },
+      {
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "name": "wasm-runtime"
+      }
+    ],
+    "core_freeze": {
+      "bytes": 6363,
+      "path": "target/m2/stage62-core-freeze-02/freeze.json",
+      "sha256": "1a8d21bc8312fa19ce4a2cee8305d54f47e2c18c1b98e0dd85761a10c44240d8"
+    },
+    "core_native_replays": {
+      "target/m2/stage62-core-controls-05/comparison.json": {
+        "passes": 58,
+        "rows": 58
+      },
+      "target/m2/stage62-core-defaults-03/comparison.json": {
+        "passes": 22,
+        "rows": 22
+      },
+      "target/m2/stage62-core-focused-19/comparison.json": {
+        "passes": 236,
+        "rows": 236
+      },
+      "target/m2/stage62-core-lookups-05/comparison.json": {
+        "passes": 133,
+        "rows": 133
+      },
+      "target/m2/stage62-core-property-names-01/comparison.json": {
+        "passes": 26,
+        "rows": 26
+      },
+      "target/m2/stage62-core-render-03/comparison.json": {
+        "passes": 10,
+        "rows": 10
+      }
+    },
+    "final_source_selected_validation": {
+      "bytes": 1835,
+      "path": "target/m2/stage62-core-focused-19/report.json",
+      "sha256": "ad4f7f6f93a062e3db28f63b70dfcb088bacb8d09e3742275d875e046f31fe25"
+    },
+    "focused_history": [
+      {
+        "attempt": 1,
+        "commands": [],
+        "report": {
+          "bytes": 170,
+          "path": "target/m2/stage62-core-focused-01/report.json",
+          "sha256": "79f50964696a7c21fce97c06410bed997850dbb7e08683edd239d55788fe6134"
+        },
+        "source_stable": null
+      },
+      {
+        "attempt": 2,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "fmt"
+          },
+          {
+            "exit_code": 0,
+            "name": "build"
+          }
+        ],
+        "report": {
+          "bytes": 611,
+          "path": "target/m2/stage62-core-focused-02/report.json",
+          "sha256": "a83df2345e89bb46247877a41f3f13bd54e4fbd5e94a1a1b8cff82ea30b15463"
+        },
+        "source_stable": false
+      },
+      {
+        "attempt": 3,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "capture"
+          }
+        ],
+        "report": {
+          "bytes": 876,
+          "path": "target/m2/stage62-core-focused-03/report.json",
+          "sha256": "ef6f340da9cb50ccbf520408a0928165bd411a633699b149c938b4b43286ea18"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 4,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "format"
+          },
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "capture"
+          }
+        ],
+        "report": {
+          "bytes": 1094,
+          "path": "target/m2/stage62-core-focused-04/report.json",
+          "sha256": "09a8ec2d5c38bf50f0a0843f1d1e388c4a28ad987b8d70dbb8d1b19e5dbf309f"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 5,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "format"
+          },
+          {
+            "exit_code": 0,
+            "name": "tests"
+          }
+        ],
+        "report": {
+          "bytes": 717,
+          "path": "target/m2/stage62-core-focused-05/report.json",
+          "sha256": "68cebccc120ff5293e8dc2b6b962364d30dd86ed7babfc694814025010db4fa1"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 6,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "runtime-tests"
+          },
+          {
+            "exit_code": 0,
+            "name": "clippy"
+          },
+          {
+            "exit_code": 0,
+            "name": "wasm"
+          }
+        ],
+        "report": {
+          "bytes": 980,
+          "path": "target/m2/stage62-core-focused-06/report.json",
+          "sha256": "4ed5dd6a96acc650ec97ce0ab2271df4324d538eeee39a38632eb5b7c807c0cd"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 7,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "format"
+          },
+          {
+            "exit_code": 0,
+            "name": "tests"
+          },
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "capture"
+          }
+        ],
+        "report": {
+          "bytes": 1541,
+          "path": "target/m2/stage62-core-focused-07/report.json",
+          "sha256": "689041623891bfb06c1e046ca251e8731d7faf50b8872fa5f741e7f3d93805d3"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 8,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "format"
+          },
+          {
+            "exit_code": 0,
+            "name": "tests"
+          },
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "capture"
+          }
+        ],
+        "report": {
+          "bytes": 1606,
+          "path": "target/m2/stage62-core-focused-08/report.json",
+          "sha256": "28086cae4d72c2a58f91ade0f76c51f50854ad717e79096730c9c965d10611c6"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 9,
+        "commands": [
+          {
+            "exit_code": 101,
+            "name": "runtime-tests"
+          },
+          {
+            "exit_code": 0,
+            "name": "clippy"
+          },
+          {
+            "exit_code": 0,
+            "name": "wasm"
+          }
+        ],
+        "report": {
+          "bytes": 1001,
+          "path": "target/m2/stage62-core-focused-09/report.json",
+          "sha256": "3fc7f031ca0b9dc0886301194d73bc4e9a89081b34d89074179ddf1a6bda1492"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 10,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "format"
+          },
+          {
+            "exit_code": 0,
+            "name": "tests"
+          },
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "capture"
+          }
+        ],
+        "report": {
+          "bytes": 1609,
+          "path": "target/m2/stage62-core-focused-10/report.json",
+          "sha256": "537430d5d11a49c9fa08fadf782ad6db6c79cb2a01f60f14fb4111feed4249e8"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 11,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "format"
+          },
+          {
+            "exit_code": 101,
+            "name": "tests"
+          },
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "capture"
+          }
+        ],
+        "report": {
+          "bytes": 1660,
+          "path": "target/m2/stage62-core-focused-11/report.json",
+          "sha256": "675868d87c461a1030b343b810d41a78aaa25fc2e100b166e141b9d6e68b875c"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 12,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "format"
+          },
+          {
+            "exit_code": 101,
+            "name": "tests"
+          },
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "capture"
+          }
+        ],
+        "report": {
+          "bytes": 1660,
+          "path": "target/m2/stage62-core-focused-12/report.json",
+          "sha256": "1a2e44f8d790dac1e58c22b29f1911e37ece39d8b7825d5b2d52d26874ca58f7"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 13,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "runtime-tests"
+          },
+          {
+            "exit_code": 0,
+            "name": "clippy"
+          },
+          {
+            "exit_code": 0,
+            "name": "wasm"
+          },
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "fmt-check"
+          }
+        ],
+        "report": {
+          "bytes": 1548,
+          "path": "target/m2/stage62-core-focused-13/report.json",
+          "sha256": "f8dd9efec0df71000eef6cdafd0d77a6835915e449c390827dc883c0b67bbcbf"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 14,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "capture"
+          }
+        ],
+        "report": {
+          "bytes": 874,
+          "path": "target/m2/stage62-core-focused-14/report.json",
+          "sha256": "da4223a553643e7180e37abb3be83a8e4a8193fbd7df5c7cb9ca4049d5545785"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 15,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "format"
+          },
+          {
+            "exit_code": 0,
+            "name": "tests"
+          },
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "capture"
+          }
+        ],
+        "report": {
+          "bytes": 1656,
+          "path": "target/m2/stage62-core-focused-15/report.json",
+          "sha256": "1374d8786bd1b8b9234560b08cb61b41c0dcb44fd124793028a76de1a8c947f7"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 16,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "runtime-tests"
+          },
+          {
+            "exit_code": 0,
+            "name": "clippy"
+          },
+          {
+            "exit_code": 0,
+            "name": "wasm"
+          },
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "fmt-check"
+          }
+        ],
+        "report": {
+          "bytes": 1545,
+          "path": "target/m2/stage62-core-focused-16/report.json",
+          "sha256": "5512464ec212b1b0c935a57183fc920cb02aec6bfe1fc4f795a2ed340f6bfa71"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 17,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "capture"
+          }
+        ],
+        "report": {
+          "bytes": 875,
+          "path": "target/m2/stage62-core-focused-17/report.json",
+          "sha256": "7360e277692ae13744e17e336f991bb1ddc2b7402ab67af6802d74eb2d6ee060"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 18,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "runtime-tests"
+          },
+          {
+            "exit_code": 0,
+            "name": "clippy"
+          },
+          {
+            "exit_code": 0,
+            "name": "wasm"
+          },
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "fmt-check"
+          }
+        ],
+        "report": {
+          "bytes": 1545,
+          "path": "target/m2/stage62-core-focused-18/report.json",
+          "sha256": "310334eb53297b46b8bc6a920c7fd595318de9b841239f90420300007b1e3b22"
+        },
+        "source_stable": true
+      },
+      {
+        "attempt": 19,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "format"
+          },
+          {
+            "exit_code": 0,
+            "name": "tests"
+          },
+          {
+            "exit_code": 0,
+            "name": "build"
+          },
+          {
+            "exit_code": 0,
+            "name": "capture"
+          }
+        ],
+        "report": {
+          "bytes": 1835,
+          "path": "target/m2/stage62-core-focused-19/report.json",
+          "sha256": "ad4f7f6f93a062e3db28f63b70dfcb088bacb8d09e3742275d875e046f31fe25"
+        },
+        "source_stable": true
+      }
+    ],
+    "nested_frontend_child_summaries": 5,
+    "prior_freeze": {
+      "bytes": 4598,
+      "path": "target/m2/stage62-core-freeze-01/freeze.json",
+      "sha256": "9765ae3ac2f78d7c2d3f703126e585cbc1da92d717afb69a43b0c90ff182df96"
+    },
+    "prior_freeze_invalidation": {
+      "bytes": 933,
+      "path": "target/m2/stage62-core-freeze-invalidation-01/invalidation.json",
+      "sha256": "2c182c48055563eb9d578b0df834eee9c3a927b10739e84a8e252b1423c9ff09"
+    },
+    "prior_full_runtime_a6_input_equivalent": false,
+    "prior_full_runtime_source_difference": {
+      "bytes": 726,
+      "path": "target/m2/stage62-core-freeze-02/test-uri-correction.json",
+      "sha256": "e67c881d48e4f180a320b64275b15305b1815d2bb5d320a5502f119fc7516b4d"
+    },
+    "report": {
+      "bytes": 5494,
+      "path": "target/m2/stage62-rust-validation-02/report.json",
+      "sha256": "a24373229c1fd236b3b0bae6480295dec08b6f607b2d8f8d3a00c9e692042430"
+    },
+    "source_count": 165344,
+    "source_manifest": {
+      "bytes": 108261429,
+      "path": "target/m2/stage62-rust-validation-02/sources.json",
+      "sha256": "5fedf7434652044f44641f7e4b6d621b239f98df36d54dd1152c6d062321dba9"
+    },
+    "workspace_deduplication": "Five nested 256 KiB frontend child summaries also appear in the parent suite summary; subtract those five from the 969 raw passed-summary sum. The final-source required workspace check has 964 unique passed. Focused18 prior-source runtime 958 plus xtask six agrees numerically, without a claim of identical A6 test URI inputs.",
+    "workspace_raw_harness_totals": {
+      "failed": 0,
+      "ignored": 2,
+      "passed": 969
+    },
+    "workspace_test_summaries": [
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 151
+      },
+      {
+        "fail": 0,
+        "ignored": 1,
+        "pass": 10
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 15
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 3
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 1,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 6
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 5
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 8
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 9
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 10
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 10
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 8
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 18
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 7
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 3
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 6
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 9
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 3
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 10
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 6
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 7
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 6
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 10
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 3
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 6
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 5
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 7
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 10
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 7
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 3
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 5
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 21
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 5
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 6
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 6
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 8
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 7
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 7
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 16
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 8
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 5
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 3
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 7
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 6
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 15
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 10
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 3
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 8
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 16
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 11
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 9
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 7
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 12
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 27
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 3
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 8
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 8
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 7
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 13
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 12
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 9
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 3
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 10
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 8
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 41
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 8
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 6
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 8
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 9
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 4
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 9
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 13
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 6
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 12
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 10
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 9
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 7
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 8
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 2
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 13
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 1
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 13
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 0
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 6
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 0
+      },
+      {
+        "fail": 0,
+        "ignored": 0,
+        "pass": 0
+      }
+    ],
+    "workspace_unique_test_outcomes": {
+      "failed": 0,
+      "ignored": 2,
+      "passed": 964
+    }
+  },
+  "scalar_regressions": {
+    "bytes": {
+      "chromium": {
+        "pass": 600
+      },
+      "napi": {
+        "pass": 600
+      },
+      "native": {
+        "pass": 600
+      }
+    },
+    "data-size": {
+      "chromium": {
+        "pass": 510
+      },
+      "napi": {
+        "pass": 510
+      },
+      "native": {
+        "pass": 510
+      }
+    },
+    "duration": {
+      "chromium": {
+        "pass": 548
+      },
+      "napi": {
+        "pass": 548
+      },
+      "native": {
+        "pass": 548
+      }
+    },
+    "intseq": {
+      "chromium": {
+        "pass": 474
+      },
+      "napi": {
+        "pass": 474
+      },
+      "native": {
+        "pass": 474
+      }
+    }
+  },
+  "schema": 1,
+  "source_binding": {
+    "base_commit": "b262208ccc537af2845d2107226bb4dac0ba7ecf",
+    "status": "Precommit frozen source snapshots; actual Git implementation binding follows separately."
+  },
+  "tool_validation_and_inventory": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "python"
+          },
+          {
+            "exit_code": 0,
+            "name": "python-optimized"
+          },
+          {
+            "exit_code": 0,
+            "name": "javascript"
+          }
+        ],
+        "complete": true,
+        "report": {
+          "bytes": 2927,
+          "path": "target/m2/stage62-tool-development-01/report.json",
+          "sha256": "602ea89e886aa6055100ef60c189eacbdfe0595a88cb69e19c89a625c7efe0ee"
+        }
+      },
+      {
+        "attempt": 2,
+        "commands": [
+          {
+            "exit_code": -15,
+            "name": "python"
+          }
+        ],
+        "complete": false,
+        "report": {
+          "bytes": 2039,
+          "path": "target/m2/stage62-tool-development-02/report.json",
+          "sha256": "3062e1cd2f8f3ffd56794d5a801e7e61b4da28da14861c23ea1cadf043890baa"
+        }
+      },
+      {
+        "attempt": 3,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "python"
+          },
+          {
+            "exit_code": 0,
+            "name": "python-optimized"
+          },
+          {
+            "exit_code": 0,
+            "name": "javascript"
+          },
+          {
+            "exit_code": 0,
+            "name": "inventory"
+          }
+        ],
+        "complete": true,
+        "report": {
+          "bytes": 3878,
+          "path": "target/m2/stage62-tool-development-03/report.json",
+          "sha256": "26e2a45bc039fa1a96024c1295d152e0af406e711a1d51439fd2eac63cfa6d10"
+        }
+      },
+      {
+        "attempt": 4,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "python"
+          },
+          {
+            "exit_code": 0,
+            "name": "python-optimized"
+          },
+          {
+            "exit_code": 0,
+            "name": "javascript"
+          },
+          {
+            "exit_code": 0,
+            "name": "inventory"
+          }
+        ],
+        "complete": true,
+        "report": {
+          "bytes": 3878,
+          "path": "target/m2/stage62-tool-development-04/report.json",
+          "sha256": "06ddc5ef64da6f10e0b0226d2bff7784d247cbdd11b05829d9787e4263f68a6f"
+        }
+      },
+      {
+        "attempt": 5,
+        "commands": [
+          {
+            "exit_code": 0,
+            "name": "python"
+          },
+          {
+            "exit_code": 0,
+            "name": "python-optimized"
+          },
+          {
+            "exit_code": 0,
+            "name": "javascript"
+          },
+          {
+            "exit_code": 0,
+            "name": "inventory"
+          }
+        ],
+        "complete": true,
+        "report": {
+          "bytes": 4010,
+          "path": "target/m2/stage62-tool-development-05/report.json",
+          "sha256": "f868ef4fd83e0480ff28229d4153c48370d8a101db0c996e85772cfe9c2d3a2d"
+        }
+      }
+    ],
+    "final_javascript_tests": 16,
+    "final_manifest_refresh_changed_fields": 0,
+    "final_python_tests_per_mode": [
+      61,
+      61
+    ],
+    "full_completion_gate_passed": false,
+    "inventory_counts": {
+      "cases": 4527,
+      "cases_by_execution": {
+        "ready": 4416,
+        "unimplemented": 71,
+        "unmapped": 40
+      },
+      "requirements": 475,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 31,
+        "specification": 198
+      }
+    },
+    "manifest_changed_implementation_link_hashes": 102,
+    "manifest_refresh": {
+      "bytes": 2012,
+      "path": "target/m2/stage62-manifest-refresh-02/report.json",
+      "sha256": "cf8c3ceb8e2fc4086ab5057b24b5bff075204c9678c2eff675a6b778a60f4c7a"
+    },
+    "prior_manifest_refresh": {
+      "bytes": 33744,
+      "path": "target/m2/stage62-manifest-refresh-01/report.json",
+      "sha256": "961349f2da85c3479a2b7911bb7f4c20f915041ba7bbf00dddf201a6031118e4"
+    }
+  },
+  "verification_provenance": "Recorded local execution, not hosted CI."
+}

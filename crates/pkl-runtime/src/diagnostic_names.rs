@@ -244,3 +244,65 @@ pub(crate) const LIST_METHODS: &[(&str, &str, usize)] = &[
     ("toDynamic", "toDynamic()", 0),
     ("toBytes", "toBytes()", 0),
 ];
+
+/// Source-derived candidates for the lazy and strict collection classes.
+/// This catalog describes declarations, including still unsupported methods.
+pub(crate) fn collection_members(class: &str) -> (Vec<String>, Vec<(String, String, usize)>) {
+    type Catalog = std::collections::BTreeMap<String, (Vec<String>, Vec<(String, String, usize)>)>;
+    static CATALOG: std::sync::OnceLock<Catalog> = std::sync::OnceLock::new();
+    let catalog = CATALOG.get_or_init(|| {
+        let parsed = crate::parser::parse_module(&crate::stdlib_sources::base().text)
+            .expect("pinned base declarations");
+        let mut catalog = Catalog::new();
+        for declaration in &parsed.members {
+            let crate::syntax::ExprKind::Class { members, .. } = &declaration.expr.kind else {
+                continue;
+            };
+            let mut properties = Vec::new();
+            let mut methods = Vec::new();
+            for member in members.iter().filter(|member| !member.local) {
+                if let crate::syntax::ExprKind::Function {
+                    parameters,
+                    method: true,
+                    ..
+                } = &member.expr.kind
+                {
+                    let signature = format!(
+                        "{}({})",
+                        member.name,
+                        parameters
+                            .iter()
+                            .map(|p| p.name.as_str())
+                            .collect::<Vec<_>>()
+                            .join(", ")
+                    );
+                    methods.push((member.name.clone(), signature, parameters.len()));
+                } else {
+                    properties.push(member.name.clone());
+                }
+            }
+            catalog.insert(declaration.name.clone(), (properties, methods));
+        }
+        catalog
+    });
+    let mut properties = Vec::new();
+    let mut methods: Vec<(String, String, usize)> = Vec::new();
+    let parents: &[&str] = if matches!(class, "List" | "Set") {
+        &["Any", "Collection"]
+    } else {
+        &["Any", "Object"]
+    };
+    for name in parents.iter().copied().chain(std::iter::once(class)) {
+        if let Some((props, funcs)) = catalog.get(name) {
+            properties.extend(props.iter().cloned());
+            for candidate in funcs {
+                if let Some(existing) = methods.iter_mut().find(|method| method.0 == candidate.0) {
+                    *existing = candidate.clone();
+                } else {
+                    methods.push(candidate.clone());
+                }
+            }
+        }
+    }
+    (properties, methods)
+}

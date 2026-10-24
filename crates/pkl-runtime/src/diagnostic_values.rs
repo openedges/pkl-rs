@@ -626,7 +626,10 @@ impl Renderer<'_> {
             }
             match member.kind {
                 CollectionMemberKind::Property => {
-                    tasks.push(RenderTask::Identifier(member.name.clone().into()))
+                    let Value::String(name) = &member.key else {
+                        unreachable!("property string key");
+                    };
+                    tasks.push(RenderTask::Identifier(name.clone()))
                 }
                 CollectionMemberKind::Entry => {
                     tasks.push(RenderTask::Text("[".into()));

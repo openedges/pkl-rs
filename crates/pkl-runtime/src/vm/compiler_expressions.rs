@@ -1068,7 +1068,12 @@ impl Compiler<'_> {
                     let has_default =
                         matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. });
                     if has_default {
-                        self.default_type(&check, output, ty.span)?;
+                        let origin = RuntimeFrame {
+                            source: self.source.clone(),
+                            span: expression.span,
+                            member: self.member.concat(&".default".into()),
+                        };
+                        self.default_type_with_origin(&check, output, ty.span, Some(&origin))?;
                     }
                     if matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. }) {
                         work.push(Work::Emit(

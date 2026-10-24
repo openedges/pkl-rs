@@ -108,6 +108,18 @@ mismatch, and 21 are unsupported. The previous 17-program cohort improves
 from 12 to 15 matches, with no passing case regressing. These are selected
 results; all nine M2 workstreams still have unmet completion criteria.
 
+The [collection conversion checkpoint](reports/m2/stage62-implementation-checkpoint.json)
+adds shared strict/lazy object conversions, optional and defaulted lookups,
+Dynamic length, Set addition, and Bytes iteration/spread. Six independent Java
+fixtures contain 485 expressions; native, N-API, and Chromium each match all
+970 observations across two repetitions, including full UTF-16 and error bytes.
+The implementation also separates authored NUL property names from synthetic
+surrogate names. Existing scalar regressions remain unchanged, including the
+known Regex failures. The expanded 90-program original selection has 35 matches,
+22 mismatches, 32 unsupported results, and one Java heap error. Within the prior
+62 programs, matches increase from 26 to 30 without a passing case regressing.
+These results do not close full M2, typed product APIs, or performance targets.
+
 ## Goals
 
 - Compatibility with the Pkl 0.32.0 language, standard library, CLI, REPL, server, and public APIs.

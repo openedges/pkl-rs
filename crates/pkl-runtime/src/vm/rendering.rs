@@ -887,10 +887,8 @@ impl Vm {
                             &member.descriptor.name,
                         )?;
                         if !annotations.is_empty() {
-                            let property = self.make_pair(
-                                Value::String(member.descriptor.name.clone().into()),
-                                member.value.clone(),
-                            );
+                            let property =
+                                self.make_pair(member.descriptor.key.clone(), member.value.clone());
                             run.tasks.push(Task::Property(PropertyRun {
                                 member,
                                 annotations,
@@ -916,7 +914,11 @@ impl Vm {
                 let mut path = member.members.path.clone();
                 path.push(
                     if member.descriptor.kind == CollectionMemberKind::Property {
-                        PathPart::Property(member.descriptor.name.clone().into())
+                        PathPart::Property(if let Value::String(name) = &member.descriptor.key {
+                            name.clone()
+                        } else {
+                            unreachable!("property string key")
+                        })
                     } else {
                         PathPart::Entry(member.key.clone())
                     },
@@ -972,9 +974,14 @@ impl Vm {
                             if run.indent.is_empty() { ":" } else { ": " }.into(),
                         ));
                         if kind == CollectionMemberKind::Property {
-                            run.tasks.push(Task::Text(json_string(
-                                &output_name.unwrap_or_else(|| descriptor.name.into()),
-                            )));
+                            run.tasks
+                                .push(Task::Text(json_string(&output_name.unwrap_or_else(|| {
+                                    if let Value::String(name) = &descriptor.key {
+                                        name.clone()
+                                    } else {
+                                        unreachable!("property string key")
+                                    }
+                                }))));
                         } else {
                             run.value(key, depth, false, false, false, Vec::new());
                         }
@@ -999,8 +1006,13 @@ impl Vm {
                                 run.append("\n");
                                 run.output.push_value(&run.indentation(depth));
                             }
-                            let name =
-                                output_name.unwrap_or_else(|| descriptor.name.clone().into());
+                            let name = output_name.unwrap_or_else(|| {
+                                if let Value::String(name) = &descriptor.key {
+                                    name.clone()
+                                } else {
+                                    unreachable!("property string key")
+                                }
+                            });
                             if name
                                 .as_str()
                                 .is_some_and(crate::parser::is_regular_identifier)

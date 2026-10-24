@@ -17,6 +17,7 @@ pub(crate) mod builtins;
 mod bytes;
 pub(crate) mod classes;
 mod code_storage;
+pub(crate) mod collection_conversions;
 mod collection_transforms;
 pub mod collections;
 mod data_size;
@@ -38,6 +39,7 @@ mod stdlib_modules;
 pub use session_expressions::{SessionExpressionError, compile_session_expression};
 mod frame_transformation;
 pub(crate) mod identity;
+mod object_lookups;
 mod output;
 mod pair;
 mod pcf_format;
@@ -209,6 +211,19 @@ pub enum Instruction {
     ToString,
     StringRepeat,
     CollectionJoin,
+    BeginConversion(collection_conversions::Operation),
+    ObjectLookup(object_lookups::Lookup),
+    ObjectDefault,
+    ObjectDefaultProperty,
+    ConversionNext {
+        end: usize,
+    },
+    ConversionValue,
+    ConversionPair,
+    AppendConvertedMember,
+    EndConversion,
+    ConvertObject(collection_conversions::Operation),
+    ReadConversionProperty,
     BeginCollectionTransform(collection_transforms::Transform),
     BeginCollectionProjection(collection_transforms::Projection),
     CollectionKeyOrder,
@@ -885,6 +900,10 @@ pub struct Program {
     pub(crate) collection_join_blocks: [usize; 2],
     collection_transform_blocks: [usize; 11],
     collection_projection_blocks: [usize; 8],
+    conversion_blocks: BTreeMap<(Arc<str>, Arc<str>), (usize, usize)>,
+    conversion_delegate_block: usize,
+    object_default_block: usize,
+    object_default_property_blocks: [usize; 3],
     null_constructor_block: usize,
     pub(crate) string_encode_block: usize,
     pub(crate) pair_constructor_block: usize,
@@ -976,6 +995,25 @@ impl Program {
         let collection_transform_blocks = collection_transforms::blocks(&mut blocks, &mut metadata);
         let collection_projection_blocks =
             collection_transforms::projection_blocks(&mut blocks, &mut metadata);
+        let mut conversion_blocks = collection_conversions::blocks(&mut blocks, &mut metadata);
+        conversion_blocks.extend(object_lookups::blocks(&mut blocks, &mut metadata));
+        let object_default_property_blocks =
+            object_lookups::default_blocks(&mut blocks, &mut metadata);
+        let object_default_block = blocks.len();
+        blocks.push(vec![Instruction::ObjectDefault, Instruction::Return]);
+        metadata.push(BlockMetadata {
+            spans: vec![None; 2],
+            ..Default::default()
+        });
+        let conversion_delegate_block = blocks.len();
+        blocks.push(vec![
+            Instruction::ReadConversionProperty,
+            Instruction::Return,
+        ]);
+        metadata.push(BlockMetadata {
+            spans: vec![None; 2],
+            ..Default::default()
+        });
         let null_constructor_block = null::constructor_block(&mut blocks, &mut metadata);
         let string_encode_block = strings::encode_block(&mut blocks, &mut metadata);
         let pair_constructor_block = pair::constructor_block(&mut blocks, &mut metadata);
@@ -1001,6 +1039,10 @@ impl Program {
             collection_join_blocks,
             collection_transform_blocks,
             collection_projection_blocks,
+            conversion_blocks,
+            conversion_delegate_block,
+            object_default_block,
+            object_default_property_blocks,
             null_constructor_block,
             string_encode_block,
             pair_constructor_block,
@@ -1116,6 +1158,7 @@ struct Frame {
     collection_join: Option<collections::JoinRun>,
     collection_transform: Option<collection_transforms::TransformRun>,
     int_seq_run: Option<Box<int_seq::Run>>,
+    conversion_run: Option<Box<collection_conversions::Run>>,
     function_owner: Option<ObjectId>,
     amendment_arguments: Option<Vec<Value>>,
     amendment_end: Option<usize>,
@@ -1386,6 +1429,7 @@ impl Vm {
             collection_join: None,
             collection_transform: None,
             int_seq_run: None,
+            conversion_run: None,
             function_owner: None,
             amendment_arguments: None,
             amendment_end: None,
@@ -1834,6 +1878,9 @@ impl Vm {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.int_seq_run {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.conversion_run {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.collection_transform {
@@ -2514,6 +2561,16 @@ impl Vm {
                         return Ok(());
                     }
                     None => {
+                        if method && self.conversion_method(Value::Object(receiver), &name)? {
+                            return Ok(());
+                        }
+                        if !method
+                            && !entry
+                            && name.as_ref() == "default"
+                            && self.object_default_member(receiver)?
+                        {
+                            return Ok(());
+                        }
                         // A super method searches from its owner's parent while
                         // retaining the actual receiver for successful invocation.
                         // The failed lookup describes that search origin too.
@@ -2666,8 +2723,13 @@ impl Vm {
                 })
                 .cloned();
         }
+        let implicit_default_type = if !local && !method && !entry && name.as_ref() == "default" {
+            self.object_default_type(receiver)?
+        } else {
+            None
+        };
         if let Some(value) = &constant_value {
-            if collection_casts.is_empty() {
+            if collection_casts.is_empty() && implicit_default_type.is_none() {
                 if memoize {
                     self.complete_cache(receiver, key, value.clone())?;
                 }
@@ -2708,6 +2770,9 @@ impl Vm {
                 }
                 parent = object.parent;
             }
+        }
+        if inherited_types.is_empty() && member.ty.is_none() {
+            inherited_types.extend(implicit_default_type);
         }
         let object = self.heap.get(owner)?;
         let mut environment = object
@@ -2774,6 +2839,7 @@ impl Vm {
             collection_join: None,
             collection_transform: None,
             int_seq_run: None,
+            conversion_run: None,
             function_owner: None,
             amendment_arguments: None,
             amendment_end: None,
@@ -3091,6 +3157,62 @@ impl Vm {
             && object.reference.is_none()
             && !object.ref_module;
         if class.is_none() && !dynamic {
+            if object.pair.is_none() && object.reference.is_none() && !object.ref_module {
+                let class_name = format!("{:?}", object.collection_kind);
+                let (properties, methods) =
+                    crate::diagnostic_names::collection_members(&class_name);
+                let arity = if method {
+                    self.frames
+                        .last()
+                        .and_then(|frame| {
+                            self.program.metadata.get(frame.block).and_then(|meta| {
+                                meta.method_arities.get(&frame.pc.saturating_sub(1))
+                            })
+                        })
+                        .copied()
+                        .unwrap_or(0) as isize
+                } else {
+                    -1
+                };
+                let mut error = RuntimeError::new(
+                    ErrorKind::MissingMember,
+                    if method {
+                        format!("Cannot find method `{name}` in class `{class_name}`.")
+                    } else {
+                        format!("Cannot find property `{name}` in object of type `{class_name}`.")
+                    },
+                );
+                error.hint =
+                    crate::diagnostic::member_suggestions(name, arity, &properties, &methods)
+                        .or_else(|| {
+                            let mut names = if method {
+                                methods.into_iter().map(|m| m.0).collect()
+                            } else {
+                                properties
+                            };
+                            names.sort_by(|a, b| a.encode_utf16().cmp(b.encode_utf16()));
+                            names.dedup();
+                            Some(
+                                if method {
+                                    format!(
+                                        "Available methods in class `{class_name}`:\n{}",
+                                        names.join("\n")
+                                    )
+                                } else {
+                                    format!(
+                                        "Available properties:\n{}",
+                                        if names.is_empty() {
+                                            "(none)".into()
+                                        } else {
+                                            names.join("\n")
+                                        }
+                                    )
+                                }
+                                .into(),
+                            )
+                        });
+                return Ok(error);
+            }
             return Ok(RuntimeError::new(
                 ErrorKind::MissingMember,
                 format!("missing member {name}"),
@@ -3676,6 +3798,7 @@ impl Vm {
             collection_join: None,
             collection_transform: None,
             int_seq_run: None,
+            conversion_run: None,
             function_owner: Some(id),
             amendment_arguments,
             amendment_end: None,
@@ -4225,6 +4348,22 @@ impl Vm {
             }
             Instruction::StringRepeat => self.repeat_string()?,
             Instruction::CollectionJoin => self.begin_collection_join()?,
+            Instruction::ObjectLookup(operation) => self.object_lookup(operation)?,
+            Instruction::ObjectDefault => self.object_default()?,
+            Instruction::ObjectDefaultProperty => {
+                let receiver = self.conversion_receiver()?;
+                if !self.object_default_member(receiver)? {
+                    return Err(invalid("object default receiver"));
+                }
+            }
+            Instruction::BeginConversion(operation) => self.begin_conversion(operation)?,
+            Instruction::ConversionNext { end } => self.conversion_next(end)?,
+            Instruction::ConversionValue => self.conversion_value()?,
+            Instruction::ConversionPair => self.conversion_pair()?,
+            Instruction::AppendConvertedMember => self.append_converted_member()?,
+            Instruction::EndConversion => self.end_conversion()?,
+            Instruction::ConvertObject(operation) => self.convert_object(operation)?,
+            Instruction::ReadConversionProperty => self.read_conversion_property()?,
             Instruction::BeginCollectionTransform(operation) => {
                 self.begin_collection_transform(operation)?
             }

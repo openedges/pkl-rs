@@ -1,5 +1,54 @@
 # M2 language evidence
 
+### Stage62 collection conversions — implementation and local comparisons
+
+The [implementation checkpoint](stage62-implementation-checkpoint.json) records
+shared strict object materialization, lazy conversions, selector-based maps,
+Dynamic property queries, Listing/Mapping optional and defaulted lookup,
+Dynamic length, Set addition, and signed Bytes iteration versus unsigned spread.
+The VM retains conversion and callback state across Host suspension, reentry,
+GC, cancellation and retry. Present null values bypass fallback; missing keys
+force the inherited Function1 default with its original diagnostic frames.
+
+Six sealed Java profiles contain 485 expressions. Native, actual N-API and
+Chromium each match all 970 observations across two repetitions, including
+seven raw channels and complete process protocols. A late review reproduced
+an authored-NUL/synthetic-surrogate property collision in the first candidate.
+The final candidate uses an LF-prefixed injective lookup encoding and preserves
+original PklString names for output. The rejected candidate, failed attempts,
+and the test-only URI correction remain archived separately.
+
+All five required local Rust checks pass. Workspace output contains 969 passed
+harness executions and two ignored tests; removing five nested frontend child
+summaries duplicated by their parent leaves 964 unique passes, zero failures,
+and two ignored tests. Python tooling has 61 passes normally and under `-O`,
+JavaScript has 16 passes, and inventory checks pass. The final source inventory
+contains 165,344 reconstructible entries with 22 inputs copied directly.
+The M2 manifest changes 102 implementation-link hashes only; its 4,527 cases,
+475 requirements, 4,416 ready rows, 71 unimplemented rows and 40 unmapped rows
+are unchanged. These accounting rows are not a completion percentage.
+
+Existing IntSeq, Bytes, Duration and DataSize string regressions retain 474,
+600, 548 and 510 matches per target. Any portable retains 170 matches and two
+Regex mismatches per target. The M1 experiment contract passes while strict
+Java compatibility retains its two Regex gaps.
+
+The unchanged original selection has 35 matches, 22 mismatches, 32 unsupported
+results and one Java oracle error across 90 programs. The prior 62 improve
+from 26 to 30 matches, with no previously passing case regressing. The four new
+passes are element generation, Listing and Mapping spread, and object hashing.
+The earlier 17-program subset still has 15 matches; two Binary-path mismatches
+now reach unsupported `pkl:pklbinary` and remain failures. The historical
+Stage60-to-Stage62 comparison is preserved separately from current progress.
+`api/list.pkl` fails in Java with `OutOfMemoryError` under recorded `-Xmx512m`;
+Rust reaches missing `List.isNotEmpty`. Neither outcome is counted as a pass.
+Two package/HTTP/TLS-dependent original cases remain required and unexecuted.
+
+These are recorded local macOS arm64 results. The four implementation evidence
+groups retain failed and superseded captures, source/artifact identities and
+independent review. Full M2, typed product APIs, other release platforms, and
+the speed and memory targets remain incomplete.
+
 ### Stage62 collection conversions — independent Java authority
 
 The [Java checkpoint](stage62-java-checkpoint.json) seals 236 ordered public

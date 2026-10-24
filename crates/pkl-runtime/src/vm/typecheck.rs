@@ -650,6 +650,7 @@ impl Vm {
             collection_join: None,
             collection_transform: None,
             int_seq_run: None,
+            conversion_run: None,
             function_owner: None,
             amendment_arguments: None,
             amendment_end: None,
@@ -791,7 +792,11 @@ impl Vm {
                     if let Mismatch::InsertedFrame { frame, .. } = &mismatch {
                         if error.frames.is_empty() {
                             error.frames.push(RuntimeFrame {
-                                source: None,
+                                source: self
+                                    .program
+                                    .metadata
+                                    .get(self.frames.last().expect("type frame").block)
+                                    .and_then(|m| m.source.clone()),
                                 span: diagnostic.span(),
                                 member: run.member.clone(),
                             });
@@ -1052,6 +1057,48 @@ impl Vm {
                 } => {
                     run.tasks.push(Task::AfterBase { constraints });
                     self.push_type_child(&mut run, *base, base_span, 0)?;
+                }
+                TypeCheck::IntegerAlias { name, min, max } => {
+                    let source = crate::stdlib_sources::base();
+                    let declaration = source
+                        .text
+                        .find(&format!("typealias {name} = Int("))
+                        .expect("pinned integer alias");
+                    let start = declaration + format!("typealias {name} = ").len();
+                    let end = start + source.text[start..].find('\n').unwrap();
+                    let accepted = matches!(&run.value, Value::Int(value) if (min..=max).contains(&value.get()));
+                    run.outcome = Some(if accepted {
+                        Ok(run.value.clone())
+                    } else {
+                        let mismatch = if matches!(&run.value, Value::Int(_)) {
+                            let predicate = Span::new(start + 4, end - 1);
+                            let mut observations = Trace::new();
+                            observations.insert(
+                                predicate,
+                                Observation {
+                                    value: ObservedValue::NativeLiteral("false".into()),
+                                    executions: 1,
+                                },
+                            );
+                            Mismatch::Constraint {
+                                source: Some(source.clone()),
+                                span: predicate,
+                                value: run.value.clone(),
+                                body_span: predicate,
+                                observations: Some(observations),
+                            }
+                        } else {
+                            Mismatch::Simple {
+                                span: Span::new(start, start + 3),
+                                ty: TypeCheck::Int,
+                                value: run.value.clone(),
+                            }
+                        };
+                        Err(Mismatch::AliasSource {
+                            source,
+                            inner: Box::new(mismatch),
+                        })
+                    });
                 }
                 ty => {
                     run.outcome = Some(if ty.accepts(&run.value, &self.heap) {
