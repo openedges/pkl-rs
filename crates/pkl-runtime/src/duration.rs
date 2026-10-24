@@ -1,8 +1,8 @@
-//! Duration scalar storage and Pkl 0.32.0 unit/display/equality semantics.
-//! Arithmetic, unit conversion methods and ISO formatting are separate operations.
+//! Pkl 0.32.0 Duration payload, conversion, comparison and ISO formatting.
 use crate::value_identity::Token;
+use std::cmp::Ordering;
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum DurationUnit {
     Nanoseconds,
     Microseconds,
@@ -14,6 +14,16 @@ pub enum DurationUnit {
 }
 
 impl DurationUnit {
+    pub const ALL: [Self; 7] = [
+        Self::Nanoseconds,
+        Self::Microseconds,
+        Self::Milliseconds,
+        Self::Seconds,
+        Self::Minutes,
+        Self::Hours,
+        Self::Days,
+    ];
+
     pub fn parse(symbol: &str) -> Option<Self> {
         Some(match symbol {
             "ns" => Self::Nanoseconds,
@@ -85,8 +95,81 @@ impl Duration {
     pub(crate) fn reference(self) -> Token {
         self.reference
     }
+    pub fn value_in(self, unit: DurationUnit) -> f64 {
+        // VmDuration.getValue multiplies before dividing, even for the same
+        // unit. Cancelling factors changes rounding and overflow behavior.
+        self.value * self.unit.nanos() / unit.nanos()
+    }
+    pub fn to_unit(self, unit: DurationUnit) -> Self {
+        Self::new(self.value_in(unit), unit)
+    }
     pub(crate) fn nanos(self) -> f64 {
-        self.value * self.unit.nanos()
+        self.value_in(DurationUnit::Nanoseconds)
+    }
+    pub(crate) fn common_values(self, other: Self) -> (f64, f64, DurationUnit) {
+        if self.unit <= other.unit {
+            (self.value_in(other.unit), other.value, other.unit)
+        } else {
+            (self.value, other.value_in(self.unit), self.unit)
+        }
+    }
+    pub(crate) fn compare(self, other: Self) -> Ordering {
+        let (left, right, _) = self.common_values(other);
+        if left < right {
+            return Ordering::Less;
+        }
+        if left > right {
+            return Ordering::Greater;
+        }
+        // Java Double.compare distinguishes signed zero and places every NaN
+        // above positive infinity, after canonicalizing its payload.
+        let bits = |value: f64| {
+            if value.is_nan() {
+                0x7ff8_0000_0000_0000i64
+            } else {
+                value.to_bits() as i64
+            }
+        };
+        bits(left).cmp(&bits(right))
+    }
+    pub fn iso_string(self) -> Option<String> {
+        // DurationUtils deliberately divides the unit factor first. This must
+        // remain separate from value_in, including for sub-nanosecond inputs.
+        let total_seconds = self.value * (self.unit.nanos() / 1e9);
+        if !total_seconds.is_finite() {
+            return None;
+        }
+        let absolute_seconds = total_seconds.abs();
+        // Rust's saturating casts match Java double-to-long narrowing, also
+        // for NaN caused by the extreme-value fractional subtraction below.
+        let hours = (absolute_seconds / 3600.0) as i64;
+        let minutes = (absolute_seconds / 60.0) as i64 % 60;
+        let seconds = (absolute_seconds % 60.0) as i64;
+        let nanos = (absolute_seconds * 1_000_000_000.0
+            - absolute_seconds.floor() * 1_000_000_000.0) as i64;
+        let mut result = String::new();
+        if total_seconds < 0.0 {
+            result.push('-');
+        }
+        result.push_str("PT");
+        if hours != 0 {
+            result.push_str(&format!("{hours}H"));
+        }
+        if minutes != 0 {
+            result.push_str(&format!("{minutes}M"));
+        }
+        if seconds != 0 || nanos != 0 || total_seconds == 0.0 {
+            result.push_str(&seconds.to_string());
+            if nanos != 0 {
+                result.push('.');
+                let fraction = format!("{nanos:09}");
+                // This removes zeros only from the ISO decimal fraction, as
+                // prescribed by DurationUtils; no diagnostic/output cleanup.
+                result.push_str(fraction.trim_end_matches('0'));
+            }
+            result.push('S');
+        }
+        Some(result)
     }
     pub(crate) fn java_hash(self) -> i32 {
         let nanos = self.nanos();

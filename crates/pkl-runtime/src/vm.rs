@@ -21,6 +21,7 @@ mod collection_transforms;
 pub mod collections;
 mod data_size;
 pub(crate) mod deprecation;
+mod duration;
 pub use code_storage::CodeStorage;
 mod compiler_expressions;
 mod converters;
@@ -4444,6 +4445,8 @@ impl Vm {
                     return Err(self.function_member_error(&receiver, name, method)?);
                 } else if matches!(receiver, Value::DataSize(_)) {
                     return Err(self.data_size_member_error(name, method));
+                } else if matches!(receiver, Value::Duration(_)) {
+                    return Err(self.duration_member_error(name, method));
                 } else {
                     let receiver = receiver.as_object()?;
                     if method
@@ -4532,6 +4535,9 @@ impl Vm {
                 }
                 if matches!(receiver, Value::DataSize(_)) {
                     return Err(self.data_size_member_error(name, method));
+                }
+                if matches!(receiver, Value::Duration(_)) {
+                    return Err(self.duration_member_error(name, method));
                 }
                 let receiver = receiver.as_object()?;
                 if method || !self.collection_builtin(receiver, name)? {
@@ -5579,6 +5585,9 @@ fn binary(instruction: &Instruction, left: Value, right: Value) -> Result<Value,
                 equal
             },
         ));
+    }
+    if let Some(value) = duration::binary(instruction, &left, &right)? {
+        return Ok(value);
     }
     if let Some(value) = data_size::binary(instruction, &left, &right)? {
         return Ok(value);
@@ -6835,7 +6844,9 @@ impl Compiler<'_> {
                     .get(&expression.span)
                     .ok_or_else(|| invalid("missing static binding"))?
                 {
-                    Binding::BaseTypeAlias if name.as_ref() == "DataSizeUnit" => {
+                    Binding::BaseTypeAlias
+                        if matches!(name.as_ref(), "DataSizeUnit" | "DurationUnit") =>
+                    {
                         output.push(Instruction::LoadBaseModule);
                         output.push(Instruction::GetMember(name));
                     }
@@ -7703,7 +7714,7 @@ impl Compiler<'_> {
                 .iter()
                 .map(|argument| self.compile_type_at(argument, limit, aliases, parameters))
                 .collect::<Result<Vec<_>, _>>()?;
-            let fallback = if path[0] != "DataSizeUnit"
+            let fallback = if !matches!(path[0].as_str(), "DataSizeUnit" | "DurationUnit")
                 && crate::diagnostic_names::BASE_PROPERTIES.contains(&path[0].as_str())
             {
                 let previous = self.runtime_type_fallback.replace(ty.span);
@@ -8224,7 +8235,7 @@ impl Compiler<'_> {
                         "Int" => TypeCheck::Int,
                         "Float" => TypeCheck::Float,
                         "Duration" => TypeCheck::Duration,
-                        "DataSizeUnit" => self.declared_type(ty, Vec::new())?,
+                        "DataSizeUnit" | "DurationUnit" => self.declared_type(ty, Vec::new())?,
                         "Number" => TypeCheck::Number,
                         "String" => TypeCheck::String,
                         "Bytes" => TypeCheck::Bytes,

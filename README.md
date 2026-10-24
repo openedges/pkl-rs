@@ -73,10 +73,20 @@ checks. Its independent Java fixtures and selected native comparison retain
 four mismatched Regex and IntSeq constructor executions across two repeats.
 The N-API and Chromium string comparisons also match 168 of 172 executions
 each; their integrity gates pass and strict string gates fail on those rows.
-The unchanged `api/any.pkl` original program now passes raw comparison. Across
-17 original programs, ten pass and seven still mismatch. The DataSize native,
+The unchanged `api/any.pkl` original program passes raw comparison. At Stage 58,
+ten of 17 original programs passed and seven mismatched. The DataSize native,
 N-API, and Chromium string regressions each retain 510 of 510 matches.
 Typed exports, full M2, and performance requirements remain open.
+
+The [Duration checkpoint](reports/m2/stage59-implementation-checkpoint.json)
+extends the shared engine with unit conversion, arithmetic, comparison,
+`isoString`, and method/type diagnostics. Native, N-API, and Chromium each
+match all 548 recorded Java string observations and complete session protocols.
+The unchanged original selection now has 11 matches, five mismatches, and one
+unsupported result: `basic/duration.pkl` newly passes, while `api/duration.pkl`
+reaches the missing `pkl:math` module. Bytes and Binary test dependencies remain.
+The separate 15-value raw-bit regression checks internal Rust values; typed
+product exports, whole-language compatibility, and performance remain open.
 
 ## Goals
 

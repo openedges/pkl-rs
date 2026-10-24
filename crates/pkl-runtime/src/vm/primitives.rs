@@ -4,6 +4,7 @@ use super::*;
 #[derive(Clone, Copy, Debug)]
 pub enum Operation {
     DataSize(data_size::Operation),
+    Duration(duration::Operation),
     IfNonNull,
     Between,
     Uppercase,
@@ -124,6 +125,7 @@ pub(super) fn blocks(
         result.insert((class.into(), name.into()), block);
     }
     result.extend(data_size::blocks(blocks, metadata));
+    result.extend(duration::blocks(blocks, metadata));
     result.extend(any::blocks(blocks, metadata));
     result
 }
@@ -256,6 +258,19 @@ impl Vm {
                             Value::Float(value.into())
                         }
                     }
+                    "isoString" => Value::String(
+                        duration
+                            .iso_string()
+                            .ok_or_else(|| {
+                                RuntimeError::new(
+                                    ErrorKind::Arithmetic,
+                                    format!(
+                                        "Cannot convert duration `{duration}` to ISO 8601 duration."
+                                    ),
+                                )
+                            })?
+                            .into(),
+                    ),
                     "unit" => Value::String(duration.unit().symbol_value()),
                     "isPositive" => Value::Bool(value >= 0.0),
                     _ => return Ok(false),
@@ -304,11 +319,14 @@ impl Vm {
             Value::Int(_) => "Int",
             Value::Float(_) => "Float",
             Value::DataSize(_) => "DataSize",
+            Value::Duration(_) => "Duration",
             Value::String(_) => "String",
             _ => return Ok(false),
         };
         if method {
-            if matches!(receiver, Value::DataSize(_)) && matches!(name, "getClass" | "toString") {
+            if matches!(receiver, Value::DataSize(_) | Value::Duration(_))
+                && matches!(name, "getClass" | "toString")
+            {
                 let function = self.native_reference_method(
                     receiver.clone(),
                     if name == "toString" {
@@ -329,7 +347,8 @@ impl Vm {
             };
             let arity = match name {
                 "isBetween" => 2,
-                "contains" | "dropLast" | "xor" | "implies" | "toDataSize" | "toUnit" => 1,
+                "contains" | "dropLast" | "xor" | "implies" | "toDataSize" | "toDuration"
+                | "toUnit" => 1,
                 _ => 0,
             };
             let id = self.heap.allocate(Object {
@@ -379,6 +398,7 @@ impl Vm {
             .ok_or_else(|| invalid("primitive receiver"))?;
         match operation {
             Operation::DataSize(operation) => self.data_size_operation(receiver, operation)?,
+            Operation::Duration(operation) => self.duration_operation(receiver, operation)?,
             Operation::IfNonNull => self.if_non_null(receiver)?,
             Operation::BooleanXor | Operation::BooleanImplies => {
                 let Value::Bool(left) = receiver else {

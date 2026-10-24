@@ -586,10 +586,10 @@ impl Vm {
                 first = false;
                 owner = object.parent;
             }
-            // DataSizeUnit is an authored base alias. Resolve its retained
+            // Unit types are authored base aliases. Resolve their retained
             // declaration after lexical/user parents, preserving its union's
             // source section instead of constructing a source-less substitute.
-            if name.as_ref() == "DataSizeUnit"
+            if matches!(name.as_ref(), "DataSizeUnit" | "DurationUnit")
                 && let Some(modules::CachedModule::Value(base)) =
                     self.modules_stdlib.get("pkl:base")
             {

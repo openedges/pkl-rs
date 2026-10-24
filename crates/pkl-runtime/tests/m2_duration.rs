@@ -149,3 +149,129 @@ fn duration_callbacks_survive_collection_at_every_poll_boundary() {
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
+
+#[test]
+fn duration_payload_bits_match_separate_java_export_observations() {
+    // These expectations come from m2-duration-values-bits/capture-bits-01, two
+    // independent JVM executions. They check the shared internal Value payload;
+    // they do not establish compatibility of Rust typed export or transport.
+    for (id, expression, bits, unit) in [
+        (
+            "int-beyond-f64-exact",
+            r###"9007199254740993.s"###,
+            0x4340000000000000u64,
+            "s",
+        ),
+        (
+            "int-max",
+            r###"9223372036854775807.s"###,
+            0x43e0000000000000u64,
+            "s",
+        ),
+        (
+            "same-unit-day",
+            r###"0.1.d.toUnit("d")"###,
+            0x3fb999999999999au64,
+            "d",
+        ),
+        (
+            "same-unit-minute",
+            r###"0.1.min.toUnit("min")"###,
+            0x3fb999999999999au64,
+            "min",
+        ),
+        (
+            "same-unit-huge-day",
+            r###"(1e300).d.toUnit("d")"###,
+            0x7ff0000000000000u64,
+            "d",
+        ),
+        (
+            "negative-zero-convert",
+            r###"(-0.0).s.toUnit("min")"###,
+            0x8000000000000000u64,
+            "min",
+        ),
+        (
+            "negative-zero-direct",
+            r###"(-0.0).s"###,
+            0x8000000000000000u64,
+            "s",
+        ),
+        (
+            "min-subnormal",
+            r###"(5e-324).ns"###,
+            0x0000000000000001u64,
+            "ns",
+        ),
+        (
+            "min-subnormal-to-day",
+            r###"(5e-324).ns.toUnit("d")"###,
+            0x0000000000000000u64,
+            "d",
+        ),
+        (
+            "pow-fraction",
+            r###"2.2.s ** 3.3"###,
+            0x402afa9ba63dcf21u64,
+            "s",
+        ),
+        (
+            "nan-convert",
+            r###"(0.0/0.0).s.toUnit("d")"###,
+            0x7ff8000000000000u64,
+            "d",
+        ),
+        (
+            "overflow-convert",
+            r###"(1e308).d.toUnit("ns")"###,
+            0x7ff0000000000000u64,
+            "ns",
+        ),
+        (
+            "same-unit-second",
+            r###"1.s.toUnit("s")"###,
+            0x3ff0000000000000u64,
+            "s",
+        ),
+        (
+            "same-unit-fraction-second",
+            r###"0.1.s.toUnit("s")"###,
+            0x3fb999999999999au64,
+            "s",
+        ),
+        (
+            "fraction-second",
+            r###"0.1.s"###,
+            0x3fb999999999999au64,
+            "s",
+        ),
+    ] {
+        let source = format!("result = {expression}");
+        let program =
+            compile_module(&resolve_module(&parse_module(&source).unwrap()).unwrap()).unwrap();
+        let mut vm = Vm::new(program.clone());
+        vm.start(program.entry, vec![]).unwrap();
+        let ready = |vm: &mut Vm| {
+            for _ in 0..200_000 {
+                match vm.poll(1) {
+                    VmPoll::Yielded => {
+                        vm.collect(&[]);
+                    }
+                    VmPoll::Ready(result) => return result.unwrap(),
+                    event => panic!("Java row {id}: unexpected {event:?}"),
+                }
+            }
+            panic!("Java row {id}: poll budget")
+        };
+        let module = ready(&mut vm).as_object().unwrap();
+        vm.start_member(module, "result").unwrap();
+        let Value::Duration(value) = ready(&mut vm) else {
+            panic!("Java row {id}: expected Duration")
+        };
+        assert_eq!(value.value().to_bits(), bits, "Java row {id}: {expression}");
+        assert_eq!(value.unit().symbol(), unit, "Java row {id}: {expression}");
+        vm.close();
+        assert_eq!(vm.heap_stats().slots, 0);
+    }
+}

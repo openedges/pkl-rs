@@ -269,6 +269,52 @@ DataSize regression retains 510/510 on each target. Of 17 unchanged original
 upstream programs, ten pass complete raw comparison and seven mismatch,
 including Bytes, Duration, and Pkl Binary cases.
 
+The Stage 59 `Duration` contract is recorded in
+[the M2 language guide](docs/m2-language.md). Verify the separately sealed
+274-row Java string authority and 15-row exported-value bit supplement before
+candidate comparison:
+
+```sh
+python3 tools/duration_values_fixtures.py
+python3 tools/duration_values_bits_fixtures.py
+python3 -m unittest tools.tests.test_duration_values_fixtures tools.tests.test_duration_values_bits_fixtures
+cargo test -p pkl-runtime --test m2_duration --locked
+```
+
+The Rust test's raw-bit assertions are internal value checks against actual
+Java exported `Duration` observations; they do not establish typed product
+API parity. Use fresh directories and an existing recorded native build for
+the two complete ordered expression-string sessions:
+
+```sh
+python3 tools/duration_values_compare.py --acquire target/m2/duration-native-new --build target/m2/duration-build-record
+python3 tools/duration_values_compare.py --verify target/m2/duration-native-new --gate string
+node tools/platform/capture-duration-values.mjs target/m2/duration-portable-new WASM_DIR NAPI_BINARY tests/fixtures/m2-duration-values
+python3 tools/duration_values_portable_compare.py --capture target/m2/duration-portable-new --m1 M1_PLATFORM_RECORD --native-build target/m2/duration-build-record --build-wrapper M1_BUILD_WRAPPER --gate string
+```
+
+The portable verifier requires both `--native-build` and `--build-wrapper` to
+bind the supplied N-API and Wasm artifacts to recorded sources. The native
+and portable `--gate integrity` options check evidence independently of exact
+string equality. The portable `--gate full-api` remains unsuccessful while
+typed exports are unexecuted; the native runner has no full-API gate. The
+string gate compares the entire status, expression,
+stdout, stderr, UTF-16BE, and process-protocol bytes across two repetitions.
+Original upstream Duration snippets retain their separate CLI and generated
+file comparison contract. The [Java-only checkpoint](reports/m2/stage59-java-checkpoint.json)
+does not claim native, Node, or browser compatibility.
+The later recorded Stage 59 local comparisons match all 548 Duration string
+executions on each of native, N-API, and Chromium, including complete process
+protocols. The unchanged DataSize string regression matches 510 on each
+target. Portable `Any.ifNonNull` still has four Regex/IntSeq constructor
+mismatches per target. Of 17 separately executed original modules, 11 match,
+five mismatch, and one is candidate-unsupported; `basic/duration.pkl` newly
+matches while `api/duration.pkl` reaches an unimplemented `pkl:math` use.
+These selected results and internal raw-bit assertions do not satisfy the
+typed export, whole-language, product API, release-platform, or performance
+gates. The [M2 evidence report](reports/m2/README.md) tracks the distinct
+recorded scopes.
+
 The [method-deprecation contract](docs/m2-deprecation.md) records the pinned Java
 logger matrix and a separate experiment with sequential evaluators in one JVM.
 Its independent fixture verifier checks raw UTF-8, UTF-16, frame, and callback

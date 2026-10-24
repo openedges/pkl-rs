@@ -2000,6 +2000,7 @@ impl<'a> Resolver<'a> {
                             | "UInt32"
                             | "UInt"
                             | "DataSizeUnit"
+                            | "DurationUnit"
                     )
                 {
                     binding = Binding::BaseTypeAlias;

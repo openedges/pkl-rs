@@ -1,0 +1,346 @@
+{
+  "any_if_non_null_regression": {
+    "known_mismatch_ids": [
+      "scalar-regex",
+      "scalar-intseq"
+    ],
+    "portable": {
+      "chromium": {
+        "mismatch": 4,
+        "pass": 168
+      },
+      "napi": {
+        "mismatch": 4,
+        "pass": 168
+      }
+    },
+    "scope": "Four mismatched executions per portable target remain failures; no current native Any rerun claimed."
+  },
+  "baseline": "Pkl 0.32.0",
+  "canonical": {
+    "boundary": "Seven exact UTF-8/UTF-16BE/status query channels and complete ordered protocol; Java error class remains producer metadata.",
+    "comparison_report": {
+      "bytes": 3029,
+      "path": "target/m2/stage59-comparison-validation-02/report.json",
+      "sha256": "af5618ca1c2a76e33423f6b32d0d859043b43841447ef1d42fdf216e385681b4"
+    },
+    "integrity_status": "passed",
+    "native_artifact": {
+      "bytes": 16933392,
+      "sha256": "8f6f717fa5301d1446eb6457e5c7ca60f7248b7281f7c777eab8d789cdd9dbb8"
+    },
+    "portable_artifacts": {
+      "napi": {
+        "bytes": 4811392,
+        "sha256": "2bfa94c26372e32e5fb8d369cdee82f23dd184778e01ee9afdee367d2090d4e8"
+      },
+      "wasm_bg": {
+        "bytes": 3896692,
+        "sha256": "aadb36b9908396d271df357a9f57adc585b3fd0849d51404f9414e06f9f7ed78"
+      },
+      "wasm_js": {
+        "bytes": 42154,
+        "sha256": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc"
+      }
+    },
+    "repetitions_per_target": 2,
+    "rows": 274,
+    "strict_string_status": "passed",
+    "targets": {
+      "chromium": {
+        "pass": 548
+      },
+      "napi": {
+        "pass": 548
+      },
+      "native": {
+        "pass": 548
+      }
+    }
+  },
+  "data_size_regression": {
+    "chromium": {
+      "pass": 510
+    },
+    "napi": {
+      "pass": 510
+    },
+    "native": {
+      "pass": 510
+    },
+    "repetitions_per_target": 2,
+    "rows": 255,
+    "scope": "Existing raw string boundary and complete protocol; typed exports remain unexecuted."
+  },
+  "evidence": {
+    "closeout": {
+      "archive": {
+        "bytes": 13558935,
+        "path": "reports/m2/stage59-closeout-evidence.tar.gz",
+        "sha256": "2f340da957a56c72089a786ff5e7785436a8ead966d16c40ba013bea14911c5d"
+      },
+      "archived_members": 5567,
+      "member_hash_readback": true,
+      "publication": {
+        "bytes": 1356071,
+        "path": "reports/m2/stage59-closeout-publication.json",
+        "sha256": "63252d886d7d93c617b5606e3691dfa7f0c0ee39efc156c495de396b6cfc4f25"
+      }
+    },
+    "native": {
+      "archive": {
+        "bytes": 26251870,
+        "path": "reports/m2/stage59-native-evidence.tar.gz",
+        "sha256": "b80a3d43a67d24cf529388409d9423f7428550af830513730efd6822a499901c"
+      },
+      "archived_members": 24165,
+      "member_hash_readback": true,
+      "publication": {
+        "bytes": 5616079,
+        "path": "reports/m2/stage59-native-publication.json",
+        "sha256": "b6d457e59a6f7d5f7bafc02c41222e5047a48543ebbc34eb4ad5f7fdfd12fa05"
+      }
+    },
+    "platform": {
+      "archive": {
+        "bytes": 30315650,
+        "path": "reports/m2/stage59-platform-evidence.tar.gz",
+        "sha256": "a9e2dc8ae3dd99bb886737a74556e8a9a9ecff2356deb554852fd34ceaeb804a"
+      },
+      "archived_members": 83741,
+      "member_hash_readback": true,
+      "publication": {
+        "bytes": 20501975,
+        "path": "reports/m2/stage59-platform-publication.json",
+        "sha256": "ab3216b275263522b944c30ea6d53d91bd346c197d75e7ae84bc5adb450b0f3d"
+      }
+    },
+    "validation": {
+      "archive": {
+        "bytes": 16000963,
+        "path": "reports/m2/stage59-validation-evidence.tar.gz",
+        "sha256": "48f6f02615bab4804fefc6bdd51f103dea94ae7229110eb60c56037d51be3e8f"
+      },
+      "archived_members": 417,
+      "member_hash_readback": true,
+      "publication": {
+        "bytes": 93090,
+        "path": "reports/m2/stage59-validation-publication.json",
+        "sha256": "0c028f46b9e0fee8b2968a7549ada07742412993a85ae161c77ff3d3cbe2a52a"
+      }
+    }
+  },
+  "full_m2_complete": false,
+  "full_public_api_comparison_passed": false,
+  "implementation": [
+    "Shared Duration double/unit value, seven-unit literal and Number.toDuration paths.",
+    "Java-order conversion, coarser-unit arithmetic, division, truncation, remainder, StrictMath-compatible power, ordering, equality, and hash thresholds.",
+    "Shared Duration type/DurationUnit alias, properties, isBetween, ISO formatting, first-error diagnostics, and inherited Any behavior.",
+    "Native, N-API, and Chromium run the same ordered expression-string engine; internal raw-bit regressions are separate from typed export APIs."
+  ],
+  "inventory": {
+    "changed_implementation_link_sha256": 49,
+    "counts": {
+      "cases": 4527,
+      "cases_by_execution": {
+        "ready": 4416,
+        "unimplemented": 71,
+        "unmapped": 40
+      },
+      "requirements": 475,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 31,
+        "specification": 198
+      }
+    },
+    "current_manifest": {
+      "bytes": 6700510,
+      "path": "compatibility/m2-language.json",
+      "sha256": "837ece864288ac5bfb463914ea082b2c8caa84b3ccfe80e83729e55c71121cc3"
+    },
+    "prior_snapshot": {
+      "bytes": 6700510,
+      "path": "target/m2/stage58-rust-validation-01/sources/compatibility/m2-language.json",
+      "sha256": "5ab930afcb1ac0cb7b00687786aa961ffc0c94deb9f40e0b4e6779af40c7aeb1"
+    }
+  },
+  "java_authority": {
+    "bytes": 9036,
+    "path": "reports/m2/stage59-java-checkpoint.json",
+    "sha256": "3f128e685d043067e731d2fa67b290817df3bd31b57aa70a6b73557a6040001a"
+  },
+  "kind": "stage59-duration-values-implementation-checkpoint",
+  "m1_platform_regression": {
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "oracle_passed": {
+      "browser": 6076,
+      "node": 6076,
+      "rust": 6076
+    },
+    "shared_engine_passed": 6078,
+    "source_stability": true,
+    "total": 6078
+  },
+  "original_modules": {
+    "candidate_sha256": "9c9039dc28dd2bae66f2a1fd2c2b971c4c84fa554506b2d7cfb4e6c2bc14a482",
+    "candidate_unsupported": "api/duration.pkl reaches line 77 and requires unimplemented pkl:math at maxFiniteFloat.s.isoString.",
+    "current_whole_language_verdict": false,
+    "executions_per_case": {
+      "java": 1,
+      "rust": 1
+    },
+    "integrity_status": "passed",
+    "new_match": "basic/duration.pkl",
+    "remaining_first_failures": {
+      "api/bytes.pkl": "Bytes.md5 lookup remains different.",
+      "basic/bytes.pkl": "Bytes.toList lookup remains different.",
+      "errors/invalidBytes4.pkl": "List.toBytes differs from the Java UInt8 constraint error.",
+      "pklbinary/datasize.msgpack.yaml.pkl": "module.toMap lookup fails before encoding.",
+      "pklbinary/duration.msgpack.yaml.pkl": "module.toMap lookup fails before encoding."
+    },
+    "report": {
+      "bytes": 1255760,
+      "path": "target/m2/stage59-original-duration-01/report.json",
+      "sha256": "7fbb4cf5595ed10d18a30fa7bc26650f43505ecf2b9816d1b77bc0ce9d87422d"
+    },
+    "status_counts": {
+      "candidate-unsupported": 1,
+      "mismatch": 5,
+      "pass": 11
+    },
+    "strict_selected_status": "failed",
+    "total": 17
+  },
+  "performance_targets_achieved": false,
+  "raw_bits_supplement": {
+    "fixture": "tests/fixtures/m2-duration-values-bits",
+    "java_repetitions": 2,
+    "java_rows": 15,
+    "java_statuses_per_session": {
+      "success": 15
+    },
+    "rust_boundary": "Internal Duration f64 bits and unit assertions in m2_duration; typed product export remains unexecuted."
+  },
+  "remaining": [
+    "All nine M2 workstreams and the whole-language completion gate remain open.",
+    "Regex and IntSeq constructors, pkl:math at the original Duration API module, remaining Bytes and Pkl Binary failures, metadata/reflection, and original corpus obligations remain.",
+    "Typed public exports, complete diagnostic/API/lifecycle coverage, and product/release-platform obligations remain.",
+    "Java-compatible speed and peak-memory targets are not established."
+  ],
+  "rust_validation": {
+    "checks": [
+      {
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0,
+        "name": "references"
+      },
+      {
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "name": "format"
+      },
+      {
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "name": "clippy"
+      },
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "name": "workspace-tests"
+      },
+      {
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "name": "wasm-runtime"
+      }
+    ],
+    "copied_source_files": 25,
+    "host": {
+      "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+      "uname": {
+        "machine": "arm64",
+        "node": "research-macmini1.local",
+        "processor": "arm",
+        "release": "27.0.0",
+        "system": "Darwin",
+        "version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:27 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8103"
+      }
+    },
+    "ignored_scope": "The existing frontend probe and two known Regex/IntSeq constructor gaps.",
+    "report": {
+      "bytes": 5494,
+      "path": "target/m2/stage59-rust-validation-01/report.json",
+      "sha256": "449dd1ba3b553c1561b703fa339b4910cd0f4a9b766d86eac1ed9052bf6afd4e"
+    },
+    "source_count": 165249,
+    "source_stable": true,
+    "test_executions": {
+      "fail": 0,
+      "ignored": 3,
+      "pass": 932
+    },
+    "toolchain": "1.98.1"
+  },
+  "schema": 1,
+  "source_binding": {
+    "base_commit": "6433bcda2ba034f3dd56ce60e1ff45cca059c77b",
+    "gitlinks": {
+      "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+    },
+    "java_authority_commit_prefix": "8da7941",
+    "status": "precommit verified source snapshots; actual implementation Git commit binding follows separately"
+  },
+  "tool_validation": {
+    "freshness": "Source inventory, M2 manifest, and original registry checks passed.",
+    "javascript_tests": 17,
+    "python_optimized_repeated_tests": 26,
+    "report": {
+      "bytes": 4272,
+      "path": "target/m2/stage59-tool-validation-02/report.json",
+      "sha256": "5d529fca123c5760befc49ba6c282a27fda8e5fbea436fef5748c977de34426f"
+    },
+    "unique_python_tests": 26
+  },
+  "verification_provenance": "Recorded local macOS arm64 execution, not hosted CI."
+}

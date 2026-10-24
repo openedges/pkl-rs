@@ -1,6 +1,51 @@
 # M2 language evidence
 
-The latest [Stage58 implementation checkpoint](stage58-implementation-checkpoint.json)
+### Stage59 Duration values — Java authority and local implementation checks
+
+Stage 59 adds the shared `Duration` value and VM paths for seven units,
+conversion, arithmetic, ordering, equality and hashed keys, `isoString`,
+`isBetween`, type checks, inherited `Any` methods, and complete selected
+diagnostics. The [Duration contract](../../docs/m2-language.md) separates
+Java string observations, exported raw-double observations, Rust internal
+value checks, and the required typed product APIs.
+
+The [Java checkpoint](stage59-java-checkpoint.json) seals 274 ordered public
+expression-string calls in each of two fresh JVMs, with 240 successes and 34
+ordinary Pkl errors per session. A separate 15-row Java export supplement
+records raw double bits and units twice. The [validation archive](stage59-java-validation.tar.gz)
+retains eight passing Java fixture/tooling and inventory checks; the
+[historical archive](stage59-java-history.tar.gz) preserves the superseded
+263-row exploration. Both archives passed full member readback. The original
+upstream `basic/duration.pkl` and `api/duration.pkl` programs were reviewed,
+but were not inputs to these authored Java API calls and have not been replayed
+by this checkpoint. The canonical source snapshot includes unrelated
+`reference.pkl` files in place of those Duration programs; the validation
+snapshot records the actual Duration source files.
+
+The shared Rust implementation passed the five required local checks with
+Rust 1.98.1: 932 passing workspace test executions, no failures, and three
+ignored tests. The [local validation publication](stage59-validation-publication.json)
+preserves its raw outputs and source identities. Final complete-session
+comparisons match all 548 of 548 Duration string calls and the whole protocol
+on each of native, N-API, and actual Chromium. The existing DataSize string
+regression matches 510 of 510 on each target. On N-API and Chromium, the existing
+`Any.ifNonNull` string selection retains 168 matches and four Regex/IntSeq
+constructor mismatches per target. The M1 platform regression retains 6,076
+Java matches out of 6,078 and its two regex differences per target.
+
+The 17 unchanged original Java/Rust module comparisons have 11 matches, five
+mismatches, and one candidate-unsupported result. `basic/duration.pkl` newly
+matches; `api/duration.pkl` reaches its line 77 `pkl:math` use and remains
+unsupported. Three Bytes cases and two Pkl Binary `module.toMap()` cases keep
+their earlier first failures. These original programs have one execution per
+runtime and are distinct from the 274-query sessions. Tool validation passes
+26 unique Python tests normally and under `-O`, plus 17 JavaScript tests;
+the M2 inventory differs only in 49 implementation-link hashes. Platform and
+closeout evidence publication are still pending.
+Selected results do not establish typed export/API parity, full M2
+compatibility, release-platform coverage, or performance targets.
+
+The earlier [Stage58 implementation checkpoint](stage58-implementation-checkpoint.json)
 adds inherited `Any.ifNonNull` to the shared runtime, with ordinary lookup,
 const restrictions, callback checks, preserved null defaults and Host/GC
 continuations. See the [development contract](../../docs/m2-any-if-non-null.md).

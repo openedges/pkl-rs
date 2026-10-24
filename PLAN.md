@@ -1686,15 +1686,26 @@ JDK 실행 파일·입력과 소스의 전후 해시, 원시 결과·검사 출�
 소스 사본에 기록했습니다. 따라서 이 Java 관찰을 원래 snippet suite의
 실행이나 Rust 호환 결과로 표시하지 않습니다.
 
-다음 검증은 같은 274개 식을 공통 평가기에서 native·Node·실제 Chromium으로
-각각 두 번 실행하여 순서·상태·출력·오류의 모든 원시 채널과 프로세스
-protocol을 Java와 대조하고, 15개 원시 비트에 대응하는 Rust 내부 값 회귀를
-확인합니다. 원본 `basic/duration.pkl`·`api/duration.pkl`의 Java·Rust 실행,
-기존 DataSize·M1 회귀, 필수 Rust 검사 다섯 개, 도구 검사와 독립 검토는
-각각 별도 결과로 기록합니다. 현재 Java 기준·도구 무결성만 확보됐으며
-native·Node·Chromium의 Stage 59 일치나 원본 snippet 통과는 아직 판정하지
-않습니다. M2의 아홉 작업 영역, typed export·제품 API·릴리스 플랫폼과
-성능 목표도 계속 열려 있습니다.
+공통 평가기의 최종 274개 식을 두 번 실행한 문자열 비교는 native·Node·실제
+Chromium에서 각각 **548/548 일치**했고 전체 순서·원시 채널·프로세스 protocol의
+엄격한 판정도 통과했습니다. 별도 Java export 비트 15개에 대응한 Rust 내부 값
+회귀와 필수 Rust 검사 다섯 개를 실행하여 workspace 테스트 **932개 통과·실패
+0개·ignored 3개**를 기록했습니다. 기존 DataSize의 native·Node·Chromium
+문자열도 각각 **510/510 일치**했습니다. Node·Chromium의 기존
+`Any.ifNonNull` 문자열은 각각 172회 중
+168회 일치하며 Regex·IntSeq 생성자 네 불일치를 그대로 보존합니다. M1의
+Java 비교도 각 환경에서 6,078개 중 6,076개 일치·regex 불일치 두 개입니다.
+
+원본 17개를 Java·Rust에서 각각 한 번 실행한 결과는 **11개 일치·5개 불일치·
+후보 미지원 1개**입니다. `basic/duration.pkl`은 새로 일치했고,
+`api/duration.pkl`은 `isBetween`을 지난 뒤 77행의 `pkl:math` 지원 부족에서
+멈춥니다. Bytes 관련 세 개와 Pkl Binary의 `module.toMap()` 선행 실패 두 개는
+그대로 남습니다. 이 원본 비교와 작성된 274개 API 식의 성공은 서로 다른
+계약입니다. 도구 검사는 Python 고유 26개를 일반·`-O`에서 각각 통과하고
+JS 17개를 통과했으며, 목록의 변경은 구현 link SHA 49개뿐입니다.
+플랫폼·마감 archive의 게시 결과는 별도로 기록합니다. M2의 아홉 작업 영역,
+typed export·제품 API·릴리스
+플랫폼과 성능 목표는 계속 열려 있습니다.
 
 ## M3 — 표준 라이브러리와 출력
 

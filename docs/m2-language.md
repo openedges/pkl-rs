@@ -8,6 +8,37 @@ The [Any.ifNonNull contract](m2-any-if-non-null.md) records shared VM lookup,
 callback and null-default behavior, independent Java string authority, native
 and portable raw comparison gates, and the remaining constructor gaps.
 
+Stage 59 connects `Duration` to the shared value, VM, type, diagnostic, and
+rendering paths. Its seven units are `ns`, `us`, `ms`, `s`, `min`, `h`, and `d`.
+The pinned Java implementation converts as `value * sourceNanos /
+targetNanos`; even a conversion to the same unit can overflow an intermediate
+double. Addition and subtraction select the coarser unit. Ordering uses
+`Double.compare`, while equality and hashing use values converted to
+nanoseconds, with Java's distinct NaN and signed-zero behavior. Set and Map
+observations include the transition from four to five keys. `isoString` uses
+`value * (sourceNanos / 1e9)` and the pinned Java formatting and finite-value
+checks; huge finite inputs can therefore format unusually or fail after
+conversion. These details are required outcomes, including first-error order
+for `isBetween` and argument/type failures.
+
+The [sealed Java Duration string fixture](../tests/fixtures/m2-duration-values/README.md)
+contains 274 ordered expressions in each of two fresh JVM sessions: 240
+successes and 34 ordinary Pkl errors per session. A separate
+[15-row Java exported-value supplement](../tests/fixtures/m2-duration-values-bits/README.md)
+records raw double bits and units, also twice. Native, N-API, and Chromium
+string comparisons must check complete status, expression, stdout, stderr,
+UTF-16BE channels, and ordered process protocol without normalizing errors.
+The Java exception class is producer metadata. Rust internal raw-bit tests
+use the exported-value observations as authority; they do not test a typed
+Rust, Wasm, or N-API Duration export. Typed product APIs and the original
+upstream `basic/duration.pkl` and `api/duration.pkl` suite executions remain
+separate obligations. The [Java checkpoint](../reports/m2/stage59-java-checkpoint.json)
+records that the canonical source snapshot includes unrelated `reference.pkl`
+files in place of those original Duration programs; their bytes are captured
+in the separate validation source snapshot. The authored Java calls never used
+the original snippet programs as inputs. Java evidence integrity is distinct
+from a candidate compatibility result.
+
 The [Class-value contract](m2-class-values.md) records declaration/prototype
 identity, superclass and converter rules, and independent Java observations.
 Common query/logger comparisons and the required provider/export supplements

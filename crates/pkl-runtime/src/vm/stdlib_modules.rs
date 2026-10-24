@@ -132,7 +132,8 @@ fn append_members(
     // and source owners. The JSON parser's external binding remains explicit.
     header.members.retain(|member| {
         (uri == "pkl:json" && matches!(member.name.as_str(), "Property" | "Value"))
-            || (uri == "pkl:base" && member.name == "DataSizeUnit")
+            || (uri == "pkl:base"
+                && matches!(member.name.as_str(), "DataSizeUnit" | "DurationUnit"))
     });
     let resolved = crate::resolver::resolve_module(&header)
         .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;
