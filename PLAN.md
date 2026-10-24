@@ -2092,6 +2092,48 @@ fixture 검증·Python 검사·JavaScript 검사·identity 보충 자료·소스
 추가했습니다. 이 기록 역시 Java 기준의 검증이며 Rust·플랫폼·M2 완료 결과가
 아닙니다.
 
+#### Stage 63 B — 공유 구현·플랫폼·원본 검증
+
+[구현 체크포인트](reports/m2/stage63-implementation-checkpoint.json)는 List·Set
+덧셈, Map 병합, 강제 평가하지 않는 피연산자 진단과 Set의 양끝 조회를 기록합니다.
+순서·중복 대표값·Map 키 교체와 빈 오른쪽 피연산자의 왼쪽 객체 반환을 유지하며,
+hash·equality 도중 Host 중단·재진입·GC·취소·재시도를 같은 continuation으로
+처리합니다. 새 저장 공간에 원래 producer의 실행 환경·구조 캐시를 복제하지 않습니다.
+
+여덟 Java 기준의 식 680개를 두 번씩 비교하여 native·실제 N-API·Chromium
+각각 **1,360회 관찰이 일치**합니다. 일곱 원시 채널과 전체 process protocol을
+비교했습니다. IntSeq 474회·Bytes 600회·Duration 548회·DataSize 510회도 환경별
+일치합니다. Any portable의 170회 일치·Regex 두 회 불일치와 M1의 두 Regex
+차이는 실패로 유지합니다.
+
+필수 Rust 검사 다섯 개가 통과했습니다. Workspace는 고유 테스트 **971개 통과·
+실패 0개·ignored 2개**이며, 원시 합계 976개에는 frontend 자식 검사 다섯 개가
+중복됩니다. Python 75개를 일반·`-O`로, JavaScript 49개와 mapping 검사 8개를
+Python 두 모드로 실행했고 목록 검사도 통과했습니다. 부분 mapping은 27개에서
+29개로 늘었으며 manifest의 63개 값이 바뀌었습니다. 4,527개 행·475개 요구사항과
+ready 4,416개·미구현 71개·미연결 40개 accounting 상태는 그대로입니다.
+
+수정하지 않은 원본 91개는 **37개 일치·21개 불일치·32개 미지원·Java 오류 1개**입니다.
+기존 90개는 `basic/set.pkl`이 통과해 35개에서 36개 일치로 늘었고 이전 통과의
+회귀는 없습니다. 새로 선택한 `basic/map.pkl`도 일치합니다. `api/list.pkl`의
+Java `-Xmx512m` 힙 오류와 package·HTTP·TLS 원본 두 개의 미실행 의무는
+유지합니다. 원본 선택 gate는 실패이며 선택 사례 수를 M2 완료율로 계산하지 않습니다.
+
+첫 플랫폼 취득은 Python 절대 경로를 기록해 기존 verifier의 literal `python3`
+호출 계약을 만족하지 못했습니다. 첫 비교는 guest 비교 전에 중단됐으며 해당
+취득·실패 기록을 보존했습니다. 런타임·기대 바이트·검증 도구를 바꾸지 않고 새
+플랫폼 취득과 비교로 계약을 충족했습니다. 검증·native 두 묶음·이전/최종 플랫폼·
+마감의 여섯 archive와 실제 publication·assembly 실행 기록을 별도로 보관합니다.
+
+첫 checkpoint assembly에서 Java 기준 게시 후 생성된 실행 영수증 두 개가 여섯
+archive에 없음을 검출했습니다. 기존 자료를 수정하지 않고 두 실행의 원시 기록,
+실패한 assembly와 수정 preparer를 별도 보충 archive에 보관합니다. 수정 assembly는
+일곱 archive의 전체 member를 읽어 모든 target 입력의 소속·바이트를 확인합니다.
+
+다음 우선순위는 연속 amendment 본문, class 값 부모의 객체 생성, 효과가 없는
+generator amendment와 원본이 요구하는 `Listing.fold`의 평가 순서입니다.
+**M2 아홉 영역과 전체 호환성·제품 API·릴리스 플랫폼·성능 조건은 계속 열려 있습니다.**
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

@@ -7500,6 +7500,86 @@
         ],
         "state": "partial"
       }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "binary"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "binary_error"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collection_addition.rs",
+            "symbol": "begin_collection_addition"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collection_addition.rs",
+            "symbol": "step_collection_addition"
+          }
+        ],
+        "state": "partial"
+      },
+      "remaining": [
+        "Complete operand-pair coverage, error ordering, source frames and the entire upstream operator corpus remain unverified.",
+        "Other language operators and all original cases retain their existing failed, unsupported, unexecuted or unmapped obligations; these source links are not a completion verdict."
+      ],
+      "requirement": "semantic:operators",
+      "scope": "Stage63 implements strict List/Set cross-kind addition and Map addition, including left-kind result, order, key representatives, empty-right identity and resumable key processing. Heap-aware errors cover ordinary Add and the integer-constant specialization without forcing diagnostic values. The linked unchanged original programs exercise these paths; their execution outcomes remain separate from focused Java string and Rust lifecycle evidence.",
+      "tests": {
+        "case_ids": [
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/list.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/set.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/map.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings/typeCheck.pkl"
+        ],
+        "state": "partial"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm/collection_addition.rs",
+            "symbol": "begin_collection_addition"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collection_addition.rs",
+            "symbol": "step_collection_addition"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collections.rs",
+            "symbol": "prepare_map_association"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collections.rs",
+            "symbol": "insert_map_entry_ordered"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collection_transforms.rs",
+            "symbol": "collection_endpoint"
+          }
+        ],
+        "state": "partial"
+      },
+      "remaining": [
+        "The remaining strict and lazy collection members, custom defaults, typed wrappers, generators and complete hashing/cyclic-key behavior remain separate implementation and verification work.",
+        "All original collection/type-check and public API contracts must execute with matching raw results before this semantic family can be marked complete."
+      ],
+      "requirement": "semantic:collections",
+      "scope": "Stage63 connects ordered strict collection addition to shared hashing, equality, insertion and GC/Host continuations, and supplies the four Set endpoint properties through the existing endpoint primitive. The linked original List/Set/Map and Mapping type-check programs are preserved unchanged. Focused string results and internal ownership checks do not establish the full original-program or collection requirement.",
+      "tests": {
+        "case_ids": [
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/list.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/set.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/map.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings/typeCheck.pkl"
+        ],
+        "state": "partial"
+      }
     }
   ],
   "schema_version": 1

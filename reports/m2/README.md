@@ -1,5 +1,62 @@
 # M2 language evidence
 
+### Stage63 collection addition — implementation and local comparisons
+
+The [implementation checkpoint](stage63-implementation-checkpoint.json) records
+List/Set concatenation, Map merging, nonforcing invalid-operand diagnostics,
+and Set `first`, `last`, `firstOrNull` and `lastOrNull`. Collection addition
+preserves insertion order and duplicate/key representatives, returns the left
+object for an empty right operand, and retains operands and pending hash or
+equality work across Host suspension, reentry, GC, cancellation and retry.
+New strict storage does not inherit the producer's executable environment or
+cached structural metadata.
+
+Eight sealed Java profiles contain 680 expressions. Native, actual N-API and
+Chromium each match all 1,360 observations across two sessions, comparing seven
+raw channels and whole process protocols. Existing scalar regressions retain
+IntSeq 474, Bytes 600, Duration 548 and DataSize 510 matches on each target.
+Any portable retains 170 matches and two `scalar-regex` mismatches on each
+target, with strict comparison failed. The M1 architecture contract passes
+while its two Java Regex compatibility differences remain failures.
+
+All five required Rust checks pass. The raw workspace harness reports 976
+passes; five nested frontend child summaries are also counted by their parent.
+The unique result is 971 passed, zero failed and two ignored. Tool validation
+passes 75 Python tests normally and under `-O`, 49 JavaScript tests, eight
+mapping tests in both Python modes, and both inventory checks. Its incomplete
+first tracing attempt is preserved separately.
+
+The original 91-program comparison has 37 matches, 21 mismatches,
+32 unsupported results and one Java heap error. The prior 90 improve from
+35 to 36 matches because `basic/set.pkl` now passes, with no prior pass
+regressing. The newly selected `basic/map.pkl` passes. Java `api/list.pkl`
+continues to fail under the unchanged `-Xmx512m`; two further package/HTTP/TLS
+originals remain required and unexecuted. The selected original gate fails.
+
+Two reviewed partial operator/collection mappings bring the mapping entries
+from 27 to 29. The manifest changes 63 values and retains 4,527 case rows,
+475 requirements, 4,416 ready rows, 71 unimplemented rows and 40 unmapped rows.
+These overlapping accounting rows and repeated observations are not a whole
+language completion percentage.
+
+Six evidence groups preserve validation, native collections, native scalar
+regressions, historical platform acquisition, final platform acquisition and
+closeout. Platform01 used an absolute Python executable where the existing
+verifiers require literal `python3`; comparison01 stopped before comparing
+guest rows. Fresh platform02 and comparison02 satisfy that unchanged contract.
+Original failures, focused development failures, producer histories and
+independent review remain visible. Publication and checkpoint assembly have
+separate actual process logs. The first checkpoint assembly rejected two later
+Java publication receipts absent from the six archives. A separate
+[assembly supplement](stage63-assembly-support-publication.json) preserves
+those receipts and raw channels, the failed assembly process, and the corrected
+preparer. The corrected checkpoint requires every target input to match the
+union of all seven archives. Cache recovery preserves removed build binaries
+in verified archives and claims no compatibility result.
+
+These results are recorded local macOS arm64 evidence. Full M2, typed exports,
+product APIs, release platform coverage and speed/memory targets remain open.
+
 ### Stage63 collection addition — independent Java authority
 
 The [Java checkpoint](stage63-java-checkpoint.json) seals 125 ordered public

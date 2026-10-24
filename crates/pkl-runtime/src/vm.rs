@@ -17,6 +17,7 @@ pub(crate) mod builtins;
 mod bytes;
 pub(crate) mod classes;
 mod code_storage;
+mod collection_addition;
 pub(crate) mod collection_conversions;
 mod collection_transforms;
 pub mod collections;
@@ -1159,6 +1160,7 @@ struct Frame {
     collection_transform: Option<collection_transforms::TransformRun>,
     int_seq_run: Option<Box<int_seq::Run>>,
     conversion_run: Option<Box<collection_conversions::Run>>,
+    collection_addition: Option<Box<collection_addition::Run>>,
     function_owner: Option<ObjectId>,
     amendment_arguments: Option<Vec<Value>>,
     amendment_end: Option<usize>,
@@ -1430,6 +1432,7 @@ impl Vm {
             collection_transform: None,
             int_seq_run: None,
             conversion_run: None,
+            collection_addition: None,
             function_owner: None,
             amendment_arguments: None,
             amendment_end: None,
@@ -1878,6 +1881,9 @@ impl Vm {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.int_seq_run {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.collection_addition {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.conversion_run {
@@ -2840,6 +2846,7 @@ impl Vm {
             collection_transform: None,
             int_seq_run: None,
             conversion_run: None,
+            collection_addition: None,
             function_owner: None,
             amendment_arguments: None,
             amendment_end: None,
@@ -3799,6 +3806,7 @@ impl Vm {
             collection_transform: None,
             int_seq_run: None,
             conversion_run: None,
+            collection_addition: None,
             function_owner: Some(id),
             amendment_arguments,
             amendment_end: None,
@@ -5427,7 +5435,15 @@ impl Vm {
                             .into(),
                     ),
                     Value::Float(left) => Value::Float((left.get() + right as f64).into()),
-                    left => return Err(binary_error("+", &left, &Value::Int(right.into()))),
+                    left => {
+                        return Err(binary_error(
+                            "+",
+                            &left,
+                            &Value::Int(right.into()),
+                            &self.heap,
+                            &self.program.module_name,
+                        )?);
+                    }
                 };
                 self.stack.push(value);
             }
@@ -5437,7 +5453,13 @@ impl Vm {
                 if matches!((&left, &right), (Value::Object(_), Value::Object(_))) {
                     self.begin_equality(left, right, matches!(instruction, Instruction::NotEqual));
                 } else {
-                    self.stack.push(binary(&instruction, left, right)?);
+                    self.stack.push(binary(
+                        &instruction,
+                        left,
+                        right,
+                        &self.heap,
+                        &self.program.module_name,
+                    )?);
                 }
             }
             Instruction::Add
@@ -5451,20 +5473,28 @@ impl Vm {
             | Instruction::IntegerDivide
             | Instruction::Remainder
             | Instruction::Power => {
+                if matches!(instruction, Instruction::Add)
+                    && self
+                        .frames
+                        .last()
+                        .is_some_and(|frame| frame.collection_addition.is_some())
+                {
+                    return self.step_collection_addition();
+                }
                 let right = self.pop()?;
                 let left = self.pop()?;
-                if (matches!(left, Value::Bytes(_)) || matches!(right, Value::Bytes(_)))
-                    && !(matches!(instruction, Instruction::Add)
-                        && matches!((&left, &right), (Value::Bytes(_), Value::Bytes(_))))
+                if matches!(instruction, Instruction::Add)
+                    && self.begin_collection_addition(&left, &right)?
                 {
-                    return Err(RuntimeError::new(ErrorKind::Type, PklString::join(&[
-                        format!("Operator `{}` is not defined for operand types `{}` and `{}`.\nLeft operand : ", operator_name(&instruction), crate::diagnostic_values::type_name(&left, &self.heap, &self.program.module_name)?, crate::diagnostic_values::type_name(&right, &self.heap, &self.program.module_name)?).into(),
-                        crate::diagnostic_values::render_string(&left, &self.heap, &self.program.module_name, 80)?,
-                        "\nRight operand: ".into(),
-                        crate::diagnostic_values::render_string(&right, &self.heap, &self.program.module_name, 80)?,
-                    ], "")));
+                    return Ok(());
                 }
-                self.stack.push(binary(&instruction, left, right)?);
+                self.stack.push(binary(
+                    &instruction,
+                    left,
+                    right,
+                    &self.heap,
+                    &self.program.module_name,
+                )?);
             }
             Instruction::Jump(target) => {
                 self.jump(target)?;
@@ -5752,7 +5782,13 @@ fn invalid(message: &str) -> RuntimeError {
     RuntimeError::new(ErrorKind::InvalidBytecode, message)
 }
 
-fn binary(instruction: &Instruction, left: Value, right: Value) -> Result<Value, RuntimeError> {
+fn binary(
+    instruction: &Instruction,
+    left: Value,
+    right: Value,
+    heap: &Heap,
+    module: &str,
+) -> Result<Value, RuntimeError> {
     if matches!(instruction, Instruction::Equal | Instruction::NotEqual) {
         let equal = match (&left, &right) {
             (Value::Int(a), Value::Float(b)) => a.get() as f64 == **b,
@@ -5837,7 +5873,9 @@ fn binary(instruction: &Instruction, left: Value, right: Value) -> Result<Value,
                         operator_name(instruction),
                         &Value::String(left),
                         &Value::String(right),
-                    ));
+                        heap,
+                        module,
+                    )?);
                 }
             }))
         }
@@ -5848,7 +5886,13 @@ fn binary(instruction: &Instruction, left: Value, right: Value) -> Result<Value,
             float_binary(instruction, *left, right.get() as f64)
         }
         (Value::Float(left), Value::Float(right)) => float_binary(instruction, *left, *right),
-        (left, right) => Err(binary_error(operator_name(instruction), &left, &right)),
+        (left, right) => Err(binary_error(
+            operator_name(instruction),
+            &left,
+            &right,
+            heap,
+            module,
+        )?),
     }
 }
 
@@ -7384,11 +7428,18 @@ fn unary_error(operator: &str, operand: &Value) -> RuntimeError {
     )
 }
 
-fn binary_error(operator: &str, left: &Value, right: &Value) -> RuntimeError {
-    RuntimeError::new(ErrorKind::Type, PklString::join(&[
-        format!("Operator `{operator}` is not defined for operand types `{}` and `{}`.\nLeft operand : ", value_type_name(left), value_type_name(right)).into(),
-        display_value(left), "\nRight operand: ".into(), display_value(right),
-    ], ""))
+fn binary_error(
+    operator: &str,
+    left: &Value,
+    right: &Value,
+    heap: &Heap,
+    module: &str,
+) -> Result<RuntimeError, RuntimeError> {
+    Ok(RuntimeError::new(ErrorKind::Type, PklString::join(&[
+        format!("Operator `{operator}` is not defined for operand types `{}` and `{}`.\nLeft operand : ", crate::diagnostic_values::type_name(left, heap, module)?, crate::diagnostic_values::type_name(right, heap, module)?).into(),
+        crate::diagnostic_values::render_string(left, heap, module, 80)?, "\nRight operand: ".into(),
+        crate::diagnostic_values::render_string(right, heap, module, 80)?,
+    ], "")))
 }
 
 fn operator_name(instruction: &Instruction) -> &'static str {

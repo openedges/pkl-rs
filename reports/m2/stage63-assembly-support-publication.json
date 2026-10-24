@@ -1,0 +1,139 @@
+{
+  "archive": {
+    "bytes": 53036,
+    "full_member_readback_verified": true,
+    "members": 20,
+    "path": "reports/m2/stage63-assembly-support-evidence.tar.gz",
+    "sha256": "ab75d67f3ddea7ec287efe28c7d7a9402d001a8ab2849eebd82b8f2686cf630f"
+  },
+  "elapsed_seconds": 0.027,
+  "excluded": [],
+  "historical_limitations": [
+    "Six implementation archives remain unchanged. This supplement binds later Java A/A2 publication process receipts and corrected checkpoint preparation.",
+    "Failed checkpoint assembly01 is preserved as a publication-closure failure; it is not a language comparison failure. No guest evaluation is performed."
+  ],
+  "kind": "Stage63 local assembly-support evidence publication",
+  "member_inventory": {
+    "target/m2/stage63-assembly-support-01/preparation.json": {
+      "bytes": 1163,
+      "mode": 420,
+      "sha256": "df07eda90dc28683b0e1bda53f33569ae6e20798a92d6ee73833b373dac9de68"
+    },
+    "target/m2/stage63-assembly-support-01/publish.py": {
+      "bytes": 2580,
+      "mode": 420,
+      "sha256": "9ecf79937b1419ccb8bd11611bf4003bd51e120bd95eaeae1b2c4aceae622277"
+    },
+    "target/m2/stage63-checkpoint-02/__pycache__/prepare.cpython-314.pyc": {
+      "bytes": 71486,
+      "mode": 420,
+      "sha256": "12bbcfb51c5db2087a02c1c66bceca4a748a6ec698d763ab8d65751e32990a6a"
+    },
+    "target/m2/stage63-checkpoint-02/prepare.py": {
+      "bytes": 48736,
+      "mode": 420,
+      "sha256": "452a6172d74df676c5e1f389852d624bbb1a802eff1c2319d817f07d009ea673"
+    },
+    "target/m2/stage63-java-publication-execution-01/process.json": {
+      "bytes": 3489,
+      "mode": 420,
+      "sha256": "6ef9ed15e563e6bcffcdc804188047756b99dcc96decf61e9f0413590e7fa5e4"
+    },
+    "target/m2/stage63-java-publication-execution-01/result.json": {
+      "bytes": 357,
+      "mode": 420,
+      "sha256": "b495d35f93d1fc38cbcfbe0d7f7ab5d503c9002ec9bcf75208159a9bc652813b"
+    },
+    "target/m2/stage63-java-publication-execution-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage63-java-publication-execution-01/stdout.bin": {
+      "bytes": 463,
+      "mode": 420,
+      "sha256": "e24cab7f259968b64455f31b79612c1215fe493a28f357c9b133a6236ddc9e27"
+    },
+    "target/m2/stage63-publication-01/assembly-support-run.json": {
+      "bytes": 891,
+      "mode": 420,
+      "sha256": "c8c9177a27f97adc102af0fca90051c62b3e30565671471e87536340e1a6825f"
+    },
+    "target/m2/stage63-publication-01/layout.json": {
+      "bytes": 4504,
+      "mode": 420,
+      "sha256": "24fd8a950e926678a10f7ccb6131c2704d91a5a4029d1477698dd69f5694d5e5"
+    },
+    "target/m2/stage63-publication-01/preparation.json": {
+      "bytes": 809,
+      "mode": 420,
+      "sha256": "72be62d2daaf87afebb9695f5ff6d1a2dc3d2e429185ba2b090b97c2dc6c4635"
+    },
+    "target/m2/stage63-publication-01/publish.py": {
+      "bytes": 10381,
+      "mode": 420,
+      "sha256": "5ff09821c0eda144b73a94838b1416f7eba2ed1ab65151f7c286b4153195f600"
+    },
+    "target/m2/stage63-publication-execution-01/checkpoint-assembly/process.json": {
+      "bytes": 5851,
+      "mode": 420,
+      "sha256": "e373fb87a03d3ae194783f7b169c66baed33afcfbaaf482f26231537173bd3d1"
+    },
+    "target/m2/stage63-publication-execution-01/checkpoint-assembly/stderr.bin": {
+      "bytes": 979,
+      "mode": 420,
+      "sha256": "6ffd817c6906ac8064f82536f487576e5a191485e44a268f28b804f33b93a018"
+    },
+    "target/m2/stage63-publication-execution-01/checkpoint-assembly/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage63-publication-execution-01/run.py": {
+      "bytes": 3295,
+      "mode": 420,
+      "sha256": "0e14aec6782a7b1af469415ed1271d949b2d464da7244644b02ae4e7b0e48fce"
+    },
+    "target/m2/stage63-set-endpoints-java-publication-execution-01/process.json": {
+      "bytes": 3540,
+      "mode": 420,
+      "sha256": "27cb5bf1a15d8a9dece25b81cece75372224916a08fb371ccba368cb83af861b"
+    },
+    "target/m2/stage63-set-endpoints-java-publication-execution-01/result.json": {
+      "bytes": 357,
+      "mode": 420,
+      "sha256": "68024a95db09fe1b4421c199fecfe94581456334e92c33b525b1850cadb1dad6"
+    },
+    "target/m2/stage63-set-endpoints-java-publication-execution-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage63-set-endpoints-java-publication-execution-01/stdout.bin": {
+      "bytes": 477,
+      "mode": 420,
+      "sha256": "66a029e70e45c378a493cc6edb6f12192d14f66dd16711d79dbbabc2ea25d4ea"
+    }
+  },
+  "publisher_inputs": [
+    "target/m2/stage63-publication-01/publish.py",
+    "target/m2/stage63-publication-01/assembly-support-run.json",
+    "target/m2/stage63-publication-01/layout.json",
+    "target/m2/stage63-publication-01/preparation.json",
+    "target/m2/stage63-publication-execution-01/run.py"
+  ],
+  "schema": 1,
+  "scope": "Recorded local captures, including failures; no full M2, public API, release platform, or performance completion claim",
+  "selected_directories": [
+    "target/m2/stage63-java-publication-execution-01",
+    "target/m2/stage63-set-endpoints-java-publication-execution-01",
+    "target/m2/stage63-checkpoint-02",
+    "target/m2/stage63-publication-execution-01/checkpoint-assembly",
+    "target/m2/stage63-assembly-support-01"
+  ],
+  "source_before_after": {
+    "file_set_after_sha256": "e2150e832538b76d636b1c213dc8507d4e562be3f0585c2d8db5f0515d99a622",
+    "file_set_before_sha256": "e2150e832538b76d636b1c213dc8507d4e562be3f0585c2d8db5f0515d99a622",
+    "stable": true
+  }
+}

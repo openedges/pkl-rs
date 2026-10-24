@@ -640,7 +640,7 @@ impl Vm {
     }
 
     /// Return true only when hashing/equality must retry this instruction.
-    fn put_set_key(&mut self, value: &Value) -> Result<bool, RuntimeError> {
+    pub(super) fn put_set_key(&mut self, value: &Value) -> Result<bool, RuntimeError> {
         let id = self.builder()?;
         if self.prepare_keys(vec![value.clone()])?
             || self.search_key(value, self.set_candidates(id, value, true)?)?
@@ -748,8 +748,57 @@ impl Vm {
         key: Value,
         value: Value,
     ) -> Result<(), RuntimeError> {
+        self.insert_map_entry_ordered(id, key, value, None)
+    }
+
+    pub(super) fn prepare_map_association(
+        &mut self,
+        id: ObjectId,
+        key: &Value,
+    ) -> Result<bool, RuntimeError> {
+        if self.prepare_keys(vec![key.clone()])? {
+            return Ok(true);
+        }
         let object = self.heap.get(id)?;
-        let append_order = self.map_value(id, &key)?.is_none();
+        let candidates: Vec<_> = object
+            .map_index()
+            .assoc_candidates(self.java_hash(key)?)
+            .into_iter()
+            .map(|index| object.collection_members[index].key.clone())
+            .collect();
+        if self.search_key(key, candidates.clone())? {
+            return Ok(true);
+        }
+        if !candidates
+            .iter()
+            .any(|candidate| same_key(&self.heap, key, candidate))
+        {
+            let object = self.heap.get(id)?;
+            let keys = object
+                .map_index()
+                .rehash(self.java_hash(key)?)
+                .into_iter()
+                .map(|index| object.collection_members[index].key.clone())
+                .collect();
+            if self.prepare_keys(keys)? {
+                return Ok(true);
+            }
+        }
+        Ok(false)
+    }
+
+    pub(super) fn insert_map_entry_ordered(
+        &mut self,
+        id: ObjectId,
+        key: Value,
+        value: Value,
+        append_order: Option<bool>,
+    ) -> Result<(), RuntimeError> {
+        let object = self.heap.get(id)?;
+        let append_order = match append_order {
+            Some(append) => append,
+            None => self.map_value(id, &key)?.is_none(),
+        };
         let candidates = object.map_index().assoc_candidates(self.java_hash(&key)?);
         let replacing = object.collection_members.iter().position(|member| {
             candidates.iter().any(|index| {

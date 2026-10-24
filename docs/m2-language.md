@@ -1,5 +1,35 @@
 # M2 language verification
 
+Stage 63 adds strict List/Set concatenation, Map merging, and Set endpoint
+properties to the shared VM. Its
+[implementation checkpoint](../reports/m2/stage63-implementation-checkpoint.json)
+records eight independent Java string profiles: 680 expressions and 1,360
+observations on each of native, actual N-API and Chromium. All seven common raw
+channels and complete process protocols match. List ordering, Set duplicate
+representatives, Map replacement order, empty-right identity and nonforcing
+operand diagnostics have dedicated cases. Host suspension, reentry, GC,
+cancellation and retry retain the pending operands and builder.
+
+All five required Rust checks pass, with 971 unique workspace tests passing,
+zero failures and two ignored tests. IntSeq, Bytes, Duration and DataSize retain
+474, 600, 548 and 510 exact observations per target. Any portable still has
+170 matches and two Regex mismatches per target; its strict gate fails. The
+M1 architecture contract also retains its separate two Regex compatibility gaps.
+
+The unchanged original selection expands to 91 programs: 37 matches,
+21 mismatches, 32 unsupported results and one Java heap error. Among the prior
+90, `basic/set.pkl` changes from mismatch to pass and all 35 previous passes
+remain passes. The newly selected `basic/map.pkl` also passes. Java
+`api/list.pkl` still fails at the recorded `-Xmx512m`; two package/HTTP/TLS
+originals remain blocked. All nine M2 workstreams and the strict full-language
+gate remain open.
+
+An earlier platform acquisition used an absolute Python launcher where the
+offline verifier requires literal `python3`. Its failed comparison preflight
+and original captures remain preserved. A fresh platform acquisition satisfies
+the unchanged command and raw-comparison contracts. These are local macOS
+arm64 results, not hosted CI or complete product/platform/performance evidence.
+
 Stage 62 connects strict object materialization, lazy object/collection adapters,
 selector-based maps, Dynamic property queries, Listing/Mapping optional and
 defaulted lookup, Dynamic length, Set addition, and Bytes iteration/spread to

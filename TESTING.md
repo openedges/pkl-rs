@@ -811,6 +811,23 @@ Generate expected results from the Java oracle and review their provenance and c
 
 ## Planned Test Layers
 
+Stage63's collection-addition and Set-endpoint fixtures extend the shared
+catalog to eight Java authorities. Native, N-API and Chromium comparisons
+check all seven common raw channels and whole process protocols for 680
+expressions in two sessions per target. UTF-16 comparisons preserve lone
+surrogates. The Java-only internal identity supplement remains a distinct
+boundary from public string results and typed exports.
+
+The [Stage63 checkpoint](reports/m2/stage63-implementation-checkpoint.json)
+separately records the unchanged original 91-program CLI/output-file contract,
+whose nonpasses remain failures, and the known Any/M1 Regex differences.
+Its initial platform acquisition failed a command-provenance admission check
+because the M1 launcher used an absolute Python executable instead of the
+recorded literal `python3` contract. Preserve that capture and failed preflight;
+the fresh acquisition uses the existing verifier without changing expected
+bytes or rewriting the original execution record. Replaying saved comparisons
+does not count as another guest execution.
+
 | Layer | Scope |
 | --- | --- |
 | Test tooling | Failure detection for empty corpora, missing expected results, unavailable runners, and byte differences |

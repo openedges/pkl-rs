@@ -174,6 +174,7 @@ impl Vm {
             collection_transform: None,
             int_seq_run: None,
             conversion_run: None,
+            collection_addition: None,
             function_owner: None,
             amendment_arguments: None,
             amendment_end: None,

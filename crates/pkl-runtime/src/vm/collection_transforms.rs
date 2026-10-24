@@ -529,16 +529,19 @@ pub(super) fn endpoint_blocks(
     metadata: &mut Vec<BlockMetadata>,
 ) -> BTreeMap<(Arc<str>, Arc<str>), usize> {
     let source = crate::stdlib_sources::base();
-    let class = source.text.find("external class List<").unwrap();
-    ["first", "firstOrNull", "last", "lastOrNull"]
-        .into_iter()
-        .map(|name| {
+    let mut result = BTreeMap::new();
+    for class_name in ["List", "Set"] {
+        let class = source
+            .text
+            .find(&format!("external class {class_name}<"))
+            .unwrap();
+        for name in ["first", "firstOrNull", "last", "lastOrNull"] {
             let signature = format!("external {name}:");
             let start = class + source.text[class..].find(&signature).unwrap();
             let end = start + source.text[start..].find('\n').unwrap();
             let block = blocks.len();
             blocks.push(vec![
-                Instruction::Primitive(primitives::Operation::ListEndpoint {
+                Instruction::Primitive(primitives::Operation::CollectionEndpoint {
                     last: name.starts_with("last"),
                     nullable: name.ends_with("OrNull"),
                 }),
@@ -546,17 +549,19 @@ pub(super) fn endpoint_blocks(
             ]);
             metadata.push(BlockMetadata {
                 source: Some(source.clone()),
-                member: format!("#List.{name}").into(),
+                member: format!("#{class_name}.{name}").into(),
                 declaration: Some(Span::new(start, end)),
                 spans: vec![None; 2],
                 ..Default::default()
             });
-            (("List".into(), name.into()), block)
-        })
-        .collect()
+            result.insert((class_name.into(), name.into()), block);
+        }
+    }
+    result
 }
+
 impl Vm {
-    pub(super) fn list_endpoint(
+    pub(super) fn collection_endpoint(
         &mut self,
         receiver: Value,
         last: bool,
@@ -571,13 +576,16 @@ impl Vm {
         };
         let value = if let Some(member) = member {
             collections::cached_render_value(&self.heap, id, member)?
-                .ok_or_else(|| invalid("uncached strict List endpoint"))?
+                .ok_or_else(|| invalid("uncached strict collection endpoint"))?
         } else if nullable {
             Value::Null
         } else {
             return Err(RuntimeError::new(
                 ErrorKind::Type,
-                "Expected a non-empty collection.\nCollection: List()",
+                format!(
+                    "Expected a non-empty collection.\nCollection: {:?}()",
+                    self.heap.get(id)?.collection_kind
+                ),
             ));
         };
         self.stack.push(value);

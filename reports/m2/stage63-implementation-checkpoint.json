@@ -1,0 +1,1009 @@
+{
+  "any_if_non_null": {
+    "chromium": {
+      "mismatch": 2,
+      "pass": 170
+    },
+    "napi": {
+      "mismatch": 2,
+      "pass": 170
+    }
+  },
+  "assembly": {
+    "all_seven_publications_fully_read_back": true,
+    "all_target_inputs_match_seven_published_member_sets": true,
+    "first_attempt_failed_and_preserved": true,
+    "layout": {
+      "bytes": 4504,
+      "path": "target/m2/stage63-publication-01/layout.json",
+      "sha256": "24fd8a950e926678a10f7ccb6131c2704d91a5a4029d1477698dd69f5694d5e5"
+    },
+    "preparer": {
+      "bytes": 48736,
+      "path": "target/m2/stage63-checkpoint-02/prepare.py",
+      "sha256": "452a6172d74df676c5e1f389852d624bbb1a802eff1c2319d817f07d009ea673"
+    },
+    "separate_assembly_support_group": "assembly-support",
+    "six_implementation_groups": [
+      "validation",
+      "native-collections",
+      "native-regressions",
+      "platform-history",
+      "platform",
+      "closeout"
+    ]
+  },
+  "baseline": "Pkl 0.32.0",
+  "collection": {
+    "collection-addition": {
+      "chromium": {
+        "pass": 250
+      },
+      "compared_rows_per_target": 250,
+      "module_uri": "file:///stage63/collection-addition.pkl",
+      "napi": {
+        "pass": 250
+      },
+      "native": {
+        "pass": 250
+      },
+      "native_report": {
+        "bytes": 97650,
+        "path": "target/m2/stage63-collection-addition-native-comparison-01/report.json",
+        "sha256": "6538eba45629609f369ecb1d23d0e65a1cee6629f414cd2495a63eeca7ddc8d5"
+      },
+      "portable_report": {
+        "bytes": 44771,
+        "path": "target/m2/stage63-collection-addition-portable-capture-02/report.json",
+        "sha256": "82056bca6615302e776826ccee411caec57c908fde0b2e21d0a6f2303feeaaa1"
+      },
+      "rows": 125
+    },
+    "collection-conversion-controls": {
+      "chromium": {
+        "pass": 116
+      },
+      "compared_rows_per_target": 116,
+      "module_uri": "file:///stage62/collection-conversion-controls.pkl",
+      "napi": {
+        "pass": 116
+      },
+      "native": {
+        "pass": 116
+      },
+      "native_report": {
+        "bytes": 80834,
+        "path": "target/m2/stage63-collection-conversion-controls-native-comparison-01/report.json",
+        "sha256": "40cd5490fca4d9b290dc885cffbdf843298e3652143dce333180f5fdff300edc"
+      },
+      "portable_report": {
+        "bytes": 43982,
+        "path": "target/m2/stage63-collection-conversion-controls-portable-capture-02/report.json",
+        "sha256": "d7683b5a98cfa1d273ce284c4eea6ab080dc9194db9b250a85edebbd6b34b83c"
+      },
+      "rows": 58
+    },
+    "collection-conversions": {
+      "chromium": {
+        "pass": 472
+      },
+      "compared_rows_per_target": 472,
+      "module_uri": "file:///stage62/collection-conversions.pkl",
+      "napi": {
+        "pass": 472
+      },
+      "native": {
+        "pass": 472
+      },
+      "native_report": {
+        "bytes": 128370,
+        "path": "target/m2/stage63-collection-conversions-native-comparison-01/report.json",
+        "sha256": "e8d5cec9aeb8c2f3e2e5abe7ff6cf0ecde59930200e8ad563c490b115084dc5e"
+      },
+      "portable_report": {
+        "bytes": 48388,
+        "path": "target/m2/stage63-collection-conversions-portable-capture-02/report.json",
+        "sha256": "820d961ca852d292edf64cc8c055e68c908fb0bb2de96d7afc0a3b84abb2a89d"
+      },
+      "rows": 236
+    },
+    "collection-default-contracts": {
+      "chromium": {
+        "pass": 44
+      },
+      "compared_rows_per_target": 44,
+      "module_uri": "file:///stage62/collection-default-contracts.pkl",
+      "napi": {
+        "pass": 44
+      },
+      "native": {
+        "pass": 44
+      },
+      "native_report": {
+        "bytes": 70784,
+        "path": "target/m2/stage63-collection-default-contracts-native-comparison-01/report.json",
+        "sha256": "037f9d5ab83a93a49452836dab47ca321a65ce1169592a518e06aca6de7084d2"
+      },
+      "portable_report": {
+        "bytes": 42725,
+        "path": "target/m2/stage63-collection-default-contracts-portable-capture-02/report.json",
+        "sha256": "fb9a05dc24fe57c8b622b67e2bc59ab14d966a484fbfe5af663a57bb5bd08dc0"
+      },
+      "rows": 22
+    },
+    "collection-dynamic-render": {
+      "chromium": {
+        "pass": 20
+      },
+      "compared_rows_per_target": 20,
+      "module_uri": "file:///stage62/dynamic-render.pkl",
+      "napi": {
+        "pass": 20
+      },
+      "native": {
+        "pass": 20
+      },
+      "native_report": {
+        "bytes": 67178,
+        "path": "target/m2/stage63-collection-dynamic-render-native-comparison-01/report.json",
+        "sha256": "9bea61cebf789b8aafd79a16509ae76cbeb51f7928156f5c3f76296a4ff960e6"
+      },
+      "portable_report": {
+        "bytes": 41977,
+        "path": "target/m2/stage63-collection-dynamic-render-portable-capture-02/report.json",
+        "sha256": "a2289a6c556de6e2f2c0e808d2bc8fb614956ce2a861f1fcbe03bb3662519dcf"
+      },
+      "rows": 10
+    },
+    "collection-lookups": {
+      "chromium": {
+        "pass": 266
+      },
+      "compared_rows_per_target": 266,
+      "module_uri": "file:///stage62/collection-lookups.pkl",
+      "napi": {
+        "pass": 266
+      },
+      "native": {
+        "pass": 266
+      },
+      "native_report": {
+        "bytes": 100648,
+        "path": "target/m2/stage63-collection-lookups-native-comparison-01/report.json",
+        "sha256": "cc8ba2948a39fc284e82520216bbdb495c0db0256452c2f7bf177844bf93df70"
+      },
+      "portable_report": {
+        "bytes": 45372,
+        "path": "target/m2/stage63-collection-lookups-portable-capture-02/report.json",
+        "sha256": "e08ebeecc4287fa46856ca6ceb488ebbbaf1aa5e8c10080a720b44da41537daf"
+      },
+      "rows": 133
+    },
+    "collection-property-names": {
+      "chromium": {
+        "pass": 52
+      },
+      "compared_rows_per_target": 52,
+      "module_uri": "file:///stage62/collection-property-names.pkl",
+      "napi": {
+        "pass": 52
+      },
+      "native": {
+        "pass": 52
+      },
+      "native_report": {
+        "bytes": 71339,
+        "path": "target/m2/stage63-collection-property-names-native-comparison-01/report.json",
+        "sha256": "8eb008d02253d699566ef3bf5221ddf8f44c400f550d10eefc92e599b1ce7f07"
+      },
+      "portable_report": {
+        "bytes": 42373,
+        "path": "target/m2/stage63-collection-property-names-portable-capture-02/report.json",
+        "sha256": "50c83a44a0f1d3092c92bbfdcaaa5d20a5dadb32c483bb1733b5833cf46f2eca"
+      },
+      "rows": 26
+    },
+    "set-endpoints": {
+      "chromium": {
+        "pass": 140
+      },
+      "compared_rows_per_target": 140,
+      "module_uri": "file:///stage63/set-endpoints.pkl",
+      "napi": {
+        "pass": 140
+      },
+      "native": {
+        "pass": 140
+      },
+      "native_report": {
+        "bytes": 83485,
+        "path": "target/m2/stage63-set-endpoints-native-comparison-01/report.json",
+        "sha256": "99ae6c92d2b06f5b0499393c9f7268dc420986ac883d1350690b81b17c07cf23"
+      },
+      "portable_report": {
+        "bytes": 43308,
+        "path": "target/m2/stage63-set-endpoints-portable-capture-02/report.json",
+        "sha256": "8d7c7d5f7f7cd88f9599dd7b38fe100fb5fe9db0b8b162b03331a8e44ddd4602"
+      },
+      "rows": 70
+    }
+  },
+  "comparison": {
+    "boundary": "Two complete native, N-API and Chromium sessions per string fixture; seven exact common channels, with known Regex failures retained.",
+    "report": {
+      "bytes": 56444,
+      "path": "target/m2/stage63-comparison-validation-02/report.json",
+      "sha256": "f515007db6e3e3b93241889a9a9011f35b049e543b6b72988b2854f25b15304b"
+    }
+  },
+  "evidence": {
+    "assembly-support": {
+      "archive": {
+        "bytes": 53036,
+        "path": "reports/m2/stage63-assembly-support-evidence.tar.gz",
+        "sha256": "ab75d67f3ddea7ec287efe28c7d7a9402d001a8ab2849eebd82b8f2686cf630f"
+      },
+      "full_member_readback_verified": true,
+      "members": 20,
+      "publication": {
+        "bytes": 5745,
+        "path": "reports/m2/stage63-assembly-support-publication.json",
+        "sha256": "96b10a654fba2dbfca10404c52ad8c43bc8d27695716e7e11b92b2d47c7d2f12"
+      }
+    },
+    "closeout": {
+      "archive": {
+        "bytes": 31570334,
+        "path": "reports/m2/stage63-closeout-evidence.tar.gz",
+        "sha256": "c5c6979afc99c78db2d3f2a915910f438ee5fc290183ac0faaf443197743aa97"
+      },
+      "full_member_readback_verified": true,
+      "members": 7179,
+      "publication": {
+        "bytes": 1743716,
+        "path": "reports/m2/stage63-closeout-publication.json",
+        "sha256": "635818adb7f36f79be3ade2849128868954304b9ad3c95a749bb36b34ea064fa"
+      }
+    },
+    "native-collections": {
+      "archive": {
+        "bytes": 74867209,
+        "path": "reports/m2/stage63-native-collections-evidence.tar.gz",
+        "sha256": "3027a49a80803a15006f6c65a8f1f39b8d8ed6147fce6b33603a0df1dfa7c1d1"
+      },
+      "full_member_readback_verified": true,
+      "members": 17769,
+      "publication": {
+        "bytes": 4632775,
+        "path": "reports/m2/stage63-native-collections-publication.json",
+        "sha256": "9b5c177d50d90b9e760bfe5b09ac8213dd435fb7eed81a4dd40a130694fc2f56"
+      }
+    },
+    "native-regressions": {
+      "archive": {
+        "bytes": 51057313,
+        "path": "reports/m2/stage63-native-regressions-evidence.tar.gz",
+        "sha256": "def0f47191beb2739043d5e77555ef70d22e04829a979df4120fa45b24217cbf"
+      },
+      "full_member_readback_verified": true,
+      "members": 24989,
+      "publication": {
+        "bytes": 5981262,
+        "path": "reports/m2/stage63-native-regressions-publication.json",
+        "sha256": "0ac4ea30c78119de01fbdb42ede73002cefc858ea58884192610d399bf353c3a"
+      }
+    },
+    "platform": {
+      "archive": {
+        "bytes": 16520292,
+        "path": "reports/m2/stage63-platform-evidence.tar.gz",
+        "sha256": "03f3b12e557b4caebea95169017be71e06812e15361cea8ccfe71c7df8e09e38"
+      },
+      "full_member_readback_verified": true,
+      "members": 81914,
+      "publication": {
+        "bytes": 20583704,
+        "path": "reports/m2/stage63-platform-publication.json",
+        "sha256": "0963e961c66bb1eb61dbeaaf8ef4f44b632747cc09acc26ea2c4a7c8b9345003"
+      }
+    },
+    "platform-history": {
+      "archive": {
+        "bytes": 16514975,
+        "path": "reports/m2/stage63-platform-history-evidence.tar.gz",
+        "sha256": "59bb2617860e9f9dfb7543dde80778023b41d1aca90010a17bdfb82507e858ab"
+      },
+      "full_member_readback_verified": true,
+      "members": 81909,
+      "publication": {
+        "bytes": 20582633,
+        "path": "reports/m2/stage63-platform-history-publication.json",
+        "sha256": "10b228558ed526e0cc718956f9a5053c5e23f41e768983643c3a167d639b6dcd"
+      }
+    },
+    "validation": {
+      "archive": {
+        "bytes": 28192980,
+        "path": "reports/m2/stage63-validation-evidence.tar.gz",
+        "sha256": "f723a6c4c09124d3ebc4e73d6f4ee5c9aed455efbc93f4c0aebf4d9c80bd9423"
+      },
+      "full_member_readback_verified": true,
+      "members": 13522,
+      "publication": {
+        "bytes": 3427377,
+        "path": "reports/m2/stage63-validation-publication.json",
+        "sha256": "0806db2267c9e69044cd366b6e23b1f5cf9fdd095c2af868f84710c4eb126275"
+      }
+    }
+  },
+  "full_m2_complete": false,
+  "full_public_api_comparison_passed": false,
+  "historical_comparison_preflight_failure": {
+    "bytes": 876,
+    "path": "target/m2/stage63-comparison-validation-01/attempt.json",
+    "sha256": "094371c355d8739ed91ddcabca40ece5cc8f729b36290af933235be4a69f21dd"
+  },
+  "historical_first_checkpoint_assembly_failure": {
+    "bytes": 5851,
+    "path": "target/m2/stage63-publication-execution-01/checkpoint-assembly/process.json",
+    "sha256": "e373fb87a03d3ae194783f7b169c66baed33afcfbaaf482f26231537173bd3d1"
+  },
+  "historical_platform_absolute_python_acquisition": {
+    "bytes": 174191,
+    "path": "target/m2/stage63-platform-validation-01/report.json",
+    "sha256": "aa37c4dfb46b800cf4e36ae223675ceeb002e85d122feb5133c15eb4682e3de8"
+  },
+  "java_authority": {
+    "file:///stage62/collection-conversion-controls.pkl": {
+      "boundary": "Seven common raw channels; Java exception/cause and direct wrapper identity are separate authorities.",
+      "checkpoint": {
+        "bytes": 9684,
+        "path": "reports/m2/stage62-controls-java-checkpoint.json",
+        "sha256": "02e8632e3cf85ccdf06253a9b54831cec97c2ce22ebab6109e20b6dfb665a86a"
+      },
+      "fixture": "tests/fixtures/m2-collection-conversion-controls",
+      "fixture_archive": {
+        "bytes": 223024,
+        "path": "tests/fixtures/m2-collection-conversion-controls/oracle-evidence.tar.gz",
+        "sha256": "c254f3cad568223c1da8f75bd5dad0a74f64867132a292bf1f1a312414f7f9da"
+      },
+      "independent_publications": [
+        {
+          "bytes": 1294054,
+          "path": "reports/m2/stage62-controls-java-evidence.tar.gz",
+          "sha256": "5fee552fc2b5812d4724ef311e4f1698a69264f679b1d4aa6364f2351b4b8779"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 58,
+      "separate_publication_execution": null,
+      "statuses_per_jvm": {
+        "error": 14,
+        "success": 44
+      }
+    },
+    "file:///stage62/collection-conversions.pkl": {
+      "boundary": "Seven common raw channels; Java exception/cause and direct wrapper identity are separate authorities.",
+      "checkpoint": {
+        "bytes": 13204,
+        "path": "reports/m2/stage62-java-checkpoint.json",
+        "sha256": "1fa10f11d7162442becb15a80adbe96f2e63505a9f84442e6727f63f4ba8d45d"
+      },
+      "fixture": "tests/fixtures/m2-collection-conversions",
+      "fixture_archive": {
+        "bytes": 513094,
+        "path": "tests/fixtures/m2-collection-conversions/oracle-evidence.tar.gz",
+        "sha256": "e2e7db0435308cd2b3ff0656e0ba799e621535054a67c45ef0fd08594b00d8f6"
+      },
+      "independent_publications": [
+        {
+          "bytes": 1031529,
+          "path": "reports/m2/stage62-java-validation.tar.gz",
+          "sha256": "b07a7a1318d36a266e22c0be162406289286768b0fdd8b6fe53328f818e62fce"
+        },
+        {
+          "bytes": 2288928,
+          "path": "reports/m2/stage62-java-history.tar.gz",
+          "sha256": "22dc68f3faa35d6f0ee41b4a3959b4bda0705adb6b3dc9806356fe11eb287d2f"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 236,
+      "separate_publication_execution": null,
+      "statuses_per_jvm": {
+        "error": 78,
+        "success": 158
+      }
+    },
+    "file:///stage62/collection-default-contracts.pkl": {
+      "boundary": "Seven common raw channels; Java exception/cause and direct wrapper identity are separate authorities.",
+      "checkpoint": {
+        "bytes": 9873,
+        "path": "reports/m2/stage62-default-contracts-java-checkpoint.json",
+        "sha256": "7600fc9bc84892bcfdf2a70dd5555a71180efd4714b10312b3c6fbeb18faed80"
+      },
+      "fixture": "tests/fixtures/m2-collection-default-contracts",
+      "fixture_archive": {
+        "bytes": 155316,
+        "path": "tests/fixtures/m2-collection-default-contracts/oracle-evidence.tar.gz",
+        "sha256": "0c7ed42e1f786ea02086f6cf1c736b1c326835801221512568ed695dfc96c126"
+      },
+      "independent_publications": [
+        {
+          "bytes": 1278026,
+          "path": "reports/m2/stage62-default-contracts-java-evidence.tar.gz",
+          "sha256": "fb0d44010780fda76fbbce8248256f692a10535029caf7e9207786f60ffd60e5"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 22,
+      "separate_publication_execution": null,
+      "statuses_per_jvm": {
+        "error": 10,
+        "success": 12
+      }
+    },
+    "file:///stage62/collection-lookups.pkl": {
+      "boundary": "Seven common raw channels; Java exception/cause and direct wrapper identity are separate authorities.",
+      "checkpoint": {
+        "bytes": 10741,
+        "path": "reports/m2/stage62-lookups-java-checkpoint.json",
+        "sha256": "f97ba22d7062daaec7a124c6b0ccd4e4d22808fa9487c77432dfbb765de8a85e"
+      },
+      "fixture": "tests/fixtures/m2-collection-lookups",
+      "fixture_archive": {
+        "bytes": 371632,
+        "path": "tests/fixtures/m2-collection-lookups/oracle-evidence.tar.gz",
+        "sha256": "2c75876849e8b9d0f87a72c1b4aa874c0f613d2d40cbdbb3e03fd23d48fa6317"
+      },
+      "independent_publications": [
+        {
+          "bytes": 4213019,
+          "path": "reports/m2/stage62-lookups-java-evidence.tar.gz",
+          "sha256": "35a27812180afd101301e73caf32cd20843d4ace01909256941bf37ff2ee9928"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 133,
+      "separate_publication_execution": null,
+      "statuses_per_jvm": {
+        "error": 51,
+        "success": 82
+      }
+    },
+    "file:///stage62/collection-property-names.pkl": {
+      "boundary": "Seven common raw channels; Java exception/cause and direct wrapper identity are separate authorities.",
+      "checkpoint": {
+        "bytes": 10941,
+        "path": "reports/m2/stage62-property-names-java-checkpoint.json",
+        "sha256": "fed36269559335503b6436e44525e68049231c11e01595e51a55401c22275a50"
+      },
+      "fixture": "tests/fixtures/m2-collection-property-names",
+      "fixture_archive": {
+        "bytes": 158570,
+        "path": "tests/fixtures/m2-collection-property-names/oracle-evidence.tar.gz",
+        "sha256": "4fd0bab6188625485f311e592a4e02303ddfcf05d63a86d9c30ec668ed875ac2"
+      },
+      "independent_publications": [
+        {
+          "bytes": 1462251,
+          "path": "reports/m2/stage62-property-names-java-evidence.tar.gz",
+          "sha256": "2b06905374dd1cb2eeaf81b1aef9bc5b4ba509e041590b4e902c6564998a8336"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 26,
+      "separate_publication_execution": null,
+      "statuses_per_jvm": {
+        "success": 26
+      }
+    },
+    "file:///stage62/dynamic-render.pkl": {
+      "boundary": "Seven common raw channels; Java exception/cause and direct wrapper identity are separate authorities.",
+      "checkpoint": {
+        "bytes": 9415,
+        "path": "reports/m2/stage62-dynamic-render-java-checkpoint.json",
+        "sha256": "b34aee47774773601688415f555ab3e7260c6933257706b00b2b0f2e7076adca"
+      },
+      "fixture": "tests/fixtures/m2-collection-dynamic-render",
+      "fixture_archive": {
+        "bytes": 147108,
+        "path": "tests/fixtures/m2-collection-dynamic-render/oracle-evidence.tar.gz",
+        "sha256": "29344c12e72341e574e8da0e20d56a43818a75872afecb997c6a062d787cd483"
+      },
+      "independent_publications": [
+        {
+          "bytes": 1072150,
+          "path": "reports/m2/stage62-dynamic-render-java-evidence.tar.gz",
+          "sha256": "db3a47bf661708c86eb01a6645ea551a97874e49d32578b33178bfd5f1cee885"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 10,
+      "separate_publication_execution": null,
+      "statuses_per_jvm": {
+        "success": 10
+      }
+    },
+    "file:///stage63/collection-addition.pkl": {
+      "boundary": "Seven common raw channels; Java exception/cause and direct wrapper identity are separate authorities.",
+      "checkpoint": {
+        "bytes": 22633,
+        "path": "reports/m2/stage63-java-checkpoint.json",
+        "sha256": "81947e1f1392c6c67bcac00d41f10cf429b7980c0ca7d789a732b685fa8da5d3"
+      },
+      "fixture": "tests/fixtures/m2-collection-addition",
+      "fixture_archive": {
+        "bytes": 250740,
+        "path": "tests/fixtures/m2-collection-addition/oracle-evidence.tar.gz",
+        "sha256": "5e14a08075c7f488ca0a5dd2632956366a1a5f368428b5e325da584c499f801d"
+      },
+      "independent_publications": [
+        {
+          "bytes": 4069123,
+          "path": "reports/m2/stage63-java-evidence.tar.gz",
+          "sha256": "07ddc41efa762c0663a0d694f010c8b21c874dd7ea93b825c25340b3e9902bd8"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 125,
+      "separate_publication_execution": {
+        "bytes": 3489,
+        "path": "target/m2/stage63-java-publication-execution-01/process.json",
+        "sha256": "6ef9ed15e563e6bcffcdc804188047756b99dcc96decf61e9f0413590e7fa5e4"
+      },
+      "statuses_per_jvm": {
+        "error": 39,
+        "success": 86
+      }
+    },
+    "file:///stage63/set-endpoints.pkl": {
+      "boundary": "Seven common raw channels; Java exception/cause and direct wrapper identity are separate authorities.",
+      "checkpoint": {
+        "bytes": 19318,
+        "path": "reports/m2/stage63-set-endpoints-java-checkpoint.json",
+        "sha256": "3560c0faf9a7eafc7282777563a7c9c35a7f51c647174a3fec334ab947783515"
+      },
+      "fixture": "tests/fixtures/m2-set-endpoints",
+      "fixture_archive": {
+        "bytes": 182591,
+        "path": "tests/fixtures/m2-set-endpoints/oracle-evidence.tar.gz",
+        "sha256": "9a1326f0220b92607779bd02e2fc41d81d7a9cea8f40a3f404a55f3be03e1ae9"
+      },
+      "independent_publications": [
+        {
+          "bytes": 3105789,
+          "path": "reports/m2/stage63-set-endpoints-java-evidence.tar.gz",
+          "sha256": "e2c7958c27f05d67a23c6cc738ca917e88e7b5aa1be79a7158af3710409f2522"
+        }
+      ],
+      "repetitions": 2,
+      "rows": 70,
+      "separate_publication_execution": {
+        "bytes": 3540,
+        "path": "target/m2/stage63-set-endpoints-java-publication-execution-01/process.json",
+        "sha256": "27cb5bf1a15d8a9dece25b81cece75372224916a08fb371ccba368cb83af861b"
+      },
+      "statuses_per_jvm": {
+        "error": 23,
+        "success": 47
+      }
+    }
+  },
+  "kind": "stage63-collection-addition-and-set-endpoints-implementation-checkpoint",
+  "native_and_platform": {
+    "m1_platform_contract": {
+      "compatibility_status": "fail",
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "report": {
+        "bytes": 3390397,
+        "path": "target/m2/stage63-m1-platform-contract-02/report.json",
+        "sha256": "786f3c59d4e584bcaf160d91ba61a4a250df7746482dd924e4e0401b7f8b099c"
+      },
+      "status": "pass"
+    },
+    "native_acquisition": {
+      "bytes": 23323,
+      "path": "target/m2/stage63-native-acquisition-01/report.json",
+      "sha256": "bba67fd4b315e1c0bf5d68658bc9b505dbd4d7eae3f5354b161b67f0bfb09208"
+    },
+    "native_build": {
+      "bytes": 4970,
+      "path": "target/m2/stage63-native-build-01/build.json",
+      "sha256": "5a9ebdea4b9edc846db26ae52921f7760b85d80a3988ecc858d344715508373a"
+    },
+    "native_commands": [
+      "collection-conversions",
+      "collection-conversion-controls",
+      "collection-lookups",
+      "collection-default-contracts",
+      "collection-dynamic-render",
+      "collection-property-names",
+      "collection-addition",
+      "set-endpoints",
+      "intseq",
+      "bytes",
+      "duration",
+      "data-size"
+    ],
+    "platform_commands": [
+      "m1-contract",
+      "collection-conversions",
+      "collection-conversion-controls",
+      "collection-lookups",
+      "collection-default-contracts",
+      "collection-dynamic-render",
+      "collection-property-names",
+      "collection-addition",
+      "set-endpoints",
+      "int-seq-values",
+      "bytes-values",
+      "duration-values",
+      "any-if-non-null",
+      "data-size"
+    ],
+    "platform_validation": {
+      "bytes": 174403,
+      "path": "target/m2/stage63-platform-validation-02/report.json",
+      "sha256": "bd9f129e546d83492da7a70e81a1d1623b06bbef1b2b48d1eb54c35b9a5d58c6"
+    }
+  },
+  "original_modules": {
+    "blocked_required": 2,
+    "failure_audit": {
+      "bytes": 614368,
+      "path": "target/m2/stage63-original-failure-audit-01/report.json",
+      "sha256": "f0b8f65e7527e286501c55cdf71b536ed89165ac5bb9936867a9a67858dceffd"
+    },
+    "failure_audit_process": {
+      "bytes": 4630,
+      "path": "target/m2/stage63-original-failure-audit-01/process.json",
+      "sha256": "e5e4d05a0004e82067a5c7d91d24b343e1f43ad9fafb8fbf8ad3c9b2f5a66512"
+    },
+    "full_m2_complete": false,
+    "independent_final_review": {
+      "bytes": 8746,
+      "path": "target/m2/stage63-review-01/report.json",
+      "sha256": "de29d3ba4d83981d5c20d378204a8289c9759297c75515d92f2f4a2ea9a452e5"
+    },
+    "launch": {
+      "bytes": 8878,
+      "path": "target/m2/stage63-original-addition-launch-01/report.json",
+      "sha256": "88e3d2cf2da0d6fe0444f63f85624785dd4d481edb2837c7d9fae24f05984c96"
+    },
+    "new_basic_map_status": "pass",
+    "prior90_status_transitions": {
+      "candidate-unsupported->candidate-unsupported": 32,
+      "mismatch->mismatch": 21,
+      "mismatch->pass": 1,
+      "oracle-error->oracle-error": 1,
+      "pass->pass": 35
+    },
+    "report": {
+      "bytes": 1763887,
+      "path": "target/m2/stage63-original-addition-01/report.json",
+      "sha256": "dee864f4411f9d971730671f719cc9f971d2fbf8f2115db588f46fdd47bda6c7"
+    },
+    "selected": 91,
+    "selected_status": "failed",
+    "selection_origin": {
+      "bytes": 300569,
+      "path": "target/m2/stage63-original-selection-01/selection-origin.json",
+      "sha256": "7028825672d414cb61f0a3404ed03faf47c8d148bb302c2b82398f06ef16f685"
+    },
+    "statuses": {
+      "candidate-unsupported": 32,
+      "mismatch": 21,
+      "oracle-error": 1,
+      "pass": 37
+    }
+  },
+  "performance_targets_achieved": false,
+  "remaining": [
+    "The strict whole-language M2 completion gate and unmapped or unimplemented inventory items remain open.",
+    "Original mismatches, candidate unsupported cases, Java errors and two blocked package/HTTP/TLS originals remain required and are not passes.",
+    "The two known M1 Regex failures and portable Any scalar-regex mismatch remain failed compatibility cases.",
+    "Typed export, Java wrapper reference identity, complete public API and release platform coverage remain separate obligations.",
+    "Java-compatible speed and peak-memory targets remain open."
+  ],
+  "rust_validation": {
+    "base_commit": "b3664d84ce0f3b5a45daf46981c5c9f30acf5e3e",
+    "core_freeze": {
+      "bytes": 8526,
+      "path": "target/m2/stage63-core-freeze-01/freeze.json",
+      "sha256": "6e82031c1ac5930cf3294406c508f8419e60231e418040d4de983a69a317c23f"
+    },
+    "focused_history": [
+      {
+        "attempt": 1,
+        "commands": [
+          [
+            "format",
+            0
+          ],
+          [
+            "check",
+            101
+          ]
+        ],
+        "report": {
+          "bytes": 666,
+          "path": "target/m2/stage63-core-focused-01/report.json",
+          "sha256": "1f6dab9c889b752f07e3538729345698ef2aa38b47fae01fa2dba9b3a2766231"
+        }
+      },
+      {
+        "attempt": 2,
+        "commands": [
+          [
+            "format",
+            0
+          ],
+          [
+            "check",
+            0
+          ]
+        ],
+        "report": {
+          "bytes": 664,
+          "path": "target/m2/stage63-core-focused-02/report.json",
+          "sha256": "5b50c2f01ea84b7b52550c7177e3abe4742fa3294a742cfdcbb3b0950161d2b6"
+        }
+      },
+      {
+        "attempt": 3,
+        "commands": [
+          [
+            "format",
+            0
+          ],
+          [
+            "unit",
+            0
+          ],
+          [
+            "lifecycle",
+            101
+          ]
+        ],
+        "report": {
+          "bytes": 1121,
+          "path": "target/m2/stage63-core-focused-03/report.json",
+          "sha256": "c5c0d0d723dd2f899d57111463a37a271b4e9d747372eaf17d51a66097384258"
+        }
+      },
+      {
+        "attempt": 4,
+        "commands": [
+          [
+            "format",
+            0
+          ],
+          [
+            "unit",
+            0
+          ],
+          [
+            "lifecycle",
+            0
+          ]
+        ],
+        "report": {
+          "bytes": 1117,
+          "path": "target/m2/stage63-core-focused-04/report.json",
+          "sha256": "5aee8f0a6915db34ef77423c394a8f4ce3d12fc5a3ab114f42a976e2d43360f9"
+        }
+      },
+      {
+        "attempt": 5,
+        "commands": [
+          [
+            "format",
+            0
+          ],
+          [
+            "java",
+            101
+          ]
+        ],
+        "report": {
+          "bytes": 715,
+          "path": "target/m2/stage63-core-focused-05/report.json",
+          "sha256": "e0b0d9f32d584300d452ec9d08a8e066341865bb4a0f4f9c7ec9560281358471"
+        }
+      },
+      {
+        "attempt": 6,
+        "commands": [
+          [
+            "format",
+            0
+          ],
+          [
+            "java",
+            0
+          ]
+        ],
+        "report": {
+          "bytes": 1004,
+          "path": "target/m2/stage63-core-focused-06/report.json",
+          "sha256": "1eb5f371c9d423531d34a463d2b187a259ea1ec849bceee1a39654fae3c6ea20"
+        }
+      },
+      {
+        "attempt": 7,
+        "commands": [
+          [
+            "format",
+            0
+          ],
+          [
+            "unit",
+            0
+          ],
+          [
+            "regression",
+            0
+          ]
+        ],
+        "report": {
+          "bytes": 1985,
+          "path": "target/m2/stage63-core-focused-07/report.json",
+          "sha256": "bf07486c5663d2f59608051d94013248d3fee91d937484b2e801961881069470"
+        }
+      },
+      {
+        "attempt": 8,
+        "commands": [
+          [
+            "format",
+            0
+          ],
+          [
+            "unit",
+            0
+          ],
+          [
+            "final-focused",
+            0
+          ]
+        ],
+        "report": {
+          "bytes": 3113,
+          "path": "target/m2/stage63-core-focused-08/report.json",
+          "sha256": "5df67287e9620e39e7f98bd044750b870661ae9de9c3386159358f619852b297"
+        }
+      }
+    ],
+    "independent_review": {
+      "bytes": 3513,
+      "path": "target/m2/stage63-validation-review-01/review.json",
+      "sha256": "d78dabce0f49f325a58aa51742e9914f9e487f34d2b34254969a821fe10209cc"
+    },
+    "nested_frontend_child_summaries": 5,
+    "raw_harness_totals": {
+      "failed": 0,
+      "ignored": 2,
+      "passed": 976
+    },
+    "report": {
+      "bytes": 5864,
+      "path": "target/m2/stage63-rust-validation-01/report.json",
+      "sha256": "a2d6cd478aea0c61b4011ae75abed56317cf7d8026b9cf49aaa38f9b6fa64380"
+    },
+    "source_manifest": {
+      "bytes": 108271902,
+      "path": "target/m2/stage63-rust-validation-01/sources.json",
+      "sha256": "93217cd06a8cf0c66f0209a87c85f3d3aa0e2eb43a60f34304066bdf3c90c424"
+    },
+    "unique_test_outcomes": {
+      "failed": 0,
+      "ignored": 2,
+      "passed": 971
+    },
+    "workspace_test_summaries": 148
+  },
+  "scalar_regressions": {
+    "bytes": {
+      "chromium": {
+        "pass": 600
+      },
+      "napi": {
+        "pass": 600
+      },
+      "native": {
+        "pass": 600
+      }
+    },
+    "data-size": {
+      "chromium": {
+        "pass": 510
+      },
+      "napi": {
+        "pass": 510
+      },
+      "native": {
+        "pass": 510
+      }
+    },
+    "duration": {
+      "chromium": {
+        "pass": 548
+      },
+      "napi": {
+        "pass": 548
+      },
+      "native": {
+        "pass": 548
+      }
+    },
+    "intseq": {
+      "chromium": {
+        "pass": 474
+      },
+      "napi": {
+        "pass": 474
+      },
+      "native": {
+        "pass": 474
+      }
+    }
+  },
+  "schema": 1,
+  "source_binding": {
+    "base_commit": "b3664d84ce0f3b5a45daf46981c5c9f30acf5e3e",
+    "status": "Precommit frozen source snapshots; Git implementation binding follows separately."
+  },
+  "tool_validation_and_inventory": {
+    "actual_python_reads": 6438,
+    "copied_source_files": 6499,
+    "counts": {
+      "js-protocol": 49,
+      "m2-mappings": 8,
+      "m2-mappings-O": 8,
+      "python-eight-profiles": 75,
+      "python-eight-profiles-O": 75
+    },
+    "final_report": {
+      "bytes": 3884204,
+      "path": "target/m2/stage63-tool-development-02/report.json",
+      "sha256": "ef5dcf61e714fe6e5d97ff2894161ed529d299dc0e0911def8fae88ce7a74675"
+    },
+    "full_m2_completion_gate_passed": false,
+    "historical_incomplete_attempt": {
+      "bytes": 4014755,
+      "path": "target/m2/stage63-tool-development-01/report.json",
+      "sha256": "9b5b116bfb9e99f1f540f506d8127b94e75bdbc593e5d18696824a9f438aa6b3"
+    },
+    "inventory_counts": {
+      "cases": 4527,
+      "cases_by_execution": {
+        "ready": 4416,
+        "unimplemented": 71,
+        "unmapped": 40
+      },
+      "requirements": 475,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 31,
+        "specification": 198
+      }
+    },
+    "manifest_refresh": {
+      "bytes": 315747,
+      "path": "target/m2/stage63-manifest-refresh-01/report.json",
+      "sha256": "2f2d5efa0547c35df9204286690e6645126e022149f8a0d443f869ef9401a56d"
+    },
+    "mapping_review": {
+      "bytes": 2275,
+      "path": "target/m2/stage63-mapping-review-01/review.json",
+      "sha256": "7f2fdab66588ed2f379fdfe7a14bb37343fb96c536c42a86bf697ae097bb7647"
+    },
+    "partial_mapping_entries": 29
+  },
+  "verification_provenance": "Recorded local execution; hosted CI is separate."
+}

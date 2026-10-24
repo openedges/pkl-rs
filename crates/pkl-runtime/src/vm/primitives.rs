@@ -7,7 +7,7 @@ pub enum Operation {
     Duration(duration::Operation),
     Bytes(bytes::Operation),
     IntSeq(int_seq::Operation),
-    ListEndpoint { last: bool, nullable: bool },
+    CollectionEndpoint { last: bool, nullable: bool },
     IfNonNull,
     Between,
     Uppercase,
@@ -321,15 +321,16 @@ impl Vm {
             Value::IntSeq(_) => "IntSeq",
             Value::String(_) => "String",
             Value::Object(_) if self.is_list(receiver) => "List",
+            Value::Object(_) if self.is_set(receiver) => "Set",
             _ => return Ok(false),
         };
         if method
-            && class == "List"
+            && matches!(class, "List" | "Set")
             && matches!(name, "first" | "firstOrNull" | "last" | "lastOrNull")
         {
             let mut error = RuntimeError::new(
                 ErrorKind::MissingMember,
-                format!("Cannot find method `{name}` in class `List`."),
+                format!("Cannot find method `{name}` in class `{class}`."),
             );
             let arity = self
                 .frames
@@ -343,27 +344,33 @@ impl Vm {
                 })
                 .copied()
                 .unwrap_or(0) as isize;
-            error.hint = crate::diagnostic::member_suggestions(
-                name,
-                arity,
-                &crate::diagnostic_names::LIST_PROPERTIES
-                    .iter()
-                    .map(|name| (*name).to_owned())
-                    .collect::<Vec<_>>(),
-                &crate::diagnostic_names::LIST_METHODS
-                    .iter()
-                    .map(|(name, signature, arity)| {
-                        ((*name).to_owned(), (*signature).to_owned(), *arity)
-                    })
-                    .collect::<Vec<_>>(),
-            );
+            if class == "Set" {
+                let (properties, methods) = crate::diagnostic_names::collection_members(class);
+                error.hint =
+                    crate::diagnostic::member_suggestions(name, arity, &properties, &methods);
+            } else {
+                error.hint = crate::diagnostic::member_suggestions(
+                    name,
+                    arity,
+                    &crate::diagnostic_names::LIST_PROPERTIES
+                        .iter()
+                        .map(|name| (*name).to_owned())
+                        .collect::<Vec<_>>(),
+                    &crate::diagnostic_names::LIST_METHODS
+                        .iter()
+                        .map(|(name, signature, arity)| {
+                            ((*name).to_owned(), (*signature).to_owned(), *arity)
+                        })
+                        .collect::<Vec<_>>(),
+                );
+            }
             return Err(error);
         }
         if !method
-            && class == "List"
+            && matches!(class, "List" | "Set")
             && matches!(name, "first" | "firstOrNull" | "last" | "lastOrNull")
         {
-            let block = self.program.primitive_methods[&("List".into(), name.into())];
+            let block = self.program.primitive_methods[&(class.into(), name.into())];
             let id = self.heap.allocate(Object {
                 function: Some(Function {
                     block,
@@ -455,8 +462,8 @@ impl Vm {
             Operation::Duration(operation) => self.duration_operation(receiver, operation)?,
             Operation::Bytes(operation) => self.bytes_operation(receiver, operation)?,
             Operation::IntSeq(operation) => self.int_seq_operation(receiver, operation)?,
-            Operation::ListEndpoint { last, nullable } => {
-                self.list_endpoint(receiver, last, nullable)?
+            Operation::CollectionEndpoint { last, nullable } => {
+                self.collection_endpoint(receiver, last, nullable)?
             }
             Operation::IfNonNull => self.if_non_null(receiver)?,
             Operation::BooleanXor | Operation::BooleanImplies => {
