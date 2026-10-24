@@ -3,6 +3,9 @@
 //! these Host callback checks are lifecycle tests, not Java byte comparisons.
 //! Retained module graphs include their one builtin Module parent; executable
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
+#[path = "support/constructor_baseline.rs"]
+mod constructor_baseline;
+use constructor_baseline::compile_module_with_constructor_baseline;
 use std::sync::Arc;
 #[path = "support/eager_base.rs"]
 mod eager_base;
@@ -12,7 +15,7 @@ use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::resolve_module;
 use pkl_runtime::value::{ErrorKind, RuntimeError, Value};
-use pkl_runtime::vm::{Instruction as I, compile_module};
+use pkl_runtime::vm::Instruction as I;
 
 fn session(parent: &str, child: &str) -> (HostSession, Value, usize, usize) {
     let source = format!("parent = {parent}\nchild = {child}");
@@ -21,7 +24,9 @@ fn session(parent: &str, child: &str) -> (HostSession, Value, usize, usize) {
 
 fn session_source(source: &str) -> (HostSession, Value, usize, usize) {
     let parsed = parse_module(source).unwrap();
-    let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    let mut program =
+        (*compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap())
+            .clone();
     let module_entry = program.entry;
     let entries = ["parent", "child"].map(|member| {
         let entry = program.blocks.len();
@@ -356,7 +361,9 @@ fn completed_left_forcing_survives_a_failed_right_and_is_reused_on_retry() {
         right = new Dynamic { text = read("mem:right") }
         parent = left == right"#;
     let parsed = parse_module(source).unwrap();
-    let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    let mut program =
+        (*compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap())
+            .clone();
     let module_entry = program.entry;
     let parent = program.blocks.len();
     program.blocks.push(vec![

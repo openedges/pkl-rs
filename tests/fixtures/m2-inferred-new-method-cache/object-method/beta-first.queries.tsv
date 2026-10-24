@@ -1,0 +1,11 @@
+string	module-beta-class	betaModule.objectmodule.result.getClass() == betaModule.getClass()
+string	module-alpha-class	alphaModule.objectmodule.result.getClass() == alphaModule.getClass()
+string	nullable-beta-class	betaModule.objectnullable.result.getClass() == betaModule.getClass()
+string	nullable-alpha-class	alphaModule.objectnullable.result.getClass() == alphaModule.getClass()
+string	module-beta-marker	betaModule.objectmodule.result.marker
+string	module-alpha-marker	alphaModule.objectmodule.result.marker
+string	nullable-beta-marker	betaModule.objectnullable.result.marker
+string	nullable-alpha-marker	alphaModule.objectnullable.result.marker
+string	explicit-alias-second	alphaModule.makeAlias().getClass() == alphaModule.getClass()
+string	module-distinct	alphaModule.getClass() == betaModule.getClass()
+string	second-marker	alphaModule.marker

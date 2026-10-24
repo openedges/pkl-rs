@@ -822,7 +822,7 @@ impl Vm {
                     span,
                 });
                 self.frames.last_mut().expect("type frame").type_run = Some(run);
-                let Some(resolved) = self.resolve_runtime_type(&ty, &environment)? else {
+                let Some(resolved) = self.resolve_runtime_type(&ty, &environment, false)? else {
                     return Ok(());
                 };
                 run = self

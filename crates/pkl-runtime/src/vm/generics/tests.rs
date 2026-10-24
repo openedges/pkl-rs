@@ -52,7 +52,7 @@ fn shared_abstract_collection_metadata_traversals_and_release_are_stack_safe() {
                 reference::type_name(&left_metadata, ""),
                 format!("{}Int{}", "Collection<".repeat(20_000), ">".repeat(20_000))
             );
-            assert_eq!(type_name(&left, ""), "Collection");
+            assert_eq!(type_name_value(&left, "").to_java_utf8(), "Collection");
             drop(left);
             drop(right);
             assert!(released.upgrade().is_none());
@@ -106,7 +106,7 @@ fn shared_argument_dags_clone_compare_substitute_and_release_on_small_stack() {
             .substituted(&clone)
             .unwrap();
             assert!(substituted.accepts(&Value::Null, &Heap::new()));
-            assert_eq!(type_name(&substituted, ""), "Mapping?");
+            assert_eq!(type_name_value(&substituted, "").to_java_utf8(), "Mapping?");
             assert!(format!("{clone:?}").len() < 512);
             drop(environment);
             drop(clone);
@@ -135,7 +135,10 @@ fn shared_nullable_traversals_and_concurrent_last_release_are_stack_safe() {
             }
             assert!(ty.accepts(&Value::Int(1.into()), &Heap::new()));
             assert!(!ty.accepts(&Value::Bool(false), &Heap::new()));
-            assert_eq!(type_name(&ty, ""), format!("Int{}", "?".repeat(20_000)));
+            assert_eq!(
+                type_name_value(&ty, "").to_java_utf8(),
+                format!("Int{}", "?".repeat(20_000))
+            );
             let other = ty.clone();
             let barrier = Arc::new(std::sync::Barrier::new(2));
             let barrier2 = barrier.clone();
@@ -173,16 +176,26 @@ fn default_descent_and_unwind_yield_trace_unpublished_objects_and_cancel() {
             Instruction::Return,
         ]]));
         let mut vm = Vm::new(program);
+        // Defaults share the evaluator's builtin class/prototype graph. Its
+        // retained roots are separate from the unpublished default chain.
+        vm.canonical_builtin_class(classes::BuiltinClass::Listing);
+        let canonical_live = vm.collect(&[]).live;
         vm.start(0, vec![]).unwrap();
         let target = vm.heap.allocate(Object::default());
+        let mut unpublished = BTreeSet::new();
         vm.frames.last_mut().unwrap().generic_default =
             Some(GenericDefaultRun::new(target, ty, None));
         for index in 0..stop {
             assert!(matches!(vm.poll(1), VmPoll::Yielded));
-            // Descent allocates exactly one object per step; unwind publishes
-            // each child only into its still-unpublished parent.
-            let expected = 1 + (index + 1).min(DEPTH);
+            // One shared empty Listing and the target accompany exactly one
+            // allocated child per descent step; unwind only links children.
+            let expected = canonical_live + 2 + (index + 1).min(DEPTH);
             assert_eq!(vm.collect(&[]).live, expected);
+            let run = vm.frames.last().unwrap().generic_default.as_ref().unwrap();
+            unpublished.extend(run.tasks.iter().filter_map(|task| match task {
+                DefaultTask::Collection(id) => Some(*id),
+                _ => None,
+            }));
             assert!(vm.heap.get(target).unwrap().collection_default.is_none());
         }
         let run = vm.frames.last().unwrap().generic_default.as_ref().unwrap();
@@ -195,7 +208,10 @@ fn default_descent_and_unwind_yield_trace_unpublished_objects_and_cancel() {
         assert!(
             matches!(vm.poll(1), VmPoll::Ready(Err(error)) if error.kind == ErrorKind::Cancelled)
         );
-        assert_eq!(vm.collect(&[]).live, 0);
+        assert_eq!(vm.collect(&[]).live, canonical_live);
+        assert!(vm.heap.get(target).is_err());
+        assert!(unpublished.into_iter().all(|id| vm.heap.get(id).is_err()));
+        assert!(vm.empty_objects[1].is_some_and(|id| vm.heap.get(id).is_err()));
         vm.close();
         assert_eq!(vm.heap_stats().slots, 0);
     }

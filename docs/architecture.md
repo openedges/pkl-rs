@@ -268,10 +268,15 @@ and memory parity remain separate requirements.
 ### Inferred object parents
 
 Methods construct the parent of contextual `new {}` from their declared return
-type. Inference follows `if` expressions and let bodies; parentheses, lambdas,
-and let initializers keep their own boundaries. Type defaults are created only
+type. Inference follows `if` conditions and branches, `trace`, and let bodies;
+parentheses, intervening operators, lambdas, and let initializers keep their own
+boundaries. Type defaults are created only
 when execution reaches `new`, before amendment members run. Literal `unknown`
 retains the Dynamic default; `Any` and aliases of `unknown` do not acquire it.
+Methods without a return annotation use the canonical empty Dynamic parent,
+including its prototype. Assigned collection entries and elements obtain their
+inferred parent from `receiver.default(key)`. Bare entry amendments instead read
+an inherited same-key entry before falling back to the default function.
 
 Typed properties use the same default construction. An inherited class
 prototype uses the declared property type's default, while an instance amendment
@@ -286,6 +291,33 @@ span, as appropriate. Their metadata contains source information, not heap
 handles. Selected Java comparisons and native Host/GC tests cover these paths;
 general module inference, complete diagnostics and object stringification remain
 separate requirements.
+
+Parent defaults use the resumable `GenericDefaultRun` worklist. Successful
+method-parent defaults are cached by compiled block and instruction position,
+not by receiver. The cache is rooted through the owning code arena and retired
+with unreachable query code; closing the evaluator releases it. Parent selection
+can succeed and remain cached even when the later amendment body fails.
+Explicit constructors only cache final type defaults, and parameter-dependent
+constructor sites retain their invocation-specific arguments.
+
+A successful builtin collection constructor can turn a weak canonical empty
+Dynamic, Listing, or Mapping into a strong code-owned parent. This root is
+distinct from the temporary amendment object and its captured environment.
+Builtin collection prototype backlinks provide class and inherited-member
+information; structural equality and hashing still use collection members,
+while Typed and module values retain their class-declared member rules.
+
+The pinned module-type node chooses finality at its first resolution: a closed
+module caches its class, while an open or abstract module retains a receiver-
+dependent self type. Alias checks use the declaration context; default creation
+retains the invocation receiver. These are distinct operations even when an
+alias has been expanded by the compiler and no alias singleton was forced.
+The [module-receiver](../tests/fixtures/m2-inferred-new-module-receiver/README.md)
+and [method-cache](../tests/fixtures/m2-inferred-new-method-cache/README.md)
+Java authorities preserve opposite receiver orders and the difference between
+explicit and inferred construction. The latter also retains a Java internal
+error for local object-method aliases as unresolved oracle evidence. These
+selected authorities do not establish complete module or alias compatibility.
 
 ### Constraint continuations
 

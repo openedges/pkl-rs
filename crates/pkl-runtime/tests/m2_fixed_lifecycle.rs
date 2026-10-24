@@ -2,8 +2,11 @@
 //! Java byte compatibility for selected sources is recorded separately.
 //! Retained module graphs include their builtin Module parent and source-backed
 //! stdlib annotations; transient objects and terminal-zero assertions stay separate.
+#[path = "support/constructor_baseline.rs"]
+mod constructor_baseline;
 #[path = "support/eager_base.rs"]
 mod eager_base;
+use constructor_baseline::compile_module_with_constructor_baseline;
 use eager_base::Baseline;
 #[path = "support/module_policy.rs"]
 mod module_policy;
@@ -13,7 +16,7 @@ use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::resolve_module;
 use pkl_runtime::value::{ErrorKind, RuntimeError, Value};
-use pkl_runtime::vm::{Instruction as I, compile_module};
+use pkl_runtime::vm::Instruction as I;
 
 const SOURCE: &str = r#"
 import "pkl:ref"
@@ -38,7 +41,9 @@ inspect = reference is ref.Reference<D, String> && reference.getPath()[0].proper
 
 fn setup() -> (HostSession, Value, [usize; 4]) {
     let parsed = parse_module(SOURCE).unwrap();
-    let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    let mut program =
+        (*compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap())
+            .clone();
     module_policy::register(&mut program, SOURCE);
     let module_entry = program.entry;
     let entries = ["parent", "value", "rendered", "inspect"].map(|member| {

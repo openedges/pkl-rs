@@ -1669,7 +1669,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         Some(generics::GenericDefaultRun::new(target, ty, origin));
                 }
             }
-            Instruction::GenericConstructorParent { ty, source } => {
+            Instruction::GenericConstructorParent { ty, source, cache } => {
                 let environment = &self.frames.last().expect("active frame").environment;
                 let source = ty.argument_source(environment).unwrap_or(source);
                 let ty = ty.substituted(environment)?;
@@ -1694,11 +1694,13 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         }
                         .concat(&".default".into()),
                     });
+                let cache = cache.then_some((frame.block, frame.pc - 1));
                 self.frames
                     .last_mut()
                     .expect("active frame")
-                    .generic_default =
-                    Some(generics::GenericDefaultRun::constructor(ty, source, origin));
+                    .generic_default = Some(generics::GenericDefaultRun::constructor(
+                    ty, source, origin, cache,
+                ));
             }
 
             Instruction::EndCollection => self.end_collection()?,
@@ -1980,7 +1982,33 @@ crate::diagnostic_values::render(
                 })?;
                 self.force_key(receiver, owner, member.name, false, !is_super, false, true)?;
             }
-            Instruction::EntryParent => {
+            Instruction::EntryKey => {
+                let force = self
+                    .frames
+                    .last()
+                    .and_then(|frame| frame.force.as_ref())
+                    .ok_or_else(|| invalid("entry key outside member"))?;
+                let key = self
+                    .heap
+                    .get(force.owner)?
+                    .collection_members
+                    .iter()
+                    .find(|member| member.name == force.name)
+                    .ok_or_else(|| invalid("entry key is missing"))?
+                    .key
+                    .clone();
+                self.stack.push(key);
+            }
+            Instruction::EntryDefault => {
+                let receiver = self
+                    .frames
+                    .last()
+                    .and_then(|frame| frame.force.as_ref())
+                    .ok_or_else(|| invalid("entry default outside member"))?
+                    .receiver;
+                self.force(receiver, receiver, "default".into(), false, true, false)?;
+            }
+            Instruction::EntryParent { end } => {
                 let force = self
                     .frames
                     .last()
@@ -2018,6 +2046,9 @@ crate::diagnostic_values::render(
                                     .is_some_and(|key| same_key(&self.heap, key, &member.key)))
                     });
                 if let (Some(parent), Some(member)) = (parent, inherited) {
+                    // The inherited value is already the parent; skip the
+                    // default(key) call emitted for the missing-entry branch.
+                    self.frames.last_mut().expect("entry frame").pc = end;
                     self.force_key(
                         force.receiver,
                         parent,
@@ -2028,33 +2059,14 @@ crate::diagnostic_values::render(
                         true,
                     )?;
                 } else {
-                    let mut owner = Some(force.owner);
-                    while let Some(id) = owner {
-                        let object = self.heap.get(id)?;
-                        if let Some(value) = &object.collection_default {
-                            if let Some(value) = value {
-                                self.stack.push(value.clone());
-                                return Ok(());
-                            }
-                            let mut error = RuntimeError::new(
-                                ErrorKind::MissingMember,
-                                "Tried to read property `default` but its value is undefined.",
-                            )
-                            .undefined();
-                            error
-                                .frames
-                                .extend(object.collection_default_origin.clone());
-                            return Err(error);
-                        }
-                        if object.members.iter().any(|m| {
-                            !m.entry && !m.method && !m.local && m.name.as_ref() == "default"
-                        }) {
-                            return Err(unsupported_type("custom collection default functions"));
-                        }
-                        owner = object.parent;
-                    }
-                    let object = self.heap.allocate(Object::default());
-                    self.stack.push(Value::Object(object));
+                    self.force(
+                        force.receiver,
+                        force.receiver,
+                        "default".into(),
+                        false,
+                        true,
+                        false,
+                    )?;
                 }
             }
             Instruction::OpenIterator { nullable, spread } => {
@@ -2951,26 +2963,7 @@ impl Compiler<'_> {
             .concat(&label)
             .concat(&"]".into());
         let mut code = Code::default();
-        if let crate::syntax::ExprKind::Object {
-            parent: None,
-            members,
-            parameters,
-        } = &value.unparenthesized().kind
-        {
-            code.push_at(
-                Instruction::EntryParent,
-                Span::new(value.span.start, value.span.start + 3),
-            );
-            self.collection_body(
-                members,
-                parameters,
-                CollectionKind::Dynamic,
-                true,
-                &mut code,
-            )?;
-        } else {
-            self.expression(value, &mut code)?;
-        }
+        self.expression_with_entry_parent(value, &mut code)?;
         if self.constant_member_body(value) {
             for instruction in &mut code.instructions {
                 if let Instruction::Constant(value) = instruction {

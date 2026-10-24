@@ -348,8 +348,7 @@ def verify_capture(capture_dir, m1, fixture, cases, hashes, java, profile):
     verifier = report['fixtureVerification']
     need(verifier['exitCode'] == 0 and verifier['signal'] is None and
          verifier['error'] is None and
-         verifier['command'][1:] == [str(ROOT / profile['validator_script']),
-                                     '--fixture', str(fixture)] and
+         verifier['command'][1:] == profiles.validator_args(profile, fixture) and
          verifier['stdoutSha256'] == sha((capture_dir / 'fixture-verification.stdout.bin').read_bytes()) and
          verifier['stderrSha256'] == sha((capture_dir / 'fixture-verification.stderr.bin').read_bytes()) and
          (capture_dir / 'fixture-verification.stderr.bin').read_bytes() == b'',

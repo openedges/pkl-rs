@@ -101,6 +101,14 @@ impl Vm {
                 retain(index, value.clone());
             }
         }
+        for ((block, _), value) in &self.type_parent_defaults {
+            retain(
+                self.code_arenas
+                    .iter()
+                    .position(|arena| arena.blocks.contains(block)),
+                value.clone(),
+            );
+        }
         for (block, owner) in &self.executable_roots {
             retain(
                 self.code_arenas
@@ -147,6 +155,8 @@ impl Vm {
             let arena = self.code_arenas.remove(index);
             self.resolved_declarations
                 .retain(|(recipe, _), _| !arena.recipes.contains(recipe));
+            self.type_parent_defaults
+                .retain(|(block, _), _| !arena.blocks.contains(block));
             self.executable_roots
                 .retain(|block, _| !arena.blocks.contains(block));
             self.class_singletons
@@ -277,6 +287,319 @@ mod tests {
             .unwrap();
         vm.start(entry, Vec::new()).unwrap();
     }
+
+    #[test]
+    fn explicit_constructor_sites_share_only_neutral_canonical_parents_across_body_retry() {
+        use crate::heap::CollectionKind;
+
+        let source = r#"
+            d0 = new Dynamic {}
+            d1 = new Dynamic {}
+            l0 = new Listing {}
+            l1 = new Listing {}
+            m0 = new Mapping {}
+            m1 = new Mapping {}
+            result = new Dynamic { for (value in List(read("mem:body"))) { value } }
+        "#;
+        let resolved =
+            crate::resolver::resolve_module(&crate::parser::parse_module(source).unwrap()).unwrap();
+        let program = compile_module(&resolved).unwrap();
+        let mut vm = Vm::new(program.clone());
+        vm.start(program.entry, Vec::new()).unwrap();
+        let module = settle(&mut vm, &[], false);
+        let roots = std::slice::from_ref(&module);
+        let mut sites = BTreeSet::new();
+        let mut parents = BTreeSet::new();
+        for (index, kind, names) in [
+            (0, CollectionKind::Dynamic, ["d0", "d1"]),
+            (1, CollectionKind::Listing, ["l0", "l1"]),
+            (2, CollectionKind::Mapping, ["m0", "m1"]),
+        ] {
+            let baseline = vm.collect(roots);
+            let existing_parent = vm.empty_objects[index].filter(|id| vm.heap.get(*id).is_ok());
+            if let Some(parent) = existing_parent {
+                assert_eq!(kind, CollectionKind::Mapping);
+                assert!(
+                    vm.builtin_classes.values().any(|class| {
+                        let prototype = vm.heap.get_class(*class).unwrap().prototype;
+                        vm.heap
+                            .get(prototype)
+                            .unwrap()
+                            .cache
+                            .iter()
+                            .any(|(key, state)| {
+                                if key.name.as_ref() != "converters" {
+                                    return false;
+                                }
+                                let LazyState::Completed(Value::Object(id)) = state else {
+                                    return false;
+                                };
+                                let object = vm.heap.get(*id).unwrap();
+                                object.parent == Some(parent)
+                                    && object.collection_cast.as_ref().is_some_and(|cast| {
+                                        cast.member == "#BaseValueRenderer.converters"
+                                    })
+                            })
+                    }),
+                    "existing canonical Mapping must be owned by the builtin renderer's converters"
+                );
+            }
+            for name in names {
+                vm.start_member(module.as_object().unwrap(), name).unwrap();
+                let value = settle(&mut vm, roots, false);
+                let id = value.as_object().unwrap();
+                assert_eq!(vm.empty_objects[index], Some(id));
+                if let Some(existing) = existing_parent {
+                    assert_eq!(id, existing);
+                }
+                let parent = vm.heap.get(id).unwrap();
+                assert_eq!(parent.collection_kind, kind);
+                assert!(parent.members.is_empty());
+                assert!(parent.environment.locals.is_empty());
+                assert!(parent.environment.scopes.is_empty());
+                assert!(parent.environment.custom_this.is_none());
+                assert!(parent.environment.executable_owner.is_none());
+                assert!(parent.environment.code_owner.is_none());
+                assert!(parent.parent.is_some());
+                let new_sites: Vec<_> = vm
+                    .type_parent_defaults
+                    .iter()
+                    .filter(|(site, _)| !sites.contains(*site))
+                    .map(|(site, parent)| (*site, parent.clone()))
+                    .collect();
+                assert_eq!(new_sites.len(), 1);
+                let (site, cached) = &new_sites[0];
+                assert!(matches!(
+                    vm.program.blocks[site.0][site.1],
+                    Instruction::GenericConstructorParent { cache: true, .. }
+                ));
+                assert_eq!(cached, &value);
+                sites.insert(*site);
+                parents.insert(id);
+                let retained = vm.collect(roots);
+                assert_eq!(
+                    retained.live,
+                    baseline.live + usize::from(existing_parent.is_none()),
+                    "canonical parent allocation for {kind:?} at {name}"
+                );
+                assert_eq!(retained.executable_live, baseline.executable_live);
+            }
+        }
+        assert_eq!(sites.len(), 6);
+        assert_eq!(parents.len(), 3);
+        let baseline = vm.collect(roots);
+        let dynamic = vm.empty_objects[0].unwrap();
+        let mut retry_site = None;
+        for cancel in [false, true, false] {
+            vm.start_member(module.as_object().unwrap(), "result")
+                .unwrap();
+            let request = loop {
+                vm.collect(roots);
+                match vm.poll(1) {
+                    VmPoll::Yielded => {}
+                    VmPoll::Pending(request) => break request,
+                    other => panic!("expected constructor body read: {other:?}"),
+                }
+            };
+            assert_eq!(request.uri.as_ref(), "mem:body");
+            let cached: Vec<_> = vm
+                .type_parent_defaults
+                .iter()
+                .filter(|(site, _)| !sites.contains(*site))
+                .map(|(site, value)| (*site, value.clone()))
+                .collect();
+            assert_eq!(cached.len(), 1);
+            assert_eq!(cached[0].1, Value::Object(dynamic));
+            if let Some(site) = retry_site {
+                assert_eq!(cached[0].0, site);
+            } else {
+                retry_site = Some(cached[0].0);
+            }
+            let builders: Vec<_> = vm
+                .frames
+                .iter()
+                .flat_map(|f| &f.builders)
+                .copied()
+                .collect();
+            assert_eq!(builders.len(), 1);
+            assert_ne!(builders[0], dynamic);
+            assert_eq!(vm.heap.get(builders[0]).unwrap().parent, Some(dynamic));
+            if cancel {
+                vm.cancel();
+            } else {
+                vm.resume(
+                    request.id,
+                    Err(RuntimeError::new(ErrorKind::Host, "retry constructor body")),
+                )
+                .unwrap();
+            }
+            let failure = settle_result(&mut vm, roots, false).unwrap_err();
+            assert_eq!(
+                failure.kind,
+                if cancel {
+                    ErrorKind::Cancelled
+                } else {
+                    ErrorKind::Host
+                }
+            );
+            assert!(vm.heap.get(builders[0]).is_err());
+            assert!(vm.heap.get(dynamic).is_ok());
+            assert_eq!(vm.collect(roots).live, baseline.live);
+        }
+        vm.close();
+        assert!(vm.type_parent_defaults.is_empty());
+        assert_eq!(vm.heap_stats().slots, 0);
+        for id in parents {
+            assert!(vm.heap.get(id).is_err());
+        }
+    }
+
+    #[test]
+    fn explicit_constructor_parent_cache_retires_with_its_code_owner() {
+        for (expression, parameterized) in [
+            ("new Dynamic { value=7 }", false),
+            ("new Listing { 7 }", false),
+            ("new Mapping<String, Int> { [\"value\"]=7 }", true),
+        ] {
+            let mut vm = Vm::new(Arc::new(Program::new(Vec::new())));
+            start(&mut vm, expression);
+            let escaped = settle(&mut vm, &[], true);
+            let site = *vm
+                .type_parent_defaults
+                .keys()
+                .find(|(block, pc)| {
+                    matches!(
+                        vm.program.blocks[*block][*pc],
+                        Instruction::GenericConstructorParent { cache: true, .. }
+                    )
+                })
+                .expect("explicit constructor cache");
+            let parent = vm.type_parent_defaults[&site].clone();
+            let result = vm.heap.get(escaped.as_object().unwrap()).unwrap();
+            let authored = if parameterized {
+                // The explicit generic type check wraps the authored object.
+                assert!(result.collection_cast.is_some());
+                let cached = vm.heap.get(parent.as_object().unwrap()).unwrap();
+                assert_ne!(Some(parent.as_object().unwrap()), vm.empty_objects[2]);
+                assert_eq!(cached.parent, vm.empty_objects[2]);
+                assert!(cached.collection_default.is_some());
+                vm.heap.get(result.parent.unwrap()).unwrap()
+            } else {
+                assert!(result.collection_cast.is_none());
+                result
+            };
+            assert_eq!(authored.parent, Some(parent.as_object().unwrap()));
+            start(&mut vm, "stable");
+            settle(&mut vm, std::slice::from_ref(&escaped), false);
+            assert_eq!(vm.type_parent_defaults.get(&site), Some(&parent));
+            start(&mut vm, "stable");
+            settle(&mut vm, &[], false);
+            assert!(!vm.type_parent_defaults.contains_key(&site));
+            assert!(vm.program.blocks.get(site.0).is_none());
+            // A parameterized Mapping has a query-owned specialized parent,
+            // distinct from the empty Mapping held by the builtin renderer.
+            vm.collect(&[]);
+            assert!(vm.heap.get(parent.as_object().unwrap()).is_err());
+            vm.close();
+            assert!(vm.type_parent_defaults.is_empty());
+            assert_eq!(vm.heap_stats().slots, 0);
+        }
+    }
+
+    #[test]
+    fn inferred_method_parent_cache_follows_query_code_reachability() {
+        let mut vm = Vm::new(Arc::new(Program::new(Vec::new())));
+        start(
+            &mut vm,
+            "(new Dynamic { local function make(): Dynamic = new { marker=7 }; result=make() }).result",
+        );
+        let escaped = settle(&mut vm, &[], true);
+        let site = *vm
+            .type_parent_defaults
+            .keys()
+            .find(|(block, pc)| {
+                matches!(
+                    vm.program.blocks[*block][*pc],
+                    Instruction::ResolvedInferredParent { cache: true, .. }
+                )
+            })
+            .expect("inferred parent cache");
+        let parent = vm.type_parent_defaults[&site].clone();
+        start(&mut vm, "stable");
+        settle(&mut vm, std::slice::from_ref(&escaped), false);
+        assert_eq!(vm.type_parent_defaults.get(&site), Some(&parent));
+        assert!(vm.program.blocks.get(site.0).is_some());
+        start(&mut vm, "stable");
+        settle(&mut vm, &[], false);
+        assert!(!vm.type_parent_defaults.contains_key(&site));
+        assert!(vm.program.blocks.get(site.0).is_none());
+        vm.close();
+        assert!(vm.type_parent_defaults.is_empty());
+        assert_eq!(vm.collect(&[]).slots, 0);
+        let isolated = Vm::new(Arc::new(Program::new(Vec::new())));
+        assert!(isolated.type_parent_defaults.is_empty());
+    }
+
+    #[test]
+    fn inferred_method_parent_cache_is_published_before_a_failed_body() {
+        let source =
+            "function make(): Dynamic = new { value=read(\"mem:body\") }\nresult=make().value";
+        let resolved =
+            crate::resolver::resolve_module(&crate::parser::parse_module(source).unwrap()).unwrap();
+        let program = compile_module(&resolved).unwrap();
+        let mut vm = Vm::new(program.clone());
+        vm.start(program.entry, Vec::new()).unwrap();
+        let module = settle(&mut vm, &[], false);
+        let mut first = None;
+        for succeeds in [false, true] {
+            vm.start_member(module.as_object().unwrap(), "result")
+                .unwrap();
+            let request = loop {
+                vm.collect(std::slice::from_ref(&module));
+                match vm.poll(1) {
+                    VmPoll::Yielded => {}
+                    VmPoll::Pending(request) => break request,
+                    other => panic!("expected body read: {other:?}"),
+                }
+            };
+            assert_eq!(request.uri.as_ref(), "mem:body");
+            let cached = vm
+                .type_parent_defaults
+                .iter()
+                .find(|((block, pc), _)| {
+                    matches!(
+                        vm.program.blocks[*block][*pc],
+                        Instruction::ResolvedInferredParent { cache: true, .. }
+                    )
+                })
+                .map(|(key, value)| (*key, value.clone()))
+                .expect("parent acquired before body read");
+            if let Some(first) = &first {
+                assert_eq!(&cached, first);
+            } else {
+                first = Some(cached);
+            }
+            vm.resume(
+                request.id,
+                if succeeds {
+                    Ok(Value::string("ready"))
+                } else {
+                    Err(RuntimeError::new(ErrorKind::Host, "failed body"))
+                },
+            )
+            .unwrap();
+            let value = settle_result(&mut vm, std::slice::from_ref(&module), false);
+            if succeeds {
+                assert_eq!(value, Ok(Value::string("ready")));
+            } else {
+                assert_eq!(value.unwrap_err().kind, ErrorKind::Host);
+            }
+        }
+        vm.close();
+        assert!(vm.type_parent_defaults.is_empty());
+        assert_eq!(vm.collect(&[]).slots, 0);
+    }
+
     fn counts(vm: &Vm) -> (usize, usize, usize, usize) {
         (
             vm.program.blocks.len(),
@@ -297,7 +620,7 @@ mod tests {
         executable_live: usize,
         aliases: usize,
         owners: usize,
-        declaration_caches: [usize; 5],
+        declaration_caches: [usize; 6],
     }
     fn resident_stats(vm: &Vm) -> ResidentStats {
         let p = &vm.program;
@@ -369,6 +692,7 @@ mod tests {
                 vm.class_singletons.len(),
                 vm.alias_singletons.len(),
                 vm.resolved_declarations.len(),
+                vm.type_parent_defaults.len(),
                 vm.executable_roots.len(),
             ],
         }

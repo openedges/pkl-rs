@@ -1,5 +1,8 @@
 //! Collection continuation roots and Host lifecycle checks, separate from Java
 //! language compatibility and resource-cache evidence.
+#[path = "support/constructor_baseline.rs"]
+mod constructor_baseline;
+use constructor_baseline::compile_module_with_constructor_baseline;
 use std::sync::Arc;
 #[path = "support/eager_base.rs"]
 mod eager_base;
@@ -9,7 +12,7 @@ use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::resolve_module;
 use pkl_runtime::value::{ErrorKind, RuntimeError, Value};
-use pkl_runtime::vm::{Instruction as I, compile_module};
+use pkl_runtime::vm::Instruction as I;
 
 fn session() -> (HostSession, Value, usize, usize) {
     // Both iterable literals are temporary: only the iterator keeps their
@@ -33,7 +36,9 @@ fn session() -> (HostSession, Value, usize, usize) {
         "#,
     )
     .unwrap();
-    let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    let mut program =
+        (*compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap())
+            .clone();
     let module_entry = program.entry;
     let mut entries = Vec::new();
     for member in ["parentResult", "childResult"] {

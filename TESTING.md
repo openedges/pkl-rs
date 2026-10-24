@@ -242,6 +242,37 @@ The full gate must fail while required language implementations, mappings,
 adapters, or passing executions are missing. It cannot be replaced with the
 selected-case gate.
 
+The inferred-construction authorities retain five separate observation scopes:
+72 ordinary expressions, seven real amending-module queries, two opposite
+eleven-query module-receiver orders, 44 method-cache queries, and four separate
+default-diagnostic modules. Verify their sealed Java captures with:
+
+```sh
+python3 tools/inferred_new_fixtures.py --profile values
+python3 tools/inferred_new_fixtures.py --profile amends
+python3 tools/inferred_new_module_receiver_fixtures.py
+python3 tools/inferred_new_method_cache_fixtures.py
+python3 tools/inferred_new_default_diagnostics_fixtures.py
+```
+
+Only the ordinary 72-expression profile belongs to the single-module comparison
+catalog. Preserve sibling modules, receiver order, evaluator lifetime, and Host
+requests in the other scopes. The method-cache archive also retains an earlier
+object-method alias experiment with eight Java internal errors per repetition;
+those observations remain oracle failures. Fixture integrity does not establish
+Rust compatibility. Candidate comparisons must retain complete raw channels,
+and native multi-module regressions do not replace the corresponding portable
+execution requirements.
+
+Lifecycle tests that measure user-object heap deltas use the test-only
+[constructor baseline](crates/pkl-runtime/tests/support/constructor_baseline.rs).
+It initializes
+the three canonical collection parents through compiled constructor sites
+before taking the baseline, without forcing authored members. Production
+initialization and compatibility captures remain lazy. Separate VM tests cover
+first-use parent caching, cache identity, code ownership, and terminal cleanup;
+the lifecycle tests retain exact temporary-object and executable-node deltas.
+
 Stage 64's independent amendment authorities have separate offline verifiers:
 
 ```sh

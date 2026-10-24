@@ -6,6 +6,9 @@
 //! target/m2/stage9-runtime-java-04. These tests exercise the Rust Host and GC
 //! lifecycle; their callbacks do not constitute Java/Rust byte comparisons.
 
+#[path = "support/constructor_baseline.rs"]
+mod constructor_baseline;
+use constructor_baseline::compile_module_with_constructor_baseline;
 use std::sync::Arc;
 #[path = "support/eager_base.rs"]
 mod eager_base;
@@ -15,7 +18,7 @@ use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::resolve_module;
 use pkl_runtime::value::{ErrorKind, RuntimeError, Value};
-use pkl_runtime::vm::{Instruction as I, compile_module};
+use pkl_runtime::vm::Instruction as I;
 
 const SOURCE: &str = r#"
     key = new Listing { read("mem:key") }
@@ -37,7 +40,9 @@ fn session() -> (HostSession, Value, usize, usize, usize, usize) {
 
 fn session_source(source: &str) -> (HostSession, Value, usize, usize, usize, usize) {
     let parsed = parse_module(source).unwrap();
-    let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    let mut program =
+        (*compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap())
+            .clone();
     let module_entry = program.entry;
     let [outer, child, inspect, compare] =
         ["parent", "child", "inspect", "compare"].map(|member| {

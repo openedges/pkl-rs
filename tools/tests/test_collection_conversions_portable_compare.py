@@ -320,6 +320,10 @@ class PortableCollectionConversionComparisonTests(unittest.TestCase):
              {'success': 102, 'error': 86},
              'repeat-0/000-module-first/result.stdout.code-units.bin',
              '1'.encode('utf-16-be')),
+            ('file:///stage65/inferred-new-values.pkl', 72,
+             {'success': 49, 'error': 23},
+             'repeat-0/000-module-self-type/result.stdout.code-units.bin',
+             'ModuleClass'.encode('utf-16-be')),
         ):
             with self.subTest(uri=uri):
                 fixture = compare.ROOT / compare.profiles.PROFILES[uri]['fixture']
@@ -330,6 +334,14 @@ class PortableCollectionConversionComparisonTests(unittest.TestCase):
                 self.assertEqual(compare.java_members(fixture)[channel], expected)
                 self.assertTrue(set(compare.profiles.PROFILES[uri]['tool_sources'])
                                 <= compare.CAPTURE_SOURCES)
+
+    def test_inferred_new_values_verifier_command_is_profiled(self):
+        uri = 'file:///stage65/inferred-new-values.pkl'
+        profile = compare.profiles.PROFILES[uri]
+        fixture = compare.ROOT / profile['fixture']
+        self.assertEqual(compare.profiles.validator_args(profile, fixture), [
+            str(compare.ROOT / 'tools/inferred_new_fixtures.py'),
+            '--profile', 'values', '--fixture', str(fixture)])
 
     def test_actual_java_session_overrides_preflight_locale_and_rejects_drift(self):
         payload = {

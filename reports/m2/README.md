@@ -1,5 +1,54 @@
 # M2 language evidence
 
+### Stage65 inferred construction — implementation and local comparisons
+
+Stage 65 connects contextual and explicit `new` to the shared resumable
+type-default engine, including method-parent caching, inherited module self
+types, receiver-sensitive aliases, default-key calls, and missing-default frames.
+Canonical constructor parents remain traced roots owned by their code. Dedicated
+first-use, failure/retry, retirement, and close tests check their ownership;
+lifecycle tests measure user-object deltas after warming those canonical roots.
+Collection equality continues to compare collection members independently of
+builtin prototype backlinks.
+
+The [implementation checkpoint](stage65-implementation-checkpoint.json)
+records ten Java profiles: 940 expressions and 1,880 observations on each of
+native, actual N-API, and Chromium. All seven raw channels and whole process
+protocols match. Five inferred-construction fixtures also retain separate native,
+ordered-module, diagnostic, Host, identity, and frontend verification boundaries;
+their multi-module cases are not counted as portable single-module coverage.
+
+All five required Rust checks pass. There are 991 distinct workspace passes,
+zero failures, and two ignored tests; the raw 1,004 passes include thirteen
+nested child reruns. Tool checks pass 128 Python tests in both normal and `-O`
+modes, 50 JavaScript tests, eight mapping tests in both modes, and inventory
+freshness. Earlier failed candidates and build/storage failures remain recorded.
+
+The unchanged original selection expands to 130 programs: 74 matches,
+24 mismatches, 31 unsupported results, and one Java heap error at the unchanged
+`-Xmx512m`. All 52 previous passes remain passes; ten prior nonpasses and twelve
+of fourteen added programs now match. Two package/HTTP/TLS originals remain
+required and unexecuted. The selected original gate still fails. Remaining
+failures include the diagnostic categories/spans for `errors/notAUnionDefault.pkl`
+and `errors/multipleDefaults.pkl`. Follow-up implementation also targets
+`String.reverse()` and collection reversal, identified by inspecting the source
+at the remaining renderer-program failures.
+
+The first portable comparison stopped at a verifier that required a fixed
+browser resource-completion order. Its failed record and ordered HTTP logs are
+preserved. A source-bound post-capture amendment admits only complete sessions
+with the exact resource/status pairs and the loading dependencies expressed by
+the capture code. It changes no captured tool or guest bytes. Six amendment
+tests pass in normal and `-O` modes; the subsequent 29-command offline comparison
+retains every other source, artifact, Java, and raw-channel check.
+
+IntSeq, Bytes, Duration, and DataSize retain 474, 600, 548, and 510 matches per
+target. Any retains 170 matches and two Regex mismatches per portable target;
+M1's architecture contract also preserves its two Regex compatibility failures.
+These are local macOS arm64 results. All nine M2 workstreams, full language and
+product API compatibility, other release platforms, and performance goals
+remain incomplete.
+
 ### Stage65 inferred construction — independent Java authority
 
 The [Java checkpoint](stage65-java-checkpoint.json) publishes three distinct

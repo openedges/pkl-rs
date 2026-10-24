@@ -329,6 +329,28 @@ impl Vm {
         {
             return Ok(false);
         }
+        // ListingOrMappingTypeNode creates an undefined *property* when
+        // the element type has no default, not a function that throws later.
+        // Reading default must therefore fail before the implicit call node.
+        let mut owner = Some(receiver);
+        while let Some(id) = owner {
+            let object = self.heap.get(id)?;
+            if let Some(value) = &object.collection_default {
+                if value.is_none() {
+                    let mut error = RuntimeError::new(
+                        ErrorKind::MissingMember,
+                        "Tried to read property `default` but its value is undefined.",
+                    )
+                    .undefined();
+                    error
+                        .frames
+                        .extend(object.collection_default_origin.clone());
+                    return Err(error);
+                }
+                break;
+            }
+            owner = object.parent;
+        }
         let id = self.heap.allocate(Object {
             function: Some(Function {
                 block: self.program.object_default_block,
@@ -374,7 +396,7 @@ impl Vm {
             }
             owner = object.parent;
         }
-        let result = self.heap.allocate(Object::default());
+        let result = self.empty_object(CollectionKind::Dynamic);
         self.stack.push(Value::Object(result));
         Ok(())
     }

@@ -29,13 +29,15 @@ export function validateProfileCatalog(catalog) {
     'collection_conversion_controls_fixtures', 'collection_lookups_fixtures',
     'collection_default_contracts_fixtures', 'collection_dynamic_render_fixtures',
     'collection_property_names_fixtures', 'collection_addition_fixtures',
-    'set_endpoints_fixtures', 'amendment_construction_fixtures']);
+    'set_endpoints_fixtures', 'amendment_construction_fixtures',
+    'inferred_new_fixtures']);
   const uris = new Set(), fixtures = new Set();
   for (const profile of catalog.profiles) {
     if (!profile || typeof profile.module_uri !== 'string'
         || !(/^file:\/\/\/stage62\/[a-z-]+\.pkl$/.test(profile.module_uri)
           || ['file:///stage63/collection-addition.pkl', 'file:///stage63/set-endpoints.pkl',
-              'file:///stage64/amendment-construction.pkl']
+              'file:///stage64/amendment-construction.pkl',
+              'file:///stage65/inferred-new-values.pkl']
             .includes(profile.module_uri))
         || uris.has(profile.module_uri) || fixtures.has(profile.fixture)
         || !/^tests\/fixtures\/m2-[a-z-]+$/.test(profile.fixture)
@@ -58,6 +60,12 @@ export function validateProfileCatalog(catalog) {
          'amendment_construction_fixtures'].includes(profile.validator_module))
       requiredTools.push('tools/collection_conversions_fixtures.py',
         'tools/collection_conversions_oracle.py');
+    if (profile.validator_module === 'inferred_new_fixtures') {
+      if (profile.module_uri !== 'file:///stage65/inferred-new-values.pkl'
+          || profile.archive_prefix !== 'capture-01')
+        throw Error('inferred-new values profile boundary differs');
+      requiredTools.push('tools/amendment_construction_oracle.py');
+    }
     if (new Set(profile.tool_sources).size !== requiredTools.length
         || profile.tool_sources.length !== requiredTools.length
         || requiredTools.some(name => !profile.tool_sources.includes(name)))
@@ -70,6 +78,15 @@ export function validateProfileCatalog(catalog) {
 export const CONVERSION_PROFILES = Object.freeze(validateProfileCatalog(
   JSON.parse(readFileSync(resolve(root, PROFILE_CATALOG), 'utf8'))));
 const profilesByUri = new Map(CONVERSION_PROFILES.map(profile => [profile.module_uri, profile]));
+export function validatorArguments(profile, fixture) {
+  const args = [resolve(root, profile.validator_script)];
+  if (profile.validator_module === 'inferred_new_fixtures') {
+    if (profile.module_uri !== 'file:///stage65/inferred-new-values.pkl')
+      throw Error('inferred-new verifier profile differs');
+    args.push('--profile', 'values');
+  }
+  return [...args, '--fixture', fixture];
+}
 const profileSources = [PROFILE_CATALOG, 'tools/collection_conversion_profiles.py',
   ...CONVERSION_PROFILES.flatMap(profile => profile.tool_sources)];
 const common = ['expression.bin', 'expression.code-units.bin', 'result.status.bin',
@@ -300,11 +317,12 @@ export async function capture(args) {
     const py = JSON.parse(execFileSync(python, ['-c', 'import json,sys;print(json.dumps({"executable":sys.executable,"version":sys.version}))'], { cwd: root }).toString());
     await track(py.executable);
     report.python = { ...py, executableRealpath: await realpath(py.executable), executableSha256: tracked[py.executable] };
-    const verification = spawnSync(python, [resolve(root, profile.validator_script), '--fixture', fixturePath],
+    const verifierArgs = validatorArguments(profile, fixturePath);
+    const verification = spawnSync(python, verifierArgs,
       { cwd: root, encoding: null, timeout: 180_000, maxBuffer: 8 * 1024 * 1024 });
     await writeFile(resolve(out, 'fixture-verification.stdout.bin'), verification.stdout ?? Buffer.alloc(0), { flag: 'wx' });
     await writeFile(resolve(out, 'fixture-verification.stderr.bin'), verification.stderr ?? Buffer.alloc(0), { flag: 'wx' });
-    report.fixtureVerification = { command: [python, resolve(root, profile.validator_script), '--fixture', fixturePath],
+    report.fixtureVerification = { command: [python, ...verifierArgs],
       exitCode: verification.status, signal: verification.signal, error: verification.error?.message ?? null,
       stdoutSha256: sha(verification.stdout ?? Buffer.alloc(0)), stderrSha256: sha(verification.stderr ?? Buffer.alloc(0)) };
     if (verification.status !== 0 || verification.signal || verification.error) throw Error('canonical fixture verification failed');

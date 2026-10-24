@@ -2,6 +2,9 @@
 //! These native lifetime checks are separate from pinned Java byte comparisons.
 //! Retained module graphs include their one builtin Module parent; executable
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
+#[path = "support/constructor_baseline.rs"]
+mod constructor_baseline;
+use constructor_baseline::compile_module_with_constructor_baseline;
 use std::process::{Command, Stdio};
 use std::sync::Arc;
 #[path = "support/eager_base.rs"]
@@ -14,7 +17,7 @@ use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::resolve_module;
 use pkl_runtime::value::{ErrorKind, RuntimeError, Value};
-use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll, compile_module};
+use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll};
 
 const SOURCE: &str = r#"
 parent = read("mem:outer")
@@ -24,8 +27,10 @@ inspect = map.length
 "#;
 
 fn program(source: &str) -> (Arc<Program>, [usize; 3]) {
-    let mut program = (*compile_module(&resolve_module(&parse_module(source).unwrap()).unwrap())
-        .unwrap())
+    let mut program = (*compile_module_with_constructor_baseline(
+        &resolve_module(&parse_module(source).unwrap()).unwrap(),
+    )
+    .unwrap())
     .clone();
     let entries = ["parent", "child", "inspect"].map(|name| {
         let block = program.blocks.len();

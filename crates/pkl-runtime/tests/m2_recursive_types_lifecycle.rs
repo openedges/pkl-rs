@@ -1,6 +1,9 @@
 //! Recursive source constraints use the existing Host scheduler and traced heap.
 //! Retained module graphs include their one builtin Module parent; executable
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
+#[path = "support/constructor_baseline.rs"]
+mod constructor_baseline;
+use constructor_baseline::compile_module_with_constructor_baseline;
 use std::sync::Arc;
 #[path = "support/eager_base.rs"]
 mod eager_base;
@@ -11,7 +14,7 @@ use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::resolve_module;
 use pkl_runtime::value::{ErrorKind, RuntimeError, Value};
-use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll, compile_module};
+use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll};
 
 const SOURCE: &str = r#"
 typealias Countdown = Int(this == 0 || (read("mem:step") == "ok" && (this - 1) is Countdown))
@@ -21,7 +24,10 @@ identity = Countdown
 "#;
 
 fn program() -> Arc<Program> {
-    compile_module(&resolve_module(&parse_module(SOURCE).unwrap()).unwrap()).unwrap()
+    compile_module_with_constructor_baseline(
+        &resolve_module(&parse_module(SOURCE).unwrap()).unwrap(),
+    )
+    .unwrap()
 }
 
 fn vm_event(vm: &mut Vm) -> VmPoll {

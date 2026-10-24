@@ -1,0 +1,17 @@
+open module Base
+marker: String = "base"
+typealias Current = module
+typealias MaybeCurrent = module?
+function makeModule(): module = new module { marker = "made" }
+function makeNullable(): module? = new module { marker = "nullable" }
+function makeAlias(): Current = new Current { marker = "alias" }
+function makeNullableAlias(): MaybeCurrent = new MaybeCurrent { marker = "nullable-alias" }
+
+objectmodule = new Dynamic {
+  local function infer(): module = new { marker = "object-module" }
+  result = infer()
+}
+objectnullable = new Dynamic {
+  local function infer(): module? = new { marker = "object-nullable" }
+  result = infer()
+}

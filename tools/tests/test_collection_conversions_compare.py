@@ -146,7 +146,7 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "timeout"):
                 compare.compare(self.output, bad_timeout)
 
-    def test_nine_sealed_profiles_and_wrong_count_uri_or_input_are_rejected(self):
+    def test_ten_sealed_profiles_and_wrong_count_uri_or_input_are_rejected(self):
         expected = {
             'file:///stage62/collection-conversions.pkl': 236,
             'file:///stage62/collection-conversion-controls.pkl': 58,
@@ -157,10 +157,11 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             'file:///stage63/collection-addition.pkl': 125,
             'file:///stage63/set-endpoints.pkl': 70,
             'file:///stage64/amendment-construction.pkl': 188,
+            'file:///stage65/inferred-new-values.pkl': 72,
         }
         self.assertEqual({uri: profile['rows'] for uri, profile in compare.profiles.PROFILES.items()},
                          expected)
-        self.assertEqual(sum(expected.values()), 868)
+        self.assertEqual(sum(expected.values()), 940)
         for uri, rows in expected.items():
             profile = compare.profiles.PROFILES[uri]
             fixture = compare.ROOT / profile['fixture']
@@ -261,6 +262,9 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             ('file:///stage64/amendment-construction.pkl', 188,
              {'success': 102, 'error': 86},
              'repeat-0/000-module-first/result.stdout.code-units.bin'),
+            ('file:///stage65/inferred-new-values.pkl', 72,
+             {'success': 49, 'error': 23},
+             'repeat-0/000-module-self-type/result.stdout.code-units.bin'),
         ):
             with self.subTest(uri=uri):
                 profile = compare.profiles.PROFILES[uri]
@@ -272,6 +276,18 @@ class CollectionConversionsCompareTests(unittest.TestCase):
                 self.assertTrue(set(profile['tool_sources']) <= set(compare.TOOLS))
                 self.assertEqual(set(profile['tool_sources']),
                                  compare.profiles.PROFILE_TOOL_CLOSURES[profile['validator_module']])
+
+    def test_inferred_new_values_verifier_requires_explicit_profile(self):
+        uri = 'file:///stage65/inferred-new-values.pkl'
+        profile = compare.profiles.PROFILES[uri]
+        fixture = compare.ROOT / profile['fixture']
+        self.assertEqual(compare.profiles.validator_args(profile, fixture), [
+            str(compare.ROOT / 'tools/inferred_new_fixtures.py'),
+            '--profile', 'values', '--fixture', str(fixture)])
+        old = compare.profiles.PROFILES['file:///stage64/amendment-construction.pkl']
+        old_fixture = compare.ROOT / old['fixture']
+        self.assertEqual(compare.profiles.validator_args(old, old_fixture), [
+            str(compare.ROOT / old['validator_script']), '--fixture', str(old_fixture)])
 
     def test_relocated_capture_uses_recorded_path_for_command_identity(self):
         recorded = self.output / "original-place"

@@ -1,0 +1,3 @@
+typealias U = unknown
+function make(): Listing<unknown> = new { new {} }
+result = make()[0] is Dynamic

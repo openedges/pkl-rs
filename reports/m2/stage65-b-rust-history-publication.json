@@ -1,0 +1,853 @@
+{
+  "archive": {
+    "bytes": 28409114,
+    "full_member_readback_verified": true,
+    "members": 156,
+    "mode": 420,
+    "path": "reports/m2/stage65-b-rust-history-evidence.tar.gz",
+    "sha256": "76804882a97e5adf7846f5511c021455ae3a69ea75148d6603f725e353b5c651"
+  },
+  "base_head": "358ab1e3cc165913ba6a29fc31e8eee258984b31",
+  "candidate_compatibility_passes_claimed": 0,
+  "embedded_manifest_sha256": "f14ebf40e204f910f3ca2ce146c4dc4d23a81b3070c6f19a9569908202e77d31",
+  "exclusions": {
+    "exact_nested_subtrees": [
+      "target/m2/stage65-stage36-reports-sparse-01/dirty-backup"
+    ],
+    "external_backups": [
+      "target/cache-preservation"
+    ],
+    "prior_java_A": "Already published reports/m2/stage65-java-evidence.tar.gz; its capture directories are not duplicated here.",
+    "whole_directories": [
+      "stage65-original-inference-01-workspace"
+    ]
+  },
+  "group": "rust-history",
+  "kind": "stage65-B-local-evidence-publication",
+  "known_failure_boundaries": [
+    "Original130 selected status failed despite capture integrity; preserve 74 pass/24 mismatch/31 candidate-unsupported/1 oracle-error and two blocked inputs.",
+    "Prior Rust01/02 and count-parser03 failures remain historical; final Rust03 has five exits zero.",
+    "Comparison01 failed and remains historical; comparison02 strict verdict must be read from its terminal record.",
+    "Any and M1 Regex strict compatibility failures remain failures, even when acquisition and contract checks pass.",
+    "No whole-M2, complete public API, release-platform, performance or guest compatibility pass is inferred from publication integrity."
+  ],
+  "member_inventory": {
+    "target/m2/stage65-b-publication-01/layout.json": {
+      "bytes": 7651,
+      "mode": 420,
+      "sha256": "285f5f551afc1580f5a957be4f407b27c8af00867dac2f15517dcb36a35a976a"
+    },
+    "target/m2/stage65-b-publication-01/publish.py": {
+      "bytes": 15969,
+      "mode": 420,
+      "sha256": "406b5113ef1126e8c91b980d72018c5202b22ad2100e7aa9870c9f1c83bac140"
+    },
+    "target/m2/stage65-b-publication-01/rust-history-invocation.json": {
+      "bytes": 858,
+      "mode": 420,
+      "sha256": "14a1eca4ba06dcaa1a4d029bc4fda3207263d14bc662978517a2cea0c323a24c"
+    },
+    "target/m2/stage65-b-publication-01/source-review.json": {
+      "bytes": 3921,
+      "mode": 420,
+      "sha256": "bf047db473fb28bdc87da163ce52f68ec6efdebfbc3ca59b09578aae2efdc6d3"
+    },
+    "target/m2/stage65-rust-validation-01/active.json": {
+      "bytes": 100,
+      "mode": 420,
+      "sha256": "9de1794fb6a83465c7096ace1a803fe7cbf1886f848f674bdf4fbcfa80abbb50"
+    },
+    "target/m2/stage65-rust-validation-01/cargo-version.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage65-rust-validation-01/cargo-version.stdout.bin": {
+      "bytes": 335,
+      "mode": 420,
+      "sha256": "069f116aa0e4bb5642706972ee89ca375c5f7cf1e66a58c149a0842deed5c700"
+    },
+    "target/m2/stage65-rust-validation-01/clippy.stderr.bin": {
+      "bytes": 343,
+      "mode": 420,
+      "sha256": "70df62b3a462555baaca42ad9fb88c8d82acb330dce170ac579598176931edaa"
+    },
+    "target/m2/stage65-rust-validation-01/clippy.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage65-rust-validation-01/format.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage65-rust-validation-01/format.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage65-rust-validation-01/preparation.json": {
+      "bytes": 534,
+      "mode": 420,
+      "sha256": "657988a515a121246bd2fdbebcaf6fb5e8319479843b5feec68ab2c7c841ec50"
+    },
+    "target/m2/stage65-rust-validation-01/references.stderr.bin": {
+      "bytes": 101,
+      "mode": 420,
+      "sha256": "f1c61b92461aef8ca02c1beaed6df7f077e68b4b6101cd39c6e9aa5b3f09b7b1"
+    },
+    "target/m2/stage65-rust-validation-01/references.stdout.bin": {
+      "bytes": 40,
+      "mode": 420,
+      "sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb"
+    },
+    "target/m2/stage65-rust-validation-01/report.json": {
+      "bytes": 6329,
+      "mode": 420,
+      "sha256": "4b8f672a213d03056ca35f185203f0ba2db6e4d807d9e9eadf4d5f0869fd8a0e"
+    },
+    "target/m2/stage65-rust-validation-01/run.py": {
+      "bytes": 11315,
+      "mode": 420,
+      "sha256": "0ac41b6497c0b8332905c4885b7a01102f859047b78732d18134168926b8dbb6"
+    },
+    "target/m2/stage65-rust-validation-01/rust-version.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage65-rust-validation-01/rust-version.stdout.bin": {
+      "bytes": 192,
+      "mode": 420,
+      "sha256": "e2211d4c0760a2a3b03eab88e42f8848952b7aa2ed649277a8fdbf3ce1838fd4"
+    },
+    "target/m2/stage65-rust-validation-01/sources-after.json": {
+      "bytes": 108318244,
+      "mode": 420,
+      "sha256": "d0729bd4dd5fc43854e2e14f788c1a6da979cc9d7d8883ef8792fa4b42ab90ce"
+    },
+    "target/m2/stage65-rust-validation-01/sources.json": {
+      "bytes": 108318244,
+      "mode": 420,
+      "sha256": "d0729bd4dd5fc43854e2e14f788c1a6da979cc9d7d8883ef8792fa4b42ab90ce"
+    },
+    "target/m2/stage65-rust-validation-01/sources/compatibility/m2-language.json": {
+      "bytes": 6726598,
+      "mode": 420,
+      "sha256": "a404d735227cb7f12d132352b99452eff8b872e24212ff1d5ba5da30f3b8d28e"
+    },
+    "target/m2/stage65-rust-validation-01/sources/compatibility/m2-mappings.json": {
+      "bytes": 457714,
+      "mode": 420,
+      "sha256": "534f8c03df23b70da052082efe02042499e445b10a9e014953f5aef0262d90c2"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/src/diagnostic_values.rs": {
+      "bytes": 28758,
+      "mode": 420,
+      "sha256": "4275f918c62a28db0c6287186c9a14438d36856b7504c3d2b8737bc328956678"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/src/vm.rs": {
+      "bytes": 360401,
+      "mode": 420,
+      "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/src/vm/collections.rs": {
+      "bytes": 128157,
+      "mode": 420,
+      "sha256": "9cfb7e263833f5212e7ed1c678e77183baef2bd3d92bb72b50d5e85e3d8b32bd"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/src/vm/compiler_expressions.rs": {
+      "bytes": 77676,
+      "mode": 420,
+      "sha256": "eae43bbc9ef6714b2ac4c10cce906cc2a1fdbb3672d08dbc4138244c09bdc50c"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/src/vm/generics.rs": {
+      "bytes": 28754,
+      "mode": 420,
+      "sha256": "8cfff25f51af42c5167715671e748f03ca594274dd79cabeb1bb1373c823a0f9"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/src/vm/generics/tests.rs": {
+      "bytes": 8098,
+      "mode": 420,
+      "sha256": "1199725b047b4aa2ba96887e757873f577c5458e92725ca00d8f003ae528ec55"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/src/vm/object_lookups.rs": {
+      "bytes": 15431,
+      "mode": 420,
+      "sha256": "3ba2fcd45bb56bdef479ff142d2bbdd98c4ec231e45f864b6ef7795f754121b7"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/src/vm/query_lifecycle.rs": {
+      "bytes": 53906,
+      "mode": 420,
+      "sha256": "3aabb45f2c0c0431a89476da023f172177559a9edf0d7c595135c88986b77612"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/src/vm/type_resolution.rs": {
+      "bytes": 48411,
+      "mode": 420,
+      "sha256": "1ad5e5074f59d5c7ec01216c404ce2d4afde2ab2e032644a9039767a938abb8d"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/src/vm/typecheck.rs": {
+      "bytes": 67469,
+      "mode": 420,
+      "sha256": "883d60b24dcd14cdefa8fc9f0657cf121bc29e8e518fa703fdcdff9f5c140d46"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/src/vm/uri_resolution.rs": {
+      "bytes": 31187,
+      "mode": 420,
+      "sha256": "24563d2b7fd6f0cac4ed5d25cd7bb26f6393f7e622ef041af77aaa383baec53e"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/tests/m2_inferred_new.rs": {
+      "bytes": 31026,
+      "mode": 420,
+      "sha256": "d5a5e4902028798c4304843b7b94f3d25d6c1cdb1a1bb6c9cbb11a73cea22e1f"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/tests/m2_inferred_new_default_diagnostics.rs": {
+      "bytes": 7033,
+      "mode": 420,
+      "sha256": "82a3b435f7994c4f5e0a97b61c34b3e6202d9fefa8be8c4482c728eddd1753e2"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/tests/m2_inferred_new_lifecycle.rs": {
+      "bytes": 8716,
+      "mode": 420,
+      "sha256": "567a2626d3343405fa16dc0bad6f6814d702575b0ade26a2f228709154ed05b6"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/tests/m2_inferred_new_method_cache.rs": {
+      "bytes": 20065,
+      "mode": 420,
+      "sha256": "e3986d67e9a94602fc9d6e9cb9e6b96cb4fbf7e4ef3b226f0e27b3cb10080a96"
+    },
+    "target/m2/stage65-rust-validation-01/sources/crates/pkl-runtime/tests/m2_inferred_new_module_receiver.rs": {
+      "bytes": 13274,
+      "mode": 420,
+      "sha256": "5ec911382ea66b34a613bae1cffc47e35d7fce800aae12e7f12c5e209ce12584"
+    },
+    "target/m2/stage65-rust-validation-01/sources/docs/architecture.md": {
+      "bytes": 89962,
+      "mode": 420,
+      "sha256": "1d6c6b0aa6008dbb3736843b56d0b9a5018ffb1aeeefbce4ae42b1395b1d704f"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/README.md": {
+      "bytes": 697,
+      "mode": 420,
+      "sha256": "345de55b24758480a82c5a5512466f18e1dd138c3a04de65cb8e63a1d78a168f"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/alias-unknown/module.pkl": {
+      "bytes": 96,
+      "mode": 420,
+      "sha256": "21a8c0fca38e6a8119cd26ed3c8121cf735cc5057b964a53c2b8f3c615b86ef4"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/alias-unknown/queries.tsv": {
+      "bytes": 21,
+      "mode": 420,
+      "sha256": "80cb5148ff5057377eca71bf22630c6b50d3bac72e583f596aabaaccc8e71119"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/any/module.pkl": {
+      "bytes": 98,
+      "mode": 420,
+      "sha256": "4e9e196071203db4f69687cd3b106815cbba8e70b8f2e6400602761953f243ff"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/any/queries.tsv": {
+      "bytes": 21,
+      "mode": 420,
+      "sha256": "80cb5148ff5057377eca71bf22630c6b50d3bac72e583f596aabaaccc8e71119"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/archive-identity.json": {
+      "bytes": 393,
+      "mode": 420,
+      "sha256": "1f4be6a39eb1414232716554f91dd57fa53a1242a988a45c253c5b5c507e486a"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/cases.json": {
+      "bytes": 147,
+      "mode": 420,
+      "sha256": "d6af32af62dd7444bbfd31be601148e68776298cee1a26b45345f01bb73ac793"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/generic-alias-unknown/module.pkl": {
+      "bytes": 108,
+      "mode": 420,
+      "sha256": "685133a6b5d2ad222afcae3f54770755058a9fb35d706c35d5cc26b369d7af1a"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/generic-alias-unknown/queries.tsv": {
+      "bytes": 21,
+      "mode": 420,
+      "sha256": "80cb5148ff5057377eca71bf22630c6b50d3bac72e583f596aabaaccc8e71119"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/literal-unknown/module.pkl": {
+      "bytes": 102,
+      "mode": 420,
+      "sha256": "361607c6511645e38ad6925a7a6dde176ea6be1487c7903e596d2a0c104909b4"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/literal-unknown/queries.tsv": {
+      "bytes": 21,
+      "mode": 420,
+      "sha256": "80cb5148ff5057377eca71bf22630c6b50d3bac72e583f596aabaaccc8e71119"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/manifest.json": {
+      "bytes": 1233,
+      "mode": 420,
+      "sha256": "55d5804513c04d2d9ea217aaf64404f858244884dbeee03e597c6687a34b7279"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-default-diagnostics/oracle-evidence.tar.gz": {
+      "bytes": 185790,
+      "mode": 420,
+      "sha256": "d15f914ffb2a72fce86862ab30fea2b087644be0594303b1f705a8f801a191fc"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/README.md": {
+      "bytes": 1152,
+      "mode": 420,
+      "sha256": "b22cf0860cc83d1949eb4f7df58b2b749c3b46766d499cb937e04758de285b6d"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/archive-identity.json": {
+      "bytes": 631,
+      "mode": 420,
+      "sha256": "e97efbdcf14344820111aaa93095a078b8b74f120cb5fae74f39ff5837b1d3eb"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/manifest.json": {
+      "bytes": 1734,
+      "mode": 420,
+      "sha256": "05514849a0935f74cf58330f8e5b1f560a41e9e3db8c908c88e8479e1336327b"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/method/alpha-first.queries.tsv": {
+      "bytes": 884,
+      "mode": 420,
+      "sha256": "376d7a853b74cb7e0ff6c011b0f8cc0993f0f65017dcf01a1e0f1dc81a1d9f20"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/method/alpha.pkl": {
+      "bytes": 36,
+      "mode": 420,
+      "sha256": "b96b50766b7201465022ca3347ddd9ff4b7d1984e640f69722d1f21193a8376c"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/method/base.pkl": {
+      "bytes": 689,
+      "mode": 420,
+      "sha256": "ae0d4d94e3bdb349270e6911b15d155bb8f3ff5f960245f50add9a73173e234c"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/method/beta-first.queries.tsv": {
+      "bytes": 887,
+      "mode": 420,
+      "sha256": "16a36770308654f8b80e06ebdff6a3d01ec1d30a783f70fb05557c3b416630fe"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/method/beta.pkl": {
+      "bytes": 35,
+      "mode": 420,
+      "sha256": "a64a0c145bbbc955ec2ba3a892dc5a6a7217f5b993f03acd5229567f2aed03cc"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/method/cases.json": {
+      "bytes": 3734,
+      "mode": 420,
+      "sha256": "aeac3c770e21e1f7c83b1d504ff7c0af73fad120ad429e758cd78d1b9b4bdadb"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/method/module.pkl": {
+      "bytes": 92,
+      "mode": 420,
+      "sha256": "2f63ea3af3b838456b1a55e6c97e33655aefd9fa4b670401e382894b91852c5b"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/alpha-first.queries.tsv": {
+      "bytes": 848,
+      "mode": 420,
+      "sha256": "2c53f97419a50841029fa2151ea5b2120bb12cf5c31f25da5281ba017a93791b"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/alpha.pkl": {
+      "bytes": 36,
+      "mode": 420,
+      "sha256": "b96b50766b7201465022ca3347ddd9ff4b7d1984e640f69722d1f21193a8376c"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/base.pkl": {
+      "bytes": 633,
+      "mode": 420,
+      "sha256": "3460a611c1d986698c95c92bf886189ba55e9a169cacead63baaaf7014102b60"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/beta-first.queries.tsv": {
+      "bytes": 851,
+      "mode": 420,
+      "sha256": "1d2bb1ef18e4a937563ad0a1081b45e629ce71e0bd4e237ef0775cba07db3f7e"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/beta.pkl": {
+      "bytes": 35,
+      "mode": 420,
+      "sha256": "a64a0c145bbbc955ec2ba3a892dc5a6a7217f5b993f03acd5229567f2aed03cc"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/cases.json": {
+      "bytes": 3662,
+      "mode": 420,
+      "sha256": "99ec0dd2be44618b09be46c087e92bb08d8477bca012c97b1e870b335650edb1"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/module.pkl": {
+      "bytes": 92,
+      "mode": 420,
+      "sha256": "2f63ea3af3b838456b1a55e6c97e33655aefd9fa4b670401e382894b91852c5b"
+    },
+    "target/m2/stage65-rust-validation-01/sources/tests/fixtures/m2-inferred-new-method-cache/oracle-evidence.tar.gz": {
+      "bytes": 662302,
+      "mode": 420,
+      "sha256": "82b0f357830033bf61be139ecc3b0ebc7570893427b9faeb958d0851128ab6ec"
+    },
+    "target/m2/stage65-rust-validation-01/wasm-runtime.stderr.bin": {
+      "bytes": 158,
+      "mode": 420,
+      "sha256": "ce7a2ae645903170008a38edd17eb2466b94ab2a6b02a43fbdf0eb9509b5441f"
+    },
+    "target/m2/stage65-rust-validation-01/wasm-runtime.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage65-rust-validation-01/workspace-tests.stderr.bin": {
+      "bytes": 1498,
+      "mode": 420,
+      "sha256": "d99a1294906347d1e82a9bbfb0e53796eb7689e51c41214c81cd4b97bc45fb5c"
+    },
+    "target/m2/stage65-rust-validation-01/workspace-tests.stdout.bin": {
+      "bytes": 17974,
+      "mode": 420,
+      "sha256": "9c5a4da2afbc3329933aaf53fa6de4905fef30969c66ee224df2bb7cd70dcc84"
+    },
+    "target/m2/stage65-rust-validation-02/active.json": {
+      "bytes": 100,
+      "mode": 420,
+      "sha256": "9de1794fb6a83465c7096ace1a803fe7cbf1886f848f674bdf4fbcfa80abbb50"
+    },
+    "target/m2/stage65-rust-validation-02/cargo-version.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage65-rust-validation-02/cargo-version.stdout.bin": {
+      "bytes": 335,
+      "mode": 420,
+      "sha256": "069f116aa0e4bb5642706972ee89ca375c5f7cf1e66a58c149a0842deed5c700"
+    },
+    "target/m2/stage65-rust-validation-02/clippy.stderr.bin": {
+      "bytes": 343,
+      "mode": 420,
+      "sha256": "2038ae5d4b004266c70ab607802a4eb8c09bee6f716823f7b6b4238f3b1ce5b3"
+    },
+    "target/m2/stage65-rust-validation-02/clippy.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage65-rust-validation-02/format.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage65-rust-validation-02/format.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage65-rust-validation-02/preparation.json": {
+      "bytes": 534,
+      "mode": 420,
+      "sha256": "12c75a66f495d04397a3a1f7e55af6bae24b9f8be1f8b929d79509802984930d"
+    },
+    "target/m2/stage65-rust-validation-02/references.stderr.bin": {
+      "bytes": 101,
+      "mode": 420,
+      "sha256": "e24773f5a51aa3f119345caca822e01ef145fd791f450ac2d011649932f6d459"
+    },
+    "target/m2/stage65-rust-validation-02/references.stdout.bin": {
+      "bytes": 40,
+      "mode": 420,
+      "sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb"
+    },
+    "target/m2/stage65-rust-validation-02/report.json": {
+      "bytes": 6425,
+      "mode": 420,
+      "sha256": "89d247aa4af535ff6164fccefc4702c0894f3b8886e436fa1a9f66cc046594ea"
+    },
+    "target/m2/stage65-rust-validation-02/run.py": {
+      "bytes": 11407,
+      "mode": 420,
+      "sha256": "c97559884f223d9b7979d8c2cd6fbe24a00adaa4e8fa5b8a8ea3bf5356302c45"
+    },
+    "target/m2/stage65-rust-validation-02/rust-version.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage65-rust-validation-02/rust-version.stdout.bin": {
+      "bytes": 192,
+      "mode": 420,
+      "sha256": "e2211d4c0760a2a3b03eab88e42f8848952b7aa2ed649277a8fdbf3ce1838fd4"
+    },
+    "target/m2/stage65-rust-validation-02/sources-after.json": {
+      "bytes": 108317938,
+      "mode": 420,
+      "sha256": "94d4c53fce6d82dacc2070b8ce3213973b9088e60f35815b15e06c25b7f08c5c"
+    },
+    "target/m2/stage65-rust-validation-02/sources.json": {
+      "bytes": 108317938,
+      "mode": 420,
+      "sha256": "94d4c53fce6d82dacc2070b8ce3213973b9088e60f35815b15e06c25b7f08c5c"
+    },
+    "target/m2/stage65-rust-validation-02/sources/TESTING.md": {
+      "bytes": 63195,
+      "mode": 420,
+      "sha256": "bfcad758754debe3cafa4ef58e0bc8512561733e8f5d51126bb2715d3d601793"
+    },
+    "target/m2/stage65-rust-validation-02/sources/compatibility/m2-language.json": {
+      "bytes": 6726598,
+      "mode": 420,
+      "sha256": "a404d735227cb7f12d132352b99452eff8b872e24212ff1d5ba5da30f3b8d28e"
+    },
+    "target/m2/stage65-rust-validation-02/sources/compatibility/m2-mappings.json": {
+      "bytes": 457714,
+      "mode": 420,
+      "sha256": "534f8c03df23b70da052082efe02042499e445b10a9e014953f5aef0262d90c2"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/src/diagnostic_values.rs": {
+      "bytes": 28758,
+      "mode": 420,
+      "sha256": "4275f918c62a28db0c6287186c9a14438d36856b7504c3d2b8737bc328956678"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/src/vm.rs": {
+      "bytes": 360401,
+      "mode": 420,
+      "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/src/vm/collections.rs": {
+      "bytes": 128157,
+      "mode": 420,
+      "sha256": "9cfb7e263833f5212e7ed1c678e77183baef2bd3d92bb72b50d5e85e3d8b32bd"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/src/vm/compiler_expressions.rs": {
+      "bytes": 77676,
+      "mode": 420,
+      "sha256": "eae43bbc9ef6714b2ac4c10cce906cc2a1fdbb3672d08dbc4138244c09bdc50c"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/src/vm/equality.rs": {
+      "bytes": 65962,
+      "mode": 420,
+      "sha256": "1a26c96875e1f78986e90fc56d7d5d86d7921763508c615fb3fdd9f10c585771"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/src/vm/generics.rs": {
+      "bytes": 28754,
+      "mode": 420,
+      "sha256": "8cfff25f51af42c5167715671e748f03ca594274dd79cabeb1bb1373c823a0f9"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/src/vm/generics/tests.rs": {
+      "bytes": 8924,
+      "mode": 420,
+      "sha256": "fe58253e316e92d98c6ad74448caf7c12827c35a023bd377cfd071a7db8ae323"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/src/vm/object_lookups.rs": {
+      "bytes": 15431,
+      "mode": 420,
+      "sha256": "3ba2fcd45bb56bdef479ff142d2bbdd98c4ec231e45f864b6ef7795f754121b7"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/src/vm/query_lifecycle.rs": {
+      "bytes": 53906,
+      "mode": 420,
+      "sha256": "3aabb45f2c0c0431a89476da023f172177559a9edf0d7c595135c88986b77612"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/src/vm/type_resolution.rs": {
+      "bytes": 48411,
+      "mode": 420,
+      "sha256": "1ad5e5074f59d5c7ec01216c404ce2d4afde2ab2e032644a9039767a938abb8d"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/src/vm/typecheck.rs": {
+      "bytes": 67469,
+      "mode": 420,
+      "sha256": "883d60b24dcd14cdefa8fc9f0657cf121bc29e8e518fa703fdcdff9f5c140d46"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/src/vm/uri_resolution.rs": {
+      "bytes": 31187,
+      "mode": 420,
+      "sha256": "24563d2b7fd6f0cac4ed5d25cd7bb26f6393f7e622ef041af77aaa383baec53e"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/tests/m2_inferred_new.rs": {
+      "bytes": 31026,
+      "mode": 420,
+      "sha256": "d5a5e4902028798c4304843b7b94f3d25d6c1cdb1a1bb6c9cbb11a73cea22e1f"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/tests/m2_inferred_new_default_diagnostics.rs": {
+      "bytes": 7033,
+      "mode": 420,
+      "sha256": "82a3b435f7994c4f5e0a97b61c34b3e6202d9fefa8be8c4482c728eddd1753e2"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/tests/m2_inferred_new_lifecycle.rs": {
+      "bytes": 8716,
+      "mode": 420,
+      "sha256": "567a2626d3343405fa16dc0bad6f6814d702575b0ade26a2f228709154ed05b6"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/tests/m2_inferred_new_method_cache.rs": {
+      "bytes": 20065,
+      "mode": 420,
+      "sha256": "e3986d67e9a94602fc9d6e9cb9e6b96cb4fbf7e4ef3b226f0e27b3cb10080a96"
+    },
+    "target/m2/stage65-rust-validation-02/sources/crates/pkl-runtime/tests/m2_inferred_new_module_receiver.rs": {
+      "bytes": 13274,
+      "mode": 420,
+      "sha256": "5ec911382ea66b34a613bae1cffc47e35d7fce800aae12e7f12c5e209ce12584"
+    },
+    "target/m2/stage65-rust-validation-02/sources/docs/architecture.md": {
+      "bytes": 89962,
+      "mode": 420,
+      "sha256": "1d6c6b0aa6008dbb3736843b56d0b9a5018ffb1aeeefbce4ae42b1395b1d704f"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/README.md": {
+      "bytes": 697,
+      "mode": 420,
+      "sha256": "345de55b24758480a82c5a5512466f18e1dd138c3a04de65cb8e63a1d78a168f"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/alias-unknown/module.pkl": {
+      "bytes": 96,
+      "mode": 420,
+      "sha256": "21a8c0fca38e6a8119cd26ed3c8121cf735cc5057b964a53c2b8f3c615b86ef4"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/alias-unknown/queries.tsv": {
+      "bytes": 21,
+      "mode": 420,
+      "sha256": "80cb5148ff5057377eca71bf22630c6b50d3bac72e583f596aabaaccc8e71119"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/any/module.pkl": {
+      "bytes": 98,
+      "mode": 420,
+      "sha256": "4e9e196071203db4f69687cd3b106815cbba8e70b8f2e6400602761953f243ff"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/any/queries.tsv": {
+      "bytes": 21,
+      "mode": 420,
+      "sha256": "80cb5148ff5057377eca71bf22630c6b50d3bac72e583f596aabaaccc8e71119"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/archive-identity.json": {
+      "bytes": 393,
+      "mode": 420,
+      "sha256": "1f4be6a39eb1414232716554f91dd57fa53a1242a988a45c253c5b5c507e486a"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/cases.json": {
+      "bytes": 147,
+      "mode": 420,
+      "sha256": "d6af32af62dd7444bbfd31be601148e68776298cee1a26b45345f01bb73ac793"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/generic-alias-unknown/module.pkl": {
+      "bytes": 108,
+      "mode": 420,
+      "sha256": "685133a6b5d2ad222afcae3f54770755058a9fb35d706c35d5cc26b369d7af1a"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/generic-alias-unknown/queries.tsv": {
+      "bytes": 21,
+      "mode": 420,
+      "sha256": "80cb5148ff5057377eca71bf22630c6b50d3bac72e583f596aabaaccc8e71119"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/literal-unknown/module.pkl": {
+      "bytes": 102,
+      "mode": 420,
+      "sha256": "361607c6511645e38ad6925a7a6dde176ea6be1487c7903e596d2a0c104909b4"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/literal-unknown/queries.tsv": {
+      "bytes": 21,
+      "mode": 420,
+      "sha256": "80cb5148ff5057377eca71bf22630c6b50d3bac72e583f596aabaaccc8e71119"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/manifest.json": {
+      "bytes": 1233,
+      "mode": 420,
+      "sha256": "55d5804513c04d2d9ea217aaf64404f858244884dbeee03e597c6687a34b7279"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-default-diagnostics/oracle-evidence.tar.gz": {
+      "bytes": 185790,
+      "mode": 420,
+      "sha256": "d15f914ffb2a72fce86862ab30fea2b087644be0594303b1f705a8f801a191fc"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/README.md": {
+      "bytes": 1152,
+      "mode": 420,
+      "sha256": "b22cf0860cc83d1949eb4f7df58b2b749c3b46766d499cb937e04758de285b6d"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/archive-identity.json": {
+      "bytes": 631,
+      "mode": 420,
+      "sha256": "e97efbdcf14344820111aaa93095a078b8b74f120cb5fae74f39ff5837b1d3eb"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/manifest.json": {
+      "bytes": 1734,
+      "mode": 420,
+      "sha256": "05514849a0935f74cf58330f8e5b1f560a41e9e3db8c908c88e8479e1336327b"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/method/alpha-first.queries.tsv": {
+      "bytes": 884,
+      "mode": 420,
+      "sha256": "376d7a853b74cb7e0ff6c011b0f8cc0993f0f65017dcf01a1e0f1dc81a1d9f20"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/method/alpha.pkl": {
+      "bytes": 36,
+      "mode": 420,
+      "sha256": "b96b50766b7201465022ca3347ddd9ff4b7d1984e640f69722d1f21193a8376c"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/method/base.pkl": {
+      "bytes": 689,
+      "mode": 420,
+      "sha256": "ae0d4d94e3bdb349270e6911b15d155bb8f3ff5f960245f50add9a73173e234c"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/method/beta-first.queries.tsv": {
+      "bytes": 887,
+      "mode": 420,
+      "sha256": "16a36770308654f8b80e06ebdff6a3d01ec1d30a783f70fb05557c3b416630fe"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/method/beta.pkl": {
+      "bytes": 35,
+      "mode": 420,
+      "sha256": "a64a0c145bbbc955ec2ba3a892dc5a6a7217f5b993f03acd5229567f2aed03cc"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/method/cases.json": {
+      "bytes": 3734,
+      "mode": 420,
+      "sha256": "aeac3c770e21e1f7c83b1d504ff7c0af73fad120ad429e758cd78d1b9b4bdadb"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/method/module.pkl": {
+      "bytes": 92,
+      "mode": 420,
+      "sha256": "2f63ea3af3b838456b1a55e6c97e33655aefd9fa4b670401e382894b91852c5b"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/alpha-first.queries.tsv": {
+      "bytes": 848,
+      "mode": 420,
+      "sha256": "2c53f97419a50841029fa2151ea5b2120bb12cf5c31f25da5281ba017a93791b"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/alpha.pkl": {
+      "bytes": 36,
+      "mode": 420,
+      "sha256": "b96b50766b7201465022ca3347ddd9ff4b7d1984e640f69722d1f21193a8376c"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/base.pkl": {
+      "bytes": 633,
+      "mode": 420,
+      "sha256": "3460a611c1d986698c95c92bf886189ba55e9a169cacead63baaaf7014102b60"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/beta-first.queries.tsv": {
+      "bytes": 851,
+      "mode": 420,
+      "sha256": "1d2bb1ef18e4a937563ad0a1081b45e629ce71e0bd4e237ef0775cba07db3f7e"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/beta.pkl": {
+      "bytes": 35,
+      "mode": 420,
+      "sha256": "a64a0c145bbbc955ec2ba3a892dc5a6a7217f5b993f03acd5229567f2aed03cc"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/cases.json": {
+      "bytes": 3662,
+      "mode": 420,
+      "sha256": "99ec0dd2be44618b09be46c087e92bb08d8477bca012c97b1e870b335650edb1"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/object-method/module.pkl": {
+      "bytes": 92,
+      "mode": 420,
+      "sha256": "2f63ea3af3b838456b1a55e6c97e33655aefd9fa4b670401e382894b91852c5b"
+    },
+    "target/m2/stage65-rust-validation-02/sources/tests/fixtures/m2-inferred-new-method-cache/oracle-evidence.tar.gz": {
+      "bytes": 662302,
+      "mode": 420,
+      "sha256": "82b0f357830033bf61be139ecc3b0ebc7570893427b9faeb958d0851128ab6ec"
+    },
+    "target/m2/stage65-rust-validation-02/wasm-runtime.stderr.bin": {
+      "bytes": 158,
+      "mode": 420,
+      "sha256": "b3d80403e55b130e963d73888717271dba1b8d2bbca662d177944b87a26b904d"
+    },
+    "target/m2/stage65-rust-validation-02/wasm-runtime.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage65-rust-validation-02/workspace-tests.stderr.bin": {
+      "bytes": 1836,
+      "mode": 420,
+      "sha256": "45117901818c7a5dd4c4d1533f947876aeb5c42e540ea0fa91a02cf038f18be3"
+    },
+    "target/m2/stage65-rust-validation-02/workspace-tests.stdout.bin": {
+      "bytes": 25657,
+      "mode": 420,
+      "sha256": "de54a21a4195f52816446baffeda80f69893575ed9c21bd28d08fb5632382f1d"
+    },
+    "target/m2/stage65-validation-count-review-01/audit.py": {
+      "bytes": 6110,
+      "mode": 420,
+      "sha256": "38340d9cc1992558c7c2ea2560cadc62b6a195008e95faf0ab3c08f169d255fc"
+    },
+    "target/m2/stage65-validation-count-review-01/report.json": {
+      "bytes": 2350,
+      "mode": 420,
+      "sha256": "4a78293f034e236d746abe61c89e11077e670cdf36687655e6f78b9b83dadf40"
+    },
+    "target/m2/stage65-validation-count-review-02/audit.py": {
+      "bytes": 7327,
+      "mode": 420,
+      "sha256": "2c3f005f0557ffbd23a392070818e5bebe987d8795d6dbce37af9e2724ffbed6"
+    },
+    "target/m2/stage65-validation-count-review-02/report.json": {
+      "bytes": 2540,
+      "mode": 420,
+      "sha256": "0c2417f11d38033942f0689575bddd343d2765efd987f8fe80052b9aa075af8e"
+    },
+    "target/m2/stage65-validation-count-review-03/audit.py": {
+      "bytes": 7473,
+      "mode": 420,
+      "sha256": "e4642234a20c096bb1a5f0cc9a5ee328a8563c34b7aa6b331dfbf80c93764c42"
+    },
+    "target/m2/stage65-validation-count-review-03/preparation.json": {
+      "bytes": 925,
+      "mode": 420,
+      "sha256": "39dd845c5f6ae0256e3d1d4c9f919b9394c2eed4608e177773f1320b404afe48"
+    },
+    "target/m2/stage65-validation-count-review-03/recorded-failure-01/process.json": {
+      "bytes": 728,
+      "mode": 420,
+      "sha256": "d35f25b9a8e922db9f176fb27b69532cdc974b018774f0660a641fe5830f0630"
+    },
+    "target/m2/stage65-validation-count-review-03/recorded-failure-01/stderr.bin": {
+      "bytes": 430,
+      "mode": 420,
+      "sha256": "60df2ada2604bf97fae1a1ee7c59a6a5e306adbf114f2333fefd32641f5185b1"
+    },
+    "target/m2/stage65-validation-count-review-03/recorded-failure-01/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "publisher_sources": [
+    "target/m2/stage65-b-publication-01/publish.py",
+    "target/m2/stage65-b-publication-01/layout.json",
+    "target/m2/stage65-b-publication-01/source-review.json",
+    "target/m2/stage65-b-publication-01/rust-history-invocation.json"
+  ],
+  "schema": 1,
+  "selected_directories": [
+    "stage65-rust-validation-01",
+    "stage65-rust-validation-02",
+    "stage65-validation-count-review-01",
+    "stage65-validation-count-review-02",
+    "stage65-validation-count-review-03"
+  ],
+  "source_before_after_equal": true,
+  "terminal_admission": {
+    "comparison_complete": null,
+    "comparison_source_stable": null,
+    "final_review_approved": null,
+    "original_status_counts": {
+      "candidate-unsupported": 31,
+      "mismatch": 24,
+      "oracle-error": 1,
+      "pass": 74
+    },
+    "required_five_exits": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "tool_exits": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

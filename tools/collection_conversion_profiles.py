@@ -19,6 +19,7 @@ VALIDATORS = {
     'collection_addition_fixtures': 'tools/collection_addition_fixtures.py',
     'set_endpoints_fixtures': 'tools/set_endpoints_fixtures.py',
     'amendment_construction_fixtures': 'tools/amendment_construction_fixtures.py',
+    'inferred_new_fixtures': 'tools/inferred_new_fixtures.py',
 }
 PROFILE_TOOL_CLOSURES = {
     'collection_conversions_fixtures': {
@@ -81,6 +82,13 @@ PROFILE_TOOL_CLOSURES = {
         'tools/collection_conversions_fixtures.py',
         'tools/collection_conversions_oracle.py',
     },
+    'inferred_new_fixtures': {
+        'tools/inferred_new_fixtures.py',
+        'tools/inferred_new_oracle.py',
+        'tools/amendment_construction_oracle.py',
+        'tools/tests/test_inferred_new_fixtures.py',
+        'tools/java/CollectionConversionsOracle.java',
+    },
 }
 
 
@@ -112,7 +120,8 @@ def load_profiles(path=ROOT / CATALOG):
                 (uri.startswith('file:///stage62/') or
                  uri in ('file:///stage63/collection-addition.pkl',
                          'file:///stage63/set-endpoints.pkl',
-                         'file:///stage64/amendment-construction.pkl')) and uri.endswith('.pkl')
+                         'file:///stage64/amendment-construction.pkl',
+                         'file:///stage65/inferred-new-values.pkl')) and uri.endswith('.pkl')
                 and type(fixture) is str and fixture.startswith('tests/fixtures/m2-')
                 and '..' not in Path(fixture).parts and fixture not in fixtures
                 and uri not in profiles and type(profile['rows']) is int and profile['rows'] > 0
@@ -164,6 +173,28 @@ def profile_for_fixture(fixture):
 def authority_for_fixture(fixture):
     profile = profile_for_fixture(fixture)
     authority = importlib.import_module(profile['validator_module'])
+    if profile['validator_module'] == 'inferred_new_fixtures':
+        require(profile['module_uri'] == 'file:///stage65/inferred-new-values.pkl'
+                and profile['archive_prefix'] == 'capture-01',
+                'inferred-new values authority boundary differs')
+        class ValuesAuthority:
+            ARCHIVE_PREFIX = 'capture-01'
+
+            @staticmethod
+            def verify(selected_fixture):
+                return authority.verify('values', selected_fixture)
+
+        return ValuesAuthority
     require(authority.ARCHIVE_PREFIX == profile['archive_prefix'],
             'collection conversion archive prefix differs')
     return authority
+
+
+def validator_args(profile, fixture):
+    args = [str(ROOT / profile['validator_script'])]
+    if profile['validator_module'] == 'inferred_new_fixtures':
+        require(profile['module_uri'] == 'file:///stage65/inferred-new-values.pkl',
+                'inferred-new validator profile differs')
+        args.extend(['--profile', 'values'])
+    args.extend(['--fixture', str(fixture)])
+    return args

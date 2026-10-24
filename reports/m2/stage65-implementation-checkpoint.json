@@ -1,0 +1,1600 @@
+{
+  "assembly_source": {
+    "bytes": 15958,
+    "path": "target/m2/stage65-checkpoint-01/assemble.py",
+    "sha256": "5bf71e42b9bc50ea87eb4ac99419d890785394e777b6e1b7abb82f7e76f90306"
+  },
+  "base_commit": "358ab1e3cc165913ba6a29fc31e8eee258984b31",
+  "catalog": {
+    "expressions": 940,
+    "observations_per_target": 1880,
+    "profiles": 10,
+    "raw_channels_per_observation": 7,
+    "targets": [
+      "native",
+      "napi",
+      "chromium"
+    ]
+  },
+  "comparison_counts": {
+    "amendment-construction-native": {
+      "pass": 376
+    },
+    "amendment-construction-portable": {
+      "chromium": {
+        "pass": 376
+      },
+      "napi": {
+        "pass": 376
+      }
+    },
+    "any-portable": {
+      "chromium": {
+        "mismatch": 2,
+        "pass": 170
+      },
+      "napi": {
+        "mismatch": 2,
+        "pass": 170
+      }
+    },
+    "bytes-native": {
+      "pass": 600
+    },
+    "bytes-portable": {
+      "chromium": {
+        "pass": 600
+      },
+      "napi": {
+        "pass": 600
+      }
+    },
+    "collection-addition-native": {
+      "pass": 250
+    },
+    "collection-addition-portable": {
+      "chromium": {
+        "pass": 250
+      },
+      "napi": {
+        "pass": 250
+      }
+    },
+    "collection-conversion-controls-native": {
+      "pass": 116
+    },
+    "collection-conversion-controls-portable": {
+      "chromium": {
+        "pass": 116
+      },
+      "napi": {
+        "pass": 116
+      }
+    },
+    "collection-conversions-native": {
+      "pass": 472
+    },
+    "collection-conversions-portable": {
+      "chromium": {
+        "pass": 472
+      },
+      "napi": {
+        "pass": 472
+      }
+    },
+    "collection-default-contracts-native": {
+      "pass": 44
+    },
+    "collection-default-contracts-portable": {
+      "chromium": {
+        "pass": 44
+      },
+      "napi": {
+        "pass": 44
+      }
+    },
+    "collection-dynamic-render-native": {
+      "pass": 20
+    },
+    "collection-dynamic-render-portable": {
+      "chromium": {
+        "pass": 20
+      },
+      "napi": {
+        "pass": 20
+      }
+    },
+    "collection-lookups-native": {
+      "pass": 266
+    },
+    "collection-lookups-portable": {
+      "chromium": {
+        "pass": 266
+      },
+      "napi": {
+        "pass": 266
+      }
+    },
+    "collection-property-names-native": {
+      "pass": 52
+    },
+    "collection-property-names-portable": {
+      "chromium": {
+        "pass": 52
+      },
+      "napi": {
+        "pass": 52
+      }
+    },
+    "data-size-native": {
+      "pass": 510
+    },
+    "data-size-portable": {
+      "chromium": {
+        "pass": 510
+      },
+      "napi": {
+        "pass": 510
+      }
+    },
+    "duration-native": {
+      "pass": 548
+    },
+    "duration-portable": {
+      "chromium": {
+        "pass": 548
+      },
+      "napi": {
+        "pass": 548
+      }
+    },
+    "inferred-new-values-native": {
+      "pass": 144
+    },
+    "inferred-new-values-portable": {
+      "chromium": {
+        "pass": 144
+      },
+      "napi": {
+        "pass": 144
+      }
+    },
+    "intseq-native": {
+      "pass": 474
+    },
+    "intseq-portable": {
+      "chromium": {
+        "pass": 474
+      },
+      "napi": {
+        "pass": 474
+      }
+    },
+    "set-endpoints-native": {
+      "pass": 140
+    },
+    "set-endpoints-portable": {
+      "chromium": {
+        "pass": 140
+      },
+      "napi": {
+        "pass": 140
+      }
+    }
+  },
+  "compatibility_baseline": "Pkl 0.32.0",
+  "documentation_updated_after_capture": true,
+  "duplicate_nested_child_summaries": 13,
+  "full_api_complete": false,
+  "full_m2_complete": false,
+  "http_verifier_amendment": {
+    "metadata": {
+      "bytes": 4493,
+      "sha256": "c28e0315220f072d95655294bf3ad4764df10e7891c11b5d2010c33a69bdc9a1"
+    },
+    "scope": "Post-capture HTTP request admission only; captured tools and all guest raw channels unchanged.",
+    "validation": {
+      "bytes": 2509,
+      "sha256": "bf7c2d5c40b99a0be592868d92492b396c7871c17c4b26dfda15b3d4beee9091"
+    }
+  },
+  "inputs": {
+    "comparison": {
+      "bytes": 66037,
+      "path": "target/m2/stage65-comparison-validation-02/report.json",
+      "sha256": "f75de967b01824d0262dfa810598a637761ed3f4dda3bd2dc3f0f340d9de4948"
+    },
+    "comparison_process": {
+      "bytes": 4990,
+      "path": "target/m2/stage65-closeout-execution-01/comparison-validation/process.json",
+      "sha256": "4cbb6c89a1e479925365920ba2d4da1136fda4bd261d132ebfca40dddba87017"
+    },
+    "http_amendment": {
+      "bytes": 4493,
+      "path": "target/m2/stage65-http-verification-amendment-01/amendment.json",
+      "sha256": "c28e0315220f072d95655294bf3ad4764df10e7891c11b5d2010c33a69bdc9a1"
+    },
+    "http_amendment_tests": {
+      "bytes": 2509,
+      "path": "target/m2/stage65-http-verification-amendment-01/validation.json",
+      "sha256": "bf7c2d5c40b99a0be592868d92492b396c7871c17c4b26dfda15b3d4beee9091"
+    },
+    "independent_review": {
+      "bytes": 4938,
+      "path": "target/m2/stage65-review-01/report.json",
+      "sha256": "3fb8894bfbf8025c98aa84b4d29ccc8f376d014d76396de0eac338dc951c1458"
+    },
+    "native_acquisition": {
+      "bytes": 27717,
+      "path": "target/m2/stage65-native-acquisition-01/report.json",
+      "sha256": "84289404331b0441263939b595f6dc6cb9ff57cf0ed7f17b1eacb4e3ab356cf2"
+    },
+    "original_failure_audit": {
+      "bytes": 704647,
+      "path": "target/m2/stage65-original-failure-audit-01/report.json",
+      "sha256": "910dcc9a0188a08648b1b58c0947ab1987fe18e7af0f397642466d81fd8f540e"
+    },
+    "originals": {
+      "bytes": 2031184,
+      "path": "target/m2/stage65-original-inference-01/report.json",
+      "sha256": "b8120e87e16965f9ac722de531b7e29e3f8e0ec7ce67f16c360661752b6abb5f"
+    },
+    "platform_acquisition": {
+      "bytes": 217217,
+      "path": "target/m2/stage65-platform-validation-01/report.json",
+      "sha256": "3a96263f61f6b109af76921a0b0ae6ee60ef0463517b79444736bf8f400c62e1"
+    },
+    "required_rust": {
+      "bytes": 6423,
+      "path": "target/m2/stage65-rust-validation-03/report.json",
+      "sha256": "03cdc73a8023f6aa01f40bb7577bf6f13aa92132d7e1ebffc7bcbc05f9a2327d"
+    },
+    "runtime_freeze": {
+      "bytes": 24912,
+      "path": "target/m2/stage65-core-freeze-03/freeze.json",
+      "sha256": "29a87159a76651a03ef6b52b4e8b4b1635781d46242db29e41d32349e853e63b"
+    },
+    "runtime_sources": {
+      "bytes": 44846,
+      "path": "target/m2/stage65-core-freeze-03/source-snapshot.json",
+      "sha256": "ff2347361c01877ea826736c577b8160c87f93b90a17e0f6c211d339223f74f5"
+    },
+    "tooling": {
+      "bytes": 3967864,
+      "path": "target/m2/stage65-tool-development-03/report.json",
+      "sha256": "b22e5cadfa4d20bcfb4930250705927c810899d8e9ae4711ffc033cf07d870f9"
+    },
+    "workspace_count_audit": {
+      "bytes": 6162,
+      "path": "target/m2/stage65-validation-count-review-04/report.json",
+      "sha256": "baba6f7c23d3007a791a7422bc6fd9028c4f12d1e3e54774a24174ba64a553f9"
+    }
+  },
+  "kind": "Stage65 inferred construction implementation and local verification",
+  "known_limits": [
+    "All nine M2 workstreams and the strict full-language gate remain open.",
+    "Any and M1 preserve known Regex compatibility failures.",
+    "Five inferred-construction fixture scopes remain distinct; multi-module native controls are not portable coverage.",
+    "Java api/list.pkl retains its oracle error at unchanged -Xmx512m.",
+    "Earlier failed semantic, lifecycle, build/storage, HTTP admission and audit attempts remain archived.",
+    "Inventory ready/mapping counts are not passes or a whole-project percentage.",
+    "Full public API, other release platforms, speed and memory targets remain incomplete."
+  ],
+  "original_selection": {
+    "added14": {
+      "mismatch": 2,
+      "pass": 12
+    },
+    "count": 130,
+    "integrity": "passed",
+    "newly_passing_prior_cases": [
+      {
+        "current_raw_failure": null,
+        "current_status": "pass",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInAmendingModuleMethod.pkl",
+        "prior_raw_failure": {
+          "case_directory": "target/m2/stage64-original-amendment-01/cases/584453ba8d634466d49d374a",
+          "first_error_line": {
+            "java": "",
+            "rust": "Cannot find method `getClass`."
+          },
+          "first_raw_difference": {
+            "java_bytes": 150,
+            "java_hex_at_offset": "666f6f203d204c697374286e6577207b0a20206e616d65203d2022506967656f",
+            "kind": "stdout",
+            "offset": 0,
+            "rust_bytes": 0,
+            "rust_hex_at_offset": ""
+          },
+          "generated_file_hashes": {
+            "java": {},
+            "rust": {}
+          },
+          "java_exit_code": 0,
+          "java_timed_out": false,
+          "private_file_hashes": {
+            "java": {
+              "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+            },
+            "rust": {}
+          },
+          "rust_exit_code": 1,
+          "rust_timed_out": false,
+          "source_program": {
+            "adapter": "language-module-eval",
+            "java_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInAmendingModuleMethod.pkl",
+            "rust_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInAmendingModuleMethod.pkl",
+            "staged_source_identities": {
+              "java": {
+                "bytes": 384,
+                "sha256": "48932381a5dedbc9189b772937725666a5f27ebf6179b5ceb1abc55d34e14d7c"
+              },
+              "rust": {
+                "bytes": 384,
+                "sha256": "48932381a5dedbc9189b772937725666a5f27ebf6179b5ceb1abc55d34e14d7c"
+              }
+            },
+            "upstream_case_record_sha256": "48e712623c7094660d14f47136da8c3fbf5f61b471335d466412a95d7ebd892f",
+            "upstream_identity": {
+              "bytes": 384,
+              "sha256": "48932381a5dedbc9189b772937725666a5f27ebf6179b5ceb1abc55d34e14d7c"
+            },
+            "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInAmendingModuleMethod.pkl"
+          },
+          "status": "mismatch",
+          "streams": {
+            "java": {
+              "stderr": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 150,
+                  "sha256": "7fca75806c3ae2bd9127bdaee756f2565a03e9eff559281cee0ffd09921cb53e"
+                }
+              }
+            },
+            "rust": {
+              "stderr": {
+                "first_diagnostic_line": "Cannot find method `getClass`.",
+                "identity": {
+                  "bytes": 973,
+                  "sha256": "4b67486c8596c58992d47e0491179813afd6ae8eaa8fc90de4b3a6465c41589e"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              }
+            }
+          }
+        },
+        "prior_status": "mismatch",
+        "status_changed": true
+      },
+      {
+        "current_raw_failure": null,
+        "current_status": "pass",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideIf.pkl",
+        "prior_raw_failure": {
+          "case_directory": "target/m2/stage64-original-amendment-01/cases/42cb48e79d3cefc98eab055a",
+          "first_error_line": {
+            "java": "",
+            "rust": "Expected value of type `newInsideIf#Person`, but got type `Dynamic`."
+          },
+          "first_raw_difference": {
+            "java_bytes": 1291,
+            "java_hex_at_offset": "72657331207b0a20206e616d65203d2022506967656f6e220a7d0a7265733220",
+            "kind": "stdout",
+            "offset": 0,
+            "rust_bytes": 0,
+            "rust_hex_at_offset": ""
+          },
+          "generated_file_hashes": {
+            "java": {},
+            "rust": {}
+          },
+          "java_exit_code": 0,
+          "java_timed_out": false,
+          "private_file_hashes": {
+            "java": {
+              "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+            },
+            "rust": {}
+          },
+          "rust_exit_code": 1,
+          "rust_timed_out": false,
+          "source_program": {
+            "adapter": "language-module-eval",
+            "java_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideIf.pkl",
+            "rust_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideIf.pkl",
+            "staged_source_identities": {
+              "java": {
+                "bytes": 2993,
+                "sha256": "6cd403d8b444a8c6752ec0d735e252738560a97e09cdb09beafda5ab45aa2274"
+              },
+              "rust": {
+                "bytes": 2993,
+                "sha256": "6cd403d8b444a8c6752ec0d735e252738560a97e09cdb09beafda5ab45aa2274"
+              }
+            },
+            "upstream_case_record_sha256": "f790d6ed42d3e3225dba29ec0a7dacc53285c836430ef4837de4973f891a004c",
+            "upstream_identity": {
+              "bytes": 2993,
+              "sha256": "6cd403d8b444a8c6752ec0d735e252738560a97e09cdb09beafda5ab45aa2274"
+            },
+            "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideIf.pkl"
+          },
+          "status": "mismatch",
+          "streams": {
+            "java": {
+              "stderr": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 1291,
+                  "sha256": "6e67c79dc2403d12a4082009baa6c1569b59ead9e5572831bc3c259579e08df2"
+                }
+              }
+            },
+            "rust": {
+              "stderr": {
+                "first_diagnostic_line": "Expected value of type `newInsideIf#Person`, but got type `Dynamic`.",
+                "identity": {
+                  "bytes": 1180,
+                  "sha256": "d9d5769b6518070f5948d117aad314210c6be014aa980030945b88b078d12c87"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              }
+            }
+          }
+        },
+        "prior_status": "mismatch",
+        "status_changed": true
+      },
+      {
+        "current_raw_failure": null,
+        "current_status": "pass",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideLet.pkl",
+        "prior_raw_failure": {
+          "case_directory": "target/m2/stage64-original-amendment-01/cases/e39d9c7641cf6fca3b91153f",
+          "first_error_line": {
+            "java": "",
+            "rust": "Expected value of type `newInsideLet#Person`, but got type `Dynamic`."
+          },
+          "first_raw_difference": {
+            "java_bytes": 1291,
+            "java_hex_at_offset": "72657331207b0a20206e616d65203d2022506967656f6e220a7d0a7265733220",
+            "kind": "stdout",
+            "offset": 0,
+            "rust_bytes": 0,
+            "rust_hex_at_offset": ""
+          },
+          "generated_file_hashes": {
+            "java": {},
+            "rust": {}
+          },
+          "java_exit_code": 0,
+          "java_timed_out": false,
+          "private_file_hashes": {
+            "java": {
+              "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+            },
+            "rust": {}
+          },
+          "rust_exit_code": 1,
+          "rust_timed_out": false,
+          "source_program": {
+            "adapter": "language-module-eval",
+            "java_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideLet.pkl",
+            "rust_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideLet.pkl",
+            "staged_source_identities": {
+              "java": {
+                "bytes": 2738,
+                "sha256": "abf49df00b9025f9d3fe5cac93826ac859bf17a4c6a6b04a8f432d892247c261"
+              },
+              "rust": {
+                "bytes": 2738,
+                "sha256": "abf49df00b9025f9d3fe5cac93826ac859bf17a4c6a6b04a8f432d892247c261"
+              }
+            },
+            "upstream_case_record_sha256": "c675accaa1c57384788db28e468dcfdb0093d87b6a01d73b91de72ac23cc74ca",
+            "upstream_identity": {
+              "bytes": 2738,
+              "sha256": "abf49df00b9025f9d3fe5cac93826ac859bf17a4c6a6b04a8f432d892247c261"
+            },
+            "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideLet.pkl"
+          },
+          "status": "mismatch",
+          "streams": {
+            "java": {
+              "stderr": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 1291,
+                  "sha256": "6e67c79dc2403d12a4082009baa6c1569b59ead9e5572831bc3c259579e08df2"
+                }
+              }
+            },
+            "rust": {
+              "stderr": {
+                "first_diagnostic_line": "Expected value of type `newInsideLet#Person`, but got type `Dynamic`.",
+                "identity": {
+                  "bytes": 1167,
+                  "sha256": "b5c43737499117b00ea0f27329f992886bc9e6ed01f9497113fd02469e2e463b"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              }
+            }
+          }
+        },
+        "prior_status": "mismatch",
+        "status_changed": true
+      },
+      {
+        "current_raw_failure": null,
+        "current_status": "pass",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newType.pkl",
+        "prior_raw_failure": {
+          "case_directory": "target/m2/stage64-original-amendment-01/cases/50509d62f3ef1282dd667e89",
+          "first_error_line": {
+            "java": "",
+            "rust": "Expected a class type."
+          },
+          "first_raw_difference": {
+            "java_bytes": 1618,
+            "java_hex_at_offset": "72657331207b0a20206e616d65203d2022506967656f6e220a7d0a7265733220",
+            "kind": "stdout",
+            "offset": 0,
+            "rust_bytes": 0,
+            "rust_hex_at_offset": ""
+          },
+          "generated_file_hashes": {
+            "java": {},
+            "rust": {}
+          },
+          "java_exit_code": 0,
+          "java_timed_out": false,
+          "private_file_hashes": {
+            "java": {
+              "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+            },
+            "rust": {}
+          },
+          "rust_exit_code": 1,
+          "rust_timed_out": false,
+          "source_program": {
+            "adapter": "language-module-eval",
+            "java_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/newType.pkl",
+            "rust_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/newType.pkl",
+            "staged_source_identities": {
+              "java": {
+                "bytes": 2042,
+                "sha256": "d50eaf77d9171f8a407b2757f89cfc80fc3a6bb9b75b31fa2755c3949e3a814c"
+              },
+              "rust": {
+                "bytes": 2042,
+                "sha256": "d50eaf77d9171f8a407b2757f89cfc80fc3a6bb9b75b31fa2755c3949e3a814c"
+              }
+            },
+            "upstream_case_record_sha256": "5249bef7d6ffd77dd60788b6d3ca15c37f81509f2acfca613528337ab998fd9e",
+            "upstream_identity": {
+              "bytes": 2042,
+              "sha256": "d50eaf77d9171f8a407b2757f89cfc80fc3a6bb9b75b31fa2755c3949e3a814c"
+            },
+            "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/newType.pkl"
+          },
+          "status": "mismatch",
+          "streams": {
+            "java": {
+              "stderr": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 1618,
+                  "sha256": "ffef47191333e3787b81b84e40f983e7130639361fcb18210b092056d2791ee2"
+                }
+              }
+            },
+            "rust": {
+              "stderr": {
+                "first_diagnostic_line": "Expected a class type.",
+                "identity": {
+                  "bytes": 776,
+                  "sha256": "ec6409562ec70485f3a9dac37961c08e3568a3941a9304cd378683880b82735f"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              }
+            }
+          }
+        },
+        "prior_status": "mismatch",
+        "status_changed": true
+      },
+      {
+        "current_raw_failure": null,
+        "current_status": "pass",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings/default.pkl",
+        "prior_raw_failure": {
+          "case_directory": "target/m2/stage64-original-amendment-01/cases/52ec06923e94332147df259c",
+          "first_error_line": {
+            "java": "",
+            "rust": "Expected value of type `Function1`, but got type `Dynamic`."
+          },
+          "first_raw_difference": {
+            "java_bytes": 435,
+            "java_hex_at_offset": "72657331207b0a20206e6577207b0a202020206e616d65203d2022506967656f",
+            "kind": "stdout",
+            "offset": 0,
+            "rust_bytes": 0,
+            "rust_hex_at_offset": ""
+          },
+          "generated_file_hashes": {
+            "java": {},
+            "rust": {}
+          },
+          "java_exit_code": 0,
+          "java_timed_out": false,
+          "private_file_hashes": {
+            "java": {
+              "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+            },
+            "rust": {}
+          },
+          "rust_exit_code": 1,
+          "rust_timed_out": false,
+          "source_program": {
+            "adapter": "language-module-eval",
+            "java_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/listings/default.pkl",
+            "rust_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/listings/default.pkl",
+            "staged_source_identities": {
+              "java": {
+                "bytes": 371,
+                "sha256": "2ca5f491d5312309a2f0b77b928769df068e427709cc2e4bdf73b07823fb9bed"
+              },
+              "rust": {
+                "bytes": 371,
+                "sha256": "2ca5f491d5312309a2f0b77b928769df068e427709cc2e4bdf73b07823fb9bed"
+              }
+            },
+            "upstream_case_record_sha256": "680d4189c020c046399d1b526191ed2619222e6173ac42449aec9e662473f233",
+            "upstream_identity": {
+              "bytes": 371,
+              "sha256": "2ca5f491d5312309a2f0b77b928769df068e427709cc2e4bdf73b07823fb9bed"
+            },
+            "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/listings/default.pkl"
+          },
+          "status": "mismatch",
+          "streams": {
+            "java": {
+              "stderr": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 435,
+                  "sha256": "93b86acc2099c6e2de96a07718fc9f3ef27fb0e91696ebefc4f7914903008176"
+                }
+              }
+            },
+            "rust": {
+              "stderr": {
+                "first_diagnostic_line": "Expected value of type `Function1`, but got type `Dynamic`.",
+                "identity": {
+                  "bytes": 1310,
+                  "sha256": "099d4947cad2c06d19318ba826b67f12399fb08b274757d7377c6e23dd733d04"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              }
+            }
+          }
+        },
+        "prior_status": "mismatch",
+        "status_changed": true
+      },
+      {
+        "current_raw_failure": null,
+        "current_status": "pass",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings/wrongParent.pkl",
+        "prior_raw_failure": {
+          "case_directory": "target/m2/stage64-original-amendment-01/cases/10a03107f48b5ff0bac0f7b8",
+          "first_error_line": {
+            "java": "",
+            "rust": "Expected an exception, but none was thrown."
+          },
+          "first_raw_difference": {
+            "java_bytes": 837,
+            "java_hex_at_offset": "72657331203d202243616e6e6f7420696e7374616e74696174652c206f722061",
+            "kind": "stdout",
+            "offset": 0,
+            "rust_bytes": 0,
+            "rust_hex_at_offset": ""
+          },
+          "generated_file_hashes": {
+            "java": {},
+            "rust": {}
+          },
+          "java_exit_code": 0,
+          "java_timed_out": false,
+          "private_file_hashes": {
+            "java": {
+              "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+            },
+            "rust": {}
+          },
+          "rust_exit_code": 1,
+          "rust_timed_out": false,
+          "source_program": {
+            "adapter": "language-module-eval",
+            "java_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/listings/wrongParent.pkl",
+            "rust_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/listings/wrongParent.pkl",
+            "staged_source_identities": {
+              "java": {
+                "bytes": 640,
+                "sha256": "155377fa54bfb875a4d2dadb15b22fac9c21d7b7ea9a2d5b2b52cde4509ebd06"
+              },
+              "rust": {
+                "bytes": 640,
+                "sha256": "155377fa54bfb875a4d2dadb15b22fac9c21d7b7ea9a2d5b2b52cde4509ebd06"
+              }
+            },
+            "upstream_case_record_sha256": "a26e3ce3d4cfe00fab2fd11e795243a7c95546bea26617fd06b6d44aa7cffd67",
+            "upstream_identity": {
+              "bytes": 640,
+              "sha256": "155377fa54bfb875a4d2dadb15b22fac9c21d7b7ea9a2d5b2b52cde4509ebd06"
+            },
+            "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/listings/wrongParent.pkl"
+          },
+          "status": "mismatch",
+          "streams": {
+            "java": {
+              "stderr": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 837,
+                  "sha256": "bef1207f108b02c9f59e6a8ad2aee6d141e1a0c2d9299c62bae185a8a5f6a668"
+                }
+              }
+            },
+            "rust": {
+              "stderr": {
+                "first_diagnostic_line": "Expected an exception, but none was thrown.",
+                "identity": {
+                  "bytes": 838,
+                  "sha256": "2a246b3a8574415780522723718263011417719f084fcbc5183571dbcc742fae"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              }
+            }
+          }
+        },
+        "prior_status": "mismatch",
+        "status_changed": true
+      },
+      {
+        "current_raw_failure": null,
+        "current_status": "pass",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings2/default.pkl",
+        "prior_raw_failure": {
+          "case_directory": "target/m2/stage64-original-amendment-01/cases/d40eee32c633ae639968cb58",
+          "first_error_line": {
+            "java": "",
+            "rust": "custom collection default functions are not implemented"
+          },
+          "first_raw_difference": {
+            "java_bytes": 393,
+            "java_hex_at_offset": "72657331207b0a20206e6577207b0a202020206e616d65203d2022506967656f",
+            "kind": "stdout",
+            "offset": 0,
+            "rust_bytes": 0,
+            "rust_hex_at_offset": ""
+          },
+          "generated_file_hashes": {
+            "java": {},
+            "rust": {}
+          },
+          "java_exit_code": 0,
+          "java_timed_out": false,
+          "private_file_hashes": {
+            "java": {
+              "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+            },
+            "rust": {}
+          },
+          "rust_exit_code": 2,
+          "rust_timed_out": false,
+          "source_program": {
+            "adapter": "language-module-eval",
+            "java_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/listings2/default.pkl",
+            "rust_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/listings2/default.pkl",
+            "staged_source_identities": {
+              "java": {
+                "bytes": 397,
+                "sha256": "4a30e1f208ba7a9a53334ea9fbe717703152e280b1cddbd323195a2f38262224"
+              },
+              "rust": {
+                "bytes": 397,
+                "sha256": "4a30e1f208ba7a9a53334ea9fbe717703152e280b1cddbd323195a2f38262224"
+              }
+            },
+            "upstream_case_record_sha256": "c7fd6ab376f74ce4881ff3fc7150da60c35d1f616f8fd8655b2d59c399382406",
+            "upstream_identity": {
+              "bytes": 397,
+              "sha256": "4a30e1f208ba7a9a53334ea9fbe717703152e280b1cddbd323195a2f38262224"
+            },
+            "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/listings2/default.pkl"
+          },
+          "status": "candidate-unsupported",
+          "streams": {
+            "java": {
+              "stderr": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 393,
+                  "sha256": "abdce700fc82a04c729b2c93429d77a06c8aaafbb91185e06effea699b20ba3b"
+                }
+              }
+            },
+            "rust": {
+              "stderr": {
+                "first_diagnostic_line": "custom collection default functions are not implemented",
+                "identity": {
+                  "bytes": 766,
+                  "sha256": "05b759cdbca7333ca64b5922a2d5ff57501818b0f7148814afa9894d67c88322"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              }
+            }
+          }
+        },
+        "prior_status": "candidate-unsupported",
+        "status_changed": true
+      },
+      {
+        "current_raw_failure": null,
+        "current_status": "pass",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings2/wrongParent.pkl",
+        "prior_raw_failure": {
+          "case_directory": "target/m2/stage64-original-amendment-01/cases/dd026efe7f7613865ed2a3bd",
+          "first_error_line": {
+            "java": "",
+            "rust": "Expected an exception, but none was thrown."
+          },
+          "first_raw_difference": {
+            "java_bytes": 837,
+            "java_hex_at_offset": "72657331203d202243616e6e6f7420696e7374616e74696174652c206f722061",
+            "kind": "stdout",
+            "offset": 0,
+            "rust_bytes": 0,
+            "rust_hex_at_offset": ""
+          },
+          "generated_file_hashes": {
+            "java": {},
+            "rust": {}
+          },
+          "java_exit_code": 0,
+          "java_timed_out": false,
+          "private_file_hashes": {
+            "java": {
+              "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+            },
+            "rust": {}
+          },
+          "rust_exit_code": 1,
+          "rust_timed_out": false,
+          "source_program": {
+            "adapter": "language-module-eval",
+            "java_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/listings2/wrongParent.pkl",
+            "rust_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/listings2/wrongParent.pkl",
+            "staged_source_identities": {
+              "java": {
+                "bytes": 880,
+                "sha256": "c5b1cc216cda2e46d327214a016d389a85b8142691a0c3d2519c10e37f5e578d"
+              },
+              "rust": {
+                "bytes": 880,
+                "sha256": "c5b1cc216cda2e46d327214a016d389a85b8142691a0c3d2519c10e37f5e578d"
+              }
+            },
+            "upstream_case_record_sha256": "939212f818eca55e0301ada7766cf00b5e48bbf2b399c457113a5d3a5b7e5924",
+            "upstream_identity": {
+              "bytes": 880,
+              "sha256": "c5b1cc216cda2e46d327214a016d389a85b8142691a0c3d2519c10e37f5e578d"
+            },
+            "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/listings2/wrongParent.pkl"
+          },
+          "status": "mismatch",
+          "streams": {
+            "java": {
+              "stderr": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 837,
+                  "sha256": "bef1207f108b02c9f59e6a8ad2aee6d141e1a0c2d9299c62bae185a8a5f6a668"
+                }
+              }
+            },
+            "rust": {
+              "stderr": {
+                "first_diagnostic_line": "Expected an exception, but none was thrown.",
+                "identity": {
+                  "bytes": 879,
+                  "sha256": "7c418cc487320c682b9091b34614c037eb5eb3a43c049491a1286aca024273b9"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              }
+            }
+          }
+        },
+        "prior_status": "mismatch",
+        "status_changed": true
+      },
+      {
+        "current_raw_failure": null,
+        "current_status": "pass",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings/default.pkl",
+        "prior_raw_failure": {
+          "case_directory": "target/m2/stage64-original-amendment-01/cases/ef107db4542a5339bfeade69",
+          "first_error_line": {
+            "java": "",
+            "rust": "Expected value of type `Function1`, but got type `Dynamic`."
+          },
+          "first_raw_difference": {
+            "java_bytes": 434,
+            "java_hex_at_offset": "72657331207b0a20205b22706967656f6e225d207b0a202020206e616d65203d",
+            "kind": "stdout",
+            "offset": 0,
+            "rust_bytes": 0,
+            "rust_hex_at_offset": ""
+          },
+          "generated_file_hashes": {
+            "java": {},
+            "rust": {}
+          },
+          "java_exit_code": 0,
+          "java_timed_out": false,
+          "private_file_hashes": {
+            "java": {
+              "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+            },
+            "rust": {}
+          },
+          "rust_exit_code": 1,
+          "rust_timed_out": false,
+          "source_program": {
+            "adapter": "language-module-eval",
+            "java_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/mappings/default.pkl",
+            "rust_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/mappings/default.pkl",
+            "staged_source_identities": {
+              "java": {
+                "bytes": 533,
+                "sha256": "c942bfa17bb476ec87f993f914f72292eccc5d04916fef964aa90877d9634fe4"
+              },
+              "rust": {
+                "bytes": 533,
+                "sha256": "c942bfa17bb476ec87f993f914f72292eccc5d04916fef964aa90877d9634fe4"
+              }
+            },
+            "upstream_case_record_sha256": "2d57a2793036a60b01e2a4e085d294bcb7a89f6660b7df6ff09e3aa87c6dba40",
+            "upstream_identity": {
+              "bytes": 533,
+              "sha256": "c942bfa17bb476ec87f993f914f72292eccc5d04916fef964aa90877d9634fe4"
+            },
+            "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/mappings/default.pkl"
+          },
+          "status": "mismatch",
+          "streams": {
+            "java": {
+              "stderr": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 434,
+                  "sha256": "c250488bc86d68ddcc947683399ed0584559b5b7c4937aa2bbf362cec1f93c9f"
+                }
+              }
+            },
+            "rust": {
+              "stderr": {
+                "first_diagnostic_line": "Expected value of type `Function1`, but got type `Dynamic`.",
+                "identity": {
+                  "bytes": 1331,
+                  "sha256": "62542e324c0275660bffe57826d38b98f2dfe0d2a1ea4689499e0731d8416f80"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              }
+            }
+          }
+        },
+        "prior_status": "mismatch",
+        "status_changed": true
+      },
+      {
+        "current_raw_failure": null,
+        "current_status": "pass",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings/wrongParent.pkl",
+        "prior_raw_failure": {
+          "case_directory": "target/m2/stage64-original-amendment-01/cases/5b94de2ff2cc147f77b05e55",
+          "first_error_line": {
+            "java": "",
+            "rust": "Expected an exception, but none was thrown."
+          },
+          "first_raw_difference": {
+            "java_bytes": 825,
+            "java_hex_at_offset": "72657331203d202243616e6e6f7420696e7374616e74696174652c206f722061",
+            "kind": "stdout",
+            "offset": 0,
+            "rust_bytes": 0,
+            "rust_hex_at_offset": ""
+          },
+          "generated_file_hashes": {
+            "java": {},
+            "rust": {}
+          },
+          "java_exit_code": 0,
+          "java_timed_out": false,
+          "private_file_hashes": {
+            "java": {
+              "home/Library/Caches/org.graalvm.polyglot/engine/libtruffleattach/03770ea6f62f0ff5b8205b1cb3a73672e0981ba6bf6c018b2b9fc6360fc98543/bin/libtruffleattach.dylib": "9c871271741bd5bdb8a39a7bb7ac1f2591446c03a52268a93266051f9b36d657"
+            },
+            "rust": {}
+          },
+          "rust_exit_code": 1,
+          "rust_timed_out": false,
+          "source_program": {
+            "adapter": "language-module-eval",
+            "java_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/mappings/wrongParent.pkl",
+            "rust_source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-original-amendment-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/mappings/wrongParent.pkl",
+            "staged_source_identities": {
+              "java": {
+                "bytes": 735,
+                "sha256": "ecce32172a6080a4b37bc5730fa8f9e1f773ed129303e28b1d8b3f909b35d729"
+              },
+              "rust": {
+                "bytes": 735,
+                "sha256": "ecce32172a6080a4b37bc5730fa8f9e1f773ed129303e28b1d8b3f909b35d729"
+              }
+            },
+            "upstream_case_record_sha256": "a5db018fd2823f423f5944f277f49ebc20bfb56814c376b63a699037c329ff8c",
+            "upstream_identity": {
+              "bytes": 735,
+              "sha256": "ecce32172a6080a4b37bc5730fa8f9e1f773ed129303e28b1d8b3f909b35d729"
+            },
+            "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/mappings/wrongParent.pkl"
+          },
+          "status": "mismatch",
+          "streams": {
+            "java": {
+              "stderr": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 825,
+                  "sha256": "fde0a09419ee22ec3185a6d4567e62091dfe6a5dcf602eebe2042752de992867"
+                }
+              }
+            },
+            "rust": {
+              "stderr": {
+                "first_diagnostic_line": "Expected an exception, but none was thrown.",
+                "identity": {
+                  "bytes": 856,
+                  "sha256": "a3ac7f586c3c8ee1bfa09e41b587cd5511fcf2fdfdceaea9cafdccfeff4b3e0f"
+                }
+              },
+              "stdout": {
+                "first_diagnostic_line": "",
+                "identity": {
+                  "bytes": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              }
+            }
+          }
+        },
+        "prior_status": "mismatch",
+        "status_changed": true
+      }
+    ],
+    "prior116_status_transitions": {
+      "candidate-unsupported->candidate-unsupported": 31,
+      "candidate-unsupported->mismatch": 1,
+      "candidate-unsupported->pass": 1,
+      "mismatch->mismatch": 21,
+      "mismatch->pass": 9,
+      "oracle-error->oracle-error": 1,
+      "pass->pass": 52
+    },
+    "prior_pass_regressions": [],
+    "selected_gate": "failed",
+    "status_counts": {
+      "candidate-unsupported": 31,
+      "mismatch": 24,
+      "oracle-error": 1,
+      "pass": 74
+    },
+    "unexecuted_required_cases": [
+      {
+        "adapter": null,
+        "execution": {
+          "reason": "Requires pinned package/HTTP fixture server and generated test TLS certificate.",
+          "state": "unimplemented"
+        },
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/analyze1.pkl",
+        "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/analyze1.pkl",
+        "input_identity": {
+          "bytes": 732,
+          "sha256": "47c6f6721230195214d0427f78a700d4e74662d29d0cad3d658c63d6e107ba45"
+        },
+        "reasons": [
+          "conversion_call"
+        ]
+      },
+      {
+        "adapter": null,
+        "execution": {
+          "reason": "Requires pinned package/HTTP fixture server and generated test TLS certificate.",
+          "state": "unimplemented"
+        },
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/importGlob.pkl",
+        "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/importGlob.pkl",
+        "input_identity": {
+          "bytes": 2175,
+          "sha256": "b7b8477b99902bcb2005931fb0834f51d0baadc815c87a5397aa1c4bd23ac59f"
+        },
+        "reasons": [
+          "conversion_call"
+        ]
+      }
+    ]
+  },
+  "performance_claim": false,
+  "provenance": "Recorded local macOS arm64 execution; not hosted CI.",
+  "publication_layout": {
+    "bytes": 8427,
+    "path": "target/m2/stage65-b-publication-02/layout.json",
+    "sha256": "b47d3252f8e6469d413b5f77d49a99e0b4a9fe1687a7155e50086cc762231821"
+  },
+  "publications": {
+    "closeout-current": {
+      "archive": {
+        "bytes": 46951112,
+        "full_member_readback_verified": true,
+        "members": 7763,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-closeout-current-evidence.tar.gz",
+        "sha256": "4a5362470ff7ac47a3802d861c7d797839790cee66808e6b5b12a1c55cf2bbaf"
+      },
+      "record": {
+        "bytes": 1889321,
+        "path": "reports/m2/stage65-b-closeout-current-publication.json",
+        "sha256": "46ba44c869707f36cdd7787d97d0f5146eb356af0bc6cc0bc67563849b45b9bb"
+      }
+    },
+    "development": {
+      "archive": {
+        "bytes": 1444854,
+        "full_member_readback_verified": true,
+        "members": 384,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-development-evidence.tar.gz",
+        "sha256": "7ff24ca07059fe9b972b4b27499cec3457e10ff40eb6655ccfaece237b299364"
+      },
+      "record": {
+        "bytes": 79583,
+        "path": "reports/m2/stage65-b-development-publication.json",
+        "sha256": "7cda136ac14790effa04c07772dfd6a34f36c997baf24d1a2f5e2b1967091632"
+      }
+    },
+    "java-supplement": {
+      "archive": {
+        "bytes": 1655615,
+        "full_member_readback_verified": true,
+        "members": 5990,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-java-supplement-evidence.tar.gz",
+        "sha256": "97a747596caae8d58fd99a50cf81ccffc4b10074c0be7901b0298a3b9655dbc5"
+      },
+      "record": {
+        "bytes": 1599247,
+        "path": "reports/m2/stage65-b-java-supplement-publication.json",
+        "sha256": "5a4170aaf9424348cb55807d03f8f6a24ca70284a1e65113011d2c5ac2d0ac31"
+      }
+    },
+    "native-catalog-a": {
+      "archive": {
+        "bytes": 79319349,
+        "full_member_readback_verified": true,
+        "members": 11953,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-native-catalog-a-evidence.tar.gz",
+        "sha256": "59159888f999c1f47b9eda236cccb4cf2fb381daed50ba97b024c1fdbe7d408b"
+      },
+      "record": {
+        "bytes": 3145496,
+        "path": "reports/m2/stage65-b-native-catalog-a-publication.json",
+        "sha256": "d04d3d1dabd26da9db84e93d3593115cb9c47a5f125051a039565eddaa82f0b2"
+      }
+    },
+    "native-catalog-b": {
+      "archive": {
+        "bytes": 79176318,
+        "full_member_readback_verified": true,
+        "members": 12437,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-native-catalog-b-evidence.tar.gz",
+        "sha256": "ab82cde002c4705584d638e51d0a63edce542e9cefcc14434382a9fff9adb42a"
+      },
+      "record": {
+        "bytes": 3210793,
+        "path": "reports/m2/stage65-b-native-catalog-b-publication.json",
+        "sha256": "3cb54d5519edc8a0b5607e0e40ef0c41b3a6d25d3c4d4e3d1fa757cb37507072"
+      }
+    },
+    "native-regressions-a": {
+      "archive": {
+        "bytes": 46862139,
+        "full_member_readback_verified": true,
+        "members": 565,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-native-regressions-a-evidence.tar.gz",
+        "sha256": "a82ef9eb0c9d68aa7c8397ed8d5dc435f808891e8422c1b8c150b03d517c3f93"
+      },
+      "record": {
+        "bytes": 132239,
+        "path": "reports/m2/stage65-b-native-regressions-a-publication.json",
+        "sha256": "b72efd8b4f64f4053d4820629c147b4cde1e139c6962273e6a3ba9bb8bc226cd"
+      }
+    },
+    "native-regressions-b": {
+      "archive": {
+        "bytes": 56140605,
+        "full_member_readback_verified": true,
+        "members": 24517,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-native-regressions-b-evidence.tar.gz",
+        "sha256": "92072727750f6874c6cca1c3f17f8823b5287e0218de2514091cdd5d51c62931"
+      },
+      "record": {
+        "bytes": 5874734,
+        "path": "reports/m2/stage65-b-native-regressions-b-publication.json",
+        "sha256": "6bad6853e6769458f7d54e2dc75e858936bd0e86963accbd42db4f65d2dd1fbb"
+      }
+    },
+    "platform": {
+      "archive": {
+        "bytes": 26143170,
+        "full_member_readback_verified": true,
+        "members": 93441,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-platform-evidence.tar.gz",
+        "sha256": "77e76933ec28cf05218bd77fa3d99dfcd90a1caa4b24059d60040c2b49cb834c"
+      },
+      "record": {
+        "bytes": 23570431,
+        "path": "reports/m2/stage65-b-platform-publication.json",
+        "sha256": "f0cbf7875745780ad9c518cffde0b06877f04679b2053725e2698645751badf2"
+      }
+    },
+    "preparation": {
+      "archive": {
+        "bytes": 1710124,
+        "full_member_readback_verified": true,
+        "members": 56,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-preparation-evidence.tar.gz",
+        "sha256": "1469c77c6af399562b2417f3d3a9d9d90a28fa5f4140c2b8d6a8b24f26cffaca"
+      },
+      "record": {
+        "bytes": 13712,
+        "path": "reports/m2/stage65-b-preparation-publication.json",
+        "sha256": "2e5d85c928689881c85b7ba37486c931fafe019d6fd1343fc414e10037405c9a"
+      }
+    },
+    "recovery": {
+      "archive": {
+        "bytes": 83536545,
+        "full_member_readback_verified": true,
+        "members": 661,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-recovery-evidence.tar.gz",
+        "sha256": "27e674191046b96dbca507a36c2dfa3f3985ebccc612c2647748416d674266de"
+      },
+      "record": {
+        "bytes": 137608,
+        "path": "reports/m2/stage65-b-recovery-publication.json",
+        "sha256": "5626303df65254b3343eecaadb246b3a8dd5f99aa6ee10b48e3b8247e314a066"
+      }
+    },
+    "rust-final": {
+      "archive": {
+        "bytes": 14287304,
+        "full_member_readback_verified": true,
+        "members": 97,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-rust-final-evidence.tar.gz",
+        "sha256": "089c52fedb6167de2b1e0bfdec695300365161a567b576476c51937f75ab0ba5"
+      },
+      "record": {
+        "bytes": 24407,
+        "path": "reports/m2/stage65-b-rust-final-publication.json",
+        "sha256": "30431f9c6b073e3d8aedc17d0a9298e218751d5a9dc49317a99c112df37e30c4"
+      }
+    },
+    "rust-history": {
+      "archive": {
+        "bytes": 28409114,
+        "full_member_readback_verified": true,
+        "members": 156,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-rust-history-evidence.tar.gz",
+        "sha256": "76804882a97e5adf7846f5511c021455ae3a69ea75148d6603f725e353b5c651"
+      },
+      "record": {
+        "bytes": 37780,
+        "path": "reports/m2/stage65-b-rust-history-publication.json",
+        "sha256": "b05f7454a000d887462301ee97ecead42b58f601099cff946666d7d1d1a3c151"
+      }
+    },
+    "tooling": {
+      "archive": {
+        "bytes": 27172264,
+        "full_member_readback_verified": true,
+        "members": 19978,
+        "mode": 420,
+        "path": "reports/m2/stage65-b-tooling-evidence.tar.gz",
+        "sha256": "a4ade4182122541c32c7110c234226c109576b8171cecc6bad7aaf05a0fa8931"
+      },
+      "record": {
+        "bytes": 5093678,
+        "path": "reports/m2/stage65-b-tooling-publication.json",
+        "sha256": "8b9965734e8efa060acf86445d77c77abdb5a3c8363b1114dd918aa5e7470fae"
+      }
+    }
+  },
+  "raw_workspace_passes": 1004,
+  "required_rust_commands": [
+    {
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "finished_utc": "2026-10-24T20:46:02.160204+00:00",
+      "free_disk_after": 4583399424,
+      "free_disk_before": 4583636992,
+      "name": "references",
+      "pid": 55708,
+      "started_utc": "2026-10-24T20:46:01.052334+00:00",
+      "stderr_sha256": "3682334571260e9c2d64ea862615d54e97460a93dbee42489897716c051d7f99",
+      "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "finished_utc": "2026-10-24T20:46:03.450271+00:00",
+      "free_disk_after": 4583100416,
+      "free_disk_before": 4583399424,
+      "name": "format",
+      "pid": 55732,
+      "started_utc": "2026-10-24T20:46:02.160867+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "finished_utc": "2026-10-24T20:46:24.530058+00:00",
+      "free_disk_after": 4583714816,
+      "free_disk_before": 4583096320,
+      "name": "clippy",
+      "pid": 55751,
+      "started_utc": "2026-10-24T20:46:03.455332+00:00",
+      "stderr_sha256": "2a07eadeb9736b9d595c34614eddfd0dd05e5caec5c4a442317b107eee1c155e",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "finished_utc": "2026-10-24T20:51:33.990248+00:00",
+      "free_disk_after": 4570931200,
+      "free_disk_before": 4583710720,
+      "name": "workspace-tests",
+      "pid": 56031,
+      "started_utc": "2026-10-24T20:46:24.531106+00:00",
+      "stderr_sha256": "75ac0d16cc744c54e5af8c4ef149b4053fcefcf834d2a115c7f5c368d346bc3f",
+      "stdout_sha256": "6a34bfd6c433a2a89b2e08fc319533ee29369987c8254859257b43d7c4876961"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "finished_utc": "2026-10-24T20:51:36.907856+00:00",
+      "free_disk_after": 4570288128,
+      "free_disk_before": 4570927104,
+      "name": "wasm-runtime",
+      "pid": 59862,
+      "started_utc": "2026-10-24T20:51:33.991470+00:00",
+      "stderr_sha256": "83e327d197f7b3511b0d9de5561c8a205965c95e0057c59e3fb9de31c91692c4",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "runtime_source_count": 280,
+  "schema": 1,
+  "tool_test_counts": {
+    "js-protocol": {
+      "node_tap": 50,
+      "python_unittest": null
+    },
+    "m2-manifest-check": {
+      "node_tap": null,
+      "python_unittest": null
+    },
+    "m2-mappings": {
+      "node_tap": null,
+      "python_unittest": 8
+    },
+    "m2-mappings-O": {
+      "node_tap": null,
+      "python_unittest": 8
+    },
+    "python-ten-profile-and-supplements": {
+      "node_tap": null,
+      "python_unittest": 128
+    },
+    "python-ten-profile-and-supplements-O": {
+      "node_tap": null,
+      "python_unittest": 128
+    },
+    "source-inventory-check": {
+      "node_tap": null,
+      "python_unittest": null
+    }
+  },
+  "workspace_tests": {
+    "failed": 0,
+    "ignored": 2,
+    "passed": 991
+  }
+}

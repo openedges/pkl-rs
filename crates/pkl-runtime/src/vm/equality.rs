@@ -578,7 +578,14 @@ impl Vm {
         Ok(true)
     }
     fn class_identity(&self, id: ObjectId) -> Result<Option<ObjectId>, RuntimeError> {
-        self.heap.object_class(id)
+        let Some(class) = self.heap.object_class(id)? else {
+            return Ok(None);
+        };
+        let prototype = self.heap.get(self.heap.get_class(class)?.prototype)?;
+        // Builtin collection prototypes supply inherited members and getClass,
+        // but collection equality/hash use the object's own cached members.
+        // Only Typed/module instances use class-declared property ordering.
+        Ok((!matches!(prototype.builtin_type, Some(TypeCheck::Collection(_)))).then_some(class))
     }
     fn equality_members(&self, id: ObjectId) -> Result<Vec<CollectionMember>, RuntimeError> {
         if self.heap.get(id)?.collection_kind == CollectionKind::Map {

@@ -1,6 +1,9 @@
 //! Wrapper continuation roots and Host lifecycle, separate from Java resource semantics.
 //! Retained module graphs include their one builtin Module parent; executable
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
+#[path = "support/constructor_baseline.rs"]
+mod constructor_baseline;
+use constructor_baseline::compile_module_with_constructor_baseline;
 use std::sync::Arc;
 #[path = "support/eager_base.rs"]
 mod eager_base;
@@ -10,7 +13,7 @@ use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::resolve_module;
 use pkl_runtime::value::{ErrorKind, RuntimeError, Value};
-use pkl_runtime::vm::{Instruction as I, compile_module};
+use pkl_runtime::vm::Instruction as I;
 
 fn session() -> (HostSession, Value, usize, usize) {
     // Each method returns a wrapper that outlives its checking frame. Its
@@ -33,7 +36,9 @@ fn session() -> (HostSession, Value, usize, usize) {
         "#,
     )
     .unwrap();
-    let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    let mut program =
+        (*compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap())
+            .clone();
     let module_entry = program.entry;
     let mut entries = Vec::new();
     for member in ["outerResult", "innerResult"] {
@@ -90,7 +95,9 @@ fn suspended_parent_constraint_keeps_reentry_eager_until_it_finishes() {
         "#,
     )
     .unwrap();
-    let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    let mut program =
+        (*compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap())
+            .clone();
     let module_entry = program.entry;
     let mut entries = Vec::new();
     for member in ["parentResult", "childResult"] {
@@ -148,7 +155,7 @@ fn parameter_and_let_bindings_publish_checked_wrappers_before_the_body_runs() {
             result = f.apply("prefix:", new Listing { "value" })"#,
     ].into_iter().enumerate() {
         let parsed = parse_module(source).unwrap();
-        let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+        let mut program = (*compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap()).clone();
         let module_entry = program.entry;
         let result_entry = program.blocks.len();
         program.blocks.push(vec![
@@ -189,7 +196,9 @@ fn failed_cast_of_cached_source_retries_and_successful_wrapper_cache_is_shared()
         "#,
     )
     .unwrap();
-    let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    let mut program =
+        (*compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap())
+            .clone();
     let module_entry = program.entry;
     let mut entries = Vec::new();
     for member in ["prime", "result", "again"] {

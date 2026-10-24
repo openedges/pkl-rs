@@ -187,6 +187,27 @@
         "tools/collection_conversions_fixtures.py",
         "tools/collection_conversions_oracle.py"
       ]
+    },
+    {
+      "module_uri": "file:///stage65/inferred-new-values.pkl",
+      "fixture": "tests/fixtures/m2-inferred-new-values",
+      "rows": 72,
+      "repetitions": 2,
+      "validator_module": "inferred_new_fixtures",
+      "validator_script": "tools/inferred_new_fixtures.py",
+      "archive_prefix": "capture-01",
+      "input_hashes": {
+        "cases.json": "10bc691c2aab559e5ade734087e26619f8903945875924a92da9784416182057",
+        "module.pkl": "d0a0fc1c19a588d9188ecf73243d819d32fca34da249764573f3739b3a1dd03e",
+        "queries.tsv": "6efd438f068e88f23f7864745860c4b37e01e5b531602bacddb3aae2f9d03c59"
+      },
+      "tool_sources": [
+        "tools/inferred_new_fixtures.py",
+        "tools/inferred_new_oracle.py",
+        "tools/amendment_construction_oracle.py",
+        "tools/tests/test_inferred_new_fixtures.py",
+        "tools/java/CollectionConversionsOracle.java"
+      ]
     }
   ]
 }

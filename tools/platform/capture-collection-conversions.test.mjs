@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CAPTURE_TRACKED_SOURCES, CONVERSION_PROFILES, deriveJavaExecution,
-  loadCollectionConversionsFixture, requireSessionCoverage, validateProfileCatalog,
+  loadCollectionConversionsFixture, requireSessionCoverage, validateProfileCatalog, validatorArguments,
   validateSessionFileSet } from './capture-collection-conversions.mjs';
 
 const here = resolve(fileURLToPath(import.meta.url), '..');
@@ -87,6 +87,7 @@ test('separate Java authorities retain distinct input identities and complete se
     ['file:///stage63/collection-addition.pkl', 125],
     ['file:///stage63/set-endpoints.pkl', 70],
     ['file:///stage64/amendment-construction.pkl', 188],
+    ['file:///stage65/inferred-new-values.pkl', 72],
   ]);
   assert.equal(CONVERSION_PROFILES.length, sizes.size);
   for (const profile of CONVERSION_PROFILES) {
@@ -98,6 +99,16 @@ test('separate Java authorities retain distinct input identities and complete se
       ({ repeat, rowCount: selected.rows.length - 1, uri: selected.uri }))));
     assert.throws(() => requireSessionCoverage({ ...selected, uri: 'file:///unregistered.pkl' }, []));
   }
+});
+
+test('inferred-new values profile retains required verifier selector', () => {
+  const profile = CONVERSION_PROFILES.find(row => row.module_uri === 'file:///stage65/inferred-new-values.pkl');
+  const fixture = resolve(here, '../../tests/fixtures/m2-inferred-new-values');
+  assert.deepEqual(validatorArguments(profile, fixture), [
+    resolve(here, '../inferred_new_fixtures.py'), '--profile', 'values', '--fixture', fixture]);
+  const old = CONVERSION_PROFILES.find(row => row.module_uri === 'file:///stage64/amendment-construction.pkl');
+  assert.deepEqual(validatorArguments(old, fixture), [
+    resolve(here, '../amendment_construction_fixtures.py'), '--fixture', fixture]);
 });
 
 test('mixed-profile module bytes and changed profile selection cannot enter capture', async () => {

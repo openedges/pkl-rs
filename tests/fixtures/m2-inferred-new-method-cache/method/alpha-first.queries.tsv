@@ -1,0 +1,11 @@
+string	module-alpha	alphaModule.inferModule().getClass() == alphaModule.getClass()
+string	module-beta	betaModule.inferModule().getClass() == betaModule.getClass()
+string	nullable-alpha	alphaModule.inferNullable().getClass() == alphaModule.getClass()
+string	nullable-beta	betaModule.inferNullable().getClass() == betaModule.getClass()
+string	alias-alpha	alphaModule.inferAlias().getClass() == alphaModule.getClass()
+string	alias-beta	betaModule.inferAlias().getClass() == betaModule.getClass()
+string	nullable-alias-alpha	alphaModule.inferNullableAlias().getClass() == alphaModule.getClass()
+string	nullable-alias-beta	betaModule.inferNullableAlias().getClass() == betaModule.getClass()
+string	explicit-alias-second	betaModule.makeAlias().getClass() == betaModule.getClass()
+string	module-distinct	alphaModule.getClass() == betaModule.getClass()
+string	second-marker	betaModule.marker

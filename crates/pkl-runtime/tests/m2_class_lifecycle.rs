@@ -4,6 +4,9 @@
 //! Class descriptors and their prototypes are separate traced entries.
 //! Retained module graphs include the builtin superclass graph; executable
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
+#[path = "support/constructor_baseline.rs"]
+mod constructor_baseline;
+use constructor_baseline::compile_module_with_constructor_baseline;
 use std::sync::Arc;
 
 use pkl_runtime::heap::{HeapStats, LazyState, Member};
@@ -11,7 +14,7 @@ use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::resolve_module;
 use pkl_runtime::value::{ErrorKind, RuntimeError, Value};
-use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll, compile_module};
+use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll};
 
 const SOURCE: &str = r#"
 open class Base { fixed value: Int = 42 }
@@ -32,7 +35,7 @@ scalar = 7
 
 fn program(source: &str) -> Program {
     let parsed = parse_module(source).unwrap();
-    (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone()
+    (*compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap()).clone()
 }
 
 fn ready(vm: &mut Vm) -> Result<Value, RuntimeError> {

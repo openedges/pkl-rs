@@ -247,7 +247,7 @@ impl Vm {
                                     // the synthetic repl root. Real module
                                     // declarations retain their # boundary.
                                     if suffix.is_empty()
-                                        || suffix.encode_utf16().next() == Some(b'.' as u16)
+                                        || matches!(suffix.encode_utf16().next(), Some(46 | 91))
                                     {
                                         suffix.as_ref().clone()
                                     } else {

@@ -85,11 +85,10 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
             } else if heap.get(*id)?.ref_module {
                 "pkl.ref".into()
             } else if heap.get(*id)?.is_module {
-                heap.get(*id)?
-                    .class_definition
-                    .as_ref()
-                    .map_or(module, |class| class.name.as_ref())
-                    .into()
+                heap.object_class(*id)?
+                    .map(|class| heap.class_display_name(class))
+                    .transpose()?
+                    .unwrap_or_else(|| module.into())
             } else if heap.get(*id)?.collection_kind == CollectionKind::Dynamic {
                 let mut name = "Dynamic".to_owned();
                 for owner in ancestry(*id, heap)? {

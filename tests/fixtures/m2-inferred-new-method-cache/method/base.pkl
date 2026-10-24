@@ -1,0 +1,13 @@
+open module Base
+marker: String = "base"
+typealias Current = module
+typealias MaybeCurrent = module?
+function makeModule(): module = new module { marker = "made" }
+function makeNullable(): module? = new module { marker = "nullable" }
+function makeAlias(): Current = new Current { marker = "alias" }
+function makeNullableAlias(): MaybeCurrent = new MaybeCurrent { marker = "nullable-alias" }
+
+function inferModule(): module = new { marker = "inferred-module" }
+function inferNullable(): module? = new { marker = "inferred-nullable" }
+function inferAlias(): Current = new { marker = "inferred-alias" }
+function inferNullableAlias(): MaybeCurrent = new { marker = "inferred-nullable-alias" }

@@ -161,6 +161,7 @@ pub enum Instruction {
     GenericConstructorParent {
         ty: TypeCheck,
         source: TypeArgumentSource,
+        cache: bool,
     },
     AddCollectionProperty(Member),
     AddCollectionElement(Member),
@@ -187,7 +188,13 @@ pub enum Instruction {
         key_span: Span,
     },
     SuperSubscript,
-    EntryParent,
+    EntryParent {
+        end: usize,
+    },
+    EntryDefault,
+    EntryKey,
+    ApplyEntryDefault,
+    EmptyDynamic,
     InferPropertyParent,
     MakeList {
         length: usize,
@@ -290,6 +297,11 @@ pub enum Instruction {
     ResolvedDefault {
         ty: TypeCheck,
         origin: Option<RuntimeFrame>,
+    },
+    ResolvedInferredParent {
+        ty: TypeCheck,
+        origin: Option<RuntimeFrame>,
+        cache: bool,
     },
     ResolveClassType {
         name: Arc<str>,
@@ -512,49 +524,6 @@ impl TypeCheck {
                 } => current = inner,
                 ty => return ty,
             }
-        }
-    }
-    /// Mixin's identity default belongs to its declaration, not to an
-    /// arbitrary structurally equivalent function type. Aliases and selected
-    /// default wrappers delegate to that declaration without losing its identity.
-    fn mixin_default(&self) -> bool {
-        let mut ty = self;
-        loop {
-            ty = match ty.resolved() {
-                Self::NamedAlias { declaration, .. } if *declaration == amendment::MIXIN_ID => {
-                    return true;
-                }
-                Self::Alias(inner)
-                | Self::GenericAlias(inner)
-                | Self::NamedAlias {
-                    expanded: inner, ..
-                }
-                | Self::Nullable(inner)
-                | Self::Constrained { base: inner, .. } => inner,
-                Self::Union {
-                    types,
-                    default: Some(index),
-                    ..
-                } => &types[*index],
-                _ => return false,
-            };
-        }
-    }
-    /// Whether this type's selected default ultimately comes from Collection.
-    /// Nullable defaults retain the empty List for empty amendments.
-    fn collection_base_default(&self) -> bool {
-        let mut ty = self;
-        loop {
-            ty = match ty.unaliased() {
-                Self::CollectionBase { .. } => return true,
-                Self::Nullable(inner) | Self::Constrained { base: inner, .. } => inner,
-                Self::Union {
-                    types,
-                    default: Some(index),
-                    ..
-                } => &types[*index],
-                _ => return false,
-            };
         }
     }
     pub(crate) fn equivalent(&self, other: &Self) -> bool {
@@ -1267,6 +1236,7 @@ pub struct Vm {
     empty_collections: [Option<ObjectId>; 3],
     empty_objects: [Option<ObjectId>; 3],
     resolved_declarations: BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
+    type_parent_defaults: BTreeMap<(usize, usize), Value>,
     /// Static call targets own code state, never captured receivers/environments.
     executable_roots: BTreeMap<usize, ExecutableOwnerId>,
     code_arenas: Vec<query_lifecycle::CodeArena>,
@@ -1339,6 +1309,7 @@ impl Vm {
             empty_collections: [None; 3],
             empty_objects: [None; 3],
             resolved_declarations: BTreeMap::new(),
+            type_parent_defaults: BTreeMap::new(),
             executable_roots: BTreeMap::new(),
             code_arenas: Vec::new(),
             public_operation_entries: BTreeSet::new(),
@@ -1752,6 +1723,7 @@ impl Vm {
         self.empty_collections = [None; 3];
         self.empty_objects = [None; 3];
         self.resolved_declarations.clear();
+        self.type_parent_defaults.clear();
         self.executable_roots.clear();
         self.code_arenas.clear();
         self.public_operation_entries.clear();
@@ -2045,7 +2017,7 @@ impl Vm {
             && self.frames.last().is_some_and(|frame| {
                 matches!(
                     instruction(frame),
-                    Some(Instruction::Undefined(_) | Instruction::EntryParent)
+                    Some(Instruction::Undefined(_) | Instruction::EntryParent { .. })
                 )
             });
         let diagnostic_count = if let Some((index, _)) = callback_root {
@@ -3968,7 +3940,9 @@ impl Vm {
                 | Instruction::AddPredicateMember(_)
                 | Instruction::Subscript { .. }
                 | Instruction::SuperSubscript
-                | Instruction::EntryParent
+                | Instruction::EntryParent { .. }
+                | Instruction::EntryDefault
+                | Instruction::EntryKey
                 | Instruction::MakeList { .. }
                 | Instruction::PrepareMapEntry
                 | Instruction::PrepareSetElement
@@ -3985,6 +3959,7 @@ impl Vm {
                 | Instruction::ResolveType(_)
                 | Instruction::ResolvedClass(_)
                 | Instruction::ResolvedDefault { .. }
+                | Instruction::ResolvedInferredParent { .. }
                 | Instruction::ResolveClassType { .. }
                 | Instruction::BindLocal { .. }
                 | Instruction::CheckType(_)
@@ -4015,6 +3990,7 @@ impl Vm {
             | Instruction::ResolveType(_)
             | Instruction::ResolvedClass(_)
             | Instruction::ResolvedDefault { .. }
+            | Instruction::ResolvedInferredParent { .. }
             | Instruction::ResolveClassType { .. }
             | Instruction::BindLocal { .. }
             | Instruction::CheckType(_) => {
@@ -4245,7 +4221,9 @@ impl Vm {
             | Instruction::AddPredicateMember(_)
             | Instruction::Subscript { .. }
             | Instruction::SuperSubscript
-            | Instruction::EntryParent
+            | Instruction::EntryParent { .. }
+            | Instruction::EntryDefault
+            | Instruction::EntryKey
             | Instruction::MakeList { .. }
             | Instruction::PrepareMapEntry
             | Instruction::PrepareSetElement
@@ -4386,6 +4364,10 @@ impl Vm {
             Instruction::CollectionJoin => self.begin_collection_join()?,
             Instruction::ObjectLookup(operation) => self.object_lookup(operation)?,
             Instruction::ObjectDefault => self.object_default()?,
+            Instruction::EmptyDynamic => {
+                let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
+                self.stack.push(Value::Object(empty));
+            }
             Instruction::ObjectDefaultProperty => {
                 let receiver = self.conversion_receiver()?;
                 if !self.object_default_member(receiver)? {
@@ -4765,6 +4747,32 @@ impl Vm {
                     .ok_or_else(|| invalid("property parent outside member"))?
                     .name
                     .clone();
+                if !self.heap.get(scope.owner)?.is_module
+                    && collections::typed_class(&self.heap, scope.owner)?.is_none()
+                {
+                    let kind = self.heap.get(scope.owner)?.collection_kind;
+                    if name.as_ref() == "default"
+                        && matches!(
+                            kind,
+                            crate::heap::CollectionKind::Listing
+                                | crate::heap::CollectionKind::Mapping
+                        )
+                    {
+                        let class = self.canonical_builtin_class(
+                            if kind == crate::heap::CollectionKind::Listing {
+                                classes::BuiltinClass::Listing
+                            } else {
+                                classes::BuiltinClass::Mapping
+                            },
+                        );
+                        let prototype = self.heap.get_class(class)?.prototype;
+                        self.force(prototype, prototype, name, false, true, false)?;
+                    } else {
+                        let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
+                        self.stack.push(Value::Object(empty));
+                    }
+                    return Ok(());
+                }
                 let mut prototype = Some(scope.owner);
                 while let Some(owner) = prototype {
                     let object = self.heap.get(owner)?;
@@ -4820,15 +4828,16 @@ impl Vm {
                     {
                         let frame = self.frames.last_mut().expect("property default frame");
                         let ty = ty.substituted(&frame.environment)?;
-                        frame.generic_default =
-                            Some(generics::GenericDefaultRun::inferred_parent(ty, origin));
+                        frame.generic_default = Some(generics::GenericDefaultRun::inferred_parent(
+                            ty, origin, None,
+                        ));
                     } else {
-                        self.stack
-                            .push(Value::Object(self.heap.allocate(Object::default())));
+                        let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
+                        self.stack.push(Value::Object(empty));
                     }
                 } else {
-                    self.stack
-                        .push(Value::Object(self.heap.allocate(Object::default())));
+                    let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
+                    self.stack.push(Value::Object(empty));
                 }
             }
             Instruction::GetSuperMember(ref name)
@@ -5320,6 +5329,19 @@ impl Vm {
                     ..Object::default()
                 });
                 self.stack.push(Value::Function(id));
+            }
+            Instruction::ApplyEntryDefault => {
+                let argument = self.pop()?;
+                let Value::Function(id) = self.pop()? else {
+                    return Err(invalid("entry default is not a function"));
+                };
+                // ApplyVmFunction1Node has no guest source section. Keep the
+                // enclosing member alive, but omit this synthetic call site.
+                self.frames
+                    .last_mut()
+                    .expect("active frame")
+                    .callsite_hidden = true;
+                self.invoke_function(id, vec![argument], false)?;
             }
             Instruction::Call { arity, method } => {
                 let base = self.frames.last().expect("active frame").base;
@@ -7058,7 +7080,13 @@ impl Compiler<'_> {
                 }
             }
             ExprKind::TypeAlias { .. } => self.type_alias_expression(expression, output)?,
-            ExprKind::EntryParent => output.push(Instruction::EntryParent),
+            ExprKind::EntryParent => {
+                output.push(Instruction::EntryParent {
+                    end: output.len() + 3,
+                });
+                output.push(Instruction::EntryKey);
+                output.push(Instruction::ApplyEntryDefault);
+            }
             ExprKind::Uninitialized => output.push(Instruction::AbstractMember {
                 name: self.member.clone(),
                 method: true,
@@ -7288,7 +7316,7 @@ fn type_error_at_width(
     {
         reference::type_name_value(expected, module)
     } else {
-        type_name_value(expected, module)
+        type_name_value_with_heap(expected, module, Some(heap))
     };
     Ok(RuntimeError::new(
         ErrorKind::Type,
@@ -7328,11 +7356,11 @@ fn type_error_at_width(
     ))
 }
 
-fn type_name(ty: &TypeCheck, module: &str) -> String {
-    type_name_value(ty, module).to_java_utf8()
+fn type_name_value(ty: &TypeCheck, module: &str) -> PklString {
+    type_name_value_with_heap(ty, module, None)
 }
 
-fn type_name_value(ty: &TypeCheck, module: &str) -> PklString {
+fn type_name_value_with_heap(ty: &TypeCheck, module: &str, heap: Option<&Heap>) -> PklString {
     enum Part<'a> {
         Type(&'a TypeCheck),
         Text(String),
@@ -7368,7 +7396,18 @@ fn type_name_value(ty: &TypeCheck, module: &str) -> PklString {
                 name,
                 module: declaring_module,
             } => {
-                if builtins::name(*id).is_some() || classes::base_class_name(*id).is_some() {
+                if builtins::name(*id).is_some()
+                    || classes::base_class_name(*id).is_some()
+                    || heap
+                        .and_then(|heap| {
+                            heap.find_class(*id).and_then(|class| {
+                                heap.get_class(class)
+                                    .ok()
+                                    .and_then(|class| heap.get(class.prototype).ok())
+                            })
+                        })
+                        .is_some_and(|prototype| prototype.is_module)
+                {
                     name.to_string()
                 } else {
                     format!("{}#{name}", declaring_module.as_deref().unwrap_or(module))
@@ -8659,15 +8698,6 @@ impl Compiler<'_> {
         Ok(())
     }
 
-    fn default_type(
-        &mut self,
-        check: &TypeCheck,
-        output: &mut Code,
-        span: Span,
-    ) -> Result<bool, RuntimeError> {
-        self.default_type_with_origin(check, output, span, None)
-    }
-
     fn default_type_with_origin(
         &mut self,
         check: &TypeCheck,
@@ -8705,6 +8735,7 @@ impl Compiler<'_> {
             TypeCheck::NamedAlias { declaration, .. } if *declaration == amendment::MIXIN_ID => {
                 output.push_at(
                     Instruction::GenericConstructorParent {
+                        cache: !check.contains_parameter(),
                         ty: check.clone(),
                         source: TypeArgumentSource {
                             span,

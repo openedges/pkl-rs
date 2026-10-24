@@ -166,8 +166,8 @@ enum DefaultTask {
     Nullable,
     Collection(ObjectId),
     Publish(ObjectId),
-    Constructor(TypeCheck, TypeArgumentSource),
-    InferredParent,
+    Constructor(TypeCheck, TypeArgumentSource, Option<(usize, usize)>),
+    InferredParent(Option<(usize, usize)>),
 }
 pub(super) struct GenericDefaultRun {
     tasks: Vec<DefaultTask>,
@@ -182,9 +182,13 @@ impl GenericDefaultRun {
             origin,
         }
     }
-    pub(super) fn inferred_parent(ty: TypeCheck, origin: Option<RuntimeFrame>) -> Self {
+    pub(super) fn inferred_parent(
+        ty: TypeCheck,
+        origin: Option<RuntimeFrame>,
+        cache: Option<(usize, usize)>,
+    ) -> Self {
         Self {
-            tasks: vec![DefaultTask::InferredParent, DefaultTask::Visit(ty)],
+            tasks: vec![DefaultTask::InferredParent(cache), DefaultTask::Visit(ty)],
             value: None,
             origin,
         }
@@ -193,10 +197,11 @@ impl GenericDefaultRun {
         ty: TypeCheck,
         source: TypeArgumentSource,
         origin: Option<RuntimeFrame>,
+        cache: Option<(usize, usize)>,
     ) -> Self {
         Self {
             tasks: vec![
-                DefaultTask::Constructor(ty.clone(), source),
+                DefaultTask::Constructor(ty.clone(), source, cache),
                 DefaultTask::Visit(ty),
             ],
             value: None,
@@ -217,8 +222,8 @@ impl GenericDefaultRun {
             DefaultTask::Stack
             | DefaultTask::Visit(_)
             | DefaultTask::Nullable
-            | DefaultTask::Constructor(_, _)
-            | DefaultTask::InferredParent => None,
+            | DefaultTask::Constructor(_, _, _)
+            | DefaultTask::InferredParent(_) => None,
         }));
     }
 }
@@ -251,7 +256,7 @@ impl Vm {
                     .last_mut()
                     .expect("default frame")
                     .generic_default = Some(run);
-                let Some(resolved) = self.resolve_runtime_type(&ty, &environment)? else {
+                let Some(resolved) = self.resolve_runtime_type(&ty, &environment, true)? else {
                     return Ok(());
                 };
                 run = self
@@ -294,54 +299,51 @@ impl Vm {
                 self.stack.push(value);
                 return Ok(());
             }
-            DefaultTask::InferredParent => {
-                self.stack.push(run.value.ok_or_else(cannot_infer_parent)?);
+            DefaultTask::InferredParent(cache) => {
+                let value = run.value.ok_or_else(cannot_infer_parent)?;
+                if let Some(key) = cache {
+                    self.type_parent_defaults.insert(key, value.clone());
+                }
+                self.stack.push(value);
                 return Ok(());
             }
-            DefaultTask::Constructor(ty, source) => {
+            DefaultTask::Constructor(ty, source, cache) => {
                 if let Some(value) = run.value {
+                    if let Some(key) = cache {
+                        self.type_parent_defaults.insert(key, value.clone());
+                    }
                     self.stack.push(value);
                     return Ok(());
                 }
-                let mut base = ty.unaliased();
-                while let TypeCheck::Constrained { base: inner, .. } = base {
-                    base = inner.unaliased();
-                }
-                if let TypeCheck::Class { id, .. } = base
-                    && let Some(class) = self.heap.find_class(*id)
-                    && let class = self.heap.class_definition(class)?
-                    && class.abstract_
-                {
-                    let mut error = RuntimeError::new(
-                        ErrorKind::Type,
-                        format!(
-                            "Cannot instantiate abstract class `{}#{}`.",
-                            class.module.as_deref().unwrap_or(&self.program.module_name),
-                            class.name
-                        ),
-                    );
-                    error.hint = Some("Abstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.".into());
-                    return Err(error.at(source.span));
-                }
-                if matches!(
-                    classes::BuiltinClass::from_type(base),
-                    Some(classes::BuiltinClass::DataSize | classes::BuiltinClass::IntSeq)
-                ) || matches!(
-                    base,
-                    TypeCheck::Boolean
-                        | TypeCheck::Int
-                        | TypeCheck::Float
-                        | TypeCheck::Duration
-                        | TypeCheck::String
-                        | TypeCheck::Bytes
-                        | TypeCheck::Reference { .. }
-                        | TypeCheck::Function { .. }
-                ) {
-                    return Err(collections::external_amendment_error(&type_name(
-                        base,
-                        &self.program.module_name,
-                    ))
-                    .at(source.span));
+                // TypeAliasTypeNode delegates getVmClass, while composite
+                // nodes (including ConstrainedTypeNode) do not expose a class.
+                let base = ty.unaliased();
+                let class = if let Some(class) = classes::BuiltinClass::from_type(base) {
+                    Some(self.canonical_builtin_class(class))
+                } else if let TypeCheck::Class { id, .. } = base {
+                    self.heap.find_class(*id)
+                } else {
+                    None
+                };
+                if let Some(class) = class {
+                    let declaration = self.heap.class_definition(class)?;
+                    if declaration.abstract_ {
+                        let mut error = RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Cannot instantiate abstract class `{}`.",
+                                self.heap.class_display_name(class)?
+                            ),
+                        );
+                        error.hint = Some("Abstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.".into());
+                        return Err(error.at(source.span));
+                    }
+                    if self.class_external(class)? {
+                        return Err(collections::external_amendment_error(
+                            &self.heap.class_display_name(class)?,
+                        )
+                        .at(source.span));
+                    }
                 }
                 return Err(RuntimeError::new(
                     ErrorKind::Type,
@@ -396,24 +398,28 @@ impl Vm {
                 {
                     run.value = None;
                 }
-                TypeCheck::Class { id, .. } => {
-                    // A resolved builtin recipe can reach its default before any
-                    // class-value expression has materialized the shared prototype.
-                    // User class recipes still require their published declaration.
-                    let object = if builtins::name(id).is_some() {
-                        self.builtin_class(builtins::ty(id)).heap_id().unwrap()
+                ty @ TypeCheck::Class { .. } => {
+                    let TypeCheck::Class { id, .. } = &ty else {
+                        unreachable!()
+                    };
+                    // Builtin type defaults share the canonical class graph;
+                    // user classes have already been initialized by resolution.
+                    let object = if let Some(class) = classes::BuiltinClass::from_type(&ty) {
+                        self.canonical_builtin_class(class)
                     } else {
                         self.heap
-                            .find_class(id)
+                            .find_class(*id)
                             .ok_or_else(|| invalid("missing resolved default class"))?
                     };
+                    let external = self.class_external(object)?;
                     let object = self.heap.get_class(object)?.prototype;
-                    if self
-                        .heap
-                        .get(object)?
-                        .class_definition
-                        .as_ref()
-                        .is_none_or(|class| class.abstract_)
+                    if external
+                        || self
+                            .heap
+                            .get(object)?
+                            .class_definition
+                            .as_ref()
+                            .is_none_or(|class| class.abstract_)
                     {
                         run.value = None;
                     } else {
@@ -434,34 +440,34 @@ impl Vm {
                         } => (kind, arguments.pop().map(|(ty, _)| ty)),
                         _ => unreachable!(),
                     };
-                    let mut object = Object {
-                        collection_kind: kind,
-                        collection_default_origin: run.origin.clone(),
-                        ..Object::default()
-                    };
-                    if !matches!(
+                    if matches!(
                         kind,
                         CollectionKind::List | CollectionKind::Map | CollectionKind::Set
                     ) {
-                        object.environment = self
-                            .frames
-                            .last()
-                            .expect("default frame")
-                            .environment
-                            .clone();
-                        object.specialized_literal = true;
-                    }
-                    let id = self.heap.allocate(object);
-                    if !matches!(
-                        kind,
-                        CollectionKind::List | CollectionKind::Map | CollectionKind::Set
-                    ) && let Some(argument) = argument
-                        && !matches!(argument.resolved(), TypeCheck::Unknown)
-                    {
-                        run.tasks.push(DefaultTask::Collection(id));
-                        run.tasks.push(DefaultTask::Visit(argument));
+                        run.value = Some(Value::Object(self.empty_strict_collection(kind)));
                     } else {
-                        run.value = Some(Value::Object(self.finish_strict_collection(id)?));
+                        let parent = self.empty_object(kind);
+                        if let Some(argument) = argument
+                            && !matches!(argument.resolved(), TypeCheck::Unknown)
+                        {
+                            let id = self.heap.allocate(Object {
+                                parent: Some(parent),
+                                collection_kind: kind,
+                                collection_default_origin: run.origin.clone(),
+                                environment: self
+                                    .frames
+                                    .last()
+                                    .expect("default frame")
+                                    .environment
+                                    .clone(),
+                                specialized_literal: true,
+                                ..Object::default()
+                            });
+                            run.tasks.push(DefaultTask::Collection(id));
+                            run.tasks.push(DefaultTask::Visit(argument));
+                        } else {
+                            run.value = Some(Value::Object(parent));
+                        }
                     }
                 }
                 TypeCheck::Parameter { .. } => {

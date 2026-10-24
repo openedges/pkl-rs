@@ -16,8 +16,10 @@ fn literal_value(expression: &Expr) -> Option<Value> {
 
 #[derive(Clone)]
 enum InferredParent {
-    DeclaredType(TypeCheck, RuntimeFrame),
+    DeclaredType(TypeCheck, RuntimeFrame, bool),
     Property,
+    Entry,
+    EmptyDynamic,
 }
 
 fn register_inferred_parents(
@@ -98,6 +100,7 @@ impl Compiler<'_> {
         let parent = if let Some(ty) = &member.ty {
             let check = self.compile_type(ty)?;
             if matches!(check, TypeCheck::Unknown) {
+                register_inferred_parents(&member.expr, InferredParent::EmptyDynamic, parents);
                 return Ok(());
             }
             InferredParent::DeclaredType(
@@ -107,11 +110,12 @@ impl Compiler<'_> {
                     span: self.type_source_span(ty),
                     member: self.member.concat(&".default".into()),
                 },
+                false,
             )
         } else if !member.local {
             InferredParent::Property
         } else {
-            return Ok(());
+            InferredParent::EmptyDynamic
         };
         register_inferred_parents(&member.expr, parent, parents);
         Ok(())
@@ -131,6 +135,24 @@ impl Compiler<'_> {
         output: &mut Code,
         property_parent: Option<&crate::syntax::Member>,
     ) -> Result<(), RuntimeError> {
+        self.expression_context(expression, output, property_parent, false)
+    }
+
+    pub(super) fn expression_with_entry_parent(
+        &mut self,
+        expression: &Expr,
+        output: &mut Code,
+    ) -> Result<(), RuntimeError> {
+        self.expression_context(expression, output, None, true)
+    }
+
+    fn expression_context(
+        &mut self,
+        expression: &Expr,
+        output: &mut Code,
+        property_parent: Option<&crate::syntax::Member>,
+        entry_parent: bool,
+    ) -> Result<(), RuntimeError> {
         let mut work = vec![Work::Visit(expression)];
         // Children own their emitted source spans. Only outstanding instructions
         // need their parent's span; never rescan an already completed subtree.
@@ -142,6 +164,8 @@ impl Compiler<'_> {
         let mut inferred_parents = BTreeMap::new();
         if let Some(member) = property_parent {
             self.register_property_parents(member, &mut inferred_parents)?;
+        } else if entry_parent {
+            register_inferred_parents(expression, InferredParent::Entry, &mut inferred_parents);
         }
         let result = (|| {
             while let Some(task) = work.pop() {
@@ -466,22 +490,26 @@ impl Compiler<'_> {
                             self.member = previous;
                         } else {
                             let mut instructions = Code::default();
-                            if *method && let Some(ty) = return_type {
-                                let check = self.compile_type(ty)?;
-                                if !matches!(check, TypeCheck::Unknown) {
-                                    register_inferred_parents(
-                                        body,
-                                        InferredParent::DeclaredType(
-                                            check,
-                                            RuntimeFrame {
-                                                source: None,
-                                                span: *header_span,
-                                                member: self.member.concat(&".default".into()),
-                                            },
-                                        ),
-                                        &mut inferred_parents,
-                                    );
-                                }
+                            if *method {
+                                let check = return_type
+                                    .as_ref()
+                                    .map(|ty| self.compile_type(ty))
+                                    .transpose()?
+                                    .unwrap_or(TypeCheck::Unknown);
+                                let parent = if matches!(check, TypeCheck::Unknown) {
+                                    InferredParent::EmptyDynamic
+                                } else {
+                                    InferredParent::DeclaredType(
+                                        check,
+                                        RuntimeFrame {
+                                            source: None,
+                                            span: *header_span,
+                                            member: self.member.concat(&".default".into()),
+                                        },
+                                        true,
+                                    )
+                                };
+                                register_inferred_parents(body, parent, &mut inferred_parents);
                             }
                             for (index, parameter) in parameters.iter().enumerate() {
                                 let depth = parameters.len() - 1 - index;
@@ -879,15 +907,29 @@ impl Compiler<'_> {
                             };
                             let span = Span::new(expression.span.start, expression.span.start + 3);
                             let defined = match parent {
-                                InferredParent::DeclaredType(check, origin) => self
-                                    .default_type_with_origin(
-                                        &check,
-                                        output,
+                                InferredParent::DeclaredType(ty, origin, cache) => {
+                                    output.push_at(
+                                        Instruction::ResolvedInferredParent {
+                                            ty,
+                                            origin: Some(origin),
+                                            cache,
+                                        },
                                         span,
-                                        Some(&origin),
-                                    )?,
+                                    );
+                                    true
+                                }
                                 InferredParent::Property => {
                                     output.push_at(Instruction::InferPropertyParent, span);
+                                    true
+                                }
+                                InferredParent::Entry => {
+                                    output.push_at(Instruction::EntryDefault, span);
+                                    output.push_at(Instruction::EntryKey, span);
+                                    output.push_at(Instruction::ApplyEntryDefault, span);
+                                    true
+                                }
+                                InferredParent::EmptyDynamic => {
+                                    output.push_at(Instruction::EmptyDynamic, span);
                                     true
                                 }
                             };
@@ -1055,139 +1097,52 @@ impl Compiler<'_> {
                     }
                 };
                 self.initialize_type_resolution(ty, output);
-                if check.mixin_default() {
-                    self.default_type(&check, output, ty.span)?;
-                    // Explicit type arguments check the constructed value as
-                    // well as selecting the parent's default, including alias
-                    // constraints around a Mixin declaration.
-                    if matches!(&ty.kind, crate::syntax::TypeKind::Named { arguments, .. } if !arguments.is_empty())
-                    {
-                        work.push(Work::Emit(
-                            Instruction::CheckType(check),
-                            Some(self.type_source_span(ty)),
-                        ));
-                    }
-                    self.schedule_collection(
-                        members,
-                        parameters,
-                        crate::heap::CollectionKind::Dynamic,
-                        true,
-                        output,
-                        work,
-                    )?;
-                    return Ok(());
-                }
-                if check.collection_base_default() {
-                    self.default_type(&check, output, ty.span)?;
-                    self.schedule_collection(
-                        members,
-                        parameters,
-                        crate::heap::CollectionKind::Dynamic,
-                        true,
-                        output,
-                        work,
-                    )?;
-                    return Ok(());
-                }
-                if let TypeCheck::Collection(kind)
-                | TypeCheck::ParameterizedCollection { kind, .. } = check.unaliased()
-                {
-                    let kind = *kind;
-                    if matches!(
-                        kind,
-                        crate::heap::CollectionKind::Map | crate::heap::CollectionKind::Set
-                    ) {
-                        output.push_at(
-                            Instruction::Fail(collections::external_amendment_error(&format!(
-                                "{kind:?}"
-                            ))),
-                            expression.span,
-                        );
-                        return Ok(());
-                    }
-                    let has_default =
-                        matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. });
-                    if has_default {
-                        let origin = RuntimeFrame {
-                            source: self.source.clone(),
-                            span: expression.span,
-                            member: self.member.concat(&".default".into()),
-                        };
-                        self.default_type_with_origin(&check, output, ty.span, Some(&origin))?;
-                    }
-                    if matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. }) {
-                        work.push(Work::Emit(
-                            Instruction::CheckType(check),
-                            Some(self.type_source_span(ty)),
-                        ));
-                    }
-                    self.schedule_collection(members, parameters, kind, has_default, output, work)?;
-                } else if check.contains_parameter() || check.has_declared() {
-                    let check = if self.constructor_parameters_bound {
-                        check
-                    } else {
-                        let mut environment = Environment::default();
-                        for parameter in self.active_type_parameters.values() {
-                            if let TypeCheck::Parameter { block, name } = parameter {
-                                environment
-                                    .type_arguments
-                                    .insert((*block, name.clone()), TypeCheck::Unknown);
-                            }
-                        }
-                        check.substituted(&environment)?
-                    };
-                    output.push_at(
-                        Instruction::GenericConstructorParent {
-                            ty: check.clone(),
-                            source: TypeArgumentSource {
-                                span: ty.span,
-                                text: Arc::from(
-                                    &self.resolved.module.source[ty.span.start..ty.span.end],
-                                ),
-                            },
-                        },
-                        expression.span,
-                    );
-                    // The cast is syntax-directed: `new T` only selects a parent,
-                    // whereas explicit `new Alias<T>` also checks the result.
-                    if matches!(&ty.kind, crate::syntax::TypeKind::Named { arguments, .. } if !arguments.is_empty())
-                    {
-                        work.push(Work::Emit(
-                            Instruction::CheckType(check),
-                            Some(self.type_source_span(ty)),
-                        ));
-                    }
-                    self.schedule_collection(
-                        members,
-                        parameters,
-                        crate::heap::CollectionKind::Dynamic,
-                        true,
-                        output,
-                        work,
-                    )?;
-                } else if matches!(check.unaliased(), TypeCheck::Function { .. }) {
-                    output.push_at(
-                        Instruction::Fail(collections::external_amendment_error(&type_name(
-                            check.unaliased(),
-                            &self.program.module_name,
-                        ))),
-                        ty.span,
-                    );
+                let check = if self.constructor_parameters_bound {
+                    check
                 } else {
-                    if let Err(error) = self.class_expression(
-                        ty,
-                        output,
-                        self.type_scopes.len(),
-                        &mut BTreeSet::new(),
-                    ) {
-                        // Selecting an actual class is evaluation of the parent
-                        // type node, after all AST construction effects.
-                        let span = error.span.unwrap_or(ty.span);
-                        output.push_at(Instruction::Fail(error), span);
-                        return Ok(());
+                    let mut environment = Environment::default();
+                    for parameter in self.active_type_parameters.values() {
+                        if let TypeCheck::Parameter { block, name } = parameter {
+                            environment
+                                .type_arguments
+                                .insert((*block, name.clone()), TypeCheck::Unknown);
+                        }
                     }
-                    self.instance_body(members, parameters, ty.span, expression.span, output)?;
+                    check.substituted(&environment)?
+                };
+                // GetParentForTypeNode selects the default for every authored
+                // type shape. Resolution/default work remains in the VM so a
+                // deferred alias or module can suspend without recursive evaluation.
+                output.push_at(
+                    Instruction::GenericConstructorParent {
+                        cache: !check.contains_parameter(),
+                        ty: check.clone(),
+                        source: TypeArgumentSource {
+                            span: ty.span,
+                            text: Arc::from(
+                                &self.resolved.module.source[ty.span.start..ty.span.end],
+                            ),
+                        },
+                    },
+                    expression.span,
+                );
+                // Java adds a result cast only for an explicit declared type
+                // with arguments, not for arbitrary composite type syntax.
+                if matches!(&ty.kind, crate::syntax::TypeKind::Named { arguments, .. } if !arguments.is_empty())
+                {
+                    work.push(Work::Emit(
+                        Instruction::CheckType(check),
+                        Some(self.type_source_span(ty)),
+                    ));
                 }
+                self.schedule_collection(
+                    members,
+                    parameters,
+                    crate::heap::CollectionKind::Dynamic,
+                    true,
+                    output,
+                    work,
+                )?;
             }
             ExprKind::Object {
                 parent,

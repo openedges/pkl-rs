@@ -2,8 +2,11 @@
 //! contracts complement, and do not replace, raw pinned Java comparisons.
 //! Retained module graphs include their one builtin Module parent; executable
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
+#[path = "support/constructor_baseline.rs"]
+mod constructor_baseline;
 #[path = "support/module_policy.rs"]
 mod module_policy;
+use constructor_baseline::compile_module_with_constructor_baseline;
 use std::sync::Arc;
 #[path = "support/eager_base.rs"]
 mod eager_base;
@@ -14,11 +17,12 @@ use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::resolve_module;
 use pkl_runtime::value::{ErrorKind, RuntimeError, Value};
-use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll, compile_module};
+use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll};
 
 fn program(source: &str) -> Arc<Program> {
     let parsed = parse_module(source).unwrap();
-    let mut program = compile_module(&resolve_module(&parsed).unwrap()).unwrap();
+    let mut program =
+        compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap();
     module_policy::register(Arc::make_mut(&mut program), source);
     program
 }

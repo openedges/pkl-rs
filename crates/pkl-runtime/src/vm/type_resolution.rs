@@ -24,12 +24,16 @@ pub(super) struct AliasDefinition {
 pub(super) enum DeclarationValue {
     Value(Value),
     Builtin(TypeCheck),
+    /// A module type first resolved in an open/abstract module remains a
+    /// receiver-dependent self type. A closed first receiver is cached as Class.
+    ModuleSelf,
 }
 
 #[derive(Clone, Copy)]
 pub(super) struct Need {
     recipe: usize,
     owner: ObjectId,
+    module_receiver: Option<ObjectId>,
 }
 
 enum ResolutionFailure {
@@ -58,6 +62,7 @@ impl DeclaredRun {
     }
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
         roots.push(Value::Object(self.need.owner));
+        roots.extend(self.need.module_receiver.map(Value::Object));
         roots.extend(self.imported.map(Value::Object));
     }
 }
@@ -188,32 +193,87 @@ impl TypeCheck {
 }
 
 impl Vm {
-    fn declaring_module(&self, environment: &Environment) -> Result<ObjectId, RuntimeError> {
-        let mut owner = environment
+    fn declaring_module(
+        &self,
+        environment: &Environment,
+        self_type: bool,
+    ) -> Result<ObjectId, RuntimeError> {
+        let mut scope = environment
             .scopes
             .last()
-            .map(|scope| scope.owner)
+            .cloned()
             .ok_or_else(|| invalid("type resolution has no lexical module"))?;
         let mut seen = BTreeSet::new();
-        while seen.insert(owner) {
-            let object = self.heap.get(owner)?;
+        while seen.insert(scope.owner) {
+            let object = self.heap.get(scope.owner)?;
             if object.is_module {
-                return Ok(owner);
+                // `module` is a receiver-dependent self type. Ordinary named
+                // declarations retain the lexical owner's lookup/cache key.
+                return Ok(if self_type {
+                    scope.receiver
+                } else {
+                    scope.owner
+                });
             }
-            owner = object
+            scope = object
                 .environment
                 .scopes
                 .last()
-                .map(|scope| scope.owner)
+                .cloned()
                 .ok_or_else(|| invalid("type owner has no enclosing module"))?;
         }
         Err(invalid("cyclic lexical type owner"))
+    }
+
+    fn alias_check_environment(
+        &self,
+        declaration: usize,
+        environment: &Environment,
+    ) -> Result<Option<Environment>, RuntimeError> {
+        if let Some(alias) = self.alias_singletons.get(&declaration) {
+            return Ok(Some(self.heap.get(*alias)?.environment.clone()));
+        }
+        // Inlined aliases need not have had their value forced. Locate the
+        // published declaration owner without evaluating the alias or its body.
+        let mut pending: Vec<_> = environment
+            .scopes
+            .iter()
+            .rev()
+            .map(|scope| scope.owner)
+            .collect();
+        let mut visited = BTreeSet::new();
+        while let Some(owner) = pending.pop() {
+            if !visited.insert(owner) {
+                continue;
+            }
+            let object = self.heap.get(owner)?;
+            if object.members.iter().any(|member| matches!(
+                self.program.blocks.get(member.code).and_then(|block| block.first()),
+                Some(Instruction::BeginTypeAlias { declaration: found, .. }) if *found == declaration
+            )) {
+                let mut lexical = object.environment.clone();
+                lexical.scopes.insert(0, Scope { receiver: owner, owner });
+                return Ok(Some(lexical));
+            }
+            pending.extend(
+                object
+                    .environment
+                    .scopes
+                    .iter()
+                    .rev()
+                    .map(|scope| scope.owner),
+            );
+            pending.extend(object.parent);
+        }
+        Ok(None)
     }
 
     fn materialize_type(
         &self,
         ty: &TypeCheck,
         environment: &Environment,
+        for_default: bool,
+        final_type: &mut bool,
     ) -> Result<TypeCheck, ResolutionFailure> {
         // Postorder work avoids Rust recursion even when a deep shared generic
         // graph acquires a declaration leaf. Context ids distinguish alias
@@ -257,13 +317,45 @@ impl Vm {
                         continue;
                     }
                     if let TypeCheck::Declared { recipe, arguments } = ty {
-                        let owner = self.declaring_module(&context.1)?;
-                        let value = self
-                            .resolved_declarations
-                            .get(&(recipe, owner))
-                            .ok_or(ResolutionFailure::Need(Need { recipe, owner }))?;
+                        let self_type = self.program.type_recipes[recipe].path.is_empty();
+                        let owner = self.declaring_module(&context.1, false)?;
+                        let module_receiver = self_type
+                            .then(|| self.declaring_module(&context.1, true))
+                            .transpose()?;
+                        let value = self.resolved_declarations.get(&(recipe, owner)).ok_or(
+                            ResolutionFailure::Need(Need {
+                                recipe,
+                                owner,
+                                module_receiver,
+                            }),
+                        )?;
                         let definition = &self.program.type_recipes[recipe];
                         match value {
+                            DeclarationValue::ModuleSelf => {
+                                *final_type = false;
+                                // The declaration established a non-final module
+                                // type; defaults/checks now use the invocation's
+                                // module even when an alias supplies lexical names.
+                                // Alias checking swaps in its declaration frame;
+                                // createDefaultValue deliberately keeps the caller.
+                                let receiver = self.declaring_module(
+                                    if for_default { environment } else { &context.1 },
+                                    true,
+                                )?;
+                                let class = self
+                                    .heap
+                                    .object_class(receiver)?
+                                    .ok_or_else(|| invalid("module self type has no class"))?;
+                                let class = self.heap.class_definition(class)?;
+                                values.push((
+                                    TypeCheck::Class {
+                                        module: class.module.clone(),
+                                        id: class.id,
+                                        name: class.name.clone(),
+                                    },
+                                    true,
+                                ));
+                            }
                             DeclarationValue::Builtin(ty) => {
                                 work.push(Work::Changed);
                                 work.push(Work::Visit(ty.substituted(&context.1)?, context));
@@ -355,9 +447,29 @@ impl Vm {
                         values.push((ty, false));
                         continue;
                     }
+                    // Locally compiled aliases already carry their expanded
+                    // body rather than a Declared lookup. Preserve the same
+                    // lexical receiver swap as the runtime alias path above.
+                    let alias_context = if !for_default
+                        && let TypeCheck::NamedAlias { declaration, .. } = &ty
+                        && let Some(lexical) =
+                            self.alias_check_environment(*declaration, &context.1)?
+                    {
+                        let id = next_context;
+                        next_context += 1;
+                        Some((id, Arc::new(lexical)))
+                    } else {
+                        None
+                    };
+                    let expanded_index = children.len() - 1;
                     work.push(Work::Rebuild(ty, children.len()));
-                    for child in children.into_iter().rev() {
-                        work.push(Work::Visit(child, context.clone()));
+                    for (index, child) in children.into_iter().enumerate().rev() {
+                        let child_context = if index == expanded_index {
+                            alias_context.as_ref().unwrap_or(&context)
+                        } else {
+                            &context
+                        };
+                        work.push(Work::Visit(child, child_context.clone()));
                     }
                 }
                 Work::Changed => values.last_mut().expect("builtin type result").1 = true,
@@ -466,11 +578,12 @@ impl Vm {
         &mut self,
         ty: &TypeCheck,
         environment: &Environment,
+        for_default: bool,
     ) -> Result<Option<TypeCheck>, RuntimeError> {
         if !ty.has_declared() {
             return Ok(Some(ty.clone()));
         }
-        match self.materialize_type(ty, environment) {
+        match self.materialize_type(ty, environment, for_default, &mut true) {
             Ok(resolved) => Ok(Some(resolved)),
             Err(ResolutionFailure::Error(error)) => Err(error),
             Err(ResolutionFailure::Need(need)) => {
@@ -484,6 +597,24 @@ impl Vm {
         &mut self,
         mut instruction: Instruction,
     ) -> Result<Option<Instruction>, RuntimeError> {
+        if matches!(
+            instruction,
+            Instruction::ResolvedInferredParent { cache: true, .. }
+                | Instruction::GenericConstructorParent { cache: true, .. }
+        ) {
+            let frame = self.frames.last().expect("inferred parent frame");
+            if let Some(value) = self.type_parent_defaults.get(&(frame.block, frame.pc - 1)) {
+                return Ok(Some(Instruction::Constant(value.clone())));
+            }
+        }
+        let for_default = matches!(
+            instruction,
+            Instruction::ResolvedDefault { .. }
+                | Instruction::ResolvedInferredParent { .. }
+                | Instruction::GenericConstructorParent { .. }
+                | Instruction::SetCollectionTypeDefault { .. }
+        );
+        let mut final_type = true;
         let ty = match &mut instruction {
             Instruction::ResolveType(ty)
             | Instruction::ResolvedClass(ty)
@@ -492,6 +623,7 @@ impl Vm {
             | Instruction::CheckType(ty)
             | Instruction::TestType(ty)
             | Instruction::ResolvedDefault { ty, .. }
+            | Instruction::ResolvedInferredParent { ty, .. }
             | Instruction::ValidateTypeArguments { ty, .. }
             | Instruction::GenericConstructorParent { ty, .. }
             | Instruction::SetCollectionTypeDefault { ty, .. } => ty,
@@ -501,13 +633,17 @@ impl Vm {
             return Ok(Some(instruction));
         }
         let environment = &self.frames.last().expect("type instruction").environment;
-        match self.materialize_type(ty, environment) {
+        match self.materialize_type(ty, environment, for_default, &mut final_type) {
             Ok(resolved) => *ty = resolved,
             Err(ResolutionFailure::Error(error)) => return Err(error),
             Err(ResolutionFailure::Need(need)) => {
                 self.begin_declared_type(need, true)?;
                 return Ok(None);
             }
+        }
+        if !final_type && let Instruction::GenericConstructorParent { cache, .. } = &mut instruction
+        {
+            *cache = false;
         }
         Ok(Some(instruction))
     }
@@ -519,11 +655,24 @@ impl Vm {
     ) -> Result<(), RuntimeError> {
         let recipe = self.program.type_recipes[need.recipe].clone();
         if recipe.path.is_empty() {
-            // The `module` type uses the current module's class, including an
-            // adopted parent class. This is distinct from importing a prototype.
-            let value = self.reference_get_class(&Value::Object(need.owner))?;
+            // UnresolvedTypeNode.Module chooses finality once, using the
+            // receiver at first resolution. Inherited call sites first resolved
+            // in a closed child retain that child's class, matching Java's
+            // observable order-dependent direct `new module` behavior.
+            let receiver = need
+                .module_receiver
+                .ok_or_else(|| invalid("module type receiver"))?;
+            let value = self.reference_get_class(&Value::Object(receiver))?;
+            let class = self
+                .heap
+                .class_definition(value.heap_id().expect("module class"))?;
+            let value = if class.open || class.abstract_ {
+                DeclarationValue::ModuleSelf
+            } else {
+                DeclarationValue::Value(value)
+            };
             self.resolved_declarations
-                .insert((need.recipe, need.owner), DeclarationValue::Value(value));
+                .insert((need.recipe, need.owner), value);
             if retry_instruction {
                 self.frames.last_mut().expect("type frame").pc -= 1;
             }
@@ -855,6 +1004,15 @@ impl Vm {
                     .expect("default frame")
                     .generic_default = Some(generics::GenericDefaultRun::stack(ty, origin));
             }
+            Instruction::ResolvedInferredParent { ty, origin, cache } => {
+                let frame = self.frames.last_mut().expect("inferred parent frame");
+                let ty = ty.substituted(&frame.environment)?;
+                frame.generic_default = Some(generics::GenericDefaultRun::inferred_parent(
+                    ty,
+                    origin,
+                    cache.then_some((frame.block, frame.pc - 1)),
+                ));
+            }
             Instruction::ResolveClassType { name, local } => {
                 let frame = self.frames.last().expect("active frame");
                 let module = match frame.environment.scopes.last() {
@@ -967,7 +1125,7 @@ mod tests {
                         .shared();
                     }
                     assert!(ty.has_declared());
-                    let result = match vm.materialize_type(&ty, &environment) {
+                    let result = match vm.materialize_type(&ty, &environment, false, &mut true) {
                         Ok(result) => result,
                         Err(_) => panic!("cached declaration should resolve"),
                     };

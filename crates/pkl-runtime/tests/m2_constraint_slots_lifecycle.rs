@@ -1,4 +1,7 @@
 //! Logical custom-this slot lifetimes; separate from Java raw-byte compatibility evidence.
+#[path = "support/constructor_baseline.rs"]
+mod constructor_baseline;
+use constructor_baseline::compile_module_with_constructor_baseline;
 use std::sync::Arc;
 
 use pkl_runtime::heap::LazyState;
@@ -6,7 +9,7 @@ use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::resolve_module;
 use pkl_runtime::value::{ErrorKind, RuntimeError, Value};
-use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll, compile_module};
+use pkl_runtime::vm::{Instruction as I, Program, Vm, VmPoll};
 
 const SOURCE: &str = r#"
 typealias Outer = Dynamic(
@@ -33,7 +36,7 @@ letRoot = let (checked: Dynamic(
 
 fn program() -> Program {
     let parsed = parse_module(SOURCE).unwrap();
-    (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone()
+    (*compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap()).clone()
 }
 
 fn vm_event(vm: &mut Vm) -> VmPoll {

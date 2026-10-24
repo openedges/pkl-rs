@@ -2,10 +2,13 @@
 //! Retained module graphs include their builtin Module parent and source-backed
 //! stdlib annotations; transient objects and terminal-zero assertions stay separate.
 //! Exact executable bounds also include reached virtual method-call owners.
+#[path = "support/constructor_baseline.rs"]
+mod constructor_baseline;
 #[path = "support/eager_base.rs"]
 mod eager_base;
 #[path = "support/module_policy.rs"]
 mod module_policy;
+use constructor_baseline::compile_module_with_constructor_baseline;
 use eager_base::Baseline;
 use std::sync::Arc;
 
@@ -13,7 +16,7 @@ use pkl_runtime::host::{HostPoll, HostSession};
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::resolve_module;
 use pkl_runtime::value::{ErrorKind, RuntimeError, Value};
-use pkl_runtime::vm::{Instruction as I, compile_module};
+use pkl_runtime::vm::Instruction as I;
 
 const SOURCE: &str = r#"
 import "pkl:ref"
@@ -35,7 +38,9 @@ checkedValue = checked.getData().text
 
 fn setup(source: &str, members: &[&str]) -> (HostSession, Value, Vec<usize>) {
     let parsed = parse_module(source).unwrap();
-    let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    let mut program =
+        (*compile_module_with_constructor_baseline(&resolve_module(&parsed).unwrap()).unwrap())
+            .clone();
     module_policy::register(&mut program, source);
     let module_entry = program.entry;
     let entries = members
