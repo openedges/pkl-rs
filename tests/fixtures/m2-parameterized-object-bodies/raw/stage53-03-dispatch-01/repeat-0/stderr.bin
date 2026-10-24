@@ -1,0 +1,50 @@
+An unexpected error has occurred. Would you mind filing a bug report?
+Cmd+Double-click the link below to open an issue.
+Please copy and paste the entire error output into the issue's description.
+
+https://github.com/apple/pkl/issues/new
+
+java.lang.ArrayIndexOutOfBoundsException%3A%20Index%200%20out%20of%20bounds%20for%20length%200
+
+–– Pkl Error ––
+Index 0 out of bounds for length 0
+
+3 | directUnbound = new Dynamic { arg -> value = arg }
+                                         ^^^^^
+at dispatch#directUnbound.value (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl)
+
+1 | directUnbound.value
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Pkl 0.32.0 (macOS 27.0, Java 21.0.12.1)
+
+java.lang.ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at com.oracle.truffle.api.impl.FrameWithoutBoxing.getIndexedTagChecked(FrameWithoutBoxing.java:729)
+	at com.oracle.truffle.api.impl.FrameWithoutBoxing.verifyIndexedGet(FrameWithoutBoxing.java:698)
+	at com.oracle.truffle.api.impl.FrameWithoutBoxing.getLong(FrameWithoutBoxing.java:531)
+	at org.pkl.core.ast.frame.ReadFrameSlotNode.evalInt(ReadFrameSlotNode.java:36)
+	at org.pkl.core.ast.frame.ReadFrameSlotNodeGen.executeAndSpecialize(ReadFrameSlotNodeGen.java:192)
+	at org.pkl.core.ast.frame.ReadFrameSlotNodeGen.executeGeneric(ReadFrameSlotNodeGen.java:114)
+	at org.pkl.core.ast.member.TypeCheckedPropertyNode.eval(TypeCheckedPropertyNode.java:87)
+	at org.pkl.core.ast.member.TypeCheckedPropertyNodeGen.executeAndSpecialize(TypeCheckedPropertyNodeGen.java:151)
+	at org.pkl.core.ast.member.TypeCheckedPropertyNodeGen.executeImpl(TypeCheckedPropertyNodeGen.java:97)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultIndirectCallNode.call(DefaultIndirectCallNode.java:53)
+	at org.pkl.core.runtime.VmUtils.doReadMember(VmUtils.java:395)
+	at org.pkl.core.runtime.VmUtils.readMemberOrNull(VmUtils.java:324)
+	at org.pkl.core.ast.expression.member.ReadPropertyNode.evalObject(ReadPropertyNode.java:112)
+	at org.pkl.core.ast.expression.member.ReadPropertyNodeGen.executeAndSpecialize(ReadPropertyNodeGen.java:142)
+	at org.pkl.core.ast.expression.member.ReadPropertyNodeGen.executeGeneric(ReadPropertyNodeGen.java:104)
+	at org.pkl.core.ast.SimpleRootNode.executeImpl(SimpleRootNode.java:53)
+	at org.pkl.core.ast.PklRootNode.execute(PklRootNode.java:46)
+	at com.oracle.truffle.api.impl.DefaultCallTarget.call(DefaultCallTarget.java:118)
+	at com.oracle.truffle.api.impl.DefaultIndirectCallNode.call(DefaultIndirectCallNode.java:53)
+	at org.pkl.core.runtime.VmUtils.evaluateExpression(VmUtils.java:969)
+	at org.pkl.core.EvaluatorImpl.lambda$evaluateExpressionString$0(EvaluatorImpl.java:267)
+	at org.pkl.core.EvaluatorImpl.lambda$doEvaluate$0(EvaluatorImpl.java:470)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:388)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at M2LanguageProbe.main(M2LanguageProbe.java:24)

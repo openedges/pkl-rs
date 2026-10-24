@@ -1,0 +1,9 @@
+typealias Gate = Int(read("gate.txt").text == "go\n")
+typealias ClosedGate = Int(read("gate.txt").text == "stop")
+local parent = (arg) -> new Dynamic { value = arg }
+local patch = (parent) { arg: Gate -> captured = arg }
+local closed = (parent) { arg: ClosedGate -> captured = arg }
+local lazy = new Mixin { arg -> value = read("gate.txt").text + arg.toString() }
+readConstraintSuccess = patch.apply(7).captured
+readConstraintFailure = closed.apply(7).captured
+readInLazyBody = lazy.apply(8).value

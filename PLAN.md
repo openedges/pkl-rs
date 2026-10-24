@@ -1252,6 +1252,75 @@ ready 888개와 역사적으로 보존한 blocked `import1b` 한 개이며, 실�
 실행한 뒤 실제 첫 실패에 따라 공통 런타임 구현을 이어갑니다. **M2의 9개 영역과
 엄격한 전체 완료 조건은 계속 열려 있습니다.**
 
+### Stage 53 — 객체 본문 매개변수와 Mixin 호출 의미론
+
+Stage 52의 도구 변경은 `d7d691b`에 커밋·푸시했습니다. 로컬 Python 검사
+184개와 참조·목록 검증을 포함한 명령 아홉 개가 통과했고, 검증 입력 3,955개의
+바이트가 실제 커밋과 일치했습니다. 이 커밋을 고정한 worktree에서 명시적
+원본 작업 환경으로 888개 전체를 비교하고 있습니다. 완료된 일부 사례의
+관찰은 전체 취득 완료나 M2 완료로 집계하지 않습니다.
+
+공통 런타임에 객체 본문의 함수 매개변수와 Mixin 호출을 구현했습니다. 기존
+`lambdaTrailingCommas.pkl`은 local 선언만 있어 빈 출력 일치만으로 호출
+의미론을 검증할 수 없습니다. 실제 Mixin 호출, 선언·추론 new, 실제 alias와
+구조적으로 같은 함수 타입의 차이, 함수 amendment와 currying, 타입 검사,
+generator·lexical capture·오류 위치·GC·재진입을 추가 Java 관찰로 대조합니다.
+
+핵심 구현은 `gpt-6-astra / xhigh`, Java 기준 취득과 독립 의미론 검토는 각각
+`gpt-6.1-sol / high`에 배정합니다. `d7d691b`에서 별도 worktree를 만들었으며
+진행 중인 원본 비교 소스와 입력은 수정하지 않습니다. 부모 함수에 전달할
+원래 인자와 본문에서 캡처할 검사된 값을 구분하고, eager generator header·key와
+지연 본문의 이름 해석 범위를 고정 Java와 맞춥니다. 비어 있는 본문의 검사
+생략과 nonfunction 부모의 오류 순서도 같은 공통 경로에서 구현합니다.
+
+Java 기준 취득에서 의도한 호출에 도달하지 못한 초기 입력과 실제 내부 오류는
+별도 결과로 보존합니다. 수정된 제어 입력은 새 출력 디렉터리에서 실행하며,
+반복·수정 취득을 독립 기능 개수로 합산하지 않습니다. 일반 호출의 원시 결과가
+일치한 뒤 필수 Rust 검사와 실제 native·Node·Chromium 검증을 진행합니다.
+
+독립 검토에서 명시적 `new Alias<T>`가 실제 Mixin의 기본값을 잃는 누락을
+찾았습니다. 별칭·nullable·선택된 union·제약을 따라 실제 선언 identity를
+유지하도록 수정했고, 이름만 `Mixin`인 일반 함수 별칭에는 기본값을 부여하지
+않았습니다. 일반 Java 사례는 값 56개·언어 오류 29개인 85개로 확정했으며,
+실제 내부 오류 7개와 이전에 의도에 도달하지 못한 입력은 따로 보존했습니다.
+
+첫 정식 비교는 환경별 170회 중 164회 일치·취득 실패 6회였습니다. 검증
+어댑터가 authored 상대 URI와 resolved 절대 URI의 동등성을 잘못 요구한 것이
+원인이었습니다. 두 URI를 각각 기록하고 resolved URI·원래 resource bytes를
+정확히 확인하도록 수정했으며, 상대 경로와 미선언 resource 회귀를 추가했습니다.
+첫 실패 자료는 유지하고 공통 VM·Java fixture·고정 binding 바이너리는 바꾸지
+않았습니다. 수정된 드라이버의 두 번째 비교는 native·N-API·Chromium 각각
+85개를 두 번씩 실행한 **170/170회**, 총 **510회 원시 출력·오류 일치**입니다.
+내부 오류 7개는 이 통과 수에 포함하지 않으며 전체 gate는 계속 열려 있습니다.
+
+원본 `parser/lambdaTrailingCommas.pkl`, `generators/forGeneratorInMixins.pkl`,
+`generators/forGeneratorInMixinWithObjectParam.pkl`도 고정 Java와 동일한
+물리적 작업 환경·원래 명령·resource로 실행했습니다. 세 사례의 stdout·stderr·
+종료 코드·생성 파일이 일치했습니다. 첫 parser 사례의 빈 출력과 두 generator
+사례의 실제 출력 검증을 구분하며, 원본 코퍼스 전체 통과로 확대하지 않습니다.
+
+수정 후 필수 Rust 검사 다섯 개를 포함한 명령 17개가 모두 통과했고, 입력
+4,589개의 바이트가 실행 전후 같았습니다. workspace harness 관찰은 873회
+통과·실패 0·ignored 1이며 별도 native 어댑터 검사 4개, Python 207개,
+JS 드라이버 13개가 통과했습니다. 공통 primitive는 세 환경 간 6,078개 일치,
+Java 대비 환경별 6,076개 일치와 기존 regex 실패 2개를 유지합니다. Node와
+Chromium의 기존 92개 시나리오도 각각 통과했습니다. 수정된 URI 검증 드라이버는
+고정 binding을 재사용하며 공통 엔진 입력·실행 파일의 동일성을 별도로 확인했습니다.
+
+[구현 체크포인트](reports/m2/stage53-implementation-checkpoint.json)와 Java·
+첫 실패·최종 비교·원본 세 모듈·검증·독립 검토의 원시 증거를 게시합니다.
+전체 목록의 행·순서·실행 계약·mapping 상태는 유지하며 구현 source hash만
+갱신했습니다. 다음 공통 구현은 실제 호출 위치별 deprecation 경고와 수명주기를
+우선 검토하고, module 상대 경로·class ancestry·Typed/Dynamic metadata를
+이어갑니다. renderer 이름이 붙은 실패라도 실제 원인인 builtin·언어 의존성을
+구분하여 수정하며 원래 실패를 제거하거나 다른 기대 결과로 바꾸지 않습니다.
+
+Stage 52의 완료된 prefix에서는 deprecation 경고 누락, reflection과 일부
+표준 라이브러리·renderer·URI 동작의 차이가 관찰됐습니다. 이 범위는 원래
+언어 코퍼스를 실행하기 위한 의존성으로 남기며, 입력이나 기대 결과를 바꾸어
+제외하지 않습니다. 현재 구현은 이들 의무나 **M2의 아홉 영역 전체를 닫지
+않으며**, 전체 원본 비교의 실제 결과에 따라 후속 공통 구현을 이어갑니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

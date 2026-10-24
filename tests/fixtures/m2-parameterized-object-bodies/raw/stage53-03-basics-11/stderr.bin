@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `basics#Box`, but got type `Dynamic`.
+Value: new Dynamic { value = ? }
+
+10 | local typed = new Mixin<Box> { arg -> value = arg.value + 1 }
+                             ^^^
+at basics#typed (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl)
+
+10 | local typed = new Mixin<Box> { arg -> value = arg.value + 1 }
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at basics#typed.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl)
+
+25 | badArgument = typed.apply(seed).value
+                   ^^^^^^^^^^^^^^^^^
+at basics#badArgument (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl)
+
+1 | badArgument
+    ^^^^^^^^^^^
+at  (repl:text)

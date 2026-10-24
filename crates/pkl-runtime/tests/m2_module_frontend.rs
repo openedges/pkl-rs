@@ -936,7 +936,7 @@ fn constant_string_interpolation_rejects_before_its_body_or_later_escape() {
 }
 
 #[test]
-fn delayed_validation_and_unsupported_object_parameters_do_not_hide_syntax() {
+fn delayed_validation_and_object_parameters_do_not_hide_syntax() {
     for source in [
         "first = 9223372036854775808\nlater = )",
         "first = new { x -> value = x }\nlater = )",
@@ -948,16 +948,14 @@ fn delayed_validation_and_unsupported_object_parameters_do_not_hide_syntax() {
             FailureDisposition::LanguageError
         );
     }
-    let error = parse_module("first = new { x -> value = x }").unwrap_err();
-    assert_eq!(
-        error.provenance.origin,
-        DiagnosticOrigin::DeferredAstValidation
-    );
-    assert_eq!(
-        error.provenance.disposition,
-        FailureDisposition::Unsupported
-    );
-    assert_eq!(error.provenance.reason, Some("parameterized-object-body"));
+    let parsed = parse_module("first = new { x: Int, -> value = x }").unwrap();
+    let pkl_runtime::syntax::ExprKind::Object { parameters, .. } = &parsed.members[0].expr.kind
+    else {
+        panic!("inferred object body");
+    };
+    assert_eq!(parameters.len(), 1);
+    assert_eq!(parameters[0].name, "x");
+    assert!(parameters[0].ty.is_some());
     assert!(parse_module("result = new Dynamic { x = 1 } { y = 2 }").is_ok());
 }
 

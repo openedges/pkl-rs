@@ -1,0 +1,398 @@
+[
+  {
+    "id": "basics-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "explicitValue"
+  },
+  {
+    "id": "basics-01",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "inferredValue"
+  },
+  {
+    "id": "basics-02",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "aliasValue"
+  },
+  {
+    "id": "basics-03",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "functionTypedValue"
+  },
+  {
+    "id": "basics-04",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "defaultValue"
+  },
+  {
+    "id": "basics-05",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "typedValue"
+  },
+  {
+    "id": "basics-06",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "underscoreValue"
+  },
+  {
+    "id": "basics-07",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "shadowValue"
+  },
+  {
+    "id": "basics-08",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "pipelineValue.value"
+  },
+  {
+    "id": "basics-09",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "chainedValue"
+  },
+  {
+    "id": "basics-10",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "repeatedValue"
+  },
+  {
+    "id": "basics-11",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "badArgument"
+  },
+  {
+    "id": "basics-12",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "badCallArity"
+  },
+  {
+    "id": "basics-13",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl",
+    "source_sha256": "d5bb79789faaa43c3b56853003dbddf81cc03944f88fa9952d3e6cc1d876394a",
+    "expression": "badAlias"
+  },
+  {
+    "id": "arity-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "zero"
+  },
+  {
+    "id": "arity-01",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "one"
+  },
+  {
+    "id": "arity-02",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "two"
+  },
+  {
+    "id": "arity-03",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "three"
+  },
+  {
+    "id": "arity-04",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "noNames"
+  },
+  {
+    "id": "arity-05",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "wrongZero"
+  },
+  {
+    "id": "arity-06",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "wrongOne"
+  },
+  {
+    "id": "arity-07",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "wrongCountBeforeMissingType"
+  },
+  {
+    "id": "arity-08",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "missingType"
+  },
+  {
+    "id": "arity-09",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "emptyIgnoresTypeAndCount"
+  },
+  {
+    "id": "arity-10",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "duplicateName"
+  },
+  {
+    "id": "arity-11",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "repeatedDiscard"
+  },
+  {
+    "id": "arity-12",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl",
+    "source_sha256": "e2c0375c2c929df11a8e54a54fba0d14561261e5fc7e7b3f3432fd8a2c5ba0c0",
+    "expression": "wrongTypedArgument"
+  },
+  {
+    "id": "curried-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/curried.pkl",
+    "source_sha256": "4b8ca379060b08b1bbf215b222b3d2dee9232a00b4e23bd1bdb0ebe1b2a0127a",
+    "expression": "firstCapture"
+  },
+  {
+    "id": "curried-01",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/curried.pkl",
+    "source_sha256": "4b8ca379060b08b1bbf215b222b3d2dee9232a00b4e23bd1bdb0ebe1b2a0127a",
+    "expression": "curriedValue"
+  },
+  {
+    "id": "curried-02",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/curried.pkl",
+    "source_sha256": "4b8ca379060b08b1bbf215b222b3d2dee9232a00b4e23bd1bdb0ebe1b2a0127a",
+    "expression": "tripleCapture"
+  },
+  {
+    "id": "curried-03",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/curried.pkl",
+    "source_sha256": "4b8ca379060b08b1bbf215b222b3d2dee9232a00b4e23bd1bdb0ebe1b2a0127a",
+    "expression": "tripleValue"
+  },
+  {
+    "id": "curried-04",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/curried.pkl",
+    "source_sha256": "4b8ca379060b08b1bbf215b222b3d2dee9232a00b4e23bd1bdb0ebe1b2a0127a",
+    "expression": "nullObjectDefault"
+  },
+  {
+    "id": "curried-05",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/curried.pkl",
+    "source_sha256": "4b8ca379060b08b1bbf215b222b3d2dee9232a00b4e23bd1bdb0ebe1b2a0127a",
+    "expression": "nullFunctionDefault"
+  },
+  {
+    "id": "curried-06",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/curried.pkl",
+    "source_sha256": "4b8ca379060b08b1bbf215b222b3d2dee9232a00b4e23bd1bdb0ebe1b2a0127a",
+    "expression": "scalarReturnError"
+  },
+  {
+    "id": "curried-07",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/curried.pkl",
+    "source_sha256": "4b8ca379060b08b1bbf215b222b3d2dee9232a00b4e23bd1bdb0ebe1b2a0127a",
+    "expression": "wrongSecondArity"
+  },
+  {
+    "id": "curried-08",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/curried.pkl",
+    "source_sha256": "4b8ca379060b08b1bbf215b222b3d2dee9232a00b4e23bd1bdb0ebe1b2a0127a",
+    "expression": "repeatedCurried"
+  },
+  {
+    "id": "dispatch-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl",
+    "source_sha256": "6e4fe88a95ce6417770764405c244a9671f731dfd07d0a773fe45b54734fbd7d",
+    "expression": "direct.value"
+  },
+  {
+    "id": "dispatch-01",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl",
+    "source_sha256": "6e4fe88a95ce6417770764405c244a9671f731dfd07d0a773fe45b54734fbd7d",
+    "expression": "directUnbound.value"
+  },
+  {
+    "id": "dispatch-02",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl",
+    "source_sha256": "6e4fe88a95ce6417770764405c244a9671f731dfd07d0a773fe45b54734fbd7d",
+    "expression": "typed.value"
+  },
+  {
+    "id": "dispatch-03",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl",
+    "source_sha256": "6e4fe88a95ce6417770764405c244a9671f731dfd07d0a773fe45b54734fbd7d",
+    "expression": "listing[0]"
+  },
+  {
+    "id": "dispatch-04",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl",
+    "source_sha256": "6e4fe88a95ce6417770764405c244a9671f731dfd07d0a773fe45b54734fbd7d",
+    "expression": "mapping[\"x\"]"
+  },
+  {
+    "id": "dispatch-05",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl",
+    "source_sha256": "6e4fe88a95ce6417770764405c244a9671f731dfd07d0a773fe45b54734fbd7d",
+    "expression": "emptyTyped.value"
+  },
+  {
+    "id": "dispatch-06",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl",
+    "source_sha256": "6e4fe88a95ce6417770764405c244a9671f731dfd07d0a773fe45b54734fbd7d",
+    "expression": "emptyListing.length"
+  },
+  {
+    "id": "dispatch-07",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl",
+    "source_sha256": "6e4fe88a95ce6417770764405c244a9671f731dfd07d0a773fe45b54734fbd7d",
+    "expression": "emptyMapping.length"
+  },
+  {
+    "id": "dispatch-08",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl",
+    "source_sha256": "6e4fe88a95ce6417770764405c244a9671f731dfd07d0a773fe45b54734fbd7d",
+    "expression": "generatorDynamic.value"
+  },
+  {
+    "id": "dispatch-09",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl",
+    "source_sha256": "6e4fe88a95ce6417770764405c244a9671f731dfd07d0a773fe45b54734fbd7d",
+    "expression": "generatorUntyped.value"
+  },
+  {
+    "id": "generators-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/generators.pkl",
+    "source_sha256": "639f153391c81e35549df05efb027e538bd1ba2a02dfd7aebd96fa33cf542fd5",
+    "expression": "listFirst"
+  },
+  {
+    "id": "generators-01",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/generators.pkl",
+    "source_sha256": "639f153391c81e35549df05efb027e538bd1ba2a02dfd7aebd96fa33cf542fd5",
+    "expression": "listLoop"
+  },
+  {
+    "id": "generators-02",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/generators.pkl",
+    "source_sha256": "639f153391c81e35549df05efb027e538bd1ba2a02dfd7aebd96fa33cf542fd5",
+    "expression": "mapEntry"
+  },
+  {
+    "id": "generators-03",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/generators.pkl",
+    "source_sha256": "639f153391c81e35549df05efb027e538bd1ba2a02dfd7aebd96fa33cf542fd5",
+    "expression": "dynamicWhen"
+  },
+  {
+    "id": "generators-04",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/generators.pkl",
+    "source_sha256": "639f153391c81e35549df05efb027e538bd1ba2a02dfd7aebd96fa33cf542fd5",
+    "expression": "dynamicSpread"
+  },
+  {
+    "id": "generators-05",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/generators.pkl",
+    "source_sha256": "639f153391c81e35549df05efb027e538bd1ba2a02dfd7aebd96fa33cf542fd5",
+    "expression": "entryCapture"
+  },
+  {
+    "id": "generators-06",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/generators.pkl",
+    "source_sha256": "639f153391c81e35549df05efb027e538bd1ba2a02dfd7aebd96fa33cf542fd5",
+    "expression": "loopShadow"
+  },
+  {
+    "id": "types-order-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl",
+    "source_sha256": "eec874d02d75db4703d80f7c7e246670b20eda62c7202bd1e459b7e4ff64da81",
+    "expression": "constraintSuccess"
+  },
+  {
+    "id": "types-order-01",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl",
+    "source_sha256": "eec874d02d75db4703d80f7c7e246670b20eda62c7202bd1e459b7e4ff64da81",
+    "expression": "constraintFailure"
+  },
+  {
+    "id": "types-order-02",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl",
+    "source_sha256": "eec874d02d75db4703d80f7c7e246670b20eda62c7202bd1e459b7e4ff64da81",
+    "expression": "typeBeforeParentFailure"
+  },
+  {
+    "id": "types-order-03",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl",
+    "source_sha256": "eec874d02d75db4703d80f7c7e246670b20eda62c7202bd1e459b7e4ff64da81",
+    "expression": "parentFailure"
+  },
+  {
+    "id": "types-order-04",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl",
+    "source_sha256": "eec874d02d75db4703d80f7c7e246670b20eda62c7202bd1e459b7e4ff64da81",
+    "expression": "rawMapping"
+  },
+  {
+    "id": "types-order-05",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl",
+    "source_sha256": "eec874d02d75db4703d80f7c7e246670b20eda62c7202bd1e459b7e4ff64da81",
+    "expression": "checkedMapping"
+  },
+  {
+    "id": "types-order-06",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl",
+    "source_sha256": "eec874d02d75db4703d80f7c7e246670b20eda62c7202bd1e459b7e4ff64da81",
+    "expression": "rawFunction"
+  },
+  {
+    "id": "types-order-07",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl",
+    "source_sha256": "eec874d02d75db4703d80f7c7e246670b20eda62c7202bd1e459b7e4ff64da81",
+    "expression": "checkedFunction"
+  },
+  {
+    "id": "lexical-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/lexical.pkl",
+    "source_sha256": "9cfa0d555f1d2cce4fabbe8b4ea6db64b35c2d0a86c5841cf517e3d579ac0f75",
+    "expression": "superValue"
+  },
+  {
+    "id": "lexical-01",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/lexical.pkl",
+    "source_sha256": "9cfa0d555f1d2cce4fabbe8b4ea6db64b35c2d0a86c5841cf517e3d579ac0f75",
+    "expression": "selfValue"
+  },
+  {
+    "id": "lexical-02",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/lexical.pkl",
+    "source_sha256": "9cfa0d555f1d2cce4fabbe8b4ea6db64b35c2d0a86c5841cf517e3d579ac0f75",
+    "expression": "lexicalCapture"
+  },
+  {
+    "id": "lexical-03",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/lexical.pkl",
+    "source_sha256": "9cfa0d555f1d2cce4fabbe8b4ea6db64b35c2d0a86c5841cf517e3d579ac0f75",
+    "expression": "parentReceiver"
+  },
+  {
+    "id": "lexical-04",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/lexical.pkl",
+    "source_sha256": "9cfa0d555f1d2cce4fabbe8b4ea6db64b35c2d0a86c5841cf517e3d579ac0f75",
+    "expression": "bodyReceiver"
+  }
+]

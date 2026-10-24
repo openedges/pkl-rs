@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "bad"
+
+12 | class Box { value: Int = 3 }
+                        ^^^
+at eager-scope#Box.value (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/eager-scope.pkl)
+
+13 | local badReturn = new Mixin<Box> { arg -> value = "bad" }
+                                                       ^^^^^
+at eager-scope#badReturn.value (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/eager-scope.pkl)
+
+20 | returnedMemberConstraint = badReturn.apply(new Box {}).value
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at eager-scope#returnedMemberConstraint (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/eager-scope.pkl)
+
+1 | returnedMemberConstraint
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

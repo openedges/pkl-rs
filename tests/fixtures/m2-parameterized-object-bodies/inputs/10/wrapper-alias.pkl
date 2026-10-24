@@ -1,0 +1,9 @@
+typealias Maybe<T> = Mixin<T>?
+typealias Pick<T> = *Mixin<T> | String
+typealias Checked<T> = Mixin<T>(false)
+local maybe = new Maybe<Dynamic> { arg -> value = arg.value + 1 }
+local pick = new Pick<Dynamic> { arg -> value = arg.value + 2 }
+local checked = new Checked<Dynamic> { arg -> value = 1 }
+maybeValue = maybe.apply(new Dynamic { value = 4 }).value
+pickValue = pick.apply(new Dynamic { value = 4 }).value
+checkedError = checked

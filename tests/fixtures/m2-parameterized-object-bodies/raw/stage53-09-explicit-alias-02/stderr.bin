@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Cannot instantiate, or amend an instance of, external class `Function1`.
+
+6 | local structural = new Structural<Dynamic> { arg -> value = 1 }
+                           ^^^^^^^^^^^^^^^^^^^
+at explicit-alias#structural (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-09/inputs/explicit-alias.pkl)
+
+To create an instance of an external class, use its literal syntax or constructor method.
+Examples:
+* `123` uses literal syntax to create an instance of class `Int`.
+* `Pair(1, 2)` uses the `Pair()` constructor method to create an instance of class `Pair`.
+
+9 | structuralError = structural
+                      ^^^^^^^^^^
+at explicit-alias#structuralError (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-09/inputs/explicit-alias.pkl)
+
+1 | structuralError
+    ^^^^^^^^^^^^^^^
+at  (repl:text)

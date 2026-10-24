@@ -1,0 +1,19 @@
+local parent = (first) -> (second) -> new Dynamic { value = first + second }
+local amended = (parent) { captured: Int -> first = captured; value = super.value + captured }
+local tripleParent = (a) -> (b) -> (c) -> new Dynamic { value = a + b + c }
+local triple = (tripleParent) { original -> captured = original }
+local scalarParent = (a) -> a
+local scalarAmended = (scalarParent) { a -> value = a }
+local nullParent = (a) -> Null(new Dynamic { value = a })
+local nullAmended = (nullParent) { a -> extra = a + 1 }
+local nullFunctionParent = Null(parent)
+local nullFunctionAmended = (nullFunctionParent) { original -> first = original }
+firstCapture = amended.apply(2).apply(100).first
+curriedValue = amended.apply(2).apply(100).value
+tripleCapture = triple.apply(2).apply(100).apply(1000).captured
+tripleValue = triple.apply(2).apply(100).apply(1000).value
+nullObjectDefault = nullAmended.apply(4).extra
+nullFunctionDefault = nullFunctionAmended.apply(3).apply(90).first
+scalarReturnError = scalarAmended.apply(7).value
+wrongSecondArity = amended.apply(2).apply(3, 4)
+repeatedCurried = amended.apply(2).apply(100).first + amended.apply(9).apply(200).first

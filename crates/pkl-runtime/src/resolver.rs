@@ -231,6 +231,7 @@ enum Scope<'a> {
     Object(Vec<&'a Member>),
     Let(&'a str),
     Parameters(&'a [Parameter]),
+    ObjectParameters(&'a [Parameter], bool),
     GeneratorParameters(&'a [Parameter]),
     TypeParameters(&'a [TypeParameter]),
     CustomThis,
@@ -345,7 +346,9 @@ enum Work<'a> {
     },
     Member(&'a Member, bool),
     MemberBody(&'a Member, bool),
-    ObjectMembers(&'a [ObjectMember]),
+    ObjectMembers(&'a [ObjectMember], &'a [Parameter]),
+    PopObjectParameters,
+    CheckGeneratorParameters(&'a [Parameter]),
     ObjectBody(&'a [ObjectMember], Option<Span>),
     SpecializedBody {
         members: &'a [ObjectMember],
@@ -362,6 +365,7 @@ enum Work<'a> {
         lambda: bool,
         const_index: usize,
         custom: bool,
+        parameter_visibility: Option<bool>,
     },
     EntryValue(&'a Expr, &'a Expr),
     PredicateValue(&'a Expr, &'a Expr),
@@ -397,8 +401,11 @@ impl<'a> Resolver<'a> {
                     }
                     let_depth += 1;
                 }
-                Scope::Parameters(parameters) | Scope::GeneratorParameters(parameters) => {
+                Scope::Parameters(parameters)
+                | Scope::GeneratorParameters(parameters)
+                | Scope::ObjectParameters(parameters, _) => {
                     if !method
+                        && !matches!(scope, Scope::ObjectParameters(_, false))
                         && name != "_"
                         && let Some(index) = parameters
                             .iter()
@@ -566,7 +573,7 @@ impl<'a> Resolver<'a> {
                     let previous = std::mem::replace(&mut self.const_level, ConstLevel::Module);
                     self.scopes.push(Scope::Annotation(class));
                     work.push(Work::EndAnnotationBody(previous));
-                    work.push(Work::ObjectMembers(members));
+                    work.push(Work::ObjectMembers(members, &[]));
                 }
                 Work::EndAnnotations(previous) => self.const_level = previous,
                 Work::EndAnnotationBody(previous) => {
@@ -578,6 +585,19 @@ impl<'a> Resolver<'a> {
                     self.const_level = level;
                     self.member_path.pop();
                     self.diagnostic_path.pop();
+                }
+                Work::CheckGeneratorParameters(parameters) => {
+                    if let Some(parameter) = parameters.first() {
+                        return Err(Diagnostic::unsupported(
+                            DiagnosticOrigin::DeferredAstValidation,
+                            "parameterized-generator-body",
+                            parameter.span,
+                            "Parameterized for/when bodies encounter an upstream internal error.",
+                        ));
+                    }
+                }
+                Work::PopObjectParameters => {
+                    self.scopes.pop();
                 }
                 Work::EndObject(lambda) => {
                     self.diagnostic_owners.exit();
@@ -630,6 +650,7 @@ impl<'a> Resolver<'a> {
                     lambda,
                     const_index,
                     custom,
+                    parameter_visibility,
                 } => {
                     self.diagnostic_owners.exit();
                     if custom {
@@ -639,6 +660,11 @@ impl<'a> Resolver<'a> {
                     self.const_scopes[const_index].lookup = true;
                     self.receiver_is_lambda = lambda;
                     self.object_levels.push(level);
+                    if let Some(previous) = parameter_visibility
+                        && let Scope::ObjectParameters(_, visible) = &mut self.scopes[index - 1]
+                    {
+                        *visible = previous;
+                    }
                     self.scopes.insert(index, scope);
                 }
                 Work::EndDiagnosticOwner => self.diagnostic_owners.exit(),
@@ -846,7 +872,7 @@ impl<'a> Resolver<'a> {
                     }
                     work.push(Work::Expression(&member.expr, true));
                 }
-                Work::ObjectMembers(members) => {
+                Work::ObjectMembers(members, parameters) => {
                     let mut declarations = members.iter().rev().collect::<Vec<_>>();
                     let mut names = Vec::new();
                     while let Some(member) = declarations.pop() {
@@ -913,6 +939,10 @@ impl<'a> Resolver<'a> {
                             }
                         }
                     }
+                    if !parameters.is_empty() {
+                        self.scopes.push(Scope::ObjectParameters(parameters, true));
+                        work.push(Work::PopObjectParameters);
+                    }
                     let previous = self.enter_object(names);
                     work.push(Work::EndObject(previous));
                     work.push(Work::ConstantEntries(members));
@@ -940,6 +970,15 @@ impl<'a> Resolver<'a> {
                         }
                     } else {
                         work.push(Work::ObjectBody(members, None));
+                    }
+                    if !members.is_empty() {
+                        work.extend(
+                            parameters
+                                .iter()
+                                .rev()
+                                .filter_map(|parameter| parameter.ty.as_ref())
+                                .map(Work::Type),
+                        );
                     }
                 }
                 Work::SpecializedBody {
@@ -1031,11 +1070,15 @@ impl<'a> Resolver<'a> {
                         condition,
                         then_members,
                         else_members,
+                        then_parameters,
+                        else_parameters,
                         ..
                     } => {
                         work.push(Work::Eager(condition, false));
                         work.push(Work::ObjectBody(else_members, for_span));
+                        work.push(Work::CheckGeneratorParameters(else_parameters));
                         work.push(Work::ObjectBody(then_members, for_span));
+                        work.push(Work::CheckGeneratorParameters(then_parameters));
                     }
                     ObjectMember::For { .. } => work.push(Work::ForHeader(
                         member,
@@ -1070,6 +1113,7 @@ impl<'a> Resolver<'a> {
                 Work::ForHeader(member, index, mut seen) => {
                     let ObjectMember::For {
                         parameters,
+                        body_parameters,
                         iterable,
                         members,
                         span,
@@ -1120,6 +1164,7 @@ impl<'a> Resolver<'a> {
                         }
                     } else {
                         work.push(Work::ForBody(parameters, members, *span));
+                        work.push(Work::CheckGeneratorParameters(body_parameters));
                         work.push(Work::Eager(iterable, false));
                     }
                 }
@@ -1145,6 +1190,13 @@ impl<'a> Resolver<'a> {
                         .rposition(|scope| matches!(scope, Scope::Object(_)))
                         .expect("object generator scope");
                     let scope = self.scopes.remove(index);
+                    let parameter_visibility = if index > 0
+                        && let Scope::ObjectParameters(_, visible) = &mut self.scopes[index - 1]
+                    {
+                        Some(std::mem::replace(visible, false))
+                    } else {
+                        None
+                    };
                     let level = self.object_levels.pop().expect("object level");
                     let lambda = std::mem::replace(
                         &mut self.receiver_is_lambda,
@@ -1169,6 +1221,7 @@ impl<'a> Resolver<'a> {
                         lambda,
                         const_index,
                         custom,
+                        parameter_visibility,
                     });
                     work.push(Work::Expression(expression, false));
                 }
@@ -1527,11 +1580,24 @@ impl<'a> Resolver<'a> {
                         work.push(Work::EndAlias(previous));
                         work.push(Work::Type(ty));
                     }
-                    ExprKind::New { ty, members } | ExprKind::Annotation { ty, members, .. } => {
-                        work.push(Work::ObjectMembers(members));
+                    ExprKind::New {
+                        ty,
+                        members,
+                        parameters,
+                    }
+                    | ExprKind::Annotation {
+                        ty,
+                        members,
+                        parameters,
+                    } => {
+                        work.push(Work::ObjectMembers(members, parameters));
                         work.push(Work::Type(ty));
                     }
-                    ExprKind::Object { parent, members } => {
+                    ExprKind::Object {
+                        parent,
+                        members,
+                        parameters,
+                    } => {
                         if parent.is_none() && !contextual_new {
                             self.diagnostic_owner_requested = true;
                             let mut error = self.const_error(expression, "Cannot tell which parent to amend.").with_hint("Please specify a parent explicitly, for example `new Person { ... }` instead of `new { ... }`.");
@@ -1541,7 +1607,7 @@ impl<'a> Resolver<'a> {
                             error.span.end = error.span.start + 3;
                             return Err(error);
                         }
-                        work.push(Work::ObjectMembers(members));
+                        work.push(Work::ObjectMembers(members, parameters));
                         if let Some(parent) = parent {
                             work.push(Work::Expression(parent, false));
                         }

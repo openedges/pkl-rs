@@ -1,0 +1,74 @@
+[
+  {
+    "id": "lexical-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/lexical.pkl",
+    "source_sha256": "55fa66d77b17ff008b1e2c6e76e49598ef01f733c66c22650140b20d6b7f7db9",
+    "expression": "superValue"
+  },
+  {
+    "id": "lexical-01",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/lexical.pkl",
+    "source_sha256": "55fa66d77b17ff008b1e2c6e76e49598ef01f733c66c22650140b20d6b7f7db9",
+    "expression": "selfValue"
+  },
+  {
+    "id": "lexical-02",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/lexical.pkl",
+    "source_sha256": "55fa66d77b17ff008b1e2c6e76e49598ef01f733c66c22650140b20d6b7f7db9",
+    "expression": "lexicalCapture"
+  },
+  {
+    "id": "lexical-03",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/lexical.pkl",
+    "source_sha256": "55fa66d77b17ff008b1e2c6e76e49598ef01f733c66c22650140b20d6b7f7db9",
+    "expression": "parentReceiver"
+  },
+  {
+    "id": "lexical-04",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/lexical.pkl",
+    "source_sha256": "55fa66d77b17ff008b1e2c6e76e49598ef01f733c66c22650140b20d6b7f7db9",
+    "expression": "bodyReceiver"
+  },
+  {
+    "id": "eager-scope-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/eager-scope.pkl",
+    "source_sha256": "0e0d8e0f3e60b5d5f8b705783d5627f723719b21963de715ccac2bd405155806",
+    "expression": "forHeaderOuterBodyParam"
+  },
+  {
+    "id": "eager-scope-01",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/eager-scope.pkl",
+    "source_sha256": "0e0d8e0f3e60b5d5f8b705783d5627f723719b21963de715ccac2bd405155806",
+    "expression": "whenOuterBodyParam"
+  },
+  {
+    "id": "eager-scope-02",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/eager-scope.pkl",
+    "source_sha256": "0e0d8e0f3e60b5d5f8b705783d5627f723719b21963de715ccac2bd405155806",
+    "expression": "spreadOuter"
+  },
+  {
+    "id": "eager-scope-03",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/eager-scope.pkl",
+    "source_sha256": "0e0d8e0f3e60b5d5f8b705783d5627f723719b21963de715ccac2bd405155806",
+    "expression": "spreadBodyParam"
+  },
+  {
+    "id": "eager-scope-04",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/eager-scope.pkl",
+    "source_sha256": "0e0d8e0f3e60b5d5f8b705783d5627f723719b21963de715ccac2bd405155806",
+    "expression": "entryOuterKeyBodyParam"
+  },
+  {
+    "id": "eager-scope-05",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/eager-scope.pkl",
+    "source_sha256": "0e0d8e0f3e60b5d5f8b705783d5627f723719b21963de715ccac2bd405155806",
+    "expression": "returnedMemberConstraint"
+  },
+  {
+    "id": "eager-scope-06",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/eager-scope.pkl",
+    "source_sha256": "0e0d8e0f3e60b5d5f8b705783d5627f723719b21963de715ccac2bd405155806",
+    "expression": "repeatedCached"
+  }
+]

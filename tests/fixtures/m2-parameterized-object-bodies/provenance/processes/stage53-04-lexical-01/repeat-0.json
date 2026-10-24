@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/cases/lexical-01/repeat-0/java.outcome.bin",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/artifacts/java",
+    "M2LanguageProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/lexical.pkl",
+    "selfValue"
+  ],
+  "exit_code": 0,
+  "outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17dc651b3a8049",
+  "timed_out": false
+}

@@ -1,0 +1,389 @@
+{
+  "schema": 1,
+  "scope": "Stage53 shared object-body parameter and Mixin semantics. Local bounded implementation checkpoint; whole M2 remains incomplete.",
+  "createdUtc": "2026-10-24T01:49:18.758004+00:00",
+  "baseCommit": "d7d691b8bbc32de880a3edd6f7b3732fcf3a6276",
+  "implementationCommitBinding": "Pending the actual Git commit; exact current sources are retained in validation02 and comparison02 snapshots. No predicted commit identifier is used.",
+  "baseline": {
+    "checkout": "external/pkl",
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "source_url_template": "https://github.com/apple/pkl/blob/e51fb2f91774265666f94980ec630db794a4db2d/{path}#L{line}",
+    "url": "https://github.com/apple/pkl.git",
+    "version": "0.32.0"
+  },
+  "implementation": [
+    "Object-body parameter AST/resolution and first-call checks",
+    "Raw parent arguments versus checked lazy captures",
+    "Currying, eager generator scope, nested validation and diagnostic ordering",
+    "Mixin declaration identity and delegated explicit/inferred defaults",
+    "Traced raw arguments and retained executable ownership"
+  ],
+  "ordinaryComparison": {
+    "cases": 85,
+    "javaSuccessCases": 56,
+    "javaLanguageErrorCases": 29,
+    "repetitionsPerTarget": 2,
+    "targets": {
+      "native": {
+        "executions": 170,
+        "passed": 170
+      },
+      "napi": {
+        "executions": 170,
+        "passed": 170
+      },
+      "chromium": {
+        "executions": 170,
+        "passed": 170
+      }
+    },
+    "totalExecutions": 510,
+    "rawChannelsMatched": [
+      "stdout",
+      "stderr",
+      "exit_code"
+    ],
+    "javaInternalErrorBoundaries": 7,
+    "boundaryCandidateExecution": "not-requested; retained as nonpasses"
+  },
+  "originalModules": {
+    "cases": [
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/generators/forGeneratorInMixins.pkl",
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/generators/forGeneratorInMixinWithObjectParam.pkl"
+    ],
+    "passed": 3,
+    "channels": [
+      "stdout",
+      "stderr",
+      "exit_code",
+      "generated_file_set_and_bytes"
+    ],
+    "qualification": "Parser original produces empty output; the two generator originals produce actual output. Each case has one Java and one Rust process, independently verified twice without reevaluation."
+  },
+  "validation": {
+    "commands": [
+      {
+        "name": "xtask",
+        "exitCode": 0
+      },
+      {
+        "name": "fmt",
+        "exitCode": 0
+      },
+      {
+        "name": "clippy",
+        "exitCode": 0
+      },
+      {
+        "name": "workspace-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "expression-probe-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "wasm-check",
+        "exitCode": 0
+      },
+      {
+        "name": "m2-python-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "parameterized-python-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "parameterized-js-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "compat-python-tests",
+        "exitCode": 0
+      },
+      {
+        "name": "parameterized-fixture",
+        "exitCode": 0
+      },
+      {
+        "name": "module-registry",
+        "exitCode": 0
+      },
+      {
+        "name": "m2-manifest",
+        "exitCode": 0
+      },
+      {
+        "name": "inventory",
+        "exitCode": 0
+      },
+      {
+        "name": "corpus",
+        "exitCode": 0
+      },
+      {
+        "name": "regressions",
+        "exitCode": 0
+      },
+      {
+        "name": "smoke",
+        "exitCode": 0
+      }
+    ],
+    "sourceInputs": 4589,
+    "sourceStable": true,
+    "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "rustWorkspaceHarnessObservations": {
+      "passed": 873,
+      "failed": 0,
+      "ignored": 1
+    },
+    "rustCountQualification": "Includes nested harness observations, not distinct features. The ignored frontend probe is not counted as an executed passing unit test.",
+    "nativeAdapterTests": 4,
+    "pythonTests": {
+      "m2-python-tests": 165,
+      "parameterized-python-tests": 23,
+      "compat-python-tests": 19
+    },
+    "jsTests": 13
+  },
+  "platformRegression": {
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "shared_engine_passed": 6078,
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "source_stability": true
+  },
+  "platformRegressionReuse": {
+    "report": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-platforms-01/report.json",
+    "sha256": "f037156e1482038b3ab5690397f69c0795a31f9d0133cf947844cf1b3a982fad",
+    "artifacts": {
+      "pkl_napi.node": "f6d71425624a5885aa79f30ef0029253cbc3e6940dbae98c9e8807b91f3dd541",
+      "semantics_probe": "1de6656ef81cc91cf23319052d209d03cf9bac05efd40367a25e7106dcc9a982",
+      "wasm/pkl_wasm_bg.wasm.d.ts": "ebc113ff7ecd9f6b8551c3df2c8fed2ee97353d2541d8b5ec4b6e663f5d54ff6",
+      "wasm/pkl_wasm_bg.wasm": "1d68310ef5285fb40a144c29b4729badd790f63bed28c48e3cda5fbedbafd734",
+      "wasm/pkl_wasm.js": "cf7bef7a717c2c3da60a49645b2deb3af721de15d8843321238f4f79804a9df9",
+      "wasm/pkl_wasm.d.ts": "946cefb176d233adc7a972680105834c353b99d847d0d70b3cfe3b56d878c68a"
+    },
+    "unchangedEngineInputs": [
+      "Cargo.lock",
+      "Cargo.toml",
+      "crates/pkl-napi/Cargo.toml",
+      "crates/pkl-napi/build.rs",
+      "crates/pkl-napi/src/lib.rs",
+      "crates/pkl-runtime/Cargo.toml",
+      "crates/pkl-runtime/examples/semantics_probe.rs",
+      "crates/pkl-runtime/src/diagnostic/frames.rs",
+      "crates/pkl-runtime/src/diagnostic/highlight.rs",
+      "crates/pkl-runtime/src/diagnostic.rs",
+      "crates/pkl-runtime/src/diagnostic_names.rs",
+      "crates/pkl-runtime/src/diagnostic_values.rs",
+      "crates/pkl-runtime/src/duration.rs",
+      "crates/pkl-runtime/src/economic_map.rs",
+      "crates/pkl-runtime/src/evaluation/frontend/arguments.rs",
+      "crates/pkl-runtime/src/evaluation/frontend.rs",
+      "crates/pkl-runtime/src/evaluation/session.rs",
+      "crates/pkl-runtime/src/evaluation.rs",
+      "crates/pkl-runtime/src/heap.rs",
+      "crates/pkl-runtime/src/host/errors.rs",
+      "crates/pkl-runtime/src/host/resources/tests.rs",
+      "crates/pkl-runtime/src/host/resources.rs",
+      "crates/pkl-runtime/src/host.rs",
+      "crates/pkl-runtime/src/lib.rs",
+      "crates/pkl-runtime/src/logging.rs",
+      "crates/pkl-runtime/src/modules.rs",
+      "crates/pkl-runtime/src/numeric.rs",
+      "crates/pkl-runtime/src/parser/string_lexer.rs",
+      "crates/pkl-runtime/src/parser/string_parser.rs",
+      "crates/pkl-runtime/src/parser/type_parser.rs",
+      "crates/pkl-runtime/src/parser/unicode_escape.rs",
+      "crates/pkl-runtime/src/parser/unicode_identifier.rs",
+      "crates/pkl-runtime/src/parser.rs",
+      "crates/pkl-runtime/src/pkl_string.rs",
+      "crates/pkl-runtime/src/power_assertions.rs",
+      "crates/pkl-runtime/src/probe.rs",
+      "crates/pkl-runtime/src/regex.rs",
+      "crates/pkl-runtime/src/resolver/constant_keys.rs",
+      "crates/pkl-runtime/src/resolver/diagnostic_owner.rs",
+      "crates/pkl-runtime/src/resolver.rs",
+      "crates/pkl-runtime/src/resources.rs",
+      "crates/pkl-runtime/src/source.rs",
+      "crates/pkl-runtime/src/stdlib/base.pkl",
+      "crates/pkl-runtime/src/stdlib/json.pkl",
+      "crates/pkl-runtime/src/stdlib/modules.txt",
+      "crates/pkl-runtime/src/stdlib/ref.pkl",
+      "crates/pkl-runtime/src/stdlib/test.pkl",
+      "crates/pkl-runtime/src/stdlib_sources.rs",
+      "crates/pkl-runtime/src/strict_map.rs",
+      "crates/pkl-runtime/src/string_case/uppercase.rs",
+      "crates/pkl-runtime/src/string_case.rs",
+      "crates/pkl-runtime/src/syntax.rs",
+      "crates/pkl-runtime/src/value.rs",
+      "crates/pkl-runtime/src/value_identity.rs",
+      "crates/pkl-runtime/src/vm/amendment.rs",
+      "crates/pkl-runtime/src/vm/annotations/java_decimal_digit_ranges.rs",
+      "crates/pkl-runtime/src/vm/annotations/tests.rs",
+      "crates/pkl-runtime/src/vm/annotations.rs",
+      "crates/pkl-runtime/src/vm/builtins.rs",
+      "crates/pkl-runtime/src/vm/code_storage.rs",
+      "crates/pkl-runtime/src/vm/collection_transforms.rs",
+      "crates/pkl-runtime/src/vm/collections.rs",
+      "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+      "crates/pkl-runtime/src/vm/converters.rs",
+      "crates/pkl-runtime/src/vm/equality.rs",
+      "crates/pkl-runtime/src/vm/forcing/tests.rs",
+      "crates/pkl-runtime/src/vm/forcing.rs",
+      "crates/pkl-runtime/src/vm/generics/tests.rs",
+      "crates/pkl-runtime/src/vm/generics.rs",
+      "crates/pkl-runtime/src/vm/guest_exceptions.rs",
+      "crates/pkl-runtime/src/vm/identity.rs",
+      "crates/pkl-runtime/src/vm/modules/inheritance.rs",
+      "crates/pkl-runtime/src/vm/modules.rs",
+      "crates/pkl-runtime/src/vm/null.rs",
+      "crates/pkl-runtime/src/vm/output/tests.rs",
+      "crates/pkl-runtime/src/vm/output.rs",
+      "crates/pkl-runtime/src/vm/pair.rs",
+      "crates/pkl-runtime/src/vm/pcf_format.rs",
+      "crates/pkl-runtime/src/vm/primitives.rs",
+      "crates/pkl-runtime/src/vm/query_lifecycle.rs",
+      "crates/pkl-runtime/src/vm/receiver_tests.rs",
+      "crates/pkl-runtime/src/vm/reference.rs",
+      "crates/pkl-runtime/src/vm/rendering.rs",
+      "crates/pkl-runtime/src/vm/resources.rs",
+      "crates/pkl-runtime/src/vm/session_expressions.rs",
+      "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+      "crates/pkl-runtime/src/vm/strings.rs",
+      "crates/pkl-runtime/src/vm/tracing/tests.rs",
+      "crates/pkl-runtime/src/vm/tracing.rs",
+      "crates/pkl-runtime/src/vm/type_equivalence_tests.rs",
+      "crates/pkl-runtime/src/vm/type_resolution.rs",
+      "crates/pkl-runtime/src/vm/typecheck.rs",
+      "crates/pkl-runtime/src/vm/uri_resolution.rs",
+      "crates/pkl-runtime/src/vm.rs",
+      "crates/pkl-wasm/Cargo.toml",
+      "crates/pkl-wasm/src/lib.rs",
+      "rust-toolchain.toml"
+    ],
+    "changedOverinclusivePlatformCatalogInputs": [
+      "tools/platform/parameterized-object-session.mjs",
+      "tools/platform/parameterized-object-session.test.mjs"
+    ],
+    "scope": "Changed helper and its tests are used by the new parameterized comparison only, not the M1 run.mjs scenario runner or any compiled binding. Prior M1 evidence retains its original source hashes and strict regex failures."
+  },
+  "historicalFailure": {
+    "candidate01": {
+      "perTargetExecutions": 170,
+      "perTargetPass": 164,
+      "perTargetAcquisitionFailures": 6
+    },
+    "cause": "Adapter incorrectly equated the authored relative resource URI with the resolved absolute URI.",
+    "correction": "Preserve both identities and enforce exact declared resolved URI/resource bytes. Native and JS regressions cover relative and undeclared resources.",
+    "originalEvidencePreserved": true
+  },
+  "sourceRefresh": {
+    "argv": [
+      "python3",
+      "-B",
+      "tools/m2_manifest.py"
+    ],
+    "exitCode": 0,
+    "time": "2026-10-24T01:24:30.149743+00:00",
+    "beforeSha256": "07b77196c59b1d9f5e971171eb681e8bc39b59860d679a04a127f141c56e09ef",
+    "afterSha256": "863b13dc5352efbac05e1fe542ee419bdaaf96893b2002be34bc55362a02ad56",
+    "casesUnchanged": true,
+    "countsUnchanged": true,
+    "changedRequirementIds": [
+      "semantic:lazy-evaluation",
+      "semantic:objects",
+      "semantic:amendment",
+      "semantic:classes",
+      "semantic:modifiers",
+      "semantic:functions",
+      "semantic:types",
+      "semantic:type-aliases",
+      "semantic:constraints",
+      "semantic:generics",
+      "semantic:reference",
+      "semantic:annotations",
+      "semantic:reflection-metadata",
+      "semantic:modules",
+      "semantic:diagnostics",
+      "language_parser:pkl-parser/src/main/java/org/pkl/parser/GenericParserImpl.java:parseAnnotation:37c150ddca16",
+      "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+      "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseAnnotation:9da252487b91",
+      "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+      "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+      "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+      "specification:docs/modules/language-reference/pages/index.adoc:Annotations",
+      "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties",
+      "specification:docs/modules/language-reference/pages/index.adoc:Import Clauses",
+      "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads",
+      "specification:docs/modules/language-reference/pages/index.adoc:References"
+    ]
+  },
+  "inventoryCounts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 4416,
+      "unimplemented": 71,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "independentAudits": [
+    {
+      "path": "stage53-final-comparison-audit-01/report.json",
+      "sha256": "963cf5efd8aa73403345d4e0f42fe75e932a77472536e014f5e38e13f12bc869"
+    },
+    {
+      "path": "stage53-original-mixins-audit-01/report.json",
+      "sha256": "d72b550f719730cb612f8e2be5a2d71d586fbf748183989b776ab41986b95c83"
+    }
+  ],
+  "archives": [
+    {
+      "path": "reports/m2/stage53-oracle-evidence.tar.gz",
+      "sha256": "786e2c0a66b5e64bf7524245c6e570f129a14f20e2fe5ef3453d59e5030ff357",
+      "bytes": 1645508
+    },
+    {
+      "path": "reports/m2/stage53-candidate-evidence.tar.gz",
+      "sha256": "20413fefddf449ff2c2d47bacbe7ccc539c0371e85e64dc3cc9565fa06aa4dd8",
+      "bytes": 18221399
+    },
+    {
+      "path": "reports/m2/stage53-validation-review-evidence.tar.gz",
+      "sha256": "e1a2c0e85f6d6d7a9d32bbe72914f64b977de4c0584bf900a60f8845e7ce6a7f",
+      "bytes": 16142035
+    }
+  ],
+  "fullM2Complete": false,
+  "fullCompatibilityComplete": false,
+  "hostedCIClaimed": false,
+  "performanceTargetClaimed": false,
+  "remaining": [
+    "All nine M2 workstreams and strict full-language inventory gate remain open.",
+    "The new arbitrary-expression fixture is a separate selected contract, not a complete mapping or passing execution of every inventory row.",
+    "Remaining module initialization/inheritance, lazy/recursive types/constraints, collection/Reference metadata and complete diagnostics.",
+    "Original-suite stdlib/rendering/loading dependencies, deprecation warnings, reflection and URI gaps remain required.",
+    "Seven Java internal boundaries and two known Java regex discrepancies remain nonpasses.",
+    "Full API/platform coverage and execution-time/peak-memory targets remain unverified."
+  ]
+}

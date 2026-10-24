@@ -212,8 +212,16 @@ pub enum Instruction {
     PairConstructor,
     NullConstructor,
     CheckNullDefault,
+    CheckObjectParameters {
+        target: amendment::ParameterTarget,
+    },
+    PrepareFunctionAmendment {
+        body: usize,
+        arity: usize,
+    },
     BeginFunctionAmendment {
         end: usize,
+        function: Option<(usize, usize)>,
     },
     EndFunctionAmendment,
     InvokeAmendedParent,
@@ -461,6 +469,32 @@ impl TypeCheck {
                 } => current = inner,
                 ty => return ty,
             }
+        }
+    }
+    /// Mixin's identity default belongs to its declaration, not to an
+    /// arbitrary structurally equivalent function type. Aliases and selected
+    /// default wrappers delegate to that declaration without losing its identity.
+    fn mixin_default(&self) -> bool {
+        let mut ty = self;
+        loop {
+            ty = match ty.resolved() {
+                Self::NamedAlias { declaration, .. } if *declaration == amendment::MIXIN_ID => {
+                    return true;
+                }
+                Self::Alias(inner)
+                | Self::GenericAlias(inner)
+                | Self::NamedAlias {
+                    expanded: inner, ..
+                }
+                | Self::Nullable(inner)
+                | Self::Constrained { base: inner, .. } => inner,
+                Self::Union {
+                    types,
+                    default: Some(index),
+                    ..
+                } => &types[*index],
+                _ => return false,
+            };
         }
     }
     /// Whether this type's selected default ultimately comes from Collection.
@@ -1060,6 +1094,7 @@ struct Frame {
     collection_join: Option<collections::JoinRun>,
     collection_transform: Option<collection_transforms::TransformRun>,
     function_owner: Option<ObjectId>,
+    amendment_arguments: Option<Vec<Value>>,
     amendment_end: Option<usize>,
     prepared_hashes: Option<Vec<Value>>,
     key_search: Option<equality::KeySearch>,
@@ -1321,6 +1356,7 @@ impl Vm {
             collection_join: None,
             collection_transform: None,
             function_owner: None,
+            amendment_arguments: None,
             amendment_end: None,
             prepared_hashes: None,
             key_search: None,
@@ -1762,6 +1798,7 @@ impl Vm {
                     run.roots(&mut roots);
                 }
                 roots.extend(frame.function_owner.map(Value::Function));
+                roots.extend(frame.amendment_arguments.iter().flatten().cloned());
                 if let Some(run) = &frame.collection_join {
                     run.roots(&mut roots);
                 }
@@ -1980,8 +2017,10 @@ impl Vm {
             .skip(unwind_start)
             .rev()
         {
-            if frame.block == self.program.amended_function_block
-                && let Some(owner) = frame.function_owner
+            if matches!(
+                instruction(frame),
+                Some(Instruction::InvokeAmendedParent | Instruction::ContinueFunctionAmendment)
+            ) && let Some(owner) = frame.function_owner
                 && let Ok(object) = self.heap.get(owner)
                 && let Some(origin) = object
                     .amendment
@@ -2622,6 +2661,7 @@ impl Vm {
             collection_join: None,
             collection_transform: None,
             function_owner: None,
+            amendment_arguments: None,
             amendment_end: None,
             prepared_hashes: None,
             key_search: None,
@@ -3444,7 +3484,12 @@ impl Vm {
         // (AmendFunctionNode's SimpleRootNode). The original function checks
         // the actual arguments, retaining both its declaration and the wrapper
         // frame in diagnostics.
-        if function.arity != arity && object.amendment.is_none() {
+        if function.arity != arity
+            && object
+                .amendment
+                .as_ref()
+                .is_none_or(|amendment| amendment.parameter_count > 0 && amendment.initial)
+        {
             let mut error = RuntimeError::new(
                 ErrorKind::Type,
                 format!(
@@ -3452,7 +3497,13 @@ impl Vm {
                     function.arity
                 ),
             );
-            if let Some(metadata) = self.program.metadata.get(function.block)
+            if let Some(origin) = object
+                .amendment
+                .as_ref()
+                .and_then(|amendment| amendment.origin.clone())
+            {
+                error.frames.push(origin);
+            } else if let Some(metadata) = self.program.metadata.get(function.block)
                 && let Some(span) = metadata.declaration
             {
                 error.frames.push(RuntimeFrame {
@@ -3469,6 +3520,11 @@ impl Vm {
                 "evaluation frame limit exceeded",
             ));
         }
+        let amendment_arguments = object
+            .amendment
+            .as_ref()
+            .filter(|amendment| amendment.initial && amendment.parameter_count > 0)
+            .map(|_| arguments.clone());
         let mut environment = object.environment.clone();
         environment.outer_value = environment.this_value.clone();
         if let Some(receiver) = &function.captured_this {
@@ -3499,6 +3555,7 @@ impl Vm {
             collection_join: None,
             collection_transform: None,
             function_owner: Some(id),
+            amendment_arguments,
             amendment_end: None,
             prepared_hashes: None,
             key_search: None,
@@ -4071,7 +4128,15 @@ impl Vm {
             Instruction::EndCollectionTransform => self.end_collection_transform()?,
             Instruction::StringEncode => self.encode_string()?,
             Instruction::Primitive(operation) => self.primitive(operation)?,
-            Instruction::BeginFunctionAmendment { end } => self.begin_function_amendment(end)?,
+            Instruction::CheckObjectParameters { target } => {
+                self.check_object_parameters(target)?
+            }
+            Instruction::PrepareFunctionAmendment { body, arity } => {
+                self.prepare_function_amendment(body, arity)?
+            }
+            Instruction::BeginFunctionAmendment { end, function } => {
+                self.begin_function_amendment(end, function)?
+            }
             Instruction::EndFunctionAmendment => {}
             Instruction::InvokeAmendedParent => self.invoke_amended_parent()?,
             Instruction::ContinueFunctionAmendment => self.continue_function_amendment()?,
@@ -6639,24 +6704,40 @@ impl Compiler<'_> {
                     }
                 }
             }
-            ExprKind::Object { parent, members } => {
+            ExprKind::Object {
+                parent,
+                members,
+                parameters,
+            } => {
                 if let Some(parent) = parent {
                     self.expression(parent, output)?;
                 }
                 let begin = output.len();
                 self.collection_body(
                     members,
+                    parameters,
                     crate::heap::CollectionKind::Dynamic,
                     parent.is_some(),
                     output,
                 )?;
                 if let Some(parent) = parent {
-                    let constructor = begin
-                        + usize::from(matches!(
-                            output[begin],
-                            Instruction::BeginFunctionAmendment { .. }
-                        ));
-                    output.spans[constructor] = Some(parent.unparenthesized().span);
+                    for index in begin..output.len() {
+                        if matches!(
+                            output[index],
+                            Instruction::PrepareFunctionAmendment { .. }
+                                | Instruction::BeginFunctionAmendment { .. }
+                                | Instruction::BeginCollection { .. }
+                                | Instruction::AmendEmpty
+                        ) {
+                            output.spans[index] = Some(parent.unparenthesized().span);
+                        }
+                        if matches!(
+                            output[index],
+                            Instruction::BeginCollection { .. } | Instruction::AmendEmpty
+                        ) {
+                            break;
+                        }
+                    }
                 }
             }
             _ => unreachable!("expression continuation handles this syntax"),

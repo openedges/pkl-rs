@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+5 | local explicit = new Mixin<Dynamic> { arg: Dynamic, -> value = arg.value + 10; captured = arg.value }
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at basics#explicit.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl)
+
+26 | badCallArity = explicit.apply().value
+                    ^^^^^^^^^^^^^^^^
+at basics#badCallArity (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/basics.pkl)
+
+1 | badCallArity
+    ^^^^^^^^^^^^
+at  (repl:text)

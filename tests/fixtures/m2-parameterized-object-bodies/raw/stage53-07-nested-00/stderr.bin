@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Expected a function that returns a `Listing`, but got a `Listing`.
+
+3 | local listing = (parent) { arg -> [(new Listing { p: Int -> 1 }).length] = arg }
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at nested#listing.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl)
+
+7 | nestedListing = listing.apply(3)[0]
+                    ^^^^^^^^^^^^^^^^
+at nested#nestedListing (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl)
+
+1 | nestedListing
+    ^^^^^^^^^^^^^
+at  (repl:text)

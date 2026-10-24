@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Expected a function that returns a `Mapping`, but got a `Mapping`.
+
+4 | local mapping = (parent) { arg -> [(new Mapping { p: Int -> ["x"] = 1 }).length] = arg }
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at nested#mapping.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl)
+
+8 | nestedMapping = mapping.apply(3)[0]
+                    ^^^^^^^^^^^^^^^^
+at nested#nestedMapping (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl)
+
+1 | nestedMapping
+    ^^^^^^^^^^^^^
+at  (repl:text)

@@ -320,6 +320,7 @@ impl Vm {
                         | TypeCheck::String
                         | TypeCheck::Bytes
                         | TypeCheck::Reference { .. }
+                        | TypeCheck::Function { .. }
                 ) {
                     return Err(collections::external_amendment_error(&type_name(
                         base,

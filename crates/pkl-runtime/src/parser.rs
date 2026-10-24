@@ -466,7 +466,13 @@ enum ExpressionFrame {
     ObjectKey(Box<ObjectBuild>, usize, bool),
     WhenCondition(Box<ObjectBuild>, usize),
     WhenThen(Box<ObjectBuild>, usize, Expr),
-    WhenElse(Box<ObjectBuild>, usize, Expr, Vec<ObjectMember>),
+    WhenElse(
+        Box<ObjectBuild>,
+        usize,
+        Expr,
+        Vec<ObjectMember>,
+        Vec<Parameter>,
+    ),
     ForIterable(Box<ObjectBuild>, usize, Vec<Parameter>),
     ForBody(Box<ObjectBuild>, usize, Vec<Parameter>, Expr),
 }
@@ -1309,23 +1315,17 @@ impl<'a> Parser<'a> {
                     return Err(error);
                 }
                 let end = self.expect('}')?.span.end;
-                if !build.parameters.is_empty() {
-                    self.pending.push(Diagnostic::unsupported(
-                        DiagnosticOrigin::DeferredAstValidation,
-                        "parameterized-object-body",
-                        Span::new(build.start, end),
-                        "Parameterized object body evaluation is not implemented.",
-                    ));
-                }
                 self.depth -= 1;
                 machine.current = Some(Expr {
                     kind: if let Some(ty) = build.ty.take() {
                         ExprKind::New {
+                            parameters: std::mem::take(&mut build.parameters),
                             ty,
                             members: std::mem::take(&mut build.members),
                         }
                     } else {
                         ExprKind::Object {
+                            parameters: std::mem::take(&mut build.parameters),
                             parent: build.parent.take().map(Box::new),
                             members: std::mem::take(&mut build.members),
                         }
@@ -2055,6 +2055,7 @@ impl<'a> Parser<'a> {
                 return Ok(ExpressionFlow::Continue);
             }
             ExpressionFrame::WhenThen(mut build, start, condition) => {
+                let then_parameters = Self::take_object_parameters(&mut left);
                 let then_members = Self::take_object_members(&mut left);
                 if self.is_name("else") {
                     self.advance()?;
@@ -2063,11 +2064,19 @@ impl<'a> Parser<'a> {
                     machine.frames.push((
                         machine.minimum,
                         self.expectation.clone(),
-                        ExpressionFrame::WhenElse(build, start, condition, then_members),
+                        ExpressionFrame::WhenElse(
+                            build,
+                            start,
+                            condition,
+                            then_members,
+                            then_parameters,
+                        ),
                     ));
                     machine.minimum = 0;
                 } else {
                     build.members.push(ObjectMember::When {
+                        then_parameters,
+                        else_parameters: Vec::new(),
                         condition,
                         then_members,
                         else_members: Vec::new(),
@@ -2080,8 +2089,16 @@ impl<'a> Parser<'a> {
                 }
                 return Ok(ExpressionFlow::Continue);
             }
-            ExpressionFrame::WhenElse(mut build, start, condition, then_members) => {
+            ExpressionFrame::WhenElse(
+                mut build,
+                start,
+                condition,
+                then_members,
+                then_parameters,
+            ) => {
                 build.members.push(ObjectMember::When {
+                    then_parameters,
+                    else_parameters: Self::take_object_parameters(&mut left),
                     condition,
                     then_members,
                     else_members: Self::take_object_members(&mut left),
@@ -2107,6 +2124,7 @@ impl<'a> Parser<'a> {
             }
             ExpressionFrame::ForBody(mut build, start, parameters, iterable) => {
                 build.members.push(ObjectMember::For {
+                    body_parameters: Self::take_object_parameters(&mut left),
                     parameters,
                     iterable,
                     members: Self::take_object_members(&mut left),
@@ -2202,6 +2220,13 @@ impl<'a> Parser<'a> {
         candidate.advance()?;
         *self = candidate;
         Ok(parameters)
+    }
+
+    fn take_object_parameters(expression: &mut Expr) -> Vec<Parameter> {
+        match &mut expression.kind {
+            ExprKind::Object { parameters, .. } => std::mem::take(parameters),
+            _ => unreachable!("generator body syntax"),
+        }
     }
 
     fn take_object_members(expression: &mut Expr) -> Vec<ObjectMember> {

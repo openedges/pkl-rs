@@ -1,0 +1,10 @@
+class Box { value: Int = 1 }
+local parent = (arg) -> new Mapping {}
+local listing = (parent) { arg -> [(new Listing { p: Int -> 1 }).length] = arg }
+local mapping = (parent) { arg -> [(new Mapping { p: Int -> ["x"] = 1 }).length] = arg }
+local typed = (parent) { arg -> [(new Box { p: Int -> value = 1 }).value] = arg }
+local dynamic = (parent) { arg -> [(new Dynamic { p: Int -> value = 1 }).value] = arg }
+nestedListing = listing.apply(3)[0]
+nestedMapping = mapping.apply(3)[0]
+nestedTyped = typed.apply(3)[1]
+nestedDynamic = dynamic.apply(3)[1]

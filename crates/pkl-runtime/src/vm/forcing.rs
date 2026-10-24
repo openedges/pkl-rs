@@ -173,6 +173,7 @@ impl Vm {
             collection_join: None,
             collection_transform: None,
             function_owner: None,
+            amendment_arguments: None,
             amendment_end: None,
             deep_force: Some(ForceRun {
                 pending_render_key: None,

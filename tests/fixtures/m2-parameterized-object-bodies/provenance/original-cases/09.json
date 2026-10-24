@@ -1,0 +1,20 @@
+[
+  {
+    "id": "explicit-alias-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-09/inputs/explicit-alias.pkl",
+    "source_sha256": "3c74e8526927f23bada4a1842173894e0c4806b6b91450e4e70b876653a563b6",
+    "expression": "directValue"
+  },
+  {
+    "id": "explicit-alias-01",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-09/inputs/explicit-alias.pkl",
+    "source_sha256": "3c74e8526927f23bada4a1842173894e0c4806b6b91450e4e70b876653a563b6",
+    "expression": "chainedValue"
+  },
+  {
+    "id": "explicit-alias-02",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-09/inputs/explicit-alias.pkl",
+    "source_sha256": "3c74e8526927f23bada4a1842173894e0c4806b6b91450e4e70b876653a563b6",
+    "expression": "structuralError"
+  }
+]

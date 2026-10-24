@@ -9,6 +9,11 @@ The [trace development contract](m2-tracing.md) separately records actual-source
 logger callbacks, source-session lifecycles, and lossless platform transport.
 Its focused comparisons do not replace the whole-language completion gate.
 
+The [object-body parameter contract](m2-object-parameters.md) records function
+amendment, Mixin defaults, lexical capture, and their Java-first fixtures.
+Arbitrary-expression and Host comparisons are separate from the bounded
+property-path adapter described below.
+
 The [resource-read development contract](m2-resource-reads.md) records `read` and
 `read?` parsing, default scalar resource policy, nullable absence, declaration
 source URIs, and the distinction between Java byte captures and lossless

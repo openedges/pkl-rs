@@ -58,12 +58,15 @@ pub enum ObjectMember {
         span: Span,
     },
     When {
+        then_parameters: Vec<Parameter>,
+        else_parameters: Vec<Parameter>,
         condition: Expr,
         then_members: Vec<ObjectMember>,
         else_members: Vec<ObjectMember>,
         span: Span,
     },
     For {
+        body_parameters: Vec<Parameter>,
         parameters: Vec<Parameter>,
         iterable: Expr,
         members: Vec<ObjectMember>,
@@ -331,7 +334,12 @@ impl Clone for Expr {
                             method: *method,
                             body: Box::new(next()),
                         },
-                        E::Object { parent, members } => E::Object {
+                        E::Object {
+                            parent,
+                            parameters,
+                            members,
+                        } => E::Object {
+                            parameters: parameters.clone(),
                             parent: parent.as_ref().map(|_| Box::new(next())),
                             members: clone_object_members(members, &mut next),
                         },
@@ -344,7 +352,12 @@ impl Clone for Expr {
                             ty: ty.clone(),
                             members: clone_object_members(members, &mut next),
                         },
-                        E::New { ty, members } => E::New {
+                        E::New {
+                            ty,
+                            parameters,
+                            members,
+                        } => E::New {
+                            parameters: parameters.clone(),
                             ty: ty.clone(),
                             members: clone_object_members(members, &mut next),
                         },
@@ -404,7 +417,9 @@ impl Expr {
             } => vec![condition, then_branch, else_branch],
             E::Let { value, body, .. } => vec![value, body],
             E::Function { body, .. } => vec![body],
-            E::Object { parent, members } => {
+            E::Object {
+                parent, members, ..
+            } => {
                 let mut children = parent.iter().map(AsRef::as_ref).collect::<Vec<_>>();
                 object_expressions(members, &mut children);
                 children
@@ -497,9 +512,13 @@ fn clone_object_members(
             ObjectMember::When {
                 then_members,
                 else_members,
+                then_parameters,
+                else_parameters,
                 span,
                 ..
             } => ObjectMember::When {
+                then_parameters: then_parameters.clone(),
+                else_parameters: else_parameters.clone(),
                 condition: next(),
                 then_members: clone_object_members(then_members, next),
                 else_members: clone_object_members(else_members, next),
@@ -507,10 +526,12 @@ fn clone_object_members(
             },
             ObjectMember::For {
                 parameters,
+                body_parameters,
                 members,
                 span,
                 ..
             } => ObjectMember::For {
+                body_parameters: body_parameters.clone(),
                 parameters: parameters.clone(),
                 iterable: next(),
                 members: clone_object_members(members, next),
@@ -604,7 +625,9 @@ impl Drop for Expr {
                 E::Class { members, .. } => {
                     pending.extend(members.into_iter().map(|member| member.expr))
                 }
-                E::Object { parent, members } => {
+                E::Object {
+                    parent, members, ..
+                } => {
                     pending.extend(parent.map(|parent| *parent));
                     detach_members(members, pending);
                 }
@@ -722,11 +745,13 @@ pub enum ExprKind {
         members: Vec<ObjectMember>,
     },
     New {
+        parameters: Vec<Parameter>,
         ty: Type,
         members: Vec<ObjectMember>,
     },
     Uninitialized,
     Object {
+        parameters: Vec<Parameter>,
         parent: Option<Box<Expr>>,
         members: Vec<ObjectMember>,
     },

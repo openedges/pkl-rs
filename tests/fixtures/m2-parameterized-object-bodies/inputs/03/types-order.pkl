@@ -1,0 +1,19 @@
+typealias Positive = Int(isPositive)
+local parent = (arg) -> new Dynamic { value = arg }
+local checked = (parent) { arg: Positive -> captured = arg }
+local throws = (arg) -> throw("parent called")
+local typedBeforeParent = (throws) { arg: Int -> value = arg }
+local mappingParent = (m) -> new Dynamic { raw = m["x"] }
+local mappingAmended = (mappingParent) { m: Mapping<String, Int> -> checked = m["x"] }
+local mappingResult = mappingAmended.apply(new Mapping { ["x"] = "oops" })
+local functionParent = (f) -> new Dynamic { raw = f.apply("x") }
+local functionAmended = (functionParent) { f: (Int) -> Int -> checked = f.apply("x") }
+local functionResult = functionAmended.apply((v) -> v)
+constraintSuccess = checked.apply(4).captured
+constraintFailure = checked.apply(-1).captured
+typeBeforeParentFailure = typedBeforeParent.apply("bad").value
+parentFailure = typedBeforeParent.apply(1).value
+rawMapping = mappingResult.raw
+checkedMapping = mappingResult.checked
+rawFunction = functionResult.raw
+checkedFunction = functionResult.checked

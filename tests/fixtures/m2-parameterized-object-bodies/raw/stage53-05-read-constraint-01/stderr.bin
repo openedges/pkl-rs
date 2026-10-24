@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `read("gate.txt").text == "stop"` violated.
+Value: 7
+
+2 | typealias ClosedGate = Int(read("gate.txt").text == "stop")
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at read-constraint#closed.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/read-constraint.pkl)
+
+8 | readConstraintFailure = closed.apply(7).captured
+                            ^^^^^^^^^^^^^^^
+at read-constraint#readConstraintFailure (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/read-constraint.pkl)
+
+1 | readConstraintFailure
+    ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

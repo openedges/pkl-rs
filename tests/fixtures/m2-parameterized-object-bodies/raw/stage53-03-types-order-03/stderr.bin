@@ -1,0 +1,18 @@
+–– Pkl Error ––
+parent called
+
+4 | local throws = (arg) -> throw("parent called")
+                            ^^^^^^^^^^^^^^^^^^^^^^
+at types-order#throws.<function#1> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl)
+
+5 | local typedBeforeParent = (throws) { arg: Int -> value = arg }
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at types-order#typedBeforeParent.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl)
+
+15 | parentFailure = typedBeforeParent.apply(1).value
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at types-order#parentFailure (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl)
+
+1 | parentFailure
+    ^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,23 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "oops"
+
+7 | local mappingAmended = (mappingParent) { m: Mapping<String, Int> -> checked = m["x"] }
+                                                                ^^^
+at types-order#mappingAmended.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl)
+
+8 | local mappingResult = mappingAmended.apply(new Mapping { ["x"] = "oops" })
+                                                                     ^^^^^^
+at types-order#mappingResult["x"] (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl)
+
+7 | local mappingAmended = (mappingParent) { m: Mapping<String, Int> -> checked = m["x"] }
+                                                                                  ^^^^^^
+at types-order#mappingAmended.checked (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl)
+
+17 | checkedMapping = mappingResult.checked
+                      ^^^^^^^^^^^^^^^^^^^^^
+at types-order#checkedMapping (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl)
+
+1 | checkedMapping
+    ^^^^^^^^^^^^^^
+at  (repl:text)

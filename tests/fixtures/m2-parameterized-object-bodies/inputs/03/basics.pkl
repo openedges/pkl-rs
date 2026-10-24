@@ -1,0 +1,27 @@
+class Box { value: Int = 3 }
+typealias Alias<T> = Mixin<T>
+typealias FunctionAlias<T> = (T) -> T
+local seed = new Dynamic { value = 2 }
+local explicit = new Mixin<Dynamic> { arg: Dynamic, -> value = arg.value + 10; captured = arg.value }
+local inferred: Mixin<Dynamic> = new { arg -> value = arg.value + 20 }
+local alias: Alias<Dynamic> = new { arg -> value = arg.value + 30 }
+local functionTyped: (Dynamic,) -> Dynamic = new Mixin { arg: Dynamic, -> value = arg.value + 40 }
+local identity = new Mixin<Box> {}
+local typed = new Mixin<Box> { arg -> value = arg.value + 1 }
+local underscore = new Mixin { _ -> value = 9 }
+local shadow = new Mixin { arg -> arg = 99; value = arg }
+local chained = (explicit) { arg -> capturedAgain = arg.value }
+explicitValue = explicit.apply(seed).value
+inferredValue = inferred.apply(seed).value
+aliasValue = alias.apply(seed).value
+functionTypedValue = functionTyped.apply(seed).value
+defaultValue = identity.apply(new Box {}).value
+typedValue = typed.apply(new Box {}).value
+underscoreValue = underscore.apply(seed).value
+shadowValue = shadow.apply(seed).value
+pipelineValue = seed |> explicit |> inferred
+chainedValue = chained.apply(seed).capturedAgain
+repeatedValue = explicit.apply(seed).value + explicit.apply(new Dynamic { value = 7 }).value
+badArgument = typed.apply(seed).value
+badCallArity = explicit.apply().value
+badAlias = new FunctionAlias<Dynamic> { arg -> value = 1 }

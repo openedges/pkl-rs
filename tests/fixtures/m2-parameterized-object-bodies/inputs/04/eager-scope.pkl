@@ -1,0 +1,21 @@
+local input = List(40)
+local listMixin = new Mixin<Listing<Int>> { input ->
+  for (n in input) { input.length + n }
+}
+local flag = true
+local whenMixin = new Mixin { flag -> when (flag) { value = flag.value } }
+local seed = new Dynamic { eager = 40 }
+local spreadMixin = new Mixin { seed -> ...seed; lazy = seed.value }
+local key = "outer"
+local parent = (key) -> new Mapping {}
+local entryMixin = (parent) { key -> [key] = key }
+class Box { value: Int = 3 }
+local badReturn = new Mixin<Box> { arg -> value = "bad" }
+local once = listMixin.apply(new Listing { 1; 2 })
+forHeaderOuterBodyParam = once[2]
+whenOuterBodyParam = whenMixin.apply(new Dynamic { value = 7 }).value
+spreadOuter = spreadMixin.apply(new Dynamic { value = 3 }).eager
+spreadBodyParam = spreadMixin.apply(new Dynamic { value = 3 }).lazy
+entryOuterKeyBodyParam = entryMixin.apply("inner")["outer"]
+returnedMemberConstraint = badReturn.apply(new Box {}).value
+repeatedCached = once[2] + once[2]

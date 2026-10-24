@@ -2,8 +2,23 @@
 use super::*;
 pub(crate) const MIXIN_ID: usize = usize::MAX - 300;
 #[derive(Clone, Debug)]
+pub enum ParameterTarget {
+    Parent {
+        kind: crate::heap::CollectionKind,
+        has_parent: bool,
+        typed: bool,
+    },
+    Builder {
+        amendment_end: Option<usize>,
+    },
+    Value,
+}
+#[derive(Clone, Debug)]
 pub struct Amendment {
     pub parent: Value,
+    pub(super) parameter_count: usize,
+    pub(super) initial: bool,
+    function_block: usize,
     block: usize,
     start: usize,
     end: usize,
@@ -108,7 +123,11 @@ impl Vm {
             .ok_or_else(|| invalid("amended function arity"))?;
         Ok(Value::Function(self.heap.allocate(Object {
             function: Some(Function {
-                block: self.program.amended_function_block,
+                block: if amendment.initial {
+                    amendment.function_block
+                } else {
+                    self.program.amended_function_block
+                },
                 arity,
                 method: false,
                 captured_this: None,
@@ -118,7 +137,129 @@ impl Vm {
             ..Default::default()
         })))
     }
-    pub(super) fn begin_function_amendment(&mut self, end: usize) -> Result<(), RuntimeError> {
+    pub(super) fn check_object_parameters(
+        &self,
+        target: ParameterTarget,
+    ) -> Result<(), RuntimeError> {
+        use crate::heap::CollectionKind;
+        let generator = matches!(target, ParameterTarget::Parent { .. });
+        if let ParameterTarget::Builder {
+            amendment_end: Some(end),
+        } = &target
+            && self
+                .frames
+                .last()
+                .is_some_and(|frame| frame.amendment_end == Some(*end))
+        {
+            return Ok(());
+        }
+        let (id, default_kind, typed_parameter) = match target {
+            ParameterTarget::Parent {
+                kind,
+                has_parent,
+                typed,
+            } => {
+                let value = has_parent.then(|| self.stack.last()).flatten();
+                if matches!(
+                    value,
+                    Some(
+                        Value::Function(_)
+                            | Value::Bool(_)
+                            | Value::Int(_)
+                            | Value::Float(_)
+                            | Value::Duration(_)
+                            | Value::String(_)
+                    )
+                ) {
+                    return Ok(());
+                }
+                (value.and_then(Value::heap_id), kind, typed)
+            }
+            ParameterTarget::Builder { .. } => (
+                self.frames
+                    .last()
+                    .and_then(|frame| frame.builders.last())
+                    .copied(),
+                CollectionKind::Dynamic,
+                true,
+            ),
+            ParameterTarget::Value => (
+                self.stack.last().and_then(Value::heap_id),
+                CollectionKind::Dynamic,
+                true,
+            ),
+        };
+        let (kind, typed_object) = if let Some(id) = id {
+            if let Ok(object) = self.heap.get(id) {
+                (
+                    object.collection_kind,
+                    collections::typed_class(&self.heap, id)?.is_some() || object.is_module,
+                )
+            } else {
+                (default_kind, false)
+            }
+        } else {
+            (default_kind, false)
+        };
+        if !generator && kind == CollectionKind::Dynamic && !typed_object {
+            return Ok(());
+        }
+        if !typed_parameter {
+            return Err(RuntimeError::new(
+                ErrorKind::Unsupported,
+                "Untyped parameterized object generators encounter an upstream internal error.",
+            ));
+        }
+        let message = match kind {
+            CollectionKind::Listing => {
+                "Expected a function that returns a `Listing`, but got a `Listing`."
+            }
+            CollectionKind::Mapping => {
+                "Expected a function that returns a `Mapping`, but got a `Mapping`."
+            }
+            _ => "Expected a function that returns an object, but got an object.",
+        };
+        Err(RuntimeError::new(ErrorKind::Type, message))
+    }
+    pub(super) fn prepare_function_amendment(
+        &mut self,
+        body: usize,
+        arity: usize,
+    ) -> Result<(), RuntimeError> {
+        self.unwrap_amendment_default()?;
+        let Some(Value::Function(parent)) = self.stack.last() else {
+            self.frames.last_mut().expect("amendment frame").pc = body;
+            return Ok(());
+        };
+        let object = self.heap.get(*parent)?;
+        let count = object
+            .function
+            .as_ref()
+            .map(|function| function.arity)
+            .or_else(|| {
+                object
+                    .native_function
+                    .as_ref()
+                    .map(|function| match function.name.as_ref() {
+                        "Reference" => 3,
+                        "containsKey" | "getOrNull" | "contains" => 1,
+                        _ => 0,
+                    })
+            })
+            .ok_or_else(|| invalid("amended function arity"))?;
+        if count != arity {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                format!("Expected a function with {arity} parameters, but got {count}."),
+            ));
+        }
+        Ok(())
+    }
+    pub(super) fn begin_function_amendment(
+        &mut self,
+        end: usize,
+        function: Option<(usize, usize)>,
+    ) -> Result<(), RuntimeError> {
         self.unwrap_amendment_default()?;
         if !matches!(self.stack.last(), Some(Value::Function(_))) {
             return Ok(());
@@ -127,6 +268,10 @@ impl Vm {
         let frame = self.frames.last().unwrap();
         let amendment = Amendment {
             parent,
+            parameter_count: function.map_or(0, |(_, arity)| arity),
+            initial: true,
+            function_block: function
+                .map_or(self.program.amended_function_block, |(block, _)| block),
             block: frame.block,
             start: frame.pc,
             end,
@@ -175,7 +320,22 @@ impl Vm {
             return Err(invalid("amended parent function"));
         };
         let captured = object.environment.locals.len();
-        let arguments = frame.environment.locals[captured..].to_vec();
+        let arguments = if let Some(arguments) = self
+            .frames
+            .last_mut()
+            .expect("amended frame")
+            .amendment_arguments
+            .take()
+        {
+            arguments
+        } else {
+            self.frames
+                .last()
+                .expect("amended frame")
+                .environment
+                .locals[captured..]
+                .to_vec()
+        };
         self.invoke_function(parent, arguments, false)
     }
     pub(super) fn continue_function_amendment(&mut self) -> Result<(), RuntimeError> {
@@ -189,7 +349,14 @@ impl Vm {
             .amendment
             .clone()
             .ok_or_else(|| invalid("amended function metadata"))?;
-        let environment = object.environment.clone();
+        let mut environment = object.environment.clone();
+        if amendment.initial && amendment.parameter_count > 0 {
+            let frame = self.frames.last().expect("amendment invocation");
+            environment.locals = frame.environment.locals.clone();
+            environment.local_owners = frame.environment.local_owners.clone();
+            environment.copy_locals = frame.environment.copy_locals.clone();
+        }
+        amendment.initial = false;
         self.unwrap_amendment_default()?;
         if matches!(self.stack.last(), Some(Value::Function(_))) {
             amendment.parent = self.pop()?;
@@ -208,5 +375,68 @@ impl Vm {
                 .concat(&".<function>".into()),
         );
         Ok(())
+    }
+}
+
+impl Compiler<'_> {
+    /// Resolve the first wrapper's parameter types only after selecting the
+    /// function specialization. The emitted function uses the ordinary typed
+    /// local continuation; subsequent curried wrappers use the forwarding block.
+    pub(super) fn compile_function_amendment(
+        &mut self,
+        parameters: &[crate::syntax::Parameter],
+        output: &mut Code,
+    ) -> Result<usize, RuntimeError> {
+        let prepare = if parameters.is_empty() {
+            None
+        } else {
+            let index = output.len();
+            output.push(Instruction::PrepareFunctionAmendment {
+                body: 0,
+                arity: parameters.len(),
+            });
+            Some(index)
+        };
+        let function = if parameters.is_empty() {
+            None
+        } else {
+            let previous = self.member.clone();
+            self.member = previous.concat(&".<function>".into());
+            let mut code = Code::default();
+            for (index, parameter) in parameters.iter().enumerate() {
+                let depth = parameters.len() - 1 - index;
+                let (check, span) = if let Some(ty) = &parameter.ty {
+                    let check = self
+                        .resolve_expression_type(ty, output)
+                        .unwrap_or(TypeCheck::Unknown);
+                    (check, self.type_source_span(ty))
+                } else {
+                    (TypeCheck::Unknown, parameter.span)
+                };
+                code.push(Instruction::LoadLocal(depth));
+                code.push_at(
+                    Instruction::BindLocal {
+                        depth: Some(depth),
+                        ty: check,
+                    },
+                    span,
+                );
+            }
+            code.push(Instruction::InvokeAmendedParent);
+            code.push(Instruction::ContinueFunctionAmendment);
+            code.push(Instruction::Return);
+            let block = self.block(code, None)?;
+            self.member = previous;
+            Some((block, parameters.len()))
+        };
+        let index = output.len();
+        output.push(Instruction::BeginFunctionAmendment { end: 0, function });
+        if let Some(prepare) = prepare {
+            output[prepare] = Instruction::PrepareFunctionAmendment {
+                body: output.len(),
+                arity: parameters.len(),
+            };
+        }
+        Ok(index)
     }
 }

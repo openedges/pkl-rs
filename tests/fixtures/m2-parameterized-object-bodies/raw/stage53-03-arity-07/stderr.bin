@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Expected a function with 1 parameters, but got 2.
+
+12 | local wrong2 = (p2) { a: Missing -> value = a }
+                     ^^
+at arity#wrong2 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl)
+
+24 | wrongCountBeforeMissingType = wrong2
+                                   ^^^^^^
+at arity#wrongCountBeforeMissingType (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl)
+
+1 | wrongCountBeforeMissingType
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

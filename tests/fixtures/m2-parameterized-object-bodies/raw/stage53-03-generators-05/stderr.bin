@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Cannot find property `original`.
+
+13 | local entryMixin = new Mixin { original -> [original.key] = original.value }
+                                                 ^^^^^^^^
+at generators#entryMixin.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/generators.pkl)
+
+24 | entryCapture = entryMixin.apply(new Dynamic { key = "answer"; value = 42 })["answer"]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at generators#entryCapture (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/generators.pkl)
+
+1 | entryCapture
+    ^^^^^^^^^^^^
+at  (repl:text)

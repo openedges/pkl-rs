@@ -1,0 +1,76 @@
+{
+  "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+  "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+  "input_sha256": "9a037e753e348abac16c43b00a606ed8fe9ae35e6c88d74996d6c92287a0891f",
+  "upstream_case": {
+    "assertion_count": null,
+    "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+    "channels": [
+      "stdout",
+      "stderr",
+      "exit_code",
+      "files"
+    ],
+    "command": [
+      "eval",
+      "--no-cache",
+      "--no-project",
+      "--settings",
+      "pkl:settings",
+      "--property",
+      "name1=value1",
+      "--property",
+      "name2=value2",
+      "--property",
+      "/foo/bar=foobar",
+      "--env-var",
+      "NAME1=value1",
+      "--env-var",
+      "NAME2=value2",
+      "--env-var",
+      "/foo/bar=foobar",
+      "--env-var",
+      "foo bar=foo bar",
+      "--env-var",
+      "file:///foo/bar=file:///foo/bar",
+      "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl"
+    ],
+    "cwd": ".",
+    "environment": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "NO_COLOR": "1",
+      "TERM": "dumb",
+      "TZ": "UTC"
+    },
+    "execution": {
+      "reason": null,
+      "status": "ready"
+    },
+    "expected_exit": [
+      0
+    ],
+    "expected_outcome": "success",
+    "host_requirements": [
+      "filesystem",
+      "source-tree-resource-set"
+    ],
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+    "resource_set": "pkl",
+    "resources": [],
+    "source": {
+      "path": "pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "repository": "pkl",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "sha256": "9a037e753e348abac16c43b00a606ed8fe9ae35e6c88d74996d6c92287a0891f"
+    },
+    "suite": "language-snippet",
+    "target": [
+      "native",
+      "wasm",
+      "napi"
+    ],
+    "upstream_goldens": [],
+    "upstream_outcome": "success"
+  }
+}

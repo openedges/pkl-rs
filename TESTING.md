@@ -92,6 +92,14 @@ Run all verification-tool regressions with `python3 -m unittest discover -s tool
 
 ## Compatibility Comparisons
 
+The [object-body parameter contract](docs/m2-object-parameters.md) keeps Java
+observations for Mixins, function amendments, and lexical captures independently
+pinned. Native and portable comparisons use the original arbitrary expressions
+and resource bytes through the public shared evaluator. Unsupported outcomes and
+Java internal errors remain separate from matching ordinary values and language
+errors. Lifecycle regressions cover suspended parameter checks, escaped curried
+closures, reentry, retry, cancellation, and terminal code/heap release.
+
 The [canonical diagnostic contract](docs/m2-diagnostics.md) keeps actual Java
 UTF-16 strings separate from their Java UTF-8 serialization. Native and portable
 checks preserve both channels; historical byte-only fixtures do not establish

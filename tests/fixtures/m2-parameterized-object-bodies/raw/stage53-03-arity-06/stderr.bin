@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Expected a function with 2 parameters, but got 1.
+
+11 | local wrong1 = (p1) { a, b -> value = a }
+                     ^^
+at arity#wrong1 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl)
+
+23 | wrongOne = wrong1
+                ^^^^^^
+at arity#wrongOne (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl)
+
+1 | wrongOne
+    ^^^^^^^^
+at  (repl:text)

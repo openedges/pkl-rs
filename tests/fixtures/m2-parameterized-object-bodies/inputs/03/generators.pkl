@@ -1,0 +1,25 @@
+local listMixin = new Mixin<Listing<Int>> { original ->
+  original.length
+  for (n in List(3, 4)) { original.length + n }
+}
+local mapMixin = new Mixin<Mapping<String, Int>> { original ->
+  ["base"] = original.length
+  for (key in List("a", "b")) { [key] = original.length + 10 }
+}
+local dynamicMixin = new Mixin { original ->
+  when (original.flag) { chosen = original.value }
+  ...new Dynamic { spread = original.value + 1 }
+}
+local entryMixin = new Mixin { original -> [original.key] = original.value }
+local shadowMixin = new Mixin<Listing<Int>> { original ->
+  for (original in List(3, 4)) { original }
+}
+local listResult = listMixin.apply(new Listing { 10; 20 })
+local mapResult = mapMixin.apply(new Mapping { ["z"] = 1 })
+listFirst = listResult[2]
+listLoop = listResult[4]
+mapEntry = mapResult["a"]
+dynamicWhen = dynamicMixin.apply(new Dynamic { flag = true; value = 6 }).chosen
+dynamicSpread = dynamicMixin.apply(new Dynamic { flag = true; value = 6 }).spread
+entryCapture = entryMixin.apply(new Dynamic { key = "answer"; value = 42 })["answer"]
+loopShadow = shadowMixin.apply(new Listing { 1; 2 })[3]

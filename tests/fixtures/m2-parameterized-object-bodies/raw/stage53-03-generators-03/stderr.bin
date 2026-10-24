@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Cannot find property `original`.
+
+10 | when (original.flag) { chosen = original.value }
+           ^^^^^^^^
+at generators#dynamicMixin.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/generators.pkl)
+
+22 | dynamicWhen = dynamicMixin.apply(new Dynamic { flag = true; value = 6 }).chosen
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at generators#dynamicWhen (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/generators.pkl)
+
+1 | dynamicWhen
+    ^^^^^^^^^^^
+at  (repl:text)

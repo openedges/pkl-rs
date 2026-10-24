@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Expected a function that returns an object, but got an object.
+
+5 | local typed = (parent) { arg -> [(new Box { p: Int -> value = 1 }).value] = arg }
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at nested#typed.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl)
+
+9 | nestedTyped = typed.apply(3)[1]
+                  ^^^^^^^^^^^^^^
+at nested#nestedTyped (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl)
+
+1 | nestedTyped
+    ^^^^^^^^^^^
+at  (repl:text)

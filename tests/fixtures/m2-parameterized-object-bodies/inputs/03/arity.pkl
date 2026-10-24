@@ -1,0 +1,29 @@
+local p0 = () -> new Dynamic { value = 1 }
+local p1 = (a) -> new Dynamic { value = a }
+local p2 = (a, b) -> new Dynamic { value = a + b }
+local p3 = (a, b, c) -> new Dynamic { value = a + b + c }
+local a0 = (p0) { value = 8 }
+local a1 = (p1) { a: Int -> value = a + 10 }
+local a2 = (p2) { a: Int, b: Int, -> value = a * b }
+local a3 = (p3) { a, b, c -> value = a * b * c }
+local ignored = (p2) { value = 5 }
+local wrong0 = (p0) { a -> value = a }
+local wrong1 = (p1) { a, b -> value = a }
+local wrong2 = (p2) { a: Missing -> value = a }
+local unresolved = (p1) { a: Missing -> value = a }
+local empty = (p2) { a: Missing -> }
+local duplicate = (p2) { a, a -> value = a }
+local discards = (p2) { _, _ -> value = 4 }
+zero = a0.apply().value
+one = a1.apply(2).value
+two = a2.apply(3, 4).value
+three = a3.apply(2, 3, 4).value
+noNames = ignored.apply(2, 3).value
+wrongZero = wrong0
+wrongOne = wrong1
+wrongCountBeforeMissingType = wrong2
+missingType = unresolved
+emptyIgnoresTypeAndCount = empty.apply(2, 3).value
+duplicateName = duplicate.apply(2, 3).value
+repeatedDiscard = discards.apply(2, 3).value
+wrongTypedArgument = a1.apply("bad").value

@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Cannot instantiate, or amend an instance of, external class `Int`.
+
+6 | local scalarAmended = (scalarParent) { a -> value = a }
+                           ^^^^^^^^^^^^
+at curried#scalarAmended.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/curried.pkl)
+
+To create an instance of an external class, use its literal syntax or constructor method.
+Examples:
+* `123` uses literal syntax to create an instance of class `Int`.
+* `Pair(1, 2)` uses the `Pair()` constructor method to create an instance of class `Pair`.
+
+17 | scalarReturnError = scalarAmended.apply(7).value
+                         ^^^^^^^^^^^^^^^^^^^^^^
+at curried#scalarReturnError (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/curried.pkl)
+
+1 | scalarReturnError
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)

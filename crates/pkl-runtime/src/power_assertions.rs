@@ -262,7 +262,9 @@ fn expression_anchors(
                 else_branch.as_ref(),
             ]),
             ExprKind::InterpolatedString(parts) => children.extend(parts),
-            ExprKind::Object { parent, members } => {
+            ExprKind::Object {
+                parent, members, ..
+            } => {
                 children.extend(parent.iter().map(AsRef::as_ref));
                 member_expressions(members, &mut children);
             }

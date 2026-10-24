@@ -1,0 +1,346 @@
+{
+  "schema": 1,
+  "scope": "Java-only independent expression observations. No Rust execution or compatibility pass.",
+  "baseline": "Pkl 0.32.0",
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "oracle_sha256": "1aa7870de1acd14941c076e111996889fb75006eec5b475703f7f77dfc67b2d7",
+  "tool_sources": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/tools/java/M2LanguageProbe.java": "50be55d31f3efac3ec3627774ca7b6a02c0226fb40c499f04013acb838ed65c7",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/tools/m2_language.py": "6e32ccbd506678927c80c6c785c586bf7a966c27fe77fcdea6f5be82333f5b16",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/tools/compat.py": "210659a90811436c0f5a3a278d1885fb548bc325918abd8344b82dd52f030f30",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/literal/AmendFunctionNode.java": "58082f17c6afe95257830d6782fe65aa2fb837bc4e5a7ce424adba846743575d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/literal/ObjectLiteralNode.java": "235039b653bd59ffb9610ec60d3fddec4cfb1b07f98f5bfdb99d8676ec9c1e07",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java": "e423325b3cef4b7410d7a01c3e9c776b7c1e5993f93f7bec02e0852d5d5fd7d8"
+  },
+  "input_files_before": {
+    "nested.pkl": {
+      "kind": "file",
+      "sha256": "92b31f95d4a73871c138c6f0343042f990e22bf1775908dd0822f93a7889990e"
+    }
+  },
+  "input_files_after": {
+    "nested.pkl": {
+      "kind": "file",
+      "sha256": "92b31f95d4a73871c138c6f0343042f990e22bf1775908dd0822f93a7889990e"
+    }
+  },
+  "input_files_unchanged": true,
+  "observations": [
+    {
+      "id": "nested-00",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl",
+      "source_sha256": "92b31f95d4a73871c138c6f0343042f990e22bf1775908dd0822f93a7889990e",
+      "expression": "nestedListing",
+      "observations": [
+        {
+          "repeat": 0,
+          "directory": "cases/nested-00/repeat-0",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/cases/nested-00/repeat-0/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl",
+              "nestedListing"
+            ],
+            "exit_code": 1,
+            "timed_out": false,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "230777b2208847bbf2b0dd6f73126d678b24844602daee1d861d156871070b67",
+            "outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+          },
+          "outcome": "pkl-exception\torg.pkl.core.PklException\n"
+        },
+        {
+          "repeat": 1,
+          "directory": "cases/nested-00/repeat-1",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/cases/nested-00/repeat-1/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl",
+              "nestedListing"
+            ],
+            "exit_code": 1,
+            "timed_out": false,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "230777b2208847bbf2b0dd6f73126d678b24844602daee1d861d156871070b67",
+            "outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+          },
+          "outcome": "pkl-exception\torg.pkl.core.PklException\n"
+        }
+      ],
+      "replay_equal": true
+    },
+    {
+      "id": "nested-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl",
+      "source_sha256": "92b31f95d4a73871c138c6f0343042f990e22bf1775908dd0822f93a7889990e",
+      "expression": "nestedMapping",
+      "observations": [
+        {
+          "repeat": 0,
+          "directory": "cases/nested-01/repeat-0",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/cases/nested-01/repeat-0/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl",
+              "nestedMapping"
+            ],
+            "exit_code": 1,
+            "timed_out": false,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "2984db13c94dd2be103dc0d90aef2cd1bb9f88249e525d2fe7aae008146f96f6",
+            "outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+          },
+          "outcome": "pkl-exception\torg.pkl.core.PklException\n"
+        },
+        {
+          "repeat": 1,
+          "directory": "cases/nested-01/repeat-1",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/cases/nested-01/repeat-1/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl",
+              "nestedMapping"
+            ],
+            "exit_code": 1,
+            "timed_out": false,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "2984db13c94dd2be103dc0d90aef2cd1bb9f88249e525d2fe7aae008146f96f6",
+            "outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+          },
+          "outcome": "pkl-exception\torg.pkl.core.PklException\n"
+        }
+      ],
+      "replay_equal": true
+    },
+    {
+      "id": "nested-02",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl",
+      "source_sha256": "92b31f95d4a73871c138c6f0343042f990e22bf1775908dd0822f93a7889990e",
+      "expression": "nestedTyped",
+      "observations": [
+        {
+          "repeat": 0,
+          "directory": "cases/nested-02/repeat-0",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/cases/nested-02/repeat-0/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl",
+              "nestedTyped"
+            ],
+            "exit_code": 1,
+            "timed_out": false,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "b255bd13e2938fd24d41633dd8051d196349db5a10934f2bf1cfacca89c84a1c",
+            "outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+          },
+          "outcome": "pkl-exception\torg.pkl.core.PklException\n"
+        },
+        {
+          "repeat": 1,
+          "directory": "cases/nested-02/repeat-1",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/cases/nested-02/repeat-1/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl",
+              "nestedTyped"
+            ],
+            "exit_code": 1,
+            "timed_out": false,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "b255bd13e2938fd24d41633dd8051d196349db5a10934f2bf1cfacca89c84a1c",
+            "outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+          },
+          "outcome": "pkl-exception\torg.pkl.core.PklException\n"
+        }
+      ],
+      "replay_equal": true
+    },
+    {
+      "id": "nested-03",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl",
+      "source_sha256": "92b31f95d4a73871c138c6f0343042f990e22bf1775908dd0822f93a7889990e",
+      "expression": "nestedDynamic",
+      "observations": [
+        {
+          "repeat": 0,
+          "directory": "cases/nested-03/repeat-0",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/cases/nested-03/repeat-0/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl",
+              "nestedDynamic"
+            ],
+            "exit_code": 0,
+            "timed_out": false,
+            "stdout_sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+          },
+          "outcome": "success\n"
+        },
+        {
+          "repeat": 1,
+          "directory": "cases/nested-03/repeat-1",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/cases/nested-03/repeat-1/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-07/inputs/nested.pkl",
+              "nestedDynamic"
+            ],
+            "exit_code": 0,
+            "timed_out": false,
+            "stdout_sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+          },
+          "outcome": "success\n"
+        }
+      ],
+      "replay_equal": true
+    }
+  ]
+}

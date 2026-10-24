@@ -1114,6 +1114,59 @@ mod tests {
         assert_eq!(query_count(&vm), 0);
     }
     #[test]
+    fn parameterized_currying_and_lazy_closures_retain_and_release_query_code() {
+        let mut vm = Vm::new(Arc::new(Program::new(Vec::new())));
+        start(&mut vm, "stable");
+        settle(&mut vm, &[], false);
+        let program = Arc::make_mut(&mut vm.program);
+        let call = program.blocks.next_id();
+        program.blocks.push(vec![
+            Instruction::Input(0),
+            Instruction::Input(1),
+            Instruction::Call {
+                arity: 1,
+                method: false,
+            },
+            Instruction::Return,
+        ]);
+        program.metadata.push(BlockMetadata::default());
+        let initial = resident_stats(&vm);
+        for iteration in 0..40 {
+            start(
+                &mut vm,
+                "(((first) -> (second) -> new Dynamic { parent = first + second }) { first: Int(this > 0) -> captured = (last) -> first + last }).apply(7)",
+            );
+            let curried = settle(&mut vm, &[], true);
+            start(&mut vm, "stable");
+            settle(&mut vm, std::slice::from_ref(&curried), false);
+            assert_eq!(query_count(&vm), 1);
+            vm.start(call, vec![curried, Value::Int(20.into())])
+                .unwrap();
+            let object = settle(&mut vm, &[], true);
+            vm.start_member(object.as_object().unwrap(), "parent")
+                .unwrap();
+            assert_eq!(
+                settle(&mut vm, std::slice::from_ref(&object), false),
+                Value::Int(27.into())
+            );
+            vm.start_member(object.as_object().unwrap(), "captured")
+                .unwrap();
+            let closure = settle(&mut vm, &[], true);
+            start(&mut vm, "stable");
+            settle(&mut vm, std::slice::from_ref(&closure), false);
+            assert_eq!(query_count(&vm), 1);
+            vm.start(call, vec![closure, Value::Int(30.into())])
+                .unwrap();
+            assert_eq!(settle(&mut vm, &[], false), Value::Int(37.into()));
+            start(&mut vm, "stable");
+            settle(&mut vm, &[], false);
+            assert_eq!(query_count(&vm), 0);
+            if iteration == 3 || iteration == 39 {
+                assert_eq!(resident_stats(&vm), initial);
+            }
+        }
+    }
+    #[test]
     fn escaped_query_closure_keeps_its_code_and_site_cache_until_its_last_root_is_gone() {
         let mut vm = Vm::new(Arc::new(Program::new(Vec::new())));
         start(&mut vm, "(x)->import(\"memo:/child.pkl\").tag + x");

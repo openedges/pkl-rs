@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected a function that returns a `Listing`, but got a `Listing`.
+
+5 | listing = new Listing { arg: Int -> 8 }
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at dispatch#listing (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl)
+
+1 | listing[0]
+    ^^^^^^^
+at  (repl:text)

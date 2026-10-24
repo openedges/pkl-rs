@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Expected a function with 1 parameters, but got 0.
+
+10 | local wrong0 = (p0) { a -> value = a }
+                     ^^
+at arity#wrong0 (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl)
+
+22 | wrongZero = wrong0
+                 ^^^^^^
+at arity#wrongZero (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl)
+
+1 | wrongZero
+    ^^^^^^^^^
+at  (repl:text)

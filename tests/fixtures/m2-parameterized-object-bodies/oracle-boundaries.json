@@ -1,0 +1,534 @@
+[
+  {
+    "id": "stage53-03-dispatch-01",
+    "source": "inputs/03/dispatch.pkl",
+    "source_sha256": "6e4fe88a95ce6417770764405c244a9671f731dfd07d0a773fe45b54734fbd7d",
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl",
+    "module_name": "dispatch",
+    "expression": "directUnbound.value",
+    "power_assertions": false,
+    "cohort": "03",
+    "original_id": "dispatch-01",
+    "classification": "oracle-error",
+    "java_repeats": 2,
+    "replay_equal": true,
+    "observations": [
+      {
+        "repeat": 0,
+        "process": {
+          "path": "provenance/processes/stage53-03-dispatch-01/repeat-0.json",
+          "sha256": "80039fd053e579f25f77a4f7217c20b70544a65e3a70a2cc1a65a580ec79a7ea",
+          "bytes": 1292
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-03-dispatch-01/repeat-0/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-03-dispatch-01/repeat-0/stderr.bin",
+            "sha256": "ba05103e01ef42715ca9878c84385e2ee3265562d884cb98130410b7bbad05fa",
+            "bytes": 3180
+          },
+          "outcome": {
+            "path": "raw/stage53-03-dispatch-01/repeat-0/outcome.bin",
+            "sha256": "937cc2827528278989a4008d6a26c92d7f4b616cc3e8faf442acc5b7f1ce1517",
+            "bytes": 43
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      },
+      {
+        "repeat": 1,
+        "process": {
+          "path": "provenance/processes/stage53-03-dispatch-01/repeat-1.json",
+          "sha256": "0aba2c1a39d70cce936c455b82166342e98e8f479e999b5e106a6a56a5213377",
+          "bytes": 1292
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-03-dispatch-01/repeat-1/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-03-dispatch-01/repeat-1/stderr.bin",
+            "sha256": "ba05103e01ef42715ca9878c84385e2ee3265562d884cb98130410b7bbad05fa",
+            "bytes": 3180
+          },
+          "outcome": {
+            "path": "raw/stage53-03-dispatch-01/repeat-1/outcome.bin",
+            "sha256": "937cc2827528278989a4008d6a26c92d7f4b616cc3e8faf442acc5b7f1ce1517",
+            "bytes": 43
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      }
+    ],
+    "requires_host": false,
+    "resources": []
+  },
+  {
+    "id": "stage53-03-dispatch-09",
+    "source": "inputs/03/dispatch.pkl",
+    "source_sha256": "6e4fe88a95ce6417770764405c244a9671f731dfd07d0a773fe45b54734fbd7d",
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl",
+    "module_name": "dispatch",
+    "expression": "generatorUntyped.value",
+    "power_assertions": false,
+    "cohort": "03",
+    "original_id": "dispatch-09",
+    "classification": "oracle-error",
+    "java_repeats": 2,
+    "replay_equal": true,
+    "observations": [
+      {
+        "repeat": 0,
+        "process": {
+          "path": "provenance/processes/stage53-03-dispatch-09/repeat-0.json",
+          "sha256": "7f1d28053dbed5106ed42960d942ab442841c95c12a90ddb09927efab010ce4c",
+          "bytes": 1295
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-03-dispatch-09/repeat-0/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-03-dispatch-09/repeat-0/stderr.bin",
+            "sha256": "24680ee950390f02ab4b7bb7ff731fe9ffc47a2e2f0592ef50df954c3d918284",
+            "bytes": 3387
+          },
+          "outcome": {
+            "path": "raw/stage53-03-dispatch-09/repeat-0/outcome.bin",
+            "sha256": "937cc2827528278989a4008d6a26c92d7f4b616cc3e8faf442acc5b7f1ce1517",
+            "bytes": 43
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      },
+      {
+        "repeat": 1,
+        "process": {
+          "path": "provenance/processes/stage53-03-dispatch-09/repeat-1.json",
+          "sha256": "0bb959fc6d6e783c43de42b86d1dd288783b4be88e540821f0db8969ea764901",
+          "bytes": 1295
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-03-dispatch-09/repeat-1/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-03-dispatch-09/repeat-1/stderr.bin",
+            "sha256": "24680ee950390f02ab4b7bb7ff731fe9ffc47a2e2f0592ef50df954c3d918284",
+            "bytes": 3387
+          },
+          "outcome": {
+            "path": "raw/stage53-03-dispatch-09/repeat-1/outcome.bin",
+            "sha256": "937cc2827528278989a4008d6a26c92d7f4b616cc3e8faf442acc5b7f1ce1517",
+            "bytes": 43
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      }
+    ],
+    "requires_host": false,
+    "resources": []
+  },
+  {
+    "id": "stage53-04-lexical-03",
+    "source": "inputs/04/lexical.pkl",
+    "source_sha256": "55fa66d77b17ff008b1e2c6e76e49598ef01f733c66c22650140b20d6b7f7db9",
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/lexical.pkl",
+    "module_name": "lexical",
+    "expression": "parentReceiver",
+    "power_assertions": false,
+    "cohort": "04",
+    "original_id": "lexical-03",
+    "classification": "oracle-error",
+    "java_repeats": 2,
+    "replay_equal": true,
+    "observations": [
+      {
+        "repeat": 0,
+        "process": {
+          "path": "provenance/processes/stage53-04-lexical-03/repeat-0.json",
+          "sha256": "9a8684adf238921ddef6235ec8a3869e9c60f1f33ae03a141bbbcd055365dd8f",
+          "bytes": 1285
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-04-lexical-03/repeat-0/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-04-lexical-03/repeat-0/stderr.bin",
+            "sha256": "e25cb6a0d287e97663fcfd3eb41110cbbda627a6410fb51c7ecf52a853f8cfb2",
+            "bytes": 89711
+          },
+          "outcome": {
+            "path": "raw/stage53-04-lexical-03/repeat-0/outcome.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      },
+      {
+        "repeat": 1,
+        "process": {
+          "path": "provenance/processes/stage53-04-lexical-03/repeat-1.json",
+          "sha256": "02414178f6ecffdd3bb0ff3bfc54a8fedfbb7fcda6c3f8dd075777005572e9e4",
+          "bytes": 1285
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-04-lexical-03/repeat-1/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-04-lexical-03/repeat-1/stderr.bin",
+            "sha256": "e25cb6a0d287e97663fcfd3eb41110cbbda627a6410fb51c7ecf52a853f8cfb2",
+            "bytes": 89711
+          },
+          "outcome": {
+            "path": "raw/stage53-04-lexical-03/repeat-1/outcome.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      }
+    ],
+    "requires_host": false,
+    "resources": []
+  },
+  {
+    "id": "stage53-04-lexical-04",
+    "source": "inputs/04/lexical.pkl",
+    "source_sha256": "55fa66d77b17ff008b1e2c6e76e49598ef01f733c66c22650140b20d6b7f7db9",
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-04/inputs/lexical.pkl",
+    "module_name": "lexical",
+    "expression": "bodyReceiver",
+    "power_assertions": false,
+    "cohort": "04",
+    "original_id": "lexical-04",
+    "classification": "oracle-error",
+    "java_repeats": 2,
+    "replay_equal": false,
+    "observations": [
+      {
+        "repeat": 0,
+        "process": {
+          "path": "provenance/processes/stage53-04-lexical-04/repeat-0.json",
+          "sha256": "ec4a123784b3ee1b416d39e40613b4358b70a8b3864ca567d92c55c23f29c5bd",
+          "bytes": 1283
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-04-lexical-04/repeat-0/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-04-lexical-04/repeat-0/stderr.bin",
+            "sha256": "860e5dd5984897ce319ce695d3009dbf64ceb6f03fbe2e703afa55c1fd8a8d4d",
+            "bytes": 89711
+          },
+          "outcome": {
+            "path": "raw/stage53-04-lexical-04/repeat-0/outcome.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      },
+      {
+        "repeat": 1,
+        "process": {
+          "path": "provenance/processes/stage53-04-lexical-04/repeat-1.json",
+          "sha256": "312bbe3d265bf370273da988680c34182cce2bcfff366e05faba54597b1beb10",
+          "bytes": 1283
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-04-lexical-04/repeat-1/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-04-lexical-04/repeat-1/stderr.bin",
+            "sha256": "e10be8e385b2e5b5f38055427624e79d0d4c89aeddbc5f878c12b08b3433e155",
+            "bytes": 89711
+          },
+          "outcome": {
+            "path": "raw/stage53-04-lexical-04/repeat-1/outcome.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      }
+    ],
+    "requires_host": false,
+    "resources": []
+  },
+  {
+    "id": "stage53-08-for-body-00",
+    "source": "inputs/08/for-body.pkl",
+    "source_sha256": "af05968eb5ea55985507790b20b54a066bf0a5cf91992041602583e486d493b1",
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-08/inputs/for-body.pkl",
+    "module_name": "for-body",
+    "expression": "value.length",
+    "power_assertions": false,
+    "cohort": "08",
+    "original_id": "for-body-00",
+    "classification": "oracle-error",
+    "java_repeats": 2,
+    "replay_equal": true,
+    "observations": [
+      {
+        "repeat": 0,
+        "process": {
+          "path": "provenance/processes/stage53-08-for-body-00/repeat-0.json",
+          "sha256": "0585d34a13bf56b65ea77c6896e62149614886b24470495885047c40fcd0ca03",
+          "bytes": 1285
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-08-for-body-00/repeat-0/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-08-for-body-00/repeat-0/stderr.bin",
+            "sha256": "9b64c6cf41d6b555aaa9d30688012e4962bcb8a8e860642b7943e144698aebe9",
+            "bytes": 966
+          },
+          "outcome": {
+            "path": "raw/stage53-08-for-body-00/repeat-0/outcome.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      },
+      {
+        "repeat": 1,
+        "process": {
+          "path": "provenance/processes/stage53-08-for-body-00/repeat-1.json",
+          "sha256": "c3e08768454d9aae99318fc546f16dc12be69eaf6d1427fff88074f2cd7767ae",
+          "bytes": 1285
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-08-for-body-00/repeat-1/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-08-for-body-00/repeat-1/stderr.bin",
+            "sha256": "9b64c6cf41d6b555aaa9d30688012e4962bcb8a8e860642b7943e144698aebe9",
+            "bytes": 966
+          },
+          "outcome": {
+            "path": "raw/stage53-08-for-body-00/repeat-1/outcome.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      }
+    ],
+    "requires_host": false,
+    "resources": []
+  },
+  {
+    "id": "stage53-08-when-body-00",
+    "source": "inputs/08/when-body.pkl",
+    "source_sha256": "231c331e34b2c779465330f275e33a168c1257ff35efcc87be5a0192821e499d",
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-08/inputs/when-body.pkl",
+    "module_name": "when-body",
+    "expression": "value.length",
+    "power_assertions": false,
+    "cohort": "08",
+    "original_id": "when-body-00",
+    "classification": "oracle-error",
+    "java_repeats": 2,
+    "replay_equal": true,
+    "observations": [
+      {
+        "repeat": 0,
+        "process": {
+          "path": "provenance/processes/stage53-08-when-body-00/repeat-0.json",
+          "sha256": "670fdaac8a5d2d96ac0739e8f0d43ca582d02697876edb55e330a833e94083f5",
+          "bytes": 1287
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-08-when-body-00/repeat-0/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-08-when-body-00/repeat-0/stderr.bin",
+            "sha256": "9b64c6cf41d6b555aaa9d30688012e4962bcb8a8e860642b7943e144698aebe9",
+            "bytes": 966
+          },
+          "outcome": {
+            "path": "raw/stage53-08-when-body-00/repeat-0/outcome.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      },
+      {
+        "repeat": 1,
+        "process": {
+          "path": "provenance/processes/stage53-08-when-body-00/repeat-1.json",
+          "sha256": "63c12a383f1a53ff8acf36c077d026c6cd13f99595a828dd52629daec25ee5c2",
+          "bytes": 1287
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-08-when-body-00/repeat-1/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-08-when-body-00/repeat-1/stderr.bin",
+            "sha256": "9b64c6cf41d6b555aaa9d30688012e4962bcb8a8e860642b7943e144698aebe9",
+            "bytes": 966
+          },
+          "outcome": {
+            "path": "raw/stage53-08-when-body-00/repeat-1/outcome.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      }
+    ],
+    "requires_host": false,
+    "resources": []
+  },
+  {
+    "id": "stage53-08-false-when-body-00",
+    "source": "inputs/08/false-when-body.pkl",
+    "source_sha256": "7b45f45b85dad39ac0871cbe1661f1bbe1fb3c0cc6714a3054317e43bdaa4542",
+    "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-08/inputs/false-when-body.pkl",
+    "module_name": "false-when-body",
+    "expression": "value.length",
+    "power_assertions": false,
+    "cohort": "08",
+    "original_id": "false-when-body-00",
+    "classification": "oracle-error",
+    "java_repeats": 2,
+    "replay_equal": true,
+    "observations": [
+      {
+        "repeat": 0,
+        "process": {
+          "path": "provenance/processes/stage53-08-false-when-body-00/repeat-0.json",
+          "sha256": "1c4fc6b42352209260b3f2724d36ab50e6cce1d72c982f281c02068669769662",
+          "bytes": 1299
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-08-false-when-body-00/repeat-0/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-08-false-when-body-00/repeat-0/stderr.bin",
+            "sha256": "9b64c6cf41d6b555aaa9d30688012e4962bcb8a8e860642b7943e144698aebe9",
+            "bytes": 966
+          },
+          "outcome": {
+            "path": "raw/stage53-08-false-when-body-00/repeat-0/outcome.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      },
+      {
+        "repeat": 1,
+        "process": {
+          "path": "provenance/processes/stage53-08-false-when-body-00/repeat-1.json",
+          "sha256": "a88dbfc0fd70c584c7b80d545a8083c6b48e120c48914d1420159d0a7e62cb7e",
+          "bytes": 1299
+        },
+        "exit_code": 1,
+        "timed_out": false,
+        "channels": {
+          "stdout": {
+            "path": "raw/stage53-08-false-when-body-00/repeat-1/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "raw/stage53-08-false-when-body-00/repeat-1/stderr.bin",
+            "sha256": "9b64c6cf41d6b555aaa9d30688012e4962bcb8a8e860642b7943e144698aebe9",
+            "bytes": 966
+          },
+          "outcome": {
+            "path": "raw/stage53-08-false-when-body-00/repeat-1/outcome.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "public_generated_files": {},
+        "input_tree_unchanged": true
+      }
+    ],
+    "requires_host": false,
+    "resources": []
+  }
+]

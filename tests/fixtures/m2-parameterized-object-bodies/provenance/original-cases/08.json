@@ -1,0 +1,20 @@
+[
+  {
+    "id": "for-body-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-08/inputs/for-body.pkl",
+    "source_sha256": "af05968eb5ea55985507790b20b54a066bf0a5cf91992041602583e486d493b1",
+    "expression": "value.length"
+  },
+  {
+    "id": "when-body-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-08/inputs/when-body.pkl",
+    "source_sha256": "231c331e34b2c779465330f275e33a168c1257ff35efcc87be5a0192821e499d",
+    "expression": "value.length"
+  },
+  {
+    "id": "false-when-body-00",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-08/inputs/false-when-body.pkl",
+    "source_sha256": "7b45f45b85dad39ac0871cbe1661f1bbe1fb3c0cc6714a3054317e43bdaa4542",
+    "expression": "value.length"
+  }
+]

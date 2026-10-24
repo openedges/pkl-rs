@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `false` violated.
+Value: new Function1 {}
+
+3 | typealias Checked<T> = Mixin<T>(false)
+                                    ^^^^^
+at wrapper-alias#checked (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-10/inputs/wrapper-alias.pkl)
+
+9 | checkedError = checked
+                   ^^^^^^^
+at wrapper-alias#checkedError (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-10/inputs/wrapper-alias.pkl)
+
+1 | checkedError
+    ^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,9 @@
+typealias Alias<T> = Mixin<T>
+typealias Chained<T> = Alias<T>
+typealias Structural<T> = (T) -> T
+local direct = new Alias<Dynamic> { arg -> value = arg.value + 1 }
+local chained = new Chained<Dynamic> { arg -> value = arg.value + 2 }
+local structural = new Structural<Dynamic> { arg -> value = 1 }
+directValue = direct.apply(new Dynamic { value = 4 }).value
+chainedValue = chained.apply(new Dynamic { value = 4 }).value
+structuralError = structural

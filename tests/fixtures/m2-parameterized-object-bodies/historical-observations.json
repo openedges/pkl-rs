@@ -1,0 +1,1106 @@
+[
+  {
+    "cohort": "01",
+    "id": "basics-00",
+    "expression": "explicitValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-01",
+    "expression": "inferredValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-02",
+    "expression": "aliasValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-03",
+    "expression": "functionTypedValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-04",
+    "expression": "defaultValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-05",
+    "expression": "typedValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-06",
+    "expression": "underscoreValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-07",
+    "expression": "shadowValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-08",
+    "expression": "pipelineValue.value",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-09",
+    "expression": "chainedValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-10",
+    "expression": "repeatedValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-11",
+    "expression": "badArgument",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-12",
+    "expression": "badCallArity",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "basics-13",
+    "expression": "badAlias",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-00",
+    "expression": "zero",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-01",
+    "expression": "one",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-02",
+    "expression": "two",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-03",
+    "expression": "three",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-04",
+    "expression": "noNames",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-05",
+    "expression": "wrongZero",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-06",
+    "expression": "wrongOne",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-07",
+    "expression": "wrongCountBeforeMissingType",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-08",
+    "expression": "missingType",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-09",
+    "expression": "emptyIgnoresTypeAndCount",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-10",
+    "expression": "duplicateName",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-11",
+    "expression": "repeatedDiscard",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "arity-12",
+    "expression": "wrongTypedArgument",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "curried-00",
+    "expression": "firstCapture",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "curried-01",
+    "expression": "curriedValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "curried-02",
+    "expression": "tripleCapture",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "curried-03",
+    "expression": "tripleValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "curried-04",
+    "expression": "nullObjectDefault",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "curried-05",
+    "expression": "nullFunctionDefault",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "curried-06",
+    "expression": "scalarReturnError",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "curried-07",
+    "expression": "wrongSecondArity",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "curried-08",
+    "expression": "repeatedCurried",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "dispatch-00",
+    "expression": "direct.value",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "dispatch-01",
+    "expression": "directUnbound.value",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "dispatch-02",
+    "expression": "typed.value",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "dispatch-03",
+    "expression": "listing[0]",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "dispatch-04",
+    "expression": "mapping[\"x\"]",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "dispatch-05",
+    "expression": "emptyTyped.value",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "dispatch-06",
+    "expression": "emptyListing.length",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "dispatch-07",
+    "expression": "emptyMapping.length",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "dispatch-08",
+    "expression": "generatorDynamic.value",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "dispatch-09",
+    "expression": "generatorUntyped.value",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "01",
+    "id": "generators-00",
+    "expression": "listFirst",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "generators-01",
+    "expression": "listLoop",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "generators-02",
+    "expression": "mapEntry",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "generators-03",
+    "expression": "dynamicWhen",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "generators-04",
+    "expression": "dynamicSpread",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "generators-05",
+    "expression": "entryCapture",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "generators-06",
+    "expression": "loopShadow",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "types-order-00",
+    "expression": "constraintSuccess",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "types-order-01",
+    "expression": "constraintFailure",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "types-order-02",
+    "expression": "typeBeforeParentFailure",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "types-order-03",
+    "expression": "parentFailure",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "types-order-04",
+    "expression": "rawMapping",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "types-order-05",
+    "expression": "checkedMapping",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "types-order-06",
+    "expression": "rawFunction",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "types-order-07",
+    "expression": "checkedFunction",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "lexical-00",
+    "expression": "superValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "lexical-01",
+    "expression": "selfValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "lexical-02",
+    "expression": "lexicalCapture",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "lexical-03",
+    "expression": "parentReceiver",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "01",
+    "id": "lexical-04",
+    "expression": "bodyReceiver",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-00",
+    "expression": "explicitValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-01",
+    "expression": "inferredValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-02",
+    "expression": "aliasValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-03",
+    "expression": "functionTypedValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-04",
+    "expression": "defaultValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-05",
+    "expression": "typedValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-06",
+    "expression": "underscoreValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-07",
+    "expression": "shadowValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-08",
+    "expression": "pipelineValue.value",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-09",
+    "expression": "chainedValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-10",
+    "expression": "repeatedValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-11",
+    "expression": "badArgument",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-12",
+    "expression": "badCallArity",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "basics-13",
+    "expression": "badAlias",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-00",
+    "expression": "zero",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-01",
+    "expression": "one",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-02",
+    "expression": "two",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-03",
+    "expression": "three",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-04",
+    "expression": "noNames",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-05",
+    "expression": "wrongZero",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-06",
+    "expression": "wrongOne",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-07",
+    "expression": "wrongCountBeforeMissingType",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-08",
+    "expression": "missingType",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-09",
+    "expression": "emptyIgnoresTypeAndCount",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-10",
+    "expression": "duplicateName",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-11",
+    "expression": "repeatedDiscard",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "arity-12",
+    "expression": "wrongTypedArgument",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "curried-00",
+    "expression": "firstCapture",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "curried-01",
+    "expression": "curriedValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "curried-02",
+    "expression": "tripleCapture",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "curried-03",
+    "expression": "tripleValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "curried-04",
+    "expression": "nullObjectDefault",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "curried-05",
+    "expression": "nullFunctionDefault",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "curried-06",
+    "expression": "scalarReturnError",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "curried-07",
+    "expression": "wrongSecondArity",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "curried-08",
+    "expression": "repeatedCurried",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "dispatch-00",
+    "expression": "direct.value",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "02",
+    "id": "dispatch-01",
+    "expression": "directUnbound.value",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "02",
+    "id": "dispatch-02",
+    "expression": "typed.value",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "02",
+    "id": "dispatch-03",
+    "expression": "listing[0]",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "02",
+    "id": "dispatch-04",
+    "expression": "mapping[\"x\"]",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "02",
+    "id": "dispatch-05",
+    "expression": "emptyTyped.value",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "02",
+    "id": "dispatch-06",
+    "expression": "emptyListing.length",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "02",
+    "id": "dispatch-07",
+    "expression": "emptyMapping.length",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "02",
+    "id": "dispatch-08",
+    "expression": "generatorDynamic.value",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "02",
+    "id": "dispatch-09",
+    "expression": "generatorUntyped.value",
+    "reason": "Earlier equivalent dispatch/arity observation is retained; the ordinary selection uses the final pinned source cohort.",
+    "intended_semantics_reached": true,
+    "classification": "superseded-observation"
+  },
+  {
+    "cohort": "02",
+    "id": "generators-00",
+    "expression": "listFirst",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "generators-01",
+    "expression": "listLoop",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "generators-02",
+    "expression": "mapEntry",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "generators-03",
+    "expression": "dynamicWhen",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "generators-04",
+    "expression": "dynamicSpread",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "generators-05",
+    "expression": "entryCapture",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "generators-06",
+    "expression": "loopShadow",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "types-order-00",
+    "expression": "constraintSuccess",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "types-order-01",
+    "expression": "constraintFailure",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "types-order-02",
+    "expression": "typeBeforeParentFailure",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "types-order-03",
+    "expression": "parentFailure",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "types-order-04",
+    "expression": "rawMapping",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "types-order-05",
+    "expression": "checkedMapping",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "types-order-06",
+    "expression": "rawFunction",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "types-order-07",
+    "expression": "checkedFunction",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "lexical-00",
+    "expression": "superValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "lexical-01",
+    "expression": "selfValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "lexical-02",
+    "expression": "lexicalCapture",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "lexical-03",
+    "expression": "parentReceiver",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "02",
+    "id": "lexical-04",
+    "expression": "bodyReceiver",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "03",
+    "id": "lexical-00",
+    "expression": "superValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "03",
+    "id": "lexical-01",
+    "expression": "selfValue",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "03",
+    "id": "lexical-02",
+    "expression": "lexicalCapture",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "03",
+    "id": "lexical-03",
+    "expression": "parentReceiver",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "03",
+    "id": "lexical-04",
+    "expression": "bodyReceiver",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  },
+  {
+    "cohort": "05",
+    "id": "read-constraint-02",
+    "expression": "readInLazyBody",
+    "reason": "Earlier invalid control syntax / reserved identifier, or scalar amendment blocks intended lazy read; full raw capture remains in original cohort.",
+    "intended_semantics_reached": false,
+    "classification": "diagnostic-only-unreached-intent"
+  }
+]

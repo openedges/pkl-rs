@@ -1,0 +1,437 @@
+{
+  "schema": 1,
+  "scope": "Java-only independent expression observations. No Rust execution or compatibility pass.",
+  "baseline": "Pkl 0.32.0",
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "oracle_sha256": "1aa7870de1acd14941c076e111996889fb75006eec5b475703f7f77dfc67b2d7",
+  "tool_sources": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/tools/java/M2LanguageProbe.java": "50be55d31f3efac3ec3627774ca7b6a02c0226fb40c499f04013acb838ed65c7",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/tools/m2_language.py": "6e32ccbd506678927c80c6c785c586bf7a966c27fe77fcdea6f5be82333f5b16",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/tools/compat.py": "210659a90811436c0f5a3a278d1885fb548bc325918abd8344b82dd52f030f30",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/literal/AmendFunctionNode.java": "58082f17c6afe95257830d6782fe65aa2fb837bc4e5a7ce424adba846743575d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/literal/ObjectLiteralNode.java": "235039b653bd59ffb9610ec60d3fddec4cfb1b07f98f5bfdb99d8676ec9c1e07",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/builder/AstBuilder.java": "e423325b3cef4b7410d7a01c3e9c776b7c1e5993f93f7bec02e0852d5d5fd7d8"
+  },
+  "input_files_before": {
+    "gate.txt": {
+      "kind": "file",
+      "sha256": "c2fc355f2b52e01ea670dc8b27f1c8f3a268d68b4b399a0cf91544cb975792df"
+    },
+    "lexical.pkl": {
+      "kind": "file",
+      "sha256": "6f4a61718d5b4390a588a258a7e67f2b3d5439c924b1d4377cefff8bcee7288d"
+    },
+    "read-constraint.pkl": {
+      "kind": "file",
+      "sha256": "f33bc25ed42eedcfab7c8eeab49eb8c2d5b2a2032693792b225db5ea122c4d11"
+    }
+  },
+  "input_files_after": {
+    "gate.txt": {
+      "kind": "file",
+      "sha256": "c2fc355f2b52e01ea670dc8b27f1c8f3a268d68b4b399a0cf91544cb975792df"
+    },
+    "lexical.pkl": {
+      "kind": "file",
+      "sha256": "6f4a61718d5b4390a588a258a7e67f2b3d5439c924b1d4377cefff8bcee7288d"
+    },
+    "read-constraint.pkl": {
+      "kind": "file",
+      "sha256": "f33bc25ed42eedcfab7c8eeab49eb8c2d5b2a2032693792b225db5ea122c4d11"
+    }
+  },
+  "input_files_unchanged": true,
+  "observations": [
+    {
+      "id": "lexical-00",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/lexical.pkl",
+      "source_sha256": "6f4a61718d5b4390a588a258a7e67f2b3d5439c924b1d4377cefff8bcee7288d",
+      "expression": "parentReceiver",
+      "observations": [
+        {
+          "repeat": 0,
+          "directory": "cases/lexical-00/repeat-0",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/cases/lexical-00/repeat-0/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/lexical.pkl",
+              "parentReceiver"
+            ],
+            "exit_code": 0,
+            "timed_out": false,
+            "stdout_sha256": "482d9673cfee5de391f97fde4d1c84f9f8d6f2cf0784fcffb958b4032de7236c",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+          },
+          "outcome": "success\n"
+        },
+        {
+          "repeat": 1,
+          "directory": "cases/lexical-00/repeat-1",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/cases/lexical-00/repeat-1/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/lexical.pkl",
+              "parentReceiver"
+            ],
+            "exit_code": 0,
+            "timed_out": false,
+            "stdout_sha256": "482d9673cfee5de391f97fde4d1c84f9f8d6f2cf0784fcffb958b4032de7236c",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+          },
+          "outcome": "success\n"
+        }
+      ],
+      "replay_equal": true
+    },
+    {
+      "id": "lexical-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/lexical.pkl",
+      "source_sha256": "6f4a61718d5b4390a588a258a7e67f2b3d5439c924b1d4377cefff8bcee7288d",
+      "expression": "bodyReceiver",
+      "observations": [
+        {
+          "repeat": 0,
+          "directory": "cases/lexical-01/repeat-0",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/cases/lexical-01/repeat-0/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/lexical.pkl",
+              "bodyReceiver"
+            ],
+            "exit_code": 0,
+            "timed_out": false,
+            "stdout_sha256": "454f63ac30c8322997ef025edff6abd23e0dbe7b8a3d5126a894e4a168c1b59b",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+          },
+          "outcome": "success\n"
+        },
+        {
+          "repeat": 1,
+          "directory": "cases/lexical-01/repeat-1",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/cases/lexical-01/repeat-1/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/lexical.pkl",
+              "bodyReceiver"
+            ],
+            "exit_code": 0,
+            "timed_out": false,
+            "stdout_sha256": "454f63ac30c8322997ef025edff6abd23e0dbe7b8a3d5126a894e4a168c1b59b",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+          },
+          "outcome": "success\n"
+        }
+      ],
+      "replay_equal": true
+    },
+    {
+      "id": "read-constraint-00",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/read-constraint.pkl",
+      "source_sha256": "f33bc25ed42eedcfab7c8eeab49eb8c2d5b2a2032693792b225db5ea122c4d11",
+      "expression": "readConstraintSuccess",
+      "observations": [
+        {
+          "repeat": 0,
+          "directory": "cases/read-constraint-00/repeat-0",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/cases/read-constraint-00/repeat-0/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/read-constraint.pkl",
+              "readConstraintSuccess"
+            ],
+            "exit_code": 0,
+            "timed_out": false,
+            "stdout_sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+          },
+          "outcome": "success\n"
+        },
+        {
+          "repeat": 1,
+          "directory": "cases/read-constraint-00/repeat-1",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/cases/read-constraint-00/repeat-1/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/read-constraint.pkl",
+              "readConstraintSuccess"
+            ],
+            "exit_code": 0,
+            "timed_out": false,
+            "stdout_sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+          },
+          "outcome": "success\n"
+        }
+      ],
+      "replay_equal": true
+    },
+    {
+      "id": "read-constraint-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/read-constraint.pkl",
+      "source_sha256": "f33bc25ed42eedcfab7c8eeab49eb8c2d5b2a2032693792b225db5ea122c4d11",
+      "expression": "readConstraintFailure",
+      "observations": [
+        {
+          "repeat": 0,
+          "directory": "cases/read-constraint-01/repeat-0",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/cases/read-constraint-01/repeat-0/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/read-constraint.pkl",
+              "readConstraintFailure"
+            ],
+            "exit_code": 1,
+            "timed_out": false,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "75d0d940472862fbb7aa4bb3dec6e93e6c6f54cfdfbd0440d559e0bc5068e284",
+            "outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+          },
+          "outcome": "pkl-exception\torg.pkl.core.PklException\n"
+        },
+        {
+          "repeat": 1,
+          "directory": "cases/read-constraint-01/repeat-1",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/cases/read-constraint-01/repeat-1/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/read-constraint.pkl",
+              "readConstraintFailure"
+            ],
+            "exit_code": 1,
+            "timed_out": false,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "75d0d940472862fbb7aa4bb3dec6e93e6c6f54cfdfbd0440d559e0bc5068e284",
+            "outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+          },
+          "outcome": "pkl-exception\torg.pkl.core.PklException\n"
+        }
+      ],
+      "replay_equal": true
+    },
+    {
+      "id": "read-constraint-02",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/read-constraint.pkl",
+      "source_sha256": "f33bc25ed42eedcfab7c8eeab49eb8c2d5b2a2032693792b225db5ea122c4d11",
+      "expression": "readInLazyBody",
+      "observations": [
+        {
+          "repeat": 0,
+          "directory": "cases/read-constraint-02/repeat-0",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/cases/read-constraint-02/repeat-0/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/read-constraint.pkl",
+              "readInLazyBody"
+            ],
+            "exit_code": 1,
+            "timed_out": false,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "c148d9e866ec96d28ee57fd5d2f0bc69bea81e1c180635313e908353777339a9",
+            "outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+          },
+          "outcome": "pkl-exception\torg.pkl.core.PklException\n"
+        },
+        {
+          "repeat": 1,
+          "directory": "cases/read-constraint-02/repeat-1",
+          "process": {
+            "command": [
+              "/usr/bin/java",
+              "-Dpkl.m2.outcome=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/cases/read-constraint-02/repeat-1/java.outcome.bin",
+              "-Xms64m",
+              "-Xmx512m",
+              "-Dfile.encoding=UTF-8",
+              "-Dstdout.encoding=UTF-8",
+              "-Dstderr.encoding=UTF-8",
+              "-Duser.language=en",
+              "-Duser.country=US",
+              "-Duser.timezone=UTC",
+              "-Djava.awt.headless=true",
+              "-Duser.name=oracle",
+              "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/home",
+              "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/tmp",
+              "-cp",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/.cache/oracle/pkl-tools-0.32.0.jar:/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/artifacts/java",
+              "M2LanguageProbe",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-05/inputs/read-constraint.pkl",
+              "readInLazyBody"
+            ],
+            "exit_code": 1,
+            "timed_out": false,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "c148d9e866ec96d28ee57fd5d2f0bc69bea81e1c180635313e908353777339a9",
+            "outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+          },
+          "outcome": "pkl-exception\torg.pkl.core.PklException\n"
+        }
+      ],
+      "replay_equal": true
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+Exception in thread "main" java.util.MissingResourceException: Can't find resource for bundle java.util.PropertyResourceBundle, key forWhenBodyCannotHaveParameters
+	at java.base/java.util.ResourceBundle.getObject(ResourceBundle.java:567)
+	at java.base/java.util.ResourceBundle.getString(ResourceBundle.java:523)
+	at org.pkl.core.util.ErrorMessages.create(ErrorMessages.java:34)
+	at org.pkl.core.runtime.VmExceptionRenderer.renderException(VmExceptionRenderer.java:98)
+	at org.pkl.core.runtime.VmExceptionRenderer.render(VmExceptionRenderer.java:55)
+	at org.pkl.core.runtime.VmExceptionRenderer.render(VmExceptionRenderer.java:47)
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:135)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at M2LanguageProbe.main(M2LanguageProbe.java:24)

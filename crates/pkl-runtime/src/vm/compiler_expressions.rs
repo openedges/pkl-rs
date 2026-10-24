@@ -55,11 +55,12 @@ enum Work<'a> {
     FunctionEnd(&'a Expr, PklString, Code, Vec<usize>),
     ObjectBody(
         &'a [crate::syntax::ObjectMember],
+        &'a [crate::syntax::Parameter],
         crate::heap::CollectionKind,
         bool,
         Option<Span>,
     ),
-    ObjectEnd(Vec<crate::syntax::Member>, Option<Span>, usize),
+    ObjectEnd(Vec<crate::syntax::Member>, Option<Span>, usize, bool),
     PropertyBegin(&'a crate::syntax::Member),
     PropertyEnd(Box<PropertyCompilation<'a>>),
 }
@@ -512,8 +513,8 @@ impl Compiler<'_> {
                                 .contains(&expression.span),
                         });
                     }
-                    Work::ObjectBody(members, kind, has_parent, parent_span) => {
-                        let begin = output.len();
+                    Work::ObjectBody(members, parameters, kind, has_parent, parent_span) => {
+                        let mut begin = output.len();
                         if has_parent && members.is_empty() {
                             output.push(Instruction::AmendEmpty);
                         } else {
@@ -524,16 +525,29 @@ impl Compiler<'_> {
                                     _ => unreachable!(),
                                 })
                                 .collect::<Vec<_>>();
-                            self.type_scopes.push(properties.clone());
                             if has_parent {
-                                output.push(Instruction::BeginFunctionAmendment { end: 0 });
+                                let start = output.len();
+                                begin = self.compile_function_amendment(parameters, output)?;
+                                if matches!(
+                                    output[start],
+                                    Instruction::PrepareFunctionAmendment { .. }
+                                ) {
+                                    output.spans[start] = parent_span;
+                                }
+                                output.spans[begin] = parent_span;
                             }
+                            self.type_scopes.push(properties.clone());
                             output.push(Instruction::BeginCollection {
                                 kind,
                                 has_parent,
                                 specialized: true,
                             });
-                            work.push(Work::ObjectEnd(properties, parent_span, begin));
+                            work.push(Work::ObjectEnd(
+                                properties,
+                                parent_span,
+                                begin,
+                                !parameters.is_empty() && !members.is_empty(),
+                            ));
                             work.extend(members.iter().rev().map(|member| match member {
                                 crate::syntax::ObjectMember::Property(member) => {
                                     Work::PropertyBegin(member)
@@ -545,13 +559,33 @@ impl Compiler<'_> {
                             output.spans[begin] = parent_span;
                         }
                     }
-                    Work::ObjectEnd(properties, parent, begin) => {
+                    Work::ObjectEnd(properties, parent, begin, has_parameters) => {
+                        let parameter_check = has_parameters.then_some(output.len());
+                        if has_parameters {
+                            output.push(Instruction::CheckObjectParameters {
+                                target: amendment::ParameterTarget::Builder {
+                                    amendment_end: None,
+                                },
+                            });
+                            *output.spans.last_mut().expect("parameter check") = parent;
+                        }
                         output.push(Instruction::EndCollection);
                         self.initialize_member_types(&properties, output)?;
                         self.type_scopes.pop();
                         if matches!(output[begin], Instruction::BeginFunctionAmendment { .. }) {
                             let end = output.len();
-                            output[begin] = Instruction::BeginFunctionAmendment { end };
+                            if let Instruction::BeginFunctionAmendment { end: target, .. } =
+                                &mut output[begin]
+                            {
+                                *target = end;
+                            }
+                            if let Some(check) = parameter_check {
+                                output[check] = Instruction::CheckObjectParameters {
+                                    target: amendment::ParameterTarget::Builder {
+                                        amendment_end: Some(end),
+                                    },
+                                };
+                            }
                             output.push(Instruction::EndFunctionAmendment);
                         }
                         if let Some(parent) = parent {
@@ -757,7 +791,12 @@ impl Compiler<'_> {
                         active_spans.push(expression.span);
                         work.push(Work::Finish(expression, pending_spans.len()));
                         if let Some(parent) = inferred_parents.remove(&expression.span) {
-                            let ExprKind::Object { members, .. } = &expression.kind else {
+                            let ExprKind::Object {
+                                members,
+                                parameters,
+                                ..
+                            } = &expression.kind
+                            else {
                                 unreachable!()
                             };
                             let span = Span::new(expression.span.start, expression.span.start + 3);
@@ -780,6 +819,7 @@ impl Compiler<'_> {
                                 }) {
                                     work.push(Work::ObjectBody(
                                         members,
+                                        parameters,
                                         crate::heap::CollectionKind::Dynamic,
                                         true,
                                         Some(span),
@@ -788,6 +828,7 @@ impl Compiler<'_> {
                                     let start = output.len();
                                     self.collection_body(
                                         members,
+                                        parameters,
                                         crate::heap::CollectionKind::Dynamic,
                                         true,
                                         output,
@@ -821,6 +862,7 @@ impl Compiler<'_> {
     fn schedule_collection<'a>(
         &mut self,
         members: &'a [crate::syntax::ObjectMember],
+        parameters: &'a [crate::syntax::Parameter],
         kind: crate::heap::CollectionKind,
         has_parent: bool,
         output: &mut Code,
@@ -830,10 +872,12 @@ impl Compiler<'_> {
             .iter()
             .all(|member| matches!(member, crate::syntax::ObjectMember::Property(_)))
         {
-            work.push(Work::ObjectBody(members, kind, has_parent, None));
+            work.push(Work::ObjectBody(
+                members, parameters, kind, has_parent, None,
+            ));
             Ok(())
         } else {
-            self.collection_body(members, kind, has_parent, output)
+            self.collection_body(members, parameters, kind, has_parent, output)
         }
     }
 
@@ -886,7 +930,7 @@ impl Compiler<'_> {
                                     span,
                                 );
                             } else {
-                                self.instance_body(members, ty.span, output)?;
+                                self.instance_body(members, parameters, ty.span, ty.span, output)?;
                                 if !parameters.is_empty() && !members.is_empty() {
                                     output.push_at(Instruction::Fail(RuntimeError::new(ErrorKind::Type, "Expected a function that returns an object, but got an object.")), ty.span);
                                 }
@@ -909,7 +953,11 @@ impl Compiler<'_> {
                     }
                 }
             }
-            ExprKind::New { ty, members } => {
+            ExprKind::New {
+                ty,
+                members,
+                parameters,
+            } => {
                 let check = match self.compile_type(ty) {
                     Ok(check) => check,
                     Err(error) => {
@@ -920,11 +968,21 @@ impl Compiler<'_> {
                     }
                 };
                 self.initialize_type_resolution(ty, output);
-                if matches!(&check,TypeCheck::NamedAlias{declaration,..} if *declaration==amendment::MIXIN_ID)
-                {
+                if check.mixin_default() {
                     self.default_type(&check, output, ty.span)?;
+                    // Explicit type arguments check the constructed value as
+                    // well as selecting the parent's default, including alias
+                    // constraints around a Mixin declaration.
+                    if matches!(&ty.kind, crate::syntax::TypeKind::Named { arguments, .. } if !arguments.is_empty())
+                    {
+                        work.push(Work::Emit(
+                            Instruction::CheckType(check),
+                            Some(self.type_source_span(ty)),
+                        ));
+                    }
                     self.schedule_collection(
                         members,
+                        parameters,
                         crate::heap::CollectionKind::Dynamic,
                         true,
                         output,
@@ -936,6 +994,7 @@ impl Compiler<'_> {
                     self.default_type(&check, output, ty.span)?;
                     self.schedule_collection(
                         members,
+                        parameters,
                         crate::heap::CollectionKind::Dynamic,
                         true,
                         output,
@@ -970,7 +1029,7 @@ impl Compiler<'_> {
                             Some(self.type_source_span(ty)),
                         ));
                     }
-                    self.schedule_collection(members, kind, has_default, output, work)?;
+                    self.schedule_collection(members, parameters, kind, has_default, output, work)?;
                 } else if check.contains_parameter() || check.has_declared() {
                     let check = if self.constructor_parameters_bound {
                         check
@@ -1008,11 +1067,20 @@ impl Compiler<'_> {
                     }
                     self.schedule_collection(
                         members,
+                        parameters,
                         crate::heap::CollectionKind::Dynamic,
                         true,
                         output,
                         work,
                     )?;
+                } else if matches!(check.unaliased(), TypeCheck::Function { .. }) {
+                    output.push_at(
+                        Instruction::Fail(collections::external_amendment_error(&type_name(
+                            check.unaliased(),
+                            &self.program.module_name,
+                        ))),
+                        ty.span,
+                    );
                 } else {
                     if let Err(error) = self.class_expression(
                         ty,
@@ -1026,16 +1094,20 @@ impl Compiler<'_> {
                         output.push_at(Instruction::Fail(error), span);
                         return Ok(());
                     }
-                    self.instance_body(members, ty.span, output)?;
+                    self.instance_body(members, parameters, ty.span, expression.span, output)?;
                 }
             }
-            ExprKind::Object { parent, members }
-                if members
-                    .iter()
-                    .all(|member| matches!(member, crate::syntax::ObjectMember::Property(_))) =>
+            ExprKind::Object {
+                parent,
+                members,
+                parameters,
+            } if members
+                .iter()
+                .all(|member| matches!(member, crate::syntax::ObjectMember::Property(_))) =>
             {
                 work.push(Work::ObjectBody(
                     members,
+                    parameters,
                     crate::heap::CollectionKind::Dynamic,
                     parent.is_some(),
                     parent.as_ref().map(|parent| parent.unparenthesized().span),

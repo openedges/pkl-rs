@@ -1,5 +1,40 @@
 # M2 language evidence
 
+The [Stage53 implementation checkpoint](stage53-implementation-checkpoint.json)
+adds object-body parameters, typed function amendments, retained curried captures,
+and Mixin defaults through explicit and inferred aliases in the shared engine.
+See the [language contract](../../docs/m2-object-parameters.md).
+
+The final comparison matches all 85 ordinary Java cases twice on native, N-API,
+and Chromium: 170 executions per target, 510 total. These comprise 56 value cases
+and 29 language-error cases. Seven Java internal-error boundaries remain separate
+unexecuted nonpasses. Three unchanged upstream module commands also match complete
+stdout, stderr, exit codes, and generated files; the parser original has empty
+output, while the two generator originals exercise actual rendered values.
+
+All 17 recorded validation commands pass with 4,589 unchanged source inputs. Rust
+workspace harnesses report 873 passes and one ignored frontend probe; the native
+adapter has four additional tests. Python verification runs 207 tests and the
+portable driver has 13 tests. Native lifecycle checks cover suspended parameter
+checks, escaped curried closures, reentry, retry, cancellation, and code/heap
+release. These counts are not distinct Pkl features or performance results.
+
+The first candidate's six acquisition failures per target remain preserved: its
+Host adapter incorrectly equated an authored relative URI with its resolved URI.
+The corrected adapter records both and checks the exact declared resource bytes.
+The engine and frozen Node/Wasm artifacts are unchanged between those candidate
+runs. The separate M1 regression matches all 6,078 shared-engine observations;
+Java matches 6,076 per target, retaining both known regex failures. Its architecture
+contract and 92 Node/Chromium scenario labels per target pass.
+
+[Java evidence](stage53-oracle-evidence.tar.gz),
+[candidate evidence, including the first failure](stage53-candidate-evidence.tar.gz),
+and [validation, original modules, and independent audits](stage53-validation-review-evidence.tar.gz)
+retain raw bytes, source snapshots, artifacts, and provenance. Full M2, product/API
+compatibility, release-platform coverage, and speed/peak-memory targets remain open.
+
+### Stage52 original module admission
+
 The [Stage52 tooling checkpoint](stage52-tooling-checkpoint.json) admits all
 752 previously unconnected original-ready snippets. The generated module registry
 contains all 888 original-ready cases and the preserved blocked `import1b` record.

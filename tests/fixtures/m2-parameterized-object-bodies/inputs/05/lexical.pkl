@@ -1,0 +1,14 @@
+local outside = 40
+local parent = (arg) -> new Dynamic { value = arg }
+local amended = (parent) { arg -> value = super.value + outside; captured = arg; self = this.value }
+local owner = new Dynamic {
+  value = 100
+  local parent = (arg) -> let (captured = this.value) new Dynamic { value = captured + arg }
+  local patch = (parent) { arg -> result = super.value + arg; own = this.value }
+  result = patch.apply(3)
+}
+superValue = amended.apply(2).value
+selfValue = amended.apply(2).self
+lexicalCapture = amended.apply(2).captured
+parentReceiver = owner.result.result
+bodyReceiver = owner.result.own

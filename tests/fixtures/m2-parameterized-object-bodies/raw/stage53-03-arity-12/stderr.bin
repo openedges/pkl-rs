@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "bad"
+
+6 | local a1 = (p1) { a: Int -> value = a + 10 }
+                         ^^^
+at arity#a1.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl)
+
+29 | wrongTypedArgument = a1.apply("bad").value
+                          ^^^^^^^^^^^^^^^
+at arity#wrongTypedArgument (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/arity.pkl)
+
+1 | wrongTypedArgument
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

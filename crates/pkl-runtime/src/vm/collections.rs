@@ -2496,7 +2496,9 @@ impl Compiler<'_> {
     pub(super) fn instance_body(
         &mut self,
         members: &[crate::syntax::ObjectMember],
+        parameters: &[crate::syntax::Parameter],
         span: Span,
+        parameter_span: Span,
         output: &mut Code,
     ) -> Result<(), RuntimeError> {
         if members
@@ -2506,14 +2508,34 @@ impl Compiler<'_> {
             let properties = Self::body_properties_only(members)?;
             let template = self.object(&properties)?;
             output.push_at(Instruction::MakeInstance { template }, span);
+            if !parameters.is_empty() && !members.is_empty() {
+                output.push_at(
+                    Instruction::CheckObjectParameters {
+                        target: amendment::ParameterTarget::Value,
+                    },
+                    parameter_span,
+                );
+            }
             self.initialize_member_types(&properties, output)?;
         } else {
             // Construct the typed parent first, preserving class validation.
             // Generator clauses then execute in source order, including
             // predicates that reject typed parents only when reached.
+            if let Some(parameter) = parameters.first() {
+                output.push_at(
+                    Instruction::CheckObjectParameters {
+                        target: amendment::ParameterTarget::Parent {
+                            kind: CollectionKind::Dynamic,
+                            has_parent: true,
+                            typed: parameter.ty.is_some(),
+                        },
+                    },
+                    parameter.ty.as_ref().map_or(parameter.span, |ty| ty.span),
+                );
+            }
             let template = self.object(&[])?;
             output.push_at(Instruction::MakeInstance { template }, span);
-            self.collection_body(members, CollectionKind::Dynamic, true, output)?;
+            self.collection_body(members, parameters, CollectionKind::Dynamic, true, output)?;
         }
         Ok(())
     }
@@ -2557,6 +2579,7 @@ impl Compiler<'_> {
     pub(super) fn collection_body(
         &mut self,
         members: &[crate::syntax::ObjectMember],
+        parameters: &[crate::syntax::Parameter],
         kind: CollectionKind,
         has_parent: bool,
         output: &mut Code,
@@ -2567,7 +2590,6 @@ impl Compiler<'_> {
         }
         let mut properties = Vec::new();
         Self::body_properties(members, &mut properties);
-        self.type_scopes.push(properties.clone());
         let generators = members.iter().any(|m| {
             matches!(
                 m,
@@ -2577,11 +2599,24 @@ impl Compiler<'_> {
                     | crate::syntax::ObjectMember::Predicate { .. }
             )
         });
-        let amendment = has_parent.then(|| {
-            let index = output.len();
-            output.push(Instruction::BeginFunctionAmendment { end: 0 });
-            index
-        });
+        if let Some(parameter) = parameters.first().filter(|_| generators) {
+            output.push_at(
+                Instruction::CheckObjectParameters {
+                    target: amendment::ParameterTarget::Parent {
+                        kind,
+                        has_parent,
+                        typed: parameter.ty.is_some(),
+                    },
+                },
+                parameter.ty.as_ref().map_or(parameter.span, |ty| ty.span),
+            );
+        }
+        let amendment = if has_parent {
+            Some(self.compile_function_amendment(parameters, output)?)
+        } else {
+            None
+        };
+        self.type_scopes.push(properties.clone());
         output.push(Instruction::BeginCollection {
             kind,
             has_parent,
@@ -2590,6 +2625,7 @@ impl Compiler<'_> {
         let mixed = members
             .iter()
             .any(|m| matches!(m, crate::syntax::ObjectMember::Element { .. }));
+        let mut parameter_check = None;
         if generators {
             self.collection_members(members, false, output)?;
         } else {
@@ -2599,6 +2635,14 @@ impl Compiler<'_> {
                 .filter(|m| matches!(m, crate::syntax::ObjectMember::Property(_)))
             {
                 self.collection_members(std::slice::from_ref(member), mixed, output)?;
+            }
+            if !parameters.is_empty() {
+                parameter_check = Some(output.len());
+                output.push(Instruction::CheckObjectParameters {
+                    target: amendment::ParameterTarget::Builder {
+                        amendment_end: None,
+                    },
+                });
             }
             for member in members
                 .iter()
@@ -2618,7 +2662,16 @@ impl Compiler<'_> {
         self.type_scopes.pop();
         if let Some(index) = amendment {
             let end = output.len();
-            output[index] = Instruction::BeginFunctionAmendment { end };
+            if let Instruction::BeginFunctionAmendment { end: target, .. } = &mut output[index] {
+                *target = end;
+            }
+            if let Some(check) = parameter_check {
+                output[check] = Instruction::CheckObjectParameters {
+                    target: amendment::ParameterTarget::Builder {
+                        amendment_end: Some(end),
+                    },
+                };
+            }
             output.push(Instruction::EndFunctionAmendment);
         }
         Ok(())
@@ -2667,13 +2720,20 @@ impl Compiler<'_> {
         if let crate::syntax::ExprKind::Object {
             parent: None,
             members,
+            parameters,
         } = &value.unparenthesized().kind
         {
             code.push_at(
                 Instruction::EntryParent,
                 Span::new(value.span.start, value.span.start + 3),
             );
-            self.collection_body(members, CollectionKind::Dynamic, true, &mut code)?;
+            self.collection_body(
+                members,
+                parameters,
+                CollectionKind::Dynamic,
+                true,
+                &mut code,
+            )?;
         } else {
             self.expression(value, &mut code)?;
         }
@@ -2794,6 +2854,7 @@ impl Compiler<'_> {
                     iterable,
                     members,
                     span,
+                    ..
                 } => {
                     let scope = self.type_scopes.pop().expect("collection scope");
                     let checks = parameters

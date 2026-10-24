@@ -1,0 +1,2 @@
+typealias Mixin<T> = (T) -> T
+result = new Mixin<Dynamic> { arg -> value = 1 }

@@ -1130,6 +1130,7 @@ impl Vm {
             collection_join: None,
             collection_transform: None,
             function_owner: None,
+            amendment_arguments: None,
             amendment_end: None,
             prepared_hashes: None,
             key_search: None,

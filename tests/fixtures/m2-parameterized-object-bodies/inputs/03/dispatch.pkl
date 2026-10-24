@@ -1,0 +1,11 @@
+class Box { value: Int = 3 }
+direct = new Dynamic { unused: Missing -> value = 8 }
+directUnbound = new Dynamic { arg -> value = arg }
+typed = new Box { arg: Int -> value = 8 }
+listing = new Listing { arg: Int -> 8 }
+mapping = new Mapping { arg: Int -> ["x"] = 8 }
+emptyTyped = new Box { arg: Missing -> }
+emptyListing = new Listing { arg: Missing -> }
+emptyMapping = new Mapping { arg: Missing -> }
+generatorDynamic = new Dynamic { arg: Int -> when (true) { value = 8 } }
+generatorUntyped = new Dynamic { arg -> when (true) { value = 8 } }

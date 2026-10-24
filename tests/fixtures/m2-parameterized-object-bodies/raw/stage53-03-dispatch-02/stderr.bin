@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected a function that returns an object, but got an object.
+
+4 | typed = new Box { arg: Int -> value = 8 }
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at dispatch#typed (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/dispatch.pkl)
+
+1 | typed.value
+    ^^^^^
+at  (repl:text)

@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "bad"
+
+5 | local typedBeforeParent = (throws) { arg: Int -> value = arg }
+                                              ^^^
+at types-order#typedBeforeParent.<function> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl)
+
+14 | typeBeforeParentFailure = typedBeforeParent.apply("bad").value
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at types-order#typeBeforeParentFailure (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage53/target/m2/stage53-oracle-parameterized-03/inputs/types-order.pkl)
+
+1 | typeBeforeParentFailure
+    ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
