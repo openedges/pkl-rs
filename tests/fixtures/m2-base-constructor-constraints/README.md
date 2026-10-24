@@ -1,0 +1,7 @@
+# Pkl 0.32.0 base constructors inside type constraints
+
+This independent Java fixture records 36 ordered public string calls at `file:///stage66/base-constructors-in-constraints.pkl`. It tests the seven base constructor functions `List`, `Set`, `Map`, `Bytes`, `Pair`, `IntSeq`, and `Null` inside type constraints, including valid and invalid arguments, nested constraints, and first-error order. The authored module also declares a public `List` method and a class-local `List` method. Its properties observe lexical resolution in their authored scope; separately supplied `evaluateExpressionString` queries observe the external expression scope. Those contexts must remain distinct.
+
+Two fresh ordered JVM sessions retain every raw UTF-8 and UTF-16BE channel, exception/cause metadata and complete process streams. The archive includes the thin producer and its imported source, generic Java helper, authored inputs, pinned Java/Pkl source copies, JDK/JAR identities and derived audit. The offline verifier checks the exact archive/root file set and full protocol. Earlier exploratory attempts, including the intentionally invalid `Null(42)` discovery and external-scope shadowing confusion, remain separate historical evidence.
+
+This fixture does not claim Rust, browser, Node, full M2, or performance compatibility. It is a prerequisite authority for the separate eight-row implicit reversal constraint fixture; neither changes the 78-row reversal values authority.

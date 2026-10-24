@@ -1,0 +1,20 @@
+{
+  "archive_sha256": "1c5b48de0cb8f7ec937d5314edb3232c1c1756d9b0665df1681b9da65597b419",
+  "captures": {
+    "capture-01": "stage66-union-marker-oracle-01"
+  },
+  "fileset_sha256": "265cefec5c62b9fbdf73ae4c95d86d960a7cbe7d5e029d5031223ff7de76fe55",
+  "members": 2085,
+  "oracle_input_sha256": {
+    "CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+    "imported-construction-oracle.py": "a73e1fa1fd047ff4477197c3715571ce21499ac5905148ecc7b045a1c63438cb",
+    "programs.json": "9aff6bb7a1704df308ebd0f0639683bcbdfacaab4439f6392a54ac7aa00b7b71",
+    "run.py": "09655dcdfc8ae618f180ccf822c48dce6e93c235b5ca8f17747e8e5f24b8da58"
+  },
+  "programs": 40,
+  "schema": 1,
+  "statuses": {
+    "error": 31,
+    "success": 9
+  }
+}

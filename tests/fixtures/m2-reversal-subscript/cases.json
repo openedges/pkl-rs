@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage66/reversal-subscript.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "empty-zero",
+      "group": "subscript",
+      "expression": "List().reverse()[0]",
+      "mode": "string"
+    },
+    {
+      "id": "empty-negative",
+      "group": "subscript",
+      "expression": "List().reverse()[-1]",
+      "mode": "string"
+    },
+    {
+      "id": "one-negative",
+      "group": "subscript",
+      "expression": "List(1).reverse()[-1]",
+      "mode": "string"
+    },
+    {
+      "id": "one-upper",
+      "group": "subscript",
+      "expression": "List(1).reverse()[1]",
+      "mode": "string"
+    },
+    {
+      "id": "one-large",
+      "group": "subscript",
+      "expression": "List(1).reverse()[1000]",
+      "mode": "string"
+    },
+    {
+      "id": "one-large-negative",
+      "group": "subscript",
+      "expression": "List(1).reverse()[-1000]",
+      "mode": "string"
+    },
+    {
+      "id": "two-large",
+      "group": "subscript",
+      "expression": "List(1,2).reverse()[1000]",
+      "mode": "string"
+    },
+    {
+      "id": "null-upper",
+      "group": "subscript",
+      "expression": "List(null).reverse()[1]",
+      "mode": "string"
+    },
+    {
+      "id": "lazy-out",
+      "group": "subscript",
+      "expression": "List(new Dynamic { value = throw(\"nested\") }).reverse()[1]",
+      "mode": "string"
+    },
+    {
+      "id": "lazy-in",
+      "group": "subscript",
+      "expression": "List(new Dynamic { value = throw(\"nested\") }).reverse()[0].value",
+      "mode": "string"
+    },
+    {
+      "id": "high-surrogate-out",
+      "group": "subscript",
+      "expression": "List(\"\\u{d800}\").reverse()[1]",
+      "mode": "string"
+    },
+    {
+      "id": "low-surrogate-out",
+      "group": "subscript",
+      "expression": "List(\"\\u{dc00}\").reverse()[1]",
+      "mode": "string"
+    },
+    {
+      "id": "replacement-out",
+      "group": "subscript",
+      "expression": "List(\"\\u{fffd}\").reverse()[1]",
+      "mode": "string"
+    },
+    {
+      "id": "high-surrogate-in",
+      "group": "subscript",
+      "expression": "List(\"\\u{d800}\").reverse()[0]",
+      "mode": "string"
+    },
+    {
+      "id": "listing-empty",
+      "group": "subscript",
+      "expression": "new Listing {}[0]",
+      "mode": "string"
+    },
+    {
+      "id": "listing-upper",
+      "group": "subscript",
+      "expression": "new Listing { 1 }[1]",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-upper",
+      "group": "subscript",
+      "expression": "Bytes(1)[1]",
+      "mode": "string"
+    },
+    {
+      "id": "wrong-key-type",
+      "group": "subscript",
+      "expression": "List(1).reverse()[\"1\"]",
+      "mode": "string"
+    },
+    {
+      "id": "key-throw",
+      "group": "subscript",
+      "expression": "List(1).reverse()[throw(\"key\")]",
+      "mode": "string"
+    }
+  ]
+}

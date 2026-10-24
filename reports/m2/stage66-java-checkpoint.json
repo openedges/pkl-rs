@@ -1,0 +1,319 @@
+{
+  "all_archive_members_and_modes_read_back": true,
+  "archive": {
+    "bytes": 7380075,
+    "path": "reports/m2/stage66-java-evidence.tar.gz",
+    "sha256": "2bffea53a6ddadfd324f7af181b55a412e25b68c192c41fc3c68fd7e8572cb89"
+  },
+  "archive_members": 31931,
+  "authorities": {
+    "base_constructor_constraints": {
+      "archive_sha256": "3f5a609f62a40e004dd208bc078be9e88a3a4a94c30ee4a04ebb5450d5eb8c6e",
+      "baseline": "Pkl 0.32.0",
+      "candidate_compatibility_passes_claimed": 0,
+      "fileset_sha256": "8fdeee6ec76ff6f777048008ca815e8e00693330f16240d9c6c7d04d06c0a6ec",
+      "raw_repetitions_equal": true,
+      "rows": 36,
+      "statuses": {
+        "error": 16,
+        "success": 20
+      }
+    },
+    "reversal_implicit": {
+      "archive_sha256": "c3a0202d3a642f8524728bdbd917970a0048ec58d9ef9031d43a6470c8086e63",
+      "baseline": "Pkl 0.32.0",
+      "candidate_compatibility_passes_claimed": 0,
+      "fileset_sha256": "0295a268454d12e9ba94696604e515b8ee2168bb1049b5ceda2acc0d39ddf89e",
+      "raw_repetitions_equal": true,
+      "rows": 8,
+      "statuses": {
+        "error": 2,
+        "success": 6
+      }
+    },
+    "reversal_subscript": {
+      "archive_sha256": "11a400a303c07dcc81dd53848a3590696c32ab889c605924e468faf8e5f4366b",
+      "baseline": "Pkl 0.32.0",
+      "candidate_compatibility_passes_claimed": 0,
+      "fileset_sha256": "93e93f0ea83745f16ac9f7dc1e6eae461202eb8e0b39e8ea88725f5535f0a24d",
+      "raw_repetitions_equal": true,
+      "rows": 19,
+      "statuses": {
+        "error": 18,
+        "success": 1
+      }
+    },
+    "reversal_values": {
+      "archive_sha256": "132cab831cf0021a2ff31ca2f45ede1e166f208eadd8965d5eb1498b01dfdc26",
+      "baseline": "Pkl 0.32.0",
+      "candidate_compatibility_passes_claimed": 0,
+      "fileset_sha256": "c4f9ce30e70545229a6f33e0575e0da6ddeea5b51cf556fe325cd61d22972928",
+      "raw_repetitions_equal": true,
+      "rows": 78,
+      "statuses": {
+        "error": 33,
+        "success": 45
+      }
+    },
+    "union_marker": {
+      "archive_sha256": "1c5b48de0cb8f7ec937d5314edb3232c1c1756d9b0665df1681b9da65597b419",
+      "baseline": "Pkl 0.32.0",
+      "candidate_compatibility_passes_claimed": 0,
+      "fileset_sha256": "265cefec5c62b9fbdf73ae4c95d86d960a7cbe7d5e029d5031223ff7de76fe55",
+      "programs": 40,
+      "raw_repetitions_equal": true,
+      "statuses": {
+        "error": 31,
+        "success": 9
+      }
+    }
+  },
+  "baseline": "Pkl 0.32.0",
+  "baseline_head": "fc484e7fcdc99498a774b695b7289e1e0836e61a",
+  "candidate_compatibility_passes_claimed": 0,
+  "direct_vm_identity": {
+    "boundary": "Direct VM reference identity, separate from public string behavior.",
+    "capture": "target/m2/stage66-reversal-identity-02/capture-02",
+    "record": {
+      "bytes": 613,
+      "path": "target/m2/stage66-reversal-identity-review-01/report.json",
+      "sha256": "de8d66a094350d244a885d4a112e7a28ac3819d5e99184999227eac54170e71d"
+    }
+  },
+  "direct_vm_identity_rows": 8,
+  "fixture_paths": {
+    "base_constructor_constraints": "tests/fixtures/m2-base-constructor-constraints",
+    "reversal_implicit": "tests/fixtures/m2-reversal-implicit",
+    "reversal_subscript": "tests/fixtures/m2-reversal-subscript",
+    "reversal_values": "tests/fixtures/m2-reversal-values",
+    "union_marker": "tests/fixtures/m2-union-marker-diagnostics"
+  },
+  "frozen_tools": [
+    {
+      "bytes": 13327,
+      "path": "tools/amendment_construction_oracle.py",
+      "sha256": "a73e1fa1fd047ff4477197c3715571ce21499ac5905148ecc7b045a1c63438cb"
+    },
+    {
+      "bytes": 5235,
+      "path": "tools/base_constructor_constraints_fixtures.py",
+      "sha256": "feb1c5abd325e699faed49e848916a78317c41326cc0c32062b796f73d672f4a"
+    },
+    {
+      "bytes": 10669,
+      "path": "tools/base_constructor_constraints_oracle.py",
+      "sha256": "9ec297ccb2248e99578110b4d5b4824764e70a149df967a2cb78cd1db8227120"
+    },
+    {
+      "bytes": 14913,
+      "path": "tools/collection_conversions_fixtures.py",
+      "sha256": "06eb22a1d4c961790d5a67e5a2e05eeddc2154938be0ea83e29f3972c2ddd3e4"
+    },
+    {
+      "bytes": 12140,
+      "path": "tools/collection_conversions_oracle.py",
+      "sha256": "fd61e2566ec29789d280114d5ca6613005880c10a32682ced64a16d3189f31ad"
+    },
+    {
+      "bytes": 4120,
+      "path": "tools/evidence.py",
+      "sha256": "b3224aa21497c955c865e143faefb8ebdc9c70ea48983eb678b5972be17fe62e"
+    },
+    {
+      "bytes": 4819,
+      "path": "tools/java/CollectionConversionsOracle.java",
+      "sha256": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0"
+    },
+    {
+      "bytes": 1834,
+      "path": "tools/java/ReversalIdentityOracle.java",
+      "sha256": "9acb4a2b459dadcf4ee17a22fe8909963389aa6a7c67c0768a734133455bf755"
+    },
+    {
+      "bytes": 5163,
+      "path": "tools/reversal_implicit_fixtures.py",
+      "sha256": "b0d4cd16773d7ff8d9b1a70253a518a56abfb1229c5ab260f1740b2dcaae0f2e"
+    },
+    {
+      "bytes": 9642,
+      "path": "tools/reversal_implicit_oracle.py",
+      "sha256": "6d82b58c9a7233f5f33a1b017ba5b7cb1ddc8f3c21f458bc0041ede94b8d9b61"
+    },
+    {
+      "bytes": 5187,
+      "path": "tools/reversal_subscript_fixtures.py",
+      "sha256": "0841b2e2a9a4b4fcf359cae2f49ad12690c7a40a0f11414f5d6f67e3296d0304"
+    },
+    {
+      "bytes": 9232,
+      "path": "tools/reversal_subscript_oracle.py",
+      "sha256": "48c24e95b209311a0472ff733c3941b553c18b2ce6025c36900806ea79ad54ce"
+    },
+    {
+      "bytes": 5115,
+      "path": "tools/reversal_values_fixtures.py",
+      "sha256": "5124d076737d9f937970e9c0f399baf4650c865ba2dcdd23db846b9d1605f3eb"
+    },
+    {
+      "bytes": 12305,
+      "path": "tools/reversal_values_oracle.py",
+      "sha256": "e6d288c6cd6683fef9ac9ad45d1890d363ba1f2a0bbde1b85702e2c3b4d0f298"
+    },
+    {
+      "bytes": 6187,
+      "path": "tools/tests/test_base_constructor_constraints_fixtures.py",
+      "sha256": "317b141d604a60fc7c4be18bb1416ace147922aaae474b8e9b2ec813a39f1f27"
+    },
+    {
+      "bytes": 4819,
+      "path": "tools/tests/test_reversal_implicit_fixtures.py",
+      "sha256": "a8f82d35cbee283390800b3bb456fbfefe8c09101ac5fa40a24b1ccfe5407a66"
+    },
+    {
+      "bytes": 5742,
+      "path": "tools/tests/test_reversal_subscript_fixtures.py",
+      "sha256": "0debd53bebc8afe9191f4f5d08c2ef2e59bea10cfce547f3a9f76fb3409794d4"
+    },
+    {
+      "bytes": 5278,
+      "path": "tools/tests/test_reversal_values_fixtures.py",
+      "sha256": "300ad46793dfd6635eb2a7a2618d7b1627019120e900bb9b6c7f0737e0d1f224"
+    },
+    {
+      "bytes": 4706,
+      "path": "tools/tests/test_union_marker_fixtures.py",
+      "sha256": "c4c5535b64578f5f07f583c907228ab57c0f7bd4831dc2236fc4466c6e9be1c5"
+    },
+    {
+      "bytes": 14883,
+      "path": "tools/union_marker_fixtures.py",
+      "sha256": "09176a9850588fdc5a17f197a793922c729fb7be7d7ffe3c14fe99a97f634530"
+    },
+    {
+      "bytes": 11811,
+      "path": "tools/union_marker_oracle.py",
+      "sha256": "09655dcdfc8ae618f180ccf822c48dce6e93c235b5ca8f17747e8e5f24b8da58"
+    }
+  ],
+  "history": {
+    "base_constructors": "Explorations distinguish externally supplied expressions from authored module/class-local lexical methods; capture06 is the final one-module authority.",
+    "implicit_and_subscript": "Separate capture02 authorities preserve shared helper dependencies and own producer identity.",
+    "reversal": "Exploration and superseded producer-copy/source-closure attempts remain preserved; main capture03 is the final authority.",
+    "union": "The preliminary eighty-session acquisition with incorrect fixed completion count remains failed; the canonical capture is separate."
+  },
+  "inventory_sha256": "10f9de07a4f17b38192ca3c5f26fbf9cc3f99c4b89d5f663b7043fc0053bc1fc",
+  "kind": "stage66-independent-Java-authorities",
+  "limits": [
+    "Java authority only; no Rust, native, N-API, browser, full API, full M2, or performance pass is claimed.",
+    "Four single-module string profiles, forty separate parser modules, and direct VM identity observations have distinct verification boundaries.",
+    "The preserved 130-case original selection and added Unicode original have not been rerun for Stage66 in this checkpoint.",
+    "All existing mismatches, unsupported outcomes, Java errors, two blocked originals and the nine M2 workstreams remain required.",
+    "The actual publisher process receipt is published separately because it postdates this archive."
+  ],
+  "original_selection": {
+    "added": 1,
+    "blocked_required": 2,
+    "evaluations_executed": 0,
+    "prior_stage65_status_counts": {
+      "candidate-unsupported": 31,
+      "mismatch": 24,
+      "oracle-error": 1,
+      "pass": 74
+    },
+    "record": {
+      "bytes": 442182,
+      "path": "target/m2/stage66-original-selection-01/selection-origin.json",
+      "sha256": "90b7b48181996f2bd28ccfd93c7ddf5ba8e848c83a9043d286a4f592641b1299"
+    },
+    "selected": 131,
+    "unchanged_stage65_prefix": 130
+  },
+  "publication_inputs_stable": true,
+  "published_directories": [
+    "stage66-base-constructor-constraint-launch-01",
+    "stage66-base-constructor-constraint-oracle-01",
+    "stage66-base-constructor-constraint-oracle-02",
+    "stage66-base-constructor-constraint-oracle-03",
+    "stage66-base-constructor-constraint-oracle-04",
+    "stage66-base-constructor-constraint-oracle-05",
+    "stage66-base-constructor-constraint-oracle-06",
+    "stage66-base-constructor-constraint-oracle-06-launch",
+    "stage66-base-constructor-constraint-prep-01",
+    "stage66-base-constructor-constraint-prep-02",
+    "stage66-base-constructor-constraint-prep-03",
+    "stage66-base-constructor-constraint-prep-04",
+    "stage66-base-constructor-constraint-prep-05",
+    "stage66-base-constructor-constraint-seal-01",
+    "stage66-base-constructor-shadow-oracle-01",
+    "stage66-base-constructor-shadow-oracle-02",
+    "stage66-base-constructor-shadow-oracle-03",
+    "stage66-base-constructor-shadow-oracle-04",
+    "stage66-base-constructor-shadow-prep-01",
+    "stage66-base-constructor-shadow-prep-02",
+    "stage66-base-constructor-shadow-prep-03",
+    "stage66-base-constructor-shadow-prep-04",
+    "stage66-original-selection-01",
+    "stage66-reversal-exploration-prep-01",
+    "stage66-reversal-exploration-prep-02",
+    "stage66-reversal-identity-01",
+    "stage66-reversal-identity-02",
+    "stage66-reversal-identity-review-01",
+    "stage66-reversal-implicit-launch-01",
+    "stage66-reversal-implicit-oracle-01",
+    "stage66-reversal-implicit-oracle-02",
+    "stage66-reversal-implicit-oracle-02-launch",
+    "stage66-reversal-implicit-prep-01",
+    "stage66-reversal-implicit-seal-01",
+    "stage66-reversal-oracle-01",
+    "stage66-reversal-oracle-01-launch",
+    "stage66-reversal-oracle-02",
+    "stage66-reversal-oracle-02-launch",
+    "stage66-reversal-oracle-03",
+    "stage66-reversal-oracle-03-launch",
+    "stage66-reversal-oracle-exploration-01",
+    "stage66-reversal-oracle-exploration-01-launch",
+    "stage66-reversal-oracle-exploration-02",
+    "stage66-reversal-oracle-exploration-02-launch",
+    "stage66-reversal-preparation-01",
+    "stage66-reversal-provisional-fixture-01",
+    "stage66-reversal-seal-01",
+    "stage66-reversal-seal-02",
+    "stage66-reversal-subscript-launch-01",
+    "stage66-reversal-subscript-oracle-01",
+    "stage66-reversal-subscript-oracle-02",
+    "stage66-reversal-subscript-oracle-02-launch",
+    "stage66-reversal-subscript-prep-01",
+    "stage66-reversal-subscript-seal-01",
+    "stage66-reversal-validation-01",
+    "stage66-reversal-validation-02",
+    "stage66-reversal-validation-03",
+    "stage66-union-marker-exploration-01",
+    "stage66-union-marker-launch-01",
+    "stage66-union-marker-oracle-01",
+    "stage66-union-marker-review-01",
+    "stage66-union-marker-seal-01",
+    "stage66-union-marker-validation-01"
+  ],
+  "published_input_bytes": 27598555,
+  "schema": 1,
+  "separate_module_programs": 40,
+  "single_module_string_rows": 141,
+  "validation": {
+    "M2_inventory_freshness": "not claimed",
+    "four_string_verifiers_normal_and_optimized": 8,
+    "reversal": {
+      "bytes": 31489,
+      "path": "target/m2/stage66-reversal-validation-03/report.json",
+      "sha256": "da6a74e99863db7e14c6da9914fcfb5d420223e3835667800b3b04c40dd060ba"
+    },
+    "string_fixture_tests_normal": 24,
+    "string_fixture_tests_optimized": 24,
+    "union": {
+      "bytes": 17523,
+      "path": "target/m2/stage66-union-marker-validation-01/report.json",
+      "sha256": "69068b69d61b56662126032d6debc489185e17251f27e6dab8fc78ddce46c32b"
+    },
+    "union_fixture_tests_normal": 6,
+    "union_fixture_tests_optimized": 6
+  }
+}

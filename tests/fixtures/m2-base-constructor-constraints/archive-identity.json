@@ -1,0 +1,16 @@
+{
+  "archive_sha256": "3f5a609f62a40e004dd208bc078be9e88a3a4a94c30ee4a04ebb5450d5eb8c6e",
+  "captures": {
+    "capture-06": "stage66-base-constructor-constraint-oracle-06"
+  },
+  "fileset_sha256": "8fdeee6ec76ff6f777048008ca815e8e00693330f16240d9c6c7d04d06c0a6ec",
+  "members": 1588,
+  "oracle_input_sha256": {
+    "CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+    "cases.json": "d0517af9355f95acb2d14daf83680781761b86b2732adf8dbbf6b45dfe47dea5",
+    "module.pkl": "818236da99270a29e3326829fd85dfed08ce39a1db2a1ccf2553ff077f650bb1",
+    "queries.tsv": "40298bcc992b9c035267816faef9b76cb990d9dae3eabfcabd94215bf758fcaf",
+    "run.py": "9ec297ccb2248e99578110b4d5b4824764e70a149df967a2cb78cd1db8227120"
+  },
+  "schema": 1
+}

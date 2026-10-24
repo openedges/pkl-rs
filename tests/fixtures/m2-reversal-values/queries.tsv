@@ -1,0 +1,78 @@
+string	str-empty	"".reverse()
+string	str-one	"a".reverse()
+string	str-ascii	"abcde".reverse()
+string	str-twice	"abC".reverse().reverse()
+string	str-nul	"a\u{0}b".reverse()
+string	str-supplementary	"A\u{1f600}B".reverse()
+string	str-combining	"a\u{301}b".reverse()
+string	str-high	"a\u{d800}b".reverse()
+string	str-low	"a\u{dc00}b".reverse()
+string	str-low-high	"\u{dc00}\u{d800}".reverse()
+string	str-high-low	"\u{d800}\u{dc00}".reverse()
+string	str-replacement	"a\u{fffd}b".reverse()
+string	str-property	"ab".reverse
+string	str-arity	"ab".reverse(1)
+string	str-arg-error	"ab".reverse(throw("arg"))
+string	str-missing	"ab".reversed()
+string	list-empty	List().reverse()
+string	list-one	List(7).reverse()
+string	list-mixed	List(1,"x",null).reverse()
+string	list-duplicates	List(1,2,1,3).reverse()
+string	list-twice	List(1,2,3).reverse().reverse()
+string	list-index-first	List(1,2,3).reverse()[0]
+string	list-index-last	List(1,2,3).reverse()[2]
+string	list-lazy-length	List(new Dynamic { value = throw("list-child") },1).reverse().length
+string	list-lazy-read	List(new Dynamic { value = throw("list-child") },1).reverse()[1].value
+string	list-render-unforced	List(new Dynamic { value = throw("left") },new Dynamic { value = throw("right") }).reverse()
+string	list-demand-right	List(new Dynamic { value = throw("left") },new Dynamic { value = throw("right") }).reverse()[0].value
+string	list-demand-left	List(new Dynamic { value = throw("left") },new Dynamic { value = throw("right") }).reverse()[1].value
+string	list-property	List(1).reverse
+string	list-arity	List(1).reverse(2)
+string	list-arg-error	List(1).reverse(throw("arg"))
+string	list-missing	List(1).reversed()
+string	set-empty	Set().reverse()
+string	set-one	Set(7).reverse()
+string	set-order	Set(3,1,2).reverse()
+string	set-duplicates	Set(3,1,3,2,1).reverse()
+string	set-result-class	Set(3,1,2).reverse().getClass().simpleName
+string	set-twice	Set(1,2,3).reverse().reverse()
+string	set-index-first	Set(3,1,2).reverse()[0]
+string	set-duration-first	Set(1.min,60.s).reverse()[0].unit
+string	set-duration-second	Set(60.s,1.min).reverse()[0].unit
+string	set-null	Set(null,1,null).reverse()
+string	set-numeric-kind	Set(1,1.0).reverse()
+string	set-construction-child-length	Set(new Dynamic { value = throw("set-child") }).reverse().length
+string	set-construction-child-read	Set(new Dynamic { value = throw("set-child") }).reverse()[0].value
+string	set-construction-error	Set(new Dynamic { hashCode = throw("hash") }).reverse()
+string	set-property	Set(1).reverse
+string	set-arity	Set(1).reverse(2)
+string	set-arg-error	Set(1).reverse(throw("arg"))
+string	set-missing	Set(1).reversed()
+string	int-reverse	1.reverse()
+string	null-reverse	null.reverse()
+string	bytes-reverse	Bytes(1,2).reverse()
+string	map-reverse	Map("a",1).reverse()
+string	dynamic-reverse	(new Dynamic {}).reverse()
+string	str-double-low-high	"\u{dc00}\u{d800}".reverse().reverse()
+string	str-double-high-low	"\u{d800}\u{dc00}".reverse().reverse()
+string	str-nullsafe	null?.reverse()
+string	str-nullsafepresent	"x"?.reverse()
+string	str-misspell	"x".reveres()
+string	str-two-args	"x".reverse(1,2)
+string	str-two-arg-throw	"x".reverse(1,throw("second"))
+string	list-two-args	List(1).reverse(1,2)
+string	list-index-oob	List(1).reverse()[1]
+string	list-boundary-16	List(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15).reverse()
+string	list-boundary-17	List(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16).reverse()
+string	list-prebuilt	prebuiltList.reverse()
+string	list-empty-class	List().reverse().getClass().simpleName
+string	set-two-args	Set(1).reverse(1,2)
+string	set-index-oob	Set(1).reverse()[1]
+string	set-duration-ordered	Set(1.min,60.s,2.min).reverse()
+string	set-boundary-16	Set(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15).reverse()
+string	set-boundary-17	Set(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16).reverse()
+string	set-prebuilt	prebuiltSet.reverse()
+string	set-fn-length	Set((x) -> throw("set-fn")).reverse().length
+string	set-fn-demand	Set((x) -> throw("set-fn")).reverse()[0].apply(1)
+string	float-reverse	1.0.reverse()
+string	bool-reverse	true.reverse()

@@ -1,0 +1,16 @@
+{
+  "archive_sha256": "11a400a303c07dcc81dd53848a3590696c32ab889c605924e468faf8e5f4366b",
+  "captures": {
+    "capture-02": "stage66-reversal-subscript-oracle-02"
+  },
+  "fileset_sha256": "93e93f0ea83745f16ac9f7dc1e6eae461202eb8e0b39e8ea88725f5535f0a24d",
+  "members": 858,
+  "oracle_input_sha256": {
+    "CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+    "cases.json": "ea9f15510c8da63180c73d6a8cfacbd01159fe9b79e6ba72911bd776389f7899",
+    "module.pkl": "a9045c2bd08d9097c9893fe60cb017a7b17bd7efbdaa801bc247bc103a5ff168",
+    "queries.tsv": "f755443fea6b0646a306da03b6da2641b37d4bb544d59f0c47af5a46e416bc0b",
+    "run.py": "48c24e95b209311a0472ff733c3941b553c18b2ce6025c36900806ea79ad54ce"
+  },
+  "schema": 1
+}

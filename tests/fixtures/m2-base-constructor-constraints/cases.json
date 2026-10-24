@@ -1,0 +1,225 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage66/base-constructors-in-constraints.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "list",
+      "group": "base-constraint",
+      "expression": "1 as Int(List(1,2).length == 2)",
+      "mode": "string"
+    },
+    {
+      "id": "set",
+      "group": "base-constraint",
+      "expression": "1 as Int(Set(1,2).length == 2)",
+      "mode": "string"
+    },
+    {
+      "id": "map",
+      "group": "base-constraint",
+      "expression": "1 as Int(Map(\"a\",1).length == 1)",
+      "mode": "string"
+    },
+    {
+      "id": "bytes",
+      "group": "base-constraint",
+      "expression": "1 as Int(Bytes(0,255).length == 2)",
+      "mode": "string"
+    },
+    {
+      "id": "pair",
+      "group": "base-constraint",
+      "expression": "1 as Int(Pair(1,2).first == 1)",
+      "mode": "string"
+    },
+    {
+      "id": "intseq",
+      "group": "base-constraint",
+      "expression": "1 as Int(IntSeq(1,3).start == 1)",
+      "mode": "string"
+    },
+    {
+      "id": "null-object",
+      "group": "base-constraint",
+      "expression": "1 as Int(Null(new Dynamic {}) is Null)",
+      "mode": "string"
+    },
+    {
+      "id": "null-function",
+      "group": "base-constraint",
+      "expression": "1 as Int(Null(() -> new Dynamic {}) is Null)",
+      "mode": "string"
+    },
+    {
+      "id": "nested-list",
+      "group": "base-constraint",
+      "expression": "List(1,2) as List(List(this[0],this[1]).length == 2)",
+      "mode": "string"
+    },
+    {
+      "id": "nested-set",
+      "group": "base-constraint",
+      "expression": "Set(1,2) as Set(Set(this.first,this.last).length == 2)",
+      "mode": "string"
+    },
+    {
+      "id": "nested-map",
+      "group": "base-constraint",
+      "expression": "List(Map(\"a\",1)) as List(this[0].length == 1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-odd",
+      "group": "base-constraint",
+      "expression": "1 as Int(Map(\"a\").length == 0)",
+      "mode": "string"
+    },
+    {
+      "id": "map-odd-before-throw",
+      "group": "base-constraint",
+      "expression": "1 as Int(Map(\"a\",throw(\"value\"),\"b\").length == 1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-even-value-throw",
+      "group": "base-constraint",
+      "expression": "1 as Int(Map(\"a\",throw(\"value\")).length == 1)",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-range",
+      "group": "base-constraint",
+      "expression": "1 as Int(Bytes(256).length == 1)",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-range-before-throw",
+      "group": "base-constraint",
+      "expression": "1 as Int(Bytes(256,throw(\"second\")).length == 2)",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-throw-before-range",
+      "group": "base-constraint",
+      "expression": "1 as Int(Bytes(throw(\"first\"),256).length == 2)",
+      "mode": "string"
+    },
+    {
+      "id": "pair-arity",
+      "group": "base-constraint",
+      "expression": "1 as Int(Pair(1).first == 1)",
+      "mode": "string"
+    },
+    {
+      "id": "intseq-type",
+      "group": "base-constraint",
+      "expression": "1 as Int(IntSeq(\"x\",3).start == 1)",
+      "mode": "string"
+    },
+    {
+      "id": "null-invalid-type",
+      "group": "base-constraint",
+      "expression": "1 as Int(Null(42) is Null)",
+      "mode": "string"
+    },
+    {
+      "id": "null-arity",
+      "group": "base-constraint",
+      "expression": "1 as Int(Null() is Null)",
+      "mode": "string"
+    },
+    {
+      "id": "null-throw",
+      "group": "base-constraint",
+      "expression": "1 as Int(Null(throw(\"nullarg\")) is Null)",
+      "mode": "string"
+    },
+    {
+      "id": "module-qualified",
+      "group": "base-constraint",
+      "expression": "module.List(1)",
+      "mode": "string"
+    },
+    {
+      "id": "constraint-qualified",
+      "group": "base-constraint",
+      "expression": "1 as Int(module.List(1) == 42)",
+      "mode": "string"
+    },
+    {
+      "id": "constraint-unqualified",
+      "group": "base-constraint",
+      "expression": "1 as Int(List(1) == 42)",
+      "mode": "string"
+    },
+    {
+      "id": "constraint-unqualified-is-list",
+      "group": "base-constraint",
+      "expression": "1 as Int(List(1) is List)",
+      "mode": "string"
+    },
+    {
+      "id": "let-unqualified",
+      "group": "base-constraint",
+      "expression": "1 as Int(let (List = (x) -> 42) List(1) == 42)",
+      "mode": "string"
+    },
+    {
+      "id": "let-qualified",
+      "group": "base-constraint",
+      "expression": "1 as Int(let (List = (x) -> 42) module.List(1) == 42)",
+      "mode": "string"
+    },
+    {
+      "id": "authored-public-direct",
+      "group": "authored-shadow",
+      "expression": "direct",
+      "mode": "string"
+    },
+    {
+      "id": "authored-public-constraint",
+      "group": "authored-shadow",
+      "expression": "constrained",
+      "mode": "string"
+    },
+    {
+      "id": "authored-public-is-list",
+      "group": "authored-shadow",
+      "expression": "constrainedIsList",
+      "mode": "string"
+    },
+    {
+      "id": "authored-class-local-direct",
+      "group": "authored-shadow",
+      "expression": "new LocalHolder {}.direct",
+      "mode": "string"
+    },
+    {
+      "id": "authored-class-local-constraint",
+      "group": "authored-shadow",
+      "expression": "new LocalHolder {}.constrained",
+      "mode": "string"
+    },
+    {
+      "id": "authored-class-local-is-list",
+      "group": "authored-shadow",
+      "expression": "new LocalHolder {}.constrainedIsList",
+      "mode": "string"
+    },
+    {
+      "id": "external-list-direct",
+      "group": "authored-shadow",
+      "expression": "List(1)",
+      "mode": "string"
+    },
+    {
+      "id": "external-class-local-call",
+      "group": "authored-shadow",
+      "expression": "new LocalHolder {}.List(1)",
+      "mode": "string"
+    }
+  ]
+}

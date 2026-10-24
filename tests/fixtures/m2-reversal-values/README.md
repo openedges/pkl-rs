@@ -1,0 +1,9 @@
+# Pkl 0.32.0 reversal values
+
+This fixture records independent Java observations for `String.reverse()`, `List.reverse()`, and `Set.reverse()` at `file:///stage66/reversal-values.pkl`. The 78 ordered public string calls were made in each of two fresh JVM sessions. Every call records its original expression, raw UTF-8 and UTF-16BE result and exception channels, status, Java exception/cause metadata, and complete process protocol.
+
+`String.reverse()` follows the pinned JDK's `StringBuilder.reverse()` UTF-16 behavior. The raw UTF-16BE channel distinguishes lone high and low surrogates that both appear as `?` in the UTF-8 convenience channel. Reversing adjacent low/high surrogates can create a valid pair. `Set.reverse()` produces a List in reverse insertion order; the first equal Set element remains the representative. The rows named `set-construction-*` fail while constructing and hashing the Set, before `reverse()` can run. The `set-fn-*` rows isolate reversal from deferred function invocation. Public string rows do not prove VM reference identity; the separate direct Java VM identity supplement records that boundary.
+
+The archive holds the final standalone Java capture, copied pinned Pkl sources, input files, actual JDK and JAR identities, two full ordered sessions, and the derived audit. The earlier 55-row and 78-row explorations and provisional capture remain separate historical evidence. `archive-identity.json` and `manifest.json` seal the archive and root file set. Run `python3 -B tools/reversal_values_fixtures.py` for offline verification.
+
+This authority does not claim Rust, browser, Node, typed export, complete M2, or performance compatibility. Upstream `api/string.pkl`, `api/stringUnicode.pkl`, `api/list.pkl`, and `api/set.pkl` are pinned source controls; their full original programs were not replayed by this fixture.

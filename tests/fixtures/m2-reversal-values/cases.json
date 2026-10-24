@@ -1,0 +1,477 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage66/reversal-values.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "str-empty",
+      "group": "문자열 기본",
+      "expression": "\"\".reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-one",
+      "group": "문자열 기본",
+      "expression": "\"a\".reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-ascii",
+      "group": "문자열 기본",
+      "expression": "\"abcde\".reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-twice",
+      "group": "문자열 기본",
+      "expression": "\"abC\".reverse().reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-nul",
+      "group": "문자열 기본",
+      "expression": "\"a\\u{0}b\".reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-supplementary",
+      "group": "유니코드 코드 단위",
+      "expression": "\"A\\u{1f600}B\".reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-combining",
+      "group": "유니코드 코드 단위",
+      "expression": "\"a\\u{301}b\".reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-high",
+      "group": "유니코드 코드 단위",
+      "expression": "\"a\\u{d800}b\".reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-low",
+      "group": "유니코드 코드 단위",
+      "expression": "\"a\\u{dc00}b\".reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-low-high",
+      "group": "유니코드 코드 단위",
+      "expression": "\"\\u{dc00}\\u{d800}\".reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-high-low",
+      "group": "유니코드 코드 단위",
+      "expression": "\"\\u{d800}\\u{dc00}\".reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-replacement",
+      "group": "유니코드 코드 단위",
+      "expression": "\"a\\u{fffd}b\".reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-property",
+      "group": "문자열 진단",
+      "expression": "\"ab\".reverse",
+      "mode": "string"
+    },
+    {
+      "id": "str-arity",
+      "group": "문자열 진단",
+      "expression": "\"ab\".reverse(1)",
+      "mode": "string"
+    },
+    {
+      "id": "str-arg-error",
+      "group": "문자열 진단",
+      "expression": "\"ab\".reverse(throw(\"arg\"))",
+      "mode": "string"
+    },
+    {
+      "id": "str-missing",
+      "group": "문자열 진단",
+      "expression": "\"ab\".reversed()",
+      "mode": "string"
+    },
+    {
+      "id": "list-empty",
+      "group": "List 순서",
+      "expression": "List().reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "list-one",
+      "group": "List 순서",
+      "expression": "List(7).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "list-mixed",
+      "group": "List 순서",
+      "expression": "List(1,\"x\",null).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "list-duplicates",
+      "group": "List 순서",
+      "expression": "List(1,2,1,3).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "list-twice",
+      "group": "List 순서",
+      "expression": "List(1,2,3).reverse().reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "list-index-first",
+      "group": "List 순서",
+      "expression": "List(1,2,3).reverse()[0]",
+      "mode": "string"
+    },
+    {
+      "id": "list-index-last",
+      "group": "List 순서",
+      "expression": "List(1,2,3).reverse()[2]",
+      "mode": "string"
+    },
+    {
+      "id": "list-lazy-length",
+      "group": "List 지연 평가/순서",
+      "expression": "List(new Dynamic { value = throw(\"list-child\") },1).reverse().length",
+      "mode": "string"
+    },
+    {
+      "id": "list-lazy-read",
+      "group": "List 지연 평가/순서",
+      "expression": "List(new Dynamic { value = throw(\"list-child\") },1).reverse()[1].value",
+      "mode": "string"
+    },
+    {
+      "id": "list-render-unforced",
+      "group": "List 지연 평가/순서",
+      "expression": "List(new Dynamic { value = throw(\"left\") },new Dynamic { value = throw(\"right\") }).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "list-demand-right",
+      "group": "List 지연 평가/순서",
+      "expression": "List(new Dynamic { value = throw(\"left\") },new Dynamic { value = throw(\"right\") }).reverse()[0].value",
+      "mode": "string"
+    },
+    {
+      "id": "list-demand-left",
+      "group": "List 지연 평가/순서",
+      "expression": "List(new Dynamic { value = throw(\"left\") },new Dynamic { value = throw(\"right\") }).reverse()[1].value",
+      "mode": "string"
+    },
+    {
+      "id": "list-property",
+      "group": "List 진단",
+      "expression": "List(1).reverse",
+      "mode": "string"
+    },
+    {
+      "id": "list-arity",
+      "group": "List 진단",
+      "expression": "List(1).reverse(2)",
+      "mode": "string"
+    },
+    {
+      "id": "list-arg-error",
+      "group": "List 진단",
+      "expression": "List(1).reverse(throw(\"arg\"))",
+      "mode": "string"
+    },
+    {
+      "id": "list-missing",
+      "group": "List 진단",
+      "expression": "List(1).reversed()",
+      "mode": "string"
+    },
+    {
+      "id": "set-empty",
+      "group": "Set 순서",
+      "expression": "Set().reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "set-one",
+      "group": "Set 순서",
+      "expression": "Set(7).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "set-order",
+      "group": "Set 순서",
+      "expression": "Set(3,1,2).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "set-duplicates",
+      "group": "Set 순서",
+      "expression": "Set(3,1,3,2,1).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "set-result-class",
+      "group": "Set 순서",
+      "expression": "Set(3,1,2).reverse().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "set-twice",
+      "group": "Set 순서",
+      "expression": "Set(1,2,3).reverse().reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "set-index-first",
+      "group": "Set 순서",
+      "expression": "Set(3,1,2).reverse()[0]",
+      "mode": "string"
+    },
+    {
+      "id": "set-duration-first",
+      "group": "Set 대표값",
+      "expression": "Set(1.min,60.s).reverse()[0].unit",
+      "mode": "string"
+    },
+    {
+      "id": "set-duration-second",
+      "group": "Set 대표값",
+      "expression": "Set(60.s,1.min).reverse()[0].unit",
+      "mode": "string"
+    },
+    {
+      "id": "set-null",
+      "group": "Set 대표값",
+      "expression": "Set(null,1,null).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "set-numeric-kind",
+      "group": "Set 대표값",
+      "expression": "Set(1,1.0).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "set-construction-child-length",
+      "group": "set-construction-error",
+      "expression": "Set(new Dynamic { value = throw(\"set-child\") }).reverse().length",
+      "mode": "string"
+    },
+    {
+      "id": "set-construction-child-read",
+      "group": "set-construction-error",
+      "expression": "Set(new Dynamic { value = throw(\"set-child\") }).reverse()[0].value",
+      "mode": "string"
+    },
+    {
+      "id": "set-construction-error",
+      "group": "Set 지연 평가/해시",
+      "expression": "Set(new Dynamic { hashCode = throw(\"hash\") }).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "set-property",
+      "group": "Set 진단",
+      "expression": "Set(1).reverse",
+      "mode": "string"
+    },
+    {
+      "id": "set-arity",
+      "group": "Set 진단",
+      "expression": "Set(1).reverse(2)",
+      "mode": "string"
+    },
+    {
+      "id": "set-arg-error",
+      "group": "Set 진단",
+      "expression": "Set(1).reverse(throw(\"arg\"))",
+      "mode": "string"
+    },
+    {
+      "id": "set-missing",
+      "group": "Set 진단",
+      "expression": "Set(1).reversed()",
+      "mode": "string"
+    },
+    {
+      "id": "int-reverse",
+      "group": "스칼라 멤버",
+      "expression": "1.reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "null-reverse",
+      "group": "스칼라 멤버",
+      "expression": "null.reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-reverse",
+      "group": "스칼라 멤버",
+      "expression": "Bytes(1,2).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "map-reverse",
+      "group": "스칼라 멤버",
+      "expression": "Map(\"a\",1).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-reverse",
+      "group": "스칼라 멤버",
+      "expression": "(new Dynamic {}).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-double-low-high",
+      "group": "unicode",
+      "expression": "\"\\u{dc00}\\u{d800}\".reverse().reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-double-high-low",
+      "group": "unicode",
+      "expression": "\"\\u{d800}\\u{dc00}\".reverse().reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-nullsafe",
+      "group": "diagnostic",
+      "expression": "null?.reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-nullsafepresent",
+      "group": "diagnostic",
+      "expression": "\"x\"?.reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "str-misspell",
+      "group": "diagnostic",
+      "expression": "\"x\".reveres()",
+      "mode": "string"
+    },
+    {
+      "id": "str-two-args",
+      "group": "diagnostic",
+      "expression": "\"x\".reverse(1,2)",
+      "mode": "string"
+    },
+    {
+      "id": "str-two-arg-throw",
+      "group": "diagnostic",
+      "expression": "\"x\".reverse(1,throw(\"second\"))",
+      "mode": "string"
+    },
+    {
+      "id": "list-two-args",
+      "group": "diagnostic",
+      "expression": "List(1).reverse(1,2)",
+      "mode": "string"
+    },
+    {
+      "id": "list-index-oob",
+      "group": "diagnostic",
+      "expression": "List(1).reverse()[1]",
+      "mode": "string"
+    },
+    {
+      "id": "list-boundary-16",
+      "group": "order",
+      "expression": "List(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "list-boundary-17",
+      "group": "order",
+      "expression": "List(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "list-prebuilt",
+      "group": "order",
+      "expression": "prebuiltList.reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "list-empty-class",
+      "group": "order",
+      "expression": "List().reverse().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "set-two-args",
+      "group": "diagnostic",
+      "expression": "Set(1).reverse(1,2)",
+      "mode": "string"
+    },
+    {
+      "id": "set-index-oob",
+      "group": "diagnostic",
+      "expression": "Set(1).reverse()[1]",
+      "mode": "string"
+    },
+    {
+      "id": "set-duration-ordered",
+      "group": "representative",
+      "expression": "Set(1.min,60.s,2.min).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "set-boundary-16",
+      "group": "order",
+      "expression": "Set(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "set-boundary-17",
+      "group": "order",
+      "expression": "Set(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16).reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "set-prebuilt",
+      "group": "order",
+      "expression": "prebuiltSet.reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "set-fn-length",
+      "group": "lazy",
+      "expression": "Set((x) -> throw(\"set-fn\")).reverse().length",
+      "mode": "string"
+    },
+    {
+      "id": "set-fn-demand",
+      "group": "lazy",
+      "expression": "Set((x) -> throw(\"set-fn\")).reverse()[0].apply(1)",
+      "mode": "string"
+    },
+    {
+      "id": "float-reverse",
+      "group": "diagnostic",
+      "expression": "1.0.reverse()",
+      "mode": "string"
+    },
+    {
+      "id": "bool-reverse",
+      "group": "diagnostic",
+      "expression": "true.reverse()",
+      "mode": "string"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+string	list	1 as Int(List(1,2).length == 2)
+string	set	1 as Int(Set(1,2).length == 2)
+string	map	1 as Int(Map("a",1).length == 1)
+string	bytes	1 as Int(Bytes(0,255).length == 2)
+string	pair	1 as Int(Pair(1,2).first == 1)
+string	intseq	1 as Int(IntSeq(1,3).start == 1)
+string	null-object	1 as Int(Null(new Dynamic {}) is Null)
+string	null-function	1 as Int(Null(() -> new Dynamic {}) is Null)
+string	nested-list	List(1,2) as List(List(this[0],this[1]).length == 2)
+string	nested-set	Set(1,2) as Set(Set(this.first,this.last).length == 2)
+string	nested-map	List(Map("a",1)) as List(this[0].length == 1)
+string	map-odd	1 as Int(Map("a").length == 0)
+string	map-odd-before-throw	1 as Int(Map("a",throw("value"),"b").length == 1)
+string	map-even-value-throw	1 as Int(Map("a",throw("value")).length == 1)
+string	bytes-range	1 as Int(Bytes(256).length == 1)
+string	bytes-range-before-throw	1 as Int(Bytes(256,throw("second")).length == 2)
+string	bytes-throw-before-range	1 as Int(Bytes(throw("first"),256).length == 2)
+string	pair-arity	1 as Int(Pair(1).first == 1)
+string	intseq-type	1 as Int(IntSeq("x",3).start == 1)
+string	null-invalid-type	1 as Int(Null(42) is Null)
+string	null-arity	1 as Int(Null() is Null)
+string	null-throw	1 as Int(Null(throw("nullarg")) is Null)
+string	module-qualified	module.List(1)
+string	constraint-qualified	1 as Int(module.List(1) == 42)
+string	constraint-unqualified	1 as Int(List(1) == 42)
+string	constraint-unqualified-is-list	1 as Int(List(1) is List)
+string	let-unqualified	1 as Int(let (List = (x) -> 42) List(1) == 42)
+string	let-qualified	1 as Int(let (List = (x) -> 42) module.List(1) == 42)
+string	authored-public-direct	direct
+string	authored-public-constraint	constrained
+string	authored-public-is-list	constrainedIsList
+string	authored-class-local-direct	new LocalHolder {}.direct
+string	authored-class-local-constraint	new LocalHolder {}.constrained
+string	authored-class-local-is-list	new LocalHolder {}.constrainedIsList
+string	external-list-direct	List(1)
+string	external-class-local-call	new LocalHolder {}.List(1)

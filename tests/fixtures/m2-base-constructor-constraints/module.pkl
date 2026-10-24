@@ -1,0 +1,11 @@
+tag = "stage66-base-constructors-in-constraints"
+function List(x: Int): Int = 42
+direct = List(1)
+constrained = 1 as Int(List(1) == 42)
+class LocalHolder {
+  local function List(x: Int): Int = 43
+  direct = List(1)
+  constrained = 1 as Int(List(1) == 43)
+  constrainedIsList = 1 as Int(List(1) is List)
+}
+constrainedIsList = 1 as Int(List(1) is List)

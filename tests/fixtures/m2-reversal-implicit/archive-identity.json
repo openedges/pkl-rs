@@ -1,0 +1,16 @@
+{
+  "archive_sha256": "c3a0202d3a642f8524728bdbd917970a0048ec58d9ef9031d43a6470c8086e63",
+  "captures": {
+    "capture-02": "stage66-reversal-implicit-oracle-02"
+  },
+  "fileset_sha256": "0295a268454d12e9ba94696604e515b8ee2168bb1049b5ceda2acc0d39ddf89e",
+  "members": 401,
+  "oracle_input_sha256": {
+    "CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+    "cases.json": "06b6d407cb7f7049eb83ed9fd8cf2af0801accaf87064915157743694bd95cfc",
+    "module.pkl": "ad7ab1ce7bc50d525b29b10b8db1c5247623ce9bce2da705cd9ee0d01723f8ca",
+    "queries.tsv": "2d05613d0794ca668a54a9ae9d8f9d9938776f6471d08bb24f58a52044755464",
+    "run.py": "6d82b58c9a7233f5f33a1b017ba5b7cb1ddc8f3c21f458bc0041ede94b8d9b61"
+  },
+  "schema": 1
+}

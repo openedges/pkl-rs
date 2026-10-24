@@ -1,0 +1,329 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "module_uri": "file:///stage66/union-marker-diagnostics.pkl",
+  "programs": [
+    {
+      "id": "nonunion-int",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 30,
+      "module_file": "modules/00-nonunion-int.pkl",
+      "module_sha256": "8dec6c8411e945e4f5efcd4785699ad76ff362e133089717452148a78fa1839c",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-string",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 32,
+      "module_file": "modules/01-nonunion-string.pkl",
+      "module_sha256": "86076c491e6022f8e749d075721c0034bd2f126dcc653b27c280ca0535e29528",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-nullable",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 31,
+      "module_file": "modules/02-nonunion-nullable.pkl",
+      "module_sha256": "d35bb7880150810fe453a265fdf0b051115750df97811a3951cf06a3c4aa835a",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-constraint",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 36,
+      "module_file": "modules/03-nonunion-constraint.pkl",
+      "module_sha256": "c2057f711c00f6399721f2468371beff7d4b41fb394257193751fe55cda5d045",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-parenthesized",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 32,
+      "module_file": "modules/04-nonunion-parenthesized.pkl",
+      "module_sha256": "334af802a5c55b452d00aa90a7f63dc7cc508d9ee5744ac2fda3f03c00d54ed6",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-nested-union",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 41,
+      "module_file": "modules/05-nonunion-nested-union.pkl",
+      "module_sha256": "12c1c8bf4e603da2d86f21fe638ed452befa2c90bac6eba0d9675ccb08354284",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-function",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 44,
+      "module_file": "modules/06-nonunion-function.pkl",
+      "module_sha256": "790b98705f0f1951d94416a62f49b1db7c7c23593922ff43ccf57b2dfd9a3042",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-generic",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 36,
+      "module_file": "modules/07-nonunion-generic.pkl",
+      "module_sha256": "ef86abe73aacb28070f1517ad46fbee01acda0a07f6511c64dd23ff67e29be74",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-alias",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 46,
+      "module_file": "modules/08-nonunion-alias.pkl",
+      "module_sha256": "f3d8080e0e6c4662b9b22d743725ac092c24a5959d458b3b4c1290ce891aaef8",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-module",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 33,
+      "module_file": "modules/09-nonunion-module.pkl",
+      "module_sha256": "c22cdebaa23ec18e4ebd68e129400ca86c775fefa71f88f40716c73943a8a680",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-unknown",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 34,
+      "module_file": "modules/10-nonunion-unknown.pkl",
+      "module_sha256": "78191dae5dee50182d36b9b3aa3c8de8ea33a1cd2466036ef9f53ae26db46eb4",
+      "query": "result"
+    },
+    {
+      "id": "union-first",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 39,
+      "module_file": "modules/11-union-first.pkl",
+      "module_sha256": "9ec6d69088056b34d972d88c55f8c393971fdbaa098001c0b98143bea74757bd",
+      "query": "result"
+    },
+    {
+      "id": "union-second",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 39,
+      "module_file": "modules/12-union-second.pkl",
+      "module_sha256": "322f08635f4302cf0fe9e3dcefe92f4cd284bc39a6eb0c8012685ab56a6fff7c",
+      "query": "result"
+    },
+    {
+      "id": "union-third",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 49,
+      "module_file": "modules/13-union-third.pkl",
+      "module_sha256": "81b8f792faa62093a2a5a78b254ef829427bacca886266bd384fcecf7a742355",
+      "query": "result"
+    },
+    {
+      "id": "union-nullable",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 40,
+      "module_file": "modules/14-union-nullable.pkl",
+      "module_sha256": "4883e19bad20f0b1aafeeaafadaa5b339d4b6555c5a5c806ce1af24f802079a3",
+      "query": "result"
+    },
+    {
+      "id": "union-constraint",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 45,
+      "module_file": "modules/15-union-constraint.pkl",
+      "module_sha256": "382bb8e11c50368023c6c774dc357601ef49c0105f5f06896227bfda93db46ab",
+      "query": "result"
+    },
+    {
+      "id": "union-generic",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 45,
+      "module_file": "modules/16-union-generic.pkl",
+      "module_sha256": "c3827e4bf08f393bf437fefe62067ce9391c9b798036747a789e303331b05690",
+      "query": "result"
+    },
+    {
+      "id": "union-nested",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 51,
+      "module_file": "modules/17-union-nested.pkl",
+      "module_sha256": "ea37b1f8a338d01255c21d2da4d9583b167d0014cf6d04d0df8ee7cc381e639c",
+      "query": "result"
+    },
+    {
+      "id": "union-function",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 54,
+      "module_file": "modules/18-union-function.pkl",
+      "module_sha256": "fdc4994901696096979b31a7599021836a67f264310a8ed154d203f175d891c1",
+      "query": "result"
+    },
+    {
+      "id": "union-alias",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 55,
+      "module_file": "modules/19-union-alias.pkl",
+      "module_sha256": "4e281237cd9554be87c4c74085e454128c312bf094b2d7af463012c1329b895c",
+      "query": "result"
+    },
+    {
+      "id": "duplicate-first-second",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 40,
+      "module_file": "modules/20-duplicate-first-second.pkl",
+      "module_sha256": "320b569be7f514fc94eba1b9dacae438262882dfe765c06ff626083396e036d9",
+      "query": "result"
+    },
+    {
+      "id": "duplicate-first-third",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 50,
+      "module_file": "modules/21-duplicate-first-third.pkl",
+      "module_sha256": "2ab64d74bf9c73bb1545828db496a3be30aad49981ce95c579aca539bc3d01ae",
+      "query": "result"
+    },
+    {
+      "id": "duplicate-second-third",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 50,
+      "module_file": "modules/22-duplicate-second-third.pkl",
+      "module_sha256": "881366429da394291ec6bd06bd2c2dff3030e5657fbd1c8acf55caae058a1509",
+      "query": "result"
+    },
+    {
+      "id": "duplicate-nullable",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 41,
+      "module_file": "modules/23-duplicate-nullable.pkl",
+      "module_sha256": "14ac1bfb723588917282fc9d30b3bda020003e46b6fb81cb6b0ee43899ec1742",
+      "query": "result"
+    },
+    {
+      "id": "duplicate-constraint",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 46,
+      "module_file": "modules/24-duplicate-constraint.pkl",
+      "module_sha256": "7801c0d88e87b0afb1d4b631168f4e76f8075d95593a2c2b7d9b0ccaed3e2123",
+      "query": "result"
+    },
+    {
+      "id": "duplicate-generic",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 46,
+      "module_file": "modules/25-duplicate-generic.pkl",
+      "module_sha256": "e1b299e1eb8b817a4e053b1f432782e795c3300b792151e96e8f285dafb3d02f",
+      "query": "result"
+    },
+    {
+      "id": "duplicate-inner",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 52,
+      "module_file": "modules/26-duplicate-inner.pkl",
+      "module_sha256": "c0d53ef348c79407880153f8e22075879f32db1e816516ccf2be0bbcdc8c0166",
+      "query": "result"
+    },
+    {
+      "id": "duplicate-before-eof",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 31,
+      "module_file": "modules/27-duplicate-before-eof.pkl",
+      "module_sha256": "7a911721d8ff596a3693ddc3d5b7443c08e629ccfa35a6633c10035e576dc6e7",
+      "query": "result"
+    },
+    {
+      "id": "duplicate-before-bad-generic",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 40,
+      "module_file": "modules/28-duplicate-before-bad-generic.pkl",
+      "module_sha256": "faaa76765357bb563c03d555766f5702c23b9df5c18004328b9842cfcda5cbf3",
+      "query": "result"
+    },
+    {
+      "id": "first-bad-generic",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 33,
+      "module_file": "modules/29-first-bad-generic.pkl",
+      "module_sha256": "7fbd7d7417f3a134b2393729a7d6b4edcceeaa425b39f589fe42483c4d03b5db",
+      "query": "result"
+    },
+    {
+      "id": "missing-union-atom",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 20,
+      "module_file": "modules/30-missing-union-atom.pkl",
+      "module_sha256": "6a0c41eb7c38a3a0e0b81dd3917768e1680e0b1f7c9b3ac05cd30490747d92a4",
+      "query": "result"
+    },
+    {
+      "id": "bad-union-atom",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 41,
+      "module_file": "modules/31-bad-union-atom.pkl",
+      "module_sha256": "c74a28a5b9c0cddac47e9e79f9894acb2a9516599d859bb29c830811b5339d35",
+      "query": "result"
+    },
+    {
+      "id": "notunion-before-later-error",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 28,
+      "module_file": "modules/32-notunion-before-later-error.pkl",
+      "module_sha256": "147d1eb9c18ee52e28a56bacb9264efcab80e99ccf87f133c727c4a9d4d85a0e",
+      "query": "result"
+    },
+    {
+      "id": "property-context",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 27,
+      "module_file": "modules/33-property-context.pkl",
+      "module_sha256": "aabf65cb70524ed7b7947c473ca80841ab94f693688952809966d628602c82ef",
+      "query": "result"
+    },
+    {
+      "id": "parameter-context",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 46,
+      "module_file": "modules/34-parameter-context.pkl",
+      "module_sha256": "e146a161f503404567ab9da7669339e383dbdf9217ddee4e3a46e54d5ef9e532",
+      "query": "result"
+    },
+    {
+      "id": "return-context",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 40,
+      "module_file": "modules/35-return-context.pkl",
+      "module_sha256": "262d849f4ae0867a095403cf9cedeadb895a36139a58504b9e8f346bc7b0b733",
+      "query": "result"
+    },
+    {
+      "id": "class-parent-context",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 35,
+      "module_file": "modules/36-class-parent-context.pkl",
+      "module_sha256": "6e183b957d7513a48bd3c404266c1e824e027378ca48033a1ee894179f1b04ff",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-comment-gap",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 39,
+      "module_file": "modules/37-nonunion-comment-gap.pkl",
+      "module_sha256": "7b205382ad92811a4a1b2c91be6081037a6f8b68abbc9875ec3c83508a9d0acd",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-emoji",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 33,
+      "module_file": "modules/38-nonunion-emoji.pkl",
+      "module_sha256": "a96f50fcd6d7c46ee5bf004ee0ebc3fa55c711754508b21d8cfb756c540420f4",
+      "query": "result"
+    },
+    {
+      "id": "nonunion-crlf",
+      "intent": "Java-first authored parser diagnostic; no Rust expected value",
+      "module_bytes": 32,
+      "module_file": "modules/39-nonunion-crlf.pkl",
+      "module_sha256": "bf2fe5890255104ee3508738a01dd88b17d2a635fdf966521e34b894e3a6571a",
+      "query": "result"
+    }
+  ],
+  "repetitions": 2,
+  "schema": 1
+}

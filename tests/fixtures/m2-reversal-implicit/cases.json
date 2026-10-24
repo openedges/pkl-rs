@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage66/reversal-implicit.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "list-implicit",
+      "group": "implicit",
+      "expression": "List(1,2) as List(reverse() == List(2,1))",
+      "mode": "string"
+    },
+    {
+      "id": "list-this",
+      "group": "implicit",
+      "expression": "List(1,2) as List(this.reverse() == List(2,1))",
+      "mode": "string"
+    },
+    {
+      "id": "set-implicit",
+      "group": "implicit",
+      "expression": "Set(1,2) as Set(reverse() == List(2,1))",
+      "mode": "string"
+    },
+    {
+      "id": "set-this",
+      "group": "implicit",
+      "expression": "Set(1,2) as Set(this.reverse() == List(2,1))",
+      "mode": "string"
+    },
+    {
+      "id": "string-implicit",
+      "group": "implicit",
+      "expression": "\"ab\" as String(reverse() == \"ba\")",
+      "mode": "string"
+    },
+    {
+      "id": "string-this",
+      "group": "implicit",
+      "expression": "\"ab\" as String(this.reverse() == \"ba\")",
+      "mode": "string"
+    },
+    {
+      "id": "list-implicit-false",
+      "group": "implicit",
+      "expression": "List(1,2) as List(reverse() == List(1,2))",
+      "mode": "string"
+    },
+    {
+      "id": "set-implicit-false",
+      "group": "implicit",
+      "expression": "Set(1,2) as Set(reverse() == List(1,2))",
+      "mode": "string"
+    }
+  ]
+}

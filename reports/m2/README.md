@@ -1,5 +1,20 @@
 # M2 language evidence
 
+### Stage66 reversal and union diagnostics — Java authority checkpoint
+
+The [Java checkpoint](stage66-java-checkpoint.json) pins four single-module
+string profiles: reversal values (78), constraint calls (8), subscript diagnostics
+(19), and base constructor resolution (36). Each profile retains two fresh JVM
+runs with equal raw channels. Forty separate union-marker modules and eight
+direct VM identity observations have distinct evidence boundaries.
+
+The [history archive](stage66-java-evidence.tar.gz) preserves canonical Java
+acquisitions, earlier failed/provisional attempts, validation, and the prepared
+131-program original selection. The [publication receipt](stage66-java-publication.json)
+records its actual publishing process. No Rust or portable compatibility result
+is claimed by this checkpoint. Stage65 below remains the latest completed
+implementation checkpoint; Stage66 implementation and integration are in progress.
+
 ### Stage65 inferred construction — implementation and local comparisons
 
 Stage 65 connects contextual and explicit `new` to the shared resumable

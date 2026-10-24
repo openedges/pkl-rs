@@ -1,0 +1,8 @@
+string	list-implicit	List(1,2) as List(reverse() == List(2,1))
+string	list-this	List(1,2) as List(this.reverse() == List(2,1))
+string	set-implicit	Set(1,2) as Set(reverse() == List(2,1))
+string	set-this	Set(1,2) as Set(this.reverse() == List(2,1))
+string	string-implicit	"ab" as String(reverse() == "ba")
+string	string-this	"ab" as String(this.reverse() == "ba")
+string	list-implicit-false	List(1,2) as List(reverse() == List(1,2))
+string	set-implicit-false	Set(1,2) as Set(reverse() == List(1,2))
