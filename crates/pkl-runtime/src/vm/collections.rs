@@ -71,6 +71,47 @@ impl JoinRun {
 }
 
 impl Vm {
+    pub(super) fn empty_strict_collection(&mut self, kind: CollectionKind) -> ObjectId {
+        let index = match kind {
+            CollectionKind::List => 0,
+            CollectionKind::Set => 1,
+            CollectionKind::Map => 2,
+            _ => unreachable!("strict empty collection"),
+        };
+        if let Some(id) = self.empty_collections[index]
+            && self.heap.get(id).is_ok()
+        {
+            return id;
+        }
+        let id = self.heap.allocate(Object {
+            collection_kind: kind,
+            ..Object::default()
+        });
+        self.empty_collections[index] = Some(id);
+        id
+    }
+
+    pub(super) fn finish_strict_collection(
+        &mut self,
+        id: ObjectId,
+    ) -> Result<ObjectId, RuntimeError> {
+        let object = self.heap.get(id)?;
+        if matches!(
+            object.collection_kind,
+            CollectionKind::List | CollectionKind::Set | CollectionKind::Map
+        ) && object.length == 0
+            && object.members.is_empty()
+            && object.collection_members.is_empty()
+            && object.set_entries.is_empty()
+            && object.parent.is_none()
+            && object.collection_cast.is_none()
+        {
+            Ok(self.empty_strict_collection(object.collection_kind))
+        } else {
+            Ok(id)
+        }
+    }
+
     pub(super) fn collection_join_method(&mut self, receiver: Value) {
         let block = self.program.collection_join_blocks[usize::from(self.is_set(&receiver))];
         let id = self.heap.allocate(Object {
@@ -584,28 +625,36 @@ impl Vm {
         if present == Value::Bool(true) {
             return Ok(());
         }
-        let id = self.builder()?;
-        if self.prepare_keys(vec![value.clone()])?
-            || self.search_key(&value, self.set_candidates(id, &value, true)?)?
-        {
+        if self.put_set_key(&value)? {
             self.stack.extend([value, present]);
             return Ok(());
         }
+        self.stack.push(value);
+        self.append_strict_element()
+    }
+
+    /// Return true only when hashing/equality must retry this instruction.
+    fn put_set_key(&mut self, value: &Value) -> Result<bool, RuntimeError> {
+        let id = self.builder()?;
+        if self.prepare_keys(vec![value.clone()])?
+            || self.search_key(value, self.set_candidates(id, value, true)?)?
+        {
+            return Ok(true);
+        }
         let replacing = self
-            .set_candidates(id, &value, true)?
+            .set_candidates(id, value, true)?
             .iter()
-            .any(|candidate| same_key(&self.heap, &value, candidate));
+            .any(|candidate| same_key(&self.heap, value, candidate));
         if !replacing {
             let object = self.heap.get(id)?;
             let old = object
                 .map_index()
-                .rehash(self.java_hash(&value)?)
+                .rehash(self.java_hash(value)?)
                 .into_iter()
                 .map(|index| object.set_entries[index].clone())
                 .collect();
             if self.prepare_keys(old)? {
-                self.stack.extend([value, present]);
-                return Ok(());
+                return Ok(true);
             }
             let mut hashes = self
                 .heap
@@ -614,7 +663,7 @@ impl Vm {
                 .iter()
                 .map(|value| self.java_hash(value))
                 .collect::<Result<Vec<_>, _>>()?;
-            hashes.push(self.java_hash(&value)?);
+            hashes.push(self.java_hash(value)?);
             let object = self.heap.get_mut(id)?;
             object
                 .map_index
@@ -622,23 +671,7 @@ impl Vm {
                 .insert(hashes, true);
             object.set_entries.push(value.clone());
         }
-        self.add_collection_member(
-            Member {
-                flags: 0,
-                entry: true,
-                name: Arc::from(""),
-                code: usize::MAX,
-                local: false,
-                method: false,
-                ty: None,
-                type_span: None,
-                constant: false,
-                fixed: false,
-            },
-            None,
-            CollectionMemberKind::Element,
-            Some(value),
-        )
+        Ok(false)
     }
 
     pub(super) fn set_hash_elements(&self, id: ObjectId) -> Result<Vec<Value>, RuntimeError> {
@@ -663,7 +696,11 @@ impl Vm {
 
     /// Paguro skips hashing only when its root is empty. Every nonempty lookup
     /// hashes the probe before comparing candidates, including small Maps.
-    fn prepare_map_lookup(&mut self, id: ObjectId, key: &Value) -> Result<bool, RuntimeError> {
+    pub(super) fn prepare_map_lookup(
+        &mut self,
+        id: ObjectId,
+        key: &Value,
+    ) -> Result<bool, RuntimeError> {
         if self.heap.get(id)?.length == 0 {
             return Ok(false);
         }
@@ -673,7 +710,11 @@ impl Vm {
         self.search_key(key, self.map_candidates(id, key)?)
     }
 
-    fn map_value(&self, id: ObjectId, key: &Value) -> Result<Option<Value>, RuntimeError> {
+    pub(super) fn map_value(
+        &self,
+        id: ObjectId,
+        key: &Value,
+    ) -> Result<Option<Value>, RuntimeError> {
         let object = self.heap.get(id)?;
         let candidates = self.map_candidates(id, key)?;
         let member = object.collection_members.iter().find(|member| {
@@ -1104,7 +1145,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         self.prepare_keys(keys)
     }
 
-    fn add_collection_member(
+    pub(super) fn add_collection_member(
         &mut self,
         mut member: Member,
         key: Option<Value>,
@@ -1268,9 +1309,21 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         if let Some(parent) = parent {
             self.validate_object_members(parent, std::slice::from_ref(&member))?;
         }
-        let frame = self.frames.last().expect("active frame");
-        let mut environment = frame.environment.clone();
-        environment.restore_for_bindings = !frame.generator_scopes.is_empty();
+        // Strict elements with no body are complete values. Retaining their
+        // producer's environment would keep callback inputs and lexical scopes
+        // alive even when the result contains only scalars.
+        let environment = if value.is_some()
+            && member.code == usize::MAX
+            && member.ty.is_none()
+            && matches!(collection_kind, CollectionKind::List | CollectionKind::Set)
+        {
+            None
+        } else {
+            let frame = self.frames.last().expect("active frame");
+            let mut environment = frame.environment.clone();
+            environment.restore_for_bindings = !frame.generator_scopes.is_empty();
+            Some(environment)
+        };
         let cache_key = CacheKey {
             owner: None,
             name: member.name.clone(),
@@ -1278,9 +1331,11 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
             entry: member.entry,
         };
         let object = self.heap.get_mut(target)?;
-        object
-            .member_environments
-            .insert(cache_key.clone(), environment);
+        if let Some(environment) = environment {
+            object
+                .member_environments
+                .insert(cache_key.clone(), environment);
+        }
         if !member.local && !member.method {
             if let Some(index) = replacing {
                 object.collection_members[index] = descriptor;
@@ -1405,6 +1460,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         value @ (Value::Bool(_)
                         | Value::Int(_)
                         | Value::Float(_)
+                        | Value::Duration(_)
                         | Value::String(_)) => {
                             return Err(external_amendment_error(value_type_name(&value)));
                         }
@@ -2360,6 +2416,12 @@ crate::diagnostic_values::render(
             }
             Instruction::PrepareSetElement => self.prepare_set_element()?,
             Instruction::AddSetElement => self.add_set_element()?,
+            Instruction::PutSetKey => {
+                let value = self.pop()?;
+                if self.put_set_key(&value)? {
+                    self.stack.push(value);
+                }
+            }
             Instruction::PrepareMapEntry => self.prepare_map_entry()?,
             Instruction::AddMapEntry => self.add_map_entry()?,
             Instruction::CheckMapSpread => self.check_strict_spread()?,
@@ -2399,6 +2461,7 @@ crate::diagnostic_values::render(
                     )?;
                 }
                 self.frames.last_mut().expect("active frame").builders.pop();
+                let id = self.finish_strict_collection(id)?;
                 self.stack.push(Value::Object(id));
             }
             _ => return Err(invalid("unexpected collection instruction")),
@@ -2423,6 +2486,7 @@ crate::diagnostic_values::render(
         } else {
             id
         };
+        let result = self.finish_strict_collection(result)?;
         self.stack.push(Value::Object(result));
         Ok(())
     }

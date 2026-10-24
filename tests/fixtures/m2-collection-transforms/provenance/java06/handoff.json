@@ -1,0 +1,20 @@
+{
+  "status": "CLOSED-bounded-Java-first-collection-capture",
+  "reportSha256": "8c8d796eefbb210b3de52ea0dc7fcfc4647400d7f35831ebbd197a5b56bce44d",
+  "readbackReportSha256": "8e18bfa1a2a41b771ffd74a0b4c52783618d60dda10ed8faa38ed3f805b706c9",
+  "profileSha256": "ff30979ebe428b2be0172758dfd1ffafd2535e20074b26877b0e09ea092200f5",
+  "originalWholeSourceUnchanged": true,
+  "originalAdapterRawMatches": 0,
+  "sequentialApiCalls": 228,
+  "scopeLedger": {
+    "intended-collection-control": 228
+  },
+  "orderedActualEvents": 552,
+  "all8JvmProcessesExit0": true,
+  "postCloseBoundaryQualification": "No post-close calls in06; original01 post-close12 remains a separate actual API boundary.",
+  "misreachabilityQualification": "All228 PCF empty-reference diagnostic controls reached. Same-ref versus distinct equal-content behavior observed through fullrawdiagnostics; no heap-layout identity requirement.",
+  "sourceInputChanges": [],
+  "newRustOrPortableComparison": false,
+  "cachePrunesSha256": "4b09af845e840e2c01d480993cc8fddef64852fb40b18010ba5eb4690d6ff43c",
+  "liveHandles": []
+}

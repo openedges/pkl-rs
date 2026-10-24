@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find property `typed`.
+
+1 | List(1,2).map(typed).toString()
+                  ^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+Typed

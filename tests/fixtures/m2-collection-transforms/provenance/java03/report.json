@@ -1,0 +1,886 @@
+{
+  "scope": "Bounded collection transform oracle, not full stdlib, Java fallback or Rust comparison.",
+  "originalAdapterProcesses": [],
+  "processes": [
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/catch-source-properties-0/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/catch-source-properties-0/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage50/.cache/oracle/pkl-tools-0.32.0.jar",
+        "CollectionProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/workspace/catch-source-properties/input.pkl",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/workspace/catch-source-properties/operations.tsv",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/workspace/catch-source-properties/reader-plan.tsv",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/workspace/catch-source-properties",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/catch-source-properties-0/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/catch-source-properties-0/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/catch-source-properties-0/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/catch-source-properties-0/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "parentPid": 78920,
+      "startedUtc": "2026-10-23T21:52:11.312228+00:00",
+      "pid": 78941,
+      "exitCode": 0,
+      "timedOut": false,
+      "finishedUtc": "2026-10-23T21:52:13.342514+00:00",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "case": "catch-source-properties",
+      "repeat": 0,
+      "calls": [
+        {
+          "session": 0,
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            1
+          ],
+          "countsAfter": [
+            0,
+            0,
+            3
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-0/call-0"
+        },
+        {
+          "session": 0,
+          "index": 1,
+          "expression": "insideList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "4c697374286e756c6c2c2022696e6e6572222c206e756c6c29",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "004c0069007300740028006e0075006c006c002c002000220069006e006e006500720022002c0020006e0075006c006c0029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            3
+          ],
+          "countsAfter": [
+            0,
+            3,
+            8
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-0/call-1"
+        },
+        {
+          "session": 0,
+          "index": 2,
+          "expression": "outerList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6f75746572",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006f0075007400650072",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            3,
+            8
+          ],
+          "countsAfter": [
+            0,
+            5,
+            12
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-0/call-2"
+        },
+        {
+          "session": 0,
+          "index": 3,
+          "expression": "insideSet.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "5365742822696e6e65722229",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "005300650074002800220069006e006e0065007200220029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            5,
+            12
+          ],
+          "countsAfter": [
+            0,
+            8,
+            17
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-0/call-3"
+        },
+        {
+          "session": 0,
+          "index": 4,
+          "expression": "outerMap.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "45787065637465642076616c7565206f662074797065206050616972602c2062757420676f7420747970652060496e74602e2056616c75653a203432",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "00450078007000650063007400650064002000760061006c007500650020006f0066002000740079007000650020006000500061006900720060002c002000620075007400200067006f007400200074007900700065002000600049006e00740060002e002000560061006c00750065003a002000340032",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            8,
+            17
+          ],
+          "countsAfter": [
+            0,
+            10,
+            21
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-0/call-4"
+        },
+        {
+          "session": 0,
+          "index": 5,
+          "expression": "insideList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "4c697374286e756c6c2c2022696e6e6572222c206e756c6c29",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "004c0069007300740028006e0075006c006c002c002000220069006e006e006500720022002c0020006e0075006c006c0029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            10,
+            21
+          ],
+          "countsAfter": [
+            0,
+            10,
+            23
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-0/call-5"
+        },
+        {
+          "session": 0,
+          "index": 6,
+          "expression": "outerList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6f75746572",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006f0075007400650072",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            10,
+            23
+          ],
+          "countsAfter": [
+            0,
+            10,
+            25
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-0/call-6"
+        },
+        {
+          "session": 0,
+          "index": 7,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            10,
+            26
+          ],
+          "countsAfter": [
+            0,
+            10,
+            28
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-0/call-7"
+        },
+        {
+          "session": 1,
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            1
+          ],
+          "countsAfter": [
+            0,
+            0,
+            3
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-1/call-0"
+        },
+        {
+          "session": 1,
+          "index": 1,
+          "expression": "insideList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "4c697374286e756c6c2c2022696e6e6572222c206e756c6c29",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "004c0069007300740028006e0075006c006c002c002000220069006e006e006500720022002c0020006e0075006c006c0029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            3
+          ],
+          "countsAfter": [
+            0,
+            3,
+            8
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-1/call-1"
+        },
+        {
+          "session": 1,
+          "index": 2,
+          "expression": "outerList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6f75746572",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006f0075007400650072",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            3,
+            8
+          ],
+          "countsAfter": [
+            0,
+            5,
+            12
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-1/call-2"
+        },
+        {
+          "session": 1,
+          "index": 3,
+          "expression": "insideSet.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "5365742822696e6e65722229",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "005300650074002800220069006e006e0065007200220029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            5,
+            12
+          ],
+          "countsAfter": [
+            0,
+            8,
+            17
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-1/call-3"
+        },
+        {
+          "session": 1,
+          "index": 4,
+          "expression": "outerMap.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "45787065637465642076616c7565206f662074797065206050616972602c2062757420676f7420747970652060496e74602e2056616c75653a203432",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "00450078007000650063007400650064002000760061006c007500650020006f0066002000740079007000650020006000500061006900720060002c002000620075007400200067006f007400200074007900700065002000600049006e00740060002e002000560061006c00750065003a002000340032",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            8,
+            17
+          ],
+          "countsAfter": [
+            0,
+            10,
+            21
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-1/call-4"
+        },
+        {
+          "session": 1,
+          "index": 5,
+          "expression": "insideList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "4c697374286e756c6c2c2022696e6e6572222c206e756c6c29",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "004c0069007300740028006e0075006c006c002c002000220069006e006e006500720022002c0020006e0075006c006c0029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            10,
+            21
+          ],
+          "countsAfter": [
+            0,
+            10,
+            23
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-1/call-5"
+        },
+        {
+          "session": 1,
+          "index": 6,
+          "expression": "outerList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6f75746572",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006f0075007400650072",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            10,
+            23
+          ],
+          "countsAfter": [
+            0,
+            10,
+            25
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-1/call-6"
+        },
+        {
+          "session": 1,
+          "index": 7,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            10,
+            26
+          ],
+          "countsAfter": [
+            0,
+            10,
+            28
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/0/raw/session-1/call-7"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/catch-source-properties-1/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/catch-source-properties-1/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage50/.cache/oracle/pkl-tools-0.32.0.jar",
+        "CollectionProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/workspace/catch-source-properties/input.pkl",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/workspace/catch-source-properties/operations.tsv",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/workspace/catch-source-properties/reader-plan.tsv",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/workspace/catch-source-properties",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/catch-source-properties-1/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/catch-source-properties-1/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/catch-source-properties-1/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/catch-source-properties-1/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "parentPid": 78920,
+      "startedUtc": "2026-10-23T21:52:13.542411+00:00",
+      "pid": 78961,
+      "exitCode": 0,
+      "timedOut": false,
+      "finishedUtc": "2026-10-23T21:52:15.673944+00:00",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "case": "catch-source-properties",
+      "repeat": 1,
+      "calls": [
+        {
+          "session": 0,
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            1
+          ],
+          "countsAfter": [
+            0,
+            0,
+            3
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-0/call-0"
+        },
+        {
+          "session": 0,
+          "index": 1,
+          "expression": "insideList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "4c697374286e756c6c2c2022696e6e6572222c206e756c6c29",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "004c0069007300740028006e0075006c006c002c002000220069006e006e006500720022002c0020006e0075006c006c0029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            3
+          ],
+          "countsAfter": [
+            0,
+            3,
+            8
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-0/call-1"
+        },
+        {
+          "session": 0,
+          "index": 2,
+          "expression": "outerList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6f75746572",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006f0075007400650072",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            3,
+            8
+          ],
+          "countsAfter": [
+            0,
+            5,
+            12
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-0/call-2"
+        },
+        {
+          "session": 0,
+          "index": 3,
+          "expression": "insideSet.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "5365742822696e6e65722229",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "005300650074002800220069006e006e0065007200220029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            5,
+            12
+          ],
+          "countsAfter": [
+            0,
+            8,
+            17
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-0/call-3"
+        },
+        {
+          "session": 0,
+          "index": 4,
+          "expression": "outerMap.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "45787065637465642076616c7565206f662074797065206050616972602c2062757420676f7420747970652060496e74602e2056616c75653a203432",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "00450078007000650063007400650064002000760061006c007500650020006f0066002000740079007000650020006000500061006900720060002c002000620075007400200067006f007400200074007900700065002000600049006e00740060002e002000560061006c00750065003a002000340032",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            8,
+            17
+          ],
+          "countsAfter": [
+            0,
+            10,
+            21
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-0/call-4"
+        },
+        {
+          "session": 0,
+          "index": 5,
+          "expression": "insideList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "4c697374286e756c6c2c2022696e6e6572222c206e756c6c29",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "004c0069007300740028006e0075006c006c002c002000220069006e006e006500720022002c0020006e0075006c006c0029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            10,
+            21
+          ],
+          "countsAfter": [
+            0,
+            10,
+            23
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-0/call-5"
+        },
+        {
+          "session": 0,
+          "index": 6,
+          "expression": "outerList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6f75746572",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006f0075007400650072",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            10,
+            23
+          ],
+          "countsAfter": [
+            0,
+            10,
+            25
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-0/call-6"
+        },
+        {
+          "session": 0,
+          "index": 7,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            10,
+            26
+          ],
+          "countsAfter": [
+            0,
+            10,
+            28
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-0/call-7"
+        },
+        {
+          "session": 1,
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            1
+          ],
+          "countsAfter": [
+            0,
+            0,
+            3
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-1/call-0"
+        },
+        {
+          "session": 1,
+          "index": 1,
+          "expression": "insideList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "4c697374286e756c6c2c2022696e6e6572222c206e756c6c29",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "004c0069007300740028006e0075006c006c002c002000220069006e006e006500720022002c0020006e0075006c006c0029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            3
+          ],
+          "countsAfter": [
+            0,
+            3,
+            8
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-1/call-1"
+        },
+        {
+          "session": 1,
+          "index": 2,
+          "expression": "outerList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6f75746572",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006f0075007400650072",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            3,
+            8
+          ],
+          "countsAfter": [
+            0,
+            5,
+            12
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-1/call-2"
+        },
+        {
+          "session": 1,
+          "index": 3,
+          "expression": "insideSet.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "5365742822696e6e65722229",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "005300650074002800220069006e006e0065007200220029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            5,
+            12
+          ],
+          "countsAfter": [
+            0,
+            8,
+            17
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-1/call-3"
+        },
+        {
+          "session": 1,
+          "index": 4,
+          "expression": "outerMap.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "45787065637465642076616c7565206f662074797065206050616972602c2062757420676f7420747970652060496e74602e2056616c75653a203432",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "00450078007000650063007400650064002000760061006c007500650020006f0066002000740079007000650020006000500061006900720060002c002000620075007400200067006f007400200074007900700065002000600049006e00740060002e002000560061006c00750065003a002000340032",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            8,
+            17
+          ],
+          "countsAfter": [
+            0,
+            10,
+            21
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-1/call-4"
+        },
+        {
+          "session": 1,
+          "index": 5,
+          "expression": "insideList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "4c697374286e756c6c2c2022696e6e6572222c206e756c6c29",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "004c0069007300740028006e0075006c006c002c002000220069006e006e006500720022002c0020006e0075006c006c0029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            10,
+            21
+          ],
+          "countsAfter": [
+            0,
+            10,
+            23
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-1/call-5"
+        },
+        {
+          "session": 1,
+          "index": 6,
+          "expression": "outerList.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6f75746572",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006f0075007400650072",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            10,
+            23
+          ],
+          "countsAfter": [
+            0,
+            10,
+            25
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-1/call-6"
+        },
+        {
+          "session": 1,
+          "index": 7,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            10,
+            26
+          ],
+          "countsAfter": [
+            0,
+            10,
+            28
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/cases/catch-source-properties/1/raw/session-1/call-7"
+        }
+      ]
+    }
+  ],
+  "plannedApiCalls": 32,
+  "acquiredApiCalls": 32,
+  "statusCounts": {
+    "success\n": 32
+  },
+  "caseCount": 1,
+  "freshEvaluatorProcesses": 2,
+  "sameJvmSessions": 2,
+  "sourceInputChanges": [],
+  "rawEncodings": "Independent actual Java String.getBytes(UTF_8) and writeChar UTF16BE for API channels and event fields. No Rust expected values.",
+  "unexecutedBoundary": "Rust poll/reentry/cancel/timeouts/stale tokens and new native/Node/Wasm comparisons remain unexecuted; post-close errors are public API boundary, not ordinary collection compatibility.",
+  "profileSha256": "5fcdc1148fb929eeecaf4d0044a17d6d8f4a33a1f0cb1ee5d386d2668e1df3dd"
+}

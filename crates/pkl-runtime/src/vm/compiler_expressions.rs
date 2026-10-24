@@ -1134,7 +1134,35 @@ impl Compiler<'_> {
                     work.push(Work::Visit(receiver));
                 }
             }
-            ExprKind::Member(receiver, name) => {
+            ExprKind::Member(receiver, name) | ExprKind::NullableMember(receiver, name) => {
+                if let Some(unit) = crate::duration::DurationUnit::parse(name) {
+                    let number = match &receiver.unparenthesized().kind {
+                        ExprKind::Int(value) => Some(*value as f64),
+                        ExprKind::Float(value) => Some(*value),
+                        ExprKind::Unary {
+                            op: UnaryOp::Negate,
+                            operand,
+                        } => match operand.kind {
+                            ExprKind::Float(value) => Some(-value),
+                            _ => None,
+                        },
+                        _ => None,
+                    };
+                    if let Some(value) = number {
+                        // AstBuilder folds numeric literal units into one
+                        // ConstantValueNode. Reusing this code preserves its
+                        // wrapper identity; dynamic getters allocate per read.
+                        output.push(Instruction::Constant(Value::Duration(
+                            crate::duration::Duration::new(value, unit),
+                        )));
+                        return Ok(());
+                    }
+                }
+                if matches!(expression.kind, ExprKind::NullableMember(_, _)) {
+                    work.push(Work::NullableMember(expression, name));
+                    work.push(Work::Visit(receiver));
+                    return Ok(());
+                }
                 let constant = self.resolved.const_names.contains(&expression.span);
                 let super_receiver = matches!(receiver.unparenthesized().kind, ExprKind::Super);
                 let name = Arc::from(name.as_str());
@@ -1150,10 +1178,6 @@ impl Compiler<'_> {
                 if !super_receiver {
                     work.push(Work::Visit(receiver));
                 }
-            }
-            ExprKind::NullableMember(receiver, name) => {
-                work.push(Work::NullableMember(expression, name));
-                work.push(Work::Visit(receiver));
             }
             ExprKind::InterpolatedString(parts) => {
                 output.push(Instruction::Constant(Value::string("")));

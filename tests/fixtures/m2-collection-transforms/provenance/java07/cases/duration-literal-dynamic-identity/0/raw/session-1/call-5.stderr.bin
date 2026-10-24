@@ -1,0 +1,9 @@
+–– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `Duration`.
+Value: 1.s
+
+1 | rOtherLiteral.renderDocument(literalValue)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+This value was converted during rendering. Previous: 1.s. After: 1.s.

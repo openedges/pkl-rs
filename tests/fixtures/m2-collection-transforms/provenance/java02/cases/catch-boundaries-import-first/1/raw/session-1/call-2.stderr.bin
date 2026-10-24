@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find property `test`.
+
+1 | test.catch(()->List(1,2,3).map((x)->if(trace(x)==2)throw("outer") else x)).toString()
+    ^^^^
+at  (repl:text)

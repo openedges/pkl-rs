@@ -1,0 +1,1 @@
+Map(1,"one",2,"two").mapKeys((k,v)->if(k==1)1.min else 60.s).toString()

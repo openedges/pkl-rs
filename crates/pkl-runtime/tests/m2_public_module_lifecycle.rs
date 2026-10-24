@@ -63,6 +63,90 @@ fn resolve(request: &ModuleRequest, uri: Option<&str>) -> ModuleCompletion {
 }
 
 #[test]
+fn parse_failure_infers_selected_key_name_before_caching_the_diagnostic() {
+    for (selected, fragment_paths, expected, getter_count) in [
+        ("memo:/selected/input.pkl", false, "input", 1),
+        (
+            "memo:/selected/ignored.pkl#/folder/fragment.pkl",
+            true,
+            "fragment",
+            1,
+        ),
+        (
+            "jar:file:///package.jar!/folder/archive.pkl",
+            false,
+            "archive",
+            0,
+        ),
+    ] {
+        let mut probe = SourceProbe::new_module_evaluator("compact", false, false, false).unwrap();
+        let (mut names, mut loads) = (0, 0);
+        let mut previous = None;
+        for expression in ["stable", "other"] {
+            probe
+                .evaluate_module_source("memo:/requested.pkl", None, expression, 0, None)
+                .unwrap();
+            let error = settle(&mut probe, &mut |request| {
+                Some(match &request.kind {
+                    ModuleRequestKind::SelectKey { id, .. } => {
+                        ModuleCompletion::KeySelected(Ok(ModuleKey {
+                            id: *id,
+                            uri: selected.into(),
+                            kind: ModuleKeyKind::Host,
+                            handle: "selected".into(),
+                        }))
+                    }
+                    ModuleRequestKind::QueryCachePolicy { .. } => {
+                        ModuleCompletion::CachePolicy(Ok(true))
+                    }
+                    ModuleRequestKind::ResolveKey {
+                        key,
+                        resolved_key_id,
+                        ..
+                    } => ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
+                        id: *resolved_key_id,
+                        key: key.clone(),
+                        handle: "resolved".into(),
+                        module: ResolvedModule {
+                            original_uri: key.uri.clone(),
+                            resolved_uri: "memo:/canonical.pkl".into(),
+                            source_uri: "memo:/source.pkl".into(),
+                        },
+                    })),
+                    ModuleRequestKind::LoadSource { .. } => {
+                        loads += 1;
+                        ModuleCompletion::Source(Ok(ModuleSource {
+                            text: "module declared\nstable=7\nimport \"pkl:test\"\n".into(),
+                            inferred_name: "wrongHostName".into(),
+                        }))
+                    }
+                    ModuleRequestKind::QueryFragmentPaths { key } => {
+                        names += 1;
+                        assert_eq!(key.uri.as_ref(), selected);
+                        ModuleCompletion::FragmentPaths(Ok(fragment_paths))
+                    }
+                    _ => return None,
+                })
+            })
+            .unwrap_err();
+            assert!(
+                error.contains(&format!("at {expected} (memo:/source.pkl")),
+                "{error}"
+            );
+            assert!(!error.contains("wrongHostName"));
+            if let Some(previous) = &previous {
+                assert_eq!(&error, previous);
+            } else {
+                previous = Some(error);
+            }
+        }
+        assert_eq!((names, loads), (getter_count, 1));
+        probe.close();
+        assert_eq!(probe.collect().slots, 0);
+    }
+}
+
+#[test]
 fn primary_selection_runs_each_call_and_queries_have_fresh_keys_and_sites() {
     let mut p = SourceProbe::new_module_evaluator("compact", false, false, false).unwrap();
     let mut primary_select = 0;

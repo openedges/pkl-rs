@@ -1,0 +1,20 @@
+{
+  "status": "CLOSED-bounded-Java-first-collection-capture",
+  "reportSha256": "039e4762fdc7923fd1fda5ebddc09abcfa75e764a1bd6c2f80fd24f8016a808a",
+  "readbackReportSha256": "345817e8e4ac25de1d08a66b0834a30480704a7bfb9e0ef95153c2a9d8fe537d",
+  "profileSha256": "7c03a61c701f9b16784f0dae130a7714dd4488880c70539714d3da6c4b32ccd1",
+  "originalWholeSourceUnchanged": true,
+  "originalAdapterRawMatches": 0,
+  "sequentialApiCalls": 56,
+  "scopeLedger": {
+    "intended-collection-control": 56
+  },
+  "orderedActualEvents": 124,
+  "all2JvmProcessesExit0": true,
+  "postCloseBoundaryQualification": "No post-close calls in05; original01 post-close12 remains a separate actual API boundary.",
+  "misreachabilityQualification": "All56 parenthesized Null amendment controls reached.04 parser36 remains preserved. Function value/property/arity distinctions are actual ordinary observations.",
+  "sourceInputChanges": [],
+  "newRustOrPortableComparison": false,
+  "cachePrunesSha256": "258cf67194e79c5531d7bbf8022ba551bf452cd2ad2a06ddf0d8a65cb65e5532",
+  "liveHandles": []
+}

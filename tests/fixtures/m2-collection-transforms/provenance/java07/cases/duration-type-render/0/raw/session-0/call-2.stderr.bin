@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Duration`, but got type `Int`.
+Value: 1
+
+3 | wrong: Duration=1
+           ^^^^^^^^
+at input#wrong (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-type-render/input.pkl)
+
+3 | wrong: Duration=1
+                    ^
+at input#wrong (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-type-render/input.pkl)
+
+1 | wrong
+    ^^^^^
+at  (repl:text)

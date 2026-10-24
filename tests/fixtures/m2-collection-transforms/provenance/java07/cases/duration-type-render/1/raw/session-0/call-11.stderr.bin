@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Object | Function<Object>`, but got type `Duration`.
+Value: 1.s
+
+2380 | external const function Null(defaultValue: Object | Function<Object>): Null
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Null (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2380)
+
+1 | Null(typed).toString()
+    ^^^^^^^^^^^
+at  (repl:text)

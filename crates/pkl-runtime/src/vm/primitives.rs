@@ -125,12 +125,111 @@ pub(super) fn blocks(
 }
 
 impl Vm {
+    pub(super) fn function_member_error(
+        &self,
+        receiver: &Value,
+        name: &str,
+        method: bool,
+    ) -> Result<RuntimeError, RuntimeError> {
+        let Value::Function(id) = receiver else {
+            return Err(invalid("function member receiver"));
+        };
+        let arity = crate::diagnostic_values::function_arity(*id, &self.heap)?;
+        let class = format!("Function{arity}");
+        let mut methods = [
+            ("getClass", "getClass()", 0),
+            ("toString", "toString()", 0),
+            ("ifNonNull", "ifNonNull(transform)", 1),
+            ("applyToList", "applyToList(argumentList)", 1),
+        ]
+        .map(|(name, signature, count)| (name.to_owned(), signature.to_owned(), count))
+        .to_vec();
+        methods.push((
+            "apply".into(),
+            format!(
+                "apply({})",
+                (1..=arity)
+                    .map(|n| format!("p{n}"))
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            ),
+            arity,
+        ));
+        let requested_arity = if method {
+            self.frames
+                .last()
+                .and_then(|frame| {
+                    self.program.metadata.get(frame.block).and_then(|metadata| {
+                        metadata.method_arities.get(&frame.pc.saturating_sub(1))
+                    })
+                })
+                .copied()
+                .unwrap_or(0) as isize
+        } else {
+            -1
+        };
+        let mut error = RuntimeError::new(
+            ErrorKind::MissingMember,
+            if method {
+                format!("Cannot find method `{name}` in class `{class}`.")
+            } else {
+                format!("Cannot find property `{name}` in object of type `{class}`.")
+            },
+        );
+        error.hint = crate::diagnostic::member_suggestions(name, requested_arity, &[], &methods)
+            .or_else(|| {
+                Some(if method {
+                    let mut names = methods.into_iter().map(|m| m.0).collect::<Vec<_>>();
+                    names.sort();
+                    format!(
+                        "Available methods in class `{class}`:\n{}",
+                        names.join("\n")
+                    )
+                    .into()
+                } else {
+                    "Available properties:\n(none)".into()
+                })
+            });
+        Ok(error)
+    }
+
     pub(super) fn primitive_member(
         &mut self,
         receiver: &Value,
         name: &str,
         method: bool,
     ) -> Result<bool, RuntimeError> {
+        if !method {
+            if let Some(unit) = crate::duration::DurationUnit::parse(name) {
+                let number = match receiver {
+                    Value::Int(value) => Some(value.get() as f64),
+                    Value::Float(value) => Some(value.get()),
+                    _ => None,
+                };
+                if let Some(value) = number {
+                    self.stack
+                        .push(Value::Duration(crate::duration::Duration::new(value, unit)));
+                    return Ok(true);
+                }
+            }
+            if let Value::Duration(duration) = receiver {
+                let value = duration.value();
+                let result = match name {
+                    "value" => {
+                        if value.is_finite() && value.fract() == 0.0 {
+                            Value::Int((value as i64).into())
+                        } else {
+                            Value::Float(value.into())
+                        }
+                    }
+                    "unit" => Value::String(duration.unit().symbol_value()),
+                    "isPositive" => Value::Bool(value >= 0.0),
+                    _ => return Ok(false),
+                };
+                self.stack.push(result);
+                return Ok(true);
+            }
+        }
         if !method && let Value::Bytes(bytes) = receiver {
             if name == "base64" {
                 self.stack.push(Value::String(resources::base64(bytes)));

@@ -1,0 +1,15 @@
+{
+  "scope": "Independent capture readback only; Java oracle coverage, not Rust compatibility.",
+  "checks": {
+    "independentStringEncodingPairs": 3200,
+    "rawApiRows": 228
+  },
+  "orderedActualEvents": 552,
+  "scopeLedger": {
+    "intended-collection-control": 228
+  },
+  "originalAdapterFullRawMatches": 0,
+  "repeatDifferences": [],
+  "qualification": "All228 empty-reference diagnostic controls reached; no conversion hint assumed. Same-ref versus distinct equal-content errors and trace effects are fullrawobservations. Original1272 corpus unchanged.",
+  "sourceInputChanges": []
+}

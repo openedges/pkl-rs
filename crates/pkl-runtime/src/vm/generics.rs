@@ -316,6 +316,7 @@ impl Vm {
                     TypeCheck::Boolean
                         | TypeCheck::Int
                         | TypeCheck::Float
+                        | TypeCheck::Duration
                         | TypeCheck::String
                         | TypeCheck::Bytes
                         | TypeCheck::Reference { .. }
@@ -395,10 +396,9 @@ impl Vm {
                     }
                 }
                 TypeCheck::CollectionBase { .. } => {
-                    run.value = Some(Value::Object(self.heap.allocate(Object {
-                        collection_kind: CollectionKind::List,
-                        ..Object::default()
-                    })));
+                    run.value = Some(Value::Object(
+                        self.empty_strict_collection(CollectionKind::List),
+                    ));
                 }
                 ty @ (TypeCheck::Collection(_) | TypeCheck::ParameterizedCollection { .. }) => {
                     let (kind, argument) = match ty {
@@ -436,7 +436,7 @@ impl Vm {
                         run.tasks.push(DefaultTask::Collection(id));
                         run.tasks.push(DefaultTask::Visit(argument));
                     } else {
-                        run.value = Some(Value::Object(id));
+                        run.value = Some(Value::Object(self.finish_strict_collection(id)?));
                     }
                 }
                 TypeCheck::Parameter { .. } => {

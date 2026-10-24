@@ -1,0 +1,1 @@
+function work() = Set(1,2,3).map((x)->if(trace(x)==2)read("ct:/retry") else read("ct:/cached-\(x)")).toString()

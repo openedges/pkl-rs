@@ -1,0 +1,11 @@
+–– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `List`.
+Value: List()
+
+7 | result = renderer.renderDocument(original)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at input#result (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/canonical-empty-source-observer/input.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

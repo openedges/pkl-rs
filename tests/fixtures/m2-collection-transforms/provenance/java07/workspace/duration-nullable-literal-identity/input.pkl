@@ -1,0 +1,16 @@
+stable=7
+nullableInt=()->1?.s
+nullableIntParen=()->(1)?.s
+nullableFloat=()->1.25?.s
+nullableFloatParen=()->(1.25)?.s
+nullableDynamic=(x)->x?.s
+qi=nullableInt.apply()
+qip=nullableIntParen.apply()
+qf=nullableFloat.apply()
+qfp=nullableFloatParen.apply()
+qd=nullableDynamic.apply(1)
+rI=new PcfRenderer { converters { [Duration]=(value)->nullableInt.apply() } }
+rIP=new PcfRenderer { converters { [Duration]=(value)->nullableIntParen.apply() } }
+rF=new PcfRenderer { converters { [Duration]=(value)->nullableFloat.apply() } }
+rFP=new PcfRenderer { converters { [Duration]=(value)->nullableFloatParen.apply() } }
+rD=new PcfRenderer { converters { [Duration]=(value)->nullableDynamic.apply(1) } }

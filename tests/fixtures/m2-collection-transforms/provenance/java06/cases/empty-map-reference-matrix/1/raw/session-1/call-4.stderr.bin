@@ -1,0 +1,7 @@
+–– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `Map`.
+Value: Map()
+
+1 | r_keysEmpty.renderDocument(empty)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

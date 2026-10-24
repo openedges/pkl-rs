@@ -1,0 +1,7 @@
+stable = 7
+class Key { id: Int; hidden tag: Int; marker = trace(id+100) }
+function key(wantedId: Int, wantedTag: Int): Key = if(trace(wantedTag)>0)new Key { id=wantedId; tag=wantedTag } else throw("tag")
+class FailKey { id: Int; marker = if(trace(id)==2)throw("hash-two") else id }
+function failKey(x): FailKey = if(trace(x)>0)new FailKey { id=x } else throw("x")
+setKeys=Set(1,2,3).map((x)->key(x%2,x))
+mapKeys=Map(1,10,2,20,3,30).mapKeys((k,v)->key(k%2,k))

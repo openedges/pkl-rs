@@ -14,6 +14,7 @@ pub(crate) mod amendment;
 pub(crate) mod annotations;
 pub(crate) mod builtins;
 mod code_storage;
+mod collection_transforms;
 pub mod collections;
 pub use code_storage::CodeStorage;
 mod compiler_expressions;
@@ -23,6 +24,7 @@ mod forcing;
 mod generics;
 mod guest_exceptions;
 mod modules;
+mod null;
 mod query_lifecycle;
 mod session_expressions;
 mod stdlib_modules;
@@ -32,6 +34,8 @@ mod output;
 mod pair;
 mod pcf_format;
 mod primitives;
+#[cfg(test)]
+mod receiver_tests;
 pub(crate) mod reference;
 mod rendering;
 mod resources;
@@ -177,6 +181,8 @@ pub enum Instruction {
     /// Hash and deduplicate one strict Set element before the next argument.
     PrepareSetElement,
     AddSetElement,
+    /// Paguro keySet builds its hash table with put, without a contains probe.
+    PutSetKey,
     LoadThis,
     LoadCustomThis,
     LoadOuter,
@@ -189,10 +195,23 @@ pub enum Instruction {
     ToString,
     StringRepeat,
     CollectionJoin,
+    BeginCollectionTransform(collection_transforms::Transform),
+    BeginCollectionProjection(collection_transforms::Projection),
+    CollectionKeyOrder,
+    CollectionTransformNext {
+        end: usize,
+    },
+    CollectionTransformProject {
+        next: usize,
+    },
+    AppendStrictElement,
+    EndCollectionTransform,
     StringEncode,
     Primitive(primitives::Operation),
     MakePair,
     PairConstructor,
+    NullConstructor,
+    CheckNullDefault,
     BeginFunctionAmendment {
         end: usize,
     },
@@ -370,6 +389,7 @@ pub enum TypeCheck {
     Boolean,
     Int,
     Float,
+    Duration,
     Number,
     String,
     Bytes,
@@ -599,6 +619,7 @@ impl TypeCheck {
                     | Self::Boolean
                     | Self::Int
                     | Self::Float
+                    | Self::Duration
                     | Self::Number
                     | Self::String
                     | Self::Bytes,
@@ -710,6 +731,7 @@ impl TypeCheck {
             Self::Boolean => matches!(value, Value::Bool(_)),
             Self::Int => matches!(value, Value::Int(_)),
             Self::Float => matches!(value, Value::Float(_)),
+            Self::Duration => matches!(value, Value::Duration(_)),
             Self::Number => matches!(value, Value::Int(_) | Value::Float(_)),
             Self::String => matches!(value, Value::String(_)),
             Self::Bytes => matches!(value, Value::Bytes(_)),
@@ -824,6 +846,9 @@ pub struct Program {
     pub(crate) typed_string_block: usize,
     pub(crate) string_repeat_block: usize,
     pub(crate) collection_join_blocks: [usize; 2],
+    collection_transform_blocks: [usize; 11],
+    collection_projection_blocks: [usize; 6],
+    null_constructor_block: usize,
     pub(crate) string_encode_block: usize,
     pub(crate) pair_constructor_block: usize,
     primitive_methods: BTreeMap<(Arc<str>, Arc<str>), usize>,
@@ -895,6 +920,10 @@ impl Program {
         ));
         let string_repeat_block = strings::repeat_block(&mut blocks, &mut metadata);
         let collection_join_blocks = collections::join_blocks(&mut blocks, &mut metadata);
+        let collection_transform_blocks = collection_transforms::blocks(&mut blocks, &mut metadata);
+        let collection_projection_blocks =
+            collection_transforms::projection_blocks(&mut blocks, &mut metadata);
+        let null_constructor_block = null::constructor_block(&mut blocks, &mut metadata);
         let string_encode_block = strings::encode_block(&mut blocks, &mut metadata);
         let pair_constructor_block = pair::constructor_block(&mut blocks, &mut metadata);
         let primitive_methods = primitives::blocks(&mut blocks, &mut metadata);
@@ -917,6 +946,9 @@ impl Program {
             typed_string_block,
             string_repeat_block,
             collection_join_blocks,
+            collection_transform_blocks,
+            collection_projection_blocks,
+            null_constructor_block,
             string_encode_block,
             pair_constructor_block,
             primitive_methods,
@@ -1026,6 +1058,7 @@ struct Frame {
     deep_force: Option<forcing::ForceRun>,
     pcf_render: Option<rendering::RenderRun>,
     collection_join: Option<collections::JoinRun>,
+    collection_transform: Option<collection_transforms::TransformRun>,
     function_owner: Option<ObjectId>,
     amendment_end: Option<usize>,
     prepared_hashes: Option<Vec<Value>>,
@@ -1120,6 +1153,9 @@ pub struct Vm {
     resources: BTreeMap<crate::host::resources::CacheKey, Option<Value>>,
     class_singletons: BTreeMap<usize, ObjectId>,
     alias_singletons: BTreeMap<usize, ObjectId>,
+    /// Weak handles: live empty strict values share Java's EMPTY identity, but
+    /// this lookup does not keep discarded values or producer scopes alive.
+    empty_collections: [Option<ObjectId>; 3],
     resolved_declarations: BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
     /// Static call targets own code state, never captured receivers/environments.
     executable_roots: BTreeMap<usize, ExecutableOwnerId>,
@@ -1189,6 +1225,7 @@ impl Vm {
             resources: BTreeMap::new(),
             class_singletons: BTreeMap::new(),
             alias_singletons: BTreeMap::new(),
+            empty_collections: [None; 3],
             resolved_declarations: BTreeMap::new(),
             executable_roots: BTreeMap::new(),
             code_arenas: Vec::new(),
@@ -1282,6 +1319,7 @@ impl Vm {
             deep_force: None,
             pcf_render: None,
             collection_join: None,
+            collection_transform: None,
             function_owner: None,
             amendment_end: None,
             prepared_hashes: None,
@@ -1594,6 +1632,7 @@ impl Vm {
         self.resources.clear();
         self.class_singletons.clear();
         self.alias_singletons.clear();
+        self.empty_collections = [None; 3];
         self.resolved_declarations.clear();
         self.executable_roots.clear();
         self.code_arenas.clear();
@@ -1724,6 +1763,9 @@ impl Vm {
                 }
                 roots.extend(frame.function_owner.map(Value::Function));
                 if let Some(run) = &frame.collection_join {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.collection_transform {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.pcf_render {
@@ -2175,6 +2217,17 @@ impl Vm {
             .ok_or_else(|| invalid("invalid object scope"))
     }
 
+    fn this_receiver(&self) -> Result<Value, RuntimeError> {
+        match self
+            .frames
+            .last()
+            .and_then(|frame| frame.environment.this_value.clone())
+        {
+            Some(receiver) => Ok(receiver),
+            None => Ok(Value::Object(self.scope(0)?.receiver)),
+        }
+    }
+
     fn force(
         &mut self,
         receiver: ObjectId,
@@ -2567,6 +2620,7 @@ impl Vm {
             deep_force: None,
             pcf_render: None,
             collection_join: None,
+            collection_transform: None,
             function_owner: None,
             amendment_end: None,
             prepared_hashes: None,
@@ -3386,7 +3440,11 @@ impl Vm {
                 "function values must be invoked with apply",
             ));
         }
-        if function.arity != arity {
+        // An amendment without object parameters is a forwarding call target
+        // (AmendFunctionNode's SimpleRootNode). The original function checks
+        // the actual arguments, retaining both its declaration and the wrapper
+        // frame in diagnostics.
+        if function.arity != arity && object.amendment.is_none() {
             let mut error = RuntimeError::new(
                 ErrorKind::Type,
                 format!(
@@ -3439,6 +3497,7 @@ impl Vm {
             deep_force: None,
             pcf_render: None,
             collection_join: None,
+            collection_transform: None,
             function_owner: Some(id),
             amendment_end: None,
             prepared_hashes: None,
@@ -3576,6 +3635,7 @@ impl Vm {
                 | Instruction::PrepareMapEntry
                 | Instruction::PrepareSetElement
                 | Instruction::AddSetElement
+                | Instruction::PutSetKey
                 | Instruction::AddMapEntry
         ) {
             self.collection_instruction(instruction)
@@ -3862,6 +3922,7 @@ impl Vm {
             | Instruction::PrepareMapEntry
             | Instruction::PrepareSetElement
             | Instruction::AddSetElement
+            | Instruction::PutSetKey
             | Instruction::AddMapEntry => {
                 return Err(invalid("collection instruction bypassed scheduler"));
             }
@@ -3923,13 +3984,10 @@ impl Vm {
                     return Err(invalid("lexical stack underflow"));
                 }
             }
-            Instruction::LoadThis => self.stack.push(
-                frame
-                    .environment
-                    .this_value
-                    .clone()
-                    .unwrap_or(Value::Object(self.scope(0)?.receiver)),
-            ),
+            Instruction::LoadThis => {
+                let receiver = self.this_receiver()?;
+                self.stack.push(receiver);
+            }
             Instruction::LoadCustomThis => {
                 let slot = frame
                     .environment
@@ -3998,6 +4056,19 @@ impl Vm {
             }
             Instruction::StringRepeat => self.repeat_string()?,
             Instruction::CollectionJoin => self.begin_collection_join()?,
+            Instruction::BeginCollectionTransform(operation) => {
+                self.begin_collection_transform(operation)?
+            }
+            Instruction::BeginCollectionProjection(operation) => {
+                self.begin_collection_projection(operation)?
+            }
+            Instruction::CollectionKeyOrder => self.collection_key_order()?,
+            Instruction::CollectionTransformNext { end } => self.collection_transform_next(end)?,
+            Instruction::CollectionTransformProject { next } => {
+                self.collection_transform_project(next)?
+            }
+            Instruction::AppendStrictElement => self.append_strict_element()?,
+            Instruction::EndCollectionTransform => self.end_collection_transform()?,
             Instruction::StringEncode => self.encode_string()?,
             Instruction::Primitive(operation) => self.primitive(operation)?,
             Instruction::BeginFunctionAmendment { end } => self.begin_function_amendment(end)?,
@@ -4009,6 +4080,11 @@ impl Vm {
                 let value = self.pair_constructor();
                 self.stack.push(value);
             }
+            Instruction::NullConstructor => {
+                let value = self.null_constructor();
+                self.stack.push(value);
+            }
+            Instruction::CheckNullDefault => self.check_null_default()?,
             Instruction::MakePair => {
                 let second = self.pop()?;
                 let first = self.pop()?;
@@ -4143,6 +4219,12 @@ impl Vm {
                     self.collection_join_method(receiver);
                     return Ok(());
                 }
+                if method && self.collection_transform_method(receiver.clone(), name) {
+                    return Ok(());
+                }
+                if self.collection_projection_member(receiver.clone(), name, method)? {
+                    return Ok(());
+                }
                 if method && name.as_ref() == "repeat" && matches!(receiver, Value::String(_)) {
                     self.string_repeat_method(receiver);
                 } else if !method
@@ -4171,6 +4253,8 @@ impl Vm {
                 {
                     let function = self.native_reference_method(receiver, "scalarToString");
                     self.stack.push(function);
+                } else if matches!(receiver, Value::Function(_)) {
+                    return Err(self.function_member_error(&receiver, name, method)?);
                 } else {
                     let receiver = receiver.as_object()?;
                     if method
@@ -4244,14 +4328,7 @@ impl Vm {
             Instruction::GetImplicitProperty(ref name)
             | Instruction::GetImplicitMethod(ref name) => {
                 let method = matches!(instruction, Instruction::GetImplicitMethod(_));
-                let receiver = self
-                    .frames
-                    .last()
-                    .expect("active frame")
-                    .environment
-                    .this_value
-                    .clone()
-                    .unwrap_or(Value::Object(self.scope(0)?.receiver));
+                let receiver = self.this_receiver()?;
                 if self.primitive_member(&receiver, name, method)? {
                     return Ok(());
                 }
@@ -4856,6 +4933,10 @@ impl Vm {
                             .into(),
                     ),
                     Value::Float(value) => Value::Float((-value.get()).into()),
+                    Value::Duration(value) => Value::Duration(crate::duration::Duration::new(
+                        -value.value(),
+                        value.unit(),
+                    )),
                     value => return Err(unary_error("-", &value)),
                 };
                 self.stack.push(value);
@@ -6543,6 +6624,9 @@ impl Compiler<'_> {
                     Binding::ImplicitMethod if name.as_ref() == "Pair" => {
                         output.push(Instruction::PairConstructor)
                     }
+                    Binding::ImplicitMethod if name.as_ref() == "Null" => {
+                        output.push(Instruction::NullConstructor)
+                    }
                     Binding::ImplicitMethod => output.push(Instruction::GetImplicitMethod(name)),
                     Binding::ImplicitThis => output.push(Instruction::GetImplicitProperty(name)),
                     Binding::CustomThis => {
@@ -6587,6 +6671,7 @@ fn scalar_string(value: &Value) -> Result<PklString, RuntimeError> {
         Value::Bool(value) => value.to_string().into(),
         Value::Int(value) => value.to_string().into(),
         Value::Float(value) => crate::numeric::double_to_string(**value).into(),
+        Value::Duration(value) => value.to_string().into(),
         Value::String(value) => value.clone(),
         _ => {
             return Err(RuntimeError::new(
@@ -6784,6 +6869,7 @@ fn value_type_name(value: &Value) -> &'static str {
         Value::Bool(_) => "Boolean",
         Value::Int(_) => "Int",
         Value::Float(_) => "Float",
+        Value::Duration(_) => "Duration",
         Value::String(_) => "String",
         Value::Bytes(_) => "Bytes",
         Value::Object(_) => "Dynamic",
@@ -7847,6 +7933,7 @@ impl Compiler<'_> {
                         "Boolean" => TypeCheck::Boolean,
                         "Int" => TypeCheck::Int,
                         "Float" => TypeCheck::Float,
+                        "Duration" => TypeCheck::Duration,
                         "Number" => TypeCheck::Number,
                         "String" => TypeCheck::String,
                         "Bytes" => TypeCheck::Bytes,

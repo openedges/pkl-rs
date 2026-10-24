@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Function2`.
+Value: new Function2 {}
+
+3151 | external function mapNonNull<Result>(transform: (Element) -> Result): List<Result(this != null)>
+                                                       ^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.mapNonNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3151)
+
+1 | List().mapNonNull((x,y)->x).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

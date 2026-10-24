@@ -1,0 +1,491 @@
+[
+  {
+    "id": "duration-seven-units",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-seven-units",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-seven-units/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-seven-units/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.ns,1.25.ns,dyn_ns(1),dyn_ns(1.25)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.ns.value,1.25.ns.value,1.ns.unit,1.25.ns.unit).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.ns.value.getClass()==Int,1.25.ns.value.getClass()==Float,1.ns.getClass()==Duration).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.us,1.25.us,dyn_us(1),dyn_us(1.25)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.us.value,1.25.us.value,1.us.unit,1.25.us.unit).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.us.value.getClass()==Int,1.25.us.value.getClass()==Float,1.us.getClass()==Duration).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.ms,1.25.ms,dyn_ms(1),dyn_ms(1.25)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.ms.value,1.25.ms.value,1.ms.unit,1.25.ms.unit).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.ms.value.getClass()==Int,1.25.ms.value.getClass()==Float,1.ms.getClass()==Duration).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.s,1.25.s,dyn_s(1),dyn_s(1.25)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.s.value,1.25.s.value,1.s.unit,1.25.s.unit).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.s.value.getClass()==Int,1.25.s.value.getClass()==Float,1.s.getClass()==Duration).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.min,1.25.min,dyn_min(1),dyn_min(1.25)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.min.value,1.25.min.value,1.min.unit,1.25.min.unit).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.min.value.getClass()==Int,1.25.min.value.getClass()==Float,1.min.getClass()==Duration).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.h,1.25.h,dyn_h(1),dyn_h(1.25)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.h.value,1.25.h.value,1.h.unit,1.25.h.unit).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.h.value.getClass()==Int,1.25.h.value.getClass()==Float,1.h.getClass()==Duration).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.d,1.25.d,dyn_d(1),dyn_d(1.25)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.d.value,1.25.d.value,1.d.unit,1.25.d.unit).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.d.value.getClass()==Int,1.25.d.value.getClass()==Float,1.d.getClass()==Duration).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "separate Duration foundation Java-first; constructor/type/format/equality/hash/transform/refidentity only, no toUnit/ISO/DataSize/other arithmetic"
+  },
+  {
+    "id": "duration-numeric-boundaries",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-numeric-boundaries",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-numeric-boundaries/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-numeric-boundaries/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(9007199254740993.s,9223372036854775807.s,(-9223372036854775808).s,(-1.25).min,(-0.0).s,Infinity.s,(-Infinity).s,NaN.s,1e300.d).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List((9007199254740993.s).value,(9223372036854775807.s).value,((-9223372036854775808).s).value,((-1.25).min).value,((-0.0).s).value,(Infinity.s).value,((-Infinity).s).value,(NaN.s).value,(1e300.d).value).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List((9007199254740993.s).value.getClass()==Int,(9223372036854775807.s).value.getClass()==Int,((-9223372036854775808).s).value.getClass()==Int,((-1.25).min).value.getClass()==Int,((-0.0).s).value.getClass()==Int,(Infinity.s).value.getClass()==Int,((-Infinity).s).value.getClass()==Int,(NaN.s).value.getClass()==Int,(1e300.d).value.getClass()==Int).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List((9007199254740993.s).isPositive,(9223372036854775807.s).isPositive,((-9223372036854775808).s).isPositive,((-1.25).min).isPositive,((-0.0).s).isPositive,(Infinity.s).isPositive,((-Infinity).s).isPositive,(NaN.s).isPositive,(1e300.d).isPositive).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(dyn(9007199254740993),dyn(9223372036854775807),dyn(-9223372036854775808),dyn(-0.0),dyn(NaN),dyn(Infinity)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List((-1.s),(-1.25.s),(-(-0.0).s)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1e300.d==Infinity.s,1e300.d.value).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "separate Duration foundation Java-first; constructor/type/format/equality/hash/transform/refidentity only, no toUnit/ISO/DataSize/other arithmetic"
+  },
+  {
+    "id": "duration-type-render",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-type-render",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-type-render/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-type-render/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "typed.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "wrong"
+      },
+      {
+        "kind": "evaluate",
+        "value": "echo(1.25.h).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "echo(1)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(typed is Duration,typed is Any,typed is Number).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "typed.getClass()==Duration"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r.renderValue(typed)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r.renderDocument(document)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "value": "\"duration=\\(typed); fractional=\\(1.25.h)\""
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(typed).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "separate Duration foundation Java-first; constructor/type/format/equality/hash/transform/refidentity only, no toUnit/ISO/DataSize/other arithmetic"
+  },
+  {
+    "id": "duration-equality-hash",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-equality-hash",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-equality-hash/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-equality-hash/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1.s==1000.ms,1.min==60.s,1.h==3600.s,0.1.s==100.ms).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "nan==nan"
+      },
+      {
+        "kind": "evaluate",
+        "value": "nan==nanOther"
+      },
+      {
+        "kind": "evaluate",
+        "value": "NaN.s==NaN.s"
+      },
+      {
+        "kind": "evaluate",
+        "value": "zero==0.s"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(nan,nan,NaN.s,NaN.s).length.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(zero,0.s).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(zero,0.s).length.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1.min,\"first\",60.s,\"last\").keys.toList().map((d)->d.unit).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1.min,\"first\",60.s,\"last\").values.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(60.s,\"first\",1.min,\"last\").keys.toList().map((d)->d.unit).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(zero,\"negative\",0.min,\"positive\").toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(zero,\"negative\",0.min,\"positive\").length.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(nan,1,nan,2,nanOther,3).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(nan,1,nan,2,nanOther,3).length.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1e300.d,Infinity.s).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1e300.d,\"first\",Infinity.s,\"last\").toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "separate Duration foundation Java-first; constructor/type/format/equality/hash/transform/refidentity only, no toUnit/ISO/DataSize/other arithmetic"
+  },
+  {
+    "id": "duration-transforms-retry",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-transforms-retry",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-transforms-retry/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-transforms-retry/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2,3).map((x)->trace(x).s).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2).map((x)->if(x==1)1.min else 60.s).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1,\"one\",2,\"two\").mapKeys((k,v)->if(k==1)1.min else 60.s).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1,\"one\",2,\"two\").map((k,v)->Pair(k.s,v)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "memo"
+      },
+      {
+        "kind": "evaluate",
+        "value": "memo"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [
+      {
+        "uri": "ct:/duration-retry",
+        "kind": "io-first",
+        "value": "duration-reader-first"
+      }
+    ],
+    "scope": "separate Duration foundation Java-first; constructor/type/format/equality/hash/transform/refidentity only, no toUnit/ISO/DataSize/other arithmetic"
+  },
+  {
+    "id": "duration-literal-dynamic-identity",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-literal-dynamic-identity",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-literal-dynamic-identity/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-literal-dynamic-identity/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(a.tag,b.tag,c.tag,d.tag).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rSelf.renderDocument(literalValue)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rLiteral.renderDocument(literalValue)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rLiteral.renderDocument(literalValue)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rOtherLiteral.renderDocument(literalValue)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rSelf.renderDocument(dynamicValue)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rDynamic.renderDocument(dynamicValue)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rB.renderDocument(a.quantity)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rD.renderDocument(c.quantity)"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rLiteral.renderDocument(literalValue)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rDynamic.renderDocument(dynamicValue)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "separate Duration foundation Java-first; constructor/type/format/equality/hash/transform/refidentity only, no toUnit/ISO/DataSize/other arithmetic"
+  },
+  {
+    "id": "duration-nullable-literal-identity",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-nullable-literal-identity",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-nullable-literal-identity/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-nullable-literal-identity/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(qi,qip,qf,qfp,qd).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rI.renderDocument(qi)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rI.renderDocument(qi)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rIP.renderDocument(qip)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rF.renderDocument(qf)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rFP.renderDocument(qfp)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rD.renderDocument(qd)"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rI.renderDocument(qi)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rD.renderDocument(qd)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "separate Duration foundation Java-first; constructor/type/format/equality/hash/transform/refidentity only, no toUnit/ISO/DataSize/other arithmetic"
+  }
+]

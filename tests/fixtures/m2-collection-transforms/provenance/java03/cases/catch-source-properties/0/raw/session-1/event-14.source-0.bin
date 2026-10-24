@@ -1,0 +1,1 @@
+insideSet = Set(1,2,3).mapNonNull((x)->test.catchOrNull(()->if(trace(x)==2)throw("inner") else x))

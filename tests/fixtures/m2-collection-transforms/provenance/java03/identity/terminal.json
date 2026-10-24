@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-XshowSettings:properties",
+    "-version"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/identity/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/identity/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/identity/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/runtime-private/identity/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 78920,
+  "startedUtc": "2026-10-23T21:52:09.480743+00:00",
+  "pid": 78922,
+  "exitCode": 0,
+  "timedOut": false,
+  "finishedUtc": "2026-10-23T21:52:09.704787+00:00",
+  "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSha256": "9bb39dd8b915c70cfd2af8cd01ef10a044b00c63eb258637fa1293aa06aa1e78"
+}

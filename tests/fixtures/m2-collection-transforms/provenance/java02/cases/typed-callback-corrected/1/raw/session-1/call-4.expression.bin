@@ -1,0 +1,1 @@
+Map("a",1).map((k,v)->badPair(k,v)).toString()

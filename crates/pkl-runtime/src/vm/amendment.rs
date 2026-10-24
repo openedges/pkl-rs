@@ -119,6 +119,7 @@ impl Vm {
         })))
     }
     pub(super) fn begin_function_amendment(&mut self, end: usize) -> Result<(), RuntimeError> {
+        self.unwrap_amendment_default()?;
         if !matches!(self.stack.last(), Some(Value::Function(_))) {
             return Ok(());
         }
@@ -148,6 +149,16 @@ impl Vm {
         self.frames.last_mut().unwrap().pc = end + 1;
         Ok(())
     }
+    // Literal nodes redispatch on VmNull.getDefaultValue before choosing the
+    // object or function amendment specialization. Reading the default does
+    // not execute it, including when a wrapped function returns another null.
+    fn unwrap_amendment_default(&mut self) -> Result<(), RuntimeError> {
+        while let Some(Value::NullWithDefault(id)) = self.stack.last() {
+            let value = self.heap.null_default(*id)?;
+            *self.stack.last_mut().expect("amendment parent") = value;
+        }
+        Ok(())
+    }
     pub(super) fn invoke_amended_parent(&mut self) -> Result<(), RuntimeError> {
         let frame = self.frames.last().unwrap();
         let owner = frame
@@ -163,8 +174,8 @@ impl Vm {
         let Value::Function(parent) = parent else {
             return Err(invalid("amended parent function"));
         };
-        let arity = object.function.as_ref().unwrap().arity;
-        let arguments = frame.environment.locals[frame.environment.locals.len() - arity..].to_vec();
+        let captured = object.environment.locals.len();
+        let arguments = frame.environment.locals[captured..].to_vec();
         self.invoke_function(parent, arguments, false)
     }
     pub(super) fn continue_function_amendment(&mut self) -> Result<(), RuntimeError> {
@@ -179,6 +190,7 @@ impl Vm {
             .clone()
             .ok_or_else(|| invalid("amended function metadata"))?;
         let environment = object.environment.clone();
+        self.unwrap_amendment_default()?;
         if matches!(self.stack.last(), Some(Value::Function(_))) {
             amendment.parent = self.pop()?;
             let value = self.amended_function(amendment, environment)?;

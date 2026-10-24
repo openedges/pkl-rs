@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `Pair`, but got type `Int`.
+Value: 42
+
+1 | Map(1,10,2,20,3,30).map((k,v)->if(trace(k)==2)42 else Pair(k,v)).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

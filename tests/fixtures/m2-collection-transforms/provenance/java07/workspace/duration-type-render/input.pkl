@@ -1,0 +1,7 @@
+stable=7
+typed: Duration=1.s
+wrong: Duration=1
+function echo(x: Duration): Duration=x
+document=new Dynamic { integer=1.s; fractional=1.25.min; negative=(-1.25).h; zero=(-0.0).s; positive=Infinity.s; nan=NaN.s }
+r=new PcfRenderer {}
+output { value=document }

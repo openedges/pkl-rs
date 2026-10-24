@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/usr/bin/javac",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/.cache/oracle/pkl-tools-0.32.0.jar",
+    "-d",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/classes",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/CollectionProbe.java",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/tool-sources/tools/java/M2LanguageProbe.java"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/identity/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/identity/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/identity/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/identity/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 92653,
+  "startedUtc": "2026-10-23T22:10:16.566741+00:00",
+  "pid": 92655,
+  "exitCode": 0,
+  "timedOut": false,
+  "finishedUtc": "2026-10-23T22:10:17.286389+00:00",
+  "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

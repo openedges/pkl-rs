@@ -1,0 +1,282 @@
+[
+  {
+    "id": "canonical-empty-source-observer",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/canonical-empty-source-observer",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/canonical-empty-source-observer/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/canonical-empty-source-observer/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "result"
+      },
+      {
+        "kind": "evaluate",
+        "value": "result"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "result"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "C source-only observer input copied byte-identically, now actual evaluator boundary"
+  },
+  {
+    "id": "empty-list-reference-matrix",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/empty-list-reference-matrix",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/empty-list-reference-matrix/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/empty-list-reference-matrix/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_self.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_receiver.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_literal.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_fromSet.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_fromMap.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapEmpty.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapIndexedEmpty.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapNonNullEmpty.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_dropAll.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_dropAllIndexed.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_literalOne.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapSameOne.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_self.renderDocument(one)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_receiver.renderDocument(one)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_literalOne.renderDocument(one)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapSameOne.renderDocument(one)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_self.renderDocument(empty)"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_self.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "Empty canonical reference identity is observed only through actual public conversion-hint diagnostic; no heap-layout requirement. Nonempty same-reference versus same-content distinct controls."
+  },
+  {
+    "id": "empty-set-reference-matrix",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/empty-set-reference-matrix",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/empty-set-reference-matrix/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/empty-set-reference-matrix/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_self.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_receiver.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_literal.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_fromList.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_fromMap.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapEmpty.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapIndexedEmpty.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapNonNullEmpty.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_dropAll.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_dropAllIndexed.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_literalOne.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapSameOne.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_self.renderDocument(one)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_receiver.renderDocument(one)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_literalOne.renderDocument(one)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapSameOne.renderDocument(one)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_self.renderDocument(empty)"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_self.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "Empty canonical reference identity is observed only through actual public conversion-hint diagnostic; no heap-layout requirement. Nonempty same-reference versus same-content distinct controls."
+  },
+  {
+    "id": "empty-map-reference-matrix",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/empty-map-reference-matrix",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/empty-map-reference-matrix/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-06/workspace/empty-map-reference-matrix/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_self.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_literal.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapEmpty.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_keysEmpty.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_valuesEmpty.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_literalOne.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapSameOne.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_self.renderDocument(one)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_literalOne.renderDocument(one)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_mapSameOne.renderDocument(one)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_self.renderDocument(empty)"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_self.renderDocument(empty)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "Empty canonical reference identity is observed only through actual public conversion-hint diagnostic; no heap-layout requirement. Nonempty same-reference versus same-content distinct controls."
+  }
+]

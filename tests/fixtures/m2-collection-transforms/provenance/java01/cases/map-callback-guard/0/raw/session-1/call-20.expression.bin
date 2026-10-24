@@ -1,0 +1,1 @@
+Map("a",1).mapKeys((x,y,z)->x).toString()

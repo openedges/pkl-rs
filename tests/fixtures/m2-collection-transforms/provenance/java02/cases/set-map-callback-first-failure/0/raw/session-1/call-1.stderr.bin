@@ -1,0 +1,10 @@
+–– Pkl Error ––
+set-at-1
+
+1 | Set(1,2,3).map((x)->if(trace(x)==1)throw("set-at-1") else x).toString()
+                                       ^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | Set(1,2,3).map((x)->if(trace(x)==1)throw("set-at-1") else x).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

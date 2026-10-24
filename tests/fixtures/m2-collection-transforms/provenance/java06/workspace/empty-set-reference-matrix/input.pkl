@@ -1,0 +1,15 @@
+stable=7
+empty=Set()
+one=Set(1)
+r_self = new PcfRenderer { converters { [Set] = (value) -> value } }
+r_receiver = new PcfRenderer { converters { [Set] = (value) -> value.toSet() } }
+r_literal = new PcfRenderer { converters { [Set] = (value) -> Set() } }
+r_fromList = new PcfRenderer { converters { [Set] = (value) -> List().toSet() } }
+r_fromMap = new PcfRenderer { converters { [Set] = (value) -> Map().keys } }
+r_mapEmpty = new PcfRenderer { converters { [Set] = (value) -> Set().map((x)->throw("unreachable")) } }
+r_mapIndexedEmpty = new PcfRenderer { converters { [Set] = (value) -> Set().mapIndexed((i,x)->throw("unreachable")) } }
+r_mapNonNullEmpty = new PcfRenderer { converters { [Set] = (value) -> Set().mapNonNull((x)->throw("unreachable")) } }
+r_dropAll = new PcfRenderer { converters { [Set] = (value) -> Set(1,2).mapNonNull((x)->if(trace(x)>0)null else x) } }
+r_dropAllIndexed = new PcfRenderer { converters { [Set] = (value) -> Set(1,2).mapNonNullIndexed((i,x)->if(trace(i)>=0)null else x) } }
+r_literalOne = new PcfRenderer { converters { [Set] = (value) -> Set(1) } }
+r_mapSameOne = new PcfRenderer { converters { [Set] = (value) -> value.map((x)->x) } }

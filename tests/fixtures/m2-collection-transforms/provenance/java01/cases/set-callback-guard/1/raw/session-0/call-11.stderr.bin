@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function2`, but got type `Int`.
+Value: 42
+
+3449 | external function mapIndexed<Result>(transform: (Int, Element) -> Result): Set<Result>
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.mapIndexed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3449)
+
+1 | Set().mapIndexed(42).toString()
+    ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

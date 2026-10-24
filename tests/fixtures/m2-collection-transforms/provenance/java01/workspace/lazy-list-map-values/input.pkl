@@ -1,0 +1,3 @@
+stable = 7
+lazyList = List(1,2).map((x)->new Dynamic { value = read("ct:/lazy-\(x)") })
+lazyMap = Map("a",1,"b",2).mapValues((k,v)->new Dynamic { value=read("ct:/map-\(k)") })

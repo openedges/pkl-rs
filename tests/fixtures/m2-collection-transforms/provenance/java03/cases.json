@@ -1,0 +1,47 @@
+[
+  {
+    "id": "catch-source-properties",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/workspace/catch-source-properties",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/workspace/catch-source-properties/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-03/workspace/catch-source-properties/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "insideList.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "outerList.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "insideSet.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "outerMap.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "insideList.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "outerList.toString()"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "Actual module-owned imports/callback catch; source/query ownership intentionally differs from failed01/02 setup."
+  }
+]

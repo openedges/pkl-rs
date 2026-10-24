@@ -1,0 +1,7 @@
+original = List()
+renderer = new PcfRenderer {
+  converters {
+    [List] = (value) -> Set().toList()
+  }
+}
+result = renderer.renderDocument(original)

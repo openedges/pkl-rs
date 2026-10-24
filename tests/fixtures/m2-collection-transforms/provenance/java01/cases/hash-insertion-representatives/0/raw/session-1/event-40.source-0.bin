@@ -1,0 +1,1 @@
+function failKey(x): FailKey = if(trace(x)>0)new FailKey { id=x } else throw("x")

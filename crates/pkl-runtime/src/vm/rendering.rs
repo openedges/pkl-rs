@@ -618,6 +618,12 @@ impl Vm {
                         }
                         run.append(&text);
                     }
+                    Value::Duration(value) => {
+                        if run.format == Format::Json {
+                            return self.pcf_unrenderable(run, &Value::Duration(value));
+                        }
+                        run.append(&value.to_string());
+                    }
                     Value::String(value) => run.output.push_value(&if run.format == Format::Json {
                         json_string(&value)
                     } else {

@@ -1,0 +1,1 @@
+Set(1,2,3).mapNonNull((x)->if(x==2)null else x%2).toString()

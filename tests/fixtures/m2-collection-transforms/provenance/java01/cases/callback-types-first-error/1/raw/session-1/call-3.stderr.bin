@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find property `bad`.
+
+1 | List(1,2).map(bad).toString()
+                  ^^^
+at  (repl:text)
+
+Did you mean any of the following?
+badPair(k, v)

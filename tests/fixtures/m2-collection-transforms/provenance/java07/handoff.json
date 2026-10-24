@@ -1,0 +1,21 @@
+{
+  "status": "CLOSED-bounded-Java-first-collection-capture",
+  "reportSha256": "73d9ff7836a9b5cb97889278a6b2719a34eb470776820ce26f2787ad09ec7176",
+  "readbackReportSha256": "9e89588a769e1c2c2f78d0227a12faaaf99eaeea7daa3bc4bba9754411537cf9",
+  "profileSha256": "00a7676fe604aee507e6dcb6efd42e47da9ff3134090426db6bb69d4b7ff9954",
+  "originalWholeSourceUnchanged": true,
+  "originalAdapterRawMatches": 0,
+  "sequentialApiCalls": 404,
+  "scopeLedger": {
+    "intended-collection-control": 400,
+    "authored-intent-not-reached": 4
+  },
+  "orderedActualEvents": 980,
+  "all14JvmProcessesExit0": true,
+  "postCloseBoundaryQualification": "No post-close calls in07; original01 post-close12 remains a separate actual API boundary.",
+  "misreachabilityQualification": "400 Duration controls reached; 4 output.text calls reject prop:pkl.outputFormat before renderer. These are preserved diagnostic-only, not Duration rendering coverage. Literal/dynamic and nullable receiver identity observations remain raw outcomes.",
+  "sourceInputChanges": [],
+  "newRustOrPortableComparison": false,
+  "cachePrunesSha256": "849485784c4d84700e605429d67388dff0c147a2c4c6ab40583065827fb973b1",
+  "liveHandles": []
+}

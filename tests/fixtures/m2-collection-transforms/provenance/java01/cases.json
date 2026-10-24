@@ -1,0 +1,1191 @@
+[
+  {
+    "id": "original-source-code",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/original-source-code",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/original-source-code/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/original-source-code/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "result"
+      },
+      {
+        "kind": "evaluate",
+        "value": "result"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "result"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "unchanged-whole-original-source-with-result-expression"
+  },
+  {
+    "id": "list-core",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/list-core",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/list-core/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/list-core/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().map((x)->throw(\"unreachable\")).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(3,1,2).map((x)->trace(x*10)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2).map((x)->List(x,x+1)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(4,5,6).mapIndexed((i,x)->trace(Pair(i,x))).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapIndexed((i,x)->throw(\"unreachable\")).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2,3).mapNonNull((x)->if(x==2)null else trace(x)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2).mapNonNull((x)->Null(new Dynamic { marker=throw(\"default-not-forced\") })).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(4,5,6).mapNonNullIndexed((i,x)->if(i==1)null else trace(Pair(i,x))).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapNonNullIndexed((i,x)->throw(\"unreachable\")).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2).map((x)->null).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2).mapNonNull((x)->null).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(\"é\",\"😀\",\"\\u{d800}\").map((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "collection-transform"
+  },
+  {
+    "id": "set-core",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/set-core",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/set-core/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/set-core/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().map((x)->throw(\"unreachable\")).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(3,1,2).map((x)->trace(x*10)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(3,1,2).map((x)->trace(x%2)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(4,5,6).mapIndexed((i,x)->trace(Pair(i,x))).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(4,5,6).mapNonNullIndexed((i,x)->if(i==1)null else trace(Pair(i,x))).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2,3).mapNonNull((x)->if(x==2)null else x%2).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2).mapNonNull((x)->Null(new Dynamic { marker=throw(\"default-not-forced\") })).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2).map((x)->null).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2).mapNonNull((x)->null).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2).map((x)->if(x==1)1 else 1.0).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(\"Aa\",\"BB\",\"AaAa\",\"BBBB\").map((x)->trace(x)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "collection-transform"
+  },
+  {
+    "id": "map-core",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/map-core",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/map-core/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/map-core/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().map((k,v)->throw(\"unreachable\")).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().mapKeys((k,v)->throw(\"unreachable\")).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().mapValues((k,v)->throw(\"unreachable\")).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"c\",3,\"a\",1,\"b\",2).map((k,v)->trace(Pair(k,v*10))).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"c\",3,\"a\",1,\"b\",2).mapKeys((k,v)->trace(k+v.toString())).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"c\",3,\"a\",1,\"b\",2).mapValues((k,v)->trace(k+v.toString())).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1,\"b\",2,\"c\",3).map((k,v)->Pair(\"same\",trace(v))).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1,\"b\",2,\"c\",3).mapKeys((k,v)->trace(\"same\")).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1,\"b\",2).mapValues((k,v)->null).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1,\"b\",2).map((k,v)->Pair(v,k)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"Aa\",1,\"BB\",2).mapKeys((k,v)->trace(k)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "collection-transform"
+  },
+  {
+    "id": "list-callback-guard",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/list-callback-guard",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/list-callback-guard/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/list-callback-guard/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().map(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().map(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().map((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().map((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().map((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).map(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).map(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).map((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).map((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).map((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapIndexed(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapIndexed(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapIndexed((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapIndexed((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapIndexed((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapIndexed(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapIndexed(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapIndexed((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapIndexed((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapIndexed((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapNonNull(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapNonNull(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapNonNull((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapNonNull((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapNonNull((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapNonNull(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapNonNull(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapNonNull((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapNonNull((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapNonNull((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapNonNullIndexed(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapNonNullIndexed(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapNonNullIndexed((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapNonNullIndexed((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().mapNonNullIndexed((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapNonNullIndexed(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapNonNullIndexed(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapNonNullIndexed((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapNonNullIndexed((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1).mapNonNullIndexed((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "collection-transform"
+  },
+  {
+    "id": "set-callback-guard",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/set-callback-guard",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/set-callback-guard/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/set-callback-guard/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().map(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().map(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().map((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().map((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().map((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).map(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).map(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).map((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).map((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).map((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapIndexed(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapIndexed(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapIndexed((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapIndexed((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapIndexed((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapIndexed(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapIndexed(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapIndexed((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapIndexed((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapIndexed((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapNonNull(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapNonNull(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapNonNull((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapNonNull((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapNonNull((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapNonNull(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapNonNull(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapNonNull((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapNonNull((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapNonNull((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapNonNullIndexed(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapNonNullIndexed(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapNonNullIndexed((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapNonNullIndexed((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set().mapNonNullIndexed((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapNonNullIndexed(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapNonNullIndexed(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapNonNullIndexed((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapNonNullIndexed((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1).mapNonNullIndexed((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "collection-transform"
+  },
+  {
+    "id": "map-callback-guard",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/map-callback-guard",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/map-callback-guard/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/map-callback-guard/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().map(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().map(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().map((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().map((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().map((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).map(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).map(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).map((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).map((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).map((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().mapKeys(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().mapKeys(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().mapKeys((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().mapKeys((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().mapKeys((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).mapKeys(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).mapKeys(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).mapKeys((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).mapKeys((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).mapKeys((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().mapValues(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().mapValues(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().mapValues((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().mapValues((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map().mapValues((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).mapValues(42).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).mapValues(()->1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).mapValues((x)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).mapValues((x,y)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).mapValues((x,y,z)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "collection-transform"
+  },
+  {
+    "id": "callback-types-first-error",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/callback-types-first-error",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/callback-types-first-error/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/callback-types-first-error/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().map(typed).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2).map(typed).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2).map(bad).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).map(badPair).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).map((k: Int,v)->Pair(k,v)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2,3).map((x)->if(trace(x)==1)throw(\"at-1\") else x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2,3).map((x)->if(trace(x)==2)throw(\"at-2\") else x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2,3).map((x)->if(trace(x)==3)throw(\"at-3\") else x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2,3).map((x)->if(trace(x)==2)throw(\"again\") else x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1,10,2,20,3,30).map((k,v)->if(trace(k)==2)42 else Pair(k,v)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1,10).map((k,v)->new Dynamic { first=k; second=v }).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1,10).map((k,v)->null).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "collection-transform"
+  },
+  {
+    "id": "lazy-list-map-values",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/lazy-list-map-values",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/lazy-list-map-values/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/lazy-list-map-values/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "lazyList.length"
+      },
+      {
+        "kind": "evaluate",
+        "value": "lazyMap.length"
+      },
+      {
+        "kind": "evaluate",
+        "value": "lazyList[0].value"
+      },
+      {
+        "kind": "evaluate",
+        "value": "lazyList.length"
+      },
+      {
+        "kind": "evaluate",
+        "value": "lazyList[1].value"
+      },
+      {
+        "kind": "evaluate",
+        "value": "lazyMap[\"a\"].value"
+      },
+      {
+        "kind": "evaluate",
+        "value": "lazyMap.length"
+      },
+      {
+        "kind": "evaluate",
+        "value": "lazyMap[\"b\"].value"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [
+      {
+        "uri": "ct:/lazy-1",
+        "kind": "text",
+        "value": "lazy-1"
+      },
+      {
+        "uri": "ct:/lazy-2",
+        "kind": "text",
+        "value": "lazy-2"
+      },
+      {
+        "uri": "ct:/map-a",
+        "kind": "text",
+        "value": "map-a"
+      },
+      {
+        "uri": "ct:/map-b",
+        "kind": "text",
+        "value": "map-b"
+      }
+    ],
+    "scope": "collection-transform"
+  },
+  {
+    "id": "list-retry-lifecycle",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/list-retry-lifecycle",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/list-retry-lifecycle/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/list-retry-lifecycle/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "memo"
+      },
+      {
+        "kind": "evaluate",
+        "value": "memo"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "close"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "close"
+      }
+    ],
+    "readerPlan": [
+      {
+        "uri": "ct:/retry",
+        "kind": "io-first",
+        "value": "stage51-reader-first"
+      },
+      {
+        "uri": "ct:/cached-1",
+        "kind": "text",
+        "value": "one"
+      },
+      {
+        "uri": "ct:/cached-3",
+        "kind": "text",
+        "value": "three"
+      }
+    ],
+    "scope": "persistent-reader-retry-then-close-public-API-boundary"
+  },
+  {
+    "id": "set-retry-lifecycle",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/set-retry-lifecycle",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/set-retry-lifecycle/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/set-retry-lifecycle/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "memo"
+      },
+      {
+        "kind": "evaluate",
+        "value": "memo"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "close"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "close"
+      }
+    ],
+    "readerPlan": [
+      {
+        "uri": "ct:/retry",
+        "kind": "io-first",
+        "value": "stage51-reader-first"
+      },
+      {
+        "uri": "ct:/cached-1",
+        "kind": "text",
+        "value": "one"
+      },
+      {
+        "uri": "ct:/cached-3",
+        "kind": "text",
+        "value": "three"
+      }
+    ],
+    "scope": "persistent-reader-retry-then-close-public-API-boundary"
+  },
+  {
+    "id": "map-retry-lifecycle",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/map-retry-lifecycle",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/map-retry-lifecycle/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/map-retry-lifecycle/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "memo"
+      },
+      {
+        "kind": "evaluate",
+        "value": "memo"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "work()"
+      },
+      {
+        "kind": "close"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "close"
+      }
+    ],
+    "readerPlan": [
+      {
+        "uri": "ct:/retry",
+        "kind": "io-first",
+        "value": "stage51-reader-first"
+      },
+      {
+        "uri": "ct:/cached-1",
+        "kind": "text",
+        "value": "one"
+      },
+      {
+        "uri": "ct:/cached-3",
+        "kind": "text",
+        "value": "three"
+      }
+    ],
+    "scope": "persistent-reader-retry-then-close-public-API-boundary"
+  },
+  {
+    "id": "catch-boundaries",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/catch-boundaries",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/catch-boundaries/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/catch-boundaries/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2,3).map((x)->test.catchOrNull(()->if(trace(x)==2)throw(\"inner\") else x)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "test.catch(()->List(1,2,3).map((x)->if(trace(x)==2)throw(\"outer\") else x)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2,3).mapNonNull((x)->test.catchOrNull(()->if(trace(x)==2)throw(\"inner\") else x)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "test.catch(()->Map(1,10,2,20,3,30).map((k,v)->if(trace(k)==2)42 else Pair(k,v))).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "collection-transform"
+  },
+  {
+    "id": "hash-insertion-representatives",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/hash-insertion-representatives",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/hash-insertion-representatives/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/hash-insertion-representatives/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "setKeys.length"
+      },
+      {
+        "kind": "evaluate",
+        "value": "setKeys.toList().map((k)->k.tag).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "mapKeys.length"
+      },
+      {
+        "kind": "evaluate",
+        "value": "mapKeys.keys.toList().map((k)->k.tag).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "mapKeys.values.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2,3).map((x)->failKey(x)).length"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2,3).map((x)->failKey(x)).length"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1,10,2,20,3,30).mapKeys((k,v)->failKey(k)).length"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1,10,2,20,3,30).map((k,v)->Pair(failKey(k),v)).length"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2,3).map((x)->failKey(x)).length"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "collection-transform"
+  },
+  {
+    "id": "hash-zero-collision-rehash",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/hash-zero-collision-rehash",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/hash-zero-collision-rehash/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/hash-zero-collision-rehash/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2,3).map((x)->zero(x)).toList().map((k)->k.tag).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1,10,2,20,3,30).mapKeys((k,v)->zero(k)).keys.toList().map((k)->k.tag).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1,10,2,20,3,30).mapKeys((k,v)->zero(k)).values.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40).map((x)->trace(x)).toSet().length.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40).map((x)->trace(x%17)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "collection-transform"
+  }
+]

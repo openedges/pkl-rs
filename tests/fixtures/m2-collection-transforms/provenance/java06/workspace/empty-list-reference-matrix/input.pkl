@@ -1,0 +1,15 @@
+stable=7
+empty=List()
+one=List(1)
+r_self = new PcfRenderer { converters { [List] = (value) -> value } }
+r_receiver = new PcfRenderer { converters { [List] = (value) -> value.toList() } }
+r_literal = new PcfRenderer { converters { [List] = (value) -> List() } }
+r_fromSet = new PcfRenderer { converters { [List] = (value) -> Set().toList() } }
+r_fromMap = new PcfRenderer { converters { [List] = (value) -> Map().values } }
+r_mapEmpty = new PcfRenderer { converters { [List] = (value) -> List().map((x)->throw("unreachable")) } }
+r_mapIndexedEmpty = new PcfRenderer { converters { [List] = (value) -> List().mapIndexed((i,x)->throw("unreachable")) } }
+r_mapNonNullEmpty = new PcfRenderer { converters { [List] = (value) -> List().mapNonNull((x)->throw("unreachable")) } }
+r_dropAll = new PcfRenderer { converters { [List] = (value) -> List(1,2).mapNonNull((x)->if(trace(x)>0)null else x) } }
+r_dropAllIndexed = new PcfRenderer { converters { [List] = (value) -> List(1,2).mapNonNullIndexed((i,x)->if(trace(i)>=0)null else x) } }
+r_literalOne = new PcfRenderer { converters { [List] = (value) -> List(1) } }
+r_mapSameOne = new PcfRenderer { converters { [List] = (value) -> value.map((x)->x) } }

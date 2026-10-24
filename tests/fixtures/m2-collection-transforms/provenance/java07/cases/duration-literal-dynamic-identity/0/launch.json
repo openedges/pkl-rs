@@ -1,0 +1,41 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/runtime-private/duration-literal-dynamic-identity-0/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/runtime-private/duration-literal-dynamic-identity-0/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage51/.cache/oracle/pkl-tools-0.32.0.jar",
+    "CollectionProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-literal-dynamic-identity/input.pkl",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-literal-dynamic-identity/operations.tsv",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-literal-dynamic-identity/reader-plan.tsv",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/cases/duration-literal-dynamic-identity/0/raw"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-literal-dynamic-identity",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/runtime-private/duration-literal-dynamic-identity-0/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/runtime-private/duration-literal-dynamic-identity-0/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/runtime-private/duration-literal-dynamic-identity-0/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/runtime-private/duration-literal-dynamic-identity-0/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 14976,
+  "startedUtc": "2026-10-23T22:59:02.680860+00:00",
+  "pid": 15054
+}

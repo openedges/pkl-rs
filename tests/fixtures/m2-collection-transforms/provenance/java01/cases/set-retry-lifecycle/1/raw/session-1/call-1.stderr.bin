@@ -1,0 +1,15 @@
+–– Pkl Error ––
+I/O error reading resource `ct:/retry`.
+IOException: stage51-reader-first
+
+2 | function work() = Set(1,2,3).map((x)->if(trace(x)==2)read("ct:/retry") else read("ct:/cached-\(x)")).toString()
+                                                         ^^^^^^^^^^^^^^^^^
+at input#work.<function#1> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/set-retry-lifecycle/input.pkl)
+
+2 | function work() = Set(1,2,3).map((x)->if(trace(x)==2)read("ct:/retry") else read("ct:/cached-\(x)")).toString()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at input#work (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/set-retry-lifecycle/input.pkl)
+
+1 | work()
+    ^^^^^^
+at  (repl:text)

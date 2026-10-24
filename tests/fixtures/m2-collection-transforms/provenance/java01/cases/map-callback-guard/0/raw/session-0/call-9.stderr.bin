@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `Pair`, but got type `String`.
+Value: "a"
+
+1 | Map("a",1).map((x,y)->x).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

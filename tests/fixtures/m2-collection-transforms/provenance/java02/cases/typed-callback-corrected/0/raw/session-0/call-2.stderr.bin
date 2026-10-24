@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 1
+
+3 | function typed(x: String): String = x
+                      ^^^^^^
+at input#typed (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-02/workspace/typed-callback-corrected/input.pkl)
+
+1 | List(1,2).map((x)->typed(x)).toString()
+                       ^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | List(1,2).map((x)->typed(x)).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

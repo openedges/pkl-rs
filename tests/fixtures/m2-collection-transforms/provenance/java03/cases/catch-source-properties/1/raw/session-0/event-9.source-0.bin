@@ -1,0 +1,1 @@
+outerList = test.catch(()->List(1,2,3).map((x)->if(trace(x)==2)throw("outer") else x))

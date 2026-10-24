@@ -1,0 +1,3 @@
+stable = 7
+function work() = Map(1,10,2,20,3,30).map((x,v)->Pair(x,if(trace(x)==2)read("ct:/retry") else read("ct:/cached-\(x)"))).toString()
+memo = work()

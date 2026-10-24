@@ -1,0 +1,10 @@
+–– Pkl Error ––
+at-2
+
+1 | List(1,2,3).map((x)->if(trace(x)==2)throw("at-2") else x).toString()
+                                        ^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | List(1,2,3).map((x)->if(trace(x)==2)throw("at-2") else x).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -22,7 +22,7 @@ pub(crate) enum Reference {
     Heap(ObjectId),
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub(crate) struct Token(NonZeroU64);
 impl Token {
     pub(crate) fn fresh() -> Self {

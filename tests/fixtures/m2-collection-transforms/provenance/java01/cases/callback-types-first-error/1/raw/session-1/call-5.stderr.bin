@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "a"
+
+1 | Map("a",1).map((k: Int,v)->Pair(k,v)).toString()
+                       ^^^
+at repl:text.<function#1> (repl:text)
+
+1 | Map("a",1).map((k: Int,v)->Pair(k,v)).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

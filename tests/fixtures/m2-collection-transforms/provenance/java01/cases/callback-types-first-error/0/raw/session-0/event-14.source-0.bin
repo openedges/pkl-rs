@@ -1,0 +1,1 @@
+List(1,2,3).map((x)->if(trace(x)==1)throw("at-1") else x).toString()

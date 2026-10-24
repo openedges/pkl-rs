@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Refusing to read resource `prop:pkl.outputFormat` because it does not match any entry in the resource allowlist (`--allowed-resources`).
+
+106 | let (format = read?("prop:pkl.outputFormat") ?? "pcf")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.renderer (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L106)
+
+130 | if (renderer is ValueRenderer)
+          ^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L130)

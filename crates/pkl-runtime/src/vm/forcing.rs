@@ -171,6 +171,7 @@ impl Vm {
             equality_run: None,
             pcf_render: None,
             collection_join: None,
+            collection_transform: None,
             function_owner: None,
             amendment_end: None,
             deep_force: Some(ForceRun {

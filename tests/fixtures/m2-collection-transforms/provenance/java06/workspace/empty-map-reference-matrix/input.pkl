@@ -1,0 +1,10 @@
+stable=7
+empty=Map()
+one=Map("a",1)
+r_self = new PcfRenderer { converters { [Map] = (value) -> value } }
+r_literal = new PcfRenderer { converters { [Map] = (value) -> Map() } }
+r_mapEmpty = new PcfRenderer { converters { [Map] = (value) -> Map().map((k,v)->throw("unreachable")) } }
+r_keysEmpty = new PcfRenderer { converters { [Map] = (value) -> Map().mapKeys((k,v)->throw("unreachable")) } }
+r_valuesEmpty = new PcfRenderer { converters { [Map] = (value) -> Map().mapValues((k,v)->throw("unreachable")) } }
+r_literalOne = new PcfRenderer { converters { [Map] = (value) -> Map("a",1) } }
+r_mapSameOne = new PcfRenderer { converters { [Map] = (value) -> value.map((k,v)->Pair(k,v)) } }

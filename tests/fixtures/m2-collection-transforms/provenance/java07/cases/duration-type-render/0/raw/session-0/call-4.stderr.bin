@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Duration`, but got type `Int`.
+Value: 1
+
+4 | function echo(x: Duration): Duration=x
+                     ^^^^^^^^
+at input#echo (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-type-render/input.pkl)
+
+1 | echo(1)
+    ^^^^^^^
+at  (repl:text)

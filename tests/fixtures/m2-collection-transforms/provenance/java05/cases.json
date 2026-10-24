@@ -1,0 +1,68 @@
+[
+  {
+    "id": "null-amendment-parenthesized",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/workspace/null-amendment-parenthesized",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/workspace/null-amendment-parenthesized/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/workspace/null-amendment-parenthesized/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "defaultObject.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "amended.a.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "defaultFunction.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "amendedFunction.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "amendedFunction.a"
+      },
+      {
+        "kind": "evaluate",
+        "value": "amendedFunction.apply().a.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "amendedFunction1.apply(9).a.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "amendedFunction1.apply().a"
+      },
+      {
+        "kind": "evaluate",
+        "value": "unforced.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "amendedBoom.a.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2).mapNonNull((x)->unforced).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2).mapNonNull((x)->functionUnforced).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "corrected separate Null object/function amendment and default-not-forced semantics;04parser36 preserved"
+  }
+]

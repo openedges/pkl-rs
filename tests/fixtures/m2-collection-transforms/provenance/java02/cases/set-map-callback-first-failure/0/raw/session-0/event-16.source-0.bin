@@ -1,0 +1,1 @@
+Map(1,10,2,20,3,30).map((k,v)->if(trace(k)==1)throw("map-at-1") else Pair(k,v)).toString()

@@ -1129,6 +1129,37 @@ the shared diagnostic text, source spans, UTF-16 widths and hint precedence.
 Selected differential regressions do not establish complete reference identity,
 standard-module lifecycle, renderer coverage or the performance targets.
 
+### Strict transforms and quantity identity
+
+Collection transforms retain their source, callback, iteration cursor and
+pending operands in ordinary VM frames. Calls, key lookup, hashing, insertion
+and Host suspension use the shared continuations. Completed strict results use
+neutral builder environments so they do not retain an otherwise unreachable
+source module or callback capture. Evaluator-local weak handles canonicalize
+eligible empty List, Set and Map values; live values preserve reference identity,
+while unreachable empty values remain reclaimable. Cast wrappers and custom
+parents are not replaced by a structurally equal empty value.
+
+`this` and implicit property/method access use an explicit frame receiver first,
+including an explicit Null value. They consult the lexical scope only when that
+receiver is absent. Builtin functions with neutral environments therefore do not
+need an otherwise unused lexical scope to return their captured receiver.
+
+Duration stores a double, one of seven units, and a semantic reference token.
+Cloning preserves the token. Equality checks reference identity before normalized
+nanoseconds, which preserves equality of the same NaN-valued instance; hashing
+follows Java's normalized double bits, including its signed-zero behavior.
+Literal unit members, including nullable member syntax, retain executable
+constant identity. The seven unit-symbol String values are shared independently
+of authored strings with equal contents. These rules are visible through
+collection keys and renderer conversion diagnostics, not just scalar text.
+
+This Duration foundation supplies value/unit/positivity properties, unary
+negation, type checks and shared formatting. Remaining arithmetic, conversion,
+ISO output, DataSize and typed product transport require further implementation.
+The [collection transform contract](m2-collection-transforms.md) separates
+these language behaviors from capture-Host policy and evidence boundaries.
+
 ### Import admission and module cache ownership
 
 Authored imports execute a typed `CheckImport` Host request before consulting

@@ -1,0 +1,198 @@
+[
+  {
+    "id": "null-argument-guard",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-argument-guard",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-argument-guard/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-argument-guard/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(new Dynamic { value=1 }).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(new Listing { 1;2 }).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(new Mapping { [\"a\"]=1 }).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(new C { n=1 }).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(()->new Dynamic { value=1 }).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(()->throw(\"function-default-not-forced\")).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null((x)->new Dynamic {}).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(1).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(1.0).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(\"text\").toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(true).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(null).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(Pair(1,2)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(List(1)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(Set(1)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(Map(\"a\",1)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(Int).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(1.s).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null().toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(1,2).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "additive Null constructor/default binding, separate from original1060collection calls"
+  },
+  {
+    "id": "null-amendment-and-nonnull",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-amendment-and-nonnull",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-amendment-and-nonnull/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-amendment-and-nonnull/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "defaultObject.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "amended.a.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "defaultFunction.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "amendedFunction.a.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "unforced.toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2).mapNonNull((x)->unforced).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2).mapNonNull((x)->functionUnforced).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "additive Null constructor/default binding, separate from original1060collection calls"
+  },
+  {
+    "id": "null-authored-property-shadow",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-authored-property-shadow",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-authored-property-shadow/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-authored-property-shadow/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "value"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(new Dynamic {})"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "additive Null constructor/default binding, separate from original1060collection calls"
+  },
+  {
+    "id": "null-authored-method-shadow",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-authored-method-shadow",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-authored-method-shadow/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-authored-method-shadow/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "value"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Null(new Dynamic {})"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "additive Null constructor/default binding, separate from original1060collection calls"
+  }
+]

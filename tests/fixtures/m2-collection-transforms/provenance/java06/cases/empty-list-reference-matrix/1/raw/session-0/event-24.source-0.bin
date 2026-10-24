@@ -1,0 +1,1 @@
+r_dropAllIndexed = new PcfRenderer { converters { [List] = (value) -> List(1,2).mapNonNullIndexed((i,x)->if(trace(i)>=0)null else x) } }

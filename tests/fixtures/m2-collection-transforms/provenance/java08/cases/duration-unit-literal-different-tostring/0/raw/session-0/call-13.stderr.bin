@@ -1,0 +1,9 @@
+–– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `String`.
+Value: "min"
+
+1 | rLiteral_min.renderDocument(d_min.unit)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+This value was converted during rendering. Previous: "min". After: "min".

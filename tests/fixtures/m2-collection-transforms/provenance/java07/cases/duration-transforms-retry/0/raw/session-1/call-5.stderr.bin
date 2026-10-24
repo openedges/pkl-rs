@@ -1,0 +1,15 @@
+–– Pkl Error ––
+I/O error reading resource `ct:/duration-retry`.
+IOException: duration-reader-first
+
+2 | function work()=List(1,2,3).map((x)->if(trace(x)==2)if(read("ct:/duration-retry")=="recovered")x.s else x.s else x.s).toString()
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at input#work.<function#1> (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-transforms-retry/input.pkl)
+
+2 | function work()=List(1,2,3).map((x)->if(trace(x)==2)if(read("ct:/duration-retry")=="recovered")x.s else x.s else x.s).toString()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at input#work (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/workspace/duration-transforms-retry/input.pkl)
+
+1 | work()
+    ^^^^^^
+at  (repl:text)

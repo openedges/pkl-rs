@@ -1,0 +1,6 @@
+import "pkl:test"
+stable = 7
+insideList = List(1,2,3).map((x)->test.catchOrNull(()->if(trace(x)==2)throw("inner") else x))
+outerList = test.catch(()->List(1,2,3).map((x)->if(trace(x)==2)throw("outer") else x))
+insideSet = Set(1,2,3).mapNonNull((x)->test.catchOrNull(()->if(trace(x)==2)throw("inner") else x))
+outerMap = test.catch(()->Map(1,10,2,20,3,30).map((k,v)->if(trace(k)==2)42 else Pair(k,v)))

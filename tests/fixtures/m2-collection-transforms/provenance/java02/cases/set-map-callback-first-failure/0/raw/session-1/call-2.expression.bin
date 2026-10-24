@@ -1,0 +1,1 @@
+Set(1,2,3).map((x)->if(trace(x)==2)throw("set-at-2") else x).toString()

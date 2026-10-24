@@ -41,6 +41,7 @@ pub(crate) fn base_type(name: &str) -> Option<TypeCheck> {
         "Boolean" => TypeCheck::Boolean,
         "Int" => TypeCheck::Int,
         "Float" => TypeCheck::Float,
+        "Duration" => TypeCheck::Duration,
         "Number" => TypeCheck::Number,
         "String" => TypeCheck::String,
         "Bytes" => TypeCheck::Bytes,
@@ -648,6 +649,7 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
                         | TypeCheck::Boolean
                         | TypeCheck::Int
                         | TypeCheck::Float
+                        | TypeCheck::Duration
                         | TypeCheck::Number
                         | TypeCheck::String
                         | TypeCheck::Bytes
@@ -838,6 +840,7 @@ impl Vm {
                         TypeCheck::Collection(CollectionKind::Set) => 26,
                         TypeCheck::CollectionBase { .. } => 27,
                         TypeCheck::Pair { .. } => 28,
+                        TypeCheck::Duration => 29,
                         _ => 2,
                     },
                 super::type_name(&ty, &self.program.module_name),
@@ -1076,6 +1079,7 @@ impl Vm {
             Value::Bool(_) => TypeCheck::Boolean,
             Value::Int(_) => TypeCheck::Int,
             Value::Float(_) => TypeCheck::Float,
+            Value::Duration(_) => TypeCheck::Duration,
             Value::String(_) => TypeCheck::String,
             Value::Bytes(_) => TypeCheck::Bytes,
             Value::TypeAlias(_) => TypeCheck::MetaClass(Arc::from("TypeAlias")),
@@ -1146,6 +1150,9 @@ impl Vm {
     }
 
     fn reference_list(&mut self, values: Vec<Value>) -> Value {
+        if values.is_empty() {
+            return Value::Object(self.empty_strict_collection(CollectionKind::List));
+        }
         let mut object = Object {
             collection_kind: CollectionKind::List,
             length: values.len(),

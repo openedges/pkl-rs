@@ -149,6 +149,7 @@ fn is_base_class(name: &str) -> bool {
             | "Boolean"
             | "Int"
             | "Float"
+            | "Duration"
             | "Number"
             | "String"
             | "Bytes"

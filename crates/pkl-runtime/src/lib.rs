@@ -6,6 +6,7 @@
 pub mod diagnostic;
 mod diagnostic_names;
 mod diagnostic_values;
+pub mod duration;
 mod economic_map;
 pub mod evaluation;
 pub mod heap;

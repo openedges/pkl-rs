@@ -202,6 +202,13 @@ event/counter gate separate. A completed capture with preserved mismatches is
 not a strict compatibility pass. An older frozen engine used to debug a new
 provider does not verify a subsequent Rust runtime candidate.
 
+The [collection transform contract](docs/m2-collection-transforms.md) records
+Java-authenticated callback, conversion, identity, and quantity controls through
+the native and actual Node/Chromium evaluators. Ordinary operations, inputs that
+missed their intended feature, and post-close API boundaries remain separate.
+Raw failures and full Java lifecycle gaps are retained even when acquisition
+integrity passes.
+
 M2 language implementation and verification are in progress. The
 [M2 contract](docs/m2-language.md) separates whole-language requirement accounting
 from the executable selection:

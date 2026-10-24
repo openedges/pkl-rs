@@ -1,0 +1,3 @@
+stable = 7
+class Zero { id=0; hidden tag: Int }
+function zero(x): Zero = if(trace(x)>0)new Zero { tag=x } else throw("x")

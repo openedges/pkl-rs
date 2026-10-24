@@ -1,0 +1,1 @@
+function key(wantedId: Int, wantedTag: Int): Key = if(trace(wantedTag)>0)new Key { id=wantedId; tag=wantedTag } else throw("tag")

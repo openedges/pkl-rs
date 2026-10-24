@@ -1,0 +1,15 @@
+{
+  "scope": "Independent capture readback only; Java oracle coverage, not Rust compatibility.",
+  "checks": {
+    "independentStringEncodingPairs": 2548,
+    "rawApiRows": 204
+  },
+  "orderedActualEvents": 452,
+  "scopeLedger": {
+    "intended-collection-control": 204
+  },
+  "originalAdapterFullRawMatches": 0,
+  "repeatDifferences": [],
+  "qualification": "All204 Duration.unit reference and explicit-output controls reached. No interning presumed; source literal and enum symbol relations are actual raw diagnostics. Original1272 and earlier oracle corpora unchanged.",
+  "sourceInputChanges": []
+}

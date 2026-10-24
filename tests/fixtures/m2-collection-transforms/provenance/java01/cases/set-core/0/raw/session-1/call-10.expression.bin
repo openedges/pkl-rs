@@ -1,0 +1,1 @@
+Set(1,2).map((x)->if(x==1)1 else 1.0).toString()

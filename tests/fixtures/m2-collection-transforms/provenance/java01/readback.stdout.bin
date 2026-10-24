@@ -1,0 +1,84 @@
+{
+  "scope": "Independent capture readback only; Java oracle coverage, not Rust compatibility.",
+  "checks": {
+    "independentStringEncodingPairs": 20784,
+    "rawApiRows": 940
+  },
+  "orderedActualEvents": 3044,
+  "scopeLedger": {
+    "intended-collection-control": 888,
+    "authored-intent-not-reached": 40,
+    "post-close-public-api-boundary": 12
+  },
+  "originalAdapterFullRawMatches": 2,
+  "repeatDifferences": [
+    {
+      "case": "list-retry-lifecycle",
+      "repeat": 0,
+      "session": 1,
+      "index": 8,
+      "fields": [
+        "stderrHex",
+        "stderrUTF16BEHex"
+      ],
+      "scope": "post-close-public-api-boundary"
+    },
+    {
+      "case": "list-retry-lifecycle",
+      "repeat": 1,
+      "session": 1,
+      "index": 8,
+      "fields": [
+        "stderrHex",
+        "stderrUTF16BEHex"
+      ],
+      "scope": "post-close-public-api-boundary"
+    },
+    {
+      "case": "set-retry-lifecycle",
+      "repeat": 0,
+      "session": 1,
+      "index": 8,
+      "fields": [
+        "stderrHex",
+        "stderrUTF16BEHex"
+      ],
+      "scope": "post-close-public-api-boundary"
+    },
+    {
+      "case": "set-retry-lifecycle",
+      "repeat": 1,
+      "session": 1,
+      "index": 8,
+      "fields": [
+        "stderrHex",
+        "stderrUTF16BEHex"
+      ],
+      "scope": "post-close-public-api-boundary"
+    },
+    {
+      "case": "map-retry-lifecycle",
+      "repeat": 0,
+      "session": 1,
+      "index": 8,
+      "fields": [
+        "stderrHex",
+        "stderrUTF16BEHex"
+      ],
+      "scope": "post-close-public-api-boundary"
+    },
+    {
+      "case": "map-retry-lifecycle",
+      "repeat": 1,
+      "session": 1,
+      "index": 8,
+      "fields": [
+        "stderrHex",
+        "stderrUTF16BEHex"
+      ],
+      "scope": "post-close-public-api-boundary"
+    }
+  ],
+  "qualification": "Post-close timeout executor RejectedExecutionException includes per-JVM object identity strings; retain each actual string, no normalization/ordinary compatibility claim. Catch parser24 and bare method ref16 are original authored intent failures; require fresh corrected root.",
+  "sourceInputChanges": []
+}

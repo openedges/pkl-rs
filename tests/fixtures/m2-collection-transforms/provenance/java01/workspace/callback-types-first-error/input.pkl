@@ -1,0 +1,4 @@
+stable = 7
+function bad(x): Int = "wrong-return"
+function typed(x: String): String = x
+function badPair(k,v): Pair = 42

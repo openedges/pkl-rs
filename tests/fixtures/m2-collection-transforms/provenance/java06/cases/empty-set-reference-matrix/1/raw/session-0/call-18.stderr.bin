@@ -1,0 +1,7 @@
+–– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `Set`.
+Value: Set()
+
+1 | r_self.renderDocument(empty)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

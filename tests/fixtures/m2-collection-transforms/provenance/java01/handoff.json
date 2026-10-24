@@ -1,0 +1,22 @@
+{
+  "status": "CLOSED-bounded-Java-first-collection-capture",
+  "reportSha256": "1ba9bf7e62e69926f89122d8f6c2826b64046b5e05d60716bebbdf56ca770fea",
+  "readbackReportSha256": "c58fcfb21d9382ab1429ea6b163db7a1e921af749e80ae05252034f000596309",
+  "profileSha256": "de7618e5d93ab8fff8eaa67925610ecefebe2eaa6fd42f4ec48046194819bd5c",
+  "originalWholeSourceUnchanged": true,
+  "originalAdapterRawMatches": 2,
+  "sequentialApiCalls": 940,
+  "scopeLedger": {
+    "intended-collection-control": 888,
+    "authored-intent-not-reached": 40,
+    "post-close-public-api-boundary": 12
+  },
+  "orderedActualEvents": 3044,
+  "all30JvmProcessesExit0": true,
+  "postCloseBoundaryQualification": "12 actual public API errors; timeout executor object-identity strings retained. Not deterministic ordinary Collection results.",
+  "misreachabilityQualification": "24 parser rejections from import placement +16 bare method-reference missing-property errors preserved. Corrected intent requires new02 source/queries.",
+  "sourceInputChanges": [],
+  "newRustOrPortableComparison": false,
+  "cachePrunesSha256": "c6872c1bcf58b6e68c2b4ef06afc0cda4a0e48623e180e0f687d57833f2c35c3",
+  "liveHandles": []
+}

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function2`, but got type `Function1`.
+Value: new Function1 {}
+
+3449 | external function mapIndexed<Result>(transform: (Int, Element) -> Result): Set<Result>
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Set.mapIndexed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3449)
+
+1 | Set().mapIndexed((x)->x).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

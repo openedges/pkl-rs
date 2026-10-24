@@ -1,0 +1,3 @@
+stable=7
+function Null(x) = "shadow-method"
+value=Null(new Dynamic {})

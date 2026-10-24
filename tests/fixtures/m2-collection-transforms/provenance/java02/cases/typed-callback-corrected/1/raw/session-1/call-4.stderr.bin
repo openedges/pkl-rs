@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Pair`, but got type `Int`.
+Value: 42
+
+4 | function badPair(k,v): Pair = 42
+                           ^^^^
+at input#badPair (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-02/workspace/typed-callback-corrected/input.pkl)
+
+1 | Map("a",1).map((k,v)->badPair(k,v)).toString()
+                          ^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | Map("a",1).map((k,v)->badPair(k,v)).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

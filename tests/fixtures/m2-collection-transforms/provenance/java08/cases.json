@@ -1,0 +1,242 @@
+[
+  {
+    "id": "duration-unit-same-enum-symbol",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-08/workspace/duration-unit-same-enum-symbol",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-08/workspace/duration-unit-same-enum-symbol/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-08/workspace/duration-unit-same-enum-symbol/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_ns.renderDocument(a_ns.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_ns.renderDocument(a_ns.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_us.renderDocument(a_us.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_us.renderDocument(a_us.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_ms.renderDocument(a_ms.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_ms.renderDocument(a_ms.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_s.renderDocument(a_s.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_s.renderDocument(a_s.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_min.renderDocument(a_min.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_min.renderDocument(a_min.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_h.renderDocument(a_h.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_h.renderDocument(a_h.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_d.renderDocument(a_d.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_d.renderDocument(a_d.unit)"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_ns.renderDocument(a_ns.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_us.renderDocument(a_us.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_ms.renderDocument(a_ms.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_s.renderDocument(a_s.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_min.renderDocument(a_min.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_h.renderDocument(a_h.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "r_d.renderDocument(a_d.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "Separate actual Duration.unit String-reference diagnostic and explicit output renderer corrective controls; no preassumed interning or semantic identity result."
+  },
+  {
+    "id": "duration-unit-literal-different-tostring",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-08/workspace/duration-unit-literal-different-tostring",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-08/workspace/duration-unit-literal-different-tostring/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-08/workspace/duration-unit-literal-different-tostring/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rLiteral_ns.renderDocument(d_ns.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rDifferent_ns.renderDocument(d_ns.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rToString_ns.renderDocument(d_ns.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rLiteral_us.renderDocument(d_us.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rDifferent_us.renderDocument(d_us.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rToString_us.renderDocument(d_us.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rLiteral_ms.renderDocument(d_ms.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rDifferent_ms.renderDocument(d_ms.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rToString_ms.renderDocument(d_ms.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rLiteral_s.renderDocument(d_s.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rDifferent_s.renderDocument(d_s.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rToString_s.renderDocument(d_s.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rLiteral_min.renderDocument(d_min.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rDifferent_min.renderDocument(d_min.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rToString_min.renderDocument(d_min.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rLiteral_h.renderDocument(d_h.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rDifferent_h.renderDocument(d_h.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rToString_h.renderDocument(d_h.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rLiteral_d.renderDocument(d_d.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rDifferent_d.renderDocument(d_d.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "rToString_d.renderDocument(d_d.unit)"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "Separate actual Duration.unit String-reference diagnostic and explicit output renderer corrective controls; no preassumed interning or semantic identity result."
+  },
+  {
+    "id": "duration-output-explicit-renderer",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-08/workspace/duration-output-explicit-renderer",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-08/workspace/duration-output-explicit-renderer/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-08/workspace/duration-output-explicit-renderer/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "value": "output.text"
+      },
+      {
+        "kind": "gc"
+      },
+      {
+        "kind": "evaluate",
+        "value": "output.text"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "Separate actual Duration.unit String-reference diagnostic and explicit output renderer corrective controls; no preassumed interning or semantic identity result."
+  }
+]

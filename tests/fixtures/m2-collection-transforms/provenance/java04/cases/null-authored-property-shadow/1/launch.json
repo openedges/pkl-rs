@@ -1,0 +1,41 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle",
+    "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/runtime-private/null-authored-property-shadow-1/home",
+    "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/runtime-private/null-authored-property-shadow-1/tmp",
+    "-cp",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage50/.cache/oracle/pkl-tools-0.32.0.jar",
+    "CollectionProbe",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-authored-property-shadow/input.pkl",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-authored-property-shadow/operations.tsv",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-authored-property-shadow/reader-plan.tsv",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/cases/null-authored-property-shadow/1/raw"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-authored-property-shadow",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/runtime-private/null-authored-property-shadow-1/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/runtime-private/null-authored-property-shadow-1/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/runtime-private/null-authored-property-shadow-1/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/runtime-private/null-authored-property-shadow-1/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 87018,
+  "startedUtc": "2026-10-23T22:01:08.577983+00:00",
+  "pid": 87279
+}

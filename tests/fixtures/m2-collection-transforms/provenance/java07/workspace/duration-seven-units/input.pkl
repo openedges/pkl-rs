@@ -1,0 +1,8 @@
+stable=7
+function dyn_ns(x)=x.ns
+function dyn_us(x)=x.us
+function dyn_ms(x)=x.ms
+function dyn_s(x)=x.s
+function dyn_min(x)=x.min
+function dyn_h(x)=x.h
+function dyn_d(x)=x.d

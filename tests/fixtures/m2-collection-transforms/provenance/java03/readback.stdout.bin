@@ -1,0 +1,15 @@
+{
+  "scope": "Independent capture readback only; Java oracle coverage, not Rust compatibility.",
+  "checks": {
+    "independentStringEncodingPairs": 820,
+    "rawApiRows": 32
+  },
+  "orderedActualEvents": 120,
+  "scopeLedger": {
+    "intended-collection-control": 32
+  },
+  "originalAdapterFullRawMatches": 0,
+  "repeatDifferences": [],
+  "qualification": "Module-owned imported catch controls reached all32 API calls. Inner catchOrNull yields null for normal callbacks and error string for thrown callback; raw expectations are actual Java, not assumed callback result. Repeated successful source properties produced no new logs. No original adapter reexecution.",
+  "sourceInputChanges": []
+}

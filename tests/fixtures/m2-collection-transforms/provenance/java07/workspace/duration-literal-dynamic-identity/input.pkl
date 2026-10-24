@@ -1,0 +1,17 @@
+stable=7
+function literal()=1.s
+function dyn(x)=x.s
+literalValue=literal()
+dynamicValue=dyn(1)
+rSelf=new PcfRenderer { converters { [Duration]=(value)->value } }
+rLiteral=new PcfRenderer { converters { [Duration]=(value)->literal() } }
+rOtherLiteral=new PcfRenderer { converters { [Duration]=(value)->1.s } }
+rDynamic=new PcfRenderer { converters { [Duration]=(value)->dyn(1) } }
+class LiteralHolder { tag: Int; quantity=1.s }
+class ComputedHolder { tag: Int; quantity=(tag-tag+1).s }
+a=new LiteralHolder { tag=1 }
+b=new LiteralHolder { tag=2 }
+c=new ComputedHolder { tag=1 }
+d=new ComputedHolder { tag=2 }
+rB=new PcfRenderer { converters { [Duration]=(value)->b.quantity } }
+rD=new PcfRenderer { converters { [Duration]=(value)->d.quantity } }

@@ -325,6 +325,9 @@ fn append_members(
 fn base_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
     let name = declaration.name.as_str();
     match &declaration.expr.kind {
+        ExprKind::Function { method: true, .. } if name == "Null" => {
+            return vec![Instruction::NullConstructor];
+        }
         ExprKind::Class { .. } => {
             if let Some(ty) =
                 reference::base_type(name).or_else(|| builtins::id(name).map(builtins::ty))

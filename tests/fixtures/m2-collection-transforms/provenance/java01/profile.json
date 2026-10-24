@@ -1,0 +1,102 @@
+{
+  "sourcePin": "e51fb2f91774265666f94980ec630db794a4db2d",
+  "oracleVersion": "0.32.0",
+  "oracleJar": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/.cache/oracle/pkl-tools-0.32.0.jar",
+  "oracleJarSha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+  "release": {
+    "version": "0.32.0",
+    "commitId": "e51fb2f",
+    "stdlibModules": "pkl:analyze,pkl:base,pkl:Benchmark,pkl:Command,pkl:DocPackageInfo,pkl:DocsiteInfo,pkl:EvaluatorSettings,pkl:json,pkl:jsonnet,pkl:math,pkl:pklbinary,pkl:platform,pkl:Project,pkl:protobuf,pkl:ref,pkl:reflect,pkl:release,pkl:semver,pkl:settings,pkl:shell,pkl:test,pkl:xml,pkl:yaml"
+  },
+  "jdkProperties": {
+    "file.encoding": "UTF-8",
+    "file.separator": "/",
+    "ftp.nonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+    "http.nonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+    "java.class.path": "",
+    "java.class.version": "65.0",
+    "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+    "java.io.tmpdir": "/var/folders/_q/s969zhkx6qd8p32v2nd87ygh0000gp/T/",
+    "java.library.path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/runtime-private/identity/home/Library/Java/Extensions",
+    "java.runtime.name": "OpenJDK Runtime Environment",
+    "java.runtime.version": "21.0.12.1+1-LTS",
+    "java.specification.name": "Java Platform API Specification",
+    "java.specification.vendor": "Oracle Corporation",
+    "java.specification.version": "21",
+    "java.vendor": "Eclipse Adoptium",
+    "java.vendor.url": "https://adoptium.net/",
+    "java.vendor.url.bug": "https://github.com/adoptium/adoptium-support/issues",
+    "java.vendor.version": "Temurin-21.0.12.1+1",
+    "java.version": "21.0.12.1",
+    "java.version.date": "2026-08-18",
+    "java.vm.compressedOopsMode": "Non-zero disjoint base",
+    "java.vm.info": "mixed mode, sharing",
+    "java.vm.name": "OpenJDK 64-Bit Server VM",
+    "java.vm.specification.name": "Java Virtual Machine Specification",
+    "java.vm.specification.vendor": "Oracle Corporation",
+    "java.vm.specification.version": "21",
+    "java.vm.vendor": "Eclipse Adoptium",
+    "java.vm.version": "21.0.12.1+1-LTS",
+    "jdk.debug": "release",
+    "line.separator": "\\n ",
+    "native.encoding": "US-ASCII",
+    "os.arch": "aarch64",
+    "os.name": "Mac OS X",
+    "os.version": "27.0",
+    "path.separator": ":",
+    "socksNonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+    "stderr.encoding": "US-ASCII",
+    "stdout.encoding": "US-ASCII",
+    "sun.arch.data.model": "64",
+    "sun.boot.library.path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib",
+    "sun.cpu.endian": "little",
+    "sun.io.unicode.encoding": "UnicodeBig",
+    "sun.java.launcher": "SUN_STANDARD",
+    "sun.jnu.encoding": "UTF-8",
+    "sun.management.compiler": "HotSpot 64-Bit Tiered Compilers",
+    "user.country": "KR",
+    "user.dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50",
+    "user.home": "/Users/cody.ij.hwang",
+    "user.language": "ko",
+    "user.name": "cody.ij.hwang"
+  },
+  "runtimeFiles": {
+    "/usr/bin/java": {
+      "sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+      "bytes": 217296
+    },
+    "/usr/bin/javac": {
+      "sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+      "bytes": 217296
+    },
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java": {
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c",
+      "bytes": 70432
+    },
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/javac": {
+      "sha256": "20ce8ae6a5771801267af082a573e02758e5004a25ef3cba71d14fc95897bb2f",
+      "bytes": 70464
+    },
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib/modules": {
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+      "bytes": 140714013
+    },
+    "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/release": {
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+      "bytes": 1628
+    }
+  },
+  "powerAssertions": false,
+  "color": false,
+  "moduleCacheDir": null,
+  "traceMode": "COMPACT",
+  "stackFrameTransformer": "preconfigured default (not replaced)",
+  "evaluatorApi": "evaluateExpressionString(ModuleSource.path(exact copied source), expression)",
+  "sameJvmSessions": 2,
+  "freshJvmRepeats": 2,
+  "logger": "Actual Logger.trace/warn raw message/frame UTF16 and JavaUTF8; no callback reentry",
+  "reader": "Explicit ct URI table; successful Text cached by ordinary ResourceManager; io-first throws configured IOException only at first actual URI read per evaluator. No Host semantic cache.",
+  "gc": "System.gc request only; not proof of GC completion; distinct from Rust per-poll GC",
+  "close": "Actual evaluator.close API, including post-close evaluation where declared; API/internal errors remain separate",
+  "scope": "Bounded collection transform oracle, not full stdlib, Java fallback or Rust comparison."
+}

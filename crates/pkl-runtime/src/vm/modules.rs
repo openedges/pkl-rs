@@ -156,6 +156,9 @@ pub(super) fn next_failure_id() -> u64 {
     next_key_id().expect("cached exception identity exhausted")
 }
 
+type ParsedModule =
+    Result<crate::syntax::Module, Box<(crate::diagnostic::Diagnostic, Option<PklString>)>>;
+
 pub(super) struct ModuleRun {
     pub spec: ImportSpec,
     site: Option<(ExecutableOwnerId, usize, usize)>,
@@ -170,7 +173,7 @@ pub(super) struct ModuleRun {
     pub resolved: Option<ResolvedModule>,
     pub receiver: Option<ObjectId>,
     pub initializing: bool,
-    parsed: Option<crate::syntax::Module>,
+    parsed: Option<ParsedModule>,
     source: Option<Arc<RuntimeSource>>,
 }
 
@@ -943,22 +946,35 @@ impl Vm {
             module_name: input.inferred_name,
             line_anchors: false,
         });
+        // An ImportNode's guest call frame supplies the first visible member
+        // for its parser exception. Primary loading has no such guest frame.
         let frame = self.frames.last().expect("import continuation");
         let metadata = &self.program.metadata[frame.block];
-        let member = PklString::from(
-            metadata
-                .source
-                .as_ref()
-                .map_or(self.program.module_name.as_ref(), |source| {
-                    source.module_name.as_ref()
-                }),
-        )
-        .concat(frame.diagnostic_member.as_ref().unwrap_or(&metadata.member));
+        let import_member = (frame.module_load.as_ref().expect("module load").purpose
+            == ModulePurpose::Import)
+            .then(|| {
+                PklString::from(
+                    metadata
+                        .source
+                        .as_ref()
+                        .map_or(self.program.module_name.as_ref(), |source| {
+                            source.module_name.as_ref()
+                        }),
+                )
+                .concat(frame.diagnostic_member.as_ref().unwrap_or(&metadata.member))
+            });
+        // VmLanguage infers the selected key's module name even when parsing
+        // fails. Keep the original diagnostic while its name getter suspends.
         let parsed = crate::parser::parse_module_for_evaluation(&input.text)
-            .map_err(|error| imported_diagnostic(error, source.clone(), member.clone()))?;
-        if let Some(name) = parsed.declaration.as_ref().and_then(|d| d.name.as_ref()) {
+            .map_err(|error| Box::new((error, import_member)));
+        if let Some(name) = parsed
+            .as_ref()
+            .ok()
+            .and_then(|parsed| parsed.declaration.as_ref())
+            .and_then(|d| d.name.as_ref())
+        {
             Arc::make_mut(&mut source).module_name = name.join(".").into();
-            return self.compile_loaded_module(parsed, source, receiver);
+            return self.finish_loaded_parse(parsed, source, receiver);
         }
         let run = self
             .frames
@@ -974,7 +990,7 @@ impl Vm {
         if !crate::host::resources::module_name_needs_fragment_paths(&key.uri) {
             Arc::make_mut(&mut source).module_name =
                 crate::host::resources::infer_module_name(&key.uri, false)?.into();
-            return self.compile_loaded_module(parsed, source, receiver);
+            return self.finish_loaded_parse(parsed, source, receiver);
         }
         run.parsed = Some(parsed);
         run.source = Some(source);
@@ -1009,7 +1025,23 @@ impl Vm {
         let receiver = run
             .receiver
             .ok_or_else(|| invalid("missing module receiver"))?;
-        self.compile_loaded_module(parsed, source, receiver)
+        self.finish_loaded_parse(parsed, source, receiver)
+    }
+
+    fn finish_loaded_parse(
+        &mut self,
+        parsed: ParsedModule,
+        source: Arc<RuntimeSource>,
+        receiver: ObjectId,
+    ) -> Result<(), RuntimeError> {
+        match parsed {
+            Ok(parsed) => self.compile_loaded_module(parsed, source, receiver),
+            Err(error) => {
+                let (diagnostic, member) = *error;
+                let member = member.unwrap_or_else(|| PklString::from(source.module_name.as_ref()));
+                Err(imported_diagnostic(diagnostic, source, member))
+            }
+        }
     }
 
     fn compile_loaded_module(
@@ -1096,6 +1128,7 @@ impl Vm {
             deep_force: None,
             pcf_render: None,
             collection_join: None,
+            collection_transform: None,
             function_owner: None,
             amendment_end: None,
             prepared_hashes: None,

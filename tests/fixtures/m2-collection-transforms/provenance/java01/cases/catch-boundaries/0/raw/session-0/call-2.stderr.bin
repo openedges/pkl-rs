@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Keyword `import` is not allowed here.
+
+If you must use this name as identifier, enclose it in backticks.
+
+2 | import "pkl:test"
+    ^^^^^^
+at input (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/catch-boundaries/input.pkl)

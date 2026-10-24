@@ -1,0 +1,9 @@
+–– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `Set`.
+Value: Set(1)
+
+1 | r_literalOne.renderDocument(empty)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+This value was converted during rendering. Previous: Set(). After: Set(1).

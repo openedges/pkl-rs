@@ -1,0 +1,7 @@
+–– Pkl Error ––
+The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `String`.
+Value: "ns"
+
+1 | rToString_ns.renderDocument(d_ns.unit)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,16 @@
+{
+  "scope": "Independent capture readback only; Java oracle coverage, not Rust compatibility.",
+  "checks": {
+    "independentStringEncodingPairs": 1984,
+    "rawApiRows": 156
+  },
+  "orderedActualEvents": 360,
+  "scopeLedger": {
+    "intended-collection-control": 120,
+    "authored-intent-not-reached": 36
+  },
+  "originalAdapterFullRawMatches": 0,
+  "repeatDifferences": [],
+  "qualification": "Null argument/arity guards and authored shadowing reached120; missing amendment parentheses yielded36 parser rejections preserved. No original adapter reexecution; corrected amendment requires fresh05.",
+  "sourceInputChanges": []
+}

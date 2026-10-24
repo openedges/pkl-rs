@@ -1,0 +1,16 @@
+{
+  "scope": "Independent capture readback only; Java oracle coverage, not Rust compatibility.",
+  "checks": {
+    "independentStringEncodingPairs": 1620,
+    "rawApiRows": 88
+  },
+  "orderedActualEvents": 260,
+  "scopeLedger": {
+    "intended-collection-control": 72,
+    "authored-intent-not-reached": 16
+  },
+  "originalAdapterFullRawMatches": 0,
+  "repeatDifferences": [],
+  "qualification": "Typed invocation/direct typed lambda and Set/Map firstfailure reached. API repl cannot see module-local import alias test:16 catch queries still authored-intent-not-reached; original02 retained, new03 source-property owner controls required. No original adapter reexecution.",
+  "sourceInputChanges": []
+}

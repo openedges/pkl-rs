@@ -1,0 +1,1 @@
+function zero(x): Zero = if(trace(x)>0)new Zero { tag=x } else throw("x")

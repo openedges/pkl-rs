@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/usr/bin/java",
+    "-XshowSettings:properties",
+    "-version"
+  ],
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51",
+  "environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/runtime-private/identity/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/runtime-private/identity/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/runtime-private/identity/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-collection-oracle-07/runtime-private/identity/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  },
+  "parentPid": 14976,
+  "startedUtc": "2026-10-23T22:58:51.462430+00:00",
+  "pid": 14978
+}

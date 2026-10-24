@@ -1069,6 +1069,8 @@ archive 네 개는 합계 50,857,094 compressed bytes이며 생성·검증·원�
 통과했습니다. 실제 종료 관찰과 늦게 기록한 receipt의 시점은 구분합니다.
 이는 Stage48의 로컬 회귀 마감이며 이후 Stage49·50·51이나 전체 플랫폼·성능의
 검증으로 승계하지 않습니다. **M2의 9개 영역과 전체 완료 조건은 계속 열려 있습니다.**
+보고서·원시 archive·계획 갱신은 `460bfa5`에 커밋·푸시하고 원격 `main`의 일치를
+확인했습니다. 진행 중인 Stage51 구현 파일은 이 보고서 커밋에 포함하지 않았습니다.
 
 ### Stage 51 — 엄격한 collection 변환과 callback 수명주기
 
@@ -1100,10 +1102,127 @@ Java 기준 취득은 원래 source·expression·reader plan과 실제 logger/re
 종료 뒤 Java 오류의 비결정적 객체 식별자는 원문으로 보존하며 일반 collection
 golden에 포함하지 않습니다. Rust 또는 플랫폼 일치는 실제 비교 후에만 기록합니다.
 
+추가 Java 취득 04·05를 별도 원문으로 연결하여 총 96개 세션·1,272회 호출을
+보존했습니다. 일반 동작 1,168회, 의도한 기능에 도달하지 못한 입력의 진단 92회,
+종료 뒤 API 경계 12회를 구분합니다. 기존 76개 세션·1,060회 결과와 원시 파일은
+변경하지 않았습니다. Fixture 검증의 Python 검사 25개·독립 CLI·목록 freshness
+검사 네 개가 통과했습니다.
+
+첫 native 후보에서는 일반 992회 중 964회가 일치했습니다. 나머지 28회는
+`Set.toList`, `List.toSet`, `Map.keys`, `Map.values`를 사용하는 일곱 입력의 반복이며,
+공통 변환·projection으로 보완했습니다. `Map.keys`의 hash table 구성과 원래 key
+순서 보존, `Map.values`의 순차 조회, 오류·Host 재진입을 Java 구현과 대조합니다.
+잘못된 import 위치의 진단에서 primary 모듈 이름과 import 호출 멤버 이름을
+구분하여 기존 Java frame 회귀를 유지했습니다.
+
+고정 candidate02의 실제 Node·Chromium에서는 환경별 1,272회 중 1,248회가 원시
+일치했습니다. 일반 1,168회 중 1,156회와 의도 미도달 진단 92회가 일치하고,
+일반 차이 12회와 종료 뒤 API 차이 12회는 실패로 남습니다. 일반 차이는
+`Null(1.s)`의 Duration 값, 함수 속성 오류, amendment 뒤 함수 인자 개수 오류의
+frame 세 입력입니다. 모든 호출의 읽기·로그 개수와 순서, 취득 무결성은 통과했지만
+일반·전체 raw 호환 gate는 실패입니다. 원본 SourceCode 입력은 같은 물리 경로의
+Java 관찰과 원래 language adapter로 두 번 stdout·stderr·종료가 일치했습니다.
+이는 전체 선택 runner 재실행을 대체하지 않습니다.
+
+같은 candidate02의 native 48개 프로세스도 모두 정상 종료했습니다. 첫 분석은
+종료 뒤 API 오류의 별도 kind 원시 파일을 누락하여 12개 세션을 취득 무결성 실패로
+기록했습니다. 원본 실패 보고서를 유지하고 parser를 보완한 뒤 새 출력 경로에서
+기존 원시 파일만 재대조했습니다. 재실행 없이 96개 세션·1,272회를 복원했으며,
+native도 원시 1,248회·일반 1,156회 일치와 동일한 세 일반 차이를 확인했습니다.
+원본 payload·분석 입력 변경은 없고 읽기·로그 개수와 순서는 모두 일치했습니다.
+보완한 native 증거 parser의 회귀 검사 아홉 개가 통과했습니다.
+
+후속 후보에서는 이 세 의미론 차이와 빈 collection 변환의 renderer identity
+진단 경계를 검증합니다. GC 검사는 호출자가 보관하는 값의 명시적 root와 VM이
+보관해야 하는 값의 root를 구분하여, poll 전후·중단·재개 경계를 강하게 검사합니다.
+candidate02 소스·실행 파일·실패 자료를 유지하며 최종 Rust 필수 검사·M1 플랫폼
+실험·전체 선택 회귀와 게시 마감은 아직 남아 있습니다.
+
 이번 묶음의 검증에는 동일 후보의 Java raw 비교, 원본 SourceCode 입력,
 callback 중단·재진입 수명주기, 필수 Rust 검사와 실제 플랫폼 실행이 필요합니다.
 `filter`·`flatMap`·`fold`, 일반 lazy collection, glob·Mixin·reflection과 나머지
 진단·내부 오류·전체 event/counter·성능 조건은 계속 별도 미완료 항목입니다.
+
+후속 core freeze03에서 세 일반 차이와 빈 strict collection의 참조 identity를
+보완했습니다. Duration은 일곱 단위의 값·단위·부호·타입·표시·동등성·hash와
+리터럴 및 단위 문자열의 참조 identity를 공통 값 모델에 연결했습니다. GC는
+모든 poll 전후에 수행하며 호출자 소유 root와 VM이 보관할 root를 구분합니다.
+집중 검사 20개와 runtime clippy·fmt가 통과했으며 전체 후보의 플랫폼 결과는
+아직 별도 취득해야 합니다. Duration의 나머지 연산·변환·DataSize·제품 transport는
+완료 범위에 포함하지 않습니다.
+
+Java06–08 원문을 추가하여 152개 세션·2,108회 호출을 보존했습니다. 일반 동작
+2,000회·의도 미도달 진단 96회·종료 뒤 API 경계 12회를 구분합니다. Java07의
+네 `output.text` 입력은 원래 `ct:.*` 리소스 허용 목록에 의해 renderer 실행 전에
+거부됩니다. 검증용 Host도 원래 helper 설정을 적용하고 typed security 오류를
+reader 호출 전에 전달하도록 연결합니다. 정책 요청은 읽기·로그 효과와 별도로
+기록하며, 원본 실패를 제거하거나 교정 입력의 성공으로 대체하지 않습니다.
+
+candidate03의 실제 Node·Chromium 비교는 각각 2,108회 중 원시 2,080회,
+일반 2,000회 중 1,984회가 일치했습니다. 의도 미도달 진단 96회는 모두
+일치하며 종료 뒤 API 12회 차이는 그대로 유지합니다. 읽기·로그 효과 및
+취득 무결성은 통과하고 입력 변경은 없습니다. 새 일반 실패 16회는 List·Set의
+identity 변환을 renderer callback에서 호출하는 네 입력의 반복입니다.
+`LoadThis`가 명시적 receiver가 있어도 lexical scope fallback을 먼저 평가하여
+중립적인 builtin 환경에서 내부 오류를 내는 경로를 확인했습니다. 원본 기록을
+보존하며 일반 receiver 선택 규칙과 회귀 검사를 보완합니다. 원래 SourceCode
+입력의 두 번 원시 비교는 같은 candidate03의 일반 language adapter로
+stdout·stderr·종료가 일치했습니다. 전체 후보 마감과 M2 완료는 아직 아닙니다.
+
+candidate03의 native도 같은 2,108회·원시 2,080회·일반 1,984회 결과를
+확인했습니다. 세 대상의 정책 요청은 각각 76회이며 거부 네 회의 오류 원문은
+Java와 일치하고 reader 효과는 없습니다. 필수 Rust 검사 다섯 개도 통과했지만
+확대 차등 검사에서 드러난 16회 내부 오류는 실패로 보존합니다.
+
+freeze04에서는 `LoadThis`와 implicit property/method 접근이 공통 receiver
+선택 함수를 사용하도록 수정했습니다. 명시적 receiver가 Null이어도 직접 사용하며,
+receiver가 없을 때만 기존 lexical scope fallback을 평가합니다. 환경이나 GC root를
+추가하지 않았습니다. 수정 전 실패를 보존하고 실제 Java06 네 호출의 전체 오류,
+List·Set 객체 identity, explicit/lexical receiver와 poll 전후 GC를 포함한 집중
+검사 44개·fmt·runtime clippy가 통과했습니다. 독립 검토 후 candidate04의
+native·Node·Chromium, 필수 Rust 검사와 M1 플랫폼 실험을 새로 취득합니다.
+
+candidate04의 실제 세 대상에서는 각각 152개 세션·2,108회 중 원시 2,096회가
+일치했습니다. 일반 동작 2,000회와 의도 미도달 진단 96회가 모두 일치하며,
+기존 종료 뒤 API 경계 12회는 실패로 남습니다. candidate03 대비 환경별 16회
+일반 실패를 수정했고 그 밖의 원시 결과·읽기·로그 효과 변화는 없습니다.
+취득 무결성과 일반 개발 계약은 통과했으나 전체 raw·행정 API·M2 gate의
+완료로 계산하지 않습니다. 원본 SourceCode 두 반복도 같은 후보에서 일치했습니다.
+
+필수 Rust 검사 다섯 개가 통과했으며 workspace 검사 864개 통과와 명시적으로
+분리된 frontend probe 한 개를 기록합니다. 공통 M1 플랫폼 실험은 세 Rust 대상
+6,078개가 서로 일치하고 Java와는 각각 6,076개가 일치했습니다. 기존 정규식
+실패 두 개와 Java UTF-8 전용 역사 자료의 경계는 유지합니다. 실제 Node·Chromium
+시나리오는 각각 92개이며, 이 결과는 제품 API·전체 언어·성능 완료 증거가 아닙니다.
+현재 검증 자료를 정리하여 구현 체크포인트를 커밋·푸시하고, 해당 고정 커밋의
+전체 선택 코퍼스·순차 evaluator 회귀는 별도로 취득합니다.
+
+[Stage 51 구현 검증 기록](reports/m2/stage51-implementation-checkpoint.json)과
+[원시 증거 목록](reports/m2/stage51-implementation-captures.json)에 최종 후보 및
+이전 실패 후보, Java fixture·실제 native/Node/Chromium 결과와 독립 검토를
+보관했습니다. 증거 archive 27개는 복사 후 원본 SHA-256·크기를 대조했습니다.
+고정 소스 437개와 fixture 75,863개를 포함한 76,302개 경로를 staged Git blob과
+대조한 기록도 유지하며, 실제 구현 커밋과의 연결은 커밋 후 별도로 확인합니다.
+이는 제한된 구현 체크포인트이며 전체 선택·순차 evaluator 회귀와 M2 종료 조건은
+계속 열려 있습니다.
+
+### 다음 실행 — 원본 코퍼스 연결과 공통 기능 확장
+
+정적 전수 조사에서 미구현 accounting 823행은 모두 실행 adapter가 없고,
+요구사항 연결도 비어 있음을 확인했습니다. 이 중 원본 language snippet 752개는
+상위 코퍼스에서 실행 조건이 준비된 상태이며, 선택 rev1 세 개는 색상·project
+인자를 별도로 검토해야 합니다. 나머지 68행은 project·package·glob 등으로
+차단된 원래 조건을 유지합니다. 이 분류는 언어 기능의 미구현 개수나 새 통과
+결과가 아니며, 미연결 40행과 요구사항 475개의 연결 의무도 그대로 남습니다.
+
+다음 우선순위는 752개 원본의 ID·입력·명령·작업 경로·환경·출력 채널을
+보존하면서 일반 module adapter의 연결 가능 여부를 감사하고 실제 Java/Rust
+취득을 진행하는 것입니다. 정적 연결 가능과 실제 통과를 구분하고, 새로 드러난
+첫 실패에 따라 collection predicate/filter/fold·lazy projection, Mixin·reflection,
+타입·진단의 일반 구현을 병행합니다. `lambdaTrailingCommas.pkl`은 local 선언만
+있어 빈 출력이 일치할 수 있으므로 실제 Mixin 호출·타입·amendment·generator
+대조군이 필요합니다. `lineCommentBetween.pkl`의 reflection과 doc comment span
+의무도 parser 차단만 제거하는 방식으로 완료 처리하지 않습니다.
 
 ## M3 — 표준 라이브러리와 출력
 

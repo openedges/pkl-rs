@@ -1,0 +1,1463 @@
+{
+  "scope": "Bounded collection transform oracle, not full stdlib, Java fallback or Rust comparison.",
+  "originalAdapterProcesses": [],
+  "processes": [
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/null-amendment-parenthesized-0/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/null-amendment-parenthesized-0/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage50/.cache/oracle/pkl-tools-0.32.0.jar",
+        "CollectionProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/workspace/null-amendment-parenthesized/input.pkl",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/workspace/null-amendment-parenthesized/operations.tsv",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/workspace/null-amendment-parenthesized/reader-plan.tsv",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/workspace/null-amendment-parenthesized",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/null-amendment-parenthesized-0/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/null-amendment-parenthesized-0/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/null-amendment-parenthesized-0/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/null-amendment-parenthesized-0/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "parentPid": 92653,
+      "startedUtc": "2026-10-23T22:10:17.416273+00:00",
+      "pid": 92659,
+      "exitCode": 0,
+      "timedOut": false,
+      "finishedUtc": "2026-10-23T22:10:18.617616+00:00",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "case": "null-amendment-parenthesized",
+      "repeat": 0,
+      "calls": [
+        {
+          "session": 0,
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            1
+          ],
+          "countsAfter": [
+            0,
+            0,
+            3
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-0"
+        },
+        {
+          "session": 0,
+          "index": 1,
+          "expression": "defaultObject.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e756c6c",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e0075006c006c",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            3
+          ],
+          "countsAfter": [
+            0,
+            0,
+            5
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-1"
+        },
+        {
+          "session": 0,
+          "index": 2,
+          "expression": "amended.a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "32",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0032",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            5
+          ],
+          "countsAfter": [
+            0,
+            0,
+            7
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-2"
+        },
+        {
+          "session": 0,
+          "index": 3,
+          "expression": "defaultFunction.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e756c6c",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e0075006c006c",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            7
+          ],
+          "countsAfter": [
+            0,
+            0,
+            9
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-3"
+        },
+        {
+          "session": 0,
+          "index": 4,
+          "expression": "amendedFunction.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e65772046756e6374696f6e30207b7d",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e00650077002000460075006e006300740069006f006e00300020007b007d",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            9
+          ],
+          "countsAfter": [
+            0,
+            0,
+            11
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-4"
+        },
+        {
+          "session": 0,
+          "index": 5,
+          "expression": "amendedFunction.a",
+          "status": "error\n",
+          "statusHex": "6572726f720a",
+          "stdoutHex": "",
+          "stderrHex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f742066696e642070726f70657274792060616020696e206f626a656374206f662074797065206046756e6374696f6e30602e0a0a31207c20616d656e64656446756e6374696f6e2e610a202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a0a417661696c61626c652070726f706572746965733a0a286e6f6e65290a",
+          "stdoutUTF16BEHex": "",
+          "stderrUTF16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f0074002000660069006e0064002000700072006f00700065007200740079002000600061006000200069006e0020006f0062006a0065006300740020006f0066002000740079007000650020006000460075006e006300740069006f006e00300060002e000a000a00310020007c00200061006d0065006e00640065006400460075006e006300740069006f006e002e0061000a0020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0041007600610069006c00610062006c0065002000700072006f0070006500720074006900650073003a000a0028006e006f006e00650029000a",
+          "errorClass": "org.pkl.core.PklException",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            11
+          ],
+          "countsAfter": [
+            0,
+            0,
+            13
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-5"
+        },
+        {
+          "session": 0,
+          "index": 6,
+          "expression": "amendedFunction.apply().a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "34",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0034",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            13
+          ],
+          "countsAfter": [
+            0,
+            0,
+            15
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-6"
+        },
+        {
+          "session": 0,
+          "index": 7,
+          "expression": "amendedFunction1.apply(9).a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "35",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0035",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            15
+          ],
+          "countsAfter": [
+            0,
+            0,
+            17
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-7"
+        },
+        {
+          "session": 0,
+          "index": 8,
+          "expression": "amendedFunction1.apply().a",
+          "status": "error\n",
+          "statusHex": "6572726f720a",
+          "stdoutHex": "",
+          "stderrHex": "e28093e2809320506b6c204572726f7220e28093e280930a457870656374656420312066756e6374696f6e20617267756d656e74732062757420676f7420302e0a0a36207c2064656661756c7446756e6374696f6e31203d204e756c6c282878292d3e6e65772044796e616d6963207b20613d78207d290a202020202020202020202020202020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a617420696e7075742364656661756c7446756e6374696f6e312e3c66756e6374696f6e23313e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676535302f7461726765742f6d322f737461676535312d636f6c6c656374696f6e2d6f7261636c652d30352f776f726b73706163652f6e756c6c2d616d656e646d656e742d706172656e74686573697a65642f696e7075742e706b6c290a0a37207c20616d656e64656446756e6374696f6e31203d202864656661756c7446756e6374696f6e3129207b20613d35207d0a20202020202020202020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a617420696e70757423616d656e64656446756e6374696f6e312e3c66756e6374696f6e3e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676535302f7461726765742f6d322f737461676535312d636f6c6c656374696f6e2d6f7261636c652d30352f776f726b73706163652f6e756c6c2d616d656e646d656e742d706172656e74686573697a65642f696e7075742e706b6c290a0a31207c20616d656e64656446756e6374696f6e312e6170706c7928292e610a202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a",
+          "stdoutUTF16BEHex": "",
+          "stderrUTF16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a0045007800700065006300740065006400200031002000660075006e006300740069006f006e00200061007200670075006d0065006e00740073002000620075007400200067006f007400200030002e000a000a00360020007c002000640065006600610075006c007400460075006e006300740069006f006e00310020003d0020004e0075006c006c0028002800780029002d003e006e00650077002000440079006e0061006d006900630020007b00200061003d00780020007d0029000a0020002000200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a0061007400200069006e007000750074002300640065006600610075006c007400460075006e006300740069006f006e0031002e003c00660075006e006300740069006f006e00230031003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500350030002f007400610072006700650074002f006d0032002f0073007400610067006500350031002d0063006f006c006c0065006300740069006f006e002d006f007200610063006c0065002d00300035002f0077006f0072006b00730070006100630065002f006e0075006c006c002d0061006d0065006e0064006d0065006e0074002d0070006100720065006e00740068006500730069007a00650064002f0069006e007000750074002e0070006b006c0029000a000a00370020007c00200061006d0065006e00640065006400460075006e006300740069006f006e00310020003d0020002800640065006600610075006c007400460075006e006300740069006f006e003100290020007b00200061003d00350020007d000a00200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a0061007400200069006e00700075007400230061006d0065006e00640065006400460075006e006300740069006f006e0031002e003c00660075006e006300740069006f006e003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500350030002f007400610072006700650074002f006d0032002f0073007400610067006500350031002d0063006f006c006c0065006300740069006f006e002d006f007200610063006c0065002d00300035002f0077006f0072006b00730070006100630065002f006e0075006c006c002d0061006d0065006e0064006d0065006e0074002d0070006100720065006e00740068006500730069007a00650064002f0069006e007000750074002e0070006b006c0029000a000a00310020007c00200061006d0065006e00640065006400460075006e006300740069006f006e0031002e006100700070006c007900280029002e0061000a0020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "errorClass": "org.pkl.core.PklException",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            17
+          ],
+          "countsAfter": [
+            0,
+            0,
+            19
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-8"
+        },
+        {
+          "session": 0,
+          "index": 9,
+          "expression": "unforced.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e756c6c",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e0075006c006c",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            19
+          ],
+          "countsAfter": [
+            0,
+            0,
+            21
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-9"
+        },
+        {
+          "session": 0,
+          "index": 10,
+          "expression": "amendedBoom.a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "31",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0031",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            21
+          ],
+          "countsAfter": [
+            0,
+            0,
+            23
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-10"
+        },
+        {
+          "session": 0,
+          "index": 11,
+          "expression": "List(1,2).mapNonNull((x)->unforced).toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "4c6973742829",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "004c00690073007400280029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            23
+          ],
+          "countsAfter": [
+            0,
+            0,
+            25
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-11"
+        },
+        {
+          "session": 0,
+          "index": 12,
+          "expression": "Set(1,2).mapNonNull((x)->functionUnforced).toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "5365742829",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "00530065007400280029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            25
+          ],
+          "countsAfter": [
+            0,
+            0,
+            27
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-12"
+        },
+        {
+          "session": 0,
+          "index": 13,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            27
+          ],
+          "countsAfter": [
+            0,
+            0,
+            29
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-0/call-13"
+        },
+        {
+          "session": 1,
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            1
+          ],
+          "countsAfter": [
+            0,
+            0,
+            3
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-0"
+        },
+        {
+          "session": 1,
+          "index": 1,
+          "expression": "defaultObject.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e756c6c",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e0075006c006c",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            3
+          ],
+          "countsAfter": [
+            0,
+            0,
+            5
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-1"
+        },
+        {
+          "session": 1,
+          "index": 2,
+          "expression": "amended.a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "32",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0032",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            5
+          ],
+          "countsAfter": [
+            0,
+            0,
+            7
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-2"
+        },
+        {
+          "session": 1,
+          "index": 3,
+          "expression": "defaultFunction.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e756c6c",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e0075006c006c",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            7
+          ],
+          "countsAfter": [
+            0,
+            0,
+            9
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-3"
+        },
+        {
+          "session": 1,
+          "index": 4,
+          "expression": "amendedFunction.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e65772046756e6374696f6e30207b7d",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e00650077002000460075006e006300740069006f006e00300020007b007d",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            9
+          ],
+          "countsAfter": [
+            0,
+            0,
+            11
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-4"
+        },
+        {
+          "session": 1,
+          "index": 5,
+          "expression": "amendedFunction.a",
+          "status": "error\n",
+          "statusHex": "6572726f720a",
+          "stdoutHex": "",
+          "stderrHex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f742066696e642070726f70657274792060616020696e206f626a656374206f662074797065206046756e6374696f6e30602e0a0a31207c20616d656e64656446756e6374696f6e2e610a202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a0a417661696c61626c652070726f706572746965733a0a286e6f6e65290a",
+          "stdoutUTF16BEHex": "",
+          "stderrUTF16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f0074002000660069006e0064002000700072006f00700065007200740079002000600061006000200069006e0020006f0062006a0065006300740020006f0066002000740079007000650020006000460075006e006300740069006f006e00300060002e000a000a00310020007c00200061006d0065006e00640065006400460075006e006300740069006f006e002e0061000a0020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0041007600610069006c00610062006c0065002000700072006f0070006500720074006900650073003a000a0028006e006f006e00650029000a",
+          "errorClass": "org.pkl.core.PklException",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            11
+          ],
+          "countsAfter": [
+            0,
+            0,
+            13
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-5"
+        },
+        {
+          "session": 1,
+          "index": 6,
+          "expression": "amendedFunction.apply().a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "34",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0034",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            13
+          ],
+          "countsAfter": [
+            0,
+            0,
+            15
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-6"
+        },
+        {
+          "session": 1,
+          "index": 7,
+          "expression": "amendedFunction1.apply(9).a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "35",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0035",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            15
+          ],
+          "countsAfter": [
+            0,
+            0,
+            17
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-7"
+        },
+        {
+          "session": 1,
+          "index": 8,
+          "expression": "amendedFunction1.apply().a",
+          "status": "error\n",
+          "statusHex": "6572726f720a",
+          "stdoutHex": "",
+          "stderrHex": "e28093e2809320506b6c204572726f7220e28093e280930a457870656374656420312066756e6374696f6e20617267756d656e74732062757420676f7420302e0a0a36207c2064656661756c7446756e6374696f6e31203d204e756c6c282878292d3e6e65772044796e616d6963207b20613d78207d290a202020202020202020202020202020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a617420696e7075742364656661756c7446756e6374696f6e312e3c66756e6374696f6e23313e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676535302f7461726765742f6d322f737461676535312d636f6c6c656374696f6e2d6f7261636c652d30352f776f726b73706163652f6e756c6c2d616d656e646d656e742d706172656e74686573697a65642f696e7075742e706b6c290a0a37207c20616d656e64656446756e6374696f6e31203d202864656661756c7446756e6374696f6e3129207b20613d35207d0a20202020202020202020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a617420696e70757423616d656e64656446756e6374696f6e312e3c66756e6374696f6e3e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676535302f7461726765742f6d322f737461676535312d636f6c6c656374696f6e2d6f7261636c652d30352f776f726b73706163652f6e756c6c2d616d656e646d656e742d706172656e74686573697a65642f696e7075742e706b6c290a0a31207c20616d656e64656446756e6374696f6e312e6170706c7928292e610a202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a",
+          "stdoutUTF16BEHex": "",
+          "stderrUTF16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a0045007800700065006300740065006400200031002000660075006e006300740069006f006e00200061007200670075006d0065006e00740073002000620075007400200067006f007400200030002e000a000a00360020007c002000640065006600610075006c007400460075006e006300740069006f006e00310020003d0020004e0075006c006c0028002800780029002d003e006e00650077002000440079006e0061006d006900630020007b00200061003d00780020007d0029000a0020002000200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a0061007400200069006e007000750074002300640065006600610075006c007400460075006e006300740069006f006e0031002e003c00660075006e006300740069006f006e00230031003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500350030002f007400610072006700650074002f006d0032002f0073007400610067006500350031002d0063006f006c006c0065006300740069006f006e002d006f007200610063006c0065002d00300035002f0077006f0072006b00730070006100630065002f006e0075006c006c002d0061006d0065006e0064006d0065006e0074002d0070006100720065006e00740068006500730069007a00650064002f0069006e007000750074002e0070006b006c0029000a000a00370020007c00200061006d0065006e00640065006400460075006e006300740069006f006e00310020003d0020002800640065006600610075006c007400460075006e006300740069006f006e003100290020007b00200061003d00350020007d000a00200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a0061007400200069006e00700075007400230061006d0065006e00640065006400460075006e006300740069006f006e0031002e003c00660075006e006300740069006f006e003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500350030002f007400610072006700650074002f006d0032002f0073007400610067006500350031002d0063006f006c006c0065006300740069006f006e002d006f007200610063006c0065002d00300035002f0077006f0072006b00730070006100630065002f006e0075006c006c002d0061006d0065006e0064006d0065006e0074002d0070006100720065006e00740068006500730069007a00650064002f0069006e007000750074002e0070006b006c0029000a000a00310020007c00200061006d0065006e00640065006400460075006e006300740069006f006e0031002e006100700070006c007900280029002e0061000a0020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "errorClass": "org.pkl.core.PklException",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            17
+          ],
+          "countsAfter": [
+            0,
+            0,
+            19
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-8"
+        },
+        {
+          "session": 1,
+          "index": 9,
+          "expression": "unforced.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e756c6c",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e0075006c006c",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            19
+          ],
+          "countsAfter": [
+            0,
+            0,
+            21
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-9"
+        },
+        {
+          "session": 1,
+          "index": 10,
+          "expression": "amendedBoom.a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "31",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0031",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            21
+          ],
+          "countsAfter": [
+            0,
+            0,
+            23
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-10"
+        },
+        {
+          "session": 1,
+          "index": 11,
+          "expression": "List(1,2).mapNonNull((x)->unforced).toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "4c6973742829",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "004c00690073007400280029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            23
+          ],
+          "countsAfter": [
+            0,
+            0,
+            25
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-11"
+        },
+        {
+          "session": 1,
+          "index": 12,
+          "expression": "Set(1,2).mapNonNull((x)->functionUnforced).toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "5365742829",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "00530065007400280029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            25
+          ],
+          "countsAfter": [
+            0,
+            0,
+            27
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-12"
+        },
+        {
+          "session": 1,
+          "index": 13,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            27
+          ],
+          "countsAfter": [
+            0,
+            0,
+            29
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/0/raw/session-1/call-13"
+        }
+      ]
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/null-amendment-parenthesized-1/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/null-amendment-parenthesized-1/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage50/.cache/oracle/pkl-tools-0.32.0.jar",
+        "CollectionProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/workspace/null-amendment-parenthesized/input.pkl",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/workspace/null-amendment-parenthesized/operations.tsv",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/workspace/null-amendment-parenthesized/reader-plan.tsv",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/workspace/null-amendment-parenthesized",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/null-amendment-parenthesized-1/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/null-amendment-parenthesized-1/tmp",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/null-amendment-parenthesized-1/tmp",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/runtime-private/null-amendment-parenthesized-1/tmp",
+        "LC_ALL": "C",
+        "LANG": "C",
+        "TZ": "UTC",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "COLUMNS": "80"
+      },
+      "parentPid": 92653,
+      "startedUtc": "2026-10-23T22:10:18.654169+00:00",
+      "pid": 92661,
+      "exitCode": 0,
+      "timedOut": false,
+      "finishedUtc": "2026-10-23T22:10:19.722576+00:00",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "case": "null-amendment-parenthesized",
+      "repeat": 1,
+      "calls": [
+        {
+          "session": 0,
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            1
+          ],
+          "countsAfter": [
+            0,
+            0,
+            3
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-0"
+        },
+        {
+          "session": 0,
+          "index": 1,
+          "expression": "defaultObject.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e756c6c",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e0075006c006c",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            3
+          ],
+          "countsAfter": [
+            0,
+            0,
+            5
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-1"
+        },
+        {
+          "session": 0,
+          "index": 2,
+          "expression": "amended.a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "32",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0032",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            5
+          ],
+          "countsAfter": [
+            0,
+            0,
+            7
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-2"
+        },
+        {
+          "session": 0,
+          "index": 3,
+          "expression": "defaultFunction.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e756c6c",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e0075006c006c",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            7
+          ],
+          "countsAfter": [
+            0,
+            0,
+            9
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-3"
+        },
+        {
+          "session": 0,
+          "index": 4,
+          "expression": "amendedFunction.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e65772046756e6374696f6e30207b7d",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e00650077002000460075006e006300740069006f006e00300020007b007d",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            9
+          ],
+          "countsAfter": [
+            0,
+            0,
+            11
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-4"
+        },
+        {
+          "session": 0,
+          "index": 5,
+          "expression": "amendedFunction.a",
+          "status": "error\n",
+          "statusHex": "6572726f720a",
+          "stdoutHex": "",
+          "stderrHex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f742066696e642070726f70657274792060616020696e206f626a656374206f662074797065206046756e6374696f6e30602e0a0a31207c20616d656e64656446756e6374696f6e2e610a202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a0a417661696c61626c652070726f706572746965733a0a286e6f6e65290a",
+          "stdoutUTF16BEHex": "",
+          "stderrUTF16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f0074002000660069006e0064002000700072006f00700065007200740079002000600061006000200069006e0020006f0062006a0065006300740020006f0066002000740079007000650020006000460075006e006300740069006f006e00300060002e000a000a00310020007c00200061006d0065006e00640065006400460075006e006300740069006f006e002e0061000a0020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0041007600610069006c00610062006c0065002000700072006f0070006500720074006900650073003a000a0028006e006f006e00650029000a",
+          "errorClass": "org.pkl.core.PklException",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            11
+          ],
+          "countsAfter": [
+            0,
+            0,
+            13
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-5"
+        },
+        {
+          "session": 0,
+          "index": 6,
+          "expression": "amendedFunction.apply().a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "34",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0034",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            13
+          ],
+          "countsAfter": [
+            0,
+            0,
+            15
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-6"
+        },
+        {
+          "session": 0,
+          "index": 7,
+          "expression": "amendedFunction1.apply(9).a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "35",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0035",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            15
+          ],
+          "countsAfter": [
+            0,
+            0,
+            17
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-7"
+        },
+        {
+          "session": 0,
+          "index": 8,
+          "expression": "amendedFunction1.apply().a",
+          "status": "error\n",
+          "statusHex": "6572726f720a",
+          "stdoutHex": "",
+          "stderrHex": "e28093e2809320506b6c204572726f7220e28093e280930a457870656374656420312066756e6374696f6e20617267756d656e74732062757420676f7420302e0a0a36207c2064656661756c7446756e6374696f6e31203d204e756c6c282878292d3e6e65772044796e616d6963207b20613d78207d290a202020202020202020202020202020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a617420696e7075742364656661756c7446756e6374696f6e312e3c66756e6374696f6e23313e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676535302f7461726765742f6d322f737461676535312d636f6c6c656374696f6e2d6f7261636c652d30352f776f726b73706163652f6e756c6c2d616d656e646d656e742d706172656e74686573697a65642f696e7075742e706b6c290a0a37207c20616d656e64656446756e6374696f6e31203d202864656661756c7446756e6374696f6e3129207b20613d35207d0a20202020202020202020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a617420696e70757423616d656e64656446756e6374696f6e312e3c66756e6374696f6e3e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676535302f7461726765742f6d322f737461676535312d636f6c6c656374696f6e2d6f7261636c652d30352f776f726b73706163652f6e756c6c2d616d656e646d656e742d706172656e74686573697a65642f696e7075742e706b6c290a0a31207c20616d656e64656446756e6374696f6e312e6170706c7928292e610a202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a",
+          "stdoutUTF16BEHex": "",
+          "stderrUTF16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a0045007800700065006300740065006400200031002000660075006e006300740069006f006e00200061007200670075006d0065006e00740073002000620075007400200067006f007400200030002e000a000a00360020007c002000640065006600610075006c007400460075006e006300740069006f006e00310020003d0020004e0075006c006c0028002800780029002d003e006e00650077002000440079006e0061006d006900630020007b00200061003d00780020007d0029000a0020002000200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a0061007400200069006e007000750074002300640065006600610075006c007400460075006e006300740069006f006e0031002e003c00660075006e006300740069006f006e00230031003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500350030002f007400610072006700650074002f006d0032002f0073007400610067006500350031002d0063006f006c006c0065006300740069006f006e002d006f007200610063006c0065002d00300035002f0077006f0072006b00730070006100630065002f006e0075006c006c002d0061006d0065006e0064006d0065006e0074002d0070006100720065006e00740068006500730069007a00650064002f0069006e007000750074002e0070006b006c0029000a000a00370020007c00200061006d0065006e00640065006400460075006e006300740069006f006e00310020003d0020002800640065006600610075006c007400460075006e006300740069006f006e003100290020007b00200061003d00350020007d000a00200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a0061007400200069006e00700075007400230061006d0065006e00640065006400460075006e006300740069006f006e0031002e003c00660075006e006300740069006f006e003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500350030002f007400610072006700650074002f006d0032002f0073007400610067006500350031002d0063006f006c006c0065006300740069006f006e002d006f007200610063006c0065002d00300035002f0077006f0072006b00730070006100630065002f006e0075006c006c002d0061006d0065006e0064006d0065006e0074002d0070006100720065006e00740068006500730069007a00650064002f0069006e007000750074002e0070006b006c0029000a000a00310020007c00200061006d0065006e00640065006400460075006e006300740069006f006e0031002e006100700070006c007900280029002e0061000a0020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "errorClass": "org.pkl.core.PklException",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            17
+          ],
+          "countsAfter": [
+            0,
+            0,
+            19
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-8"
+        },
+        {
+          "session": 0,
+          "index": 9,
+          "expression": "unforced.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e756c6c",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e0075006c006c",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            19
+          ],
+          "countsAfter": [
+            0,
+            0,
+            21
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-9"
+        },
+        {
+          "session": 0,
+          "index": 10,
+          "expression": "amendedBoom.a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "31",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0031",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            21
+          ],
+          "countsAfter": [
+            0,
+            0,
+            23
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-10"
+        },
+        {
+          "session": 0,
+          "index": 11,
+          "expression": "List(1,2).mapNonNull((x)->unforced).toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "4c6973742829",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "004c00690073007400280029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            23
+          ],
+          "countsAfter": [
+            0,
+            0,
+            25
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-11"
+        },
+        {
+          "session": 0,
+          "index": 12,
+          "expression": "Set(1,2).mapNonNull((x)->functionUnforced).toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "5365742829",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "00530065007400280029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            25
+          ],
+          "countsAfter": [
+            0,
+            0,
+            27
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-12"
+        },
+        {
+          "session": 0,
+          "index": 13,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            27
+          ],
+          "countsAfter": [
+            0,
+            0,
+            29
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-0/call-13"
+        },
+        {
+          "session": 1,
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            1
+          ],
+          "countsAfter": [
+            0,
+            0,
+            3
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-0"
+        },
+        {
+          "session": 1,
+          "index": 1,
+          "expression": "defaultObject.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e756c6c",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e0075006c006c",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            3
+          ],
+          "countsAfter": [
+            0,
+            0,
+            5
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-1"
+        },
+        {
+          "session": 1,
+          "index": 2,
+          "expression": "amended.a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "32",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0032",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            5
+          ],
+          "countsAfter": [
+            0,
+            0,
+            7
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-2"
+        },
+        {
+          "session": 1,
+          "index": 3,
+          "expression": "defaultFunction.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e756c6c",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e0075006c006c",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            7
+          ],
+          "countsAfter": [
+            0,
+            0,
+            9
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-3"
+        },
+        {
+          "session": 1,
+          "index": 4,
+          "expression": "amendedFunction.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e65772046756e6374696f6e30207b7d",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e00650077002000460075006e006300740069006f006e00300020007b007d",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            9
+          ],
+          "countsAfter": [
+            0,
+            0,
+            11
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-4"
+        },
+        {
+          "session": 1,
+          "index": 5,
+          "expression": "amendedFunction.a",
+          "status": "error\n",
+          "statusHex": "6572726f720a",
+          "stdoutHex": "",
+          "stderrHex": "e28093e2809320506b6c204572726f7220e28093e280930a43616e6e6f742066696e642070726f70657274792060616020696e206f626a656374206f662074797065206046756e6374696f6e30602e0a0a31207c20616d656e64656446756e6374696f6e2e610a202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a0a417661696c61626c652070726f706572746965733a0a286e6f6e65290a",
+          "stdoutUTF16BEHex": "",
+          "stderrUTF16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a00430061006e006e006f0074002000660069006e0064002000700072006f00700065007200740079002000600061006000200069006e0020006f0062006a0065006300740020006f0066002000740079007000650020006000460075006e006300740069006f006e00300060002e000a000a00310020007c00200061006d0065006e00640065006400460075006e006300740069006f006e002e0061000a0020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a000a0041007600610069006c00610062006c0065002000700072006f0070006500720074006900650073003a000a0028006e006f006e00650029000a",
+          "errorClass": "org.pkl.core.PklException",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            11
+          ],
+          "countsAfter": [
+            0,
+            0,
+            13
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-5"
+        },
+        {
+          "session": 1,
+          "index": 6,
+          "expression": "amendedFunction.apply().a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "34",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0034",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            13
+          ],
+          "countsAfter": [
+            0,
+            0,
+            15
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-6"
+        },
+        {
+          "session": 1,
+          "index": 7,
+          "expression": "amendedFunction1.apply(9).a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "35",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0035",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            15
+          ],
+          "countsAfter": [
+            0,
+            0,
+            17
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-7"
+        },
+        {
+          "session": 1,
+          "index": 8,
+          "expression": "amendedFunction1.apply().a",
+          "status": "error\n",
+          "statusHex": "6572726f720a",
+          "stdoutHex": "",
+          "stderrHex": "e28093e2809320506b6c204572726f7220e28093e280930a457870656374656420312066756e6374696f6e20617267756d656e74732062757420676f7420302e0a0a36207c2064656661756c7446756e6374696f6e31203d204e756c6c282878292d3e6e65772044796e616d6963207b20613d78207d290a202020202020202020202020202020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a617420696e7075742364656661756c7446756e6374696f6e312e3c66756e6374696f6e23313e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676535302f7461726765742f6d322f737461676535312d636f6c6c656374696f6e2d6f7261636c652d30352f776f726b73706163652f6e756c6c2d616d656e646d656e742d706172656e74686573697a65642f696e7075742e706b6c290a0a37207c20616d656e64656446756e6374696f6e31203d202864656661756c7446756e6374696f6e3129207b20613d35207d0a20202020202020202020202020202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a617420696e70757423616d656e64656446756e6374696f6e312e3c66756e6374696f6e3e202866696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676535302f7461726765742f6d322f737461676535312d636f6c6c656374696f6e2d6f7261636c652d30352f776f726b73706163652f6e756c6c2d616d656e646d656e742d706172656e74686573697a65642f696e7075742e706b6c290a0a31207c20616d656e64656446756e6374696f6e312e6170706c7928292e610a202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a61742020287265706c3a74657874290a",
+          "stdoutUTF16BEHex": "",
+          "stderrUTF16BEHex": "2013201300200050006b006c0020004500720072006f0072002020132013000a0045007800700065006300740065006400200031002000660075006e006300740069006f006e00200061007200670075006d0065006e00740073002000620075007400200067006f007400200030002e000a000a00360020007c002000640065006600610075006c007400460075006e006300740069006f006e00310020003d0020004e0075006c006c0028002800780029002d003e006e00650077002000440079006e0061006d006900630020007b00200061003d00780020007d0029000a0020002000200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a0061007400200069006e007000750074002300640065006600610075006c007400460075006e006300740069006f006e0031002e003c00660075006e006300740069006f006e00230031003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500350030002f007400610072006700650074002f006d0032002f0073007400610067006500350031002d0063006f006c006c0065006300740069006f006e002d006f007200610063006c0065002d00300035002f0077006f0072006b00730070006100630065002f006e0075006c006c002d0061006d0065006e0064006d0065006e0074002d0070006100720065006e00740068006500730069007a00650064002f0069006e007000750074002e0070006b006c0029000a000a00370020007c00200061006d0065006e00640065006400460075006e006300740069006f006e00310020003d0020002800640065006600610075006c007400460075006e006300740069006f006e003100290020007b00200061003d00350020007d000a00200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a0061007400200069006e00700075007400230061006d0065006e00640065006400460075006e006300740069006f006e0031002e003c00660075006e006300740069006f006e003e0020002800660069006c0065003a002f002f002f00550073006500720073002f0063006f00640079002e0069006a002e006800770061006e0067002f00500072006f006a0065006300740073002f0070006b006c002d00720073002e0073007400610067006500350030002f007400610072006700650074002f006d0032002f0073007400610067006500350031002d0063006f006c006c0065006300740069006f006e002d006f007200610063006c0065002d00300035002f0077006f0072006b00730070006100630065002f006e0075006c006c002d0061006d0065006e0064006d0065006e0074002d0070006100720065006e00740068006500730069007a00650064002f0069006e007000750074002e0070006b006c0029000a000a00310020007c00200061006d0065006e00640065006400460075006e006300740069006f006e0031002e006100700070006c007900280029002e0061000a0020002000200020005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e005e000a00610074002000200028007200650070006c003a00740065007800740029000a",
+          "errorClass": "org.pkl.core.PklException",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            17
+          ],
+          "countsAfter": [
+            0,
+            0,
+            19
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-8"
+        },
+        {
+          "session": 1,
+          "index": 9,
+          "expression": "unforced.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "6e756c6c",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "006e0075006c006c",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            19
+          ],
+          "countsAfter": [
+            0,
+            0,
+            21
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-9"
+        },
+        {
+          "session": 1,
+          "index": 10,
+          "expression": "amendedBoom.a.toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "31",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0031",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            21
+          ],
+          "countsAfter": [
+            0,
+            0,
+            23
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-10"
+        },
+        {
+          "session": 1,
+          "index": 11,
+          "expression": "List(1,2).mapNonNull((x)->unforced).toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "4c6973742829",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "004c00690073007400280029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            23
+          ],
+          "countsAfter": [
+            0,
+            0,
+            25
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-11"
+        },
+        {
+          "session": 1,
+          "index": 12,
+          "expression": "Set(1,2).mapNonNull((x)->functionUnforced).toString()",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "5365742829",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "00530065007400280029",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            25
+          ],
+          "countsAfter": [
+            0,
+            0,
+            27
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-12"
+        },
+        {
+          "session": 1,
+          "index": 13,
+          "expression": "stable",
+          "status": "success\n",
+          "statusHex": "737563636573730a",
+          "stdoutHex": "37",
+          "stderrHex": "",
+          "stdoutUTF16BEHex": "0037",
+          "stderrUTF16BEHex": "",
+          "errorClass": "",
+          "messageNull": "false",
+          "countsBefore": [
+            0,
+            0,
+            27
+          ],
+          "countsAfter": [
+            0,
+            0,
+            29
+          ],
+          "rawPrefix": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-05/cases/null-amendment-parenthesized/1/raw/session-1/call-13"
+        }
+      ]
+    }
+  ],
+  "plannedApiCalls": 56,
+  "acquiredApiCalls": 56,
+  "statusCounts": {
+    "success\n": 48,
+    "error\n": 8
+  },
+  "caseCount": 1,
+  "freshEvaluatorProcesses": 2,
+  "sameJvmSessions": 2,
+  "sourceInputChanges": [],
+  "rawEncodings": "Independent actual Java String.getBytes(UTF_8) and writeChar UTF16BE for API channels and event fields. No Rust expected values.",
+  "unexecutedBoundary": "Rust poll/reentry/cancel/timeouts/stale tokens and new native/Node/Wasm comparisons remain unexecuted; post-close errors are public API boundary, not ordinary collection compatibility.",
+  "profileSha256": "7c03a61c701f9b16784f0dae130a7714dd4488880c70539714d3da6c4b32ccd1"
+}

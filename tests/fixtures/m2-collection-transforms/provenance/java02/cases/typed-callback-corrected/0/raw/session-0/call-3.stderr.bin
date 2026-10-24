@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "wrong-return"
+
+2 | function bad(x): Int = "wrong-return"
+                     ^^^
+at input#bad (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-02/workspace/typed-callback-corrected/input.pkl)
+
+1 | List(1,2).map((x)->bad(x)).toString()
+                       ^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | List(1,2).map((x)->bad(x)).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

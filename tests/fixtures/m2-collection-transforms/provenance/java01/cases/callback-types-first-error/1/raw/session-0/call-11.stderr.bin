@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `Pair`, but got type `Dynamic`.
+Value: new Dynamic { first = ?; second = ? }
+
+1 | Map(1,10).map((k,v)->new Dynamic { first=k; second=v }).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

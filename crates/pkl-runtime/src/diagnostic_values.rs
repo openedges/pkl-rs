@@ -41,8 +41,12 @@ fn object_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
 }
 
 fn function_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
+    Ok(format!("Function{}", function_arity(id, heap)?))
+}
+
+pub(crate) fn function_arity(id: ObjectId, heap: &Heap) -> Result<usize, RuntimeError> {
     let object = heap.get(id)?;
-    let arity = object
+    object
         .function
         .as_ref()
         .map(|function| function.arity)
@@ -56,10 +60,7 @@ fn function_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
                     _ => 0,
                 })
         })
-        .ok_or_else(|| {
-            RuntimeError::new(ErrorKind::InvalidBytecode, "function has no definition")
-        })?;
-    Ok(format!("Function{arity}"))
+        .ok_or_else(|| RuntimeError::new(ErrorKind::InvalidBytecode, "function has no definition"))
 }
 
 pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<String, RuntimeError> {
@@ -68,6 +69,7 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
         Value::Bool(_) => "Boolean".into(),
         Value::Int(_) => "Int".into(),
         Value::Float(_) => "Float".into(),
+        Value::Duration(_) => "Duration".into(),
         Value::String(_) => "String".into(),
         Value::Bytes(_) => "Bytes".into(),
         Value::Function(id) => function_name(*id, heap)?,
@@ -376,6 +378,7 @@ impl Renderer<'_> {
             Value::Bool(value) => self.append(if *value { "true" } else { "false" }),
             Value::Int(value) => self.append(&value.to_string()),
             Value::Float(value) => self.append(&crate::numeric::double_to_string(**value)),
+            Value::Duration(value) => self.append(&value.to_string()),
             Value::String(value) => {
                 self.append_units(value.quoted().encode_utf16());
             }

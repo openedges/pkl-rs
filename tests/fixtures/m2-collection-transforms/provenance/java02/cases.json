@@ -1,0 +1,123 @@
+[
+  {
+    "id": "typed-callback-corrected",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-02/workspace/typed-callback-corrected",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-02/workspace/typed-callback-corrected/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-02/workspace/typed-callback-corrected/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().map((x)->typed(x)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2).map((x)->typed(x)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2).map((x)->bad(x)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(\"a\",1).map((k,v)->badPair(k,v)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List().map((x: String)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2).map((x: String)->x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "fresh corrected/necessary collection controls; no original01 rewrite",
+    "predecessorCase": "callback-types-first-error"
+  },
+  {
+    "id": "catch-boundaries-import-first",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-02/workspace/catch-boundaries-import-first",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-02/workspace/catch-boundaries-import-first/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-02/workspace/catch-boundaries-import-first/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "List(1,2,3).map((x)->test.catchOrNull(()->if(trace(x)==2)throw(\"inner\") else x)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "test.catch(()->List(1,2,3).map((x)->if(trace(x)==2)throw(\"outer\") else x)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2,3).mapNonNull((x)->test.catchOrNull(()->if(trace(x)==2)throw(\"inner\") else x)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "test.catch(()->Map(1,10,2,20,3,30).map((k,v)->if(trace(k)==2)42 else Pair(k,v))).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "fresh corrected/necessary collection controls; no original01 rewrite",
+    "predecessorCase": "catch-boundaries"
+  },
+  {
+    "id": "set-map-callback-first-failure",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-02/workspace/set-map-callback-first-failure",
+    "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-02/workspace/set-map-callback-first-failure/input.pkl",
+    "sourceUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-02/workspace/set-map-callback-first-failure/input.pkl",
+    "operations": [
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2,3).map((x)->if(trace(x)==1)throw(\"set-at-1\") else x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2,3).map((x)->if(trace(x)==2)throw(\"set-at-2\") else x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Set(1,2,3).map((x)->if(trace(x)==3)throw(\"set-at-3\") else x).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1,10,2,20,3,30).map((k,v)->if(trace(k)==1)throw(\"map-at-1\") else Pair(k,v)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1,10,2,20,3,30).map((k,v)->if(trace(k)==2)throw(\"map-at-2\") else Pair(k,v)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "Map(1,10,2,20,3,30).map((k,v)->if(trace(k)==3)throw(\"map-at-3\") else Pair(k,v)).toString()"
+      },
+      {
+        "kind": "evaluate",
+        "value": "stable"
+      }
+    ],
+    "readerPlan": [],
+    "scope": "fresh corrected/necessary collection controls; no original01 rewrite",
+    "predecessorCase": null
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "scope": "Independent capture readback only; Java oracle coverage, not Rust compatibility.",
+  "checks": {
+    "independentStringEncodingPairs": 5796,
+    "rawApiRows": 404
+  },
+  "orderedActualEvents": 980,
+  "scopeLedger": {
+    "intended-collection-control": 400,
+    "authored-intent-not-reached": 4
+  },
+  "originalAdapterFullRawMatches": 0,
+  "repeatDifferences": [],
+  "qualification": "400 intended Duration controls reached; 4 output.text calls are resource allowlist rejection before renderer and remain diagnostic-only. All literal/dynamic/nullable identity evidence is actual raw; no source-derived expectations. Original1272 corpus unchanged.",
+  "sourceInputChanges": []
+}

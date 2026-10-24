@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected value of type `Pair`, but got `null`.
+
+1 | Map(1,10).map((k,v)->null).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

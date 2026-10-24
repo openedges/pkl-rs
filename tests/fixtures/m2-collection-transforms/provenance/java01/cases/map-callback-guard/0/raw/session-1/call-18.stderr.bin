@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function2`, but got type `Function1`.
+Value: new Function1 {}
+
+3631 | external function mapKeys<NewKey>(transform: (Key, Value) -> NewKey): Map<NewKey, Value>
+                                                    ^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Map.mapKeys (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3631)
+
+1 | Map("a",1).mapKeys((x)->x).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

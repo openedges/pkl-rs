@@ -1,0 +1,1 @@
+r_dropAll = new PcfRenderer { converters { [List] = (value) -> List(1,2).mapNonNull((x)->if(trace(x)>0)null else x) } }

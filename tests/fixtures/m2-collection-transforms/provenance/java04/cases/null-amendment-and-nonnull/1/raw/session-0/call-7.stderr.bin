@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Unexpected token: `{`.
+
+If you meant to write an amends expression, wrap the parent in parentheses. Try: `(defaultObject) { ... }`
+
+3 | amended = defaultObject { a=2 }
+                            ^
+at input (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-04/workspace/null-amendment-and-nonnull/input.pkl)

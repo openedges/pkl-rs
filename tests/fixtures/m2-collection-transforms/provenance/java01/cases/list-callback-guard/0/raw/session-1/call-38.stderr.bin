@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function2`, but got type `Function1`.
+Value: new Function1 {}
+
+3159 | transform: (Int, Element) -> Result,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.mapNonNullIndexed (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3159)
+
+1 | List(1).mapNonNullIndexed((x)->x).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

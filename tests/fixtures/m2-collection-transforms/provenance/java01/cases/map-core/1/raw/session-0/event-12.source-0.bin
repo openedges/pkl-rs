@@ -1,0 +1,1 @@
+Map("c",3,"a",1,"b",2).map((k,v)->trace(Pair(k,v*10))).toString()

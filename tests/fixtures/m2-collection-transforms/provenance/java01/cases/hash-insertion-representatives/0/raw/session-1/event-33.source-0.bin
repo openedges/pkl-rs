@@ -1,0 +1,1 @@
+class FailKey { id: Int; marker = if(trace(id)==2)throw("hash-two") else id }

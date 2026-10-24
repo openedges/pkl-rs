@@ -1,0 +1,22 @@
+stable=7
+a_ns=1.ns
+b_ns=2.ns
+r_ns=new PcfRenderer { converters { [String]=(value)->b_ns.unit } }
+a_us=1.us
+b_us=2.us
+r_us=new PcfRenderer { converters { [String]=(value)->b_us.unit } }
+a_ms=1.ms
+b_ms=2.ms
+r_ms=new PcfRenderer { converters { [String]=(value)->b_ms.unit } }
+a_s=1.s
+b_s=2.s
+r_s=new PcfRenderer { converters { [String]=(value)->b_s.unit } }
+a_min=1.min
+b_min=2.min
+r_min=new PcfRenderer { converters { [String]=(value)->b_min.unit } }
+a_h=1.h
+b_h=2.h
+r_h=new PcfRenderer { converters { [String]=(value)->b_h.unit } }
+a_d=1.d
+b_d=2.d
+r_d=new PcfRenderer { converters { [String]=(value)->b_d.unit } }

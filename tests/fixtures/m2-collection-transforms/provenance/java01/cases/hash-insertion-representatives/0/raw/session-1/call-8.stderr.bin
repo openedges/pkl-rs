@@ -1,0 +1,10 @@
+–– Pkl Error ––
+hash-two
+
+4 | class FailKey { id: Int; marker = if(trace(id)==2)throw("hash-two") else id }
+                                                      ^^^^^^^^^^^^^^^^^
+at input#FailKey.marker (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage50/target/m2/stage51-collection-oracle-01/workspace/hash-insertion-representatives/input.pkl)
+
+1 | Map(1,10,2,20,3,30).mapKeys((k,v)->failKey(k)).length
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

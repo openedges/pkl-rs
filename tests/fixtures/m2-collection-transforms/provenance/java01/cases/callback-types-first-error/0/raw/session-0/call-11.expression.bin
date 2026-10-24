@@ -1,0 +1,1 @@
+Map(1,10).map((k,v)->new Dynamic { first=k; second=v }).toString()

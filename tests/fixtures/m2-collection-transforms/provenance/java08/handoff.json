@@ -1,0 +1,20 @@
+{
+  "status": "CLOSED-bounded-Java-first-collection-capture",
+  "reportSha256": "5a4afe4c9033c7301b6a33e87093704432d03aa698fce43a2605412b62152ade",
+  "readbackReportSha256": "6aac2a48129861dc83a11ef39cf8d12d1bcc263c285ecab57c0ee213f77761cb",
+  "profileSha256": "ffb508a7479ae4ab9e45f8285ee7e95b5d2aabbc2b036b97265c561653d7bfac",
+  "originalWholeSourceUnchanged": true,
+  "originalAdapterRawMatches": 0,
+  "sequentialApiCalls": 204,
+  "scopeLedger": {
+    "intended-collection-control": 204
+  },
+  "orderedActualEvents": 452,
+  "all6JvmProcessesExit0": true,
+  "postCloseBoundaryQualification": "No post-close calls in08; original01 post-close12 remains a separate actual API boundary.",
+  "misreachabilityQualification": "All204 unit String-reference and explicit output renderer controls reached. Same-unit symbols across Duration objects, literal equal-content strings, other units and toString observed through actual fullraw diagnostics. No global payload identity or Java instrumentation variants assumed.",
+  "sourceInputChanges": [],
+  "newRustOrPortableComparison": false,
+  "cachePrunesSha256": "c8ae4c80e89f918d19e8b388cc3dc0b5d3d13ca385e83cf8c31f03643e105c45",
+  "liveHandles": []
+}

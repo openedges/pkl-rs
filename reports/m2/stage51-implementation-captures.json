@@ -1,0 +1,626 @@
+{
+  "schema": 1,
+  "scope": "Local Stage51 candidate04 implementation checkpoint, raw Java/Rust results, failed prior candidates and source provenance. Not full M2, CI or performance completion.",
+  "archives": [
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/archives/stage51-java-authorities-prep.tar.gz",
+      "path": "reports/m2/stage51-java06-08-authorities.tar.gz",
+      "bytes": 1425605,
+      "sha256": "121672c0f3631dd4f6dabb04b0e0a072d1c8a45524a854839343a0c9e9a2455d",
+      "originalMode": 420,
+      "preparationIndex": "stage51-evidence-publication-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "java-authorities",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/archives/stage51-java-authorities-prep.tar.gz",
+        "sha256": "121672c0f3631dd4f6dabb04b0e0a072d1c8a45524a854839343a0c9e9a2455d",
+        "compressedBytes": 1425605,
+        "payloadFiles": 66,
+        "gatherBytes": 32818332,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "rawMemberReadback": true,
+        "proposedReportsFilename": "stage51-java06-08-authorities.tar.gz"
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/archives/stage51-fixture-tooling-prep.tar.gz",
+      "path": "reports/m2/stage51-fixture-expanded-tooling.tar.gz",
+      "bytes": 1280336,
+      "sha256": "1cb9c89d5cc8f04527920e2df47d07e11853ce88dac347ff96f502c8ec883cf1",
+      "originalMode": 420,
+      "preparationIndex": "stage51-evidence-publication-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "fixture-tooling",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/archives/stage51-fixture-tooling-prep.tar.gz",
+        "sha256": "1cb9c89d5cc8f04527920e2df47d07e11853ce88dac347ff96f502c8ec883cf1",
+        "compressedBytes": 1280336,
+        "payloadFiles": 51,
+        "gatherBytes": 24887616,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "rawMemberReadback": true,
+        "proposedReportsFilename": "stage51-fixture-expanded-tooling.tar.gz"
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/archives/stage51-parser-reviews-prep.tar.gz",
+      "path": "reports/m2/stage51-native-policy-parser-reviews.tar.gz",
+      "bytes": 75321,
+      "sha256": "71a3632d9f57be1bb14e78832828fca3797f54ca500c7140933ffcd387a38576",
+      "originalMode": 420,
+      "preparationIndex": "stage51-evidence-publication-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "parser-reviews",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/archives/stage51-parser-reviews-prep.tar.gz",
+        "sha256": "71a3632d9f57be1bb14e78832828fca3797f54ca500c7140933ffcd387a38576",
+        "compressedBytes": 75321,
+        "payloadFiles": 551,
+        "gatherBytes": 530842,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "rawMemberReadback": true,
+        "proposedReportsFilename": "stage51-native-policy-parser-reviews.tar.gz"
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/archives/stage51-preparation-metadata.tar.gz",
+      "path": "reports/m2/stage51-oracle-followup-preparation-metadata.tar.gz",
+      "bytes": 932466,
+      "sha256": "50e8064b1179cc2ddbfe930ebbb343273a36f9387ee36a1bb53af9d77afe0d75",
+      "originalMode": 420,
+      "preparationIndex": "stage51-evidence-publication-prep-01/index.json",
+      "originalPreparationRecord": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/archives/stage51-preparation-metadata.tar.gz",
+        "sha256": "50e8064b1179cc2ddbfe930ebbb343273a36f9387ee36a1bb53af9d77afe0d75",
+        "compressedBytes": 932466,
+        "payloadFiles": 49,
+        "rawMemberReadback": true,
+        "commands": [
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/tool-sources/tools/evidence.py",
+              "create",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/gather/preparation-metadata",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/archives/stage51-preparation-metadata.tar.gz"
+            ],
+            "pid": 31977,
+            "exitCode": 0,
+            "stdoutSha256": "ba8ed762ab447d0d96c99411d98b7f4b4e7a8ce92e353964937be08f3b3c5560",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/tool-sources/tools/evidence.py",
+              "verify",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-evidence-publication-prep-01/archives/stage51-preparation-metadata.tar.gz"
+            ],
+            "pid": 31979,
+            "exitCode": 0,
+            "stdoutSha256": "ba8ed762ab447d0d96c99411d98b7f4b4e7a8ce92e353964937be08f3b3c5560",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "unit": "preparation-metadata",
+        "proposedReportsFilename": "stage51-oracle-followup-preparation-metadata.tar.gz"
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/archives/stage51-candidate03-build-and-snapshots-history.tar.gz",
+      "path": "reports/m2/stage51-candidate03-build-and-snapshots-history.tar.gz",
+      "bytes": 11616960,
+      "sha256": "3d2f3964de9ea9260216bf9dbe5b9d50771d1ac866d9546776916bb7c5dca163",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate03-evidence-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "build-and-snapshots",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/archives/stage51-candidate03-build-and-snapshots-history.tar.gz",
+        "sha256": "3d2f3964de9ea9260216bf9dbe5b9d50771d1ac866d9546776916bb7c5dca163",
+        "compressedBytes": 11616960,
+        "payloadFiles": 460,
+        "originalFiles": 457,
+        "originalBytes": 49926182,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "allRawMembersReadBack": true
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/archives/stage51-candidate03-native-results-history.tar.gz",
+      "path": "reports/m2/stage51-candidate03-native-results-history.tar.gz",
+      "bytes": 10188462,
+      "sha256": "3eb1e8ffe590344108ef67d3d1bde7c9ef5a5acda4bef1a41d7c3f5005805d59",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate03-evidence-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "native-results",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/archives/stage51-candidate03-native-results-history.tar.gz",
+        "sha256": "3eb1e8ffe590344108ef67d3d1bde7c9ef5a5acda4bef1a41d7c3f5005805d59",
+        "compressedBytes": 10188462,
+        "payloadFiles": 85483,
+        "originalFiles": 85480,
+        "originalBytes": 86882948,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "allRawMembersReadBack": true
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/archives/stage51-candidate03-portable-results-history.tar.gz",
+      "path": "reports/m2/stage51-candidate03-portable-results-history.tar.gz",
+      "bytes": 7008284,
+      "sha256": "a266f8f59d802994ec0630d620705b233302dc3393f9b55e012003d9a9e5f243",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate03-evidence-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "portable-results",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/archives/stage51-candidate03-portable-results-history.tar.gz",
+        "sha256": "a266f8f59d802994ec0630d620705b233302dc3393f9b55e012003d9a9e5f243",
+        "compressedBytes": 7008284,
+        "payloadFiles": 22009,
+        "originalFiles": 22006,
+        "originalBytes": 144336731,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "allRawMembersReadBack": true
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/archives/stage51-candidate03-checks-original-launches-history.tar.gz",
+      "path": "reports/m2/stage51-candidate03-checks-original-launches-history.tar.gz",
+      "bytes": 2579018,
+      "sha256": "b9d3116e65bc1de2215d6ee9e8e6e5e8f793b1488543e32b196bdd2d819db2a0",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate03-evidence-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "checks-original-launches",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/archives/stage51-candidate03-checks-original-launches-history.tar.gz",
+        "sha256": "b9d3116e65bc1de2215d6ee9e8e6e5e8f793b1488543e32b196bdd2d819db2a0",
+        "compressedBytes": 2579018,
+        "payloadFiles": 481,
+        "originalFiles": 478,
+        "originalBytes": 26690656,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "allRawMembersReadBack": true
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/archives/stage51-candidate03-preparation-metadata-history.tar.gz",
+      "path": "reports/m2/stage51-candidate03-preparation-metadata-history.tar.gz",
+      "bytes": 2480026,
+      "sha256": "c9abd2658c17c7778a579330141f1f16a29ffee106746950828c71e8b099baec",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate03-evidence-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "preparation-metadata",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/archives/stage51-candidate03-preparation-metadata-history.tar.gz",
+        "sha256": "c9abd2658c17c7778a579330141f1f16a29ffee106746950828c71e8b099baec",
+        "compressedBytes": 2480026,
+        "payloadFiles": 52,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "allRawMembersReadBack": true,
+        "commands": [
+          {
+            "argv": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/tool-sources/tools/evidence.py",
+              "create",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/gather/preparation-metadata",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/archives/stage51-candidate03-preparation-metadata-history.tar.gz"
+            ],
+            "pid": 38435,
+            "exitCode": 0,
+            "stdoutSha256": "21ee82a30324f420f867c3369447a6fd187da1fdf85c05934c7aee40a5a0dac8",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "argv": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/tool-sources/tools/evidence.py",
+              "verify",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate03-evidence-prep-01/archives/stage51-candidate03-preparation-metadata-history.tar.gz"
+            ],
+            "pid": 38440,
+            "exitCode": 0,
+            "stdoutSha256": "21ee82a30324f420f867c3369447a6fd187da1fdf85c05934c7aee40a5a0dac8",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ]
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-diagnostic-build01-history.tar.gz",
+      "path": "reports/m2/stage51-early-diagnostic-build01-history.tar.gz",
+      "bytes": 4603075,
+      "sha256": "d642a080622550e80c30f96a4996715bd5329bc7bbeeac863c85ef9f6e7fad13",
+      "originalMode": 420,
+      "preparationIndex": "stage51-early-history-evidence-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "diagnostic-build01",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-diagnostic-build01-history.tar.gz",
+        "sha256": "d642a080622550e80c30f96a4996715bd5329bc7bbeeac863c85ef9f6e7fad13",
+        "compressedBytes": 4603075,
+        "payloadFiles": 242,
+        "originalFiles": 239,
+        "originalBytes": 22558037,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "allRawMembersReadBack": true
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-diagnostic-native01-readback-history.tar.gz",
+      "path": "reports/m2/stage51-early-diagnostic-native01-readback-history.tar.gz",
+      "bytes": 5868295,
+      "sha256": "b96f5a16421a4dd503479ff7608462660f8b082903b3bb42a024bda415f24c29",
+      "originalMode": 420,
+      "preparationIndex": "stage51-early-history-evidence-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "diagnostic-native01-readback",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-diagnostic-native01-readback-history.tar.gz",
+        "sha256": "b96f5a16421a4dd503479ff7608462660f8b082903b3bb42a024bda415f24c29",
+        "compressedBytes": 5868295,
+        "payloadFiles": 51172,
+        "originalFiles": 51169,
+        "originalBytes": 34464407,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "allRawMembersReadBack": true
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-candidate02-build-history.tar.gz",
+      "path": "reports/m2/stage51-early-candidate02-build-history.tar.gz",
+      "bytes": 11468136,
+      "sha256": "f4d4f9f055c378770c9b52fb45daab9dfa8bd901c7efb351b4857442e30c7789",
+      "originalMode": 420,
+      "preparationIndex": "stage51-early-history-evidence-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "candidate02-build",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-candidate02-build-history.tar.gz",
+        "sha256": "f4d4f9f055c378770c9b52fb45daab9dfa8bd901c7efb351b4857442e30c7789",
+        "compressedBytes": 11468136,
+        "payloadFiles": 264,
+        "originalFiles": 261,
+        "originalBytes": 49433207,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "allRawMembersReadBack": true
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-candidate02-native-failure-readback-history.tar.gz",
+      "path": "reports/m2/stage51-early-candidate02-native-failure-readback-history.tar.gz",
+      "bytes": 7239232,
+      "sha256": "ddf609586477d8e6214c303b75bc6dfcc711df26c2c52a1ca237cfd946828770",
+      "originalMode": 420,
+      "preparationIndex": "stage51-early-history-evidence-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "candidate02-native-failure-readback",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-candidate02-native-failure-readback-history.tar.gz",
+        "sha256": "ddf609586477d8e6214c303b75bc6dfcc711df26c2c52a1ca237cfd946828770",
+        "compressedBytes": 7239232,
+        "payloadFiles": 57561,
+        "originalFiles": 57558,
+        "originalBytes": 79645911,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "allRawMembersReadBack": true
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-candidate02-portable-original-history.tar.gz",
+      "path": "reports/m2/stage51-early-candidate02-portable-original-history.tar.gz",
+      "bytes": 4549768,
+      "sha256": "0490514812df37f04d641b0f0cc492b244e20f009c9b01ec2874bb7742da7a05",
+      "originalMode": 420,
+      "preparationIndex": "stage51-early-history-evidence-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "candidate02-portable-original",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-candidate02-portable-original-history.tar.gz",
+        "sha256": "0490514812df37f04d641b0f0cc492b244e20f009c9b01ec2874bb7742da7a05",
+        "compressedBytes": 4549768,
+        "payloadFiles": 13328,
+        "originalFiles": 13325,
+        "originalBytes": 99186912,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "allRawMembersReadBack": true
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-preparation-metadata-history.tar.gz",
+      "path": "reports/m2/stage51-early-preparation-metadata-history.tar.gz",
+      "bytes": 2824925,
+      "sha256": "f441ff694313872bb96ae45e850a0a2c859c2ac1ecb37c03aaafe1e37e009d9e",
+      "originalMode": 420,
+      "preparationIndex": "stage51-early-history-evidence-prep-01/index.json",
+      "originalPreparationRecord": {
+        "unit": "preparation-metadata",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-preparation-metadata-history.tar.gz",
+        "sha256": "f441ff694313872bb96ae45e850a0a2c859c2ac1ecb37c03aaafe1e37e009d9e",
+        "compressedBytes": 2824925,
+        "payloadFiles": 61,
+        "createExitCode": 0,
+        "separateVerifyExitCode": 0,
+        "allRawMembersReadBack": true,
+        "commands": [
+          {
+            "argv": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/tool-sources/tools/evidence.py",
+              "create",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/gather/preparation-metadata",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-preparation-metadata-history.tar.gz"
+            ],
+            "pid": 43709,
+            "exitCode": 0,
+            "stdoutSha256": "15292354c6804baaea2d6050d9a9ff0c98dc1e851f9b02f74269ea66059b1a0c",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "argv": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/tool-sources/tools/evidence.py",
+              "verify",
+              "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-early-history-evidence-prep-01/archives/stage51-early-preparation-metadata-history.tar.gz"
+            ],
+            "pid": 43710,
+            "exitCode": 0,
+            "stdoutSha256": "15292354c6804baaea2d6050d9a9ff0c98dc1e851f9b02f74269ea66059b1a0c",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ]
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-build.tar.gz",
+      "path": "reports/m2/stage51-candidate04-build.tar.gz",
+      "bytes": 11586515,
+      "sha256": "8db7458970edf756e9f56a02e8aaa6b22122045a73ce40a2ac0b374d0584a489",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate04-evidence-prep-01/report.json",
+      "originalPreparationRecord": {
+        "unit": "build",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-build.tar.gz",
+        "sha256": "8db7458970edf756e9f56a02e8aaa6b22122045a73ce40a2ac0b374d0584a489",
+        "bytes": 11586515,
+        "sourceFiles": 464,
+        "scope": "Original closed source tree retained in full; no exclusions or deduplication."
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-native.tar.gz",
+      "path": "reports/m2/stage51-candidate04-native.tar.gz",
+      "bytes": 8105913,
+      "sha256": "3dba383d50fc88845dbcfb03b9f25b08bebbfc33cf2701df2a1ff44ebee8ab43",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate04-evidence-prep-01/report.json",
+      "originalPreparationRecord": {
+        "unit": "native",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-native.tar.gz",
+        "sha256": "3dba383d50fc88845dbcfb03b9f25b08bebbfc33cf2701df2a1ff44ebee8ab43",
+        "bytes": 8105913,
+        "sourceFiles": 85480,
+        "scope": "Original closed source tree retained in full; no exclusions or deduplication."
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-portable.tar.gz",
+      "path": "reports/m2/stage51-candidate04-portable.tar.gz",
+      "bytes": 6553796,
+      "sha256": "a436fc94c4f572b6ab65593235cc47d8a64522827cee2c25d998b043a6607d69",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate04-evidence-prep-01/report.json",
+      "originalPreparationRecord": {
+        "unit": "portable",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-portable.tar.gz",
+        "sha256": "a436fc94c4f572b6ab65593235cc47d8a64522827cee2c25d998b043a6607d69",
+        "bytes": 6553796,
+        "sourceFiles": 22006,
+        "scope": "Original closed source tree retained in full; no exclusions or deduplication."
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-original.tar.gz",
+      "path": "reports/m2/stage51-candidate04-original.tar.gz",
+      "bytes": 23125,
+      "sha256": "0b0631cdaac04c58854ffc42a5c27d75b691b999710ea2b576788417abb32455",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate04-evidence-prep-01/report.json",
+      "originalPreparationRecord": {
+        "unit": "original",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-original.tar.gz",
+        "sha256": "0b0631cdaac04c58854ffc42a5c27d75b691b999710ea2b576788417abb32455",
+        "bytes": 23125,
+        "sourceFiles": 9,
+        "scope": "Original closed source tree retained in full; no exclusions or deduplication."
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-required.tar.gz",
+      "path": "reports/m2/stage51-candidate04-required.tar.gz",
+      "bytes": 2514739,
+      "sha256": "b347131b37f3c4864e1fa4d3fed247ca83fe06b61c0c0f9aaf9c4afa7a4ef162",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate04-evidence-prep-01/report.json",
+      "originalPreparationRecord": {
+        "unit": "required",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-required.tar.gz",
+        "sha256": "b347131b37f3c4864e1fa4d3fed247ca83fe06b61c0c0f9aaf9c4afa7a4ef162",
+        "bytes": 2514739,
+        "sourceFiles": 456,
+        "scope": "Original closed source tree retained in full; no exclusions or deduplication."
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-m1.tar.gz",
+      "path": "reports/m2/stage51-candidate04-m1.tar.gz",
+      "bytes": 5547067,
+      "sha256": "00941f2fffa5ff65b42e2e10a7894dbdd98e2f8b789cddfe9a0750f07adc06b6",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate04-evidence-prep-01/report.json",
+      "originalPreparationRecord": {
+        "unit": "m1",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-m1.tar.gz",
+        "sha256": "00941f2fffa5ff65b42e2e10a7894dbdd98e2f8b789cddfe9a0750f07adc06b6",
+        "bytes": 5547067,
+        "sourceFiles": 254,
+        "scope": "Original closed source tree retained in full; no exclusions or deduplication."
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-launches.tar.gz",
+      "path": "reports/m2/stage51-candidate04-launches.tar.gz",
+      "bytes": 5966,
+      "sha256": "d280ba055f260af78a5ee0e99032caeb64aeca03cefda834f2f8826ccfe83919",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate04-evidence-prep-01/report.json",
+      "originalPreparationRecord": {
+        "unit": "launches",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-launches.tar.gz",
+        "sha256": "d280ba055f260af78a5ee0e99032caeb64aeca03cefda834f2f8826ccfe83919",
+        "bytes": 5966,
+        "sourceFiles": 19,
+        "scope": "Original closed source tree retained in full; no exclusions or deduplication."
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-receipts.tar.gz",
+      "path": "reports/m2/stage51-candidate04-receipts.tar.gz",
+      "bytes": 2672,
+      "sha256": "0c4aa15bd4727cea53244df08e395298ef5db4b6a109238d06dcbdecfac56efa",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate04-evidence-prep-01/report.json",
+      "originalPreparationRecord": {
+        "unit": "receipts",
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-evidence-prep-01/archives/stage51-candidate04-receipts.tar.gz",
+        "sha256": "0c4aa15bd4727cea53244df08e395298ef5db4b6a109238d06dcbdecfac56efa",
+        "bytes": 2672,
+        "sourceFiles": 15,
+        "scope": "Original closed source tree retained in full; no exclusions or deduplication."
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-review-metadata-evidence-prep-01/archives/stage51-review-metadata.tar.gz",
+      "path": "reports/m2/stage51-review-metadata-evidence.tar.gz",
+      "bytes": 11117618,
+      "sha256": "365a6a8c57b6e58358f40793307684d2f403f348e9998f9db233b894206b71a8",
+      "originalMode": 420,
+      "preparationIndex": "stage51-review-metadata-evidence-prep-01/index.json",
+      "originalPreparationRecord": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-review-metadata-evidence-prep-01/archives/stage51-review-metadata.tar.gz",
+        "futureReportPath": "reports/m2/stage51-review-metadata-evidence.tar.gz",
+        "bytes": 11117618,
+        "sha256": "365a6a8c57b6e58358f40793307684d2f403f348e9998f9db233b894206b71a8",
+        "memberFiles": 1177
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-review-metadata-packaging-02/archives/stage51-review-worker-metadata.tar.gz",
+      "path": "reports/m2/stage51-review-worker-metadata-evidence.tar.gz",
+      "bytes": 175187,
+      "sha256": "196b4a59fa2979c268fe1c520ac908c5eb6c19f5eed1480b2b97b335acac8982",
+      "originalMode": 420,
+      "preparationIndex": "stage51-review-metadata-packaging-02/index.json",
+      "originalPreparationRecord": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-review-metadata-packaging-02/archives/stage51-review-worker-metadata.tar.gz",
+        "futureReportPath": "reports/m2/stage51-review-worker-metadata-evidence.tar.gz",
+        "bytes": 175187,
+        "sha256": "196b4a59fa2979c268fe1c520ac908c5eb6c19f5eed1480b2b97b335acac8982",
+        "memberFilesIncludingInventory": 23
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-staged-binding-publication-01/stage51-candidate04-staged-source-binding.tar.gz",
+      "path": "reports/m2/stage51-candidate04-staged-source-binding.tar.gz",
+      "bytes": 7597576,
+      "sha256": "9f4b85afe702c43e94461d2747637614ec6490bc0f6cf145b2ec00189dc58074",
+      "originalMode": 420,
+      "preparationIndex": "stage51-candidate04-staged-binding-publication-01/index.json",
+      "originalPreparationRecord": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage51/target/m2/stage51-candidate04-staged-binding-publication-01/stage51-candidate04-staged-source-binding.tar.gz",
+        "sha256": "9f4b85afe702c43e94461d2747637614ec6490bc0f6cf145b2ec00189dc58074",
+        "compressedBytes": 7597576,
+        "payloadFiles": 86
+      },
+      "copyBytesVerified": true
+    },
+    {
+      "path": "reports/m2/stage51-publication-metadata-evidence.tar.gz",
+      "bytes": 39700,
+      "sha256": "462fa19197a7df09702062eb66bf27289c262e96125bd2c05634aa66c89cdfba",
+      "scope": "Closed preparation indices, final independent archive audit and staged-binding packaging provenance.",
+      "createExitCode": 0,
+      "separateVerifyExitCode": 0
+    }
+  ],
+  "archiveCount": 27,
+  "compressedBytes": 127409783,
+  "allArchivesBelow100000000": true,
+  "sourceBinding": {
+    "status": "Precommit staged blobs verified; actual implementation commit join is a separate publication record.",
+    "archive": "stage51-candidate04-staged-source-binding.tar.gz",
+    "fileBindingsSha256": "31d58542974ae796d1a519fdbe3ceb00aec59a2f7475862885545d5bde22e817",
+    "files": 76302,
+    "rawGitBlobsVerified": 3053,
+    "candidate04Sources": 437,
+    "submoduleSourceFiles": 21,
+    "externalPklGitlink": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "historicalCandidateSourcesAreNotClaimedAsCurrentGitBlobs": true
+  },
+  "fixtureAuthority": {
+    "path": "tests/fixtures/m2-collection-transforms",
+    "manifestSha256": "a90cc8d0c409b03c783192f39cf265052e3efa48e0d9bc5f7d64818e57a2558d",
+    "filesIncludingManifest": 75863,
+    "qualification": "The Java06-08 authority package deduplicates 23397 files through exact repository fixture paths and SHA-256. The committed fixture tree and source binding are required to reconstruct that package. Original exclusions and mappings remain in the preparation metadata."
+  },
+  "modeQualification": "evidence.py normalizes archive headers to mode 0644 and mtime 0. Original paths/modes are preserved in selection tables; extractors must use those tables to restore executable modes.",
+  "candidate04Results": {
+    "eachTargetOrdinaryMatches": 2000,
+    "eachTargetOrdinaryCalls": 2000,
+    "eachTargetDiagnosticOnlyMatches": 96,
+    "eachTargetPostCloseMismatches": 12,
+    "rawApiPassed": false,
+    "fullJavaEventsCountersPassed": false,
+    "strictSelectedContractPassed": false
+  },
+  "m1KnownRegexMismatchesEachTarget": 2,
+  "fullM2Complete": false,
+  "hostedCiClaimed": false,
+  "performanceTargetClaimed": false
+}

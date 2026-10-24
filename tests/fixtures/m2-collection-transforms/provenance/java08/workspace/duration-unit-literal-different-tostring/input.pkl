@@ -1,0 +1,36 @@
+stable=7
+d_ns=1.ns
+l_ns="ns"
+rLiteral_ns=new PcfRenderer { converters { [String]=(value)->l_ns } }
+rDifferent_ns=new PcfRenderer { converters { [String]=(value)->1.us.unit } }
+rToString_ns=new PcfRenderer { converters { [String]=(value)->d_ns.unit.toString() } }
+d_us=1.us
+l_us="us"
+rLiteral_us=new PcfRenderer { converters { [String]=(value)->l_us } }
+rDifferent_us=new PcfRenderer { converters { [String]=(value)->1.ms.unit } }
+rToString_us=new PcfRenderer { converters { [String]=(value)->d_us.unit.toString() } }
+d_ms=1.ms
+l_ms="ms"
+rLiteral_ms=new PcfRenderer { converters { [String]=(value)->l_ms } }
+rDifferent_ms=new PcfRenderer { converters { [String]=(value)->1.s.unit } }
+rToString_ms=new PcfRenderer { converters { [String]=(value)->d_ms.unit.toString() } }
+d_s=1.s
+l_s="s"
+rLiteral_s=new PcfRenderer { converters { [String]=(value)->l_s } }
+rDifferent_s=new PcfRenderer { converters { [String]=(value)->1.min.unit } }
+rToString_s=new PcfRenderer { converters { [String]=(value)->d_s.unit.toString() } }
+d_min=1.min
+l_min="min"
+rLiteral_min=new PcfRenderer { converters { [String]=(value)->l_min } }
+rDifferent_min=new PcfRenderer { converters { [String]=(value)->1.h.unit } }
+rToString_min=new PcfRenderer { converters { [String]=(value)->d_min.unit.toString() } }
+d_h=1.h
+l_h="h"
+rLiteral_h=new PcfRenderer { converters { [String]=(value)->l_h } }
+rDifferent_h=new PcfRenderer { converters { [String]=(value)->1.d.unit } }
+rToString_h=new PcfRenderer { converters { [String]=(value)->d_h.unit.toString() } }
+d_d=1.d
+l_d="d"
+rLiteral_d=new PcfRenderer { converters { [String]=(value)->l_d } }
+rDifferent_d=new PcfRenderer { converters { [String]=(value)->1.ns.unit } }
+rToString_d=new PcfRenderer { converters { [String]=(value)->d_d.unit.toString() } }

@@ -639,6 +639,7 @@ impl Vm {
             deep_force: None,
             pcf_render: None,
             collection_join: None,
+            collection_transform: None,
             function_owner: None,
             amendment_end: None,
             prepared_hashes: None,

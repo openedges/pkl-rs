@@ -1,0 +1,7 @@
+stable=7
+defaultObject = Null(new Dynamic { a=1 })
+amended = defaultObject { a=2 }
+defaultFunction = Null(()->new Dynamic { a=3 })
+amendedFunction = defaultFunction { a=4 }
+unforced = Null(new Dynamic { boom=throw("default-not-forced") })
+functionUnforced = Null(()->throw("function-default-not-forced"))

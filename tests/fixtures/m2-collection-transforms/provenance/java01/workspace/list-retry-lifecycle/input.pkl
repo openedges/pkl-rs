@@ -1,0 +1,3 @@
+stable = 7
+function work() = List(1,2,3).map((x)->if(trace(x)==2)read("ct:/retry") else read("ct:/cached-\(x)")).toString()
+memo = work()
