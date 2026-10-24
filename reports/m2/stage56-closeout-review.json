@@ -1,0 +1,262 @@
+{
+  "blockers": [],
+  "documents": {
+    "PLAN.md": {
+      "bytes": 327048,
+      "path": "PLAN.md",
+      "sha256": "3ebf12c61cef042c3ce2173eaf805e8d17b48b3f620a28c8bc78ec15cdd31252"
+    },
+    "docs/m2-class-values.md": {
+      "bytes": 20964,
+      "path": "docs/m2-class-values.md",
+      "sha256": "12f923ebaa69d1f4d09763e892477204826630da02c7b873dcab73f53bce4636"
+    },
+    "reports/m2/README.md": {
+      "bytes": 277770,
+      "path": "reports/m2/README.md",
+      "sha256": "9bf8016e701923fe9036bbfb46a09698614a6715b797cc81e0ba8024469094e7"
+    },
+    "reports/m2/stage56-implementation-checkpoint.json": {
+      "bytes": 22506,
+      "path": "reports/m2/stage56-implementation-checkpoint.json",
+      "sha256": "f3cfba21d295ce6e016e863ce63c8fb96d2f4cd83e012136a4c713dfd02e3e4f"
+    }
+  },
+  "evidence": {
+    "candidate-publication.json": {
+      "bytes": 6692,
+      "path": "reports/m2/stage56-candidate-publication.json",
+      "sha256": "9800c9547a9d28a4b6e0d76e93077c6d8a920ba600eb4099cb07a5542d2a2e81"
+    },
+    "final-audit.md": {
+      "bytes": 6571,
+      "path": "reports/m2/stage56-final-audit.md",
+      "sha256": "6d81f328a9ebfd390be8138fd66abd88c80d1bdb7da566a1914f0c3b12798323"
+    },
+    "original-publication.json": {
+      "bytes": 2234,
+      "path": "reports/m2/stage56-original-publication.json",
+      "sha256": "8c100db587fa2c074237831949ae5dd2c3771732de5982b41f4d84aee4b9c611"
+    },
+    "source-binding.json": {
+      "bytes": 5788,
+      "path": "reports/m2/stage56-source-binding.json",
+      "sha256": "d47483831a080bcfeb41bfb14a0b4bec3e4d502b2ce5dc485897b43163707c15"
+    },
+    "validation-publication.json": {
+      "bytes": 10831,
+      "path": "reports/m2/stage56-validation-publication.json",
+      "sha256": "be8c0816d9a995033bd36d07363eaa911da1843459301088b5e4407f101c07a2"
+    }
+  },
+  "historical_current_separation": "Checkpoint retains pending post-commit binding as historical; separate binding covers exact B objects. Earlier failures, missing build inputs, original DataSize mismatch and M1 regex failures remain explicit.",
+  "limitations": "Selected local macOS evidence; provider/export APIs, full M2, other release platforms, and speed/peak-memory targets remain open.",
+  "links": {
+    "filesystem": [
+      {
+        "document": "PLAN.md",
+        "line": 1467,
+        "target": "docs/m2-class-values.md"
+      },
+      {
+        "document": "PLAN.md",
+        "line": 1488,
+        "target": "reports/m2/stage56-implementation-checkpoint.json"
+      },
+      {
+        "document": "PLAN.md",
+        "line": 1489,
+        "target": "reports/m2/stage56-final-audit.md"
+      },
+      {
+        "document": "PLAN.md",
+        "line": 1517,
+        "target": "reports/m2/stage56-validation-evidence.tar.gz"
+      },
+      {
+        "document": "PLAN.md",
+        "line": 1518,
+        "target": "reports/m2/stage56-candidate-evidence.tar.gz"
+      },
+      {
+        "document": "PLAN.md",
+        "line": 1519,
+        "target": "reports/m2/stage56-original-evidence.tar.gz"
+      },
+      {
+        "document": "PLAN.md",
+        "line": 1524,
+        "target": "reports/m2/stage56-source-binding.json"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 5,
+        "target": "../tests/fixtures/m2-class-values/README.md"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 54,
+        "target": "../external/pkl/pkl-core/src/main/java/org/pkl/core/ast/member/ClassNode.java"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 55,
+        "target": "../external/pkl/pkl-core/src/main/java/org/pkl/core/ast/type/UnresolvedTypeNode.java"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 56,
+        "target": "../external/pkl/stdlib/base.pkl"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 66,
+        "target": "../external/pkl/pkl-core/src/main/java/org/pkl/core/ast/type/TypeNode.java"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 76,
+        "target": "../external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/PklConverter.java"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 90,
+        "target": "../reports/m2/stage56-oracle-checkpoint.json"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 91,
+        "target": "../reports/m2/stage56-oracle-validation-evidence.tar.gz"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 94,
+        "target": "../reports/m2/stage56-oracle-source-binding.json"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 124,
+        "target": "../tests/fixtures/m2-class-metadata-completion/README.md"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 126,
+        "target": "../reports/m2/stage56-metadata-oracle-checkpoint.json"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 127,
+        "target": "../reports/m2/stage56-metadata-validation-evidence.tar.gz"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 129,
+        "target": "../reports/m2/stage56-metadata-oracle-source-binding.json"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 249,
+        "target": "../reports/m2/stage56-implementation-checkpoint.json"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 250,
+        "target": "../reports/m2/stage56-final-audit.md"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 281,
+        "target": "../reports/m2/stage56-source-binding.json"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 284,
+        "target": "../reports/m2/stage56-source-binding-evidence.tar.gz"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 288,
+        "target": "../reports/m2/stage56-validation-evidence.tar.gz"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 289,
+        "target": "../reports/m2/stage56-candidate-evidence.tar.gz"
+      },
+      {
+        "document": "docs/m2-class-values.md",
+        "line": 290,
+        "target": "../reports/m2/stage56-original-evidence.tar.gz"
+      },
+      {
+        "document": "reports/m2/README.md",
+        "line": 3,
+        "target": "stage56-implementation-checkpoint.json"
+      },
+      {
+        "document": "reports/m2/README.md",
+        "line": 7,
+        "target": "../../docs/m2-class-values.md"
+      },
+      {
+        "document": "reports/m2/README.md",
+        "line": 8,
+        "target": "stage56-final-audit.md"
+      },
+      {
+        "document": "reports/m2/README.md",
+        "line": 23,
+        "target": "stage56-source-binding.json"
+      },
+      {
+        "document": "reports/m2/README.md",
+        "line": 27,
+        "target": "stage56-source-binding-evidence.tar.gz"
+      },
+      {
+        "document": "reports/m2/README.md",
+        "line": 30,
+        "target": "stage56-validation-evidence.tar.gz"
+      },
+      {
+        "document": "reports/m2/README.md",
+        "line": 31,
+        "target": "stage56-candidate-evidence.tar.gz"
+      },
+      {
+        "document": "reports/m2/README.md",
+        "line": 32,
+        "target": "stage56-original-evidence.tar.gz"
+      }
+    ],
+    "git_tree_sparse": [
+      {
+        "document": "reports/m2/README.md",
+        "git_tree_path": "reports/m2/stage55-implementation-checkpoint.json",
+        "line": 40,
+        "target": "stage55-implementation-checkpoint.json"
+      }
+    ],
+    "unresolved": []
+  },
+  "schema": 1,
+  "scope": "Read-only Stage56 closeout documentation review against final audit, Git binding, publications and checkpoint; no guests, tests, builds or documentation edits.",
+  "verdict": "pass",
+  "verified_counts": {
+    "metadata_per_target": 20,
+    "metadata_total_sessions": 60,
+    "original_class_per_target": {
+      "mismatch": 4,
+      "oracle_error": 6,
+      "pass": 78
+    },
+    "original_class_total_sessions": 264,
+    "original_cli_mismatch": 1,
+    "original_cli_pass": 5,
+    "rust_test_ignored": 1,
+    "rust_test_pass": 910,
+    "source_binding_catalog_rows": 179686,
+    "source_binding_nonmatches": 0,
+    "source_binding_rust_input_rows": 165175
+  }
+}

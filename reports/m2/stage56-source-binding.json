@@ -1,0 +1,163 @@
+{
+  "archive_full_reread_verified": true,
+  "binding_report": {
+    "B_commit": "25aa0487603d80da17ca77011137139ca9c290b0",
+    "Git_object_method": "Actual B and pinned-submodule tree OIDs, mode, Git blob SHA1 framing, and raw blob SHA256/size; unique blob reads deduplicated, every input row accounted.",
+    "artifact_boundaries": {
+      "candidate_archive": {
+        "bytes": 87427784,
+        "sha256": "6676fa608f1a065725d71b24c0158d08fa47d7feb5ba8bdd691988ce1b7f7436"
+      },
+      "original_archive": {
+        "bytes": 9542101,
+        "sha256": "68fc1bb93d2e6e58c26ad8e5281ba91efe7232e2637a03b53df3976b18468817"
+      },
+      "release_class_helper_sha256": "84548c956e549404967a7ead18be5c93d34988fca51be630a41a9e56ec713a9e",
+      "validation_archive": {
+        "bytes": 44819732,
+        "sha256": "ba243077805cc43a555f04d7d89fb2a46ff80e2f8c9cdca872309603dd228e39"
+      }
+    },
+    "category_statuses": {
+      "class_platform_01": {
+        "matches_B": 4570
+      },
+      "comparator_checks_03": {
+        "matches_B": 19
+      },
+      "core_freeze_04_compile_inputs": {
+        "matches_B": 270
+      },
+      "core_freeze_04_files": {
+        "matches_B": 37
+      },
+      "m1_platforms_01": {
+        "matches_B": 222
+      },
+      "metadata_platform_01": {
+        "matches_B": 4570
+      },
+      "original_six_01": {
+        "matches_B": 4568
+      },
+      "portable_checks_05": {
+        "matches_B": 8
+      },
+      "release_platform_run_01": {
+        "matches_B": 247
+      },
+      "rust_validation_03": {
+        "matches_B": 165175
+      }
+    },
+    "exceptions": {},
+    "gitlinks": {
+      "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+    },
+    "historical_A2_binding": {
+      "bytes": 3841,
+      "path": "target/m2/stage56-metadata-checkpoint-publication-01/source-binding.json",
+      "sha256": "32c17c5d60c067eeb56ae7b4c91d30ca4a6d3a4b4e30698e6ce15e95b7cfbbf5"
+    },
+    "kind": "Actual Git-object source binding for Stage56 implementation B",
+    "limitations": [
+      "Historical snapshots that differ from B are listed as differences, never bound as matching B.",
+      "Source/object binding does not rerun guests, builds, tests or establish full Class API, M2 compatibility, browser release coverage, or speed/memory targets."
+    ],
+    "manifest_rows": [
+      {
+        "bytes": 103546548,
+        "category": "rust_validation_03",
+        "path": "target/m2/stage56-rust-validation-03/sources.json",
+        "rows": 165175,
+        "sha256": "afe86fec74a3994a1d27ef27894e4b0d67cae0326f58547fcd05b0f120d9a3d1"
+      },
+      {
+        "bytes": 82838,
+        "category": "core_freeze_04_files",
+        "path": "target/m2/stage56-core-checks-04/core-freeze.json",
+        "rows": 37,
+        "sha256": "80aa1d1b915f688c136bec9894bed41df155f59efa168d8ea40f87baa283897b"
+      },
+      {
+        "bytes": 82838,
+        "category": "core_freeze_04_compile_inputs",
+        "path": "target/m2/stage56-core-checks-04/core-freeze.json",
+        "rows": 270,
+        "sha256": "80aa1d1b915f688c136bec9894bed41df155f59efa168d8ea40f87baa283897b"
+      },
+      {
+        "bytes": 2682,
+        "category": "comparator_checks_03",
+        "path": "target/m2/stage56-comparator-checks-03/sources-after.json",
+        "rows": 19,
+        "sha256": "e607b7bb0abe62cfa60f70a97f566ebb333f3348689afccf21c733ecc77925fd"
+      },
+      {
+        "bytes": 1210,
+        "category": "portable_checks_05",
+        "path": "target/m2/stage56-portable-checks-05/sources-after.json",
+        "rows": 8,
+        "sha256": "0fe71678a3f86318503727f02c1d30577218772dd2550baa1e3bcbed023056bf"
+      },
+      {
+        "bytes": 6519407,
+        "category": "class_platform_01",
+        "path": "target/m2/stage56-class-platform-01/report.json",
+        "rows": 4570,
+        "sha256": "d9427eb5ee2c60e71a2b3c8fda713c12fc45cae48e1195a37069fc0e34a2f773"
+      },
+      {
+        "bytes": 3414336,
+        "category": "metadata_platform_01",
+        "path": "target/m2/stage56-metadata-platform-01/report.json",
+        "rows": 4570,
+        "sha256": "e15aab77ffcb2dff55d89aefbbb89d3d9061b44d57b11b29eaf9684244d8bf61"
+      },
+      {
+        "bytes": 25363,
+        "category": "m1_platforms_01",
+        "path": "target/m2/stage56-platforms-01/sources.json",
+        "rows": 222,
+        "sha256": "f548d4bf93baefe0ca728d0d26ff74f93da70c9dfe9b47a0cf22a10a1da6c5ed"
+      },
+      {
+        "bytes": 29420,
+        "category": "release_platform_run_01",
+        "path": "target/m2/stage56-platform-run-01/sources.json",
+        "rows": 247,
+        "sha256": "8b6132c8e11129f675e9ce0a6248ccc159c80450a90ecd329d54817ef195b94f"
+      },
+      {
+        "bytes": 618030,
+        "category": "original_six_01",
+        "path": "target/m2/stage56-original-class-01/sources.json",
+        "rows": 4568,
+        "sha256": "3de60a0af2e4c361608578dbf7f77341f684cf0c2ebf97b55b356f1da0762947"
+      }
+    ],
+    "recorded_utc": "2026-10-24T07:28:37.208494+00:00",
+    "row_details": {
+      "bytes": 7784872,
+      "path": "target/m2/stage56-implementation-binding-01/rows.jsonl.gz",
+      "sha256": "d1a9708bf407bf03fc35fba3461eb7f8be31e8dec5c3c569bfc3c9f3ac07944b"
+    },
+    "rust_captured_files_verified": 47,
+    "rust_symlink_target_mode_120000_verified": true,
+    "schema": 1,
+    "unique_blob_objects_read": {
+      ".": 13582,
+      "external/pkl": 2013,
+      "external/pkl-pantry": 0
+    }
+  },
+  "evidence_archive": {
+    "bytes": 7175465,
+    "members": 5,
+    "path": "reports/m2/stage56-source-binding-evidence.tar.gz",
+    "sha256": "18a59e36e331a08507dd58df977cb35398fd28ece7342dfb0f57670c2be65f61"
+  },
+  "original_source_stability_verified": true,
+  "schema": 1
+}

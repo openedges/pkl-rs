@@ -1,5 +1,51 @@
 # M2 language evidence
 
+The latest [Stage56 implementation checkpoint](stage56-implementation-checkpoint.json)
+records canonical Class descriptors, separate instance prototypes, actual
+superclasses, shared type/converter lookup and corrected typed equality/hash
+member traversal in `25aa0487603d80da17ca77011137139ca9c290b0`.
+See the [Class contract](../../docs/m2-class-values.md) and
+[independent final audit](stage56-final-audit.md).
+
+Native, Node N-API and Chromium Wasm each record 78 passes, four mismatches and
+six oracle errors across the original 88 Class sessions. The additive metadata
+selection passes all 20 sessions per target. Provider SPI and exported-Class API
+parity remain required and unexecuted. Six unchanged original CLI programs have
+five raw matches and one mismatch: `api/any.pkl` first fails on DataSize value
+construction. These are one Java and one Rust execution per input.
+
+All five required Rust checks pass locally with Rust 1.98.1; workspace tests
+report 910 passes and one ignored probe. The M1 platform regression retains
+6,076 Java matches and both known regex failures per target. Its architecture
+contract passes, while strict compatibility fails. Full M2, product APIs,
+release-platform coverage, speed and peak-memory targets remain open.
+
+[Post-commit source binding](stage56-source-binding.json) compares 179,686
+selected source records with actual Git objects in the implementation and
+pinned submodule trees, with zero differences. This includes all 165,175 final
+Rust-check inputs; overlapping catalogs are not distinct source or feature
+counts. The [binding archive](stage56-source-binding-evidence.tar.gz) retains
+per-record results, symlink modes and target bytes, and the audit script.
+
+[Validation](stage56-validation-evidence.tar.gz),
+[candidate](stage56-candidate-evidence.tar.gz), and
+[original CLI](stage56-original-evidence.tar.gz) archives retain raw final and
+failed acquisitions. Their publication reports record member verification and
+explicit exclusions. Earlier native build manifests omitted five literal
+stdlib inputs; the independent frozen-binary byte bridge remains separate from
+the complete final build input capture. No hosted CI result is claimed.
+
+### Stage55 diagnostic frames and transformers
+
+The [Stage55 checkpoint](stage55-implementation-checkpoint.json) records complete
+source-frame and custom transformer boundaries, including 246 passes and 42 raw
+nonpasses across 288 executions. Its
+[actual source binding](stage55-source-binding.json) retains the separate
+implementation and verification provenance. Later Class results do not replace
+those historical outcomes or close their remaining API and lifecycle scope.
+
+### Stage54 method deprecation
+
 The [Stage54 implementation checkpoint](stage54-implementation-checkpoint.json)
 adds method-deprecation warning state to executable call sites, preserving
 argument order, callback acknowledgement, reentry, cache roots and implicit calls.

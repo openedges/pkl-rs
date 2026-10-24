@@ -125,7 +125,10 @@ The separate [metadata fixture](../tests/fixtures/m2-class-metadata-completion/R
 covers `YamlRenderer`, `PListRenderer`, `PropertiesRenderer`, `RegexMatch`, and
 `PcfRenderDirective`. Its [Java checkpoint](../reports/m2/stage56-metadata-oracle-checkpoint.json)
 and [validation archive](../reports/m2/stage56-metadata-validation-evidence.tar.gz)
-retain the original local checks. Reviewing all 56 top-level base Class declarations exposed
+retain the original local checks. The separate
+[actual Git binding](../reports/m2/stage56-metadata-oracle-source-binding.json)
+connects its ten frozen inputs to `94d48d65b289bd07dafdf04d27b73b48fd44e4b6`.
+Reviewing all 56 top-level base Class declarations exposed
 these five descriptor gaps in the second candidate. The original 44-session
 fixture and archive remain unchanged.
 
@@ -223,9 +226,7 @@ The preserved native development packet
 `target/m2/stage56-class-native-dev-01` contains 88 session executions: 58 pass,
 14 mismatch, 10 candidate-unsupported, and 6 oracle-error. It is an observation
 of that frozen artifact, not a final result for subsequent core revisions.
-At this documentation checkpoint, the new portable capture drivers exist but
-the current Stage56 binding artifacts have not executed their Class matrix.
-Earlier platform builds or Java replay cannot substitute for that execution.
+This historical packet predates the final portable execution below.
 
 The second native packet, `target/m2/stage56-class-native-dev-02`, records 78
 passes, 4 mismatches, and 6 oracle errors across the same 88 executions. The
@@ -234,6 +235,66 @@ IntSeq, and Regex; the annotation callback nonpasses remain recorded. This is
 the second frozen candidate's result, not verification of later descriptor
 additions or platform artifacts. A separate complete base-declaration review
 also identified missing Class metadata outside the original selected names.
+
+## Stage56 implementation checkpoint
+
+Implementation `25aa0487603d80da17ca77011137139ca9c290b0` separates traced Class
+descriptors from prototypes and connects canonical identity, superclass lookup,
+type checks, converters, metadata and diagnostics. It also corrects typed
+equality/hash member traversal to dereference the descriptor's prototype.
+All 56 pinned base Class declarations resolve. The five supplemental ordinary
+classes retain lazy defaults and constraints; this does not implement the three
+remaining external renderer algorithms or Regex matching.
+
+The [implementation checkpoint](../reports/m2/stage56-implementation-checkpoint.json)
+and [independent final audit](../reports/m2/stage56-final-audit.md) record the
+actual macOS arm64 native, Node N-API and Chromium Wasm executions:
+
+| Final comparison | Per target | Total across three targets | Strict common verdict |
+| --- | --- | --- | --- |
+| Original Class sessions | 78 pass, 4 mismatch, 6 oracle-error | 234 pass, 12 mismatch, 18 oracle-error | Failed |
+| Additive metadata sessions | 20 pass | 60 pass | Passed |
+
+The original packet's four ordinary mismatches per target are two repetitions
+each of runtime Class canonicality and builtin ancestry, blocked by actual
+DataSize/Bytes/IntSeq/Regex value construction. Three annotation callback sessions
+in two repetitions retain their oracle errors and raw protocol differences.
+Both packets still require candidate provider SPI and exported-Class API parity.
+The metadata authority also requires Java export observations. Neither full API
+gate passes.
+
+Six unchanged upstream CLI programs were separately executed once on Java and
+once on Rust. `classes/class1.pkl`, `classes/class4.pkl`, `api/anyConverter.pkl`,
+`errors/anyConverterError.pkl`, and `errors/extendExternalClass.pkl` match complete
+stdout, stderr, exit codes and generated files. `api/any.pkl` first fails on Rust
+at `5.mb.getClass().simpleName` because DataSize construction is unsupported.
+Its Java exit is zero and Rust exit is one. Offline verification of a capture
+does not add guest repetitions.
+
+All five required Rust checks passed; workspace tests report 910 passed and one
+ignored probe. The shared native/Node/Chromium primitive regression has 6,078
+shared-engine matches and 6,076 Java matches per target. Both known regex
+differences remain failures despite its passing architecture contract. These
+counts are separate execution scopes, not distinct feature coverage or proof of
+the speed and memory targets.
+
+The separate [post-commit source binding](../reports/m2/stage56-source-binding.json)
+compares all 179,686 selected source records to actual implementation and pinned
+submodule Git objects, including every one of the 165,175 Rust-check inputs.
+These catalogs overlap. Its [evidence](../reports/m2/stage56-source-binding-evidence.tar.gz)
+retains the per-record checks and preserves symlink target bytes and modes.
+The original checkpoint's pending-binding statement remains historical.
+
+[Validation evidence](../reports/m2/stage56-validation-evidence.tar.gz),
+[candidate evidence](../reports/m2/stage56-candidate-evidence.tar.gz), and
+[original CLI evidence](../reports/m2/stage56-original-evidence.tar.gz) preserve
+the final and failed runs with exact source and runtime provenance. Earlier
+native builds 01 and 02 omitted five literal stdlib inputs from their build
+manifests. A separate audit found their exact bytes in the frozen artifacts;
+this does not retroactively prove before/after capture. Build03 and the final
+build records include these inputs. The original failed Rust runs and exact
+heap-count corrections also remain available. Full M2 and release gates remain
+open.
 
 ## Available commands
 

@@ -1481,6 +1481,70 @@ Class 메타데이터 결손도 확인했습니다. 별도 Java 관찰과 함께
 최종 후보의 필수 Rust 검사·원본 프로그램·실제 Node·브라우저 결과를 취득합니다.
 기존 두 후보의 원시 결과는 보존하며 아직 실행하지 않은 검사를 통과로 집계하지 않습니다.
 
+### Stage 56 — 최종 구현과 로컬 검증
+
+공통 Class 구현을 `25aa0487603d80da17ca77011137139ca9c290b0`에 커밋·푸시하고
+원격 `main`의 일치를 확인했습니다.
+[구현 기록](reports/m2/stage56-implementation-checkpoint.json)과
+[독립 검토](reports/m2/stage56-final-audit.md)는 Class descriptor와 prototype 분리,
+canonical builtin identity·실제 superclass·converter·타입 검사·진단의 연결을
+확인합니다. typed 객체의 동등성·hash 순회가 descriptor 대신 prototype의 선언을
+읽도록 수정했고, heap 검사는 실제 소유 graph에 맞춰 개수를 보완했습니다.
+stale/foreign handle·취소·종료 후 0 조건과 기존 비회계 assertion은 유지했습니다.
+56개 base Class 선언을 모두 해석하지만 세 외부 renderer 알고리즘과 primitive 값
+생성은 별도 미완료 범위입니다.
+
+최종 native·Node·Chromium의 원래 Class 비교는 **환경별 88회 중 일치 78·불일치 4·
+oracle 오류 6**입니다. 추가 메타데이터는 환경별 20회, 합계 60회 모두 일치했습니다.
+이 두 묶음의 provider SPI·공개 Class export 후보 검증은 미실행 필수 항목이며,
+추가 Java authority의 export 관찰도 아직 없습니다. 공통 비교가 일치해도 전체 API
+gate를 통과로 바꾸지 않습니다.
+
+수정하지 않은 upstream 원본 6개는 각각 Java·Rust 한 번씩 실제 실행했습니다.
+`classes/class1.pkl`, `classes/class4.pkl`, `api/anyConverter.pkl`,
+`errors/anyConverterError.pkl`, `errors/extendExternalClass.pkl`은 전체 CLI 채널이
+일치했습니다. `api/any.pkl`은 `5.mb.getClass().simpleName`의 DataSize 생성에서
+실패하여 Java 종료 0·Rust 종료 1을 보존합니다. 같은 capture의 오프라인 검증 두 번은
+guest 반복 실행이 아닙니다.
+
+필수 Rust 검사 다섯 개가 모두 통과했고 workspace는 **910 통과·1 ignored**입니다.
+Python은 M2 165개·내장 입력 1개, 별도 comparator 50개·메타데이터 authority 16개·
+기존 authority 15개를 기록했습니다. JS transport 23개와 syntax 검사 4개도 통과했습니다.
+이들은 검사 묶음별 실행 수이며 기능 수로 합산하지 않습니다. 공통 primitive는 세 환경
+6,078개가 서로 일치하고 Java와는 환경별 6,076개 일치·기존 regex 실패 2개입니다.
+실제 macOS arm64 로컬 결과이며 원격 CI나 속도·메모리 목표 달성으로 표기하지 않습니다.
+
+[검증 증거](reports/m2/stage56-validation-evidence.tar.gz),
+[후보 실행 증거](reports/m2/stage56-candidate-evidence.tar.gz),
+[원본 CLI 증거](reports/m2/stage56-original-evidence.tar.gz)에 초기 실패와 수정 후
+결과를 함께 보관했습니다. 이전 native build01·02에서 stdlib literal 입력 5개가
+manifest에서 빠진 사실과 별도 artifact 내부 byte 확인을 구분합니다. 이를 소급해
+완전한 취득으로 표시하지 않으며 build03과 최종 build는 해당 입력을 기록했습니다.
+목록 갱신은 구현 link hash 110개만 바꿨고 4,527개 사례·475개 요구사항·기존 상태와
+실패를 유지했습니다. [별도 소스 연결](reports/m2/stage56-source-binding.json)은
+최종 Rust 입력 165,175건을 포함한 중복 catalog 179,686건을 실제 구현·고정 submodule
+Git 객체와 대조했고 불일치는 없었습니다. symlink는 target bytes와 mode를 보존합니다.
+이 개수는 고유 소스나 기능 수가 아닙니다. 원래 체크포인트의 pending 문장은 수정하지
+않고 실제 커밋 연결 증거를 별도 게시했습니다. **M2 아홉 영역과 전체 완료 gate는
+계속 열려 있습니다.**
+
+### Stage 57 — DataSize 값과 연산
+
+다음 우선순위는 실제 원본 실패가 확인된 DataSize입니다. `getClass` 응답만 보완하지
+않고 공통 값 모델에 11개 단위·double 값·참조 identity를 연결합니다. 단위 변환의
+곱셈/나눗셈 순서, 공개 멤버, 혼합 단위 산술·비교, NaN·부호 있는 zero·극값,
+Map/Set의 동등성·hash, 타입·기본값, 문자열·PCF·진단·converter를 함께 검증합니다.
+Java `StrictMath.pow`, 정수 나눗셈 오류와 `Double.compare`를 Rust 기본 연산과
+동일하다고 가정하지 않습니다.
+
+고정 Java의 독립 관찰을 먼저 두 번의 새 JVM에서 취득하고 원시 바이트·실제 부동소수
+비트·오류를 보관합니다. 이후 값 core, 생성·멤버·타입, 연산·동등성, 출력·수명 순서로
+구현하고 원본 DataSize 사례와 Class·Duration 회귀, 실제 native·Node·Chromium을
+비교합니다. `Bytes.size`, 전체 renderer, typed export와 Pkl Binary는 연관된 필수
+의무로 유지하며 미구현 제품 경로를 통과로 집계하지 않습니다. 현재 단계의 설계·Java
+관찰은 `gpt-6-sol / high`에 배정하고, 주 에이전트가 직전 구현의 커밋·소스 연결·문서
+검토를 담당합니다. 런타임 구현은 새 기준 커밋에서 분리해 진행합니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.
