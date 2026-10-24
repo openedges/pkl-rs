@@ -1,0 +1,885 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "boundary": "string",
+  "module_uri": "file:///stage67/string-properties.pkl",
+  "repetitions": 2,
+  "rows": [
+    {
+      "expression": "\"\".isBlank",
+      "group": "basic",
+      "id": "empty",
+      "mode": "string"
+    },
+    {
+      "expression": "\" \".isBlank",
+      "group": "basic",
+      "id": "ascii-space",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\t\\n\\r\".isBlank",
+      "group": "basic",
+      "id": "ascii-tabs",
+      "mode": "string"
+    },
+    {
+      "expression": "\"a\".isBlank",
+      "group": "basic",
+      "id": "ascii-letter",
+      "mode": "string"
+    },
+    {
+      "expression": "\"0\".isBlank",
+      "group": "basic",
+      "id": "digit",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{0000}\".isBlank",
+      "group": "basic",
+      "id": "nul",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{0007}\".isBlank",
+      "group": "basic",
+      "id": "bell",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{0009}\\u{000a}\\u{000b}\\u{000c}\\u{000d}\\u{0020}\\u{0085}\\u{00a0}\\u{1680}\\u{2000}\\u{2001}\\u{2002}\\u{2003}\\u{2004}\\u{2005}\\u{2006}\\u{2007}\\u{2008}\\u{2009}\\u{200a}\\u{2028}\\u{2029}\\u{202f}\\u{205f}\\u{3000}\".isBlank",
+      "group": "basic",
+      "id": "all-25",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{0009}\".isBlank",
+      "group": "white-space",
+      "id": "white-0009",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{000a}\".isBlank",
+      "group": "white-space",
+      "id": "white-000a",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{000b}\".isBlank",
+      "group": "white-space",
+      "id": "white-000b",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{000c}\".isBlank",
+      "group": "white-space",
+      "id": "white-000c",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{000d}\".isBlank",
+      "group": "white-space",
+      "id": "white-000d",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{0020}\".isBlank",
+      "group": "white-space",
+      "id": "white-0020",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{0085}\".isBlank",
+      "group": "white-space",
+      "id": "white-0085",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{00a0}\".isBlank",
+      "group": "white-space",
+      "id": "white-00a0",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{1680}\".isBlank",
+      "group": "white-space",
+      "id": "white-1680",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2000}\".isBlank",
+      "group": "white-space",
+      "id": "white-2000",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2001}\".isBlank",
+      "group": "white-space",
+      "id": "white-2001",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2002}\".isBlank",
+      "group": "white-space",
+      "id": "white-2002",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2003}\".isBlank",
+      "group": "white-space",
+      "id": "white-2003",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2004}\".isBlank",
+      "group": "white-space",
+      "id": "white-2004",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2005}\".isBlank",
+      "group": "white-space",
+      "id": "white-2005",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2006}\".isBlank",
+      "group": "white-space",
+      "id": "white-2006",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2007}\".isBlank",
+      "group": "white-space",
+      "id": "white-2007",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2008}\".isBlank",
+      "group": "white-space",
+      "id": "white-2008",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2009}\".isBlank",
+      "group": "white-space",
+      "id": "white-2009",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{200a}\".isBlank",
+      "group": "white-space",
+      "id": "white-200a",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2028}\".isBlank",
+      "group": "white-space",
+      "id": "white-2028",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2029}\".isBlank",
+      "group": "white-space",
+      "id": "white-2029",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{202f}\".isBlank",
+      "group": "white-space",
+      "id": "white-202f",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{205f}\".isBlank",
+      "group": "white-space",
+      "id": "white-205f",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{3000}\".isBlank",
+      "group": "white-space",
+      "id": "white-3000",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{0008}\".isBlank",
+      "group": "near-miss",
+      "id": "near-0008",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{000e}\".isBlank",
+      "group": "near-miss",
+      "id": "near-000e",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{001f}\".isBlank",
+      "group": "near-miss",
+      "id": "near-001f",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{007f}\".isBlank",
+      "group": "near-miss",
+      "id": "near-007f",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{0084}\".isBlank",
+      "group": "near-miss",
+      "id": "near-0084",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{0086}\".isBlank",
+      "group": "near-miss",
+      "id": "near-0086",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{009f}\".isBlank",
+      "group": "near-miss",
+      "id": "near-009f",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{00ad}\".isBlank",
+      "group": "near-miss",
+      "id": "near-00ad",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{180e}\".isBlank",
+      "group": "near-miss",
+      "id": "near-180e",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{200b}\".isBlank",
+      "group": "near-miss",
+      "id": "near-200b",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{202a}\".isBlank",
+      "group": "near-miss",
+      "id": "near-202a",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{2060}\".isBlank",
+      "group": "near-miss",
+      "id": "near-2060",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{3001}\".isBlank",
+      "group": "near-miss",
+      "id": "near-3001",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{feff}\".isBlank",
+      "group": "near-miss",
+      "id": "near-feff",
+      "mode": "string"
+    },
+    {
+      "expression": "\"a\\u{0020}\".isBlank",
+      "group": "mixtures",
+      "id": "leading-letter",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{0020}a\".isBlank",
+      "group": "mixtures",
+      "id": "trailing-letter",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{00a0}a\\u{0085}\".isBlank",
+      "group": "mixtures",
+      "id": "middle-letter",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{00a0}\\u{0085}\\u{202f}\".isBlank",
+      "group": "mixtures",
+      "id": "multi-white",
+      "mode": "string"
+    },
+    {
+      "expression": "\" \\u{0000}\".isBlank",
+      "group": "mixtures",
+      "id": "space-and-nul",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{d800}\".isBlank",
+      "group": "utf16",
+      "id": "utf16-high-surrogate",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{dc00}\".isBlank",
+      "group": "utf16",
+      "id": "utf16-low-surrogate",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{1f600}\".isBlank",
+      "group": "utf16",
+      "id": "utf16-pair",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{d800}\\u{dc00}\".isBlank",
+      "group": "utf16",
+      "id": "utf16-high-low-literals",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{dc00}\\u{d800}\".isBlank",
+      "group": "utf16",
+      "id": "utf16-low-high-literals",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{0020}\\u{d800}\\u{00a0}\".isBlank",
+      "group": "utf16",
+      "id": "utf16-white-surrogate-white",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\".isNotBlank",
+      "group": "complement",
+      "id": "notblank-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{00a0}\".isNotBlank",
+      "group": "complement",
+      "id": "notblank-nbsp",
+      "mode": "string"
+    },
+    {
+      "expression": "\"a\".isNotBlank",
+      "group": "complement",
+      "id": "notblank-letter",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{d800}\".isNotBlank",
+      "group": "complement",
+      "id": "notblank-high",
+      "mode": "string"
+    },
+    {
+      "expression": "\" \".isBlank()",
+      "group": "diagnostics",
+      "id": "property-call",
+      "mode": "string"
+    },
+    {
+      "expression": "\" \".isBlank(throw(\"arg\"))",
+      "group": "diagnostics",
+      "id": "property-arg-throw",
+      "mode": "string"
+    },
+    {
+      "expression": "\" \".isBlank(1)",
+      "group": "diagnostics",
+      "id": "property-arg-value",
+      "mode": "string"
+    },
+    {
+      "expression": "\"a\".isNotBlank()",
+      "group": "diagnostics",
+      "id": "nonblank-call",
+      "mode": "string"
+    },
+    {
+      "expression": "\" \".isBlanx",
+      "group": "diagnostics",
+      "id": "missing-name",
+      "mode": "string"
+    },
+    {
+      "expression": "(1).isBlank",
+      "group": "diagnostics",
+      "id": "wrong-int",
+      "mode": "string"
+    },
+    {
+      "expression": "true.isBlank",
+      "group": "diagnostics",
+      "id": "wrong-bool",
+      "mode": "string"
+    },
+    {
+      "expression": "null.isBlank",
+      "group": "diagnostics",
+      "id": "wrong-null",
+      "mode": "string"
+    },
+    {
+      "expression": "List(\" \").isBlank",
+      "group": "diagnostics",
+      "id": "wrong-list",
+      "mode": "string"
+    },
+    {
+      "expression": "Bytes(32).isBlank",
+      "group": "diagnostics",
+      "id": "wrong-bytes",
+      "mode": "string"
+    },
+    {
+      "expression": "throw(\"receiver\").isBlank",
+      "group": "diagnostics",
+      "id": "receiver-throw",
+      "mode": "string"
+    },
+    {
+      "expression": "new Dynamic {}.isBlank",
+      "group": "diagnostics",
+      "id": "wrong-dynamic",
+      "mode": "string"
+    },
+    {
+      "expression": "\"\\u{0009}\\u{000A}\\u{000B}\\u{000C}\\u{000D}\\u{0020}\\u{0085}\\u{00A0}\\u{1680}\\u{2000}\\u{2001}\\u{2002}\\u{2003}\\u{2004}\\u{2005}\\u{2006}\\u{2007}\\u{2008}\\u{2009}\\u{200A}\\u{2028}\\u{2029}\\u{202F}\\u{205F}\\u{3000}\".isBlank",
+      "group": "original-control",
+      "id": "original-line13",
+      "mode": "string"
+    },
+    {
+      "expression": "module.originalLine13",
+      "group": "original-control",
+      "id": "module-line13",
+      "mode": "string"
+    },
+    {
+      "expression": "module.originalEmojiNonBlank",
+      "group": "original-control",
+      "id": "module-emoji",
+      "mode": "string"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-blank",
+      "group": "controls",
+      "expression": "\" \" as String(isBlank)"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-notblank",
+      "group": "controls",
+      "expression": "\"a\" as String(isNotBlank)"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-blank-failure",
+      "group": "controls",
+      "expression": "\"a\" as String(isBlank)"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-notblank-failure",
+      "group": "controls",
+      "expression": "\" \" as String(isNotBlank)"
+    },
+    {
+      "mode": "string",
+      "id": "explicit-this-blank",
+      "group": "controls",
+      "expression": "\" \" as String(this.isBlank)"
+    },
+    {
+      "mode": "string",
+      "id": "explicit-this-notblank",
+      "group": "controls",
+      "expression": "\"a\" as String(this.isNotBlank)"
+    },
+    {
+      "mode": "string",
+      "id": "explicit-this-failure",
+      "group": "controls",
+      "expression": "\"a\" as String(this.isBlank)"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-blank-class",
+      "group": "controls",
+      "expression": "(\" \" as String(isBlank)).getClass().simpleName"
+    },
+    {
+      "mode": "string",
+      "id": "typed-blank",
+      "group": "controls",
+      "expression": "module.typedBlank"
+    },
+    {
+      "mode": "string",
+      "id": "typed-notblank",
+      "group": "controls",
+      "expression": "module.typedNotBlank"
+    },
+    {
+      "mode": "string",
+      "id": "typed-failure",
+      "group": "controls",
+      "expression": "module.typedFailure"
+    },
+    {
+      "mode": "string",
+      "id": "typed-this-blank",
+      "group": "controls",
+      "expression": "module.typedThisBlank"
+    },
+    {
+      "mode": "string",
+      "id": "typed-this-failure",
+      "group": "controls",
+      "expression": "module.typedThisFailure"
+    },
+    {
+      "mode": "string",
+      "id": "typed-property-method",
+      "group": "controls",
+      "expression": "module.typedBlank.isBlank(throw(\"argument\"))"
+    },
+    {
+      "mode": "string",
+      "id": "typed-failure-method",
+      "group": "controls",
+      "expression": "module.typedFailure.isBlank(throw(\"argument\"))"
+    },
+    {
+      "mode": "string",
+      "id": "nullsafe-blank",
+      "group": "controls",
+      "expression": "null?.isBlank"
+    },
+    {
+      "mode": "string",
+      "id": "nullsafe-notblank",
+      "group": "controls",
+      "expression": "null?.isNotBlank"
+    },
+    {
+      "mode": "string",
+      "id": "receiver-first",
+      "group": "controls",
+      "expression": "throw(\"receiver\").isBlank(throw(\"argument\"))"
+    },
+    {
+      "mode": "string",
+      "id": "property-class",
+      "group": "controls",
+      "expression": "\" \".isBlank.getClass().simpleName"
+    },
+    {
+      "mode": "string",
+      "id": "notblank-property-class",
+      "group": "controls",
+      "expression": "\"a\".isNotBlank.getClass().simpleName"
+    },
+    {
+      "mode": "string",
+      "id": "ref-blank-type",
+      "group": "ref-metadata",
+      "expression": "module.refBlankType"
+    },
+    {
+      "mode": "string",
+      "id": "ref-notblank-type",
+      "group": "ref-metadata",
+      "expression": "module.refNotBlankType"
+    },
+    {
+      "mode": "string",
+      "id": "ref-blank-path",
+      "group": "ref-metadata",
+      "expression": "module.refString.isBlank.getPath()[0].property"
+    },
+    {
+      "mode": "string",
+      "id": "ref-notblank-path",
+      "group": "ref-metadata",
+      "expression": "module.refString.isNotBlank.getPath()[0].property"
+    },
+    {
+      "mode": "string",
+      "id": "ref-blank-data",
+      "group": "ref-metadata",
+      "expression": "module.refString.isBlank.getData()"
+    },
+    {
+      "mode": "string",
+      "id": "ref-blank-method",
+      "group": "ref-metadata",
+      "expression": "module.refString.isBlank()"
+    },
+    {
+      "mode": "string",
+      "id": "ref-length-type",
+      "group": "ref-metadata",
+      "expression": "module.refLengthType"
+    },
+    {
+      "mode": "string",
+      "id": "ref-empty-type",
+      "group": "ref-metadata",
+      "expression": "module.refEmptyType"
+    },
+    {
+      "mode": "string",
+      "id": "ref-length-path",
+      "group": "ref-metadata",
+      "expression": "module.refString.length.getPath()[0].property"
+    },
+    {
+      "mode": "string",
+      "id": "ref-empty-path",
+      "group": "ref-metadata",
+      "expression": "module.refString.isEmpty.getPath()[0].property"
+    },
+    {
+      "mode": "string",
+      "id": "notempty-public-empty",
+      "group": "notempty-public",
+      "expression": "\"\".isNotEmpty"
+    },
+    {
+      "mode": "string",
+      "id": "notempty-public-space",
+      "group": "notempty-public",
+      "expression": "\" \".isNotEmpty"
+    },
+    {
+      "mode": "string",
+      "id": "notempty-public-ascii",
+      "group": "notempty-public",
+      "expression": "\"a\".isNotEmpty"
+    },
+    {
+      "mode": "string",
+      "id": "notempty-public-emoji",
+      "group": "notempty-public",
+      "expression": "\"😀\".isNotEmpty"
+    },
+    {
+      "mode": "string",
+      "id": "notempty-public-high",
+      "group": "notempty-public",
+      "expression": "\"\\u{d800}\".isNotEmpty"
+    },
+    {
+      "mode": "string",
+      "id": "lastindex-public-empty",
+      "group": "lastindex-public",
+      "expression": "\"\".lastIndex"
+    },
+    {
+      "mode": "string",
+      "id": "lastindex-public-ascii",
+      "group": "lastindex-public",
+      "expression": "\"a\".lastIndex"
+    },
+    {
+      "mode": "string",
+      "id": "lastindex-public-bmp",
+      "group": "lastindex-public",
+      "expression": "\"abc\".lastIndex"
+    },
+    {
+      "mode": "string",
+      "id": "lastindex-public-emoji",
+      "group": "lastindex-public",
+      "expression": "\"😀\".lastIndex"
+    },
+    {
+      "mode": "string",
+      "id": "lastindex-public-mixed",
+      "group": "lastindex-public",
+      "expression": "\"a😀b\".lastIndex"
+    },
+    {
+      "mode": "string",
+      "id": "lastindex-public-high",
+      "group": "lastindex-public",
+      "expression": "\"\\u{d800}\".lastIndex"
+    },
+    {
+      "mode": "string",
+      "id": "lastindex-public-low",
+      "group": "lastindex-public",
+      "expression": "\"\\u{dc00}\".lastIndex"
+    },
+    {
+      "mode": "string",
+      "id": "lastindex-public-pair-literals",
+      "group": "lastindex-public",
+      "expression": "\"\\u{d800}\\u{dc00}\".lastIndex"
+    },
+    {
+      "mode": "string",
+      "id": "lastindex-public-reverse-pair",
+      "group": "lastindex-public",
+      "expression": "\"\\u{dc00}\\u{d800}\".lastIndex"
+    },
+    {
+      "mode": "string",
+      "id": "lastindex-public-original-emoji",
+      "group": "lastindex-public",
+      "expression": "module.unicodeLastIndex"
+    },
+    {
+      "mode": "string",
+      "id": "length-codepoints-emoji",
+      "group": "length-codepoints",
+      "expression": "\"😀\".length"
+    },
+    {
+      "mode": "string",
+      "id": "length-codepoints-mixed",
+      "group": "length-codepoints",
+      "expression": "\"a😀b\".length"
+    },
+    {
+      "mode": "string",
+      "id": "length-codepoints-pair-literals",
+      "group": "length-codepoints",
+      "expression": "\"\\u{d800}\\u{dc00}\".length"
+    },
+    {
+      "mode": "string",
+      "id": "length-codepoints-reverse-pair",
+      "group": "length-codepoints",
+      "expression": "\"\\u{dc00}\\u{d800}\".length"
+    },
+    {
+      "mode": "string",
+      "id": "property-method-notempty",
+      "group": "property-method",
+      "expression": "\"\".isNotEmpty()"
+    },
+    {
+      "mode": "string",
+      "id": "property-method-lastindex",
+      "group": "property-method",
+      "expression": "\"\".lastIndex()"
+    },
+    {
+      "mode": "string",
+      "id": "property-method-length",
+      "group": "property-method",
+      "expression": "\"\".length()"
+    },
+    {
+      "mode": "string",
+      "id": "property-method-lastindex-throw",
+      "group": "property-method",
+      "expression": "\"\".lastIndex(throw(\"argument\"))"
+    },
+    {
+      "mode": "string",
+      "id": "property-method-wrong-int",
+      "group": "property-method",
+      "expression": "1.lastIndex"
+    },
+    {
+      "mode": "string",
+      "id": "property-method-nullsafe",
+      "group": "property-method",
+      "expression": "null?.lastIndex"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-properties-notempty-good",
+      "group": "implicit-properties",
+      "expression": "\"x\" as String(isNotEmpty)"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-properties-notempty-fail",
+      "group": "implicit-properties",
+      "expression": "\"\" as String(isNotEmpty)"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-properties-notempty-negated",
+      "group": "implicit-properties",
+      "expression": "\"\" as String(!isNotEmpty)"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-properties-lastindex-good",
+      "group": "implicit-properties",
+      "expression": "\"😀\" as String(lastIndex == 0)"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-properties-lastindex-this",
+      "group": "implicit-properties",
+      "expression": "\"😀\" as String(this.lastIndex == 0)"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-properties-lastindex-fail",
+      "group": "implicit-properties",
+      "expression": "\"😀\" as String(lastIndex == 1)"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-properties-length-emoji",
+      "group": "implicit-properties",
+      "expression": "\"😀\" as String(length == 1)"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-properties-empty-good",
+      "group": "implicit-properties",
+      "expression": "\"\" as String(isEmpty)"
+    },
+    {
+      "mode": "string",
+      "id": "implicit-properties-empty-negated",
+      "group": "implicit-properties",
+      "expression": "\"x\" as String(!isEmpty)"
+    },
+    {
+      "mode": "string",
+      "id": "ref-properties-notempty-type",
+      "group": "ref-properties",
+      "expression": "module.refNotEmptyType"
+    },
+    {
+      "mode": "string",
+      "id": "ref-properties-lastindex-type",
+      "group": "ref-properties",
+      "expression": "module.refLastIndexType"
+    },
+    {
+      "mode": "string",
+      "id": "ref-properties-notempty-path",
+      "group": "ref-properties",
+      "expression": "module.refString.isNotEmpty.getPath()[0].property"
+    },
+    {
+      "mode": "string",
+      "id": "ref-properties-lastindex-path",
+      "group": "ref-properties",
+      "expression": "module.refString.lastIndex.getPath()[0].property"
+    },
+    {
+      "mode": "string",
+      "id": "ref-properties-lastindex-method",
+      "group": "ref-properties",
+      "expression": "module.refString.lastIndex()"
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+string	empty	"".isBlank
+string	ascii-space	" ".isBlank
+string	ascii-tabs	"\t\n\r".isBlank
+string	ascii-letter	"a".isBlank
+string	digit	"0".isBlank
+string	nul	"\u{0000}".isBlank
+string	bell	"\u{0007}".isBlank
+string	all-25	"\u{0009}\u{000a}\u{000b}\u{000c}\u{000d}\u{0020}\u{0085}\u{00a0}\u{1680}\u{2000}\u{2001}\u{2002}\u{2003}\u{2004}\u{2005}\u{2006}\u{2007}\u{2008}\u{2009}\u{200a}\u{2028}\u{2029}\u{202f}\u{205f}\u{3000}".isBlank
+string	white-0009	"\u{0009}".isBlank
+string	white-000a	"\u{000a}".isBlank
+string	white-000b	"\u{000b}".isBlank
+string	white-000c	"\u{000c}".isBlank
+string	white-000d	"\u{000d}".isBlank
+string	white-0020	"\u{0020}".isBlank
+string	white-0085	"\u{0085}".isBlank
+string	white-00a0	"\u{00a0}".isBlank
+string	white-1680	"\u{1680}".isBlank
+string	white-2000	"\u{2000}".isBlank
+string	white-2001	"\u{2001}".isBlank
+string	white-2002	"\u{2002}".isBlank
+string	white-2003	"\u{2003}".isBlank
+string	white-2004	"\u{2004}".isBlank
+string	white-2005	"\u{2005}".isBlank
+string	white-2006	"\u{2006}".isBlank
+string	white-2007	"\u{2007}".isBlank
+string	white-2008	"\u{2008}".isBlank
+string	white-2009	"\u{2009}".isBlank
+string	white-200a	"\u{200a}".isBlank
+string	white-2028	"\u{2028}".isBlank
+string	white-2029	"\u{2029}".isBlank
+string	white-202f	"\u{202f}".isBlank
+string	white-205f	"\u{205f}".isBlank
+string	white-3000	"\u{3000}".isBlank
+string	near-0008	"\u{0008}".isBlank
+string	near-000e	"\u{000e}".isBlank
+string	near-001f	"\u{001f}".isBlank
+string	near-007f	"\u{007f}".isBlank
+string	near-0084	"\u{0084}".isBlank
+string	near-0086	"\u{0086}".isBlank
+string	near-009f	"\u{009f}".isBlank
+string	near-00ad	"\u{00ad}".isBlank
+string	near-180e	"\u{180e}".isBlank
+string	near-200b	"\u{200b}".isBlank
+string	near-202a	"\u{202a}".isBlank
+string	near-2060	"\u{2060}".isBlank
+string	near-3001	"\u{3001}".isBlank
+string	near-feff	"\u{feff}".isBlank
+string	leading-letter	"a\u{0020}".isBlank
+string	trailing-letter	"\u{0020}a".isBlank
+string	middle-letter	"\u{00a0}a\u{0085}".isBlank
+string	multi-white	"\u{00a0}\u{0085}\u{202f}".isBlank
+string	space-and-nul	" \u{0000}".isBlank
+string	utf16-high-surrogate	"\u{d800}".isBlank
+string	utf16-low-surrogate	"\u{dc00}".isBlank
+string	utf16-pair	"\u{1f600}".isBlank
+string	utf16-high-low-literals	"\u{d800}\u{dc00}".isBlank
+string	utf16-low-high-literals	"\u{dc00}\u{d800}".isBlank
+string	utf16-white-surrogate-white	"\u{0020}\u{d800}\u{00a0}".isBlank
+string	notblank-empty	"".isNotBlank
+string	notblank-nbsp	"\u{00a0}".isNotBlank
+string	notblank-letter	"a".isNotBlank
+string	notblank-high	"\u{d800}".isNotBlank
+string	property-call	" ".isBlank()
+string	property-arg-throw	" ".isBlank(throw("arg"))
+string	property-arg-value	" ".isBlank(1)
+string	nonblank-call	"a".isNotBlank()
+string	missing-name	" ".isBlanx
+string	wrong-int	(1).isBlank
+string	wrong-bool	true.isBlank
+string	wrong-null	null.isBlank
+string	wrong-list	List(" ").isBlank
+string	wrong-bytes	Bytes(32).isBlank
+string	receiver-throw	throw("receiver").isBlank
+string	wrong-dynamic	new Dynamic {}.isBlank
+string	original-line13	"\u{0009}\u{000A}\u{000B}\u{000C}\u{000D}\u{0020}\u{0085}\u{00A0}\u{1680}\u{2000}\u{2001}\u{2002}\u{2003}\u{2004}\u{2005}\u{2006}\u{2007}\u{2008}\u{2009}\u{200A}\u{2028}\u{2029}\u{202F}\u{205F}\u{3000}".isBlank
+string	module-line13	module.originalLine13
+string	module-emoji	module.originalEmojiNonBlank
+string	implicit-blank	" " as String(isBlank)
+string	implicit-notblank	"a" as String(isNotBlank)
+string	implicit-blank-failure	"a" as String(isBlank)
+string	implicit-notblank-failure	" " as String(isNotBlank)
+string	explicit-this-blank	" " as String(this.isBlank)
+string	explicit-this-notblank	"a" as String(this.isNotBlank)
+string	explicit-this-failure	"a" as String(this.isBlank)
+string	implicit-blank-class	(" " as String(isBlank)).getClass().simpleName
+string	typed-blank	module.typedBlank
+string	typed-notblank	module.typedNotBlank
+string	typed-failure	module.typedFailure
+string	typed-this-blank	module.typedThisBlank
+string	typed-this-failure	module.typedThisFailure
+string	typed-property-method	module.typedBlank.isBlank(throw("argument"))
+string	typed-failure-method	module.typedFailure.isBlank(throw("argument"))
+string	nullsafe-blank	null?.isBlank
+string	nullsafe-notblank	null?.isNotBlank
+string	receiver-first	throw("receiver").isBlank(throw("argument"))
+string	property-class	" ".isBlank.getClass().simpleName
+string	notblank-property-class	"a".isNotBlank.getClass().simpleName
+string	ref-blank-type	module.refBlankType
+string	ref-notblank-type	module.refNotBlankType
+string	ref-blank-path	module.refString.isBlank.getPath()[0].property
+string	ref-notblank-path	module.refString.isNotBlank.getPath()[0].property
+string	ref-blank-data	module.refString.isBlank.getData()
+string	ref-blank-method	module.refString.isBlank()
+string	ref-length-type	module.refLengthType
+string	ref-empty-type	module.refEmptyType
+string	ref-length-path	module.refString.length.getPath()[0].property
+string	ref-empty-path	module.refString.isEmpty.getPath()[0].property
+string	notempty-public-empty	"".isNotEmpty
+string	notempty-public-space	" ".isNotEmpty
+string	notempty-public-ascii	"a".isNotEmpty
+string	notempty-public-emoji	"😀".isNotEmpty
+string	notempty-public-high	"\u{d800}".isNotEmpty
+string	lastindex-public-empty	"".lastIndex
+string	lastindex-public-ascii	"a".lastIndex
+string	lastindex-public-bmp	"abc".lastIndex
+string	lastindex-public-emoji	"😀".lastIndex
+string	lastindex-public-mixed	"a😀b".lastIndex
+string	lastindex-public-high	"\u{d800}".lastIndex
+string	lastindex-public-low	"\u{dc00}".lastIndex
+string	lastindex-public-pair-literals	"\u{d800}\u{dc00}".lastIndex
+string	lastindex-public-reverse-pair	"\u{dc00}\u{d800}".lastIndex
+string	lastindex-public-original-emoji	module.unicodeLastIndex
+string	length-codepoints-emoji	"😀".length
+string	length-codepoints-mixed	"a😀b".length
+string	length-codepoints-pair-literals	"\u{d800}\u{dc00}".length
+string	length-codepoints-reverse-pair	"\u{dc00}\u{d800}".length
+string	property-method-notempty	"".isNotEmpty()
+string	property-method-lastindex	"".lastIndex()
+string	property-method-length	"".length()
+string	property-method-lastindex-throw	"".lastIndex(throw("argument"))
+string	property-method-wrong-int	1.lastIndex
+string	property-method-nullsafe	null?.lastIndex
+string	implicit-properties-notempty-good	"x" as String(isNotEmpty)
+string	implicit-properties-notempty-fail	"" as String(isNotEmpty)
+string	implicit-properties-notempty-negated	"" as String(!isNotEmpty)
+string	implicit-properties-lastindex-good	"😀" as String(lastIndex == 0)
+string	implicit-properties-lastindex-this	"😀" as String(this.lastIndex == 0)
+string	implicit-properties-lastindex-fail	"😀" as String(lastIndex == 1)
+string	implicit-properties-length-emoji	"😀" as String(length == 1)
+string	implicit-properties-empty-good	"" as String(isEmpty)
+string	implicit-properties-empty-negated	"x" as String(!isEmpty)
+string	ref-properties-notempty-type	module.refNotEmptyType
+string	ref-properties-lastindex-type	module.refLastIndexType
+string	ref-properties-notempty-path	module.refString.isNotEmpty.getPath()[0].property
+string	ref-properties-lastindex-path	module.refString.lastIndex.getPath()[0].property
+string	ref-properties-lastindex-method	module.refString.lastIndex()

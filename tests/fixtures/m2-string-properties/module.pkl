@@ -1,0 +1,24 @@
+import "pkl:ref"
+originalLine13 = "\u{0009}\u{000A}\u{000B}\u{000C}\u{000D}\u{0020}\u{0085}\u{00A0}\u{1680}\u{2000}\u{2001}\u{2002}\u{2003}\u{2004}\u{2005}\u{2006}\u{2007}\u{2008}\u{2009}\u{200A}\u{2028}\u{2029}\u{202F}\u{205F}\u{3000}".isBlank
+originalEmojiNonBlank = !"😀😈😍😎😡🤢🤣".isBlank
+
+typedBlank: String(isBlank) = " "
+typedNotBlank: String(isNotBlank) = "a"
+typedFailure: String(isBlank) = "a"
+typedThisBlank: String(this.isBlank) = " "
+typedThisFailure: String(this.isBlank) = "a"
+
+class D extends ref.Domain {
+  function renderReference(reference: ref.Reference<D, Any>): String = "ref"
+}
+local domain = new D {}
+refString = ref.Reference(domain, String, null)
+
+refBlankType = refString.isBlank is ref.Reference<D, Boolean>
+refNotBlankType = refString.isNotBlank is ref.Reference<D, Boolean>
+refLengthType = refString.length is ref.Reference<D, Int>
+refEmptyType = refString.isEmpty is ref.Reference<D, Boolean>
+
+refNotEmptyType = refString.isNotEmpty is ref.Reference<D, Boolean>
+refLastIndexType = refString.lastIndex is ref.Reference<D, Int>
+unicodeLastIndex = "😀😈😍😎😡🤢🤣".lastIndex

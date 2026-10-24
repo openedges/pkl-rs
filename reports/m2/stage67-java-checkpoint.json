@@ -1,0 +1,96 @@
+{
+  "all_archive_payloads_and_modes_read_back": true,
+  "archive": {
+    "bytes": 2875264,
+    "path": "reports/m2/stage67-java-evidence.tar.gz",
+    "sha256": "018b3f6015e236050c116bbd103b808450a4cb82b8220f6e9db9935fdc22642c"
+  },
+  "archive_inventory_sha256": "96f3c49b038d19ed704eed5a7c3d408b66124d9a5b30af04fe3e2fa19850ce93",
+  "archive_members": 21854,
+  "authority": {
+    "archive_sha256": "a0dc5929d76467b30c92bb82fb54867e8a4ba4b4cac6d648eb344d03af596ae5",
+    "baseline": "Pkl 0.32.0",
+    "candidate_compatibility_passes_claimed": 0,
+    "direct_bitset": {
+      "jdk_bitset_sha256": "70a0045776ee862d943e8eb43512ca18bae72c522b49e8a2b29e36af26ef4a95",
+      "pkl_bitset_sha256": "2861bb010a0faac3ae03df880d56379f8ea0890e5d1d7089cd4cd9a804d43e57",
+      "raw_repetitions_equal": true
+    },
+    "fileset_sha256": "79d048ce5125198f9e2ce1024e0942557c32a99c65169655fcf5e7f68edcdb5c",
+    "members": 6233,
+    "module_uri": "file:///stage67/string-properties.pkl",
+    "raw_repetitions_equal": true,
+    "rows": 146,
+    "statuses": {
+      "error": 29,
+      "success": 117
+    }
+  },
+  "baseline": "Pkl 0.32.0",
+  "baseline_head": "1a07503cf01076e5a187d6cde86cd5f1c9b4c44c",
+  "candidate_compatibility_passes_claimed": 0,
+  "direct_BMP_bitset_supplement": {
+    "boundary": "Direct pinned Java StringUtils/JDK bitsets, separate from public Pkl expression calls",
+    "fixture_member": "tests/fixtures/m2-string-properties/pkl-whitespace-bmp.bitset.bin",
+    "identity": {
+      "bytes": 8192,
+      "path": "tests/fixtures/m2-string-properties/pkl-whitespace-bmp.bitset.bin",
+      "sha256": "2861bb010a0faac3ae03df880d56379f8ea0890e5d1d7089cd4cd9a804d43e57"
+    }
+  },
+  "fixture_path": "tests/fixtures/m2-string-properties",
+  "history": {
+    "blank_oracle_01": "One authored syntax error preserved; corrected 77-row capture02 remains exploration history.",
+    "control_oracle_01": "Local Reference query and generic syntax mistakes preserved; module-bound control capture02 corrected them.",
+    "properties_capture_01": "A public 146-row raw-valid producer-audit prose attempt, superseded by capture02's reusable shared verifier wording.",
+    "seal_01": "First seal lacked three direct Java producer/lock copies; exact attempted fixture bytes are preserved under fixture-attempt; seal02 closes the source set."
+  },
+  "independent_review": {
+    "bytes": 11334,
+    "path": "target/m2/stage67-string-properties-review-01/report.json",
+    "sha256": "0271c09d91824147104fb24fa8ffb94ec8395674f9d3d59e70020da532c39223"
+  },
+  "kind": "stage67-independent-Java-String-properties",
+  "limits": [
+    "Java authority only; no Rust, native, N-API, browser, full original-program, full M2, or performance pass is claimed.",
+    "The 146 public string rows and direct internal BMP bitsets have distinct verification boundaries.",
+    "The publisher process and its raw streams postdate this archive and are published separately.",
+    "Existing mismatches, unsupported original programs and blocked requirements remain open."
+  ],
+  "ordinary_pkl_errors": 29,
+  "public_expression_rows": 146,
+  "public_successes": 117,
+  "publication_inputs_stable": true,
+  "published_directories": [
+    "stage67-string-blank-investigation-01",
+    "stage67-string-blank-investigation-02",
+    "stage67-string-blank-launch-01",
+    "stage67-string-blank-launch-02",
+    "stage67-string-blank-oracle-01",
+    "stage67-string-blank-oracle-02",
+    "stage67-string-blank-findings-01",
+    "stage67-string-blank-jdk-prep-01",
+    "stage67-string-blank-jdk-01",
+    "stage67-string-blank-controls-exploration-01",
+    "stage67-string-blank-controls-exploration-02",
+    "stage67-string-blank-controls-oracle-01",
+    "stage67-string-blank-controls-oracle-02",
+    "stage67-string-properties-exploration-03",
+    "stage67-string-properties-oracle-03",
+    "stage67-string-properties-launch-01",
+    "stage67-string-properties-launch-02",
+    "stage67-string-properties-oracle-01",
+    "stage67-string-properties-oracle-02",
+    "stage67-string-properties-seal-01",
+    "stage67-string-properties-seal-02",
+    "stage67-string-properties-validation-01",
+    "stage67-string-properties-review-01"
+  ],
+  "reviewed_prior_blank_expression_prefix": 77,
+  "schema": 1,
+  "validation": {
+    "bytes": 11025,
+    "path": "target/m2/stage67-string-properties-validation-01/report.json",
+    "sha256": "d6767d52b0215b945c2e9be8b577d861f85eeec77ce81d100ad34a764107e2d9"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "included_in_java_archive": false,
+  "kind": "stage67-Java-publication-actual-process",
+  "process": {
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-java-publication-01/publish.py"
+    ],
+    "candidate_compatibility_passes_claimed": 0,
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+    "exit_code": 0,
+    "finished_epoch": 1792883464.8650298,
+    "host": {
+      "machine": "arm64",
+      "node": "research-macmini1.local",
+      "processor": "arm",
+      "release": "27.0.0",
+      "system": "Darwin",
+      "version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:27 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8103"
+    },
+    "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "schema": 1,
+    "source_after": [
+      {
+        "bytes": 2702,
+        "path": "target/m2/stage67-java-publication-01/run.py",
+        "sha256": "d1ace9fae29f76894346d862469c8a813c671c9bb45fc20b981ff5dcb478e13e"
+      },
+      {
+        "bytes": 13546,
+        "path": "target/m2/stage67-java-publication-01/publish.py",
+        "sha256": "2625ed4539eac6bb132d8ae686dfaaa4a9075cd2188a0676a29da470f7de81a6"
+      },
+      {
+        "bytes": 947,
+        "path": "target/m2/stage67-java-publication-01/directories.json",
+        "sha256": "03a282ffac9f949d5bf81989473b17f1f17c9f77b726a29f95c22341d43ab5c1"
+      },
+      {
+        "bytes": 10630,
+        "path": "target/m2/stage67-java-publication-01/initial-preparation/publish.py",
+        "sha256": "806abfb7b38888c2b540be089b6180e1bac4069aae59be44faeaa187b6f8ad9f"
+      }
+    ],
+    "source_before": [
+      {
+        "bytes": 2702,
+        "path": "target/m2/stage67-java-publication-01/run.py",
+        "sha256": "d1ace9fae29f76894346d862469c8a813c671c9bb45fc20b981ff5dcb478e13e"
+      },
+      {
+        "bytes": 13546,
+        "path": "target/m2/stage67-java-publication-01/publish.py",
+        "sha256": "2625ed4539eac6bb132d8ae686dfaaa4a9075cd2188a0676a29da470f7de81a6"
+      },
+      {
+        "bytes": 947,
+        "path": "target/m2/stage67-java-publication-01/directories.json",
+        "sha256": "03a282ffac9f949d5bf81989473b17f1f17c9f77b726a29f95c22341d43ab5c1"
+      },
+      {
+        "bytes": 10630,
+        "path": "target/m2/stage67-java-publication-01/initial-preparation/publish.py",
+        "sha256": "806abfb7b38888c2b540be089b6180e1bac4069aae59be44faeaa187b6f8ad9f"
+      }
+    ],
+    "source_stable": true,
+    "started_epoch": 1792883453.180942,
+    "stderr": {
+      "bytes": 0,
+      "path": "target/m2/stage67-java-publication-01/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 617,
+      "path": "target/m2/stage67-java-publication-01/stdout.bin",
+      "sha256": "0cd8e05a978b20ca1472ea48c052fd4503324ab513b390267564bfe6b747b916"
+    }
+  },
+  "process_base64": "ewogICJhcmd2IjogWwogICAgIi9vcHQvaG9tZWJyZXcvb3B0L3B5dGhvbkAzLjE0L2Jpbi9weXRob24zLjE0IiwKICAgICItQiIsCiAgICAiL1VzZXJzL2NvZHkuaWouaHdhbmcvUHJvamVjdHMvcGtsLXJzLnN0YWdlNTcvdGFyZ2V0L20yL3N0YWdlNjctamF2YS1wdWJsaWNhdGlvbi0wMS9wdWJsaXNoLnB5IgogIF0sCiAgImNhbmRpZGF0ZV9jb21wYXRpYmlsaXR5X3Bhc3Nlc19jbGFpbWVkIjogMCwKICAiY3dkIjogIi9Vc2Vycy9jb2R5LmlqLmh3YW5nL1Byb2plY3RzL3BrbC1ycy5zdGFnZTU3IiwKICAiZXhpdF9jb2RlIjogMCwKICAiZmluaXNoZWRfZXBvY2giOiAxNzkyODgzNDY0Ljg2NTAyOTgsCiAgImhvc3QiOiB7CiAgICAibWFjaGluZSI6ICJhcm02NCIsCiAgICAibm9kZSI6ICJyZXNlYXJjaC1tYWNtaW5pMS5sb2NhbCIsCiAgICAicHJvY2Vzc29yIjogImFybSIsCiAgICAicmVsZWFzZSI6ICIyNy4wLjAiLAogICAgInN5c3RlbSI6ICJEYXJ3aW4iLAogICAgInZlcnNpb24iOiAiRGFyd2luIEtlcm5lbCBWZXJzaW9uIDI3LjAuMDogVHVlIEF1ZyAxMSAyMTowNToyNyBQRFQgMjAyNjsgcm9vdDp4bnUtMTM0MzIuMS45fjEvUkVMRUFTRV9BUk02NF9UODEwMyIKICB9LAogICJweXRob24iOiAiMy4xNC44IChtYWluLCBTZXAgMzAgMjAyNiwgMTc6NTU6MDkpIFtDbGFuZyAyMS4wLjAgKGNsYW5nLTIxMDAuMy4zNC4yKV0iLAogICJzY2hlbWEiOiAxLAogICJzb3VyY2VfYWZ0ZXIiOiBbCiAgICB7CiAgICAgICJieXRlcyI6IDI3MDIsCiAgICAgICJwYXRoIjogInRhcmdldC9tMi9zdGFnZTY3LWphdmEtcHVibGljYXRpb24tMDEvcnVuLnB5IiwKICAgICAgInNoYTI1NiI6ICJkMWFjZTlmYWUyOWY3Njg5NDM0NmQ4NjI0NjljOGE4MTNjNjcxYzliYjQ1ZmMyMGI5ODFmZjVkY2I0NzhlMTNlIgogICAgfSwKICAgIHsKICAgICAgImJ5dGVzIjogMTM1NDYsCiAgICAgICJwYXRoIjogInRhcmdldC9tMi9zdGFnZTY3LWphdmEtcHVibGljYXRpb24tMDEvcHVibGlzaC5weSIsCiAgICAgICJzaGEyNTYiOiAiMjYyNWVkNDUzOWVhYzZiYjEzMmQ4YWU2ODZkZmFhYTRhOTA3NWNkMjE4OGEwNjc2YTI5ZGE0NzBmN2RlODFhNiIKICAgIH0sCiAgICB7CiAgICAgICJieXRlcyI6IDk0NywKICAgICAgInBhdGgiOiAidGFyZ2V0L20yL3N0YWdlNjctamF2YS1wdWJsaWNhdGlvbi0wMS9kaXJlY3Rvcmllcy5qc29uIiwKICAgICAgInNoYTI1NiI6ICIwM2EyODJmZmFjOWY5NDlkNWJmODE5ODk0NzNiMTdmMWYxN2M5Zjc3YjcyNmEyOWY5NWMyMjM0MWQ0M2FiNWMxIgogICAgfSwKICAgIHsKICAgICAgImJ5dGVzIjogMTA2MzAsCiAgICAgICJwYXRoIjogInRhcmdldC9tMi9zdGFnZTY3LWphdmEtcHVibGljYXRpb24tMDEvaW5pdGlhbC1wcmVwYXJhdGlvbi9wdWJsaXNoLnB5IiwKICAgICAgInNoYTI1NiI6ICI4MDZhYmZiN2IzODg4OGMyYjU0MGJlMDg5YjYxODBlMWJhYzQwNjlhYWU1OWJlNDRmYWVhYTE4N2I2ZjhhZDlmIgogICAgfQogIF0sCiAgInNvdXJjZV9iZWZvcmUiOiBbCiAgICB7CiAgICAgICJieXRlcyI6IDI3MDIsCiAgICAgICJwYXRoIjogInRhcmdldC9tMi9zdGFnZTY3LWphdmEtcHVibGljYXRpb24tMDEvcnVuLnB5IiwKICAgICAgInNoYTI1NiI6ICJkMWFjZTlmYWUyOWY3Njg5NDM0NmQ4NjI0NjljOGE4MTNjNjcxYzliYjQ1ZmMyMGI5ODFmZjVkY2I0NzhlMTNlIgogICAgfSwKICAgIHsKICAgICAgImJ5dGVzIjogMTM1NDYsCiAgICAgICJwYXRoIjogInRhcmdldC9tMi9zdGFnZTY3LWphdmEtcHVibGljYXRpb24tMDEvcHVibGlzaC5weSIsCiAgICAgICJzaGEyNTYiOiAiMjYyNWVkNDUzOWVhYzZiYjEzMmQ4YWU2ODZkZmFhYTRhOTA3NWNkMjE4OGEwNjc2YTI5ZGE0NzBmN2RlODFhNiIKICAgIH0sCiAgICB7CiAgICAgICJieXRlcyI6IDk0NywKICAgICAgInBhdGgiOiAidGFyZ2V0L20yL3N0YWdlNjctamF2YS1wdWJsaWNhdGlvbi0wMS9kaXJlY3Rvcmllcy5qc29uIiwKICAgICAgInNoYTI1NiI6ICIwM2EyODJmZmFjOWY5NDlkNWJmODE5ODk0NzNiMTdmMWYxN2M5Zjc3YjcyNmEyOWY5NWMyMjM0MWQ0M2FiNWMxIgogICAgfSwKICAgIHsKICAgICAgImJ5dGVzIjogMTA2MzAsCiAgICAgICJwYXRoIjogInRhcmdldC9tMi9zdGFnZTY3LWphdmEtcHVibGljYXRpb24tMDEvaW5pdGlhbC1wcmVwYXJhdGlvbi9wdWJsaXNoLnB5IiwKICAgICAgInNoYTI1NiI6ICI4MDZhYmZiN2IzODg4OGMyYjU0MGJlMDg5YjYxODBlMWJhYzQwNjlhYWU1OWJlNDRmYWVhYTE4N2I2ZjhhZDlmIgogICAgfQogIF0sCiAgInNvdXJjZV9zdGFibGUiOiB0cnVlLAogICJzdGFydGVkX2Vwb2NoIjogMTc5Mjg4MzQ1My4xODA5NDIsCiAgInN0ZGVyciI6IHsKICAgICJieXRlcyI6IDAsCiAgICAicGF0aCI6ICJ0YXJnZXQvbTIvc3RhZ2U2Ny1qYXZhLXB1YmxpY2F0aW9uLTAxL3N0ZGVyci5iaW4iLAogICAgInNoYTI1NiI6ICJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IgogIH0sCiAgInN0ZG91dCI6IHsKICAgICJieXRlcyI6IDYxNywKICAgICJwYXRoIjogInRhcmdldC9tMi9zdGFnZTY3LWphdmEtcHVibGljYXRpb24tMDEvc3Rkb3V0LmJpbiIsCiAgICAic2hhMjU2IjogIjBjZDhlMDVhOTc4YjIwY2ExNDcyZWE0OGMwNTJmZDQ1MDMzMjRhYjUxM2IzOTAyNjc1NjRiZmU2Yjc0N2I5MTYiCiAgfQp9Cg==",
+  "process_file": {
+    "bytes": 2701,
+    "path": "target/m2/stage67-java-publication-01/process.json",
+    "sha256": "5dc0ae4188d33cb4babf4fc0259e2fd8dbed18f4028fe678c7053e076a70cf1e"
+  },
+  "schema": 1,
+  "stderr_base64": "",
+  "stdout_base64": "VmVyaWZpZWQgMjE4NTMgZXZpZGVuY2UgZmlsZXM6IC9Vc2Vycy9jb2R5LmlqLmh3YW5nL1Byb2plY3RzL3BrbC1ycy5zdGFnZTU3L3JlcG9ydHMvbTIvc3RhZ2U2Ny1qYXZhLWV2aWRlbmNlLnRhci5negp7ImFyY2hpdmUiOiB7ImJ5dGVzIjogMjg3NTI2NCwgInBhdGgiOiAicmVwb3J0cy9tMi9zdGFnZTY3LWphdmEtZXZpZGVuY2UudGFyLmd6IiwgInNoYTI1NiI6ICIwMThiM2Y2MDE1ZTIzNjA1MGMxMTZiYmQxMDNiODA4NDUwYTRjYjgyYjgyMjBmNmU5ZGI5OTM1ZmRjMjI2NDJjIn0sICJjaGVja3BvaW50IjogeyJieXRlcyI6IDQ0NTAsICJwYXRoIjogInJlcG9ydHMvbTIvc3RhZ2U2Ny1qYXZhLWNoZWNrcG9pbnQuanNvbiIsICJzaGEyNTYiOiAiZDA5ZTQxNzA5ODU2MDVlYjAzNWRjNjFmNmE5MjQ5MTBhNmRlNzllOGQwYmY3YjI1MTFmMjAxMDljNzliNjZmYiJ9LCAibWVtYmVycyI6IDIxODU0LCAicHVibGljYXRpb24iOiB7ImJ5dGVzIjogMjI5MSwgInBhdGgiOiAicmVwb3J0cy9tMi9zdGFnZTY3LWphdmEtcHVibGljYXRpb24uanNvbiIsICJzaGEyNTYiOiAiMzQ3YzJiMzU0NjM5Y2VjZDkxOTNlNDJkNjQ4MjJkZDIzY2NiYjM4MDIwZmU5ZDBjMDEyOTY4NmNhYWE3Y2MzYyJ9fQo="
+}

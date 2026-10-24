@@ -1,0 +1,44 @@
+{
+  "archive_sha256": "a0dc5929d76467b30c92bb82fb54867e8a4ba4b4cac6d648eb344d03af596ae5",
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "captures": {
+    "capture-02": "stage67-string-properties-oracle-02",
+    "jdk-01": "stage67-string-blank-jdk-01"
+  },
+  "fileset_sha256": "79d048ce5125198f9e2ce1024e0942557c32a99c65169655fcf5e7f68edcdb5c",
+  "java_helper": {
+    "bytes": 4819,
+    "mode": 420,
+    "sha256": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0"
+  },
+  "members": 6233,
+  "producer": {
+    "bytes": 13984,
+    "mode": 420,
+    "sha256": "c6386efeb90c02550fd6f71917282a4e830f2e69bf2dc24e7cef1f7bf39b091a"
+  },
+  "root_inputs": {
+    "cases.json": {
+      "bytes": 21989,
+      "mode": 420,
+      "sha256": "79e5064d943ac38f074e014a3ec516d8ac3835e7d52e1d358c09658a2e96258b"
+    },
+    "module.pkl": {
+      "bytes": 1133,
+      "mode": 420,
+      "sha256": "809e32ea351d9ef6d60ba10fa7382ae24078c087dbd292958581f0bb624051d2"
+    },
+    "pkl-whitespace-bmp.bitset.bin": {
+      "bytes": 8192,
+      "mode": 420,
+      "sha256": "2861bb010a0faac3ae03df880d56379f8ea0890e5d1d7089cd4cd9a804d43e57"
+    },
+    "queries.tsv": {
+      "bytes": 7266,
+      "mode": 420,
+      "sha256": "7082d796c57fa9b4d220957c0f58dbe79ee327a8d57fcd743018de7aa8845eb3"
+    }
+  },
+  "schema": 1
+}

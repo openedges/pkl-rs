@@ -1,5 +1,27 @@
 # M2 language evidence
 
+### Stage67 String properties — Java authority checkpoint
+
+The [Java checkpoint](stage67-java-checkpoint.json) seals 146 expressions at
+`file:///stage67/string-properties.pkl`: 117 successful results and 29 ordinary
+Pkl errors, with equal raw channels in two fresh JVM sessions. The cases cover
+String blankness, emptiness, code-point length and last index, implicit and
+explicit constraints, synthetic Reference types, and property/method error
+ordering. The original 77 blankness expressions remain an ordered prefix.
+
+A separate direct Java supplement preserves the 8,192-byte BMP membership
+bitset for Pkl's 25-character White_Space set and its differences from JDK
+whitespace predicates. It is separate from the public Pkl expression boundary.
+The [history archive](stage67-java-evidence.tar.gz) retains the 23 Java evidence
+directories, including corrected exploration and seal attempts. Full payload,
+mode, and SHA readback passed; the [actual publication receipt](stage67-java-publication.json)
+retains the publisher's exit status and raw channels.
+
+The fixture verifier, seven tests in normal and optimized Python, inventory
+freshness, and independent source/fixture review passed. This checkpoint claims
+zero candidate compatibility passes. Rust, actual platform, full current
+corpus, and M2 completion results remain separate; existing failures stay open.
+
 ### Stage66 implementation and local comparisons
 
 Stage 66 implements shared UTF-16 string reversal and shallow List/Set reversal,
