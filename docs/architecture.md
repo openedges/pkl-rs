@@ -89,10 +89,16 @@ The Java oracle is a development and validation tool. Product evaluation must no
 
 ## M2 implementation in progress
 
-Classes and closures live in the evaluator's existing traced arena. Class
-prototypes use the same parent chain as amended objects, and their captured
-environments participate in collection. Class identity and inherited member
-checks are shared across all three runtime targets. Type aliases resolve in
+Classes and closures live in the evaluator's existing traced arena. A Class
+descriptor traces its instance prototype and superclass descriptor; the prototype
+owns the declaration's members, annotations, and partial initialization state.
+Prototypes and instances trace their Class descriptor. Immutable programs retain
+declaration keys, not evaluator heap handles. The VM roots its canonical builtin
+classes while user classes follow their actual object/code ownership lifetimes.
+Class identity and inherited member checks are shared across all three runtime
+targets. Representation-based type checks and exact-class versus typed-ancestor
+converter lookup remain distinct from the superclass graph; see the
+[Class-value contract](m2-class-values.md). Type aliases resolve in
 their declaration scope; generic arguments resolve at their use site. The
 timing of class initialization and type validation is part of compatibility,
 including declarations whose errors remain unobserved until they are used.

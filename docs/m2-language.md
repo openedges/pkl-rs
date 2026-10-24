@@ -1,5 +1,10 @@
 # M2 language verification
 
+The [Class-value contract](m2-class-values.md) records declaration/prototype
+identity, superclass and converter rules, and independent Java observations.
+Common query/logger comparisons and the required provider/export supplements
+have separate verdicts; a matching selected Class matrix does not close M2.
+
 The [method-deprecation contract](m2-deprecation.md) adds independent Java logger
 observations, including implicit method calls and sequential evaluator lifetimes.
 Its reference checkpoint and ongoing candidate implementation do not close the

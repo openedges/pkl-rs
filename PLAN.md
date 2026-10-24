@@ -1464,6 +1464,23 @@ evaluator 간 공유 수명 또는 M2 종료 조건을 완료 처리하지 않�
 디버그 심볼 크기를 줄일 경우 `CARGO_PROFILE_DEV_DEBUG=0`을 실행 조건으로 기록하며,
 debug assertion·heap 제한·성능 판정 조건을 바꾸지 않습니다.
 
+Java 기준 A는 `31eef43`에 커밋·푸시했습니다. [Class 검증 계약](docs/m2-class-values.md)은
+44개 세션의 두 반복과 공통 query/logger 경계, 별도 provider SPI·공개 Class export
+의무를 구분합니다. 첫 native 후보의 실제 88회 비교는 일치 58·불일치 14·미지원 10·
+oracle 오류 6이며, 해당 고정 후보의 개발 기록으로 보존합니다. 이 결과를 후속 수정
+후보나 Node·브라우저 결과로 승계하지 않습니다. converter 네 그룹의 공통 `[Typed]`
+이름 해석, Java의 `VmTyped` 표현 기반 판정, builtin 이름의 타입 특수화와 오류 frame
+owner를 수정한 뒤 같은 입력을 다시 비교합니다. 실제 DataSize·Bytes·IntSeq·Regex
+값 연산과 미실행 provider/export API는 별도 미완료 의무로 유지합니다.
+
+두 번째 고정 native 후보는 같은 88회에서 일치 78·불일치 4·oracle 오류 6입니다.
+이전 Class 관련 실패 20회가 일치로 바뀌었으며, 남은 일반 불일치는 실제 값 생성의
+미구현 경로입니다. 전체 base 선언을 별도로 대조하여 선택 사례에 없던
+`YamlRenderer`, `PListRenderer`, `PropertiesRenderer`, `RegexMatch`, `PcfRenderDirective`
+Class 메타데이터 결손도 확인했습니다. 별도 Java 관찰과 함께 이 결손을 보완하고,
+최종 후보의 필수 Rust 검사·원본 프로그램·실제 Node·브라우저 결과를 취득합니다.
+기존 두 후보의 원시 결과는 보존하며 아직 실행하지 않은 검사를 통과로 집계하지 않습니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

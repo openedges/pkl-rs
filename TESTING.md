@@ -92,6 +92,14 @@ Run all verification-tool regressions with `python3 -m unittest discover -s tool
 
 ## Compatibility Comparisons
 
+The [Class-value contract](docs/m2-class-values.md) separates declaration identity,
+instance prototypes, superclass links, and representation-based type/converter
+rules. Its independent Java query/logger observations, ModuleKey SPI observations,
+and exported-Class identity observations are distinct verification boundaries.
+The common native/portable matrix cannot close the required provider/export
+supplements. Run fixture integrity, strict query comparison, and full API checks
+separately; retain unsupported values and callback/oracle failures.
+
 The [object-body parameter contract](docs/m2-object-parameters.md) keeps Java
 observations for Mixins, function amendments, and lexical captures independently
 pinned. Native and portable comparisons use the original arbitrary expressions
