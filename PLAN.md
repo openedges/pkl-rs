@@ -1202,7 +1202,7 @@ candidate04의 실제 세 대상에서는 각각 152개 세션·2,108회 중 원
 이전 실패 후보, Java fixture·실제 native/Node/Chromium 결과와 독립 검토를
 보관했습니다. 증거 archive 27개는 복사 후 원본 SHA-256·크기를 대조했습니다.
 고정 소스 437개와 fixture 75,863개를 포함한 76,302개 경로를 staged Git blob과
-대조한 기록도 유지하며, 실제 구현 커밋과의 연결은 커밋 후 별도로 확인합니다.
+대조한 기록도 유지합니다. [실제 커밋 대조](reports/m2/stage51-implementation-source-binding.json)에서 모든 경로·mode·OID가 구현 커밋 `f5d1f7a`와 일치했고 `origin/main`에 푸시했습니다. 원래 검증 기록의 커밋 전 관찰은 그대로 보존합니다.
 이는 제한된 구현 체크포인트이며 전체 선택·순차 evaluator 회귀와 M2 종료 조건은
 계속 열려 있습니다.
 
