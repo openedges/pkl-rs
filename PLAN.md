@@ -1772,6 +1772,16 @@ wrapper identity, mutable byte array export와 제품 API를 문자열 비교 �
 의존성과 나머지 원본 실패를 우선 확인합니다. M2의 아홉 영역·전체 완료 조건과
 성능·메모리 목표는 계속 열려 있습니다.
 
+Stage 60 구현·네 증거 묶음은 `64df1bfbe3b620f2e9393d1f883fd48f5342b4f3`에
+커밋·푸시했습니다. [실제 Git 소스 대조](reports/m2/stage60-source-binding.json)는
+runtime 입력 165,254개가 그 커밋과 일치하고 문서 네 개가 기록된 base 소스임을
+확인했습니다. native 263개·M1 237개·platform wrapper 522개·원본 비교 4,584개·
+도구 218개도 일치합니다. 비교 wrapper는 소스 327개와 Git 소스 파일이 아닌
+실행 스크립트 한 개를 구분하며, 후자는 커밋된 archive의 정확한 바이트로
+증명합니다. 네 archive 전체 member 재검증과 처음 실패한 대조 도구 기록도
+[별도 증거](reports/m2/stage60-source-binding-evidence.tar.gz)에 보존했습니다.
+이 대조는 평가·검사를 다시 실행한 결과가 아닙니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

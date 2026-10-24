@@ -50,6 +50,18 @@ readback. These are local macOS arm64 results. Typed exports and mutable Java
 array aliasing, complete wrapper identity, full M2, product/release platforms,
 and speed/peak-memory targets remain open.
 
+The implementation and four evidence publications were committed as
+`64df1bfbe3b620f2e9393d1f883fd48f5342b4f3` and pushed to remote `main`.
+The [Git source audit](stage60-source-binding.json) verifies 165,254 runtime
+validation inputs against that commit and retains four documents from the
+recorded base commit. Native build inputs (263), M1 inputs (237), platform
+wrapper inputs (522), original-module inputs (4,584), and tool inputs (218)
+match the implementation. The comparison has 327 matching source inputs and
+one generated execution wrapper verified by its exact committed archive bytes.
+All four implementation archives were fully reread. The
+[binding evidence](stage60-source-binding-evidence.tar.gz) preserves the failed
+first audit and corrected result. This audit does not rerun tests or evaluation.
+
 ### Stage59 Duration values — implementation and local comparisons
 
 Stage 59 adds the shared `Duration` value and VM paths for seven units,
