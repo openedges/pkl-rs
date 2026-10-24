@@ -1,0 +1,23 @@
+// Independent Stage62 public lookup-method authority.
+open class HiddenParent {
+  hidden secret: Int = 4
+  visible: Int = 3
+}
+class HiddenChild extends HiddenParent { visible: Int = 5 }
+class LocalThing {
+  local scratch: Int = 8
+  visible: Int = 2
+}
+class Box { value: Int = 1 }
+marker = "lookup-marker"
+dynamicProps = new Dynamic {
+  name = "bird"
+  nullable = null
+  ["entry"] = 12
+  [1] = "one"
+  "element"
+}
+dynamicInherited = (dynamicProps) { name = "owl"; extra = true }
+entryDynamic = new Dynamic { ["cached"] = marker.length }
+listingBase = new Listing { 1; null; 3 }
+mappingBase = new Mapping { ["a"] = 1; ["null"] = null; [1] = "one" }

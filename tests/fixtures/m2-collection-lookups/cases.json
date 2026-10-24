@@ -1,0 +1,807 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage62/collection-lookups.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "dyn-has-empty",
+      "group": "dynamic-has-property",
+      "expression": "new Dynamic {}.hasProperty(\"x\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-own",
+      "group": "dynamic-has-property",
+      "expression": "dynamicProps.hasProperty(\"name\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-null",
+      "group": "dynamic-has-property",
+      "expression": "dynamicProps.hasProperty(\"nullable\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-absent",
+      "group": "dynamic-has-property",
+      "expression": "dynamicProps.hasProperty(\"missing\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-entry",
+      "group": "dynamic-has-property",
+      "expression": "dynamicProps.hasProperty(\"entry\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-numeric-entry",
+      "group": "dynamic-has-property",
+      "expression": "dynamicProps.hasProperty(\"1\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-inherited",
+      "group": "dynamic-has-property",
+      "expression": "dynamicInherited.hasProperty(\"nullable\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-overridden",
+      "group": "dynamic-has-property",
+      "expression": "dynamicInherited.hasProperty(\"name\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-added",
+      "group": "dynamic-has-property",
+      "expression": "dynamicInherited.hasProperty(\"extra\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-hidden-typed",
+      "group": "dynamic-has-property",
+      "expression": "new HiddenChild {}.toDynamic().hasProperty(\"secret\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-visible-typed",
+      "group": "dynamic-has-property",
+      "expression": "new HiddenChild {}.toDynamic().hasProperty(\"visible\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-local-typed",
+      "group": "dynamic-has-property",
+      "expression": "new LocalThing {}.toDynamic().hasProperty(\"scratch\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-external-method-name",
+      "group": "dynamic-has-property",
+      "expression": "dynamicProps.hasProperty(\"length\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-hidden-default",
+      "group": "dynamic-has-property",
+      "expression": "new Dynamic {}.hasProperty(\"default\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-no-force",
+      "group": "dynamic-has-property",
+      "expression": "new Dynamic { x = throw(\"has-no-force\") }.hasProperty(\"x\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-wrong-int",
+      "group": "dynamic-has-property",
+      "expression": "dynamicProps.hasProperty(1)",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-wrong-null",
+      "group": "dynamic-has-property",
+      "expression": "dynamicProps.hasProperty(null)",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-no-args",
+      "group": "dynamic-has-property",
+      "expression": "dynamicProps.hasProperty()",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-two-args",
+      "group": "dynamic-has-property",
+      "expression": "dynamicProps.hasProperty(\"name\", \"age\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-as-property",
+      "group": "dynamic-has-property",
+      "expression": "dynamicProps.hasProperty",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-high-surrogate",
+      "group": "dynamic-has-property",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic().hasProperty(\"\\u{d800}\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-has-replacement-distinct",
+      "group": "dynamic-has-property",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic().hasProperty(\"\\u{fffd}\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-cache-module-before",
+      "group": "dynamic-cached-string-entry",
+      "expression": "entryDynamic.hasProperty(\"cached\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-cache-module-read-entry",
+      "group": "dynamic-cached-string-entry",
+      "expression": "entryDynamic[\"cached\"]",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-cache-module-after",
+      "group": "dynamic-cached-string-entry",
+      "expression": "entryDynamic.hasProperty(\"cached\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-cache-module-ornull-after",
+      "group": "dynamic-cached-string-entry",
+      "expression": "entryDynamic.getPropertyOrNull(\"cached\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-cache-module-get-after",
+      "group": "dynamic-cached-string-entry",
+      "expression": "entryDynamic.getProperty(\"cached\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-cache-let-before",
+      "group": "dynamic-cached-string-entry",
+      "expression": "let (x = new Dynamic { [\"cached\"] = module.marker.length }) x.hasProperty(\"cached\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-cache-let-after-read",
+      "group": "dynamic-cached-string-entry",
+      "expression": "let (x = new Dynamic { [\"cached\"] = module.marker.length }) x[\"cached\"] >= 0 && x.hasProperty(\"cached\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-cache-let-after-map",
+      "group": "dynamic-cached-string-entry",
+      "expression": "let (x = new Dynamic { [\"cached\"] = module.marker.length }) x.toMap().length >= 0 && x.hasProperty(\"cached\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-cache-let-still-no-property",
+      "group": "dynamic-cached-string-entry",
+      "expression": "let (x = new Dynamic { [\"cached\"] = module.marker.length }) x[\"cached\"] >= 0 && x.getPropertyOrNull(\"cached\") == null",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-cache-let-get-property",
+      "group": "dynamic-cached-string-entry",
+      "expression": "let (x = new Dynamic { [\"cached\"] = module.marker.length }) x[\"cached\"] >= 0 && x.getProperty(\"cached\") == 13",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-own",
+      "group": "dynamic-get-property",
+      "expression": "dynamicProps.getProperty(\"name\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-null",
+      "group": "dynamic-get-property",
+      "expression": "dynamicProps.getProperty(\"nullable\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-absent",
+      "group": "dynamic-get-property",
+      "expression": "dynamicProps.getProperty(\"missing\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-entry-as-property",
+      "group": "dynamic-get-property",
+      "expression": "dynamicProps.getProperty(\"entry\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-inherited",
+      "group": "dynamic-get-property",
+      "expression": "dynamicInherited.getProperty(\"nullable\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-overridden",
+      "group": "dynamic-get-property",
+      "expression": "dynamicInherited.getProperty(\"name\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-added",
+      "group": "dynamic-get-property",
+      "expression": "dynamicInherited.getProperty(\"extra\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-hidden-typed",
+      "group": "dynamic-get-property",
+      "expression": "new HiddenChild {}.toDynamic().getProperty(\"secret\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-visible-typed",
+      "group": "dynamic-get-property",
+      "expression": "new HiddenChild {}.toDynamic().getProperty(\"visible\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-local-typed",
+      "group": "dynamic-get-property",
+      "expression": "new LocalThing {}.toDynamic().getProperty(\"scratch\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-external-method-name",
+      "group": "dynamic-get-property",
+      "expression": "dynamicProps.getProperty(\"length\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-lazy-error",
+      "group": "dynamic-get-property",
+      "expression": "new Dynamic { x = throw(\"dyn-get-lazy\") }.getProperty(\"x\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-wrong-int",
+      "group": "dynamic-get-property",
+      "expression": "dynamicProps.getProperty(1)",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-wrong-null",
+      "group": "dynamic-get-property",
+      "expression": "dynamicProps.getProperty(null)",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-no-args",
+      "group": "dynamic-get-property",
+      "expression": "dynamicProps.getProperty()",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-two-args",
+      "group": "dynamic-get-property",
+      "expression": "dynamicProps.getProperty(\"name\", \"age\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-as-property",
+      "group": "dynamic-get-property",
+      "expression": "dynamicProps.getProperty",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-high-surrogate",
+      "group": "dynamic-get-property",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic().getProperty(\"\\u{d800}\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-get-high-vs-replacement",
+      "group": "dynamic-get-property",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic().getProperty(\"\\u{fffd}\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-own",
+      "group": "dynamic-get-or-null",
+      "expression": "dynamicProps.getPropertyOrNull(\"name\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-null",
+      "group": "dynamic-get-or-null",
+      "expression": "dynamicProps.getPropertyOrNull(\"nullable\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-absent",
+      "group": "dynamic-get-or-null",
+      "expression": "dynamicProps.getPropertyOrNull(\"missing\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-entry-as-property",
+      "group": "dynamic-get-or-null",
+      "expression": "dynamicProps.getPropertyOrNull(\"entry\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-inherited",
+      "group": "dynamic-get-or-null",
+      "expression": "dynamicInherited.getPropertyOrNull(\"name\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-hidden-typed",
+      "group": "dynamic-get-or-null",
+      "expression": "new HiddenChild {}.toDynamic().getPropertyOrNull(\"secret\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-external-method-name",
+      "group": "dynamic-get-or-null",
+      "expression": "dynamicProps.getPropertyOrNull(\"length\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-lazy-error",
+      "group": "dynamic-get-or-null",
+      "expression": "new Dynamic { x = throw(\"dyn-ornull-lazy\") }.getPropertyOrNull(\"x\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-wrong-int",
+      "group": "dynamic-get-or-null",
+      "expression": "dynamicProps.getPropertyOrNull(1)",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-wrong-null",
+      "group": "dynamic-get-or-null",
+      "expression": "dynamicProps.getPropertyOrNull(null)",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-no-args",
+      "group": "dynamic-get-or-null",
+      "expression": "dynamicProps.getPropertyOrNull()",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-two-args",
+      "group": "dynamic-get-or-null",
+      "expression": "dynamicProps.getPropertyOrNull(\"name\", \"age\")",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-as-property",
+      "group": "dynamic-get-or-null",
+      "expression": "dynamicProps.getPropertyOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "dyn-ornull-high-surrogate",
+      "group": "dynamic-get-or-null",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic().getPropertyOrNull(\"\\u{d800}\")",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-empty-zero",
+      "group": "listing-get-or-null",
+      "expression": "new Listing {}.getOrNull(0)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-zero",
+      "group": "listing-get-or-null",
+      "expression": "listingBase.getOrNull(0)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-null",
+      "group": "listing-get-or-null",
+      "expression": "listingBase.getOrNull(1)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-last",
+      "group": "listing-get-or-null",
+      "expression": "listingBase.getOrNull(2)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-end",
+      "group": "listing-get-or-null",
+      "expression": "listingBase.getOrNull(3)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-negative",
+      "group": "listing-get-or-null",
+      "expression": "listingBase.getOrNull(-1)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-max-int",
+      "group": "listing-get-or-null",
+      "expression": "listingBase.getOrNull(9223372036854775807)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-inherited",
+      "group": "listing-get-or-null",
+      "expression": "(listingBase) { [0] = 9; 4 }.getOrNull(0)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-appended",
+      "group": "listing-get-or-null",
+      "expression": "(listingBase) { 4 }.getOrNull(3)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-lazy-error",
+      "group": "listing-get-or-null",
+      "expression": "new Listing { throw(\"list-ornull-lazy\") }.getOrNull(0)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-missing-no-force",
+      "group": "listing-get-or-null",
+      "expression": "new Listing { throw(\"list-ornull-skip\") }.getOrNull(9)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-typed",
+      "group": "listing-get-or-null",
+      "expression": "(new Listing<Int> { 1; 2 }).getOrNull(1)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-typed-bad",
+      "group": "listing-get-or-null",
+      "expression": "(new Listing<Int> { 1; \"bad\" }).getOrNull(1)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-wrong-string",
+      "group": "listing-get-or-null",
+      "expression": "listingBase.getOrNull(\"1\")",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-wrong-null",
+      "group": "listing-get-or-null",
+      "expression": "listingBase.getOrNull(null)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-no-args",
+      "group": "listing-get-or-null",
+      "expression": "listingBase.getOrNull()",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-two-args",
+      "group": "listing-get-or-null",
+      "expression": "listingBase.getOrNull(0, 1)",
+      "mode": "string"
+    },
+    {
+      "id": "list-ornull-as-property",
+      "group": "listing-get-or-null",
+      "expression": "listingBase.getOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-empty",
+      "group": "listing-get-or-default",
+      "expression": "new Listing {}.getOrDefault(0).getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-present",
+      "group": "listing-get-or-default",
+      "expression": "listingBase.getOrDefault(0)",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-null",
+      "group": "listing-get-or-default",
+      "expression": "listingBase.getOrDefault(1)",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-missing",
+      "group": "listing-get-or-default",
+      "expression": "listingBase.getOrDefault(3).getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-negative",
+      "group": "listing-get-or-default",
+      "expression": "listingBase.getOrDefault(-1).getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-custom-positive",
+      "group": "listing-get-or-default",
+      "expression": "new Listing { default = (i) -> i * 10; 1 }.getOrDefault(2)",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-custom-negative",
+      "group": "listing-get-or-default",
+      "expression": "new Listing { default = (i) -> i * 10; 1 }.getOrDefault(-1)",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-custom-present",
+      "group": "listing-get-or-default",
+      "expression": "new Listing { default = (_) -> throw(\"should-skip\"); 1 }.getOrDefault(0)",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-custom-null",
+      "group": "listing-get-or-default",
+      "expression": "new Listing { default = (_) -> throw(\"should-skip-null\"); null }.getOrDefault(0)",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-custom-throw",
+      "group": "listing-get-or-default",
+      "expression": "new Listing { default = (_) -> throw(\"list-default-throw\"); 1 }.getOrDefault(2)",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-present-throw",
+      "group": "listing-get-or-default",
+      "expression": "new Listing { default = (_) -> 2; throw(\"list-present-throw\") }.getOrDefault(0)",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-typed-missing",
+      "group": "listing-get-or-default",
+      "expression": "(new Listing<Int> { 1 }).getOrDefault(2)",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-typed-bad-return",
+      "group": "listing-get-or-default",
+      "expression": "(new Listing<Int> { default = (_) -> \"bad\"; 1 }).getOrDefault(2)",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-wrong-string",
+      "group": "listing-get-or-default",
+      "expression": "listingBase.getOrDefault(\"1\")",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-no-args",
+      "group": "listing-get-or-default",
+      "expression": "listingBase.getOrDefault()",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-two-args",
+      "group": "listing-get-or-default",
+      "expression": "listingBase.getOrDefault(0, 1)",
+      "mode": "string"
+    },
+    {
+      "id": "list-default-as-property",
+      "group": "listing-get-or-default",
+      "expression": "listingBase.getOrDefault",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-empty",
+      "group": "mapping-get-or-null",
+      "expression": "new Mapping {}.getOrNull(\"x\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-present",
+      "group": "mapping-get-or-null",
+      "expression": "mappingBase.getOrNull(\"a\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-null",
+      "group": "mapping-get-or-null",
+      "expression": "mappingBase.getOrNull(\"null\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-number",
+      "group": "mapping-get-or-null",
+      "expression": "mappingBase.getOrNull(1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-absent",
+      "group": "mapping-get-or-null",
+      "expression": "mappingBase.getOrNull(\"missing\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-inherited",
+      "group": "mapping-get-or-null",
+      "expression": "(mappingBase) { [\"a\"] = 9 }.getOrNull(\"a\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-lazy-error",
+      "group": "mapping-get-or-null",
+      "expression": "new Mapping { [\"x\"] = throw(\"map-ornull-lazy\") }.getOrNull(\"x\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-missing-no-force",
+      "group": "mapping-get-or-null",
+      "expression": "new Mapping { [\"x\"] = throw(\"map-ornull-skip\") }.getOrNull(\"missing\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-object-key",
+      "group": "mapping-get-or-null",
+      "expression": "let (k = new Dynamic { n = 1 }) (new Mapping { [k] = 42 }).getOrNull(new Dynamic { n = 1 })",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-typed",
+      "group": "mapping-get-or-null",
+      "expression": "(new Mapping<String, Int> { [\"x\"] = 2 }).getOrNull(\"x\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-typed-wrong-key",
+      "group": "mapping-get-or-null",
+      "expression": "(new Mapping<String, Int> { [\"x\"] = 2 }).getOrNull(1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-typed-bad-value",
+      "group": "mapping-get-or-null",
+      "expression": "(new Mapping<String, Int> { [\"x\"] = \"bad\" }).getOrNull(\"x\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-no-args",
+      "group": "mapping-get-or-null",
+      "expression": "mappingBase.getOrNull()",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-two-args",
+      "group": "mapping-get-or-null",
+      "expression": "mappingBase.getOrNull(\"a\", 1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-ornull-as-property",
+      "group": "mapping-get-or-null",
+      "expression": "mappingBase.getOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-empty",
+      "group": "mapping-get-or-default",
+      "expression": "new Mapping {}.getOrDefault(\"x\").getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-present",
+      "group": "mapping-get-or-default",
+      "expression": "mappingBase.getOrDefault(\"a\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-null",
+      "group": "mapping-get-or-default",
+      "expression": "mappingBase.getOrDefault(\"null\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-missing",
+      "group": "mapping-get-or-default",
+      "expression": "mappingBase.getOrDefault(\"missing\").getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-custom-string",
+      "group": "mapping-get-or-default",
+      "expression": "new Mapping { default = (k) -> \"fallback-\\(k)\"; [\"x\"] = 1 }.getOrDefault(\"y\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-custom-int-key",
+      "group": "mapping-get-or-default",
+      "expression": "new Mapping { default = (k) -> k * 2; [1] = 1 }.getOrDefault(4)",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-custom-present",
+      "group": "mapping-get-or-default",
+      "expression": "new Mapping { default = (_) -> throw(\"should-skip\"); [\"x\"] = 1 }.getOrDefault(\"x\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-custom-null",
+      "group": "mapping-get-or-default",
+      "expression": "new Mapping { default = (_) -> throw(\"should-skip-null\"); [\"x\"] = null }.getOrDefault(\"x\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-custom-throw",
+      "group": "mapping-get-or-default",
+      "expression": "new Mapping { default = (_) -> throw(\"map-default-throw\"); [\"x\"] = 1 }.getOrDefault(\"missing\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-present-throw",
+      "group": "mapping-get-or-default",
+      "expression": "new Mapping { default = (_) -> 2; [\"x\"] = throw(\"map-present-throw\") }.getOrDefault(\"x\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-inherited",
+      "group": "mapping-get-or-default",
+      "expression": "(new Mapping { default = (k) -> \"base-\\(k)\"; [\"x\"] = 1 }) { [\"y\"] = 2 }.getOrDefault(\"z\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-object-key",
+      "group": "mapping-get-or-default",
+      "expression": "new Mapping { default = (k) -> k.toString() }.getOrDefault(new Dynamic { n = 1 })",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-typed-missing",
+      "group": "mapping-get-or-default",
+      "expression": "(new Mapping<String, Int> { [\"x\"] = 2 }).getOrDefault(\"missing\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-typed-bad-return",
+      "group": "mapping-get-or-default",
+      "expression": "(new Mapping<String, Int> { default = (_) -> \"bad\"; [\"x\"] = 2 }).getOrDefault(\"missing\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-typed-wrong-key-no-default",
+      "group": "mapping-get-or-default",
+      "expression": "(new Mapping<String, Int> { [\"x\"] = 2 }).getOrDefault(1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-no-args",
+      "group": "mapping-get-or-default",
+      "expression": "mappingBase.getOrDefault()",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-two-args",
+      "group": "mapping-get-or-default",
+      "expression": "mappingBase.getOrDefault(\"a\", 1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-default-as-property",
+      "group": "mapping-get-or-default",
+      "expression": "mappingBase.getOrDefault",
+      "mode": "string"
+    }
+  ]
+}

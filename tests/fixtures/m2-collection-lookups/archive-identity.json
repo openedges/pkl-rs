@@ -1,0 +1,18 @@
+{
+  "archive_sha256": "2c75876849e8b9d0f87a72c1b4aa874c0f613d2d40cbdbb3e03fd23d48fa6317",
+  "captures": {
+    "capture-03": "stage62-collection-lookups-oracle-03"
+  },
+  "fileset_sha256": "fdd5a93d117380ab9fbcf4d52ed5b8d77d3e5f9c9a6735070da4a16873d7ee55",
+  "members": 5666,
+  "oracle_input_sha256": {
+    "CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+    "audit.json": "6b5819f5ad889b8efcf537ba91d0a13b3a4032b3b060e17c7aba2b7cebec13a1",
+    "cases.json": "a95d66add782756fbd2b0533fe2b4660de872f172abde76f56a712f7b12eab32",
+    "module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+    "provenance.json": "554f8485c2b38510b3cbfcdc68e50e5e98f35134f862cc3638c0fc62ca6e7d64",
+    "queries.tsv": "1096a8cd0bdf65b615c104fd25592ddb58fbe4e7ca3b12a3e0f8ac2a5b971f18",
+    "run.py": "a041aeddad6651bbc9676339e00beddafab79fc26fc05dbda35b434d3c4d1411"
+  },
+  "schema": 1
+}

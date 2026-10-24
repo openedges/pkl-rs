@@ -38,6 +38,20 @@ normally and under `-O`; all archive members passed independent readback.
 The original 236-row authority is unchanged. Both checkpoints remain Java
 evidence and do not claim candidate compatibility or typed export identity.
 
+The [lookup checkpoint](stage62-lookups-java-checkpoint.json) adds 133 independent
+Java expressions for Dynamic property queries and Listing/Mapping optional and
+defaulted lookup. Each of two fresh JVM sessions records 82 successes and 51
+ordinary errors; all 2,795 raw files per session match between repetitions.
+The controls retain missing versus null values, callback types and first-error
+order, hidden declarations, UTF-16 names, and Java's cache-dependent
+`hasProperty` behavior for string entries. The original two fixtures are unchanged.
+Five validation checks pass, including seven Python tests normally and under
+`-O`, with 82 stable source copies. The [evidence archive](stage62-lookups-java-evidence.tar.gz)
+preserves earlier authored captures and the first publication attempt; a history
+description was corrected from four to five receiver-expression changes.
+All 16,683 members passed independent readback. Candidate, platform, original
+program, and full M2 verdicts remain separate from this Java authority.
+
 ### Stage61 IntSeq values — implementation and local comparisons
 
 The [implementation checkpoint](stage61-implementation-checkpoint.json) adds
