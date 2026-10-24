@@ -48,6 +48,27 @@ These are local macOS arm64 results. All nine M2 workstreams, full language and
 product API compatibility, other release platforms, and performance goals
 remain incomplete. The [Java checkpoint](stage66-java-checkpoint.json) and its original history remain separate from this implementation evidence.
 
+Stage66 implementation and evidence are committed as `959c2f7`; its push and
+remote `main` identity were verified. The twelve B archives total 281,284,982
+bytes. Each publisher read back every payload, mode, and SHA; the independent
+publication review verified the archive identities and exact inventories.
+
+The [source-binding report](stage66-source-binding.json) connects 165,540 recorded
+required-check inputs and all 291 runtime/Cargo freeze entries to that actual
+implementation commit. It checks 165,524 Git-origin rows by recorded
+commit/path/mode/OID, and additionally checks the bytes of sixteen copied inputs
+and all 291 frozen entries. Five recorded document inputs retain their historical
+bytes. `reports/m2/README.md` has separate A/B document provenance because it was
+not a required-check input.
+
+The [88-member archive](stage66-source-binding-evidence.tar.gz) preserves the
+source proof and actual publication, assembly, review, commit, and push records.
+The [binding process](stage66-source-binding-process.json) exited zero with stable
+sources and Git HEAD; its terminal receipt and raw channels are published
+separately because they postdate that archive. The [copy record](stage66-source-binding-publication.json)
+verifies their exact published bytes. This closes the Stage66 checkpoint without
+adding guest executions or changing the known failures and open M2 gates.
+
 ### Stage66 reversal and union diagnostics — Java authority checkpoint
 
 The [Java checkpoint](stage66-java-checkpoint.json) pins four single-module

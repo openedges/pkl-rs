@@ -1,0 +1,132 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage66-source-binding-01/bind.py",
+    "--commit",
+    "959c2f7894c9fc3837abc41fd1eac7845183b36e"
+  ],
+  "binder_report": {
+    "bytes": 223414,
+    "path": "target/m2/stage66-source-binding-01/report.json",
+    "sha256": "108799720927e6ceca46537e4bf157237fb9b8ef3c08409a42a85370dd8018d8"
+  },
+  "boundary": "This process receipt and its raw channels postdate the evidence archive and must be published separately.",
+  "builds_executed": 0,
+  "complete": true,
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/Users/cody.ij.hwang/.local/share/mise/shims:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/opt/homebrew/bin:/Users/cody.ij.hwang/.local/bin:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.164.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0-macos/codex-arg0WaCBLw:/Users/cody.ij.hwang/.codex/tmp/arg0-macos/codex-arg0bqYRuA:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.163.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0AdUHmc:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.162.1-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0s2Ws1B:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.162.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0aQ0Pe2:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.161.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg07GBUOF:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.160.1-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0XSBIgf:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.160.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0cHvuNN:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.159.3-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0CgL1ON:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.159.2-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0wD41rT:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.159.1-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0cUjllx:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.159.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg05MjH3M:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.158.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0lbKprz:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.157.1-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0hPSAj8:/Users/cody.ij.hwang/.codex/packages/standalone/releases/0.157.1-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.cargo/bin",
+    "PYTHONDONTWRITEBYTECODE": null,
+    "TZ": null
+  },
+  "evidence_archive": {
+    "bytes": 6648065,
+    "path": "target/m2/stage66-source-binding-01/evidence.tar.gz",
+    "sha256": "fe742f688c96256d7c40274ff867750b1c7e9966da87230d0d367a5830b4de8e"
+  },
+  "exit_code": 0,
+  "finished_epoch": 1792882432.648114,
+  "git_head_stable": true,
+  "guest_evaluations_executed": 0,
+  "head_after": "959c2f7894c9fc3837abc41fd1eac7845183b36e",
+  "head_before": "959c2f7894c9fc3837abc41fd1eac7845183b36e",
+  "host": {
+    "machine": "arm64",
+    "node": "research-macmini1.local",
+    "processor": "arm",
+    "release": "27.0.0",
+    "system": "Darwin",
+    "version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:27 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8103"
+  },
+  "implementation_commit": "959c2f7894c9fc3837abc41fd1eac7845183b36e",
+  "included_in_source_binding_archive": false,
+  "kind": "stage66-minimal-source-binding-actual-execution",
+  "pid": 27717,
+  "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "python_executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+  "schema": 1,
+  "source_after": {
+    "target/m2/stage66-source-binding-01/bind.py": {
+      "bytes": 25971,
+      "path": "target/m2/stage66-source-binding-01/bind.py",
+      "sha256": "925acfaf05367c74917e3f8c756d3b6bc96f8d72d4dc6a65aa464c5ba300b357"
+    },
+    "target/m2/stage66-source-binding-01/execution-plan.md": {
+      "bytes": 3527,
+      "path": "target/m2/stage66-source-binding-01/execution-plan.md",
+      "sha256": "82df8decab2a024885067984744e8b5e7b097b9bf7627458ddb49eb851e0f635"
+    },
+    "target/m2/stage66-source-binding-01/preparation.json": {
+      "bytes": 5423,
+      "path": "target/m2/stage66-source-binding-01/preparation.json",
+      "sha256": "327dc056120590dc49e74e4fa0f6007b98a066aae0c0760a1e371dbb146561f6"
+    },
+    "target/m2/stage66-source-binding-01/prepare_receipts.py": {
+      "bytes": 9814,
+      "path": "target/m2/stage66-source-binding-01/prepare_receipts.py",
+      "sha256": "e6ff4158d1870a130372447155c414df42ce88dc5df28cd4a49ce3d9ff3f4467"
+    },
+    "target/m2/stage66-source-binding-01/receipts.json": {
+      "bytes": 34758,
+      "path": "target/m2/stage66-source-binding-01/receipts.json",
+      "sha256": "087b6ab944e5aae2901d16f85151078ab9e087f879a735fc354a6016f411fa08"
+    },
+    "target/m2/stage66-source-binding-01/run.py": {
+      "bytes": 3503,
+      "path": "target/m2/stage66-source-binding-01/run.py",
+      "sha256": "8d31f3d86ba86ea527b45c87ffb7deb6b1903efb44a2c47951d69451f6ab14cc"
+    }
+  },
+  "source_before": {
+    "target/m2/stage66-source-binding-01/bind.py": {
+      "bytes": 25971,
+      "path": "target/m2/stage66-source-binding-01/bind.py",
+      "sha256": "925acfaf05367c74917e3f8c756d3b6bc96f8d72d4dc6a65aa464c5ba300b357"
+    },
+    "target/m2/stage66-source-binding-01/execution-plan.md": {
+      "bytes": 3527,
+      "path": "target/m2/stage66-source-binding-01/execution-plan.md",
+      "sha256": "82df8decab2a024885067984744e8b5e7b097b9bf7627458ddb49eb851e0f635"
+    },
+    "target/m2/stage66-source-binding-01/preparation.json": {
+      "bytes": 5423,
+      "path": "target/m2/stage66-source-binding-01/preparation.json",
+      "sha256": "327dc056120590dc49e74e4fa0f6007b98a066aae0c0760a1e371dbb146561f6"
+    },
+    "target/m2/stage66-source-binding-01/prepare_receipts.py": {
+      "bytes": 9814,
+      "path": "target/m2/stage66-source-binding-01/prepare_receipts.py",
+      "sha256": "e6ff4158d1870a130372447155c414df42ce88dc5df28cd4a49ce3d9ff3f4467"
+    },
+    "target/m2/stage66-source-binding-01/receipts.json": {
+      "bytes": 34758,
+      "path": "target/m2/stage66-source-binding-01/receipts.json",
+      "sha256": "087b6ab944e5aae2901d16f85151078ab9e087f879a735fc354a6016f411fa08"
+    },
+    "target/m2/stage66-source-binding-01/run.py": {
+      "bytes": 3503,
+      "path": "target/m2/stage66-source-binding-01/run.py",
+      "sha256": "8d31f3d86ba86ea527b45c87ffb7deb6b1903efb44a2c47951d69451f6ab14cc"
+    }
+  },
+  "source_stable": true,
+  "started_epoch": 1792882426.201407,
+  "stderr": {
+    "bytes": 0,
+    "path": "target/m2/stage66-source-binding-01/stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 23950,
+    "path": "target/m2/stage66-source-binding-01/stdout.bin",
+    "sha256": "e9b1d806a6c253abaa45767a9dccc788169e58e19c11035937e7c534ce11654d"
+  },
+  "wrapper_argv": [
+    "target/m2/stage66-source-binding-01/run.py",
+    "--commit",
+    "959c2f7894c9fc3837abc41fd1eac7845183b36e"
+  ]
+}
