@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-10-24T03:40:19.185283+00:00",
+  "scope": "Post-commit source binding; no new candidate/oracle execution or compatibility pass is claimed.",
+  "implementation_commit": "9f92573a1262729158103f2a32ddf254ad1cf631",
+  "gitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "groups": [
+    {
+      "group": "final-validation-inputs",
+      "manifest": "target/m2/stage54-adapter-recheck-01/sources.json",
+      "manifest_sha256": "b58205fa27b06c9de0d6afb3508d554a606a680245454824af72d2471bf0aa02",
+      "files": 4577,
+      "counts": {
+        "project": 4514,
+        "references": 63
+      },
+      "payload_origin": "workspace bytes equal final frozen manifest"
+    },
+    {
+      "group": "required-rust-check-inputs",
+      "manifest": "target/m2/stage54-rust-validation-01/sources.json",
+      "manifest_sha256": "fdc8e3fba7307ba6a239a3c0f5369f23da8b85a275c1d0fa7349705610228ed2",
+      "files": 162919,
+      "counts": {
+        "project": 162919,
+        "references": 0
+      },
+      "payload_origin": "original immutable validation snapshot"
+    }
+  ],
+  "binding_rows": 167496,
+  "details_sha256": "840b6c8fa517b5f216bf41dbaf3b7d9131f15fd17b83baac32c353dd526a3a91",
+  "failures": [],
+  "all_match": true,
+  "method": "Hash original source bytes with SHA-256 against each frozen catalog and Git SHA-1 blob framing against the actual committed tree object IDs. Reference files are resolved through the committed gitlinks.",
+  "reconstruction": "The 162919 required Rust validation snapshot payloads omitted from the validation publication can be reconstructed from this implementation Git tree using the original sources.json manifest. Original local snapshots remain intact.",
+  "archive": {
+    "path": "reports/m2/stage54-source-binding-evidence.tar.gz",
+    "sha256": "254ffffe57c1e65479f999bc46d813757e4f61cadd967b69dd3f211301a4097a",
+    "bytes": 6294971,
+    "re_read_verified": true
+  }
+}

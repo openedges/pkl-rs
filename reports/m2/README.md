@@ -1,5 +1,40 @@
 # M2 language evidence
 
+The [Stage54 implementation checkpoint](stage54-implementation-checkpoint.json)
+adds method-deprecation warning state to executable call sites, preserving
+argument order, callback acknowledgement, reentry, cache roots and implicit calls.
+See the [deprecation contract](../../docs/m2-deprecation.md).
+
+The final native, Node N-API and Chromium Wasm comparison records 306 raw matches
+and 30 oracle-error nonpasses across 336 executions. Five Java internal-error/API
+sessions remain strict failures. Eight unchanged upstream snippets match all CLI
+channels, with one Java and one Rust process per input. Required Rust checks pass;
+workspace harnesses report 884 passes and one ignored probe. Python checks report
+165 M2 plus 44 deprecation tests, and the final JS adapter has 13 passing tests.
+The M1 experiment keeps both known Java regex differences.
+
+[Postcommit source binding](stage54-source-binding.json) connects the 4,577 final
+validation inputs and all 162,919 original Rust-check snapshots to implementation
+commit `9f92573a1262729158103f2a32ddf254ad1cf631` and its pinned Git references.
+These sets overlap. The [binding archive](stage54-source-binding-evidence.tar.gz)
+retains the detailed per-file records and publication reviews; the original
+precommit checkpoint remains unchanged.
+
+[Candidate evidence](stage54-candidate-evidence.tar.gz),
+[Java history](stage54-java-history-evidence.tar.gz), and
+[validation and review evidence](stage54-validation-review-evidence-v2.tar.gz)
+preserve final and failed acquisitions. The validation archive supplies the exact
+missing transitive verifier dependency `benchmark.py` from the pinned Java
+authority, separately from the original candidate source catalog. Its v2 changes
+only the readability of the verification README; the original publication is
+preserved locally and identified in the binding archive.
+
+Cross-evaluator standard-library caches, custom frame transformation and callback
+closure/API parity remain open, alongside full M2, platform and performance gates.
+These are local development results; no hosted CI outcome is claimed.
+
+### Stage53 object-body parameters
+
 The [Stage53 implementation checkpoint](stage53-implementation-checkpoint.json)
 adds object-body parameters, typed function amendments, retained curried captures,
 and Mixin defaults through explicit and inferred aliases in the shared engine.

@@ -1246,3 +1246,23 @@ Complete factory behavior, URI semantics, import globs and public evaluator
 policy counters remain required work. Full ordered event traces are separate
 from selected API output comparisons. This implementation does not establish
 full module-policy or M2 compatibility.
+
+
+## Method deprecation call sites
+
+The shared VM retains warning state under executable owners and invocation sites.
+Direct lexical sites bind after argument evaluation; virtual and super sites
+bind before arguments. A warning acknowledgement publishes the target binding,
+while callback rejection leaves it available for retry. Reentrant publication
+retains the expected cache chain and traces its class/declaration roots until the
+pending call completes. A direct target roots its declaring owner; it does not
+retain an arbitrary receiver subclass or instance.
+
+Virtual sites retain actual receiver classes up to the pinned polymorphic cache
+limit, then release old roots before indirect lookup. Intrinsic Function.apply
+uses its separate path. Retiring an executable site releases its retained graph;
+collector tests also cover cancellation, query release and final closure. See
+[the deprecation contract](m2-deprecation.md) for actual Java comparisons and the
+remaining cross-evaluator standard-library cache and frame-transformer obligations.
+This evaluator-local representation does not implement Java's static singleton
+standard-library execution lifetime.

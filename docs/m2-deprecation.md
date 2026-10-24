@@ -1,7 +1,7 @@
 # Method deprecation warnings
 
-Stage 54 is implementing Pkl 0.32.0 method-deprecation warnings in the shared
-engine. The [Java fixture](../tests/fixtures/m2-deprecation/README.md) establishes
+Stage 54 implements a bounded Pkl 0.32.0 method-deprecation warning contract in
+the shared engine. The [Java fixture](../tests/fixtures/m2-deprecation/README.md) establishes
 the reference observations. It does not establish Rust compatibility, completion
 of the full M2 language gate, or achievement of the performance targets.
 
@@ -61,11 +61,30 @@ Exact positions, source lines, and URIs remain part of the raw comparison.
 
 ## Remaining scope and candidate verification
 
-The shared Rust implementation and final native, Node, and Chromium comparisons
-are in progress. Exploratory adapter failures and candidate mismatches are kept
-in their original output directories. A fresh final acquisition, required Rust
-checks, platform checks, and the eight original deprecated-language snippets are
-still required before closing the implementation checkpoint.
+The [implementation checkpoint](../reports/m2/stage54-implementation-checkpoint.json)
+records 112 executions on each of native, Node N-API, and Chromium Wasm: 102 raw
+matches and 10 preserved oracle-error nonpasses per target, or 306 matches and
+30 nonpasses overall. Five Java internal-error/API boundary sessions account for
+the nonpasses across repetitions and targets. The strict comparison remains
+failed. All eight unchanged original deprecated-language snippets match complete
+stdout, stderr, exit codes, and generated files, with one Java and one Rust
+process per snippet.
+
+The five required Rust checks pass; workspace harnesses report 884 passes and
+one ignored probe. Related Python checks pass 165 M2 tests and 44 deprecation
+tests; the final JS adapter checks pass 13 tests. Actual M1 platform regression
+retains 6,078 shared-engine matches, 6,076 Java matches per target and the two
+known regex failures. These are local observations, not hosted CI or performance
+results.
+
+The first portable acquisition's supplied-text key ownership failures and earlier
+candidate differences remain preserved. Correcting that adapter changed two JS
+files; the native and binding artifacts were reused with explicit source checks.
+The [postcommit source binding](../reports/m2/stage54-source-binding.json) connects
+all 4,577 final validation inputs and 162,919 original Rust-check snapshot files
+to implementation commit `9f92573a1262729158103f2a32ddf254ad1cf631` and its pinned
+reference gitlinks. The counts overlap and are not distinct features. Historical
+precommit reports remain unchanged; this document was updated after binding.
 
 The supplemental Java experiment proves that standard-library invocation caches
 can survive evaluator closure within one JVM. Warning counts across four
@@ -113,3 +132,13 @@ artifact and source revisions, and recomputes observations from the original
 bytes. Its success proves evidence integrity only. Missing candidate execution,
 known differences, Java internal failures, and incomplete full-language mappings
 remain visible in the M2 completion accounting.
+
+The [candidate evidence](../reports/m2/stage54-candidate-evidence.tar.gz) and
+[validation evidence](../reports/m2/stage54-validation-review-evidence-v2.tar.gz)
+retain failed and final acquisitions, raw verification logs, and independent
+audits. The captured comparator omits the transitive `benchmark.py` import from
+its source catalog. The validation archive supplies that exact dependency under
+`verification-tools/`, with provenance from the independently pinned Java fixture.
+Use that directory on `PYTHONPATH` when running the extracted comparator with
+Python `-B --verify-report`. Offline integrity verification succeeds while
+`--verify-full` retains the recorded failures.

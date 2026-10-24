@@ -1,0 +1,211 @@
+{
+  "schema": 1,
+  "scope": "Read-only post-B binding result audit; archive streamed without complete extraction, no guest/test execution and no current workspace source freeze check. Documentation C may intentionally differ.",
+  "implementation_commit": "9f92573a1262729158103f2a32ddf254ad1cf631",
+  "archive_sha256": "254ffffe57c1e65479f999bc46d813757e4f61cadd967b69dd3f211301a4097a",
+  "archive_bytes": 6294971,
+  "archive_members": 36,
+  "safe_unique_regular_paths": true,
+  "full_archive_manifest_and_report_match": true,
+  "archived_bind_script_matches_preexecution_review": true,
+  "rows": 167496,
+  "group_counts": {
+    "final-validation-inputs": {
+      "project": 4514,
+      "references": 63
+    },
+    "required-rust-check-inputs": {
+      "project": 162919
+    }
+  },
+  "all_row_path_sets_sha256_and_actual_tree_oids_match": true,
+  "gitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "critical_committed_blob_reads": [
+    {
+      "path": "crates/pkl-runtime/src/heap.rs",
+      "git_blob": "ae3b952f3b95e820dd692e7d33e8c179bba199ce",
+      "sha256": "09b631a01c83e7aa89bcc78df46fbc14524523588131e2216e07ca3718328c36",
+      "bytes": 39741
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm.rs",
+      "git_blob": "b610c22328cb7c12081c8db63a34bb4a592856ac",
+      "sha256": "ec9bcf96b243824e3ed82f9aed0cd21cfd6a87380761f15878b9f8fb108a5811",
+      "bytes": 339221
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/annotations.rs",
+      "git_blob": "6abc60a6614c84dc7e2cc90fd82cca45baff9e47",
+      "sha256": "1ccbac08a1285d56f6eb662e9b775b92fcf734c32b919de6d60bac116a55eefd",
+      "bytes": 16654
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+      "git_blob": "4f5de4d338a76eda98c99279e3e62a6574179722",
+      "sha256": "36cfd837ccbc1789612588b28cac3cbf2ddfb68169f41ef483eaf83cbf025546",
+      "bytes": 72793
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/deprecation.rs",
+      "git_blob": "ab4e02fd7ef1fd429ae03e4b25df3d00b80bba3e",
+      "sha256": "fbb763fa9c8e5a1b2d40ee29e3a908d86e78b2ae5e35de5c1347508f3c0dbb5f",
+      "bytes": 15954
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/deprecation/tests.rs",
+      "git_blob": "d10ec0da7d6b934c0f20bd8b89596da39b335357",
+      "sha256": "21cc55c99246742d2e8ba3000edb502ef0ac134b3548f2b7e8bc3129720d5768",
+      "bytes": 26397
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/forcing.rs",
+      "git_blob": "f7dd1ee920317ecaa04e5bc6383db0190c301385",
+      "sha256": "84df09d851013ba3e0e61bce9066692d20094a48736c1710b02ffc14530ceb9f",
+      "bytes": 20054
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/modules.rs",
+      "git_blob": "f17db09577bcff23efedadeec0f6eb863acbbff5",
+      "sha256": "117ed2f7c06b138dff935125bc1b52d49fd818f521ffdfc2479abbc3c1ea893d",
+      "bytes": 47798
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/output.rs",
+      "git_blob": "b8a5e9d10bc6b9a98d7c2fbd602b96c38952b83b",
+      "sha256": "8dc0432cbe25fbfbda6c02de82fbf82fba06fe4ed8a8f816f0db826530aef7a9",
+      "bytes": 26241
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/reference.rs",
+      "git_blob": "83c094e15765ef910b3c427cfd6886e963aa8aea",
+      "sha256": "0fe1e9d7763ef363ff087c35f2b647ba117512a44bfd0bfb3dd84f747b1ebfa3",
+      "bytes": 68847
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/tracing.rs",
+      "git_blob": "88ebeabad128bd7036f75767091d3d096ce6434e",
+      "sha256": "50b54fa8071e2f2861a6ec198a263a0dfb93c7b648ff0371040e36daeb10b31f",
+      "bytes": 6703
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+      "git_blob": "80385b40f1f4880cd229de5540fd679834ca44f6",
+      "sha256": "2b3a9d205f7c54197f18bf508237eacddff92697062fcf1fce0e2ff25f47d328",
+      "bytes": 63554
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_collection_types_lifecycle.rs",
+      "git_blob": "b9e6b7d74ade808ef1fac9205e47290fd8596e58",
+      "sha256": "8328ff7382d0bb2b6ddfa06625e44112752d17e0da100ba36700c7afb1424fa4",
+      "bytes": 17001
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_equality_lifecycle.rs",
+      "git_blob": "07be648046ae3cc511a74f8d10f67591bd2a8ee1",
+      "sha256": "390906b1ef5ba1569f9695b97a4f8f96ec1be69c310c3e5d56460d13cd0e980e",
+      "bytes": 24846
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_fixed_lifecycle.rs",
+      "git_blob": "65e3ebe66642c704a853b538ad0609f6ead49636",
+      "sha256": "5bd17bb7e13004bdd5435f7b06baaec9f04d77d06f06cab97b5bbdb40d0a08dd",
+      "bytes": 9994
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_references_lifecycle.rs",
+      "git_blob": "80f68e32537d0fab9a3a15213205b2317d932d4a",
+      "sha256": "83920a65b7a60dcd1b26fc670fbb4dd6a6b66adc0e665848c4ae15aff2309ee6",
+      "bytes": 12698
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_set_lifecycle.rs",
+      "git_blob": "20c7ca3c903748e2063733e13a9b6c217a22a3ca",
+      "sha256": "14f56b4fb35203810be7ec558f3febb30196e7f93233d3c7306985844a5feb33",
+      "bytes": 24598
+    },
+    {
+      "path": "crates/pkl-runtime/tests/m2_strict_map_lifecycle.rs",
+      "git_blob": "3d0d4174d4fcea1ab09ff1b95be2cfa1fa5a292e",
+      "sha256": "b606c7ac1334784154df4bb33b5c7b45f932d15fd05304ee33a40eb06d3c1018",
+      "bytes": 24576
+    },
+    {
+      "path": "crates/pkl-runtime/examples/deprecation_fixture_probe.rs",
+      "git_blob": "7d55a318af8783fe52bc911ec400541c88c2e528",
+      "sha256": "fed1fb50024f585e0edf4766caea445c5a07cfec10bcaa34dea569bdaaef84c9",
+      "bytes": 13799
+    },
+    {
+      "path": "tools/deprecation_compare.py",
+      "git_blob": "5de58a89da5c69d473cb2e0f280ccf5a8ec908d2",
+      "sha256": "f2e6ebee4c864a766e0d9ae34e7d49e912367898e54644710ed9e9f41b74ffa5",
+      "bytes": 47548
+    },
+    {
+      "path": "tools/tests/test_deprecation_compare.py",
+      "git_blob": "98a6c73c5b75e6c3ca1b2ec2222c083734e5322a",
+      "sha256": "dfff1a937ecedd8e40dc888ba79c896742d635484aedee9510125eff1965a244",
+      "bytes": 27328
+    },
+    {
+      "path": "tools/platform/deprecation-session.mjs",
+      "git_blob": "c67126aafd5f9fa9028669f931df1b6f3bbfd2ab",
+      "sha256": "eec29d6f305618efcef3a35f14fa9f17586f85f44a43e94972fd5e5c2f3adf9f",
+      "bytes": 8942
+    },
+    {
+      "path": "tools/platform/deprecation-session.test.mjs",
+      "git_blob": "06b84c6d6206a74c1a7ea1855f19364fd692aa67",
+      "sha256": "b9c8ca7927d177e288dccc3f6ebc91ebe2f36f377bb16195727d1012d9b040d4",
+      "bytes": 9478
+    },
+    {
+      "path": "tools/platform/capture-deprecation.mjs",
+      "git_blob": "82b10cde29fe7432ea985a9ce21cea04aafb0e85",
+      "sha256": "8b050fbcf5379b02dc8dba8c2c2ab81d1ad625b152bdbf4e1e9709a8c48b1e7c",
+      "bytes": 11802
+    },
+    {
+      "path": "tools/platform/capture-deprecation.test.mjs",
+      "git_blob": "9e40d08022c9c97b0925946a327d7d0f3d61ca9b",
+      "sha256": "7c71a976c2a64098d16bd7b92a21cd43ff43a05a1208471b63ca3ad92494bcc3",
+      "bytes": 828
+    },
+    {
+      "path": "Cargo.lock",
+      "git_blob": "5fe1502a115e95259956f2321b9b5026b6d8b057",
+      "sha256": "17114bdbbe6146393c569475c128bdfc618863bbaab8f4bada41860bf8eab96b",
+      "bytes": 8660
+    },
+    {
+      "path": "tools/platform/package-lock.json",
+      "git_blob": "929d9b0c426064b97b0a57076daf655027f3494c",
+      "sha256": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+      "bytes": 1173
+    },
+    {
+      "path": "tests/fixtures/m2-deprecation/oracle-evidence.tar.gz",
+      "git_blob": "fc35ad9f8422d36c025df1a6178448130e463347",
+      "sha256": "e0e78f3f55c680ae4a37620dd3355f9efd6158d4f0ba141852c8825070de2fae",
+      "bytes": 750231
+    },
+    {
+      "path": "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/ModuleCache.java",
+      "git_blob": "3467a381cb5908fd03bfbb1a1f64558cdefc4ca7",
+      "sha256": "96eb6429a710d0b4db09664b6d84a0cb25a17a3206983183f66a65382ae69d82",
+      "bytes": 8387
+    }
+  ],
+  "reconstruction_scope": "All167496 recorded rows bind original catalogSHA256 and actual B/gitlink blob OIDs. 29 selected committed blobs independently re-read as bytes. Other original snapshot bytes were checked by archived bind.py execution; this audit does not repeat reading all162919 local originals. Reconstruction requires original published catalogs plus B/reference Git object availability.",
+  "blockers": [],
+  "publication": {
+    "archive": "reports/m2/stage54-source-binding-review-evidence.tar.gz",
+    "sha256": "de4f64890a234f60e59e4c82bfd771cc7b6c7fc59700a310906d2296acf7ce95",
+    "bytes": 8105,
+    "payload_files": 8,
+    "re_read_verified": true
+  }
+}
