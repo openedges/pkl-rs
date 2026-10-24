@@ -1,0 +1,16 @@
+{
+  "archive_sha256": "d0eb7a027bcb735c53b73289c1981a942e15150cbc63163575dd2b0e7624cab6",
+  "capture": "stage60-bytes-oracle-05",
+  "fileset_sha256": "f1c64f10df99a221b36861fcda1e6a06cfe79333907f9909c3f070ca105baccc",
+  "members": 10229,
+  "oracle_input_sha256": {
+    "BytesValuesOracle.java": "51b94eb214e2afed5fa8d66f66c9e5a1fd98d143e90afafea39178de1f78fe3b",
+    "audit.json": "feebea069dff0ac1ba1ef1a15b2501ebdee6bd27018c16ec86483f19ed672ac0",
+    "cases.json": "29daee757930fa16a7ae72b10a866d5ad4e74f108a6a449f0c45117cab008c0e",
+    "module.pkl": "a6a4e57b3bf4cd47f9f5964232f7036c1591b6c81878b314a16c6e8f73463232",
+    "provenance.json": "6eefae6899dab59bf828b0b6b164a2950e3355e5886e878c933513dcf3d62cef",
+    "queries.tsv": "a805ca66a7345079ef345a4af9fbc52a816bd1b3ee7a9c1e5db14d557d421397",
+    "run.py": "182f72ad04f4bcea8c41b54fb239eec110ae4b5ae3569825e8405e4b25064cee"
+  },
+  "schema": 1
+}

@@ -1720,6 +1720,30 @@ Rust 검증 입력 165,245개를 구현 커밋과 연결하고, 이전 기준 �
 커밋 연결입니다. 다음 구현은 원본 실패에서 확인한 Bytes 변환·해시·디코딩과
 관련 List 변환을 다루며, `pkl:math`와 Binary 경로 등 나머지 의무도 유지합니다.
 
+### Stage 60 — `Bytes` 공통 연산과 `List.toBytes`
+
+Stage 59의 원본 Bytes 실패에서 이어집니다. 공통 값·VM·GC 구현은
+`gpt-6-astra / xhigh`, 독립 Java 기준과 검토는 각각 `gpt-6-sol / high`에
+배정합니다. Bytes의 Base64·hex·MD5·SHA-1·SHA-256·`sha256Int`, `getOrNull`,
+`toList`, UTF-8·UTF-16·ISO-8859-1의 엄격한 디코딩, 덧셈·subscript와
+`List.toBytes`의 UInt8 제약·첫 오류·프레임을 공통 엔진에서 구현합니다.
+Java가 Bytes 인덱싱에서 signed byte를 반환하고 List 변환에서는 unsigned
+값을 반환하는 차이, 빈 Bytes 결합과 List 캐시·backlink의 수명주기도 확인합니다.
+
+고정 Java의 독립 기준은 `file:///stage60/bytes-values.pkl`의 순서 있는
+300개 식을 두 JVM에서 실행한 것입니다. 각 반복의 성공 223개·Pkl 오류 77개와
+전체 UTF-8·UTF-16·상태·세션 protocol을 보존합니다. Java 예외 클래스·
+`toString`·cause 자료는 별도 생산자 metadata이며, 후보 문자열 경계에서 이를
+합성하거나 typed export 호환성으로 확대하지 않습니다. 잘못 작성한 초기 입력은
+역사 자료로 유지하고, 값 동등성·해시 관찰을 wrapper identity 증거로 표시하지
+않습니다.
+
+최종 소스를 고정한 뒤 native·Node·Chromium의 같은 식과 원본 모듈을 비교하고,
+필수 Rust 검사·도구 검사·공통 플랫폼·기존 Duration/DataSize 회귀를 검증합니다.
+현재 원본 `basic/bytes.pkl`·`api/bytes.pkl`의 IntSeq 의존성과 제품의 mutable
+byte array export 계약은 별도 미완료 범위입니다. 실제 원본 결과를 확인하기
+전에는 새 통과로 집계하지 않으며 M2의 아홉 영역과 전체 완료 조건을 유지합니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

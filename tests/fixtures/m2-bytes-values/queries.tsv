@@ -1,0 +1,300 @@
+empty-length	emptyBytes.length
+empty-size	emptyBytes.size
+empty-base64	emptyBytes.base64
+empty-hex	emptyBytes.hex
+empty-md5	emptyBytes.md5
+empty-sha1	emptyBytes.sha1
+empty-sha256	emptyBytes.sha256
+empty-sha256int	emptyBytes.sha256Int
+single-length	singleBytes.length
+single-size	singleBytes.size
+single-base64	singleBytes.base64
+single-hex	singleBytes.hex
+single-md5	singleBytes.md5
+single-sha1	singleBytes.sha1
+single-sha256	singleBytes.sha256
+single-sha256int	singleBytes.sha256Int
+ascii-length	asciiBytes.length
+ascii-size	asciiBytes.size
+ascii-base64	asciiBytes.base64
+ascii-hex	asciiBytes.hex
+ascii-md5	asciiBytes.md5
+ascii-sha1	asciiBytes.sha1
+ascii-sha256	asciiBytes.sha256
+ascii-sha256int	asciiBytes.sha256Int
+boundary-length	boundaryBytes.length
+boundary-size	boundaryBytes.size
+boundary-base64	boundaryBytes.base64
+boundary-hex	boundaryBytes.hex
+boundary-md5	boundaryBytes.md5
+boundary-sha1	boundaryBytes.sha1
+boundary-sha256	boundaryBytes.sha256
+boundary-sha256int	boundaryBytes.sha256Int
+all-length	allBytes.length
+all-size	allBytes.size
+all-base64	allBytes.base64
+all-hex	allBytes.hex
+all-md5	allBytes.md5
+all-sha1	allBytes.sha1
+all-sha256	allBytes.sha256
+all-sha256int	allBytes.sha256Int
+all-index-0	allBytes[0]
+all-index-1	allBytes[1]
+all-index-2	allBytes[2]
+all-index-3	allBytes[3]
+all-index-4	allBytes[4]
+all-index-15	allBytes[15]
+all-index-16	allBytes[16]
+all-index-31	allBytes[31]
+all-index-32	allBytes[32]
+all-index-63	allBytes[63]
+all-index-64	allBytes[64]
+all-index-126	allBytes[126]
+all-index-127	allBytes[127]
+all-index-128	allBytes[128]
+all-index-129	allBytes[129]
+all-index-254	allBytes[254]
+all-index-255	allBytes[255]
+boundary-get-neg2	boundaryBytes.getOrNull(-2)
+boundary-get-neg1	boundaryBytes.getOrNull(-1)
+boundary-get-0	boundaryBytes.getOrNull(0)
+boundary-get-1	boundaryBytes.getOrNull(1)
+boundary-get-2	boundaryBytes.getOrNull(2)
+boundary-get-3	boundaryBytes.getOrNull(3)
+boundary-get-4	boundaryBytes.getOrNull(4)
+boundary-get-5	boundaryBytes.getOrNull(5)
+boundary-get-127	boundaryBytes.getOrNull(127)
+boundary-get-128	boundaryBytes.getOrNull(128)
+boundary-get-254	boundaryBytes.getOrNull(254)
+boundary-get-255	boundaryBytes.getOrNull(255)
+boundary-get-256	boundaryBytes.getOrNull(256)
+boundary-get-9223372036854775807	boundaryBytes.getOrNull(9223372036854775807)
+boundary-sub-neg1	boundaryBytes[-1]
+boundary-sub-0	boundaryBytes[0]
+boundary-sub-1	boundaryBytes[1]
+boundary-sub-2	boundaryBytes[2]
+boundary-sub-3	boundaryBytes[3]
+boundary-sub-4	boundaryBytes[4]
+boundary-sub-255	boundaryBytes[255]
+boundary-sub-256	boundaryBytes[256]
+ctor-empty	Bytes()
+ctor-zero	Bytes(0)
+ctor-max-signed	Bytes(127)
+ctor-first-high	Bytes(128)
+ctor-last	Bytes(255)
+ctor-two	Bytes(0, 255)
+ctor-hex	Bytes(0x0, 0xff)
+ctor-octal	Bytes(0o0, 0o377)
+ctor-binary	Bytes(0b0, 0b11111111)
+ctor-triple	Bytes(1, 2, 3)
+ctor-negative	Bytes(-1)
+ctor-too-large	Bytes(256)
+ctor-mid-negative	Bytes(1, -1, 2)
+ctor-mid-large	Bytes(1, 256, 2)
+ctor-first-large	Bytes(1, 256, -1)
+ctor-first-negative	Bytes(1, -1, 256)
+ctor-float	Bytes(1.0)
+ctor-string	Bytes("1")
+ctor-null	Bytes(null)
+ctor-bool	Bytes(true)
+ctor-second-string	Bytes(1, "x")
+ctor-second-float	Bytes(1, 2.0)
+ctor-throw-second	Bytes(1, throw("second"))
+ctor-range-before-throw	Bytes(256, throw("second"))
+ctor-throw-before-range	Bytes(throw("first"),256)
+enc-empty-utf8	"".encodeToBytes("UTF-8").hex
+round-empty-utf8	"".encodeToBytes("UTF-8").decodeToString("UTF-8")
+enc-empty-utf16	"".encodeToBytes("UTF-16").hex
+round-empty-utf16	"".encodeToBytes("UTF-16").decodeToString("UTF-16")
+enc-empty-iso88591	"".encodeToBytes("ISO-8859-1").hex
+round-empty-iso88591	"".encodeToBytes("ISO-8859-1").decodeToString("ISO-8859-1")
+enc-ascii-utf8	"abc".encodeToBytes("UTF-8").hex
+round-ascii-utf8	"abc".encodeToBytes("UTF-8").decodeToString("UTF-8")
+enc-ascii-utf16	"abc".encodeToBytes("UTF-16").hex
+round-ascii-utf16	"abc".encodeToBytes("UTF-16").decodeToString("UTF-16")
+enc-ascii-iso88591	"abc".encodeToBytes("ISO-8859-1").hex
+round-ascii-iso88591	"abc".encodeToBytes("ISO-8859-1").decodeToString("ISO-8859-1")
+enc-latin-utf8	"é".encodeToBytes("UTF-8").hex
+round-latin-utf8	"é".encodeToBytes("UTF-8").decodeToString("UTF-8")
+enc-latin-utf16	"é".encodeToBytes("UTF-16").hex
+round-latin-utf16	"é".encodeToBytes("UTF-16").decodeToString("UTF-16")
+enc-latin-iso88591	"é".encodeToBytes("ISO-8859-1").hex
+round-latin-iso88591	"é".encodeToBytes("ISO-8859-1").decodeToString("ISO-8859-1")
+enc-euro-utf8	"€".encodeToBytes("UTF-8").hex
+round-euro-utf8	"€".encodeToBytes("UTF-8").decodeToString("UTF-8")
+enc-euro-utf16	"€".encodeToBytes("UTF-16").hex
+round-euro-utf16	"€".encodeToBytes("UTF-16").decodeToString("UTF-16")
+enc-euro-iso88591	"€".encodeToBytes("ISO-8859-1").hex
+round-euro-iso88591	"€".encodeToBytes("ISO-8859-1").decodeToString("ISO-8859-1")
+enc-emoji-utf8	"😀".encodeToBytes("UTF-8").hex
+round-emoji-utf8	"😀".encodeToBytes("UTF-8").decodeToString("UTF-8")
+enc-emoji-utf16	"😀".encodeToBytes("UTF-16").hex
+round-emoji-utf16	"😀".encodeToBytes("UTF-16").decodeToString("UTF-16")
+enc-emoji-iso88591	"😀".encodeToBytes("ISO-8859-1").hex
+round-emoji-iso88591	"😀".encodeToBytes("ISO-8859-1").decodeToString("ISO-8859-1")
+enc-combining-utf8	"á".encodeToBytes("UTF-8").hex
+round-combining-utf8	"á".encodeToBytes("UTF-8").decodeToString("UTF-8")
+enc-combining-utf16	"á".encodeToBytes("UTF-16").hex
+round-combining-utf16	"á".encodeToBytes("UTF-16").decodeToString("UTF-16")
+enc-combining-iso88591	"á".encodeToBytes("ISO-8859-1").hex
+round-combining-iso88591	"á".encodeToBytes("ISO-8859-1").decodeToString("ISO-8859-1")
+enc-snow-utf8	"☃".encodeToBytes("UTF-8").hex
+round-snow-utf8	"☃".encodeToBytes("UTF-8").decodeToString("UTF-8")
+enc-snow-utf16	"☃".encodeToBytes("UTF-16").hex
+round-snow-utf16	"☃".encodeToBytes("UTF-16").decodeToString("UTF-16")
+enc-snow-iso88591	"☃".encodeToBytes("ISO-8859-1").hex
+round-snow-iso88591	"☃".encodeToBytes("ISO-8859-1").decodeToString("ISO-8859-1")
+enc-bom-char-utf8	"﻿A".encodeToBytes("UTF-8").hex
+round-bom-char-utf8	"﻿A".encodeToBytes("UTF-8").decodeToString("UTF-8")
+enc-bom-char-utf16	"﻿A".encodeToBytes("UTF-16").hex
+round-bom-char-utf16	"﻿A".encodeToBytes("UTF-16").decodeToString("UTF-16")
+enc-bom-char-iso88591	"﻿A".encodeToBytes("ISO-8859-1").hex
+round-bom-char-iso88591	"﻿A".encodeToBytes("ISO-8859-1").decodeToString("ISO-8859-1")
+enc-nul-utf8	"A\u{0}B".encodeToBytes("UTF-8").hex
+round-nul-utf8	"A\u{0}B".encodeToBytes("UTF-8").decodeToString("UTF-8")
+enc-nul-utf16	"A\u{0}B".encodeToBytes("UTF-16").hex
+round-nul-utf16	"A\u{0}B".encodeToBytes("UTF-16").decodeToString("UTF-16")
+enc-nul-iso88591	"A\u{0}B".encodeToBytes("ISO-8859-1").hex
+round-nul-iso88591	"A\u{0}B".encodeToBytes("ISO-8859-1").decodeToString("ISO-8859-1")
+dec-empty-utf8	Bytes().decodeToString("UTF-8")
+dec-empty-utf16	Bytes().decodeToString("UTF-16")
+dec-empty-iso88591	Bytes().decodeToString("ISO-8859-1")
+dec-ascii-utf8	Bytes(65, 66, 67).decodeToString("UTF-8")
+dec-ascii-utf16	Bytes(65, 66, 67).decodeToString("UTF-16")
+dec-ascii-iso88591	Bytes(65, 66, 67).decodeToString("ISO-8859-1")
+dec-utf8-bom-utf8	Bytes(239, 187, 191, 65).decodeToString("UTF-8")
+dec-utf8-bom-utf16	Bytes(239, 187, 191, 65).decodeToString("UTF-16")
+dec-utf8-bom-iso88591	Bytes(239, 187, 191, 65).decodeToString("ISO-8859-1")
+dec-utf8-two-utf8	Bytes(194, 162).decodeToString("UTF-8")
+dec-utf8-two-utf16	Bytes(194, 162).decodeToString("UTF-16")
+dec-utf8-two-iso88591	Bytes(194, 162).decodeToString("ISO-8859-1")
+dec-utf8-three-utf8	Bytes(226, 130, 172).decodeToString("UTF-8")
+dec-utf8-three-utf16	Bytes(226, 130, 172).decodeToString("UTF-16")
+dec-utf8-three-iso88591	Bytes(226, 130, 172).decodeToString("ISO-8859-1")
+dec-utf8-four-utf8	Bytes(240, 159, 152, 128).decodeToString("UTF-8")
+dec-utf8-four-utf16	Bytes(240, 159, 152, 128).decodeToString("UTF-16")
+dec-utf8-four-iso88591	Bytes(240, 159, 152, 128).decodeToString("ISO-8859-1")
+dec-utf8-overlong-utf8	Bytes(192, 175).decodeToString("UTF-8")
+dec-utf8-overlong-utf16	Bytes(192, 175).decodeToString("UTF-16")
+dec-utf8-overlong-iso88591	Bytes(192, 175).decodeToString("ISO-8859-1")
+dec-utf8-surrogate-utf8	Bytes(237, 160, 128).decodeToString("UTF-8")
+dec-utf8-surrogate-utf16	Bytes(237, 160, 128).decodeToString("UTF-16")
+dec-utf8-surrogate-iso88591	Bytes(237, 160, 128).decodeToString("ISO-8859-1")
+dec-utf8-out-of-range-utf8	Bytes(244, 144, 128, 128).decodeToString("UTF-8")
+dec-utf8-out-of-range-utf16	Bytes(244, 144, 128, 128).decodeToString("UTF-16")
+dec-utf8-out-of-range-iso88591	Bytes(244, 144, 128, 128).decodeToString("ISO-8859-1")
+dec-utf8-truncated-2-utf8	Bytes(194).decodeToString("UTF-8")
+dec-utf8-truncated-2-utf16	Bytes(194).decodeToString("UTF-16")
+dec-utf8-truncated-2-iso88591	Bytes(194).decodeToString("ISO-8859-1")
+dec-utf8-truncated-3-utf8	Bytes(226, 130).decodeToString("UTF-8")
+dec-utf8-truncated-3-utf16	Bytes(226, 130).decodeToString("UTF-16")
+dec-utf8-truncated-3-iso88591	Bytes(226, 130).decodeToString("ISO-8859-1")
+dec-utf8-truncated-4-utf8	Bytes(240, 159, 152).decodeToString("UTF-8")
+dec-utf8-truncated-4-utf16	Bytes(240, 159, 152).decodeToString("UTF-16")
+dec-utf8-truncated-4-iso88591	Bytes(240, 159, 152).decodeToString("ISO-8859-1")
+dec-utf8-continuation-utf8	Bytes(128).decodeToString("UTF-8")
+dec-utf8-continuation-utf16	Bytes(128).decodeToString("UTF-16")
+dec-utf8-continuation-iso88591	Bytes(128).decodeToString("ISO-8859-1")
+dec-utf8-invalid-after-valid-utf8	Bytes(65, 255, 66).decodeToString("UTF-8")
+dec-utf8-invalid-after-valid-utf16	Bytes(65, 255, 66).decodeToString("UTF-16")
+dec-utf8-invalid-after-valid-iso88591	Bytes(65, 255, 66).decodeToString("ISO-8859-1")
+dec-utf16-be-bom-utf8	Bytes(254, 255, 0, 65).decodeToString("UTF-8")
+dec-utf16-be-bom-utf16	Bytes(254, 255, 0, 65).decodeToString("UTF-16")
+dec-utf16-be-bom-iso88591	Bytes(254, 255, 0, 65).decodeToString("ISO-8859-1")
+dec-utf16-le-bom-utf8	Bytes(255, 254, 65, 0).decodeToString("UTF-8")
+dec-utf16-le-bom-utf16	Bytes(255, 254, 65, 0).decodeToString("UTF-16")
+dec-utf16-le-bom-iso88591	Bytes(255, 254, 65, 0).decodeToString("ISO-8859-1")
+dec-utf16-no-bom-utf8	Bytes(0, 65).decodeToString("UTF-8")
+dec-utf16-no-bom-utf16	Bytes(0, 65).decodeToString("UTF-16")
+dec-utf16-no-bom-iso88591	Bytes(0, 65).decodeToString("ISO-8859-1")
+dec-utf16-odd-utf8	Bytes(0, 65, 0).decodeToString("UTF-8")
+dec-utf16-odd-utf16	Bytes(0, 65, 0).decodeToString("UTF-16")
+dec-utf16-odd-iso88591	Bytes(0, 65, 0).decodeToString("ISO-8859-1")
+dec-utf16-high-surrogate-utf8	Bytes(216, 0).decodeToString("UTF-8")
+dec-utf16-high-surrogate-utf16	Bytes(216, 0).decodeToString("UTF-16")
+dec-utf16-high-surrogate-iso88591	Bytes(216, 0).decodeToString("ISO-8859-1")
+dec-utf16-low-surrogate-utf8	Bytes(220, 0).decodeToString("UTF-8")
+dec-utf16-low-surrogate-utf16	Bytes(220, 0).decodeToString("UTF-16")
+dec-utf16-low-surrogate-iso88591	Bytes(220, 0).decodeToString("ISO-8859-1")
+dec-utf16-pair-utf8	Bytes(216, 61, 222, 0).decodeToString("UTF-8")
+dec-utf16-pair-utf16	Bytes(216, 61, 222, 0).decodeToString("UTF-16")
+dec-utf16-pair-iso88591	Bytes(216, 61, 222, 0).decodeToString("ISO-8859-1")
+dec-utf16-reversed-bom-utf8	Bytes(255, 254, 0, 65).decodeToString("UTF-8")
+dec-utf16-reversed-bom-utf16	Bytes(255, 254, 0, 65).decodeToString("UTF-16")
+dec-utf16-reversed-bom-iso88591	Bytes(255, 254, 0, 65).decodeToString("ISO-8859-1")
+dec-latin-high-utf8	Bytes(0, 127, 128, 255).decodeToString("UTF-8")
+dec-latin-high-utf16	Bytes(0, 127, 128, 255).decodeToString("UTF-16")
+dec-latin-high-iso88591	Bytes(0, 127, 128, 255).decodeToString("ISO-8859-1")
+list-empty	List().toBytes()
+list-boundary	List(0,127,128,255).toBytes()
+list-triple	List(1,2,3).toBytes()
+list-roundtrip	List(0,127,128,255).toBytes().toList()
+list-all-to-list	allBytes.toList()
+list-all-round-hash	allBytes.toList().toBytes().sha256
+list-neg	List(-1).toBytes()
+list-over	List(256).toBytes()
+list-first-neg	List(1, -1, 256).toBytes()
+list-first-over	List(1, 256, -1).toBytes()
+list-first-string	List(1, "x", 256).toBytes()
+list-first-null	List(1, null, 256).toBytes()
+list-float	List(1, 2.0).toBytes()
+list-eager-throw-second	List(1, throw("second")).toBytes()
+list-eager-throw-after-range	List(-1, throw("second")).toBytes()
+list-intseq-all	IntSeq(0, 255).toList().toBytes()
+list-intseq-hash	IntSeq(0, 255).toList().toBytes().sha256
+concat-empty	Bytes()+Bytes()
+concat-empty-left	Bytes()+asciiBytes
+concat-empty-right	asciiBytes+Bytes()
+concat-boundary	Bytes(0,127)+Bytes(128,255)
+concat-chain	Bytes(1)+Bytes(2)+Bytes(3)
+concat-double	asciiBytes+asciiBytes
+concat-list-type	asciiBytes+List(1)
+concat-string-type	asciiBytes+"x"
+concat-int-type	asciiBytes+1
+concat-throw-right	asciiBytes+throw("right")
+value-same	Bytes(1)==Bytes(1)
+value-different	Bytes(1)==Bytes(2)
+value-not-equal	Bytes(1)!=Bytes(2)
+value-list	Bytes(1)==List(1)
+value-empty-list	Bytes()==List()
+value-all-intseq	allBytes==IntSeq(0,255).toList().toBytes()
+value-set-equal	Set(Bytes(1),Bytes(1)).length
+value-set-diff	Set(Bytes(1),Bytes(2)).length
+value-set-threshold-five	Set(Bytes(1),Bytes(2),Bytes(3),Bytes(4),Bytes(1)).length
+value-map-equal	Map(Bytes(1),"a",Bytes(1),"b").length
+value-map-diff	Map(Bytes(1),"a",Bytes(2),"b").length
+value-map-threshold-five	Map(Bytes(1),1,Bytes(2),2,Bytes(3),3,Bytes(4),4,Bytes(1),5).length
+value-set-empty	Set(Bytes(),Bytes()).length
+value-map-empty	Map(Bytes(),1,Bytes(),2).length
+value-class	Bytes(1).getClass().simpleName
+value-string	Bytes(1).toString()
+value-if-non-null	Bytes(1).ifNonNull((it)->it.hex)
+value-is-bytes	Bytes(1) is Bytes
+value-is-list	Bytes(1) is List
+value-as-bytes	Bytes(1) as Bytes
+error-charset-lower	Bytes(1).decodeToString("utf-8")
+error-charset-no-hyphen	Bytes(1).decodeToString("UTF8")
+error-charset-latin-alias	Bytes(1).decodeToString("latin1")
+error-charset-unsupported	Bytes(1).decodeToString("UTF-32")
+error-charset-ascii	Bytes(1).decodeToString("ASCII")
+error-charset-int	Bytes(1).decodeToString(1)
+error-charset-null	Bytes(1).decodeToString(null)
+error-charset-missing	Bytes(1).decodeToString()
+error-charset-extra	Bytes(1).decodeToString("UTF-8", "UTF-16")
+error-encode-alias	"a".encodeToBytes("utf-8")
+error-encode-unsupported	"a".encodeToBytes("UTF-32")
+error-get-string	Bytes(1).getOrNull("0")
+error-get-missing	Bytes(1).getOrNull()
+error-get-extra	Bytes(1).getOrNull(0,1)
+error-tolist-extra	Bytes(1).toList(1)
+error-missing-member	Bytes(1).missing
+error-property-as-method	Bytes(1).sha256()
+error-tostring-extra	Bytes(1).toString(1)
+error-sub-string	Bytes(1)["0"]
+error-sub-float	Bytes(1)[1.0]
+conversion-signed-subscript	Bytes(255)[0]
+conversion-signed-get	Bytes(255).getOrNull(0)
+conversion-unsigned-list	Bytes(255).toList()[0]
+conversion-unsigned-list-roundtrip	List(255).toBytes().toList()[0]
+conversion-boundary-to-list	boundaryBytes.toList()
+conversion-all-to-list-last	allBytes.toList()[255]

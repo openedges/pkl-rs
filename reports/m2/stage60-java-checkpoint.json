@@ -1,0 +1,253 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical": {
+    "archive_identity": {
+      "bytes": 277992,
+      "sha256": "d0eb7a027bcb735c53b73289c1981a942e15150cbc63163575dd2b0e7624cab6"
+    },
+    "archive_members": 10229,
+    "fixture": "tests/fixtures/m2-bytes-values",
+    "module_uri": "file:///stage60/bytes-values.pkl",
+    "pids": [
+      96161,
+      96166
+    ],
+    "raw_files_per_repetition": 5102,
+    "repetitions": 2,
+    "row_channels": {
+      "encodings_per_string": [
+        "UTF-8",
+        "UTF-16BE-code-units"
+      ],
+      "status_binary": 1,
+      "string_names": [
+        "expression",
+        "result.stdout",
+        "result.stderr",
+        "result.error-class",
+        "result.exception-to-string",
+        "result.cause-class",
+        "result.cause-message",
+        "result.cause-to-string"
+      ]
+    },
+    "rows": 300,
+    "statuses_per_session": {
+      "error": 77,
+      "success": 223
+    }
+  },
+  "history": {
+    "archive": "reports/m2/stage60-java-history.tar.gz",
+    "captures": {
+      "01": {
+        "pids": [
+          95252,
+          95268
+        ],
+        "raw_repetitions_equal": true,
+        "rows": 300,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 166,
+          "success": 134
+        }
+      },
+      "02": {
+        "pids": [
+          95525,
+          95579
+        ],
+        "raw_repetitions_equal": true,
+        "rows": 300,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 83,
+          "success": 217
+        }
+      },
+      "03": {
+        "pids": [
+          95737,
+          95764
+        ],
+        "raw_repetitions_equal": true,
+        "rows": 300,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 77,
+          "success": 223
+        }
+      },
+      "04": {
+        "pids": [
+          96062,
+          96110
+        ],
+        "raw_repetitions_equal": true,
+        "rows": 300,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 77,
+          "success": 223
+        }
+      }
+    },
+    "embedded_manifest_sha256": "6de981b6a29e6211e613960acdd94ed411f745974f0a45c866330341d44207ad",
+    "identity": {
+      "bytes": 1857377,
+      "sha256": "4d4cb3cc2b1590e81724989addd43f930981933a22614a221e1a1ff63914e9a8"
+    },
+    "member_hash_readback": true,
+    "members": 40914,
+    "reason_superseded": {
+      "01": "Module-local properties were not visible to public expression evaluation.",
+      "02": "Authored NUL escape used unsupported syntax.",
+      "03": "Value equality labels incorrectly suggested reference identity.",
+      "04": "List eager construction labels incorrectly suggested toBytes error order."
+    }
+  },
+  "java_runtime": {
+    "artifact_before_after_equal": true,
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "jdk_executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+    "jdk_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "jdk_release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+    "reference_revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "kind": "stage60-bytes-java-authority-checkpoint",
+  "limits": [
+    "The original upstream basic/bytes.pkl, api/bytes.pkl and invalidBytes4.pkl sources were reviewed and copied; original snippet suite replay remains separate.",
+    "This Java string API capture does not establish VM cache/backlink reference identity or typed byte[] export aliasing.",
+    "No Rust candidate, browser, Node, full M2, or performance compatibility is established by this Java authority checkpoint.",
+    "M2 manifest freshness is deferred until concurrent Rust/core changes freeze and the manifest is regenerated."
+  ],
+  "schema": 1,
+  "validation": {
+    "archive": "reports/m2/stage60-java-validation.tar.gz",
+    "checks": [
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/bytes_values_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792838697.7371662,
+        "name": "fixture-verifier",
+        "started_epoch": 1792838696.814982,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 331,
+          "sha256": "ac6a0134fbef7f2dbb69546606d8c4155b8d2d66b04bd7f9ceef561205feda64"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "tools/bytes_values_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792838698.530497,
+        "name": "fixture-verifier-O",
+        "started_epoch": 1792838697.739858,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 331,
+          "sha256": "ac6a0134fbef7f2dbb69546606d8c4155b8d2d66b04bd7f9ceef561205feda64"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "tools.tests.test_bytes_values_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792838699.516397,
+        "name": "fixture-tests",
+        "started_epoch": 1792838698.532127,
+        "stderr": {
+          "bytes": 1450,
+          "sha256": "aa8dbd1740a304446e26bdd4f4a4f30b9b4f450b3c76c37c86ca8c511e073776"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "-m",
+          "unittest",
+          "tools.tests.test_bytes_values_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792838700.530098,
+        "name": "fixture-tests-O",
+        "started_epoch": 1792838699.518759,
+        "stderr": {
+          "bytes": 1450,
+          "sha256": "229334584f0ea40d1e90f5ac265ac421515d2d12a30e1c6515c49a666cb93538"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/inventory.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792838703.3858712,
+        "name": "source-inventory",
+        "started_epoch": 1792838700.5331268,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 926,
+          "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+        }
+      }
+    ],
+    "deferred_final_integration": [
+      "M2 manifest freshness after Rust/core source freeze and regeneration"
+    ],
+    "directory": "target/m2/stage60-java-validation-01",
+    "embedded_manifest_sha256": "75fcf9a138407aa8fbda49c425c5c01a72ee7796f7d3fd11d4f34cdef65b3d70",
+    "identity": {
+      "bytes": 798107,
+      "sha256": "688d9a9b2ab975ff4463eb6669de1af7e91b2eadd6fbdc41a8aabba9b20959cd"
+    },
+    "member_hash_readback": true,
+    "members": 52,
+    "record": "target/m2/stage60-java-validation-01/validation.json",
+    "record_identity": {
+      "bytes": 13166,
+      "sha256": "f3a50c662c9a734665b37e5efbcee54c69d015da0b68fb3bbae6cc24328a00d0"
+    },
+    "source_stable": true
+  }
+}
