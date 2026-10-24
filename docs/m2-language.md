@@ -1,5 +1,42 @@
 # M2 language verification
 
+Stage 60 adds shared `Bytes` operations and resumable `List.toBytes` conversion.
+The [Java authority](../reports/m2/stage60-java-checkpoint.json) contains 300
+ordered expressions in two fresh JVMs, with 223 successes and 77 ordinary Pkl
+errors per session. Native, N-API, and Chromium each match 594 of 600 common
+string observations. `list-intseq-all`, `list-intseq-hash`, and
+`value-all-intseq` fail in both repetitions; their strict gates remain failed.
+The full fixture retains these rows. One ignored Rust regression preserves all
+three known failures separately from the 297 passing focused cases.
+
+Selected operations cover length/size, Base64, hex, MD5, SHA-1, SHA-256,
+`sha256Int`, concatenation, indexing, `getOrNull`, `toList`, and strict UTF-8,
+UTF-16, and ISO-8859-1 decoding. Java directly widens a signed byte for Bytes
+indexing and `getOrNull`; its List conversion produces unsigned values.
+`sha256Int` reads the first eight digest bytes as a signed little-endian integer.
+The shared engine preserves these distinctions and first-error diagnostics.
+Heap-local cache links retain the originating List through Host suspension and
+GC; release clears those links. Value/hash observations do not establish Java
+wrapper identity or mutable exported-array aliasing.
+
+Comparisons require seven common raw channels, including UTF-16 code units,
+and the complete session protocol. Java exception-class, exception-string, and
+cause channels remain additional producer observations; the candidate string
+boundary does not synthesize them. Portable capture requests the eleven
+environment keys recorded by Java. Effective `en-US`/`UTC` comes from both
+actual JVM session command lines, separately from the preflight `ko-KR`
+properties. Actual Node environment and browser locale/timezone observations
+are recorded. The Java capture does not record its complete OS-injected
+environment, so complete process-environment identity is not claimed.
+
+The [implementation evidence](../reports/m2/stage60-implementation-checkpoint.json)
+also preserves unchanged original programs: 12 matches, four mismatches, and
+one unsupported result among 17. `errors/invalidBytes4.pkl` newly matches;
+`basic/bytes.pkl` and `api/bytes.pkl` reach missing `IntSeq` calls. Binary tests
+still fail at `module.toMap()` before encoding, and the Duration API program
+still requires `pkl:math`. Typed exports, full M2, product APIs, and performance
+remain separate requirements.
+
 The [DataSize contract](m2-data-size.md) separates shared value operations and
 raw native/Node/Chromium string comparisons from required typed exports,
 remaining Bytes behavior, and unchanged original-module failures.

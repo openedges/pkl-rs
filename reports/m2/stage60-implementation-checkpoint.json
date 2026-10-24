@@ -1,0 +1,361 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "canonical": {
+    "boundary": "Seven exact common UTF-8/UTF-16/status channels and whole session protocol; Java exception and cause metadata are producer-only.",
+    "comparison_report": {
+      "bytes": 12276,
+      "path": "target/m2/stage60-comparison-validation-01/report.json",
+      "sha256": "302353554b6daae077cfd2e4b4525ac6f12f81cdd95cd0e1d4f6b66835f28de8"
+    },
+    "environment": "Portable requested process environments match the eleven Java capture keys; effective JVM en-US/UTC comes from actual session flags, separately from preflight ko-KR. Actual Node and browser observations are captured; complete OS-injected Java environment identity is unverified.",
+    "integrity_status": "passed",
+    "known_mismatch_ids": [
+      "list-intseq-all",
+      "list-intseq-hash",
+      "value-all-intseq"
+    ],
+    "native_artifact": {
+      "bytes": 17425456,
+      "sha256": "0a5b1ab53f031f8b4b5d33aa57f2f3c04cffc4865204ab6a5c6d7b88795a7831"
+    },
+    "portable_artifacts": {
+      "napi": {
+        "bytes": 4867856,
+        "sha256": "6786262a8a00469bbcef702a1e5f99bc3a5c789cb09d5b4e4b02a7b478b79db8"
+      },
+      "wasm_bg": {
+        "bytes": 3964826,
+        "sha256": "4caed3b4129db9cbc3bfedf7d766a855aaacdcb9dd467b04ce1b49d5b01e4d04"
+      },
+      "wasm_js": {
+        "bytes": 42154,
+        "sha256": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc"
+      }
+    },
+    "repetitions_per_target": 2,
+    "rows": 300,
+    "strict_string_status": "failed",
+    "targets": {
+      "chromium": {
+        "mismatch": 6,
+        "pass": 594
+      },
+      "napi": {
+        "mismatch": 6,
+        "pass": 594
+      },
+      "native": {
+        "mismatch": 6,
+        "pass": 594
+      }
+    }
+  },
+  "evidence": {
+    "closeout": {
+      "archive": {
+        "bytes": 17719100,
+        "path": "reports/m2/stage60-closeout-evidence.tar.gz",
+        "sha256": "ec2de573e68b5cd39b56616be4bfa054a614d5b63449dcf5b9baaf35ec66bd9b"
+      },
+      "full_member_readback_verified": true,
+      "members": 5802,
+      "publication": {
+        "bytes": 1403585,
+        "path": "reports/m2/stage60-closeout-publication.json",
+        "sha256": "3530fcb95c9bf10245965ce0c55f14f87d3e12524724863079b981803ab9e41a"
+      }
+    },
+    "native": {
+      "archive": {
+        "bytes": 28132868,
+        "path": "reports/m2/stage60-native-evidence.tar.gz",
+        "sha256": "fad5de6c5435966348f38eb1dfcc031295453dd2e1ecd22ca82dd2fe698243f1"
+      },
+      "full_member_readback_verified": true,
+      "members": 19130,
+      "publication": {
+        "bytes": 4529294,
+        "path": "reports/m2/stage60-native-publication.json",
+        "sha256": "0513d13ce4c45a2fe75169e521cedbd819e6043820917917fa7a910113d3c56e"
+      }
+    },
+    "platform": {
+      "archive": {
+        "bytes": 11355955,
+        "path": "reports/m2/stage60-platform-evidence.tar.gz",
+        "sha256": "319c9a9336ae05ac742d2045f1e9b9592a6d8ded99d0964d2d2f16cfa87c6018"
+      },
+      "full_member_readback_verified": true,
+      "members": 41193,
+      "publication": {
+        "bytes": 10130148,
+        "path": "reports/m2/stage60-platform-publication.json",
+        "sha256": "01fb37e9eff9c88826048ad5809d25a6e4013dd915094fcf618ead2143a39207"
+      }
+    },
+    "validation": {
+      "archive": {
+        "bytes": 31356028,
+        "path": "reports/m2/stage60-validation-evidence.tar.gz",
+        "sha256": "5257b557ca1311ffb226099b0015ef5b96b7346334b2069c095f480e14db45a4"
+      },
+      "full_member_readback_verified": true,
+      "members": 1315,
+      "publication": {
+        "bytes": 289809,
+        "path": "reports/m2/stage60-validation-publication.json",
+        "sha256": "c14925445c2c0ef7a337454233e710ade505025994d93a194c8637ff8181bde2"
+      }
+    }
+  },
+  "failed_attempts": "Original focused failures, unchanged-stack overflow, subsequent ENOSPC evidence write, and comparison preflight error remain archived separately from final checks.",
+  "full_m2_complete": false,
+  "full_public_api_comparison_passed": false,
+  "implementation": [
+    "Shared Bytes properties, hashing, concatenation, indexing, strict charset decoding, and List.toBytes UInt8 checks.",
+    "Heap-local Bytes/List cache links with tracing across Host suspension, GC, and heap release.",
+    "Source-backed Charset alias and small compiler frames for alias annotations and scalar literals; unchanged 256 KiB frontend regression passes."
+  ],
+  "inventory": {
+    "changed_implementation_link_sha256": 69,
+    "counts": {
+      "cases": 4527,
+      "cases_by_execution": {
+        "ready": 4416,
+        "unimplemented": 71,
+        "unmapped": 40
+      },
+      "requirements": 475,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 31,
+        "specification": 198
+      }
+    },
+    "freshness": {
+      "bytes": 1017,
+      "path": "target/m2/stage60-inventory-update-02/report.json",
+      "sha256": "86293f6241a7819d5368dc3fb93953f33b3bac888f85d8d0e9fc053c125204de"
+    },
+    "manifest": {
+      "bytes": 6700510,
+      "path": "compatibility/m2-language.json",
+      "sha256": "05f4e2467dfdc6425e8e54468ee1c3d45227183bee6c17e47b1110ede804bc66"
+    }
+  },
+  "java_authority": {
+    "bytes": 8090,
+    "path": "reports/m2/stage60-java-checkpoint.json",
+    "sha256": "8ec0719db4f605cb2ed93316520abfb50230bc3cf9ae98d00eb9f6f26f96902b"
+  },
+  "kind": "stage60-bytes-values-implementation-checkpoint",
+  "m1_platform_regression": {
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "oracle_passed": {
+      "browser": 6076,
+      "node": 6076,
+      "rust": 6076
+    },
+    "shared_engine_passed": 6078,
+    "source_stability": true,
+    "total": 6078
+  },
+  "original_modules": {
+    "candidate_sha256": "c110beb51a35eed0469c4d626da78efad788f6e30e1b29fa9ae5f003244e18e5",
+    "current_whole_language_verdict": false,
+    "executions_per_case": {
+      "java": 1,
+      "rust": 1
+    },
+    "first_failure_review": {
+      "bytes": 16031,
+      "path": "target/m2/stage60-original-review-01/review.json",
+      "sha256": "04632ed14bda997a76cf8dcf0144538662cf37cf799a918a5dfe115ed7d5289d"
+    },
+    "outcomes": {
+      "api/any.pkl": "pass",
+      "api/anyConverter.pkl": "pass",
+      "api/bytes.pkl": "mismatch",
+      "api/dataSize.pkl": "pass",
+      "api/duration.pkl": "candidate-unsupported",
+      "basic/bytes.pkl": "mismatch",
+      "basic/dataSize.pkl": "pass",
+      "basic/duration.pkl": "pass",
+      "classes/class1.pkl": "pass",
+      "classes/class4.pkl": "pass",
+      "errors/anyConverterError.pkl": "pass",
+      "errors/invalidBytes1.pkl": "pass",
+      "errors/invalidBytes2.pkl": "pass",
+      "errors/invalidBytes3.pkl": "pass",
+      "errors/invalidBytes4.pkl": "pass",
+      "pklbinary/datasize.msgpack.yaml.pkl": "mismatch",
+      "pklbinary/duration.msgpack.yaml.pkl": "mismatch"
+    },
+    "report": {
+      "bytes": 1255226,
+      "path": "target/m2/stage60-original-bytes-01/report.json",
+      "sha256": "32928ea6d1ca938337b1031f47b55e9afc259524423acbe8444d6994fc684e4c"
+    },
+    "status_counts": {
+      "candidate-unsupported": 1,
+      "mismatch": 4,
+      "pass": 12
+    },
+    "strict_selected_status": "failed",
+    "total": 17
+  },
+  "performance_targets_achieved": false,
+  "regressions": {
+    "any_if_non_null": {
+      "chromium": {
+        "mismatch": 4,
+        "pass": 168
+      },
+      "napi": {
+        "mismatch": 4,
+        "pass": 168
+      }
+    },
+    "any_scope": "N-API and Chromium string comparison only; Regex and IntSeq remain failed.",
+    "data_size": {
+      "chromium": {
+        "pass": 510
+      },
+      "napi": {
+        "pass": 510
+      },
+      "native": {
+        "pass": 510
+      }
+    },
+    "duration": {
+      "chromium": {
+        "pass": 548
+      },
+      "napi": {
+        "pass": 548
+      },
+      "native": {
+        "pass": 548
+      }
+    }
+  },
+  "remaining": [
+    "All nine M2 workstreams and the strict full-language completion gate remain open.",
+    "IntSeq and Regex constructor gaps, remaining original module and diagnostic failures, metadata/reflection, and broader language corpus obligations remain.",
+    "Typed exports and Java mutable byte-array export aliasing are unverified; value/hash observations do not prove wrapper identity.",
+    "Complete product APIs, release platforms, Java-compatible speed and peak-memory targets remain open."
+  ],
+  "rust_validation": {
+    "checks": [
+      {
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0,
+        "name": "references"
+      },
+      {
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "name": "format"
+      },
+      {
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "name": "clippy"
+      },
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "name": "workspace-tests"
+      },
+      {
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "name": "wasm-runtime"
+      }
+    ],
+    "host": {
+      "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+      "uname": {
+        "machine": "arm64",
+        "node": "research-macmini1.local",
+        "processor": "arm",
+        "release": "27.0.0",
+        "system": "Darwin",
+        "version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:27 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8103"
+      }
+    },
+    "ignored_scope": "Existing frontend probe, two Any constructor-gap tests, and one Bytes test preserving three IntSeq failures.",
+    "report": {
+      "bytes": 5494,
+      "path": "target/m2/stage60-rust-validation-02/report.json",
+      "sha256": "f26be39069a0c8cffa38fc7d15fff22319c2de5617e8e04651e98ec5c0449b22"
+    },
+    "source_count": 165258,
+    "source_stable": true,
+    "test_executions": {
+      "fail": 0,
+      "ignored": 4,
+      "pass": 940
+    },
+    "toolchain": "1.98.1"
+  },
+  "schema": 1,
+  "source_binding": {
+    "base_commit": "b2301be5fe074b423f3baddfaa701aad0ecd5641",
+    "gitlinks": {
+      "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+    },
+    "status": "Precommit source snapshots; actual Git implementation binding follows separately."
+  },
+  "tool_validation": {
+    "javascript_tests": 19,
+    "python_optimized_repeated_tests": 25,
+    "report": {
+      "bytes": 2330,
+      "path": "target/m2/stage60-tool-development-05/report.json",
+      "sha256": "5aa01a5403ea4a4a652e24520216e4a55acc2af62cbe7c4670dc213ab44ac12f"
+    },
+    "unique_python_tests": 25
+  },
+  "verification_provenance": "Recorded local macOS arm64 execution, not hosted CI."
+}

@@ -3,6 +3,17 @@ use super::*;
 use crate::resolver::Binding;
 use crate::syntax::{BinaryOp, Expr, ExprKind, UnaryOp};
 
+fn literal_value(expression: &Expr) -> Option<Value> {
+    Some(match &expression.kind {
+        ExprKind::Int(value) => Value::Int((*value).into()),
+        ExprKind::Float(value) => Value::Float((*value).into()),
+        ExprKind::Null => Value::Null,
+        ExprKind::String(value) => Value::string(value.source_literal()),
+        ExprKind::Bool(value) => Value::Bool(*value),
+        _ => return None,
+    })
+}
+
 #[derive(Clone)]
 enum InferredParent {
     DeclaredType(TypeCheck, RuntimeFrame),
@@ -869,6 +880,15 @@ impl Compiler<'_> {
                             } else {
                                 output.push_at(Instruction::Fail(cannot_infer_parent()), span);
                             }
+                        } else if let Some(value) = literal_value(expression) {
+                            // Leaves do not need either large expression dispatcher.
+                            // This also bounds annotation-property compilation.
+                            output.push(Instruction::Constant(value));
+                        } else if matches!(expression.kind, ExprKind::TypeAlias { .. }) {
+                            // Annotation compilation can reenter the expression compiler.
+                            // Do not retain either general expression-dispatch frame.
+                            self.type_alias_expression(expression, output)
+                                .map_err(|error| error.at(expression.span))?;
                         } else {
                             self.schedule_expression(expression, output, &mut work)
                                 .map_err(|error| error.at(expression.span))?;

@@ -589,7 +589,7 @@ impl Vm {
             // Unit types are authored base aliases. Resolve their retained
             // declaration after lexical/user parents, preserving its union's
             // source section instead of constructing a source-less substitute.
-            if matches!(name.as_ref(), "DataSizeUnit" | "DurationUnit")
+            if matches!(name.as_ref(), "DataSizeUnit" | "DurationUnit" | "Charset")
                 && let Some(modules::CachedModule::Value(base)) =
                     self.modules_stdlib.get("pkl:base")
             {

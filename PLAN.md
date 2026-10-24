@@ -1738,11 +1738,39 @@ Java가 Bytes 인덱싱에서 signed byte를 반환하고 List 변환에서는 u
 역사 자료로 유지하고, 값 동등성·해시 관찰을 wrapper identity 증거로 표시하지
 않습니다.
 
-최종 소스를 고정한 뒤 native·Node·Chromium의 같은 식과 원본 모듈을 비교하고,
-필수 Rust 검사·도구 검사·공통 플랫폼·기존 Duration/DataSize 회귀를 검증합니다.
-현재 원본 `basic/bytes.pkl`·`api/bytes.pkl`의 IntSeq 의존성과 제품의 mutable
-byte array export 계약은 별도 미완료 범위입니다. 실제 원본 결과를 확인하기
-전에는 새 통과로 집계하지 않으며 M2의 아홉 영역과 전체 완료 조건을 유지합니다.
+고정 Java 기준은 `b2301be5fe074b423f3baddfaa701aad0ecd5641`에 커밋·푸시했습니다.
+공통 구현의 [검증 기록](reports/m2/stage60-implementation-checkpoint.json)은
+native·Node·Chromium 각각 600회 중 594회 일치·6회 불일치를 보존합니다.
+불일치는 `list-intseq-all`·`list-intseq-hash`·`value-all-intseq`의 두 번 반복이며,
+엄격한 비교는 실패입니다. 전체 300개 Java 입력은 유지하고, Rust 회귀의 297개
+일치와 나머지 세 사례를 보존하는 ignored 검사 한 개를 구분합니다.
+
+원본 17개 프로그램은 12개 일치·4개 불일치·1개 후보 미지원입니다.
+`errors/invalidBytes4.pkl`이 새로 일치합니다. `basic/bytes.pkl`은 68행의
+`IntSeq(0, 255).toList().toBytes()`, `api/bytes.pkl`은 3행의
+`IntSeq(0, 999).map((_) -> 0).toBytes()`에서 멈춥니다. Binary 두 사례는
+공통 입력의 `module.toMap()`에서 인코딩 전에 실패하고, `api/duration.pkl`의
+`pkl:math` 의존성도 남습니다. 각 원본은 Java·Rust 한 번씩 실행했으며 오프라인
+재검증을 추가 평가 횟수로 집계하지 않습니다.
+
+기존 Duration 548회·DataSize 510회는 세 대상 모두 일치했습니다. portable
+Any는 대상별 168회 일치·4회 불일치, M1은 대상별 Java 6,076개 일치·regex 두 개
+불일치를 유지합니다. 필수 Rust 검사 다섯 개와 workspace 940개 검사가 통과했고
+ignored 네 개는 통과에서 제외했습니다. Python 25개를 일반·`-O`로 각각 실행하고
+JavaScript 19개도 통과했습니다. 목록은 구현 연결 hash 69개만 갱신했으며
+4,527개 accounting row·475개 요구사항과 미구현·미연결 상태는 바꾸지 않았습니다.
+
+새 `Charset` 별칭의 annotation 컴파일이 기존 256 KiB stack 검사를 실패시킨
+문제를 수정했습니다. 큰 일반 표현식 프레임을 유지하지 않도록 별칭과 scalar
+literal 경로를 분리했고, 원래 제한·입력으로 다섯 frontend 검사를 통과했습니다.
+최초 stack 실패와 그 뒤 디스크 부족으로 evidence 기록이 실패한 사건은 구분해
+보존합니다. 캐시 정리는 재생성 가능한 Cargo 산출물에만 적용했습니다.
+
+이번 결과는 로컬 macOS arm64 기록입니다. Java exception/cause metadata,
+wrapper identity, mutable byte array export와 제품 API를 문자열 비교 통과로
+확대하지 않습니다. 다음 구현은 원본 Bytes와 Any에서 반복해서 드러나는 IntSeq
+의존성과 나머지 원본 실패를 우선 확인합니다. M2의 아홉 영역·전체 완료 조건과
+성능·메모리 목표는 계속 열려 있습니다.
 
 ## M3 — 표준 라이브러리와 출력
 

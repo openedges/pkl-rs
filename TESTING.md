@@ -315,6 +315,43 @@ typed export, whole-language, product API, release-platform, or performance
 gates. The [M2 evidence report](reports/m2/README.md) tracks the distinct
 recorded scopes.
 
+The Stage 60 Bytes fixture contains 300 independent Java expressions in two
+fresh JVM sessions. Its 17 producer channels include exception and cause
+metadata; the current candidate string boundary compares seven common raw
+channels and the complete ordered protocol. Do not count producer-only metadata
+as candidate API passes. The strict native and portable comparisons retain six
+IntSeq mismatches per target, with 594 matches. The ignored Rust test retains
+the three underlying cases and does not contribute to the passing count.
+
+```sh
+python3 tools/bytes_values_fixtures.py
+python3 tools/bytes_values_compare.py --acquire target/m2/bytes-native-new --build target/m2/bytes-build-new --gate string
+python3 tools/bytes_values_compare.py --verify target/m2/bytes-native-new --gate string
+python3 tools/bytes_values_portable_compare.py --capture target/m2/bytes-portable-new --m1 target/m2/bytes-platforms-new --native-build target/m2/bytes-build-new --build-wrapper target/m2/bytes-platform-wrapper-new --gate string
+```
+
+Acquisition requires an existing recorded build; portable verification also
+requires the matching actual N-API/Chromium capture, M1 artifact set, and source
+wrapper. The [Stage 60 evidence](reports/m2/stage60-implementation-checkpoint.json)
+preserves those exact inputs and commands. Strict comparisons exit nonzero for
+the retained failures even when acquisition and evidence integrity pass.
+The Java session flags establish effective `en-US` and `UTC`, independently
+of the preflight locale. Portable capture checks the recorded requested process
+environment and actual browser observations without claiming a complete
+OS-injected Java environment observation.
+
+Stage 60 passed the five required local Rust checks: 940 test executions passed
+and four were ignored. Its initial unchanged 256 KiB frontend stack test failed;
+the compiler fix and subsequent pass retain the original stack limit and input.
+The later disk-full evidence-write failure is recorded separately. Tool checks
+pass 25 Python tests normally and under `-O`, plus 19 JavaScript tests.
+Duration and DataSize string regressions match 548 and 510 observations on each
+target. Portable Any and the M1 regex experiment retain their known failures.
+Original modules have 12 matches, four mismatches, and one unsupported result
+among 17; each program has one Java and one Rust execution. Offline verification
+does not add evaluation repetitions. Typed exports, mutable Java array aliasing,
+whole-language and product compatibility, and performance remain unverified.
+
 The [method-deprecation contract](docs/m2-deprecation.md) records the pinned Java
 logger matrix and a separate experiment with sequential evaluators in one JVM.
 Its independent fixture verifier checks raw UTF-8, UTF-16, frame, and callback

@@ -874,7 +874,7 @@ pub struct Program {
     pub(crate) string_repeat_block: usize,
     pub(crate) collection_join_blocks: [usize; 2],
     collection_transform_blocks: [usize; 11],
-    collection_projection_blocks: [usize; 6],
+    collection_projection_blocks: [usize; 7],
     null_constructor_block: usize,
     pub(crate) string_encode_block: usize,
     pub(crate) pair_constructor_block: usize,
@@ -4447,6 +4447,8 @@ impl Vm {
                     return Err(self.data_size_member_error(name, method));
                 } else if matches!(receiver, Value::Duration(_)) {
                     return Err(self.duration_member_error(name, method));
+                } else if matches!(receiver, Value::Bytes(_)) {
+                    return Err(self.bytes_member_error(name, method));
                 } else {
                     let receiver = receiver.as_object()?;
                     if method
@@ -4538,6 +4540,9 @@ impl Vm {
                 }
                 if matches!(receiver, Value::Duration(_)) {
                     return Err(self.duration_member_error(name, method));
+                }
+                if matches!(receiver, Value::Bytes(_)) {
+                    return Err(self.bytes_member_error(name, method));
                 }
                 let receiver = receiver.as_object()?;
                 if method || !self.collection_builtin(receiver, name)? {
@@ -5277,6 +5282,17 @@ impl Vm {
             | Instruction::Power => {
                 let right = self.pop()?;
                 let left = self.pop()?;
+                if (matches!(left, Value::Bytes(_)) || matches!(right, Value::Bytes(_)))
+                    && !(matches!(instruction, Instruction::Add)
+                        && matches!((&left, &right), (Value::Bytes(_), Value::Bytes(_))))
+                {
+                    return Err(RuntimeError::new(ErrorKind::Type, PklString::join(&[
+                        format!("Operator `{}` is not defined for operand types `{}` and `{}`.\nLeft operand : ", operator_name(&instruction), crate::diagnostic_values::type_name(&left, &self.heap, &self.program.module_name)?, crate::diagnostic_values::type_name(&right, &self.heap, &self.program.module_name)?).into(),
+                        crate::diagnostic_values::render_string(&left, &self.heap, &self.program.module_name, 80)?,
+                        "\nRight operand: ".into(),
+                        crate::diagnostic_values::render_string(&right, &self.heap, &self.program.module_name, 80)?,
+                    ], "")));
+                }
                 self.stack.push(binary(&instruction, left, right)?);
             }
             Instruction::Jump(target) => {
@@ -5632,6 +5648,9 @@ fn binary(instruction: &Instruction, left: Value, right: Value) -> Result<Value,
             }
             _ => return Err(invalid("invalid binary instruction")),
         }),
+        (Value::Bytes(left), Value::Bytes(right)) if matches!(instruction, Instruction::Add) => {
+            Ok(Value::Bytes(left.concatenate(&right)))
+        }
         (Value::String(left), Value::String(right)) if matches!(instruction, Instruction::Add) => {
             Ok(Value::string(left.concat(&right)))
         }
@@ -6538,6 +6557,105 @@ impl Compiler<'_> {
         )
     }
 
+    // Alias annotations compile nested object bodies. Keep this path out of
+    // inner_expression's large general-dispatch frame during stdlib bootstrap.
+    fn type_alias_expression(
+        &mut self,
+        expression: &crate::syntax::Expr,
+        output: &mut Code,
+    ) -> Result<(), RuntimeError> {
+        let crate::syntax::ExprKind::TypeAlias {
+            type_parameters,
+            ty,
+            ..
+        } = &expression.kind
+        else {
+            return Err(invalid("type alias expression"));
+        };
+        let begin = output.len();
+        let declaration_name = self
+            .resolved
+            .module
+            .members
+            .iter()
+            .find(|member| member.expr.span == expression.span)
+            .map(|member| {
+                format!(
+                    "#{}",
+                    &self.resolved.module.source[member.name_span.start..member.name_span.end]
+                )
+            })
+            .unwrap_or_else(|| {
+                self.member
+                    .as_str()
+                    .expect("type aliases are declared in module scope")
+                    .to_owned()
+            });
+        output.push(Instruction::BeginTypeAlias {
+            declaration: self.declaration_base + expression.span.start,
+            name: Arc::from(declaration_name),
+            end: 0,
+        });
+        self.declaration_annotations(expression, output)?;
+        let declaration = self.declaration_base + expression.span.start;
+        let formals = type_parameters
+            .iter()
+            .map(|parameter| {
+                (
+                    parameter.name.clone(),
+                    TypeCheck::Parameter {
+                        block: declaration,
+                        name: parameter.name.clone().into(),
+                    },
+                )
+            })
+            .collect();
+        let previous_module = std::mem::replace(&mut self.constraint_module, true);
+        let alias_body =
+            self.compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), &formals);
+        self.constraint_module = previous_module;
+        if let Ok(body) = alias_body {
+            self.program.alias_definitions.insert(
+                declaration,
+                type_resolution::AliasDefinition {
+                    parameters: type_parameters
+                        .iter()
+                        .map(|parameter| Arc::from(parameter.name.as_str()))
+                        .collect(),
+                    body,
+                    origin: RuntimeFrame {
+                        source: self.source.clone(),
+                        span: ty.span,
+                        member: self.member.clone(),
+                    },
+                },
+            );
+        }
+        let parameters = type_parameters
+            .iter()
+            .map(|parameter| (parameter.name.clone(), TypeCheck::Unknown))
+            .collect();
+        match self.compile_type_at(
+            ty,
+            self.type_scopes.len(),
+            &mut BTreeSet::new(),
+            &parameters,
+        ) {
+            Ok(_) => self.initialize_type_resolution_with_parameters(ty, &parameters, output),
+            Err(error) => {
+                self.initialize_type_resolution_with_parameters(ty, &parameters, output);
+                let span = error.span.unwrap_or(ty.span);
+                output.push_at(Instruction::Fail(error), span);
+            }
+        }
+        output.push(Instruction::FinishTypeAlias);
+        let end = output.len();
+        if let Instruction::BeginTypeAlias { end: target, .. } = &mut output[begin] {
+            *target = end;
+        }
+        Ok(())
+    }
+
     fn inner_expression(
         &mut self,
         expression: &crate::syntax::Expr,
@@ -6693,100 +6811,7 @@ impl Compiler<'_> {
                     *target = end;
                 }
             }
-            ExprKind::TypeAlias {
-                type_parameters,
-                ty,
-                ..
-            } => {
-                let begin = output.len();
-                let declaration_name = self
-                    .resolved
-                    .module
-                    .members
-                    .iter()
-                    .find(|member| member.expr.span == expression.span)
-                    .map(|member| {
-                        format!(
-                            "#{}",
-                            &self.resolved.module.source
-                                [member.name_span.start..member.name_span.end]
-                        )
-                    })
-                    .unwrap_or_else(|| {
-                        self.member
-                            .as_str()
-                            .expect("type aliases are declared in module scope")
-                            .to_owned()
-                    });
-                output.push(Instruction::BeginTypeAlias {
-                    declaration: self.declaration_base + expression.span.start,
-                    name: Arc::from(declaration_name),
-                    end: 0,
-                });
-                self.declaration_annotations(expression, output)?;
-                let declaration = self.declaration_base + expression.span.start;
-                let formals = type_parameters
-                    .iter()
-                    .map(|parameter| {
-                        (
-                            parameter.name.clone(),
-                            TypeCheck::Parameter {
-                                block: declaration,
-                                name: parameter.name.clone().into(),
-                            },
-                        )
-                    })
-                    .collect();
-                let previous_module = std::mem::replace(&mut self.constraint_module, true);
-                let alias_body = self.compile_type_at(
-                    ty,
-                    self.type_scopes.len(),
-                    &mut BTreeSet::new(),
-                    &formals,
-                );
-                self.constraint_module = previous_module;
-                if let Ok(body) = alias_body {
-                    self.program.alias_definitions.insert(
-                        declaration,
-                        type_resolution::AliasDefinition {
-                            parameters: type_parameters
-                                .iter()
-                                .map(|parameter| Arc::from(parameter.name.as_str()))
-                                .collect(),
-                            body,
-                            origin: RuntimeFrame {
-                                source: self.source.clone(),
-                                span: ty.span,
-                                member: self.member.clone(),
-                            },
-                        },
-                    );
-                }
-                let parameters = type_parameters
-                    .iter()
-                    .map(|parameter| (parameter.name.clone(), TypeCheck::Unknown))
-                    .collect();
-                match self.compile_type_at(
-                    ty,
-                    self.type_scopes.len(),
-                    &mut BTreeSet::new(),
-                    &parameters,
-                ) {
-                    Ok(_) => {
-                        self.initialize_type_resolution_with_parameters(ty, &parameters, output)
-                    }
-                    Err(error) => {
-                        self.initialize_type_resolution_with_parameters(ty, &parameters, output);
-                        let span = error.span.unwrap_or(ty.span);
-                        output.push_at(Instruction::Fail(error), span);
-                    }
-                }
-                output.push(Instruction::FinishTypeAlias);
-                let end = output.len();
-                if let Instruction::BeginTypeAlias { end: target, .. } = &mut output[begin] {
-                    *target = end;
-                }
-            }
+            ExprKind::TypeAlias { .. } => self.type_alias_expression(expression, output)?,
             ExprKind::EntryParent => output.push(Instruction::EntryParent),
             ExprKind::Uninitialized => output.push(Instruction::AbstractMember {
                 name: self.member.clone(),
@@ -6845,7 +6870,7 @@ impl Compiler<'_> {
                     .ok_or_else(|| invalid("missing static binding"))?
                 {
                     Binding::BaseTypeAlias
-                        if matches!(name.as_ref(), "DataSizeUnit" | "DurationUnit") =>
+                        if matches!(name.as_ref(), "DataSizeUnit" | "DurationUnit" | "Charset") =>
                     {
                         output.push(Instruction::LoadBaseModule);
                         output.push(Instruction::GetMember(name));
@@ -7714,8 +7739,11 @@ impl Compiler<'_> {
                 .iter()
                 .map(|argument| self.compile_type_at(argument, limit, aliases, parameters))
                 .collect::<Result<Vec<_>, _>>()?;
-            let fallback = if !matches!(path[0].as_str(), "DataSizeUnit" | "DurationUnit")
-                && crate::diagnostic_names::BASE_PROPERTIES.contains(&path[0].as_str())
+            let fallback = if !matches!(
+                path[0].as_str(),
+                "DataSizeUnit" | "DurationUnit" | "Charset"
+            ) && crate::diagnostic_names::BASE_PROPERTIES
+                .contains(&path[0].as_str())
             {
                 let previous = self.runtime_type_fallback.replace(ty.span);
                 let result = self.compile_type_at(ty, limit, aliases, parameters);
@@ -8235,7 +8263,9 @@ impl Compiler<'_> {
                         "Int" => TypeCheck::Int,
                         "Float" => TypeCheck::Float,
                         "Duration" => TypeCheck::Duration,
-                        "DataSizeUnit" | "DurationUnit" => self.declared_type(ty, Vec::new())?,
+                        "DataSizeUnit" | "DurationUnit" | "Charset" => {
+                            self.declared_type(ty, Vec::new())?
+                        }
                         "Number" => TypeCheck::Number,
                         "String" => TypeCheck::String,
                         "Bytes" => TypeCheck::Bytes,

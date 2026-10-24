@@ -2001,6 +2001,7 @@ impl<'a> Resolver<'a> {
                             | "UInt"
                             | "DataSizeUnit"
                             | "DurationUnit"
+                            | "Charset"
                     )
                 {
                     binding = Binding::BaseTypeAlias;

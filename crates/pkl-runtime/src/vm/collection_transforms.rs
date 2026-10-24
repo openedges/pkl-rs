@@ -17,6 +17,7 @@ pub enum Transform {
 pub enum Projection {
     ToList,
     ToSet,
+    ToBytes,
     KeysHash,
     KeysOrder,
     Values,
@@ -144,7 +145,7 @@ pub(super) fn blocks(
 pub(super) fn projection_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> [usize; 6] {
+) -> [usize; 7] {
     let source = crate::stdlib_sources::base();
     [
         ("List", "toList", None),
@@ -153,6 +154,7 @@ pub(super) fn projection_blocks(
         ("Set", "toSet", None),
         ("Map", "keys", Some(Projection::KeysHash)),
         ("Map", "values", Some(Projection::Values)),
+        ("List", "toBytes", Some(Projection::ToBytes)),
     ]
     .map(|(class, name, operation)| {
         let class_start = source
@@ -189,6 +191,9 @@ pub(super) fn projection_blocks(
                 if matches!(operation, Projection::ToSet) {
                     code.extend([Instruction::PrepareSetElement, Instruction::AddSetElement]);
                 } else {
+                    if matches!(operation, Projection::ToBytes) {
+                        code.push(Instruction::CheckByte);
+                    }
                     code.push(Instruction::AppendStrictElement);
                 }
                 code.push(Instruction::Jump(1));
@@ -246,6 +251,7 @@ impl Vm {
             (true, "toSet") if self.is_set(&receiver) => 3,
             (false, "keys") if self.is_map(&receiver) => 4,
             (false, "values") if self.is_map(&receiver) => 5,
+            (true, "toBytes") if self.is_list(&receiver) => 6,
             _ => return Ok(false),
         };
         let id = self.heap.allocate(Object {
@@ -479,7 +485,7 @@ impl Vm {
 
     pub(super) fn end_collection_transform(&mut self) -> Result<(), RuntimeError> {
         let frame = self.frames.last_mut().expect("transform frame");
-        frame
+        let run = frame
             .collection_transform
             .take()
             .ok_or_else(|| invalid("missing transform cursor"))?;
@@ -487,6 +493,23 @@ impl Vm {
             .builders
             .pop()
             .ok_or_else(|| invalid("missing transform builder"))?;
+        if matches!(run.operation, Operation::Projection(Projection::ToBytes)) {
+            let data = collections::ordered_members(&self.heap, builder)?
+                .iter()
+                .map(|member| {
+                    match collections::cached_render_value(&self.heap, builder, member)? {
+                        Some(Value::Int(value)) => Ok(value.get() as u8),
+                        _ => Err(invalid("checked List.toBytes element")),
+                    }
+                })
+                .collect::<Result<Vec<_>, _>>()?;
+            let bytes: crate::value::Bytes = data.into();
+            self.heap
+                .bytes_lists
+                .insert(bytes.reference(), (bytes.lifetime(), run.source, false));
+            self.stack.push(Value::Bytes(bytes));
+            return Ok(());
+        }
         let result = self.finish_strict_collection(builder)?;
         self.stack.push(Value::Object(result));
         Ok(())

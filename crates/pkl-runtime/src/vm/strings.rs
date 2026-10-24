@@ -221,27 +221,11 @@ pub(super) fn encode_block(
         .text
         .find(declaration)
         .expect("String.encodeToBytes declaration");
-    let alias = source.text.find("typealias Charset = ").unwrap() + "typealias Charset = ".len();
-    let mut cursor = alias;
-    let mut spans = Vec::new();
-    let mut types = Vec::new();
-    for charset in ["UTF-8", "UTF-16", "ISO-8859-1"] {
-        let literal = format!("\"{charset}\"");
-        let p = cursor + source.text[cursor..].find(&literal).unwrap();
-        cursor = p + literal.len();
-        spans.push(Span::new(p, cursor));
-        types.push(TypeCheck::StringLiteral(charset.into()));
-    }
+    let (charset_type, charset_span) = bytes::charset_type();
     let block = blocks.len();
     blocks.push(vec![
         Instruction::LoadLocal(0),
-        Instruction::CheckType(TypeCheck::Union {
-            string_literals: false,
-            types,
-            labels: spans.clone(),
-            spans,
-            default: None,
-        }),
+        Instruction::CheckType(charset_type),
         Instruction::StringEncode,
         Instruction::Return,
     ]);
@@ -249,7 +233,7 @@ pub(super) fn encode_block(
         source: Some(source),
         member: "#String.encodeToBytes".into(),
         declaration: Some(Span::new(start, start + declaration.len())),
-        spans: vec![None, Some(Span::new(alias, cursor)), None, None],
+        spans: vec![None, Some(charset_span), None, None],
         ..Default::default()
     });
     block

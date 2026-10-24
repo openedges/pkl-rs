@@ -1,5 +1,55 @@
 # M2 language evidence
 
+### Stage60 Bytes values — implementation and local comparisons
+
+The [implementation checkpoint](stage60-implementation-checkpoint.json) adds
+shared Bytes hashes, encoding, strict charset decoding, indexing,
+concatenation, List conversion, and resumable `List.toBytes` UInt8 checks.
+Heap-local cache links preserve List ownership across Host suspension and GC.
+The compiler also avoids retaining large generic expression frames while
+compiling source-backed alias annotations and scalar literals.
+
+The [Java checkpoint](stage60-java-checkpoint.json), committed in
+`b2301be5fe074b423f3baddfaa701aad0ecd5641`, seals 300 ordered expressions in
+each of two fresh JVM sessions: 223 successes and 77 ordinary errors per session.
+Native, N-API, and actual Chromium each match 594 of 600 string observations.
+Three IntSeq cases fail in both repetitions; strict string compatibility fails.
+Seven common raw channels and the complete protocol are compared. Additional
+Java exception/cause metadata remain producer-only observations. The requested
+portable environment uses the Java capture keys and effective session flags;
+full OS-injected Java environment identity is unverified.
+
+Duration and DataSize string regressions match 548 and 510 observations on each
+target. Portable Any retains 168 matches and four Regex/IntSeq mismatches per
+target. M1 retains 6,076 Java matches out of 6,078 per target and two regex
+differences; its architecture contract passes while compatibility fails.
+
+The unchanged original selection has 12 matches, four mismatches, and one
+candidate-unsupported result. `errors/invalidBytes4.pkl` newly matches. The
+basic and API Bytes programs reach missing `IntSeq` calls at lines 68 and 3,
+respectively. Both Binary programs still fail at `module.toMap()` before
+encoding, and the Duration API program still requires `pkl:math`. There is
+one Java and one Rust execution per original program, separate from repeated
+authored expression sessions.
+
+All five required Rust checks pass locally with Rust 1.98.1: 940 passing test
+executions and four ignored tests. The ignored Bytes test retains all three
+IntSeq failures, separately from the 297 exact focused comparisons. The original
+256 KiB frontend test passes after the compiler fix without changing its limit
+or input. The initial stack failure and subsequent disk-full evidence write
+remain separate failures. Tool checks pass 25 Python tests normally and under
+`-O`, plus 19 JavaScript tests. Inventory updates change only 69 implementation
+link hashes.
+
+The [validation](stage60-validation-evidence.tar.gz),
+[native](stage60-native-evidence.tar.gz),
+[platform](stage60-platform-evidence.tar.gz), and
+[closeout](stage60-closeout-evidence.tar.gz) publications preserve source and
+artifact identities, raw captures, earlier failed attempts, and complete member
+readback. These are local macOS arm64 results. Typed exports and mutable Java
+array aliasing, complete wrapper identity, full M2, product/release platforms,
+and speed/peak-memory targets remain open.
+
 ### Stage59 Duration values — implementation and local comparisons
 
 Stage 59 adds the shared `Duration` value and VM paths for seven units,

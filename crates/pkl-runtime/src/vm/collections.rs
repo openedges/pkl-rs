@@ -1650,6 +1650,11 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         self.stack.push(value);
                         return Ok(());
                     }
+                    if let Value::Bytes(bytes) = &value {
+                        let value = self.subscript_bytes(bytes, key)?;
+                        self.stack.push(value);
+                        return Ok(());
+                    }
                     value.as_object()?
                 };
                 if self.heap.get(receiver)?.collection_kind == CollectionKind::Set {

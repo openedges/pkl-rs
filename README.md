@@ -88,6 +88,15 @@ reaches the missing `pkl:math` module. Bytes and Binary test dependencies remain
 The separate 15-value raw-bit regression checks internal Rust values; typed
 product exports, whole-language compatibility, and performance remain open.
 
+The [Bytes checkpoint](reports/m2/stage60-implementation-checkpoint.json) adds
+shared hashing, encoding, strict charset decoding, indexing, concatenation,
+`toList`, and resumable `List.toBytes` checks. Each of native, N-API, and
+Chromium matches 594 of 600 string observations; three IntSeq-dependent cases
+fail in both repetitions. The 17 original programs now have 12 matches, four
+mismatches, and one unsupported result. `invalidBytes4.pkl` newly matches;
+the basic/API Bytes programs reach their missing `IntSeq` dependency.
+Typed exports, including Java byte-array aliasing, remain unverified.
+
 ## Goals
 
 - Compatibility with the Pkl 0.32.0 language, standard library, CLI, REPL, server, and public APIs.

@@ -5,6 +5,7 @@ use super::*;
 pub enum Operation {
     DataSize(data_size::Operation),
     Duration(duration::Operation),
+    Bytes(bytes::Operation),
     IfNonNull,
     Between,
     Uppercase,
@@ -126,6 +127,7 @@ pub(super) fn blocks(
     }
     result.extend(data_size::blocks(blocks, metadata));
     result.extend(duration::blocks(blocks, metadata));
+    result.extend(bytes::blocks(blocks, metadata));
     result.extend(any::blocks(blocks, metadata));
     result
 }
@@ -280,19 +282,7 @@ impl Vm {
             }
         }
         if !method && let Value::Bytes(bytes) = receiver {
-            if name == "length" {
-                self.stack.push(Value::Int((bytes.len() as i64).into()));
-                return Ok(true);
-            }
-            if name == "size" {
-                self.stack.push(Value::DataSize(bytes.size()));
-                return Ok(true);
-            }
-            if name == "base64" {
-                self.stack.push(Value::String(resources::base64(bytes)));
-                return Ok(true);
-            }
-            return Ok(false);
+            return self.bytes_property(bytes, name);
         }
         if !method
             && name == "base64DecodedBytes"
@@ -320,6 +310,7 @@ impl Vm {
             Value::Float(_) => "Float",
             Value::DataSize(_) => "DataSize",
             Value::Duration(_) => "Duration",
+            Value::Bytes(_) => "Bytes",
             Value::String(_) => "String",
             _ => return Ok(false),
         };
@@ -348,7 +339,7 @@ impl Vm {
             let arity = match name {
                 "isBetween" => 2,
                 "contains" | "dropLast" | "xor" | "implies" | "toDataSize" | "toDuration"
-                | "toUnit" => 1,
+                | "toUnit" | "getOrNull" | "decodeToString" => 1,
                 _ => 0,
             };
             let id = self.heap.allocate(Object {
@@ -399,6 +390,7 @@ impl Vm {
         match operation {
             Operation::DataSize(operation) => self.data_size_operation(receiver, operation)?,
             Operation::Duration(operation) => self.duration_operation(receiver, operation)?,
+            Operation::Bytes(operation) => self.bytes_operation(receiver, operation)?,
             Operation::IfNonNull => self.if_non_null(receiver)?,
             Operation::BooleanXor | Operation::BooleanImplies => {
                 let Value::Bool(left) = receiver else {

@@ -388,6 +388,9 @@ pub struct Heap {
     pub(crate) structural_keys: BTreeMap<crate::vm::equality::StructuralKey, u64>,
     pub(crate) next_structural_key: u64,
     pub(crate) key_equalities: std::collections::BTreeSet<(ObjectId, ObjectId)>,
+    // Heap-local VmBytes.vmList backlinks never put evaluator handles in code constants.
+    pub(crate) bytes_lists:
+        BTreeMap<crate::value_identity::Token, (std::sync::Weak<()>, ObjectId, bool)>,
 }
 
 impl Default for Heap {
@@ -406,6 +409,7 @@ impl Heap {
             structural_keys: BTreeMap::new(),
             next_structural_key: 1,
             key_equalities: std::collections::BTreeSet::new(),
+            bytes_lists: BTreeMap::new(),
         }
     }
 
@@ -811,11 +815,31 @@ impl Heap {
         self.stats
     }
 
+    fn traced_id(&self, value: &Value) -> Option<ObjectId> {
+        if let Value::Bytes(bytes) = value {
+            self.bytes_lists
+                .get(&bytes.reference())
+                .map(|(_, id, _)| *id)
+        } else {
+            value.heap_id()
+        }
+    }
+
     /// Trace all object edges, including lazy captures and completed values, iteratively.
     /// The caller must include every externally retained handle in `roots`.
     pub fn collect(&mut self, roots: &[Value]) -> HeapStats {
         let mut marked = vec![false; self.slots.len()];
-        let mut pending: Vec<ObjectId> = roots.iter().filter_map(Value::heap_id).collect();
+        let mut pending: Vec<ObjectId> = roots
+            .iter()
+            .filter_map(|value| self.traced_id(value))
+            .collect();
+        pending.extend(
+            self.bytes_lists
+                .values()
+                .filter_map(|(lifetime, id, constant)| {
+                    (*constant && lifetime.strong_count() != 0).then_some(*id)
+                }),
+        );
         while let Some(id) = pending.pop() {
             let Ok(entry) = self.entry(id) else { continue };
             if marked[id.index] {
@@ -829,11 +853,16 @@ impl Heap {
                     continue;
                 }
                 Entry::NullDefault(value) => {
-                    pending.extend(value.heap_id());
+                    pending.extend(self.traced_id(value));
                     continue;
                 }
                 Entry::Executable(state) => {
-                    pending.extend(state.code_roots.iter().filter_map(Value::heap_id));
+                    pending.extend(
+                        state
+                            .code_roots
+                            .iter()
+                            .filter_map(|value| self.traced_id(value)),
+                    );
                     pending.extend(state.children.values().map(|owner| owner.0));
                     pending.extend(state.imported_modules.values().copied());
                     for cache in state.method_calls.values() {
@@ -842,7 +871,7 @@ impl Heap {
                     continue;
                 }
                 Entry::CustomThis(value) => {
-                    pending.extend(value.iter().filter_map(Value::heap_id));
+                    pending.extend(value.iter().filter_map(|value| self.traced_id(value)));
                     continue;
                 }
                 Entry::Object(object) => object,
@@ -851,18 +880,23 @@ impl Heap {
             pending.extend(object.instance_class);
             pending.extend(object.method_declaration.map(|(owner, _)| owner));
             if let Some(amendment) = &object.amendment {
-                pending.extend(amendment.parent.heap_id());
+                pending.extend(self.traced_id(&amendment.parent));
             }
             if let Some(pair) = &object.pair {
-                pending.extend(pair.iter().filter_map(Value::heap_id));
+                pending.extend(pair.iter().filter_map(|value| self.traced_id(value)));
             }
-            pending.extend(object.annotations.iter().filter_map(Value::heap_id));
+            pending.extend(
+                object
+                    .annotations
+                    .iter()
+                    .filter_map(|value| self.traced_id(value)),
+            );
             pending.extend(
                 object
                     .member_annotations
                     .values()
                     .flatten()
-                    .filter_map(Value::heap_id),
+                    .filter_map(|value| self.traced_id(value)),
             );
             pending.extend(
                 object
@@ -872,32 +906,47 @@ impl Heap {
                     .map(|node| (node.0).0),
             );
             if let Some(function) = &object.function {
-                pending.extend(function.captured_this.iter().filter_map(Value::heap_id));
+                pending.extend(
+                    function
+                        .captured_this
+                        .iter()
+                        .filter_map(|value| self.traced_id(value)),
+                );
             }
             if let Some(reference) = &object.reference {
-                pending.extend(reference.domain.heap_id());
-                pending.extend(reference.data.heap_id());
-                pending.extend(reference.path.iter().filter_map(Value::heap_id));
+                pending.extend(self.traced_id(&reference.domain));
+                pending.extend(self.traced_id(&reference.data));
+                pending.extend(
+                    reference
+                        .path
+                        .iter()
+                        .filter_map(|value| self.traced_id(value)),
+                );
                 pending.extend(reference.classes.iter().copied());
             }
             if let Some(native) = &object.native_function {
-                pending.extend(native.receiver.heap_id());
+                pending.extend(self.traced_id(&native.receiver));
             }
             for member in &object.collection_members {
-                pending.extend(member.key.heap_id());
+                pending.extend(self.traced_id(&member.key));
             }
             if let Some(iterator) = &object.iterator {
                 pending.push(iterator.source);
                 for member in iterator.members.iter().chain(&iterator.force_members) {
-                    pending.extend(member.key.heap_id());
+                    pending.extend(self.traced_id(&member.key));
                 }
             }
             if let Some(iterator) = &object.predicate_iterator {
                 pending.push(iterator.source);
-                pending.extend(iterator.previous_this.iter().filter_map(Value::heap_id));
+                pending.extend(
+                    iterator
+                        .previous_this
+                        .iter()
+                        .filter_map(|value| self.traced_id(value)),
+                );
                 for (owner, member) in &iterator.members {
                     pending.push(*owner);
-                    pending.extend(member.key.heap_id());
+                    pending.extend(self.traced_id(&member.key));
                 }
             }
             for environment in object
@@ -919,7 +968,7 @@ impl Heap {
                         .iter()
                         .chain(environment.this_value.iter())
                         .chain(environment.outer_value.iter())
-                        .filter_map(Value::heap_id),
+                        .filter_map(|value| self.traced_id(value)),
                 );
             }
             pending.extend(object.environment.custom_this.map(|slot| slot.0));
@@ -951,7 +1000,7 @@ impl Heap {
                     _ => None,
                 }))
             {
-                if let Some(id) = value.heap_id() {
+                if let Some(id) = self.traced_id(value) {
                     pending.push(id);
                 }
             }
@@ -989,6 +1038,8 @@ impl Heap {
                 })
             })
             .collect();
+        self.bytes_lists
+            .retain(|_, (lifetime, id, _)| lifetime.strong_count() != 0 && live.contains(id));
         self.key_equalities
             .retain(|(a, b)| live.contains(a) && live.contains(b));
         // Canonical keys are metadata, not roots. Retain only keys referenced by
@@ -1031,6 +1082,7 @@ impl Heap {
         self.free = Vec::new();
         self.structural_keys = BTreeMap::new();
         self.key_equalities.clear();
+        self.bytes_lists.clear();
         self.identity = NEXT_HEAP.fetch_add(1, Ordering::Relaxed);
     }
 }

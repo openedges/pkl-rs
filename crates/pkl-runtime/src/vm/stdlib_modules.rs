@@ -133,7 +133,10 @@ fn append_members(
     header.members.retain(|member| {
         (uri == "pkl:json" && matches!(member.name.as_str(), "Property" | "Value"))
             || (uri == "pkl:base"
-                && matches!(member.name.as_str(), "DataSizeUnit" | "DurationUnit"))
+                && matches!(
+                    member.name.as_str(),
+                    "DataSizeUnit" | "DurationUnit" | "Charset"
+                ))
     });
     let resolved = crate::resolver::resolve_module(&header)
         .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;

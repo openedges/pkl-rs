@@ -140,7 +140,14 @@ impl<T: fmt::Display> fmt::Display for Number<T> {
 pub struct Bytes {
     data: Arc<[u8]>,
     reference: Token,
-    size: Arc<std::sync::OnceLock<crate::data_size::DataSize>>,
+    pub(crate) cache: Arc<BytesCache>,
+}
+#[derive(Default)]
+pub(crate) struct BytesCache {
+    size: std::sync::OnceLock<crate::data_size::DataSize>,
+    lifetime: Arc<()>,
+    pub(crate) hex: std::sync::OnceLock<crate::value::PklString>,
+    pub(crate) base64: std::sync::OnceLock<crate::value::PklString>,
 }
 impl Bytes {
     pub(crate) fn empty() -> Self {
@@ -153,9 +160,24 @@ impl Bytes {
     pub(crate) fn reference(&self) -> Token {
         self.reference
     }
+    pub(crate) fn lifetime(&self) -> std::sync::Weak<()> {
+        Arc::downgrade(&self.cache.lifetime)
+    }
+    pub(crate) fn concatenate(&self, right: &Self) -> Self {
+        if self.is_empty() {
+            return right.clone();
+        }
+        if right.is_empty() {
+            return self.clone();
+        }
+        let mut data = Vec::with_capacity(self.len() + right.len());
+        data.extend_from_slice(self);
+        data.extend_from_slice(right);
+        data.into()
+    }
     pub fn size(&self) -> crate::data_size::DataSize {
         use crate::data_size::{DataSize, DataSizeUnit};
-        *self.size.get_or_init(|| {
+        *self.cache.size.get_or_init(|| {
             let unit = match self.data.len() as u64 {
                 0..=999 => DataSizeUnit::Bytes,
                 1_000..=999_999 => DataSizeUnit::Kilobytes,
@@ -173,7 +195,7 @@ impl From<Arc<[u8]>> for Bytes {
         Self {
             data,
             reference: Token::fresh(),
-            size: Arc::new(std::sync::OnceLock::new()),
+            cache: Arc::new(BytesCache::default()),
         }
     }
 }
