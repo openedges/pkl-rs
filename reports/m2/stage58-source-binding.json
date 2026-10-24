@@ -1,0 +1,172 @@
+{
+  "binding_report": {
+    "B_archive_blobs": {
+      "closeout": {
+        "B_oid": "78c5bcc7e341ac8051e841da76ac81be8adf04b1",
+        "bytes": 9642362,
+        "path": "reports/m2/stage58-closeout-evidence.tar.gz",
+        "sha256": "3c890d93e9ee02a9be3a5e50000e3c22d3ec72fae6e8c2863ae4feabfcc5d535"
+      },
+      "native": {
+        "B_oid": "2498be1f7c7dcb6e030b7a2f77690776f57ead12",
+        "bytes": 8808804,
+        "path": "reports/m2/stage58-native-evidence.tar.gz",
+        "sha256": "8d3a65d7936534ec297f9d9f55055b16cdcc7e22f828412836219f01faeaa47b"
+      },
+      "platform": {
+        "B_oid": "133956b36d196ad5b78fa999cbb2e99c4f5f5a67",
+        "bytes": 8896665,
+        "path": "reports/m2/stage58-platform-evidence.tar.gz",
+        "sha256": "9502de123f58faf07998d5453af3150e0661a41e9ca1f38dfa5f53d2919d512a"
+      },
+      "validation": {
+        "B_oid": "d085a6216caa971af2f3c32b4da532796af246d2",
+        "bytes": 13797542,
+        "path": "reports/m2/stage58-validation-evidence.tar.gz",
+        "sha256": "33fb97a3f59b79b57f5be39a8ab69703a3cf74a590fdd48bc1ae3387232763bb"
+      }
+    },
+    "B_commit": "b0b6143ac978e14e80e6c3f7229640a6734d7f59",
+    "archived_source_member_counts": {
+      "comparison_wrapper": 25,
+      "m1_platforms": 232,
+      "native_build": 257,
+      "original_17": 4579,
+      "platform_wrapper": 253,
+      "rust_validation": 26
+    },
+    "category_statuses": {
+      "comparison_wrapper": {
+        "matches_B": 25
+      },
+      "m1_platforms": {
+        "matches_B": 232
+      },
+      "native_build": {
+        "matches_B": 257
+      },
+      "original_17": {
+        "matches_B": 4579
+      },
+      "platform_wrapper": {
+        "matches_B": 253
+      },
+      "rust_validation": {
+        "historical_document_from_base": 4,
+        "matches_B": 165227
+      }
+    },
+    "copied_source_files_stable": 5372,
+    "deviations": {
+      "rust_validation": [
+        {
+          "B_sha256": "5ebe39fd48432fc2086f0a04a4875102c5a7cc6a78ccbf083a330a65df01523a",
+          "expected_sha256": "7a2604f68365179b0e9bb444ffb8af6a28f88ae18784ab564018d329d5eebfb5",
+          "path": "PLAN.md",
+          "status": "historical_document_from_base"
+        },
+        {
+          "B_sha256": "75e6af900dddd8475266cedd3e25037ed5e6ea42962aff97af9bf9e5e7623520",
+          "expected_sha256": "0ccf0f00c427ad41504586f6e6d54424bf0a2b5e16308fcc29db30ed179f71fe",
+          "path": "README.md",
+          "status": "historical_document_from_base"
+        },
+        {
+          "B_sha256": "2a64fafc44fc01740d0468fb6404356edddb79c830f092332a59eea9288cd18a",
+          "expected_sha256": "774f599237c73a6e385c75c991ed90c0da1590124f4da89f51a258f3bd68aa29",
+          "path": "TESTING.md",
+          "status": "historical_document_from_base"
+        },
+        {
+          "B_sha256": "f9fb19e2969b0d2e28f9f19025fc2bd99e092c8cc81fc05f20cce093f986d207",
+          "expected_sha256": "01503c6151082b11fa501395b271bfbadfb8a648349e69ff0f77d1c19c20945e",
+          "path": "docs/m2-language.md",
+          "status": "historical_document_from_base"
+        }
+      ]
+    },
+    "explicit_historical_exceptions": [],
+    "gitlinks": {
+      "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+    },
+    "kind": "actual-Git-object-source-binding-for-Stage58-B",
+    "limits": [
+      "Document rows with B differences retain verified base Git bytes and are not B-current source claims.",
+      "Explicit historical source rows retain verified member bytes in a committed B evidence archive and are not B-current source claims.",
+      "Source binding does not rerun evaluators, builds or tests and does not establish full API, whole M2 or performance compatibility."
+    ],
+    "manifests": {
+      "comparison_wrapper": {
+        "bytes": 3701,
+        "path": "target/m2/stage58-comparison-validation-01/source-before.json",
+        "rows": 25,
+        "sha256": "6c4e99a4ee5125518b8c04102492421e5d2741c3f21b28ba518f7b6120ec28dd"
+      },
+      "m1_platforms": {
+        "bytes": 26485,
+        "path": "target/m2/stage58-m1-platform-contract-01/sources.json",
+        "rows": 232,
+        "sha256": "81cacd607607a1796391e62a0c4693b1017046111fa5e3518484c16245ea31f5"
+      },
+      "native_build": {
+        "bytes": 40758,
+        "path": "target/m2/stage58-native-build-01/source-before.json",
+        "rows": 257,
+        "sha256": "adfc4cbff06a4edf8d4202e9a951493bc9d23ba98b2585912903455dad001e3f"
+      },
+      "original_17": {
+        "bytes": 619340,
+        "path": "target/m2/stage58-original-any-01/sources.json",
+        "rows": 4579,
+        "sha256": "0eb2f6fcb97e8eb87d896d59b3b4237f43e9933fd08abeca2acb2cc074971a15"
+      },
+      "platform_wrapper": {
+        "bytes": 38848,
+        "path": "target/m2/stage58-platform-validation-01/source-before.json",
+        "rows": 253,
+        "sha256": "0140d067c67e8bda46b007f1954a157afdd0daf28b46516c47c7c39bc43d9c99"
+      },
+      "rust_validation": {
+        "bytes": 108202972,
+        "path": "target/m2/stage58-rust-validation-01/sources.json",
+        "rows": 165231,
+        "sha256": "fd63a609c2703a17e4bc8ec6870bee41bdbee53372c804016d3e7d8765a78a81"
+      }
+    },
+    "method": "Actual base, pinned submodule and B tree OIDs/modes; SHA-1-framed Git blob reads and raw SHA-256/size; copied source bytes and B archive members reread.",
+    "origin_counts": {
+      "base_git": 163133,
+      "captured_file": 26,
+      "pinned_submodule_git": 2072
+    },
+    "recorded_base_commit": "2e3f575f1dc88b5fbbf07df84d4b4bc3ac06c3dd",
+    "recorded_utc": "2026-10-24T09:53:08.425112+00:00",
+    "row_details": {
+      "bytes": 8256734,
+      "path": "target/m2/stage58-source-binding-01/rows.jsonl.gz",
+      "sha256": "98d0b56ff8416bc284928efb133d50ccaf88086d42488b3639664700abda3cfb"
+    },
+    "schema": 1,
+    "unique_blob_objects_read": {
+      ".": 13661,
+      "external/pkl": 2014,
+      "external/pkl-pantry": 1
+    },
+    "verified_symlink_sources": [
+      "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked"
+    ]
+  },
+  "evidence_archive": {
+    "bytes": 7450269,
+    "members": 4,
+    "path": "reports/m2/stage58-source-binding-evidence.tar.gz",
+    "sha256": "d7fd7929e834c760d94fea0352014c12500cc9e61ba2702053e46261f781a7d4"
+  },
+  "full_archive_reread_verified": true,
+  "full_public_api_comparison_passed": false,
+  "original_sources_stable_before_after": true,
+  "performance_targets_achieved": false,
+  "schema": 1,
+  "whole_M2_complete": false
+}

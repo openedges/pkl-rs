@@ -34,4 +34,4 @@ Each publication records every archive member SHA-256, size and mode, a full mem
 - Five required Rust commands passed locally with 929 test executions passed, zero failed, and three ignored. Tool checks cover 20 distinct Python tests and 17 JavaScript tests; the initial failed Python invocation remains recorded.
 - M1 architecture contract passes, while strict compatibility fails at 6,076/6,078 Java matches per target. Full M2, complete public APIs, release platforms, speed and peak-memory gates remain open.
 
-The [independent review](../../target/m2/stage58-final-audit-01/review.md) records the count and claim checks against raw capture reports. This is local macOS arm64 evidence, not hosted CI.
+The [independent review](stage58-final-audit-review.md) records the count and claim checks against raw capture reports. This is local macOS arm64 evidence, not hosted CI.

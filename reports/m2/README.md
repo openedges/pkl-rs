@@ -36,6 +36,17 @@ records verify every archived member. Full M2, typed exports, complete product
 APIs, release platforms, speed and peak-memory targets remain open. These are
 local macOS arm64 records, not hosted CI results.
 
+The implementation and evidence were committed as
+`b0b6143ac978e14e80e6c3f7229640a6734d7f59` and pushed to remote `main`.
+[Actual Git source binding](stage58-source-binding.json) verifies every Rust
+validation input origin; 165,227 match that implementation and four documentation
+inputs retain verified earlier Git bytes. All 257 native build inputs, 232 M1
+inputs, 253 platform wrapper inputs, 4,579 original comparison inputs and 25 final
+comparison inputs match the implementation. The four published evidence archives
+also match its Git blobs. The [binding archive](stage58-source-binding-evidence.tar.gz)
+contains the detailed results. The original precommit checkpoint and audit remain
+historical records; source binding does not rerun checks or establish full M2.
+
 ### Stage57 DataSize values
 
 The [Stage57 implementation checkpoint](stage57-implementation-checkpoint.json)
