@@ -1,0 +1,18 @@
+{
+  "archive_sha256": "4fd0bab6188625485f311e592a4e02303ddfcf05d63a86d9c30ec668ed875ac2",
+  "captures": {
+    "capture-02": "stage62-collection-property-names-oracle-02"
+  },
+  "fileset_sha256": "083a20c8a7117c5de6dbaeb90ee8edb4084f7b01d4da19a2b1bcdf7b336adf9e",
+  "members": 1173,
+  "oracle_input_sha256": {
+    "CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+    "audit.json": "b572f5c0925c4bd37332311123d80c0588662de3ef783e8758558c2ce1c931af",
+    "cases.json": "341f6b953b8dcd39e623dc6d1a04a0ac0a2aa786f7f13dce7f6f81a98bba50b4",
+    "module.pkl": "7f80ba30b4248cff7cca4b036bde2f5a7f3a215408765e622b2b124eb5a5b1ce",
+    "provenance.json": "6e2ca61fae045e7704f33d3d22eb96f0d0c63f84a9a02c7523ef2ff6c6322918",
+    "queries.tsv": "59e7145df48a51493f10fb16ea9093711c18e9ff50a30a67c3f81043a0b1b239",
+    "run.py": "122cfe187eddd253922eca5cf9cf752046b12e6d3cf1885071aa5b432c8dd1b5"
+  },
+  "schema": 1
+}

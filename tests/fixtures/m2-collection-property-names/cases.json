@@ -1,0 +1,165 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage62/collection-property-names.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "authored-direct",
+      "expression": "new Dynamic { `\u0000property:[55296]` = 2 }.`\u0000property:[55296]`",
+      "mode": "string",
+      "group": "verbatim-native-nul"
+    },
+    {
+      "id": "authored-has",
+      "expression": "new Dynamic { `\u0000property:[55296]` = 2 }.hasProperty(\"\\u{0}property:[55296]\")",
+      "mode": "string",
+      "group": "verbatim-native-nul"
+    },
+    {
+      "id": "authored-get",
+      "expression": "new Dynamic { `\u0000property:[55296]` = 2 }.getProperty(\"\\u{0}property:[55296]\")",
+      "mode": "string",
+      "group": "verbatim-native-nul"
+    },
+    {
+      "id": "authored-get-or-null",
+      "expression": "new Dynamic { `\u0000property:[55296]` = 2 }.getPropertyOrNull(\"\\u{0}property:[55296]\")",
+      "mode": "string",
+      "group": "verbatim-native-nul"
+    },
+    {
+      "id": "surrogate-control",
+      "expression": "Map(\"\\u{d800}\", 1).toDynamic().getProperty(\"\\u{d800}\")",
+      "mode": "string",
+      "group": "verbatim-native-nul"
+    },
+    {
+      "id": "amended-surrogate-get",
+      "expression": "(Map(\"\\u{d800}\", 1).toDynamic()) { `\u0000property:[55296]` = 2 }.getProperty(\"\\u{d800}\")",
+      "mode": "string",
+      "group": "verbatim-native-nul"
+    },
+    {
+      "id": "amended-authored-get",
+      "expression": "(Map(\"\\u{d800}\", 1).toDynamic()) { `\u0000property:[55296]` = 2 }.getProperty(\"\\u{0}property:[55296]\")",
+      "mode": "string",
+      "group": "verbatim-native-nul"
+    },
+    {
+      "id": "amended-authored-direct",
+      "expression": "(Map(\"\\u{d800}\", 1).toDynamic()) { `\u0000property:[55296]` = 2 }.`\u0000property:[55296]`",
+      "mode": "string",
+      "group": "verbatim-native-nul"
+    },
+    {
+      "id": "amended-to-map",
+      "expression": "(Map(\"\\u{d800}\", 1).toDynamic()) { `\u0000property:[55296]` = 2 }.toMap()",
+      "mode": "string",
+      "group": "verbatim-native-nul"
+    },
+    {
+      "id": "synthetic-two-keys",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{0}property:[55296]\",2).toDynamic().toMap()",
+      "mode": "string",
+      "group": "verbatim-native-nul"
+    },
+    {
+      "id": "lf-only",
+      "expression": "Map(\"\\u{a}property:[55296]\",3).toDynamic().toMap()",
+      "mode": "string",
+      "group": "line-separator-string-keys"
+    },
+    {
+      "id": "lf-alone",
+      "expression": "Map(\"\\u{a}\",3).toDynamic().toMap()",
+      "mode": "string",
+      "group": "line-separator-string-keys"
+    },
+    {
+      "id": "lf-high-map",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{a}property:[55296]\",3).toDynamic().toMap()",
+      "mode": "string",
+      "group": "line-separator-string-keys"
+    },
+    {
+      "id": "lf-high-length",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{a}property:[55296]\",3).toDynamic().toMap().length",
+      "mode": "string",
+      "group": "line-separator-string-keys"
+    },
+    {
+      "id": "lf-high-get",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{a}property:[55296]\",3).toDynamic().getProperty(\"\\u{d800}\")",
+      "mode": "string",
+      "group": "line-separator-string-keys"
+    },
+    {
+      "id": "lf-prefix-get",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{a}property:[55296]\",3).toDynamic().getProperty(\"\\u{a}property:[55296]\")",
+      "mode": "string",
+      "group": "line-separator-string-keys"
+    },
+    {
+      "id": "lf-high-has",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{a}property:[55296]\",3).toDynamic().hasProperty(\"\\u{d800}\")",
+      "mode": "string",
+      "group": "line-separator-string-keys"
+    },
+    {
+      "id": "lf-prefix-has",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{a}property:[55296]\",3).toDynamic().hasProperty(\"\\u{a}property:[55296]\")",
+      "mode": "string",
+      "group": "line-separator-string-keys"
+    },
+    {
+      "id": "lf-high-render",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{a}property:[55296]\",3).toDynamic().toString()",
+      "mode": "string",
+      "group": "line-separator-string-keys"
+    },
+    {
+      "id": "triple-high-nul-lf",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{0}property:[55296]\",2,\"\\u{a}property:[55296]\",3).toDynamic().toMap()",
+      "mode": "string",
+      "group": "line-separator-string-keys"
+    },
+    {
+      "id": "low-lf-map",
+      "expression": "Map(\"\\u{dc00}\",4,\"\\u{a}property:[56320]\",5).toDynamic().toMap()",
+      "mode": "string",
+      "group": "line-separator-string-keys"
+    },
+    {
+      "id": "cr-high-map",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{d}property:[55296]\",6).toDynamic().toMap()",
+      "mode": "string",
+      "group": "line-separator-string-keys"
+    },
+    {
+      "id": "backtick-high-map",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{60}property:[55296]\",7).toDynamic().toMap()",
+      "mode": "string",
+      "group": "nonidentifier-string-keys"
+    },
+    {
+      "id": "backtick-key-get",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{60}property:[55296]\",7).toDynamic().getProperty(\"\\u{60}property:[55296]\")",
+      "mode": "string",
+      "group": "nonidentifier-string-keys"
+    },
+    {
+      "id": "line-separator-high-map",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{2028}property:[55296]\",8).toDynamic().toMap()",
+      "mode": "string",
+      "group": "nonidentifier-string-keys"
+    },
+    {
+      "id": "paragraph-separator-high-map",
+      "expression": "Map(\"\\u{d800}\",1,\"\\u{2029}property:[55296]\",9).toDynamic().toMap()",
+      "mode": "string",
+      "group": "nonidentifier-string-keys"
+    }
+  ]
+}

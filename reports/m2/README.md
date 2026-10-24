@@ -76,6 +76,22 @@ including five Python tests normally and under `-O`. The
 earlier target-only probe separately. All 1,105 members passed independent
 readback; candidate comparison and full rendering compatibility remain open.
 
+The [property-name checkpoint](stage62-property-names-java-checkpoint.json) adds
+26 successful expressions in each of two fresh JVMs. They distinguish authored
+NUL identifiers from lone-surrogate properties and from LF, CR, backtick, U+2028
+and U+2029 String keys. Pinned Java permits NUL inside quoted identifiers; the
+first Rust candidate incorrectly treated NUL as an unrepresentable authored
+name and used it to prefix synthetic identifiers. That candidate's passing
+earlier matrices and required Rust checks remain superseded evidence.
+The [Java evidence archive](stage62-property-names-java-evidence.tar.gz) preserves
+the narrower 22-row capture and both exploratory collision probes separately.
+Only their identical query/module bytes are claimed; exploratory Java and Rust
+module URIs differed. Five validation checks pass with 90 stable source copies,
+including six Python tests normally and under `-O`. All 3,251 archive members
+passed independent readback. The six sealed profiles contain 485 selected
+expressions; corrected-candidate, platform and whole-language verdicts remain
+separate.
+
 ### Stage61 IntSeq values — implementation and local comparisons
 
 The [implementation checkpoint](stage61-implementation-checkpoint.json) adds
