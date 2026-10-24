@@ -1,0 +1,195 @@
+{
+  "binding_report": {
+    "B_archive_blobs": {
+      "native": {
+        "bytes": 14670452,
+        "oid": "bf660108f8d50d50deb0da2f168dcb9511bfad1f",
+        "path": "reports/m2/stage57-native-evidence.tar.gz",
+        "sha256": "664309fa174f20e721fb8bd260b1a974b4f0517f0b5bfb42ffa1c3cb52e726ed"
+      },
+      "original": {
+        "bytes": 9831067,
+        "oid": "11fd6f73df40ba0e78b72454676b5ed7603a8f6e",
+        "path": "reports/m2/stage57-original-evidence.tar.gz",
+        "sha256": "85b7929f97de81e0d9e22b91079b2e870416e056fae77ee999f7fd3eabcf6bbb"
+      },
+      "platform": {
+        "bytes": 13617326,
+        "oid": "6affe3d3183cf761ea114d12e99f84aa3e47f154",
+        "path": "reports/m2/stage57-platform-evidence.tar.gz",
+        "sha256": "7c6f458fe3695ee83b641c6107958c9cbf1bbec51dc4d7cf371bf62595598fa5"
+      },
+      "validation": {
+        "bytes": 37107322,
+        "oid": "fcb5b96afde7713525a3aee663465f8925c5f6f2",
+        "path": "reports/m2/stage57-validation-evidence.tar.gz",
+        "sha256": "3017d9caec31b254414126bdba955ff604a653be54d1e93beefacede196595ad"
+      }
+    },
+    "B_commit": "0560c919c9fea6f7ea7a08d76e5d78e74a3e9d83",
+    "archived_source_member_counts": {
+      "m1_platforms_contract_01": 229,
+      "native_comparison_02": 4586,
+      "original_17": 4573
+    },
+    "category_statuses": {
+      "capture_wrapper_04": {
+        "matches_B": 383
+      },
+      "m1_platforms_contract_01": {
+        "historical_transport_archived_in_B": 1,
+        "matches_B": 228
+      },
+      "native_comparison_02": {
+        "matches_B": 4586
+      },
+      "original_17": {
+        "matches_B": 4573
+      },
+      "runtime_build_08": {
+        "matches_B": 252
+      },
+      "rust_validation_03": {
+        "differs_from_B_historical_snapshot": 4,
+        "matches_B": 165206
+      }
+    },
+    "copied_source_files_stable": 9414,
+    "gitlinks": {
+      "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+    },
+    "historical_M1_transport": {
+      "B_current_sha256": "66c77ba1d51ed6ee18373214656d83b7ac2129ebe1cd885a215c184fd260c962",
+      "archive": {
+        "bytes": 13617326,
+        "oid": "6affe3d3183cf761ea114d12e99f84aa3e47f154",
+        "path": "reports/m2/stage57-platform-evidence.tar.gz",
+        "sha256": "7c6f458fe3695ee83b641c6107958c9cbf1bbec51dc4d7cf371bf62595598fa5"
+      },
+      "current_member": "current-source/tools/platform/capture-data-size.mjs",
+      "old_member": "evidence/stage57-m1-platform-contract-01/sources/tools/platform/capture-data-size.mjs",
+      "old_sha256": "082c0922ec9558a8607f0f2823c3608d6b00cdf8094fcadbbaca46b02faf2487",
+      "path": "tools/platform/capture-data-size.mjs",
+      "status": "historical_transport_archived_in_B"
+    },
+    "kind": "Actual Git-object source binding for Stage57 implementation B",
+    "limitations": [
+      "Rows with historical bytes differing from B are identified individually and are not claimed as current B sources.",
+      "M1 old pre-favicon JavaScript is bound as a member of the committed platform archive, not the current source path.",
+      "Source binding does not rerun evaluators/builds/tests or prove full public API, whole M2 or performance targets."
+    ],
+    "manifests": {
+      "capture_wrapper_04": {
+        "bytes": 60204,
+        "path": "target/m2/stage57-platform-validation-04/acquisition-source-before.json",
+        "rows": 383,
+        "sha256": "52c6e660b45c35c1ee0ea70841a94fc598f4cffba3e33e59387752391260b6b4"
+      },
+      "m1_platforms_contract_01": {
+        "bytes": 26142,
+        "path": "target/m2/stage57-m1-platform-contract-01/sources.json",
+        "rows": 229,
+        "sha256": "9197b7fc9ce6ce18f4c76e3b6d48bc278ff97883154c0b01d35b16b3012f786a"
+      },
+      "native_comparison_02": {
+        "bytes": 792270,
+        "path": "target/m2/stage57-native-comparison-02/sources.json",
+        "rows": 4586,
+        "sha256": "810fd34dc63d9c5a66013ec9ac56e49dc7dc04ecd2160709f80b655f4ac0a8f5"
+      },
+      "original_17": {
+        "bytes": 618601,
+        "path": "target/m2/stage57-original-data-size-01/sources.json",
+        "rows": 4573,
+        "sha256": "7827d943f69e97bda1510e2b9fbff2220108615e7fa8d9d29b0e78de633a330c"
+      },
+      "runtime_build_08": {
+        "bytes": 39955,
+        "path": "target/m2/stage57-native-build-08/source-before.json",
+        "rows": 252,
+        "sha256": "099aac28d07071e2c1389e01df0aeeeaa52f5a3466cacf47543bd3d22528c305"
+      },
+      "rust_validation_03": {
+        "bytes": 108192308,
+        "path": "target/m2/stage57-rust-validation-03/sources.json",
+        "rows": 165210,
+        "sha256": "37176eaf2a34890a27ebd9ee68f9bc09a6fd292521b0b9746808951d7640536b"
+      }
+    },
+    "noncurrent_examples": {
+      "m1_platforms_contract_01": [
+        {
+          "B_sha256": "66c77ba1d51ed6ee18373214656d83b7ac2129ebe1cd885a215c184fd260c962",
+          "expected_sha256": "082c0922ec9558a8607f0f2823c3608d6b00cdf8094fcadbbaca46b02faf2487",
+          "path": "tools/platform/capture-data-size.mjs",
+          "status": "historical_transport_archived_in_B"
+        }
+      ],
+      "rust_validation_03": [
+        {
+          "B_sha256": "4b3ec16ee8f922c54368eecfc65f49faceba295f6ba215756d00000ebee2b800",
+          "expected_sha256": "3ebf12c61cef042c3ce2173eaf805e8d17b48b3f620a28c8bc78ec15cdd31252",
+          "path": "PLAN.md",
+          "status": "differs_from_B_historical_snapshot"
+        },
+        {
+          "B_sha256": "0ccf0f00c427ad41504586f6e6d54424bf0a2b5e16308fcc29db30ed179f71fe",
+          "expected_sha256": "9e1e7d35b171be564b8c44cd91512f95fb2d92867a8110e341d6d783280fd401",
+          "path": "README.md",
+          "status": "differs_from_B_historical_snapshot"
+        },
+        {
+          "B_sha256": "774f599237c73a6e385c75c991ed90c0da1590124f4da89f51a258f3bd68aa29",
+          "expected_sha256": "f406450ddd1c61dd0c56ba2a5766a779978c6192df98d5c28bb76a19e44af7eb",
+          "path": "TESTING.md",
+          "status": "differs_from_B_historical_snapshot"
+        },
+        {
+          "B_sha256": "01503c6151082b11fa501395b271bfbadfb8a648349e69ff0f77d1c19c20945e",
+          "expected_sha256": "db0a8a03b885dd669784f429e97a6d43c9abc2debac95b896e9ceca18a3b7e69",
+          "path": "docs/m2-language.md",
+          "status": "differs_from_B_historical_snapshot"
+        }
+      ]
+    },
+    "recorded_base_commit": "e05508fcc5200b6330011c15a5f1bcc6a34c3a13",
+    "recorded_utc": "2026-10-24T09:11:42.570785+00:00",
+    "row_details": {
+      "bytes": 8636942,
+      "path": "target/m2/stage57-source-binding-01/rows.jsonl.gz",
+      "sha256": "0d963f50c2745f8ec83875f7ce0e54457987cb3ef923d16b3e1b55ef74856d86"
+    },
+    "runtime_build_252_match_B": true,
+    "rust_captured_26_match_B": true,
+    "rust_origin_counts": {
+      "base_git": 163112,
+      "captured_file": 26,
+      "pinned_submodule_git": 2072
+    },
+    "schema": 1,
+    "source_origin_method": "Actual e055 base/pinned submodule/B tree OIDs and mode, SHA1-framed Git blob reads plus raw SHA256/size; copied source bytes reread. B overlap and historical differences remain distinct.",
+    "symlink_120000_target_verified": {
+      "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+      "sha256": "2affd42fb4ab5d3937747d31d118219afff6ac4116f0382d4a6bf8a6654ce273",
+      "target_bytes": 6
+    },
+    "unique_blob_objects_read": {
+      ".": 13632,
+      "external/pkl": 2014,
+      "external/pkl-pantry": 1
+    }
+  },
+  "evidence_archive": {
+    "bytes": 7848004,
+    "members": 4,
+    "path": "reports/m2/stage57-source-binding-evidence.tar.gz",
+    "sha256": "de38f86a4a9459aab0e4a1e0e0ffb68337486a0ebf995321641e084ac69db294"
+  },
+  "full_archive_reread_verified": true,
+  "full_public_api_comparison_passed": false,
+  "original_sources_stable_before_after": true,
+  "performance_targets_achieved": false,
+  "schema": 1,
+  "whole_M2_complete": false
+}

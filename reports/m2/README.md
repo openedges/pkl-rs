@@ -34,6 +34,18 @@ Their publication reports verify complete member identities and state exclusions
 No hosted CI result is claimed. The Java authority commits and bindings are
 separate from candidate implementation provenance.
 
+The implementation is committed as
+`0560c919c9fea6f7ea7a08d76e5d78e74a3e9d83` and was pushed to remote `main`.
+[Actual Git source binding](stage57-source-binding.json) verifies all 252 final
+runtime build inputs and the complete native, capture-wrapper and original source
+catalogs. All 165,210 Rust-check input origins are verified; four documentation
+inputs retain their earlier committed versions. The one earlier M1 capture script
+is bound to its historical member inside the committed platform archive, rather
+than mislabeled as current source. The
+[binding evidence](stage57-source-binding-evidence.tar.gz) retains the complete
+per-record results and actual Git-object checks. The original precommit checkpoint
+is preserved with its pending-binding statement.
+
 ### Stage56 Class descriptors and inheritance
 
 The [Stage56 implementation checkpoint](stage56-implementation-checkpoint.json)
