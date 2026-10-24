@@ -1,0 +1,34 @@
+// Independent Pkl 0.32.0 collection conversion authority.
+class Holder { value: Int = 1 }
+class EmptyClass {}
+class NullableAnimal { name: String? = "default" }
+class Carrier { child: Holder = new Holder {} }
+open class HiddenBase { hidden secret: Int = 1; visible: Int = 2 }
+class HiddenChild extends HiddenBase { visible: Int = 3 }
+open class Animal {
+  name: String = "default"
+  age: Int = 3
+}
+class Bird extends Animal {
+  wings: Int = 2
+}
+abstract class AbstractAnimal extends Animal {}
+
+tag = "stage62"
+count = 7
+local hiddenModule = "local"
+
+typedBase = new Animal { name = "pigeon" }
+typedDerived = new Bird { name = "owl"; age = 4 }
+dynamicMixed = new Dynamic {
+  name = "bird"
+  ["entry"] = 23
+  [7] = "seven"
+  "first"
+  "second"
+}
+mappingBase = new Mapping {
+  ["a"] = 1
+  ["b"] = 2
+}
+listingBase = new Listing { "a"; "b" }

@@ -1,0 +1,1425 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage62/collection-conversions.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "typed-empty-map",
+      "group": "typed-map",
+      "expression": "new EmptyClass {}.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "typed-base-map",
+      "group": "typed-map",
+      "expression": "typedBase.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "typed-derived-map",
+      "group": "typed-map",
+      "expression": "typedDerived.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "typed-base-keys",
+      "group": "typed-map",
+      "expression": "typedBase.toMap().keys",
+      "mode": "string"
+    },
+    {
+      "id": "typed-derived-keys",
+      "group": "typed-map",
+      "expression": "typedDerived.toMap().keys",
+      "mode": "string"
+    },
+    {
+      "id": "typed-derived-values",
+      "group": "typed-map",
+      "expression": "typedDerived.toMap().values",
+      "mode": "string"
+    },
+    {
+      "id": "typed-derived-name",
+      "group": "typed-map",
+      "expression": "typedDerived.toMap()[\"name\"]",
+      "mode": "string"
+    },
+    {
+      "id": "typed-class-name",
+      "group": "typed-map",
+      "expression": "typedDerived.toMap().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "typed-null-value",
+      "group": "typed-map",
+      "expression": "new Holder {}.toMap().getOrNull(\"missing\")",
+      "mode": "string"
+    },
+    {
+      "id": "typed-local-excluded",
+      "group": "typed-map",
+      "expression": "typedBase.toMap().containsKey(\"hiddenModule\")",
+      "mode": "string"
+    },
+    {
+      "id": "typed-map-empty-class",
+      "group": "typed-map",
+      "expression": "new EmptyClass {}.toMap().isEmpty",
+      "mode": "string"
+    },
+    {
+      "id": "typed-map-override",
+      "group": "typed-map",
+      "expression": "(typedBase) { name = \"sparrow\" }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "typed-map-lazy-error",
+      "group": "typed-map",
+      "expression": "new Holder { value = throw(\"typed-bang\") }.toMap().length",
+      "mode": "string"
+    },
+    {
+      "id": "typed-map-nested-lazy",
+      "group": "typed-map",
+      "expression": "new Carrier { child = new Holder { value = throw(\"typed-nested\") } }.toMap().length",
+      "mode": "string"
+    },
+    {
+      "id": "typed-map-nested-forced",
+      "group": "typed-map",
+      "expression": "new Carrier { child = new Holder { value = throw(\"typed-nested\") } }.toMap()[\"child\"].value",
+      "mode": "string"
+    },
+    {
+      "id": "typed-hidden-inherited-map",
+      "group": "typed-map",
+      "expression": "new HiddenChild {}.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "typed-hidden-inherited-keys",
+      "group": "typed-map",
+      "expression": "new HiddenChild {}.toMap().keys",
+      "mode": "string"
+    },
+    {
+      "id": "typed-map-arity",
+      "group": "typed-map",
+      "expression": "typedBase.toMap(1)",
+      "mode": "string"
+    },
+    {
+      "id": "typed-map-property",
+      "group": "typed-map",
+      "expression": "typedBase.toMap",
+      "mode": "string"
+    },
+    {
+      "id": "typed-map-missing-member",
+      "group": "typed-map",
+      "expression": "typedBase.missingField",
+      "mode": "string"
+    },
+    {
+      "id": "module-map-keys",
+      "group": "typed-map",
+      "expression": "module.toMap().keys",
+      "mode": "string"
+    },
+    {
+      "id": "module-map-count",
+      "group": "typed-map",
+      "expression": "module.toMap()[\"count\"]",
+      "mode": "string"
+    },
+    {
+      "id": "module-map-tag",
+      "group": "typed-map",
+      "expression": "module.toMap()[\"tag\"]",
+      "mode": "string"
+    },
+    {
+      "id": "module-map-class-excluded",
+      "group": "typed-map",
+      "expression": "module.toMap().containsKey(\"Animal\")",
+      "mode": "string"
+    },
+    {
+      "id": "module-map-local-excluded",
+      "group": "typed-map",
+      "expression": "module.toMap().containsKey(\"hiddenModule\")",
+      "mode": "string"
+    },
+    {
+      "id": "module-map-size",
+      "group": "typed-map",
+      "expression": "module.toMap().length",
+      "mode": "string"
+    },
+    {
+      "id": "module-map-arity",
+      "group": "typed-map",
+      "expression": "module.toMap(1)",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-empty-length",
+      "group": "dynamic",
+      "expression": "new Dynamic {}.length()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-property-length",
+      "group": "dynamic",
+      "expression": "new Dynamic { name = \"bird\" }.length()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-entry-length",
+      "group": "dynamic",
+      "expression": "new Dynamic { [\"name\"] = \"bird\" }.length()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-elements-length",
+      "group": "dynamic",
+      "expression": "new Dynamic { 1; 2; 3 }.length()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-mixed-length",
+      "group": "dynamic",
+      "expression": "dynamicMixed.length()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-extended-length",
+      "group": "dynamic",
+      "expression": "(dynamicMixed) { \"third\" }.length()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-replaced-index-length",
+      "group": "dynamic",
+      "expression": "(dynamicMixed) { [0] = \"zero\" }.length()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-length-property",
+      "group": "dynamic",
+      "expression": "dynamicMixed.length",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-length-arity",
+      "group": "dynamic",
+      "expression": "dynamicMixed.length(1)",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-length-wrong-member",
+      "group": "dynamic",
+      "expression": "dynamicMixed.missingField",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-empty-map",
+      "group": "dynamic",
+      "expression": "new Dynamic {}.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-mixed-map",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-mixed-map-keys",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toMap().keys",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-mixed-map-values",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toMap().values",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-mixed-map-size",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toMap().length",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-mixed-map-element-excluded",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toMap().containsKey(0)",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-mixed-map-property",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toMap()[\"name\"]",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-mixed-map-entry",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toMap()[\"entry\"]",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-mixed-map-number-key",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toMap()[7]",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-prop-entry-collision",
+      "group": "dynamic",
+      "expression": "new Dynamic { name = \"property\"; [\"name\"] = \"entry\" }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-boolean-null-keys",
+      "group": "dynamic",
+      "expression": "new Dynamic { [true] = 1; [null] = 2 }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-empty-list",
+      "group": "dynamic",
+      "expression": "new Dynamic {}.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-mixed-list",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-mixed-list-size",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toList().length",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-extended-list",
+      "group": "dynamic",
+      "expression": "(dynamicMixed) { \"third\" }.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-replaced-list",
+      "group": "dynamic",
+      "expression": "(dynamicMixed) { [0] = \"zero\" }.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-property-list-empty",
+      "group": "dynamic",
+      "expression": "new Dynamic { name = \"bird\" }.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-entry-list-empty",
+      "group": "dynamic",
+      "expression": "new Dynamic { [\"name\"] = \"bird\" }.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-list-arity",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toList(1)",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-map-arity",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toMap(1)",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-map-property",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toMap",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-list-property",
+      "group": "dynamic",
+      "expression": "dynamicMixed.toList",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-discarded-element-error",
+      "group": "dynamic",
+      "expression": "new Dynamic { name = 1; throw(\"discarded-element\") }.toMap().length",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-discarded-property-error",
+      "group": "dynamic",
+      "expression": "new Dynamic { name = throw(\"discarded-property\"); 1 }.toList().length",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-discarded-entry-error",
+      "group": "dynamic",
+      "expression": "new Dynamic { [\"bad\"] = throw(\"discarded-entry\"); 1 }.toList().length",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-first-error-self",
+      "group": "dynamic",
+      "expression": "new Dynamic { name = throw(\"first-property\"); [\"bad\"] = throw(\"second-entry\"); throw(\"third-element\") }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-child-before-parent-error",
+      "group": "dynamic",
+      "expression": "(new Dynamic { parent = throw(\"parent-bang\") }) { child = throw(\"child-bang\") }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-hidden-typed-source",
+      "group": "dynamic",
+      "expression": "new HiddenChild {}.toDynamic().toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-shadow-method-call",
+      "group": "dynamic",
+      "expression": "new Dynamic { toMap = 42 }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-shadow-method-property",
+      "group": "dynamic",
+      "expression": "new Dynamic { toMap = 42 }.toMap",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-nested-object-shallow",
+      "group": "dynamic",
+      "expression": "new Dynamic { x = new Holder { value = throw(\"nested\") } }.toMap().length",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-nested-object-forced",
+      "group": "dynamic",
+      "expression": "new Dynamic { x = new Holder { value = throw(\"nested\") } }.toMap()[\"x\"].value",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-map-inherited",
+      "group": "dynamic",
+      "expression": "(dynamicMixed) { name = \"owl\" }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-list-inherited",
+      "group": "dynamic",
+      "expression": "(dynamicMixed) { name = \"owl\" }.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-override-kind-element-to-entry-map",
+      "group": "dynamic",
+      "expression": "(dynamicMixed) { [0] = \"zero\" }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-override-kind-element-to-entry-list",
+      "group": "dynamic",
+      "expression": "(dynamicMixed) { [0] = \"zero\" }.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-empty-map",
+      "group": "mapping-listing",
+      "expression": "new Mapping {}.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-base-map",
+      "group": "mapping-listing",
+      "expression": "mappingBase.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-base-keys",
+      "group": "mapping-listing",
+      "expression": "mappingBase.toMap().keys",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-base-values",
+      "group": "mapping-listing",
+      "expression": "mappingBase.toMap().values",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-override-map",
+      "group": "mapping-listing",
+      "expression": "(mappingBase) { [\"a\"] = 9; [\"c\"] = 3 }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-override-keys",
+      "group": "mapping-listing",
+      "expression": "(mappingBase) { [\"a\"] = 9; [\"c\"] = 3 }.toMap().keys",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-null-key",
+      "group": "mapping-listing",
+      "expression": "new Mapping { [null] = 1 }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-null-value",
+      "group": "mapping-listing",
+      "expression": "new Mapping { [\"x\"] = null }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-local-default-excluded",
+      "group": "mapping-listing",
+      "expression": "new Mapping { local x = 1; default = (_) -> 4; [\"a\"] = 2 }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-lazy-error",
+      "group": "mapping-listing",
+      "expression": "new Mapping { [\"x\"] = throw(\"mapping-bang\") }.toMap().length",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-nested-shallow",
+      "group": "mapping-listing",
+      "expression": "new Mapping { [\"x\"] = new Holder { value = throw(\"nested-mapping\") } }.toMap().length",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-nested-forced",
+      "group": "mapping-listing",
+      "expression": "new Mapping { [\"x\"] = new Holder { value = throw(\"nested-mapping\") } }.toMap()[\"x\"].value",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-map-arity",
+      "group": "mapping-listing",
+      "expression": "mappingBase.toMap(1)",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-map-property",
+      "group": "mapping-listing",
+      "expression": "mappingBase.toMap",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-typed-good",
+      "group": "mapping-listing",
+      "expression": "(new Mapping<String, Int> { [\"a\"] = 1 }).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-typed-bad-key",
+      "group": "mapping-listing",
+      "expression": "(new Mapping<String, Int> { [1] = 2 }).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "mapping-typed-bad-value",
+      "group": "mapping-listing",
+      "expression": "(new Mapping<String, Int> { [\"a\"] = \"bad\" }).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "listing-empty-list",
+      "group": "mapping-listing",
+      "expression": "new Listing {}.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "listing-base-list",
+      "group": "mapping-listing",
+      "expression": "listingBase.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "listing-extended-list",
+      "group": "mapping-listing",
+      "expression": "(listingBase) { \"c\" }.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "listing-overridden-list",
+      "group": "mapping-listing",
+      "expression": "(listingBase) { [0] = \"z\" }.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "listing-null-list",
+      "group": "mapping-listing",
+      "expression": "new Listing { null; 1 }.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "listing-lazy-error",
+      "group": "mapping-listing",
+      "expression": "new Listing { throw(\"listing-bang\") }.toList().length",
+      "mode": "string"
+    },
+    {
+      "id": "listing-nested-shallow",
+      "group": "mapping-listing",
+      "expression": "new Listing { new Holder { value = throw(\"nested-listing\") } }.toList().length",
+      "mode": "string"
+    },
+    {
+      "id": "listing-nested-forced",
+      "group": "mapping-listing",
+      "expression": "new Listing { new Holder { value = throw(\"nested-listing\") } }.toList()[0].value",
+      "mode": "string"
+    },
+    {
+      "id": "listing-empty-set",
+      "group": "mapping-listing",
+      "expression": "new Listing {}.toSet()",
+      "mode": "string"
+    },
+    {
+      "id": "listing-base-set",
+      "group": "mapping-listing",
+      "expression": "listingBase.toSet()",
+      "mode": "string"
+    },
+    {
+      "id": "listing-duplicate-set",
+      "group": "mapping-listing",
+      "expression": "new Listing { 1; 2; 1; 3 }.toSet()",
+      "mode": "string"
+    },
+    {
+      "id": "listing-extended-set",
+      "group": "mapping-listing",
+      "expression": "(listingBase) { \"c\" }.toSet()",
+      "mode": "string"
+    },
+    {
+      "id": "listing-typed-good",
+      "group": "mapping-listing",
+      "expression": "(new Listing<Int> { 1; 2 }).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "listing-typed-bad-value",
+      "group": "mapping-listing",
+      "expression": "(new Listing<Int> { 1; \"bad\" }).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "listing-list-arity",
+      "group": "mapping-listing",
+      "expression": "listingBase.toList(1)",
+      "mode": "string"
+    },
+    {
+      "id": "listing-set-arity",
+      "group": "mapping-listing",
+      "expression": "listingBase.toSet(1)",
+      "mode": "string"
+    },
+    {
+      "id": "listing-list-property",
+      "group": "mapping-listing",
+      "expression": "listingBase.toList",
+      "mode": "string"
+    },
+    {
+      "id": "map-empty-self",
+      "group": "collection-map",
+      "expression": "Map().toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "map-nonempty-self",
+      "group": "collection-map",
+      "expression": "Map(\"a\", 1, \"b\", 2).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "map-null-self",
+      "group": "collection-map",
+      "expression": "Map(null, null).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "map-self-equality",
+      "group": "collection-map",
+      "expression": "Map(\"a\",1).toMap() == Map(\"a\",1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-self-arity",
+      "group": "collection-map",
+      "expression": "Map().toMap(1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-self-property",
+      "group": "collection-map",
+      "expression": "Map().toMap",
+      "mode": "string"
+    },
+    {
+      "id": "list-empty-self",
+      "group": "collection-map",
+      "expression": "List().toList()",
+      "mode": "string"
+    },
+    {
+      "id": "list-nonempty-self",
+      "group": "collection-map",
+      "expression": "List(1, null, 2).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "list-self-arity",
+      "group": "collection-map",
+      "expression": "List().toList(1)",
+      "mode": "string"
+    },
+    {
+      "id": "set-empty-self",
+      "group": "collection-map",
+      "expression": "Set().toSet()",
+      "mode": "string"
+    },
+    {
+      "id": "set-nonempty-self",
+      "group": "collection-map",
+      "expression": "Set(2,1,2).toSet()",
+      "mode": "string"
+    },
+    {
+      "id": "set-self-arity",
+      "group": "collection-map",
+      "expression": "Set().toSet(1)",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-empty",
+      "group": "collection-map",
+      "expression": "List().toMap((x) -> x, (x) -> x)",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-basic",
+      "group": "collection-map",
+      "expression": "List(1,2,3).toMap((x) -> x, (x) -> x * 10)",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-duplicate",
+      "group": "collection-map",
+      "expression": "List(1,2,3).toMap((x) -> x % 2, (x) -> x * 10)",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-duplicate-keys",
+      "group": "collection-map",
+      "expression": "List(1,2,3).toMap((x) -> x % 2, (x) -> x * 10).keys",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-null-key",
+      "group": "collection-map",
+      "expression": "List(1,2).toMap((x) -> null, (x) -> x)",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-null-value",
+      "group": "collection-map",
+      "expression": "List(1,2).toMap((x) -> x, (x) -> null)",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-key-throw",
+      "group": "collection-map",
+      "expression": "List(1,2).toMap((x) -> throw(\"key-first\"), (x) -> throw(\"value-second\"))",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-value-throw",
+      "group": "collection-map",
+      "expression": "List(1,2).toMap((x) -> x, (x) -> throw(\"value-first\"))",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-second-key-throw",
+      "group": "collection-map",
+      "expression": "List(1,2).toMap((x) -> if (x == 2) throw(\"second-key\") else x, (x) -> x)",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-second-value-throw",
+      "group": "collection-map",
+      "expression": "List(1,2).toMap((x) -> x, (x) -> if (x == 2) throw(\"second-value\") else x)",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-no-args",
+      "group": "collection-map",
+      "expression": "List(1).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-one-arg",
+      "group": "collection-map",
+      "expression": "List(1).toMap((x) -> x)",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-three-args",
+      "group": "collection-map",
+      "expression": "List(1).toMap((x) -> x, (x) -> x, 1)",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-wrong-first",
+      "group": "collection-map",
+      "expression": "List().toMap(1, (x) -> x)",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-wrong-second",
+      "group": "collection-map",
+      "expression": "List().toMap((x) -> x, 1)",
+      "mode": "string"
+    },
+    {
+      "id": "list-to-map-wrong-callback-arity",
+      "group": "collection-map",
+      "expression": "List(1).toMap((a,b) -> a, (x) -> x)",
+      "mode": "string"
+    },
+    {
+      "id": "set-to-map-empty",
+      "group": "collection-map",
+      "expression": "Set().toMap((x) -> x, (x) -> x)",
+      "mode": "string"
+    },
+    {
+      "id": "set-to-map-basic",
+      "group": "collection-map",
+      "expression": "Set(3,1,2).toMap((x) -> x, (x) -> x * 10)",
+      "mode": "string"
+    },
+    {
+      "id": "set-to-map-duplicate",
+      "group": "collection-map",
+      "expression": "Set(1,2,3).toMap((x) -> x % 2, (x) -> x * 10)",
+      "mode": "string"
+    },
+    {
+      "id": "set-to-map-duplicate-keys",
+      "group": "collection-map",
+      "expression": "Set(1,2,3).toMap((x) -> x % 2, (x) -> x * 10).keys",
+      "mode": "string"
+    },
+    {
+      "id": "set-to-map-null-key",
+      "group": "collection-map",
+      "expression": "Set(1,2).toMap((x) -> null, (x) -> x)",
+      "mode": "string"
+    },
+    {
+      "id": "set-to-map-key-throw",
+      "group": "collection-map",
+      "expression": "Set(1,2).toMap((x) -> throw(\"set-key\"), (x) -> throw(\"set-value\"))",
+      "mode": "string"
+    },
+    {
+      "id": "set-to-map-wrong-first",
+      "group": "collection-map",
+      "expression": "Set().toMap(1, (x) -> x)",
+      "mode": "string"
+    },
+    {
+      "id": "set-to-map-wrong-second",
+      "group": "collection-map",
+      "expression": "Set().toMap((x) -> x, 1)",
+      "mode": "string"
+    },
+    {
+      "id": "set-to-map-wrong-callback-arity",
+      "group": "collection-map",
+      "expression": "Set(1).toMap((x) -> x, (a,b) -> a)",
+      "mode": "string"
+    },
+    {
+      "id": "list-empty-listing",
+      "group": "lazy-conversions",
+      "expression": "List().toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "list-basic-listing",
+      "group": "lazy-conversions",
+      "expression": "List(1,2).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "list-listing-length",
+      "group": "lazy-conversions",
+      "expression": "List(1,2).toListing().length",
+      "mode": "string"
+    },
+    {
+      "id": "list-listing-index",
+      "group": "lazy-conversions",
+      "expression": "List(1,2).toListing()[1]",
+      "mode": "string"
+    },
+    {
+      "id": "list-empty-dynamic",
+      "group": "lazy-conversions",
+      "expression": "List().toDynamic()",
+      "mode": "string"
+    },
+    {
+      "id": "list-basic-dynamic",
+      "group": "lazy-conversions",
+      "expression": "List(1,2).toDynamic().toList()",
+      "mode": "string"
+    },
+    {
+      "id": "list-dynamic-length",
+      "group": "lazy-conversions",
+      "expression": "List(1,2).toDynamic().length()",
+      "mode": "string"
+    },
+    {
+      "id": "list-listing-arity",
+      "group": "lazy-conversions",
+      "expression": "List(1).toListing(1)",
+      "mode": "string"
+    },
+    {
+      "id": "list-dynamic-arity",
+      "group": "lazy-conversions",
+      "expression": "List(1).toDynamic(1)",
+      "mode": "string"
+    },
+    {
+      "id": "set-empty-listing",
+      "group": "lazy-conversions",
+      "expression": "Set().toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "set-basic-listing",
+      "group": "lazy-conversions",
+      "expression": "Set(2,1).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "set-listing-length",
+      "group": "lazy-conversions",
+      "expression": "Set(2,1).toListing().length",
+      "mode": "string"
+    },
+    {
+      "id": "set-empty-dynamic",
+      "group": "lazy-conversions",
+      "expression": "Set().toDynamic()",
+      "mode": "string"
+    },
+    {
+      "id": "set-basic-dynamic",
+      "group": "lazy-conversions",
+      "expression": "Set(2,1).toDynamic().toList()",
+      "mode": "string"
+    },
+    {
+      "id": "set-dynamic-length",
+      "group": "lazy-conversions",
+      "expression": "Set(2,1).toDynamic().length()",
+      "mode": "string"
+    },
+    {
+      "id": "set-listing-arity",
+      "group": "lazy-conversions",
+      "expression": "Set(1).toListing(1)",
+      "mode": "string"
+    },
+    {
+      "id": "set-dynamic-arity",
+      "group": "lazy-conversions",
+      "expression": "Set(1).toDynamic(1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-empty-mapping",
+      "group": "lazy-conversions",
+      "expression": "Map().toMapping()",
+      "mode": "string"
+    },
+    {
+      "id": "map-basic-mapping",
+      "group": "lazy-conversions",
+      "expression": "Map(\"a\",1,\"b\",2).toMapping().toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "map-mapping-length",
+      "group": "lazy-conversions",
+      "expression": "Map(\"a\",1).toMapping().length",
+      "mode": "string"
+    },
+    {
+      "id": "map-mapping-index",
+      "group": "lazy-conversions",
+      "expression": "Map(\"a\",1).toMapping()[\"a\"]",
+      "mode": "string"
+    },
+    {
+      "id": "map-empty-dynamic",
+      "group": "lazy-conversions",
+      "expression": "Map().toDynamic()",
+      "mode": "string"
+    },
+    {
+      "id": "map-basic-dynamic",
+      "group": "lazy-conversions",
+      "expression": "Map(\"a\",1,\"b\",2).toDynamic().toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "map-dynamic-length",
+      "group": "lazy-conversions",
+      "expression": "Map(\"a\",1).toDynamic().length()",
+      "mode": "string"
+    },
+    {
+      "id": "map-nonstr-dynamic",
+      "group": "lazy-conversions",
+      "expression": "Map(1,\"one\",true,\"yes\").toDynamic().toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "map-mapping-arity",
+      "group": "lazy-conversions",
+      "expression": "Map().toMapping(1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-dynamic-arity",
+      "group": "lazy-conversions",
+      "expression": "Map().toDynamic(1)",
+      "mode": "string"
+    },
+    {
+      "id": "typed-empty-dynamic",
+      "group": "lazy-conversions",
+      "expression": "new Holder {}.toDynamic().toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "typed-base-dynamic",
+      "group": "lazy-conversions",
+      "expression": "typedBase.toDynamic().toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "typed-dynamic-length",
+      "group": "lazy-conversions",
+      "expression": "typedBase.toDynamic().length()",
+      "mode": "string"
+    },
+    {
+      "id": "typed-dynamic-amend",
+      "group": "lazy-conversions",
+      "expression": "(typedBase.toDynamic()) { name = \"new\" }.toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "typed-dynamic-arity",
+      "group": "lazy-conversions",
+      "expression": "typedBase.toDynamic(1)",
+      "mode": "string"
+    },
+    {
+      "id": "typed-dynamic-shallow",
+      "group": "lazy-conversions",
+      "expression": "new Holder { value = throw(\"typed-dynamic-lazy\") }.toDynamic().length()",
+      "mode": "string"
+    },
+    {
+      "id": "typed-dynamic-forced",
+      "group": "lazy-conversions",
+      "expression": "new Holder { value = throw(\"typed-dynamic-force\") }.toDynamic().toMap().length",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-basic",
+      "group": "to-typed",
+      "expression": "new Dynamic { name = \"bird\"; age = 5 }.toTyped(Animal).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-defaults",
+      "group": "to-typed",
+      "expression": "new Dynamic { name = \"bird\" }.toTyped(Animal).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-missing",
+      "group": "to-typed",
+      "expression": "new Dynamic {}.toTyped(Animal).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-null",
+      "group": "to-typed",
+      "expression": "new Dynamic { name = null }.toTyped(Animal).name",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-null-present",
+      "group": "to-typed",
+      "expression": "new Dynamic { name = null }.toTyped(NullableAnimal).name",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-extra",
+      "group": "to-typed",
+      "expression": "new Dynamic { name = \"bird\"; extra = 9 }.toTyped(Animal).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-lazy",
+      "group": "to-typed",
+      "expression": "new Dynamic { name = throw(\"dynamic-typed-lazy\") }.toTyped(Animal).getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-force",
+      "group": "to-typed",
+      "expression": "new Dynamic { name = throw(\"dynamic-typed-force\") }.toTyped(Animal).name",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-wrong-value",
+      "group": "to-typed",
+      "expression": "new Dynamic { age = \"old\" }.toTyped(Animal).age",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-non-typed",
+      "group": "to-typed",
+      "expression": "new Dynamic {}.toTyped(Dynamic)",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-abstract",
+      "group": "to-typed",
+      "expression": "new Dynamic {}.toTyped(AbstractAnimal)",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-wrong-argument",
+      "group": "to-typed",
+      "expression": "new Dynamic {}.toTyped(1)",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-typed-arity",
+      "group": "to-typed",
+      "expression": "new Dynamic {}.toTyped()",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-basic",
+      "group": "to-typed",
+      "expression": "Map(\"name\",\"bird\",\"age\",5).toTyped(Animal).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-defaults",
+      "group": "to-typed",
+      "expression": "Map(\"name\",\"bird\").toTyped(Animal).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-missing",
+      "group": "to-typed",
+      "expression": "Map().toTyped(Animal).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-null",
+      "group": "to-typed",
+      "expression": "Map(\"name\",null).toTyped(Animal).name",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-null-present",
+      "group": "to-typed",
+      "expression": "Map(\"name\",null).toTyped(NullableAnimal).name",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-extra",
+      "group": "to-typed",
+      "expression": "Map(\"name\",\"bird\",\"extra\",9).toTyped(Animal).toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-wrong-value",
+      "group": "to-typed",
+      "expression": "Map(\"age\",\"old\").toTyped(Animal).age",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-nonstr-key",
+      "group": "to-typed",
+      "expression": "Map(1,\"one\",\"name\",\"bird\").toTyped(Animal).name",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-non-typed",
+      "group": "to-typed",
+      "expression": "Map().toTyped(Dynamic)",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-abstract",
+      "group": "to-typed",
+      "expression": "Map().toTyped(AbstractAnimal)",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-wrong-argument",
+      "group": "to-typed",
+      "expression": "Map().toTyped(1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-arity",
+      "group": "to-typed",
+      "expression": "Map().toTyped()",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-nested-shallow",
+      "group": "to-typed",
+      "expression": "Map(\"child\", new Holder { value = throw(\"map-nested\") }).toTyped(Carrier).getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "map-typed-nested-forced",
+      "group": "to-typed",
+      "expression": "Map(\"child\", new Holder { value = throw(\"map-nested\") }).toTyped(Carrier).child.value",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-empty",
+      "group": "set-add",
+      "expression": "Set().add(1)",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-new",
+      "group": "set-add",
+      "expression": "Set(1,2).add(3)",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-duplicate",
+      "group": "set-add",
+      "expression": "Set(1,2).add(1)",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-duplicate-order",
+      "group": "set-add",
+      "expression": "Set(2,1).add(2).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-null",
+      "group": "set-add",
+      "expression": "Set(1).add(null)",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-double-null",
+      "group": "set-add",
+      "expression": "Set(null).add(null)",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-equality",
+      "group": "set-add",
+      "expression": "Set(1,2).add(2) == Set(2,1)",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-contains",
+      "group": "set-add",
+      "expression": "Set(1,2).add(2).contains(2)",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-object",
+      "group": "set-add",
+      "expression": "Set(new Dynamic { x = 1 }).add(new Dynamic { x = 1 }).length",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-list",
+      "group": "set-add",
+      "expression": "Set(List(1)).add(List(1)).length",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-arity",
+      "group": "set-add",
+      "expression": "Set().add()",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-extra-arg",
+      "group": "set-add",
+      "expression": "Set().add(1,2)",
+      "mode": "string"
+    },
+    {
+      "id": "set-add-method-value",
+      "group": "set-add",
+      "expression": "Set().add",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-for-empty",
+      "group": "bytes-iteration",
+      "expression": "new Listing { for (b in Bytes()) { b } }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-spread-empty",
+      "group": "bytes-iteration",
+      "expression": "new Listing { ...Bytes() }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-for-low",
+      "group": "bytes-iteration",
+      "expression": "new Listing { for (b in Bytes(0,1,127)) { b } }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-spread-low",
+      "group": "bytes-iteration",
+      "expression": "new Listing { ...Bytes(0,1,127) }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-for-high",
+      "group": "bytes-iteration",
+      "expression": "new Listing { for (b in Bytes(128,255)) { b } }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-spread-high",
+      "group": "bytes-iteration",
+      "expression": "new Listing { ...Bytes(128,255) }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-for-boundaries",
+      "group": "bytes-iteration",
+      "expression": "new Listing { for (b in Bytes(0,127,128,254,255)) { b } }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-spread-boundaries",
+      "group": "bytes-iteration",
+      "expression": "new Listing { ...Bytes(0,127,128,254,255) }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-for-pairs",
+      "group": "bytes-iteration",
+      "expression": "new Listing { for (i,b in Bytes(128,255)) { Pair(i,b) } }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-for-typed-int",
+      "group": "bytes-iteration",
+      "expression": "new Listing { for (b: Int in Bytes(128,255)) { b } }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-for-typed-uint8",
+      "group": "bytes-iteration",
+      "expression": "new Listing { for (b: UInt8 in Bytes(128,255)) { b } }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-for-typed-wrong",
+      "group": "bytes-iteration",
+      "expression": "new Listing { for (b: String in Bytes(128,255)) { b } }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-spread-dynamic",
+      "group": "bytes-iteration",
+      "expression": "new Dynamic { ...Bytes(128,255) }.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-for-dynamic",
+      "group": "bytes-iteration",
+      "expression": "new Dynamic { for (b in Bytes(128,255)) { b } }.toList()",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-spread-listing-typed",
+      "group": "bytes-iteration",
+      "expression": "(new Listing<UInt8> { ...Bytes(128,255) }).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-for-listing-typed",
+      "group": "bytes-iteration",
+      "expression": "(new Listing<UInt8> { for (b in Bytes(128,255)) { b } }).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-spread-mapping-empty",
+      "group": "bytes-iteration",
+      "expression": "new Mapping { ...Bytes() }",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-for-mapping-empty",
+      "group": "bytes-iteration",
+      "expression": "new Mapping { for (b in Bytes()) { b } }",
+      "mode": "string"
+    }
+  ]
+}

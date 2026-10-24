@@ -1862,6 +1862,60 @@ M2를 완료할 수 있습니다.
 구분하고, 복사 소스 6,408개·증거 archive 네 개를 다시 확인했습니다. 이것은
 Stage 61의 구현·증거 체크포인트 마감이며 M2 전체 완료를 뜻하지 않습니다.
 
+### Stage 62 — 객체·collection 변환과 순회
+
+Stage 61의 원본 실패와 고정 Java 구현을 기준으로 공통 변환 경로를 확장합니다.
+`912c731`에서 `m2/stage62-collection-conversions`를 시작했으며, 런타임 구현은
+`gpt-6-astra / xhigh`, 독립 Java 기준과 검토는 각각 `gpt-6-sol / high`에
+배정합니다. 다음 범위는 모두 이 단계의 구현·검증 대상으로 유지합니다.
+
+- 엄격한 변환: Typed·module·Dynamic·Mapping의 `toMap`, Dynamic·Listing의
+  `toList`, Listing의 `toSet`, Map의 `toMap`, List·Set의 두 extractor `toMap`.
+- 지연 변환: List·Set의 `toListing`·`toDynamic`, Map의 `toMapping`·`toDynamic`,
+  Typed의 `toDynamic`, Dynamic·Map의 `toTyped`.
+- 원본 선행 기능: Dynamic의 `length()` 메서드, Set의 `add`, Bytes의 `for`·spread.
+
+객체의 엄격한 변환은 자식에서 부모 순서로 보이는 멤버를 먼저 얕게 강제 평가하고,
+부모에서 자식 순서로 첫 선언의 종류·숨김 규칙을 유지하면서 최종 receiver 값을
+읽어야 합니다. Dynamic 변환에서 결과에 포함하지 않는 멤버의 오류도 먼저 발생할
+수 있습니다. 중복 Map 키의 첫 위치·마지막 값, key extractor→value extractor→
+삽입 순서, 상속·generic 검사·첫 오류와 실패 뒤 성공한 캐시 prefix를 검증합니다.
+
+지연 adapter는 원래 source receiver와 환경을 보존해야 합니다. 없는 멤버와 명시적
+Pkl `null`을 구분하고, target prototype 기본값·숨김 속성·타입 검사를 실제 접근
+시점에 적용합니다. source·builder·callback 결과·pending key·위임 연결은 Host
+중단·재진입·GC·취소·재시도·종료 동안 공통 VM의 root로 유지합니다. 원래 256 KiB
+frontend 조건은 바꾸지 않습니다. Bytes는 Java의 `for`에서 signed 값, spread에서
+unsigned 값을 생성하는 차이를 그대로 유지합니다.
+
+독립 Java 문자열 기준은 `file:///stage62/collection-conversions.pkl`에서 두
+새 JVM 세션으로 취득하며, typed export·wrapper identity는 별도 경계입니다.
+Java 결과를 봉인한 뒤 native·Node·Chromium에서 원래 행과 전체 원시 protocol을
+비교합니다. 기존 Stage 61 코퍼스와 원본 입력을 보존하고 관련 upstream 변환
+프로그램을 추가 실행합니다. `module.toMap`이 구현되어도 이후 Binary renderer
+미지원이 드러날 수 있으므로 원본 통과 수를 미리 가정하지 않습니다.
+
+원본 `spreadSyntaxMapping.pkl`의 첫 `toMap` 실패는 Mapping receiver가 아니라
+`names: List<String>`의 두 extractor 호출임을 소스에서 확인했습니다. Stage 61
+보고서의 설명을 바로잡되 원래 오류·archive는 수정하지 않습니다. Java 기준,
+구현 검증, 실제 커밋과의 소스 대조를 각각 기록·커밋·푸시하며 M2 전체 완료
+조건과 아직 남은 기능을 계속 유지합니다.
+
+독립 [Java 기준](reports/m2/stage62-java-checkpoint.json)의 문자열 236개를
+두 새 JVM에서 관찰했습니다. 세션별 성공 158개·일반 Pkl 오류 78개이며 전체
+원시 결과가 반복 간 일치합니다. 55개 기준 소스와 고정 JDK·JAR·환경을 기록했고,
+검증 소스 70개의 전후 동일성, fixture 검사와 Python 회귀 7개의 일반·`-O`
+실행, inventory freshness 등 다섯 명령이 통과했습니다. 초기 local helper 접근
+오류와 수정 전 관찰은 history archive에 보존했습니다. 이것은 Java 기준 취득이며
+Rust·제품 API 호환 통과를 주장하지 않습니다. M2 구현 연결 hash의 freshness는
+진행 중인 Rust 소스를 고정한 뒤 별도로 검사합니다.
+
+원본 입력 957개를 검색한 결과 관련 호출을 가진 43개 중 41개가 기존 adapter로
+실행 가능합니다. 이전 62개를 모두 유지한 후보 비교 대상은 90개입니다. 나머지
+`basic/importGlob.pkl`·`api/analyze1.pkl`은 package·HTTP fixture server와 TLS
+인증서 설정이 필요하므로 미실행 의무로 보존합니다. 이 선별은 구문상의 호출
+검색이며 전체 의미론 커버리지나 새 실행·통과 결과가 아닙니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

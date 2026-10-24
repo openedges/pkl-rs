@@ -1,0 +1,343 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "baseline_head": "912c7319c418208351f1ff7f56d9e7f5dfa7b8ec",
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical": {
+    "archive": {
+      "bytes": 513094,
+      "sha256": "e2e7db0435308cd2b3ff0656e0ba799e621535054a67c45ef0fd08594b00d8f6"
+    },
+    "archive_members": 9980,
+    "archive_prefix": "capture-04",
+    "boundary": "string",
+    "fileset_sha256": "11d43c85f2885e08c436f14e067e09fbdec4203cf684c11071ca4a5dc57a8a05",
+    "module_uri": "file:///stage62/collection-conversions.pkl",
+    "path": "tests/fixtures/m2-collection-conversions",
+    "rows": 236,
+    "statuses_per_session": {
+      "error": 78,
+      "success": 158
+    }
+  },
+  "history": {
+    "archive": "reports/m2/stage62-java-history.tar.gz",
+    "captures": {
+      "capture-01": {
+        "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+        "jdk": {
+          "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+          "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+          "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+        },
+        "pids": [
+          63969,
+          63974
+        ],
+        "raw_files_per_session": 4727,
+        "raw_repetitions_equal": true,
+        "reason": "Superseded authored module-local helpers were inaccessible to the public expression API.",
+        "role": "superseded",
+        "rows": 225,
+        "source_count": 48,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 117,
+          "success": 108
+        }
+      },
+      "capture-02": {
+        "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+        "jdk": {
+          "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+          "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+          "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+        },
+        "pids": [
+          64377,
+          64383
+        ],
+        "raw_files_per_session": 4769,
+        "raw_repetitions_equal": true,
+        "reason": "Superseded after adding nested-lazy, inherited hidden, child-first error, and shadowing controls.",
+        "role": "superseded",
+        "rows": 227,
+        "source_count": 48,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 75,
+          "success": 152
+        }
+      },
+      "capture-03": {
+        "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+        "jdk": {
+          "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+          "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+          "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+        },
+        "pids": [
+          64767,
+          64772
+        ],
+        "raw_files_per_session": 4958,
+        "raw_repetitions_equal": true,
+        "reason": "Superseded authored Dynamic hidden modifier was invalid; corrected in capture 04.",
+        "role": "superseded",
+        "rows": 236,
+        "source_count": 55,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 79,
+          "success": 157
+        }
+      },
+      "capture-04": {
+        "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+        "jdk": {
+          "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+          "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+          "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+        },
+        "pids": [
+          65044,
+          65046
+        ],
+        "raw_files_per_session": 4958,
+        "raw_repetitions_equal": true,
+        "reason": "Canonical reviewed 236-row Java string authority; also embedded in the sealed fixture archive.",
+        "role": "canonical",
+        "rows": 236,
+        "source_count": 55,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 78,
+          "success": 158
+        }
+      }
+    },
+    "embedded_manifest_sha256": "a87433766b8ecca89ad39eb222cef83d1bce1cef83a4e6e1b3c0b5fb02da5a33",
+    "identity": {
+      "bytes": 2288928,
+      "sha256": "22dc68f3faa35d6f0ee41b4a3959b4bda0705adb6b3dc9806356fe11eb287d2f"
+    },
+    "member_hash_readback": true,
+    "members": 39067,
+    "source_before_after_equal": true
+  },
+  "java_runtime": {
+    "artifact_before_after_equal": true,
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "jdk_executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+    "jdk_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "jdk_release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+    "reference_revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "kind": "stage62-collection-conversions-java-authority-checkpoint",
+  "limits": [
+    "Java public string API observations only; no Rust candidate passes are claimed.",
+    "Typed Java export and Java wrapper reference identity were not compared.",
+    "Original upstream snippet replay, browser/Node, full M2 and performance gates remain separate.",
+    "M2 manifest freshness is deferred until concurrent Rust/core source freeze and regeneration.",
+    "A verifier-only raw JDK identity cross-check was added after early local verifier runs; this publication records fresh validation with that check."
+  ],
+  "schema": 1,
+  "validation": {
+    "archive": "reports/m2/stage62-java-validation.tar.gz",
+    "checks": [
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/collection_conversions_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792846430.078946,
+        "name": "fixture-verifier",
+        "started_epoch": 1792846429.538722,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 359,
+          "sha256": "a8b80a6968281ed54d858fe2fd7e1d765a7d07b7eee305334768b6d5928df1b2"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "tools/collection_conversions_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792846430.630892,
+        "name": "fixture-verifier-O",
+        "started_epoch": 1792846430.080689,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 359,
+          "sha256": "a8b80a6968281ed54d858fe2fd7e1d765a7d07b7eee305334768b6d5928df1b2"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "tools.tests.test_collection_conversions_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792846432.131823,
+        "name": "fixture-tests",
+        "started_epoch": 1792846430.6323829,
+        "stderr": {
+          "bytes": 1408,
+          "sha256": "28f7b862fe79e79563a3549dd8351bc7f684ea2459a194ee3abe5b11ba5ab26e"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "-m",
+          "unittest",
+          "tools.tests.test_collection_conversions_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792846433.630404,
+        "name": "fixture-tests-O",
+        "started_epoch": 1792846432.133305,
+        "stderr": {
+          "bytes": 1408,
+          "sha256": "eeb00f3e352e73700b1c7658b2d7d53cc294cc7bb3b29a0d91be75a1d1d54df5"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/inventory.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792846436.561738,
+        "name": "source-inventory",
+        "started_epoch": 1792846433.632412,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 926,
+          "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+        }
+      }
+    ],
+    "deferred_final_integration": [
+      "M2 manifest regeneration and freshness after concurrent Rust/core source freeze"
+    ],
+    "directory": "target/m2/stage62-java-validation-01",
+    "embedded_manifest_sha256": "7054e14560267962d7669463e8a6b64c49cb8fe8819420d6920d4812b7598c07",
+    "identity": {
+      "bytes": 1031529,
+      "sha256": "b07a7a1318d36a266e22c0be162406289286768b0fdd8b6fe53328f818e62fce"
+    },
+    "manifest_freshness_pass_claimed": false,
+    "member_hash_readback": true,
+    "members": 91,
+    "record": "target/m2/stage62-java-validation-01/validation.json",
+    "record_identity": {
+      "bytes": 33766,
+      "sha256": "9525cfac5abb2dfe58e34f80135b18808753418dbe784bb25869838fac67bec7"
+    },
+    "source_before_after_equal": true,
+    "source_count": 70,
+    "source_stable": true
+  }
+}

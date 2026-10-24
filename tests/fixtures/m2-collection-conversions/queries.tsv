@@ -1,0 +1,236 @@
+string	typed-empty-map	new EmptyClass {}.toMap()
+string	typed-base-map	typedBase.toMap()
+string	typed-derived-map	typedDerived.toMap()
+string	typed-base-keys	typedBase.toMap().keys
+string	typed-derived-keys	typedDerived.toMap().keys
+string	typed-derived-values	typedDerived.toMap().values
+string	typed-derived-name	typedDerived.toMap()["name"]
+string	typed-class-name	typedDerived.toMap().getClass().simpleName
+string	typed-null-value	new Holder {}.toMap().getOrNull("missing")
+string	typed-local-excluded	typedBase.toMap().containsKey("hiddenModule")
+string	typed-map-empty-class	new EmptyClass {}.toMap().isEmpty
+string	typed-map-override	(typedBase) { name = "sparrow" }.toMap()
+string	typed-map-lazy-error	new Holder { value = throw("typed-bang") }.toMap().length
+string	typed-map-nested-lazy	new Carrier { child = new Holder { value = throw("typed-nested") } }.toMap().length
+string	typed-map-nested-forced	new Carrier { child = new Holder { value = throw("typed-nested") } }.toMap()["child"].value
+string	typed-hidden-inherited-map	new HiddenChild {}.toMap()
+string	typed-hidden-inherited-keys	new HiddenChild {}.toMap().keys
+string	typed-map-arity	typedBase.toMap(1)
+string	typed-map-property	typedBase.toMap
+string	typed-map-missing-member	typedBase.missingField
+string	module-map-keys	module.toMap().keys
+string	module-map-count	module.toMap()["count"]
+string	module-map-tag	module.toMap()["tag"]
+string	module-map-class-excluded	module.toMap().containsKey("Animal")
+string	module-map-local-excluded	module.toMap().containsKey("hiddenModule")
+string	module-map-size	module.toMap().length
+string	module-map-arity	module.toMap(1)
+string	dynamic-empty-length	new Dynamic {}.length()
+string	dynamic-property-length	new Dynamic { name = "bird" }.length()
+string	dynamic-entry-length	new Dynamic { ["name"] = "bird" }.length()
+string	dynamic-elements-length	new Dynamic { 1; 2; 3 }.length()
+string	dynamic-mixed-length	dynamicMixed.length()
+string	dynamic-extended-length	(dynamicMixed) { "third" }.length()
+string	dynamic-replaced-index-length	(dynamicMixed) { [0] = "zero" }.length()
+string	dynamic-length-property	dynamicMixed.length
+string	dynamic-length-arity	dynamicMixed.length(1)
+string	dynamic-length-wrong-member	dynamicMixed.missingField
+string	dynamic-empty-map	new Dynamic {}.toMap()
+string	dynamic-mixed-map	dynamicMixed.toMap()
+string	dynamic-mixed-map-keys	dynamicMixed.toMap().keys
+string	dynamic-mixed-map-values	dynamicMixed.toMap().values
+string	dynamic-mixed-map-size	dynamicMixed.toMap().length
+string	dynamic-mixed-map-element-excluded	dynamicMixed.toMap().containsKey(0)
+string	dynamic-mixed-map-property	dynamicMixed.toMap()["name"]
+string	dynamic-mixed-map-entry	dynamicMixed.toMap()["entry"]
+string	dynamic-mixed-map-number-key	dynamicMixed.toMap()[7]
+string	dynamic-prop-entry-collision	new Dynamic { name = "property"; ["name"] = "entry" }.toMap()
+string	dynamic-boolean-null-keys	new Dynamic { [true] = 1; [null] = 2 }.toMap()
+string	dynamic-empty-list	new Dynamic {}.toList()
+string	dynamic-mixed-list	dynamicMixed.toList()
+string	dynamic-mixed-list-size	dynamicMixed.toList().length
+string	dynamic-extended-list	(dynamicMixed) { "third" }.toList()
+string	dynamic-replaced-list	(dynamicMixed) { [0] = "zero" }.toList()
+string	dynamic-property-list-empty	new Dynamic { name = "bird" }.toList()
+string	dynamic-entry-list-empty	new Dynamic { ["name"] = "bird" }.toList()
+string	dynamic-list-arity	dynamicMixed.toList(1)
+string	dynamic-map-arity	dynamicMixed.toMap(1)
+string	dynamic-map-property	dynamicMixed.toMap
+string	dynamic-list-property	dynamicMixed.toList
+string	dynamic-discarded-element-error	new Dynamic { name = 1; throw("discarded-element") }.toMap().length
+string	dynamic-discarded-property-error	new Dynamic { name = throw("discarded-property"); 1 }.toList().length
+string	dynamic-discarded-entry-error	new Dynamic { ["bad"] = throw("discarded-entry"); 1 }.toList().length
+string	dynamic-first-error-self	new Dynamic { name = throw("first-property"); ["bad"] = throw("second-entry"); throw("third-element") }.toMap()
+string	dynamic-child-before-parent-error	(new Dynamic { parent = throw("parent-bang") }) { child = throw("child-bang") }.toMap()
+string	dynamic-hidden-typed-source	new HiddenChild {}.toDynamic().toMap()
+string	dynamic-shadow-method-call	new Dynamic { toMap = 42 }.toMap()
+string	dynamic-shadow-method-property	new Dynamic { toMap = 42 }.toMap
+string	dynamic-nested-object-shallow	new Dynamic { x = new Holder { value = throw("nested") } }.toMap().length
+string	dynamic-nested-object-forced	new Dynamic { x = new Holder { value = throw("nested") } }.toMap()["x"].value
+string	dynamic-map-inherited	(dynamicMixed) { name = "owl" }.toMap()
+string	dynamic-list-inherited	(dynamicMixed) { name = "owl" }.toList()
+string	dynamic-override-kind-element-to-entry-map	(dynamicMixed) { [0] = "zero" }.toMap()
+string	dynamic-override-kind-element-to-entry-list	(dynamicMixed) { [0] = "zero" }.toList()
+string	mapping-empty-map	new Mapping {}.toMap()
+string	mapping-base-map	mappingBase.toMap()
+string	mapping-base-keys	mappingBase.toMap().keys
+string	mapping-base-values	mappingBase.toMap().values
+string	mapping-override-map	(mappingBase) { ["a"] = 9; ["c"] = 3 }.toMap()
+string	mapping-override-keys	(mappingBase) { ["a"] = 9; ["c"] = 3 }.toMap().keys
+string	mapping-null-key	new Mapping { [null] = 1 }.toMap()
+string	mapping-null-value	new Mapping { ["x"] = null }.toMap()
+string	mapping-local-default-excluded	new Mapping { local x = 1; default = (_) -> 4; ["a"] = 2 }.toMap()
+string	mapping-lazy-error	new Mapping { ["x"] = throw("mapping-bang") }.toMap().length
+string	mapping-nested-shallow	new Mapping { ["x"] = new Holder { value = throw("nested-mapping") } }.toMap().length
+string	mapping-nested-forced	new Mapping { ["x"] = new Holder { value = throw("nested-mapping") } }.toMap()["x"].value
+string	mapping-map-arity	mappingBase.toMap(1)
+string	mapping-map-property	mappingBase.toMap
+string	mapping-typed-good	(new Mapping<String, Int> { ["a"] = 1 }).toMap()
+string	mapping-typed-bad-key	(new Mapping<String, Int> { [1] = 2 }).toMap()
+string	mapping-typed-bad-value	(new Mapping<String, Int> { ["a"] = "bad" }).toMap()
+string	listing-empty-list	new Listing {}.toList()
+string	listing-base-list	listingBase.toList()
+string	listing-extended-list	(listingBase) { "c" }.toList()
+string	listing-overridden-list	(listingBase) { [0] = "z" }.toList()
+string	listing-null-list	new Listing { null; 1 }.toList()
+string	listing-lazy-error	new Listing { throw("listing-bang") }.toList().length
+string	listing-nested-shallow	new Listing { new Holder { value = throw("nested-listing") } }.toList().length
+string	listing-nested-forced	new Listing { new Holder { value = throw("nested-listing") } }.toList()[0].value
+string	listing-empty-set	new Listing {}.toSet()
+string	listing-base-set	listingBase.toSet()
+string	listing-duplicate-set	new Listing { 1; 2; 1; 3 }.toSet()
+string	listing-extended-set	(listingBase) { "c" }.toSet()
+string	listing-typed-good	(new Listing<Int> { 1; 2 }).toList()
+string	listing-typed-bad-value	(new Listing<Int> { 1; "bad" }).toList()
+string	listing-list-arity	listingBase.toList(1)
+string	listing-set-arity	listingBase.toSet(1)
+string	listing-list-property	listingBase.toList
+string	map-empty-self	Map().toMap()
+string	map-nonempty-self	Map("a", 1, "b", 2).toMap()
+string	map-null-self	Map(null, null).toMap()
+string	map-self-equality	Map("a",1).toMap() == Map("a",1)
+string	map-self-arity	Map().toMap(1)
+string	map-self-property	Map().toMap
+string	list-empty-self	List().toList()
+string	list-nonempty-self	List(1, null, 2).toList()
+string	list-self-arity	List().toList(1)
+string	set-empty-self	Set().toSet()
+string	set-nonempty-self	Set(2,1,2).toSet()
+string	set-self-arity	Set().toSet(1)
+string	list-to-map-empty	List().toMap((x) -> x, (x) -> x)
+string	list-to-map-basic	List(1,2,3).toMap((x) -> x, (x) -> x * 10)
+string	list-to-map-duplicate	List(1,2,3).toMap((x) -> x % 2, (x) -> x * 10)
+string	list-to-map-duplicate-keys	List(1,2,3).toMap((x) -> x % 2, (x) -> x * 10).keys
+string	list-to-map-null-key	List(1,2).toMap((x) -> null, (x) -> x)
+string	list-to-map-null-value	List(1,2).toMap((x) -> x, (x) -> null)
+string	list-to-map-key-throw	List(1,2).toMap((x) -> throw("key-first"), (x) -> throw("value-second"))
+string	list-to-map-value-throw	List(1,2).toMap((x) -> x, (x) -> throw("value-first"))
+string	list-to-map-second-key-throw	List(1,2).toMap((x) -> if (x == 2) throw("second-key") else x, (x) -> x)
+string	list-to-map-second-value-throw	List(1,2).toMap((x) -> x, (x) -> if (x == 2) throw("second-value") else x)
+string	list-to-map-no-args	List(1).toMap()
+string	list-to-map-one-arg	List(1).toMap((x) -> x)
+string	list-to-map-three-args	List(1).toMap((x) -> x, (x) -> x, 1)
+string	list-to-map-wrong-first	List().toMap(1, (x) -> x)
+string	list-to-map-wrong-second	List().toMap((x) -> x, 1)
+string	list-to-map-wrong-callback-arity	List(1).toMap((a,b) -> a, (x) -> x)
+string	set-to-map-empty	Set().toMap((x) -> x, (x) -> x)
+string	set-to-map-basic	Set(3,1,2).toMap((x) -> x, (x) -> x * 10)
+string	set-to-map-duplicate	Set(1,2,3).toMap((x) -> x % 2, (x) -> x * 10)
+string	set-to-map-duplicate-keys	Set(1,2,3).toMap((x) -> x % 2, (x) -> x * 10).keys
+string	set-to-map-null-key	Set(1,2).toMap((x) -> null, (x) -> x)
+string	set-to-map-key-throw	Set(1,2).toMap((x) -> throw("set-key"), (x) -> throw("set-value"))
+string	set-to-map-wrong-first	Set().toMap(1, (x) -> x)
+string	set-to-map-wrong-second	Set().toMap((x) -> x, 1)
+string	set-to-map-wrong-callback-arity	Set(1).toMap((x) -> x, (a,b) -> a)
+string	list-empty-listing	List().toListing()
+string	list-basic-listing	List(1,2).toListing()
+string	list-listing-length	List(1,2).toListing().length
+string	list-listing-index	List(1,2).toListing()[1]
+string	list-empty-dynamic	List().toDynamic()
+string	list-basic-dynamic	List(1,2).toDynamic().toList()
+string	list-dynamic-length	List(1,2).toDynamic().length()
+string	list-listing-arity	List(1).toListing(1)
+string	list-dynamic-arity	List(1).toDynamic(1)
+string	set-empty-listing	Set().toListing()
+string	set-basic-listing	Set(2,1).toListing()
+string	set-listing-length	Set(2,1).toListing().length
+string	set-empty-dynamic	Set().toDynamic()
+string	set-basic-dynamic	Set(2,1).toDynamic().toList()
+string	set-dynamic-length	Set(2,1).toDynamic().length()
+string	set-listing-arity	Set(1).toListing(1)
+string	set-dynamic-arity	Set(1).toDynamic(1)
+string	map-empty-mapping	Map().toMapping()
+string	map-basic-mapping	Map("a",1,"b",2).toMapping().toMap()
+string	map-mapping-length	Map("a",1).toMapping().length
+string	map-mapping-index	Map("a",1).toMapping()["a"]
+string	map-empty-dynamic	Map().toDynamic()
+string	map-basic-dynamic	Map("a",1,"b",2).toDynamic().toMap()
+string	map-dynamic-length	Map("a",1).toDynamic().length()
+string	map-nonstr-dynamic	Map(1,"one",true,"yes").toDynamic().toMap()
+string	map-mapping-arity	Map().toMapping(1)
+string	map-dynamic-arity	Map().toDynamic(1)
+string	typed-empty-dynamic	new Holder {}.toDynamic().toMap()
+string	typed-base-dynamic	typedBase.toDynamic().toMap()
+string	typed-dynamic-length	typedBase.toDynamic().length()
+string	typed-dynamic-amend	(typedBase.toDynamic()) { name = "new" }.toMap()
+string	typed-dynamic-arity	typedBase.toDynamic(1)
+string	typed-dynamic-shallow	new Holder { value = throw("typed-dynamic-lazy") }.toDynamic().length()
+string	typed-dynamic-forced	new Holder { value = throw("typed-dynamic-force") }.toDynamic().toMap().length
+string	dynamic-typed-basic	new Dynamic { name = "bird"; age = 5 }.toTyped(Animal).toMap()
+string	dynamic-typed-defaults	new Dynamic { name = "bird" }.toTyped(Animal).toMap()
+string	dynamic-typed-missing	new Dynamic {}.toTyped(Animal).toMap()
+string	dynamic-typed-null	new Dynamic { name = null }.toTyped(Animal).name
+string	dynamic-typed-null-present	new Dynamic { name = null }.toTyped(NullableAnimal).name
+string	dynamic-typed-extra	new Dynamic { name = "bird"; extra = 9 }.toTyped(Animal).toMap()
+string	dynamic-typed-lazy	new Dynamic { name = throw("dynamic-typed-lazy") }.toTyped(Animal).getClass().simpleName
+string	dynamic-typed-force	new Dynamic { name = throw("dynamic-typed-force") }.toTyped(Animal).name
+string	dynamic-typed-wrong-value	new Dynamic { age = "old" }.toTyped(Animal).age
+string	dynamic-typed-non-typed	new Dynamic {}.toTyped(Dynamic)
+string	dynamic-typed-abstract	new Dynamic {}.toTyped(AbstractAnimal)
+string	dynamic-typed-wrong-argument	new Dynamic {}.toTyped(1)
+string	dynamic-typed-arity	new Dynamic {}.toTyped()
+string	map-typed-basic	Map("name","bird","age",5).toTyped(Animal).toMap()
+string	map-typed-defaults	Map("name","bird").toTyped(Animal).toMap()
+string	map-typed-missing	Map().toTyped(Animal).toMap()
+string	map-typed-null	Map("name",null).toTyped(Animal).name
+string	map-typed-null-present	Map("name",null).toTyped(NullableAnimal).name
+string	map-typed-extra	Map("name","bird","extra",9).toTyped(Animal).toMap()
+string	map-typed-wrong-value	Map("age","old").toTyped(Animal).age
+string	map-typed-nonstr-key	Map(1,"one","name","bird").toTyped(Animal).name
+string	map-typed-non-typed	Map().toTyped(Dynamic)
+string	map-typed-abstract	Map().toTyped(AbstractAnimal)
+string	map-typed-wrong-argument	Map().toTyped(1)
+string	map-typed-arity	Map().toTyped()
+string	map-typed-nested-shallow	Map("child", new Holder { value = throw("map-nested") }).toTyped(Carrier).getClass().simpleName
+string	map-typed-nested-forced	Map("child", new Holder { value = throw("map-nested") }).toTyped(Carrier).child.value
+string	set-add-empty	Set().add(1)
+string	set-add-new	Set(1,2).add(3)
+string	set-add-duplicate	Set(1,2).add(1)
+string	set-add-duplicate-order	Set(2,1).add(2).toList()
+string	set-add-null	Set(1).add(null)
+string	set-add-double-null	Set(null).add(null)
+string	set-add-equality	Set(1,2).add(2) == Set(2,1)
+string	set-add-contains	Set(1,2).add(2).contains(2)
+string	set-add-object	Set(new Dynamic { x = 1 }).add(new Dynamic { x = 1 }).length
+string	set-add-list	Set(List(1)).add(List(1)).length
+string	set-add-arity	Set().add()
+string	set-add-extra-arg	Set().add(1,2)
+string	set-add-method-value	Set().add
+string	bytes-for-empty	new Listing { for (b in Bytes()) { b } }
+string	bytes-spread-empty	new Listing { ...Bytes() }
+string	bytes-for-low	new Listing { for (b in Bytes(0,1,127)) { b } }
+string	bytes-spread-low	new Listing { ...Bytes(0,1,127) }
+string	bytes-for-high	new Listing { for (b in Bytes(128,255)) { b } }
+string	bytes-spread-high	new Listing { ...Bytes(128,255) }
+string	bytes-for-boundaries	new Listing { for (b in Bytes(0,127,128,254,255)) { b } }
+string	bytes-spread-boundaries	new Listing { ...Bytes(0,127,128,254,255) }
+string	bytes-for-pairs	new Listing { for (i,b in Bytes(128,255)) { Pair(i,b) } }
+string	bytes-for-typed-int	new Listing { for (b: Int in Bytes(128,255)) { b } }
+string	bytes-for-typed-uint8	new Listing { for (b: UInt8 in Bytes(128,255)) { b } }
+string	bytes-for-typed-wrong	new Listing { for (b: String in Bytes(128,255)) { b } }
+string	bytes-spread-dynamic	new Dynamic { ...Bytes(128,255) }.toList()
+string	bytes-for-dynamic	new Dynamic { for (b in Bytes(128,255)) { b } }.toList()
+string	bytes-spread-listing-typed	(new Listing<UInt8> { ...Bytes(128,255) }).toList()
+string	bytes-for-listing-typed	(new Listing<UInt8> { for (b in Bytes(128,255)) { b } }).toList()
+string	bytes-spread-mapping-empty	new Mapping { ...Bytes() }
+string	bytes-for-mapping-empty	new Mapping { for (b in Bytes()) { b } }

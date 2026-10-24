@@ -1,5 +1,31 @@
 # M2 language evidence
 
+### Stage62 collection conversions — independent Java authority
+
+The [Java checkpoint](stage62-java-checkpoint.json) seals 236 ordered public
+expression-string calls in each of two fresh JVM sessions: 158 successes and
+78 ordinary Pkl errors per session. The raw repeats match across 4,958 files
+per session. Inputs cover strict object materialization, selector-based maps,
+lazy object conversions, Dynamic length, Set addition, and Bytes for/spread
+iteration. They preserve forcing and callback order, inherited member behavior,
+and the distinction between missing properties and explicit Pkl null.
+
+The [fixture](../../tests/fixtures/m2-collection-conversions/README.md) records
+55 source copies with the pinned Java runtime and execution environment. Its
+21 producer channels include exception metadata; candidate string comparisons
+use seven common raw channels and the complete ordered process protocol.
+Typed export and wrapper identity comparisons are separate requirements.
+
+The [validation archive](stage62-java-validation.tar.gz) preserves five passing
+fixture/tooling and inventory checks, including seven Python regressions run
+normally and under `-O`, with 70 stable source copies. The
+[history archive](stage62-java-history.tar.gz) preserves authored captures
+01–03 separately from canonical capture 04. Both archives passed full member
+readback. The M2 implementation-link manifest check is deferred until the
+concurrent Rust implementation is frozen. This checkpoint claims zero candidate
+compatibility passes; Stage62 runtime, platform, and original-program validation
+remain in progress.
+
 ### Stage61 IntSeq values — implementation and local comparisons
 
 The [implementation checkpoint](stage61-implementation-checkpoint.json) adds
@@ -39,7 +65,8 @@ per runtime; offline verification is not an additional guest execution.
 The selected and full gates remain failed despite stable sources, artifacts,
 oracle, and workspace. The closeout archive retains each nonpass's raw channels
 and first failure, including missing Bytes iteration, Dynamic.length,
-Mapping.toMap, hashCode-program collection methods, and renderer dependencies.
+List.toMap in the mapping-spread program, hashCode-program collection methods,
+and renderer dependencies.
 Binary programs still fail at `module.toMap()` before encoding.
 
 All five required checks pass locally with Rust 1.98.1: 953 passing workspace

@@ -1,0 +1,18 @@
+{
+  "archive_sha256": "e2e7db0435308cd2b3ff0656e0ba799e621535054a67c45ef0fd08594b00d8f6",
+  "captures": {
+    "capture-04": "stage62-collection-conversions-oracle-04"
+  },
+  "fileset_sha256": "11d43c85f2885e08c436f14e067e09fbdec4203cf684c11071ca4a5dc57a8a05",
+  "members": 9980,
+  "oracle_input_sha256": {
+    "CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+    "audit.json": "33115e3c3375c0329b0b8e3edc2d5d98ae3d02dddbffedc5eb7442702c67e00d",
+    "cases.json": "a45146b0387754d879109cfed5dd280bf6aad215c9e4197e10644d432a444c3b",
+    "module.pkl": "a24a1e717919fd710c219f7c7e27e6c9baa93b575749c840d96a58ae0f886b4a",
+    "provenance.json": "fb2503714f9d10bceb35c0062fdc71d521ce879f41b7b5d3502e871c0000f7ed",
+    "queries.tsv": "39416e2d5adb7db5fe531289ff736a14f8926af3af8bf64fcbf9aad2ad3021cc",
+    "run.py": "fd61e2566ec29789d280114d5ca6613005880c10a32682ced64a16d3189f31ad"
+  },
+  "schema": 1
+}
