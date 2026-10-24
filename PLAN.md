@@ -1415,6 +1415,55 @@ Git 복원 근거를 제공했습니다. 당시의 pending 기록은 수정하�
 고정 소스를 보존합니다. 표준 모듈의 evaluator 간 공유 실행 상태는 후속 domain·
 heap 소유권 작업으로 이어가며, 이번 프레임 수정만으로 완료 처리하지 않습니다.
 
+구현 `f82060d`를 커밋·푸시했습니다. [로컬 체크포인트](reports/m2/stage55-implementation-checkpoint.json)의
+native·Node·Chromium 각 96회는 전체 바이트 일치 82회·Java 내부 오류 10회·API 예외
+4회입니다. 합계 288회 중 246회가 통과했으며 42회는 상태·stderr·전체 protocol 차이를
+유지합니다. 세 환경의 transformer·logger 파일 집합과 바이트 12,408개는 모두 일치했지만
+이 부분 일치를 전체 호출의 통과로 바꾸지 않았습니다. 첫 native 취득에서 발견한
+callback 실패 프레임 위치는 선언 root span과 실제 trace 호출자를 보존하도록 수정했고,
+수정 전·후 증거를 함께 보관했습니다.
+
+같은 후보의 기본 경고 회귀는 336회 중 306회 일치·Java 내부 오류 30회, 기본 trace는
+270회 중 174회 일치·Java 내부 오류 96회이며 새 불일치나 취득 실패는 없습니다.
+필수 Rust 검사 다섯 개와 Rust 895개·Python 220개·JS 34개 검사가 통과했고 ignored
+검사 1개를 유지합니다. Wasm 검사의 최초 디스크 부족 실패와 같은 입력의 성공한
+재시도를 분리했습니다. 공통 primitive는 각 환경 Java 일치 6,076개와 기존 regex 실패
+2개를 유지합니다. 독립 검토가 Rust 입력 163,100개의 원본 bytes와 실제 Git 객체를
+확인했고, [별도 소스 연결](reports/m2/stage55-source-binding.json)이 실제 구현 커밋에
+연결합니다. 이 기록은 로컬 검증이며 원격 CI 결과로 표기하지 않습니다.
+
+기존 Stage50·53 전체 취득은 디스크 부족으로 최종 report 없이 종료됐습니다. 보존된
+로그 접두어는 각각 3,640/3,664행과 4,191/4,416행이며 완료된 전체 결과나 현재 후보
+결과가 아닙니다. Stage52 원본 888개 취득은 완료됐고 해당 고정 후보에서 일치 521·
+불일치 208·미지원 158·oracle 오류 1입니다. 이 수치를 Stage55에 승계하거나 선택·
+원본·반복·환경별 결과를 합산해 M2 완료율로 계산하지 않습니다.
+
+후속 의무는 전체 예외/API 바이트, Java-only `evaluateTest` buffer의 후보 구현,
+package/service-provider 기본 변환, eager constructor의 Host callback, evaluator 간
+표준 모듈 실행 상태입니다. **M2의 아홉 영역과 전체 완료 gate는 계속 열려 있습니다.**
+
+### Stage 56 — 실제 Class 값과 상속 계층
+
+`f82060d`에서 별도 worktree를 만들고 공통 런타임은 `gpt-6-astra / xhigh`, 독립 Java
+기준과 검토는 `gpt-6.1-sol / high`로 배정했습니다. 원본 `classes/class1.pkl`,
+`classes/class4.pkl`, `api/any.pkl`, converter와 external 확장 오류 등에서 확인한
+공통 결손을 해결합니다. `Class` descriptor와 instance prototype을 구분하고 실제
+builtin/user superclass 연결을 `getClass`, Class 멤버 조회, 타입 검사와 renderer
+converter가 공유하게 합니다. 기존 선언·annotation의 부분 게시 상태를 중복 저장하지
+않으며 immutable Program에는 heap handle을 넣지 않습니다.
+
+명시적·암시적 Typed, module/amends, 동명 선언 identity, Class 타입 인자의 소거,
+Function0–5, converter의 조상·경로 우선순위, closed/external 규칙과 실패 뒤 재시도를
+고정 Java에서 관찰합니다. 외부 superclass 예외의 `moduleName.startsWith("pkl.")`와
+external 선언의 URI provenance는 서로 다른 upstream 검사로 보존합니다. code 소유
+클래스와 query release·GC·Host 재진입의 생존·해제도 실제 검증합니다.
+
+새 Java 기준은 독립적으로 봉인하고 원본 프로그램과 native·Node·브라우저 결과를
+비교합니다. 초기 Class 기반 연결만으로 전체 reflection, 값 연산, 표준 라이브러리,
+evaluator 간 공유 수명 또는 M2 종료 조건을 완료 처리하지 않습니다. 이후 로컬 빌드의
+디버그 심볼 크기를 줄일 경우 `CARGO_PROFILE_DEV_DEBUG=0`을 실행 조건으로 기록하며,
+debug assertion·heap 제한·성능 판정 조건을 바꾸지 않습니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

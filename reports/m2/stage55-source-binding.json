@@ -1,0 +1,171 @@
+{
+  "B_binding_methods": {
+    "independent-actual-B-blob-byte-read": 497,
+    "reused-exact-oid-prior-actual-byte-audit": 176861
+  },
+  "B_binding_rows": 177358,
+  "Java_checkpoint": {
+    "association_commit": "6cc264eff87ad4a4b4e025309800946e33631e1d",
+    "details": "java-A-verified.json",
+    "independent_actual_A_blob_reads": 21,
+    "original_binding_identity": {
+      "bytes": 6505,
+      "sha256": "66d0721c8a871964f8aa2e9a99c859b0ba59d00d459f99c1d1608cc9aee64206"
+    },
+    "source_count": 21
+  },
+  "all_match": true,
+  "archive_manifest_identity": {
+    "bytes": 3065,
+    "sha256": "0b8e2018d00797c16d4e62a58acb56f3beb3f05349280159b2876a947476ee1f"
+  },
+  "archive_report_identity": {
+    "bytes": 5898,
+    "sha256": "6ce23197a56bad364a52f97cfe5d08be33c73fbaa3d9eeca709e50a66e9e298c"
+  },
+  "bindings_jsonl": {
+    "bytes": 168787653,
+    "sha256": "040216fe775c22211ed0796dbc4904b2ba22f4f7e71f3f774ccc59c93f571db8"
+  },
+  "errors": [],
+  "evidence_archive": {
+    "bytes": 16127610,
+    "full_manifest_and_byte_reread_verified": true,
+    "path": "reports/m2/stage55-source-binding-evidence.tar.gz",
+    "payload_files": 22,
+    "safe_unique_regular_paths": true,
+    "sha256": "e21bab057300a1932c5ca4c4e27044b662272e0b81c9dd11e7b1bbbd8a9eff67"
+  },
+  "gitlink_trees": {
+    "external/pkl": {
+      "commit": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "tree": "130860af2b4a3130bed26ae3af0baf8e400bcf21"
+    },
+    "external/pkl-pantry": {
+      "commit": "904a68184e54da378b0a0e8a911a3fab3956f693",
+      "tree": "6ce53d80eb71df2722e400fa6b28ca7e81a994ff"
+    }
+  },
+  "gitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "groups": [
+    {
+      "binding_commit": "f82060d395d6c1cb16aef2b94a48a2d8f28440b1",
+      "count": 163100,
+      "field": null,
+      "group": "required-rust",
+      "original_catalog": "target/m2/stage55-rust-validation-01/sources.json",
+      "original_catalog_identity": {
+        "bytes": 92927615,
+        "sha256": "81349df248ddcc93a5387e662b32ff4fb68789cd9d597b398cc7de04c66a6184"
+      }
+    },
+    {
+      "binding_commit": "f82060d395d6c1cb16aef2b94a48a2d8f28440b1",
+      "count": 4503,
+      "field": "sources_before",
+      "group": "final-frame",
+      "original_catalog": "target/m2/stage55-frame-final-01/report.json",
+      "original_catalog_identity": {
+        "bytes": 7997592,
+        "sha256": "d39589eb4bc26f96a26899e04d0387b18766b20815333503c8c98c01901a60b5"
+      }
+    },
+    {
+      "binding_commit": "f82060d395d6c1cb16aef2b94a48a2d8f28440b1",
+      "count": 4553,
+      "field": null,
+      "group": "legacy-regression",
+      "original_catalog": "target/m2/stage55-legacy-regression-01/sources-before.json",
+      "original_catalog_identity": {
+        "bytes": 616024,
+        "sha256": "295f6756af42535267e5ac3947d0031fe7c3ab966d68a159c8d87415ba67669b"
+      }
+    },
+    {
+      "binding_commit": "f82060d395d6c1cb16aef2b94a48a2d8f28440b1",
+      "count": 242,
+      "field": null,
+      "group": "platform-and-native-release",
+      "original_catalog": "target/m2/stage55-platform-run-02/sources.json",
+      "original_catalog_identity": {
+        "bytes": 28827,
+        "sha256": "ed42df9c84787a66ee0d6106e216f0b12a6445215c77f397af52d9f019ffa785"
+      }
+    },
+    {
+      "binding_commit": "f82060d395d6c1cb16aef2b94a48a2d8f28440b1",
+      "count": 215,
+      "field": null,
+      "group": "m1-platform",
+      "original_catalog": "target/m2/stage55-platforms-02/sources.json",
+      "original_catalog_identity": {
+        "bytes": 24556,
+        "sha256": "c2cae1b52a394ca028143a308666fe9b072cb3cafc82c210dea1be54171fad06"
+      }
+    },
+    {
+      "binding_commit": "f82060d395d6c1cb16aef2b94a48a2d8f28440b1",
+      "count": 241,
+      "field": null,
+      "group": "native-debug-build-02",
+      "original_catalog": "target/m2/stage55-native-build-02/sources.json",
+      "original_catalog_identity": {
+        "bytes": 28732,
+        "sha256": "b4fe8c80c737ecd5890b98edddb88f53878614322e93f89a6da30c4b0aee1a60"
+      }
+    },
+    {
+      "binding_commit": "f82060d395d6c1cb16aef2b94a48a2d8f28440b1",
+      "count": 4504,
+      "field": null,
+      "group": "tooling-validation",
+      "original_catalog": "target/m2/stage55-tooling-validation-01/sources.json",
+      "original_catalog_identity": {
+        "bytes": 609834,
+        "sha256": "d0608518256e76dc72196ccc02e448acd3cc1c80f4ee51d3bb64819f96521b7b"
+      }
+    }
+  ],
+  "historical_scope": "Initial native dev01/build01 and earlier platform failures retain their original captured sources. This resolution binds only the seven explicitly listed catalogs to B. It does not assert that initial dev01 sources equal B. Original reports, pending-binding strings and failures remain unchanged.",
+  "implementation_commit": "f82060d395d6c1cb16aef2b94a48a2d8f28440b1",
+  "implementation_tree": "e2c7c8b4e34df5c832ce8b6226f26e40cab8e1be",
+  "independent_B_actual_blob_reads": {
+    ".": {
+      "actual_bytes_streamed": 10444240,
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unique_blobs": 165
+    }
+  },
+  "independent_verification": {
+    "B_rows_checked": 177358,
+    "Java_A_rows_checked": 21,
+    "blockers": [],
+    "bytes": 3328,
+    "file": "independent-verification.json",
+    "final_package_complete_manifest_reread_verified": true,
+    "prepublication_payload_unchanged": true,
+    "sha256": "d944fb979a223057353c1922fcd887d74bf48756c572253f7e11d466f46d9eb9"
+  },
+  "original_project_source_commit": "6cc264eff87ad4a4b4e025309800946e33631e1d",
+  "prior_actual_blob_byte_audit": {
+    "original_manifest_sha256": "81349df248ddcc93a5387e662b32ff4fb68789cd9d597b398cc7de04c66a6184",
+    "path": "target/m2/stage55-final-review-01/validation-audit.json",
+    "seal_identity": {
+      "bytes": 1743,
+      "sha256": "1dd803bfdda3403a5cac57740f15d14888c624aa9b13dd57cdce5bf8090cc4c7"
+    },
+    "seal_path": "target/m2/stage55-final-review-01/seal.json",
+    "sha256": "92f6bb75092ba214d66aadab9e70b41827f33331370cb7434342e0d1a02af664",
+    "unique_old_blob_objects_verified": 13414
+  },
+  "reconstruction": "Each row identifies an exact Git tree blob and SHA256. Reconstruct project inputs from implementation commit B and submodule inputs from its gitlinks, preserving row paths; Java checkpoint inputs use A. Git objects and the referenced existing source evidence are required. This archive does not duplicate full source payloads. Prior exact-OID byte verification is explicitly reused, rather than represented as newly re-read B bytes.",
+  "recorded_at": "2026-10-24T05:13:35.503450+00:00",
+  "required_rust_original_captured_files_rechecked": 63,
+  "schema": 1,
+  "scope": "Post-commit source provenance only. No compilation, tests, Java or candidate evaluations. No compatibility status changes.",
+  "validation_scope": "Final frame comparison remains strict failed: 246 whole-session passes and 42 preserved nonpasses across three targets. Java-only buffer supplement remains unexecuted by candidates. Required Rust evidence and its separate Wasm retry retain their original outcomes; this adds provenance only."
+}

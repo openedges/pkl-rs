@@ -238,8 +238,21 @@ The [method-deprecation contract](docs/m2-deprecation.md) records the pinned Jav
 logger matrix and a separate experiment with sequential evaluators in one JVM.
 Its independent fixture verifier checks raw UTF-8, UTF-16, frame, and callback
 observations. Java internal failures and API exceptions remain nonpasses;
-evidence integrity does not establish candidate compatibility. Final candidate
-comparison and the separate evaluator-lifetime obligations remain in progress.
+evidence integrity does not establish candidate compatibility. Recorded candidate
+comparisons retain Java internal-error nonpasses and the separate, unexecuted
+cross-evaluator lifetime obligations.
+
+The [frame-transformation contract](docs/m2-frame-transformers.md) compares
+complete original and replacement frames, nullable members, arbitrary UTF-16,
+public result/error payloads, and ordered callback protocol on native, N-API,
+and Chromium. `tools/frame_transformer_compare.py --verify-report` checks the
+captured evidence; `--verify-full` is the strict requested main matrix. It does
+not execute the Java-only test-buffer supplement or replace the whole M2 gate.
+The [Stage55 checkpoint](reports/m2/stage55-implementation-checkpoint.json)
+retains all 42 exception-related main nonpasses, the initial frame-location
+failure, and the recorded default trace/deprecation regressions. Required Rust
+checks combine four original passes with an unchanged-input Wasm retry after
+disk exhaustion; the initial failure remains part of the evidence.
 
 The [standard-module and guest-catch contract](docs/m2-stdlib-bootstrap.md)
 records Java-origin catch, ModuleInfo, and typed security-denial fixtures, native

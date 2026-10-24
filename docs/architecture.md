@@ -1263,6 +1263,31 @@ limit, then release old roots before indirect lookup. Intrinsic Function.apply
 uses its separate path. Retiring an executable site releases its retained graph;
 collector tests also cover cancellation, query release and final closure. See
 [the deprecation contract](m2-deprecation.md) for actual Java comparisons and the
-remaining cross-evaluator standard-library cache and frame-transformer obligations.
+remaining cross-evaluator standard-library cache obligations.
 This evaluator-local representation does not implement Java's static singleton
 standard-library execution lifetime.
+
+## Original frames and Host transformation
+
+Runtime sources retain authored URIs, including `pkl:` standard-library URIs.
+`FrameTransformer` selects the default display policy, builtin identity, or a
+Host continuation. A `LogFrame` owns UTF-16 text for its URI, nullable member,
+and source lines, with independent inclusive source coordinates. Replacement
+frames cross native, Wasm, and N-API through the same typed transport.
+
+The shared VM buffers a message, transforms its frame, then delivers the logger
+callback. Transformation remains observable with a noop logger. Distinct typed
+requests preserve token validation, reentry, cancellation, and pending roots.
+A deprecation site publishes its successful target only after delivery completes.
+
+Diagnostics compress raw frames before transformation and validate each returned
+frame before requesting the next callback. Cached language errors stay raw;
+the escaping invocation applies its current policy. Rendered UTF-16 diagnostics
+are retained with the error. Optional callback-origin metadata distinguishes
+logger, log-transformer, diagnostic-transformer, and diagnostic-renderer failures
+without constructing Java exception class names. Guest catch paths that omit
+frames do not invoke the transformer.
+
+See the [frame contract](m2-frame-transformers.md) for the actual comparisons and
+remaining exception/API, eager-constructor, package/service-provider, and
+cross-evaluator obligations.

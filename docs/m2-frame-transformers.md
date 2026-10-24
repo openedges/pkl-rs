@@ -52,15 +52,53 @@ the actual failure phase without manufacturing Java exception class names.
 Only metadata attached to an actual public call is admitted as provenance; all
 public frame and protocol channels remain raw byte comparisons.
 
-## Remaining obligations
+## Recorded checkpoint
 
-The first native acquisition retains failures in callback-exception propagation
-and diagnostic frame locations. Corrections require new captures; the original
-results must remain intact. Actual Node and browser comparisons, the default
-frame regressions, and the required repository checks are needed for checkpoint
-closeout.
+Implementation `f82060d395d6c1cb16aef2b94a48a2d8f28440b1` has a recorded
+[local checkpoint](../reports/m2/stage55-implementation-checkpoint.json).
+Native, N-API, and Chromium each executed 48 sessions twice: 82 whole-session
+raw matches, 10 Java internal-error observations, and 4 API-exception observations
+per target. The strict main comparison remains failed. All 288 sessions have
+matching transformer/logger filename sets and bytes across 12,408 channel
+comparisons. The 42 nonpassing sessions still differ in public status, stderr
+UTF-8/UTF-16, and ordered protocol channels.
+
+The first native capture preserves incorrect callback-failure frame locations.
+The correction uses the authored root declaration span and retains the actual
+trace caller. Both the original failure and corrected captures are included in
+the candidate evidence archive. No original result was rewritten.
+
+Default-policy regressions also ran on all three targets. Deprecation has
+306 matches and 30 Java internal-error observations across 336 sessions; trace
+has 174 matches and 96 Java internal-error observations across 270 sessions.
+Neither matrix introduced a new mismatch or acquisition failure. Their strict
+nonpasses remain recorded. Required Rust checks passed, including a separate
+unchanged-input Wasm retry after a recorded disk-space failure. The independent
+audit verified the exact captured inputs and actual Git-backed source bytes.
+
+The [post-commit binding](../reports/m2/stage55-source-binding.json) connects
+those original manifests to the actual implementation commit without modifying
+their historical provenance. The archives preserve exploratory failures,
+successful reruns, ignored tests, and the two existing shared-primitive regex gaps.
+
+For a new capture, supply separately recorded native, Wasm, and N-API builds:
+
+```sh
+python3 tools/frame_transformer_fixtures.py
+python3 tools/frame_transformer_compare.py --output target/m2/frame-new --native target/release/examples/frame_transformer_fixture_probe --wasm target/m2/platforms-new/wasm --napi target/m2/platforms-new/pkl_napi.node --record-only
+python3 tools/frame_transformer_compare.py --verify-report target/m2/frame-new
+python3 tools/frame_transformer_compare.py --verify-full target/m2/frame-new
+```
+
+`--verify-report` checks evidence integrity while retaining nonpasses.
+`--verify-full` requires the complete requested main matrix to match. The
+Java-only test-buffer supplement and whole-language M2 gate are separate.
+
+## Remaining obligations
 
 Package and service-provider default transformations, Host callbacks from eager
 synchronous constructors, complete exception/API parity, and cross-evaluator
 standard-library execution state remain explicit implementation obligations.
-The main fixture is not the entire language, API, or performance gate.
+Candidate `evaluateTest`/`TestResults.logs()` parity is unexecuted. The main
+fixture covers a bounded evaluator contract; the whole language, API, and
+performance gates remain open.
