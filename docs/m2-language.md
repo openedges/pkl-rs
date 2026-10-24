@@ -47,6 +47,16 @@ These are local macOS arm64 results. All nine M2 workstreams, full language and
 product API compatibility, other release platforms, and performance goals
 remain incomplete.
 
+Implementation commit `6f41ceda1708c5dcdce20faf7030233063bf08c1` is pushed.
+The [source binding](../reports/m2/stage65-source-binding.json) links 165,390
+recorded Git inputs and 69 copied inputs to that commit and the pinned references.
+Two historical planning/verification documents retain their original bytes and
+separate identities. All 280 frozen runtime/Cargo files match actual commit blob
+bytes. The archive also preserves the later publication and assembly receipts,
+including failed attempts. The binding's own terminal receipt and raw channels
+are published separately because they postdate its archive. This audit performs
+no builds or guest evaluations and leaves every compatibility gap unchanged.
+
 Stage 64 implements repeated amendment bodies, class-valued construction
 parents, empty-result identity, and `Listing.fold` forcing order. Its
 [implementation checkpoint](../reports/m2/stage64-implementation-checkpoint.json)

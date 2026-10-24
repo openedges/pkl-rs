@@ -49,6 +49,19 @@ These are local macOS arm64 results. All nine M2 workstreams, full language and
 product API compatibility, other release platforms, and performance goals
 remain incomplete.
 
+Implementation commit `6f41ceda1708c5dcdce20faf7030233063bf08c1` is pushed.
+The [source binding](stage65-source-binding.json) links 165,390 recorded Git
+inputs and 69 copied inputs to the implementation and pinned references; two
+historical documents retain their original bytes. All 280 runtime/Cargo freeze
+entries match actual commit blob contents. Its [evidence archive](stage65-source-binding-evidence.tar.gz)
+preserves 83 members, including the 73 later publication, review, and assembly
+receipt files and their three failed attempts. The binding's own
+[terminal process receipt](stage65-source-binding-process.json),
+[stdout](stage65-source-binding.stdout.bin), and
+[stderr](stage65-source-binding.stderr.bin) are separate post-archive records.
+No builds or guest evaluations run during source binding; the earlier
+compatibility and performance limits remain unchanged.
+
 ### Stage65 inferred construction — independent Java authority
 
 The [Java checkpoint](stage65-java-checkpoint.json) publishes three distinct
