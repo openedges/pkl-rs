@@ -1,0 +1,1137 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "boundary": "string",
+  "module_uri": "file:///stage64/amendment-construction.pkl",
+  "repetitions": 2,
+  "rows": [
+    {
+      "expression": "moduleRepeated.first",
+      "group": "body-chain",
+      "id": "module-first",
+      "mode": "string"
+    },
+    {
+      "expression": "moduleRepeated.second",
+      "group": "body-chain",
+      "id": "module-second",
+      "mode": "string"
+    },
+    {
+      "expression": "moduleRepeated",
+      "group": "body-chain",
+      "id": "module-render",
+      "mode": "string"
+    },
+    {
+      "expression": "moduleAmended.first",
+      "group": "body-chain",
+      "id": "module-chain-first",
+      "mode": "string"
+    },
+    {
+      "expression": "moduleAmended.second",
+      "group": "body-chain",
+      "id": "module-chain-second",
+      "mode": "string"
+    },
+    {
+      "expression": "moduleAmended.third",
+      "group": "body-chain",
+      "id": "module-chain-third",
+      "mode": "string"
+    },
+    {
+      "expression": "moduleAmended",
+      "group": "body-chain",
+      "id": "module-chain-render",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic { a = 1 } { b = 2 } { c = 3 }).a",
+      "group": "body-chain",
+      "id": "object-chain-a",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic { a = 1 } { b = 2 } { c = 3 }).b",
+      "group": "body-chain",
+      "id": "object-chain-b",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic { a = 1 } { b = 2 } { c = 3 }).c",
+      "group": "body-chain",
+      "id": "object-chain-c",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic { value = 1 } { value = 2 } { value = 3 }).value",
+      "group": "body-chain",
+      "id": "object-override-first",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic { inner = new Dynamic { a = 1 } } { inner { b = 2 } { c = 3 } }).inner",
+      "group": "body-chain",
+      "id": "object-nested-chain",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Box {} { value = 3 } { extra = 4 }).value",
+      "group": "body-chain",
+      "id": "typed-chain",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Owner {} { child { value = 3 } { extra = 4 } }).child",
+      "group": "body-chain",
+      "id": "typed-nested-inferred",
+      "mode": "string"
+    },
+    {
+      "expression": "(new OwnerAmended {}).child",
+      "group": "body-chain",
+      "id": "class-declared-child",
+      "mode": "string"
+    },
+    {
+      "expression": "(new OwnerAmended {}).child.value",
+      "group": "body-chain",
+      "id": "class-declared-value",
+      "mode": "string"
+    },
+    {
+      "expression": "(new OwnerAmended {}).child.extra",
+      "group": "body-chain",
+      "id": "class-declared-extra",
+      "mode": "string"
+    },
+    {
+      "expression": "((mapBase) { [\"k\"] { second = 2 } { third = 3 } })[\"k\"]",
+      "group": "body-chain",
+      "id": "mapping-entry-chain",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { new Dynamic { a = 1 } } { [0] { b = 2 } { c = 3 } })[0]",
+      "group": "body-chain",
+      "id": "listing-element-chain",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { new Dynamic { tag = \"x\" } } { [[ tag == \"x\" ]] { good = true } { also = true } })[0]",
+      "group": "body-chain",
+      "id": "predicate-chain",
+      "mode": "string"
+    },
+    {
+      "expression": "new Dynamic { x = 1 } { y = 2 }",
+      "group": "body-chain",
+      "id": "module-decl-syntax-repeated",
+      "mode": "string"
+    },
+    {
+      "expression": "new Dynamic { x = 1 } {} { y = 2 }",
+      "group": "body-chain",
+      "id": "module-decl-empty-middle",
+      "mode": "string"
+    },
+    {
+      "expression": "(Dynamic) {}",
+      "group": "class-parent",
+      "id": "dynamic-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(Dynamic) { value = 7 }",
+      "group": "class-parent",
+      "id": "dynamic-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(Dynamic) { 7 }",
+      "group": "class-parent",
+      "id": "dynamic-element",
+      "mode": "string"
+    },
+    {
+      "expression": "(Dynamic) { [\"k\"] = 7 }",
+      "group": "class-parent",
+      "id": "dynamic-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "(Dynamic) { for (x in List()) { x } }",
+      "group": "class-parent",
+      "id": "dynamic-generator-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(Dynamic) { for (x in List(1)) { value = x } }",
+      "group": "class-parent",
+      "id": "dynamic-generator-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(Listing) {}",
+      "group": "class-parent",
+      "id": "listing-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(Listing) { value = 7 }",
+      "group": "class-parent",
+      "id": "listing-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(Listing) { 7 }",
+      "group": "class-parent",
+      "id": "listing-element",
+      "mode": "string"
+    },
+    {
+      "expression": "(Listing) { [\"k\"] = 7 }",
+      "group": "class-parent",
+      "id": "listing-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "(Listing) { for (x in List()) { x } }",
+      "group": "class-parent",
+      "id": "listing-generator-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(Listing) { for (x in List(1)) { value = x } }",
+      "group": "class-parent",
+      "id": "listing-generator-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(Mapping) {}",
+      "group": "class-parent",
+      "id": "mapping-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(Mapping) { value = 7 }",
+      "group": "class-parent",
+      "id": "mapping-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(Mapping) { 7 }",
+      "group": "class-parent",
+      "id": "mapping-element",
+      "mode": "string"
+    },
+    {
+      "expression": "(Mapping) { [\"k\"] = 7 }",
+      "group": "class-parent",
+      "id": "mapping-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "(Mapping) { for (x in List()) { [x] = x } }",
+      "group": "class-parent",
+      "id": "mapping-generator-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(Mapping) { for (x in List(1)) { value = x } }",
+      "group": "class-parent",
+      "id": "mapping-generator-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(Box) {}",
+      "group": "class-parent",
+      "id": "user-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(Box) { value = 7 }",
+      "group": "class-parent",
+      "id": "user-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(Box) { 7 }",
+      "group": "class-parent",
+      "id": "user-element",
+      "mode": "string"
+    },
+    {
+      "expression": "(Box) { [\"k\"] = 7 }",
+      "group": "class-parent",
+      "id": "user-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "(Box) { when (false) { value = 7 } }",
+      "group": "class-parent",
+      "id": "user-generator-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(Box) { for (x in List(1)) { value = x } }",
+      "group": "class-parent",
+      "id": "user-generator-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(AbstractBox) {}",
+      "group": "class-parent",
+      "id": "abstract-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(AbstractBox) { value = 7 }",
+      "group": "class-parent",
+      "id": "abstract-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(AbstractBox) { 7 }",
+      "group": "class-parent",
+      "id": "abstract-element",
+      "mode": "string"
+    },
+    {
+      "expression": "(AbstractBox) { [\"k\"] = 7 }",
+      "group": "class-parent",
+      "id": "abstract-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "(AbstractBox) { when (false) { value = 7 } }",
+      "group": "class-parent",
+      "id": "abstract-generator-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(AbstractBox) { for (x in List(1)) { value = x } }",
+      "group": "class-parent",
+      "id": "abstract-generator-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(Int) {}",
+      "group": "class-parent",
+      "id": "external-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(Int) { value = 7 }",
+      "group": "class-parent",
+      "id": "external-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(Int) { 7 }",
+      "group": "class-parent",
+      "id": "external-element",
+      "mode": "string"
+    },
+    {
+      "expression": "(Int) { [\"k\"] = 7 }",
+      "group": "class-parent",
+      "id": "external-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "(Int) { when (false) { value = 7 } }",
+      "group": "class-parent",
+      "id": "external-generator-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(Int) { for (x in List(1)) { value = x } }",
+      "group": "class-parent",
+      "id": "external-generator-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(BoxAlias) {}",
+      "group": "class-parent",
+      "id": "alias-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(BoxAlias) { value = 7 }",
+      "group": "class-parent",
+      "id": "alias-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(BoxAlias) { 7 }",
+      "group": "class-parent",
+      "id": "alias-element",
+      "mode": "string"
+    },
+    {
+      "expression": "(BoxAlias) { [\"k\"] = 7 }",
+      "group": "class-parent",
+      "id": "alias-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "(BoxAlias) { when (false) { value = 7 } }",
+      "group": "class-parent",
+      "id": "alias-generator-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(BoxAlias) { for (x in List(1)) { value = x } }",
+      "group": "class-parent",
+      "id": "alias-generator-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(NumberListing) {}",
+      "group": "class-parent",
+      "id": "listing-alias-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(NumberListing) { value = 7 }",
+      "group": "class-parent",
+      "id": "listing-alias-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(NumberListing) { 7 }",
+      "group": "class-parent",
+      "id": "listing-alias-element",
+      "mode": "string"
+    },
+    {
+      "expression": "(NumberListing) { [\"k\"] = 7 }",
+      "group": "class-parent",
+      "id": "listing-alias-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "(NumberListing) { when (false) { value = 7 } }",
+      "group": "class-parent",
+      "id": "listing-alias-generator-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(NumberListing) { for (x in List(1)) { value = x } }",
+      "group": "class-parent",
+      "id": "listing-alias-generator-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(StringIntMapping) {}",
+      "group": "class-parent",
+      "id": "mapping-alias-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(StringIntMapping) { value = 7 }",
+      "group": "class-parent",
+      "id": "mapping-alias-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(StringIntMapping) { 7 }",
+      "group": "class-parent",
+      "id": "mapping-alias-element",
+      "mode": "string"
+    },
+    {
+      "expression": "(StringIntMapping) { [\"k\"] = 7 }",
+      "group": "class-parent",
+      "id": "mapping-alias-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "(StringIntMapping) { when (false) { value = 7 } }",
+      "group": "class-parent",
+      "id": "mapping-alias-generator-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(StringIntMapping) { for (x in List(1)) { value = x } }",
+      "group": "class-parent",
+      "id": "mapping-alias-generator-property",
+      "mode": "string"
+    },
+    {
+      "expression": "(moduleBase) {}",
+      "group": "zero-generator",
+      "id": "dynamic-empty-rhs",
+      "mode": "string"
+    },
+    {
+      "expression": "(moduleBase) { when (false) { ignored = throw(\"no\") } }",
+      "group": "zero-generator",
+      "id": "dynamic-when-false",
+      "mode": "string"
+    },
+    {
+      "expression": "(moduleBase) { for (x in List()) { [x] = x } }",
+      "group": "zero-generator",
+      "id": "dynamic-empty-for",
+      "mode": "string"
+    },
+    {
+      "expression": "(moduleBase) { ...new Dynamic {} }",
+      "group": "zero-generator",
+      "id": "dynamic-empty-spread",
+      "mode": "string"
+    },
+    {
+      "expression": "((moduleBase) { for (x in List()) { [x] = x } }).first",
+      "group": "zero-generator",
+      "id": "dynamic-empty-for-read",
+      "mode": "string"
+    },
+    {
+      "expression": "(listBase) {}",
+      "group": "zero-generator",
+      "id": "listing-empty-rhs",
+      "mode": "string"
+    },
+    {
+      "expression": "(listBase) { for (x in List()) { x } }",
+      "group": "zero-generator",
+      "id": "listing-empty-for",
+      "mode": "string"
+    },
+    {
+      "expression": "((listBase) { for (x in List()) { x } }).length",
+      "group": "zero-generator",
+      "id": "listing-empty-for-length",
+      "mode": "string"
+    },
+    {
+      "expression": "((listBase) { when(false) { 9 } }).length",
+      "group": "zero-generator",
+      "id": "listing-empty-when",
+      "mode": "string"
+    },
+    {
+      "expression": "(mapBase) {}",
+      "group": "zero-generator",
+      "id": "mapping-empty-rhs",
+      "mode": "string"
+    },
+    {
+      "expression": "(mapBase) { for (x in List()) { [x] = x } }",
+      "group": "zero-generator",
+      "id": "mapping-empty-for",
+      "mode": "string"
+    },
+    {
+      "expression": "(boxBase) {}",
+      "group": "zero-generator",
+      "id": "typed-empty-rhs",
+      "mode": "string"
+    },
+    {
+      "expression": "(boxBase) { when (false) { value = 7 } }",
+      "group": "zero-generator",
+      "id": "typed-empty-for",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic { lazy = throw(\"later\") } { for (x in List()) { [x] = x } }).length()",
+      "group": "zero-generator",
+      "id": "zero-generator-after-lazy",
+      "mode": "string"
+    },
+    {
+      "expression": "(moduleBase) { for (x in List(throw(\"source\"))) { [x] = x } }",
+      "group": "zero-generator",
+      "id": "for-source-first-error",
+      "mode": "string"
+    },
+    {
+      "expression": "(moduleBase) { for (x in List(1)) { [throw(\"key\")] = x } }",
+      "group": "zero-generator",
+      "id": "for-body-first-error",
+      "mode": "string"
+    },
+    {
+      "expression": "(moduleBase) { when (throw(\"condition\")) { a = 1 } }",
+      "group": "zero-generator",
+      "id": "when-condition-first-error",
+      "mode": "string"
+    },
+    {
+      "expression": "(moduleBase) { when (false) { [throw(\"skipped\")] = 1 } }",
+      "group": "zero-generator",
+      "id": "when-false-skip-error",
+      "mode": "string"
+    },
+    {
+      "expression": "((one) { x -> amended = x + 1 }).apply(2)",
+      "group": "function",
+      "id": "one-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "((one) { x -> amended = x + 1 }).apply(2).amended",
+      "group": "function",
+      "id": "one-amend-read",
+      "mode": "string"
+    },
+    {
+      "expression": "((one) { x -> first = x + 1 } { x -> second = x + 2 }).apply(2)",
+      "group": "function",
+      "id": "one-amend-repeated",
+      "mode": "string"
+    },
+    {
+      "expression": "((one) { amended = 7 }).apply(2)",
+      "group": "function",
+      "id": "one-amend-zero-parameter",
+      "mode": "string"
+    },
+    {
+      "expression": "((one) { x, y -> amended = x + y }).apply(2)",
+      "group": "function",
+      "id": "one-amend-wrong-two",
+      "mode": "string"
+    },
+    {
+      "expression": "((one) { x: Int -> amended = x + 1 }).apply(2)",
+      "group": "function",
+      "id": "one-amend-typed-good",
+      "mode": "string"
+    },
+    {
+      "expression": "((one) { x: String -> amended = x }).apply(2)",
+      "group": "function",
+      "id": "one-amend-typed-bad",
+      "mode": "string"
+    },
+    {
+      "expression": "((two) { x, y -> amended = x * y }).apply(2, 3)",
+      "group": "function",
+      "id": "two-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "((two) { x -> amended = x }).apply(2, 3)",
+      "group": "function",
+      "id": "two-amend-wrong-one",
+      "mode": "string"
+    },
+    {
+      "expression": "((two) { x, y: Int -> amended = x + y }).apply(2, 3)",
+      "group": "function",
+      "id": "two-amend-typed-second",
+      "mode": "string"
+    },
+    {
+      "expression": "((curried) { x -> first = x }).apply(2).apply(3)",
+      "group": "function",
+      "id": "curried-first",
+      "mode": "string"
+    },
+    {
+      "expression": "(((curried).apply(2)) { y -> second = y }).apply(3)",
+      "group": "function",
+      "id": "curried-second",
+      "mode": "string"
+    },
+    {
+      "expression": "((((curried) { x -> first = x }).apply(2)) { y -> second = y }).apply(3)",
+      "group": "function",
+      "id": "curried-both",
+      "mode": "string"
+    },
+    {
+      "expression": "(one) { x -> amended = throw(\"callback\") }.apply(2).amended",
+      "group": "function",
+      "id": "function-property-error",
+      "mode": "string"
+    },
+    {
+      "expression": "((one) { x, y -> amended = throw(\"body\") }).apply(2)",
+      "group": "function",
+      "id": "function-body-arity-first",
+      "mode": "string"
+    },
+    {
+      "expression": "(nullBase) {}",
+      "group": "null-inferred-generic",
+      "id": "null-default-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(nullBase) { second = 2 }",
+      "group": "null-inferred-generic",
+      "id": "null-default-property",
+      "mode": "string"
+    },
+    {
+      "expression": "((nullBase) { second = 2 }).first",
+      "group": "null-inferred-generic",
+      "id": "null-default-property-read",
+      "mode": "string"
+    },
+    {
+      "expression": "(null) {}",
+      "group": "null-inferred-generic",
+      "id": "null-bare-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(null) { value = 1 }",
+      "group": "null-inferred-generic",
+      "id": "null-bare-property",
+      "mode": "string"
+    },
+    {
+      "expression": "new Owner { child { value = 5 } }.child.value",
+      "group": "null-inferred-generic",
+      "id": "new-inferred-owner",
+      "mode": "string"
+    },
+    {
+      "expression": "new Owner { child { nested { left = 5 } } }.child.nested.left",
+      "group": "null-inferred-generic",
+      "id": "new-inferred-nested",
+      "mode": "string"
+    },
+    {
+      "expression": "new BoxAlias { value = 5 }",
+      "group": "null-inferred-generic",
+      "id": "new-alias-user",
+      "mode": "string"
+    },
+    {
+      "expression": "new NumberListing { 1; 2 }",
+      "group": "null-inferred-generic",
+      "id": "new-alias-listing",
+      "mode": "string"
+    },
+    {
+      "expression": "new StringIntMapping { [\"x\"] = 1 }",
+      "group": "null-inferred-generic",
+      "id": "new-alias-mapping",
+      "mode": "string"
+    },
+    {
+      "expression": "(BoxAlias) { value = 5 }",
+      "group": "null-inferred-generic",
+      "id": "direct-alias-user",
+      "mode": "string"
+    },
+    {
+      "expression": "(NumberListing) { 1; 2 }",
+      "group": "null-inferred-generic",
+      "id": "direct-alias-listing",
+      "mode": "string"
+    },
+    {
+      "expression": "(StringIntMapping) { [\"x\"] = 1 }",
+      "group": "null-inferred-generic",
+      "id": "direct-alias-mapping",
+      "mode": "string"
+    },
+    {
+      "expression": "new Listing<Int> { 1; 2 }",
+      "group": "null-inferred-generic",
+      "id": "generic-listing-good",
+      "mode": "string"
+    },
+    {
+      "expression": "new Listing<Int> { \"wrong\" }",
+      "group": "null-inferred-generic",
+      "id": "generic-listing-bad",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping<String, Int> { [\"x\"] = 1 }",
+      "group": "null-inferred-generic",
+      "id": "generic-mapping-good",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping<String, Int> { [1] = 2 }",
+      "group": "null-inferred-generic",
+      "id": "generic-mapping-bad-key",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping<String, Int> { [\"x\"] = \"wrong\" }",
+      "group": "null-inferred-generic",
+      "id": "generic-mapping-bad-value",
+      "mode": "string"
+    },
+    {
+      "expression": "(Null(new Dynamic { value = throw(\"default\") })) { value = 2 }.value",
+      "group": "null-inferred-generic",
+      "id": "parent-null-then-error",
+      "mode": "string"
+    },
+    {
+      "expression": "(throw(\"parent\")) { value = throw(\"body\") }",
+      "group": "null-inferred-generic",
+      "id": "parent-error-before-body",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing {}).fold(7, (acc, it) -> acc + it)",
+      "group": "listing-fold",
+      "id": "fold-empty-value",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing {}).fold(7, 1)",
+      "group": "listing-fold",
+      "id": "fold-empty-bad-callback",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing {}).fold(7, () -> 1)",
+      "group": "listing-fold",
+      "id": "fold-empty-arity-zero",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing {}).fold(7, (x) -> x)",
+      "group": "listing-fold",
+      "id": "fold-empty-arity-one",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { 1; 2 }).fold(0, (acc, it) -> acc + it)",
+      "group": "listing-fold",
+      "id": "fold-two-sum",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { 1; 2 }).fold(List(), (acc, it) -> acc.add(it))",
+      "group": "listing-fold",
+      "id": "fold-two-list",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { 1; 2 }).fold(0, (acc, it) -> throw(\"callback-first\"))",
+      "group": "listing-fold",
+      "id": "fold-first-callback-error",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { 1; throw(\"later-value\") }).fold(0, (acc, it) -> throw(\"callback-first\"))",
+      "group": "listing-fold",
+      "id": "fold-later-value-before-callback",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { throw(\"first-value\"); throw(\"later-value\") }).fold(0, (acc, it) -> throw(\"callback\"))",
+      "group": "listing-fold",
+      "id": "fold-first-value-before-later",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { 1; 2; throw(\"third-value\") }).fold(0, (acc, it) -> throw(\"callback-first\"))",
+      "group": "listing-fold",
+      "id": "fold-later-vs-first-callback",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { trace(\"first-value\"); trace(\"later-value\") }).fold(0, (acc, it) -> throw(\"callback-first\"))",
+      "group": "listing-fold",
+      "id": "fold-trace-before-callback",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { new Listing { 1; 2 }; new Listing { 3 } }).fold(List(), (acc, inner) -> inner.fold(acc, (xs, it) -> xs.add(it)))",
+      "group": "listing-fold",
+      "id": "fold-nested",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing<Int> { 1; 2 }).fold(0, (acc: Int, it: Int) -> acc + it)",
+      "group": "listing-fold",
+      "id": "fold-typed-good",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing<Int> { 1; 2 }).fold(0, (acc: String, it) -> acc)",
+      "group": "listing-fold",
+      "id": "fold-typed-bad",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { for (x in List()) { x } }).fold(9, (acc, it) -> throw(\"callback\"))",
+      "group": "listing-fold",
+      "id": "fold-generator-zero",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { new Listing { 1 } } { [0] { 2 } }).fold(List(), (acc, inner) -> inner.fold(acc, (xs, it) -> xs.add(it)))",
+      "group": "listing-fold",
+      "id": "fold-amended-chain",
+      "mode": "string"
+    },
+    {
+      "expression": "new Dynamic { value = 1 } {",
+      "group": "diagnostic",
+      "id": "syntax-missing-body",
+      "mode": "string"
+    },
+    {
+      "expression": "((one) { x -> -> value = x }).apply(1)",
+      "group": "diagnostic",
+      "id": "syntax-double-arrow",
+      "mode": "string"
+    },
+    {
+      "expression": "new Dynamic { value: Int { 1 } }",
+      "group": "diagnostic",
+      "id": "syntax-property-annotation-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping { [] { value = 1 } }",
+      "group": "diagnostic",
+      "id": "syntax-entry-missing-key",
+      "mode": "string"
+    },
+    {
+      "expression": "new Listing { [[ true ] { 1 } }",
+      "group": "diagnostic",
+      "id": "syntax-predicate-unclosed",
+      "mode": "string"
+    },
+    {
+      "expression": "(1) { value = 2 }",
+      "group": "diagnostic",
+      "id": "invalid-primitive-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "(\"text\") { value = 2 }",
+      "group": "diagnostic",
+      "id": "invalid-string-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "(List(1)) { 2 }",
+      "group": "diagnostic",
+      "id": "invalid-list-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "(Map(\"k\",1)) { [\"x\"] = 2 }",
+      "group": "diagnostic",
+      "id": "invalid-map-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "((Dynamic) { when (true) { value = 7 } }).value",
+      "group": "generator-positive",
+      "id": "dynamic-class-when-property",
+      "mode": "string"
+    },
+    {
+      "expression": "((Dynamic) { for (x in List(1, 2)) { [x] = x } }).toMap()",
+      "group": "generator-positive",
+      "id": "dynamic-class-for-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "((Listing) { for (x in List(1, 2)) { x } }).toList()",
+      "group": "generator-positive",
+      "id": "listing-class-for-element",
+      "mode": "string"
+    },
+    {
+      "expression": "((Mapping) { for (x in List(\"a\", \"b\")) { [x] = x } }).toMap()",
+      "group": "generator-positive",
+      "id": "mapping-class-for-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "((Box) { when (true) { value = 7 } }).value",
+      "group": "generator-positive",
+      "id": "user-class-when-property",
+      "mode": "string"
+    },
+    {
+      "expression": "((moduleBase) { when (true) { value = 7 } }).value",
+      "group": "generator-positive",
+      "id": "dynamic-object-when-property",
+      "mode": "string"
+    },
+    {
+      "expression": "((listBase) { for (x in List(3)) { x } }).length",
+      "group": "generator-positive",
+      "id": "listing-object-for-element",
+      "mode": "string"
+    },
+    {
+      "expression": "((mapBase) { for (x in List(\"j\")) { [x] = 9 } })[\"j\"]",
+      "group": "generator-positive",
+      "id": "mapping-object-for-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "((zero) { added = 8 }).apply().added",
+      "group": "function-owner-default",
+      "id": "zero-function-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "((zero) { x -> added = x }).apply()",
+      "group": "function-owner-default",
+      "id": "zero-function-bad-parameter",
+      "mode": "string"
+    },
+    {
+      "expression": "((primitiveResult) { x -> added = 8 }).apply(3)",
+      "group": "function-owner-default",
+      "id": "primitive-function-result",
+      "mode": "string"
+    },
+    {
+      "expression": "((one) { x -> added = this.original + x }).apply(2).added",
+      "group": "function-owner-default",
+      "id": "function-this-original",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dependent {}).greeting",
+      "group": "function-owner-default",
+      "id": "dependent-base",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dependent { name = \"child\" }).greeting",
+      "group": "function-owner-default",
+      "id": "dependent-override",
+      "mode": "string"
+    },
+    {
+      "expression": "((new Dependent {}) { name = \"child\" }).greeting",
+      "group": "function-owner-default",
+      "id": "dependent-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic { fixed item = new Dynamic { x = 1 } }) { item { y = 2 } }",
+      "group": "modifier-error-order",
+      "id": "fixed-member-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic { const item = new Dynamic { x = 1 } }) { item { y = 2 } }",
+      "group": "modifier-error-order",
+      "id": "const-member-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic { local item = new Dynamic { x = 1 } }) { item { y = 2 } }",
+      "group": "modifier-error-order",
+      "id": "local-member-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic { hidden item = new Dynamic { x = 1 } }) { item { y = 2 } }",
+      "group": "modifier-error-order",
+      "id": "hidden-member-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "(throw(\"parent-first\")) { for (x in List(throw(\"source\"))) { [x] = throw(\"body\") } }",
+      "group": "modifier-error-order",
+      "id": "parent-before-generator-source",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic {}) { for (x in List(throw(\"source\"))) { [throw(\"key\")] = throw(\"body\") } }",
+      "group": "modifier-error-order",
+      "id": "generator-source-before-key",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic {}) { for (x in List(1)) { [throw(\"key\")] = throw(\"body\") } }",
+      "group": "modifier-error-order",
+      "id": "generator-key-before-body",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic {}) { when (throw(\"condition\")) { [throw(\"key\")] = throw(\"body\") } }",
+      "group": "modifier-error-order",
+      "id": "when-condition-before-key",
+      "mode": "string"
+    },
+    {
+      "expression": "((new Dynamic { lazy = throw(\"later\") }) { when (false) { [1] = 2 } }).lazy",
+      "group": "modifier-error-order",
+      "id": "zero-after-lazy-access",
+      "mode": "string"
+    },
+    {
+      "expression": "(boxBase) { for (x in List()) { [x] = x } }",
+      "group": "inherited-empty-fold",
+      "id": "typed-empty-for-entry",
+      "mode": "string"
+    },
+    {
+      "expression": "(boxBase) { when (false) { value = throw(\"unused\") } }",
+      "group": "inherited-empty-fold",
+      "id": "typed-false-when",
+      "mode": "string"
+    },
+    {
+      "expression": "(boxBase) { ...new Dynamic {} }",
+      "group": "inherited-empty-fold",
+      "id": "typed-empty-spread",
+      "mode": "string"
+    },
+    {
+      "expression": "((nestedBase) { added = 2 }) { for (x in List()) { [x] = x } }",
+      "group": "inherited-empty-fold",
+      "id": "inherited-empty-for",
+      "mode": "string"
+    },
+    {
+      "expression": "(((nestedBase) { added = 2 }) { ...new Dynamic {} }).nested.value",
+      "group": "inherited-empty-fold",
+      "id": "inherited-empty-spread-read",
+      "mode": "string"
+    },
+    {
+      "expression": "(((nestedBase) { added = 2 }) { when (false) { [\"skip\"] = 9 } }).added",
+      "group": "inherited-empty-fold",
+      "id": "inherited-false-when-read",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { throw(\"parent-first\"); 2 } { [0] = 1 }).fold(0, (acc, it) -> throw(\"callback\"))",
+      "group": "inherited-empty-fold",
+      "id": "fold-overridden-parent-throw",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { 1; throw(\"inherited-second\") } { [0] = throw(\"child-first\") }).fold(0, (acc, it) -> throw(\"callback\"))",
+      "group": "inherited-empty-fold",
+      "id": "fold-child-before-inherited",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { 1; throw(\"inherited-second\") } { [0] = 2 }).fold(0, (acc, it) -> throw(\"callback\"))",
+      "group": "inherited-empty-fold",
+      "id": "fold-inherited-before-callback",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { throw(\"parent-first\"); 2 } { [0] = 1 }).fold(0, (acc, it) -> acc + it)",
+      "group": "inherited-empty-fold",
+      "id": "fold-overridden-lazy-success",
+      "mode": "string"
+    }
+  ],
+  "schema": 1
+}

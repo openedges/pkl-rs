@@ -29,12 +29,13 @@ export function validateProfileCatalog(catalog) {
     'collection_conversion_controls_fixtures', 'collection_lookups_fixtures',
     'collection_default_contracts_fixtures', 'collection_dynamic_render_fixtures',
     'collection_property_names_fixtures', 'collection_addition_fixtures',
-    'set_endpoints_fixtures']);
+    'set_endpoints_fixtures', 'amendment_construction_fixtures']);
   const uris = new Set(), fixtures = new Set();
   for (const profile of catalog.profiles) {
     if (!profile || typeof profile.module_uri !== 'string'
         || !(/^file:\/\/\/stage62\/[a-z-]+\.pkl$/.test(profile.module_uri)
-          || ['file:///stage63/collection-addition.pkl', 'file:///stage63/set-endpoints.pkl']
+          || ['file:///stage63/collection-addition.pkl', 'file:///stage63/set-endpoints.pkl',
+              'file:///stage64/amendment-construction.pkl']
             .includes(profile.module_uri))
         || uris.has(profile.module_uri) || fixtures.has(profile.fixture)
         || !/^tests\/fixtures\/m2-[a-z-]+$/.test(profile.fixture)
@@ -53,7 +54,8 @@ export function validateProfileCatalog(catalog) {
     const requiredTools = [profile.validator_script,
       `tools/${profile.validator_module.replace(/_fixtures$/, '_oracle')}.py`,
       `tools/tests/test_${profile.validator_module}.py`, 'tools/java/CollectionConversionsOracle.java'];
-    if (['collection_addition_fixtures', 'set_endpoints_fixtures'].includes(profile.validator_module))
+    if (['collection_addition_fixtures', 'set_endpoints_fixtures',
+         'amendment_construction_fixtures'].includes(profile.validator_module))
       requiredTools.push('tools/collection_conversions_fixtures.py',
         'tools/collection_conversions_oracle.py');
     if (new Set(profile.tool_sources).size !== requiredTools.length

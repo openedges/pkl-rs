@@ -242,6 +242,22 @@ The full gate must fail while required language implementations, mappings,
 adapters, or passing executions are missing. It cannot be replaced with the
 selected-case gate.
 
+Stage 64's independent amendment authorities have separate offline verifiers:
+
+```sh
+python3 tools/amendment_construction_fixtures.py
+python3 tools/amendment_declarations_fixtures.py
+python3 -m unittest tools.tests.test_amendment_construction_fixtures tools.tests.test_amendment_declarations_fixtures
+```
+
+The construction fixture contains 188 ordered public string queries and is
+registered in the shared comparison catalog. The declaration fixture contains
+eleven distinct modules and remains outside that single-module profile. Direct
+VM identity, Host logs, and the additional local-amendment/EOF controls in the
+[Java checkpoint](reports/m2/stage64-java-checkpoint.json) retain their own
+observation boundaries. Fixture verification establishes the Java authority;
+candidate process, native, Node, browser, and full M2 checks remain required.
+
 The [DataSize contract](docs/m2-data-size.md) defines two complete ordered string
 sessions per target against the independent split Java fixture. Verify native
 capture integrity with `tools/data_size_compare.py --verify-report`, strict

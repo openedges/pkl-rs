@@ -1,0 +1,580 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "baseline_head": "b7af226b62da218a0d42fdf80ec60270eae998e2",
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical_declarations": {
+    "archive": {
+      "bytes": 180514,
+      "sha256": "7eb633d508b3a28db95c29789f92a84cfb273fe811312d93b3696ce72bb6ffa3"
+    },
+    "archive_members": 632,
+    "archive_prefix": "capture-01",
+    "fileset_sha256": "0d2ce3e30ee85e97077dd062fdeee5b5031e14055b46a7efd0ee7ea029734cb4",
+    "fixture": "tests/fixtures/m2-amendment-declarations",
+    "module_uri": "file:///stage64/amendment-declarations.pkl",
+    "programs": 11,
+    "source_count": 74,
+    "statuses_per_program": {
+      "error": 8,
+      "success": 3
+    }
+  },
+  "canonical_string": {
+    "archive": {
+      "bytes": 326267,
+      "sha256": "77c4a0f285dacdbf56a6f47cc39e67fc164bd76457510a125d7396b3034e9214"
+    },
+    "archive_members": 7983,
+    "archive_prefix": "capture-01",
+    "fileset_sha256": "8d3d05eb597e98e3dee47afde497df054870dc59d054e8b6b1c36af14b762967",
+    "fixture": "tests/fixtures/m2-amendment-construction",
+    "module_uri": "file:///stage64/amendment-construction.pkl",
+    "rows": 188,
+    "source_count": 74,
+    "statuses_per_session": {
+      "error": 86,
+      "success": 102
+    }
+  },
+  "history": {
+    "corrected_analysis": {
+      "bytes": 4365,
+      "sha256": "1118e06df457627b24666462a6f9788e6eb6747357e3f9c682d6602a2e5116af"
+    },
+    "declaration_attempts": {
+      "declarations-01": {
+        "programs": 5,
+        "report": {
+          "bytes": 3309,
+          "sha256": "8ad5d531e5a323b246574bbe6ac1ac54a953046043d3ba6e2f921feb1bb7eba1"
+        },
+        "statuses": {
+          "error": 2,
+          "success": 3
+        }
+      },
+      "declarations-02": {
+        "programs": 5,
+        "report": {
+          "bytes": 3406,
+          "sha256": "bb2416f6574e58670ba879c15e27372c39e3d17a897e063b56df8d4129391dc7"
+        },
+        "statuses": {
+          "error": 4,
+          "success": 1
+        }
+      },
+      "declarations-03": {
+        "programs": 11,
+        "report": {
+          "bytes": 6795,
+          "sha256": "53b332bc3ced8d80befece37db58b91b9a027565d6f7646795cebe493d60605e"
+        },
+        "statuses": {
+          "error": 8,
+          "success": 3
+        }
+      }
+    },
+    "direct_identity": {
+      "identity-01": {
+        "complete": true,
+        "report": {
+          "bytes": 14676,
+          "sha256": "76f4b6b1dd0b2b11bd2de2ede46368eca00eab912b22b38faef53c00e8422e8e"
+        },
+        "role": "earlier direct VM identity",
+        "rows_before_failure_or_exit": 9
+      },
+      "identity-02": {
+        "complete": false,
+        "report": {
+          "bytes": 14688,
+          "sha256": "443d9a0935aadcbf73396611b7d8df26a00c328e82f8e846bd21d1241406f8a8"
+        },
+        "role": "historical failed Module-class proxy",
+        "rows_before_failure_or_exit": 12
+      },
+      "identity-03": {
+        "complete": true,
+        "report": {
+          "bytes": 14681,
+          "sha256": "b58477f0f95fc0d8bea9561a86aff0c7f0667d4be7a21c26f64c1df7d637d369"
+        },
+        "role": "final direct VM identity",
+        "rows_before_failure_or_exit": 12
+      }
+    },
+    "host_trace": {
+      "bytes": 12357,
+      "sha256": "9a8e74a71eef895a32921cec6daf4f04593abed7aa41558ebaa6b1517709fe19"
+    },
+    "string_attempts": {
+      "candidate-01": {
+        "module_uri": "file:///stage64/amendment-construction.pkl",
+        "pids": [
+          25845,
+          25847
+        ],
+        "provenance": {
+          "bytes": 28793,
+          "sha256": "7a74a0433714a12d426490710248d46a26a8999e012d005e52ad8bac7997c3c5"
+        },
+        "role": "authored exploration, not canonical",
+        "rows": 178,
+        "statuses": {
+          "error": 83,
+          "success": 95
+        }
+      },
+      "candidate-02": {
+        "module_uri": "file:///stage64/amendment-construction.pkl",
+        "pids": [
+          26347,
+          26352
+        ],
+        "provenance": {
+          "bytes": 28807,
+          "sha256": "1986be937ade95dd4ee6ecba278767aefadb6fdb8f07ca0e748e3c7a3c7b34f1"
+        },
+        "role": "authored exploration, not canonical",
+        "rows": 188,
+        "statuses": {
+          "error": 86,
+          "success": 102
+        }
+      },
+      "capture-01": {
+        "module_uri": "file:///stage64/amendment-exploration.pkl",
+        "pids": [
+          18741,
+          18747
+        ],
+        "provenance": {
+          "bytes": 28734,
+          "sha256": "80afad9c5e50d70f07d9feb29e841ffe1e6a72a0cc5d4b948919bcc77e32f5e4"
+        },
+        "role": "authored exploration, not canonical",
+        "rows": 150,
+        "statuses": {
+          "error": 150
+        }
+      },
+      "capture-02": {
+        "module_uri": "file:///stage64/amendment-exploration.pkl",
+        "pids": [
+          19007,
+          19057
+        ],
+        "provenance": {
+          "bytes": 28735,
+          "sha256": "c9af6bd41d42ad5bc32be95906f255c8db625caa72d0743ec8df4f396e1ce898"
+        },
+        "role": "authored exploration, not canonical",
+        "rows": 150,
+        "statuses": {
+          "error": 108,
+          "success": 42
+        }
+      },
+      "capture-03": {
+        "module_uri": "file:///stage64/amendment-exploration.pkl",
+        "pids": [
+          19413,
+          19420
+        ],
+        "provenance": {
+          "bytes": 28735,
+          "sha256": "5a05d8f88d17bac44bad505e4adf01da78d184b66bf8bbe8846055e411260305"
+        },
+        "role": "authored exploration, not canonical",
+        "rows": 150,
+        "statuses": {
+          "error": 80,
+          "success": 70
+        }
+      },
+      "capture-04": {
+        "module_uri": "file:///stage64/amendment-exploration.pkl",
+        "pids": [
+          20064,
+          20067
+        ],
+        "provenance": {
+          "bytes": 28735,
+          "sha256": "7b57c026a179dfab10fcf7c19aeafe3e941608c500b3c4eda5bca0915a706408"
+        },
+        "role": "authored exploration, not canonical",
+        "rows": 154,
+        "statuses": {
+          "error": 73,
+          "success": 81
+        }
+      },
+      "original-control-01": {
+        "module_uri": "file:///stage64/amendment-exploration.pkl",
+        "pids": [
+          24500,
+          24606
+        ],
+        "provenance": {
+          "bytes": 28889,
+          "sha256": "da71a915b24245b7a750b8aa1529f1de3b201d6461b072243e43e9054dc3c261"
+        },
+        "role": "selected original source public calls",
+        "rows": 4,
+        "statuses": {
+          "success": 4
+        }
+      }
+    }
+  },
+  "java_runtime": {
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "declaration_jdk": {
+      "executable": "/usr/bin/java",
+      "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+      "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+      "properties": {
+        "file.encoding": "UTF-8",
+        "file.separator": "/",
+        "ftp.nonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+        "http.nonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+        "java.class.path": "",
+        "java.class.version": "65.0",
+        "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+        "java.io.tmpdir": "/var/folders/_q/s969zhkx6qd8p32v2nd87ygh0000gp/T/",
+        "java.library.path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home/Library/Java/Extensions",
+        "java.runtime.name": "OpenJDK Runtime Environment",
+        "java.runtime.version": "21.0.12.1+1-LTS",
+        "java.specification.name": "Java Platform API Specification",
+        "java.specification.vendor": "Oracle Corporation",
+        "java.specification.version": "21",
+        "java.vendor": "Eclipse Adoptium",
+        "java.vendor.url": "https://adoptium.net/",
+        "java.vendor.url.bug": "https://github.com/adoptium/adoptium-support/issues",
+        "java.vendor.version": "Temurin-21.0.12.1+1",
+        "java.version": "21.0.12.1",
+        "java.version.date": "2026-08-18",
+        "java.vm.compressedOopsMode": "Non-zero disjoint base",
+        "java.vm.info": "mixed mode, sharing",
+        "java.vm.name": "OpenJDK 64-Bit Server VM",
+        "java.vm.specification.name": "Java Virtual Machine Specification",
+        "java.vm.specification.vendor": "Oracle Corporation",
+        "java.vm.specification.version": "21",
+        "java.vm.vendor": "Eclipse Adoptium",
+        "java.vm.version": "21.0.12.1+1-LTS",
+        "jdk.debug": "release",
+        "line.separator": "\\n ",
+        "native.encoding": "US-ASCII",
+        "os.arch": "aarch64",
+        "os.name": "Mac OS X",
+        "os.version": "27.0",
+        "path.separator": ":",
+        "socksNonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+        "stderr.encoding": "US-ASCII",
+        "stdout.encoding": "US-ASCII",
+        "sun.arch.data.model": "64",
+        "sun.boot.library.path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib",
+        "sun.cpu.endian": "little",
+        "sun.io.unicode.encoding": "UnicodeBig",
+        "sun.java.launcher": "SUN_STANDARD",
+        "sun.jnu.encoding": "UTF-8",
+        "sun.management.compiler": "HotSpot 64-Bit Tiered Compilers",
+        "user.country": "KR",
+        "user.dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-amendment-declarations-oracle-01",
+        "user.home": "/Users/cody.ij.hwang",
+        "user.language": "ko",
+        "user.name": "cody.ij.hwang"
+      },
+      "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+    },
+    "main_jdk": {
+      "executable": "/usr/bin/java",
+      "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+      "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+      "properties": {
+        "file.encoding": "UTF-8",
+        "file.separator": "/",
+        "ftp.nonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+        "http.nonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+        "java.class.path": "",
+        "java.class.version": "65.0",
+        "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+        "java.io.tmpdir": "/var/folders/_q/s969zhkx6qd8p32v2nd87ygh0000gp/T/",
+        "java.library.path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home/Library/Java/Extensions",
+        "java.runtime.name": "OpenJDK Runtime Environment",
+        "java.runtime.version": "21.0.12.1+1-LTS",
+        "java.specification.name": "Java Platform API Specification",
+        "java.specification.vendor": "Oracle Corporation",
+        "java.specification.version": "21",
+        "java.vendor": "Eclipse Adoptium",
+        "java.vendor.url": "https://adoptium.net/",
+        "java.vendor.url.bug": "https://github.com/adoptium/adoptium-support/issues",
+        "java.vendor.version": "Temurin-21.0.12.1+1",
+        "java.version": "21.0.12.1",
+        "java.version.date": "2026-08-18",
+        "java.vm.compressedOopsMode": "Non-zero disjoint base",
+        "java.vm.info": "mixed mode, sharing",
+        "java.vm.name": "OpenJDK 64-Bit Server VM",
+        "java.vm.specification.name": "Java Virtual Machine Specification",
+        "java.vm.specification.vendor": "Oracle Corporation",
+        "java.vm.specification.version": "21",
+        "java.vm.vendor": "Eclipse Adoptium",
+        "java.vm.version": "21.0.12.1+1-LTS",
+        "jdk.debug": "release",
+        "line.separator": "\\n ",
+        "native.encoding": "US-ASCII",
+        "os.arch": "aarch64",
+        "os.name": "Mac OS X",
+        "os.version": "27.0",
+        "path.separator": ":",
+        "socksNonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+        "stderr.encoding": "US-ASCII",
+        "stdout.encoding": "US-ASCII",
+        "sun.arch.data.model": "64",
+        "sun.boot.library.path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib",
+        "sun.cpu.endian": "little",
+        "sun.io.unicode.encoding": "UnicodeBig",
+        "sun.java.launcher": "SUN_STANDARD",
+        "sun.jnu.encoding": "UTF-8",
+        "sun.management.compiler": "HotSpot 64-Bit Tiered Compilers",
+        "user.country": "KR",
+        "user.dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage64-amendment-oracle-01",
+        "user.home": "/Users/cody.ij.hwang",
+        "user.language": "ko",
+        "user.name": "cody.ij.hwang"
+      },
+      "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+    },
+    "reference_revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "kind": "stage64-amendment-java-authority-checkpoint",
+  "limits": [
+    "Public 188-row string fixture and eleven separate declaration programs are distinct authorities.",
+    "Direct VM identity is producer-only and does not establish user-class identity.",
+    "Exact upstream amendsChains.pkl was evaluated for four public expressions; full original CLI/output-file execution remains unverified.",
+    "Identity-02 failed Java launcher execution and remains failed historical evidence.",
+    "No Rust candidate, typed export, Node, browser, full M2 or performance pass is claimed.",
+    "M2 manifest freshness waits for source freeze and regeneration."
+  ],
+  "producer_only_diagnostic_supplements": {
+    "stage64-amendment-eof-newline-01": {
+      "boundary": "producer-only public Java string diagnostic controls; not catalog profile",
+      "capture_provenance": {
+        "bytes": 28724,
+        "sha256": "23cf823bb287636c3b813f9e3ce62a9bada7795f31858b1b5cfdf28c1addd447"
+      },
+      "module_uri": "file:///stage64/amendment-eof-newline.pkl",
+      "recorded_process": {
+        "bytes": 7309,
+        "sha256": "a8e335315deaf5e8d8b17cc1c7cc87ac06a3b37160b7756a43488629e07d9a3b"
+      },
+      "rows": 3,
+      "statuses": {
+        "error": 3
+      }
+    },
+    "stage64-amendment-local-controls-01": {
+      "boundary": "producer-only public Java string diagnostic controls; not catalog profile",
+      "capture_provenance": {
+        "bytes": 28762,
+        "sha256": "a6546465eb38d5fb78562fd3e04ddeeb3f11ac140d04b886558541fd9bfecbbc"
+      },
+      "module_uri": "file:///stage64/amendment-local-controls.pkl",
+      "recorded_process": {
+        "bytes": 7293,
+        "sha256": "323e566f4004910961cabe146742b510c8818ef62b24b65617e12e4fb8c082dd"
+      },
+      "rows": 18,
+      "statuses": {
+        "error": 16,
+        "success": 2
+      }
+    }
+  },
+  "publication": {
+    "embedded_manifest_sha256": "5ba0a8becc461e2810326fc36e5448654eaed5a083544508854eff2bf0d88d2f",
+    "identity": {
+      "bytes": 10750107,
+      "sha256": "6589ad61464daaa0796d108221d0d2299299b4fa97b9dbd9444b1c94a4cc73d1"
+    },
+    "member_hash_readback": true,
+    "members": 54117,
+    "path": "reports/m2/stage64-java-evidence.tar.gz",
+    "source_before_after_equal": true
+  },
+  "publication_execution": {
+    "archived_with_this_publication": false,
+    "exit_code": 0,
+    "identity": {
+      "bytes": 6955,
+      "sha256": "2c88f914b24bff95bb8ce6118b773528fb5bfaedbafb7b600f891207ddeaed6a"
+    },
+    "later_implementation_evidence_required": true,
+    "path": "target/m2/stage64-java-publication-execution-01/process.json",
+    "source_stable": true,
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 464,
+      "sha256": "3dc413be66d57428e2d74899fe464cb039f83155da7d7c3e5b2832ead561eaf0"
+    }
+  },
+  "schema": 1,
+  "validation": {
+    "checks": [
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "tools/amendment_construction_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792862345.8509922,
+        "label": "construction-verifier",
+        "pid": 33302,
+        "started_epoch": 1792862345.562751,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 359,
+          "sha256": "13c660777850f96c0f2aadbb86588f38c6b6759ebcc16f274e06962cea325912"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "tools/amendment_declarations_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792862345.936554,
+        "label": "declarations-verifier",
+        "pid": 33303,
+        "started_epoch": 1792862345.852344,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 359,
+          "sha256": "2df70d292ca9b5f6f62a61b018a7fd16d028370f54379beeab3a4b988591ca65"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "-m",
+          "unittest",
+          "tools.tests.test_amendment_construction_fixtures",
+          "tools.tests.test_amendment_declarations_fixtures",
+          "tools.tests.test_collection_conversions_compare",
+          "tools.tests.test_collection_conversions_portable_compare",
+          "-q"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792862352.514272,
+        "label": "python-tests",
+        "pid": 33304,
+        "started_epoch": 1792862345.9379468,
+        "stderr": {
+          "bytes": 98,
+          "sha256": "65bd7c098f5eebc704fbdfb9e8fc4d9e27486656748013df34a0f953f034517c"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "-B",
+          "-m",
+          "unittest",
+          "tools.tests.test_amendment_construction_fixtures",
+          "tools.tests.test_amendment_declarations_fixtures",
+          "tools.tests.test_collection_conversions_compare",
+          "tools.tests.test_collection_conversions_portable_compare",
+          "-q"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792862362.933695,
+        "label": "python-tests-O",
+        "pid": 33320,
+        "started_epoch": 1792862352.515627,
+        "stderr": {
+          "bytes": 99,
+          "sha256": "9b99b066eeee0a3eeeced5cdfaf87f3690a0b1d96d36d19afac8e52ab5309008"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/bin/node",
+          "--test",
+          "tools/platform/capture-collection-conversions.test.mjs"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 0,
+        "finished_epoch": 1792862364.693584,
+        "label": "js-tests",
+        "pid": 33461,
+        "started_epoch": 1792862362.935721,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1053,
+          "sha256": "72c3a43c1e59c3c134ed6e02c41b5163c34f69474ab0c2c13d8b7649bd66094a"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "exit_code": 1,
+        "finished_epoch": 1792862368.670321,
+        "label": "m2-manifest-observation",
+        "pid": 33467,
+        "started_epoch": 1792862364.69502,
+        "stderr": {
+          "bytes": 75,
+          "sha256": "4ab2ba53cfffef67a6446fcecddda1a9cb82f45199d590477fcef1cccac537dd"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    ],
+    "deferred_final_integration": "Concurrent Rust/runtime and manifest changes require later regeneration.",
+    "directory": "target/m2/stage64-java-validation-01",
+    "m2_manifest_freshness_pass_claimed": false,
+    "record": {
+      "bytes": 81758,
+      "sha256": "ab69cdeab2792a99caa41d6be56cd0682349cf427f2b37a15e359779ba6d27be"
+    },
+    "source_count": 199,
+    "source_stable": true
+  }
+}

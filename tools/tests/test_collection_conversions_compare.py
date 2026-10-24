@@ -146,7 +146,7 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "timeout"):
                 compare.compare(self.output, bad_timeout)
 
-    def test_eight_sealed_profiles_and_wrong_count_uri_or_input_are_rejected(self):
+    def test_nine_sealed_profiles_and_wrong_count_uri_or_input_are_rejected(self):
         expected = {
             'file:///stage62/collection-conversions.pkl': 236,
             'file:///stage62/collection-conversion-controls.pkl': 58,
@@ -156,10 +156,11 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             'file:///stage62/collection-property-names.pkl': 26,
             'file:///stage63/collection-addition.pkl': 125,
             'file:///stage63/set-endpoints.pkl': 70,
+            'file:///stage64/amendment-construction.pkl': 188,
         }
         self.assertEqual({uri: profile['rows'] for uri, profile in compare.profiles.PROFILES.items()},
                          expected)
-        self.assertEqual(sum(expected.values()), 680)
+        self.assertEqual(sum(expected.values()), 868)
         for uri, rows in expected.items():
             profile = compare.profiles.PROFILES[uri]
             fixture = compare.ROOT / profile['fixture']
@@ -175,6 +176,7 @@ class CollectionConversionsCompareTests(unittest.TestCase):
                 lambda value: value['rows'].pop(),
                 lambda value: value.update(module_uri='file:///stage62/unknown.pkl'),
                 lambda value: value.update(module_uri='file:///stage63/unknown.pkl'),
+                lambda value: value.update(module_uri='file:///stage64/unknown.pkl'),
                 lambda value: value.update(repetitions=1),
             ):
                 modified = json.loads(json.dumps(cases))
@@ -256,6 +258,9 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             ('file:///stage63/set-endpoints.pkl', 70,
              {'success': 47, 'error': 23},
              'repeat-0/000-set-empty-first/result.stderr.code-units.bin'),
+            ('file:///stage64/amendment-construction.pkl', 188,
+             {'success': 102, 'error': 86},
+             'repeat-0/000-module-first/result.stdout.code-units.bin'),
         ):
             with self.subTest(uri=uri):
                 profile = compare.profiles.PROFILES[uri]

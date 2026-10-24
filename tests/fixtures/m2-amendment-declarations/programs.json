@@ -1,0 +1,74 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage64/amendment-declarations.pkl",
+  "programs": [
+    {
+      "id": "abstract-class-property-amend",
+      "module_file": "modules/00-abstract-class-property-amend.pkl",
+      "module_sha256": "baa899826a434784ed903b6fa545a55ff33740c0bf83e772c90ee7e538dff349",
+      "query": "test"
+    },
+    {
+      "id": "abstract-property-unfilled",
+      "module_file": "modules/01-abstract-property-unfilled.pkl",
+      "module_sha256": "9c43922350ae1838e7c9257b4968e1fa2d64c61cd5350daee823362bef5f1b38",
+      "query": "test"
+    },
+    {
+      "id": "class-body-amends-int",
+      "module_file": "modules/02-class-body-amends-int.pkl",
+      "module_sha256": "123c42bf928893acafbae0c5279094b31246995b3e5f1132ee03e1f84b5ebb1d",
+      "query": "test"
+    },
+    {
+      "id": "const-class-property-amend",
+      "module_file": "modules/03-const-class-property-amend.pkl",
+      "module_sha256": "b8b6dbe39bd7aff87c304e4433c779ee8c08c64f1eca37f296efd9f157f9d56c",
+      "query": "test"
+    },
+    {
+      "id": "extends-external-int",
+      "module_file": "modules/04-extends-external-int.pkl",
+      "module_sha256": "3a74e7b57f19f8845b111ff43a9c857ea82b61099a635c2409bf772c48831fa2",
+      "query": "test"
+    },
+    {
+      "id": "fixed-class-property-amend",
+      "module_file": "modules/05-fixed-class-property-amend.pkl",
+      "module_sha256": "ae5f7198f2eb2933341b505ef0a8151359f6ea52238214791a3aff00274f0137",
+      "query": "test"
+    },
+    {
+      "id": "later-syntax-versus-abstract",
+      "module_file": "modules/06-later-syntax-versus-abstract.pkl",
+      "module_sha256": "501bb8148dbdd70726aa5cd331215d8bfa14dc4466c11a76c076f9614417ddc2",
+      "query": "test"
+    },
+    {
+      "id": "later-syntax-versus-fixed",
+      "module_file": "modules/07-later-syntax-versus-fixed.pkl",
+      "module_sha256": "ba44e25655b914c934ee889d86f944e7f03a38f98eff19f57e48a4a6a37b1048",
+      "query": "test"
+    },
+    {
+      "id": "local-class-property-amend",
+      "module_file": "modules/08-local-class-property-amend.pkl",
+      "module_sha256": "6f18d3526092d5e293a84b9541fc27b09b467298fbbd5b2488163836029cb2ad",
+      "query": "test"
+    },
+    {
+      "id": "typed-annotation-amend",
+      "module_file": "modules/09-typed-annotation-amend.pkl",
+      "module_sha256": "be4fa6e991070fb51fcd8234adea42d1e55e696e2d1e6a7ae4ded0c5f56b4575",
+      "query": "test"
+    },
+    {
+      "id": "valid-repeated-class-bodies",
+      "module_file": "modules/10-valid-repeated-class-bodies.pkl",
+      "module_sha256": "d321bce10cee799912ca6512883e66b3ad6aab643c8cab394210c4af04f41696",
+      "query": "test"
+    }
+  ],
+  "repetitions": 2,
+  "schema": 1
+}

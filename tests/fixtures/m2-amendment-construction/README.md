@@ -1,0 +1,7 @@
+# Pkl 0.32.0 amendment construction Java authority
+
+This fixture records 188 ordered `evaluateExpressionString` calls against the pinned Pkl 0.32.0 Java evaluator at `file:///stage64/amendment-construction.pkl`. Two fresh JVM sessions each produced 102 successful values and 86 ordinary Pkl errors. The archive keeps every producer UTF-8 and UTF-16BE string channel, status, Java exception/cause metadata, full process streams, authored inputs, actual JAR/JDK identity, and 74 copied pinned sources. The offline verifier checks the complete ordered protocol and byte equality across both sessions.
+
+The public rows cover repeated property bodies in module, class, and object declarations; entry and predicate amendments; class-valued Dynamic, Listing, Mapping, user, abstract, external, and TypeAlias parents; positive and zero-effective generators; function and curried amendments; null/default and inferred/generic owners; amendment modifier diagnostics; and first-error order. Listing.fold rows establish shallow forcing of the whole Listing before its first callback, including inherited and overridden lazy elements.
+
+The earlier 154-row exploration, authored corrections, separate declaration programs, direct VM reference-identity probe, Host trace probe, and four exact-source `basic/amendsChains.pkl` expression controls remain distinct target-only evidence. Public strings cannot prove internal object identity; this fixture makes no typed-export, native, browser, Node, full M2, or performance pass claim. Expected bytes came only from Java.

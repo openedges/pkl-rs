@@ -1,0 +1,188 @@
+string	module-first	moduleRepeated.first
+string	module-second	moduleRepeated.second
+string	module-render	moduleRepeated
+string	module-chain-first	moduleAmended.first
+string	module-chain-second	moduleAmended.second
+string	module-chain-third	moduleAmended.third
+string	module-chain-render	moduleAmended
+string	object-chain-a	(new Dynamic { a = 1 } { b = 2 } { c = 3 }).a
+string	object-chain-b	(new Dynamic { a = 1 } { b = 2 } { c = 3 }).b
+string	object-chain-c	(new Dynamic { a = 1 } { b = 2 } { c = 3 }).c
+string	object-override-first	(new Dynamic { value = 1 } { value = 2 } { value = 3 }).value
+string	object-nested-chain	(new Dynamic { inner = new Dynamic { a = 1 } } { inner { b = 2 } { c = 3 } }).inner
+string	typed-chain	(new Box {} { value = 3 } { extra = 4 }).value
+string	typed-nested-inferred	(new Owner {} { child { value = 3 } { extra = 4 } }).child
+string	class-declared-child	(new OwnerAmended {}).child
+string	class-declared-value	(new OwnerAmended {}).child.value
+string	class-declared-extra	(new OwnerAmended {}).child.extra
+string	mapping-entry-chain	((mapBase) { ["k"] { second = 2 } { third = 3 } })["k"]
+string	listing-element-chain	(new Listing { new Dynamic { a = 1 } } { [0] { b = 2 } { c = 3 } })[0]
+string	predicate-chain	(new Listing { new Dynamic { tag = "x" } } { [[ tag == "x" ]] { good = true } { also = true } })[0]
+string	module-decl-syntax-repeated	new Dynamic { x = 1 } { y = 2 }
+string	module-decl-empty-middle	new Dynamic { x = 1 } {} { y = 2 }
+string	dynamic-empty	(Dynamic) {}
+string	dynamic-property	(Dynamic) { value = 7 }
+string	dynamic-element	(Dynamic) { 7 }
+string	dynamic-entry	(Dynamic) { ["k"] = 7 }
+string	dynamic-generator-empty	(Dynamic) { for (x in List()) { x } }
+string	dynamic-generator-property	(Dynamic) { for (x in List(1)) { value = x } }
+string	listing-empty	(Listing) {}
+string	listing-property	(Listing) { value = 7 }
+string	listing-element	(Listing) { 7 }
+string	listing-entry	(Listing) { ["k"] = 7 }
+string	listing-generator-empty	(Listing) { for (x in List()) { x } }
+string	listing-generator-property	(Listing) { for (x in List(1)) { value = x } }
+string	mapping-empty	(Mapping) {}
+string	mapping-property	(Mapping) { value = 7 }
+string	mapping-element	(Mapping) { 7 }
+string	mapping-entry	(Mapping) { ["k"] = 7 }
+string	mapping-generator-empty	(Mapping) { for (x in List()) { [x] = x } }
+string	mapping-generator-property	(Mapping) { for (x in List(1)) { value = x } }
+string	user-empty	(Box) {}
+string	user-property	(Box) { value = 7 }
+string	user-element	(Box) { 7 }
+string	user-entry	(Box) { ["k"] = 7 }
+string	user-generator-empty	(Box) { when (false) { value = 7 } }
+string	user-generator-property	(Box) { for (x in List(1)) { value = x } }
+string	abstract-empty	(AbstractBox) {}
+string	abstract-property	(AbstractBox) { value = 7 }
+string	abstract-element	(AbstractBox) { 7 }
+string	abstract-entry	(AbstractBox) { ["k"] = 7 }
+string	abstract-generator-empty	(AbstractBox) { when (false) { value = 7 } }
+string	abstract-generator-property	(AbstractBox) { for (x in List(1)) { value = x } }
+string	external-empty	(Int) {}
+string	external-property	(Int) { value = 7 }
+string	external-element	(Int) { 7 }
+string	external-entry	(Int) { ["k"] = 7 }
+string	external-generator-empty	(Int) { when (false) { value = 7 } }
+string	external-generator-property	(Int) { for (x in List(1)) { value = x } }
+string	alias-empty	(BoxAlias) {}
+string	alias-property	(BoxAlias) { value = 7 }
+string	alias-element	(BoxAlias) { 7 }
+string	alias-entry	(BoxAlias) { ["k"] = 7 }
+string	alias-generator-empty	(BoxAlias) { when (false) { value = 7 } }
+string	alias-generator-property	(BoxAlias) { for (x in List(1)) { value = x } }
+string	listing-alias-empty	(NumberListing) {}
+string	listing-alias-property	(NumberListing) { value = 7 }
+string	listing-alias-element	(NumberListing) { 7 }
+string	listing-alias-entry	(NumberListing) { ["k"] = 7 }
+string	listing-alias-generator-empty	(NumberListing) { when (false) { value = 7 } }
+string	listing-alias-generator-property	(NumberListing) { for (x in List(1)) { value = x } }
+string	mapping-alias-empty	(StringIntMapping) {}
+string	mapping-alias-property	(StringIntMapping) { value = 7 }
+string	mapping-alias-element	(StringIntMapping) { 7 }
+string	mapping-alias-entry	(StringIntMapping) { ["k"] = 7 }
+string	mapping-alias-generator-empty	(StringIntMapping) { when (false) { value = 7 } }
+string	mapping-alias-generator-property	(StringIntMapping) { for (x in List(1)) { value = x } }
+string	dynamic-empty-rhs	(moduleBase) {}
+string	dynamic-when-false	(moduleBase) { when (false) { ignored = throw("no") } }
+string	dynamic-empty-for	(moduleBase) { for (x in List()) { [x] = x } }
+string	dynamic-empty-spread	(moduleBase) { ...new Dynamic {} }
+string	dynamic-empty-for-read	((moduleBase) { for (x in List()) { [x] = x } }).first
+string	listing-empty-rhs	(listBase) {}
+string	listing-empty-for	(listBase) { for (x in List()) { x } }
+string	listing-empty-for-length	((listBase) { for (x in List()) { x } }).length
+string	listing-empty-when	((listBase) { when(false) { 9 } }).length
+string	mapping-empty-rhs	(mapBase) {}
+string	mapping-empty-for	(mapBase) { for (x in List()) { [x] = x } }
+string	typed-empty-rhs	(boxBase) {}
+string	typed-empty-for	(boxBase) { when (false) { value = 7 } }
+string	zero-generator-after-lazy	(new Dynamic { lazy = throw("later") } { for (x in List()) { [x] = x } }).length()
+string	for-source-first-error	(moduleBase) { for (x in List(throw("source"))) { [x] = x } }
+string	for-body-first-error	(moduleBase) { for (x in List(1)) { [throw("key")] = x } }
+string	when-condition-first-error	(moduleBase) { when (throw("condition")) { a = 1 } }
+string	when-false-skip-error	(moduleBase) { when (false) { [throw("skipped")] = 1 } }
+string	one-amend	((one) { x -> amended = x + 1 }).apply(2)
+string	one-amend-read	((one) { x -> amended = x + 1 }).apply(2).amended
+string	one-amend-repeated	((one) { x -> first = x + 1 } { x -> second = x + 2 }).apply(2)
+string	one-amend-zero-parameter	((one) { amended = 7 }).apply(2)
+string	one-amend-wrong-two	((one) { x, y -> amended = x + y }).apply(2)
+string	one-amend-typed-good	((one) { x: Int -> amended = x + 1 }).apply(2)
+string	one-amend-typed-bad	((one) { x: String -> amended = x }).apply(2)
+string	two-amend	((two) { x, y -> amended = x * y }).apply(2, 3)
+string	two-amend-wrong-one	((two) { x -> amended = x }).apply(2, 3)
+string	two-amend-typed-second	((two) { x, y: Int -> amended = x + y }).apply(2, 3)
+string	curried-first	((curried) { x -> first = x }).apply(2).apply(3)
+string	curried-second	(((curried).apply(2)) { y -> second = y }).apply(3)
+string	curried-both	((((curried) { x -> first = x }).apply(2)) { y -> second = y }).apply(3)
+string	function-property-error	(one) { x -> amended = throw("callback") }.apply(2).amended
+string	function-body-arity-first	((one) { x, y -> amended = throw("body") }).apply(2)
+string	null-default-empty	(nullBase) {}
+string	null-default-property	(nullBase) { second = 2 }
+string	null-default-property-read	((nullBase) { second = 2 }).first
+string	null-bare-empty	(null) {}
+string	null-bare-property	(null) { value = 1 }
+string	new-inferred-owner	new Owner { child { value = 5 } }.child.value
+string	new-inferred-nested	new Owner { child { nested { left = 5 } } }.child.nested.left
+string	new-alias-user	new BoxAlias { value = 5 }
+string	new-alias-listing	new NumberListing { 1; 2 }
+string	new-alias-mapping	new StringIntMapping { ["x"] = 1 }
+string	direct-alias-user	(BoxAlias) { value = 5 }
+string	direct-alias-listing	(NumberListing) { 1; 2 }
+string	direct-alias-mapping	(StringIntMapping) { ["x"] = 1 }
+string	generic-listing-good	new Listing<Int> { 1; 2 }
+string	generic-listing-bad	new Listing<Int> { "wrong" }
+string	generic-mapping-good	new Mapping<String, Int> { ["x"] = 1 }
+string	generic-mapping-bad-key	new Mapping<String, Int> { [1] = 2 }
+string	generic-mapping-bad-value	new Mapping<String, Int> { ["x"] = "wrong" }
+string	parent-null-then-error	(Null(new Dynamic { value = throw("default") })) { value = 2 }.value
+string	parent-error-before-body	(throw("parent")) { value = throw("body") }
+string	fold-empty-value	(new Listing {}).fold(7, (acc, it) -> acc + it)
+string	fold-empty-bad-callback	(new Listing {}).fold(7, 1)
+string	fold-empty-arity-zero	(new Listing {}).fold(7, () -> 1)
+string	fold-empty-arity-one	(new Listing {}).fold(7, (x) -> x)
+string	fold-two-sum	(new Listing { 1; 2 }).fold(0, (acc, it) -> acc + it)
+string	fold-two-list	(new Listing { 1; 2 }).fold(List(), (acc, it) -> acc.add(it))
+string	fold-first-callback-error	(new Listing { 1; 2 }).fold(0, (acc, it) -> throw("callback-first"))
+string	fold-later-value-before-callback	(new Listing { 1; throw("later-value") }).fold(0, (acc, it) -> throw("callback-first"))
+string	fold-first-value-before-later	(new Listing { throw("first-value"); throw("later-value") }).fold(0, (acc, it) -> throw("callback"))
+string	fold-later-vs-first-callback	(new Listing { 1; 2; throw("third-value") }).fold(0, (acc, it) -> throw("callback-first"))
+string	fold-trace-before-callback	(new Listing { trace("first-value"); trace("later-value") }).fold(0, (acc, it) -> throw("callback-first"))
+string	fold-nested	(new Listing { new Listing { 1; 2 }; new Listing { 3 } }).fold(List(), (acc, inner) -> inner.fold(acc, (xs, it) -> xs.add(it)))
+string	fold-typed-good	(new Listing<Int> { 1; 2 }).fold(0, (acc: Int, it: Int) -> acc + it)
+string	fold-typed-bad	(new Listing<Int> { 1; 2 }).fold(0, (acc: String, it) -> acc)
+string	fold-generator-zero	(new Listing { for (x in List()) { x } }).fold(9, (acc, it) -> throw("callback"))
+string	fold-amended-chain	(new Listing { new Listing { 1 } } { [0] { 2 } }).fold(List(), (acc, inner) -> inner.fold(acc, (xs, it) -> xs.add(it)))
+string	syntax-missing-body	new Dynamic { value = 1 } {
+string	syntax-double-arrow	((one) { x -> -> value = x }).apply(1)
+string	syntax-property-annotation-amend	new Dynamic { value: Int { 1 } }
+string	syntax-entry-missing-key	new Mapping { [] { value = 1 } }
+string	syntax-predicate-unclosed	new Listing { [[ true ] { 1 } }
+string	invalid-primitive-amend	(1) { value = 2 }
+string	invalid-string-amend	("text") { value = 2 }
+string	invalid-list-amend	(List(1)) { 2 }
+string	invalid-map-amend	(Map("k",1)) { ["x"] = 2 }
+string	dynamic-class-when-property	((Dynamic) { when (true) { value = 7 } }).value
+string	dynamic-class-for-entry	((Dynamic) { for (x in List(1, 2)) { [x] = x } }).toMap()
+string	listing-class-for-element	((Listing) { for (x in List(1, 2)) { x } }).toList()
+string	mapping-class-for-entry	((Mapping) { for (x in List("a", "b")) { [x] = x } }).toMap()
+string	user-class-when-property	((Box) { when (true) { value = 7 } }).value
+string	dynamic-object-when-property	((moduleBase) { when (true) { value = 7 } }).value
+string	listing-object-for-element	((listBase) { for (x in List(3)) { x } }).length
+string	mapping-object-for-entry	((mapBase) { for (x in List("j")) { [x] = 9 } })["j"]
+string	zero-function-amend	((zero) { added = 8 }).apply().added
+string	zero-function-bad-parameter	((zero) { x -> added = x }).apply()
+string	primitive-function-result	((primitiveResult) { x -> added = 8 }).apply(3)
+string	function-this-original	((one) { x -> added = this.original + x }).apply(2).added
+string	dependent-base	(new Dependent {}).greeting
+string	dependent-override	(new Dependent { name = "child" }).greeting
+string	dependent-amend	((new Dependent {}) { name = "child" }).greeting
+string	fixed-member-amend	(new Dynamic { fixed item = new Dynamic { x = 1 } }) { item { y = 2 } }
+string	const-member-amend	(new Dynamic { const item = new Dynamic { x = 1 } }) { item { y = 2 } }
+string	local-member-amend	(new Dynamic { local item = new Dynamic { x = 1 } }) { item { y = 2 } }
+string	hidden-member-amend	(new Dynamic { hidden item = new Dynamic { x = 1 } }) { item { y = 2 } }
+string	parent-before-generator-source	(throw("parent-first")) { for (x in List(throw("source"))) { [x] = throw("body") } }
+string	generator-source-before-key	(new Dynamic {}) { for (x in List(throw("source"))) { [throw("key")] = throw("body") } }
+string	generator-key-before-body	(new Dynamic {}) { for (x in List(1)) { [throw("key")] = throw("body") } }
+string	when-condition-before-key	(new Dynamic {}) { when (throw("condition")) { [throw("key")] = throw("body") } }
+string	zero-after-lazy-access	((new Dynamic { lazy = throw("later") }) { when (false) { [1] = 2 } }).lazy
+string	typed-empty-for-entry	(boxBase) { for (x in List()) { [x] = x } }
+string	typed-false-when	(boxBase) { when (false) { value = throw("unused") } }
+string	typed-empty-spread	(boxBase) { ...new Dynamic {} }
+string	inherited-empty-for	((nestedBase) { added = 2 }) { for (x in List()) { [x] = x } }
+string	inherited-empty-spread-read	(((nestedBase) { added = 2 }) { ...new Dynamic {} }).nested.value
+string	inherited-false-when-read	(((nestedBase) { added = 2 }) { when (false) { ["skip"] = 9 } }).added
+string	fold-overridden-parent-throw	(new Listing { throw("parent-first"); 2 } { [0] = 1 }).fold(0, (acc, it) -> throw("callback"))
+string	fold-child-before-inherited	(new Listing { 1; throw("inherited-second") } { [0] = throw("child-first") }).fold(0, (acc, it) -> throw("callback"))
+string	fold-inherited-before-callback	(new Listing { 1; throw("inherited-second") } { [0] = 2 }).fold(0, (acc, it) -> throw("callback"))
+string	fold-overridden-lazy-success	(new Listing { throw("parent-first"); 2 } { [0] = 1 }).fold(0, (acc, it) -> acc + it)

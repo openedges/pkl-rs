@@ -1,0 +1,42 @@
+// Java Pkl 0.32.0 amendment exploration. Public string observations only.
+open class BaseBox {
+  value: Int = 1
+  nested: Dynamic = new Dynamic { left = 10 }
+}
+class Box extends BaseBox {
+  extra: Int = 2
+}
+class Owner {
+  child: Box = new Box {}
+}
+open class BaseOwner {
+  child: Box = new Box {}
+}
+class OwnerAmended extends BaseOwner {
+  child { value = 4 } { extra = 5 }
+}
+abstract class AbstractBox {
+  value: Int = 1
+}
+typealias BoxAlias = Box
+typealias NumberListing = Listing<Number>
+typealias StringIntMapping = Mapping<String, Int>
+
+moduleRepeated { first = 1 } { second = 2 }
+moduleBase = new Dynamic { first = 1 }
+moduleAmended = (moduleBase) { second = 2 } { third = 3 }
+listBase = new Listing { 1; 2 }
+mapBase = new Mapping { ["k"] = new Dynamic { first = 1 } }
+boxBase = new Box {}
+nullBase = Null(new Dynamic { first = 1 })
+one = (x) -> new Dynamic { original = x }
+two = (x, y) -> new Dynamic { original = x + y }
+curried = (x) -> (y) -> new Dynamic { original = x + y }
+ownerBase = new Owner {}
+zero = () -> new Dynamic { original = 7 }
+primitiveResult = (x) -> x
+class Dependent {
+  name: String = "base"
+  greeting: String = "hello-" + this.name
+}
+nestedBase = new Dynamic { nested = new Dynamic { value = 1 } }

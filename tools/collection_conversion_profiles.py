@@ -1,4 +1,4 @@
-"""Pinned collection conversion, addition, and endpoint string profiles."""
+"""Pinned collection conversion, addition, endpoint, and amendment string profiles."""
 from __future__ import annotations
 
 import importlib
@@ -18,6 +18,7 @@ VALIDATORS = {
     'collection_property_names_fixtures': 'tools/collection_property_names_fixtures.py',
     'collection_addition_fixtures': 'tools/collection_addition_fixtures.py',
     'set_endpoints_fixtures': 'tools/set_endpoints_fixtures.py',
+    'amendment_construction_fixtures': 'tools/amendment_construction_fixtures.py',
 }
 PROFILE_TOOL_CLOSURES = {
     'collection_conversions_fixtures': {
@@ -72,6 +73,14 @@ PROFILE_TOOL_CLOSURES = {
         'tools/collection_conversions_fixtures.py',
         'tools/collection_conversions_oracle.py',
     },
+    'amendment_construction_fixtures': {
+        'tools/amendment_construction_fixtures.py',
+        'tools/amendment_construction_oracle.py',
+        'tools/tests/test_amendment_construction_fixtures.py',
+        'tools/java/CollectionConversionsOracle.java',
+        'tools/collection_conversions_fixtures.py',
+        'tools/collection_conversions_oracle.py',
+    },
 }
 
 
@@ -102,7 +111,8 @@ def load_profiles(path=ROOT / CATALOG):
         require(type(uri) is str and
                 (uri.startswith('file:///stage62/') or
                  uri in ('file:///stage63/collection-addition.pkl',
-                         'file:///stage63/set-endpoints.pkl')) and uri.endswith('.pkl')
+                         'file:///stage63/set-endpoints.pkl',
+                         'file:///stage64/amendment-construction.pkl')) and uri.endswith('.pkl')
                 and type(fixture) is str and fixture.startswith('tests/fixtures/m2-')
                 and '..' not in Path(fixture).parts and fixture not in fixtures
                 and uri not in profiles and type(profile['rows']) is int and profile['rows'] > 0

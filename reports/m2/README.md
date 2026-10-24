@@ -1,5 +1,36 @@
 # M2 language evidence
 
+### Stage64 amendment construction — independent Java authority
+
+The [Java checkpoint](stage64-java-checkpoint.json) records two separately sealed
+Pkl 0.32.0 authorities. The [construction fixture](../../tests/fixtures/m2-amendment-construction/README.md)
+contains 188 ordered string calls per fresh JVM: 102 successful values and 86
+ordinary errors. The [declaration fixture](../../tests/fixtures/m2-amendment-declarations/README.md)
+contains eleven separate modules, each evaluated in two fresh JVMs, with three
+successful values and eight ordinary errors. Both fixtures retain all producer
+UTF-8 and UTF-16 channels, process streams, pinned JAR/JDK identities, and 74
+copied source inputs. Only the construction fixture joins the shared comparison
+catalog, as its ninth profile.
+
+The [evidence archive](stage64-java-evidence.tar.gz) preserves 54,117 members,
+including exploratory failures, the canonical authorities, twelve direct VM
+identity observations per JVM, and separate Host trace evidence. Four expression
+queries use the unchanged upstream `basic/amendsChains.pkl` source; they do not
+execute its complete CLI/generated-file contract. Separate local-amendment and
+EOF controls contain eighteen and three rows respectively. Their two JVM
+repetitions match, including actual LF transport and invalid source-section
+coordinates. These supplements retain their distinct public-expression, direct
+VM, and logger boundaries.
+
+Five recorded Java/tool validation commands pass: both fixture verifiers,
+37 Python tests normally and under `-O`, and ten JavaScript tests. The 199 copied
+inputs remain stable. The separate M2 manifest freshness command exits one while
+runtime changes are in progress; no freshness pass is claimed. Independent review
+reads every archive member and checks its identity against the physical inputs.
+The actual publication receipt is retained outside its own archive for later
+implementation evidence. This checkpoint establishes Java authorities and tooling;
+Rust, portable, full M2, product API, and performance results remain separate.
+
 ### Stage63 collection addition — implementation and local comparisons
 
 The [implementation checkpoint](stage63-implementation-checkpoint.json) records

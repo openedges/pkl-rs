@@ -1,5 +1,14 @@
 # M2 language verification
 
+Stage 64 is implementing repeated amendment bodies, class-valued construction
+parents, zero-effective generators, and Listing.fold forcing order. Its
+[independent Java checkpoint](../reports/m2/stage64-java-checkpoint.json) seals
+188 string queries and eleven separate declaration modules. The main string
+fixture is the ninth shared native/portable comparison profile; declaration,
+direct VM identity, logger, and additional frontend controls retain separate
+boundaries. This authority checkpoint does not establish Rust compatibility.
+The last completed implementation checkpoint is Stage 63 below.
+
 Stage 63 adds strict List/Set concatenation, Map merging, and Set endpoint
 properties to the shared VM. Its
 [implementation checkpoint](../reports/m2/stage63-implementation-checkpoint.json)

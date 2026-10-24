@@ -1,0 +1,16 @@
+{
+  "archive_sha256": "77c4a0f285dacdbf56a6f47cc39e67fc164bd76457510a125d7396b3034e9214",
+  "captures": {
+    "capture-01": "stage64-amendment-oracle-01"
+  },
+  "fileset_sha256": "8d3d05eb597e98e3dee47afde497df054870dc59d054e8b6b1c36af14b762967",
+  "members": 7983,
+  "oracle_input_sha256": {
+    "CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+    "cases.json": "97fa9ae8551b14f39dea2b352c9e00d22eae574c6c5ba25e7840742700343f84",
+    "module.pkl": "28ed759288cd664505347ef6e649d95c9495901787bfbea160c1aa5e6bc8efc6",
+    "queries.tsv": "0f8105fad96003a6bcebc71c5c9e235148f6b3d33a1132e06c3eb0e69fda10d9",
+    "run.py": "a73e1fa1fd047ff4477197c3715571ce21499ac5905148ecc7b045a1c63438cb"
+  },
+  "schema": 1
+}

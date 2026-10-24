@@ -1,0 +1,3 @@
+abstract class Parent { value: Int }
+class Child extends Parent {}
+test = (new Child {}).value

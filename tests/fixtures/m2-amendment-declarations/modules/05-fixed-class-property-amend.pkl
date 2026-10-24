@@ -1,0 +1,3 @@
+open class Parent { fixed child: Dynamic = new Dynamic { first = 1 } }
+class Child extends Parent { child { second = 2 } }
+test = (new Child {}).child

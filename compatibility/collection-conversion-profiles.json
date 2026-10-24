@@ -165,6 +165,28 @@
         "tools/collection_conversions_fixtures.py",
         "tools/collection_conversions_oracle.py"
       ]
+    },
+    {
+      "module_uri": "file:///stage64/amendment-construction.pkl",
+      "fixture": "tests/fixtures/m2-amendment-construction",
+      "rows": 188,
+      "repetitions": 2,
+      "validator_module": "amendment_construction_fixtures",
+      "validator_script": "tools/amendment_construction_fixtures.py",
+      "archive_prefix": "capture-01",
+      "input_hashes": {
+        "cases.json": "97fa9ae8551b14f39dea2b352c9e00d22eae574c6c5ba25e7840742700343f84",
+        "module.pkl": "28ed759288cd664505347ef6e649d95c9495901787bfbea160c1aa5e6bc8efc6",
+        "queries.tsv": "0f8105fad96003a6bcebc71c5c9e235148f6b3d33a1132e06c3eb0e69fda10d9"
+      },
+      "tool_sources": [
+        "tools/amendment_construction_fixtures.py",
+        "tools/amendment_construction_oracle.py",
+        "tools/tests/test_amendment_construction_fixtures.py",
+        "tools/java/CollectionConversionsOracle.java",
+        "tools/collection_conversions_fixtures.py",
+        "tools/collection_conversions_oracle.py"
+      ]
     }
   ]
 }

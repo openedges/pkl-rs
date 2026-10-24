@@ -2147,6 +2147,59 @@ generator amendment와 원본이 요구하는 `Listing.fold`의 평가 순서입
 Git 객체·원시 기록·archive 전체 member를 확인했습니다. 이 대조는 guest를 다시
 실행하지 않으며 기존 원본·Regex 실패와 **M2 전체 미완료 상태를 유지합니다.**
 
+### Stage 64 — amendment 본문·부모 값·Listing fold
+
+Stage 63 마감 커밋 `b7af226`에서 `m2/stage64-amendment-construction`을 시작합니다.
+주 에이전트가 parser·구문 트리와 frontend 회귀를, `gpt-6-astra / xhigh`가
+공유 VM·Host·수명주기를, `gpt-6-sol / high` 에이전트들이 각각 독립 Java 기준과
+검토를 담당합니다. 완료한 Stage 63 기록은 그대로 보존합니다.
+
+module·class·object 속성의 연속 `{ ... }` 본문을 왼쪽부터 적용하고 authored
+amendment와 명시적 대입의 선언 identity를 구분합니다. abstract·fixed·const
+검사, 본문별 lexical scope·오류 위치와 첫 오류 순서를 유지하며 parser·clone·drop·
+compiler의 긴 본문 체인을 기존 256 KiB 조건으로 검증합니다.
+
+Dynamic·Listing·Mapping과 사용자 class 값을 부모로 사용하는 빈 본문·속성·
+element·entry·generator 경로를 연결합니다. abstract·external class와 직접
+TypeAlias 값, `new Alias<T>`의 기본값을 구분하고, 효과가 없는 generator의
+부모 객체 반환·class prototype·캐시 재사용을 Java identity 보충 기준으로
+확인합니다. 함수·curried amendment, null/default, owner·generic 추론의 기존
+continuation과 Host 중단·재진입·GC·취소·재시도를 함께 검증합니다.
+
+원본 `basic/amendsChains.pkl`이 요구하는 `Listing.fold`는 callback 전에 전체
+Listing을 shallow-force하는 Java 순서를 유지해야 합니다. 별도 trace 기준으로
+상속·override 값과 callback의 경쟁 오류를 확인합니다. 주 문자열 기준은 공통
+native·Node·브라우저 비교에 연결하고, eager 선언 오류의 별도 원본 프로그램과
+직접 VM identity·logger 관찰은 각자의 실행 경계를 유지합니다. 선택 API 식의
+성공으로 원본 CLI·생성 파일 계약을 대신하지 않습니다.
+
+독립 Java 기준, 구현·플랫폼·원본 검증, 실제 커밋 소스 연결을 단계별로 커밋·
+푸시합니다. 남은 관련 실패를 제외하거나 M2의 아홉 영역·전체 gate를 축소하지
+않습니다. 기록된 로컬 검증을 사용하며 제품 API·릴리스 플랫폼·성능 조건은
+별도 미완료 의무로 유지합니다.
+
+#### Stage 64 A — amendment 독립 Java 기준
+
+[Java 체크포인트](reports/m2/stage64-java-checkpoint.json)는 문자열 식 188개와
+선언 모듈 11개를 별도로 고정합니다. 문자열 기준은 새 JVM 두 개에서 각각
+성공 102개·일반 오류 86개이며, 선언 기준은 모듈마다 새 JVM 두 개를 사용해
+성공 3개·일반 오류 8개를 기록합니다. UTF-8·UTF-16 전체 원시 채널과 process
+출력, JAR·JDK 식별자, 고정 소스 74개를 검증했습니다. 문자열 기준만 공유
+비교 목록의 아홉 번째 프로필에 연결합니다.
+
+54,117개 member의 [증거](reports/m2/stage64-java-evidence.tar.gz)는 실패한
+초기 관찰, 직접 VM identity 12개, 별도 logger 관찰, 원본 `basic/amendsChains.pkl`
+식 네 개, local amendment·EOF 18개와 실제 줄바꿈 대조군 3개를 보존합니다.
+원본 식 네 개를 원래 CLI·생성 파일 검증으로 계산하지 않습니다. 독립 검토에서
+모든 archive member를 읽어 실제 입력과 대조했습니다.
+
+Java/tool 검증 명령 다섯 개가 통과했습니다. 두 fixture verifier와 Python
+37개 검사의 일반·`-O` 실행, JavaScript 10개 검사를 포함하며 입력 사본 199개는
+전후 일치합니다. 별도 M2 manifest 검사는 구현 중인 소스로 인해 stale 종료 1이며,
+소스 고정 뒤 재생성·검증할 의무를 유지합니다. 실제 게시 process 영수증은 자신의
+archive 밖에 보존해 후속 B 증거에 연결합니다. **이 단계는 Java 기준 고정이며
+Rust·실제 플랫폼·M2 전체 완료 판정은 아닙니다.**
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

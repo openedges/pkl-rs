@@ -1,0 +1,20 @@
+{
+  "archive_sha256": "7eb633d508b3a28db95c29789f92a84cfb273fe811312d93b3696ce72bb6ffa3",
+  "captures": {
+    "capture-01": "stage64-amendment-declarations-oracle-01"
+  },
+  "fileset_sha256": "0d2ce3e30ee85e97077dd062fdeee5b5031e14055b46a7efd0ee7ea029734cb4",
+  "members": 632,
+  "oracle_input_sha256": {
+    "CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+    "imported-construction-oracle.py": "a73e1fa1fd047ff4477197c3715571ce21499ac5905148ecc7b045a1c63438cb",
+    "programs.json": "4af7021ce8ba2dc7df7e9f4048bff71739bbca823f0e2a249ac829f6d3dbb9c1",
+    "run.py": "323697ef164b0f02fb773af6049f945d9f8e3942ad3b69462b040dd191540242"
+  },
+  "programs": 11,
+  "schema": 1,
+  "statuses": {
+    "error": 8,
+    "success": 3
+  }
+}

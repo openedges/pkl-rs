@@ -86,6 +86,7 @@ test('separate Java authorities retain distinct input identities and complete se
     ['file:///stage62/collection-property-names.pkl', 26],
     ['file:///stage63/collection-addition.pkl', 125],
     ['file:///stage63/set-endpoints.pkl', 70],
+    ['file:///stage64/amendment-construction.pkl', 188],
   ]);
   assert.equal(CONVERSION_PROFILES.length, sizes.size);
   for (const profile of CONVERSION_PROFILES) {
@@ -124,7 +125,7 @@ test('profile catalog rejects incomplete source closure, duplicates, unknown val
     catalog => { catalog.profiles[0].rows = 0; },
     catalog => { delete catalog.profiles[0].input_hashes['module.pkl']; },
     catalog => { catalog.profiles[0].tool_sources.pop(); },
-    catalog => { catalog.profiles.at(-1).module_uri = 'file:///stage63/unknown.pkl'; },
+    catalog => { catalog.profiles.at(-1).module_uri = 'file:///stage64/unknown.pkl'; },
     catalog => { catalog.profiles.at(-1).tool_sources.pop(); },
   ]) {
     const changed = structuredClone(original);
