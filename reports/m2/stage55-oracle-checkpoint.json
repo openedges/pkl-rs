@@ -1,0 +1,459 @@
+{
+  "schema": 1,
+  "stage": 55,
+  "kind": "Java-only-reference-observation-checkpoint",
+  "recorded_at": "2026-10-24T04:20:29.129610+00:00",
+  "scope": "Actual pinned Java full-frame transformer observations and offline evidence/tooling checks; Rust implementation and actual candidate comparison remain separate in-progress work.",
+  "baseline": "Pkl 0.32.0",
+  "base_commit": "599f161ffd109b3b76de67cb5dc8dc36aff1b9a4",
+  "actual_step_commit": null,
+  "actual_commit_binding": "pending until the authorized step commit exists; no staging or commit was performed here",
+  "local_provenance": {
+    "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage55",
+    "execution": "Local macOS; not hosted CI",
+    "python": {
+      "executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "version": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+      "sha256": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063",
+      "bytes": 34640
+    }
+  },
+  "reference_pins": {
+    "pkl_revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "pantry_revision": "904a68184e54da378b0a0e8a911a3fab3956f693",
+    "oracle_lock": {
+      "path": "oracle.lock.json",
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+      "bytes": 4421
+    },
+    "references_lock": {
+      "path": "references.lock",
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+      "bytes": 648
+    },
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "artifact_url": "https://repo.maven.apache.org/maven2/org/pkl-lang/pkl-tools/0.32.0/pkl-tools-0.32.0.jar",
+    "JDK": {
+      "executable": "/usr/bin/java",
+      "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+      "runtime_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+      "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+      "properties": {
+        "java.vendor": "Eclipse Adoptium",
+        "java.version": "21.0.12.1",
+        "java.runtime.version": "21.0.12.1+1-LTS",
+        "java.vm.name": "OpenJDK 64-Bit Server VM",
+        "java.vm.version": "21.0.12.1+1-LTS",
+        "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+        "os.name": "Mac OS X",
+        "os.arch": "aarch64",
+        "os.version": "27.0"
+      }
+    },
+    "exact_command_prefix": [
+      "/usr/bin/java",
+      "-Xms64m",
+      "-Xmx512m",
+      "-Dfile.encoding=UTF-8",
+      "-Dstdout.encoding=UTF-8",
+      "-Dstderr.encoding=UTF-8",
+      "-Duser.language=en",
+      "-Duser.country=US",
+      "-Duser.timezone=UTC",
+      "-Djava.awt.headless=true",
+      "-Duser.name=oracle",
+      "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage55/.cache/oracle/home",
+      "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage55/.cache/oracle/tmp",
+      "-cp",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage55/.cache/oracle/pkl-tools-0.32.0.jar",
+      "org.pkl.cli.Main"
+    ],
+    "environment": {
+      "PATH": "/bin:/usr/bin",
+      "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage55/.cache/oracle/home",
+      "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage55/.cache/oracle/tmp",
+      "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage55/.cache/oracle/tmp",
+      "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage55/.cache/oracle/tmp",
+      "LC_ALL": "C",
+      "LANG": "C",
+      "TZ": "UTC",
+      "TERM": "dumb",
+      "NO_COLOR": "1",
+      "COLUMNS": "80"
+    },
+    "references_updated": false
+  },
+  "fixture": {
+    "path": "tests/fixtures/m2-frame-transformers",
+    "canonical_archive": {
+      "path": "tests/fixtures/m2-frame-transformers/oracle-evidence.tar.gz",
+      "sha256": "53efa9f779095d54fb2fa3345bab0d01e4bc4ddfa707f45c2b3223c63b6606dc",
+      "bytes": 715205
+    },
+    "manifest": {
+      "path": "tests/fixtures/m2-frame-transformers/manifest.json",
+      "sha256": "104533b4fc39c9aed8ea64144d41da8405f01d73b81d05c50c5371559a380f63",
+      "bytes": 1715
+    },
+    "main_cases": {
+      "path": "tests/fixtures/m2-frame-transformers/cases.json",
+      "sha256": "eade525c41b66465402f92509e16e8488ed8cba0736cd4c84069797f992a1148",
+      "bytes": 52280
+    },
+    "buffer_cases": {
+      "path": "tests/fixtures/m2-frame-transformers/buffer-cases.json",
+      "sha256": "3b3cbe978ed57d866e17834c2a7a7b6d62aaa553880e5426e9eb26c560940890",
+      "bytes": 5445
+    },
+    "verification": {
+      "sessions": 48,
+      "java_processes": 96,
+      "repeated_raw_equal": 48,
+      "public_calls": 180,
+      "transformer_callbacks": 164,
+      "logger_callbacks": 82,
+      "warning_callbacks": 68,
+      "call_status_counts": {
+        "api-exception": 4,
+        "success": 142,
+        "oracle-error": 10,
+        "error": 24
+      },
+      "oracle_error_calls": 10,
+      "api_exception_calls": 4,
+      "nested_oracle_error_results": 0,
+      "compatibility_passes_claimed": 0,
+      "buffer_supplement": {
+        "sessions": 7,
+        "java_processes": 14,
+        "repeated_raw_equal": 7,
+        "public_calls": 32,
+        "transformer_callbacks": 50,
+        "logger_callbacks": 14,
+        "warning_callbacks": 0,
+        "call_status_counts": {
+          "success": 32
+        },
+        "oracle_error_calls": 0,
+        "api_exception_calls": 0,
+        "nested_oracle_error_results": 4,
+        "compatibility_passes_claimed": 0,
+        "scope": "Java-only public TestResults.logs() observations; candidate test-tool API parity is unexecuted."
+      }
+    }
+  },
+  "main": {
+    "report": {
+      "path": "target/m2/stage55-frame-oracle-02/report.json",
+      "sha256": "14b716344589a25d0ba68b0c0c98ae290bb2a53cda9acd8f7e7771c66217162a",
+      "bytes": 2250399
+    },
+    "sessions": 48,
+    "JVM_processes": 96,
+    "public_calls": 180,
+    "transformer_callbacks": 164,
+    "logger_callbacks": 82,
+    "warning_callbacks": 68,
+    "public_call_status_counts": {
+      "api-exception": 4,
+      "success": 142,
+      "oracle-error": 10,
+      "error": 24
+    },
+    "repeated_pairs_raw_equal": 48,
+    "compatibility_passes_claimed": 0,
+    "boundary": "All original/returned frame fields, nullable versus empty members, every source line, four inclusive positions, original Java UTF8 and exact UTF16BE code units, full error/status/class provenance and ordered callback/process protocol.",
+    "policies": [
+      "default",
+      "builtin-identity",
+      "observed identity callback",
+      "full replacement callback",
+      "numbered replacement callback"
+    ],
+    "actions": [
+      "real noop delegate",
+      "transformer/logger throw-once and retry",
+      "transformer/logger public evaluator reentry",
+      "nested reentry consuming throw-once",
+      "compressed original diagnostic frames transformed afterward"
+    ],
+    "nonpasses": "Ten PklBugException calls and four actual API exception calls remain reference nonpasses, never compatible-error or tool-success passes. API exception classes/messages are not synthesized by candidates."
+  },
+  "buffer_supplement": {
+    "report": {
+      "path": "target/m2/stage55-frame-buffer-oracle-01/report.json",
+      "sha256": "54846343538cce8a60efad140f4726a6f0e0b573b264a9226629491aad855300",
+      "bytes": 580595
+    },
+    "sessions": 7,
+    "JVM_processes": 14,
+    "evaluateTest_outer_calls": 28,
+    "expression_reentry_calls": 4,
+    "public_calls": 32,
+    "transformer_callbacks": 50,
+    "logger_callbacks": 14,
+    "repeated_pairs_raw_equal": 7,
+    "nested_PklBugException_results": 4,
+    "public_call_status_counts": {
+      "success": 32
+    },
+    "compatibility_passes_claimed": 0,
+    "observations": [
+      "Real TestResults.logs() exposes attempted message append before transformer/delegate failure.",
+      "The noop delegate emits no logger callback while custom transformation and buffered messages remain observable.",
+      "Repeated public evaluation clears the buffer; cached successful facts need not emit another trace.",
+      "Transformer and logger public reentry can clear the buffer before the enclosing operation returns."
+    ],
+    "scope": "Java-only public API supplement. A returned TestResults object is not an assertion pass; four nested erroneous results remain preserved. Candidate test-tool/API parity was not executed here."
+  },
+  "preserved_history": {
+    "report": {
+      "path": "target/m2/stage55-frame-oracle-01/report.json",
+      "sha256": "b1ee19484307dc2312c7f6883131f98beea4fc884ee77543d845c6ee5979e3b2",
+      "bytes": 2225363
+    },
+    "sessions": 47,
+    "JVM_processes": 94,
+    "repeated_pairs_raw_equal": 47,
+    "bytes_preserved": true,
+    "included_in_archive": "reports/m2/stage55-oracle-validation-evidence.tar.gz",
+    "reason": "The final matrix added one diagnostic-empty-source-list control in a new directory; the initial complete acquisition is retained unchanged, not overwritten or counted as new independent feature coverage."
+  },
+  "validation": {
+    "report": {
+      "path": "target/m2/stage55-oracle-checkpoint-validation-01/report.json",
+      "sha256": "354526c4f6494a115497e3cc034c13be45864b0530e6fa326fd3f893aae717bc",
+      "bytes": 15644
+    },
+    "commands": [
+      {
+        "name": "fixture-integrity",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/frame_transformer_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage55",
+        "started_utc": "2026-10-24T04:12:46.689095+00:00",
+        "finished_utc": "2026-10-24T04:12:55.953654+00:00",
+        "elapsed_ns": 9264207834,
+        "status": "executed",
+        "exit_code": 0,
+        "error": null,
+        "stdout": {
+          "sha256": "ea900d44ec4bb4258124d2b1e369746ce231a25630f39d8f1135cb0c056b0c06",
+          "bytes": 828
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      {
+        "name": "oracle-main-integrity",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/frame_transformer_oracle.py",
+          "--verify-report",
+          "target/m2/stage55-frame-oracle-02"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage55",
+        "started_utc": "2026-10-24T04:12:55.954501+00:00",
+        "finished_utc": "2026-10-24T04:12:59.890161+00:00",
+        "elapsed_ns": 3935556417,
+        "status": "executed",
+        "exit_code": 0,
+        "error": null,
+        "stdout": {
+          "sha256": "1cef666d306cf66b5f0e31b54cbd594d35f961ab9f0facfe62bf0b0d67b2b65d",
+          "bytes": 100
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      {
+        "name": "oracle-buffer-integrity",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/frame_transformer_oracle.py",
+          "--verify-report",
+          "target/m2/stage55-frame-buffer-oracle-01"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage55",
+        "started_utc": "2026-10-24T04:12:59.891025+00:00",
+        "finished_utc": "2026-10-24T04:13:00.993553+00:00",
+        "elapsed_ns": 1102546917,
+        "status": "executed",
+        "exit_code": 0,
+        "error": null,
+        "stdout": {
+          "sha256": "cfd06687eb34c0e3426f15e9f9d1aaeb571c5a8a6cb348c0d19de75ab49b72e4",
+          "bytes": 98
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      {
+        "name": "oracle-history-integrity",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/frame_transformer_oracle.py",
+          "--verify-report",
+          "target/m2/stage55-frame-oracle-01"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage55",
+        "started_utc": "2026-10-24T04:13:00.994494+00:00",
+        "finished_utc": "2026-10-24T04:13:04.880330+00:00",
+        "elapsed_ns": 3885798208,
+        "status": "executed",
+        "exit_code": 0,
+        "error": null,
+        "stdout": {
+          "sha256": "2092ceffdc0d822aec97967a059a82c933fe2b7809a8d03b6fb71f0eca64fb28",
+          "bytes": 100
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      {
+        "name": "fixture-tests",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-p",
+          "test_frame_transformer_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage55",
+        "started_utc": "2026-10-24T04:13:04.881336+00:00",
+        "finished_utc": "2026-10-24T04:13:44.753357+00:00",
+        "elapsed_ns": 39870855542,
+        "status": "executed",
+        "exit_code": 0,
+        "error": null,
+        "stdout": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "sha256": "278c557e15868139e19df3a3a70cb2b80ad55c24d3b6fdb0a5266f46573ead28",
+          "bytes": 114
+        }
+      },
+      {
+        "name": "source-inventory",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/inventory.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage55",
+        "started_utc": "2026-10-24T04:13:44.754455+00:00",
+        "finished_utc": "2026-10-24T04:13:48.024934+00:00",
+        "elapsed_ns": 3270440000,
+        "status": "executed",
+        "exit_code": 0,
+        "error": null,
+        "stdout": {
+          "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b",
+          "bytes": 926
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    ],
+    "all_six_checks_exit_zero": true,
+    "fixture_tests": {
+      "count": 14,
+      "status": "passed",
+      "raw_stdout": {
+        "path": "target/m2/stage55-oracle-checkpoint-validation-01/fixture-tests.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "raw_stderr": {
+        "path": "target/m2/stage55-oracle-checkpoint-validation-01/fixture-tests.stderr.bin",
+        "sha256": "278c557e15868139e19df3a3a70cb2b80ad55c24d3b6fdb0a5266f46573ead28",
+        "bytes": 114
+      }
+    },
+    "protected_source_identities_unchanged": true,
+    "protected_source_manifest": {
+      "path": "target/m2/stage55-oracle-checkpoint-validation-01/sources.json",
+      "sha256": "9cbcb6be17eef6460f35ff6c5e06620791c86fd673d1514a177c35c94320be65",
+      "bytes": 3290
+    },
+    "scope": "Read-only offline fixture/report integrity, exact raw test logs and pinned source inventory freshness. No Java guest or Rust/Node/browser candidate is launched by these checks."
+  },
+  "packaging_preparation_failure": {
+    "path": "target/m2/stage55-oracle-checkpoint-publication-01/failure.json",
+    "reason": "Initial archive output open failed because reports/m2 was absent; script and manifest preserved, no source or acquisition failure."
+  },
+  "owned_sources": {
+    "tools/java/M2FrameTransformerProbe.java": {
+      "path": "tools/java/M2FrameTransformerProbe.java",
+      "sha256": "ff3b0860de4b2da6d5a670f0da2cbe507bdd4d890fdabd67535c754ada5cb507",
+      "bytes": 11051
+    },
+    "tools/frame_transformer_oracle.py": {
+      "path": "tools/frame_transformer_oracle.py",
+      "sha256": "367b31bf07d48a8613982b822d841110d7722005c9d960df39739b4507f26dd1",
+      "bytes": 20562
+    },
+    "tools/frame_transformer_fixtures.py": {
+      "path": "tools/frame_transformer_fixtures.py",
+      "sha256": "1317d59e200be12123d6809e1a8b3b50bc8a64c334c8812443f5e53aa62bbb00",
+      "bytes": 4317
+    },
+    "tools/tests/test_frame_transformer_fixtures.py": {
+      "path": "tools/tests/test_frame_transformer_fixtures.py",
+      "sha256": "f722b7a3081e96e1f0b9c971b9983e4c09188ad5e2ef3431d05f9994f1f66491",
+      "bytes": 7252
+    }
+  },
+  "publication": {
+    "archive": {
+      "path": "reports/m2/stage55-oracle-validation-evidence.tar.gz",
+      "sha256": "ce5b9ddb229fc2ba33e2de0f3ec6be78d976c1453a9df7ba4083fea154a14894",
+      "bytes": 634773
+    },
+    "payload_members": 5964,
+    "archive_members": 5965,
+    "manifest_sha256": "0564ed281174c2a14893c873e19effed2be573246ab2cdda57ee7e894cd4939a",
+    "historical_and_validation_payload_files": 5961,
+    "canonical_final_files_deduplicated": 7550,
+    "re_read_verified": true,
+    "safe_paths_and_no_duplicates": true,
+    "publication_report": {
+      "path": "target/m2/stage55-oracle-checkpoint-publication-02/report.json",
+      "sha256": "3789876507ba44a5ab615f291acb57d873df0e9e69a74c7cc8aa10ab7fa16a5c",
+      "bytes": 767
+    },
+    "canonical_archive_not_duplicated": true,
+    "originals_modified_or_deleted": false
+  },
+  "remaining_scope": [
+    "This checkpoint makes no Rust/native/Wasm/N-API compatibility or implementation-completion claim.",
+    "The parent concurrent native acquisition is separate evidence and is not summarized as this checkpoint work.",
+    "Java internal errors/API exceptions and the buffer supplement remain explicit nonpass/unexecuted candidate boundaries.",
+    "Service-provider/package URL policies, malformed signed frame coordinates, cross-evaluator stdlib lifetime and full lifecycle/API behavior remain open.",
+    "Whole M2, release-platform compatibility and speed/memory targets remain open. No performance measurement or claim is made.",
+    "Actual new step commit/source binding remains pending."
+  ],
+  "Rust_compatibility_passes_claimed": 0,
+  "whole_M2_complete": false,
+  "full_language_or_API_compatibility": false,
+  "performance_or_memory_targets_achieved": false,
+  "hosted_CI_result_claimed": false
+}

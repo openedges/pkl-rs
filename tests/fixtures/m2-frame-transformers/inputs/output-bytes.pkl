@@ -1,0 +1,7 @@
+module stage54OutputBytes
+class R extends BytesRenderer {
+  @Deprecated { message = "bytes document renderer" }
+  function renderDocument(v): Bytes = "ok".encodeToBytes("UTF-8")
+  function renderValue(v): Bytes = "value".encodeToBytes("UTF-8")
+}
+output { renderer = new R {}; value = 1 }

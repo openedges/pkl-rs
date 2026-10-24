@@ -1,0 +1,16 @@
+module stage55Frames
+@Deprecated { message = "original warn\n😀\u{D800}" }
+function old(x) = x
+function retained(x) = old(x)
+function traced(x) = trace(x)
+function fail() = throw("frame-failure")
+function recurse(n) = if (n == 0) fail() else recurse(n - 1)
+function left(n) = if (n == 0) fail() else right(n - 1)
+function right(n) = left(n)
+function traceThenFail() = trace(1) + fail()
+class C {
+  @Deprecated
+  function toString() = "value"
+}
+object = new C {}
+stable = 42

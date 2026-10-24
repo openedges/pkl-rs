@@ -1,0 +1,237 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "repetitions": 2,
+  "scope": "Java-only evaluateTest(...).logs() buffer observations; source-driven public API, not evidence of candidate test-tool support.",
+  "cases": [
+    {
+      "id": "buffer-identity",
+      "source": "inputs/buffer.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "test",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "calls": 2,
+      "source_sha256": "6dbd0f77597304f37b427592300645b7e78121f8925bd881add21f2bc257db71"
+    },
+    {
+      "id": "buffer-full",
+      "source": "inputs/buffer.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "test",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "calls": 2,
+      "source_sha256": "6dbd0f77597304f37b427592300645b7e78121f8925bd881add21f2bc257db71"
+    },
+    {
+      "id": "buffer-noop",
+      "source": "inputs/buffer.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "test",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "noop",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "calls": 2,
+      "source_sha256": "6dbd0f77597304f37b427592300645b7e78121f8925bd881add21f2bc257db71"
+    },
+    {
+      "id": "buffer-transformer-throw",
+      "source": "inputs/buffer.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "test",
+      "transformer": {
+        "mode": "identity",
+        "action": "throw-once",
+        "callback": "",
+        "callback_after": 1
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "calls": 2,
+      "source_sha256": "6dbd0f77597304f37b427592300645b7e78121f8925bd881add21f2bc257db71"
+    },
+    {
+      "id": "buffer-logger-throw",
+      "source": "inputs/buffer.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "test",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "throw-once",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "calls": 2,
+      "source_sha256": "6dbd0f77597304f37b427592300645b7e78121f8925bd881add21f2bc257db71"
+    },
+    {
+      "id": "buffer-transformer-reentry-clear",
+      "source": "inputs/buffer.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "test",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "42",
+        "callback_after": 1
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "calls": 2,
+      "source_sha256": "6dbd0f77597304f37b427592300645b7e78121f8925bd881add21f2bc257db71"
+    },
+    {
+      "id": "buffer-logger-reentry-clear",
+      "source": "inputs/buffer.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "test",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "42",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "calls": 2,
+      "source_sha256": "6dbd0f77597304f37b427592300645b7e78121f8925bd881add21f2bc257db71"
+    }
+  ]
+}

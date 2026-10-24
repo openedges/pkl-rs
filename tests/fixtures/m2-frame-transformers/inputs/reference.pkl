@@ -1,0 +1,9 @@
+module stage54Reference
+import "pkl:ref"
+class D extends ref.Domain {
+  @Deprecated { message = "domain renderer" }
+  function renderReference(r): String = "ok"
+}
+domain = new D {}
+reference = ref.Reference(domain, String, null)
+function format(x) = "\(x)"

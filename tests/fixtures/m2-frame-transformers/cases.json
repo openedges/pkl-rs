@@ -1,0 +1,2540 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "repetitions": 2,
+  "scope": "Selected source-driven public frame-transformer and logger observations; no candidate compatibility claim.",
+  "cases": [
+    {
+      "id": "diagnostic-empty-lines",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "fail()"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "authored-warn-default",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "default",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "authored-warn-builtin-identity",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "builtin-identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "authored-warn-identity",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "authored-warn-full",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "authored-warn-unicode",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          110,
+          111,
+          116,
+          32,
+          97,
+          32,
+          85,
+          82,
+          73,
+          32,
+          58,
+          55357,
+          56832,
+          55296,
+          10,
+          101,
+          110,
+          100
+        ],
+        "memberName": [
+          57343,
+          55357,
+          56832
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            118,
+            97,
+            108,
+            117,
+            101,
+            32,
+            61,
+            32,
+            34,
+            55357,
+            56832,
+            55296,
+            34
+          ],
+          [
+            32,
+            32,
+            110,
+            101,
+            120,
+            116,
+            32,
+            61,
+            32,
+            34,
+            116,
+            97,
+            105,
+            108,
+            57343,
+            34
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "authored-warn-member-empty",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "authored-warn-member-null",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": null,
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "authored-warn-empty-lines",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "trace-identity",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "traced(\"first\")",
+        "traced(\"second\")"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "trace-unicode",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          110,
+          111,
+          116,
+          32,
+          97,
+          32,
+          85,
+          82,
+          73,
+          32,
+          58,
+          55357,
+          56832,
+          55296,
+          10,
+          101,
+          110,
+          100
+        ],
+        "memberName": [
+          57343,
+          55357,
+          56832
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            118,
+            97,
+            108,
+            117,
+            101,
+            32,
+            61,
+            32,
+            34,
+            55357,
+            56832,
+            55296,
+            34
+          ],
+          [
+            32,
+            32,
+            110,
+            101,
+            120,
+            116,
+            32,
+            61,
+            32,
+            34,
+            116,
+            97,
+            105,
+            108,
+            57343,
+            34
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "traced(\"\ud83d\ude00\\u{D800}\")",
+        "traced(\"again\")"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "authored-crlf",
+      "source": "inputs/crlf.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "5c9bf307a4c910dd4f205a5466344efa354085a0f51790c3fd749c7e74b4e62c"
+    },
+    {
+      "id": "query-utf16-columns",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "let (x = \"\ud83d\ude00\") old(1)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "typed-api-unavailable",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "object",
+        "object"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "noop-default",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "default",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "noop",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "noop-builtin-identity",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "builtin-identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "noop",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "noop-identity",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "noop",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "noop-full",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "noop",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          110,
+          111,
+          116,
+          32,
+          97,
+          32,
+          85,
+          82,
+          73,
+          32,
+          58,
+          55357,
+          56832,
+          55296,
+          10,
+          101,
+          110,
+          100
+        ],
+        "memberName": [
+          57343,
+          55357,
+          56832
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            118,
+            97,
+            108,
+            117,
+            101,
+            32,
+            61,
+            32,
+            34,
+            55357,
+            56832,
+            55296,
+            34
+          ],
+          [
+            32,
+            32,
+            110,
+            101,
+            120,
+            116,
+            32,
+            61,
+            32,
+            34,
+            116,
+            97,
+            105,
+            108,
+            57343,
+            34
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "transformer-throw-once",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "throw-once",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(2)",
+        "retained(3)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "logger-throw-once",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "throw-once",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(2)",
+        "retained(3)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "transformer-reentry",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "retained(2)",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(3)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "logger-reentry",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "retained(2)",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(3)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "transformer-reentry-throw-nested",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "throw-once",
+        "callback": "retained(2)",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(3)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "logger-reentry-throw-nested",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "throw-once",
+        "callback": "retained(2)",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "retained(1)",
+        "retained(3)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "diagnostic-default",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "default",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "fail()"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "diagnostic-identity",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "fail()"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "diagnostic-full",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "fail()"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "diagnostic-unicode",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          110,
+          111,
+          116,
+          32,
+          97,
+          32,
+          85,
+          82,
+          73,
+          32,
+          58,
+          55357,
+          56832,
+          55296,
+          10,
+          101,
+          110,
+          100
+        ],
+        "memberName": [
+          57343,
+          55357,
+          56832
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            118,
+            97,
+            108,
+            117,
+            101,
+            32,
+            61,
+            32,
+            34,
+            55357,
+            56832,
+            55296,
+            34
+          ],
+          [
+            32,
+            32,
+            110,
+            101,
+            120,
+            116,
+            32,
+            61,
+            32,
+            34,
+            116,
+            97,
+            105,
+            108,
+            57343,
+            34
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "fail()"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "diagnostic-compressed-single",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "numbered",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "recurse(5)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "diagnostic-compressed-mutual",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "numbered",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "left(4)"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "diagnostic-trace-first",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "numbered",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "traceThenFail()"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "diagnostic-transformer-throw-once",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "throw-once",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "fail()",
+        "fail()"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "diagnostic-logger-throw-once",
+      "source": "inputs/basic.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "throw-once",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "traceThenFail()",
+        "traceThenFail()"
+      ],
+      "source_sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0"
+    },
+    {
+      "id": "ref-default",
+      "source": "inputs/reference.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "default",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "reference.toString()",
+        "reference.toString()"
+      ],
+      "source_sha256": "568f5b9bd99d498c523d87492b70d71ff121b979d0081ee4c66ce21ccbd4559f"
+    },
+    {
+      "id": "ref-identity",
+      "source": "inputs/reference.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "reference.toString()",
+        "reference.toString()"
+      ],
+      "source_sha256": "568f5b9bd99d498c523d87492b70d71ff121b979d0081ee4c66ce21ccbd4559f"
+    },
+    {
+      "id": "ref-full",
+      "source": "inputs/reference.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "reference.toString()",
+        "reference.toString()"
+      ],
+      "source_sha256": "568f5b9bd99d498c523d87492b70d71ff121b979d0081ee4c66ce21ccbd4559f"
+    },
+    {
+      "id": "module-text-default",
+      "source": "inputs/output-text.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "default",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "output.text",
+        "output.text"
+      ],
+      "source_sha256": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d"
+    },
+    {
+      "id": "module-text-identity",
+      "source": "inputs/output-text.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "output.text",
+        "output.text"
+      ],
+      "source_sha256": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d"
+    },
+    {
+      "id": "module-text-full",
+      "source": "inputs/output-text.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "output.text",
+        "output.text"
+      ],
+      "source_sha256": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d"
+    },
+    {
+      "id": "file-text-default",
+      "source": "inputs/output-text.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "default",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "file.text",
+        "file.text"
+      ],
+      "source_sha256": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d"
+    },
+    {
+      "id": "file-text-identity",
+      "source": "inputs/output-text.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "file.text",
+        "file.text"
+      ],
+      "source_sha256": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d"
+    },
+    {
+      "id": "file-text-full",
+      "source": "inputs/output-text.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "file.text",
+        "file.text"
+      ],
+      "source_sha256": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d"
+    },
+    {
+      "id": "module-bytes-default",
+      "source": "inputs/output-bytes.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "default",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "output.bytes.base64",
+        "output.bytes.base64"
+      ],
+      "source_sha256": "a4a6b30cb5376b95515b0370b275776edb0967e8f09e27e7300ed640849a013f"
+    },
+    {
+      "id": "module-bytes-identity",
+      "source": "inputs/output-bytes.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "output.bytes.base64",
+        "output.bytes.base64"
+      ],
+      "source_sha256": "a4a6b30cb5376b95515b0370b275776edb0967e8f09e27e7300ed640849a013f"
+    },
+    {
+      "id": "module-bytes-full",
+      "source": "inputs/output-bytes.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "output.bytes.base64",
+        "output.bytes.base64"
+      ],
+      "source_sha256": "a4a6b30cb5376b95515b0370b275776edb0967e8f09e27e7300ed640849a013f"
+    },
+    {
+      "id": "stdlib-diagnostic-default",
+      "source": "inputs/reference-error.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "default",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "reference.toString()"
+      ],
+      "source_sha256": "1cd235cacd1a355467d31727cd6591cd35d600a19cbc016e1700c9d9f9670b7a"
+    },
+    {
+      "id": "stdlib-diagnostic-identity",
+      "source": "inputs/reference-error.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "identity",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": null,
+      "expressions": [
+        "reference.toString()"
+      ],
+      "source_sha256": "1cd235cacd1a355467d31727cd6591cd35d600a19cbc016e1700c9d9f9670b7a"
+    },
+    {
+      "id": "stdlib-diagnostic-full",
+      "source": "inputs/reference-error.pkl",
+      "uri": "file:///stage55-frame.pkl",
+      "operation": "expression",
+      "transformer": {
+        "mode": "full",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "replacement": {
+        "moduleUri": [
+          112,
+          107,
+          108,
+          58,
+          99,
+          117,
+          115,
+          116,
+          111,
+          109,
+          45,
+          114,
+          101,
+          116,
+          117,
+          114,
+          110
+        ],
+        "memberName": [
+          114,
+          101,
+          112,
+          108,
+          97,
+          99,
+          101,
+          109,
+          101,
+          110,
+          116,
+          35,
+          109,
+          101,
+          109,
+          98,
+          101,
+          114
+        ],
+        "sourceLines": [
+          [
+            32,
+            32,
+            32,
+            32,
+            114,
+            101,
+            112,
+            108,
+            97,
+            99,
+            101,
+            100,
+            32,
+            61,
+            32,
+            49,
+            50,
+            51
+          ],
+          [
+            32,
+            32,
+            115,
+            101,
+            99,
+            111,
+            110,
+            100,
+            32,
+            61,
+            32,
+            52,
+            53,
+            54
+          ]
+        ],
+        "startLine": 37,
+        "startColumn": 5,
+        "endLine": 38,
+        "endColumn": 7
+      },
+      "expressions": [
+        "reference.toString()"
+      ],
+      "source_sha256": "1cd235cacd1a355467d31727cd6591cd35d600a19cbc016e1700c9d9f9670b7a"
+    }
+  ]
+}

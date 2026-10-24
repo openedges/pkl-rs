@@ -1,0 +1,6 @@
+amends "pkl:test"
+facts {
+  ["trace"] {
+    trace(true)
+  }
+}

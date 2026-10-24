@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "files": {
+    "LICENSE": {
+      "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296",
+      "bytes": 10765
+    },
+    "README.md": {
+      "sha256": "ad70d9a035e232b22441ef71ad7bc001cfc4d29d4e4ae0c081c3814b9eb0b98b",
+      "bytes": 5810
+    },
+    "buffer-cases.json": {
+      "sha256": "3b3cbe978ed57d866e17834c2a7a7b6d62aaa553880e5426e9eb26c560940890",
+      "bytes": 5445
+    },
+    "cases.json": {
+      "sha256": "eade525c41b66465402f92509e16e8488ed8cba0736cd4c84069797f992a1148",
+      "bytes": 52280
+    },
+    "inputs/basic.pkl": {
+      "sha256": "ed25c4873a7ffdacc5d76d40217528b9d2bc138d7f2193d75877ef7035b5beb0",
+      "bytes": 476
+    },
+    "inputs/buffer.pkl": {
+      "sha256": "6dbd0f77597304f37b427592300645b7e78121f8925bd881add21f2bc257db71",
+      "bytes": 62
+    },
+    "inputs/crlf.pkl": {
+      "sha256": "5c9bf307a4c910dd4f205a5466344efa354085a0f51790c3fd749c7e74b4e62c",
+      "bytes": 492
+    },
+    "inputs/output-bytes.pkl": {
+      "sha256": "a4a6b30cb5376b95515b0370b275776edb0967e8f09e27e7300ed640849a013f",
+      "bytes": 288
+    },
+    "inputs/output-text.pkl": {
+      "sha256": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d",
+      "bytes": 299
+    },
+    "inputs/reference-error.pkl": {
+      "sha256": "1cd235cacd1a355467d31727cd6591cd35d600a19cbc016e1700c9d9f9670b7a",
+      "bytes": 211
+    },
+    "inputs/reference.pkl": {
+      "sha256": "568f5b9bd99d498c523d87492b70d71ff121b979d0081ee4c66ce21ccbd4559f",
+      "bytes": 257
+    },
+    "oracle-evidence.tar.gz": {
+      "sha256": "53efa9f779095d54fb2fa3345bab0d01e4bc4ddfa707f45c2b3223c63b6606dc",
+      "bytes": 715205
+    }
+  }
+}

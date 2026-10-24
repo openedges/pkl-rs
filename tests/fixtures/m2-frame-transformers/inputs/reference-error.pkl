@@ -1,0 +1,5 @@
+module stage55ReferenceError
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = throw("domain-frame-failure") }
+domain = new D {}
+reference = ref.Reference(domain, String, null)
