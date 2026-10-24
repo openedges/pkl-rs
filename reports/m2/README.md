@@ -5,6 +5,13 @@ adds object-body parameters, typed function amendments, retained curried capture
 and Mixin defaults through explicit and inferred aliases in the shared engine.
 See the [language contract](../../docs/m2-object-parameters.md).
 
+The [postcommit source binding](stage53-source-binding.json) compares all 4,589
+final validation inputs with actual Git blob bytes at implementation commit
+`0ab9da59201c6fbe59f507310f36b2e389fda4f2`, including 63 files reached through the
+pinned Pkl gitlink. [Binding evidence](stage53-source-binding-evidence.tar.gz)
+retains the Git batch requests, raw objects, and publication review. This closes
+the checkpoint's historical pending-commit observation without rewriting it.
+
 The final comparison matches all 85 ordinary Java cases twice on native, N-API,
 and Chromium: 170 executions per target, 510 total. These comprise 56 value cases
 and 29 language-error cases. Seven Java internal-error boundaries remain separate

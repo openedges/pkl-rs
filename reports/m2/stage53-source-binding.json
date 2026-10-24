@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "scope": "Actual postcommit byte binding of final validation, comparison and original-module inputs; no claim that historical candidate01/helper sources equal final Git.",
+  "completedUtc": "2026-10-24T01:55:43.091573+00:00",
+  "implementationCommit": "0ab9da59201c6fbe59f507310f36b2e389fda4f2",
+  "sourceCatalogs": {
+    "stage53-validation-02/sources.json": {
+      "sha256": "96ba6a1ce39a0afcf1d61830b3cdc8c0d472c6a44621ca93b0b60e820f61c801",
+      "entries": 4589
+    },
+    "stage53-comparison-run-02/sources.json": {
+      "sha256": "ea313ff80b15fb6eab165bd2b33f5f5605ae7ba5cb3da095e151715f14809f4e",
+      "entries": 4537
+    },
+    "stage53-original-mixins-01/sources.json": {
+      "sha256": "644ef220b7ed10f25367ddbee98a6811d985d3342de2a7281896df14d5116ccc",
+      "entries": 4436
+    }
+  },
+  "uniquePaths": 4589,
+  "repositories": {
+    "project": {
+      "commit": "0ab9da59201c6fbe59f507310f36b2e389fda4f2",
+      "paths": 4526
+    },
+    "external/pkl": {
+      "commit": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "paths": 63,
+      "gitlink": "160000 commit e51fb2f91774265666f94980ec630db794a4db2d\texternal/pkl"
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage53",
+        "cat-file",
+        "--batch"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "36688680daa7270ea8687908c60a720fb31381b4a17765d7920e53bf4f52b903",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage53/external/pkl",
+        "cat-file",
+        "--batch"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "9222375585050a308e374a5ae71d1fe71522b0df0cb96f8b0054849a9972368c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "allGitBlobBytesMatch": true,
+  "gitObjectFramingVerified": true,
+  "allCurrentInputBytesMatch": true,
+  "differences": [],
+  "bindingsSha256": "b87185d77462187e4628643d96b9f5c4dd536be0e3f5070c427b8afe90a3b97e",
+  "checkpointSha256": "51003e18e3c72c25b4a0d0038180e7828c42af2b1e4c971212e333afdb0ec5e1",
+  "publicationTerminalObservation": {
+    "session": 7356,
+    "chunk": "a642af",
+    "exitCode": 0
+  },
+  "qualification": "The checkpoint retains its original precommit observation. This sidecar supplies the actual implementation commit. M1 overinclusive source catalog contains two historical JS helper/test versions, explicitly separated from unchanged engine/binding inputs and frozen artifacts in the comparison02 reuse record. No Pantry blob batch is claimed unless listed in repositories.",
+  "fullM2Complete": false,
+  "fullCompatibilityComplete": false,
+  "performanceTargetClaimed": false,
+  "evidenceArchive": {
+    "path": "reports/m2/stage53-source-binding-evidence.tar.gz",
+    "sha256": "9f66cb189b87ea8450535a37815ef79e4078ea2fd40b15663cc1c8bbd341e4c7",
+    "bytes": 3708476
+  }
+}
