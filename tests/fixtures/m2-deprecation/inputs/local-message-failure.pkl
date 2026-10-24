@@ -1,0 +1,5 @@
+module stage54Local
+@Deprecated { message = throw("local-message-must-not-be-forced") }
+local function old(x) = x
+function retained(x) = old(x)
+stable = 42

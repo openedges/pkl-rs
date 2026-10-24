@@ -1,0 +1,13 @@
+module stage54Super
+open class Parent {
+  @Deprecated { message = "parent warning" }
+  function old(x: Int): Int = trace(x)
+}
+class Child extends Parent {
+  function retained(x) = super.old(trace(x))
+  function argumentFailure() = super.old(throw("argument-failure"))
+  function typeFailure() = super.old("wrong")
+  function arityFailure() = super.old()
+}
+child = new Child {}
+stable = 42

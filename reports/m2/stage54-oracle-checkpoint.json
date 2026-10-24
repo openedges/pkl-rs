@@ -1,0 +1,249 @@
+{
+  "schema": 1,
+  "scope": "Pinned Java deprecation reference observations and offline evidence verification; Rust implementation remains in progress",
+  "baseline": "Pkl 0.32.0",
+  "base_commit": "87a81ce22b2c246bed6d61eb14f4e729d66b2978",
+  "fixture": "tests/fixtures/m2-deprecation",
+  "authority_sha256": "e0e78f3f55c680ae4a37620dd3355f9efd6158d4f0ba141852c8825070de2fae",
+  "main": {
+    "sessions": 56,
+    "jvm_processes": 112,
+    "public_calls": 310,
+    "successes": 228,
+    "language_errors": 66,
+    "oracle_errors": 10,
+    "api_exceptions": 6
+  },
+  "supplemental_cycles": {
+    "sessions": 6,
+    "jvm_processes": 12,
+    "evaluators": 48,
+    "public_calls": 96,
+    "successful_calls": 96
+  },
+  "compatibility_passes_claimed": 0,
+  "validation": {
+    "scope": "Java-only authority/tooling checkpoint; Rust implementation and broader M2 are in progress",
+    "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "python_executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "python_sha256": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063",
+    "environment": {
+      "HOME": "/Users/cody.ij.hwang",
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "PATH": "/Users/cody.ij.hwang/.local/share/mise/shims:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/opt/homebrew/bin:/Users/cody.ij.hwang/.local/bin:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.164.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0-macos/codex-arg0WaCBLw:/Users/cody.ij.hwang/.codex/tmp/arg0-macos/codex-arg0bqYRuA:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.163.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0AdUHmc:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.162.1-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0s2Ws1B:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.162.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0aQ0Pe2:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.161.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg07GBUOF:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.160.1-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0XSBIgf:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.160.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0cHvuNN:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.159.3-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0CgL1ON:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.159.2-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0wD41rT:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.159.1-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0cUjllx:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.159.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg05MjH3M:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.158.0-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0lbKprz:/Users/cody.ij.hwang/.codex/packages/app-server-daemon/releases/0.157.1-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.codex/tmp/arg0/codex-arg0hPSAj8:/Users/cody.ij.hwang/.codex/packages/standalone/releases/0.157.1-aarch64-apple-darwin/codex-path:/Users/cody.ij.hwang/.cargo/bin",
+      "TERM": "dumb",
+      "TMPDIR": "/var/folders/_q/s969zhkx6qd8p32v2nd87ygh0000gp/T/",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "sources": {
+      "PLAN.md": "44a535c4f6a7883850999f2f910c7a1fd0f75040797d3b526e100dfb6d492a74",
+      "docs/m2-deprecation.md": "6a6e37ff9853befe882ddf5215feb5e86892f8ac7e321fe18a925837a781f86f",
+      "oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+      "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+      "tests/fixtures/m2-deprecation/LICENSE": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296",
+      "tests/fixtures/m2-deprecation/README.md": "3efef439ffee64e5188a13d79817f14ff263901982f74aa97d856f86e39d65d7",
+      "tests/fixtures/m2-deprecation/cases.json": "ce6a8645fbba5c3b515acaee4e7b2b2706ef17d44385aacb01c64d2f3fbe0cb2",
+      "tests/fixtures/m2-deprecation/cycles.json": "39c949a4c3ffa51ce3a46276491af2cd8d044dedde863a67b21aa1737774d39e",
+      "tests/fixtures/m2-deprecation/inputs/alias-clones.pkl": "fe7cb9217124b756ab4c481ddbd7f790d8c95fd8a6a0d373be159459c62af5b1",
+      "tests/fixtures/m2-deprecation/inputs/amended-local.pkl": "2a5babee9a59ff2b38687565f0076dd40765416dabfeb6bcca99992a23334fdb",
+      "tests/fixtures/m2-deprecation/inputs/annotation-type-order.pkl": "29438350f7260bc2f34c3414f1c463fa6b02b3323ce539ff1cd1502e6f6e394b",
+      "tests/fixtures/m2-deprecation/inputs/closed.pkl": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "tests/fixtures/m2-deprecation/inputs/duplicate.pkl": "75a125e756cb1d326d5747adc22da874f9c7a59d621eff0be20df74ff7394d81",
+      "tests/fixtures/m2-deprecation/inputs/local-message-failure.pkl": "7c7f7dda3f720d9e64477f544ceb928921bfc6df1b79771ee7615a5e43c7b90d",
+      "tests/fixtures/m2-deprecation/inputs/locals.pkl": "847dacb720fc6b4ec1060a3838ae1feee70ca0c7d945fd323120c8caa9a8ca45",
+      "tests/fixtures/m2-deprecation/inputs/message-failure.pkl": "d221179ab070fcce7a9c408e7f79a8f00d0e09e391bee5b21c308d0fabb722ca",
+      "tests/fixtures/m2-deprecation/inputs/message-type-failure.pkl": "e1b7625635cbfbaf22e6213ee1fcd01e41b913563f0bb92af45a7991f90b50c5",
+      "tests/fixtures/m2-deprecation/inputs/nonmethod.pkl": "802158799a1e86d4757185d866471eeb059517aec1d67d89920b7f7ed43b352d",
+      "tests/fixtures/m2-deprecation/inputs/open.pkl": "919c1b1743caabd8c38c1547f17b6d751a6e5ef527aeb54051752f615104fe02",
+      "tests/fixtures/m2-deprecation/inputs/other-fields-lazy.pkl": "8744fa2dcdbe079295e79e29c6f24afeeee56a69e430d5dc6e78f08c0985f59a",
+      "tests/fixtures/m2-deprecation/inputs/output-bytes.pkl": "a4a6b30cb5376b95515b0370b275776edb0967e8f09e27e7300ed640849a013f",
+      "tests/fixtures/m2-deprecation/inputs/output-text.pkl": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d",
+      "tests/fixtures/m2-deprecation/inputs/polymorphic.pkl": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9",
+      "tests/fixtures/m2-deprecation/inputs/reference.pkl": "568f5b9bd99d498c523d87492b70d71ff121b979d0081ee4c66ce21ccbd4559f",
+      "tests/fixtures/m2-deprecation/inputs/super.pkl": "d96e6dcef471cb4c33e56b111c65f5d62e08e8ce3c66d031de400771b473beef",
+      "tests/fixtures/m2-deprecation/manifest.json": "26df39824c0e9e3ef92233642c74f4d0793263b8a98e98b55d9ef58b032bf2d2",
+      "tests/fixtures/m2-deprecation/oracle-evidence.tar.gz": "e0e78f3f55c680ae4a37620dd3355f9efd6158d4f0ba141852c8825070de2fae",
+      "tools/benchmark.py": "a3822a1702abf7a6a385b1d8173d45e3ba941b5fb7e80cb66a0b86adf1681604",
+      "tools/deprecation_fixtures.py": "90b1340a8cb2ad76c12aa8870ccdd1068965ce02e4dfa76ffb745e18ca7af830",
+      "tools/java/M2DeprecationCyclesProbe.java": "283dced6731f009c98cc1f9be7c653a018a52033db3e29a826782a6d1af76fcc",
+      "tools/java/M2DeprecationProbe.java": "e68dc2b46eef4a8e3ff4b418027d5a517e0aefd7b24804710517a6876776ca95",
+      "tools/m2_deprecation.py": "a16dc4735204cacb3264dc349f47275d075fc18f2fd88061592e9736474dbd52",
+      "tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+      "tools/tests/test_deprecation_fixtures.py": "72fa865c1cc7f54738d2e870d2098ea73bcf12b5920a0252b6c1488b977691f1"
+    },
+    "commands": [
+      {
+        "name": "offline-authority",
+        "process": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "tools/deprecation_fixtures.py"
+          ],
+          "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54",
+          "status": "executed",
+          "exit_code": 0,
+          "elapsed_ns": 10549600583,
+          "peak_rss_bytes": 53067776,
+          "user_cpu_seconds": 1.541582,
+          "system_cpu_seconds": 4.764543,
+          "stdout": {
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-oracle-checkpoint-validation-01/offline-authority/stdout.bin",
+            "sha256": "4e53594b24b0ab419e907948d94b2693a8da40efc9de72fa091323352a86ff70",
+            "bytes": 392
+          },
+          "stderr": {
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-oracle-checkpoint-validation-01/offline-authority/stderr.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "expected_exit_for_checkpoint": 0
+      },
+      {
+        "name": "tooling-tests",
+        "process": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "tools/tests",
+            "-p",
+            "test_deprecation_fixtures.py"
+          ],
+          "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54",
+          "status": "executed",
+          "exit_code": 0,
+          "elapsed_ns": 28288925416,
+          "peak_rss_bytes": 55738368,
+          "user_cpu_seconds": 4.337153,
+          "system_cpu_seconds": 14.029637,
+          "stdout": {
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-oracle-checkpoint-validation-01/tooling-tests/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-oracle-checkpoint-validation-01/tooling-tests/stderr.bin",
+            "sha256": "d0995b868c15a684c2800838a817a20da873e347f2468ca82c7c9c81a44191de",
+            "bytes": 110
+          }
+        },
+        "expected_exit_for_checkpoint": 0
+      },
+      {
+        "name": "source-inventory",
+        "process": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "tools/inventory.py",
+            "--check"
+          ],
+          "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54",
+          "status": "executed",
+          "exit_code": 0,
+          "elapsed_ns": 3324626458,
+          "peak_rss_bytes": 87408640,
+          "user_cpu_seconds": 2.473931,
+          "system_cpu_seconds": 0.364621,
+          "stdout": {
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-oracle-checkpoint-validation-01/source-inventory/stdout.bin",
+            "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b",
+            "bytes": 926
+          },
+          "stderr": {
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-oracle-checkpoint-validation-01/source-inventory/stderr.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "expected_exit_for_checkpoint": 0
+      },
+      {
+        "name": "m2-inventory-observation",
+        "process": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "tools/m2_manifest.py",
+            "--check"
+          ],
+          "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54",
+          "status": "executed",
+          "exit_code": 1,
+          "elapsed_ns": 6001205625,
+          "peak_rss_bytes": 162611200,
+          "user_cpu_seconds": 1.582441,
+          "system_cpu_seconds": 1.838525,
+          "stdout": {
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-oracle-checkpoint-validation-01/m2-inventory-observation/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage54/target/m2/stage54-oracle-checkpoint-validation-01/m2-inventory-observation/stderr.bin",
+            "sha256": "4ab2ba53cfffef67a6446fcecddda1a9cb82f45199d590477fcef1cccac537dd",
+            "bytes": 75
+          }
+        },
+        "expected_exit_for_checkpoint": 1
+      }
+    ],
+    "sources_after": {
+      "PLAN.md": "44a535c4f6a7883850999f2f910c7a1fd0f75040797d3b526e100dfb6d492a74",
+      "docs/m2-deprecation.md": "6a6e37ff9853befe882ddf5215feb5e86892f8ac7e321fe18a925837a781f86f",
+      "oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+      "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+      "tests/fixtures/m2-deprecation/LICENSE": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296",
+      "tests/fixtures/m2-deprecation/README.md": "3efef439ffee64e5188a13d79817f14ff263901982f74aa97d856f86e39d65d7",
+      "tests/fixtures/m2-deprecation/cases.json": "ce6a8645fbba5c3b515acaee4e7b2b2706ef17d44385aacb01c64d2f3fbe0cb2",
+      "tests/fixtures/m2-deprecation/cycles.json": "39c949a4c3ffa51ce3a46276491af2cd8d044dedde863a67b21aa1737774d39e",
+      "tests/fixtures/m2-deprecation/inputs/alias-clones.pkl": "fe7cb9217124b756ab4c481ddbd7f790d8c95fd8a6a0d373be159459c62af5b1",
+      "tests/fixtures/m2-deprecation/inputs/amended-local.pkl": "2a5babee9a59ff2b38687565f0076dd40765416dabfeb6bcca99992a23334fdb",
+      "tests/fixtures/m2-deprecation/inputs/annotation-type-order.pkl": "29438350f7260bc2f34c3414f1c463fa6b02b3323ce539ff1cd1502e6f6e394b",
+      "tests/fixtures/m2-deprecation/inputs/closed.pkl": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "tests/fixtures/m2-deprecation/inputs/duplicate.pkl": "75a125e756cb1d326d5747adc22da874f9c7a59d621eff0be20df74ff7394d81",
+      "tests/fixtures/m2-deprecation/inputs/local-message-failure.pkl": "7c7f7dda3f720d9e64477f544ceb928921bfc6df1b79771ee7615a5e43c7b90d",
+      "tests/fixtures/m2-deprecation/inputs/locals.pkl": "847dacb720fc6b4ec1060a3838ae1feee70ca0c7d945fd323120c8caa9a8ca45",
+      "tests/fixtures/m2-deprecation/inputs/message-failure.pkl": "d221179ab070fcce7a9c408e7f79a8f00d0e09e391bee5b21c308d0fabb722ca",
+      "tests/fixtures/m2-deprecation/inputs/message-type-failure.pkl": "e1b7625635cbfbaf22e6213ee1fcd01e41b913563f0bb92af45a7991f90b50c5",
+      "tests/fixtures/m2-deprecation/inputs/nonmethod.pkl": "802158799a1e86d4757185d866471eeb059517aec1d67d89920b7f7ed43b352d",
+      "tests/fixtures/m2-deprecation/inputs/open.pkl": "919c1b1743caabd8c38c1547f17b6d751a6e5ef527aeb54051752f615104fe02",
+      "tests/fixtures/m2-deprecation/inputs/other-fields-lazy.pkl": "8744fa2dcdbe079295e79e29c6f24afeeee56a69e430d5dc6e78f08c0985f59a",
+      "tests/fixtures/m2-deprecation/inputs/output-bytes.pkl": "a4a6b30cb5376b95515b0370b275776edb0967e8f09e27e7300ed640849a013f",
+      "tests/fixtures/m2-deprecation/inputs/output-text.pkl": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d",
+      "tests/fixtures/m2-deprecation/inputs/polymorphic.pkl": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9",
+      "tests/fixtures/m2-deprecation/inputs/reference.pkl": "568f5b9bd99d498c523d87492b70d71ff121b979d0081ee4c66ce21ccbd4559f",
+      "tests/fixtures/m2-deprecation/inputs/super.pkl": "d96e6dcef471cb4c33e56b111c65f5d62e08e8ce3c66d031de400771b473beef",
+      "tests/fixtures/m2-deprecation/manifest.json": "26df39824c0e9e3ef92233642c74f4d0793263b8a98e98b55d9ef58b032bf2d2",
+      "tests/fixtures/m2-deprecation/oracle-evidence.tar.gz": "e0e78f3f55c680ae4a37620dd3355f9efd6158d4f0ba141852c8825070de2fae",
+      "tools/benchmark.py": "a3822a1702abf7a6a385b1d8173d45e3ba941b5fb7e80cb66a0b86adf1681604",
+      "tools/deprecation_fixtures.py": "90b1340a8cb2ad76c12aa8870ccdd1068965ce02e4dfa76ffb745e18ca7af830",
+      "tools/java/M2DeprecationCyclesProbe.java": "283dced6731f009c98cc1f9be7c653a018a52033db3e29a826782a6d1af76fcc",
+      "tools/java/M2DeprecationProbe.java": "e68dc2b46eef4a8e3ff4b418027d5a517e0aefd7b24804710517a6876776ca95",
+      "tools/m2_deprecation.py": "a16dc4735204cacb3264dc349f47275d075fc18f2fd88061592e9736474dbd52",
+      "tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+      "tools/tests/test_deprecation_fixtures.py": "72fa865c1cc7f54738d2e870d2098ea73bcf12b5920a0252b6c1488b977691f1"
+    },
+    "source_bytes_stable": true
+  },
+  "validation_archive": {
+    "path": "reports/m2/stage54-oracle-validation-evidence.tar.gz",
+    "sha256": "7ce210a1981c6e3a81a4995e49b12405ec6cc85ff017ab620209aeefad7d0559",
+    "bytes": 790354
+  },
+  "remaining": [
+    "Shared runtime implementation and native/Node/Chromium final raw comparison",
+    "Eight exact original upstream deprecated CLI cases",
+    "Strict full M2 compatibility and all nine workstreams",
+    "Candidate same-process cross-evaluator stdlib warning-cache parity",
+    "A new deprecated invocation after callback close",
+    "Raw stdlib frame input to an arbitrary custom transformer"
+  ],
+  "notes": [
+    "M2 manifest check exited 1 because uncommitted runtime work is ongoing; not reported as passing.",
+    "Initial failed or unreached Java acquisition attempts remain in original target directories for later implementation-checkpoint publication."
+  ]
+}

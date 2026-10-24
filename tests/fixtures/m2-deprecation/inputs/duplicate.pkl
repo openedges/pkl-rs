@@ -1,0 +1,6 @@
+module stage54Duplicate
+@Deprecated { message = trace("first") }
+@Deprecated { message = throw("second-message-must-not-be-forced") }
+function old(x) = x
+result = old(1)
+stable = 42

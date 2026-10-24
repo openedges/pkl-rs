@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "repetitions": 2,
+  "scope": "Java-only same-JVM sequential evaluator lifetime observations; no candidate comparison",
+  "cases": [
+    {
+      "id": "closed-retained-site",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0,
+      "evaluator_cycles": 4
+    },
+    {
+      "id": "typed-interpolation-retained",
+      "source": "inputs/polymorphic.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "format(custom)",
+        "format(custom)"
+      ],
+      "source_sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9",
+      "evaluator_cycles": 4
+    },
+    {
+      "id": "reference-render-method",
+      "source": "inputs/reference.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "reference.toString()",
+        "reference.toString()"
+      ],
+      "source_sha256": "568f5b9bd99d498c523d87492b70d71ff121b979d0081ee4c66ce21ccbd4559f",
+      "evaluator_cycles": 4
+    },
+    {
+      "id": "output-text-render-method",
+      "source": "inputs/output-text.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "output.text",
+        "output.text"
+      ],
+      "source_sha256": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d",
+      "evaluator_cycles": 4
+    },
+    {
+      "id": "file-output-text-render-method",
+      "source": "inputs/output-text.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "file.text",
+        "file.text"
+      ],
+      "source_sha256": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d",
+      "evaluator_cycles": 4
+    },
+    {
+      "id": "output-bytes-render-method",
+      "source": "inputs/output-bytes.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "output.bytes.base64",
+        "output.bytes.base64"
+      ],
+      "source_sha256": "a4a6b30cb5376b95515b0370b275776edb0967e8f09e27e7300ed640849a013f",
+      "evaluator_cycles": 4
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+module stage54MessageFailure
+@Deprecated { message = throw("message-failure") }
+function unused(x) = x
+stable = 42

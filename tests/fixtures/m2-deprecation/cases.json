@@ -1,0 +1,782 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "repetitions": 2,
+  "scope": "Selected source-driven Java public Logger observations; no Rust compatibility verdict",
+  "cases": [
+    {
+      "id": "typed-interpolation-retained",
+      "source": "inputs/polymorphic.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "format(custom)",
+        "format(custom)"
+      ],
+      "source_sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9"
+    },
+    {
+      "id": "typed-interpolation-fresh-query",
+      "source": "inputs/polymorphic.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "\"\\(custom)\"",
+        "\"\\(custom)\""
+      ],
+      "source_sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9"
+    },
+    {
+      "id": "typed-api-stringify-fresh",
+      "source": "inputs/polymorphic.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "custom",
+        "custom"
+      ],
+      "source_sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9"
+    },
+    {
+      "id": "typed-interpolation-saturation",
+      "source": "inputs/polymorphic.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "format(a)",
+        "format(b)",
+        "format(c)",
+        "format(d)",
+        "format(a)",
+        "format(f)"
+      ],
+      "source_sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9"
+    },
+    {
+      "id": "typed-interpolation-primitives-bypass",
+      "source": "inputs/polymorphic.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "format(1)",
+        "format(\"s\")",
+        "format(true)",
+        "format(custom)"
+      ],
+      "source_sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9"
+    },
+    {
+      "id": "reference-render-method",
+      "source": "inputs/reference.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "reference.toString()",
+        "reference.toString()"
+      ],
+      "source_sha256": "568f5b9bd99d498c523d87492b70d71ff121b979d0081ee4c66ce21ccbd4559f"
+    },
+    {
+      "id": "reference-interpolation",
+      "source": "inputs/reference.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "format(reference)",
+        "format(reference)"
+      ],
+      "source_sha256": "568f5b9bd99d498c523d87492b70d71ff121b979d0081ee4c66ce21ccbd4559f"
+    },
+    {
+      "id": "reference-api-stringify",
+      "source": "inputs/reference.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "reference",
+        "reference"
+      ],
+      "source_sha256": "568f5b9bd99d498c523d87492b70d71ff121b979d0081ee4c66ce21ccbd4559f"
+    },
+    {
+      "id": "output-text-render-method",
+      "source": "inputs/output-text.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "output.text",
+        "output.text"
+      ],
+      "source_sha256": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d"
+    },
+    {
+      "id": "file-output-text-render-method",
+      "source": "inputs/output-text.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "file.text",
+        "file.text"
+      ],
+      "source_sha256": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d"
+    },
+    {
+      "id": "output-bytes-render-method",
+      "source": "inputs/output-bytes.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "output.bytes.base64",
+        "output.bytes.base64"
+      ],
+      "source_sha256": "a4a6b30cb5376b95515b0370b275776edb0967e8f09e27e7300ed640849a013f"
+    },
+    {
+      "id": "virtual-different-class-reentry",
+      "source": "inputs/polymorphic.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "dispatch(b)",
+      "callback_after": 0,
+      "expressions": [
+        "dispatch(a)",
+        "dispatch(a)",
+        "dispatch(b)"
+      ],
+      "source_sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9"
+    },
+    {
+      "id": "virtual-reentry-saturation-empty",
+      "source": "inputs/polymorphic.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "List(dispatch(b), dispatch(c), dispatch(d), dispatch(e))",
+      "callback_after": 0,
+      "expressions": [
+        "dispatch(a)",
+        "dispatch(f)",
+        "dispatch(a)",
+        "dispatch(b)"
+      ],
+      "source_sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9"
+    },
+    {
+      "id": "virtual-reentry-saturation-warm",
+      "source": "inputs/polymorphic.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "List(dispatch(c), dispatch(d), dispatch(e))",
+      "callback_after": 1,
+      "expressions": [
+        "dispatch(a)",
+        "dispatch(b)",
+        "dispatch(f)",
+        "dispatch(a)",
+        "dispatch(b)"
+      ],
+      "source_sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9"
+    },
+    {
+      "id": "amended-module-local-ignored",
+      "source": "inputs/amended-local.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "callback_after": 0,
+      "expressions": [
+        "output.text",
+        "output.text"
+      ],
+      "source_sha256": "2a5babee9a59ff2b38687565f0076dd40765416dabfeb6bcca99992a23334fdb"
+    },
+    {
+      "id": "closed-message-default-empty-custom",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "old(1)",
+        "empty(2)",
+        "custom(3)"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "closed-retained-site",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "retained(1)",
+        "retained(2)",
+        "retained(3)"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "closed-fresh-query-sites",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "old(1)",
+        "old(1)",
+        "old(2)"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "closed-argument-failure",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "argumentFailure()",
+        "argumentFailure()"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "closed-type-failure",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "typeFailure()",
+        "typeFailure()"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "closed-body-failure",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "bodyFailure()",
+        "bodyFailure()"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "closed-arity-failure",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "arityFailure()",
+        "arityFailure()"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "closed-return-type-failure",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "returnFailure()",
+        "returnFailure()"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "closure-code-retained",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "factory(1).apply(2)",
+        "factory(3).apply(4)",
+        "factory(5).apply(6)"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "generator-closure-code",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "closures[0].apply(1)",
+        "closures[1].apply(1)",
+        "closures[2].apply(1)"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "null-receiver-skips",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "nullable(null)",
+        "nullable(null)"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "open-retained-site",
+      "source": "inputs/open.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "retained(1)",
+        "retained(1)"
+      ],
+      "source_sha256": "919c1b1743caabd8c38c1547f17b6d751a6e5ef527aeb54051752f615104fe02",
+      "callback_after": 0
+    },
+    {
+      "id": "open-argument-failure",
+      "source": "inputs/open.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "argumentFailure()",
+        "argumentFailure()"
+      ],
+      "source_sha256": "919c1b1743caabd8c38c1547f17b6d751a6e5ef527aeb54051752f615104fe02",
+      "callback_after": 0
+    },
+    {
+      "id": "open-type-failure",
+      "source": "inputs/open.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "typeFailure()",
+        "typeFailure()"
+      ],
+      "source_sha256": "919c1b1743caabd8c38c1547f17b6d751a6e5ef527aeb54051752f615104fe02",
+      "callback_after": 0
+    },
+    {
+      "id": "open-arity-failure",
+      "source": "inputs/open.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "arityFailure()",
+        "arityFailure()"
+      ],
+      "source_sha256": "919c1b1743caabd8c38c1547f17b6d751a6e5ef527aeb54051752f615104fe02",
+      "callback_after": 0
+    },
+    {
+      "id": "super-retained-site",
+      "source": "inputs/super.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "child.retained(1)",
+        "child.retained(1)"
+      ],
+      "source_sha256": "d96e6dcef471cb4c33e56b111c65f5d62e08e8ce3c66d031de400771b473beef",
+      "callback_after": 0
+    },
+    {
+      "id": "super-argument-failure",
+      "source": "inputs/super.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "child.argumentFailure()",
+        "child.argumentFailure()"
+      ],
+      "source_sha256": "d96e6dcef471cb4c33e56b111c65f5d62e08e8ce3c66d031de400771b473beef",
+      "callback_after": 0
+    },
+    {
+      "id": "super-type-failure",
+      "source": "inputs/super.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "child.typeFailure()",
+        "child.typeFailure()"
+      ],
+      "source_sha256": "d96e6dcef471cb4c33e56b111c65f5d62e08e8ce3c66d031de400771b473beef",
+      "callback_after": 0
+    },
+    {
+      "id": "super-arity-failure",
+      "source": "inputs/super.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "child.arityFailure()",
+        "child.arityFailure()"
+      ],
+      "source_sha256": "d96e6dcef471cb4c33e56b111c65f5d62e08e8ce3c66d031de400771b473beef",
+      "callback_after": 0
+    },
+    {
+      "id": "open-body-failure",
+      "source": "inputs/open.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "bodyFailure()",
+        "bodyFailure()"
+      ],
+      "source_sha256": "919c1b1743caabd8c38c1547f17b6d751a6e5ef527aeb54051752f615104fe02",
+      "callback_after": 0
+    },
+    {
+      "id": "virtual-inherited-saturation",
+      "source": "inputs/polymorphic.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "dispatch(a)",
+        "dispatch(a)",
+        "dispatch(b)",
+        "dispatch(c)",
+        "dispatch(d)",
+        "dispatch(a)",
+        "dispatch(e)"
+      ],
+      "source_sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9",
+      "callback_after": 0
+    },
+    {
+      "id": "virtual-failed-fourth-class",
+      "source": "inputs/polymorphic.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "dispatch(a)",
+        "dispatch(b)",
+        "dispatch(c)",
+        "dispatch(missing)",
+        "dispatch(a)",
+        "dispatch(d)",
+        "dispatch(a)"
+      ],
+      "source_sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9",
+      "callback_after": 0
+    },
+    {
+      "id": "virtual-builtins-saturation",
+      "source": "inputs/polymorphic.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "stringify(1)",
+        "stringify(\"s\")",
+        "stringify(true)",
+        "stringify(custom)",
+        "stringify(custom)"
+      ],
+      "source_sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9",
+      "callback_after": 0
+    },
+    {
+      "id": "module-local-warning",
+      "source": "inputs/locals.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "847dacb720fc6b4ec1060a3838ae1feee70ca0c7d945fd323120c8caa9a8ca45",
+      "callback_after": 0
+    },
+    {
+      "id": "duplicate",
+      "source": "inputs/duplicate.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "source_sha256": "75a125e756cb1d326d5747adc22da874f9c7a59d621eff0be20df74ff7394d81",
+      "callback_after": 0
+    },
+    {
+      "id": "local-message-failure",
+      "source": "inputs/local-message-failure.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "7c7f7dda3f720d9e64477f544ceb928921bfc6df1b79771ee7615a5e43c7b90d",
+      "callback_after": 0
+    },
+    {
+      "id": "other-fields-lazy",
+      "source": "inputs/other-fields-lazy.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "source_sha256": "8744fa2dcdbe079295e79e29c6f24afeeee56a69e430d5dc6e78f08c0985f59a",
+      "callback_after": 0
+    },
+    {
+      "id": "message-failure",
+      "source": "inputs/message-failure.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "stable",
+        "stable"
+      ],
+      "source_sha256": "d221179ab070fcce7a9c408e7f79a8f00d0e09e391bee5b21c308d0fabb722ca",
+      "callback_after": 0
+    },
+    {
+      "id": "message-type-failure",
+      "source": "inputs/message-type-failure.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "stable",
+        "stable"
+      ],
+      "source_sha256": "e1b7625635cbfbaf22e6213ee1fcd01e41b913563f0bb92af45a7991f90b50c5",
+      "callback_after": 0
+    },
+    {
+      "id": "annotation-type-order",
+      "source": "inputs/annotation-type-order.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "stable",
+        "stable"
+      ],
+      "source_sha256": "29438350f7260bc2f34c3414f1c463fa6b02b3323ce539ff1cd1502e6f6e394b",
+      "callback_after": 0
+    },
+    {
+      "id": "nonmethod-no-warning",
+      "source": "inputs/nonmethod.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "value",
+        "new C {}",
+        "stable"
+      ],
+      "source_sha256": "802158799a1e86d4757185d866471eeb059517aec1d67d89920b7f7ed43b352d",
+      "callback_after": 0
+    },
+    {
+      "id": "alias-clones",
+      "source": "inputs/alias-clones.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "",
+      "expressions": [
+        "a",
+        "b",
+        "c",
+        "a"
+      ],
+      "source_sha256": "fe7cb9217124b756ab4c481ddbd7f790d8c95fd8a6a0d373be159459c62af5b1",
+      "callback_after": 0
+    },
+    {
+      "id": "closed-throw-once",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "throw-once",
+      "callback": "",
+      "expressions": [
+        "retained(1)",
+        "retained(2)",
+        "retained(3)"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "closed-reentry",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "retained(2)",
+      "expressions": [
+        "retained(1)",
+        "retained(3)"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "open-throw-once",
+      "source": "inputs/open.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "throw-once",
+      "callback": "",
+      "expressions": [
+        "retained(1)",
+        "retained(2)",
+        "retained(3)"
+      ],
+      "source_sha256": "919c1b1743caabd8c38c1547f17b6d751a6e5ef527aeb54051752f615104fe02",
+      "callback_after": 0
+    },
+    {
+      "id": "open-reentry",
+      "source": "inputs/open.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "retained(2)",
+      "expressions": [
+        "retained(1)",
+        "retained(3)"
+      ],
+      "source_sha256": "919c1b1743caabd8c38c1547f17b6d751a6e5ef527aeb54051752f615104fe02",
+      "callback_after": 0
+    },
+    {
+      "id": "super-throw-once",
+      "source": "inputs/super.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "throw-once",
+      "callback": "",
+      "expressions": [
+        "child.retained(1)",
+        "child.retained(2)",
+        "child.retained(3)"
+      ],
+      "source_sha256": "d96e6dcef471cb4c33e56b111c65f5d62e08e8ce3c66d031de400771b473beef",
+      "callback_after": 0
+    },
+    {
+      "id": "super-reentry",
+      "source": "inputs/super.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "capture",
+      "callback": "child.retained(2)",
+      "expressions": [
+        "child.retained(1)",
+        "child.retained(3)"
+      ],
+      "source_sha256": "d96e6dcef471cb4c33e56b111c65f5d62e08e8ce3c66d031de400771b473beef",
+      "callback_after": 0
+    },
+    {
+      "id": "logger-noop",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "noop",
+      "callback": "",
+      "expressions": [
+        "retained(1)",
+        "retained(2)"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "logger-close",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "close",
+      "callback": "",
+      "expressions": [
+        "retained(1)",
+        "stable"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    },
+    {
+      "id": "logger-close-reenter",
+      "source": "inputs/closed.pkl",
+      "uri": "file:///stage54-deprecation.pkl",
+      "action": "close-reenter",
+      "callback": "",
+      "expressions": [
+        "retained(1)",
+        "stable"
+      ],
+      "source_sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "callback_after": 0
+    }
+  ],
+  "originals": [
+    "deprecated1",
+    "deprecated2",
+    "deprecated3",
+    "deprecatedNoRepeatedWarnings",
+    "deprecatedWithMessage1",
+    "deprecatedWithMessage2",
+    "deprecatedWithMessage3",
+    "deprecationSuperMethod"
+  ]
+}

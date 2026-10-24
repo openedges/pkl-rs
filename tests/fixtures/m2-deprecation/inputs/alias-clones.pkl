@@ -1,0 +1,8 @@
+module stage54Alias
+@Deprecated
+const function check(x) = x > 0
+typealias Positive = Int(check(this))
+a: Positive = 1
+b: Positive = 2
+c: Positive = 3
+stable = 42

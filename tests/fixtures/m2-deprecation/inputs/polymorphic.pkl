@@ -1,0 +1,30 @@
+module stage54Polymorphic
+open class Parent {
+  @Deprecated { message = "shared declaration" }
+  function go() = 1
+  @Deprecated { message = "parent stringify" }
+  function toString() = "parent"
+}
+class C1 extends Parent {}
+class C2 extends Parent {}
+class C3 extends Parent {}
+class C4 extends Parent {}
+class C5 extends Parent {}
+class C6 extends Parent {}
+class Missing {}
+class Custom {
+  @Deprecated { message = "custom stringify" }
+  function toString() = "custom"
+}
+a = new C1 {}
+b = new C2 {}
+c = new C3 {}
+d = new C4 {}
+e = new C5 {}
+f = new C6 {}
+missing = new Missing {}
+custom = new Custom {}
+function dispatch(x) = x.go()
+function stringify(x) = x.toString()
+stable = 42
+function format(x) = "\(x)"

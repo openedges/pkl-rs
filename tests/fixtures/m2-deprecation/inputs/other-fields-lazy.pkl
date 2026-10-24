@@ -1,0 +1,5 @@
+module stage54OtherFields
+@Deprecated { message = "first"; since = throw("unused-since") }
+function old(x) = x
+result = old(1)
+stable = 42

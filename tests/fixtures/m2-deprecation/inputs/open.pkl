@@ -1,0 +1,11 @@
+open module stage54Open
+@Deprecated
+function old(x: Int): Int = trace(x)
+@Deprecated
+function bodyOld(x) = throw("body-failure")
+function retained(x) = old(trace(x))
+function argumentFailure() = old(throw("argument-failure"))
+function typeFailure() = old("wrong")
+function bodyFailure() = bodyOld(1)
+function arityFailure() = old()
+stable = 42

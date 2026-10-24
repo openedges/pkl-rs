@@ -1,0 +1,21 @@
+module stage54Closed
+@Deprecated
+function old(x: Int): Int = trace(x)
+@Deprecated { message = "" }
+function empty(x) = x
+@Deprecated { message = "use fresh\n😀\u{D800}" }
+function custom(x) = x
+@Deprecated
+function bodyOld(x) = throw("body-failure")
+function retained(x) = old(trace(x))
+function argumentFailure() = old(throw("argument-failure"))
+function typeFailure() = old("wrong")
+@Deprecated
+function badReturn(): Int = "wrong"
+function returnFailure() = badReturn()
+function bodyFailure() = bodyOld(1)
+function arityFailure() = old()
+function factory(i) = (x) -> old(x + i)
+closures = new Listing { for (i in List(1, 2, 3)) { (x) -> old(x + i) } }
+function nullable(x) = x?.old(throw("must-not-evaluate"))
+stable = 42

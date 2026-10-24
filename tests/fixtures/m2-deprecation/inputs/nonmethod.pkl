@@ -1,0 +1,9 @@
+@Deprecated { message = throw("module-message-must-not-force") }
+module stage54Nonmethod
+@Deprecated { message = throw("property-message-must-not-force") }
+value = 1
+@Deprecated { message = throw("class-message-must-not-force") }
+class C {}
+@Deprecated { message = throw("alias-message-must-not-force") }
+typealias T = Int
+stable = 42

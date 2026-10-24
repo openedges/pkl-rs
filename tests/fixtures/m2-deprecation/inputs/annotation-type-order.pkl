@@ -1,0 +1,4 @@
+module stage54TypeOrder
+@Deprecated { message = throw("message-after-type") }
+function unused(x: MissingType) = x
+stable = 42

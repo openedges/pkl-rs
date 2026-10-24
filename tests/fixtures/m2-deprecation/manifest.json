@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "files": {
+    "LICENSE": {
+      "sha256": "87f7f506593ec1c2b6a5b34bb449cd37f8ec7f040479f37a6697f6750ecc6296",
+      "bytes": 10765
+    },
+    "README.md": {
+      "sha256": "3efef439ffee64e5188a13d79817f14ff263901982f74aa97d856f86e39d65d7",
+      "bytes": 5501
+    },
+    "cases.json": {
+      "sha256": "ce6a8645fbba5c3b515acaee4e7b2b2706ef17d44385aacb01c64d2f3fbe0cb2",
+      "bytes": 22884
+    },
+    "cycles.json": {
+      "sha256": "39c949a4c3ffa51ce3a46276491af2cd8d044dedde863a67b21aa1737774d39e",
+      "bytes": 2712
+    },
+    "inputs/alias-clones.pkl": {
+      "sha256": "fe7cb9217124b756ab4c481ddbd7f790d8c95fd8a6a0d373be159459c62af5b1",
+      "bytes": 162
+    },
+    "inputs/amended-local.pkl": {
+      "sha256": "2a5babee9a59ff2b38687565f0076dd40765416dabfeb6bcca99992a23334fdb",
+      "bytes": 130
+    },
+    "inputs/annotation-type-order.pkl": {
+      "sha256": "29438350f7260bc2f34c3414f1c463fa6b02b3323ce539ff1cd1502e6f6e394b",
+      "bytes": 126
+    },
+    "inputs/closed.pkl": {
+      "sha256": "aed22e68ea1b26f79f74fd5fdf1497dfa45a5add92b71920b307ca1d4f43ef9c",
+      "bytes": 726
+    },
+    "inputs/duplicate.pkl": {
+      "sha256": "75a125e756cb1d326d5747adc22da874f9c7a59d621eff0be20df74ff7394d81",
+      "bytes": 182
+    },
+    "inputs/local-message-failure.pkl": {
+      "sha256": "7c7f7dda3f720d9e64477f544ceb928921bfc6df1b79771ee7615a5e43c7b90d",
+      "bytes": 156
+    },
+    "inputs/locals.pkl": {
+      "sha256": "847dacb720fc6b4ec1060a3838ae1feee70ca0c7d945fd323120c8caa9a8ca45",
+      "bytes": 137
+    },
+    "inputs/message-failure.pkl": {
+      "sha256": "d221179ab070fcce7a9c408e7f79a8f00d0e09e391bee5b21c308d0fabb722ca",
+      "bytes": 115
+    },
+    "inputs/message-type-failure.pkl": {
+      "sha256": "e1b7625635cbfbaf22e6213ee1fcd01e41b913563f0bb92af45a7991f90b50c5",
+      "bytes": 96
+    },
+    "inputs/nonmethod.pkl": {
+      "sha256": "802158799a1e86d4757185d866471eeb059517aec1d67d89920b7f7ed43b352d",
+      "bytes": 335
+    },
+    "inputs/open.pkl": {
+      "sha256": "919c1b1743caabd8c38c1547f17b6d751a6e5ef527aeb54051752f615104fe02",
+      "bytes": 344
+    },
+    "inputs/other-fields-lazy.pkl": {
+      "sha256": "8744fa2dcdbe079295e79e29c6f24afeeee56a69e430d5dc6e78f08c0985f59a",
+      "bytes": 139
+    },
+    "inputs/output-bytes.pkl": {
+      "sha256": "a4a6b30cb5376b95515b0370b275776edb0967e8f09e27e7300ed640849a013f",
+      "bytes": 288
+    },
+    "inputs/output-text.pkl": {
+      "sha256": "21fe537198ee286e41a690ee14b4717b241ff475c2ea29516185e71dc19b2f9d",
+      "bytes": 299
+    },
+    "inputs/polymorphic.pkl": {
+      "sha256": "eba5d81f196e91896f0c02ef4da4828009848c8f48a5bcc8ee1bbca12af7d9e9",
+      "bytes": 712
+    },
+    "inputs/reference.pkl": {
+      "sha256": "568f5b9bd99d498c523d87492b70d71ff121b979d0081ee4c66ce21ccbd4559f",
+      "bytes": 257
+    },
+    "inputs/super.pkl": {
+      "sha256": "d96e6dcef471cb4c33e56b111c65f5d62e08e8ce3c66d031de400771b473beef",
+      "bytes": 389
+    },
+    "oracle-evidence.tar.gz": {
+      "sha256": "e0e78f3f55c680ae4a37620dd3355f9efd6158d4f0ba141852c8825070de2fae",
+      "bytes": 750231
+    }
+  }
+}

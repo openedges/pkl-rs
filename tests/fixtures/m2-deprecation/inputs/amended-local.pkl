@@ -1,0 +1,4 @@
+amends "pkl:base"
+@Deprecated { message = throw("must-stay-lazy") }
+local function old(x) = x
+output { text = old(1).toString() }

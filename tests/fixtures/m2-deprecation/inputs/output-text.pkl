@@ -1,0 +1,8 @@
+module stage54OutputText
+class R extends ValueRenderer {
+  @Deprecated { message = "text document renderer" }
+  function renderDocument(v): String = "ok"
+  function renderValue(v): String = "value"
+}
+output { renderer = new R {}; value = 1 }
+file = new FileOutput { renderer = new R {}; value = 2 }
