@@ -26,6 +26,18 @@ concurrent Rust implementation is frozen. This checkpoint claims zero candidate
 compatibility passes; Stage62 runtime, platform, and original-program validation
 remain in progress.
 
+The separate [converted-object controls checkpoint](stage62-controls-java-checkpoint.json)
+records 58 additional Java string expressions: 44 successes and 14 ordinary
+errors per fresh JVM, repeated twice. Its controls distinguish target classes,
+the receiver used for inherited defaults, missing versus explicit null values,
+property versus subscript access, and an unpaired UTF-16 surrogate from U+FFFD.
+The [evidence archive](stage62-controls-java-evidence.tar.gz) preserves the
+initial invalid-surrogate syntax capture, the corrected capture, and five
+passing validation checks with 78 stable source copies. Six fixture tests pass
+normally and under `-O`; all archive members passed independent readback.
+The original 236-row authority is unchanged. Both checkpoints remain Java
+evidence and do not claim candidate compatibility or typed export identity.
+
 ### Stage61 IntSeq values — implementation and local comparisons
 
 The [implementation checkpoint](stage61-implementation-checkpoint.json) adds

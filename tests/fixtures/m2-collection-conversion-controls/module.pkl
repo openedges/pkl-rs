@@ -1,0 +1,14 @@
+// Separate Stage62 converted-object controls; Java 0.32.0 authority.
+class Dependent {
+  name: String = "base"
+  greeting: String = "hello-\(this.name)"
+}
+class RequiredDependent {
+  name: String
+  greeting: String = "hello-\(this.name)"
+}
+class NullableDependent {
+  name: String? = "base"
+  greeting: String = if (this.name == null) "null-name" else "hello-\(this.name)"
+}
+marker = "stage62-controls"

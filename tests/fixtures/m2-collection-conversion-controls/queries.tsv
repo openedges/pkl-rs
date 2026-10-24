@@ -1,0 +1,58 @@
+string	list-empty-listing-class	List().toListing().getClass().simpleName
+string	list-listing-class	List(1,2).toListing().getClass().simpleName
+string	set-empty-listing-class	Set().toListing().getClass().simpleName
+string	set-listing-class	Set(2,1).toListing().getClass().simpleName
+string	list-empty-dynamic-class	List().toDynamic().getClass().simpleName
+string	list-dynamic-class	List(1,2).toDynamic().getClass().simpleName
+string	set-empty-dynamic-class	Set().toDynamic().getClass().simpleName
+string	set-dynamic-class	Set(2,1).toDynamic().getClass().simpleName
+string	map-empty-mapping-class	Map().toMapping().getClass().simpleName
+string	map-mapping-class	Map("a",1).toMapping().getClass().simpleName
+string	map-empty-dynamic-class	Map().toDynamic().getClass().simpleName
+string	map-dynamic-class	Map("a",1).toDynamic().getClass().simpleName
+string	typed-dynamic-class	new Dependent {}.toDynamic().getClass().simpleName
+string	list-listing-missing-null	List(1).toListing().getOrNull(3)
+string	list-listing-missing-default	List(1).toListing().getOrDefault(3).getClass().simpleName
+string	list-listing-missing-subscript	List(1).toListing()[3].getClass().simpleName
+string	list-listing-negative-null	List(1).toListing().getOrNull(-1)
+string	set-listing-missing-null	Set(1).toListing().getOrNull(3)
+string	set-listing-missing-default	Set(1).toListing().getOrDefault(3).getClass().simpleName
+string	set-listing-missing-subscript	Set(1).toListing()[3].getClass().simpleName
+string	map-mapping-missing-null	Map("a",1).toMapping().getOrNull("missing")
+string	map-mapping-missing-default	Map("a",1).toMapping().getOrDefault("missing").getClass().simpleName
+string	map-mapping-missing-subscript	Map("a",1).toMapping()["missing"].getClass().simpleName
+string	map-dynamic-missing-null	Map("a",1).toDynamic().getPropertyOrNull("missing")
+string	map-dynamic-missing-property	Map("a",1).toDynamic().getProperty("missing")
+string	map-dynamic-missing-subscript	Map("a",1).toDynamic()["missing"].getClass().simpleName
+string	map-dynamic-present-property	Map("a",1).toDynamic().getProperty("a")
+string	map-dynamic-present-subscript	Map("a",1).toDynamic()["a"]
+string	direct-dependent-base	new Dependent {}.greeting
+string	direct-dependent-overridden	new Dependent { name = "source" }.greeting
+string	dynamic-dependent-missing-name	new Dynamic {}.toTyped(Dependent).greeting
+string	dynamic-dependent-source-name	new Dynamic { name = "source" }.toTyped(Dependent).greeting
+string	dynamic-dependent-source-name-read	new Dynamic { name = "source" }.toTyped(Dependent).name
+string	dynamic-required-missing-name	new Dynamic {}.toTyped(RequiredDependent).greeting
+string	dynamic-required-source-name	new Dynamic { name = "source" }.toTyped(RequiredDependent).greeting
+string	map-dependent-missing-name	Map().toTyped(Dependent).greeting
+string	map-dependent-source-name	Map("name","source").toTyped(Dependent).greeting
+string	map-dependent-source-name-read	Map("name","source").toTyped(Dependent).name
+string	map-required-missing-name	Map().toTyped(RequiredDependent).greeting
+string	map-required-source-name	Map("name","source").toTyped(RequiredDependent).greeting
+string	dynamic-nullable-missing	new Dynamic {}.toTyped(NullableDependent).greeting
+string	dynamic-nullable-explicit-null	new Dynamic { name = null }.toTyped(NullableDependent).greeting
+string	map-nullable-missing	Map().toTyped(NullableDependent).greeting
+string	map-nullable-explicit-null	Map("name",null).toTyped(NullableDependent).greeting
+string	dynamic-dependent-class	new Dynamic { name = "source" }.toTyped(Dependent).getClass().simpleName
+string	map-dependent-class	Map("name","source").toTyped(Dependent).getClass().simpleName
+string	high-key-map	Map("\u{d800}",7).toDynamic().toMap()
+string	high-key-present	Map("\u{d800}",7).toDynamic().hasProperty("\u{d800}")
+string	high-key-get-property	Map("\u{d800}",7).toDynamic().getProperty("\u{d800}")
+string	high-key-get-or-null	Map("\u{d800}",7).toDynamic().getPropertyOrNull("\u{d800}")
+string	high-key-subscript	Map("\u{d800}",7).toDynamic()["\u{d800}"]
+string	low-key-subscript	Map("\u{dc00}",8).toDynamic()["\u{dc00}"]
+string	high-plus-ascii-subscript	Map("\u{d800}x",9).toDynamic()["\u{d800}x"]
+string	pair-key-subscript	Map("\u{d83d}\u{de00}",10).toDynamic()["\u{d83d}\u{de00}"]
+string	high-replacement-distinct-length	Map("\u{d800}",7,"\u{fffd}",8).toDynamic().toMap().length
+string	high-replacement-distinct-keys	Map("\u{d800}",7,"\u{fffd}",8).toDynamic().toMap().keys
+string	high-replacement-high-value	Map("\u{d800}",7,"\u{fffd}",8).toDynamic().getProperty("\u{d800}")
+string	high-replacement-replacement-value	Map("\u{d800}",7,"\u{fffd}",8).toDynamic().getProperty("\u{fffd}")

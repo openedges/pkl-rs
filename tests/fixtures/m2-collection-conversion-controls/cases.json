@@ -1,0 +1,357 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage62/collection-conversion-controls.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "list-empty-listing-class",
+      "group": "synthetic-class",
+      "expression": "List().toListing().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "list-listing-class",
+      "group": "synthetic-class",
+      "expression": "List(1,2).toListing().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "set-empty-listing-class",
+      "group": "synthetic-class",
+      "expression": "Set().toListing().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "set-listing-class",
+      "group": "synthetic-class",
+      "expression": "Set(2,1).toListing().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "list-empty-dynamic-class",
+      "group": "synthetic-class",
+      "expression": "List().toDynamic().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "list-dynamic-class",
+      "group": "synthetic-class",
+      "expression": "List(1,2).toDynamic().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "set-empty-dynamic-class",
+      "group": "synthetic-class",
+      "expression": "Set().toDynamic().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "set-dynamic-class",
+      "group": "synthetic-class",
+      "expression": "Set(2,1).toDynamic().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "map-empty-mapping-class",
+      "group": "synthetic-class",
+      "expression": "Map().toMapping().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "map-mapping-class",
+      "group": "synthetic-class",
+      "expression": "Map(\"a\",1).toMapping().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "map-empty-dynamic-class",
+      "group": "synthetic-class",
+      "expression": "Map().toDynamic().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "map-dynamic-class",
+      "group": "synthetic-class",
+      "expression": "Map(\"a\",1).toDynamic().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "typed-dynamic-class",
+      "group": "synthetic-class",
+      "expression": "new Dependent {}.toDynamic().getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "list-listing-missing-null",
+      "group": "synthetic-missing",
+      "expression": "List(1).toListing().getOrNull(3)",
+      "mode": "string"
+    },
+    {
+      "id": "list-listing-missing-default",
+      "group": "synthetic-missing",
+      "expression": "List(1).toListing().getOrDefault(3).getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "list-listing-missing-subscript",
+      "group": "synthetic-missing",
+      "expression": "List(1).toListing()[3].getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "list-listing-negative-null",
+      "group": "synthetic-missing",
+      "expression": "List(1).toListing().getOrNull(-1)",
+      "mode": "string"
+    },
+    {
+      "id": "set-listing-missing-null",
+      "group": "synthetic-missing",
+      "expression": "Set(1).toListing().getOrNull(3)",
+      "mode": "string"
+    },
+    {
+      "id": "set-listing-missing-default",
+      "group": "synthetic-missing",
+      "expression": "Set(1).toListing().getOrDefault(3).getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "set-listing-missing-subscript",
+      "group": "synthetic-missing",
+      "expression": "Set(1).toListing()[3].getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "map-mapping-missing-null",
+      "group": "synthetic-missing",
+      "expression": "Map(\"a\",1).toMapping().getOrNull(\"missing\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-mapping-missing-default",
+      "group": "synthetic-missing",
+      "expression": "Map(\"a\",1).toMapping().getOrDefault(\"missing\").getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "map-mapping-missing-subscript",
+      "group": "synthetic-missing",
+      "expression": "Map(\"a\",1).toMapping()[\"missing\"].getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "map-dynamic-missing-null",
+      "group": "synthetic-missing",
+      "expression": "Map(\"a\",1).toDynamic().getPropertyOrNull(\"missing\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-dynamic-missing-property",
+      "group": "synthetic-missing",
+      "expression": "Map(\"a\",1).toDynamic().getProperty(\"missing\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-dynamic-missing-subscript",
+      "group": "synthetic-missing",
+      "expression": "Map(\"a\",1).toDynamic()[\"missing\"].getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "map-dynamic-present-property",
+      "group": "synthetic-missing",
+      "expression": "Map(\"a\",1).toDynamic().getProperty(\"a\")",
+      "mode": "string"
+    },
+    {
+      "id": "map-dynamic-present-subscript",
+      "group": "synthetic-missing",
+      "expression": "Map(\"a\",1).toDynamic()[\"a\"]",
+      "mode": "string"
+    },
+    {
+      "id": "direct-dependent-base",
+      "group": "dependent-default",
+      "expression": "new Dependent {}.greeting",
+      "mode": "string"
+    },
+    {
+      "id": "direct-dependent-overridden",
+      "group": "dependent-default",
+      "expression": "new Dependent { name = \"source\" }.greeting",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-dependent-missing-name",
+      "group": "dependent-default",
+      "expression": "new Dynamic {}.toTyped(Dependent).greeting",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-dependent-source-name",
+      "group": "dependent-default",
+      "expression": "new Dynamic { name = \"source\" }.toTyped(Dependent).greeting",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-dependent-source-name-read",
+      "group": "dependent-default",
+      "expression": "new Dynamic { name = \"source\" }.toTyped(Dependent).name",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-required-missing-name",
+      "group": "dependent-default",
+      "expression": "new Dynamic {}.toTyped(RequiredDependent).greeting",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-required-source-name",
+      "group": "dependent-default",
+      "expression": "new Dynamic { name = \"source\" }.toTyped(RequiredDependent).greeting",
+      "mode": "string"
+    },
+    {
+      "id": "map-dependent-missing-name",
+      "group": "dependent-default",
+      "expression": "Map().toTyped(Dependent).greeting",
+      "mode": "string"
+    },
+    {
+      "id": "map-dependent-source-name",
+      "group": "dependent-default",
+      "expression": "Map(\"name\",\"source\").toTyped(Dependent).greeting",
+      "mode": "string"
+    },
+    {
+      "id": "map-dependent-source-name-read",
+      "group": "dependent-default",
+      "expression": "Map(\"name\",\"source\").toTyped(Dependent).name",
+      "mode": "string"
+    },
+    {
+      "id": "map-required-missing-name",
+      "group": "dependent-default",
+      "expression": "Map().toTyped(RequiredDependent).greeting",
+      "mode": "string"
+    },
+    {
+      "id": "map-required-source-name",
+      "group": "dependent-default",
+      "expression": "Map(\"name\",\"source\").toTyped(RequiredDependent).greeting",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-nullable-missing",
+      "group": "dependent-default",
+      "expression": "new Dynamic {}.toTyped(NullableDependent).greeting",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-nullable-explicit-null",
+      "group": "dependent-default",
+      "expression": "new Dynamic { name = null }.toTyped(NullableDependent).greeting",
+      "mode": "string"
+    },
+    {
+      "id": "map-nullable-missing",
+      "group": "dependent-default",
+      "expression": "Map().toTyped(NullableDependent).greeting",
+      "mode": "string"
+    },
+    {
+      "id": "map-nullable-explicit-null",
+      "group": "dependent-default",
+      "expression": "Map(\"name\",null).toTyped(NullableDependent).greeting",
+      "mode": "string"
+    },
+    {
+      "id": "dynamic-dependent-class",
+      "group": "dependent-default",
+      "expression": "new Dynamic { name = \"source\" }.toTyped(Dependent).getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "map-dependent-class",
+      "group": "dependent-default",
+      "expression": "Map(\"name\",\"source\").toTyped(Dependent).getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "high-key-map",
+      "group": "utf16-map-dynamic",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic().toMap()",
+      "mode": "string"
+    },
+    {
+      "id": "high-key-present",
+      "group": "utf16-map-dynamic",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic().hasProperty(\"\\u{d800}\")",
+      "mode": "string"
+    },
+    {
+      "id": "high-key-get-property",
+      "group": "utf16-map-dynamic",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic().getProperty(\"\\u{d800}\")",
+      "mode": "string"
+    },
+    {
+      "id": "high-key-get-or-null",
+      "group": "utf16-map-dynamic",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic().getPropertyOrNull(\"\\u{d800}\")",
+      "mode": "string"
+    },
+    {
+      "id": "high-key-subscript",
+      "group": "utf16-map-dynamic",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic()[\"\\u{d800}\"]",
+      "mode": "string"
+    },
+    {
+      "id": "low-key-subscript",
+      "group": "utf16-map-dynamic",
+      "expression": "Map(\"\\u{dc00}\",8).toDynamic()[\"\\u{dc00}\"]",
+      "mode": "string"
+    },
+    {
+      "id": "high-plus-ascii-subscript",
+      "group": "utf16-map-dynamic",
+      "expression": "Map(\"\\u{d800}x\",9).toDynamic()[\"\\u{d800}x\"]",
+      "mode": "string"
+    },
+    {
+      "id": "pair-key-subscript",
+      "group": "utf16-map-dynamic",
+      "expression": "Map(\"\\u{d83d}\\u{de00}\",10).toDynamic()[\"\\u{d83d}\\u{de00}\"]",
+      "mode": "string"
+    },
+    {
+      "id": "high-replacement-distinct-length",
+      "group": "utf16-map-dynamic",
+      "expression": "Map(\"\\u{d800}\",7,\"\\u{fffd}\",8).toDynamic().toMap().length",
+      "mode": "string"
+    },
+    {
+      "id": "high-replacement-distinct-keys",
+      "group": "utf16-map-dynamic",
+      "expression": "Map(\"\\u{d800}\",7,\"\\u{fffd}\",8).toDynamic().toMap().keys",
+      "mode": "string"
+    },
+    {
+      "id": "high-replacement-high-value",
+      "group": "utf16-map-dynamic",
+      "expression": "Map(\"\\u{d800}\",7,\"\\u{fffd}\",8).toDynamic().getProperty(\"\\u{d800}\")",
+      "mode": "string"
+    },
+    {
+      "id": "high-replacement-replacement-value",
+      "group": "utf16-map-dynamic",
+      "expression": "Map(\"\\u{d800}\",7,\"\\u{fffd}\",8).toDynamic().getProperty(\"\\u{fffd}\")",
+      "mode": "string"
+    }
+  ]
+}

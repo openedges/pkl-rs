@@ -1916,6 +1916,18 @@ Rust·제품 API 호환 통과를 주장하지 않습니다. M2 구현 연결 ha
 인증서 설정이 필요하므로 미실행 의무로 보존합니다. 이 선별은 구문상의 호출
 검색이며 전체 의미론 커버리지나 새 실행·통과 결과가 아닙니다.
 
+변환 객체의 [별도 Java 보충 기준](reports/m2/stage62-controls-java-checkpoint.json)은
+58개 식을 두 JVM에서 관찰하여 세션별 성공 44개·일반 오류 14개를 기록합니다.
+원래 236개 기준은 변경하지 않았습니다. class·기본값 receiver·없는 키·명시적
+null·UTF-16 단독 surrogate를 구분했으며, 추가 관찰에서 드러난 String 키의
+손실 없는 왕복과 지연 조회 경로를 함께 구현합니다. Dynamic의
+`hasProperty`·`getProperty`·`getPropertyOrNull`, Listing·Mapping의
+`getOrNull`·`getOrDefault` 일곱 메서드를 공통 선행 기능으로 추가하고 별도
+Java 기준으로 타입·첫 오류·캐시·default 호출과 Host 수명주기를 검증합니다.
+보충 기준은 Java 전용 검사 다섯 개와 Python 회귀 여섯 개의 일반·`-O` 실행이
+통과했고 소스 78개가 전후 일치합니다. 잘못된 surrogate 구문을 쓴 초기 관찰은
+보존하며, 이 기준 취득을 후보 호환 통과로 집계하지 않습니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

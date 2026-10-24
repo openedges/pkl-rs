@@ -1,0 +1,261 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "baseline_head": "e4e477713456ad1fc2976645524c0a0840c401a5",
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical": {
+    "archive_prefix": "capture-02",
+    "fixture": "tests/fixtures/m2-collection-conversion-controls",
+    "fixture_archive": {
+      "bytes": 223024,
+      "sha256": "c254f3cad568223c1da8f75bd5dad0a74f64867132a292bf1f1a312414f7f9da"
+    },
+    "fixture_archive_members": 2512,
+    "fixture_fileset_sha256": "0ab47c2335cee26ea63dc89664967e837acd488bebba8b58298703d6b8e1829c",
+    "module_uri": "file:///stage62/collection-conversion-controls.pkl",
+    "path": "target/m2/stage62-collection-controls-oracle-02",
+    "pids": [
+      75830,
+      75831
+    ],
+    "raw_files_per_repetition": 1220,
+    "raw_repetitions_equal": true,
+    "rows": 58,
+    "source_files": 63,
+    "source_stable": true,
+    "statuses_per_session": {
+      "error": 14,
+      "success": 44
+    }
+  },
+  "evidence": {
+    "archive": "reports/m2/stage62-controls-java-evidence.tar.gz",
+    "embedded_manifest_sha256": "dd92e84e1a0b9b49cd435f9bb3653f8c57fc5f9377a2e03a603e18ea7a301766",
+    "identity": {
+      "bytes": 1294054,
+      "sha256": "5fee552fc2b5812d4724ef311e4f1698a69264f679b1d4aa6364f2351b4b8779"
+    },
+    "member_hash_readback": true,
+    "members": 5123,
+    "source_before_after_equal": true
+  },
+  "history": {
+    "stage62-collection-controls-oracle-01": {
+      "path": "target/m2/stage62-collection-controls-oracle-01",
+      "pids": [
+        75594,
+        75642
+      ],
+      "raw_files_per_repetition": 1220,
+      "raw_repetitions_equal": true,
+      "reason_superseded": "Authored lone-surrogate keys used invalid \\uD800 syntax; corrected to Pkl \\u{d800} in capture 02.",
+      "rows": 58,
+      "source_files": 63,
+      "source_stable": true,
+      "statuses_per_session": {
+        "error": 22,
+        "success": 36
+      }
+    }
+  },
+  "java_runtime": {
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "jdk_executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+    "jdk_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "jdk_release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+    "reference_revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "kind": "stage62-converted-object-controls-java-authority-checkpoint",
+  "limits": [
+    "Public Java string observations only; no Rust candidate pass is claimed.",
+    "Unpaired surrogate key observations require UTF-16 code unit channels; Java UTF-8 is lossy.",
+    "Typed Java export and wrapper reference identity remain unverified.",
+    "Original upstream programs, browser, Node, full M2 and performance gates remain separate."
+  ],
+  "schema": 1,
+  "validation": {
+    "checks": [
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/collection_conversion_controls_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792847492.812014,
+        "name": "fixture-verifier",
+        "started_epoch": 1792847492.6318872,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 357,
+          "sha256": "312cadf914e9a232a4a7476a1b3723375227afa9a772d98cbe8e46ad109f65b6"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "tools/collection_conversion_controls_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792847492.994642,
+        "name": "fixture-verifier-O",
+        "started_epoch": 1792847492.813387,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 357,
+          "sha256": "312cadf914e9a232a4a7476a1b3723375227afa9a772d98cbe8e46ad109f65b6"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "tools.tests.test_collection_conversion_controls_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792847493.436316,
+        "name": "fixture-tests",
+        "started_epoch": 1792847492.995966,
+        "stderr": {
+          "bytes": 1210,
+          "sha256": "ad31b3fd7a7c9e087098966eee64d2b2a1c5302b3e55f55e460180b5fb1e8d07"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "-m",
+          "unittest",
+          "tools.tests.test_collection_conversion_controls_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792847493.8664901,
+        "name": "fixture-tests-O",
+        "started_epoch": 1792847493.4378262,
+        "stderr": {
+          "bytes": 1210,
+          "sha256": "f82dd817048fa9a2adc0cc5c7ead4e9784a5161ff7ad5f4f54ba5fe5d448a5db"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/inventory.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792847496.744169,
+        "name": "source-inventory",
+        "started_epoch": 1792847493.867933,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 926,
+          "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+        }
+      }
+    ],
+    "copied_sources": 78,
+    "directory": "target/m2/stage62-controls-java-validation-01",
+    "record": "target/m2/stage62-controls-java-validation-01/validation.json",
+    "record_identity": {
+      "bytes": 37290,
+      "sha256": "015a736bd7d4ee07921d10c5180a47e9d8eb02941d1168bf6ad0b50b53614d4a"
+    },
+    "source_stable": true
+  }
+}
