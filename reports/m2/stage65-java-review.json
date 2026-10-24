@@ -1,0 +1,166 @@
+{
+  "approved": true,
+  "archive": {
+    "bytes": 3830067,
+    "path": "reports/m2/stage65-java-evidence.tar.gz",
+    "sha256": "1d28fbf8cf7080d11d2301dddf4901e13996cf7d94341e77084437dd92f15f1d"
+  },
+  "archive_members": 28952,
+  "candidate_compatibility_passes_claimed": 0,
+  "checkpoint": {
+    "bytes": 7518,
+    "path": "reports/m2/stage65-java-checkpoint.json",
+    "sha256": "891046aaabe3a681218ec2d005524898d641b5d2a56d86d7991e89a792b09570"
+  },
+  "complete": true,
+  "embedded_inventory_sha256": "36b28ec61d289c3e3f2382453b2b0927be7d2b3db4e1dc06fbea12736fe40bfb",
+  "findings": [],
+  "fixture_authorities": {
+    "amends": {
+      "capture_directory": "target/m2/stage65-inferred-new-amends-oracle-01",
+      "capture_files": 400,
+      "result": {
+        "archive_sha256": "ea2c1cfe786301e1055dfd2275ecf6977d07c82f84ab5f86294322d80e2037af",
+        "baseline": "Pkl 0.32.0",
+        "candidate_compatibility_passes_claimed": 0,
+        "fileset_sha256": "b88f7617a3cf0a61fa5e8d6d09573ae694802867e4d2d80a78c4b405aba18167",
+        "module_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage65-inferred-new-amends-oracle-01/module.pkl",
+        "profile": "amends",
+        "raw_files_per_session": 149,
+        "rows": 7,
+        "source_copies": 92,
+        "statuses": {
+          "success": 7
+        }
+      }
+    },
+    "module_receiver": {
+      "capture_directory": "target/m2/stage65-module-receiver-oracle-01",
+      "capture_files": 1054,
+      "result": {
+        "archive_sha256": "8d0e624f5474c292922064fc36f211d7050d9c9dbf11cd90cd381800dea9f7dc",
+        "baseline": "Pkl 0.32.0",
+        "candidate_compatibility_passes_claimed": 0,
+        "fileset_sha256": "81f1601d7461c509708def1468d6cb3d079e2bd775ff18489f899bb68b8cf1d9",
+        "rows_per_scenario": 11,
+        "scenarios": 2,
+        "sessions": 4,
+        "source_copies": 100,
+        "statuses_per_repetition": {
+          "error": 6,
+          "success": 16
+        }
+      }
+    },
+    "values": {
+      "capture_directory": "target/m2/stage65-inferred-new-values-oracle-01",
+      "capture_files": 3129,
+      "result": {
+        "archive_sha256": "231d9c1d922cae9c1b2e0c1bd5fb15a0465681043414425f36bf89480b08763e",
+        "baseline": "Pkl 0.32.0",
+        "candidate_compatibility_passes_claimed": 0,
+        "fileset_sha256": "72c39593d98beb7d67506c97f56b1d2ddd31adefa902d4bac77cfdbf02c26ff7",
+        "module_uri": "file:///stage65/inferred-new-values.pkl",
+        "profile": "values",
+        "raw_files_per_session": 1514,
+        "rows": 72,
+        "source_copies": 92,
+        "statuses": {
+          "error": 23,
+          "success": 49
+        }
+      }
+    }
+  },
+  "kind": "stage65-independent-java-publication-review",
+  "limits": [
+    "These public string observations establish Java authority only; no Rust/native/N-API/browser candidate compatibility is claimed.",
+    "The amends and module-receiver authorities retain real sibling files and captured absolute file URIs; portable transport remains a separate obligation.",
+    "Module-receiver scenarios cover explicit new module and aliases; inherited inferred method-parent caching is separate ongoing investigation.",
+    "Existing Rust mismatches, unsupported originals, Java errors, blocked cases, all nine M2 workstreams, full API/platform and performance requirements remain open.",
+    "The actual publication process receipt postdates this archive and is published separately; it is not an archive member."
+  ],
+  "offline_validation": {
+    "commands": 6,
+    "exits": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "source_stable": true,
+    "tests_normal": 16,
+    "tests_optimized": 16
+  },
+  "original_selection": {
+    "added": [
+      8,
+      14
+    ],
+    "blocked": 2,
+    "counts": [
+      116,
+      124,
+      130
+    ],
+    "evaluations_executed": 0,
+    "prior_stage64_status_counts": {
+      "candidate-unsupported": 33,
+      "mismatch": 30,
+      "oracle-error": 1,
+      "pass": 52
+    }
+  },
+  "payload_bytes": 17844297,
+  "payload_members": 28951,
+  "post_archive_process": {
+    "bytes": 1915,
+    "path": "target/m2/stage65-java-publication-01/process.json",
+    "sha256": "4ef52f3d2ccc3b318b1342ee629c7acab30de5f1a0f28f04293fbbbe3016c01f"
+  },
+  "publication": {
+    "bytes": 5634,
+    "path": "reports/m2/stage65-java-publication.json",
+    "sha256": "c7f047e7a259d2c4fcf962edeb0140da4ea3e0301c968ec39a71ef724b0ce8d6"
+  },
+  "published_directories": [
+    "stage65-new-inference-investigation-01",
+    "stage65-new-inference-java-prep-01",
+    "stage65-new-inference-java-prep-02",
+    "stage65-new-inference-java-prep-03",
+    "stage65-new-inference-java-prep-04",
+    "stage65-new-inference-java-prep-05",
+    "stage65-new-inference-oracle-01",
+    "stage65-new-inference-oracle-02",
+    "stage65-new-inference-oracle-03",
+    "stage65-new-inference-oracle-04",
+    "stage65-new-inference-oracle-05",
+    "stage65-new-inference-launch-01",
+    "stage65-new-inference-launch-02",
+    "stage65-new-inference-launch-03",
+    "stage65-new-inference-launch-04",
+    "stage65-new-inference-launch-05",
+    "stage65-new-inference-audit-01",
+    "stage65-new-inference-independent-review-01",
+    "stage65-inferred-new-values-oracle-01",
+    "stage65-inferred-new-amends-oracle-01",
+    "stage65-inferred-new-canonical-launch-01",
+    "stage65-inferred-new-seal-01",
+    "stage65-inferred-new-fixture-validation-01",
+    "stage65-module-receiver-exploration-01",
+    "stage65-module-receiver-exploration-02",
+    "stage65-module-receiver-exploration-03",
+    "stage65-module-receiver-exploration-04",
+    "stage65-module-receiver-exploration-05",
+    "stage65-module-receiver-oracle-01",
+    "stage65-module-receiver-canonical-launch-01",
+    "stage65-module-receiver-seal-01",
+    "stage65-java-fixture-validation-01",
+    "stage65-original-selection-01",
+    "stage65-original-selection-02"
+  ],
+  "schema": 1,
+  "source_stable": true
+}

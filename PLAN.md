@@ -2280,6 +2280,77 @@ Git mode를 대조하며, 시작 시 layout 경로를 확정해 통과했습니�
 검토 실행에는 실제 실행한 검토 스크립트도 포함합니다. guest를 다시 실행한
 결과로 집계하지 않으며 **M2 전체 미완료와 기존 원본·Regex 실패를 유지합니다.**
 
+### Stage 65 — `new`의 문맥별 부모와 타입 기본값
+
+Stage 64 마감 커밋 `6110bae`에서 `m2/stage65-inferred-new`를 시작합니다.
+공유 런타임·수명주기는 `gpt-6-astra / xhigh`, 독립 Java 기준과 검증 도구는
+`gpt-6-sol / high` 에이전트들에 배정합니다. 주 에이전트가 통합 검증·문서·
+증거 게시와 단계별 커밋·푸시를 담당합니다. 기존 체크포인트와 실패 기록은
+그대로 보존합니다.
+
+원본 `basic/newInAmendingModuleMethod.pkl`, `basic/newInsideIf.pkl`,
+`basic/newInsideLet.pkl`, `basic/newType.pkl`의 첫 실패를 다음 공통 경로에서
+해결합니다. 네 프로그램만 통과하도록 예외 처리하지 않습니다.
+
+- 문맥에 따른 부모 추론은 Java와 같이 직접 연결된 `if`·`trace`·`let` 본문을
+  통과합니다. `if` 조건도 포함하되 중간 연산자·함수 호출·lambda·`let` 바인딩과
+  중첩 객체 범위는 별도로 구분합니다. 실행하지 않은 분기의 default를 미리
+  호출하거나 오류 순서를 바꾸지 않습니다.
+- 할당된 `[key] = new { ... }`와 element의 inferred `new`는 receiver의
+  `default(key)`를 사용합니다. `[key] { ... }`의 기존 항목 amendment는 상속된
+  같은 키를 먼저 찾습니다. 두 경로를 분리하고 사용자 default 함수의 인수·
+  타입 검사·첫 오류·Host 중단과 재시도를 유지합니다.
+- 반환형이 없거나 `unknown`인 일반·class·object·amends module 메서드는
+  prototype이 연결된 기본 Dynamic 부모를 사용합니다. 선언된 반환형의 owner와
+  source, override·module 자기 타입의 기본값을 함께 검증합니다.
+- 명시적 `new`의 nullable·union·별칭·제약·generic 타입을 기존 재개 가능한
+  타입 기본값 경로에 연결합니다. 기본값이 없는 타입과 external·abstract 오류를
+  구분하고, 기본값·receiver·key·callback·builder의 GC root를 보존합니다.
+
+Java 탐색 다섯 번째 입력을 독립 검토한 뒤 일반 모듈 72개·amends 모듈 7개의
+영구 Java fixture를 고정했습니다. 모듈마다 새 JVM 두 개를 사용한 반복별
+결과는 성공 56개·일반 Pkl 오류 23개이며 원시 채널이 일치했습니다. 앞선 네
+탐색의 모듈 작성·구문 오류는 별도 이력입니다. 두 fixture의 전체 archive·
+protocol 오프라인 검증과 변조 거부 검사 8개가 일반 Python과 `-O`에서
+통과했습니다. 이 79개는 Java 기준이며 Rust 호환성 완료 판정이 아닙니다.
+다중 모듈의 실제 Host 경계를 유지하고, portable 실행이 필요한 입력을 단일
+모듈 문자열로 바꾸어 대체하지 않습니다.
+
+원본 회귀 선택은 기존 116개의 입력·순서·CLI 조건을 유지하고 기본값·추론
+오류 원본 8개를 더한 124개로 먼저 준비했습니다. 모듈 자기 타입의 캐시 차이를
+확인하여 관련 원본 6개를 추가한 130개 선택을 별도로 준비했습니다. 미실행
+124개 선택과 기존 52개 통과·모든 실패 상태를 보존하며, package·HTTP·TLS
+관련 필수 원본 2개도 차단 상태로 남깁니다. 선택 준비는 실제 비교 실행이
+아닙니다. Java heap 조건 `-Xmx512m`도 유지합니다.
+
+별도 Java fixture는 같은 open base를 상속한 두 모듈을 서로 반대 순서로
+평가합니다. 두 시나리오 각각 11개 query·새 JVM 두 개에서 성공 8개와 일반
+Pkl 오류 3개를 관찰했습니다. 직접 `new module`·nullable 생성은 처음 평가한
+닫힌 모듈 타입을 유지하고 별칭은 receiver별 타입을 유지합니다. 전체 3개
+fixture 검증, 변조 거부 검사 16개(일반 Python·`-O`), source inventory 검사가
+통과했습니다. inferred method 부모의 첫 평가 캐시는 별도의 후속 Java
+조사이며 이 explicit-new fixture에 포함된 것으로 집계하지 않습니다.
+Java 기준의 공개 archive 28,952개 member와 실제 게시·검토 실행 기록을
+독립 검토했습니다. 이 자료는 Java 기준만 고정하는 A 커밋으로 분리하며,
+런타임·catalog 통합과 그 검증은 다음 구현 커밋에서 다룹니다.
+
+비활성 Stage47의 생성된 Cargo cache 중 검토한 33개 batch·3,792개 파일을
+복구 가능한 archive로 옮겼습니다. 독립 검토가 전체 payload·metadata·삭제
+기록과 미실행 batch의 원래 516개 파일을 검증했습니다. 실제 여유 공간
+2,715,656,192 bytes에서 중단하여 정확한 2.5 GiB 기준을 충족했습니다.
+현재 Stage57 cache·참조·증거는 유지했습니다. 첫 집중 검사에서는 컴파일과
+기존 frontend·generic 기본값 수명주기 검사가 통과했지만, 새 Java 값 비교의
+오류 위치·스택·제약 별칭 오류 분류가 달라 실패했습니다. 원래 실패 기록을
+보존하고 수정 후 새 디렉터리에서 검증합니다.
+
+기존 Java 기준과 원본 선택의 회귀, 새 추론 경계의 raw byte 비교, Host 중단·
+재진입·GC·실패·재시도·취소, 기존 256 KiB frontend 조건을 검증합니다.
+필수 Rust 검사와 실제 native·N-API·Chromium 검증은 소스 고정 뒤 새 출력
+디렉터리에서 수행합니다. 빌드 공간 확보는 비활성 프로젝트 생성 캐시를
+복구 가능한 archive로 보존한 뒤 진행하며 참조·원래 증거·공유 cache는 건드리지
+않습니다. Java 기준, 구현·플랫폼·원본 결과, 실제 커밋 소스 연결을 각각
+기록·커밋·푸시하고 **M2의 아홉 영역과 전체 완료 조건은 유지합니다.**
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

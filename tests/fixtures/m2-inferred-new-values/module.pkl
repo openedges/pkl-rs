@@ -1,0 +1,41 @@
+// Stage65 authored inferred-new controls; Java 0.32.0 is the authority.
+class Person {
+  name: String
+  tag: String = "person"
+}
+open class Holder {
+  child: Person = new Person { name = "base" }
+}
+class ChildHolder extends Holder {
+  child = new { name = "override" }
+}
+abstract class AbstractThing { value: Int = 1 }
+typealias PersonAlias = Person
+typealias PersonListing = Listing<Person>
+typealias NonEmptyText = String(this.length > 0)
+function typedMethod(): Person = new { name = "typed" }
+function implicitMethod() = new { kind = getClass().simpleName }
+function unknownMethod(): unknown = new { kind = getClass().simpleName }
+class MethodHost {
+  function typed(): Person = new { name = "class-typed" }
+  function implicit() = new { kind = getClass().simpleName }
+  function unknownResult(): unknown = new { kind = getClass().simpleName }
+}
+objectMethod = new Dynamic {
+  local function typed(): Person = new { name = "object-typed" }
+  local function implicit() = new { kind = getClass().simpleName }
+  local function unknownResult(): unknown = new { kind = getClass().simpleName }
+  typedValue = typed()
+}
+typedIf: Person = if (true) new { name = "if" } else new { name = "else" }
+typedLet: Person = let (x = 1) new { name = "let" }
+listBase = new Listing<Person> { new { name = "old" } }
+mapBase = new Mapping<String, Person> { ["k"] = new { name = "old" } }
+customList = new Listing {
+  default = (i) -> new Dynamic { marker = "list-default"; key = i }
+  new Dynamic { marker = "old" }
+}
+customMap = new Mapping {
+  default = (k) -> new Dynamic { marker = "map-default"; key = k }
+  ["k"] = new Dynamic { marker = "old" }
+}

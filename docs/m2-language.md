@@ -1,5 +1,17 @@
 # M2 language verification
 
+Stage 65 is in progress. Its [Java authority checkpoint](../reports/m2/stage65-java-checkpoint.json)
+pins 72 inferred/explicit `new` expressions, seven observations from a real
+amending module, and two ordered eleven-query scenarios for inherited explicit
+module self types. The latter preserve Java's first-resolution cache behavior
+and receiver-specific alias controls. All three fixture archives and sixteen
+adversarial checks pass offline; these are Java authorities, not new Rust passes.
+The prepared original selection preserves Stage 64's 116 programs and adds
+fourteen default/type controls, for 130 unexecuted Stage 65 inputs. Two required
+package/HTTP/TLS originals remain blocked. Inferred method-parent caching is a
+separate ongoing investigation. Stage 64 below remains the latest completed
+implementation checkpoint.
+
 Stage 64 implements repeated amendment bodies, class-valued construction
 parents, empty-result identity, and `Listing.fold` forcing order. Its
 [implementation checkpoint](../reports/m2/stage64-implementation-checkpoint.json)

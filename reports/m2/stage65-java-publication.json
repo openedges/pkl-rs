@@ -1,0 +1,70 @@
+{
+  "included_in_java_archive": false,
+  "kind": "stage65-Java-publication-actual-process",
+  "process": {
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage65-java-publication-01/publish.py"
+    ],
+    "candidate_compatibility_passes_claimed": 0,
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+    "exit_code": 0,
+    "finished_epoch": 1792871489.088337,
+    "host": {
+      "machine": "arm64",
+      "node": "research-macmini1.local",
+      "processor": "arm",
+      "release": "27.0.0",
+      "system": "Darwin",
+      "version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:27 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8103"
+    },
+    "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "schema": 1,
+    "source_after": [
+      {
+        "bytes": 2621,
+        "path": "target/m2/stage65-java-publication-01/run.py",
+        "sha256": "621f4a5c0f616d806728edbf3df91398bd4d939a7f56237421e49c41e2f5c298"
+      },
+      {
+        "bytes": 8508,
+        "path": "target/m2/stage65-java-publication-01/publish.py",
+        "sha256": "64d97d1c4592bed776a851b6bd8ef1204cf9764326c2cc63d84a05e6c2589c4d"
+      }
+    ],
+    "source_before": [
+      {
+        "bytes": 2621,
+        "path": "target/m2/stage65-java-publication-01/run.py",
+        "sha256": "621f4a5c0f616d806728edbf3df91398bd4d939a7f56237421e49c41e2f5c298"
+      },
+      {
+        "bytes": 8508,
+        "path": "target/m2/stage65-java-publication-01/publish.py",
+        "sha256": "64d97d1c4592bed776a851b6bd8ef1204cf9764326c2cc63d84a05e6c2589c4d"
+      }
+    ],
+    "source_stable": true,
+    "started_epoch": 1792871477.8608692,
+    "stderr": {
+      "bytes": 0,
+      "path": "target/m2/stage65-java-publication-01/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 500,
+      "path": "target/m2/stage65-java-publication-01/stdout.bin",
+      "sha256": "fd8a96f5148c3d3706db693bfbcffa48f6908cfb2d4a6407df88ca882c433d6d"
+    }
+  },
+  "process_base64": "ewogICJhcmd2IjogWwogICAgIi9vcHQvaG9tZWJyZXcvb3B0L3B5dGhvbkAzLjE0L2Jpbi9weXRob24zLjE0IiwKICAgICItQiIsCiAgICAiL1VzZXJzL2NvZHkuaWouaHdhbmcvUHJvamVjdHMvcGtsLXJzLnN0YWdlNTcvdGFyZ2V0L20yL3N0YWdlNjUtamF2YS1wdWJsaWNhdGlvbi0wMS9wdWJsaXNoLnB5IgogIF0sCiAgImNhbmRpZGF0ZV9jb21wYXRpYmlsaXR5X3Bhc3Nlc19jbGFpbWVkIjogMCwKICAiY3dkIjogIi9Vc2Vycy9jb2R5LmlqLmh3YW5nL1Byb2plY3RzL3BrbC1ycy5zdGFnZTU3IiwKICAiZXhpdF9jb2RlIjogMCwKICAiZmluaXNoZWRfZXBvY2giOiAxNzkyODcxNDg5LjA4ODMzNywKICAiaG9zdCI6IHsKICAgICJtYWNoaW5lIjogImFybTY0IiwKICAgICJub2RlIjogInJlc2VhcmNoLW1hY21pbmkxLmxvY2FsIiwKICAgICJwcm9jZXNzb3IiOiAiYXJtIiwKICAgICJyZWxlYXNlIjogIjI3LjAuMCIsCiAgICAic3lzdGVtIjogIkRhcndpbiIsCiAgICAidmVyc2lvbiI6ICJEYXJ3aW4gS2VybmVsIFZlcnNpb24gMjcuMC4wOiBUdWUgQXVnIDExIDIxOjA1OjI3IFBEVCAyMDI2OyByb290OnhudS0xMzQzMi4xLjl+MS9SRUxFQVNFX0FSTTY0X1Q4MTAzIgogIH0sCiAgInB5dGhvbiI6ICIzLjE0LjggKG1haW4sIFNlcCAzMCAyMDI2LCAxNzo1NTowOSkgW0NsYW5nIDIxLjAuMCAoY2xhbmctMjEwMC4zLjM0LjIpXSIsCiAgInNjaGVtYSI6IDEsCiAgInNvdXJjZV9hZnRlciI6IFsKICAgIHsKICAgICAgImJ5dGVzIjogMjYyMSwKICAgICAgInBhdGgiOiAidGFyZ2V0L20yL3N0YWdlNjUtamF2YS1wdWJsaWNhdGlvbi0wMS9ydW4ucHkiLAogICAgICAic2hhMjU2IjogIjYyMWY0YTVjMGY2MTZkODA2NzI4ZWRiZjNkZjkxMzk4YmQ0ZDkzOWE3ZjU2MjM3NDIxZTQ5YzQxZTJmNWMyOTgiCiAgICB9LAogICAgewogICAgICAiYnl0ZXMiOiA4NTA4LAogICAgICAicGF0aCI6ICJ0YXJnZXQvbTIvc3RhZ2U2NS1qYXZhLXB1YmxpY2F0aW9uLTAxL3B1Ymxpc2gucHkiLAogICAgICAic2hhMjU2IjogIjY0ZDk3ZDFjNDU5MmJlZDc3NmE4NTFiNmJkOGVmMTIwNGNmOTc2NDMyNmMyY2M2M2Q4NGEwNWU2YzI1ODljNGQiCiAgICB9CiAgXSwKICAic291cmNlX2JlZm9yZSI6IFsKICAgIHsKICAgICAgImJ5dGVzIjogMjYyMSwKICAgICAgInBhdGgiOiAidGFyZ2V0L20yL3N0YWdlNjUtamF2YS1wdWJsaWNhdGlvbi0wMS9ydW4ucHkiLAogICAgICAic2hhMjU2IjogIjYyMWY0YTVjMGY2MTZkODA2NzI4ZWRiZjNkZjkxMzk4YmQ0ZDkzOWE3ZjU2MjM3NDIxZTQ5YzQxZTJmNWMyOTgiCiAgICB9LAogICAgewogICAgICAiYnl0ZXMiOiA4NTA4LAogICAgICAicGF0aCI6ICJ0YXJnZXQvbTIvc3RhZ2U2NS1qYXZhLXB1YmxpY2F0aW9uLTAxL3B1Ymxpc2gucHkiLAogICAgICAic2hhMjU2IjogIjY0ZDk3ZDFjNDU5MmJlZDc3NmE4NTFiNmJkOGVmMTIwNGNmOTc2NDMyNmMyY2M2M2Q4NGEwNWU2YzI1ODljNGQiCiAgICB9CiAgXSwKICAic291cmNlX3N0YWJsZSI6IHRydWUsCiAgInN0YXJ0ZWRfZXBvY2giOiAxNzkyODcxNDc3Ljg2MDg2OTIsCiAgInN0ZGVyciI6IHsKICAgICJieXRlcyI6IDAsCiAgICAicGF0aCI6ICJ0YXJnZXQvbTIvc3RhZ2U2NS1qYXZhLXB1YmxpY2F0aW9uLTAxL3N0ZGVyci5iaW4iLAogICAgInNoYTI1NiI6ICJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IgogIH0sCiAgInN0ZG91dCI6IHsKICAgICJieXRlcyI6IDUwMCwKICAgICJwYXRoIjogInRhcmdldC9tMi9zdGFnZTY1LWphdmEtcHVibGljYXRpb24tMDEvc3Rkb3V0LmJpbiIsCiAgICAic2hhMjU2IjogImZkOGE5NmY1MTQ4YzNkMzcwNmRiNjkzYmZiY2ZmYTQ4ZjY5MDhjZmIyZDRhNjQwN2RmODhjYTg4MmM0MzNkNmQiCiAgfQp9Cg==",
+  "process_file": {
+    "bytes": 1915,
+    "path": "target/m2/stage65-java-publication-01/process.json",
+    "sha256": "4ef52f3d2ccc3b318b1342ee629c7acab30de5f1a0f28f04293fbbbe3016c01f"
+  },
+  "schema": 1,
+  "stderr_base64": "",
+  "stdout_base64": "VmVyaWZpZWQgMjg5NTEgZXZpZGVuY2UgZmlsZXM6IC9Vc2Vycy9jb2R5LmlqLmh3YW5nL1Byb2plY3RzL3BrbC1ycy5zdGFnZTU3L3JlcG9ydHMvbTIvc3RhZ2U2NS1qYXZhLWV2aWRlbmNlLnRhci5negp7ImFyY2hpdmUiOiB7InBhdGgiOiAicmVwb3J0cy9tMi9zdGFnZTY1LWphdmEtZXZpZGVuY2UudGFyLmd6IiwgImJ5dGVzIjogMzgzMDA2NywgInNoYTI1NiI6ICIxZDI4ZmJmOGNmNzA4MGQxMWQyMzAxZGRkZjQ5MDFlMTM5OTZjZjdkOTQzNDFlNzcwODQ0MzdkZDkyZjE1ZjFkIn0sICJtZW1iZXJzIjogMjg5NTIsICJjaGVja3BvaW50IjogeyJwYXRoIjogInJlcG9ydHMvbTIvc3RhZ2U2NS1qYXZhLWNoZWNrcG9pbnQuanNvbiIsICJieXRlcyI6IDc1MTgsICJzaGEyNTYiOiAiODkxMDQ2YWFhYmUzYTY4MTIxOGVjMmQwMDU1MjQ4OThkNjQxYjVkMmE1NmQ4NmQ3OTkxZTg5YTc5MmIwOTU3MCJ9LCAiY2FuZGlkYXRlX2NvbXBhdGliaWxpdHlfcGFzc2VzX2NsYWltZWQiOiAwfQo="
+}

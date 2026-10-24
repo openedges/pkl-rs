@@ -1,0 +1,441 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "boundary": "string",
+  "module_uri": "file:///stage65/inferred-new-values.pkl",
+  "repetitions": 2,
+  "rows": [
+    {
+      "expression": "this.getClass().simpleName",
+      "group": "context",
+      "id": "module-self-type",
+      "mode": "string"
+    },
+    {
+      "expression": "typedMethod().getClass().simpleName",
+      "group": "context",
+      "id": "module-typed-method",
+      "mode": "string"
+    },
+    {
+      "expression": "implicitMethod().getClass().simpleName",
+      "group": "context",
+      "id": "module-implicit-method",
+      "mode": "string"
+    },
+    {
+      "expression": "unknownMethod().getClass().simpleName",
+      "group": "context",
+      "id": "module-unknown-method",
+      "mode": "string"
+    },
+    {
+      "expression": "implicitMethod().kind",
+      "group": "context",
+      "id": "module-implicit-kind",
+      "mode": "string"
+    },
+    {
+      "expression": "unknownMethod().kind",
+      "group": "context",
+      "id": "module-unknown-kind",
+      "mode": "string"
+    },
+    {
+      "expression": "new MethodHost {}.typed().getClass().simpleName",
+      "group": "context",
+      "id": "class-typed-method",
+      "mode": "string"
+    },
+    {
+      "expression": "new MethodHost {}.implicit().getClass().simpleName",
+      "group": "context",
+      "id": "class-implicit-method",
+      "mode": "string"
+    },
+    {
+      "expression": "new MethodHost {}.unknownResult().getClass().simpleName",
+      "group": "context",
+      "id": "class-unknown-method",
+      "mode": "string"
+    },
+    {
+      "expression": "objectMethod.typedValue.getClass().simpleName",
+      "group": "context",
+      "id": "object-typed-method",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic { local function implicit() = new { kind = getClass().simpleName }; value = implicit() }).value.getClass().simpleName",
+      "group": "context",
+      "id": "object-implicit-method",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Dynamic { local function unknownResult(): unknown = new { kind = getClass().simpleName }; value = unknownResult() }).value.getClass().simpleName",
+      "group": "context",
+      "id": "object-unknown-method",
+      "mode": "string"
+    },
+    {
+      "expression": "new ChildHolder {}.child.name",
+      "group": "context",
+      "id": "typed-override",
+      "mode": "string"
+    },
+    {
+      "expression": "new ChildHolder {}.child.tag",
+      "group": "context",
+      "id": "typed-override-default",
+      "mode": "string"
+    },
+    {
+      "expression": "typedIf.name",
+      "group": "context",
+      "id": "typed-if",
+      "mode": "string"
+    },
+    {
+      "expression": "typedLet.name",
+      "group": "context",
+      "id": "typed-let",
+      "mode": "string"
+    },
+    {
+      "expression": "(if (new { name = \"condition\" } is Person) new { name = \"yes\" } else new { name = \"no\" }).name",
+      "group": "context",
+      "id": "if-condition-context",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Mapping<String, Person> { [\"k\"] = if (new { name = \"condition\" }) new { name = \"yes\" } else new { name = \"no\" } })[\"k\"].name",
+      "group": "context",
+      "id": "if-condition-direct",
+      "mode": "string"
+    },
+    {
+      "expression": "(let (x = new { name = \"binding\" }) new { name = x.getClass().simpleName }).name",
+      "group": "context",
+      "id": "let-binding-boundary",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1).map((x) -> new { kind = getClass().simpleName })[0].getClass().simpleName",
+      "group": "context",
+      "id": "lambda-boundary",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1).map((x) -> new Dynamic { marker = \"explicit\" })[0].marker",
+      "group": "context",
+      "id": "lambda-explicit-parent",
+      "mode": "string"
+    },
+    {
+      "expression": "(new { kind = getClass().simpleName }).getClass().simpleName",
+      "group": "context",
+      "id": "root-inferred",
+      "mode": "string"
+    },
+    {
+      "expression": "(customList) { [0] = new { marker = \"assigned\" } }[0].marker",
+      "group": "entry-parent",
+      "id": "list-assigned-root",
+      "mode": "string"
+    },
+    {
+      "expression": "(customList) { [0] = new { marker = \"assigned\" } }[0].key",
+      "group": "entry-parent",
+      "id": "list-assigned-parent",
+      "mode": "string"
+    },
+    {
+      "expression": "(customList) { [0] { marker = \"amended\" } }[0].marker",
+      "group": "entry-parent",
+      "id": "list-amendment",
+      "mode": "string"
+    },
+    {
+      "expression": "(customList) { [0] { marker = \"amended\" } }[0].key",
+      "group": "entry-parent",
+      "id": "list-amendment-parent",
+      "mode": "string"
+    },
+    {
+      "expression": "(customMap) { [\"k\"] = new { marker = \"assigned\" } }[\"k\"].marker",
+      "group": "entry-parent",
+      "id": "map-assigned-root",
+      "mode": "string"
+    },
+    {
+      "expression": "(customMap) { [\"k\"] = new { marker = \"assigned\" } }[\"k\"].key",
+      "group": "entry-parent",
+      "id": "map-assigned-parent",
+      "mode": "string"
+    },
+    {
+      "expression": "(customMap) { [\"k\"] { marker = \"amended\" } }[\"k\"].marker",
+      "group": "entry-parent",
+      "id": "map-amendment",
+      "mode": "string"
+    },
+    {
+      "expression": "(customMap) { [\"k\"] { marker = \"amended\" } }[\"k\"].key",
+      "group": "entry-parent",
+      "id": "map-amendment-parent",
+      "mode": "string"
+    },
+    {
+      "expression": "(customList) { [0] = if (true) new { marker = \"then\" } else new { marker = \"else\" } }[0].key",
+      "group": "entry-parent",
+      "id": "list-if-then",
+      "mode": "string"
+    },
+    {
+      "expression": "(customList) { [0] = if (false) new { marker = \"then\" } else new { marker = \"else\" } }[0].key",
+      "group": "entry-parent",
+      "id": "list-if-else",
+      "mode": "string"
+    },
+    {
+      "expression": "(customMap) { [\"k\"] = if (true) new { marker = \"then\" } else new { marker = \"else\" } }[\"k\"].key",
+      "group": "entry-parent",
+      "id": "map-if-then",
+      "mode": "string"
+    },
+    {
+      "expression": "(customMap) { [\"k\"] = if (false) new { marker = \"then\" } else new { marker = \"else\" } }[\"k\"].key",
+      "group": "entry-parent",
+      "id": "map-if-else",
+      "mode": "string"
+    },
+    {
+      "expression": "(customList) { [0] = let (x = 1) new { marker = \"body\" } }[0].key",
+      "group": "entry-parent",
+      "id": "list-let-body",
+      "mode": "string"
+    },
+    {
+      "expression": "(customMap) { [\"k\"] = let (x = 1) new { marker = \"body\" } }[\"k\"].key",
+      "group": "entry-parent",
+      "id": "map-let-body",
+      "mode": "string"
+    },
+    {
+      "expression": "(customList) { [0] = trace(new { marker = \"trace\" }) }[0].key",
+      "group": "entry-parent",
+      "id": "list-trace",
+      "mode": "string"
+    },
+    {
+      "expression": "(customMap) { [\"k\"] = trace(new { marker = \"trace\" }) }[\"k\"].key",
+      "group": "entry-parent",
+      "id": "map-trace",
+      "mode": "string"
+    },
+    {
+      "expression": "(customList) { [0] = if (true) new { marker = \"selected\" } else new { marker = throw(\"skipped-else\") } }[0].marker",
+      "group": "entry-parent",
+      "id": "list-skipped-else",
+      "mode": "string"
+    },
+    {
+      "expression": "(customMap) { [\"k\"] = if (false) new { marker = throw(\"skipped-then\") } else new { marker = \"selected\" } }[\"k\"].marker",
+      "group": "entry-parent",
+      "id": "map-skipped-then",
+      "mode": "string"
+    },
+    {
+      "expression": "(customList) { [0] = let (x = new { marker = \"binding\" }) new { marker = x.getClass().simpleName } }[0].key",
+      "group": "entry-parent",
+      "id": "list-let-binding-boundary",
+      "mode": "string"
+    },
+    {
+      "expression": "(customMap) { [\"k\"] = List(1).map((x) -> new { marker = \"lambda\" })[0] }[\"k\"].getClass().simpleName",
+      "group": "entry-parent",
+      "id": "map-lambda-boundary",
+      "mode": "string"
+    },
+    {
+      "expression": "(customList) { [throw(\"list-key-first\")] = new { marker = \"value\" } }[0]",
+      "group": "entry-parent",
+      "id": "list-key-error-first",
+      "mode": "string"
+    },
+    {
+      "expression": "(customMap) { [throw(\"map-key-first\")] = new { marker = \"value\" } }[\"k\"]",
+      "group": "entry-parent",
+      "id": "map-key-error-first",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { default = (_) -> throw(\"list-default-first\"); 1 }) { [0] = new { marker = \"value\" } }[0]",
+      "group": "entry-parent",
+      "id": "list-default-error",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Mapping { default = (_) -> throw(\"map-default-first\"); [\"k\"] = 1 }) { [\"k\"] = new { marker = \"value\" } }[\"k\"]",
+      "group": "entry-parent",
+      "id": "map-default-error",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { default = 1; 1 }) { [0] = new { marker = \"value\" } }[0]",
+      "group": "entry-parent",
+      "id": "list-nonfunction-default",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Mapping { default = 1; [\"k\"] = 1 }) { [\"k\"] = new { marker = \"value\" } }[\"k\"]",
+      "group": "entry-parent",
+      "id": "map-nonfunction-default",
+      "mode": "string"
+    },
+    {
+      "expression": "(listBase) { [0] = new { name = \"typed\" } }[0].getClass().simpleName",
+      "group": "entry-parent",
+      "id": "typed-list-assigned",
+      "mode": "string"
+    },
+    {
+      "expression": "(listBase) { [0] { name = \"typed-amend\" } }[0].name",
+      "group": "entry-parent",
+      "id": "typed-list-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "(mapBase) { [\"k\"] = new { name = \"typed\" } }[\"k\"].getClass().simpleName",
+      "group": "entry-parent",
+      "id": "typed-map-assigned",
+      "mode": "string"
+    },
+    {
+      "expression": "(mapBase) { [\"k\"] { name = \"typed-amend\" } }[\"k\"].name",
+      "group": "entry-parent",
+      "id": "typed-map-amend",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Person { name = \"direct\" }).name",
+      "group": "explicit-type",
+      "id": "class",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Person? { name = \"nullable\" }).name",
+      "group": "explicit-type",
+      "id": "nullable-class",
+      "mode": "string"
+    },
+    {
+      "expression": "(new *Person|String { name = \"union\" }).getClass().simpleName",
+      "group": "explicit-type",
+      "id": "default-union",
+      "mode": "string"
+    },
+    {
+      "expression": "new String|Person {}",
+      "group": "explicit-type",
+      "id": "no-default-union",
+      "mode": "string"
+    },
+    {
+      "expression": "(new PersonAlias { name = \"alias\" }).name",
+      "group": "explicit-type",
+      "id": "alias",
+      "mode": "string"
+    },
+    {
+      "expression": "(new PersonAlias? { name = \"alias-nullable\" }).name",
+      "group": "explicit-type",
+      "id": "nullable-alias",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing<Person> { new { name = \"generic\" } })[0].name",
+      "group": "explicit-type",
+      "id": "generic-listing",
+      "mode": "string"
+    },
+    {
+      "expression": "(new PersonListing { new { name = \"alias-generic\" } })[0].name",
+      "group": "explicit-type",
+      "id": "generic-alias",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Mapping<String, Person> { [\"k\"] = new { name = \"generic-map\" } })[\"k\"].name",
+      "group": "explicit-type",
+      "id": "generic-mapping",
+      "mode": "string"
+    },
+    {
+      "expression": "new NonEmptyText {}",
+      "group": "explicit-type",
+      "id": "constraint-alias-external",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Person(this.name == \"ok\") { name = \"ok\" }).name",
+      "group": "explicit-type",
+      "id": "constraint-class",
+      "mode": "string"
+    },
+    {
+      "expression": "new Person(this.name == \"ok\") { name = \"bad\" }",
+      "group": "explicit-type",
+      "id": "constraint-class-bad-value",
+      "mode": "string"
+    },
+    {
+      "expression": "new Person { name = \"ok\" } is Person(this.name == \"ok\")",
+      "group": "explicit-type",
+      "id": "constraint-check-ok",
+      "mode": "string"
+    },
+    {
+      "expression": "new Person { name = \"bad\" } is Person(this.name == \"ok\")",
+      "group": "explicit-type",
+      "id": "constraint-check-bad",
+      "mode": "string"
+    },
+    {
+      "expression": "new Int {}",
+      "group": "explicit-type",
+      "id": "external-int",
+      "mode": "string"
+    },
+    {
+      "expression": "new Set {}",
+      "group": "explicit-type",
+      "id": "external-set",
+      "mode": "string"
+    },
+    {
+      "expression": "new String {}",
+      "group": "explicit-type",
+      "id": "external-string",
+      "mode": "string"
+    },
+    {
+      "expression": "new \"foo\" {}",
+      "group": "explicit-type",
+      "id": "string-literal",
+      "mode": "string"
+    },
+    {
+      "expression": "new AbstractThing {}",
+      "group": "explicit-type",
+      "id": "abstract-class",
+      "mode": "string"
+    },
+    {
+      "expression": "new unknown {}",
+      "group": "explicit-type",
+      "id": "unknown-type",
+      "mode": "string"
+    }
+  ],
+  "schema": 1
+}

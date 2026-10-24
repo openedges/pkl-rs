@@ -1,0 +1,9 @@
+amends "base.pkl"
+local class Person {
+  name: String
+  tag: String = "person"
+}
+local function typedMethod(): Person = new { name = "amends-typed" }
+local function implicitMethod() = new { kind = getClass().simpleName }
+local function unknownMethod(): unknown = new { kind = getClass().simpleName }
+result = List(typedMethod(), implicitMethod(), unknownMethod())

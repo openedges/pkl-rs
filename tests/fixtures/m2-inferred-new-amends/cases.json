@@ -1,0 +1,51 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "boundary": "string",
+  "module_uri_policy": "captured-absolute-file-uri-with-sibling-base",
+  "repetitions": 2,
+  "rows": [
+    {
+      "expression": "this.getClass().simpleName",
+      "group": "amends-method",
+      "id": "amends-module-self-type",
+      "mode": "string"
+    },
+    {
+      "expression": "result[0].getClass().simpleName",
+      "group": "amends-method",
+      "id": "amends-typed",
+      "mode": "string"
+    },
+    {
+      "expression": "result[1].getClass().simpleName",
+      "group": "amends-method",
+      "id": "amends-implicit",
+      "mode": "string"
+    },
+    {
+      "expression": "result[2].getClass().simpleName",
+      "group": "amends-method",
+      "id": "amends-unknown",
+      "mode": "string"
+    },
+    {
+      "expression": "result[1].kind",
+      "group": "amends-method",
+      "id": "amends-implicit-kind",
+      "mode": "string"
+    },
+    {
+      "expression": "result[2].kind",
+      "group": "amends-method",
+      "id": "amends-unknown-kind",
+      "mode": "string"
+    },
+    {
+      "expression": "result",
+      "group": "amends-method",
+      "id": "amends-result",
+      "mode": "string"
+    }
+  ],
+  "schema": 1
+}

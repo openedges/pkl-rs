@@ -1,0 +1,7 @@
+# Pkl 0.32.0 inherited module type resolution
+
+This Java-only supplement records a shared `open module Base` inherited by two modules, `alpha` and `beta`. The base methods use explicit `new module {}`, `new module? {}`, and type aliases `Current = module` and `MaybeCurrent = module?`. A third module imports both children and exposes them as public properties for the expression evaluator.
+
+`alpha-first.queries.tsv` and `beta-first.queries.tsv` exercise the same receiver types in opposite first-force order. In pinned Java 0.32.0, the first direct `module` construction succeeds, while the other child's later direct `module` and nullable construction fail with an expected-child/got-first-child type error. The alias constructions remain child-specific and succeed. These outcomes are order-dependent Java observations; they do not imply an intended language rule or a Rust candidate pass.
+
+The fixture archive preserves the authored sources, both ordered query sets, four fresh JVM sessions, every result's raw UTF-8 and UTF-16 channels, process streams, pinned JDK/JAR identities, and copied upstream implementation sources. Run `python3 tools/inferred_new_module_receiver_fixtures.py` for offline verification. The captured absolute `file:` URIs and sibling import files are part of the observed authority. Native and portable Host behavior, direct VM identity, full API compatibility, and performance remain unverified.

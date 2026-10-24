@@ -1,0 +1,7 @@
+string	amends-module-self-type	this.getClass().simpleName
+string	amends-typed	result[0].getClass().simpleName
+string	amends-implicit	result[1].getClass().simpleName
+string	amends-unknown	result[2].getClass().simpleName
+string	amends-implicit-kind	result[1].kind
+string	amends-unknown-kind	result[2].kind
+string	amends-result	result

@@ -1,0 +1,123 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "boundary": "public-evaluateExpressionString",
+  "module_uri_policy": "captured-absolute-file-uri-with-three-sibling-modules",
+  "repetitions": 2,
+  "scenarios": {
+    "alpha-first": [
+      {
+        "expression": "alphaModule.makeModule().getClass() == alphaModule.getClass()",
+        "id": "alpha-module-is-alpha",
+        "mode": "string"
+      },
+      {
+        "expression": "betaModule.makeModule().getClass() == betaModule.getClass()",
+        "id": "beta-module-is-beta",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.makeNullable().getClass() == alphaModule.getClass()",
+        "id": "alpha-nullable-is-alpha",
+        "mode": "string"
+      },
+      {
+        "expression": "betaModule.makeNullable().getClass() == betaModule.getClass()",
+        "id": "beta-nullable-is-beta",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.makeAlias().getClass() == alphaModule.getClass()",
+        "id": "alpha-alias-is-alpha",
+        "mode": "string"
+      },
+      {
+        "expression": "betaModule.makeAlias().getClass() == betaModule.getClass()",
+        "id": "beta-alias-is-beta",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.makeModule().getClass() == betaModule.makeModule().getClass()",
+        "id": "cross-module-distinct",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.makeAlias().getClass() == betaModule.makeAlias().getClass()",
+        "id": "cross-alias-distinct",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.marker",
+        "id": "alpha-marker",
+        "mode": "string"
+      },
+      {
+        "expression": "betaModule.marker",
+        "id": "beta-marker",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.getClass() == betaModule.getClass()",
+        "id": "modules-distinct",
+        "mode": "string"
+      }
+    ],
+    "beta-first": [
+      {
+        "expression": "betaModule.makeModule().getClass() == betaModule.getClass()",
+        "id": "beta-module-is-beta",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.makeModule().getClass() == alphaModule.getClass()",
+        "id": "alpha-module-is-alpha",
+        "mode": "string"
+      },
+      {
+        "expression": "betaModule.makeNullable().getClass() == betaModule.getClass()",
+        "id": "beta-nullable-is-beta",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.makeNullable().getClass() == alphaModule.getClass()",
+        "id": "alpha-nullable-is-alpha",
+        "mode": "string"
+      },
+      {
+        "expression": "betaModule.makeAlias().getClass() == betaModule.getClass()",
+        "id": "beta-alias-is-beta",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.makeAlias().getClass() == alphaModule.getClass()",
+        "id": "alpha-alias-is-alpha",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.makeModule().getClass() == betaModule.makeModule().getClass()",
+        "id": "cross-module-distinct",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.makeAlias().getClass() == betaModule.makeAlias().getClass()",
+        "id": "cross-alias-distinct",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.marker",
+        "id": "alpha-marker",
+        "mode": "string"
+      },
+      {
+        "expression": "betaModule.marker",
+        "id": "beta-marker",
+        "mode": "string"
+      },
+      {
+        "expression": "alphaModule.getClass() == betaModule.getClass()",
+        "id": "modules-distinct",
+        "mode": "string"
+      }
+    ]
+  },
+  "schema": 1
+}

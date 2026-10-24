@@ -1,5 +1,39 @@
 # M2 language evidence
 
+### Stage65 inferred construction — independent Java authority
+
+The [Java checkpoint](stage65-java-checkpoint.json) publishes three distinct
+authorities against pinned Pkl 0.32.0. The normal fixture contains 72 expressions
+with 49 successes and 23 ordinary Pkl errors per fresh JVM. The amending-module
+fixture contains seven successful observations and retains the real sibling
+base module. Each profile has two raw-equal fresh JVM sessions.
+
+The separate module-receiver fixture runs two opposite first-force orders,
+each with eleven queries in two fresh JVMs. Each session has eight successes
+and three ordinary errors. Direct `new module` and nullable construction retain
+the first resolved closed child class; aliases retain the current receiver's
+class. Captured absolute file URIs, sibling sources, full error bytes, and both
+UTF-8 and UTF-16 channels remain intact. These observations do not cover the
+separate inferred-method parent cache now under investigation.
+
+All three complete offline verifiers pass. Sixteen adversarial tests pass in
+normal and optimized Python, and the source inventory check passes. M2 inventory
+freshness and candidate compatibility are separate requirements. The original
+selection preparation preserves the existing 116-program prefix and fourteen
+additional original default/type programs. None of those 130 programs has been
+rerun for this checkpoint, and the two blocked package/HTTP/TLS obligations remain.
+
+The [evidence archive](stage65-java-evidence.tar.gz) preserves authoring failures,
+corrected explorations, canonical acquisitions, raw process records, verification,
+and both unexecuted original-selection preparations. The actual
+[publication receipt](stage65-java-publication.json) is separate because it
+postdates that archive. The [independent review](stage65-java-review.json) reads
+back all 28,952 members and verifies the fixture, process, and original-selection
+boundaries. Its [actual execution](stage65-java-review-execution.json) preserves
+the reviewed scripts and raw process bytes separately. No Rust, native, N-API, browser, full-language, API, or
+performance pass is claimed here. Stage 64 remains the completed implementation
+checkpoint; all nine M2 workstreams remain open.
+
 ### Stage64 amendment construction — implementation and local comparisons
 
 The [implementation checkpoint](stage64-implementation-checkpoint.json) records

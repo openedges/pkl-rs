@@ -1,0 +1,185 @@
+{
+  "all_archive_members_read_back": true,
+  "archive": {
+    "bytes": 3830067,
+    "path": "reports/m2/stage65-java-evidence.tar.gz",
+    "sha256": "1d28fbf8cf7080d11d2301dddf4901e13996cf7d94341e77084437dd92f15f1d"
+  },
+  "archive_members": 28952,
+  "authorities": {
+    "amends": {
+      "archive_sha256": "ea2c1cfe786301e1055dfd2275ecf6977d07c82f84ab5f86294322d80e2037af",
+      "baseline": "Pkl 0.32.0",
+      "candidate_compatibility_passes_claimed": 0,
+      "fileset_sha256": "b88f7617a3cf0a61fa5e8d6d09573ae694802867e4d2d80a78c4b405aba18167",
+      "module_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage65-inferred-new-amends-oracle-01/module.pkl",
+      "profile": "amends",
+      "raw_files_per_session": 149,
+      "rows": 7,
+      "source_copies": 92,
+      "statuses": {
+        "success": 7
+      }
+    },
+    "module_receiver": {
+      "archive_sha256": "8d0e624f5474c292922064fc36f211d7050d9c9dbf11cd90cd381800dea9f7dc",
+      "baseline": "Pkl 0.32.0",
+      "candidate_compatibility_passes_claimed": 0,
+      "fileset_sha256": "81f1601d7461c509708def1468d6cb3d079e2bd775ff18489f899bb68b8cf1d9",
+      "rows_per_scenario": 11,
+      "scenarios": 2,
+      "sessions": 4,
+      "source_copies": 100,
+      "statuses_per_repetition": {
+        "error": 6,
+        "success": 16
+      }
+    },
+    "values": {
+      "archive_sha256": "231d9c1d922cae9c1b2e0c1bd5fb15a0465681043414425f36bf89480b08763e",
+      "baseline": "Pkl 0.32.0",
+      "candidate_compatibility_passes_claimed": 0,
+      "fileset_sha256": "72c39593d98beb7d67506c97f56b1d2ddd31adefa902d4bac77cfdbf02c26ff7",
+      "module_uri": "file:///stage65/inferred-new-values.pkl",
+      "profile": "values",
+      "raw_files_per_session": 1514,
+      "rows": 72,
+      "source_copies": 92,
+      "statuses": {
+        "error": 23,
+        "success": 49
+      }
+    }
+  },
+  "baseline": "Pkl 0.32.0",
+  "baseline_head": "6110bae01a4b8e927ea1f11785bd3483fea21eab",
+  "candidate_compatibility_passes_claimed": 0,
+  "fixture_paths": {
+    "amends": "tests/fixtures/m2-inferred-new-amends",
+    "module_receiver": "tests/fixtures/m2-inferred-new-module-receiver",
+    "values": "tests/fixtures/m2-inferred-new-values"
+  },
+  "frozen_tools": [
+    {
+      "bytes": 4120,
+      "path": "tools/evidence.py",
+      "sha256": "b3224aa21497c955c865e143faefb8ebdc9c70ea48983eb678b5972be17fe62e"
+    },
+    {
+      "bytes": 13500,
+      "path": "tools/inferred_new_oracle.py",
+      "sha256": "2008fd21449796317b8d091f55c7220d40f1b2df1fb93427eb4fd067abee5d6c"
+    },
+    {
+      "bytes": 16173,
+      "path": "tools/inferred_new_fixtures.py",
+      "sha256": "e91d801990cafbb2902bd11f459e0659ae52b4438831debf0495cff08d8d5c21"
+    },
+    {
+      "bytes": 11251,
+      "path": "tools/inferred_new_module_receiver_oracle.py",
+      "sha256": "a57c03427cc5e1ab77d20628e2b75eded248ba2f139d6e0683525790f8d6bf77"
+    },
+    {
+      "bytes": 13817,
+      "path": "tools/inferred_new_module_receiver_fixtures.py",
+      "sha256": "4e5496b0aa84b01fbe43e52c72d324bcb7e8510bc0da323a12cc8c31e75954f4"
+    },
+    {
+      "bytes": 3360,
+      "path": "tools/tests/test_inferred_new_fixtures.py",
+      "sha256": "d181a2b5647bf26454f86896316a9bb39154a8e977c0ff72585bb98db08182ab"
+    },
+    {
+      "bytes": 3510,
+      "path": "tools/tests/test_inferred_new_module_receiver_fixtures.py",
+      "sha256": "e7aa9b6585335b66b10551f7eb820adc422792d4444679458a5b573b549e3593"
+    }
+  ],
+  "history": {
+    "inference_attempt_04": "Meaningful intermediate observations with lambda parser controls subsequently corrected",
+    "inference_attempt_05": "Corrected 72 normal and seven amends observations before canonical acquisition",
+    "inference_attempts_01_to_03": "Module authoring/parser failures, retained without candidate pass claims",
+    "module_receiver_attempts_01_to_03": "Authored comparison/import mistakes, retained",
+    "module_receiver_attempts_04_to_05": "Opposite first-force order with receiver and alias controls",
+    "original_selection_01": "Unexecuted 124-program preparation, superseded by the preserved 130-program selection"
+  },
+  "inventory_sha256": "36b28ec61d289c3e3f2382453b2b0927be7d2b3db4e1dc06fbea12736fe40bfb",
+  "kind": "stage65-inferred-new-independent-Java-authority",
+  "limits": [
+    "These public string observations establish Java authority only; no Rust/native/N-API/browser candidate compatibility is claimed.",
+    "The amends and module-receiver authorities retain real sibling files and captured absolute file URIs; portable transport remains a separate obligation.",
+    "Module-receiver scenarios cover explicit new module and aliases; inherited inferred method-parent caching is separate ongoing investigation.",
+    "Existing Rust mismatches, unsupported originals, Java errors, blocked cases, all nine M2 workstreams, full API/platform and performance requirements remain open.",
+    "The actual publication process receipt postdates this archive and is published separately; it is not an archive member."
+  ],
+  "original_selection": {
+    "added": 14,
+    "blocked_required": 2,
+    "evaluations_executed": 0,
+    "prior_stage64_status_counts": {
+      "candidate-unsupported": 33,
+      "mismatch": 30,
+      "oracle-error": 1,
+      "pass": 52
+    },
+    "record": {
+      "bytes": 441284,
+      "path": "target/m2/stage65-original-selection-02/selection-origin.json",
+      "sha256": "8b0a58a6568163b5e4e3c5f3879c9afc55d5a8cf92ae5040dbe1d059c4b98be6"
+    },
+    "selected": 130,
+    "unchanged_stage64_prefix": 116
+  },
+  "publication_inputs_stable": true,
+  "published_directories": [
+    "stage65-new-inference-investigation-01",
+    "stage65-new-inference-java-prep-01",
+    "stage65-new-inference-java-prep-02",
+    "stage65-new-inference-java-prep-03",
+    "stage65-new-inference-java-prep-04",
+    "stage65-new-inference-java-prep-05",
+    "stage65-new-inference-oracle-01",
+    "stage65-new-inference-oracle-02",
+    "stage65-new-inference-oracle-03",
+    "stage65-new-inference-oracle-04",
+    "stage65-new-inference-oracle-05",
+    "stage65-new-inference-launch-01",
+    "stage65-new-inference-launch-02",
+    "stage65-new-inference-launch-03",
+    "stage65-new-inference-launch-04",
+    "stage65-new-inference-launch-05",
+    "stage65-new-inference-audit-01",
+    "stage65-new-inference-independent-review-01",
+    "stage65-inferred-new-values-oracle-01",
+    "stage65-inferred-new-amends-oracle-01",
+    "stage65-inferred-new-canonical-launch-01",
+    "stage65-inferred-new-seal-01",
+    "stage65-inferred-new-fixture-validation-01",
+    "stage65-module-receiver-exploration-01",
+    "stage65-module-receiver-exploration-02",
+    "stage65-module-receiver-exploration-03",
+    "stage65-module-receiver-exploration-04",
+    "stage65-module-receiver-exploration-05",
+    "stage65-module-receiver-oracle-01",
+    "stage65-module-receiver-canonical-launch-01",
+    "stage65-module-receiver-seal-01",
+    "stage65-java-fixture-validation-01",
+    "stage65-original-selection-01",
+    "stage65-original-selection-02"
+  ],
+  "published_input_bytes": 17844297,
+  "schema": 1,
+  "validation": {
+    "M2_inventory_freshness": "not claimed",
+    "adversarial_tests_normal": 16,
+    "adversarial_tests_optimized": 16,
+    "commands_exit_zero": 6,
+    "record": {
+      "bytes": 15475,
+      "path": "target/m2/stage65-java-fixture-validation-01/report.json",
+      "sha256": "19519d1fb0e3fab73ac1ba4beb17c47c63d589177b6edc65dbb4cfc7c30f7d36"
+    },
+    "source_inventory_check": "passed"
+  }
+}
