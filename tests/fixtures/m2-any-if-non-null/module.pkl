@@ -1,0 +1,19 @@
+// Stage58 Any.ifNonNull public expression source; expressions are separate calls.
+import "pkl:ref"
+marker = "stage58"
+class Box { value: Int = 7 }
+typealias BoxAlias = Box
+class RDomain extends ref.Domain { function renderReference(reference: ref.Reference<RDomain, Any>): String = "ref" }
+referenceValue = ref.Reference(new RDomain {}, Box, "data")
+open class BoxWithMethod { function ifNonNull(f) = "override" }
+class ChildMethod extends BoxWithMethod { function ifNonNull(f) = super.ifNonNull(f) + ":child" }
+class DelegatingMethod { value: Int = 7; function ifNonNull(f) = super.ifNonNull(f) }
+function makeValue(x: Int): Int = x + 1
+typedTransform = (x: Int) -> x + 1
+lazyBomb = throw("lazy property boom")
+holder = new { value = 10 }
+const constLiteral = 1.ifNonNull((x) -> x)
+const function constImplicit() = ifNonNull((x) -> x.marker)
+const function constExplicit() = module.ifNonNull((x) -> x.marker)
+class ConstMethod { value: Int = 9; const function run() = this.ifNonNull((x) -> x.value) }
+class ConstShadow { const function ifNonNull(f) = "const shadow"; const function run() = this.ifNonNull((x) -> x) }

@@ -1599,6 +1599,27 @@ Stage 57 구현을 `0560c919c9fea6f7ea7a08d76e5d78e74a3e9d83`에 커밋·푸시�
 구현 커밋에 포함된 archive member로 구분해 연결했습니다. 원래 체크포인트는 수정하지
 않고 이 후속 기록으로 커밋 연결을 제공합니다.
 
+### Stage 58 — 모든 값에 상속되는 `Any.ifNonNull`
+
+Stage 57의 원본 `api/any.pkl`에서 확인한 Int의 `ifNonNull` 실패를 공통 Any 메서드
+구현으로 해결합니다. 런타임·GC·호출 의미론은 `gpt-6-astra / xhigh`, 독립 Java
+기준과 검증 도구·검토는 `gpt-6-sol / high`에 배정합니다. null·기본값이 붙은 null,
+scalar·collection·객체·함수·Class·TypeAlias·Reference를 같은 VM 호출 경로로
+연결하고 override·local·super·const 우선순위와 인자·반환 타입 오류를 보존합니다.
+
+Java 기준은 고정 0.32.0의 원래 API에서 취득한 86개 질의의 두 JVM 반복입니다.
+별도 13개 보충 질의는 반환 타입 오류·기본 함수·암시적 호출·closure·제약을
+관찰합니다. 보충 취득의 Java producer와 입력·원시 결과는 보존되어 있지만,
+Python wrapper가 import한 공통 취득 helper의 당시 전후 해시는 누락됐으므로
+완전한 Python driver 출처 증명으로 표현하지 않습니다. 앞선 취득과 알려진
+실패는 별도 기록으로 유지하며 기존 fixture를 덮어쓰지 않습니다.
+
+실제 native·Node·Chromium에서 전체 순서·UTF-8·UTF-16·상태·오류와 protocol을
+비교합니다. Regex·IntSeq 생성자 미지원 두 질의도 전체 비교 분모에 남깁니다.
+기존 DataSize 비교와 원본 17개를 재실행하고, 필수 Rust 검사 다섯 개·도구 검사·
+독립 검토 뒤 구현을 커밋합니다. typed export·전체 언어 코퍼스·성능 조건은
+별도 의무이며, 이 단계의 성공으로 M2의 아홉 영역을 완료 처리하지 않습니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

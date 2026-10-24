@@ -1,0 +1,13 @@
+return-value-error	1.ifNonNull((x) -> badReturn(x))
+return-null-skip	null.ifNonNull((x) -> badReturn(x))
+return-default-null-skip	Null(new Dynamic { marker = "default" }).ifNonNull((x) -> badReturn(x))
+return-retry	1.ifNonNull((x) -> x + 1)
+default-lambda-marker	((Null(() -> new Dynamic { marker = "deferred" }).ifNonNull((x) -> x)) { extra = 8 }).apply().marker
+default-lambda-extra	((Null(() -> new Dynamic { marker = "deferred" }).ifNonNull((x) -> x)) { extra = 8 }).apply().extra
+dynamic-local-implicit	(new Dynamic { local function ifNonNull(f) = "local"; result = ifNonNull((x) -> "base") }).result
+dynamic-property-implicit	(new Dynamic { ifNonNull = "property"; result = ifNonNull((x) -> "base") }).result
+escaped-closure	(new Dynamic { value = "receiver" }).ifNonNull((x) -> (suffix) -> x.value + suffix).apply("!")
+null-escaped-closure	null.ifNonNull((x) -> (suffix) -> "unreachable")
+constraint-int-implicit	10 as Int(ifNonNull((x) -> x) > 0)
+constraint-null-implicit	null as Null(ifNonNull((x) -> throw("never")) == null)
+constraint-default-implicit	(Null(new Dynamic { x = 1 }) as Null(ifNonNull((x) -> throw("never")) == null)) == null

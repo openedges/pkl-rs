@@ -1,0 +1,5 @@
+# Any.ifNonNull Java authority
+
+This fixture records 86 independent public `evaluateExpressionString` queries against the pinned Pkl 0.32.0 JVM oracle. `module.pkl`, `queries.tsv`, and `cases.json` are the authored inputs. The sealed archive contains the canonical `stage58-any-oracle-04` acquisition: two fresh JVM sessions, ordered per query, with full UTF-8 and UTF-16BE string channels, status, process stdout/stderr, source and runtime provenance, and raw observation audit. Earlier local `stage58-any-oracle-01`, `-02`, and `-03` acquisitions remain in `target/m2/` as development observations; successive captures corrected authored expressions, added const controls, and then included actual `Reference` instances.
+
+Run `python3 tools/any_if_non_null_fixtures.py` to verify the sealed archive offline. This fixture is Java authority only. `success` denotes a successful Java query, while `error` is a complete Java error capture. No Rust compatibility passes are claimed. A typed export API, candidate comparison on native/browser/Node, and whole-language gates remain separate.

@@ -1,0 +1,226 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical": {
+    "archive": "tests/fixtures/m2-any-if-non-null/oracle-evidence.tar.gz",
+    "archive_identity": {
+      "bytes": 87919,
+      "sha256": "4d6bd68d384654cfc779583d3c5fd67df4c083aaf1bfbe68ed5ff40631599adf"
+    },
+    "archived_run_py_sha256": "cee505f91059bde137303552138cec395524e1bbfcdd5c03cba1f5045aef9a32",
+    "fileset_sha256": "ed7690207944e28e5240ddeafa8b4b44f60abf72d0800bfcfd1406a101f41850",
+    "folder": "tests/fixtures/m2-any-if-non-null",
+    "members": 1569,
+    "probe_sha256": "107a2111c5cd48e4bfaff3568d134e4e1fca7d70e70726b154fdad8efd3d4969",
+    "raw_files_per_repetition": 776,
+    "raw_repetitions_equal": true,
+    "repetitions": 2,
+    "rows": 86,
+    "statuses": {
+      "error": 25,
+      "success": 61
+    }
+  },
+  "history": {
+    "archive": "reports/m2/stage58-java-history.tar.gz",
+    "embedded_manifest_sha256": "1b22807d4a0d3e52a9bba51008db79f47ae0e07624265132e7f7927b4490f4c7",
+    "identity": {
+      "bytes": 389141,
+      "sha256": "e8b9f15c184ddd67093398acae1d45a831cd0a977536f3950e99e61bed3508ef"
+    },
+    "member_hash_readback": true,
+    "members": 4383,
+    "per_capture": {
+      "stage58-any-oracle-01": 1244,
+      "stage58-any-oracle-02": 1406,
+      "stage58-any-oracle-03": 1532,
+      "stage58-any-oracle-supplement-01": 201
+    },
+    "scope": "Historical original 01\u201303 and supplemental 01 captures; not compatibility passes."
+  },
+  "kind": "stage58-any-java-authority-checkpoint",
+  "limits": [
+    "Supplemental archived run.py imports tools.any_if_non_null_oracle, but that imported Python helper was not historically copied or hashed in the supplemental capture. Java probe, authored module/queries, JAR/JDK identities, and raw observations validate; complete historical Python helper closure is not claimed.",
+    "These are Java reference observations and offline fixture/inventory checks; no Rust, browser, Node, typed export, full M2, or performance compatibility is claimed."
+  ],
+  "schema": 1,
+  "shared_java_runtime": {
+    "artifact_before_after_equal": true,
+    "jar_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "jdk_executable_sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c",
+    "jdk_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "jdk_release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+    "oracle_lock_sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "probe_sha256": "107a2111c5cd48e4bfaff3568d134e4e1fca7d70e70726b154fdad8efd3d4969",
+    "reference_revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "references_lock_sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "source_before_after_equal": true
+  },
+  "supplement": {
+    "archive": "tests/fixtures/m2-any-if-non-null-supplement/oracle-evidence.tar.gz",
+    "archive_identity": {
+      "bytes": 46375,
+      "sha256": "5f6d6a155ab3df97ab26fd9ea994609c349d8484b3a899f13239820e21f26745"
+    },
+    "archived_run_py_sha256": "b68b4dbd9374dea23456eab36307f23b3211f7febbb906ba2c44ccae543cbba5",
+    "fileset_sha256": "604636263b7a977f5f91fceb0a82cd4a4e881521f0cafaaa9a9d36c446f5d9f7",
+    "folder": "tests/fixtures/m2-any-if-non-null-supplement",
+    "members": 255,
+    "probe_sha256": "107a2111c5cd48e4bfaff3568d134e4e1fca7d70e70726b154fdad8efd3d4969",
+    "raw_files_per_repetition": 119,
+    "raw_repetitions_equal": true,
+    "repetitions": 2,
+    "rows": 13,
+    "statuses": {
+      "error": 1,
+      "success": 12
+    }
+  },
+  "validation": {
+    "all_exit_zero": true,
+    "archive": "reports/m2/stage58-java-validation.tar.gz",
+    "archive_identity": {
+      "bytes": 1271060,
+      "sha256": "dcc29ac4eaf8343314ac6b0f6f9c128d2f8d0cb0f57a316103dbc6d6e701c933"
+    },
+    "archive_members": 60,
+    "checks": [
+      {
+        "exit_code": 0,
+        "name": "canonical-verifier",
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 329,
+          "sha256": "27aa1d2826863cf0f8955a30000c94922f327411257a829117a3301cf342096d"
+        }
+      },
+      {
+        "exit_code": 0,
+        "name": "supplement-verifier",
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 328,
+          "sha256": "ea61b91fefabe327ba7d0ef12f28142bb44983471ad43e2dc099543f89090e58"
+        }
+      },
+      {
+        "exit_code": 0,
+        "name": "fixture-tests",
+        "stderr": {
+          "bytes": 1086,
+          "sha256": "ab16e48f1a74f0ea6f89bd59c53a261a9e1e45545fb6600197ae5bd3d83851d1"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "exit_code": 0,
+        "name": "canonical-verifier-O",
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 329,
+          "sha256": "27aa1d2826863cf0f8955a30000c94922f327411257a829117a3301cf342096d"
+        }
+      },
+      {
+        "exit_code": 0,
+        "name": "supplement-verifier-O",
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 328,
+          "sha256": "ea61b91fefabe327ba7d0ef12f28142bb44983471ad43e2dc099543f89090e58"
+        }
+      },
+      {
+        "exit_code": 0,
+        "name": "fixture-tests-O",
+        "stderr": {
+          "bytes": 1086,
+          "sha256": "2a88e4c7b7a673b818895bda9913a8de853f1c79642313614accadf86ea14bdd"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "exit_code": 0,
+        "name": "source-inventory",
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 926,
+          "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+        }
+      },
+      {
+        "exit_code": 0,
+        "name": "m2-inventory",
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 231,
+          "sha256": "9eb043eed64a997a50c295ceaeaf22c94a1f9b4076d0e809c793460b394260e3"
+        }
+      }
+    ],
+    "directory": "target/m2/stage58-java-validation-01",
+    "embedded_manifest_sha256": "041b2c92f2255d23f208123e2390ac33119095506109fe65c5310880d1731528",
+    "host": {
+      "machine": "arm64",
+      "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+      "release": "27.0.0",
+      "system": "Darwin"
+    },
+    "java_version": {
+      "argv": [
+        "/usr/bin/java",
+        "-version"
+      ],
+      "exit_code": 0,
+      "stderr": {
+        "bytes": 205,
+        "sha256": "5b4412738541184e84f6b2d7520d4f4a7c2a455f60650491464c61adcbbbdeb0"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "member_hash_readback": true,
+    "python": {
+      "executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "executable_identity": {
+        "bytes": 34640,
+        "sha256": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+      },
+      "optimization_normal": 0,
+      "optimization_rerun": 1,
+      "version": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]"
+    },
+    "record": "target/m2/stage58-java-validation-01/validation.json",
+    "record_identity": {
+      "bytes": 18309,
+      "sha256": "f30725652798e1565f49b80f5358bf2796fe7137ad2afe64c42daeb825621013"
+    },
+    "source_stable": true
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage58/any-if-non-null-supplement.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "return-value-error",
+      "expression": "1.ifNonNull((x) -> badReturn(x))",
+      "group": "return-check"
+    },
+    {
+      "id": "return-null-skip",
+      "expression": "null.ifNonNull((x) -> badReturn(x))",
+      "group": "return-check"
+    },
+    {
+      "id": "return-default-null-skip",
+      "expression": "Null(new Dynamic { marker = \"default\" }).ifNonNull((x) -> badReturn(x))",
+      "group": "return-check"
+    },
+    {
+      "id": "return-retry",
+      "expression": "1.ifNonNull((x) -> x + 1)",
+      "group": "return-check"
+    },
+    {
+      "id": "default-lambda-marker",
+      "expression": "((Null(() -> new Dynamic { marker = \"deferred\" }).ifNonNull((x) -> x)) { extra = 8 }).apply().marker",
+      "group": "default-function"
+    },
+    {
+      "id": "default-lambda-extra",
+      "expression": "((Null(() -> new Dynamic { marker = \"deferred\" }).ifNonNull((x) -> x)) { extra = 8 }).apply().extra",
+      "group": "default-function"
+    },
+    {
+      "id": "dynamic-local-implicit",
+      "expression": "(new Dynamic { local function ifNonNull(f) = \"local\"; result = ifNonNull((x) -> \"base\") }).result",
+      "group": "dispatch"
+    },
+    {
+      "id": "dynamic-property-implicit",
+      "expression": "(new Dynamic { ifNonNull = \"property\"; result = ifNonNull((x) -> \"base\") }).result",
+      "group": "dispatch"
+    },
+    {
+      "id": "escaped-closure",
+      "expression": "(new Dynamic { value = \"receiver\" }).ifNonNull((x) -> (suffix) -> x.value + suffix).apply(\"!\")",
+      "group": "closure"
+    },
+    {
+      "id": "null-escaped-closure",
+      "expression": "null.ifNonNull((x) -> (suffix) -> \"unreachable\")",
+      "group": "closure"
+    },
+    {
+      "id": "constraint-int-implicit",
+      "expression": "10 as Int(ifNonNull((x) -> x) > 0)",
+      "group": "constraint"
+    },
+    {
+      "id": "constraint-null-implicit",
+      "expression": "null as Null(ifNonNull((x) -> throw(\"never\")) == null)",
+      "group": "constraint"
+    },
+    {
+      "id": "constraint-default-implicit",
+      "expression": "(Null(new Dynamic { x = 1 }) as Null(ifNonNull((x) -> throw(\"never\")) == null)) == null",
+      "group": "constraint"
+    }
+  ]
+}

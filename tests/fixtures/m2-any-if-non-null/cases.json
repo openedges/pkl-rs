@@ -1,0 +1,439 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage58/any-if-non-null.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "scalar-int-identity",
+      "group": "scalar",
+      "expression": "10.ifNonNull((x) -> x)"
+    },
+    {
+      "id": "scalar-int-transform",
+      "group": "scalar",
+      "expression": "10.ifNonNull((x) -> x + 2)"
+    },
+    {
+      "id": "scalar-int-null-result",
+      "group": "scalar",
+      "expression": "10.ifNonNull((x) -> null)"
+    },
+    {
+      "id": "scalar-float",
+      "group": "scalar",
+      "expression": "1.5.ifNonNull((x) -> x + 0.5)"
+    },
+    {
+      "id": "scalar-boolean",
+      "group": "scalar",
+      "expression": "true.ifNonNull((x) -> !x)"
+    },
+    {
+      "id": "scalar-string",
+      "group": "scalar",
+      "expression": "\"abc\".ifNonNull((x) -> x.length)"
+    },
+    {
+      "id": "scalar-duration",
+      "group": "scalar",
+      "expression": "2.s.ifNonNull((x) -> x.value)"
+    },
+    {
+      "id": "scalar-datasize",
+      "group": "scalar",
+      "expression": "3.mb.ifNonNull((x) -> x.unit)"
+    },
+    {
+      "id": "scalar-bytes",
+      "group": "scalar",
+      "expression": "Bytes(1, 2, 3).ifNonNull((x) -> x.length)"
+    },
+    {
+      "id": "scalar-pair",
+      "group": "scalar",
+      "expression": "Pair(\"a\", 4).ifNonNull((x) -> x.second)"
+    },
+    {
+      "id": "scalar-regex",
+      "group": "scalar",
+      "expression": "Regex(\"a+\").ifNonNull((x) -> x.toString())"
+    },
+    {
+      "id": "scalar-intseq",
+      "group": "scalar",
+      "expression": "IntSeq(1, 3).ifNonNull((x) -> x.length)"
+    },
+    {
+      "id": "null-plain",
+      "group": "null",
+      "expression": "null.ifNonNull((x) -> x)"
+    },
+    {
+      "id": "null-plain-constant",
+      "group": "null",
+      "expression": "null.ifNonNull((x) -> \"unreachable\")"
+    },
+    {
+      "id": "null-plain-throw",
+      "group": "null",
+      "expression": "null.ifNonNull((x) -> throw(\"unreachable\"))"
+    },
+    {
+      "id": "null-default-identity",
+      "group": "null",
+      "expression": "Null(new Dynamic { marker = \"default\" }).ifNonNull((x) -> x)"
+    },
+    {
+      "id": "null-default-constant",
+      "group": "null",
+      "expression": "Null(new Dynamic { marker = \"default\" }).ifNonNull((x) -> \"unreachable\")"
+    },
+    {
+      "id": "null-default-throw",
+      "group": "null",
+      "expression": "Null(new Dynamic { marker = \"default\" }).ifNonNull((x) -> throw(\"unreachable\"))"
+    },
+    {
+      "id": "null-default-coalesce",
+      "group": "null",
+      "expression": "Null(new Dynamic { marker = \"default\" }).ifNonNull((x) -> x) ?? \"fallback\""
+    },
+    {
+      "id": "null-default-amend",
+      "group": "null",
+      "expression": "((Null(new Dynamic { marker = \"base\" }).ifNonNull((x) -> x)) { extra = 7 }).extra"
+    },
+    {
+      "id": "null-default-equality",
+      "group": "null",
+      "expression": "Null(new Dynamic { marker = \"default\" }).ifNonNull((x) -> x) == null"
+    },
+    {
+      "id": "null-default-lambda",
+      "group": "null",
+      "expression": "Null(() -> new Dynamic { marker = \"deferred\" }).ifNonNull((x) -> \"unreachable\")"
+    },
+    {
+      "id": "null-default-lambda-amend",
+      "group": "null",
+      "expression": "((Null(() -> new Dynamic { marker = \"deferred\" }).ifNonNull((x) -> x)) { extra = 8 }).extra"
+    },
+    {
+      "id": "null-nested",
+      "group": "null",
+      "expression": "null.ifNonNull((x) -> x).ifNonNull((x) -> \"bad\")"
+    },
+    {
+      "id": "collections-list",
+      "group": "collections",
+      "expression": "List(1, 2).ifNonNull((x) -> x.length)"
+    },
+    {
+      "id": "collections-set",
+      "group": "collections",
+      "expression": "Set(1, 2).ifNonNull((x) -> x.length)"
+    },
+    {
+      "id": "collections-map",
+      "group": "collections",
+      "expression": "Map(\"a\", 1).ifNonNull((x) -> x[\"a\"])"
+    },
+    {
+      "id": "collections-listing",
+      "group": "collections",
+      "expression": "(new Listing { 1; 2 }).ifNonNull((x) -> x.length)"
+    },
+    {
+      "id": "collections-mapping",
+      "group": "collections",
+      "expression": "(new Mapping { [\"a\"] = 1 }).ifNonNull((x) -> x[\"a\"])"
+    },
+    {
+      "id": "collections-dynamic",
+      "group": "collections",
+      "expression": "(new Dynamic { n = 7 }).ifNonNull((x) -> x.n)"
+    },
+    {
+      "id": "collections-typed-object",
+      "group": "collections",
+      "expression": "(new Box {}).ifNonNull((x) -> x.value)"
+    },
+    {
+      "id": "collections-module",
+      "group": "collections",
+      "expression": "module.ifNonNull((x) -> x.marker)"
+    },
+    {
+      "id": "metavalues-class-value",
+      "group": "metavalues",
+      "expression": "Box.ifNonNull((x) -> x.simpleName)"
+    },
+    {
+      "id": "metavalues-typealias-value",
+      "group": "metavalues",
+      "expression": "BoxAlias.ifNonNull((x) -> x.toString())"
+    },
+    {
+      "id": "metavalues-function-value",
+      "group": "metavalues",
+      "expression": "((x) -> x + 1).ifNonNull((f) -> f.apply(4))"
+    },
+    {
+      "id": "metavalues-typed-function-value",
+      "group": "metavalues",
+      "expression": "typedTransform.ifNonNull((f) -> f.apply(4))"
+    },
+    {
+      "id": "metavalues-reference-type",
+      "group": "metavalues",
+      "expression": "import(\"pkl:ref\").Reference.ifNonNull((x) -> x.simpleName)"
+    },
+    {
+      "id": "metavalues-reference-instance",
+      "group": "metavalues",
+      "expression": "referenceValue.ifNonNull((x) -> x.getPath().length)"
+    },
+    {
+      "id": "metavalues-reference-path",
+      "group": "metavalues",
+      "expression": "referenceValue.ifNonNull((x) -> x.value.getPath().length)"
+    },
+    {
+      "id": "types-and-arity-int-wrong-param",
+      "group": "types-and-arity",
+      "expression": "10.ifNonNull((x: String) -> x)"
+    },
+    {
+      "id": "types-and-arity-null-wrong-param",
+      "group": "types-and-arity",
+      "expression": "null.ifNonNull((x: String) -> x)"
+    },
+    {
+      "id": "types-and-arity-default-wrong-param",
+      "group": "types-and-arity",
+      "expression": "Null(new Dynamic { n = 3 }).ifNonNull((x: String) -> x)"
+    },
+    {
+      "id": "types-and-arity-nonfunction",
+      "group": "types-and-arity",
+      "expression": "10.ifNonNull(4)"
+    },
+    {
+      "id": "types-and-arity-null-nonfunction",
+      "group": "types-and-arity",
+      "expression": "null.ifNonNull(4)"
+    },
+    {
+      "id": "types-and-arity-default-nonfunction",
+      "group": "types-and-arity",
+      "expression": "Null(new Dynamic { n = 3 }).ifNonNull(4)"
+    },
+    {
+      "id": "types-and-arity-no-args",
+      "group": "types-and-arity",
+      "expression": "10.ifNonNull()"
+    },
+    {
+      "id": "types-and-arity-null-no-args",
+      "group": "types-and-arity",
+      "expression": "null.ifNonNull()"
+    },
+    {
+      "id": "types-and-arity-too-many",
+      "group": "types-and-arity",
+      "expression": "10.ifNonNull((x) -> x, 4)"
+    },
+    {
+      "id": "types-and-arity-null-too-many",
+      "group": "types-and-arity",
+      "expression": "null.ifNonNull((x) -> x, 4)"
+    },
+    {
+      "id": "types-and-arity-null-too-many-throw",
+      "group": "types-and-arity",
+      "expression": "null.ifNonNull((x) -> x, throw(\"second argument\"))"
+    },
+    {
+      "id": "types-and-arity-value-too-many-throw",
+      "group": "types-and-arity",
+      "expression": "10.ifNonNull((x) -> x, throw(\"second argument\"))"
+    },
+    {
+      "id": "types-and-arity-zero-param",
+      "group": "types-and-arity",
+      "expression": "10.ifNonNull(() -> 9)"
+    },
+    {
+      "id": "types-and-arity-null-zero-param",
+      "group": "types-and-arity",
+      "expression": "null.ifNonNull(() -> 9)"
+    },
+    {
+      "id": "types-and-arity-two-param",
+      "group": "types-and-arity",
+      "expression": "10.ifNonNull((x, y) -> x)"
+    },
+    {
+      "id": "types-and-arity-null-two-param",
+      "group": "types-and-arity",
+      "expression": "null.ifNonNull((x, y) -> x)"
+    },
+    {
+      "id": "types-and-arity-typed-return-value",
+      "group": "types-and-arity",
+      "expression": "typedTransform.ifNonNull((f) -> f.apply(4))"
+    },
+    {
+      "id": "types-and-arity-typed-return-null",
+      "group": "types-and-arity",
+      "expression": "null.ifNonNull((x: Int) -> x + 1)"
+    },
+    {
+      "id": "evaluation-order-null-argument-throw",
+      "group": "evaluation-order",
+      "expression": "null.ifNonNull(throw(\"argument first\"))"
+    },
+    {
+      "id": "evaluation-order-value-argument-throw",
+      "group": "evaluation-order",
+      "expression": "10.ifNonNull(throw(\"argument first\"))"
+    },
+    {
+      "id": "evaluation-order-null-receiver-throw",
+      "group": "evaluation-order",
+      "expression": "throw(\"receiver first\").ifNonNull(throw(\"argument second\"))"
+    },
+    {
+      "id": "evaluation-order-nested-first-error",
+      "group": "evaluation-order",
+      "expression": "10.ifNonNull((x) -> throw(\"transform first\")).ifNonNull(throw(\"argument second\"))"
+    },
+    {
+      "id": "evaluation-order-null-deferred-property",
+      "group": "evaluation-order",
+      "expression": "null.ifNonNull((x) -> lazyBomb)"
+    },
+    {
+      "id": "evaluation-order-value-forced-property",
+      "group": "evaluation-order",
+      "expression": "10.ifNonNull((x) -> lazyBomb)"
+    },
+    {
+      "id": "evaluation-order-null-typed-function",
+      "group": "evaluation-order",
+      "expression": "null.ifNonNull(typedTransform)"
+    },
+    {
+      "id": "evaluation-order-value-typed-function",
+      "group": "evaluation-order",
+      "expression": "10.ifNonNull(typedTransform)"
+    },
+    {
+      "id": "evaluation-order-null-closure-throw",
+      "group": "evaluation-order",
+      "expression": "null.ifNonNull((x) -> throw(\"closure boom\"))"
+    },
+    {
+      "id": "evaluation-order-value-closure-throw",
+      "group": "evaluation-order",
+      "expression": "10.ifNonNull((x) -> throw(\"closure boom\"))"
+    },
+    {
+      "id": "evaluation-order-retry-after-error",
+      "group": "evaluation-order",
+      "expression": "10.ifNonNull((x) -> x + 1)"
+    },
+    {
+      "id": "evaluation-order-repeat-same-receiver",
+      "group": "evaluation-order",
+      "expression": "holder.value.ifNonNull((x) -> x + 1)"
+    },
+    {
+      "id": "evaluation-order-repeat-other-result",
+      "group": "evaluation-order",
+      "expression": "holder.value.ifNonNull((x) -> x + 2)"
+    },
+    {
+      "id": "dispatch-dynamic-custom-method",
+      "group": "dispatch",
+      "expression": "(new Dynamic { local function ifNonNull(f) = \"custom\" }).ifNonNull((x) -> \"base\")"
+    },
+    {
+      "id": "dispatch-dynamic-shadow-property",
+      "group": "dispatch",
+      "expression": "(new Dynamic { ifNonNull = \"shadow\" }).ifNonNull((x) -> \"base\")"
+    },
+    {
+      "id": "dispatch-object-custom-method",
+      "group": "dispatch",
+      "expression": "(new BoxWithMethod {}).ifNonNull((x) -> \"base\")"
+    },
+    {
+      "id": "dispatch-object-custom-wrong-arity",
+      "group": "dispatch",
+      "expression": "(new BoxWithMethod {}).ifNonNull()"
+    },
+    {
+      "id": "dispatch-object-super-method",
+      "group": "dispatch",
+      "expression": "(new ChildMethod {}).ifNonNull((x) -> \"base\")"
+    },
+    {
+      "id": "dispatch-object-super-any",
+      "group": "dispatch",
+      "expression": "(new DelegatingMethod {}).ifNonNull((x) -> x.value)"
+    },
+    {
+      "id": "dispatch-implicit-module-method",
+      "group": "dispatch",
+      "expression": "ifNonNull((x) -> x.marker)"
+    },
+    {
+      "id": "dispatch-object-method-throw-arg",
+      "group": "dispatch",
+      "expression": "(new BoxWithMethod {}).ifNonNull(throw(\"custom argument\"))"
+    },
+    {
+      "id": "dispatch-generic-on-any",
+      "group": "dispatch",
+      "expression": "(10 as Any).ifNonNull((x) -> x.toString())"
+    },
+    {
+      "id": "const-literal-property",
+      "group": "const",
+      "expression": "constLiteral"
+    },
+    {
+      "id": "const-module-implicit",
+      "group": "const",
+      "expression": "constImplicit()"
+    },
+    {
+      "id": "const-module-explicit",
+      "group": "const",
+      "expression": "constExplicit()"
+    },
+    {
+      "id": "const-class-inherited",
+      "group": "const",
+      "expression": "(new ConstMethod {}).run()"
+    },
+    {
+      "id": "const-class-shadow",
+      "group": "const",
+      "expression": "(new ConstShadow {}).run()"
+    },
+    {
+      "id": "const-class-shadow-direct",
+      "group": "const",
+      "expression": "(new ConstShadow {}).ifNonNull((x) -> x)"
+    },
+    {
+      "id": "const-class-ordinary-direct",
+      "group": "const",
+      "expression": "(new ConstMethod {}).ifNonNull((x) -> x.value)"
+    }
+  ]
+}
