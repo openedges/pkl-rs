@@ -80,6 +80,7 @@ pub(super) fn runtime_class(value: &Value, heap: &Heap) -> Result<RuntimeClass, 
         Value::DataSize(_) => B::DataSize,
         Value::String(_) => B::String,
         Value::Bytes(_) => B::Bytes,
+        Value::IntSeq(_) => B::IntSeq,
         Value::Class(_) => B::Class,
         Value::TypeAlias(_) => B::TypeAlias,
         Value::Function(id) => {

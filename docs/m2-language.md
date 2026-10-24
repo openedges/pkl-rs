@@ -1,13 +1,51 @@
 # M2 language verification
 
+Stage 61 adds shared `IntSeq` values and the prerequisites of unchanged original
+programs. Its [implementation checkpoint](../reports/m2/stage61-implementation-checkpoint.json)
+records all 474 selected string observations matching on each of native,
+N-API, and Chromium. Bytes now matches all 600 observations per target;
+Duration and DataSize retain 548 and 510 matches. Portable Any improves to
+170 matches and two retained scalar Regex mismatches per target. Earlier
+Stage 60 failures below remain historical evidence rather than current passes.
+
+The immutable sequence carrier preserves start, end, step, aligned last value,
+and reference identity. Java's method/spread iterator stops at the aligned last
+value, while its `for` generator uses a wrapping count derived from
+`abs((end - start) / step) + 1`; extreme integer inputs distinguish these paths.
+Empty sequences compare equal and hash to one; nonempty equality and hashing
+use start, aligned last, and step. Rendering retains the original end. IntSeq
+inherits Any rather than Collection, so collection length/indexing/addition
+are not exposed. Map, fold, and conversions share resumable VM continuations,
+with callback, accumulator, and synthetic Listing environments retained by GC.
+
+The [Java authority](../reports/m2/stage61-java-checkpoint.json) separates 237
+string expressions, three typed-export rejection observations, 17 math constants,
+and 21 List.add expressions. The [List supplement](../reports/m2/stage61-list-accessor-fold-java-checkpoint.json)
+adds 65 accessor/fold expressions. Math strings and internal Rust numeric bits,
+List prerequisites, and Host/GC lifecycle tests have focused native regressions;
+they are not separate typed product API or portable supplement comparisons.
+The pinned `pkl:math` source is bundled with all 17 constants; its external
+functions remain explicitly unsupported.
+
+The expanded original cohort preserves the prior 17 programs and every one of
+the 47 pinned input snippets containing `IntSeq`, with two overlaps. It has
+26 matches, 15 mismatches, and 21 unsupported results across 62 programs.
+The prior cohort now has 15 matches and two Binary-path mismatches;
+`basic/bytes.pkl`, `api/bytes.pkl`, and `api/duration.pkl` newly match, with
+no previously passing case regressing. The original basic/API IntSeq programs
+also match. Each original program ran once per runtime; offline verification
+does not add executions. Remaining renderer, collection, builtin, and diagnostic
+failures keep the selected and full gates failed. Inventory readiness, passing
+focused tests, and stage numbers are not whole-language completion percentages.
+
 Stage 60 adds shared `Bytes` operations and resumable `List.toBytes` conversion.
 The [Java authority](../reports/m2/stage60-java-checkpoint.json) contains 300
 ordered expressions in two fresh JVMs, with 223 successes and 77 ordinary Pkl
 errors per session. Native, N-API, and Chromium each match 594 of 600 common
 string observations. `list-intseq-all`, `list-intseq-hash`, and
 `value-all-intseq` fail in both repetitions; their strict gates remain failed.
-The full fixture retains these rows. One ignored Rust regression preserves all
-three known failures separately from the 297 passing focused cases.
+The full fixture retains these rows. At Stage 60, one ignored Rust regression
+preserved all three known failures separately from the 297 passing focused cases.
 
 Selected operations cover length/size, Base64, hex, MD5, SHA-1, SHA-256,
 `sha256Int`, concatenation, indexing, `getOrNull`, `toList`, and strict UTF-8,

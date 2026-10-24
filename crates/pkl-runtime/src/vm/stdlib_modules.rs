@@ -13,6 +13,7 @@ impl Vm {
             "pkl:test" => crate::stdlib_sources::test(),
             "pkl:ref" => crate::stdlib_sources::reference(),
             "pkl:json" => crate::stdlib_sources::json(),
+            "pkl:math" => crate::stdlib_sources::math(),
             _ if uri.starts_with("pkl:") => {
                 if crate::modules::stdlib_kind(uri) != Some(crate::modules::StdlibKind::Missing) {
                     return Err(RuntimeError::new(
@@ -171,6 +172,8 @@ fn append_members(
         let mut type_span = None;
         let mut body = if uri == "pkl:base" {
             base_binding(declaration)
+        } else if uri == "pkl:math" {
+            math_binding(declaration)
         } else if uri == "pkl:json" {
             unsupported_binding(uri, declaration)
         } else if uri == "pkl:ref" {
@@ -330,6 +333,9 @@ fn append_members(
 fn base_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
     let name = declaration.name.as_str();
     match &declaration.expr.kind {
+        ExprKind::Function { method: true, .. } if name == "IntSeq" => {
+            return vec![Instruction::IntSeqConstructor];
+        }
         ExprKind::Function { method: true, .. } if name == "Null" => {
             return vec![Instruction::NullConstructor];
         }
@@ -358,6 +364,42 @@ fn base_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
         _ => {}
     }
     unsupported_binding("pkl:base", declaration)
+}
+
+// Every property constant declared by pinned MathNodes. Transcendental and
+// arithmetic functions retain explicit unsupported bindings.
+fn math_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
+    let name = declaration.name.as_str();
+    let integer = match name {
+        "minInt" => Some(i64::MIN),
+        "maxInt" | "maxUInt" => Some(i64::MAX),
+        "minInt8" => Some(i8::MIN as i64),
+        "maxInt8" => Some(i8::MAX as i64),
+        "minInt16" => Some(i16::MIN as i64),
+        "maxInt16" => Some(i16::MAX as i64),
+        "minInt32" => Some(i32::MIN as i64),
+        "maxInt32" => Some(i32::MAX as i64),
+        "maxUInt8" => Some(u8::MAX as i64),
+        "maxUInt16" => Some(u16::MAX as i64),
+        "maxUInt32" => Some(u32::MAX as i64),
+        _ => None,
+    };
+    let value = if let Some(value) = integer {
+        Value::Int(value.into())
+    } else {
+        Value::Float(
+            match name {
+                "minFiniteFloat" => -f64::MAX,
+                "maxFiniteFloat" => f64::MAX,
+                "minPositiveFloat" => f64::from_bits(1),
+                "e" => std::f64::consts::E,
+                "pi" => std::f64::consts::PI,
+                _ => return unsupported_binding("pkl:math", declaration),
+            }
+            .into(),
+        )
+    };
+    vec![Instruction::Constant(value)]
 }
 
 fn unsupported_binding(uri: &str, declaration: &crate::syntax::Member) -> Vec<Instruction> {

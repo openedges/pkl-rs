@@ -1,4 +1,4 @@
-//! Complete Java 0.32.0 string observations, including retained IntSeq gaps.
+//! Complete Java 0.32.0 string observations, including IntSeq construction.
 //! Authority: tests/fixtures/m2-bytes-values/oracle-evidence.tar.gz, capture-05/repeat-0.
 #[path = "support/module_keys.rs"]
 mod module_keys;
@@ -2568,7 +2568,6 @@ fn bytes_values_operations_and_complete_diagnostics_match_java() {
 }
 
 #[test]
-#[ignore = "Three Java success rows require the unimplemented IntSeq constructor; all 300 rows remain in strict native/Node/browser comparisons"]
-fn intseq_bytes_construction_known_gap_matches_java() {
+fn intseq_bytes_construction_matches_java() {
     compare_java(true);
 }

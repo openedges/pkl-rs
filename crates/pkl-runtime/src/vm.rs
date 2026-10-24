@@ -22,6 +22,7 @@ pub mod collections;
 mod data_size;
 pub(crate) mod deprecation;
 mod duration;
+mod int_seq;
 pub use code_storage::CodeStorage;
 mod compiler_expressions;
 mod converters;
@@ -223,6 +224,15 @@ pub enum Instruction {
     Primitive(primitives::Operation),
     MakePair,
     PairConstructor,
+    IntSeqConstructor,
+    MakeIntSeq,
+    CheckIntSeqStep,
+    BeginIntSeq(int_seq::Operation),
+    IntSeqNext {
+        end: usize,
+    },
+    IntSeqAccept,
+    EndIntSeq,
     NullConstructor,
     CheckNullDefault,
     CheckObjectParameters {
@@ -874,7 +884,7 @@ pub struct Program {
     pub(crate) string_repeat_block: usize,
     pub(crate) collection_join_blocks: [usize; 2],
     collection_transform_blocks: [usize; 11],
-    collection_projection_blocks: [usize; 7],
+    collection_projection_blocks: [usize; 8],
     null_constructor_block: usize,
     pub(crate) string_encode_block: usize,
     pub(crate) pair_constructor_block: usize,
@@ -1105,6 +1115,7 @@ struct Frame {
     pcf_render: Option<rendering::RenderRun>,
     collection_join: Option<collections::JoinRun>,
     collection_transform: Option<collection_transforms::TransformRun>,
+    int_seq_run: Option<Box<int_seq::Run>>,
     function_owner: Option<ObjectId>,
     amendment_arguments: Option<Vec<Value>>,
     amendment_end: Option<usize>,
@@ -1374,6 +1385,7 @@ impl Vm {
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
+            int_seq_run: None,
             function_owner: None,
             amendment_arguments: None,
             amendment_end: None,
@@ -1819,6 +1831,9 @@ impl Vm {
                 roots.extend(frame.function_owner.map(Value::Function));
                 roots.extend(frame.amendment_arguments.iter().flatten().cloned());
                 if let Some(run) = &frame.collection_join {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.int_seq_run {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.collection_transform {
@@ -2758,6 +2773,7 @@ impl Vm {
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
+            int_seq_run: None,
             function_owner: None,
             amendment_arguments: None,
             amendment_end: None,
@@ -3659,6 +3675,7 @@ impl Vm {
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
+            int_seq_run: None,
             function_owner: Some(id),
             amendment_arguments,
             amendment_end: None,
@@ -4236,6 +4253,16 @@ impl Vm {
             Instruction::InvokeAmendedParent => self.invoke_amended_parent()?,
             Instruction::ContinueFunctionAmendment => self.continue_function_amendment()?,
             Instruction::CheckMixinArgument => self.check_mixin_argument()?,
+            Instruction::IntSeqConstructor => {
+                let value = self.int_seq_constructor();
+                self.stack.push(value);
+            }
+            Instruction::MakeIntSeq => self.make_int_seq()?,
+            Instruction::CheckIntSeqStep => self.check_int_seq_step()?,
+            Instruction::BeginIntSeq(operation) => self.begin_int_seq(operation)?,
+            Instruction::IntSeqNext { end } => self.int_seq_next(end)?,
+            Instruction::IntSeqAccept => self.int_seq_accept()?,
+            Instruction::EndIntSeq => self.end_int_seq()?,
             Instruction::PairConstructor => {
                 let value = self.pair_constructor();
                 self.stack.push(value);
@@ -4447,6 +4474,8 @@ impl Vm {
                     return Err(self.data_size_member_error(name, method));
                 } else if matches!(receiver, Value::Duration(_)) {
                     return Err(self.duration_member_error(name, method));
+                } else if matches!(receiver, Value::IntSeq(_)) {
+                    return Err(self.int_seq_member_error(name, method));
                 } else if matches!(receiver, Value::Bytes(_)) {
                     return Err(self.bytes_member_error(name, method));
                 } else {
@@ -4540,6 +4569,9 @@ impl Vm {
                 }
                 if matches!(receiver, Value::Duration(_)) {
                     return Err(self.duration_member_error(name, method));
+                }
+                if matches!(receiver, Value::IntSeq(_)) {
+                    return Err(self.int_seq_member_error(name, method));
                 }
                 if matches!(receiver, Value::Bytes(_)) {
                     return Err(self.bytes_member_error(name, method));
@@ -6913,6 +6945,9 @@ impl Compiler<'_> {
                             local: *local,
                         })
                     }
+                    Binding::ImplicitMethod if name.as_ref() == "IntSeq" => {
+                        output.push(Instruction::IntSeqConstructor)
+                    }
                     Binding::ImplicitMethod if name.as_ref() == "Pair" => {
                         output.push(Instruction::PairConstructor)
                     }
@@ -6982,6 +7017,7 @@ fn scalar_string(value: &Value) -> Result<PklString, RuntimeError> {
         Value::Duration(value) => value.to_string().into(),
         Value::DataSize(value) => value.to_string().into(),
         Value::Bytes(value) => value.to_string().into(),
+        Value::IntSeq(value) => value.to_string().into(),
         Value::String(value) => value.clone(),
         _ => {
             return Err(RuntimeError::new(
@@ -7183,6 +7219,7 @@ fn value_type_name(value: &Value) -> &'static str {
         Value::DataSize(_) => "DataSize",
         Value::String(_) => "String",
         Value::Bytes(_) => "Bytes",
+        Value::IntSeq(_) => "IntSeq",
         Value::Object(_) => "Dynamic",
         Value::Function(_) => "Function",
         Value::Class(_) => "Class",
@@ -8503,8 +8540,10 @@ impl Compiler<'_> {
                 }
             }
             TypeCheck::Class { id, .. } => {
-                if classes::BuiltinClass::from_type(check) == Some(classes::BuiltinClass::DataSize)
-                {
+                if matches!(
+                    classes::BuiltinClass::from_type(check),
+                    Some(classes::BuiltinClass::DataSize | classes::BuiltinClass::IntSeq)
+                ) {
                     return Ok(false);
                 }
                 if self.type_scopes.iter().flatten().any(|member| {

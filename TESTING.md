@@ -319,9 +319,9 @@ The Stage 60 Bytes fixture contains 300 independent Java expressions in two
 fresh JVM sessions. Its 17 producer channels include exception and cause
 metadata; the current candidate string boundary compares seven common raw
 channels and the complete ordered protocol. Do not count producer-only metadata
-as candidate API passes. The strict native and portable comparisons retain six
-IntSeq mismatches per target, with 594 matches. The ignored Rust test retains
-the three underlying cases and does not contribute to the passing count.
+as candidate API passes. At Stage 60, the strict native and portable comparisons
+retained six IntSeq mismatches per target, with 594 matches. Its ignored Rust
+test preserved the three underlying cases without counting them as passes.
 
 ```sh
 python3 tools/bytes_values_fixtures.py
@@ -351,6 +351,42 @@ Original modules have 12 matches, four mismatches, and one unsupported result
 among 17; each program has one Java and one Rust execution. Offline verification
 does not add evaluation repetitions. Typed exports, mutable Java array aliasing,
 whole-language and product compatibility, and performance remain unverified.
+
+The [Stage 61 IntSeq checkpoint](reports/m2/stage61-implementation-checkpoint.json)
+uses 237 ordered string expressions in each of two fresh Java sessions, with
+198 successes and 39 ordinary errors per session. Three typed-export rejection
+rows are captured separately and are not candidate string comparisons.
+The shared native probe accepts the same three-column `string`, ID, expression
+input as Java, while preserving the existing two-column probe format. It rejects
+other modes, extra columns, and duplicate IDs. The comparator checks all seven
+common raw channels and the full ordered protocol, including failed expressions.
+
+```sh
+python3 tools/int_seq_values_fixtures.py
+python3 tools/int_seq_values_compare.py --acquire target/m2/intseq-native-new --build target/m2/intseq-build-new --gate string
+python3 tools/int_seq_values_compare.py --verify target/m2/intseq-native-new --gate string
+python3 tools/int_seq_values_portable_compare.py --capture target/m2/intseq-portable-new --m1 target/m2/intseq-platforms-new --native-build target/m2/intseq-build-new --build-wrapper target/m2/intseq-platform-wrapper-new --gate string
+```
+
+As with Bytes, acquisition and portable verification require the recorded build,
+actual platform capture, M1 artifacts, and source wrapper. All 474 IntSeq
+observations match on each target. The unchanged Bytes regression now matches
+600 of 600, and its formerly ignored IntSeq-dependent cases execute and pass.
+Duration and DataSize retain 548 and 510 matches per target. Portable Any retains
+170 matches and two Regex differences per target; its strict gate still fails.
+All five required Rust checks pass: 953 test executions pass and two remain
+ignored. Tool checks pass 37 Python tests normally and under `-O`, plus 13
+JavaScript tests. Native prerequisite regressions cover 17 math strings and
+numeric bit values, 21 List.add cases, and 65 List accessor/fold cases; they do
+not establish typed export or separate portable supplement compatibility.
+
+The expanded 62-program original comparison has 26 matches, 15 mismatches,
+and 21 unsupported results. Its previous 17-program subset has 15 matches and
+two mismatches, with no passing regression. These are one execution per runtime
+per original, separate from repeated authored string sessions. Source, artifact,
+oracle, and workspace integrity pass while selected/full compatibility fails.
+Full M2 completion, external math functions, typed APIs, release-platform
+coverage, and performance targets remain separate outstanding requirements.
 
 The [method-deprecation contract](docs/m2-deprecation.md) records the pinned Java
 logger matrix and a separate experiment with sequential evaluators in one JVM.

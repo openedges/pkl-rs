@@ -265,6 +265,7 @@ pub struct Object {
     pub member_environments: BTreeMap<CacheKey, Environment>,
     pub member_values: BTreeMap<CacheKey, Value>,
     pub iterator: Option<CollectionIterator>,
+    pub int_seq_iterator: Option<Box<crate::int_seq::Cursor>>,
     pub predicate_iterator: Option<PredicateIterator>,
     pub collection_cast: Option<CollectionCast>,
     /// Inherited default value for inferred element/entry objects. `Some(None)`

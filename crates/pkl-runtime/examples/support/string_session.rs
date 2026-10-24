@@ -294,6 +294,29 @@ impl Capture {
     }
 }
 
+fn parse_queries(text: &str, allow_mode_prefix: bool) -> CaptureResult<Vec<(&str, &str)>> {
+    let mut rows = Vec::new();
+    let mut ids = std::collections::BTreeSet::new();
+    for line in text.lines() {
+        let fields = line.split('\t').collect::<Vec<_>>();
+        let (id, expression) = match fields.as_slice() {
+            [id, expression] => (*id, *expression),
+            ["string", id, expression] if allow_mode_prefix => (*id, *expression),
+            _ => return Err("invalid query row".into()),
+        };
+        if id.is_empty()
+            || !id
+                .bytes()
+                .all(|b| b.is_ascii_lowercase() || b.is_ascii_digit() || b == b'-')
+            || !ids.insert(id)
+        {
+            return Err("invalid or duplicate query identity".into());
+        }
+        rows.push((id, expression));
+    }
+    Ok(rows)
+}
+
 fn run(data_size_protocol: bool) -> CaptureResult<()> {
     let args = std::env::args().collect::<Vec<_>>();
     if args.len() != 4 {
@@ -315,21 +338,7 @@ fn run(data_size_protocol: bool) -> CaptureResult<()> {
     let input = PathBuf::from(&args[2]);
     let source = fs::read_to_string(input.join("module.pkl")).map_err(|e| e.to_string())?;
     let queries = fs::read_to_string(input.join("queries.tsv")).map_err(|e| e.to_string())?;
-    let mut rows = Vec::new();
-    let mut ids = std::collections::BTreeSet::new();
-    for line in queries.lines() {
-        let (id, expression) = line.split_once('\t').ok_or("invalid query row")?;
-        if id.is_empty()
-            || !id
-                .bytes()
-                .all(|b| b.is_ascii_lowercase() || b.is_ascii_digit() || b == b'-')
-            || expression.contains('\t')
-            || !ids.insert(id)
-        {
-            return Err("invalid or duplicate query identity".into());
-        }
-        rows.push((id, expression));
-    }
+    let rows = parse_queries(&queries, !data_size_protocol)?;
     let trace = OpenOptions::new()
         .create_new(true)
         .write(true)
@@ -398,5 +407,39 @@ pub fn entrypoint(data_size_protocol: bool) {
         };
         eprintln!("{label} capture failed: {error}");
         std::process::exit(2);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::parse_queries;
+    #[test]
+    fn exact_string_mode_and_legacy_queries_preserve_expressions() {
+        let source = "string\tfirst\t IntSeq(-1, 1).map((n) -> n) \nsecond\t\"λ\"\n";
+        assert_eq!(
+            parse_queries(source, true).unwrap(),
+            vec![
+                ("first", " IntSeq(-1, 1).map((n) -> n) "),
+                ("second", "\"λ\"")
+            ]
+        );
+        assert_eq!(
+            parse_queries("legacy\t1\n", false).unwrap(),
+            vec![("legacy", "1")]
+        );
+        assert!(parse_queries("string\tfirst\t1\n", false).is_err());
+    }
+    #[test]
+    fn export_extra_columns_and_duplicate_identities_are_rejected() {
+        for text in [
+            "export\tfirst\t1\n",
+            "other\tfirst\t1\n",
+            "string\tfirst\t1\textra\n",
+            "first\t1\nstring\tfirst\t2\n",
+            "string\t\t1\n",
+            "missing",
+        ] {
+            assert!(parse_queries(text, true).is_err(), "accepted {text:?}");
+        }
     }
 }

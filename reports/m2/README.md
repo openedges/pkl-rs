@@ -1,5 +1,71 @@
 # M2 language evidence
 
+### Stage61 IntSeq values — implementation and local comparisons
+
+The [implementation checkpoint](stage61-implementation-checkpoint.json) adds
+shared IntSeq construction, step/map/fold/conversion, equality and hashing,
+types, diagnostics, rendering, and streaming generator/spread behavior.
+Iterator and generator overflow semantics remain distinct as in pinned Java.
+Resumable continuations retain callback and accumulator roots, and synthetic
+Listing environments survive Host suspension and GC. All 17 `pkl:math`
+constants and the required List `add`, first/last accessors, nullable accessors,
+and `fold` are implemented in the shared engine. External math functions remain
+unsupported, and no new dependency was added.
+
+The [Java authority](stage61-java-checkpoint.json), committed as
+`8656c3f28fe6a664c7c744ff15f9f63362bf1ff8`, separates 237 string expressions
+(198 successes and 39 ordinary errors), three export-rejection observations,
+17 math constants, and 21 List.add expressions. The
+[List accessor/fold supplement](stage61-list-accessor-fold-java-checkpoint.json),
+committed as `2faf0b22b60a22af53e22af3d2cc1a9d27de667d`, records 65 expressions
+(37 successes and 28 ordinary errors). Each Java fixture has two fresh sessions.
+Producer exception/export channels remain distinct from candidate string passes.
+
+Native, N-API, and actual Chromium each match all 474 IntSeq string observations
+and the complete ordered protocol. The existing Bytes regression now matches
+600 of 600 per target, including its three previously failing IntSeq cases in
+both repetitions. Duration and DataSize retain 548 and 510 matches per target.
+Portable Any retains 170 matches and two scalar Regex mismatches per target;
+its strict gate fails. M1 retains 6,076 Java matches out of 6,078 per target,
+with its two Regex differences and a passing architecture contract.
+
+The original cohort includes the previous 17 programs plus all 47 pinned input
+snippets containing `IntSeq`, with two overlaps: 62 programs, 26 matches,
+15 mismatches, and 21 unsupported results. Its previous 17-program subset now
+has 15 matches and two mismatches. `basic/bytes.pkl`, `api/bytes.pkl`, and
+`api/duration.pkl` newly match; no previously passing case regresses.
+The unchanged basic/API IntSeq programs also match. Each original ran once
+per runtime; offline verification is not an additional guest execution.
+The selected and full gates remain failed despite stable sources, artifacts,
+oracle, and workspace. The closeout archive retains each nonpass's raw channels
+and first failure, including missing Bytes iteration, Dynamic.length,
+Mapping.toMap, hashCode-program collection methods, and renderer dependencies.
+Binary programs still fail at `module.toMap()` before encoding.
+
+All five required checks pass locally with Rust 1.98.1: 953 passing workspace
+test executions and two ignored tests. The Bytes IntSeq and Any IntSeq ignored
+regressions now execute and pass; the existing probe and Regex ignore remain.
+The original 256 KiB frontend checks retain their limit and inputs. Focused
+native regressions cover 17 math string/numeric bit cases, 21 List.add cases,
+65 List accessor/fold cases, and Host/GC/cancellation/retry lifecycles.
+They are not separate portable supplement or typed product export comparisons.
+Tool checks pass 37 Python tests normally and under `-O`, plus 13 JavaScript
+tests. Early build, probe-input, and fixture-authoring failures are preserved
+separately from final results.
+Inventory regeneration changes only 101 implementation-link hashes; original
+case IDs, requirements, and execution/mapping states remain unchanged.
+
+The [validation](stage61-validation-evidence.tar.gz),
+[native](stage61-native-evidence.tar.gz),
+[platform](stage61-platform-evidence.tar.gz), and
+[closeout](stage61-closeout-evidence.tar.gz) publications preserve recorded
+sources, artifacts, raw outcomes, and complete member readback. These are local
+macOS arm64 results, not hosted CI. All nine M2 workstreams retain unmet exit
+criteria. Typed exports, complete APIs and standard library, release-platform
+coverage, and execution-time/peak-memory targets remain open. The inventory's
+4,416 ready rows out of 4,527 are execution mappings, not passing results or
+a completion percentage.
+
 ### Stage60 Bytes values — implementation and local comparisons
 
 The [implementation checkpoint](stage60-implementation-checkpoint.json) adds

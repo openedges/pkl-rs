@@ -919,19 +919,30 @@ impl Vm {
             .stack
             .last()
             .ok_or_else(|| invalid("missing spread source"))?;
-        let Value::Object(source) = value else {
-            return Ok(());
-        };
-        let source_kind = self.heap.get(*source)?.collection_kind;
-        let (allowed, hint) = match source_kind {
-            CollectionKind::Map => (
-                CollectionKind::Mapping,
-                "`Map` can only be spread into objects of type `Dynamic` and `Mapping`.",
-            ),
-            CollectionKind::List | CollectionKind::Set => (
+        let (source_label, allowed, hint) = match value {
+            Value::IntSeq(_) => (
+                "IntSeq",
                 CollectionKind::Listing,
-                "`List` and `Set` can only be spread into objects of type `Dynamic` and `Listing`.",
+                "`IntSeq` can only be spread into objects of type `Dynamic` and `Listing`.",
             ),
+            Value::Object(source) => match self.heap.get(*source)?.collection_kind {
+                CollectionKind::Map => (
+                    "Map",
+                    CollectionKind::Mapping,
+                    "`Map` can only be spread into objects of type `Dynamic` and `Mapping`.",
+                ),
+                CollectionKind::List => (
+                    "List",
+                    CollectionKind::Listing,
+                    "`List` and `Set` can only be spread into objects of type `Dynamic` and `Listing`.",
+                ),
+                CollectionKind::Set => (
+                    "Set",
+                    CollectionKind::Listing,
+                    "`List` and `Set` can only be spread into objects of type `Dynamic` and `Listing`.",
+                ),
+                _ => return Ok(()),
+            },
             _ => return Ok(()),
         };
         let target = self.builder()?;
@@ -952,7 +963,7 @@ impl Vm {
         );
         let mut error = RuntimeError::new(
             ErrorKind::Type,
-            PklString::join(&[format!("Cannot spread value of type `{source_kind:?}` into object of type `{label}`.\nValue: ").into(),
+            PklString::join(&[format!("Cannot spread value of type `{source_label}` into object of type `{label}`.\nValue: ").into(),
 crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)?], ""),
         );
         error.hint = Some(hint.into());
@@ -1309,14 +1320,10 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         if let Some(parent) = parent {
             self.validate_object_members(parent, std::slice::from_ref(&member))?;
         }
-        // Strict elements with no body are complete values. Retaining their
+        // Synthetic members with no body are complete values. Retaining their
         // producer's environment would keep callback inputs and lexical scopes
         // alive even when the result contains only scalars.
-        let environment = if value.is_some()
-            && member.code == usize::MAX
-            && member.ty.is_none()
-            && matches!(collection_kind, CollectionKind::List | CollectionKind::Set)
-        {
+        let environment = if value.is_some() && member.code == usize::MAX && member.ty.is_none() {
             None
         } else {
             let frame = self.frames.last().expect("active frame");
@@ -1461,6 +1468,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         | Value::Int(_)
                         | Value::Float(_)
                         | Value::Duration(_)
+                        | Value::IntSeq(_)
                         | Value::DataSize(_)
                         | Value::String(_)) => {
                             return Err(external_amendment_error(value_type_name(&value)));
@@ -1654,6 +1662,14 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         let value = self.subscript_bytes(bytes, key)?;
                         self.stack.push(value);
                         return Ok(());
+                    }
+                    if matches!(value, Value::IntSeq(_)) {
+                        return Err(RuntimeError::new(ErrorKind::Type, PklString::join(&[
+                            format!("Operator `[]` is not defined for operand types `IntSeq` and `{}`.\nLeft operand : ", crate::diagnostic_values::type_name(&key, &self.heap, &self.program.module_name)?).into(),
+                            crate::diagnostic_values::render(&value, &self.heap, &self.program.module_name, 80)?,
+                            "\nRight operand: ".into(),
+                            crate::diagnostic_values::render(&key, &self.heap, &self.program.module_name, 80)?,
+                        ], "")));
                     }
                     value.as_object()?
                 };
@@ -1899,6 +1915,14 @@ crate::diagnostic_values::render(
             }
             Instruction::OpenIterator { nullable, spread } => {
                 let value = self.pop()?;
+                if let Value::IntSeq(sequence) = value {
+                    let id = self.heap.allocate(Object {
+                        int_seq_iterator: Some(Box::new(sequence.cursor(!spread))),
+                        ..Default::default()
+                    });
+                    self.stack.push(Value::Object(id));
+                    return Ok(());
+                }
                 let iterator = if nullable && value == Value::Null {
                     let source = self.heap.allocate(Object::default());
                     Some(CollectionIterator {
@@ -2043,12 +2067,21 @@ crate::diagnostic_values::render(
                     .rev()
                     .filter_map(Value::heap_id)
                     .find(|id| {
-                        self.heap
-                            .get(*id)
-                            .is_ok_and(|object| object.iterator.is_some())
+                        self.heap.get(*id).is_ok_and(|object| {
+                            object.iterator.is_some() || object.int_seq_iterator.is_some()
+                        })
                     })
                     .or_else(|| self.stack.last().and_then(Value::heap_id))
                     .ok_or_else(|| invalid("missing iterator"))?;
+                if let Some(cursor) = self.heap.get_mut(id)?.int_seq_iterator.as_mut() {
+                    if let Some((index, value)) = cursor.next() {
+                        self.stack
+                            .extend([Value::Int(index.into()), Value::Int(value.into())]);
+                    } else {
+                        self.jump(end)?;
+                    }
+                    return Ok(());
+                }
                 let source = self
                     .heap
                     .get(id)?
@@ -2138,6 +2171,11 @@ crate::diagnostic_values::render(
                     .last()
                     .ok_or_else(|| invalid("missing spread iterator"))?
                     .as_object()?;
+                if self.heap.get(iterator)?.int_seq_iterator.is_some() {
+                    self.stack.push(value);
+                    self.append_strict_element()?;
+                    return Ok(());
+                }
                 let state = self
                     .heap
                     .get(iterator)?

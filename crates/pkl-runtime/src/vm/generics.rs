@@ -319,19 +319,20 @@ impl Vm {
                     error.hint = Some("Abstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.".into());
                     return Err(error.at(source.span));
                 }
-                if classes::BuiltinClass::from_type(base) == Some(classes::BuiltinClass::DataSize)
-                    || matches!(
-                        base,
-                        TypeCheck::Boolean
-                            | TypeCheck::Int
-                            | TypeCheck::Float
-                            | TypeCheck::Duration
-                            | TypeCheck::String
-                            | TypeCheck::Bytes
-                            | TypeCheck::Reference { .. }
-                            | TypeCheck::Function { .. }
-                    )
-                {
+                if matches!(
+                    classes::BuiltinClass::from_type(base),
+                    Some(classes::BuiltinClass::DataSize | classes::BuiltinClass::IntSeq)
+                ) || matches!(
+                    base,
+                    TypeCheck::Boolean
+                        | TypeCheck::Int
+                        | TypeCheck::Float
+                        | TypeCheck::Duration
+                        | TypeCheck::String
+                        | TypeCheck::Bytes
+                        | TypeCheck::Reference { .. }
+                        | TypeCheck::Function { .. }
+                ) {
                     return Err(collections::external_amendment_error(&type_name(
                         base,
                         &self.program.module_name,
@@ -384,8 +385,10 @@ impl Vm {
                     ..
                 } => run.tasks.push(DefaultTask::Visit(types.swap_remove(index))),
                 ty @ TypeCheck::Class { .. }
-                    if classes::BuiltinClass::from_type(&ty)
-                        == Some(classes::BuiltinClass::DataSize) =>
+                    if matches!(
+                        classes::BuiltinClass::from_type(&ty),
+                        Some(classes::BuiltinClass::DataSize | classes::BuiltinClass::IntSeq)
+                    ) =>
                 {
                     run.value = None;
                 }

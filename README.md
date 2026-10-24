@@ -69,10 +69,10 @@ library coverage remain open; see the [recorded evidence](reports/m2/README.md).
 
 The [Any.ifNonNull checkpoint](docs/m2-any-if-non-null.md) adds shared VM
 method lookup and callback behavior, including null defaults and Host lifecycle
-checks. Its independent Java fixtures and selected native comparison retain
+checks. Its Stage 58 Java fixtures and selected native comparison retained
 four mismatched Regex and IntSeq constructor executions across two repeats.
-The N-API and Chromium string comparisons also match 168 of 172 executions
-each; their integrity gates pass and strict string gates fail on those rows.
+The Stage 58 N-API and Chromium string comparisons matched 168 of 172 executions
+each; their integrity gates passed and strict string gates failed on those rows.
 The unchanged `api/any.pkl` original program passes raw comparison. At Stage 58,
 ten of 17 original programs passed and seven mismatched. The DataSize native,
 N-API, and Chromium string regressions each retain 510 of 510 matches.
@@ -90,12 +90,23 @@ product exports, whole-language compatibility, and performance remain open.
 
 The [Bytes checkpoint](reports/m2/stage60-implementation-checkpoint.json) adds
 shared hashing, encoding, strict charset decoding, indexing, concatenation,
-`toList`, and resumable `List.toBytes` checks. Each of native, N-API, and
-Chromium matches 594 of 600 string observations; three IntSeq-dependent cases
-fail in both repetitions. The 17 original programs now have 12 matches, four
+`toList`, and resumable `List.toBytes` checks. At Stage 60, each of native, N-API,
+and Chromium matched 594 of 600 string observations; three IntSeq-dependent cases
+failed in both repetitions. The 17 original programs had 12 matches, four
 mismatches, and one unsupported result. `invalidBytes4.pkl` newly matches;
 the basic/API Bytes programs reach their missing `IntSeq` dependency.
 Typed exports, including Java byte-array aliasing, remain unverified.
+
+The [IntSeq checkpoint](reports/m2/stage61-implementation-checkpoint.json) adds
+shared sequence operations, streaming generators/spreads, all 17 `pkl:math`
+constants, and the List accessors, `add`, and `fold` required by the original
+programs. Native, N-API, and Chromium each match all 474 selected IntSeq string
+observations. The Bytes regression now matches 600 of 600 per target; Duration
+and DataSize retain 548 and 510 matches. Portable Any retains two Regex
+mismatches per target. Among 62 unchanged original programs, 26 match, 15
+mismatch, and 21 are unsupported. The previous 17-program cohort improves
+from 12 to 15 matches, with no passing case regressing. These are selected
+results; all nine M2 workstreams still have unmet completion criteria.
 
 ## Goals
 

@@ -6,6 +6,8 @@ pub enum Operation {
     DataSize(data_size::Operation),
     Duration(duration::Operation),
     Bytes(bytes::Operation),
+    IntSeq(int_seq::Operation),
+    ListEndpoint { last: bool, nullable: bool },
     IfNonNull,
     Between,
     Uppercase,
@@ -128,6 +130,8 @@ pub(super) fn blocks(
     result.extend(data_size::blocks(blocks, metadata));
     result.extend(duration::blocks(blocks, metadata));
     result.extend(bytes::blocks(blocks, metadata));
+    result.extend(int_seq::blocks(blocks, metadata));
+    result.extend(collection_transforms::endpoint_blocks(blocks, metadata));
     result.extend(any::blocks(blocks, metadata));
     result
 }
@@ -281,6 +285,9 @@ impl Vm {
                 return Ok(true);
             }
         }
+        if !method && let Value::IntSeq(sequence) = receiver {
+            return Ok(self.int_seq_property(sequence, name));
+        }
         if !method && let Value::Bytes(bytes) = receiver {
             return self.bytes_property(bytes, name);
         }
@@ -311,9 +318,64 @@ impl Vm {
             Value::DataSize(_) => "DataSize",
             Value::Duration(_) => "Duration",
             Value::Bytes(_) => "Bytes",
+            Value::IntSeq(_) => "IntSeq",
             Value::String(_) => "String",
+            Value::Object(_) if self.is_list(receiver) => "List",
             _ => return Ok(false),
         };
+        if method
+            && class == "List"
+            && matches!(name, "first" | "firstOrNull" | "last" | "lastOrNull")
+        {
+            let mut error = RuntimeError::new(
+                ErrorKind::MissingMember,
+                format!("Cannot find method `{name}` in class `List`."),
+            );
+            let arity = self
+                .frames
+                .last()
+                .and_then(|frame| {
+                    self.program
+                        .metadata
+                        .get(frame.block)?
+                        .method_arities
+                        .get(&frame.pc.saturating_sub(1))
+                })
+                .copied()
+                .unwrap_or(0) as isize;
+            error.hint = crate::diagnostic::member_suggestions(
+                name,
+                arity,
+                &crate::diagnostic_names::LIST_PROPERTIES
+                    .iter()
+                    .map(|name| (*name).to_owned())
+                    .collect::<Vec<_>>(),
+                &crate::diagnostic_names::LIST_METHODS
+                    .iter()
+                    .map(|(name, signature, arity)| {
+                        ((*name).to_owned(), (*signature).to_owned(), *arity)
+                    })
+                    .collect::<Vec<_>>(),
+            );
+            return Err(error);
+        }
+        if !method
+            && class == "List"
+            && matches!(name, "first" | "firstOrNull" | "last" | "lastOrNull")
+        {
+            let block = self.program.primitive_methods[&("List".into(), name.into())];
+            let id = self.heap.allocate(Object {
+                function: Some(Function {
+                    block,
+                    arity: 0,
+                    method: true,
+                    captured_this: Some(receiver.clone()),
+                }),
+                ..Default::default()
+            });
+            self.invoke_function(id, Vec::new(), false)?;
+            return Ok(true);
+        }
         if method {
             if matches!(receiver, Value::DataSize(_) | Value::Duration(_))
                 && matches!(name, "getClass" | "toString")
@@ -337,7 +399,8 @@ impl Vm {
                 return Ok(false);
             };
             let arity = match name {
-                "isBetween" => 2,
+                "isBetween" | "fold" => 2,
+                "step" | "map" => 1,
                 "contains" | "dropLast" | "xor" | "implies" | "toDataSize" | "toDuration"
                 | "toUnit" | "getOrNull" | "decodeToString" => 1,
                 _ => 0,
@@ -391,6 +454,10 @@ impl Vm {
             Operation::DataSize(operation) => self.data_size_operation(receiver, operation)?,
             Operation::Duration(operation) => self.duration_operation(receiver, operation)?,
             Operation::Bytes(operation) => self.bytes_operation(receiver, operation)?,
+            Operation::IntSeq(operation) => self.int_seq_operation(receiver, operation)?,
+            Operation::ListEndpoint { last, nullable } => {
+                self.list_endpoint(receiver, last, nullable)?
+            }
             Operation::IfNonNull => self.if_non_null(receiver)?,
             Operation::BooleanXor | Operation::BooleanImplies => {
                 let Value::Bool(left) = receiver else {

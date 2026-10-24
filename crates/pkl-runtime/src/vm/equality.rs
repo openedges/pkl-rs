@@ -23,6 +23,7 @@ pub(crate) enum Atom {
     DataSize(u64, Option<crate::value_identity::Token>),
     String(PklString),
     Bytes(Arc<[u8]>),
+    IntSeq(Option<[i64; 3]>),
     Structural(u64),
     Function(ObjectId),
     Class(ObjectId),
@@ -86,6 +87,7 @@ fn atom(heap: &Heap, value: &Value) -> Result<Atom, RuntimeError> {
         }
         Value::String(v) => Atom::String(v.clone()),
         Value::Bytes(v) => Atom::Bytes(v.clone().into_data()),
+        Value::IntSeq(v) => Atom::IntSeq(v.key()),
         Value::Function(v) => Atom::Function(*v),
         Value::Class(v) => Atom::Class(*v),
         Value::TypeAlias(v) => Atom::TypeAlias(*v),
@@ -125,6 +127,7 @@ impl Vm {
                 Some((bits ^ (bits >> 32)) as i32)
             }
             Value::Duration(value) => Some(value.java_hash()),
+            Value::IntSeq(value) => Some(value.java_hash()),
             Value::DataSize(value) => Some(value.java_hash()),
             Value::String(value) => Some(value.encode_utf16().fold(0i32, |hash, unit| {
                 hash.wrapping_mul(31).wrapping_add(i32::from(unit))

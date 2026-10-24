@@ -27,6 +27,7 @@ pub enum Value {
     DataSize(crate::data_size::DataSize),
     String(PklString),
     Bytes(Bytes),
+    IntSeq(crate::int_seq::IntSeq),
     Object(ObjectId),
     Function(ObjectId),
     Class(ObjectId),
@@ -44,6 +45,7 @@ impl PartialEq for Value {
             (Self::DataSize(a), Self::DataSize(b)) => a == b,
             (Self::String(a), Self::String(b)) => a == b,
             (Self::Bytes(a), Self::Bytes(b)) => a == b,
+            (Self::IntSeq(a), Self::IntSeq(b)) => a == b,
             (Self::Object(a), Self::Object(b))
             | (Self::Function(a), Self::Function(b))
             | (Self::Class(a), Self::Class(b))
@@ -70,6 +72,7 @@ impl Value {
             Self::Duration(value) => Some(Reference::Scalar(value.reference())),
             Self::DataSize(value) => Some(Reference::Scalar(value.reference())),
             Self::Bytes(value) => Some(Reference::Scalar(value.reference())),
+            Self::IntSeq(value) => Some(Reference::Scalar(value.reference())),
             Self::String(value) => Some(Reference::Scalar(value.reference())),
             Self::Bool(value) => Some(Reference::Scalar(Token::boolean(*value))),
             Self::Null => Some(Reference::Scalar(Token::null())),

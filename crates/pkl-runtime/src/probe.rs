@@ -119,6 +119,7 @@ pub fn encode_value(value: Value) -> String {
         Value::Float(v) => format!("float\t{:016x}", v.to_bits()),
         Value::DataSize(_) => "unsupported\tdata-size".into(),
         Value::Duration(_) => "unsupported\tduration".into(),
+        Value::IntSeq(_) => "unsupported\tint-seq".into(),
         Value::String(v) => format!("string\t{}", hex(v.to_java_utf8().as_bytes())),
         Value::Bytes(v) => format!("bytes\t{}", hex(&v)),
         Value::Object(_) => "unsupported\tobject".into(),

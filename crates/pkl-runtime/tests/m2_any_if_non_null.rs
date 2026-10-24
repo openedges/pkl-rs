@@ -814,7 +814,6 @@ fn inherited_method_on_regex_retains_original_java_requirement() {
 }
 
 #[test]
-#[ignore = "IntSeq constructor is unimplemented; the original Java mismatch remains in the strict 86-row matrix"]
 fn inherited_method_on_intseq_retains_original_java_requirement() {
     compare(&[(
         r####"scalar-intseq"####,

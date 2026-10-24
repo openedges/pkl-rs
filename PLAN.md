@@ -1813,9 +1813,46 @@ List 검증에서 드러난 `first`·`last`·`firstOrNull`·`lastOrNull`·`fold`
 65개 식의 성공 37개·오류 28개를 두 JVM에서 관찰합니다. 앞선 기준과 원본 입력은
 바꾸지 않았으며, source 목록이 불완전했던 초기 관찰도 별도로 보존합니다.
 
-최종 단계에서는 원본 IntSeq·Bytes·Any·Duration 프로그램, 기존 문자열 회귀,
-필수 Rust 검사와 실제 native·Node·Chromium을 실행합니다. 현재 새 Java 기준과
-구현은 진행 중이며, 미실행 검사나 전체 M2 종료 조건을 완료로 표시하지 않습니다.
+### Stage 61 — 공통 구현과 로컬 비교 결과
+
+[구현 체크포인트](reports/m2/stage61-implementation-checkpoint.json)는 IntSeq의
+생성·연산·동등성·해시·진단·출력과 streaming generator·spread를 공통 VM에
+연결합니다. `map`·`fold`·변환은 Host 중단 중 callback·accumulator·합성 Listing
+환경을 GC root로 유지하며 취소·재시도·종료를 검사했습니다. `pkl:math` 상수 17개와
+List의 `add`·`first`·`last`·`firstOrNull`·`lastOrNull`·`fold`를 함께 구현했습니다.
+외부 math 함수와 typed product export는 계속 미구현·미검증 범위로 남깁니다.
+
+native·실제 Node·Chromium에서 IntSeq 문자열 474회가 각각 모두 일치했습니다.
+Bytes 기존 600회도 모두 일치하여 IntSeq 관련 ignored 회귀를 실제 실행으로
+전환했습니다. Duration 548회·DataSize 510회는 각 환경에서 모두 일치합니다.
+Any portable은 환경별 170회 일치·기존 Regex 두 회 불일치이며 strict gate는
+실패입니다. M1 공통 primitive의 기존 Regex 차이도 유지합니다. 같은 입력의 반복과
+환경별 결과를 독립 기능 수나 M2 전체 완료율로 합산하지 않습니다.
+
+Rust 1.98.1의 필수 로컬 검사 다섯 개가 통과했고, workspace 테스트는 953개 통과·
+실패 0개·ignored 2개입니다. 도구 검사는 Python 37개를 일반·`-O`로, JavaScript
+13개를 실행했습니다. 별도 native 회귀에서 math 문자열·숫자 bit 17개, List.add
+21개와 accessor·fold 65개를 검증했습니다. 이것을 별도의 portable 보충 비교나
+공개 typed export 통과로 확대하지 않습니다. 초기 빌드·fixture·parser 실패는
+최종 결과와 구분하여 검증 archive에 보존했습니다.
+목록 갱신은 구현 연결 hash 101개만 바꿨으며, 4,527개 행·475개 요구사항과
+ready 4,416개·미구현 71개·미연결 40개 상태는 그대로 유지했습니다.
+
+원본은 이전 17개와 pinned 입력에서 `IntSeq`가 등장하는 47개를 합친 62개입니다.
+전체 결과는 **26개 일치·15개 불일치·21개 미지원**입니다. 이전 17개 부분집합은
+12개에서 15개 일치로 늘었으며 `basic/bytes.pkl`·`api/bytes.pkl`·
+`api/duration.pkl`이 새로 통과했습니다. 기존 통과 사례의 회귀는 없고 Binary
+경로 두 사례는 여전히 불일치입니다. 원본 basic/API IntSeq도 일치했습니다.
+각 원본을 Java·Rust에서 한 번씩 실행했으며 오프라인 검증은 실행 횟수에 더하지
+않습니다. 확대된 renderer·collection·builtin·진단 실패는 다음 구현의 입력으로
+남깁니다. 전체 원본·9개 작업 영역·성능 조건은 닫히지 않았습니다.
+
+현재 진행도는 핵심 기능을 폭넓게 구현하고 원본 프로그램의 실패를 줄이는
+단계입니다. 완료 조건별 작업량 가중치나 현재 후보의 전체 통과 결과가 없으므로
+완료 백분율을 만들지 않습니다. 후속 우선순위는 이번 원본 비교의 첫 실패를
+분류해 공통 의미론·builtin 의존성을 해결하고, 변경 범위에 맞는 원본·플랫폼
+회귀를 누적하는 것입니다. 모든 필수 언어·오류 바이트와 실행 범위가 충족되어야
+M2를 완료할 수 있습니다.
 
 ## M3 — 표준 라이브러리와 출력
 

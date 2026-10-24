@@ -172,6 +172,7 @@ impl Vm {
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
+            int_seq_run: None,
             function_owner: None,
             amendment_arguments: None,
             amendment_end: None,

@@ -12,6 +12,7 @@ mod economic_map;
 pub mod evaluation;
 pub mod heap;
 pub mod host;
+pub mod int_seq;
 pub mod logging;
 pub mod modules;
 pub mod numeric;
