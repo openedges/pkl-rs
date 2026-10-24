@@ -10,10 +10,12 @@ impl Vm {
         if !class.abstract_ {
             return Ok(());
         }
-        let is_module = self
-            .heap
-            .find_class(class.id)
-            .is_some_and(|id| self.heap.get(id).is_ok_and(|object| object.is_module));
+        let is_module = self.heap.find_class(class.id).is_some_and(|id| {
+            self.heap
+                .get_class(id)
+                .and_then(|class| self.heap.get(class.prototype))
+                .is_ok_and(|object| object.is_module)
+        });
         let name = if is_module || builtins::name(class.id).is_some() {
             class.name.to_string()
         } else {
@@ -90,9 +92,15 @@ impl Vm {
                     error.hint = Some("By default, modules are closed for extension.\nTo make a module extensible, add an `open` modifier: `open module my_module; ...`".into());
                     return Err(error);
                 }
-                let module = self.heap.get_mut(receiver)?;
-                module.parent = Some(parent);
-                module.class_superclass_initialized = true;
+                let class = self
+                    .heap
+                    .object_class(receiver)?
+                    .ok_or_else(|| invalid("extending module class"))?;
+                let superclass = self
+                    .heap
+                    .object_class(parent)?
+                    .ok_or_else(|| invalid("supermodule class"))?;
+                self.heap.link_superclass(class, Some(superclass))?;
             }
             ModuleMode::Amends => {
                 let class = collections::typed_class(&self.heap, parent)?
@@ -100,7 +108,9 @@ impl Vm {
                 self.check_class_instantiable(&class)?;
                 self.validate_object_members(parent, &self.program.objects[unit.template])?;
                 let members = self.program.objects[unit.template].clone();
+                let class = self.heap.object_class(parent)?;
                 let module = self.heap.get_mut(receiver)?;
+                module.instance_class = class;
                 module.is_module = true;
                 module.parent = Some(parent);
                 module.members = members;

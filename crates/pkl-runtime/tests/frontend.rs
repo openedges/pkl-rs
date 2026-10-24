@@ -134,14 +134,21 @@ fn eof_underlines_have_a_virtual_utf16_width_not_an_invalid_byte_span() {
 }
 
 #[test]
-fn unsupported_base_properties_and_iterative_ordinary_nesting_are_explicit() {
+fn base_resolution_and_iterative_ordinary_nesting_are_explicit() {
     for name in ["Regex", "VarArgs"] {
         let module = parse_module(&format!("result = {name}")).unwrap();
+        let resolved = resolve_module(&module).unwrap();
         assert_eq!(
-            resolve_module(&module).unwrap_err().kind,
-            DiagnosticKind::Unsupported
+            resolved.names[&Span::new(9, 9 + name.len())],
+            Binding::BaseClass
         );
     }
+
+    let module = parse_module("result = Char").unwrap();
+    assert_eq!(
+        resolve_module(&module).unwrap_err().kind,
+        DiagnosticKind::Unsupported
+    );
     let grouped = format!("{}1{}", "(".repeat(129), ")".repeat(129));
     let expression = parse_expression(&grouped).unwrap();
     assert_eq!(expression.unparenthesized().kind, ExprKind::Int(1));

@@ -114,7 +114,7 @@ fn typed_defaults_and_warmed_comparisons_retain_pending_state_across_reentry_and
             TYPED_DEFAULT_SOURCE,
             Value::Int(42.into()),
             Value::Bool(true),
-            5,
+            6,
         ),
         (
             WARMED_COMPARISON_SOURCE,
@@ -170,15 +170,16 @@ fn typed_defaults_and_warmed_comparisons_retain_pending_state_across_reentry_and
             .resume(&outer, Ok(Value::string("same")), 3)
             .unwrap();
         assert_eq!(ready(&mut session, 3), Ok(parent_result));
-        // The class-bearing source retains its module, builtin Module parent, Base,
-        // Key and Hidden; the class-free source still releases the entire graph.
+        // Base, Key and Hidden each retain a distinct descriptor/prototype pair
+        // above the initialized module. The class-free source releases both
+        // its module object and its module Class descriptor.
         assert_eq!(
             initialized.added_values(session.collect(&[]), 0),
-            if retained == 0 { -1 } else { retained - 2 }
+            if retained == 0 { -2 } else { retained }
         );
         assert_eq!(
             initialized.added_values(session.collect(&[]), 0),
-            if retained == 0 { -1 } else { retained - 2 }
+            if retained == 0 { -2 } else { retained }
         );
         if retained == 0 {
             assert_eq!(
@@ -263,7 +264,7 @@ fn structural_hash_finishes_deep_forcing_before_nested_hashing_and_retries_after
         .resume(&outer_hash, Ok(Value::string("key")), 4)
         .unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::Int(42.into())));
-    assert_eq!(initialized.added_values(session.collect(&[]), 2), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 2), -2);
     assert_eq!(
         session
             .start(parent, vec![stale_root], 10, None)
@@ -332,7 +333,7 @@ fn temporary_operands_and_structural_keys_survive_reentry_failure_retry_and_gc()
         assert_eq!(ready(&mut session, 4), Ok(Value::Bool(true)));
         assert_eq!(
             initialized.added_values(session.collect(&[]), usize::from(child == HASH_TRANSITION)),
-            -1
+            -2
         );
         assert_eq!(
             session
@@ -388,7 +389,7 @@ fn completed_left_forcing_survives_a_failed_right_and_is_reused_on_retry() {
         .resume(&retried, Ok(Value::string("same")), 2)
         .unwrap();
     assert_eq!(ready(&mut session, 2), Ok(Value::Bool(true)));
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), -2);
     assert_eq!(
         session
             .start(parent, vec![stale_root], 10, None)
@@ -427,10 +428,10 @@ fn key_comparison_forces_wrappers_with_temporary_declaration_receivers() {
     session.resume(&outer, Ok(Value::string("ok")), 3).unwrap();
     assert_eq!(ready(&mut session, 3), Ok(Value::Bool(true)));
     // Both explicit values() sites retain their executable class caches.
-    // Only Check, its captured module and builtin Module parent remain; temporary class
-    // receivers, wrapper Listings and structural-key Mapping were released.
-    assert_eq!(initialized.added_values(session.collect(&[]), 6), 1);
-    assert_eq!(initialized.added_values(session.collect(&[]), 6), 1);
+    // Check's separate descriptor/prototype pair retains its captured module;
+    // temporary receivers, wrapper Listings and structural-key Mapping are released.
+    assert_eq!(initialized.added_values(session.collect(&[]), 6), 2);
+    assert_eq!(initialized.added_values(session.collect(&[]), 6), 2);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -448,7 +449,7 @@ fn first_structural_key_and_identity_lookup_leave_lazy_members_unforced() {
     let stale_root = root.clone();
     session.start(parent, vec![root], 1, None).unwrap();
     assert_eq!(ready(&mut session, 1), Ok(Value::Int(42.into())));
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), -2);
     assert_eq!(
         session
             .start(parent, vec![stale_root], 10, None)
@@ -477,7 +478,7 @@ fn structural_lookup_compares_query_before_stored_key_across_host_suspension() {
             .unwrap();
     }
     assert_eq!(ready(&mut session, 1), Ok(Value::Int(42.into())));
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), -2);
     assert_eq!(
         session
             .start(parent, vec![stale_root], 10, None)
@@ -517,7 +518,7 @@ fn inherited_key_comparison_follows_child_value_force_and_keeps_nested_keys_aliv
         session.resume(&token, Ok(Value::string(value)), 1).unwrap();
     }
     assert_eq!(ready(&mut session, 1), Ok(Value::Bool(true)));
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), -2);
     assert_eq!(
         session
             .start(parent, vec![stale_root], 10, None)
@@ -544,7 +545,7 @@ fn object_deep_force_visits_nested_members_before_comparing_an_earlier_differenc
         .resume(&nested, Ok(Value::string("same")), 2)
         .unwrap();
     assert_eq!(ready(&mut session, 2), Ok(Value::Bool(false)));
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), -2);
     assert_eq!(
         session
             .start(parent, vec![stale_root], 10, None)

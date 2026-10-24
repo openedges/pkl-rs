@@ -230,42 +230,54 @@ impl Vm {
                         .clone()
                         .or_else(|| self.context.primary_source.clone())
                         .ok_or_else(|| invalid("AST diagnostic without source"))?;
+                    let declared_member = || {
+                        PklString::from(
+                            diagnostic
+                                .module_name
+                                .as_deref()
+                                .unwrap_or(&source.module_name),
+                        )
+                        .concat(
+                            &diagnostic
+                                .member
+                                .as_ref()
+                                .map_or_else(PklString::default, |suffix| {
+                                    PklString::from("#").concat(suffix)
+                                }),
+                        )
+                    };
                     let member =
-                        self.frames
-                            .len()
-                            .checked_sub(2)
-                            .and_then(|index| {
-                                let caller = &self.frames[index];
-                                caller
-                                    .module_load
-                                    .as_ref()
-                                    .filter(|run| run.initializing)
-                                    .map(|_| {
-                                        let metadata = &self.program.metadata[caller.block];
-                                        PklString::from(
-                                            metadata.source.as_ref().map_or(
+                        if diagnostic.member.is_some() || diagnostic.module_name.is_some() {
+                            // Delayed AST validation already knows its lexical
+                            // declaration owner; the module initializer is only
+                            // executing preparation on that declaration's behalf.
+                            declared_member()
+                        } else {
+                            self.frames
+                                .len()
+                                .checked_sub(2)
+                                .and_then(|index| {
+                                    let caller = &self.frames[index];
+                                    caller
+                                        .module_load
+                                        .as_ref()
+                                        .filter(|run| run.initializing)
+                                        .map(|_| {
+                                            let metadata = &self.program.metadata[caller.block];
+                                            PklString::from(metadata.source.as_ref().map_or(
                                                 self.program.module_name.as_ref(),
                                                 |source| &source.module_name,
-                                            ),
-                                        )
-                                        .concat(
-                                            caller
-                                                .diagnostic_member
-                                                .as_ref()
-                                                .unwrap_or(&metadata.member),
-                                        )
-                                    })
-                            })
-                            .unwrap_or_else(|| {
-                                PklString::from(source.module_name.as_ref()).concat(
-                                    &diagnostic
-                                        .member
-                                        .as_ref()
-                                        .map_or_else(PklString::default, |suffix| {
-                                            PklString::from("#").concat(suffix)
-                                        }),
-                                )
-                            });
+                                            ))
+                                            .concat(
+                                                caller
+                                                    .diagnostic_member
+                                                    .as_ref()
+                                                    .unwrap_or(&metadata.member),
+                                            )
+                                        })
+                                })
+                                .unwrap_or_else(declared_member)
+                        };
                     remaining.push_back(Preparation::Failure(modules::imported_diagnostic(
                         diagnostic.clone(),
                         source,

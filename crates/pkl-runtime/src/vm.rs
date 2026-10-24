@@ -13,6 +13,7 @@ use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, RuntimeFrame, V
 pub(crate) mod amendment;
 pub(crate) mod annotations;
 pub(crate) mod builtins;
+pub(crate) mod classes;
 mod code_storage;
 mod collection_transforms;
 pub mod collections;
@@ -790,31 +791,7 @@ impl TypeCheck {
                 Self::Collection(crate::heap::CollectionKind::List).accepts(value, heap)
                     || Self::Collection(crate::heap::CollectionKind::Set).accepts(value, heap)
             }
-            Self::Class { id, .. } => {
-                let &Value::Object(mut object) = value else {
-                    return false;
-                };
-                let mut visited = BTreeSet::new();
-                loop {
-                    if !visited.insert(object) {
-                        return false;
-                    }
-                    let Ok(value) = heap.get(object) else {
-                        return false;
-                    };
-                    if value
-                        .class_definition
-                        .as_ref()
-                        .is_some_and(|class| class.id == *id)
-                    {
-                        return true;
-                    }
-                    let Some(parent) = value.parent else {
-                        return false;
-                    };
-                    object = parent;
-                }
-            }
+            Self::Class { id, .. } => classes::accepts_nominal(*id, value, heap),
             Self::StringLiteral(expected) => {
                 matches!(value, Value::String(actual) if actual == expected)
             }
@@ -975,6 +952,7 @@ impl Program {
             &mut metadata,
             &mut objects,
         ));
+        builtin_members.extend(classes::ordinary_members(&mut blocks, &mut metadata));
         let string_repeat_block = strings::repeat_block(&mut blocks, &mut metadata);
         let collection_join_blocks = collections::join_blocks(&mut blocks, &mut metadata);
         let collection_transform_blocks = collection_transforms::blocks(&mut blocks, &mut metadata);
@@ -1216,6 +1194,7 @@ pub struct Vm {
     modules_resolved: modules::ModuleCache,
     resources: BTreeMap<crate::host::resources::CacheKey, Option<Value>>,
     class_singletons: BTreeMap<usize, ObjectId>,
+    builtin_classes: BTreeMap<classes::BuiltinClass, ObjectId>,
     alias_singletons: BTreeMap<usize, ObjectId>,
     /// Weak handles: live empty strict values share Java's EMPTY identity, but
     /// this lookup does not keep discarded values or producer scopes alive.
@@ -1288,6 +1267,7 @@ impl Vm {
             modules_resolved: modules::ModuleCache::default(),
             resources: BTreeMap::new(),
             class_singletons: BTreeMap::new(),
+            builtin_classes: BTreeMap::new(),
             alias_singletons: BTreeMap::new(),
             empty_collections: [None; 3],
             resolved_declarations: BTreeMap::new(),
@@ -1696,6 +1676,7 @@ impl Vm {
         self.modules_resolved.clear();
         self.resources.clear();
         self.class_singletons.clear();
+        self.builtin_classes.clear();
         self.alias_singletons.clear();
         self.empty_collections = [None; 3];
         self.resolved_declarations.clear();
@@ -1772,6 +1753,7 @@ impl Vm {
                     _ => None,
                 }),
         );
+        roots.extend(self.builtin_classes.values().copied().map(Value::Class));
         self.declaration_code_roots(&mut roots);
         for (stack, inputs, frames, state) in self
             .suspended
@@ -2473,6 +2455,15 @@ impl Vm {
                 owner = match object.parent {
                     Some(parent) => parent,
                     None if method
+                        && name.as_ref() == "getClass"
+                        && object.class_superclass_initialized =>
+                    {
+                        let function =
+                            self.native_reference_method(Value::Object(receiver), "getClass");
+                        self.stack.push(function);
+                        return Ok(());
+                    }
+                    None if method
                         && name.as_ref() == "toString"
                         && (object.class_definition.is_none()
                             || object.class_superclass_initialized) =>
@@ -3094,13 +3085,23 @@ impl Vm {
                 }
             }
             method_groups.push(methods);
-            // A failed superclass resolution has no Typed/Any ancestry yet.
-            if object.class_definition.is_some()
-                && object.class_superclass_initialized
-                && object.parent.is_none()
-            {
+            // Diagnostic metadata follows the same explicit builtin ancestry.
+            if let Some(ty) = &object.builtin_type {
+                let inherited = match classes::BuiltinClass::from_type(ty) {
+                    Some(classes::BuiltinClass::Any) => {
+                        &crate::diagnostic_names::TYPED_METHODS[..3]
+                    }
+                    Some(classes::BuiltinClass::Typed) => {
+                        &crate::diagnostic_names::TYPED_METHODS[3..]
+                    }
+                    Some(classes::BuiltinClass::Class) => {
+                        properties.push("simpleName".to_owned());
+                        &[]
+                    }
+                    _ => &[],
+                };
                 method_groups.push(
-                    crate::diagnostic_names::TYPED_METHODS
+                    inherited
                         .iter()
                         .map(|(name, signature, arity)| {
                             ((*name).to_owned(), (*signature).to_owned(), *arity)
@@ -3892,30 +3893,16 @@ impl Vm {
                 object.class_initializing = false;
             }
             Instruction::CheckAnnotationClass => {
-                let Some(Value::Class(id)) = self.stack.last() else {
+                let Some(Value::Class(id)) = self.stack.last().cloned() else {
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
                         "Expected an annotation class.",
                     ));
                 };
-                let mut current = Some(*id);
-                let mut valid = false;
-                let mut visited = BTreeSet::new();
-                while let Some(id) = current {
-                    if !visited.insert(id) {
-                        break;
-                    }
-                    let object = self.heap.get(id)?;
-                    if object
-                        .class_definition
-                        .as_ref()
-                        .is_some_and(|class| class.id == annotations::ANNOTATION_ID)
-                    {
-                        valid = true;
-                        break;
-                    }
-                    current = object.parent;
-                }
+                let expected = self.canonical_builtin_class(classes::BuiltinClass::Ordinary(
+                    annotations::ANNOTATION_ID,
+                ));
+                let valid = self.heap.is_subclass(id, expected);
                 if !valid {
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
@@ -3942,12 +3929,11 @@ impl Vm {
             }
             Instruction::PublishAnnotatedClassMember { template, index } => {
                 let annotations = self.pop()?.as_object()?;
-                let owner = self
-                    .stack
-                    .last()
-                    .ok_or_else(|| invalid("missing annotation owner"))?
-                    .heap_id()
-                    .ok_or_else(|| invalid("annotation owner is not a declaration"))?;
+                let owner = self.heap.declaration_object(
+                    self.stack
+                        .last()
+                        .ok_or_else(|| invalid("missing annotation owner"))?,
+                )?;
                 let member = self
                     .program
                     .objects
@@ -4371,7 +4357,9 @@ impl Vm {
                 if method {
                     self.retire_saturated_method_cache(&receiver, name)?;
                 }
-                if self.primitive_member(&receiver, name, method)? {
+                if self.class_member(&receiver, name, method)?
+                    || self.primitive_member(&receiver, name, method)?
+                {
                     return Ok(());
                 }
                 if method
@@ -4405,7 +4393,10 @@ impl Vm {
                     } else {
                         Value::Bool(text.is_empty())
                     });
-                } else if method && name.as_ref() == "getClass" {
+                } else if method
+                    && name.as_ref() == "getClass"
+                    && (!matches!(receiver, Value::Object(id) if self.heap.object_class(id)?.is_some()))
+                {
                     let function = self.native_reference_method(receiver, "getClass");
                     self.stack.push(function);
                 } else if matches!(receiver, Value::Function(_))
@@ -4504,7 +4495,9 @@ impl Vm {
                 if method {
                     self.retire_saturated_method_cache(&receiver, name)?;
                 }
-                if self.primitive_member(&receiver, name, method)? {
+                if self.class_member(&receiver, name, method)?
+                    || self.primitive_member(&receiver, name, method)?
+                {
                     return Ok(());
                 }
                 let receiver = receiver.as_object()?;
@@ -4678,8 +4671,9 @@ impl Vm {
                         environment,
                         ..Object::default()
                     });
-                    self.class_singletons.insert(template, id);
-                    self.stack.push(Value::Class(id));
+                    let class = self.heap.allocate_class(id);
+                    self.class_singletons.insert(template, class);
+                    self.stack.push(Value::Class(class));
                 }
             }
             Instruction::SetClassParent => {
@@ -4692,12 +4686,7 @@ impl Vm {
                 let Some(Value::Class(id)) = self.stack.last().cloned() else {
                     return Err(invalid("missing class initialization target"));
                 };
-                let parent_class = self
-                    .heap
-                    .get(parent)?
-                    .class_definition
-                    .as_ref()
-                    .ok_or_else(|| invalid("invalid class handle"))?;
+                let parent_class = self.heap.class_definition(parent)?;
                 if id == parent {
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
@@ -4729,16 +4718,35 @@ impl Vm {
                     error.hint = Some("By default, classes are closed for extension.\nTo make a class extensible, add an `open` modifier: `open class MyClass { ... }`".into());
                     return Err(error);
                 }
-                let object = self.heap.get_mut(id)?;
-                object.parent = Some(parent);
-                object.class_superclass_initialized = true;
+                // Upstream ClassNode uses PClassInfo's module-name predicate here.
+                if self.class_external(parent)?
+                    && !self
+                        .heap
+                        .class_definition(id)?
+                        .module
+                        .as_deref()
+                        .is_some_and(|name| name.starts_with("pkl."))
+                {
+                    let mut error = RuntimeError::new(
+                        ErrorKind::Type,
+                        format!(
+                            "Cannot extend external class `{}`.",
+                            self.heap.class_display_name(parent)?
+                        ),
+                    );
+                    error.hint = Some(
+                        "External classes can only be extended by standard library classes.".into(),
+                    );
+                    return Err(error);
+                }
+                self.heap.link_superclass(id, Some(parent))?;
             }
             Instruction::SetDefaultClassParent => {
                 let Some(Value::Class(id)) = self.stack.last().cloned() else {
                     return Err(invalid("missing class initialization target"));
                 };
-                // Typed/Any are implicit in the bounded heap representation.
-                self.heap.get_mut(id)?.class_superclass_initialized = true;
+                let parent = self.canonical_builtin_class(classes::BuiltinClass::Typed);
+                self.heap.link_superclass(id, Some(parent))?;
             }
             Instruction::PublishClassMember { template, index } => {
                 let Some(Value::Class(id)) = self.stack.last().cloned() else {
@@ -4751,16 +4759,18 @@ impl Vm {
                     .and_then(|members| members.get(index))
                     .ok_or_else(|| invalid("missing class member"))?
                     .clone();
-                if let Some(parent) = self.heap.get(id)?.parent {
+                let prototype = self.heap.get_class(id)?.prototype;
+                if let Some(parent) = self.heap.get(prototype)?.parent {
                     self.validate_class_override(parent, &member)?;
                 }
-                self.heap.get_mut(id)?.members.push(member);
+                self.heap.get_mut(prototype)?.members.push(member);
             }
             Instruction::FinishClass => {
                 let Some(Value::Class(id)) = self.stack.last().cloned() else {
                     return Err(invalid("missing class initialization target"));
                 };
-                self.heap.get_mut(id)?.class_initializing = false;
+                let prototype = self.heap.get_class(id)?.prototype;
+                self.heap.get_mut(prototype)?.class_initializing = false;
             }
             Instruction::MakeInstance { template }
             | Instruction::MakeBuiltinInstance { template } => {
@@ -4768,32 +4778,19 @@ impl Vm {
                 let Value::Class(parent) = self.pop()? else {
                     return Err(RuntimeError::new(ErrorKind::Type, "Expected a class."));
                 };
-                if let Some(ty) = &self.heap.get(parent)?.builtin_type
-                    && !matches!(
-                        ty.resolved(),
-                        TypeCheck::RefDomain
-                            | TypeCheck::Class {
-                                id: reference::ACCESS_ID,
-                                ..
-                            }
-                    )
-                    && !matches!(ty.resolved(), TypeCheck::Class { id, .. } if builtins::name(*id).is_some())
-                {
-                    let name = reference::type_name(ty, &self.program.module_name);
-                    let name = if matches!(ty.resolved(), TypeCheck::Reference { .. }) {
-                        "pkl.ref#Reference"
-                    } else {
-                        &name
-                    };
+                if self.class_external(parent)? {
+                    let name = self.heap.class_display_name(parent)?;
                     let mut error = RuntimeError::new(
                         ErrorKind::Type,
                         format!(
                             "Cannot instantiate, or amend an instance of, external class `{name}`."
                         ),
                     );
-                    error.hint=Some("To create an instance of an external class, use its literal syntax or constructor method.\nExamples:\n* `123` uses literal syntax to create an instance of class `Int`.\n* `Pair(1, 2)` uses the `Pair()` constructor method to create an instance of class `Pair`.".into());
+                    error.hint = Some("To create an instance of an external class, use its literal syntax or constructor method.\nExamples:\n* `123` uses literal syntax to create an instance of class `Int`.\n* `Pair(1, 2)` uses the `Pair()` constructor method to create an instance of class `Pair`.".into());
                     return Err(error);
                 }
+                let class_id = parent;
+                let parent = self.heap.get_class(class_id)?.prototype;
                 let class = self
                     .heap
                     .get(parent)?
@@ -4821,6 +4818,7 @@ impl Vm {
                     .clone();
                 let id = self.heap.allocate(Object {
                     parent: Some(parent),
+                    instance_class: Some(class_id),
                     members,
                     environment,
                     ..Object::default()
@@ -4831,6 +4829,7 @@ impl Vm {
                 let Value::Class(id) = self.pop()? else {
                     return Err(RuntimeError::new(ErrorKind::Type, "Expected a class."));
                 };
+                let id = self.heap.get_class(id)?.prototype;
                 if self
                     .heap
                     .get(id)?
@@ -4861,7 +4860,9 @@ impl Vm {
                     .as_ref()
                     .is_some_and(|unit| unit.mode == modules::ModuleMode::Plain)
                 {
-                    self.builtin_class(builtins::ty(output::MODULE)).heap_id()
+                    let class = self
+                        .canonical_builtin_class(classes::BuiltinClass::Ordinary(output::MODULE));
+                    Some(self.heap.get_class(class)?.prototype)
                 } else {
                     None
                 };
@@ -4954,6 +4955,19 @@ impl Vm {
                 } else {
                     self.heap.allocate(definition)
                 };
+                if self.heap.get(object)?.class_definition.is_some() {
+                    let class = self.heap.allocate_class(object);
+                    if let Some(parent) = parent {
+                        let superclass = self
+                            .heap
+                            .object_class(parent)?
+                            .ok_or_else(|| invalid("module superclass"))?;
+                        self.heap.link_superclass(class, Some(superclass))?;
+                    }
+                } else if let Some(parent) = parent {
+                    let class = self.heap.object_class(parent)?;
+                    self.heap.get_mut(object)?.instance_class = class;
+                }
                 if let Some(unit) = &module {
                     self.frames.last_mut().unwrap().module_receiver = Some(object);
                     if let Some(identity) = &unit.identity {
@@ -7826,14 +7840,24 @@ impl Compiler<'_> {
                                     ),
                                 ));
                             }
-                            TypeCheck::Class {
-                                module: self
-                                    .source
-                                    .as_ref()
-                                    .map(|source| source.module_name.clone()),
-                                id: self.declaration_base + member.expr.span.start,
-                                name: Arc::from(member.name),
-                            }
+                            let module = self
+                                .source
+                                .as_ref()
+                                .map(|source| source.module_name.clone())
+                                .or_else(|| {
+                                    self.resolved
+                                        .module
+                                        .declaration
+                                        .as_ref()
+                                        .and_then(|declaration| declaration.name.as_ref())
+                                        .map(|parts| Arc::from(parts.join(".")))
+                                });
+                            classes::specialized_type(module.as_deref(), &member.name)
+                                .unwrap_or_else(|| TypeCheck::Class {
+                                    module,
+                                    id: self.declaration_base + member.expr.span.start,
+                                    name: Arc::from(member.name),
+                                })
                         }
                         ExprKind::TypeAlias {
                             type_parameters,
@@ -8120,6 +8144,9 @@ impl Compiler<'_> {
                         return Ok(TypeCheck::ParameterizedCollection { kind, arguments });
                     }
                     match path[0].as_str() {
+                        name if classes::named_type(name).is_some() => {
+                            classes::named_type(name).expect("builtin nominal type")
+                        }
                         name if builtins::id(name).is_some() => TypeCheck::Class {
                             module: None,
                             id: builtins::id(name).expect("annotation class"),
@@ -8202,11 +8229,7 @@ impl Compiler<'_> {
             output.push_at(Instruction::ResolvedClass(check.clone()), span);
             return Ok(());
         }
-        if matches!(
-            check.unaliased(),
-            TypeCheck::RefDomain | TypeCheck::Reference { .. }
-        ) || matches!(check.unaliased(), TypeCheck::Class { id, .. } if *id == reference::ACCESS_ID || builtins::name(*id).is_some())
-        {
+        if classes::BuiltinClass::from_type(check).is_some() {
             output.push_at(Instruction::BuiltinClass(check.clone()), span);
             return Ok(());
         }

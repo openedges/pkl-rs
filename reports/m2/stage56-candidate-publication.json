@@ -1,0 +1,147 @@
+{
+  "archive": {
+    "bytes": 87427784,
+    "member_count": 71911,
+    "path": "reports/m2/stage56-candidate-evidence.tar.gz",
+    "sha256": "6676fa608f1a065725d71b24c0158d08fa47d7feb5ba8bdd691988ce1b7f7436"
+  },
+  "full_archive_member_reread_verified": true,
+  "manifest_sha256": "5b7f85ee7de3a69517e9caa31be97aa708dcf03c27b2b83c81f3b445a4bc59bd",
+  "original_capture_files_unchanged": true,
+  "overview": {
+    "class_platform_recorded_outcomes": "264 rows across native, N-API and Chromium targets: 88 per target, with 78 pass, 4 mismatch and 6 oracle-error per target. Provider/export API supplement remains unexecuted.",
+    "class_platform_status": "failed",
+    "frozen_artifacts_verified": {
+      "class-native-dev-01": {
+        "native": {
+          "archive_path": "evidence/target/m2/stage56-class-native-dev-01/artifacts/class_values_fixture_probe",
+          "bytes": 16574704,
+          "sha256": "dd10e97eee9bf55ec3ea24eff6ab4d331dd36c2594106fe65fd8cd474924eca2"
+        }
+      },
+      "class-native-dev-02": {
+        "native": {
+          "archive_path": "evidence/target/m2/stage56-class-native-dev-02/artifacts/class_values_fixture_probe",
+          "bytes": 16580896,
+          "sha256": "e3219b2668315d3499fa50047abecf029e11e8f26e0757795d8c62824c51aa5b"
+        }
+      },
+      "class-native-dev-03": {
+        "native": {
+          "archive_path": "evidence/target/m2/stage56-class-native-dev-03/artifacts/class_values_fixture_probe",
+          "bytes": 16641616,
+          "sha256": "08720d404d31dc1d97fe355db67dd4ca59de058388b0d216aab42a75a0c8f16c"
+        }
+      },
+      "class-platform-01": {
+        "napi": {
+          "archive_path": "evidence/target/m2/stage56-class-platform-01/artifacts/class-values.node",
+          "bytes": 4766496,
+          "sha256": "e7bd1cdc52c9d4a2262ebef1040c0d153de19b8686d552ef6cb255f1bbb0c849"
+        },
+        "native": {
+          "archive_path": "evidence/target/m2/stage56-class-platform-01/artifacts/class_values_fixture_probe",
+          "bytes": 4031824,
+          "sha256": "84548c956e549404967a7ead18be5c93d34988fca51be630a41a9e56ec713a9e"
+        },
+        "wasm/pkl_wasm.d.ts": {
+          "archive_path": "evidence/target/m2/stage56-class-platform-01/artifacts/wasm/pkl_wasm.d.ts",
+          "bytes": 15505,
+          "sha256": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47"
+        },
+        "wasm/pkl_wasm.js": {
+          "archive_path": "evidence/target/m2/stage56-class-platform-01/artifacts/wasm/pkl_wasm.js",
+          "bytes": 42154,
+          "sha256": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc"
+        },
+        "wasm/pkl_wasm_bg.wasm": {
+          "archive_path": "evidence/target/m2/stage56-class-platform-01/artifacts/wasm/pkl_wasm_bg.wasm",
+          "bytes": 3848733,
+          "sha256": "12c263a936ac502c20a7df51cf5b9a185068d60f1f051e267a307245b06f3d05"
+        },
+        "wasm/pkl_wasm_bg.wasm.d.ts": {
+          "archive_path": "evidence/target/m2/stage56-class-platform-01/artifacts/wasm/pkl_wasm_bg.wasm.d.ts",
+          "bytes": 7840,
+          "sha256": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+        }
+      },
+      "metadata-native-dev-01": {
+        "native": {
+          "archive_path": "evidence/target/m2/stage56-metadata-native-dev-01/artifacts/class_values_fixture_probe",
+          "bytes": 16641616,
+          "sha256": "08720d404d31dc1d97fe355db67dd4ca59de058388b0d216aab42a75a0c8f16c"
+        }
+      },
+      "metadata-platform-01": {
+        "napi": {
+          "archive_path": "evidence/target/m2/stage56-metadata-platform-01/artifacts/class-values.node",
+          "bytes": 4766496,
+          "sha256": "e7bd1cdc52c9d4a2262ebef1040c0d153de19b8686d552ef6cb255f1bbb0c849"
+        },
+        "native": {
+          "archive_path": "evidence/target/m2/stage56-metadata-platform-01/artifacts/class_values_fixture_probe",
+          "bytes": 4031824,
+          "sha256": "84548c956e549404967a7ead18be5c93d34988fca51be630a41a9e56ec713a9e"
+        },
+        "wasm/pkl_wasm.d.ts": {
+          "archive_path": "evidence/target/m2/stage56-metadata-platform-01/artifacts/wasm/pkl_wasm.d.ts",
+          "bytes": 15505,
+          "sha256": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47"
+        },
+        "wasm/pkl_wasm.js": {
+          "archive_path": "evidence/target/m2/stage56-metadata-platform-01/artifacts/wasm/pkl_wasm.js",
+          "bytes": 42154,
+          "sha256": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc"
+        },
+        "wasm/pkl_wasm_bg.wasm": {
+          "archive_path": "evidence/target/m2/stage56-metadata-platform-01/artifacts/wasm/pkl_wasm_bg.wasm",
+          "bytes": 3848733,
+          "sha256": "12c263a936ac502c20a7df51cf5b9a185068d60f1f051e267a307245b06f3d05"
+        },
+        "wasm/pkl_wasm_bg.wasm.d.ts": {
+          "archive_path": "evidence/target/m2/stage56-metadata-platform-01/artifacts/wasm/pkl_wasm_bg.wasm.d.ts",
+          "bytes": 7840,
+          "sha256": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+        }
+      }
+    },
+    "groups": [
+      "class-platform-01",
+      "metadata-platform-01",
+      "platform-run-01",
+      "platforms-01",
+      "class-native-dev-01",
+      "class-native-dev-02",
+      "class-native-dev-03",
+      "metadata-native-dev-01"
+    ],
+    "historical_native_statuses": {
+      "class-native-dev-01": "failed",
+      "class-native-dev-02": "failed",
+      "class-native-dev-03": "failed",
+      "metadata-native-dev-01": "passed"
+    },
+    "limitations": [
+      "Recorded local macOS results only; no hosted CI or full API completion.",
+      "Class strict main and historical native failures remain failures; API supplements unexecuted.",
+      "M1 selected architecture contract passes with two known regex compatibility failures per target; 6076 match counts are not whole-language coverage.",
+      "No speed or peak-RSS target is established."
+    ],
+    "m1_architecture": {
+      "experiment_contract_status": "pass",
+      "known_regex_nonmatches_per_target": 2,
+      "matching_rows_per_target": {
+        "browser": 6076,
+        "node": 6076,
+        "rust": 6076
+      },
+      "rows": 6078,
+      "strict_compatibility_status": "fail"
+    },
+    "metadata_platform_recorded_outcomes": "60 rows across native, N-API and Chromium targets: 20 pass per target in the selected comparison; not full API compatibility.",
+    "metadata_platform_status": "passed",
+    "scope": "Terminal local Stage56 candidate captures; no candidate, Java guest, Cargo or test reruns in publication."
+  },
+  "schema": 1,
+  "source_files_rehashed_before_and_after": 71909
+}

@@ -202,7 +202,7 @@ fn query_hash_and_map_equality_resume_after_failed_reentry_without_losing_operan
                 session.collect(&[]),
                 usize::from(expression.starts_with("map."))
             ),
-            -1
+            -2
         );
         assert_eq!(
             session
@@ -262,7 +262,7 @@ fn nested_map_key_failure_retries_unpublished_builder_during_parent_reentry() {
     session.resume(&outer, Ok(Value::Null), 3).unwrap();
     assert_eq!(host_ready(&mut session, 3), Ok(Value::Null));
     // User values are reclaimed; the private base and exact executable graph remain.
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), -2);
     assert_eq!(
         session
             .start(parent, vec![stale_module], 10, None)
@@ -390,7 +390,7 @@ child = let (warm = a[1]) Map(a, 7{entries}).getOrNull(b)
         session.resume(&outer, Ok(Value::Null), 3).unwrap();
         assert_eq!(host_ready(&mut session, 3), Ok(Value::Null));
         // User values are reclaimed; the private base and exact executable graph remain.
-        assert_eq!(initialized.added_values(session.collect(&[]), 1), -1);
+        assert_eq!(initialized.added_values(session.collect(&[]), 1), -2);
         assert_eq!(
             session
                 .start(parent, vec![stale_module], 10, None)
@@ -434,7 +434,7 @@ fn strict_maps_and_pending_hashes_are_evaluator_local_and_reclaimed_handles_stay
     left.resume(left_read, Ok(Value::Int(7.into()))).unwrap();
     assert_eq!(vm_ready(&mut left), Ok(Value::Int(1.into())));
     // User values are reclaimed; the private base and exact executable graph remain.
-    assert_eq!(initialized.added_values(left.collect(&[]), 0), -1);
+    assert_eq!(initialized.added_values(left.collect(&[]), 0), -2);
     assert_eq!(
         left.start(inspect, vec![stale_module]).unwrap_err().kind,
         ErrorKind::StaleHandle
@@ -542,7 +542,7 @@ child = map.getOrNull(a).p
             session.resume(&outer, Ok(Value::Null), 3).unwrap();
             assert_eq!(host_ready(&mut session, 3), Ok(Value::Null));
             // User values are reclaimed; the private base and exact executable graph remain.
-            assert_eq!(initialized.added_values(session.collect(&[]), 2), -1);
+            assert_eq!(initialized.added_values(session.collect(&[]), 2), -2);
             assert_eq!(
                 session
                     .start(parent, vec![stale_module], 10, None)

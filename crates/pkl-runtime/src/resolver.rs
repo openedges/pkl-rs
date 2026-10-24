@@ -123,6 +123,9 @@ fn is_base_class(name: &str) -> bool {
             | "BytesRenderer"
             | "PcfRenderer"
             | "JsonRenderer"
+            | "YamlRenderer"
+            | "PListRenderer"
+            | "PropertiesRenderer"
             | "ConvertProperty"
             | "RenderDirective"
             | "PcfRenderDirective"
@@ -150,6 +153,13 @@ fn is_base_class(name: &str) -> bool {
             | "Int"
             | "Float"
             | "Duration"
+            | "DataSize"
+            | "IntSeq"
+            | "Regex"
+            | "RegexMatch"
+            | "Object"
+            | "Typed"
+            | "VarArgs"
             | "Number"
             | "String"
             | "Bytes"
@@ -2339,7 +2349,13 @@ pub(crate) fn resolve_session_expression(
     resolver.enter_object(Vec::new());
     let preparation_failure = resolver
         .visit(Work::Expression(&parsed.expression, false))
-        .err();
+        .err()
+        .map(|mut error| {
+            // AstBuilder diagnostics use the synthetic ModuleInfo name. The
+            // expression's runtime SimpleRootNode still has an empty name.
+            error.module_name = Some("repl:text".into());
+            error
+        });
     Ok(ResolvedModule {
         preparation: resolver.preparation,
         function_owners: resolver.function_owners,

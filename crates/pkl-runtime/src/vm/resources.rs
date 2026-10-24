@@ -162,8 +162,11 @@ impl Vm {
             .builtin_class(builtins::ty(RESOURCE))
             .heap_id()
             .unwrap();
+        let class = parent;
+        let parent = self.heap.get_class(class).expect("builtin class").prototype;
         let object = Object {
             parent: Some(parent),
+            instance_class: Some(class),
             resource: Some(Arc::new(resource)),
             members: self.program.builtin_members[&FACTORY].clone(),
             ..Default::default()

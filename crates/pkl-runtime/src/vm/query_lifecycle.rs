@@ -633,7 +633,15 @@ mod tests {
                 Value::Class(id) | Value::TypeAlias(id) | Value::Function(id) => id,
                 _ => panic!("escaped declaration"),
             };
-            owners.push(vm.heap.get(id).unwrap().environment.code_owner.unwrap());
+            let declaration = vm.heap.declaration_object(&value).unwrap();
+            owners.push(
+                vm.heap
+                    .get(declaration)
+                    .unwrap()
+                    .environment
+                    .code_owner
+                    .unwrap(),
+            );
             ids.push(id);
             roots.push(value);
         }
@@ -642,14 +650,7 @@ mod tests {
         let alias_body = vm.program.alias_definitions[&alias.type_alias_declaration.unwrap()]
             .body
             .clone();
-        let old_class_identity = vm
-            .heap
-            .get(ids[0])
-            .unwrap()
-            .class_definition
-            .as_ref()
-            .unwrap()
-            .id;
+        let old_class_identity = vm.heap.class_definition(ids[0]).unwrap().id;
         let program = Arc::make_mut(&mut vm.program);
         program.seal_code_segment();
         let empty = program.objects.try_push(Vec::new()).unwrap();
@@ -708,13 +709,7 @@ mod tests {
             panic!("new class")
         };
         assert_ne!(
-            vm.heap
-                .get(new_class)
-                .unwrap()
-                .class_definition
-                .as_ref()
-                .unwrap()
-                .id,
+            vm.heap.class_definition(new_class).unwrap().id,
             old_class_identity
         );
         vm.start(instantiate, vec![roots[0].clone()]).unwrap();

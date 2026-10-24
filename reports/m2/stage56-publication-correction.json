@@ -1,0 +1,43 @@
+{
+  "canonical": {
+    "archive": {
+      "bytes": 87427784,
+      "path": "reports/m2/stage56-candidate-evidence.tar.gz",
+      "sha256": "6676fa608f1a065725d71b24c0158d08fa47d7feb5ba8bdd691988ce1b7f7436"
+    },
+    "report": {
+      "bytes": 6692,
+      "path": "reports/m2/stage56-candidate-publication.json",
+      "sha256": "9800c9547a9d28a4b6e0d76e93077c6d8a920ba600eb4099cb07a5542d2a2e81"
+    }
+  },
+  "checks": "Corrected candidate archive was fully reread and all included original files rehashed before and after; no guests, tests, Cargo, or Git run.",
+  "corrected_counts": {
+    "class": "264 total, 88 per target: 78 pass, 4 mismatch, 6 oracle-error",
+    "metadata": "60 total, 20 pass per target"
+  },
+  "reason": "Generated overview misstated aggregate row totals as per-target totals; raw captured evidence and source files were unchanged.",
+  "schema": 1,
+  "superseded": {
+    "archive": {
+      "bytes": 87427742,
+      "path": "target/m2/stage56-candidate-publication-01/superseded-candidate-evidence.tar.gz",
+      "sha256": "832bab3f3c2b7f4eb4727be21ac12b13cd642ca0803c1c2506bac84337a38b11"
+    },
+    "report": {
+      "bytes": 6672,
+      "path": "target/m2/stage56-candidate-publication-01/superseded-candidate-publication.json",
+      "sha256": "51ec114e4c60712f0e00713c2ba2b2c1ed58954e581bd79a2e7e81f834a6f428"
+    }
+  },
+  "unchanged_original_archive": {
+    "bytes": 9542101,
+    "path": "reports/m2/stage56-original-evidence.tar.gz",
+    "sha256": "68fc1bb93d2e6e58c26ad8e5281ba91efe7232e2637a03b53df3976b18468817"
+  },
+  "unchanged_validation_archive": {
+    "bytes": 44819732,
+    "path": "reports/m2/stage56-validation-evidence.tar.gz",
+    "sha256": "ba243077805cc43a555f04d7d89fb2a46ff80e2f8c9cdca872309603dd228e39"
+  }
+}

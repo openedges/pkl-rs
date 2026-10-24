@@ -314,12 +314,11 @@ impl Vm {
 
     pub(super) fn append_annotation(&mut self) -> Result<(), RuntimeError> {
         let annotation = self.pop()?;
-        let owner = self
-            .stack
-            .last()
-            .ok_or_else(|| invalid("missing annotation owner"))?
-            .heap_id()
-            .ok_or_else(|| invalid("annotation owner is not a declaration"))?;
+        let owner = self.heap.declaration_object(
+            self.stack
+                .last()
+                .ok_or_else(|| invalid("missing annotation owner"))?,
+        )?;
         self.heap.get_mut(owner)?.annotations.push(annotation);
         Ok(())
     }
@@ -350,12 +349,11 @@ impl Vm {
 
     pub(super) fn publish_member_annotations(&mut self, code: usize) -> Result<(), RuntimeError> {
         let annotations = self.pop()?.as_object()?;
-        let owner = self
-            .stack
-            .last()
-            .ok_or_else(|| invalid("missing annotation owner"))?
-            .heap_id()
-            .ok_or_else(|| invalid("annotation owner is not a declaration"))?;
+        let owner = self.heap.declaration_object(
+            self.stack
+                .last()
+                .ok_or_else(|| invalid("missing annotation owner"))?,
+        )?;
         self.publish_annotations(owner, annotations, code)
     }
 

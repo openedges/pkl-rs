@@ -1,0 +1,533 @@
+{
+  "base_commit": "94d48d65b289bd07dafdf04d27b73b48fd44e4b6",
+  "changes": [
+    "Separate traced Class descriptors from instance prototypes, retaining declaration-owned annotation and partial-initialization state.",
+    "Canonical builtin Class identity and superclass traversal shared by getClass, metadata, type checks, converters, diagnostics, equality and hashing.",
+    "Resolve all 56 pinned base Class declarations, including five additional ordinary Class defaults; external renderer algorithms remain unsupported.",
+    "Dereference the Class descriptor prototype when collecting typed equality/hash members in child-first declaration order.",
+    "Retain stale/foreign-handle, cancellation and terminal-zero checks with exact descriptor ownership counts.",
+    "Add Java-authority-backed native/Node/Chromium comparison and integrity tooling; retain required unexecuted public API boundaries."
+  ],
+  "class_comparisons": {
+    "full_public_api_comparison_passed": false,
+    "metadata_per_target": {
+      "pass": 20
+    },
+    "metadata_strict_common_status": "passed",
+    "metadata_total_sessions": 60,
+    "original_per_target": {
+      "mismatch": 4,
+      "oracle_error": 6,
+      "pass": 78
+    },
+    "original_strict_common_status": "failed",
+    "original_total_sessions": 264,
+    "required_unexecuted": [
+      "Candidate provider SPI and public Class exports",
+      "Supplemental Java public Class export acquisition"
+    ],
+    "targets": [
+      "native",
+      "napi",
+      "chromium"
+    ]
+  },
+  "evidence": {
+    "candidate": {
+      "archive": {
+        "bytes": 87427784,
+        "path": "reports/m2/stage56-candidate-evidence.tar.gz",
+        "sha256": "6676fa608f1a065725d71b24c0158d08fa47d7feb5ba8bdd691988ce1b7f7436"
+      },
+      "report": {
+        "bytes": 6692,
+        "path": "reports/m2/stage56-candidate-publication.json",
+        "sha256": "9800c9547a9d28a4b6e0d76e93077c6d8a920ba600eb4099cb07a5542d2a2e81"
+      }
+    },
+    "original": {
+      "archive": {
+        "bytes": 9542101,
+        "path": "reports/m2/stage56-original-evidence.tar.gz",
+        "sha256": "68fc1bb93d2e6e58c26ad8e5281ba91efe7232e2637a03b53df3976b18468817"
+      },
+      "report": {
+        "bytes": 2234,
+        "path": "reports/m2/stage56-original-publication.json",
+        "sha256": "8c100db587fa2c074237831949ae5dd2c3771732de5982b41f4d84aee4b9c611"
+      }
+    },
+    "validation": {
+      "archive": {
+        "bytes": 44819732,
+        "path": "reports/m2/stage56-validation-evidence.tar.gz",
+        "sha256": "ba243077805cc43a555f04d7d89fb2a46ff80e2f8c9cdca872309603dd228e39"
+      },
+      "report": {
+        "bytes": 10831,
+        "path": "reports/m2/stage56-validation-publication.json",
+        "sha256": "be8c0816d9a995033bd36d07363eaa911da1843459301088b5e4407f101c07a2"
+      }
+    }
+  },
+  "final_sources_preflight": {
+    "additional_frozen_manifests": [
+      {
+        "bytes": 82838,
+        "path": "target/m2/stage56-core-checks-04/core-freeze.json",
+        "sha256": "80aa1d1b915f688c136bec9894bed41df155f59efa168d8ea40f87baa283897b"
+      },
+      {
+        "bytes": 2682,
+        "path": "target/m2/stage56-comparator-checks-03/sources-after.json",
+        "sha256": "e607b7bb0abe62cfa60f70a97f566ebb333f3348689afccf21c733ecc77925fd"
+      },
+      {
+        "bytes": 1210,
+        "path": "target/m2/stage56-portable-checks-05/sources-after.json",
+        "sha256": "0fe71678a3f86318503727f02c1d30577218772dd2550baa1e3bcbed023056bf"
+      }
+    ],
+    "changed_source_count": 47,
+    "files": {
+      "compatibility/m2-language.json": {
+        "bytes": 6700510,
+        "path": "compatibility/m2-language.json",
+        "sha256": "d780bb8534889b39d25fa881d1f91baf38daa1106a31d05dc4b95eb4f35ecfa6"
+      },
+      "crates/pkl-runtime/examples/class_values_fixture_probe.rs": {
+        "bytes": 18852,
+        "path": "crates/pkl-runtime/examples/class_values_fixture_probe.rs",
+        "sha256": "400695cef4e5621716e083e23bbb8d05ccf1651c5aa86a43f18db0977ab931e2"
+      },
+      "crates/pkl-runtime/src/diagnostic_values.rs": {
+        "bytes": 28519,
+        "path": "crates/pkl-runtime/src/diagnostic_values.rs",
+        "sha256": "649719754d5b0500de100a99d821a18a5ac638e5ffa3688dd116730ce0ac72f2"
+      },
+      "crates/pkl-runtime/src/heap.rs": {
+        "bytes": 44326,
+        "path": "crates/pkl-runtime/src/heap.rs",
+        "sha256": "7954b3e0700c9fce40d94dafab9df72d175d4550a8a4b01b02900a25b8eac602"
+      },
+      "crates/pkl-runtime/src/resolver.rs": {
+        "bytes": 101553,
+        "path": "crates/pkl-runtime/src/resolver.rs",
+        "sha256": "2dda1a24b79ba70bcf7f2d91530751549fe5002fdff18dcec1d8a5df4ebf7549"
+      },
+      "crates/pkl-runtime/src/vm.rs": {
+        "bytes": 343080,
+        "path": "crates/pkl-runtime/src/vm.rs",
+        "sha256": "ac544551b18f26f1449688ca0be6560d051666aaaf131fa0e006c864d5fb3712"
+      },
+      "crates/pkl-runtime/src/vm/annotations.rs": {
+        "bytes": 16550,
+        "path": "crates/pkl-runtime/src/vm/annotations.rs",
+        "sha256": "1aba6b218172a1e352e734ea67c81c8026b33ea3d7fb5bf9758ba51ccb6b14e2"
+      },
+      "crates/pkl-runtime/src/vm/annotations/tests.rs": {
+        "bytes": 17095,
+        "path": "crates/pkl-runtime/src/vm/annotations/tests.rs",
+        "sha256": "950721a5e5079bb8083863b460f5014f9c932ae8a126d0e114133072c8b1a4c0"
+      },
+      "crates/pkl-runtime/src/vm/builtins.rs": {
+        "bytes": 1329,
+        "path": "crates/pkl-runtime/src/vm/builtins.rs",
+        "sha256": "eb66f35836d48c071428bcb73ce2f5283bb5552080fd03b4a3d8d2a47375ff7d"
+      },
+      "crates/pkl-runtime/src/vm/classes.rs": {
+        "bytes": 14685,
+        "path": "crates/pkl-runtime/src/vm/classes.rs",
+        "sha256": "4a8a72362b0982e5d2268f0152b39f5fbd73c0488e01752631cec00c0c544532"
+      },
+      "crates/pkl-runtime/src/vm/classes/ordinary.rs": {
+        "bytes": 10213,
+        "path": "crates/pkl-runtime/src/vm/classes/ordinary.rs",
+        "sha256": "5b21b69f77396de818ef82d2ca06dab162739395c85a30b5bd5503e20e3daeea"
+      },
+      "crates/pkl-runtime/src/vm/classes/tests.rs": {
+        "bytes": 4657,
+        "path": "crates/pkl-runtime/src/vm/classes/tests.rs",
+        "sha256": "111fbaafb9afa7c6a1f172e52aa16dbc19172ff4fb0f8150acb51c6c072826a3"
+      },
+      "crates/pkl-runtime/src/vm/converters.rs": {
+        "bytes": 8481,
+        "path": "crates/pkl-runtime/src/vm/converters.rs",
+        "sha256": "c18e10eba5115d63766612ead03baeeaebcf5711b2af8c7c45342686f0a3ebd4"
+      },
+      "crates/pkl-runtime/src/vm/deprecation.rs": {
+        "bytes": 14363,
+        "path": "crates/pkl-runtime/src/vm/deprecation.rs",
+        "sha256": "fa3522c6c690aea66ada88523e21ac06a6d7832f49178f62b134999fc3cf4f3f"
+      },
+      "crates/pkl-runtime/src/vm/equality.rs": {
+        "bytes": 64790,
+        "path": "crates/pkl-runtime/src/vm/equality.rs",
+        "sha256": "9db87bc6cc38b38ba01026f2606602fcca22f0198c2074c2a82f806d43e1b773"
+      },
+      "crates/pkl-runtime/src/vm/generics.rs": {
+        "bytes": 27253,
+        "path": "crates/pkl-runtime/src/vm/generics.rs",
+        "sha256": "2f1d8e532985b6007777e104a93e8a3c0564b03439d43c7754177b03ec354221"
+      },
+      "crates/pkl-runtime/src/vm/modules/inheritance.rs": {
+        "bytes": 4987,
+        "path": "crates/pkl-runtime/src/vm/modules/inheritance.rs",
+        "sha256": "ba8964740b666778eab2db6ac1ca4d2ab6eaa7c15c8aa58ec3d4eaaf846246be"
+      },
+      "crates/pkl-runtime/src/vm/output.rs": {
+        "bytes": 26792,
+        "path": "crates/pkl-runtime/src/vm/output.rs",
+        "sha256": "dbea09ab1eea437c94e707589f7cea2577f52f9d6f2d159fc0ddab80c1fb7521"
+      },
+      "crates/pkl-runtime/src/vm/output/tests.rs": {
+        "bytes": 5986,
+        "path": "crates/pkl-runtime/src/vm/output/tests.rs",
+        "sha256": "233ca0dd32a67eb4ed0db8216665b3a0e101d89850fe08dac2b0d21272056340"
+      },
+      "crates/pkl-runtime/src/vm/pair.rs": {
+        "bytes": 2764,
+        "path": "crates/pkl-runtime/src/vm/pair.rs",
+        "sha256": "f78ce60da434cd2c2de3d8a06e0c8f24d3990ef48ea979f60ea47526bffd6619"
+      },
+      "crates/pkl-runtime/src/vm/query_lifecycle.rs": {
+        "bytes": 49638,
+        "path": "crates/pkl-runtime/src/vm/query_lifecycle.rs",
+        "sha256": "070c67b0009deb2d1cb4ba8613d87b96c90800d9a7b8ef6bc5f025b62826e313"
+      },
+      "crates/pkl-runtime/src/vm/reference.rs": {
+        "bytes": 63826,
+        "path": "crates/pkl-runtime/src/vm/reference.rs",
+        "sha256": "6b3dc43b26adad487c0c813f573918b869c83e3443760c7061aa281cba438aa1"
+      },
+      "crates/pkl-runtime/src/vm/resources.rs": {
+        "bytes": 10800,
+        "path": "crates/pkl-runtime/src/vm/resources.rs",
+        "sha256": "0ae9e8383a1de823b7bb05c728e419ce71aec125317a2070a8681d6905f1a747"
+      },
+      "crates/pkl-runtime/src/vm/type_resolution.rs": {
+        "bytes": 40106,
+        "path": "crates/pkl-runtime/src/vm/type_resolution.rs",
+        "sha256": "1511098a79997338c6c78e7d256a17c1282512a2a86b3ddadf99f13d2b3bef21"
+      },
+      "crates/pkl-runtime/src/vm/uri_resolution.rs": {
+        "bytes": 30372,
+        "path": "crates/pkl-runtime/src/vm/uri_resolution.rs",
+        "sha256": "0b5bc060af688eea33010fe9977e83e3a1ce0106e45cabfd6d7e89e6840d3f29"
+      },
+      "crates/pkl-runtime/tests/frontend.rs": {
+        "bytes": 11103,
+        "path": "crates/pkl-runtime/tests/frontend.rs",
+        "sha256": "46d8639820a08d4becd8b3c05c7510989ba61f976658a0a942e7de8d258f66eb"
+      },
+      "crates/pkl-runtime/tests/m2_class_lifecycle.rs": {
+        "bytes": 19715,
+        "path": "crates/pkl-runtime/tests/m2_class_lifecycle.rs",
+        "sha256": "c8dc74041179b3b2723b4cac1edc78def75374f415b904eb130b9fc80232b2a4"
+      },
+      "crates/pkl-runtime/tests/m2_class_values.rs": {
+        "bytes": 26404,
+        "path": "crates/pkl-runtime/tests/m2_class_values.rs",
+        "sha256": "9484d7da81c693f721cd1a320d404aff21e5f38feb0820c2efc7b3803f99dd24"
+      },
+      "crates/pkl-runtime/tests/m2_collection_types_lifecycle.rs": {
+        "bytes": 17047,
+        "path": "crates/pkl-runtime/tests/m2_collection_types_lifecycle.rs",
+        "sha256": "89a7174c1211c35644378671c211481883364244104173797008fc6623bbb4cf"
+      },
+      "crates/pkl-runtime/tests/m2_collections_lifecycle.rs": {
+        "bytes": 10965,
+        "path": "crates/pkl-runtime/tests/m2_collections_lifecycle.rs",
+        "sha256": "dad7e88aad39aabe4b9a69378694e97b5ac75ff4eb968cdb43becb5799b2beb7"
+      },
+      "crates/pkl-runtime/tests/m2_equality_lifecycle.rs": {
+        "bytes": 24890,
+        "path": "crates/pkl-runtime/tests/m2_equality_lifecycle.rs",
+        "sha256": "b87543d6a9a760b12c5e5443374c8b697e366434e73dfde9a3fab730ed7edba5"
+      },
+      "crates/pkl-runtime/tests/m2_fixed_lifecycle.rs": {
+        "bytes": 10282,
+        "path": "crates/pkl-runtime/tests/m2_fixed_lifecycle.rs",
+        "sha256": "c8706b60be59e2b420a21e630839122d23337de3ec5ebc4ecc38c344bec99ca1"
+      },
+      "crates/pkl-runtime/tests/m2_map_lifecycle.rs": {
+        "bytes": 14084,
+        "path": "crates/pkl-runtime/tests/m2_map_lifecycle.rs",
+        "sha256": "2137d87a6f175d69cf79232d7987b10ea3573a4f90a8815a97551b0dcaaa27d6"
+      },
+      "crates/pkl-runtime/tests/m2_predicates_lifecycle.rs": {
+        "bytes": 6196,
+        "path": "crates/pkl-runtime/tests/m2_predicates_lifecycle.rs",
+        "sha256": "12ec529e50e0f65d4f0a7efa8881e3796d245c641993926a3c90ab75efa177ca"
+      },
+      "crates/pkl-runtime/tests/m2_predicates_scope_lifecycle.rs": {
+        "bytes": 7143,
+        "path": "crates/pkl-runtime/tests/m2_predicates_scope_lifecycle.rs",
+        "sha256": "31503aaf6210874b59336011725537afdb2d3588530f215deac15dc21218e71c"
+      },
+      "crates/pkl-runtime/tests/m2_references_lifecycle.rs": {
+        "bytes": 12931,
+        "path": "crates/pkl-runtime/tests/m2_references_lifecycle.rs",
+        "sha256": "a4dabff3a5ead57dadeecf80cb9c4fbd9f6bbd90820a73da7104e7aa128bdb34"
+      },
+      "crates/pkl-runtime/tests/m2_runtime.rs": {
+        "bytes": 43362,
+        "path": "crates/pkl-runtime/tests/m2_runtime.rs",
+        "sha256": "ef9ed92a11738853c58442b5d60b43e3a417e76f42ce8126cf624557bd8ce4bb"
+      },
+      "crates/pkl-runtime/tests/m2_set_lifecycle.rs": {
+        "bytes": 24649,
+        "path": "crates/pkl-runtime/tests/m2_set_lifecycle.rs",
+        "sha256": "c245aa10d1785c2c82fe163c0cd0efced1a305abc5c8d1df0bbffce7ca0a2f26"
+      },
+      "crates/pkl-runtime/tests/m2_strict_map_lifecycle.rs": {
+        "bytes": 24576,
+        "path": "crates/pkl-runtime/tests/m2_strict_map_lifecycle.rs",
+        "sha256": "5ce50b90d68ed77f5ad62032a96229a93ac32ba67169f5d0e9815f0e13d92c46"
+      },
+      "crates/pkl-runtime/tests/support/eager_base.rs": {
+        "bytes": 1044,
+        "path": "crates/pkl-runtime/tests/support/eager_base.rs",
+        "sha256": "6e89da466dda3de1a8503381ea7acd624ad297121b19508500d70d80a2da2f12"
+      },
+      "tools/class_values_compare.py": {
+        "bytes": 52562,
+        "path": "tools/class_values_compare.py",
+        "sha256": "9b613466aa454dc45771b9eb085e5c9281455cce17478b8203506626610f44b7"
+      },
+      "tools/m2_source_inputs.py": {
+        "bytes": 4787,
+        "path": "tools/m2_source_inputs.py",
+        "sha256": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d"
+      },
+      "tools/platform/capture-class-values.mjs": {
+        "bytes": 14989,
+        "path": "tools/platform/capture-class-values.mjs",
+        "sha256": "175bb4290a0dd14f5cb7c0b7201e8c17227d3d8f55f409e0f30f44d4e8c117f0"
+      },
+      "tools/platform/capture-class-values.test.mjs": {
+        "bytes": 6213,
+        "path": "tools/platform/capture-class-values.test.mjs",
+        "sha256": "f90e96bb2d4e0235c29cf12033f8c69bc352edefcb9f6ae68d729647dda7a066"
+      },
+      "tools/platform/class-values-session.mjs": {
+        "bytes": 12727,
+        "path": "tools/platform/class-values-session.mjs",
+        "sha256": "59e16748bd97e9c09d267166e929ba93eab6f5170f417da3f14de4ef01e861a2"
+      },
+      "tools/platform/class-values-session.test.mjs": {
+        "bytes": 16675,
+        "path": "tools/platform/class-values-session.test.mjs",
+        "sha256": "6d433a390248e2075e12922cb4cecf1faaf4fca4175552ba0efa974cbc3c7861"
+      },
+      "tools/tests/test_class_values_compare.py": {
+        "bytes": 45180,
+        "path": "tools/tests/test_class_values_compare.py",
+        "sha256": "3f2b7365d7ae73c822f917be21181b85f2f7e4676dbaa2385805e04099f638a0"
+      }
+    }
+  },
+  "full_m2_complete": false,
+  "host": {
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "uname": {
+      "machine": "arm64",
+      "node": "research-macmini1.local",
+      "processor": "arm",
+      "release": "27.0.0",
+      "system": "Darwin",
+      "version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:27 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8103"
+    }
+  },
+  "hosted_ci_claim": false,
+  "implementation_commit_binding": "Pending the actual implementation commit; publish a separate post-commit source binding without rewriting this record.",
+  "independent_final_audit": {
+    "archive": {
+      "bytes": 24521,
+      "path": "reports/m2/stage56-final-audit-evidence.tar.gz",
+      "sha256": "4bbd5ee2fa53686ba9494e1fb4ac897088aa6f39822378d78682eb11b131034c"
+    },
+    "integrity_blockers_found": false,
+    "report": {
+      "bytes": 6571,
+      "path": "reports/m2/stage56-final-audit.md",
+      "sha256": "6d81f328a9ebfd390be8138fd66abd88c80d1bdb7da566a1914f0c3b12798323"
+    },
+    "scope": "Read-only raw-channel, source, artifact and runtime identity audit; no guest or test reruns."
+  },
+  "java_supplement_actual_commit_binding": {
+    "bytes": 3841,
+    "path": "reports/m2/stage56-metadata-oracle-source-binding.json",
+    "sha256": "32c17c5d60c067eeb56ae7b4c91d30ca4a6d3a4b4e30698e6ce15e95b7cfbbf5"
+  },
+  "m1_platform_comparisons": {
+    "architecture_contract": "passed",
+    "cases_per_target": 6078,
+    "java_matches_per_target": 6076,
+    "retained_regex_failures": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "shared_engine_matches": 6078,
+    "strict_compatibility": "failed"
+  },
+  "original_cli_comparisons": {
+    "interpretation": "One Java and one Rust execution per original case; offline verifier calls are not guest repetitions.",
+    "java_guest_processes": 6,
+    "mismatch_count": 1,
+    "mismatch_detail": {
+      "expression": "5.mb.getClass().simpleName",
+      "input": "api/any.pkl",
+      "java_exit_code": 0,
+      "line": 10,
+      "reason": "DataSize value construction remains unsupported",
+      "rust_exit_code": 1
+    },
+    "pass": 5,
+    "passing_inputs": [
+      "classes/class1.pkl",
+      "classes/class4.pkl",
+      "api/anyConverter.pkl",
+      "errors/anyConverterError.pkl",
+      "errors/extendExternalClass.pkl"
+    ],
+    "rust_guest_processes": 6
+  },
+  "performance_targets_achieved": false,
+  "preserved_history": [
+    "Native candidates 01/02/03 and metadata native capture are distinct earlier source/artifact versions.",
+    "Native builds 01/02 omitted five literal stdlib files from their build manifests; a separate frozen-binary byte bridge does not retroactively prove bookend capture. Build03 and final builds record these inputs.",
+    "Rust validation01 stale frontend assertion, validation02 typed-key failure, and full diagnostic run 868 pass/42 fail/1 ignored remain recorded.",
+    "Production equality correction followed by exact heap graph count updates retained all non-accounting assertions; final targeted rerun 134 pass.",
+    "Initial publication overview row-count wording was corrected; superseded publication identities remain in the separate correction record."
+  ],
+  "publication_correction": {
+    "bytes": 1758,
+    "path": "reports/m2/stage56-publication-correction.json",
+    "sha256": "75fbc3b2434d26993768b9ed9adf20faee3330a58e3b9db5594d40ff66428346"
+  },
+  "reference_gitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "remaining": [
+    "Actual DataSize, Bytes, IntSeq and Regex value construction/operations and full ordinary renderer algorithms.",
+    "Complete provider/export APIs, metadata/reflection, annotations, type/initialization/lifecycle and policy semantics.",
+    "Latest complete original-language regression, all nine M2 workstream exit conditions and unmapped/unsupported inventory.",
+    "Other release operating systems, complete product APIs and execution-time/peak-memory targets."
+  ],
+  "rust_validation": {
+    "commands": [
+      {
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T06:56:21.419200+00:00",
+        "name": "references",
+        "started_utc": "2026-10-24T06:56:20.152031+00:00",
+        "stderr_sha256": "cf6860e57d1fbbcba4b71745126fb47884b7674d3b893dd7f460f3322f918357",
+        "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb"
+      },
+      {
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T06:56:22.453025+00:00",
+        "name": "format",
+        "started_utc": "2026-10-24T06:56:21.420165+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T06:56:29.261165+00:00",
+        "name": "clippy",
+        "started_utc": "2026-10-24T06:56:22.453908+00:00",
+        "stderr_sha256": "a3865fc18e97c38c00e75854f8c58254b35a146dbcb6e5c0764832bb0c61618e",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T06:59:17.304654+00:00",
+        "name": "workspace-tests",
+        "started_utc": "2026-10-24T06:56:29.262071+00:00",
+        "stderr_sha256": "2c0ad12e5801c38189b65da7ea7381a71b05d07e5fcc0512488d354e01b1d1ce",
+        "stdout_sha256": "9bc84b49f433f10a12b12b4b70f0eec55acfd01479a63d01e90a50ff10d85608"
+      },
+      {
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T06:59:20.226099+00:00",
+        "name": "wasm-runtime",
+        "started_utc": "2026-10-24T06:59:17.306196+00:00",
+        "stderr_sha256": "1358d08cf3a014cf0f40278f79516760b27e693dcd88ae4ec8f994d7b6b83637",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "environment_overrides": {
+      "CARGO_INCREMENTAL": "0",
+      "CARGO_PROFILE_DEV_DEBUG": "0",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "report": {
+      "bytes": 4850,
+      "path": "target/m2/stage56-rust-validation-03/report.json",
+      "sha256": "d23984983a94f271dfe023574130e28e9b0b1f6be8b4165021455bc5c2b9532b"
+    },
+    "source_entries": 165175,
+    "source_stable": true,
+    "tests": {
+      "failed": 0,
+      "ignored": 1,
+      "passed": 910
+    },
+    "toolchain": "rustc 1.98.1; raw compiler and Cargo version outputs retained"
+  },
+  "schema": 1,
+  "scope": "Stage56 canonical Class values and selected local compatibility evidence; full M2 remains incomplete.",
+  "tooling_validation": {
+    "comparator_tests": 50,
+    "embedded_input_tests": 1,
+    "interpretation": "Counts are per recorded suite; repeated authority and execution checks are not independent feature coverage.",
+    "inventory_cases": 4527,
+    "inventory_freshness": "passed; initial refresh changed 110 implementation-link hashes only; subsequent refresh made no changes",
+    "inventory_requirements": 475,
+    "m2_python_tests": 165,
+    "metadata_authority_tests": 16,
+    "node_syntax_checks": 4,
+    "node_transport_tests": 23,
+    "original_authority_tests": 15
+  }
+}

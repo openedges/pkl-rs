@@ -1,0 +1,325 @@
+{
+  "archive": {
+    "bytes": 44819732,
+    "member_count": 6660,
+    "path": "reports/m2/stage56-validation-evidence.tar.gz",
+    "sha256": "ba243077805cc43a555f04d7d89fb2a46ff80e2f8c9cdca872309603dd228e39"
+  },
+  "archive_manifest_sha256": "c7947b267e46337ad56935aac692b4f5dcac1b49a0cb777e6aaa239e172d59b7",
+  "excluded_files_rehashed_before_and_after": 299,
+  "full_archive_member_reread_verified": true,
+  "original_evidence_unchanged": true,
+  "overview": {
+    "core_freeze_04": {
+      "bytes": 82838,
+      "sha256": "80aa1d1b915f688c136bec9894bed41df155f59efa168d8ea40f87baa283897b"
+    },
+    "diagnostic_workspace_test_executions": {
+      "failed": 42,
+      "ignored": 1,
+      "passed": 868
+    },
+    "final_workspace_test_executions": {
+      "distinct_feature_coverage_claim": false,
+      "failed": 0,
+      "ignored": 1,
+      "passed": 910
+    },
+    "limitations": [
+      "Native builds 01 and 02 omitted five literal stdlib inputs from their source manifests; native-dev02-audit-01 separately records exact frozen binary input bytes. Native build 03 captured those inputs.",
+      "Git-backed sources are referenced by immutable committed object IDs and SHA256, not duplicated in this archive. Five deterministic Git tree/blob samples per Rust manifest were reread.",
+      "Candidate raw comparisons, original-class captures, and M1 platform captures are outside this validation archive.",
+      "No hosted CI, full Pkl compatibility, browser execution, full API, or performance claim follows from this archive. Actual implementation commit binding is pending parent publication."
+    ],
+    "prior_failures": [
+      "rust-validation-01: stale frontend Regex unsupported expectation",
+      "rust-validation-02: typed-key equality",
+      "workspace-diagnostic-01: 42 failures, preserved in raw logs"
+    ],
+    "rust_validation": {
+      "rust-validation-01": [
+        {
+          "command": [
+            "cargo",
+            "xtask",
+            "verify"
+          ],
+          "exit_code": 0,
+          "name": "references"
+        },
+        {
+          "command": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--",
+            "--check"
+          ],
+          "exit_code": 0,
+          "name": "format"
+        },
+        {
+          "command": [
+            "cargo",
+            "clippy",
+            "--workspace",
+            "--all-targets",
+            "--locked",
+            "--",
+            "-D",
+            "warnings"
+          ],
+          "exit_code": 0,
+          "name": "clippy"
+        },
+        {
+          "command": [
+            "cargo",
+            "test",
+            "--workspace",
+            "--locked"
+          ],
+          "exit_code": 101,
+          "name": "workspace-tests"
+        },
+        {
+          "command": [
+            "cargo",
+            "check",
+            "-p",
+            "pkl-runtime",
+            "--target",
+            "wasm32-unknown-unknown",
+            "--locked"
+          ],
+          "exit_code": 0,
+          "name": "wasm-runtime"
+        }
+      ],
+      "rust-validation-02": [
+        {
+          "command": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--",
+            "--check"
+          ],
+          "exit_code": 0,
+          "name": "format"
+        },
+        {
+          "command": [
+            "cargo",
+            "clippy",
+            "--workspace",
+            "--all-targets",
+            "--locked",
+            "--",
+            "-D",
+            "warnings"
+          ],
+          "exit_code": 0,
+          "name": "clippy"
+        },
+        {
+          "command": [
+            "cargo",
+            "test",
+            "--workspace",
+            "--locked"
+          ],
+          "exit_code": 101,
+          "name": "workspace-tests"
+        }
+      ],
+      "rust-validation-03": [
+        {
+          "command": [
+            "cargo",
+            "xtask",
+            "verify"
+          ],
+          "exit_code": 0,
+          "name": "references"
+        },
+        {
+          "command": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--",
+            "--check"
+          ],
+          "exit_code": 0,
+          "name": "format"
+        },
+        {
+          "command": [
+            "cargo",
+            "clippy",
+            "--workspace",
+            "--all-targets",
+            "--locked",
+            "--",
+            "-D",
+            "warnings"
+          ],
+          "exit_code": 0,
+          "name": "clippy"
+        },
+        {
+          "command": [
+            "cargo",
+            "test",
+            "--workspace",
+            "--locked"
+          ],
+          "exit_code": 0,
+          "name": "workspace-tests"
+        },
+        {
+          "command": [
+            "cargo",
+            "check",
+            "-p",
+            "pkl-runtime",
+            "--target",
+            "wasm32-unknown-unknown",
+            "--locked"
+          ],
+          "exit_code": 0,
+          "name": "wasm-runtime"
+        }
+      ],
+      "workspace-diagnostic-01": [
+        {
+          "command": [
+            "cargo",
+            "test",
+            "--workspace",
+            "--locked",
+            "--no-fail-fast"
+          ],
+          "exit_code": 101,
+          "name": "workspace-tests-no-fail-fast"
+        }
+      ]
+    },
+    "scope": "Terminal local Stage56 validation records; no checks or guests rerun by this publication",
+    "source_provenance": {
+      "rust-validation-01": {
+        "base_commit": "2f02150ba7bd74390ee8b0f1e86dfd4a435b4899",
+        "copied_file_count_verified": 45,
+        "git_blob_reference_count": 165130,
+        "git_tree_and_blob_samples_verified": [
+          ".cargo/config.toml",
+          "tests/fixtures/m2-collection-transforms/provenance/java01/cases/set-core/1/raw/session-1/call-4.counts-before.bin",
+          "tests/fixtures/m2-lossless-diagnostics/literal/repeats/0/calls/outer-1.expression.bin",
+          "tests/fixtures/m2-modulekey-spi/original/cases/custom-key-pkl-uri-not-stdlib-kind/0/calls/session-0/outer-1.source.bin",
+          "xtask/Cargo.toml"
+        ],
+        "gitlinks": {
+          "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+          "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+        },
+        "input_count": 165175,
+        "manifest": "evidence/target/m2/stage56-rust-validation-01/sources.json"
+      },
+      "rust-validation-02": {
+        "base_commit": "2f02150ba7bd74390ee8b0f1e86dfd4a435b4899",
+        "copied_file_count_verified": 46,
+        "git_blob_reference_count": 165129,
+        "git_tree_and_blob_samples_verified": [
+          ".cargo/config.toml",
+          "tests/fixtures/m2-collection-transforms/provenance/java01/cases/set-core/1/raw/session-1/call-4.counts-before.utf16be.bin",
+          "tests/fixtures/m2-lossless-diagnostics/literal/repeats/0/calls/outer-1.expression.bin",
+          "tests/fixtures/m2-modulekey-spi/original/cases/custom-key-pkl-uri-not-stdlib-kind/0/calls/session-0/outer-1.source.bin",
+          "xtask/Cargo.toml"
+        ],
+        "gitlinks": {
+          "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+          "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+        },
+        "input_count": 165175,
+        "manifest": "evidence/target/m2/stage56-rust-validation-02/sources.json"
+      },
+      "rust-validation-03": {
+        "base_commit": "94d48d65b289bd07dafdf04d27b73b48fd44e4b6",
+        "copied_file_count_verified": 47,
+        "git_blob_reference_count": 165128,
+        "git_tree_and_blob_samples_verified": [
+          ".cargo/config.toml",
+          "tests/fixtures/m2-collection-transforms/provenance/java01/cases/set-core/1/raw/session-1/call-4.message-null.bin",
+          "tests/fixtures/m2-lossless-diagnostics/literal/repeats/0/calls/outer-1.stdout.bin",
+          "tests/fixtures/m2-modulekey-spi/original/cases/custom-key-pkl-uri-not-stdlib-kind/0/calls/session-0/outer-1.stdout.code-units.bin",
+          "xtask/Cargo.toml"
+        ],
+        "gitlinks": {
+          "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+          "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+        },
+        "input_count": 165175,
+        "manifest": "evidence/target/m2/stage56-rust-validation-03/sources.json"
+      },
+      "workspace-diagnostic-01": {
+        "base_commit": "2f02150ba7bd74390ee8b0f1e86dfd4a435b4899",
+        "copied_file_count_verified": 46,
+        "git_blob_reference_count": 165129,
+        "git_tree_and_blob_samples_verified": [
+          ".cargo/config.toml",
+          "tests/fixtures/m2-collection-transforms/provenance/java01/cases/set-core/1/raw/session-1/call-4.counts-before.utf16be.bin",
+          "tests/fixtures/m2-lossless-diagnostics/literal/repeats/0/calls/outer-1.expression.bin",
+          "tests/fixtures/m2-modulekey-spi/original/cases/custom-key-pkl-uri-not-stdlib-kind/0/calls/session-0/outer-1.source.bin",
+          "xtask/Cargo.toml"
+        ],
+        "gitlinks": {
+          "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+          "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+        },
+        "input_count": 165175,
+        "manifest": "evidence/target/m2/stage56-workspace-diagnostic-01/sources.json"
+      }
+    }
+  },
+  "schema": 1,
+  "source_files_rehashed_before_and_after": 6658,
+  "supplemental_recorded_observations": {
+    "comparator_checks_03": {
+      "historical_native_offline_admission": "Preserved historical strict mismatches and unsupported outcomes; offline integrity only.",
+      "python_test_executions": {
+        "additive_metadata_authority": 16,
+        "comparator": 50,
+        "original_authority": 15
+      }
+    },
+    "core_checks_04": {
+      "coverage_interpretation": "Repeated attempts and suites are execution counts, not distinct Pkl feature coverage.",
+      "failed_targets_01_exit_code": 101,
+      "failed_targets_02_exit_code": 0,
+      "final_target_suites": 16,
+      "final_target_test_executions_failed": 0,
+      "final_target_test_executions_passed": 134,
+      "library_clippy_exit_code": 0
+    },
+    "native_builds": {
+      "build_01_and_02_literal_stdlib_manifest_omission": 5,
+      "build_03_literal_stdlib_inputs_captured": 5,
+      "dev02_binary_input_audit": "Exact bytes separately evidenced in native-dev02-audit-01 metadata; candidate raw pairs excluded here."
+    },
+    "portable_checks_05": {
+      "node_syntax_checks": 4,
+      "node_transport_unit_tests": 23,
+      "scope": "Mock SourceProbe transport/integrity only; no native, N-API, Wasm, Java guest execution."
+    },
+    "tooling_validation_01": {
+      "recorded_command_exit_codes": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  }
+}

@@ -9,8 +9,9 @@ impl Baseline {
         Self(initialized)
     }
     /// Added user values and custom-this slots, with an independent exact
-    /// descriptor/type-node bound. A reclaimed user module contributes -1:
-    /// base still owns the canonical Module parent.
+    /// executable/type-node bound. A reclaimed user module contributes -2:
+    /// its object and Class descriptor are separate, while base still owns
+    /// the canonical Module descriptor and instance prototype.
     #[track_caller]
     pub fn added_values(self, stats: HeapStats, added_executables: usize) -> isize {
         assert_eq!(

@@ -123,7 +123,7 @@ fn suspended_parent_constraint_keeps_reentry_eager_until_it_finishes() {
     // creates a lazy wrapper and length does not force the invalid element.
     session.start(entries[1], vec![root], 4, None).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::Int(2.into())));
-    assert_eq!(initialized.added_values(session.collect(&[]), 3), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 3), -2);
     assert_eq!(
         session
             .start(module_entry, vec![stale_root], 10, None)
@@ -170,7 +170,7 @@ fn parameter_and_let_bindings_publish_checked_wrappers_before_the_body_runs() {
             Ok(Value::string("prefix:value")),
             "{source}"
         );
-        assert_eq!(initialized.added_values(session.collect(&[]), [4, 5, 4, 4][index]), -1);
+        assert_eq!(initialized.added_values(session.collect(&[]), [4, 5, 4, 4][index]), -2);
     assert_eq!(session.start(module_entry, vec![stale_root], 10, None).unwrap_err().kind, ErrorKind::StaleHandle);
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
@@ -238,7 +238,7 @@ fn failed_cast_of_cached_source_retries_and_successful_wrapper_cache_is_shared()
     assert_eq!(ready(&mut session, 3), Ok(Value::string("cached")));
     session.start(entries[2], vec![root], 4, None).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("cached")));
-    assert_eq!(initialized.added_values(session.collect(&[]), 4), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 4), -2);
     assert_eq!(
         session
             .start(module_entry, vec![stale_root], 10, None)
@@ -277,10 +277,10 @@ fn nested_wrappers_keep_temporary_check_receivers_across_gc_and_reentry() {
         .unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer")));
     assert_eq!(session.context_depth(), 0);
-    // Only Check, its captured module and builtin Module parent survive. Temporary receivers,
+    // Only Check's descriptor/prototype, its captured module and builtin Module parent survive. Temporary receivers,
     // Listings, Mappings and wrappers must all have been reclaimed.
-    assert_eq!(initialized.added_values(session.collect(&[]), 11), 1);
-    assert_eq!(initialized.added_values(session.collect(&[]), 11), 1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 11), 2);
+    assert_eq!(initialized.added_values(session.collect(&[]), 11), 2);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -328,10 +328,10 @@ fn failed_wrapper_predicate_retries_without_publishing_a_successful_member() {
         .resume(&outer, Ok(Value::string("outer")), 4)
         .unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer")));
-    // Only Check, its captured module and builtin Module parent survive. Temporary receivers,
+    // Only Check's descriptor/prototype, its captured module and builtin Module parent survive. Temporary receivers,
     // Listings, Mappings and wrappers must all have been reclaimed.
-    assert_eq!(initialized.added_values(session.collect(&[]), 11), 1);
-    assert_eq!(initialized.added_values(session.collect(&[]), 11), 1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 11), 2);
+    assert_eq!(initialized.added_values(session.collect(&[]), 11), 2);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);

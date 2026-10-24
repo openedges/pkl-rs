@@ -81,7 +81,7 @@ fn zero_hash_cached_lookup_returns_to_eager_collection_typecheck() {
     session.resume(&outer, Ok(Value::Null), 3).unwrap();
     assert_eq!(ready(&mut session, 3), Ok(Value::Null));
     // User values are reclaimed; the private base and exact executable graph remain.
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), -2);
     assert_eq!(
         session
             .start(parent, vec![stale_module], 10, None)
@@ -153,7 +153,7 @@ fn inherited_mapping_length_retries_key_count_without_forcing_entry_values() {
     session.resume(&outer, Ok(Value::Null), 4).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::Null));
     // User values are reclaimed; the private base and exact executable graph remain.
-    assert_eq!(initialized.added_values(session.collect(&[]), 0), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 0), -2);
     assert_eq!(
         session
             .start(parent, vec![stale_module], 10, None)
@@ -279,7 +279,7 @@ fn cache_retry(key_value: i64) {
         .unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer")));
     // User values are reclaimed; the private base and exact executable graph remain.
-    assert_eq!(initialized.added_values(session.collect(&[]), 2), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 2), -2);
     assert_eq!(
         session
             .start(outer_entry, vec![stale_module], 10, None)

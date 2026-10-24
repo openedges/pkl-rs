@@ -5,19 +5,7 @@ use crate::logging::{LogEvent, LogLevel};
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum ReceiverClass {
     Declared(ObjectId),
-    Null,
-    Boolean,
-    Int,
-    Float,
-    Duration,
-    String,
-    Bytes,
-    Class,
-    TypeAlias,
-    Function(usize),
-    Pair,
-    Reference,
-    Collection(crate::heap::CollectionKind),
+    Builtin(classes::BuiltinClass),
 }
 impl ReceiverClass {
     fn prototype(self) -> Option<ObjectId> {
@@ -94,33 +82,9 @@ impl PendingWarning {
 
 impl Vm {
     fn method_receiver_class(&self, value: &Value) -> Result<ReceiverClass, RuntimeError> {
-        Ok(match value {
-            Value::Null | Value::NullWithDefault(_) => ReceiverClass::Null,
-            Value::Bool(_) => ReceiverClass::Boolean,
-            Value::Int(_) => ReceiverClass::Int,
-            Value::Float(_) => ReceiverClass::Float,
-            Value::Duration(_) => ReceiverClass::Duration,
-            Value::String(_) => ReceiverClass::String,
-            Value::Bytes(_) => ReceiverClass::Bytes,
-            Value::Class(_) => ReceiverClass::Class,
-            Value::TypeAlias(_) => ReceiverClass::TypeAlias,
-            Value::Function(id) => ReceiverClass::Function(self.function_arity(*id)?),
-            Value::Object(id) => {
-                let object = self.heap.get(*id)?;
-                if object.pair.is_some() {
-                    ReceiverClass::Pair
-                } else if object.reference.is_some() {
-                    ReceiverClass::Reference
-                } else if let Some(class) = collections::typed_class(&self.heap, *id)? {
-                    ReceiverClass::Declared(
-                        self.heap
-                            .find_class(class.id)
-                            .ok_or_else(|| invalid("missing method receiver class"))?,
-                    )
-                } else {
-                    ReceiverClass::Collection(object.collection_kind)
-                }
-            }
+        Ok(match classes::runtime_class(value, &self.heap)? {
+            classes::RuntimeClass::Declared(class) => ReceiverClass::Declared(class),
+            classes::RuntimeClass::Builtin(class) => ReceiverClass::Builtin(class),
         })
     }
 

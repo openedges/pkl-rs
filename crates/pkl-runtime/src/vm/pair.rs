@@ -32,9 +32,12 @@ impl Vm {
             })
             .heap_id()
             .expect("Pair class");
+        let class = parent;
+        let parent = self.heap.get_class(class).expect("builtin class").prototype;
         Value::Object(self.heap.allocate(Object {
             pair: Some(Box::new([first, second])),
             parent: Some(parent),
+            instance_class: Some(class),
             ..Default::default()
         }))
     }

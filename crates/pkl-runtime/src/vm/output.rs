@@ -11,6 +11,10 @@ pub(crate) const PCF_RENDERER: usize = MODULE - 6;
 pub(crate) const CONVERT_PROPERTY: usize = MODULE - 7;
 pub(crate) const JSON_RENDERER: usize = MODULE - 8;
 pub(crate) const RENDER_DIRECTIVE: usize = MODULE - 9;
+pub(crate) const PCF_RENDER_DIRECTIVE: usize = MODULE - 10;
+pub(crate) const YAML_RENDERER: usize = MODULE - 11;
+pub(crate) const PLIST_RENDERER: usize = MODULE - 12;
+pub(crate) const PROPERTIES_RENDERER: usize = MODULE - 13;
 const NAMES: &[&str] = &[
     "Module",
     "FileOutput",
@@ -22,6 +26,10 @@ const NAMES: &[&str] = &[
     "ConvertProperty",
     "JsonRenderer",
     "RenderDirective",
+    "PcfRenderDirective",
+    "YamlRenderer",
+    "PListRenderer",
+    "PropertiesRenderer",
 ];
 pub(crate) fn class_id(name: &str) -> Option<usize> {
     NAMES
@@ -37,7 +45,9 @@ pub(super) fn class_parent(id: usize) -> Option<usize> {
         CONVERT_PROPERTY => Some(annotations::ANNOTATION_ID),
         MODULE_OUTPUT => Some(FILE_OUTPUT),
         VALUE_RENDERER | BYTES_RENDERER => Some(BASE_RENDERER),
-        PCF_RENDERER | JSON_RENDERER => Some(VALUE_RENDERER),
+        PCF_RENDERER | JSON_RENDERER | YAML_RENDERER | PLIST_RENDERER | PROPERTIES_RENDERER => {
+            Some(VALUE_RENDERER)
+        }
         _ => None,
     }
 }
@@ -55,13 +65,13 @@ fn property(name: &str) -> Instruction {
         local: false,
     }
 }
-struct Definitions<'a> {
-    blocks: &'a mut Vec<Vec<Instruction>>,
-    metadata: &'a mut Vec<BlockMetadata>,
-    source: Arc<crate::value::RuntimeSource>,
+pub(super) struct Definitions<'a> {
+    pub(super) blocks: &'a mut Vec<Vec<Instruction>>,
+    pub(super) metadata: &'a mut Vec<BlockMetadata>,
+    pub(super) source: Arc<crate::value::RuntimeSource>,
 }
 impl Definitions<'_> {
-    fn member(
+    pub(super) fn member(
         &mut self,
         class: &str,
         name: &str,
@@ -134,7 +144,7 @@ impl Definitions<'_> {
             })
             .collect()
     }
-    fn method(&mut self, class: &str, name: &str, body: Instruction) -> Member {
+    pub(super) fn method(&mut self, class: &str, name: &str, body: Instruction) -> Member {
         let start = self
             .source
             .text
@@ -755,8 +765,11 @@ impl Vm {
                 PCF_RENDERER
             };
             let value = self.builtin_class(builtins::ty(renderer));
-            self.stack
-                .push(Value::Object(value.heap_id().expect("class")));
+            self.stack.push(Value::Object(
+                self.heap
+                    .get_class(value.heap_id().expect("class"))?
+                    .prototype,
+            ));
             return Ok(());
         }
         let Value::String(format) = format else {

@@ -202,7 +202,7 @@ fn contains_query_and_comparison_operands_survive_failed_reentry_and_gc() {
                 session.collect(&[]),
                 usize::from(expression == "set.contains(query)")
             ),
-            -1
+            -2
         );
         assert_eq!(
             session
@@ -260,7 +260,7 @@ fn nested_set_hash_failure_retries_unpublished_builder_during_parent_reentry() {
     session.resume(&outer, Ok(Value::Null), 3).unwrap();
     assert_eq!(host_ready(&mut session, 3), Ok(Value::Null));
     // User values are reclaimed; the private base and exact executable graph remain.
-    assert_eq!(initialized.added_values(session.collect(&[]), 1), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 1), -2);
     assert_eq!(
         session
             .start(parent, vec![stale_module], 10, None)
@@ -347,7 +347,7 @@ fn sets_and_pending_hashes_are_evaluator_local_and_reclaimed_handles_stay_stale(
     left.resume(left_read, Ok(Value::Int(7.into()))).unwrap();
     assert_eq!(vm_ready(&mut left), Ok(Value::Int(1.into())));
     // User values are reclaimed; the private base and exact executable graph remain.
-    assert_eq!(initialized.added_values(left.collect(&[]), 0), -1);
+    assert_eq!(initialized.added_values(left.collect(&[]), 0), -2);
     assert_eq!(
         left.start(inspect, vec![stale_module]).unwrap_err().kind,
         ErrorKind::StaleHandle
@@ -485,12 +485,13 @@ function again() = new Check {}.check(set)
         // The initial module has not forced Check or Items. Both paths retain
         // Check's class/prototype and the cached Set/Listing; only the Items
         // path also initializes its alias. Keep the exact executable bound
-        // separate from these five or four additional user values. The explicit
-        // check() call additionally owns its receiver-class cache.
+        // separate from these six or five additional user values, including the
+        // distinct Check descriptor. The explicit check() call additionally
+        // owns its receiver-class cache.
         let (added_values, added_executables) = if check_type.starts_with("Items") {
-            (5, 8)
+            (6, 8)
         } else {
-            (4, 6)
+            (5, 6)
         };
         assert_eq!(
             initialized.added_values(stats, added_executables),

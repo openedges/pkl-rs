@@ -297,7 +297,7 @@ impl Vm {
                 }
                 if let TypeCheck::Class { id, .. } = base
                     && let Some(class) = self.heap.find_class(*id)
-                    && let Some(class) = &self.heap.get(class)?.class_definition
+                    && let class = self.heap.class_definition(class)?
                     && class.abstract_
                 {
                     let mut error = RuntimeError::new(
@@ -384,6 +384,7 @@ impl Vm {
                             .find_class(id)
                             .ok_or_else(|| invalid("missing resolved default class"))?
                     };
+                    let object = self.heap.get_class(object)?.prototype;
                     if self
                         .heap
                         .get(object)?

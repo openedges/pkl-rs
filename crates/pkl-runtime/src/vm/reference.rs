@@ -54,7 +54,7 @@ pub(crate) fn base_type(name: &str) -> Option<TypeCheck> {
         "Collection" => TypeCheck::CollectionBase {
             arguments: Vec::new(),
         },
-        _ => return None,
+        _ => return super::classes::named_type(name),
     })
 }
 
@@ -137,7 +137,9 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
                 name,
                 module: declaring_module,
             } => {
-                if super::builtins::name(*id).is_some() {
+                if super::builtins::name(*id).is_some()
+                    || super::classes::base_class_name(*id).is_some()
+                {
                     output.push_str(name);
                 } else {
                     output.push_str(&format!(
@@ -483,25 +485,10 @@ fn class_subtype(id: usize, other: usize, heap: &Heap) -> bool {
     if id == other {
         return true;
     }
-    let mut current = heap.find_class(id);
-    let mut visited = BTreeSet::new();
-    while let Some(id) = current {
-        if !visited.insert(id) {
-            return false;
-        }
-        let Ok(object) = heap.get(id) else {
-            return false;
-        };
-        if object
-            .class_definition
-            .as_ref()
-            .is_some_and(|c| c.id == other)
-        {
-            return true;
-        }
-        current = object.parent;
+    match (heap.find_class(id), heap.find_class(other)) {
+        (Some(class), Some(expected)) => heap.is_subclass(class, expected),
+        _ => false,
     }
-    false
 }
 
 fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
@@ -802,79 +789,6 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
 }
 
 impl Vm {
-    pub(super) fn builtin_class(&mut self, ty: TypeCheck) -> Value {
-        let ty = ty.into_resolved();
-        if let Some(id) = self.heap.find_builtin_class(&ty) {
-            return Value::Class(id);
-        }
-        let (id, name, abstract_) = match ty {
-            TypeCheck::Class { id, .. } if super::builtins::name(id).is_some() => (
-                id,
-                super::builtins::name(id).unwrap().to_owned(),
-                super::builtins::abstract_class(id),
-            ),
-            TypeCheck::Class { id: ACCESS_ID, .. } => (ACCESS_ID, "Access".to_owned(), false),
-            TypeCheck::RefDomain => (DOMAIN_ID, "Domain".to_owned(), true),
-            _ => (
-                usize::MAX
-                    - match ty {
-                        TypeCheck::MetaClass(ref name) if name.as_ref() == "Class" => 23,
-                        TypeCheck::MetaClass(_) => 24,
-                        TypeCheck::Function { ref parameters, .. } => {
-                            30 + parameters.as_ref().map_or(0, |p| p.len() + 1)
-                        }
-                        TypeCheck::Any => 10,
-                        TypeCheck::NonNull => 11,
-                        TypeCheck::Null => 12,
-                        TypeCheck::Boolean => 13,
-                        TypeCheck::Int => 14,
-                        TypeCheck::Float => 15,
-                        TypeCheck::Number => 16,
-                        TypeCheck::String => 17,
-                        TypeCheck::Bytes => 18,
-                        TypeCheck::Collection(CollectionKind::Dynamic) => 19,
-                        TypeCheck::Collection(CollectionKind::Listing) => 20,
-                        TypeCheck::Collection(CollectionKind::Mapping) => 21,
-                        TypeCheck::Collection(CollectionKind::List) => 22,
-                        TypeCheck::Collection(CollectionKind::Map) => 25,
-                        TypeCheck::Collection(CollectionKind::Set) => 26,
-                        TypeCheck::CollectionBase { .. } => 27,
-                        TypeCheck::Pair { .. } => 28,
-                        TypeCheck::Duration => 29,
-                        _ => 2,
-                    },
-                super::type_name(&ty, &self.program.module_name),
-                matches!(ty, TypeCheck::CollectionBase { .. }),
-            ),
-        };
-        let members = if id == ACCESS_ID {
-            self.program.access_members.clone()
-        } else {
-            self.program
-                .builtin_members
-                .get(&id)
-                .cloned()
-                .unwrap_or_default()
-        };
-        let parent = super::builtins::parent(id)
-            .and_then(|parent| self.builtin_class(super::builtins::ty(parent)).heap_id());
-        let object = self.heap.allocate(Object {
-            parent,
-            class_superclass_initialized: true,
-            members,
-            builtin_type: Some(ty),
-            class_definition: Some(Class {
-                module: None,
-                id,
-                name: Arc::from(name),
-                open: super::builtins::open_class(id),
-                abstract_,
-            }),
-            ..Object::default()
-        });
-        Value::Class(object)
-    }
-
     pub(super) fn native_reference_method(&mut self, receiver: Value, name: &str) -> Value {
         let object = self.heap.allocate(Object {
             native_function: Some(NativeFunction {
@@ -1025,7 +939,7 @@ impl Vm {
                     "Class<T>",
                 ));
             };
-            let object = self.heap.get(class_id)?;
+            let object = self.heap.get(self.heap.get_class(class_id)?.prototype)?;
             let class = object
                 .class_definition
                 .as_ref()
@@ -1073,67 +987,21 @@ impl Vm {
         Ok(())
     }
 
-    pub(super) fn function_arity(&self, id: ObjectId) -> Result<usize, RuntimeError> {
-        let object = self.heap.get(id)?;
-        object
-            .function
-            .as_ref()
-            .map(|function| function.arity)
-            .or_else(|| {
-                object
-                    .native_function
-                    .as_ref()
-                    .map(|function| match function.name.as_ref() {
-                        "Reference" => 3,
-                        "containsKey" | "getOrNull" | "contains" => 1,
-                        _ => 0,
-                    })
-            })
-            .ok_or_else(|| invalid("function metadata missing"))
-    }
-
     pub(super) fn reference_get_class(&mut self, value: &Value) -> Result<Value, RuntimeError> {
-        let ty = match value {
-            Value::Null | Value::NullWithDefault(_) => TypeCheck::Null,
-            Value::Bool(_) => TypeCheck::Boolean,
-            Value::Int(_) => TypeCheck::Int,
-            Value::Float(_) => TypeCheck::Float,
-            Value::Duration(_) => TypeCheck::Duration,
-            Value::String(_) => TypeCheck::String,
-            Value::Bytes(_) => TypeCheck::Bytes,
-            Value::TypeAlias(_) => TypeCheck::MetaClass(Arc::from("TypeAlias")),
-            Value::Class(_) => TypeCheck::MetaClass(Arc::from("Class")),
-            Value::Function(id) => {
-                let arity = self.function_arity(*id)?;
-                TypeCheck::Function {
-                    parameters: Some(vec![TypeCheck::Unknown; arity]),
-                    result: Box::new(TypeCheck::Unknown),
-                    syntax: false,
-                }
+        match classes::runtime_class(value, &self.heap)? {
+            classes::RuntimeClass::Declared(class) => Ok(Value::Class(class)),
+            classes::RuntimeClass::Builtin(classes::BuiltinClass::Function(Some(arity)))
+                if arity > 5 =>
+            {
+                Err(RuntimeError::new(
+                    ErrorKind::Host,
+                    format!("Class `Function{arity}` does not exist."),
+                ))
             }
-            Value::Object(id) => {
-                let object = self.heap.get(*id)?;
-                if object.pair.is_some() {
-                    TypeCheck::Pair {
-                        arguments: Vec::new(),
-                    }
-                } else if object.reference.is_some() {
-                    TypeCheck::Reference {
-                        domain: Box::new(TypeCheck::Any),
-                        referent: Box::new(TypeCheck::Any),
-                    }
-                } else if let Some(class) = collections::typed_class(&self.heap, *id)? {
-                    return Ok(Value::Class(
-                        self.heap
-                            .find_class(class.id)
-                            .ok_or_else(|| invalid("missing class"))?,
-                    ));
-                } else {
-                    TypeCheck::Collection(object.collection_kind)
-                }
+            classes::RuntimeClass::Builtin(key) => {
+                Ok(Value::Class(self.canonical_builtin_class(key)))
             }
-        };
-        Ok(self.builtin_class(ty))
+        }
     }
 
     pub(super) fn render_reference(&mut self, id: ObjectId) -> Result<(), RuntimeError> {
@@ -1202,8 +1070,11 @@ impl Vm {
         }) else {
             unreachable!()
         };
+        let class = parent;
+        let parent = self.heap.get_class(class).expect("Access class").prototype;
         let mut object = Object {
             parent: Some(parent),
+            instance_class: Some(class),
             ..Object::default()
         };
         for (name, value) in [
@@ -1430,7 +1301,10 @@ impl Vm {
             TypeCheck::Class { id: MODULE_ID, .. } if property == Some("output") => Err(fail()),
             TypeCheck::Class { id, .. } if property.is_some() => {
                 let name = property.expect("property access");
-                let mut current = self.heap.find_class(*id);
+                let mut current = self
+                    .heap
+                    .find_class(*id)
+                    .map(|class| self.heap.get_class(class).expect("live class").prototype);
                 let mut found = false;
                 let mut visited = BTreeSet::new();
                 while let Some(id) = current {

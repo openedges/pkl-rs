@@ -1,0 +1,51 @@
+{
+  "archive": {
+    "bytes": 9542101,
+    "member_count": 4648,
+    "path": "reports/m2/stage56-original-evidence.tar.gz",
+    "sha256": "68fc1bb93d2e6e58c26ad8e5281ba91efe7232e2637a03b53df3976b18468817"
+  },
+  "full_archive_member_reread_verified": true,
+  "manifest_sha256": "c86119ffbfc8c77b387ca7083a65a371bdd026152e76d531bd4d25c8d5662f2c",
+  "original_capture_files_unchanged": true,
+  "overview": {
+    "candidate_frozen_artifact": {
+      "bytes": 3810208,
+      "path": "evidence/target/m2/stage56-original-class-01/artifacts/module_eval_probe",
+      "sha256": "b0fbb60f86d0f80300e9c942cee43075437b295703a4d0b824281915628101ea"
+    },
+    "groups": [
+      "original-class-prep-01",
+      "original-class-01"
+    ],
+    "limitations": [
+      "One api/anyDataSize mismatch remains, with all six Java and six Rust original processes preserved.",
+      "The generated physical workspace is represented by its complete recorded identity catalog rather than duplicated.",
+      "Whole-language inventory, full API, platform, and performance gates remain open."
+    ],
+    "physical_workspace_exclusion": {
+      "archive_status": "excluded generated physical workspace",
+      "catalog_entries": 7299,
+      "directory_and_symlink_entries": 1726,
+      "identity_catalog": {
+        "bytes": 1387743,
+        "sha256": "5ced9f6a28cc89c29742832789307884607295d65bed1467e93c81c9f257b00a"
+      },
+      "identity_catalog_member": "evidence/target/m2/stage56-original-class-01/module-workspace.json",
+      "physical_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56/target/m2/stage56-original-class-01-workspace",
+      "physical_workspace_marker": {
+        "bytes": 861,
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56/target/m2/stage56-original-class-01-workspace/.pkl-rs-compat-workspace.json",
+        "sha256": "719c7f886866caff2c4596dc92b563345e8ab770fb47a5d832808146e9615c93"
+      },
+      "regular_file_bytes_verified": 5573
+    },
+    "result_counts": {
+      "mismatch": 1,
+      "pass": 5
+    },
+    "scope": "Six unchanged original upstream Class modules, separately recorded Java and Rust processes; no reruns in publication."
+  },
+  "schema": 1,
+  "source_files_rehashed_before_and_after": 4646
+}

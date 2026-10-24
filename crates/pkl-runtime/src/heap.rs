@@ -125,6 +125,15 @@ pub struct Class {
     pub abstract_: bool,
 }
 
+/// A class value is distinct from its instance prototype. Declaration metadata
+/// and incremental member publication live on the owned prototype exactly once.
+/// Both edges are traced; neither depends on a Rust reference-counted cycle.
+#[derive(Clone, Debug)]
+pub struct ClassRecord {
+    pub prototype: ObjectId,
+    pub superclass: Option<ObjectId>,
+}
+
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum CollectionKind {
     #[default]
@@ -226,11 +235,13 @@ pub struct Object {
     pub module_initializing: bool,
     pub published_module_members: std::collections::BTreeSet<usize>,
     pub class_definition: Option<Class>,
+    /// The actual runtime class of a typed instance or class prototype.
+    pub instance_class: Option<ObjectId>,
     /// Published class whose initialization has not completed (including failure).
     /// Such classes accept new property names, but expose only published metadata.
     pub class_initializing: bool,
-    /// Includes successful resolution of the implicit Typed superclass, which
-    /// has no arena prototype in the bounded runtime.
+    /// Distinguishes a published class with an unresolved superclass from Any,
+    /// whose initialized superclass is absent.
     pub class_superclass_initialized: bool,
     pub parent: Option<ObjectId>,
     pub members: Vec<Member>,
@@ -339,6 +350,7 @@ impl ExecutableOwnerId {
 
 enum Entry {
     Object(Box<Object>),
+    Class(ClassRecord),
     NullDefault(Value),
     CustomThis(Option<Value>),
     Executable(Box<ExecutableState>),
@@ -402,6 +414,128 @@ impl Heap {
         self.allocate_entry(Entry::Object(Box::new(object)))
     }
 
+    pub(crate) fn allocate_class(&mut self, prototype: ObjectId) -> ObjectId {
+        let id = self.allocate_entry(Entry::Class(ClassRecord {
+            prototype,
+            superclass: None,
+        }));
+        self.get_mut(prototype)
+            .expect("new class prototype")
+            .instance_class = Some(id);
+        id
+    }
+
+    pub fn get_class(&self, id: ObjectId) -> Result<&ClassRecord, RuntimeError> {
+        match self.entry(id)? {
+            Entry::Class(class) => Ok(class),
+            _ => Err(RuntimeError::new(
+                ErrorKind::StaleHandle,
+                "value is not a class",
+            )),
+        }
+    }
+
+    pub(crate) fn link_superclass(
+        &mut self,
+        id: ObjectId,
+        superclass: Option<ObjectId>,
+    ) -> Result<(), RuntimeError> {
+        let prototype = self.get_class(id)?.prototype;
+        let parent = superclass
+            .map(|class| self.get_class(class).map(|c| c.prototype))
+            .transpose()?;
+        if let Some(Entry::Class(class)) = &mut self.slots[id.index].entry {
+            class.superclass = superclass;
+        }
+        let prototype = self.get_mut(prototype)?;
+        prototype.parent = parent;
+        prototype.class_superclass_initialized = true;
+        Ok(())
+    }
+
+    pub(crate) fn class_definition(&self, id: ObjectId) -> Result<&Class, RuntimeError> {
+        self.get(self.get_class(id)?.prototype)?
+            .class_definition
+            .as_ref()
+            .ok_or_else(|| {
+                RuntimeError::new(ErrorKind::InvalidBytecode, "missing class definition")
+            })
+    }
+
+    pub(crate) fn class_simple_name(&self, id: ObjectId) -> Result<&str, RuntimeError> {
+        let prototype = self.get(self.get_class(id)?.prototype)?;
+        if prototype.is_module {
+            return Ok("ModuleClass");
+        }
+        Ok(&self.class_definition(id)?.name)
+    }
+
+    pub(crate) fn class_qualified_name(&self, id: ObjectId) -> Result<String, RuntimeError> {
+        let prototype = self.get(self.get_class(id)?.prototype)?;
+        let definition = self.class_definition(id)?;
+        let module = if prototype.is_module {
+            definition.name.as_ref()
+        } else {
+            definition.module.as_deref().unwrap_or("")
+        };
+        Ok(format!("{module}#{}", self.class_simple_name(id)?))
+    }
+
+    pub(crate) fn class_display_name(&self, id: ObjectId) -> Result<String, RuntimeError> {
+        let prototype = self.get(self.get_class(id)?.prototype)?;
+        let definition = self.class_definition(id)?;
+        if prototype.is_module || definition.module.as_deref() == Some("pkl.base") {
+            Ok(definition.name.to_string())
+        } else {
+            self.class_qualified_name(id)
+        }
+    }
+
+    pub(crate) fn declaration_object(&self, value: &Value) -> Result<ObjectId, RuntimeError> {
+        match value {
+            Value::Class(id) => Ok(self.get_class(*id)?.prototype),
+            _ => value.heap_id().ok_or_else(|| {
+                RuntimeError::new(ErrorKind::InvalidBytecode, "declaration has no owner")
+            }),
+        }
+    }
+
+    pub(crate) fn object_class(&self, mut id: ObjectId) -> Result<Option<ObjectId>, RuntimeError> {
+        let mut visited = BTreeSet::new();
+        loop {
+            if !visited.insert(id) {
+                return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+            }
+            let object = self.get(id)?;
+            if let Some(class) = object.instance_class {
+                self.get_class(class)?;
+                return Ok(Some(class));
+            }
+            let Some(parent) = object.parent else {
+                return Ok(None);
+            };
+            id = parent;
+        }
+    }
+
+    pub(crate) fn is_subclass(&self, class: ObjectId, expected: ObjectId) -> bool {
+        let mut current = Some(class);
+        let mut seen = BTreeSet::new();
+        while let Some(class) = current {
+            if class == expected {
+                return true;
+            }
+            if !seen.insert(class) {
+                return false;
+            }
+            let Ok(record) = self.get_class(class) else {
+                return false;
+            };
+            current = record.superclass;
+        }
+        false
+    }
+
     pub(crate) fn allocate_null(&mut self, default: Option<Value>) -> Value {
         default.map_or(Value::Null, |value| {
             Value::NullWithDefault(self.allocate_entry(Entry::NullDefault(value)))
@@ -421,6 +555,8 @@ impl Heap {
     pub(crate) fn validate_value(&self, value: &Value) -> Result<(), RuntimeError> {
         if let Value::NullWithDefault(id) = value {
             self.null_default(*id)?;
+        } else if let Value::Class(id) = value {
+            self.get_class(*id)?;
         } else if let Some(id) = value.heap_id() {
             self.get(id)?;
         }
@@ -611,18 +747,6 @@ impl Heap {
         })
     }
 
-    pub(crate) fn find_builtin_class(&self, ty: &crate::vm::TypeCheck) -> Option<ObjectId> {
-        self.slots.iter().enumerate().find_map(|(index, slot)| {
-            slot.object()
-                .filter(|o| o.builtin_type.as_ref().is_some_and(|t| t.equivalent(ty)))
-                .map(|_| ObjectId {
-                    heap: self.identity,
-                    index,
-                    generation: slot.generation,
-                })
-        })
-    }
-
     pub(crate) fn find_module(&self, unit: crate::modules::UnitId) -> Option<ObjectId> {
         self.slots.iter().enumerate().find_map(|(index, slot)| {
             slot.object()
@@ -636,7 +760,7 @@ impl Heap {
     }
 
     pub(crate) fn find_class(&self, class_id: usize) -> Option<ObjectId> {
-        self.slots.iter().enumerate().find_map(|(index, slot)| {
+        self.slots.iter().find_map(|slot| {
             slot.object()
                 .filter(|object| {
                     object
@@ -644,11 +768,7 @@ impl Heap {
                         .as_ref()
                         .is_some_and(|class| class.id == class_id)
                 })
-                .map(|_| ObjectId {
-                    heap: self.identity,
-                    index,
-                    generation: slot.generation,
-                })
+                .and_then(|object| object.instance_class)
         })
     }
 
@@ -669,9 +789,13 @@ impl Heap {
     pub fn get(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
         match self.entry(id)? {
             Entry::Object(object) => Ok(object),
-            Entry::CustomThis(_) | Entry::Executable(_) | Entry::NullDefault(_) => Err(
-                RuntimeError::new(ErrorKind::StaleHandle, "internal slot is not a Pkl object"),
-            ),
+            Entry::Class(_)
+            | Entry::CustomThis(_)
+            | Entry::Executable(_)
+            | Entry::NullDefault(_) => Err(RuntimeError::new(
+                ErrorKind::StaleHandle,
+                "internal slot is not a Pkl object",
+            )),
         }
     }
 
@@ -699,6 +823,11 @@ impl Heap {
             }
             marked[id.index] = true;
             let object = match entry {
+                Entry::Class(class) => {
+                    pending.push(class.prototype);
+                    pending.extend(class.superclass);
+                    continue;
+                }
                 Entry::NullDefault(value) => {
                     pending.extend(value.heap_id());
                     continue;
@@ -719,6 +848,7 @@ impl Heap {
                 Entry::Object(object) => object,
             };
             pending.extend(object.parent);
+            pending.extend(object.instance_class);
             pending.extend(object.method_declaration.map(|(owner, _)| owner));
             if let Some(amendment) = &object.amendment {
                 pending.extend(amendment.parent.heap_id());

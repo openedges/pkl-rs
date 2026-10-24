@@ -600,10 +600,11 @@ fn class_handles_and_prototype_captures_are_traced_and_reject_foreign_heaps() {
         .unwrap();
     let class = done(&mut vm).unwrap();
     assert!(matches!(class, Value::Class(_)));
-    // C captures its module, which retains the builtin Module prototype.
+    // C has a distinct descriptor and prototype. Its prototype captures the
+    // module, which retains the canonical builtin Module class graph.
     assert_eq!(
         vm.collect(std::slice::from_ref(&class)).live,
-        initialized.live + 1
+        initialized.live + 2
     );
     vm.start(instantiate, vec![class.clone()]).unwrap();
     let instance = done(&mut vm).unwrap();

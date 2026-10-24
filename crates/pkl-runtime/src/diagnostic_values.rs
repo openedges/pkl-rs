@@ -431,33 +431,7 @@ impl Renderer<'_> {
                 self.append(name);
             }
             Value::Class(id) => {
-                if let Some(ty) = &self.heap.get(*id)?.builtin_type {
-                    let text = match ty {
-                        crate::vm::TypeCheck::Reference { .. } => "pkl.ref#Reference".into(),
-                        crate::vm::TypeCheck::Function { parameters, .. } => {
-                            parameters.as_ref().map_or_else(
-                                || "Function".into(),
-                                |p| format!("Function{}", p.len()).into(),
-                            )
-                        }
-                        _ => crate::vm::reference::type_name_value(ty, self.module),
-                    };
-                    self.append_units(text.encode_utf16());
-                    return Ok(());
-                }
-                let class = self
-                    .heap
-                    .get(*id)?
-                    .class_definition
-                    .as_ref()
-                    .ok_or_else(|| {
-                        RuntimeError::new(ErrorKind::InvalidBytecode, "class has no definition")
-                    })?;
-                self.append(&format!(
-                    "{}#{}",
-                    class.module.as_deref().unwrap_or(self.module),
-                    class.name
-                ));
+                self.append(&self.heap.class_display_name(*id)?);
             }
             Value::Object(id) => self.object(*id, implicit, depth)?,
         }

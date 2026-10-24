@@ -47,7 +47,17 @@ fn captured_module_keeps_exactly_one_real_parent_until_terminal_release() {
             .unwrap()
             .equivalent(&builtins::ty(MODULE))
     );
-    assert!(builtin.parent.is_none());
+    assert_eq!(
+        vm.heap
+            .get(builtin.parent.unwrap())
+            .unwrap()
+            .class_definition
+            .as_ref()
+            .unwrap()
+            .name
+            .as_ref(),
+        "Typed"
+    );
     assert!(builtin.cache.is_empty());
     assert!(
         builtin
@@ -61,7 +71,7 @@ fn captured_module_keeps_exactly_one_real_parent_until_terminal_release() {
     );
 
     // The private base bootstrap and its renderer call targets are evaluator
-    // roots. This test counts only the two new user class objects beyond that
+    // roots. This test counts only the two new user descriptor/prototype pairs beyond that
     // established graph, and still checks the exact four user handles below.
     let initialized_live = vm.collect(&[]).live;
     vm.start_member(module, "Child").unwrap();
@@ -71,39 +81,20 @@ fn captured_module_keeps_exactly_one_real_parent_until_terminal_release() {
     let base = classes
         .iter()
         .copied()
-        .find(|id| {
-            vm.heap
-                .get(*id)
-                .unwrap()
-                .class_definition
-                .as_ref()
-                .unwrap()
-                .name
-                .as_ref()
-                == "Base"
-        })
+        .find(|id| vm.heap.class_definition(*id).unwrap().name.as_ref() == "Base")
         .unwrap();
     let child = classes
         .iter()
         .copied()
-        .find(|id| {
-            vm.heap
-                .get(*id)
-                .unwrap()
-                .class_definition
-                .as_ref()
-                .unwrap()
-                .name
-                .as_ref()
-                == "Child"
-        })
+        .find(|id| vm.heap.class_definition(*id).unwrap().name.as_ref() == "Child")
         .unwrap();
-    assert!(vm.heap.get(base).unwrap().parent.is_none());
-    assert_eq!(vm.heap.get(child).unwrap().parent, Some(base));
+    let typed = vm.canonical_builtin_class(classes::BuiltinClass::Typed);
+    assert_eq!(vm.heap.get_class(base).unwrap().superclass, Some(typed));
+    assert_eq!(vm.heap.get_class(child).unwrap().superclass, Some(base));
     for class in [base, child] {
         let scope = vm
             .heap
-            .get(class)
+            .get(vm.heap.get_class(class).unwrap().prototype)
             .unwrap()
             .environment
             .scopes
@@ -118,10 +109,10 @@ fn captured_module_keeps_exactly_one_real_parent_until_terminal_release() {
             .len(),
         4
     );
-    assert_eq!(vm.collect(&[]).live, initialized_live + 2);
+    assert_eq!(vm.collect(&[]).live, initialized_live + 4);
     vm.start_member(module, "scalar").unwrap();
     assert_eq!(ready(&mut vm), Ok(Value::Int(7.into())));
-    assert_eq!(vm.collect(&[]).live, initialized_live + 2);
+    assert_eq!(vm.collect(&[]).live, initialized_live + 4);
     assert!(vm.heap.get(parent).unwrap().cache.is_empty());
     vm.close();
     assert_eq!(vm.heap_stats().live, 0);
@@ -144,13 +135,13 @@ fn unrooted_module_is_reclaimed_while_base_keeps_the_shared_parent() {
     assert_eq!(ready(&mut vm), Ok(Value::Int(7.into())));
     assert!(vm.class_singletons.is_empty());
     // The initialized base module roots the same canonical Module prototype.
-    // Releasing the user module must not release that shared parent.
+    // Releasing the user module and its Class descriptor keeps that shared parent.
     let base = match vm.modules_stdlib.get("pkl:base").unwrap() {
         modules::CachedModule::Value(id) => *id,
         _ => panic!("base was initialized successfully"),
     };
     assert_eq!(vm.heap.get(base).unwrap().parent, Some(parent));
-    assert_eq!(vm.collect(&[]).live, initialized_live - 1);
+    assert_eq!(vm.collect(&[]).live, initialized_live - 2);
     assert_eq!(
         vm.heap.get(module).unwrap_err().kind,
         ErrorKind::StaleHandle

@@ -280,16 +280,19 @@ impl Vm {
                                     .at(definition.span)
                                     .into());
                                 }
-                                let class =
-                                    self.heap.get(*id)?.class_definition.as_ref().ok_or_else(
-                                        || invalid("resolved class metadata missing"),
-                                    )?;
+                                let class = self
+                                    .heap
+                                    .get(self.heap.get_class(*id)?.prototype)?
+                                    .class_definition
+                                    .as_ref()
+                                    .ok_or_else(|| invalid("resolved class metadata missing"))?;
                                 values.push((
-                                    TypeCheck::Class {
-                                        module: class.module.clone(),
-                                        id: class.id,
-                                        name: class.name.clone(),
-                                    },
+                                    classes::specialized_type(class.module.as_deref(), &class.name)
+                                        .unwrap_or_else(|| TypeCheck::Class {
+                                            module: class.module.clone(),
+                                            id: class.id,
+                                            name: class.name.clone(),
+                                        }),
                                     true,
                                 ));
                             }
@@ -813,10 +816,7 @@ impl Vm {
             }
             Instruction::ResolveType(_) => {}
             Instruction::ResolvedClass(ty) => {
-                if matches!(
-                    ty.unaliased(),
-                    TypeCheck::RefDomain | TypeCheck::Reference { .. }
-                ) {
+                if classes::BuiltinClass::from_type(&ty).is_some() {
                     let value = self.builtin_class(ty);
                     self.stack.push(value);
                     return Ok(());
@@ -917,6 +917,7 @@ mod tests {
                     }),
                     ..Object::default()
                 });
+                let class = vm.heap.allocate_class(class);
                 vm.resolved_declarations
                     .insert((0, owner), DeclarationValue::Value(Value::Class(class)));
                 let environment = Environment {

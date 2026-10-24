@@ -140,12 +140,14 @@ fn inherited_fixed_values_keep_the_amended_receiver_across_gc_reentry_and_retry(
     // Exact source-specific class, annotation and completed Reference/cache
     // closure above the initialized base. Access-list temporaries are reclaimed;
     // shared annotation descriptors are already present in the base baseline.
+    // Six additional Class descriptors belong to D, Base, Child, the loaded
+    // ref module, and its canonical Domain and Access prototypes.
     // The lazy Domain class first forces its authored ref import here. The
     // VM roots that static site's executable; the module caches separately
     // retain module receivers. Reference construction and inspection each add
     // one virtual-call executable owner without retaining access-list receivers.
-    assert_eq!(initialized.added_values(session.collect(&[]), 3), 12);
-    assert_eq!(initialized.added_values(session.collect(&[]), 3), 12);
+    assert_eq!(initialized.added_values(session.collect(&[]), 3), 18);
+    assert_eq!(initialized.added_values(session.collect(&[]), 3), 18);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -187,11 +189,13 @@ fn inherited_hidden_fixed_reference_metadata_stays_deferred_during_render_retry(
     // Exact source-specific class, annotation and completed Reference/cache
     // closure above the initialized base. Access-list temporaries are reclaimed;
     // shared annotation descriptors are already present in the base baseline.
+    // Six additional Class descriptors belong to D, Base, Child, the loaded
+    // ref module, and its canonical Domain and Access prototypes.
     // The lazy ref import site and renderReference parameter-slot descriptor
     // each add one executable above the setup baseline. Reference construction,
     // the standard renderReference site and inspection add three call owners.
-    assert_eq!(initialized.added_values(session.collect(&[]), 5), 12);
-    assert_eq!(initialized.added_values(session.collect(&[]), 5), 12);
+    assert_eq!(initialized.added_values(session.collect(&[]), 5), 18);
+    assert_eq!(initialized.added_values(session.collect(&[]), 5), 18);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);

@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "kind": "Actual post-commit Git binding for additive Java Class metadata authority",
+  "recorded_utc": "2026-10-24T06:53:28.875270+00:00",
+  "commit": "94d48d65b289bd07dafdf04d27b73b48fd44e4b6",
+  "source_seal_sha256": "51917bab9ec0b4565e006b34c82040336e680fbe0ff6a1ae0f16c3627d9d6e36",
+  "files": {
+    "tools/class_metadata_oracle.py": {
+      "git_blob_sha1": "d627752c62239179f3460635133ef8e03f3160c9",
+      "sha256": "e547884d99710da9032f973d9b5a6732f24b3dddb866780eb3eed7690639fe15",
+      "bytes": 8826,
+      "captured_source_seal_equal": true,
+      "working_bytes_equal": true
+    },
+    "tools/class_metadata_fixtures.py": {
+      "git_blob_sha1": "2a686d899519793f493d14c417c6197f6d4409d3",
+      "sha256": "d7b09c921c96ab4d167aad6aafb2c59c718815976c62eadeb4bf30ca83e8a9b7",
+      "bytes": 5462,
+      "captured_source_seal_equal": true,
+      "working_bytes_equal": true
+    },
+    "tools/tests/test_class_metadata_fixtures.py": {
+      "git_blob_sha1": "6c29f5bf4c5879910adfb8da0670aaecf1f53156",
+      "sha256": "641fa225f44e58845231d78b425401d4ea5caa33abe9534b2402b2a2f3071172",
+      "bytes": 9081,
+      "captured_source_seal_equal": true,
+      "working_bytes_equal": true
+    },
+    "tools/class_values_fixtures.py": {
+      "git_blob_sha1": "c4245db5969602c37fa31905b68923bf33419515",
+      "sha256": "7d575590d457cd8474953a2d4cdd7629df6bd963364c97890e574a3397568ab1",
+      "bytes": 6612,
+      "captured_source_seal_equal": true,
+      "working_bytes_equal": true
+    },
+    "tests/fixtures/m2-class-metadata-completion/LICENSE": {
+      "git_blob_sha1": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "captured_source_seal_equal": true,
+      "working_bytes_equal": true
+    },
+    "tests/fixtures/m2-class-metadata-completion/README.md": {
+      "git_blob_sha1": "5bdcfff68a8fb8b685318015b135a5de19f031d6",
+      "sha256": "c653e315439f4db36ad75381418a13c4bd361a04782fc9964e95c70131b69a18",
+      "bytes": 3914,
+      "captured_source_seal_equal": true,
+      "working_bytes_equal": true
+    },
+    "tests/fixtures/m2-class-metadata-completion/cases.json": {
+      "git_blob_sha1": "c3ca218600778fc58e656b43b09d126ac8064d6d",
+      "sha256": "1ef923a3dc2cbb20f8ad84ff1679cdf6af3e184de63c1d048c104329d52c0b7e",
+      "bytes": 9282,
+      "captured_source_seal_equal": true,
+      "working_bytes_equal": true
+    },
+    "tests/fixtures/m2-class-metadata-completion/inputs/metadata.pkl": {
+      "git_blob_sha1": "fb86158f14ba50e53973d45a5b30e6ce0ed5272b",
+      "sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "bytes": 1057,
+      "captured_source_seal_equal": true,
+      "working_bytes_equal": true
+    },
+    "tests/fixtures/m2-class-metadata-completion/manifest.json": {
+      "git_blob_sha1": "9333d45b0297152c8f94413eefd07270d83f6ba3",
+      "sha256": "77acd124af281c98d67be9a13bcc66de27b9120e5a817da5a7f7dc277b14bb5d",
+      "bytes": 789,
+      "captured_source_seal_equal": true,
+      "working_bytes_equal": true
+    },
+    "tests/fixtures/m2-class-metadata-completion/oracle-evidence.tar.gz": {
+      "git_blob_sha1": "5fea7c0d16101c5a6ffe2bae4509c270b42c2f91",
+      "sha256": "8b111f12f87e171106ce431c28a3267d027a2d24c927249d387348fd13f5f652",
+      "bytes": 556259,
+      "captured_source_seal_equal": true,
+      "working_bytes_equal": true
+    }
+  },
+  "bound_files": 10,
+  "git_command": [
+    "git",
+    "cat-file",
+    "--batch"
+  ],
+  "exit_code": 0,
+  "stdout_sha256": "2e7c4fa5774ae922bdd6856454d927aa1bd2fe9082753cdac3f85aa543297484",
+  "stdout_bytes": 613162,
+  "scope": "Original pending-binding records preserved. Exactly the ten Java authority/tool/test payloads are bound here; no runtime or candidate compatibility claim."
+}

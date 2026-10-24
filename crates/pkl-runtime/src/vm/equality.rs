@@ -125,13 +125,7 @@ impl Vm {
                     string_hash(&format!("pkl.base#{name}"))
                 }
             }),
-            Value::Class(id) => self.heap.get(*id)?.class_definition.as_ref().map(|class| {
-                string_hash(&format!(
-                    "{}#{}",
-                    class.module.as_deref().unwrap_or(&self.program.module_name),
-                    class.name
-                ))
-            }),
+            Value::Class(id) => Some(string_hash(&self.heap.class_qualified_name(*id)?)),
             Value::Object(id) => self.heap.get(*id)?.java_hash.flatten(),
         })
     }
@@ -565,17 +559,8 @@ impl Vm {
         });
         Ok(true)
     }
-    fn class_identity(&self, mut id: ObjectId) -> Result<Option<ObjectId>, RuntimeError> {
-        loop {
-            let object = self.heap.get(id)?;
-            if object.class_definition.is_some() {
-                return Ok(Some(id));
-            }
-            let Some(parent) = object.parent else {
-                return Ok(None);
-            };
-            id = parent;
-        }
+    fn class_identity(&self, id: ObjectId) -> Result<Option<ObjectId>, RuntimeError> {
+        self.heap.object_class(id)
     }
     fn equality_members(&self, id: ObjectId) -> Result<Vec<CollectionMember>, RuntimeError> {
         if self.heap.get(id)?.collection_kind == CollectionKind::Map {
@@ -621,11 +606,15 @@ impl Vm {
     fn comparison_members(&self, id: ObjectId) -> Result<Vec<CollectionMember>, RuntimeError> {
         let members = self.equality_members(id)?;
         let mut result = Vec::with_capacity(members.len());
-        if let Some(class) = self
+        if let Some(prototype) = self
             .class_identity(id)?
+            .map(|class| self.heap.get_class(class).map(|class| class.prototype))
+            .transpose()?
             .or(self.heap.get(id)?.is_module.then_some(id))
         {
-            let mut owner = Some(class);
+            // Class identity belongs to the descriptor; declarations and their
+            // child-first property order belong to its instance prototype.
+            let mut owner = Some(prototype);
             while let Some(id) = owner {
                 let object = self.heap.get(id)?;
                 for member in &object.members {

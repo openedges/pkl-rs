@@ -116,7 +116,7 @@ fn reentered_spread_and_suspended_for_preserve_temporary_iterables_and_captures(
     assert_eq!(ready(&mut session, 3), Ok(Value::string("aAbcB")));
     assert_eq!(session.context_depth(), 0);
     // Only evaluator-owned base values and the exact lexical descriptors survive.
-    assert_eq!(initialized.added_values(session.collect(&[]), 6), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 6), -2);
     assert_eq!(
         session
             .start(outer_entry, vec![stale_root], 10, None)
@@ -271,7 +271,7 @@ fn failed_child_spread_retries_from_a_fresh_builder_while_parent_for_stays_pendi
     assert_eq!(ready(&mut session, 4), Ok(Value::string("aAfreshcB")));
     assert!(!session.is_closed());
     // Only evaluator-owned base values and the exact lexical descriptors survive.
-    assert_eq!(initialized.added_values(session.collect(&[]), 6), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 6), -2);
     assert_eq!(
         session
             .start(outer_entry, vec![stale_root], 10, None)

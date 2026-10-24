@@ -107,7 +107,7 @@ fn nested_predicate_reentry_and_retry_preserve_parent_cursor_and_custom_this() {
         .unwrap();
     assert_eq!(ready(&mut session, 3), Ok(Value::string("keep42")));
     // Only evaluator-owned base values and the exact lexical descriptors survive.
-    assert_eq!(initialized.added_values(session.collect(&[]), 2), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 2), -2);
     assert_eq!(
         session
             .start(parent, vec![stale_root], 10, None)

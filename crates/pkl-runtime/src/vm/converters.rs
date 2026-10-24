@@ -70,7 +70,7 @@ impl Converters {
         vm: &Vm,
         annotation: ObjectId,
     ) -> Result<Option<Value>, RuntimeError> {
-        let mut current = Some(annotation);
+        let mut current = vm.heap.object_class(annotation)?;
         let mut seen = BTreeSet::new();
         while let Some(id) = current {
             if !seen.insert(id) {
@@ -82,7 +82,7 @@ impl Converters {
             if let Some((_, f)) = self.transformers.iter().find(|(class, _)| *class == id) {
                 return Ok(Some(f.clone()));
             }
-            current = vm.heap.get(id)?.parent;
+            current = vm.heap.get_class(id)?.superclass;
         }
         Ok(None)
     }
@@ -113,7 +113,9 @@ impl Converters {
         let Value::Class(class) = vm.reference_get_class(value)? else {
             return Err(invalid("value class"));
         };
-        let typed = matches!(value,Value::Object(id) if vm.heap.get(*id)?.pair.is_none() && vm.heap.get(*id)?.reference.is_none() && collections::typed_class(&vm.heap,*id)?.is_some());
+        // PklConverter.convertTyped walks ancestry. Its scalar, collection,
+        // function and metaclass overloads deliberately use exact class keys.
+        let typed = matches!(value, Value::Object(id) if classes::typed_instance(&vm.heap, *id)?);
         let mut current = Some(class);
         let mut seen = BTreeSet::new();
         while let Some(class) = current {
@@ -126,10 +128,11 @@ impl Converters {
             if let Some((_, f)) = self.types.iter().find(|(id, _)| *id == class) {
                 return Ok(Some(f.clone()));
             }
-            if !typed {
-                break;
-            }
-            current = vm.heap.get(class)?.parent;
+            current = if typed {
+                vm.heap.get_class(class)?.superclass
+            } else {
+                None
+            };
         }
         Ok(None)
     }

@@ -1,7 +1,8 @@
 //! Class publication ownership and scheduler regressions. Heap counts and
 //! injected instruction suspension below are Rust architecture assertions;
 //! same-evaluator Java byte comparisons are recorded by the Stage 12 runner.
-//! Retained module graphs include their one builtin Module parent; executable
+//! Class descriptors and their prototypes are separate traced entries.
+//! Retained module graphs include the builtin superclass graph; executable
 //! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
 
@@ -94,11 +95,11 @@ fn partial_singleton_survives_failure_scalar_gc_and_wrapper_retry() {
             .unwrap(),
         LazyState::Unevaluated
     );
-    // Exactly the module, its builtin Module parent, Base and partial Child survive.
-    assert_retained(vm.collect(&[]), initialized, 2, 0);
+    // Base and partial Child each retain a distinct descriptor/prototype pair.
+    assert_retained(vm.collect(&[]), initialized, 4, 0);
     vm.start(scalar, vec![]).unwrap();
     assert_eq!(ready(&mut vm), Ok(Value::Int(7.into())));
-    assert_retained(vm.collect(&[]), initialized, 2, 0);
+    assert_retained(vm.collect(&[]), initialized, 4, 0);
     let child = member(&mut vm, &module, "wrapper").unwrap();
     assert!(matches!(child, Value::Class(_)));
     assert_eq!(member(&mut vm, &module, "Child"), Ok(child.clone()));
@@ -109,11 +110,11 @@ fn partial_singleton_survives_failure_scalar_gc_and_wrapper_retry() {
     );
     vm.start(disposable, vec![child.clone()]).unwrap();
     let transient = ready(&mut vm).unwrap();
-    assert_retained(vm.collect(&[]), initialized, 3, 0);
+    assert_retained(vm.collect(&[]), initialized, 5, 0);
     vm.start(scalar, vec![]).unwrap();
     assert_eq!(ready(&mut vm), Ok(Value::Int(7.into())));
     let collected = vm.collect(&[]);
-    assert_retained(collected, initialized, 2, 0);
+    assert_retained(collected, initialized, 4, 0);
     assert!(collected.reclaimed >= 1);
     assert_eq!(
         vm.start(disposable, vec![transient]).unwrap_err().kind,
@@ -122,12 +123,12 @@ fn partial_singleton_survives_failure_scalar_gc_and_wrapper_retry() {
     assert_eq!(member(&mut vm, &module, "early"), Ok(Value::Int(10.into())));
     // The cached instance and its captured Dynamic are now additionally rooted
     // through the class's captured module, rather than as temporary builders.
-    assert_retained(vm.collect(&[]), initialized, 4, 0);
+    assert_retained(vm.collect(&[]), initialized, 6, 0);
     assert_eq!(
         member(&mut vm, &module, "late").unwrap_err().kind,
         ErrorKind::MissingMember
     );
-    assert_retained(vm.collect(&[]), initialized, 4, 0);
+    assert_retained(vm.collect(&[]), initialized, 6, 0);
     assert_eq!(member(&mut vm, &module, "Child"), Ok(child));
     vm.close();
     assert_eq!(vm.heap_stats().live, 0);
@@ -143,7 +144,7 @@ fn class_free_evaluations_still_release_unrooted_modules() {
     let initialized = vm.collect(&[]);
     assert_eq!(member(&mut vm, &module, "scalar"), Ok(Value::Int(7.into())));
     // Base retains the shared Module prototype, but the user module is stale.
-    assert_eq!(vm.collect(&[]).live, initialized.live - 1);
+    assert_eq!(vm.collect(&[]).live, initialized.live - 2);
     assert_eq!(
         vm.member_state(module.as_object().unwrap(), "scalar")
             .unwrap_err()
@@ -240,7 +241,7 @@ fn partial_class_identity_crosses_contexts_while_ordinary_failure_retries_and_re
         host_ready(&mut session, 0).unwrap_err().kind,
         ErrorKind::Type
     );
-    assert_retained(session.collect(&[]), initialized, 2, 0);
+    assert_retained(session.collect(&[]), initialized, 4, 0);
     session.start(class, vec![module.clone()], 0, None).unwrap();
     let partial = host_ready(&mut session, 0).unwrap();
     session
@@ -251,7 +252,7 @@ fn partial_class_identity_crosses_contexts_while_ordinary_failure_retries_and_re
         .reenter(&outer, ordinary, vec![module.clone()], 2, None)
         .unwrap();
     let failed = request(&mut session, 2, "mem:ordinary");
-    assert_retained(session.collect(&[]), initialized, 3, 1);
+    assert_retained(session.collect(&[]), initialized, 5, 1);
     session
         .reenter(&failed, class, vec![module.clone()], 2, None)
         .unwrap();
@@ -260,7 +261,7 @@ fn partial_class_identity_crosses_contexts_while_ordinary_failure_retries_and_re
     session.resume(&failed, Err(failure.clone()), 2).unwrap();
     let error = host_ready(&mut session, 2).unwrap_err();
     assert_eq!((error.kind, error.message), (failure.kind, failure.message));
-    assert_retained(session.collect(&[]), initialized, 2, 1);
+    assert_retained(session.collect(&[]), initialized, 4, 1);
     session
         .reenter(&outer, ordinary, vec![module.clone()], 3, None)
         .unwrap();
@@ -277,14 +278,14 @@ fn partial_class_identity_crosses_contexts_while_ordinary_failure_retries_and_re
         .resume(&retry, Ok(Value::Int(42.into())), 3)
         .unwrap();
     assert_eq!(host_ready(&mut session, 3), Ok(Value::Int(42.into())));
-    assert_retained(session.collect(&[]), initialized, 2, 1);
+    assert_retained(session.collect(&[]), initialized, 4, 1);
     session
         .reenter(&outer, class, vec![module], 4, None)
         .unwrap();
     assert_eq!(host_ready(&mut session, 4), Ok(partial));
     session.resume(&outer, Ok(Value::Null), 4).unwrap();
     assert_eq!(host_ready(&mut session, 4), Ok(Value::Null));
-    assert_retained(session.collect(&[]), initialized, 2, 1);
+    assert_retained(session.collect(&[]), initialized, 4, 1);
     assert!(session.drain_cancelled_reads().is_empty());
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
@@ -315,7 +316,7 @@ fn terminal_events_release_partial_singletons_and_nested_pending_reads() {
             .reenter(&outer, ordinary, vec![module], 2, None)
             .unwrap();
         let inner = request(&mut session, 2, "mem:ordinary");
-        assert_retained(session.collect(&[]), initialized, 3, 1);
+        assert_retained(session.collect(&[]), initialized, 5, 1);
         match termination {
             ErrorKind::Cancelled => session.cancel(),
             ErrorKind::Closed => session.close(),
@@ -370,7 +371,7 @@ fn injected_initialization_read_exposes_prefix_without_advancing_parent_cursor()
         .start(wrapper, vec![module.clone()], 1, None)
         .unwrap();
     let initialization = request(&mut session, 1, "mem:initialization");
-    assert_retained(session.collect(&[]), initialized, 2, 0);
+    assert_retained(session.collect(&[]), initialized, 4, 0);
     session
         .reenter(&initialization, class, vec![module.clone()], 2, None)
         .unwrap();
@@ -386,13 +387,13 @@ fn injected_initialization_read_exposes_prefix_without_advancing_parent_cursor()
         host_ready(&mut session, 2).unwrap_err().kind,
         ErrorKind::MissingMember
     );
-    assert_retained(session.collect(&[]), initialized, 4, 0);
+    assert_retained(session.collect(&[]), initialized, 6, 0);
     session.resume(&initialization, Ok(Value::Null), 3).unwrap();
     assert_eq!(
         host_ready(&mut session, 3).unwrap_err().kind,
         ErrorKind::Type
     );
-    assert_retained(session.collect(&[]), initialized, 4, 0);
+    assert_retained(session.collect(&[]), initialized, 6, 0);
     session.start(class, vec![module], 4, None).unwrap();
     assert_eq!(host_ready(&mut session, 4), Ok(partial));
     session.close();
@@ -422,12 +423,12 @@ fn development_vm_cancel_unwinds_temporary_work_but_keeps_published_class_identi
             event => panic!("expected ordinary read, got {event:?}"),
         }
     };
-    assert_retained(vm.collect(&[]), initialized, 3, 1);
+    assert_retained(vm.collect(&[]), initialized, 5, 1);
     // This development API is nonterminal, unlike HostSession::cancel.
     vm.cancel();
     assert_eq!(ready(&mut vm).unwrap_err().kind, ErrorKind::Cancelled);
     assert!(!vm.is_closed());
-    assert_retained(vm.collect(&[]), initialized, 2, 1);
+    assert_retained(vm.collect(&[]), initialized, 4, 1);
     assert_eq!(
         vm.resume(pending, Ok(Value::Null)).unwrap_err().kind,
         ErrorKind::Host
@@ -499,11 +500,11 @@ fn development_cancel_during_injected_initialization_preserves_only_published_pr
             event => panic!("expected injected initialization read, got {event:?}"),
         }
     }
-    assert_retained(vm.collect(&[]), initialized, 2, 0);
+    assert_retained(vm.collect(&[]), initialized, 4, 0);
     // Scheduler-only cancellation observation; no Java cancellation parity claim.
     vm.cancel();
     assert_eq!(ready(&mut vm).unwrap_err().kind, ErrorKind::Cancelled);
-    assert_retained(vm.collect(&[]), initialized, 2, 0);
+    assert_retained(vm.collect(&[]), initialized, 4, 0);
     assert_eq!(
         vm.member_state(module.as_object().unwrap(), "wrapper")
             .unwrap(),
@@ -516,7 +517,7 @@ fn development_cancel_during_injected_initialization_preserves_only_published_pr
         member(&mut vm, &module, "late").unwrap_err().kind,
         ErrorKind::MissingMember
     );
-    assert_retained(vm.collect(&[]), initialized, 4, 0);
+    assert_retained(vm.collect(&[]), initialized, 6, 0);
     vm.close();
     assert_eq!(vm.heap_stats().live, 0);
     assert_eq!(vm.heap_stats().slots, 0);

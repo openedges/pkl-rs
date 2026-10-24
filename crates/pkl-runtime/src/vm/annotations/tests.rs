@@ -54,7 +54,7 @@ scalar = 0
             "Expected an annotation class."
         );
         let target = member(&mut vm, &module, "Target").unwrap();
-        let id = target.heap_id().unwrap();
+        let id = vm.heap.declaration_object(&target).unwrap();
         let annotations = vm.heap.get(id).unwrap().annotations.clone();
         assert_eq!(annotations.len(), 1);
         let annotation = annotations[0].as_object().unwrap();
@@ -100,7 +100,8 @@ scalar = 0
     let mut observed = BTreeSet::new();
     let failure = loop {
         for value in vm.stack.iter() {
-            if let Some(id) = value.heap_id() {
+            if value.heap_id().is_some() {
+                let id = vm.heap.declaration_object(value).unwrap();
                 observed.extend(
                     vm.heap
                         .get(id)
@@ -124,7 +125,10 @@ scalar = 0
         .unwrap()
         .heap_id()
         .unwrap();
-    let object = vm.heap.get(owner).unwrap();
+    let object = vm
+        .heap
+        .get(vm.heap.get_class(owner).unwrap().prototype)
+        .unwrap();
     assert_eq!(
         object
             .members
@@ -165,7 +169,12 @@ class Owner {}
         .unwrap()
         .heap_id()
         .unwrap();
-    let annotation = vm.heap.get(owner).unwrap().annotations[0].clone();
+    let annotation = vm
+        .heap
+        .get(vm.heap.get_class(owner).unwrap().prototype)
+        .unwrap()
+        .annotations[0]
+        .clone();
     let child = member(&mut vm, &annotation, "child").unwrap();
     assert_eq!(member(&mut vm, &child, "number"), Ok(Value::Int(71.into())));
     assert_eq!(
@@ -200,7 +209,7 @@ class Owner {{
             let owner = result.unwrap().heap_id().unwrap();
             let annotation = vm
                 .heap
-                .get(owner)
+                .get(vm.heap.get_class(owner).unwrap().prototype)
                 .unwrap()
                 .member_annotations
                 .values()
@@ -254,19 +263,13 @@ fn nonterminal_cancel_reclaims_pending_builder_but_preserves_annotation_prefix()
         .class_singletons
         .values()
         .copied()
-        .find(|id| {
-            vm.heap
-                .get(*id)
-                .unwrap()
-                .class_definition
-                .as_ref()
-                .unwrap()
-                .name
-                .as_ref()
-                == "Owner"
-        })
+        .find(|id| vm.heap.class_definition(*id).unwrap().name.as_ref() == "Owner")
         .unwrap();
-    let retained = vm.heap.get(owner).unwrap().annotations[0]
+    let retained = vm
+        .heap
+        .get(vm.heap.get_class(owner).unwrap().prototype)
+        .unwrap()
+        .annotations[0]
         .heap_id()
         .unwrap();
     vm.collect(&[]);
@@ -385,10 +388,19 @@ class Owner {}
         .unwrap()
         .heap_id()
         .unwrap();
-    let annotation = first.heap.get(first_owner).unwrap().annotations[0].clone();
+    let annotation = first
+        .heap
+        .get(first.heap.get_class(first_owner).unwrap().prototype)
+        .unwrap()
+        .annotations[0]
+        .clone();
     assert_ne!(
         annotation,
-        second.heap.get(second_owner).unwrap().annotations[0]
+        second
+            .heap
+            .get(second.heap.get_class(second_owner).unwrap().prototype)
+            .unwrap()
+            .annotations[0]
     );
     assert_eq!(
         second

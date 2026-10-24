@@ -123,7 +123,7 @@ fn suspended_predicates_preserve_for_let_and_replacement_this_captures() {
     assert_eq!(ready(&mut session, 3), Ok(Value::string("outer:Ab")));
     assert_eq!(session.context_depth(), 0);
     // Only evaluator-owned base values and the exact lexical descriptors survive.
-    assert_eq!(initialized.added_values(session.collect(&[]), 5), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 5), -2);
     assert_eq!(
         session
             .start(outer_entry, vec![stale_root], 10, None)
@@ -183,7 +183,7 @@ fn failed_predicate_retries_from_a_fresh_target_with_fresh_captured_values() {
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer:Ab")));
     assert!(!session.is_closed());
     // Only evaluator-owned base values and the exact lexical descriptors survive.
-    assert_eq!(initialized.added_values(session.collect(&[]), 5), -1);
+    assert_eq!(initialized.added_values(session.collect(&[]), 5), -2);
     assert_eq!(
         session
             .start(outer_entry, vec![stale_root], 10, None)

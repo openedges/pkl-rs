@@ -37,6 +37,14 @@ def source_paths(root: Path):
         'tools/platform/frame-transformer-session.test.mjs',
         'tools/platform/capture-frame-transformer.mjs',
         'tools/platform/capture-frame-transformer.test.mjs',
+        'tools/class_values_oracle.py', 'tools/class_values_exports.py',
+        'tools/class_values_fixtures.py', 'tools/class_values_compare.py',
+        'tools/class_metadata_oracle.py', 'tools/class_metadata_fixtures.py',
+        'tools/tests/test_class_metadata_fixtures.py',
+        'tools/java/M2ClassValuesProbe.java', 'tools/java/M2ClassExportProbe.java',
+        'tools/tests/test_class_values_fixtures.py', 'tools/tests/test_class_values_compare.py',
+        'tools/platform/class-values-session.mjs', 'tools/platform/class-values-session.test.mjs',
+        'tools/platform/capture-class-values.mjs', 'tools/platform/capture-class-values.test.mjs',
         'tools/platform/resource-session.mjs',
         'tools/m2_identifier_tables.py', 'tools/java/M2IdentifierProbe.java',
         'tools/m2_unicode_escape_tables.py', 'tools/java/M2UnicodeEscapeProbe.java',
@@ -51,6 +59,8 @@ def source_paths(root: Path):
                                ('tests/fixtures/m2', '*'),
                                ('tests/fixtures/m2-deprecation', '*'),
                                ('tests/fixtures/m2-frame-transformers', '*'),
+                               ('tests/fixtures/m2-class-values', '*'),
+                               ('tests/fixtures/m2-class-metadata-completion', '*'),
                                ('tests/fixtures/m2-parameterized-object-bodies', '*')]:
         paths.update(path.relative_to(root).as_posix() for path in (root / directory).rglob(pattern) if path.is_file())
     profile = json.loads((root / PROFILE).read_bytes())
