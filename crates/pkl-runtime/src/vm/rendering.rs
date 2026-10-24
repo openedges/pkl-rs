@@ -618,6 +618,12 @@ impl Vm {
                         }
                         run.append(&text);
                     }
+                    Value::DataSize(value) => {
+                        if run.format == Format::Json {
+                            return self.pcf_unrenderable(run, &Value::DataSize(value));
+                        }
+                        run.append(&value.to_string());
+                    }
                     Value::Duration(value) => {
                         if run.format == Format::Json {
                             return self.pcf_unrenderable(run, &Value::Duration(value));

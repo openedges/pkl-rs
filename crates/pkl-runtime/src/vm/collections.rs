@@ -1461,6 +1461,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         | Value::Int(_)
                         | Value::Float(_)
                         | Value::Duration(_)
+                        | Value::DataSize(_)
                         | Value::String(_)) => {
                             return Err(external_amendment_error(value_type_name(&value)));
                         }

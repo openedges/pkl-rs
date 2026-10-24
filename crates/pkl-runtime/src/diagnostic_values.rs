@@ -70,6 +70,7 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
         Value::Int(_) => "Int".into(),
         Value::Float(_) => "Float".into(),
         Value::Duration(_) => "Duration".into(),
+        Value::DataSize(_) => "DataSize".into(),
         Value::String(_) => "String".into(),
         Value::Bytes(_) => "Bytes".into(),
         Value::Function(id) => function_name(*id, heap)?,
@@ -379,6 +380,7 @@ impl Renderer<'_> {
             Value::Int(value) => self.append(&value.to_string()),
             Value::Float(value) => self.append(&crate::numeric::double_to_string(**value)),
             Value::Duration(value) => self.append(&value.to_string()),
+            Value::DataSize(value) => self.append(&value.to_string()),
             Value::String(value) => {
                 self.append_units(value.quoted().encode_utf16());
             }
@@ -392,16 +394,8 @@ impl Renderer<'_> {
                 }
                 if bytes.len() > 8 {
                     self.append(", ... <total size: ");
-                    let (divisor, unit) = if bytes.len() >= 1_000_000_000 {
-                        (1_000_000_000, "gb")
-                    } else if bytes.len() >= 1_000_000 {
-                        (1_000_000, "mb")
-                    } else if bytes.len() >= 1_000 {
-                        (1_000, "kb")
-                    } else {
-                        (1, "b")
-                    };
-                    let count = bytes.len() as f64 / divisor as f64;
+                    let size = bytes.size();
+                    let count = size.value();
                     self.append(&if count.fract() == 0.0 {
                         format!("{count:.0}")
                     } else if (count * 10.0).fract() == 0.0 {
@@ -410,7 +404,7 @@ impl Renderer<'_> {
                         format!("{count:.2}")
                     });
                     self.append(".");
-                    self.append(unit);
+                    self.append(size.unit().symbol());
                     self.append(">");
                 }
                 self.append(")");
@@ -428,7 +422,8 @@ impl Renderer<'_> {
                 let name = self.heap.get(*id)?.type_alias.as_ref().ok_or_else(|| {
                     RuntimeError::new(ErrorKind::InvalidBytecode, "type alias has no definition")
                 })?;
-                self.append(name);
+                // VmTypeAlias.toString uses the simple name for pkl.base.
+                self.append(name.strip_prefix("pkl.base#").unwrap_or(name));
             }
             Value::Class(id) => {
                 self.append(&self.heap.class_display_name(*id)?);

@@ -24,6 +24,7 @@ pub enum Value {
     Int(Number<i64>),
     Float(Number<f64>),
     Duration(crate::duration::Duration),
+    DataSize(crate::data_size::DataSize),
     String(PklString),
     Bytes(Bytes),
     Object(ObjectId),
@@ -40,6 +41,7 @@ impl PartialEq for Value {
             (Self::Int(a), Self::Int(b)) => a == b,
             (Self::Float(a), Self::Float(b)) => a == b,
             (Self::Duration(a), Self::Duration(b)) => a == b,
+            (Self::DataSize(a), Self::DataSize(b)) => a == b,
             (Self::String(a), Self::String(b)) => a == b,
             (Self::Bytes(a), Self::Bytes(b)) => a == b,
             (Self::Object(a), Self::Object(b))
@@ -66,6 +68,7 @@ impl Value {
             Self::Int(value) => value.reference().map(Reference::Scalar),
             Self::Float(value) => value.reference().map(Reference::Scalar),
             Self::Duration(value) => Some(Reference::Scalar(value.reference())),
+            Self::DataSize(value) => Some(Reference::Scalar(value.reference())),
             Self::Bytes(value) => Some(Reference::Scalar(value.reference())),
             Self::String(value) => Some(Reference::Scalar(value.reference())),
             Self::Bool(value) => Some(Reference::Scalar(Token::boolean(*value))),

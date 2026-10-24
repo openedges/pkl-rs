@@ -46,6 +46,10 @@ type Trace = BTreeMap<Span, Observation>;
 
 #[derive(Clone)]
 enum Mismatch {
+    AliasSource {
+        inner: Box<Mismatch>,
+        source: Arc<crate::value::RuntimeSource>,
+    },
     InsertedFrame {
         inner: Box<Mismatch>,
         frame: RuntimeFrame,
@@ -77,7 +81,7 @@ impl Mismatch {
     ) -> Result<TypeDiagnostic, RuntimeError> {
         use crate::diagnostic_values::{render_string as render, type_name as actual_type};
         Ok(match self {
-            Self::InsertedFrame { inner, .. } => inner.diagnostic(heap, module, indent)?,
+            Self::InsertedFrame { inner, .. } | Self::AliasSource { inner, .. } => inner.diagnostic(heap, module, indent)?,
             Self::Simple { span, ty, value } => TypeDiagnostic::Simple { span: *span, message: type_error_at_width(ty, value, module, heap, 80usize.saturating_sub(indent))?.message },
             Self::Constraint { span, value, body_span, observations, .. } => TypeDiagnostic::Constraint {
                 span: *span, value: render(value, heap, module, 80usize.saturating_sub(indent))?, body_span: *body_span,
@@ -98,7 +102,9 @@ impl Mismatch {
     }
     fn roots(&self, roots: &mut Vec<Value>) {
         match self {
-            Self::InsertedFrame { inner, .. } => inner.roots(roots),
+            Self::InsertedFrame { inner, .. } | Self::AliasSource { inner, .. } => {
+                inner.roots(roots)
+            }
             Self::Simple { value, .. } => roots.push(value.clone()),
             Self::Constraint {
                 value,
@@ -164,6 +170,7 @@ struct PairState {
 }
 #[derive(Clone)]
 enum Task {
+    AliasSource(Arc<crate::value::RuntimeSource>),
     PairResult(PairState),
     ReferenceDomainResult {
         value: Value,
@@ -742,7 +749,8 @@ impl Vm {
                     if let Mismatch::Constraint {
                         source: Some(source),
                         ..
-                    } = &mismatch
+                    }
+                    | Mismatch::AliasSource { source, .. } = &mismatch
                     {
                         // Keep the constraint's source section, but qualify its
                         // member with the same logical root that supplied
@@ -826,6 +834,16 @@ impl Vm {
             task
         };
         match task {
+            Task::AliasSource(source) => {
+                let outcome = run
+                    .outcome
+                    .take()
+                    .ok_or_else(|| invalid("alias type outcome"))?;
+                run.outcome = Some(outcome.map_err(|inner| Mismatch::AliasSource {
+                    inner: Box::new(inner),
+                    source,
+                }));
+            }
             Task::PairResult(mut state) => {
                 let outcome = run
                     .outcome
@@ -904,7 +922,25 @@ impl Vm {
                         .push(Task::ReferenceDomainResult { value, ty, span });
                     self.push_type_child(&mut run, domain, span, 0)?;
                 }
-                TypeCheck::NamedAlias { expanded, .. } => {
+                TypeCheck::NamedAlias {
+                    expanded,
+                    default_origin,
+                    ..
+                } => {
+                    let span = if matches!(
+                        expanded.unaliased(),
+                        TypeCheck::Union {
+                            string_literals: true,
+                            ..
+                        }
+                    ) && let Some(origin) = default_origin
+                        && let Some(source) = origin.source
+                    {
+                        run.tasks.push(Task::AliasSource(source));
+                        origin.span
+                    } else {
+                        span
+                    };
                     self.push_type_child(&mut run, *expanded, span, 0)?
                 }
                 TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {

@@ -1,7 +1,7 @@
 //! The bounded scalar adapters preserve original Java values and diagnostics.
 use pkl_runtime::evaluation::{
-    EvaluationOptions, scalar_expression_text_with_options, scalar_expressions_text_with_options,
-    scalar_expressions_with_options,
+    EvaluationOptions, scalar_expression_text_with_options, scalar_expression_with_options,
+    scalar_expressions_text_with_options, scalar_expressions_with_options,
 };
 use std::{fs, path::Path};
 
@@ -12,6 +12,26 @@ fn units(bytes: &[u8]) -> Vec<u16> {
         .iter()
         .map(|unit| u16::from_be_bytes(*unit))
         .collect()
+}
+
+#[test]
+fn data_size_values_reach_both_existing_scalar_adapters() {
+    // The expected string is the actual Java oracle03 `typed-property` result
+    // in tests/fixtures/m2-data-size. A property carries that expression across
+    // these existing bounded property-path adapters.
+    let source = "class SizeHolder { x: DataSize = 1.mb }\nresult = new SizeHolder {}.x\n";
+    let uri = "file:///stage57/scalar-data-size.pkl";
+    let options = EvaluationOptions::default();
+    let text =
+        scalar_expression_text_with_options(source, uri, "scalar-data-size", "result", options)
+            .unwrap();
+    let string =
+        scalar_expression_with_options(source, uri, "scalar-data-size", "result", options).unwrap();
+    assert_eq!(
+        text.encode_utf16().collect::<Vec<_>>(),
+        vec![49, 46, 109, 98]
+    );
+    assert_eq!(string.as_bytes(), b"1.mb");
 }
 
 #[test]

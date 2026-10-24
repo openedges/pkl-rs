@@ -1545,6 +1545,53 @@ Java `StrictMath.pow`, 정수 나눗셈 오류와 `Double.compare`를 Rust 기�
 관찰은 `gpt-6-sol / high`에 배정하고, 주 에이전트가 직전 구현의 커밋·소스 연결·문서
 검토를 담당합니다. 런타임 구현은 새 기준 커밋에서 분리해 진행합니다.
 
+### Stage 57 — 공통 DataSize 구현과 로컬 검증
+
+공통 값·VM 구현은 `gpt-6-astra / xhigh`, 독립 Java 관찰·플랫폼 도구·검토는
+`gpt-6-sol / high`로 진행했습니다. Java 기준 A를 `a062d81`, 추가 Bytes·단위·범위
+관찰 A2를 `e05508f`에 커밋·푸시했습니다. 11개 단위와 double 값·참조 identity,
+단위 변환·산술·비교·hash·타입·기본값·문자열·진단을 공통 런타임에 연결했습니다.
+`Bytes(...)`의 UInt8 검사와 평가 순서, 빈 값 identity, `Bytes.size`와 lexical scope
+규칙도 고정 Java 관찰로 검증했습니다. 별도 scalar 문자열 adapter에서 빠진
+DataSize 분기는 독립 검토로 발견해 String·UTF-16 회귀와 함께 수정했습니다.
+
+[구현 체크포인트](reports/m2/stage57-implementation-checkpoint.json)는 마지막 후보의
+native·Node·Chromium 각각 **255개 질의의 두 반복, 510회 모두 일치**를 기록합니다.
+각 반복의 정상 결과 233개와 일반 언어 오류 22개에 대해 원시 UTF-8·UTF-16·상태와
+전체 호출 protocol을 비교했습니다. Java export의 타입·비트·hash·wrapper identity는
+별도 관찰이며 후보 typed export 호환성 통과로 계산하지 않습니다.
+
+수정하지 않은 upstream 원본 17개는 **9개 일치·8개 불일치**입니다.
+`basic/dataSize.pkl`·`api/dataSize.pkl`과 세 Bytes 생성 오류, 두 Class 원본 및
+두 converter 원본의 전체 CLI 채널이 일치했습니다. 나머지는 Bytes의 `toList`·`md5`,
+List의 `toBytes`, Duration의 산술·`isBetween`, Int의 상속된 `ifNonNull`,
+Pkl Binary 원본의 `module.toMap()`에서 차이가 납니다. 마지막 두 Binary 사례는
+encoding까지 도달하지 않았으므로 encoding 결과를 검증했다고 주장하지 않습니다.
+각 원본은 Java·Rust 한 번씩 실행했으며 오프라인 재검증을 추가 guest 반복으로 세지
+않습니다. 이 17개 선택 결과는 전체 4,416개 실행 가능 사례의 현재 결과가 아닙니다.
+
+Rust 필수 검사 다섯 개가 모두 통과했고 workspace는 **921회 통과·실패 0·기존
+ignored 1개**입니다. 앞선 디스크 부족과 그때 손상된 테스트 산출물의 재실행 실패는
+별도 기록으로 보존했습니다. 소스 변경 없이 손상된 compiler cache 5개와 해당
+fingerprint만 보관 후 재생성했으며, 최종 165,210개 검증 입력은 전후 동일합니다.
+Python native comparator 16개와 최종 portable comparator 14개, JS 검사 10개와
+syntax 검사 4개를 기록했습니다. 브라우저 첫 취득의 HTTP 404도 보존하고, 검증 서버의
+정확한 favicon 경로를 제공한 뒤 같은 고정 Wasm·N-API artifact로 새로 취득했습니다.
+기존 M1 플랫폼 회귀는 환경별 Java 일치 6,076/6,078과 regex 실패 두 개를 유지합니다.
+
+목록 갱신은 구현 연결 hash 93개뿐이며 4,527개 사례·475개 요구사항과 기존 실행 상태를
+유지했습니다. 검증 자료와 이전 실패를 각각
+[필수 검사](reports/m2/stage57-validation-publication.json),
+[native](reports/m2/stage57-native-publication.json),
+[플랫폼](reports/m2/stage57-platform-publication.json),
+[원본](reports/m2/stage57-original-publication.json)에 게시합니다. 모두 macOS arm64
+로컬 증거이며 원격 CI·성능 목표 달성으로 표기하지 않습니다.
+
+다음 우선순위는 이번 원본 실패에서 확인한 공통 `Any.ifNonNull`과 Duration·Bytes의
+남은 값 연산입니다. IntSeq·Regex와 전체 metadata·typed export·renderer·Binary
+의무도 유지합니다. 선택된 DataSize 결과로 이 의무를 닫지 않으며 **M2의 아홉 영역과
+엄격한 전체 완료 gate는 계속 진행 중**입니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

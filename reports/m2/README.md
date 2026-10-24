@@ -1,6 +1,42 @@
 # M2 language evidence
 
-The latest [Stage56 implementation checkpoint](stage56-implementation-checkpoint.json)
+The latest [Stage57 implementation checkpoint](stage57-implementation-checkpoint.json)
+adds the shared DataSize value, conversion, arithmetic, comparison, type,
+rendering and diagnostic paths, plus related Bytes construction and cached size.
+The [DataSize contract](../../docs/m2-data-size.md) defines the exact boundaries.
+
+Native, Node N-API and Chromium each match all 510 selected string observations:
+two ordered 255-query sessions, with 233 successful values and 22 ordinary errors
+per session. Complete query bytes, UTF-16, status, result/error payloads and session
+protocols match the independent Java string authority. Typed public exports remain
+required and unexecuted; Java export observations are not Rust API passes.
+
+The unchanged original selection has nine raw CLI matches and eight mismatches.
+Both `basic/dataSize.pkl` and `api/dataSize.pkl` pass. Failures remain in Bytes and
+Duration operations, `Any.ifNonNull`, and the Pkl Binary test's `module.toMap()`
+precondition. These are 17 Java and 17 Rust executions, not a current whole-language
+result. No encoding compatibility is inferred from failures before encoding.
+
+All five required Rust checks pass locally with Rust 1.98.1: 921 passing test
+executions and one ignored probe. Disk exhaustion, corrupted compiler-cache launch
+failures, and the first browser HTTP404 capture remain preserved. The corrected
+capture reuses the same frozen Wasm/N-API binaries and records its changed transport
+source separately. M1 retains two Java regex mismatches per target despite a
+passing architecture contract. Full M2, product APIs, other release platforms,
+speed and peak-memory requirements remain open.
+
+[Validation](stage57-validation-evidence.tar.gz),
+[native comparison](stage57-native-evidence.tar.gz),
+[earlier native candidates](stage57-native-history-evidence.tar.gz),
+[platform comparison](stage57-platform-evidence.tar.gz), and
+[original CLI](stage57-original-evidence.tar.gz) archives preserve the raw evidence.
+Their publication reports verify complete member identities and state exclusions.
+No hosted CI result is claimed. The Java authority commits and bindings are
+separate from candidate implementation provenance.
+
+### Stage56 Class descriptors and inheritance
+
+The [Stage56 implementation checkpoint](stage56-implementation-checkpoint.json)
 records canonical Class descriptors, separate instance prototypes, actual
 superclasses, shared type/converter lookup and corrected typed equality/hash
 member traversal in `25aa0487603d80da17ca77011137139ca9c290b0`.

@@ -1999,6 +1999,7 @@ impl<'a> Resolver<'a> {
                             | "UInt16"
                             | "UInt32"
                             | "UInt"
+                            | "DataSizeUnit"
                     )
                 {
                     binding = Binding::BaseTypeAlias;

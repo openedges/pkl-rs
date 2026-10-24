@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "scope": "Actual post-commit Git blob binding of canonical Java DataSize authority A; no candidate compatibility claim",
+  "commit": "a062d817db369e9d7bc31c7febec321bff1fd4fe",
+  "files": [
+    {
+      "path": "tests/fixtures/m2-data-size/README.md",
+      "git_blob_oid": "3d5225710eb891221769aaf061f42830d96d6b7f",
+      "bytes": 3866,
+      "sha256": "60bb0e83119c985ca6fec89f428859a5ae9a31d199e975641bde5b409d8132b7"
+    },
+    {
+      "path": "tests/fixtures/m2-data-size/archive-identity.json",
+      "git_blob_oid": "c60ce7bbf4e03cd5a0003b6d1341b1e31a77dd0c",
+      "bytes": 1187,
+      "sha256": "d0393863471e38e555a949661682ba837b1caf7def9909cb126699f9cf760c9c"
+    },
+    {
+      "path": "tests/fixtures/m2-data-size/cases.json",
+      "git_blob_oid": "323a376e8ade0bbeb5dffb9c7383df0edc911165",
+      "bytes": 39612,
+      "sha256": "0e6f86ac0c9da84e7dce1b622bd99e2577b24cae4cf921ece7b6ef02a6a18a39"
+    },
+    {
+      "path": "tests/fixtures/m2-data-size/manifest.json",
+      "git_blob_oid": "a758fdac1e3bbedfd3bef9f4458f86a757df2024",
+      "bytes": 643,
+      "sha256": "b6ec2a7fb2623cf3bbdac22dcb3a268b710c5203bee4a48b12188e0ab82f9ed2"
+    },
+    {
+      "path": "tests/fixtures/m2-data-size/module.pkl",
+      "git_blob_oid": "f85a01345cf060687e86a1ab170863952652dcb5",
+      "bytes": 329,
+      "sha256": "fba4e81343683bbe433660e168905537fbd7d6b0dd44699e2b61b321b0a23982"
+    },
+    {
+      "path": "tests/fixtures/m2-data-size/oracle-evidence.tar.gz",
+      "git_blob_oid": "eee6c3702015780dbafd26cff86f4866240c9ba2",
+      "bytes": 1453461,
+      "sha256": "51e14a2c80836141c61a9bbb18aaa708e6a963c238132854e55e7bf6493c6b8e"
+    },
+    {
+      "path": "tests/fixtures/m2-data-size/queries.tsv",
+      "git_blob_oid": "e1ae78c7e17f38c1129d45e8d76af4962829ebe8",
+      "bytes": 7821,
+      "sha256": "2946ae533b25cb6ca76ab8694cd866cfb1781dfc9ec29b0c9584a28229ac4728"
+    },
+    {
+      "path": "tools/data_size_fixtures.py",
+      "git_blob_oid": "fe350794823b3237adf6c1637f468257c84a90b3",
+      "bytes": 10223,
+      "sha256": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705"
+    },
+    {
+      "path": "tools/data_size_oracle.py",
+      "git_blob_oid": "c04f67b78d1ea0b87a302f5cacd092647be8a0b5",
+      "bytes": 30347,
+      "sha256": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803"
+    },
+    {
+      "path": "tools/java/DataSizeSplitOracle.java",
+      "git_blob_oid": "14ee70ad577c4bd1903febf7d0af8591b4bdaeb5",
+      "bytes": 7308,
+      "sha256": "a4389bb16f2cc784288dd79859afb2991ac574ac84f63319ad56c583f91cabbb"
+    },
+    {
+      "path": "tools/tests/test_data_size_fixtures.py",
+      "git_blob_oid": "7973c87ee4403777b83b45897fb4d713e64d412e",
+      "bytes": 7701,
+      "sha256": "91c7cf6d0b1d8d9dacbb450080a6c44c59bcec6a82d8a90ce2af5e8cf9311273"
+    }
+  ],
+  "count": 11,
+  "method": "Read actual git show blob bytes and recompute framed SHA1 and SHA256; all final fixture/tool source identities match",
+  "validation_source_timing_limit": "Original Python source seal followed validation; no independent pre-test snapshot was acquired. This binding does not retroactively create one."
+}

@@ -3,6 +3,7 @@
 //! M1 prototypes establish shared source, value, heap, and Host contracts.
 //! Their explicitly bounded language and probe coverage is not a complete evaluator.
 
+pub mod data_size;
 pub mod diagnostic;
 mod diagnostic_names;
 mod diagnostic_values;

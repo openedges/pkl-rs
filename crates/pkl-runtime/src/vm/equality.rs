@@ -20,6 +20,7 @@ pub(crate) enum Atom {
     Int(i64),
     Float(u64),
     Duration(u64, Option<crate::value_identity::Token>),
+    DataSize(u64, Option<crate::value_identity::Token>),
     String(PklString),
     Bytes(Arc<[u8]>),
     Structural(u64),
@@ -55,6 +56,19 @@ fn atom(heap: &Heap, value: &Value) -> Result<Atom, RuntimeError> {
         } else {
             v.to_bits()
         }),
+        Value::DataSize(v) => {
+            let bytes = v.value_in(crate::data_size::DataSizeUnit::Bytes);
+            Atom::DataSize(
+                if bytes == 0.0 {
+                    0
+                } else if bytes.is_nan() {
+                    f64::NAN.to_bits()
+                } else {
+                    bytes.to_bits()
+                },
+                bytes.is_nan().then_some(v.reference()),
+            )
+        }
         Value::Duration(v) => {
             let nanos = v.nanos();
             // VmDuration.equals compares doubles numerically after an identity
@@ -111,6 +125,7 @@ impl Vm {
                 Some((bits ^ (bits >> 32)) as i32)
             }
             Value::Duration(value) => Some(value.java_hash()),
+            Value::DataSize(value) => Some(value.java_hash()),
             Value::String(value) => Some(value.encode_utf16().fold(0i32, |hash, unit| {
                 hash.wrapping_mul(31).wrapping_add(i32::from(unit))
             })),

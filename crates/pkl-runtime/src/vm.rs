@@ -13,10 +13,12 @@ use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, RuntimeFrame, V
 pub(crate) mod amendment;
 pub(crate) mod annotations;
 pub(crate) mod builtins;
+mod bytes;
 pub(crate) mod classes;
 mod code_storage;
 mod collection_transforms;
 pub mod collections;
+mod data_size;
 pub(crate) mod deprecation;
 pub use code_storage::CodeStorage;
 mod compiler_expressions;
@@ -323,6 +325,10 @@ pub enum Instruction {
         template: usize,
     },
     DefaultClassInstance,
+    CheckByte,
+    MakeBytes {
+        length: usize,
+    },
     Undefined(Arc<str>),
     AbstractMember {
         name: PklString,
@@ -1997,10 +2003,12 @@ impl Vm {
             .enumerate()
         {
             // A recoverable mismatch becomes VmException only at PklRootNode.
-            // Let bodies within that root do not catch the original mismatch.
+            // BytesLiteralNode converts its element mismatch before returning,
+            // so an enclosing let does catch that exception, like a type cast.
             if index == 0
                 && (callback_root.is_some()
                     || error.type_diagnostic.is_some()
+                        && !matches!(instruction(frame), Some(Instruction::CheckByte))
                         && !self
                             .program
                             .metadata
@@ -2095,9 +2103,16 @@ impl Vm {
             {
                 let reading_inferred_parent = frame_index + 1 < diagnostic_frames.len()
                     && matches!(instruction(frame), Some(Instruction::InferPropertyParent));
+                // Both BytesLiteralNode and LetExprNode insert a frame under
+                // the same call target; the enclosing let replaces the byte
+                // argument's insertion while retaining the UInt8 type frame.
+                let replaced_byte_argument =
+                    matches!(instruction(frame), Some(Instruction::CheckByte))
+                        && let_frames.contains_key(&logical_targets[frame_index]);
                 if (!frame.hides_callsite()
                     || callback_root.is_some_and(|(index, _)| index == frame_index))
                     && !reading_inferred_parent
+                    && !replaced_byte_argument
                     && !(unavailable_origin && frame_index + 1 == diagnostic_frames.len())
                 {
                     error.frames.push(RuntimeFrame {
@@ -4415,6 +4430,8 @@ impl Vm {
                     self.stack.push(function);
                 } else if matches!(receiver, Value::Function(_)) {
                     return Err(self.function_member_error(&receiver, name, method)?);
+                } else if matches!(receiver, Value::DataSize(_)) {
+                    return Err(self.data_size_member_error(name, method));
                 } else {
                     let receiver = receiver.as_object()?;
                     if method
@@ -4499,6 +4516,9 @@ impl Vm {
                     || self.primitive_member(&receiver, name, method)?
                 {
                     return Ok(());
+                }
+                if matches!(receiver, Value::DataSize(_)) {
+                    return Err(self.data_size_member_error(name, method));
                 }
                 let receiver = receiver.as_object()?;
                 if method || !self.collection_builtin(receiver, name)? {
@@ -4825,6 +4845,21 @@ impl Vm {
                 });
                 self.stack.push(Value::Object(id));
             }
+            Instruction::CheckByte => self.check_byte()?,
+            Instruction::MakeBytes { length } => {
+                if self.stack.len() < length {
+                    return Err(invalid("Bytes literal stack"));
+                }
+                let values = self.stack.split_off(self.stack.len() - length);
+                let bytes = values
+                    .into_iter()
+                    .map(|value| match value {
+                        Value::Int(value) => Ok(value.get() as u8),
+                        _ => Err(invalid("checked Bytes argument")),
+                    })
+                    .collect::<Result<Vec<_>, _>>()?;
+                self.stack.push(Value::Bytes(bytes.into()));
+            }
             Instruction::DefaultClassInstance => {
                 let Value::Class(id) = self.pop()? else {
                     return Err(RuntimeError::new(ErrorKind::Type, "Expected a class."));
@@ -5131,6 +5166,10 @@ impl Vm {
                     ),
                     Value::Float(value) => Value::Float((-value.get()).into()),
                     Value::Duration(value) => Value::Duration(crate::duration::Duration::new(
+                        -value.value(),
+                        value.unit(),
+                    )),
+                    Value::DataSize(value) => Value::DataSize(crate::data_size::DataSize::new(
                         -value.value(),
                         value.unit(),
                     )),
@@ -5527,6 +5566,9 @@ fn binary(instruction: &Instruction, left: Value, right: Value) -> Result<Value,
                 equal
             },
         ));
+    }
+    if let Some(value) = data_size::binary(instruction, &left, &right)? {
+        return Ok(value);
     }
     match (left, right) {
         (Value::Int(left), Value::Int(right)) => Ok(match instruction {
@@ -6780,6 +6822,10 @@ impl Compiler<'_> {
                     .get(&expression.span)
                     .ok_or_else(|| invalid("missing static binding"))?
                 {
+                    Binding::BaseTypeAlias if name.as_ref() == "DataSizeUnit" => {
+                        output.push(Instruction::LoadBaseModule);
+                        output.push(Instruction::GetMember(name));
+                    }
                     Binding::BaseTypeAlias => output.push(Instruction::BuiltinTypeAlias(name)),
                     Binding::BaseClass => {
                         let ty = reference::base_type(&name)
@@ -6885,6 +6931,8 @@ fn scalar_string(value: &Value) -> Result<PklString, RuntimeError> {
         Value::Int(value) => value.to_string().into(),
         Value::Float(value) => crate::numeric::double_to_string(**value).into(),
         Value::Duration(value) => value.to_string().into(),
+        Value::DataSize(value) => value.to_string().into(),
+        Value::Bytes(value) => value.to_string().into(),
         Value::String(value) => value.clone(),
         _ => {
             return Err(RuntimeError::new(
@@ -7021,7 +7069,7 @@ fn type_name_value(ty: &TypeCheck, module: &str) -> PklString {
                 name,
                 module: declaring_module,
             } => {
-                if builtins::name(*id).is_some() {
+                if builtins::name(*id).is_some() || classes::base_class_name(*id).is_some() {
                     name.to_string()
                 } else {
                     format!("{}#{name}", declaring_module.as_deref().unwrap_or(module))
@@ -7083,6 +7131,7 @@ fn value_type_name(value: &Value) -> &'static str {
         Value::Int(_) => "Int",
         Value::Float(_) => "Float",
         Value::Duration(_) => "Duration",
+        Value::DataSize(_) => "DataSize",
         Value::String(_) => "String",
         Value::Bytes(_) => "Bytes",
         Value::Object(_) => "Dynamic",
@@ -7641,7 +7690,9 @@ impl Compiler<'_> {
                 .iter()
                 .map(|argument| self.compile_type_at(argument, limit, aliases, parameters))
                 .collect::<Result<Vec<_>, _>>()?;
-            let fallback = if crate::diagnostic_names::BASE_PROPERTIES.contains(&path[0].as_str()) {
+            let fallback = if path[0] != "DataSizeUnit"
+                && crate::diagnostic_names::BASE_PROPERTIES.contains(&path[0].as_str())
+            {
                 let previous = self.runtime_type_fallback.replace(ty.span);
                 let result = self.compile_type_at(ty, limit, aliases, parameters);
                 self.runtime_type_fallback = previous;
@@ -8160,6 +8211,7 @@ impl Compiler<'_> {
                         "Int" => TypeCheck::Int,
                         "Float" => TypeCheck::Float,
                         "Duration" => TypeCheck::Duration,
+                        "DataSizeUnit" => self.declared_type(ty, Vec::new())?,
                         "Number" => TypeCheck::Number,
                         "String" => TypeCheck::String,
                         "Bytes" => TypeCheck::Bytes,
@@ -8397,6 +8449,10 @@ impl Compiler<'_> {
                 }
             }
             TypeCheck::Class { id, .. } => {
+                if classes::BuiltinClass::from_type(check) == Some(classes::BuiltinClass::DataSize)
+                {
+                    return Ok(false);
+                }
                 if self.type_scopes.iter().flatten().any(|member| {
                     self.declaration_base + member.expr.span.start == *id
                         && matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. })

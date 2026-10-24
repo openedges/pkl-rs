@@ -3,6 +3,7 @@ use super::*;
 
 #[derive(Clone, Copy, Debug)]
 pub enum Operation {
+    DataSize(data_size::Operation),
     Between,
     Uppercase,
     Contains,
@@ -121,6 +122,7 @@ pub(super) fn blocks(
         });
         result.insert((class.into(), name.into()), block);
     }
+    result.extend(data_size::blocks(blocks, metadata));
     result
 }
 
@@ -200,6 +202,36 @@ impl Vm {
         method: bool,
     ) -> Result<bool, RuntimeError> {
         if !method {
+            if let Some(unit) = crate::data_size::DataSizeUnit::parse(name) {
+                let number = match receiver {
+                    Value::Int(value) => Some(value.get() as f64),
+                    Value::Float(value) => Some(value.get()),
+                    _ => None,
+                };
+                if let Some(value) = number {
+                    self.stack
+                        .push(Value::DataSize(crate::data_size::DataSize::new(
+                            value, unit,
+                        )));
+                    return Ok(true);
+                }
+            }
+            if let Value::DataSize(size) = receiver {
+                let value = size.value();
+                let result = match name {
+                    "value" if value.is_finite() && value.fract() == 0.0 => {
+                        Value::Int((value as i64).into())
+                    }
+                    "value" => Value::Float(value.into()),
+                    "unit" => Value::String(size.unit().symbol_value()),
+                    "isPositive" => Value::Bool(value >= 0.0),
+                    "isBinaryUnit" => Value::Bool(size.unit().is_binary()),
+                    "isDecimalUnit" => Value::Bool(size.unit().is_decimal()),
+                    _ => return Ok(false),
+                };
+                self.stack.push(result);
+                return Ok(true);
+            }
             if let Some(unit) = crate::duration::DurationUnit::parse(name) {
                 let number = match receiver {
                     Value::Int(value) => Some(value.get() as f64),
@@ -231,6 +263,14 @@ impl Vm {
             }
         }
         if !method && let Value::Bytes(bytes) = receiver {
+            if name == "length" {
+                self.stack.push(Value::Int((bytes.len() as i64).into()));
+                return Ok(true);
+            }
+            if name == "size" {
+                self.stack.push(Value::DataSize(bytes.size()));
+                return Ok(true);
+            }
             if name == "base64" {
                 self.stack.push(Value::String(resources::base64(bytes)));
                 return Ok(true);
@@ -261,10 +301,23 @@ impl Vm {
             Value::Bool(_) => "Boolean",
             Value::Int(_) => "Int",
             Value::Float(_) => "Float",
+            Value::DataSize(_) => "DataSize",
             Value::String(_) => "String",
             _ => return Ok(false),
         };
         if method {
+            if matches!(receiver, Value::DataSize(_)) && matches!(name, "getClass" | "toString") {
+                let function = self.native_reference_method(
+                    receiver.clone(),
+                    if name == "toString" {
+                        "scalarToString"
+                    } else {
+                        name
+                    },
+                );
+                self.stack.push(function);
+                return Ok(true);
+            }
             let Some(&block) = self
                 .program
                 .primitive_methods
@@ -274,7 +327,8 @@ impl Vm {
             };
             let arity = match name {
                 "isBetween" => 2,
-                "contains" | "dropLast" | "xor" | "implies" => 1,
+                "contains" | "dropLast" | "xor" | "implies" | "toDataSize" | "toUnit"
+                | "ifNonNull" => 1,
                 _ => 0,
             };
             let id = self.heap.allocate(Object {
@@ -323,6 +377,7 @@ impl Vm {
             .and_then(|f| f.environment.this_value.clone())
             .ok_or_else(|| invalid("primitive receiver"))?;
         match operation {
+            Operation::DataSize(operation) => self.data_size_operation(receiver, operation)?,
             Operation::BooleanXor | Operation::BooleanImplies => {
                 let Value::Bool(left) = receiver else {
                     return Err(invalid("Boolean method receiver"));

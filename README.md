@@ -59,6 +59,14 @@ identity rules to the common engine. Its Java fixtures and bounded comparisons
 remain separate from the Stage 46 whole-selection result above. Standard-module
 admission policies, the JSON parser and complete renderer coverage remain open.
 
+The [DataSize checkpoint](docs/m2-data-size.md) adds shared unit conversion,
+value operations, type checks, rendering and related Bytes construction/size
+behavior. Its selected string comparisons match Java on native, N-API and
+Chromium; the unchanged basic/API DataSize programs also match. The expanded
+original selection still has eight mismatches involving Bytes, Duration,
+`Any.ifNonNull` and the Pkl Binary test path. Typed exports and complete standard
+library coverage remain open; see the [recorded evidence](reports/m2/README.md).
+
 ## Goals
 
 - Compatibility with the Pkl 0.32.0 language, standard library, CLI, REPL, server, and public APIs.

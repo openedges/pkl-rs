@@ -1257,6 +1257,29 @@ impl Compiler<'_> {
                         return Ok(());
                     }
                 }
+                if let Some(unit) = crate::data_size::DataSizeUnit::parse(name) {
+                    let number = match &receiver.unparenthesized().kind {
+                        ExprKind::Int(value) => Some(*value as f64),
+                        ExprKind::Float(value) => Some(*value),
+                        ExprKind::Unary {
+                            op: UnaryOp::Negate,
+                            operand,
+                        } => match operand.kind {
+                            ExprKind::Float(value) => Some(-value),
+                            _ => None,
+                        },
+                        _ => None,
+                    };
+                    if let Some(value) = number {
+                        // AstBuilder folds numeric literal units into one
+                        // ConstantValueNode. Reusing this code preserves its
+                        // wrapper identity; dynamic getters allocate per read.
+                        output.push(Instruction::Constant(Value::DataSize(
+                            crate::data_size::DataSize::new(value, unit),
+                        )));
+                        return Ok(());
+                    }
+                }
                 if matches!(expression.kind, ExprKind::NullableMember(_, _)) {
                     work.push(Work::NullableMember(expression, name));
                     work.push(Work::Visit(receiver));
@@ -1305,6 +1328,46 @@ impl Compiler<'_> {
                     && self.resolved.names.get(&callee.span) == Some(&Binding::ImplicitMethod)
                 {
                     match name.as_str() {
+                        "Bytes" => {
+                            if arguments.is_empty() {
+                                output.push(Instruction::Constant(Value::Bytes(
+                                    crate::value::Bytes::empty(),
+                                )));
+                                return Ok(());
+                            }
+                            let constant = arguments
+                                .iter()
+                                .map(|argument| match argument.kind {
+                                    ExprKind::Int(value)
+                                        if (0..=127).contains(&value)
+                                            && !self.resolved.module.source
+                                                [argument.span.start..argument.span.end]
+                                                .starts_with('-') =>
+                                    {
+                                        Some(value as u8)
+                                    }
+                                    _ => None,
+                                })
+                                .collect::<Option<Vec<_>>>();
+                            if let Some(bytes) = constant {
+                                output.push(Instruction::Constant(Value::Bytes(bytes.into())));
+                            } else {
+                                work.push(Work::Emit(
+                                    Instruction::MakeBytes {
+                                        length: arguments.len(),
+                                    },
+                                    None,
+                                ));
+                                for argument in arguments.iter().rev() {
+                                    work.push(Work::Emit(
+                                        Instruction::CheckByte,
+                                        Some(self.executable_value_span(argument)),
+                                    ));
+                                    work.push(Work::Visit(argument));
+                                }
+                            }
+                            return Ok(());
+                        }
                         "Map" => {
                             if arguments.len() % 2 != 0 {
                                 let span = Span::new(expression.span.end - 1, expression.span.end);

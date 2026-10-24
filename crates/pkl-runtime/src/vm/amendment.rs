@@ -168,6 +168,7 @@ impl Vm {
                             | Value::Int(_)
                             | Value::Float(_)
                             | Value::Duration(_)
+                            | Value::DataSize(_)
                             | Value::String(_)
                     )
                 ) {

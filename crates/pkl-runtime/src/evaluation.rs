@@ -208,6 +208,7 @@ pub fn scalar_expressions_text_with_options(
                     Value::Int(value) => Ok(value.to_string().into()),
                     Value::Float(value) => Ok(crate::numeric::double_to_string(*value).into()),
                     Value::Duration(value) => Ok(value.to_string().into()),
+                    Value::DataSize(value) => Ok(value.to_string().into()),
                     Value::String(value) => Ok(value),
                     _ => Err(render_error_text(
                         &"the M2 probe does not yet stringify compound values".into(),

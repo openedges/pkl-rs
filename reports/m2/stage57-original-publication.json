@@ -1,0 +1,157 @@
+{
+  "archive": {
+    "bytes": 9831067,
+    "mode": 420,
+    "path": "reports/m2/stage57-original-evidence.tar.gz",
+    "sha256": "85b7929f97de81e0d9e22b91079b2e870416e056fae77ee999f7fd3eabcf6bbb"
+  },
+  "candidate": {
+    "build": {
+      "argv": [
+        "cargo",
+        "build",
+        "-p",
+        "pkl-runtime",
+        "--locked",
+        "--release",
+        "--example",
+        "module_eval_probe",
+        "--target-dir",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-24T08:57:27.986583+00:00",
+      "name": "build",
+      "started_utc": "2026-10-24T08:56:34.156701+00:00",
+      "stderr_sha256": "d9a350b7dded46915df5fa73e77b1011124d9a321de372683fd37a24e818dc96",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timed_out": false,
+      "timeout_seconds": 1200
+    },
+    "frozen_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage57-original-data-size-01/artifacts/module_eval_probe",
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/release/examples/module_eval_probe",
+    "sha256": "53672e71c0a024ce5f2751335e87e41957b5a948046025a6542b4cb303983794",
+    "source_binding": "recorded-build"
+  },
+  "case_count": 17,
+  "case_results": [
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/dataSize.pkl",
+      "raw_channels_match": true,
+      "status": "pass",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/dataSize.pkl",
+      "raw_channels_match": true,
+      "status": "pass",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/pklbinary/datasize.msgpack.yaml.pkl",
+      "raw_channels_match": false,
+      "status": "mismatch",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/bytes.pkl",
+      "raw_channels_match": false,
+      "status": "mismatch",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/bytes.pkl",
+      "raw_channels_match": false,
+      "status": "mismatch",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidBytes1.pkl",
+      "raw_channels_match": true,
+      "status": "pass",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidBytes2.pkl",
+      "raw_channels_match": true,
+      "status": "pass",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidBytes3.pkl",
+      "raw_channels_match": true,
+      "status": "pass",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidBytes4.pkl",
+      "raw_channels_match": false,
+      "status": "mismatch",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/duration.pkl",
+      "raw_channels_match": false,
+      "status": "mismatch",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/duration.pkl",
+      "raw_channels_match": false,
+      "status": "mismatch",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/pklbinary/duration.msgpack.yaml.pkl",
+      "raw_channels_match": false,
+      "status": "mismatch",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/class1.pkl",
+      "raw_channels_match": true,
+      "status": "pass",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/class4.pkl",
+      "raw_channels_match": true,
+      "status": "pass",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/any.pkl",
+      "raw_channels_match": false,
+      "status": "mismatch",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/anyConverter.pkl",
+      "raw_channels_match": true,
+      "status": "pass",
+      "upstream_expected_exit_match": true
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/anyConverterError.pkl",
+      "raw_channels_match": true,
+      "status": "pass",
+      "upstream_expected_exit_match": true
+    }
+  ],
+  "full_m2_complete": false,
+  "full_member_reread_verified": true,
+  "full_public_api_comparison_passed": false,
+  "integrity_status": "passed",
+  "member_count": 4766,
+  "performance_targets_achieved": false,
+  "schema": 1,
+  "scope": "Seventeen unchanged upstream original module CLI contracts; all raw results retained, including eight mismatches; offline re-verifications are not additional guest executions",
+  "selected_status": "failed",
+  "source_files": 4765,
+  "source_stable": true,
+  "status_counts": {
+    "mismatch": 8,
+    "pass": 9
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "archive": {
+    "bytes": 13617326,
+    "full_reread_verified": true,
+    "manifest_sha256": "1534cbc8ad90b0fcb5c779dd0bf704225ba661f44f452cf572054a004afe3a06",
+    "members": 23059,
+    "original_sources_stable_before_after": true,
+    "path": "reports/m2/stage57-platform-evidence.tar.gz",
+    "sha256": "7c6f458fe3695ee83b641c6107958c9cbf1bbec51dc4d7cf371bf62595598fa5",
+    "source_members": 23056
+  },
+  "candidate_typed_export_comparison_passed": false,
+  "excluded": [
+    {
+      "identity": {
+        "bytes": 17592,
+        "sha256": "dca1aa7436b5150c88217bcfa45b72be927e69f4f400ea7132a1dc995f4adeef"
+      },
+      "path": "target/m2/stage57-platform-validation-01/__pycache__/acquire.cpython-314.pyc",
+      "reason": "Python bytecode compiler cache; source script and raw execution records included"
+    },
+    {
+      "identity": {
+        "bytes": 17626,
+        "sha256": "f58adc677e6fb7e7d1337766cfc3c0e34c6f305c050dc24b5477e188751ceb32"
+      },
+      "path": "target/m2/stage57-platform-validation-02/__pycache__/acquire.cpython-314.pyc",
+      "reason": "Python bytecode compiler cache; source script and raw execution records included"
+    },
+    {
+      "identity": {
+        "bytes": 18645,
+        "sha256": "17c4ebd89fd5cc0cbe0901c46d04f08c6e764dec8c43be2febe72d89b37ee314"
+      },
+      "path": "target/m2/stage57-platform-validation-03/__pycache__/capture-only.cpython-314.pyc",
+      "reason": "Python bytecode compiler cache; source script and raw execution records included"
+    },
+    {
+      "identity": {
+        "bytes": 18653,
+        "sha256": "a4d45c105b672c1ed7df0ea7edf5fa589a9736e12f2954d56c4708294fc8f078"
+      },
+      "path": "target/m2/stage57-platform-validation-04/__pycache__/capture-only.cpython-314.pyc",
+      "reason": "Python bytecode compiler cache; source script and raw execution records included"
+    },
+    {
+      "path": "target/debug, target/release, target/wasm32-unknown-unknown",
+      "reason": "compiler caches and generated build workspaces; frozen copied M1 artifacts/source files are included"
+    },
+    {
+      "path": "target/m2/stage57-build-space-02..04",
+      "reason": "separate cache preservation archives and manifests, not platform behavior evidence"
+    },
+    {
+      "path": "target/m2/stage57-native-build-08",
+      "reason": "separate native helper build evidence"
+    }
+  ],
+  "final_portable_capture": {
+    "bytes": 32121,
+    "chromium_sessions": 2,
+    "complete": true,
+    "http_404": 0,
+    "http_favicon_204": 2,
+    "napi_sessions": 2,
+    "ordered_rows_per_session": 255,
+    "path": "target/m2/stage57-data-size-portable-capture-02/report.json",
+    "sha256": "128c9e193f0bf104c65fc095d4f44031ee7327d4d6b3167ad34294890461e81c"
+  },
+  "first_portable_capture": {
+    "bytes": 30937,
+    "complete": false,
+    "path": "target/m2/stage57-data-size-portable-capture-01/report.json",
+    "preserved_failure": "Chromium repeat0 browser console404; actual candidate channels retained",
+    "sha256": "746bb1900986bb05b22639f16a5678212ccf7544047e2ee258c70a00803d102c"
+  },
+  "kind": "Stage57 local bounded platform evidence publication",
+  "m1_report": {
+    "bytes": 3388260,
+    "contract": "pass",
+    "known_regex_mismatches": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "ordered_rows": 6078,
+    "path": "target/m2/stage57-m1-platform-contract-01/report.json",
+    "sha256": "4ed3ad42aebe4c958521a69afe71755f1f13106b34e67df02b053b4dbfb34ecc",
+    "strict_compatibility": "fail",
+    "strict_matches_per_target": 6076
+  },
+  "performance_targets_achieved": false,
+  "portable_admission": {
+    "bytes": 900,
+    "chromium_raw_channel_passes": 510,
+    "full_public_api_comparison_passed": false,
+    "integrity": "passed",
+    "napi_raw_channel_passes": 510,
+    "normal_python_tests": "14/14 pass",
+    "optimized_python_tests": "14/14 pass",
+    "path": "target/m2/stage57-portable-comparator-checks-04/admission-summary.json",
+    "public_export_status": "not-executed-required",
+    "sha256": "3418f7ee4404de6b1b90ef356312943a535a42785b70494b21b6fa816f2f45ba",
+    "strict_string_passed": true
+  },
+  "schema": 1,
+  "whole_M2_complete": false
+}

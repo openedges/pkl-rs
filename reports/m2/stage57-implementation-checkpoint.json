@@ -1,0 +1,357 @@
+{
+  "archives": {
+    "native": {
+      "bytes": 14670452,
+      "path": "reports/m2/stage57-native-evidence.tar.gz",
+      "sha256": "664309fa174f20e721fb8bd260b1a974b4f0517f0b5bfb42ffa1c3cb52e726ed"
+    },
+    "native-history": {
+      "bytes": 66726734,
+      "path": "reports/m2/stage57-native-history-evidence.tar.gz",
+      "sha256": "6b81ae420d190535ba37b1b3b9887927dbad14514fdbc3de50df644e54f8a576"
+    },
+    "original": {
+      "bytes": 9831067,
+      "path": "reports/m2/stage57-original-evidence.tar.gz",
+      "sha256": "85b7929f97de81e0d9e22b91079b2e870416e056fae77ee999f7fd3eabcf6bbb"
+    },
+    "platform": {
+      "bytes": 13617326,
+      "path": "reports/m2/stage57-platform-evidence.tar.gz",
+      "sha256": "7c6f458fe3695ee83b641c6107958c9cbf1bbec51dc4d7cf371bf62595598fa5"
+    },
+    "validation": {
+      "bytes": 37107322,
+      "path": "reports/m2/stage57-validation-evidence.tar.gz",
+      "sha256": "3017d9caec31b254414126bdba955ff604a653be54d1e93beefacede196595ad"
+    }
+  },
+  "baseline": {
+    "pantry_gitlink": "904a68184e54da378b0a0e8a911a3fab3956f693",
+    "pkl": "0.32.0",
+    "pkl_gitlink": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "rust": "1.98.1"
+  },
+  "changes": [
+    "Shared DataSize value with eleven units, floating-point and reference semantics",
+    "Unit members/conversion, arithmetic, comparison, hashing, nominal and alias type checking",
+    "DataSize strings through common scalar, renderer and diagnostic paths",
+    "Bytes literal argument checks, evaluation order, lexical lookup, unsigned strings and cached DataSize size",
+    "Raw native and portable string acquisition/admission with separate typed-export obligations"
+  ],
+  "full_public_api_comparison_passed": false,
+  "hosted_ci_claimed": false,
+  "implementation_commit_binding": "Pending actual post-commit binding; no predicted commit identity",
+  "inventory": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 4416,
+      "unimplemented": 71,
+      "unmapped": 40
+    },
+    "changed_requirement_link_hashes": 93,
+    "existing_case_ids_order_and_states_preserved": true,
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "java_authorities": {
+    "canonical_commit": "a062d817db369e9d7bc31c7febec321bff1fd4fe",
+    "supplement_commit": "e05508fcc5200b6330011c15a5f1bcc6a34c3a13"
+  },
+  "kind": "m2-implementation-checkpoint",
+  "local_host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "m1_platform_regression": {
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "oracle_passed": {
+      "browser": 6076,
+      "node": 6076,
+      "rust": 6076
+    },
+    "report": {
+      "bytes": 3388260,
+      "path": "target/m2/stage57-m1-platform-contract-01/report.json",
+      "sha256": "4ed3ad42aebe4c958521a69afe71755f1f13106b34e67df02b053b4dbfb34ecc"
+    },
+    "shared_engine_passed": 6078,
+    "total": 6078
+  },
+  "native": {
+    "build_binding": {
+      "artifact": {
+        "bytes": 16812592,
+        "sha256": "388467e76fd4f51d64adbd077a3fdcdd8e929bb9f65c4a7c12b13224f797837a"
+      },
+      "build_manifest": {
+        "bytes": 1260,
+        "sha256": "98fc189757803142c54be59998cbf66a359ac8e7bda53d30fa4c475cbc5d5e4b"
+      },
+      "scope": "Recorded native build, not portable artifacts",
+      "source_count": 252
+    },
+    "counts": {
+      "pass": 510
+    },
+    "ordinary_error_rows_per_session": 22,
+    "query_ids_per_session": 255,
+    "repetitions": 2,
+    "report": {
+      "bytes": 1760766,
+      "path": "target/m2/stage57-native-comparison-02/report.json",
+      "sha256": "7d2f15349504cf4f6d21a984ec336a7822a0ffad2bfad29832c1a10dbdcf948b"
+    },
+    "source_changes": [],
+    "strict_string_passed": true,
+    "successful_rows_per_session": 233
+  },
+  "originals": {
+    "case_count": 17,
+    "cases": [
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/dataSize.pkl",
+        "raw_channels_match": true,
+        "status": "pass"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/dataSize.pkl",
+        "raw_channels_match": true,
+        "status": "pass"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/pklbinary/datasize.msgpack.yaml.pkl",
+        "raw_channels_match": false,
+        "status": "mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/bytes.pkl",
+        "raw_channels_match": false,
+        "status": "mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/bytes.pkl",
+        "raw_channels_match": false,
+        "status": "mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidBytes1.pkl",
+        "raw_channels_match": true,
+        "status": "pass"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidBytes2.pkl",
+        "raw_channels_match": true,
+        "status": "pass"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidBytes3.pkl",
+        "raw_channels_match": true,
+        "status": "pass"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/invalidBytes4.pkl",
+        "raw_channels_match": false,
+        "status": "mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/duration.pkl",
+        "raw_channels_match": false,
+        "status": "mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/duration.pkl",
+        "raw_channels_match": false,
+        "status": "mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/pklbinary/duration.msgpack.yaml.pkl",
+        "raw_channels_match": false,
+        "status": "mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/class1.pkl",
+        "raw_channels_match": true,
+        "status": "pass"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/class4.pkl",
+        "raw_channels_match": true,
+        "status": "pass"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/any.pkl",
+        "raw_channels_match": false,
+        "status": "mismatch"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/anyConverter.pkl",
+        "raw_channels_match": true,
+        "status": "pass"
+      },
+      {
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/anyConverterError.pkl",
+        "raw_channels_match": true,
+        "status": "pass"
+      }
+    ],
+    "guest_execution_count": {
+      "java": 17,
+      "rust": 17
+    },
+    "integrity_status": "passed",
+    "offline_reverification_is_guest_repeat": false,
+    "report": {
+      "bytes": 1254860,
+      "path": "target/m2/stage57-original-data-size-01/report.json",
+      "sha256": "801cde924aae758f9ced947e11b00c7ab16e6619caa6ed87af5f0d0df7b3d822"
+    },
+    "statuses": {
+      "mismatch": 8,
+      "pass": 9
+    },
+    "strict_selected_status": "failed"
+  },
+  "performance_targets_achieved": false,
+  "portable": {
+    "admission": {
+      "bytes": 900,
+      "path": "target/m2/stage57-portable-comparator-checks-04/admission-summary.json",
+      "sha256": "3418f7ee4404de6b1b90ef356312943a535a42785b70494b21b6fa816f2f45ba"
+    },
+    "full_public_api_comparison_passed": false,
+    "integrity": "passed",
+    "public_export_status": "not-executed-required",
+    "source_manifest_sha256": "344033ffb0247d4a4657df779805763ebd760d2bd02a4a91e0528cbafa99abc5",
+    "strict_string_passed": true,
+    "targets": {
+      "chromium": {
+        "counts": {
+          "pass": 510
+        },
+        "sessions": [
+          {
+            "issues": [],
+            "protocol_origin": "browser-page-returned-UTF8",
+            "repeat": 0
+          },
+          {
+            "issues": [],
+            "protocol_origin": "browser-page-returned-UTF8",
+            "repeat": 1
+          }
+        ]
+      },
+      "napi": {
+        "counts": {
+          "pass": 510
+        },
+        "sessions": [
+          {
+            "issues": [],
+            "pid": 33365,
+            "repeat": 0
+          },
+          {
+            "issues": [],
+            "pid": 33369,
+            "repeat": 1
+          }
+        ]
+      }
+    }
+  },
+  "preserved_failures": [
+    "Initial native value/default/Bytes failures and historical incomplete wrapper",
+    "Rust01 ENOSPC with incomplete source-after capture",
+    "Rust02 cached test binary launch failure; source stable",
+    "Two platform orchestration prelaunch failures with no candidate execution",
+    "First actual portable capture contains Chromium HTTP404 and remains incomplete",
+    "Eight original-module mismatches",
+    "Two Java regex mismatches per M1 target"
+  ],
+  "provenance_limits": [
+    "Historical portable checker01/02 tool byte copies are absent; recorded hashes and test outcomes are retained",
+    "Java-authority Python validation has no independent pre-test timestamped source-hash record; timing limit remains explicit",
+    "M1 build collected the earlier capture JS; the final capture-only JS delta is separately recorded with identical Rust artifacts"
+  ],
+  "remaining_required_scope": [
+    "Shared Any.ifNonNull for remaining value kinds",
+    "Complete Duration and Bytes operations",
+    "IntSeq, Regex and remaining builtin/metadata semantics",
+    "Public typed exports and provider APIs",
+    "Pkl Binary and remaining renderers; original binary tests stop before encoding",
+    "Whole-language final regression, all nine M2 workstreams and full completion gate",
+    "Other release platforms, speed and peak-memory goals"
+  ],
+  "required_rust": {
+    "base_commit": "e05508fcc5200b6330011c15a5f1bcc6a34c3a13",
+    "commands": [
+      [
+        "references",
+        0
+      ],
+      [
+        "format",
+        0
+      ],
+      [
+        "clippy",
+        0
+      ],
+      [
+        "workspace-tests",
+        0
+      ],
+      [
+        "wasm-runtime",
+        0
+      ]
+    ],
+    "complete": true,
+    "copied_sources": 26,
+    "failed": 0,
+    "filtered_out_reported_in_child_processes": 36,
+    "free_disk_after": 3491516416,
+    "ignored": 1,
+    "ignored_test_lines": [
+      "test frontend_probe ... ignored, invoked explicitly by the M1 differential evidence runner"
+    ],
+    "measured": 0,
+    "passed": 921,
+    "prior_attempts": {
+      "stage57-compiler-cache-recovery-01": "Raw archived and verified five confirmed corrupt outputs plus 25 matching fingerprint files, then selectively removed only those cache artifacts. No production changes.",
+      "stage57-rust-validation-01": "Failed/incomplete: ENOSPC at test linking and final source-manifest write; source stability unverified.",
+      "stage57-rust-validation-02": "Failed: five ENOSPC-corrupted cached outputs caused test-launch Permission denied; before/after source manifests match."
+    },
+    "raw_report_sha256": "5bc6861f286ef9a38980910a695612c48677ea9a7c38b0929f5288406ecacc94",
+    "scope": "Actual local required Rust checks. Test totals are executions, including explicitly spawned child test processes, not unique tests or language/API compatibility coverage.",
+    "source_after_manifest_sha256": "37176eaf2a34890a27ebd9ee68f9bc09a6fd292521b0b9746808951d7640536b",
+    "source_before_manifest_sha256": "37176eaf2a34890a27ebd9ee68f9bc09a6fd292521b0b9746808951d7640536b",
+    "source_changes": [],
+    "source_count": 165210,
+    "test_summary_groups": 128
+  },
+  "schema": 1,
+  "scope": "Bounded shared DataSize implementation, related Bytes construction/size, exact selected strings and unchanged original CLI comparisons; full M2 remains incomplete",
+  "source_base_commit": "e05508fcc5200b6330011c15a5f1bcc6a34c3a13",
+  "stage": 57,
+  "tooling_tests": {
+    "java_canonical_authority": 16,
+    "java_supplement_authority": 18,
+    "js_session_and_capture": 10,
+    "js_syntax_commands": 4,
+    "native_comparator": 16,
+    "portable_comparator": 14,
+    "portable_optimized_python_repeat": 14,
+    "test_executions_are_not_distinct_feature_counts": true
+  },
+  "whole_m2_complete": false
+}

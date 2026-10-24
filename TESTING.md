@@ -242,6 +242,21 @@ The full gate must fail while required language implementations, mappings,
 adapters, or passing executions are missing. It cannot be replaced with the
 selected-case gate.
 
+The [DataSize contract](docs/m2-data-size.md) defines two complete ordered string
+sessions per target against the independent split Java fixture. Verify native
+capture integrity with `tools/data_size_compare.py --verify-report`, strict
+strings with `--verify-string`, and the separate required API gate with
+`--verify-full`. Each option takes an existing capture directory. A recorded
+helper build is required for a fresh `--output ... --build-record ...` acquisition.
+
+The portable verifier takes `--capture`, `--m1`, `--build-wrapper`, and
+`--capture-wrapper` evidence paths,
+with `--gate integrity|string|full-api`. It binds a frozen M1 build separately
+from any explicitly recorded capture-only transport change. Browser page protocol
+and console errors remain distinct from operating-system process channels. Both
+native and portable full API gates remain unsuccessful while typed exports are
+unexecuted. Original upstream programs retain their own complete CLI contract.
+
 The [method-deprecation contract](docs/m2-deprecation.md) records the pinned Java
 logger matrix and a separate experiment with sequential evaluators in one JVM.
 Its independent fixture verifier checks raw UTF-8, UTF-16, frame, and callback

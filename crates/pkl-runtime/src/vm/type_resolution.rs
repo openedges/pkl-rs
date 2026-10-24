@@ -586,6 +586,25 @@ impl Vm {
                 first = false;
                 owner = object.parent;
             }
+            // DataSizeUnit is an authored base alias. Resolve its retained
+            // declaration after lexical/user parents, preserving its union's
+            // source section instead of constructing a source-less substitute.
+            if name.as_ref() == "DataSizeUnit"
+                && let Some(modules::CachedModule::Value(base)) =
+                    self.modules_stdlib.get("pkl:base")
+            {
+                let base = *base;
+                self.frames
+                    .last_mut()
+                    .expect("type resolution frame")
+                    .type_resolution = Some(DeclaredRun {
+                    need,
+                    phase: Phase::Type,
+                    retry_instruction,
+                    imported: None,
+                });
+                return self.force(base, base, name, false, true, false);
+            }
             return Err(RuntimeError::new(
                 ErrorKind::MissingType,
                 format!("Cannot find type `{name}`."),

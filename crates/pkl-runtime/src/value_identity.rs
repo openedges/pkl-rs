@@ -140,13 +140,32 @@ impl<T: fmt::Display> fmt::Display for Number<T> {
 pub struct Bytes {
     data: Arc<[u8]>,
     reference: Token,
+    size: Arc<std::sync::OnceLock<crate::data_size::DataSize>>,
 }
 impl Bytes {
+    pub(crate) fn empty() -> Self {
+        static EMPTY: std::sync::OnceLock<Bytes> = std::sync::OnceLock::new();
+        EMPTY.get_or_init(|| Bytes::from([])).clone()
+    }
     pub fn into_data(self) -> Arc<[u8]> {
         self.data
     }
     pub(crate) fn reference(&self) -> Token {
         self.reference
+    }
+    pub fn size(&self) -> crate::data_size::DataSize {
+        use crate::data_size::{DataSize, DataSizeUnit};
+        *self.size.get_or_init(|| {
+            let unit = match self.data.len() as u64 {
+                0..=999 => DataSizeUnit::Bytes,
+                1_000..=999_999 => DataSizeUnit::Kilobytes,
+                1_000_000..=999_999_999 => DataSizeUnit::Megabytes,
+                1_000_000_000..=999_999_999_999 => DataSizeUnit::Gigabytes,
+                1_000_000_000_000..=999_999_999_999_999 => DataSizeUnit::Terabytes,
+                _ => DataSizeUnit::Petabytes,
+            };
+            DataSize::new(self.data.len() as f64, DataSizeUnit::Bytes).to_unit(unit)
+        })
     }
 }
 impl From<Arc<[u8]>> for Bytes {
@@ -154,6 +173,7 @@ impl From<Arc<[u8]>> for Bytes {
         Self {
             data,
             reference: Token::fresh(),
+            size: Arc::new(std::sync::OnceLock::new()),
         }
     }
 }
@@ -187,5 +207,17 @@ impl Eq for Bytes {}
 impl fmt::Debug for Bytes {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         self.data.fmt(f)
+    }
+}
+impl fmt::Display for Bytes {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("Bytes(")?;
+        for (index, byte) in self.data.iter().enumerate() {
+            if index != 0 {
+                f.write_str(", ")?;
+            }
+            write!(f, "{byte}")?;
+        }
+        f.write_str(")")
     }
 }

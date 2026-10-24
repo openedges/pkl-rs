@@ -273,11 +273,19 @@ impl Vm {
                         .last()
                         .and_then(|frame| frame.force.as_ref())
                         .map_or("", |force| force.name.as_ref());
-                    RuntimeError::new(
+                    let mut error = RuntimeError::new(
                         ErrorKind::MissingMember,
                         format!("Tried to read property `{name}` but its value is undefined."),
                     )
-                    .undefined()
+                    .undefined();
+                    // DefaultPropertyBodyNode reports the property name after
+                    // deferred alias resolution finds no default. The type's
+                    // source remains the origin for failures resolving it.
+                    error.span = self
+                        .frames
+                        .last()
+                        .and_then(|frame| self.program.metadata[frame.block].value_span);
+                    error
                 })?;
                 self.stack.push(value);
                 return Ok(());
@@ -311,17 +319,19 @@ impl Vm {
                     error.hint = Some("Abstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.".into());
                     return Err(error.at(source.span));
                 }
-                if matches!(
-                    base,
-                    TypeCheck::Boolean
-                        | TypeCheck::Int
-                        | TypeCheck::Float
-                        | TypeCheck::Duration
-                        | TypeCheck::String
-                        | TypeCheck::Bytes
-                        | TypeCheck::Reference { .. }
-                        | TypeCheck::Function { .. }
-                ) {
+                if classes::BuiltinClass::from_type(base) == Some(classes::BuiltinClass::DataSize)
+                    || matches!(
+                        base,
+                        TypeCheck::Boolean
+                            | TypeCheck::Int
+                            | TypeCheck::Float
+                            | TypeCheck::Duration
+                            | TypeCheck::String
+                            | TypeCheck::Bytes
+                            | TypeCheck::Reference { .. }
+                            | TypeCheck::Function { .. }
+                    )
+                {
                     return Err(collections::external_amendment_error(&type_name(
                         base,
                         &self.program.module_name,
@@ -373,6 +383,12 @@ impl Vm {
                     default: Some(index),
                     ..
                 } => run.tasks.push(DefaultTask::Visit(types.swap_remove(index))),
+                ty @ TypeCheck::Class { .. }
+                    if classes::BuiltinClass::from_type(&ty)
+                        == Some(classes::BuiltinClass::DataSize) =>
+                {
+                    run.value = None;
+                }
                 TypeCheck::Class { id, .. } => {
                     // A resolved builtin recipe can reach its default before any
                     // class-value expression has materialized the shared prototype.

@@ -130,9 +130,10 @@ fn append_members(
     let mut header = parsed.clone();
     // Pure Pkl declarations keep their actual bodies, annotations, class identity
     // and source owners. The JSON parser's external binding remains explicit.
-    header
-        .members
-        .retain(|member| uri == "pkl:json" && matches!(member.name.as_str(), "Property" | "Value"));
+    header.members.retain(|member| {
+        (uri == "pkl:json" && matches!(member.name.as_str(), "Property" | "Value"))
+            || (uri == "pkl:base" && member.name == "DataSizeUnit")
+    });
     let resolved = crate::resolver::resolve_module(&header)
         .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;
     let unit = compile_unit_into(
