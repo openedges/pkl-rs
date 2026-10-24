@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "repetitions": 2,
+  "scope": "Java-only public evaluateExpression exported Class reference/equals identity, changed source and evaluator lifecycle. Candidate public export API parity is unexecuted/required.",
+  "cases": [
+    {
+      "id": "public-export-identity",
+      "uri": "file:///stage56-class-values/exports.pkl",
+      "other_uri": "file:///stage56-class-values/other-exports.pkl",
+      "sources": {
+        "export-first": {
+          "source": "inputs/export-first.pkl",
+          "source_sha256": "b80c2db61e479ffd52195509a6a299fc897ddec5dceebfdb751e3e81f990be35"
+        },
+        "export-changed": {
+          "source": "inputs/export-changed.pkl",
+          "source_sha256": "f5a3bb70aec4012e51ecfd60060ea1171caab8182aa79ba8188277a772c820b8"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "files": {
+    "LICENSE": {
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    "README.md": {
+      "sha256": "8ce1e963d638c245f79af2f1005a303466d03a8cafb378260de0b68b9e228e8a",
+      "bytes": 3562
+    },
+    "cases.json": {
+      "sha256": "38f6bb25bfbdbb591096b34df014ab9fc9a808acb1d589bf079501366ad08996",
+      "bytes": 31358
+    },
+    "export-cases.json": {
+      "sha256": "8262f5a4121448e0f2ec97c8c6f2fc8bfa51b898f64b25e1ae6fec106389df5f",
+      "bytes": 837
+    },
+    "inputs/amended-module.pkl": {
+      "sha256": "c482fc268cc6ff6d2405895adfffd862e6ad3e797988926b4c9ac325e38ead2a",
+      "bytes": 29
+    },
+    "inputs/annotation-reentry.pkl": {
+      "sha256": "45bc6206e07c59135b01785b7c71cfbed142bfea45fc06f1a3b11acdd8f0d832",
+      "bytes": 102
+    },
+    "inputs/builtin-name-spoof.pkl": {
+      "sha256": "e7a4cf965383ca0915774df9d89a20b8bb8d75feab8299a0fc40238828e31fee",
+      "bytes": 84
+    },
+    "inputs/closed-user-superclass.pkl": {
+      "sha256": "41343ff8f11d2c20ca46017e3b1e646d28e74d2611a456bb9acd780ba6dc14aa",
+      "bytes": 54
+    },
+    "inputs/converter-exact-builtin-boundary.pkl": {
+      "sha256": "9b3a14be03a0edfecc4d652b4aebf28fede91f919a2ef7404f494e1d34521f40",
+      "bytes": 528
+    },
+    "inputs/converter-top-level.pkl": {
+      "sha256": "be3c6a7574a1b229e16b9b114788d13b0efd7dd19a5d669048ad8007c8d66bda",
+      "bytes": 91
+    },
+    "inputs/converter-values.pkl": {
+      "sha256": "ff8b547e5d6e289b27ea1a8d37f6c78f0dab975bb046d36276b2e6684ca09dd5",
+      "bytes": 2750
+    },
+    "inputs/explicit-typed.pkl": {
+      "sha256": "19170204203dd397eda8cd8a35969e6bbf74dfacb8e1336e8eb5fb441442d554",
+      "bytes": 44
+    },
+    "inputs/export-changed.pkl": {
+      "sha256": "f5a3bb70aec4012e51ecfd60060ea1171caab8182aa79ba8188277a772c820b8",
+      "bytes": 92
+    },
+    "inputs/export-first.pkl": {
+      "sha256": "b80c2db61e479ffd52195509a6a299fc897ddec5dceebfdb751e3e81f990be35",
+      "bytes": 90
+    },
+    "inputs/extended-module.pkl": {
+      "sha256": "d224b49c4ebfbc240a86c60868ca2287a6499d387c94f443ceb22f1613147473",
+      "bytes": 30
+    },
+    "inputs/external-any-near-prefix.pkl": {
+      "sha256": "99224445aea54572c7270f886f8537af925669d1c83b343d6620d6794ff40774",
+      "bytes": 59
+    },
+    "inputs/external-any-ordinary.pkl": {
+      "sha256": "d02d20dbd21a006521719b1919b6853fd01b9e059feeb9b6f1ed65a64b2ff7b0",
+      "bytes": 51
+    },
+    "inputs/external-any-pkl-prefix.pkl": {
+      "sha256": "e275fdddaa3e33159663b293e1dc35f18b0d2c9476bc624212058efb222a8083",
+      "bytes": 58
+    },
+    "inputs/external-closed-int-ordinary.pkl": {
+      "sha256": "c61d1e1eeea7ab63ada40a95d208bee998f5a07f7b3b8543fa23adea5bc2f01f",
+      "bytes": 51
+    },
+    "inputs/external-closed-int-pkl-prefix.pkl": {
+      "sha256": "d93f3166e0ca49bdda7692992540191f6bc20f26be03122e1a3d2f7c9cd8bc15",
+      "bytes": 58
+    },
+    "inputs/external-declaration-name-prefix.pkl": {
+      "sha256": "1b116cd00d61c0205baf37e1c23e6076cd5ff199089406560a670c87338cbf08",
+      "bytes": 55
+    },
+    "inputs/external-declaration-uri-prefix.pkl": {
+      "sha256": "563f5fbbf73905310df539f67bea3b6744649414bef844626d7f687b754bf3e0",
+      "bytes": 48
+    },
+    "inputs/get-class-override.pkl": {
+      "sha256": "f2d4aa2b64ef4e86000133fcaec23e89fbdc2a410a87f1197fff361a84ba5d65",
+      "bytes": 209
+    },
+    "inputs/isolation.pkl": {
+      "sha256": "9a1e5d5f92fba6c126bfa51a67874c583279f3e5c4001c88a3fb3dafc2c25cb4",
+      "bytes": 111
+    },
+    "inputs/module-main.pkl": {
+      "sha256": "97052163f971c4e69bf7fdb00ebf984aac14e30cbafc2864e6bcdbd1c953ef72",
+      "bytes": 250
+    },
+    "inputs/partial-annotation-failure.pkl": {
+      "sha256": "d7211378ac758fc17083db92b87091c003dc4b86ae782c21da959344a1dd46ce",
+      "bytes": 63
+    },
+    "inputs/partial-method-type-failure.pkl": {
+      "sha256": "b6cfdba06a126d1efca4358dd20b77e58144eefeabb801ca578e4a4eb59cca2b",
+      "bytes": 92
+    },
+    "inputs/partial-missing-superclass.pkl": {
+      "sha256": "ecba066759f06bddf54e4935c91169318010eaa9e7fc3e5d93dc9b3d60b41e0a",
+      "bytes": 68
+    },
+    "inputs/partial-property-type-failure.pkl": {
+      "sha256": "97f94c8ebf166d5bc1e603685a30e2f51b9a3686bc1e97e922dcedf47abe6131",
+      "bytes": 69
+    },
+    "inputs/plain-module.pkl": {
+      "sha256": "deeca9ee02fe7e3400aac5ab5432d68f97973b93d73982e1569a9e21bb7b46e9",
+      "bytes": 55
+    },
+    "inputs/same-name-left.pkl": {
+      "sha256": "d9c3fc8dd746586dc48f66023f45e457c935c0b8d809c20864bf49762abb9867",
+      "bytes": 34
+    },
+    "inputs/same-name-main.pkl": {
+      "sha256": "a0c23e4d689656b0fb667a8490630f8dfbe61441324d99805725504de93aa33d",
+      "bytes": 139
+    },
+    "inputs/same-name-right.pkl": {
+      "sha256": "b9affa774269da18211355c830e2196eb4e72de36c8b1785fdbbdc41eab4572e",
+      "bytes": 34
+    },
+    "inputs/self-superclass.pkl": {
+      "sha256": "684fb19e9ab0f5412c6faf97e9a36ecc7ed1cf15ad7501acc7b52099ab183cb8",
+      "bytes": 33
+    },
+    "inputs/superclass-alias.pkl": {
+      "sha256": "8ea8e24f073d5092a279ad5b27529ad2062fda50998098574ee4357f70eab81e",
+      "bytes": 56
+    },
+    "inputs/superclass-nullable.pkl": {
+      "sha256": "54a8364f313d04504b7f21a05abff51b39d4ed1ee1750cdfbfaf3451cac23404",
+      "bytes": 26
+    },
+    "inputs/superclass-union.pkl": {
+      "sha256": "1c929f2810e71d100173deac59c6125587e04366738b1567fdf1e9747074f44e",
+      "bytes": 35
+    },
+    "inputs/unicode-class.pkl": {
+      "sha256": "e47004c079fd35643db9998dbdaa2a6bdf258320243b0b06b9a0faca4c677bd2",
+      "bytes": 63
+    },
+    "inputs/values.pkl": {
+      "sha256": "4622f5fe8235c3697965be96e7569b3213a1ad7974ad6d0ab1bec51373bd030d",
+      "bytes": 407
+    },
+    "oracle-evidence.tar.gz": {
+      "sha256": "a39060fbf155947212aaae5b2e950dc2cd04381a78cb2860a7f8b1675b3657fc",
+      "bytes": 2082943
+    }
+  }
+}

@@ -1,0 +1,1016 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "repetitions": 2,
+  "scope": "Actual public Java Class queries, real module/logger callbacks and publication retries; no Rust expectations or full compatibility claim.",
+  "cases": [
+    {
+      "id": "builtin-class-metadata",
+      "source": "inputs/values.pkl",
+      "source_sha256": "4622f5fe8235c3697965be96e7569b3213a1ad7974ad6d0ab1bec51373bd030d",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "Any.simpleName",
+        "Null.simpleName",
+        "Class.simpleName",
+        "TypeAlias.simpleName",
+        "Module.simpleName",
+        "Number.simpleName",
+        "Int.simpleName",
+        "Float.simpleName",
+        "Boolean.simpleName",
+        "String.simpleName",
+        "Duration.simpleName",
+        "DataSize.simpleName",
+        "Bytes.simpleName",
+        "IntSeq.simpleName",
+        "Pair.simpleName",
+        "Collection.simpleName",
+        "List.simpleName",
+        "Set.simpleName",
+        "Map.simpleName",
+        "Object.simpleName",
+        "Typed.simpleName",
+        "Dynamic.simpleName",
+        "Listing.simpleName",
+        "Mapping.simpleName",
+        "Function.simpleName",
+        "Function0.simpleName",
+        "Function1.simpleName",
+        "Function2.simpleName",
+        "Function3.simpleName",
+        "Function4.simpleName",
+        "Function5.simpleName",
+        "Regex.simpleName",
+        "Annotation.simpleName",
+        "ValueRenderer.simpleName",
+        "PcfRenderer.simpleName",
+        "Int.getClass() == Class",
+        "Class.getClass() == Class",
+        "Class.getClass().getClass() == Class",
+        "Typed.toString()",
+        "Any.toString()",
+        "Module.simpleName"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "builtin-identity"
+    },
+    {
+      "id": "runtime-class-canonicality",
+      "source": "inputs/values.pkl",
+      "source_sha256": "4622f5fe8235c3697965be96e7569b3213a1ad7974ad6d0ab1bec51373bd030d",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "(1).getClass().simpleName",
+        "(1.5).getClass().simpleName",
+        "(true).getClass().simpleName",
+        "(\"text\").getClass().simpleName",
+        "(1.s).getClass().simpleName",
+        "(1.mb).getClass().simpleName",
+        "(Bytes(1, 2)).getClass().simpleName",
+        "(IntSeq(1, 2)).getClass().simpleName",
+        "(Pair(1, 2)).getClass().simpleName",
+        "(List(1)).getClass().simpleName",
+        "(Set(1)).getClass().simpleName",
+        "(Map(\"k\",1)).getClass().simpleName",
+        "(new Dynamic {}).getClass().simpleName",
+        "(new Listing { 1 }).getClass().simpleName",
+        "(new Mapping { [\"x\"] = 1 }).getClass().simpleName",
+        "(new Child {}).getClass().simpleName",
+        "(null).getClass().simpleName",
+        "(Null(42)).getClass().simpleName",
+        "(Class).getClass().simpleName",
+        "(NonNull).getClass().simpleName",
+        "(Regex(\"a\")).getClass().simpleName",
+        "(module).getClass().simpleName",
+        "1.getClass() == Int",
+        "(new Child {}).getClass() == Child",
+        "(Null(42)).getClass() == Null",
+        "NonNull.getClass() == TypeAlias",
+        "List(1).getClass() == List(\"s\").getClass()",
+        "retained == Child",
+        "retained == (new Child {}).getClass()",
+        "(Null(new Dynamic {})).getClass() == Null",
+        "(Null(() -> new Dynamic {})).getClass() == Null"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "builtin-identity"
+    },
+    {
+      "id": "user-and-object-ancestry",
+      "source": "inputs/values.pkl",
+      "source_sha256": "4622f5fe8235c3697965be96e7569b3213a1ad7974ad6d0ab1bec51373bd030d",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "(new Child {}) is Parent",
+        "(new Child {}) is Typed",
+        "(new Child {}) is Object",
+        "(new Child {}) is Any",
+        "(new Explicit {}).x",
+        "(new Explicit {}) is Typed",
+        "(new Dynamic {}) is Object",
+        "(new Dynamic {}) is Typed",
+        "(new Listing {}) is Object",
+        "(new Mapping {}) is Object",
+        "Class is Class",
+        "Int is Any",
+        "NonNull is Any",
+        "Alias == User"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "ancestry"
+    },
+    {
+      "id": "builtin-ancestry",
+      "source": "inputs/values.pkl",
+      "source_sha256": "4622f5fe8235c3697965be96e7569b3213a1ad7974ad6d0ab1bec51373bd030d",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "1 is Number",
+        "1.5 is Number",
+        "List(1) is Collection",
+        "Set(1) is Collection",
+        "Map(\"x\",1) is Collection",
+        "Map(\"x\",1) is Any",
+        "Bytes(1) is Any",
+        "Pair(1,2) is Typed",
+        "1.s is Any",
+        "1.mb is Any",
+        "Regex(\"x\") is Any",
+        "module is Module",
+        "module is Typed",
+        "module is Object",
+        "module is Any"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "ancestry"
+    },
+    {
+      "id": "function-class-arities",
+      "source": "inputs/values.pkl",
+      "source_sha256": "4622f5fe8235c3697965be96e7569b3213a1ad7974ad6d0ab1bec51373bd030d",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "(() -> 0).getClass().simpleName",
+        "((a) -> a).getClass().simpleName",
+        "((a,b) -> a).getClass().simpleName",
+        "((a,b,c) -> a).getClass().simpleName",
+        "((a,b,c,d) -> a).getClass().simpleName",
+        "((a,b,c,d,e) -> a).getClass().simpleName",
+        "(() -> 0).getClass() == Function0",
+        "((a) -> a).getClass() == Function1",
+        "((a,b) -> a).getClass() == Function2",
+        "((a,b,c) -> a).getClass() == Function3",
+        "((a,b,c,d) -> a).getClass() == Function4",
+        "((a,b,c,d,e) -> a).getClass() == Function5",
+        "((a: Int) -> a).getClass() == ((b: String) -> b).getClass()",
+        "((a) -> a) is Function",
+        "((a) -> a).getClass().getClass() == Class"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "function-identity"
+    },
+    {
+      "id": "function-six-parameters",
+      "source": "inputs/values.pkl",
+      "source_sha256": "4622f5fe8235c3697965be96e7569b3213a1ad7974ad6d0ab1bec51373bd030d",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "((a,b,c,d,e,f) -> a).getClass().simpleName",
+        "stable"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "function-bounds"
+    },
+    {
+      "id": "class-generic-erasure",
+      "source": "inputs/values.pkl",
+      "source_sha256": "4622f5fe8235c3697965be96e7569b3213a1ad7974ad6d0ab1bec51373bd030d",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "accept(Int)",
+        "accept(User)",
+        "eraseUnknown(String)",
+        "eraseConstraint(Boolean)",
+        "Int is Class<String>",
+        "User is Class<MissingType>",
+        "NonNull is Class<Any>"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "erasure"
+    },
+    {
+      "id": "class-does-not-force-prototype",
+      "source": "inputs/isolation.pkl",
+      "source_sha256": "9a1e5d5f92fba6c126bfa51a67874c583279f3e5c4001c88a3fb3dafc2c25cb4",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C == C",
+        "C.getClass() == Class",
+        "C.toString()",
+        "stable"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "metaclass-dispatch"
+    },
+    {
+      "id": "class-missing-property",
+      "source": "inputs/isolation.pkl",
+      "source_sha256": "9a1e5d5f92fba6c126bfa51a67874c583279f3e5c4001c88a3fb3dafc2c25cb4",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.value",
+        "C.simpleName"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "metaclass-dispatch"
+    },
+    {
+      "id": "class-missing-method",
+      "source": "inputs/isolation.pkl",
+      "source_sha256": "9a1e5d5f92fba6c126bfa51a67874c583279f3e5c4001c88a3fb3dafc2c25cb4",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.method()",
+        "C.simpleName"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "metaclass-dispatch"
+    },
+    {
+      "id": "virtual-versus-intrinsic-get-class",
+      "source": "inputs/get-class-override.pkl",
+      "source_sha256": "f2d4aa2b64ef4e86000133fcaec23e89fbdc2a410a87f1197fff361a84ba5d65",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "u.getClass() == String",
+        "u.getClass().simpleName",
+        "u is User",
+        "u is String",
+        "renderer.renderValue(u)",
+        "u.getClass() == String"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "virtual-intrinsic"
+    },
+    {
+      "id": "converter-user-nearest-ancestor",
+      "source": "inputs/converter-values.pkl",
+      "source_sha256": "ff8b547e5d6e289b27ea1a8d37f6c78f0dab975bb046d36276b2e6684ca09dd5",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "converter_user_nearest_ancestor_0",
+        "converter_user_nearest_ancestor_1",
+        "converter_user_nearest_ancestor_2",
+        "converter_user_nearest_ancestor_3",
+        "converter_user_nearest_ancestor_4"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "converter"
+    },
+    {
+      "id": "converter-number-collection-ancestry",
+      "source": "inputs/converter-values.pkl",
+      "source_sha256": "ff8b547e5d6e289b27ea1a8d37f6c78f0dab975bb046d36276b2e6684ca09dd5",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "converter_number_collection_ancestry_0",
+        "converter_number_collection_ancestry_1",
+        "converter_number_collection_ancestry_2",
+        "converter_number_collection_ancestry_3",
+        "converter_number_collection_ancestry_4"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "converter"
+    },
+    {
+      "id": "converter-class-function-module",
+      "source": "inputs/converter-values.pkl",
+      "source_sha256": "ff8b547e5d6e289b27ea1a8d37f6c78f0dab975bb046d36276b2e6684ca09dd5",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "converter_class_function_module_0",
+        "converter_class_function_module_1",
+        "converter_class_function_module_2",
+        "converter_class_function_module_3",
+        "converter_class_function_module_4"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "converter"
+    },
+    {
+      "id": "converter-path-before-type",
+      "source": "inputs/converter-values.pkl",
+      "source_sha256": "ff8b547e5d6e289b27ea1a8d37f6c78f0dab975bb046d36276b2e6684ca09dd5",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "converter_path_before_type_0",
+        "converter_path_before_type_1"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "converter"
+    },
+    {
+      "id": "converter-top-level-module-error",
+      "source": "inputs/converter-top-level.pkl",
+      "source_sha256": "be3c6a7574a1b229e16b9b114788d13b0efd7dd19a5d669048ad8007c8d66bda",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "output.text",
+        "output.text"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "converter-error"
+    },
+    {
+      "id": "module-extends-amends-class",
+      "source": "inputs/module-main.pkl",
+      "source_sha256": "97052163f971c4e69bf7fdb00ebf984aac14e30cbafc2864e6bcdbd1c953ef72",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "plainModule.getClass().simpleName",
+        "extendedModule.getClass().simpleName",
+        "amendedModule.getClass().simpleName",
+        "extendedModule.getClass() == plainModule.getClass()",
+        "amendedModule.getClass() == plainModule.getClass()",
+        "(plainModule) {}.getClass() == plainModule.getClass()",
+        "extendedModule is plainModule",
+        "amendedModule is plainModule",
+        "plainModule is extendedModule",
+        "plainModule is Module",
+        "plainModule is Typed",
+        "plainModule is Object",
+        "plainModule.getClass() is Class",
+        "extendedIsPlain",
+        "amendedIsPlain",
+        "plainIsExtended"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [
+        {
+          "uri": "file:///stage56-class-values/plain.pkl",
+          "source": "inputs/plain-module.pkl",
+          "source_sha256": "deeca9ee02fe7e3400aac5ab5432d68f97973b93d73982e1569a9e21bb7b46e9"
+        },
+        {
+          "uri": "file:///stage56-class-values/extended.pkl",
+          "source": "inputs/extended-module.pkl",
+          "source_sha256": "d224b49c4ebfbc240a86c60868ca2287a6499d387c94f443ceb22f1613147473"
+        },
+        {
+          "uri": "file:///stage56-class-values/amended.pkl",
+          "source": "inputs/amended-module.pkl",
+          "source_sha256": "c482fc268cc6ff6d2405895adfffd862e6ad3e797988926b4c9ac325e38ead2a"
+        }
+      ],
+      "group": "module-identity"
+    },
+    {
+      "id": "same-names-different-source-uri",
+      "source": "inputs/same-name-main.pkl",
+      "source_sha256": "a0c23e4d689656b0fb667a8490630f8dfbe61441324d99805725504de93aa33d",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "leftModule.C.toString()",
+        "rightModule.C.toString()",
+        "leftModule.C == rightModule.C",
+        "leftModule.C == leftModule.C",
+        "(new leftModule.C {}) is rightModule.C",
+        "Set(leftModule.C, rightModule.C).length",
+        "Map(leftModule.C, \"left\", rightModule.C, \"right\").length",
+        "leftModule.getClass() == rightModule.getClass()",
+        "foreignInstanceIsOther"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [
+        {
+          "uri": "file:///stage56-class-values/left.pkl",
+          "source": "inputs/same-name-left.pkl",
+          "source_sha256": "d9c3fc8dd746586dc48f66023f45e457c935c0b8d809c20864bf49762abb9867"
+        },
+        {
+          "uri": "file:///stage56-class-values/right.pkl",
+          "source": "inputs/same-name-right.pkl",
+          "source_sha256": "b9affa774269da18211355c830e2196eb4e72de36c8b1785fdbbdc41eab4572e"
+        }
+      ],
+      "group": "module-identity"
+    },
+    {
+      "id": "explicit-typed",
+      "source": "inputs/explicit-typed.pkl",
+      "source_sha256": "19170204203dd397eda8cd8a35969e6bbf74dfacb8e1336e8eb5fb441442d554",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "(new C {}).x",
+        "(new C {}) is Typed"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "superclass-errors"
+    },
+    {
+      "id": "external-any-ordinary",
+      "source": "inputs/external-any-ordinary.pkl",
+      "source_sha256": "d02d20dbd21a006521719b1919b6853fd01b9e059feeb9b6f1ed65a64b2ff7b0",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "C == C"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "superclass-errors"
+    },
+    {
+      "id": "external-any-pkl-prefix",
+      "source": "inputs/external-any-pkl-prefix.pkl",
+      "source_sha256": "e275fdddaa3e33159663b293e1dc35f18b0d2c9476bc624212058efb222a8083",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "(new C {}).getClass() == C",
+        "(new C {}) is Typed",
+        "(new C {}) is Any"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "superclass-errors"
+    },
+    {
+      "id": "external-any-near-prefix",
+      "source": "inputs/external-any-near-prefix.pkl",
+      "source_sha256": "99224445aea54572c7270f886f8537af925669d1c83b343d6620d6794ff40774",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "superclass-errors"
+    },
+    {
+      "id": "external-closed-int-ordinary",
+      "source": "inputs/external-closed-int-ordinary.pkl",
+      "source_sha256": "c61d1e1eeea7ab63ada40a95d208bee998f5a07f7b3b8543fa23adea5bc2f01f",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "superclass-errors"
+    },
+    {
+      "id": "external-closed-int-pkl-prefix",
+      "source": "inputs/external-closed-int-pkl-prefix.pkl",
+      "source_sha256": "d93f3166e0ca49bdda7692992540191f6bc20f26be03122e1a3d2f7c9cd8bc15",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "superclass-errors"
+    },
+    {
+      "id": "external-declaration-name-prefix",
+      "source": "inputs/external-declaration-name-prefix.pkl",
+      "source_sha256": "1b116cd00d61c0205baf37e1c23e6076cd5ff199089406560a670c87338cbf08",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "stable"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "superclass-errors"
+    },
+    {
+      "id": "external-declaration-uri-prefix",
+      "source": "inputs/external-declaration-uri-prefix.pkl",
+      "source_sha256": "563f5fbbf73905310df539f67bea3b6744649414bef844626d7f687b754bf3e0",
+      "uri": "pkl:stage56Control",
+      "expressions": [
+        "C.simpleName",
+        "stable"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "superclass-errors"
+    },
+    {
+      "id": "closed-user-superclass",
+      "source": "inputs/closed-user-superclass.pkl",
+      "source_sha256": "41343ff8f11d2c20ca46017e3b1e646d28e74d2611a456bb9acd780ba6dc14aa",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "C == C"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "superclass-errors"
+    },
+    {
+      "id": "self-superclass",
+      "source": "inputs/self-superclass.pkl",
+      "source_sha256": "684fb19e9ab0f5412c6faf97e9a36ecc7ed1cf15ad7501acc7b52099ab183cb8",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "C == C"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "superclass-errors"
+    },
+    {
+      "id": "partial-missing-superclass",
+      "source": "inputs/partial-missing-superclass.pkl",
+      "source_sha256": "ecba066759f06bddf54e4935c91169318010eaa9e7fc3e5d93dc9b3d60b41e0a",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "C == C",
+        "stable"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "partial-publication"
+    },
+    {
+      "id": "partial-annotation-failure",
+      "source": "inputs/partial-annotation-failure.pkl",
+      "source_sha256": "d7211378ac758fc17083db92b87091c003dc4b86ae782c21da959344a1dd46ce",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "C == C",
+        "(new C {}).first",
+        "stable"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "partial-publication"
+    },
+    {
+      "id": "partial-property-type-failure",
+      "source": "inputs/partial-property-type-failure.pkl",
+      "source_sha256": "97f94c8ebf166d5bc1e603685a30e2f51b9a3686bc1e97e922dcedf47abe6131",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "(new C {}).first",
+        "(new C {}).third",
+        "stable"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "partial-publication"
+    },
+    {
+      "id": "partial-method-type-failure",
+      "source": "inputs/partial-method-type-failure.pkl",
+      "source_sha256": "b6cfdba06a126d1efca4358dd20b77e58144eefeabb801ca578e4a4eb59cca2b",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "(new C {}).first",
+        "(new C {}).a()",
+        "(new C {}).c()",
+        "stable"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "partial-publication"
+    },
+    {
+      "id": "superclass-alias",
+      "source": "inputs/superclass-alias.pkl",
+      "source_sha256": "8ea8e24f073d5092a279ad5b27529ad2062fda50998098574ee4357f70eab81e",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "(new C {}).x"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "partial-publication"
+    },
+    {
+      "id": "superclass-union",
+      "source": "inputs/superclass-union.pkl",
+      "source_sha256": "1c929f2810e71d100173deac59c6125587e04366738b1567fdf1e9747074f44e",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "partial-publication"
+    },
+    {
+      "id": "superclass-nullable",
+      "source": "inputs/superclass-nullable.pkl",
+      "source_sha256": "54a8364f313d04504b7f21a05abff51b39d4ed1ee1750cdfbfaf3451cac23404",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "partial-publication"
+    },
+    {
+      "id": "annotation-log-control",
+      "source": "inputs/annotation-reentry.pkl",
+      "source_sha256": "45bc6206e07c59135b01785b7c71cfbed142bfea45fc06f1a3b11acdd8f0d832",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "(new C {}).value"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "annotation-order"
+    },
+    {
+      "id": "annotation-log-reentry",
+      "source": "inputs/annotation-reentry.pkl",
+      "source_sha256": "45bc6206e07c59135b01785b7c71cfbed142bfea45fc06f1a3b11acdd8f0d832",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "stable"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "C == C",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "annotation-order"
+    },
+    {
+      "id": "annotation-log-throw-retry",
+      "source": "inputs/annotation-reentry.pkl",
+      "source_sha256": "45bc6206e07c59135b01785b7c71cfbed142bfea45fc06f1a3b11acdd8f0d832",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "stable",
+        "(new C {}).value"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "throw-once",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "annotation-order"
+    },
+    {
+      "id": "annotation-log-close",
+      "source": "inputs/annotation-reentry.pkl",
+      "source_sha256": "45bc6206e07c59135b01785b7c71cfbed142bfea45fc06f1a3b11acdd8f0d832",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "stable"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "close",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "annotation-order"
+    },
+    {
+      "id": "annotation-log-reentry-throw",
+      "source": "inputs/annotation-reentry.pkl",
+      "source_sha256": "45bc6206e07c59135b01785b7c71cfbed142bfea45fc06f1a3b11acdd8f0d832",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "stable",
+        "(new C {}).value"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "throw-once",
+        "callback": "C.simpleName",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "annotation-order"
+    },
+    {
+      "id": "annotation-noop",
+      "source": "inputs/annotation-reentry.pkl",
+      "source_sha256": "45bc6206e07c59135b01785b7c71cfbed142bfea45fc06f1a3b11acdd8f0d832",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "C.simpleName",
+        "C.simpleName",
+        "(new C {}).value"
+      ],
+      "logger": {
+        "mode": "noop",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "annotation-order"
+    },
+    {
+      "id": "unicode-class-name-and-java-string",
+      "source": "inputs/unicode-class.pkl",
+      "source_sha256": "e47004c079fd35643db9998dbdaa2a6bdf258320243b0b06b9a0faca4c677bd2",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "`P\ud83d\ude00`.simpleName",
+        "`P\ud83d\ude00`.toString()",
+        "`P\ud83d\ude00`.getClass().simpleName",
+        "lone"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "utf16"
+    },
+    {
+      "id": "converter-exact-builtin-boundary",
+      "source": "inputs/converter-exact-builtin-boundary.pkl",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "result0",
+        "result1",
+        "result2",
+        "result3",
+        "result4",
+        "result5"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "converter-exact-boundary",
+      "source_sha256": "9b3a14be03a0edfecc4d652b4aebf28fede91f919a2ef7404f494e1d34521f40"
+    },
+    {
+      "id": "builtin-name-spoof-query-boundary",
+      "source": "inputs/builtin-name-spoof.pkl",
+      "uri": "file:///stage56-class-values/main.pkl",
+      "expressions": [
+        "Int.simpleName",
+        "Int == 1.getClass()",
+        "(new Int {}).getClass() == Int",
+        "(new Int {}) is Typed",
+        "(new Int {}).x",
+        "declaredInt.simpleName",
+        "declaredInt == 1.getClass()",
+        "declaredInt == Int",
+        "instance.getClass() == declaredInt",
+        "instance is Typed",
+        "instance.x"
+      ],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      },
+      "support_modules": [],
+      "group": "source-identity",
+      "source_sha256": "e7a4cf965383ca0915774df9d89a20b8bb8d75feab8299a0fc40238828e31fee"
+    }
+  ]
+}

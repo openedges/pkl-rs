@@ -1,0 +1,10 @@
+import "plain.pkl"
+import "extended.pkl"
+import "amended.pkl"
+stable = 42
+plainModule = plain
+extendedModule = extended
+amendedModule = amended
+extendedIsPlain = extended is plain
+amendedIsPlain = amended is plain
+plainIsExtended = plain is extended

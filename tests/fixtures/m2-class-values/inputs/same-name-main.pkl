@@ -1,0 +1,6 @@
+import "left.pkl"
+import "right.pkl"
+stable = 42
+leftModule = left
+rightModule = right
+foreignInstanceIsOther = (new left.C {}) is right.C

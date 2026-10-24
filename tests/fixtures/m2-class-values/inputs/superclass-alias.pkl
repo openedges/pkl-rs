@@ -1,0 +1,2 @@
+typealias Parent = Typed
+class C extends Parent { x=1 }

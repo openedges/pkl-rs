@@ -1,0 +1,4 @@
+class User { function getClass(): Class = String; value = 1 }
+u = new User {}
+renderer = new PcfRenderer { converters { [Any] = (o) -> "ANY"; [String] = (o) -> "STRING"; [User] = (o) -> "USER" } }
+stable = 42

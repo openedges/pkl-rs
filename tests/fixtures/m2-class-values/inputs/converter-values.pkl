@@ -1,0 +1,27 @@
+open class Animal { age = 1 }
+class Dog extends Animal { dog = true }
+class Cat extends Animal { cat = true }
+dog = new Dog {}
+cat = new Cat {}
+stable = 42
+
+converter_user_nearest_ancestor_0 = (new PcfRenderer { converters { [Any] = (o) -> "any"; [Typed] = (o) -> "typed"; [Animal] = (o) -> "animal"; [Dog] = (o) -> "dog" } }).renderValue(dog)
+converter_user_nearest_ancestor_1 = (new PcfRenderer { converters { [Dog] = (o) -> "dog"; [Animal] = (o) -> "animal"; [Typed] = (o) -> "typed"; [Any] = (o) -> "any" } }).renderValue(dog)
+converter_user_nearest_ancestor_2 = (new PcfRenderer { converters { [Any] = (o) -> "any"; [Typed] = (o) -> "typed"; [Animal] = (o) -> "animal" } }).renderValue(cat)
+converter_user_nearest_ancestor_3 = (new PcfRenderer { converters { [Any] = (o) -> "any"; [Typed] = (o) -> "typed" } }).renderValue(cat)
+converter_user_nearest_ancestor_4 = (new PcfRenderer { converters { [Any] = (o) -> "any" } }).renderValue(cat)
+
+converter_number_collection_ancestry_0 = (new PcfRenderer { converters { [Any] = (o) -> "any"; [Number] = (o) -> "number"; [Int] = (o) -> "int" } }).renderValue(1)
+converter_number_collection_ancestry_1 = (new PcfRenderer { converters { [Any] = (o) -> "any"; [Number] = (o) -> "number" } }).renderValue(1.5)
+converter_number_collection_ancestry_2 = (new PcfRenderer { converters { [Any] = (o) -> "any"; [Collection] = (o) -> "collection" } }).renderValue(List(1))
+converter_number_collection_ancestry_3 = (new PcfRenderer { converters { [Any] = (o) -> "any"; [Collection] = (o) -> "collection" } }).renderValue(Set(1))
+converter_number_collection_ancestry_4 = (new PcfRenderer { converters { [Any] = (o) -> "any"; [Collection] = (o) -> "collection" } }).renderValue(Map("k",1))
+
+converter_class_function_module_0 = (new PcfRenderer { converters { [Any] = (o) -> "any"; [Class] = (o) -> "class" } }).renderValue(Dog)
+converter_class_function_module_1 = (new PcfRenderer { converters { [Any] = (o) -> "any"; [Function] = (o) -> "function" } }).renderValue((x) -> x)
+converter_class_function_module_2 = (new PcfRenderer { converters { [Function] = (o) -> "function"; [Function1] = (o) -> "function1" } }).renderValue((x) -> x)
+converter_class_function_module_3 = (new PcfRenderer { converters { [Any] = (o) -> "any"; [Typed] = (o) -> "typed"; [Module] = (o) -> "module" } }).renderValue(module)
+converter_class_function_module_4 = (new PcfRenderer { converters { [Any] = (o) -> "any" } }).renderValue(module)
+
+converter_path_before_type_0 = (new PcfRenderer { converters { [Dog] = (o) -> "dog"; ["x"] = (o) -> "path" } }).renderValue(new Dynamic { x = dog })
+converter_path_before_type_1 = (new PcfRenderer { converters { ["x"] = (o) -> "path"; [Dog] = (o) -> "dog" } }).renderValue(new Dynamic { x = dog })

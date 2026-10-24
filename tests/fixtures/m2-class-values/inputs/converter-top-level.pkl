@@ -1,0 +1,1 @@
+output { renderer = new PcfRenderer { converters { [Any] = (o) -> "converted-module" } } }

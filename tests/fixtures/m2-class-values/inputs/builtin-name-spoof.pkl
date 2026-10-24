@@ -1,0 +1,5 @@
+module pkl.base
+class Int { x=7 }
+stable=42
+declaredInt = Int
+instance = new Int {}

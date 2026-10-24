@@ -1,0 +1,11 @@
+open class Parent { parent = 1 }
+class Child extends Parent { child = 2 }
+class Explicit extends Typed { x = 3 }
+class User { value = 4; function method() = 5 }
+typealias Alias = User
+function accept(c: Class<String>) = c.simpleName
+function eraseUnknown(c: Class<MissingType>) = c.simpleName
+function eraseConstraint(c: Class<Int(isPositive)>) = c.simpleName
+retained = Child
+stable = 42
+lone = "\u{d800}"

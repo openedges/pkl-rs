@@ -1,0 +1,4 @@
+module exportIdentity
+open class Parent {}
+class Child extends Parent {}
+marker = "changed"

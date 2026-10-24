@@ -1,0 +1,3 @@
+open module shared
+value = 1
+open class Item { x = 1 }

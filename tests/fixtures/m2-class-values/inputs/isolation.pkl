@@ -1,0 +1,2 @@
+class C { value = trace(throw("instance-initializer")); function method() = throw("method-body") }
+stable = 42

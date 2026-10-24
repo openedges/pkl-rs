@@ -1,0 +1,2 @@
+class C { first=1; function a()=2; function b(x: MissingType)=x; function c()=3 }
+stable=42

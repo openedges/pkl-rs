@@ -1,0 +1,681 @@
+{
+  "schema": 1,
+  "stage": 56,
+  "kind": "Java-only Class reference authority checkpoint",
+  "recorded_at": "2026-10-24T05:33:35.364014+00:00",
+  "scope": "Actual pinned Java Class queries, module-key/logger observations, public exported-Class identity, preserved acquisition histories and recorded offline verifier/tooling checks. No Rust/candidate comparison or full API compatibility claim.",
+  "implementation_ancestor": "f82060d395d6c1cb16aef2b94a48a2d8f28440b1",
+  "docs_only_ancestor_reported_by_parent": "e0b52f9323722483e29654f7723c55ede152afdd",
+  "actual_Java_A_commit": null,
+  "actual_commit_binding": "Pending actual authorized parent Java-A commit; no Git staging/commit/read performed by this publication.",
+  "local_provenance": {
+    "execution": "Local macOS, not hosted CI",
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56",
+    "Java_host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "publication_Python": {
+      "executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "version": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+      "sha256": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063",
+      "host": "macOS-27.0-arm64-arm-64bit-Mach-O"
+    },
+    "validation_recording_limit": "Original offline validation logs retain exact commands, exit codes and elapsed times; they did not independently snapshot the enclosing Python process full inherited environment at launch. Publication-time Python identity is labelled separately."
+  },
+  "reference_pins": {
+    "baseline": "Pkl 0.32.0",
+    "pkl_revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "pantry_revision": "904a68184e54da378b0a0e8a911a3fab3956f693",
+    "oracle_artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "artifact_url": "https://repo.maven.apache.org/maven2/org/pkl-lang/pkl-tools/0.32.0/pkl-tools-0.32.0.jar",
+    "exact_Java_command_prefix": [
+      "/usr/bin/java",
+      "-Xms64m",
+      "-Xmx512m",
+      "-Dfile.encoding=UTF-8",
+      "-Dstdout.encoding=UTF-8",
+      "-Dstderr.encoding=UTF-8",
+      "-Duser.language=en",
+      "-Duser.country=US",
+      "-Duser.timezone=UTC",
+      "-Djava.awt.headless=true",
+      "-Duser.name=oracle",
+      "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage56/.cache/oracle/home",
+      "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage56/.cache/oracle/tmp",
+      "-cp",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage56/.cache/oracle/pkl-tools-0.32.0.jar",
+      "org.pkl.cli.Main"
+    ],
+    "exact_Java_environment": {
+      "PATH": "/bin:/usr/bin",
+      "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56/.cache/oracle/home",
+      "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56/.cache/oracle/tmp",
+      "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56/.cache/oracle/tmp",
+      "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56/.cache/oracle/tmp",
+      "LC_ALL": "C",
+      "LANG": "C",
+      "TZ": "UTC",
+      "TERM": "dumb",
+      "NO_COLOR": "1",
+      "COLUMNS": "80"
+    },
+    "JDK": {
+      "executable": "/usr/bin/java",
+      "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+      "runtime_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+      "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+      "properties": {
+        "java.vendor": "Eclipse Adoptium",
+        "java.version": "21.0.12.1",
+        "java.runtime.version": "21.0.12.1+1-LTS",
+        "java.vm.name": "OpenJDK 64-Bit Server VM",
+        "java.vm.version": "21.0.12.1+1-LTS",
+        "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+        "os.name": "Mac OS X",
+        "os.arch": "aarch64",
+        "os.version": "27.0"
+      },
+      "version_stdout_hex": "",
+      "version_stderr_hex": "50726f70657274792073657474696e67733a0a2020202066696c652e656e636f64696e67203d205554462d380a2020202066696c652e736570617261746f72203d202f0a202020206674702e6e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a20202020687474702e6e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a202020206a6176612e636c6173732e70617468203d200a202020206a6176612e636c6173732e76657273696f6e203d2036352e300a202020206a6176612e686f6d65203d202f4c6962726172792f4a6176612f4a6176615669727475616c4d616368696e65732f74656d7572696e2d32312e6a646b2f436f6e74656e74732f486f6d650a202020206a6176612e696f2e746d70646972203d202f7661722f666f6c646572732f5f712f733936397a686b783671643870333276326e6438377967683030303067702f542f0a202020206a6176612e6c6962726172792e70617468203d202f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676535362f2e63616368652f6f7261636c652f686f6d652f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f4e6574776f726b2f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f53797374656d2f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f7573722f6c69622f6a6176610a20202020202020202e0a202020206a6176612e72756e74696d652e6e616d65203d204f70656e4a444b2052756e74696d6520456e7669726f6e6d656e740a202020206a6176612e72756e74696d652e76657273696f6e203d2032312e302e31322e312b312d4c54530a202020206a6176612e73706563696669636174696f6e2e6e616d65203d204a61766120506c6174666f726d204150492053706563696669636174696f6e0a202020206a6176612e73706563696669636174696f6e2e76656e646f72203d204f7261636c6520436f72706f726174696f6e0a202020206a6176612e73706563696669636174696f6e2e76657273696f6e203d2032310a202020206a6176612e76656e646f72203d2045636c697073652041646f707469756d0a202020206a6176612e76656e646f722e75726c203d2068747470733a2f2f61646f707469756d2e6e65742f0a202020206a6176612e76656e646f722e75726c2e627567203d2068747470733a2f2f6769746875622e636f6d2f61646f707469756d2f61646f707469756d2d737570706f72742f6973737565730a202020206a6176612e76656e646f722e76657273696f6e203d2054656d7572696e2d32312e302e31322e312b310a202020206a6176612e76657273696f6e203d2032312e302e31322e310a202020206a6176612e76657273696f6e2e64617465203d20323032362d30382d31380a202020206a6176612e766d2e636f6d707265737365644f6f70734d6f6465203d204e6f6e2d7a65726f206469736a6f696e7420626173650a202020206a6176612e766d2e696e666f203d206d69786564206d6f64652c2073686172696e670a202020206a6176612e766d2e6e616d65203d204f70656e4a444b2036342d4269742053657276657220564d0a202020206a6176612e766d2e73706563696669636174696f6e2e6e616d65203d204a617661205669727475616c204d616368696e652053706563696669636174696f6e0a202020206a6176612e766d2e73706563696669636174696f6e2e76656e646f72203d204f7261636c6520436f72706f726174696f6e0a202020206a6176612e766d2e73706563696669636174696f6e2e76657273696f6e203d2032310a202020206a6176612e766d2e76656e646f72203d2045636c697073652041646f707469756d0a202020206a6176612e766d2e76657273696f6e203d2032312e302e31322e312b312d4c54530a202020206a646b2e6465627567203d2072656c656173650a202020206c696e652e736570617261746f72203d205c6e200a202020206e61746976652e656e636f64696e67203d2055532d41534349490a202020206f732e61726368203d20616172636836340a202020206f732e6e616d65203d204d6163204f5320580a202020206f732e76657273696f6e203d2032372e300a20202020706174682e736570617261746f72203d203a0a20202020736f636b734e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a202020207374646572722e656e636f64696e67203d2055532d41534349490a202020207374646f75742e656e636f64696e67203d2055532d41534349490a2020202073756e2e617263682e646174612e6d6f64656c203d2036340a2020202073756e2e626f6f742e6c6962726172792e70617468203d202f4c6962726172792f4a6176612f4a6176615669727475616c4d616368696e65732f74656d7572696e2d32312e6a646b2f436f6e74656e74732f486f6d652f6c69620a2020202073756e2e6370752e656e6469616e203d206c6974746c650a2020202073756e2e696f2e756e69636f64652e656e636f64696e67203d20556e69636f64654269670a2020202073756e2e6a6176612e6c61756e63686572203d2053554e5f5354414e444152440a2020202073756e2e6a6e752e656e636f64696e67203d205554462d380a2020202073756e2e6d616e6167656d656e742e636f6d70696c6572203d20486f7453706f742036342d4269742054696572656420436f6d70696c6572730a20202020757365722e636f756e747279203d204b520a20202020757365722e646972203d202f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732e737461676535360a20202020757365722e686f6d65203d202f55736572732f636f64792e696a2e6877616e670a20202020757365722e6c616e6775616765203d206b6f0a20202020757365722e6e616d65203d20636f64792e696a2e6877616e670a0a6f70656e6a646b2076657273696f6e202232312e302e31322e312220323032362d30382d3138204c54530a4f70656e4a444b2052756e74696d6520456e7669726f6e6d656e742054656d7572696e2d32312e302e31322e312b3120286275696c642032312e302e31322e312b312d4c5453290a4f70656e4a444b2036342d4269742053657276657220564d2054656d7572696e2d32312e302e31322e312b3120286275696c642032312e302e31322e312b312d4c54532c206d69786564206d6f64652c2073686172696e67290a"
+    },
+    "references_modified": false
+  },
+  "fixture": {
+    "path": "tests/fixtures/m2-class-values",
+    "archive": {
+      "path": "tests/fixtures/m2-class-values/oracle-evidence.tar.gz",
+      "sha256": "a39060fbf155947212aaae5b2e950dc2cd04381a78cb2860a7f8b1675b3657fc",
+      "bytes": 2082943
+    },
+    "manifest": {
+      "path": "tests/fixtures/m2-class-values/manifest.json",
+      "sha256": "6c419c84baac33f3e1512afc351d74041efec331e6caa3dd51b0d834401620a1",
+      "bytes": 5965
+    },
+    "cases": {
+      "path": "tests/fixtures/m2-class-values/cases.json",
+      "sha256": "38f6bb25bfbdbb591096b34df014ab9fc9a808acb1d589bf079501366ad08996",
+      "bytes": 31358
+    },
+    "export_cases": {
+      "path": "tests/fixtures/m2-class-values/export-cases.json",
+      "sha256": "8262f5a4121448e0f2ec97c8c6f2fc8bfa51b898f64b25e1ae6fec106389df5f",
+      "bytes": 837
+    },
+    "exact_canonical_member_manifest": {
+      "path": "target/m2/stage56-class-publication-01/members.json",
+      "sha256": "58ea45d6d6c34e64958f53f96ade482b33c25c90cecd176bfa872b046df441db",
+      "bytes": 4805044
+    },
+    "canonical_raw_files": 25945
+  },
+  "observations": {
+    "api_exception_calls": 4,
+    "call_status_counts": {
+      "api-exception": 4,
+      "error": 86,
+      "oracle-error": 6,
+      "success": 462
+    },
+    "compatibility_passes_claimed": 0,
+    "java_processes": 88,
+    "logger_callbacks": 10,
+    "oracle_error_calls": 6,
+    "preserved_history": [
+      {
+        "api_exception_calls": 4,
+        "call_status_counts": {
+          "api-exception": 4,
+          "error": 108,
+          "oracle-error": 6,
+          "success": 390
+        },
+        "compatibility_passes_claimed": 0,
+        "java_processes": 84,
+        "logger_callbacks": 10,
+        "oracle_error_calls": 6,
+        "public_calls": 508,
+        "repeated_raw_equal": 42,
+        "sessions": 42,
+        "warning_callbacks": 0
+      },
+      {
+        "api_exception_calls": 4,
+        "call_status_counts": {
+          "api-exception": 4,
+          "error": 70,
+          "oracle-error": 6,
+          "success": 444
+        },
+        "compatibility_passes_claimed": 0,
+        "java_processes": 86,
+        "logger_callbacks": 10,
+        "oracle_error_calls": 6,
+        "public_calls": 524,
+        "repeated_raw_equal": 43,
+        "sessions": 43,
+        "warning_callbacks": 0
+      },
+      {
+        "api_exception_calls": 4,
+        "call_status_counts": {
+          "api-exception": 4,
+          "error": 80,
+          "oracle-error": 6,
+          "success": 456
+        },
+        "compatibility_passes_claimed": 0,
+        "java_processes": 88,
+        "logger_callbacks": 10,
+        "oracle_error_calls": 6,
+        "public_calls": 546,
+        "repeated_raw_equal": 44,
+        "sessions": 44,
+        "warning_callbacks": 0
+      }
+    ],
+    "preserved_history_scope": "All earlier complete acquisitions, including actual invalid authored/query scope outcomes. Retained as history, never additional independent feature coverage or candidate compatibility passes.",
+    "provider_supplement": {
+      "callback_counts": {
+        "create": 578,
+        "resolve": 10
+      },
+      "scope": "Actual Java public module-key create/resolve observations and fixed key properties, retained completely. Candidate SPI/API parity is unexecuted/required unless separately mapped and compared. Common query/logger byte equality alone is not whole API compatibility."
+    },
+    "public_calls": 558,
+    "public_export_supplement": {
+      "call_status_counts": {
+        "api-exception": 2,
+        "success": 12
+      },
+      "identity_comparisons": 8,
+      "java_processes": 2,
+      "observations": {
+        "different-evaluator": {
+          "equals": "false",
+          "reference": "false"
+        },
+        "different-uri": {
+          "equals": "false",
+          "reference": "false"
+        },
+        "same-uri": {
+          "equals": "true",
+          "reference": "true"
+        },
+        "same-uri-changed-source": {
+          "equals": "true",
+          "reference": "true"
+        }
+      },
+      "public_calls": 14,
+      "repeated_raw_equal": 1,
+      "scope": "Actual public evaluateExpression exported Class reference/equals identity and evaluator lifecycle. Candidate public export API parity is unexecuted/required; Java value/exception classes are producer provenance.",
+      "sessions": 1
+    },
+    "repeated_raw_equal": 44,
+    "sessions": 44,
+    "warning_callbacks": 0
+  },
+  "semantic_corrections": [
+    "Typed-only converter ancestry walk; exact converters for primitive/strict collection/Class/Function values.",
+    "Virtual getClass override allowed; intrinsic is/converter uses true user class.",
+    "moduleName beginning pkl. permits external superclass, while external declaration permission remains module-key provenance based.",
+    "Module extends creates a different Class; amends shares the original ModuleClass.",
+    "Same module/class names at distinct URIs remain unequal; exported alias of pkl.base user Int stays distinct from builtin Int despite bare query builtin precedence.",
+    "Failed superclass/annotation/class member initialization publishes an observable partial Class before subsequent queries.",
+    "Public exported Class cache identity survives changed text for same URI, but differs across URI/evaluator; post-close call raises actual API exception."
+  ],
+  "producer_boundaries": {
+    "common_query_logger_protocol": "Raw source evaluation, all statuses/errors/log/frame/protocol bytes; Java exception classes remain independent provenance.",
+    "provider_SPI": "Actual create/resolve callbacks and key properties retained entirely; candidate parity unexecuted/required unless separately mapped and compared.",
+    "public_export": "Java-only actual evaluateExpression Class identity/lifecycle; candidate export API parity unexecuted/required."
+  },
+  "main_acquisition": {
+    "report": {
+      "path": "target/m2/stage56-class-oracle-04/report.json",
+      "sha256": "c09e945365dbd0390eb292bb42da5a685d958e054e10b2e58552eb9b73e04053",
+      "bytes": 2587508
+    },
+    "sessions": 44,
+    "JVM_processes": 88,
+    "outer_evaluation_calls": 554,
+    "reentrant_evaluation_calls": 4,
+    "total_evaluation_calls": 558,
+    "call_status_counts": {
+      "success": 462,
+      "error": 86,
+      "oracle-error": 6,
+      "api-exception": 4
+    },
+    "logger_callbacks": 10,
+    "warning_callbacks": 0,
+    "repeated_raw_equal": 44,
+    "Java_SPI_provider_callbacks": {
+      "create": 578,
+      "resolve": 10
+    },
+    "candidate_common_query_comparison": "Not performed in this Java-only checkpoint; parent candidate comparison is separate.",
+    "candidate_provider_API_parity": "unexecuted/required; all actual Java provider bytes retained"
+  },
+  "public_export_supplement": {
+    "report": {
+      "path": "target/m2/stage56-class-export-oracle-01/report.json",
+      "sha256": "9c71a9484bebfb9f30c83af9c9c3453fd2f47ed37119efed4dbfbc9ef3e43eb4",
+      "bytes": 72228
+    },
+    "sessions": 1,
+    "JVM_processes": 2,
+    "public_evaluation_calls": 14,
+    "call_status_counts": {
+      "success": 12,
+      "api-exception": 2
+    },
+    "identity_comparisons": 8,
+    "evaluation_call_count_excludes_Object_reference_equals_comparisons_and_close_calls": true,
+    "actual_observations": {
+      "different-evaluator": {
+        "equals": "false",
+        "reference": "false"
+      },
+      "different-uri": {
+        "equals": "false",
+        "reference": "false"
+      },
+      "same-uri": {
+        "equals": "true",
+        "reference": "true"
+      },
+      "same-uri-changed-source": {
+        "equals": "true",
+        "reference": "true"
+      }
+    },
+    "candidate_public_export_API_parity": "unexecuted/required; Java value and exception classes remain producer provenance"
+  },
+  "preserved_histories": {
+    "cohorts": [
+      "preserved-history-01",
+      "preserved-history-02",
+      "preserved-history-03"
+    ],
+    "sessions": [
+      42,
+      43,
+      44
+    ],
+    "JVM_processes": [
+      84,
+      86,
+      88
+    ],
+    "all_original_outputs_preserved": true,
+    "classification": "Complete earlier acquisitions including invalid Null(42), local import/query scope errors and source refinements; not additional independent feature coverage or candidate passes.",
+    "known_failed_acquisition_or_harness_processes": "None among these completed cohorts; all actual guest errors/oracle-errors/API exceptions remain recorded as observations, never relabelled as successful checks."
+  },
+  "validation": {
+    "recorded_commands": [
+      {
+        "name": "fixture",
+        "command": [
+          "python3",
+          "-B",
+          "tools/class_values_fixtures.py"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 20.983608040958643
+      },
+      {
+        "name": "tests",
+        "command": [
+          "python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-p",
+          "test_class_values_fixtures.py",
+          "-v"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 97.38680420909077
+      }
+    ],
+    "recorded_inventory_check": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/inventory.py",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    "actual_verifier_tests": 15,
+    "verifier_test_elapsed_seconds": 97.244,
+    "all_recorded_checks_exit_zero": true,
+    "raw_log_identities": {
+      "fixture.stderr.bin": {
+        "path": "target/m2/stage56-class-verification-01/fixture.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "fixture.stdout.bin": {
+        "path": "target/m2/stage56-class-verification-01/fixture.stdout.bin",
+        "sha256": "370f579fff65d6b59dddacb2888c987d9eb48fe6160d3982a26f67780b970e6e",
+        "bytes": 2536
+      },
+      "inventory/process.json": {
+        "path": "target/m2/stage56-class-verification-01/inventory/process.json",
+        "sha256": "47fa0d1fee7b28bfd465ef68d2e03395be46bc284379c8902e3153b218ba9a83",
+        "bytes": 106
+      },
+      "inventory/stderr.bin": {
+        "path": "target/m2/stage56-class-verification-01/inventory/stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "inventory/stdout.bin": {
+        "path": "target/m2/stage56-class-verification-01/inventory/stdout.bin",
+        "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b",
+        "bytes": 926
+      },
+      "report.json": {
+        "path": "target/m2/stage56-class-verification-01/report.json",
+        "sha256": "a72669f3cdd2d2e3f44aadc0ab31d0fdd795349a10653971db4e81ad3ea9aaa8",
+        "bytes": 476
+      },
+      "tests.stderr.bin": {
+        "path": "target/m2/stage56-class-verification-01/tests.stderr.bin",
+        "sha256": "300eb47c7a6a17ccb769898e7814f3cf0388162ec3aaaf3a1717ec8ba809ebcb",
+        "bytes": 2741
+      },
+      "tests.stdout.bin": {
+        "path": "target/m2/stage56-class-verification-01/tests.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "publication_re_runs_of_guests_tests_Cargo_or_candidates": 0
+  },
+  "owned_source_and_fixture_identities": {
+    "tools/java/M2ClassValuesProbe.java": {
+      "path": "tools/java/M2ClassValuesProbe.java",
+      "sha256": "6f5bc0b0474db7dda230b7213cb1288fe01b7b8132dd37cdfdbb0af6487a45d9",
+      "bytes": 7810
+    },
+    "tools/java/M2ClassExportProbe.java": {
+      "path": "tools/java/M2ClassExportProbe.java",
+      "sha256": "2c92a2d2af1d1c3c834db4bb3bf6f253307d8d87336bf3f8ac99861e466ebc84",
+      "bytes": 4035
+    },
+    "tools/class_values_oracle.py": {
+      "path": "tools/class_values_oracle.py",
+      "sha256": "b31c110d305e6b8bac7fb8d678802b8e52e1852bee8145caf98b462dbdcfe26f",
+      "bytes": 19526
+    },
+    "tools/class_values_exports.py": {
+      "path": "tools/class_values_exports.py",
+      "sha256": "051c10b3e638223626d2edfffc18d8b17d2358e5d2ffd38f285819b7616628ab",
+      "bytes": 11004
+    },
+    "tools/class_values_fixtures.py": {
+      "path": "tools/class_values_fixtures.py",
+      "sha256": "35ab4daa3f643f2f347862d3afc213580e85a93f4869898fa03414e949fc3876",
+      "bytes": 6314
+    },
+    "tools/tests/test_class_values_fixtures.py": {
+      "path": "tools/tests/test_class_values_fixtures.py",
+      "sha256": "7da77562442059a03e47061bcaf59a005474f0017bcc6bb7a5924f6584aa01d4",
+      "bytes": 8492
+    },
+    "tests/fixtures/m2-class-values/LICENSE": {
+      "path": "tests/fixtures/m2-class-values/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    "tests/fixtures/m2-class-values/README.md": {
+      "path": "tests/fixtures/m2-class-values/README.md",
+      "sha256": "8ce1e963d638c245f79af2f1005a303466d03a8cafb378260de0b68b9e228e8a",
+      "bytes": 3562
+    },
+    "tests/fixtures/m2-class-values/cases.json": {
+      "path": "tests/fixtures/m2-class-values/cases.json",
+      "sha256": "38f6bb25bfbdbb591096b34df014ab9fc9a808acb1d589bf079501366ad08996",
+      "bytes": 31358
+    },
+    "tests/fixtures/m2-class-values/export-cases.json": {
+      "path": "tests/fixtures/m2-class-values/export-cases.json",
+      "sha256": "8262f5a4121448e0f2ec97c8c6f2fc8bfa51b898f64b25e1ae6fec106389df5f",
+      "bytes": 837
+    },
+    "tests/fixtures/m2-class-values/inputs/amended-module.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/amended-module.pkl",
+      "sha256": "c482fc268cc6ff6d2405895adfffd862e6ad3e797988926b4c9ac325e38ead2a",
+      "bytes": 29
+    },
+    "tests/fixtures/m2-class-values/inputs/annotation-reentry.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/annotation-reentry.pkl",
+      "sha256": "45bc6206e07c59135b01785b7c71cfbed142bfea45fc06f1a3b11acdd8f0d832",
+      "bytes": 102
+    },
+    "tests/fixtures/m2-class-values/inputs/builtin-name-spoof.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/builtin-name-spoof.pkl",
+      "sha256": "e7a4cf965383ca0915774df9d89a20b8bb8d75feab8299a0fc40238828e31fee",
+      "bytes": 84
+    },
+    "tests/fixtures/m2-class-values/inputs/closed-user-superclass.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/closed-user-superclass.pkl",
+      "sha256": "41343ff8f11d2c20ca46017e3b1e646d28e74d2611a456bb9acd780ba6dc14aa",
+      "bytes": 54
+    },
+    "tests/fixtures/m2-class-values/inputs/converter-exact-builtin-boundary.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/converter-exact-builtin-boundary.pkl",
+      "sha256": "9b3a14be03a0edfecc4d652b4aebf28fede91f919a2ef7404f494e1d34521f40",
+      "bytes": 528
+    },
+    "tests/fixtures/m2-class-values/inputs/converter-top-level.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/converter-top-level.pkl",
+      "sha256": "be3c6a7574a1b229e16b9b114788d13b0efd7dd19a5d669048ad8007c8d66bda",
+      "bytes": 91
+    },
+    "tests/fixtures/m2-class-values/inputs/converter-values.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/converter-values.pkl",
+      "sha256": "ff8b547e5d6e289b27ea1a8d37f6c78f0dab975bb046d36276b2e6684ca09dd5",
+      "bytes": 2750
+    },
+    "tests/fixtures/m2-class-values/inputs/explicit-typed.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/explicit-typed.pkl",
+      "sha256": "19170204203dd397eda8cd8a35969e6bbf74dfacb8e1336e8eb5fb441442d554",
+      "bytes": 44
+    },
+    "tests/fixtures/m2-class-values/inputs/export-changed.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/export-changed.pkl",
+      "sha256": "f5a3bb70aec4012e51ecfd60060ea1171caab8182aa79ba8188277a772c820b8",
+      "bytes": 92
+    },
+    "tests/fixtures/m2-class-values/inputs/export-first.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/export-first.pkl",
+      "sha256": "b80c2db61e479ffd52195509a6a299fc897ddec5dceebfdb751e3e81f990be35",
+      "bytes": 90
+    },
+    "tests/fixtures/m2-class-values/inputs/extended-module.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/extended-module.pkl",
+      "sha256": "d224b49c4ebfbc240a86c60868ca2287a6499d387c94f443ceb22f1613147473",
+      "bytes": 30
+    },
+    "tests/fixtures/m2-class-values/inputs/external-any-near-prefix.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/external-any-near-prefix.pkl",
+      "sha256": "99224445aea54572c7270f886f8537af925669d1c83b343d6620d6794ff40774",
+      "bytes": 59
+    },
+    "tests/fixtures/m2-class-values/inputs/external-any-ordinary.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/external-any-ordinary.pkl",
+      "sha256": "d02d20dbd21a006521719b1919b6853fd01b9e059feeb9b6f1ed65a64b2ff7b0",
+      "bytes": 51
+    },
+    "tests/fixtures/m2-class-values/inputs/external-any-pkl-prefix.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/external-any-pkl-prefix.pkl",
+      "sha256": "e275fdddaa3e33159663b293e1dc35f18b0d2c9476bc624212058efb222a8083",
+      "bytes": 58
+    },
+    "tests/fixtures/m2-class-values/inputs/external-closed-int-ordinary.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/external-closed-int-ordinary.pkl",
+      "sha256": "c61d1e1eeea7ab63ada40a95d208bee998f5a07f7b3b8543fa23adea5bc2f01f",
+      "bytes": 51
+    },
+    "tests/fixtures/m2-class-values/inputs/external-closed-int-pkl-prefix.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/external-closed-int-pkl-prefix.pkl",
+      "sha256": "d93f3166e0ca49bdda7692992540191f6bc20f26be03122e1a3d2f7c9cd8bc15",
+      "bytes": 58
+    },
+    "tests/fixtures/m2-class-values/inputs/external-declaration-name-prefix.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/external-declaration-name-prefix.pkl",
+      "sha256": "1b116cd00d61c0205baf37e1c23e6076cd5ff199089406560a670c87338cbf08",
+      "bytes": 55
+    },
+    "tests/fixtures/m2-class-values/inputs/external-declaration-uri-prefix.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/external-declaration-uri-prefix.pkl",
+      "sha256": "563f5fbbf73905310df539f67bea3b6744649414bef844626d7f687b754bf3e0",
+      "bytes": 48
+    },
+    "tests/fixtures/m2-class-values/inputs/get-class-override.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/get-class-override.pkl",
+      "sha256": "f2d4aa2b64ef4e86000133fcaec23e89fbdc2a410a87f1197fff361a84ba5d65",
+      "bytes": 209
+    },
+    "tests/fixtures/m2-class-values/inputs/isolation.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/isolation.pkl",
+      "sha256": "9a1e5d5f92fba6c126bfa51a67874c583279f3e5c4001c88a3fb3dafc2c25cb4",
+      "bytes": 111
+    },
+    "tests/fixtures/m2-class-values/inputs/module-main.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/module-main.pkl",
+      "sha256": "97052163f971c4e69bf7fdb00ebf984aac14e30cbafc2864e6bcdbd1c953ef72",
+      "bytes": 250
+    },
+    "tests/fixtures/m2-class-values/inputs/partial-annotation-failure.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/partial-annotation-failure.pkl",
+      "sha256": "d7211378ac758fc17083db92b87091c003dc4b86ae782c21da959344a1dd46ce",
+      "bytes": 63
+    },
+    "tests/fixtures/m2-class-values/inputs/partial-method-type-failure.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/partial-method-type-failure.pkl",
+      "sha256": "b6cfdba06a126d1efca4358dd20b77e58144eefeabb801ca578e4a4eb59cca2b",
+      "bytes": 92
+    },
+    "tests/fixtures/m2-class-values/inputs/partial-missing-superclass.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/partial-missing-superclass.pkl",
+      "sha256": "ecba066759f06bddf54e4935c91169318010eaa9e7fc3e5d93dc9b3d60b41e0a",
+      "bytes": 68
+    },
+    "tests/fixtures/m2-class-values/inputs/partial-property-type-failure.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/partial-property-type-failure.pkl",
+      "sha256": "97f94c8ebf166d5bc1e603685a30e2f51b9a3686bc1e97e922dcedf47abe6131",
+      "bytes": 69
+    },
+    "tests/fixtures/m2-class-values/inputs/plain-module.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/plain-module.pkl",
+      "sha256": "deeca9ee02fe7e3400aac5ab5432d68f97973b93d73982e1569a9e21bb7b46e9",
+      "bytes": 55
+    },
+    "tests/fixtures/m2-class-values/inputs/same-name-left.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/same-name-left.pkl",
+      "sha256": "d9c3fc8dd746586dc48f66023f45e457c935c0b8d809c20864bf49762abb9867",
+      "bytes": 34
+    },
+    "tests/fixtures/m2-class-values/inputs/same-name-main.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/same-name-main.pkl",
+      "sha256": "a0c23e4d689656b0fb667a8490630f8dfbe61441324d99805725504de93aa33d",
+      "bytes": 139
+    },
+    "tests/fixtures/m2-class-values/inputs/same-name-right.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/same-name-right.pkl",
+      "sha256": "b9affa774269da18211355c830e2196eb4e72de36c8b1785fdbbdc41eab4572e",
+      "bytes": 34
+    },
+    "tests/fixtures/m2-class-values/inputs/self-superclass.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/self-superclass.pkl",
+      "sha256": "684fb19e9ab0f5412c6faf97e9a36ecc7ed1cf15ad7501acc7b52099ab183cb8",
+      "bytes": 33
+    },
+    "tests/fixtures/m2-class-values/inputs/superclass-alias.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/superclass-alias.pkl",
+      "sha256": "8ea8e24f073d5092a279ad5b27529ad2062fda50998098574ee4357f70eab81e",
+      "bytes": 56
+    },
+    "tests/fixtures/m2-class-values/inputs/superclass-nullable.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/superclass-nullable.pkl",
+      "sha256": "54a8364f313d04504b7f21a05abff51b39d4ed1ee1750cdfbfaf3451cac23404",
+      "bytes": 26
+    },
+    "tests/fixtures/m2-class-values/inputs/superclass-union.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/superclass-union.pkl",
+      "sha256": "1c929f2810e71d100173deac59c6125587e04366738b1567fdf1e9747074f44e",
+      "bytes": 35
+    },
+    "tests/fixtures/m2-class-values/inputs/unicode-class.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/unicode-class.pkl",
+      "sha256": "e47004c079fd35643db9998dbdaa2a6bdf258320243b0b06b9a0faca4c677bd2",
+      "bytes": 63
+    },
+    "tests/fixtures/m2-class-values/inputs/values.pkl": {
+      "path": "tests/fixtures/m2-class-values/inputs/values.pkl",
+      "sha256": "4622f5fe8235c3697965be96e7569b3213a1ad7974ad6d0ab1bec51373bd030d",
+      "bytes": 407
+    },
+    "tests/fixtures/m2-class-values/manifest.json": {
+      "path": "tests/fixtures/m2-class-values/manifest.json",
+      "sha256": "6c419c84baac33f3e1512afc351d74041efec331e6caa3dd51b0d834401620a1",
+      "bytes": 5965
+    },
+    "tests/fixtures/m2-class-values/oracle-evidence.tar.gz": {
+      "path": "tests/fixtures/m2-class-values/oracle-evidence.tar.gz",
+      "sha256": "a39060fbf155947212aaae5b2e950dc2cd04381a78cb2860a7f8b1675b3657fc",
+      "bytes": 2082943
+    }
+  },
+  "publication": {
+    "archive": {
+      "path": "reports/m2/stage56-oracle-validation-evidence.tar.gz",
+      "sha256": "9b2c9aafe94dd7dfcccd88619959fe12e9fd0226658239f3f424179dc1537151",
+      "bytes": 287848
+    },
+    "verification": {
+      "schema": 1,
+      "archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56/reports/m2/stage56-oracle-validation-evidence.tar.gz",
+      "archive_sha256": "9b2c9aafe94dd7dfcccd88619959fe12e9fd0226658239f3f424179dc1537151",
+      "archive_bytes": 287848,
+      "payload_members": 22,
+      "archive_members": 23,
+      "manifest_sha256": "332ea43839b5952146abcc4499b45f484b8c397ae83a4e76017faeec6a6e874a",
+      "safe_paths_and_unique_regular_members": true,
+      "canonical_raw_files_verified_without_duplication": 25945,
+      "owned_source_identities_verified": 47,
+      "Java_only": true,
+      "candidate_execution_claimed": false,
+      "compatibility_passes_claimed": 0,
+      "all_original_outputs_unchanged": true,
+      "canonical_raw_payloads_not_duplicated": true
+    },
+    "publication_report": {
+      "path": "target/m2/stage56-oracle-checkpoint-publication-01/report.json",
+      "sha256": "7f54ce1efe069b901a12876cd7a126381ea1365fee128050046aff2bcd74a096",
+      "bytes": 727
+    },
+    "canonical_raw_payloads_omitted_by_exact_member_identity": true,
+    "all_original_outputs_unchanged": true
+  },
+  "remaining_scope": [
+    "Candidate source-query/logger/protocol comparisons, provider SPI and public Class export API obligations remain separate and unexecuted here.",
+    "Real Java oracle-errors and API exceptions remain nonpasses, not compatible-error passes.",
+    "Class value, prototype, superclass, virtual getClass and intrinsic runtime class remain distinct; Typed-only converter ancestry cannot be generalized to all values.",
+    "JVM-global stdlib/evaluator lifetime, full lifecycle/API behavior, remaining Typed/Dynamic projections, reflection, DataSize, module-relative paths and whole M2 remain open.",
+    "Actual parent Java-A source/Git binding is pending; no full language/API, release-platform or speed/memory target completion claim."
+  ],
+  "Rust_compatibility_passes_claimed": 0,
+  "candidate_execution_performed": false,
+  "whole_M2_complete": false,
+  "public_API_complete": false,
+  "performance_claimed": false,
+  "hosted_CI_claimed": false
+}

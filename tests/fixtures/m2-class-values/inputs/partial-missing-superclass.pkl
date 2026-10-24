@@ -1,0 +1,3 @@
+@MissingAnnotation
+class C extends MissingSuper { x = 1 }
+stable=42

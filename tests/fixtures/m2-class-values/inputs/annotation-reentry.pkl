@@ -1,0 +1,4 @@
+class Note extends Annotation {}
+@Note { ...trace(new Dynamic {}) }
+class C { value = 9 }
+stable = 42

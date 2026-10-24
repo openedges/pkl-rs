@@ -1,0 +1,7 @@
+class Dog {}
+result0 = (new PcfRenderer { converters { [Any]=(o)->"any" } }).renderValue(1)
+result1 = (new PcfRenderer { converters { [Number]=(o)->"number" } }).renderValue(1.5)
+result2 = (new PcfRenderer { converters { [Any]=(o)->"any" } }).renderValue(List(1))
+result3 = (new PcfRenderer { converters { [Collection]=(o)->"collection" } }).renderValue(List(1))
+result4 = (new PcfRenderer { converters { [Any]=(o)->"any" } }).renderValue(Dog)
+result5 = (new PcfRenderer { converters { [Any]=(o)->"any" } }).renderValue((x)->x)
