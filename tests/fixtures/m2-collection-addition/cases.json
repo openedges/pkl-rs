@@ -1,0 +1,759 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "boundary": "string",
+  "module_uri": "file:///stage63/collection-addition.pkl",
+  "repetitions": 2,
+  "rows": [
+    {
+      "expression": "List(1, 2) + List(3, 4)",
+      "group": "list",
+      "id": "ll-ordered",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1, 2) + Set(2, 3)",
+      "group": "list",
+      "id": "ls-ordered",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1, 1) + Set(1, 2)",
+      "group": "list",
+      "id": "ls-repeat",
+      "mode": "string"
+    },
+    {
+      "expression": "List() + List()",
+      "group": "list",
+      "id": "ll-empty-both",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1, 2) + List()",
+      "group": "list",
+      "id": "ll-empty-right",
+      "mode": "string"
+    },
+    {
+      "expression": "List() + List(1, 2)",
+      "group": "list",
+      "id": "ll-empty-left",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1, 2) + Set()",
+      "group": "list",
+      "id": "ls-empty-right",
+      "mode": "string"
+    },
+    {
+      "expression": "List() + Set(1, 2)",
+      "group": "list",
+      "id": "ls-empty-left",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1) + List(2) + List(3)",
+      "group": "list",
+      "id": "ll-chain",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1) + Set(2, 1) + List(3)",
+      "group": "list",
+      "id": "ls-chain",
+      "mode": "string"
+    },
+    {
+      "expression": "(List(1) + Set(2)).getClass()",
+      "group": "list",
+      "id": "ls-result-class",
+      "mode": "string"
+    },
+    {
+      "expression": "(List(1) + Set(2)).first",
+      "group": "list",
+      "id": "ls-result-first",
+      "mode": "string"
+    },
+    {
+      "expression": "(List(1) + Set(2)).last",
+      "group": "list",
+      "id": "ls-result-last",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1, 2) + Set(3) == List(1, 2, 3)",
+      "group": "list",
+      "id": "ls-equal-list",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1, 2) + Set(3) == Set(1, 2, 3)",
+      "group": "list",
+      "id": "ls-equal-set",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1, 2) + Set(2, 3)",
+      "group": "set",
+      "id": "ss-ordered",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1, 2) + List(2, 3)",
+      "group": "set",
+      "id": "sl-ordered",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1) + List(2, 1, 2, 3, 1)",
+      "group": "set",
+      "id": "sl-repeat",
+      "mode": "string"
+    },
+    {
+      "expression": "Set() + Set()",
+      "group": "set",
+      "id": "ss-empty-both",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1, 2) + Set()",
+      "group": "set",
+      "id": "ss-empty-right",
+      "mode": "string"
+    },
+    {
+      "expression": "Set() + Set(1, 2)",
+      "group": "set",
+      "id": "ss-empty-left",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1, 2) + List()",
+      "group": "set",
+      "id": "sl-empty-right",
+      "mode": "string"
+    },
+    {
+      "expression": "Set() + List(1, 2)",
+      "group": "set",
+      "id": "sl-empty-left",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1, 2) + Set(3) + Set(1, 4)",
+      "group": "set",
+      "id": "ss-chain",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1) + List(2, 1) + Set(3, 2)",
+      "group": "set",
+      "id": "sl-chain",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1) + List(2)).getClass()",
+      "group": "set",
+      "id": "sl-result-class",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1) + List(2)).first",
+      "group": "set",
+      "id": "sl-result-first",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1) + List(2)).last",
+      "group": "set",
+      "id": "sl-result-last",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1, 2) + List(3) == Set(3, 2, 1)",
+      "group": "set",
+      "id": "sl-equal-set",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1, 2) + List(3) == List(1, 2, 3)",
+      "group": "set",
+      "id": "sl-equal-list",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"a\", 1, \"b\", 2) + Map(\"c\", 3, \"d\", 4)",
+      "group": "map",
+      "id": "mm-ordered",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"a\", 1, \"b\", 2) + Map(\"a\", 9, \"c\", 3)",
+      "group": "map",
+      "id": "mm-overwrite-first",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"a\", 1, \"b\", 2) + Map(\"c\", 3, \"b\", 9)",
+      "group": "map",
+      "id": "mm-overwrite-last",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"a\", 1, \"b\", 2) + Map(\"b\", 9, \"a\", 8)",
+      "group": "map",
+      "id": "mm-overwrite-both",
+      "mode": "string"
+    },
+    {
+      "expression": "Map() + Map()",
+      "group": "map",
+      "id": "mm-empty-both",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"a\", 1) + Map()",
+      "group": "map",
+      "id": "mm-empty-right",
+      "mode": "string"
+    },
+    {
+      "expression": "Map() + Map(\"a\", 1)",
+      "group": "map",
+      "id": "mm-empty-left",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"a\", 1) + Map(\"b\", 2, \"a\", 3) + Map(\"b\", 4, \"c\", 5)",
+      "group": "map",
+      "id": "mm-chain",
+      "mode": "string"
+    },
+    {
+      "expression": "(Map(\"a\", 1) + Map(\"b\", 2)).getClass()",
+      "group": "map",
+      "id": "mm-result-class",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"a\", 1, \"b\", 2) + Map(\"c\", 3) == Map(\"c\", 3, \"b\", 2, \"a\", 1)",
+      "group": "map",
+      "id": "mm-equal-reordered",
+      "mode": "string"
+    },
+    {
+      "expression": "(Map(\"a\", 1) + Map(\"a\", 9))[\"a\"]",
+      "group": "map",
+      "id": "mm-overwrite-lookup",
+      "mode": "string"
+    },
+    {
+      "expression": "(Map(\"a\", 1) + Map(\"a\", 9)).length",
+      "group": "map",
+      "id": "mm-overwrite-length",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1) + Set(1.0)",
+      "group": "hash",
+      "id": "set-int-float",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1.0) + Set(1)",
+      "group": "hash",
+      "id": "set-int-float-reversed",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(0.0) + Set(-0.0)",
+      "group": "hash",
+      "id": "set-float-signed-zeros",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(0.0 / 0.0) + Set(0.0 / 0.0)",
+      "group": "hash",
+      "id": "set-nan",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(\"Aa\") + Set(\"BB\")",
+      "group": "hash",
+      "id": "set-string-hash-collision",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(\"Aa\", \"BB\") + Set(\"Aa\")",
+      "group": "hash",
+      "id": "set-string-hash-collision-duplicate",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(List(1)) + Set(List(1), List(2))",
+      "group": "hash",
+      "id": "set-nested-list",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(new Dynamic { value = 1 }) + Set(new Dynamic { value = 1 })",
+      "group": "hash",
+      "id": "set-nested-object",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(1, \"int\") + Map(1.0, \"float\")",
+      "group": "hash",
+      "id": "map-int-float",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(1.0, \"float\") + Map(1, \"int\")",
+      "group": "hash",
+      "id": "map-int-float-reversed",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(0.0, \"pos\") + Map(-0.0, \"neg\")",
+      "group": "hash",
+      "id": "map-float-signed-zeros",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(0.0 / 0.0, 1) + Map(0.0 / 0.0, 2)",
+      "group": "hash",
+      "id": "map-nan-overwrite",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"Aa\", 1) + Map(\"BB\", 2)",
+      "group": "hash",
+      "id": "map-string-hash-collision",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"Aa\", 1, \"BB\", 2) + Map(\"Aa\", 3)",
+      "group": "hash",
+      "id": "map-string-hash-collision-duplicate",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(List(1), \"old\") + Map(List(1), \"new\")",
+      "group": "hash",
+      "id": "map-nested-list-key",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(new Dynamic { value = 1 }, \"old\") + Map(new Dynamic { value = 1 }, \"new\")",
+      "group": "hash",
+      "id": "map-nested-object-key",
+      "mode": "string"
+    },
+    {
+      "expression": "(List(new Dynamic { value = throw(\"lazy-left\") }) + List(new Dynamic { value = throw(\"lazy-right\") })).length",
+      "group": "force",
+      "id": "list-lazy-length",
+      "mode": "string"
+    },
+    {
+      "expression": "(List(new Dynamic { value = throw(\"lazy-left\") }) + List(new Dynamic { value = throw(\"lazy-right\") }))[0].value",
+      "group": "force",
+      "id": "list-lazy-first-read",
+      "mode": "string"
+    },
+    {
+      "expression": "(List(new Dynamic { value = throw(\"lazy-left\") }) + List(new Dynamic { value = throw(\"lazy-right\") }))[1].value",
+      "group": "force",
+      "id": "list-lazy-second-read",
+      "mode": "string"
+    },
+    {
+      "expression": "(Map(\"a\", new Dynamic { value = throw(\"lazy-left\") }) + Map(\"b\", new Dynamic { value = throw(\"lazy-right\") })).length",
+      "group": "force",
+      "id": "map-lazy-length",
+      "mode": "string"
+    },
+    {
+      "expression": "(Map(\"a\", new Dynamic { value = throw(\"lazy-left\") }) + Map(\"b\", new Dynamic { value = throw(\"lazy-right\") }))[\"a\"].value",
+      "group": "force",
+      "id": "map-lazy-first-read",
+      "mode": "string"
+    },
+    {
+      "expression": "(Map(\"a\", new Dynamic { value = throw(\"lazy-left\") }) + Map(\"b\", new Dynamic { value = throw(\"lazy-right\") }))[\"b\"].value",
+      "group": "force",
+      "id": "map-lazy-second-read",
+      "mode": "string"
+    },
+    {
+      "expression": "(Map(\"a\", new Dynamic { value = throw(\"discarded\") }) + Map(\"a\", new Dynamic { value = 2 })).length",
+      "group": "force",
+      "id": "map-lazy-overwrite-length",
+      "mode": "string"
+    },
+    {
+      "expression": "(Map(\"a\", new Dynamic { value = throw(\"discarded\") }) + Map(\"a\", new Dynamic { value = 2 }))[\"a\"].value",
+      "group": "force",
+      "id": "map-lazy-overwrite-read",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(new Dynamic { value = throw(\"hash-left\") }) + Set(new Dynamic { value = throw(\"hash-right\") })",
+      "group": "force",
+      "id": "set-hash-left-first",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1) + Set(new Dynamic { value = throw(\"hash-right\") })",
+      "group": "force",
+      "id": "set-hash-right-only",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(new Dynamic { value = throw(\"key-left\") }, 1) + Map(new Dynamic { value = throw(\"key-right\") }, 2)",
+      "group": "force",
+      "id": "map-key-left-first",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(1, 1) + Map(new Dynamic { value = throw(\"key-right\") }, 2)",
+      "group": "force",
+      "id": "map-key-right-only",
+      "mode": "string"
+    },
+    {
+      "expression": "throw(\"left\") + throw(\"right\")",
+      "group": "force",
+      "id": "strict-left-before-right",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1) + throw(\"right\")",
+      "group": "force",
+      "id": "strict-right-after-left",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1) + Map(1, 2)",
+      "group": "error",
+      "id": "bad-list-map",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(1, 2) + List(1)",
+      "group": "error",
+      "id": "bad-map-list",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1) + Map(1, 2)",
+      "group": "error",
+      "id": "bad-set-map",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(1, 2) + Set(1)",
+      "group": "error",
+      "id": "bad-map-set",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1) + 1",
+      "group": "error",
+      "id": "bad-list-int",
+      "mode": "string"
+    },
+    {
+      "expression": "1 + List(1)",
+      "group": "error",
+      "id": "bad-int-list",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1) + null",
+      "group": "error",
+      "id": "bad-set-null",
+      "mode": "string"
+    },
+    {
+      "expression": "null + Map(1, 2)",
+      "group": "error",
+      "id": "bad-null-map",
+      "mode": "string"
+    },
+    {
+      "expression": "new Dynamic {} + new Dynamic {}",
+      "group": "error",
+      "id": "bad-dynamic-dynamic",
+      "mode": "string"
+    },
+    {
+      "expression": "new Listing { 1 } + new Listing { 2 }",
+      "group": "error",
+      "id": "bad-listing-listing",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping { [\"a\"] = 1 } + new Mapping { [\"b\"] = 2 }",
+      "group": "error",
+      "id": "bad-mapping-mapping",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1) - List(2)",
+      "group": "error",
+      "id": "bad-list-subtract",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(1, 2) - Map(3, 4)",
+      "group": "error",
+      "id": "bad-map-subtract",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1) - Set(2)",
+      "group": "error",
+      "id": "bad-set-subtract",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(1.min, \"old\") + Map(60.s, \"new\")",
+      "group": "additional",
+      "id": "map-duration-representative-left",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(60.s, \"old\") + Map(1.min, \"new\")",
+      "group": "additional",
+      "id": "map-duration-representative-right",
+      "mode": "string"
+    },
+    {
+      "expression": "(Map(1.min, \"old\") + Map(60.s, \"new\")).keys.toList()[0].unit",
+      "group": "additional",
+      "id": "map-duration-left-unit",
+      "mode": "string"
+    },
+    {
+      "expression": "(Map(60.s, \"old\") + Map(1.min, \"new\")).keys.toList()[0].unit",
+      "group": "additional",
+      "id": "map-duration-right-unit",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(1.min, \"old\", 2.s, \"second\") + Map(60.s, \"new\", 3.s, \"third\")",
+      "group": "additional",
+      "id": "map-duration-overwrite-order",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1.min) + Set(60.s)",
+      "group": "additional",
+      "id": "set-duration-representative-left",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(60.s) + Set(1.min)",
+      "group": "additional",
+      "id": "set-duration-representative-right",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1.min) + Set(60.s)).first.unit",
+      "group": "additional",
+      "id": "set-duration-left-unit",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(60.s) + Set(1.min)).first.unit",
+      "group": "additional",
+      "id": "set-duration-right-unit",
+      "mode": "string"
+    },
+    {
+      "expression": "let (key = new Dynamic { value = 1 }) Map(key, \"old\") + Map(key, \"new\")",
+      "group": "additional",
+      "id": "map-same-object-key",
+      "mode": "string"
+    },
+    {
+      "expression": "let (key = new Dynamic { value = 1 }) Set(key) + Set(key)",
+      "group": "additional",
+      "id": "set-same-object-element",
+      "mode": "string"
+    },
+    {
+      "expression": "let (key = new Dynamic { value = 1 }) (Map(key, \"old\") + Map(key, \"new\"))[key]",
+      "group": "additional",
+      "id": "map-warmed-key-cache",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1) + ((x) -> x)",
+      "group": "additional",
+      "id": "bad-list-function",
+      "mode": "string"
+    },
+    {
+      "expression": "((x) -> x) + List(1)",
+      "group": "additional",
+      "id": "bad-function-list",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(1, 2) + List",
+      "group": "additional",
+      "id": "bad-map-class",
+      "mode": "string"
+    },
+    {
+      "expression": "List + Map(1, 2)",
+      "group": "additional",
+      "id": "bad-class-map",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1) + ((x) -> x)",
+      "group": "additional",
+      "id": "bad-set-function",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(1, 2) + 1",
+      "group": "additional",
+      "id": "bad-map-int",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1) + 1",
+      "group": "additional",
+      "id": "bad-set-int",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14) + Map(15, 15)",
+      "group": "threshold",
+      "id": "map-slot-sixteen",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15) + Map(16, 16)",
+      "group": "threshold",
+      "id": "map-slot-seventeen",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15) + Map(0, 99, 16, 16)",
+      "group": "threshold",
+      "id": "map-slot-seventeen-overwrite",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14) + Set(15)",
+      "group": "threshold",
+      "id": "set-slot-sixteen",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) + Set(16)",
+      "group": "threshold",
+      "id": "set-slot-seventeen",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) + List(0, 16, 0)",
+      "group": "threshold",
+      "id": "set-slot-seventeen-duplicate",
+      "mode": "string"
+    },
+    {
+      "expression": "List(new Dynamic { value = throw(\"latent-left\") }) + 1",
+      "group": "invalid-lazy",
+      "id": "invalid-list-lazy-left",
+      "mode": "string"
+    },
+    {
+      "expression": "1 + List(new Dynamic { value = throw(\"latent-right\") })",
+      "group": "invalid-lazy",
+      "id": "invalid-list-lazy-right",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"a\", new Dynamic { value = throw(\"latent-left\") }) + 1",
+      "group": "invalid-lazy",
+      "id": "invalid-map-lazy-left",
+      "mode": "string"
+    },
+    {
+      "expression": "1 + Map(\"a\", new Dynamic { value = throw(\"latent-right\") })",
+      "group": "invalid-lazy",
+      "id": "invalid-map-lazy-right",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(new Dynamic { value = throw(\"hash-left\") }) + 1",
+      "group": "invalid-lazy",
+      "id": "invalid-set-hash-left",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1) + new Dynamic { value = throw(\"latent-right\") }",
+      "group": "invalid-lazy",
+      "id": "invalid-list-dynamic-right",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"a\", 1) + new Dynamic { value = throw(\"latent-right\") }",
+      "group": "invalid-lazy",
+      "id": "invalid-map-dynamic-right",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1) + new Dynamic { value = throw(\"latent-right\") }",
+      "group": "invalid-lazy",
+      "id": "invalid-set-dynamic-right",
+      "mode": "string"
+    },
+    {
+      "expression": "setLeft + setRight",
+      "group": "prebuilt-merge",
+      "id": "prebuilt-set-equal",
+      "mode": "string"
+    },
+    {
+      "expression": "(setLeft + setRight).length",
+      "group": "prebuilt-merge",
+      "id": "prebuilt-set-length",
+      "mode": "string"
+    },
+    {
+      "expression": "let (warm = setLeft.length) setLeft + setRight",
+      "group": "prebuilt-merge",
+      "id": "prebuilt-set-warm",
+      "mode": "string"
+    },
+    {
+      "expression": "mapLeft + mapRight",
+      "group": "prebuilt-merge",
+      "id": "prebuilt-map-equal",
+      "mode": "string"
+    },
+    {
+      "expression": "(mapLeft + mapRight)[keyLeft]",
+      "group": "prebuilt-merge",
+      "id": "prebuilt-map-lookup",
+      "mode": "string"
+    },
+    {
+      "expression": "let (warm = mapLeft.length) (mapLeft + mapRight)[keyRight]",
+      "group": "prebuilt-merge",
+      "id": "prebuilt-map-warm",
+      "mode": "string"
+    }
+  ],
+  "schema": 1
+}

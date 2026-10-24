@@ -121,6 +121,28 @@
         "tools/tests/test_collection_property_names_fixtures.py",
         "tools/java/CollectionConversionsOracle.java"
       ]
+    },
+    {
+      "module_uri": "file:///stage63/collection-addition.pkl",
+      "fixture": "tests/fixtures/m2-collection-addition",
+      "rows": 125,
+      "repetitions": 2,
+      "validator_module": "collection_addition_fixtures",
+      "validator_script": "tools/collection_addition_fixtures.py",
+      "archive_prefix": "capture-04",
+      "input_hashes": {
+        "cases.json": "3a79ba3caa4ff3cd3180271e659b7323a7ca0f3b75fba9e15172ecb7d36cafd2",
+        "module.pkl": "50fc462c877bebd2a06bb9a295c2c9e89874705b5246e69aba7b7e9fbf41a3eb",
+        "queries.tsv": "2081dfb9db79a5695e58c4149783fbd4b46c4c045b764de314ff68300d1d532f"
+      },
+      "tool_sources": [
+        "tools/collection_addition_fixtures.py",
+        "tools/collection_addition_oracle.py",
+        "tools/tests/test_collection_addition_fixtures.py",
+        "tools/java/CollectionConversionsOracle.java",
+        "tools/collection_conversions_fixtures.py",
+        "tools/collection_conversions_oracle.py"
+      ]
     }
   ]
 }

@@ -1,0 +1,125 @@
+string	ll-ordered	List(1, 2) + List(3, 4)
+string	ls-ordered	List(1, 2) + Set(2, 3)
+string	ls-repeat	List(1, 1) + Set(1, 2)
+string	ll-empty-both	List() + List()
+string	ll-empty-right	List(1, 2) + List()
+string	ll-empty-left	List() + List(1, 2)
+string	ls-empty-right	List(1, 2) + Set()
+string	ls-empty-left	List() + Set(1, 2)
+string	ll-chain	List(1) + List(2) + List(3)
+string	ls-chain	List(1) + Set(2, 1) + List(3)
+string	ls-result-class	(List(1) + Set(2)).getClass()
+string	ls-result-first	(List(1) + Set(2)).first
+string	ls-result-last	(List(1) + Set(2)).last
+string	ls-equal-list	List(1, 2) + Set(3) == List(1, 2, 3)
+string	ls-equal-set	List(1, 2) + Set(3) == Set(1, 2, 3)
+string	ss-ordered	Set(1, 2) + Set(2, 3)
+string	sl-ordered	Set(1, 2) + List(2, 3)
+string	sl-repeat	Set(1) + List(2, 1, 2, 3, 1)
+string	ss-empty-both	Set() + Set()
+string	ss-empty-right	Set(1, 2) + Set()
+string	ss-empty-left	Set() + Set(1, 2)
+string	sl-empty-right	Set(1, 2) + List()
+string	sl-empty-left	Set() + List(1, 2)
+string	ss-chain	Set(1, 2) + Set(3) + Set(1, 4)
+string	sl-chain	Set(1) + List(2, 1) + Set(3, 2)
+string	sl-result-class	(Set(1) + List(2)).getClass()
+string	sl-result-first	(Set(1) + List(2)).first
+string	sl-result-last	(Set(1) + List(2)).last
+string	sl-equal-set	Set(1, 2) + List(3) == Set(3, 2, 1)
+string	sl-equal-list	Set(1, 2) + List(3) == List(1, 2, 3)
+string	mm-ordered	Map("a", 1, "b", 2) + Map("c", 3, "d", 4)
+string	mm-overwrite-first	Map("a", 1, "b", 2) + Map("a", 9, "c", 3)
+string	mm-overwrite-last	Map("a", 1, "b", 2) + Map("c", 3, "b", 9)
+string	mm-overwrite-both	Map("a", 1, "b", 2) + Map("b", 9, "a", 8)
+string	mm-empty-both	Map() + Map()
+string	mm-empty-right	Map("a", 1) + Map()
+string	mm-empty-left	Map() + Map("a", 1)
+string	mm-chain	Map("a", 1) + Map("b", 2, "a", 3) + Map("b", 4, "c", 5)
+string	mm-result-class	(Map("a", 1) + Map("b", 2)).getClass()
+string	mm-equal-reordered	Map("a", 1, "b", 2) + Map("c", 3) == Map("c", 3, "b", 2, "a", 1)
+string	mm-overwrite-lookup	(Map("a", 1) + Map("a", 9))["a"]
+string	mm-overwrite-length	(Map("a", 1) + Map("a", 9)).length
+string	set-int-float	Set(1) + Set(1.0)
+string	set-int-float-reversed	Set(1.0) + Set(1)
+string	set-float-signed-zeros	Set(0.0) + Set(-0.0)
+string	set-nan	Set(0.0 / 0.0) + Set(0.0 / 0.0)
+string	set-string-hash-collision	Set("Aa") + Set("BB")
+string	set-string-hash-collision-duplicate	Set("Aa", "BB") + Set("Aa")
+string	set-nested-list	Set(List(1)) + Set(List(1), List(2))
+string	set-nested-object	Set(new Dynamic { value = 1 }) + Set(new Dynamic { value = 1 })
+string	map-int-float	Map(1, "int") + Map(1.0, "float")
+string	map-int-float-reversed	Map(1.0, "float") + Map(1, "int")
+string	map-float-signed-zeros	Map(0.0, "pos") + Map(-0.0, "neg")
+string	map-nan-overwrite	Map(0.0 / 0.0, 1) + Map(0.0 / 0.0, 2)
+string	map-string-hash-collision	Map("Aa", 1) + Map("BB", 2)
+string	map-string-hash-collision-duplicate	Map("Aa", 1, "BB", 2) + Map("Aa", 3)
+string	map-nested-list-key	Map(List(1), "old") + Map(List(1), "new")
+string	map-nested-object-key	Map(new Dynamic { value = 1 }, "old") + Map(new Dynamic { value = 1 }, "new")
+string	list-lazy-length	(List(new Dynamic { value = throw("lazy-left") }) + List(new Dynamic { value = throw("lazy-right") })).length
+string	list-lazy-first-read	(List(new Dynamic { value = throw("lazy-left") }) + List(new Dynamic { value = throw("lazy-right") }))[0].value
+string	list-lazy-second-read	(List(new Dynamic { value = throw("lazy-left") }) + List(new Dynamic { value = throw("lazy-right") }))[1].value
+string	map-lazy-length	(Map("a", new Dynamic { value = throw("lazy-left") }) + Map("b", new Dynamic { value = throw("lazy-right") })).length
+string	map-lazy-first-read	(Map("a", new Dynamic { value = throw("lazy-left") }) + Map("b", new Dynamic { value = throw("lazy-right") }))["a"].value
+string	map-lazy-second-read	(Map("a", new Dynamic { value = throw("lazy-left") }) + Map("b", new Dynamic { value = throw("lazy-right") }))["b"].value
+string	map-lazy-overwrite-length	(Map("a", new Dynamic { value = throw("discarded") }) + Map("a", new Dynamic { value = 2 })).length
+string	map-lazy-overwrite-read	(Map("a", new Dynamic { value = throw("discarded") }) + Map("a", new Dynamic { value = 2 }))["a"].value
+string	set-hash-left-first	Set(new Dynamic { value = throw("hash-left") }) + Set(new Dynamic { value = throw("hash-right") })
+string	set-hash-right-only	Set(1) + Set(new Dynamic { value = throw("hash-right") })
+string	map-key-left-first	Map(new Dynamic { value = throw("key-left") }, 1) + Map(new Dynamic { value = throw("key-right") }, 2)
+string	map-key-right-only	Map(1, 1) + Map(new Dynamic { value = throw("key-right") }, 2)
+string	strict-left-before-right	throw("left") + throw("right")
+string	strict-right-after-left	List(1) + throw("right")
+string	bad-list-map	List(1) + Map(1, 2)
+string	bad-map-list	Map(1, 2) + List(1)
+string	bad-set-map	Set(1) + Map(1, 2)
+string	bad-map-set	Map(1, 2) + Set(1)
+string	bad-list-int	List(1) + 1
+string	bad-int-list	1 + List(1)
+string	bad-set-null	Set(1) + null
+string	bad-null-map	null + Map(1, 2)
+string	bad-dynamic-dynamic	new Dynamic {} + new Dynamic {}
+string	bad-listing-listing	new Listing { 1 } + new Listing { 2 }
+string	bad-mapping-mapping	new Mapping { ["a"] = 1 } + new Mapping { ["b"] = 2 }
+string	bad-list-subtract	List(1) - List(2)
+string	bad-map-subtract	Map(1, 2) - Map(3, 4)
+string	bad-set-subtract	Set(1) - Set(2)
+string	map-duration-representative-left	Map(1.min, "old") + Map(60.s, "new")
+string	map-duration-representative-right	Map(60.s, "old") + Map(1.min, "new")
+string	map-duration-left-unit	(Map(1.min, "old") + Map(60.s, "new")).keys.toList()[0].unit
+string	map-duration-right-unit	(Map(60.s, "old") + Map(1.min, "new")).keys.toList()[0].unit
+string	map-duration-overwrite-order	Map(1.min, "old", 2.s, "second") + Map(60.s, "new", 3.s, "third")
+string	set-duration-representative-left	Set(1.min) + Set(60.s)
+string	set-duration-representative-right	Set(60.s) + Set(1.min)
+string	set-duration-left-unit	(Set(1.min) + Set(60.s)).first.unit
+string	set-duration-right-unit	(Set(60.s) + Set(1.min)).first.unit
+string	map-same-object-key	let (key = new Dynamic { value = 1 }) Map(key, "old") + Map(key, "new")
+string	set-same-object-element	let (key = new Dynamic { value = 1 }) Set(key) + Set(key)
+string	map-warmed-key-cache	let (key = new Dynamic { value = 1 }) (Map(key, "old") + Map(key, "new"))[key]
+string	bad-list-function	List(1) + ((x) -> x)
+string	bad-function-list	((x) -> x) + List(1)
+string	bad-map-class	Map(1, 2) + List
+string	bad-class-map	List + Map(1, 2)
+string	bad-set-function	Set(1) + ((x) -> x)
+string	bad-map-int	Map(1, 2) + 1
+string	bad-set-int	Set(1) + 1
+string	map-slot-sixteen	Map(0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14) + Map(15, 15)
+string	map-slot-seventeen	Map(0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15) + Map(16, 16)
+string	map-slot-seventeen-overwrite	Map(0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15) + Map(0, 99, 16, 16)
+string	set-slot-sixteen	Set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14) + Set(15)
+string	set-slot-seventeen	Set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) + Set(16)
+string	set-slot-seventeen-duplicate	Set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) + List(0, 16, 0)
+string	invalid-list-lazy-left	List(new Dynamic { value = throw("latent-left") }) + 1
+string	invalid-list-lazy-right	1 + List(new Dynamic { value = throw("latent-right") })
+string	invalid-map-lazy-left	Map("a", new Dynamic { value = throw("latent-left") }) + 1
+string	invalid-map-lazy-right	1 + Map("a", new Dynamic { value = throw("latent-right") })
+string	invalid-set-hash-left	Set(new Dynamic { value = throw("hash-left") }) + 1
+string	invalid-list-dynamic-right	List(1) + new Dynamic { value = throw("latent-right") }
+string	invalid-map-dynamic-right	Map("a", 1) + new Dynamic { value = throw("latent-right") }
+string	invalid-set-dynamic-right	Set(1) + new Dynamic { value = throw("latent-right") }
+string	prebuilt-set-equal	setLeft + setRight
+string	prebuilt-set-length	(setLeft + setRight).length
+string	prebuilt-set-warm	let (warm = setLeft.length) setLeft + setRight
+string	prebuilt-map-equal	mapLeft + mapRight
+string	prebuilt-map-lookup	(mapLeft + mapRight)[keyLeft]
+string	prebuilt-map-warm	let (warm = mapLeft.length) (mapLeft + mapRight)[keyRight]

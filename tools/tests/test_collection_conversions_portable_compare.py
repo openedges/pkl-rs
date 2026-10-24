@@ -295,7 +295,7 @@ class PortableCollectionConversionComparisonTests(unittest.TestCase):
         self.assertEqual(archive['repeat-0/026-dyn-cache-module-get-after/result.status.bin'],
                          b'error\n')
 
-    def test_default_and_dynamic_render_profiles_keep_distinct_authority(self):
+    def test_additional_profiles_keep_distinct_authority(self):
         for uri, rows, statuses, channel, expected in (
             ('file:///stage62/collection-default-contracts.pkl', 22,
              {'success': 12, 'error': 10},
@@ -308,6 +308,10 @@ class PortableCollectionConversionComparisonTests(unittest.TestCase):
              {'success': 26},
              'repeat-0/008-amended-to-map/result.stdout.code-units.bin',
              'Map("\ud800", 1, "\x00property:[55296]", 2)'.encode('utf-16-be', 'surrogatepass')),
+            ('file:///stage63/collection-addition.pkl', 125,
+             {'success': 86, 'error': 39},
+             'repeat-0/001-ls-ordered/result.stdout.code-units.bin',
+             'List(1, 2, 2, 3)'.encode('utf-16-be')),
         ):
             with self.subTest(uri=uri):
                 fixture = compare.ROOT / compare.profiles.PROFILES[uri]['fixture']

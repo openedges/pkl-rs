@@ -1,0 +1,7 @@
+tag = "stage63-collection-addition"
+keyLeft = new Dynamic { value = 1 }
+keyRight = new Dynamic { value = 1 }
+setLeft = Set(keyLeft)
+setRight = Set(keyRight)
+mapLeft = Map(keyLeft, "old")
+mapRight = Map(keyRight, "new")

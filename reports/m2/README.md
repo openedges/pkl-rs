@@ -1,5 +1,30 @@
 # M2 language evidence
 
+### Stage63 collection addition — independent Java authority
+
+The [Java checkpoint](stage63-java-checkpoint.json) seals 125 ordered public
+string calls per fresh JVM: 86 successes and 39 ordinary Pkl errors. Two sessions
+match all raw result channels and the complete process protocol. The
+[fixture](../../tests/fixtures/m2-collection-addition/README.md) covers List/Set
+cross-kind addition, Map replacement order and key representatives, hash
+structure boundaries, lazy values, and invalid-operand diagnostics. The source
+archive retains all 5,308 members and 45 copied source inputs.
+
+A separate direct Java runtime supplement records 14 reference observations in
+each of two fresh JVMs. It distinguishes returning the left wrapper for an empty
+right operand from creating a new wrapper for nonempty merges. These internal
+observations are separate from public string and typed-export compatibility.
+
+The [evidence archive](stage63-java-evidence.tar.gz) retains exploratory captures,
+the authored module-local helper failure, both identity attempts, and nine
+recorded validation commands. All nine commands pass with 421 stable copied
+inputs: fixture verification and seven fixture tests normally and under `-O`,
+24 shared comparator tests in both modes, ten JavaScript tests, the identity
+supplement check, and source inventory freshness. Actual publication command,
+stdout, stderr, and exit are recorded separately. M2 implementation-link
+freshness waits for the concurrent runtime freeze. This Java authority claims
+no Rust, Node, browser, full M2, or performance compatibility pass.
+
 ### Stage62 collection conversions — implementation and local comparisons
 
 The [implementation checkpoint](stage62-implementation-checkpoint.json) records

@@ -28,11 +28,12 @@ export function validateProfileCatalog(catalog) {
   const validators = new Set(['collection_conversions_fixtures',
     'collection_conversion_controls_fixtures', 'collection_lookups_fixtures',
     'collection_default_contracts_fixtures', 'collection_dynamic_render_fixtures',
-    'collection_property_names_fixtures']);
+    'collection_property_names_fixtures', 'collection_addition_fixtures']);
   const uris = new Set(), fixtures = new Set();
   for (const profile of catalog.profiles) {
     if (!profile || typeof profile.module_uri !== 'string'
-        || !/^file:\/\/\/stage62\/[a-z-]+\.pkl$/.test(profile.module_uri)
+        || !(/^file:\/\/\/stage62\/[a-z-]+\.pkl$/.test(profile.module_uri)
+          || profile.module_uri === 'file:///stage63/collection-addition.pkl')
         || uris.has(profile.module_uri) || fixtures.has(profile.fixture)
         || !/^tests\/fixtures\/m2-[a-z-]+$/.test(profile.fixture)
         || !Number.isSafeInteger(profile.rows) || profile.rows < 1 || profile.repetitions !== 2
@@ -50,6 +51,9 @@ export function validateProfileCatalog(catalog) {
     const requiredTools = [profile.validator_script,
       `tools/${profile.validator_module.replace(/_fixtures$/, '_oracle')}.py`,
       `tools/tests/test_${profile.validator_module}.py`, 'tools/java/CollectionConversionsOracle.java'];
+    if (profile.validator_module === 'collection_addition_fixtures')
+      requiredTools.push('tools/collection_conversions_fixtures.py',
+        'tools/collection_conversions_oracle.py');
     if (new Set(profile.tool_sources).size !== requiredTools.length
         || profile.tool_sources.length !== requiredTools.length
         || requiredTools.some(name => !profile.tool_sources.includes(name)))

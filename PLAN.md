@@ -2030,6 +2030,53 @@ Stage 61→62의 진척을 분리합니다. `api/list.pkl`은 기록된 `-Xmx512
 다시 실행하지 않습니다. 이번 연결 검증은 Stage 62 구현 체크포인트의 근거이며
 **M2 전체 완료나 제품 API·성능 목표 달성을 뜻하지 않습니다.**
 
+### Stage 63 — List·Set·Map 덧셈과 피연산자 진단
+
+Stage 62 원본 비교에서 `basic/list.pkl`·`basic/set.pkl`·
+`mappings/typeCheck.pkl`은 strict collection의 `+` 경로에서 실패했습니다.
+현재 scalar 전용 연산 경로가 heap 객체를 `Dynamic`으로 표시하므로 실제
+피연산자의 종류도 진단에 반영해야 합니다. 추가 원본 `basic/map.pkl`을 포함해
+이 공통 언어 연산을 검증합니다. 나머지 원본의 `String.reverse`, class-parent
+amendment와 parser 차이는 별도 의무로 유지합니다.
+
+런타임·GC·재개 상태는 `gpt-6-astra / xhigh`, 독립 Java 기준과 검증 도구는
+`gpt-6-sol / high`, 독립 의미론·코드 검토는 별도의 `gpt-6-sol / high`에
+배정합니다. 주 에이전트는 통합 검증, 문서와 단계별 커밋·푸시를 담당합니다.
+
+고정 Java의 `AdditionNode`·`VmList`·`VmSet`·`VmMap`을 기준으로 List/Set 간
+네 조합과 Map 간 결합을 구현합니다. 결과 종류는 왼쪽 피연산자를 따르고,
+List는 중복을 보존하며 Set은 처음 삽입한 순서를 유지합니다. Map은 기존 키
+순서와 대표 키를 유지하면서 오른쪽 값으로 교체합니다. 빈 오른쪽 피연산자는
+왼쪽 객체를 그대로 반환합니다. boxed 숫자·객체 키의 동등성, 해시 구조의 경계,
+지연 값과 첫 오류 순서는 Java 기준으로 별도 검증합니다. 공개 문자열 출력과
+내부 객체 identity의 검증 범위는 구분합니다.
+
+실행 중인 두 입력과 결과 builder, 현재 키·값을 Host 중단·재진입·GC·취소·
+재시도 동안 보존합니다. 정상 `Add`와 정수 상수 최적화 경로의 오류가 실제
+List·Set·Map·클래스·함수 종류를 표시하도록 연결하며, 진단 때문에 값을 먼저
+평가하지 않습니다. 공통 런타임을 native·N-API·Wasm에서 그대로 사용합니다.
+
+독립 Java 기준을 먼저 고정하고, 구현 후 필수 Rust 검사와 실제 플랫폼·기존
+회귀를 로컬에서 검증합니다. 원본 90개를 유지하고 추가 Map 원본을 실행하여
+새 통과와 남은 첫 실패를 구분합니다. 원본 type-check 프로그램의 나머지 타입
+의무는 덧셈 구현만으로 완료 처리하지 않습니다. Java 기준, 구현 검증, 실제
+커밋 소스 연결을 단계별로 기록·커밋·푸시하며 **M2 전체 완료 조건은 유지합니다.**
+
+#### Stage 63 A — 독립 Java 덧셈 기준 고정
+
+[Java 기준 기록](reports/m2/stage63-java-checkpoint.json)에 식 125개를 고정했습니다.
+각 독립 JVM 세션에서 성공 86개·일반 Pkl 오류 39개이며, 두 세션의 원시 결과와
+전체 process protocol이 일치합니다. 공개 문자열 비교와 별도로 내부 Java
+wrapper identity 14개를 두 번 관찰하여 빈 오른쪽 피연산자와 비어 있지 않은
+결합의 차이를 기록했습니다. 이 내부 관찰을 공개 typed-export 호환성으로
+간주하지 않습니다.
+
+fixture 검증·Python 검사·JavaScript 검사·identity 보충 자료·소스 목록을
+검증한 아홉 명령이 모두 통과했고 입력 421개의 실행 전후 바이트가 같습니다.
+탐색 입력, 잘못 작성한 local helper 사례와 이전 identity 취득은 보존했습니다.
+게시 명령의 실제 stdout·stderr·종료 코드도 별도로 기록했습니다. 이 단계는
+독립 Java 기준이며 Rust·실제 플랫폼·M2 완료 판정은 후속 검증입니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.
