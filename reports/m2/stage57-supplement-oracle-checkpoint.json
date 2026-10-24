@@ -1,0 +1,58 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical_A_separate": {
+    "bytes": 1453461,
+    "path": "tests/fixtures/m2-data-size/oracle-evidence.tar.gz",
+    "sha256": "51e14a2c80836141c61a9bbb18aaa708e6a963c238132854e55e7bf6493c6b8e"
+  },
+  "fixture": {
+    "bytes": 370273,
+    "fileset_sha256": "f50819e7fd8bf79c444f65cc22146d5c4183368874d2f26104cb2eb6173e54b5",
+    "members": 7612,
+    "path": "tests/fixtures/m2-data-size-supplement/oracle-evidence.tar.gz",
+    "sha256": "ab8c59f0a42611aa8325d70ab2c1cc83ec59f19d12a848ee816829acbed6b6ad"
+  },
+  "freeze": {
+    "files": 21,
+    "path": "target/m2/stage57-data-size-supplement-checks-01/freeze.json",
+    "sha256": "e28e133f2f329f9dcf0b601b455f73e8ef0673683e56830dc4937e6a6c9fd003",
+    "source_timing_limit": "A2 source and fixture SHA inventory is recorded after final validation; exact pre-test source SHA snapshot was not independently timestamped. Each Java packet separately records before/after source and input hashes.",
+    "terminal_logs": 4
+  },
+  "full_public_export_candidate_comparison_passed": false,
+  "java_A2_git_commit_binding": "pending separate actual Git object audit",
+  "kind": "Separate DataSize/Bytes Java supplement A2 local authority checkpoint",
+  "native_node_browser_compatibility_passed": false,
+  "observations": {
+    "corrected05": "44 ordered rows, two string and two export JVMs; 44 string calls and 49 traced export calls per session; 24 success, 20 ordinary errors per boundary",
+    "historical04": "44 rows, four JVMs and equal raw repeats, wrapper complete=false",
+    "lexical_shadow09": "6 rows, 5 success and 1 error per string/export session",
+    "module_shadow07": "7 rows, 3 success and 4 errors per string/export session",
+    "public_identity06": "8 ordered rows, two JVMs, 16 public calls each; 6 success and 2 ordinary error row statuses; distinct producer boundary",
+    "qualified_shadow08": "7 rows, 4 success and 3 errors per string/export session",
+    "repetitions_are_distinct_feature_coverage": false
+  },
+  "performance_targets_achieved": false,
+  "publication": {
+    "bytes": 25945,
+    "full_member_reread_verified": true,
+    "manifest_sha256": "3e8a04f6ad62dd2ebb3d18926201c17cf4259a896b98ab094b6ad3ab704f1002",
+    "member_count": 37,
+    "original_sources_unchanged_before_after": true,
+    "path": "reports/m2/stage57-supplement-oracle-validation-evidence.tar.gz",
+    "sha256": "7085166ce706c87226d5c69ee52737de6bfa55097d63cac3f7cd8f9eacb7b179",
+    "source_members": 34
+  },
+  "schema": 1,
+  "scope": "Raw Java authority for additive common string cohorts and separate public identity producer; no candidate comparison",
+  "stage": 57,
+  "validation": {
+    "frozen_offline_verifier": "pass, observed exit 0",
+    "frozen_python_tests": "18/18 pass, observed exit 0",
+    "independent_read_only_raw_review": "pass",
+    "review_report": "reports/m2/stage57-supplement-oracle-review.md",
+    "review_sha256": "6469d6b861eacb78c6a995f0d4ceae0dae63a69900e4a2ef57cbe9c8ca342433"
+  },
+  "whole_M2_complete": false
+}

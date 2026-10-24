@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage57/datasize-bytes-identity-oracle.pkl",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "bytes-empty",
+      "expression": "Bytes()"
+    },
+    {
+      "id": "bytes-value",
+      "expression": "Bytes(1,2,3)"
+    },
+    {
+      "id": "bytes-module-value",
+      "expression": "byteValue"
+    },
+    {
+      "id": "bytes-module-size",
+      "expression": "byteValue.size"
+    },
+    {
+      "id": "bytes-empty-size",
+      "expression": "Bytes().size"
+    },
+    {
+      "id": "bytes-local-shadow",
+      "expression": "let (Bytes = (x) -> x) Bytes(256)"
+    },
+    {
+      "id": "bytes-local-shadow-string",
+      "expression": "let (Bytes = (x) -> x.toString()) Bytes(256)"
+    },
+    {
+      "id": "bytes-local-shadow-arity",
+      "expression": "let (Bytes = (x) -> x) Bytes()"
+    }
+  ]
+}

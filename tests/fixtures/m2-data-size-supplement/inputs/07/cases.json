@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage57/datasize-bytes-shadow-oracle.pkl",
+  "boundaries": [
+    "string",
+    "export"
+  ],
+  "repetitions": 2,
+  "scope": "Additive module-declared function Bytes shadow control",
+  "rows": [
+    {
+      "id": "module-function-overflow",
+      "expression": "Bytes(256)",
+      "group": "shadow",
+      "authored_hypothesis": "module function dispatch"
+    },
+    {
+      "id": "module-function-negative",
+      "expression": "Bytes(-1)",
+      "group": "shadow",
+      "authored_hypothesis": "module function dispatch"
+    },
+    {
+      "id": "module-function-zero",
+      "expression": "Bytes(0)",
+      "group": "shadow",
+      "authored_hypothesis": "module function dispatch"
+    },
+    {
+      "id": "module-function-missing",
+      "expression": "Bytes()",
+      "group": "shadow",
+      "authored_hypothesis": "module function dispatch"
+    },
+    {
+      "id": "module-function-extra",
+      "expression": "Bytes(1,2)",
+      "group": "shadow",
+      "authored_hypothesis": "module function dispatch"
+    },
+    {
+      "id": "module-function-float",
+      "expression": "Bytes(1.0)",
+      "group": "shadow",
+      "authored_hypothesis": "module function dispatch"
+    },
+    {
+      "id": "module-function-let",
+      "expression": "let (Bytes = (x) -> x) Bytes(256)",
+      "group": "shadow",
+      "authored_hypothesis": "module function dispatch"
+    }
+  ]
+}

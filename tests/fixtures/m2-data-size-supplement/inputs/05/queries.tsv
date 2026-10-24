@@ -1,0 +1,44 @@
+round-call	1.mb.round()
+round-property	1.mb.round
+missing-property	1.mb.absentMember
+missing-method	1.mb.absentMethod()
+between-missing	1.mb.isBetween(0.mb)
+between-extra	1.mb.isBetween(0.mb,2.mb,3.mb)
+ifnonnull-unit	1.mb.ifNonNull((it) -> it.unit)
+ifnonnull-value	1.mb.ifNonNull((it) -> it.value)
+ifnonnull-missing	1.mb.ifNonNull((it) -> it.absentMember)
+ifnonnull-wrong	1.mb.ifNonNull(1)
+alias-kind	DataSizeUnit is TypeAlias
+alias-string	DataSizeUnit.toString()
+alias-valid	"mb" is DataSizeUnit
+alias-invalid	"custom" is DataSizeUnit
+nullable-null	new UnitNullable { x = null }.x
+nullable-wrong	new UnitNullable { x = "bad" }.x
+union-int	new UnitUnion { x = 1 }.x
+union-bad	new UnitUnion { x = "bad" }.x
+unit-required-missing	new UnitRequired {}.x
+unit-holder-default	new UnitHolder {}.x
+unit-holder-wrong	new UnitHolder { x = "bad" }.x
+bytes-empty	Bytes()
+bytes-zero	Bytes(0)
+bytes-max	Bytes(255)
+bytes-pair	Bytes(0,255)
+bytes-negative	Bytes(-1)
+bytes-overflow	Bytes(256)
+bytes-float	Bytes(1.0)
+bytes-null	Bytes(null)
+bytes-string	Bytes("1")
+bytes-list	Bytes(List(1,2,3))
+bytes-order-left	Bytes(256,1.mb.absentMember)
+bytes-order-right	Bytes(1.mb.absentMember,256)
+bytes-equal	Bytes(1,2,3)==Bytes(1,2,3)
+bytes-empty-equal	Bytes()==Bytes()
+bytes-size-value	byteValue.size.value
+bytes-size-unit	byteValue.size.unit
+bytes-size-type	byteValue.size is DataSize
+bytes-size-repeat	byteValue.size == byteValue.size
+encoded-size-0	"x".repeat(0).encodeToBytes("UTF-8").size
+encoded-size-1	"x".repeat(1).encodeToBytes("UTF-8").size
+encoded-size-999	"x".repeat(999).encodeToBytes("UTF-8").size
+encoded-size-1000	"x".repeat(1000).encodeToBytes("UTF-8").size
+encoded-size-1024	"x".repeat(1024).encodeToBytes("UTF-8").size

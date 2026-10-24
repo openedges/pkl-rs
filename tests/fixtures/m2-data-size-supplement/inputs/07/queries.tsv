@@ -1,0 +1,7 @@
+module-function-overflow	Bytes(256)
+module-function-negative	Bytes(-1)
+module-function-zero	Bytes(0)
+module-function-missing	Bytes()
+module-function-extra	Bytes(1,2)
+module-function-float	Bytes(1.0)
+module-function-let	let (Bytes = (x) -> x) Bytes(256)

@@ -1,0 +1,9 @@
+// Stage57 DataSize public API source. All expressions are supplied separately.
+nanSize = (0.0 / 0.0).mb
+typealias DataSizeAlias = DataSize
+class UnitHolder { x: DataSizeUnit = "mb" }
+class SizeHolder { x: DataSize = 1.mb }
+class RequiredSize { x: DataSize }
+function useDataSize(x: DataSize): String = x.unit
+marker = "stage57"
+byteValue = Bytes(1,2,3)

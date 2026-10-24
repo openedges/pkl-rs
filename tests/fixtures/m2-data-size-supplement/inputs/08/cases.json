@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage57/datasize-bytes-qualified-shadow.pkl",
+  "boundaries": [
+    "string",
+    "export"
+  ],
+  "repetitions": 2,
+  "scope": "Qualified module Bytes method resolution",
+  "rows": [
+    {
+      "id": "this-call-overflow",
+      "expression": "this.Bytes(256)",
+      "group": "shadow",
+      "authored_hypothesis": "qualified module dispatch"
+    },
+    {
+      "id": "this-call-zero",
+      "expression": "this.Bytes(0)",
+      "group": "shadow",
+      "authored_hypothesis": "qualified module dispatch"
+    },
+    {
+      "id": "this-call-missing",
+      "expression": "this.Bytes()",
+      "group": "shadow",
+      "authored_hypothesis": "qualified module dispatch"
+    },
+    {
+      "id": "module-call-overflow",
+      "expression": "module.Bytes(256)",
+      "group": "shadow",
+      "authored_hypothesis": "qualified module dispatch"
+    },
+    {
+      "id": "module-call-zero",
+      "expression": "module.Bytes(0)",
+      "group": "shadow",
+      "authored_hypothesis": "qualified module dispatch"
+    },
+    {
+      "id": "module-property",
+      "expression": "this.Bytes",
+      "group": "shadow",
+      "authored_hypothesis": "qualified module dispatch"
+    },
+    {
+      "id": "unqualified-overflow",
+      "expression": "Bytes(256)",
+      "group": "shadow",
+      "authored_hypothesis": "qualified module dispatch"
+    }
+  ]
+}

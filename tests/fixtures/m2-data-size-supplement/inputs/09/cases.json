@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage57/datasize-bytes-lexical-shadow.pkl",
+  "boundaries": [
+    "string",
+    "export"
+  ],
+  "repetitions": 2,
+  "scope": "Actual lexical module Bytes method resolution",
+  "rows": [
+    {
+      "id": "lexical-inside",
+      "expression": "inside",
+      "group": "shadow",
+      "authored_hypothesis": "module lexical method dispatch"
+    },
+    {
+      "id": "lexical-let",
+      "expression": "insideLet",
+      "group": "shadow",
+      "authored_hypothesis": "module lexical method dispatch"
+    },
+    {
+      "id": "lexical-qualified",
+      "expression": "insideQualified",
+      "group": "shadow",
+      "authored_hypothesis": "module lexical method dispatch"
+    },
+    {
+      "id": "query-unqualified",
+      "expression": "Bytes(256)",
+      "group": "shadow",
+      "authored_hypothesis": "module lexical method dispatch"
+    },
+    {
+      "id": "query-this",
+      "expression": "this.Bytes(256)",
+      "group": "shadow",
+      "authored_hypothesis": "module lexical method dispatch"
+    },
+    {
+      "id": "query-module",
+      "expression": "module.Bytes(256)",
+      "group": "shadow",
+      "authored_hypothesis": "module lexical method dispatch"
+    }
+  ]
+}

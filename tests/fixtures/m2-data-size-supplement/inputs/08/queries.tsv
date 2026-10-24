@@ -1,0 +1,7 @@
+this-call-overflow	this.Bytes(256)
+this-call-zero	this.Bytes(0)
+this-call-missing	this.Bytes()
+module-call-overflow	module.Bytes(256)
+module-call-zero	module.Bytes(0)
+module-property	this.Bytes
+unqualified-overflow	Bytes(256)

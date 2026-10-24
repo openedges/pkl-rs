@@ -1,0 +1,8 @@
+bytes-empty	Bytes()
+bytes-value	Bytes(1,2,3)
+bytes-module-value	byteValue
+bytes-module-size	byteValue.size
+bytes-empty-size	Bytes().size
+bytes-local-shadow	let (Bytes = (x) -> x) Bytes(256)
+bytes-local-shadow-string	let (Bytes = (x) -> x.toString()) Bytes(256)
+bytes-local-shadow-arity	let (Bytes = (x) -> x) Bytes()

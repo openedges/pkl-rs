@@ -1,0 +1,277 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage57/datasize-additive-oracle.pkl",
+  "boundaries": [
+    "string",
+    "export"
+  ],
+  "repetitions": 2,
+  "scope": "Exploratory additive public DataSize/Bytes controls; hypotheses are not oracle-derived expectations.",
+  "rows": [
+    {
+      "group": "members",
+      "id": "round-call",
+      "expression": "1.mb.round()",
+      "authored_hypothesis": "DataSize has no round method"
+    },
+    {
+      "group": "members",
+      "id": "round-property",
+      "expression": "1.mb.round",
+      "authored_hypothesis": "DataSize has no round property"
+    },
+    {
+      "group": "members",
+      "id": "missing-property",
+      "expression": "1.mb.absentMember",
+      "authored_hypothesis": "unknown property diagnostic"
+    },
+    {
+      "group": "members",
+      "id": "missing-method",
+      "expression": "1.mb.absentMethod()",
+      "authored_hypothesis": "unknown method diagnostic"
+    },
+    {
+      "group": "members",
+      "id": "between-missing",
+      "expression": "1.mb.isBetween(0.mb)",
+      "authored_hypothesis": "argument arity diagnostic"
+    },
+    {
+      "group": "members",
+      "id": "between-extra",
+      "expression": "1.mb.isBetween(0.mb,2.mb,3.mb)",
+      "authored_hypothesis": "argument arity diagnostic"
+    },
+    {
+      "group": "members",
+      "id": "ifnonnull-unit",
+      "expression": "1.mb.ifNonNull((it) -> it.unit)",
+      "authored_hypothesis": "inherited nullable callback"
+    },
+    {
+      "group": "members",
+      "id": "ifnonnull-value",
+      "expression": "1.mb.ifNonNull((it) -> it.value)",
+      "authored_hypothesis": "inherited nullable callback"
+    },
+    {
+      "group": "members",
+      "id": "ifnonnull-missing",
+      "expression": "1.mb.ifNonNull((it) -> it.absentMember)",
+      "authored_hypothesis": "callback error"
+    },
+    {
+      "group": "members",
+      "id": "ifnonnull-wrong",
+      "expression": "1.mb.ifNonNull(1)",
+      "authored_hypothesis": "callback type error"
+    },
+    {
+      "group": "type-alias",
+      "id": "alias-kind",
+      "expression": "DataSizeUnit is TypeAlias",
+      "authored_hypothesis": "bundled alias value kind"
+    },
+    {
+      "group": "type-alias",
+      "id": "alias-string",
+      "expression": "DataSizeUnit.toString()",
+      "authored_hypothesis": "bundled alias text"
+    },
+    {
+      "group": "type-alias",
+      "id": "alias-valid",
+      "expression": "\"mb\" is DataSizeUnit",
+      "authored_hypothesis": "valid alias member"
+    },
+    {
+      "group": "type-alias",
+      "id": "alias-invalid",
+      "expression": "\"custom\" is DataSizeUnit",
+      "authored_hypothesis": "invalid alias member"
+    },
+    {
+      "group": "type-alias",
+      "id": "nullable-null",
+      "expression": "new UnitNullable { x = null }.x",
+      "authored_hypothesis": "nullable alias accepts null"
+    },
+    {
+      "group": "type-alias",
+      "id": "nullable-wrong",
+      "expression": "new UnitNullable { x = \"bad\" }.x",
+      "authored_hypothesis": "nullable alias rejects bad unit"
+    },
+    {
+      "group": "type-alias",
+      "id": "union-int",
+      "expression": "new UnitUnion { x = 1 }.x",
+      "authored_hypothesis": "union accepts Int"
+    },
+    {
+      "group": "type-alias",
+      "id": "union-bad",
+      "expression": "new UnitUnion { x = \"bad\" }.x",
+      "authored_hypothesis": "union rejects bad unit"
+    },
+    {
+      "group": "type-alias",
+      "id": "unit-required-missing",
+      "expression": "new UnitRequired {}.x",
+      "authored_hypothesis": "no alias default"
+    },
+    {
+      "group": "type-alias",
+      "id": "unit-holder-default",
+      "expression": "new UnitHolder {}.x",
+      "authored_hypothesis": "explicit unit default"
+    },
+    {
+      "group": "type-alias",
+      "id": "unit-holder-wrong",
+      "expression": "new UnitHolder { x = \"bad\" }.x",
+      "authored_hypothesis": "alias check"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-empty",
+      "expression": "Bytes()",
+      "authored_hypothesis": "zero varargs"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-zero",
+      "expression": "Bytes(0)",
+      "authored_hypothesis": "UInt8 lower bound"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-max",
+      "expression": "Bytes(255)",
+      "authored_hypothesis": "UInt8 upper bound"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-pair",
+      "expression": "Bytes(0,255)",
+      "authored_hypothesis": "two UInt8 arguments"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-negative",
+      "expression": "Bytes(-1)",
+      "authored_hypothesis": "UInt8 lower range error"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-overflow",
+      "expression": "Bytes(256)",
+      "authored_hypothesis": "UInt8 upper range error"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-float",
+      "expression": "Bytes(1.0)",
+      "authored_hypothesis": "Float argument type error"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-null",
+      "expression": "Bytes(null)",
+      "authored_hypothesis": "null argument type error"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-string",
+      "expression": "Bytes(\"1\")",
+      "authored_hypothesis": "String argument type error"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-list",
+      "expression": "Bytes(List(1,2,3))",
+      "authored_hypothesis": "List versus varargs type error"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-order-left",
+      "expression": "Bytes(256,1.mb.absentMember)",
+      "authored_hypothesis": "first range versus later undefined"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-order-right",
+      "expression": "Bytes(1.mb.absentMember,256)",
+      "authored_hypothesis": "first undefined versus later range"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-equal",
+      "expression": "Bytes(1,2,3)==Bytes(1,2,3)",
+      "authored_hypothesis": "value equality"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-empty-equal",
+      "expression": "Bytes()==Bytes()",
+      "authored_hypothesis": "empty equality"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-size-value",
+      "expression": "byteValue.size.value",
+      "authored_hypothesis": "size numeric value"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-size-unit",
+      "expression": "byteValue.size.unit",
+      "authored_hypothesis": "size unit"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-size-type",
+      "expression": "byteValue.size is DataSize",
+      "authored_hypothesis": "size type"
+    },
+    {
+      "group": "bytes-factory",
+      "id": "bytes-size-repeat",
+      "expression": "byteValue.size == byteValue.size",
+      "authored_hypothesis": "repeated size access equality"
+    },
+    {
+      "group": "bytes-size",
+      "id": "encoded-size-0",
+      "expression": "\"x\".repeat(0).encodeToBytes(\"UTF-8\").size",
+      "authored_hypothesis": "actual encoded Bytes size 0"
+    },
+    {
+      "group": "bytes-size",
+      "id": "encoded-size-1",
+      "expression": "\"x\".repeat(1).encodeToBytes(\"UTF-8\").size",
+      "authored_hypothesis": "actual encoded Bytes size 1"
+    },
+    {
+      "group": "bytes-size",
+      "id": "encoded-size-999",
+      "expression": "\"x\".repeat(999).encodeToBytes(\"UTF-8\").size",
+      "authored_hypothesis": "actual encoded Bytes size 999"
+    },
+    {
+      "group": "bytes-size",
+      "id": "encoded-size-1000",
+      "expression": "\"x\".repeat(1000).encodeToBytes(\"UTF-8\").size",
+      "authored_hypothesis": "actual encoded Bytes size 1000"
+    },
+    {
+      "group": "bytes-size",
+      "id": "encoded-size-1024",
+      "expression": "\"x\".repeat(1024).encodeToBytes(\"UTF-8\").size",
+      "authored_hypothesis": "actual encoded Bytes size 1024"
+    }
+  ]
+}

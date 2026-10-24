@@ -1,0 +1,30 @@
+{
+  "archive_bytes": 370273,
+  "archive_sha256": "ab8c59f0a42611aa8325d70ab2c1cc83ec59f19d12a848ee816829acbed6b6ad",
+  "canonical_a_archive_sha256": "51e14a2c80836141c61a9bbb18aaa708e6a963c238132854e55e7bf6493c6b8e",
+  "captures": {
+    "04": 2928,
+    "05": 2934,
+    "06": 471,
+    "07": 444,
+    "08": 444,
+    "09": 384
+  },
+  "executed_probes": {
+    "DataSizeBytesIdentity.java": "42a4988031b43667e916126ec662dfcacec4c0fb4f309f5d520946551bccc2f7",
+    "DataSizeSplitOracle.java": "a4389bb16f2cc784288dd79859afb2991ac574ac84f63319ad56c583f91cabbb"
+  },
+  "fileset_sha256": "f50819e7fd8bf79c444f65cc22146d5c4183368874d2f26104cb2eb6173e54b5",
+  "members": 7612,
+  "schema": 1,
+  "scope": "Separate additive Pkl 0.32.0 public Java DataSize/Bytes authority; canonical A unchanged",
+  "sources": {
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/DataSize.java": "ba435d35846ab8c817a069d2cb39c9741dd98bcd89903374098d5bad8a32fb6c",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/DataSizeUnit.java": "8aee8c8651a91fe7bd7d4327a72c3abf71fea75e953c43f0242b6854bda97fac",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmDataSize.java": "8928edffbb2cd46549737760d5af87a11b91c838b392ce19e8d6ba9dc4145010",
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/stdlib/base/DataSizeNodes.java": "c1d8add5c47acca5c20610a22ebf6dea27f7b9b16e3b31a39ff9b93ac8a13fe7",
+    "external/pkl/stdlib/base.pkl": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb",
+    "oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b"
+  }
+}

@@ -1,0 +1,5 @@
+// Stage57 lexical Bytes function resolution inside a module source.
+function Bytes(x: Int): Int = x
+inside = Bytes(256)
+insideLet = let (Bytes = (x) -> x) Bytes(256)
+insideQualified = this.Bytes(256)
