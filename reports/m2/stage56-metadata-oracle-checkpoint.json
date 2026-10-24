@@ -1,0 +1,438 @@
+{
+  "schema": 1,
+  "stage": 56,
+  "kind": "Additive Java base-class metadata authority checkpoint",
+  "recorded_utc": "2026-10-24T06:49:11.953022+00:00",
+  "scope": "Actual local Java-only authority and offline tooling validation. No candidate/Cargo/performance execution by this work.",
+  "baseline": "Pkl 0.32.0",
+  "reference_revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+  "original_authority_commit": "31eef43ad2473e8977d7844c4fa5af087392072c",
+  "fixture": "tests/fixtures/m2-class-metadata-completion",
+  "original_fixture_preserved": {
+    "tests/fixtures/m2-class-values/LICENSE": {
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    "tests/fixtures/m2-class-values/README.md": {
+      "sha256": "8ce1e963d638c245f79af2f1005a303466d03a8cafb378260de0b68b9e228e8a",
+      "bytes": 3562
+    },
+    "tests/fixtures/m2-class-values/cases.json": {
+      "sha256": "38f6bb25bfbdbb591096b34df014ab9fc9a808acb1d589bf079501366ad08996",
+      "bytes": 31358
+    },
+    "tests/fixtures/m2-class-values/export-cases.json": {
+      "sha256": "8262f5a4121448e0f2ec97c8c6f2fc8bfa51b898f64b25e1ae6fec106389df5f",
+      "bytes": 837
+    },
+    "tests/fixtures/m2-class-values/inputs/amended-module.pkl": {
+      "sha256": "c482fc268cc6ff6d2405895adfffd862e6ad3e797988926b4c9ac325e38ead2a",
+      "bytes": 29
+    },
+    "tests/fixtures/m2-class-values/inputs/annotation-reentry.pkl": {
+      "sha256": "45bc6206e07c59135b01785b7c71cfbed142bfea45fc06f1a3b11acdd8f0d832",
+      "bytes": 102
+    },
+    "tests/fixtures/m2-class-values/inputs/builtin-name-spoof.pkl": {
+      "sha256": "e7a4cf965383ca0915774df9d89a20b8bb8d75feab8299a0fc40238828e31fee",
+      "bytes": 84
+    },
+    "tests/fixtures/m2-class-values/inputs/closed-user-superclass.pkl": {
+      "sha256": "41343ff8f11d2c20ca46017e3b1e646d28e74d2611a456bb9acd780ba6dc14aa",
+      "bytes": 54
+    },
+    "tests/fixtures/m2-class-values/inputs/converter-exact-builtin-boundary.pkl": {
+      "sha256": "9b3a14be03a0edfecc4d652b4aebf28fede91f919a2ef7404f494e1d34521f40",
+      "bytes": 528
+    },
+    "tests/fixtures/m2-class-values/inputs/converter-top-level.pkl": {
+      "sha256": "be3c6a7574a1b229e16b9b114788d13b0efd7dd19a5d669048ad8007c8d66bda",
+      "bytes": 91
+    },
+    "tests/fixtures/m2-class-values/inputs/converter-values.pkl": {
+      "sha256": "ff8b547e5d6e289b27ea1a8d37f6c78f0dab975bb046d36276b2e6684ca09dd5",
+      "bytes": 2750
+    },
+    "tests/fixtures/m2-class-values/inputs/explicit-typed.pkl": {
+      "sha256": "19170204203dd397eda8cd8a35969e6bbf74dfacb8e1336e8eb5fb441442d554",
+      "bytes": 44
+    },
+    "tests/fixtures/m2-class-values/inputs/export-changed.pkl": {
+      "sha256": "f5a3bb70aec4012e51ecfd60060ea1171caab8182aa79ba8188277a772c820b8",
+      "bytes": 92
+    },
+    "tests/fixtures/m2-class-values/inputs/export-first.pkl": {
+      "sha256": "b80c2db61e479ffd52195509a6a299fc897ddec5dceebfdb751e3e81f990be35",
+      "bytes": 90
+    },
+    "tests/fixtures/m2-class-values/inputs/extended-module.pkl": {
+      "sha256": "d224b49c4ebfbc240a86c60868ca2287a6499d387c94f443ceb22f1613147473",
+      "bytes": 30
+    },
+    "tests/fixtures/m2-class-values/inputs/external-any-near-prefix.pkl": {
+      "sha256": "99224445aea54572c7270f886f8537af925669d1c83b343d6620d6794ff40774",
+      "bytes": 59
+    },
+    "tests/fixtures/m2-class-values/inputs/external-any-ordinary.pkl": {
+      "sha256": "d02d20dbd21a006521719b1919b6853fd01b9e059feeb9b6f1ed65a64b2ff7b0",
+      "bytes": 51
+    },
+    "tests/fixtures/m2-class-values/inputs/external-any-pkl-prefix.pkl": {
+      "sha256": "e275fdddaa3e33159663b293e1dc35f18b0d2c9476bc624212058efb222a8083",
+      "bytes": 58
+    },
+    "tests/fixtures/m2-class-values/inputs/external-closed-int-ordinary.pkl": {
+      "sha256": "c61d1e1eeea7ab63ada40a95d208bee998f5a07f7b3b8543fa23adea5bc2f01f",
+      "bytes": 51
+    },
+    "tests/fixtures/m2-class-values/inputs/external-closed-int-pkl-prefix.pkl": {
+      "sha256": "d93f3166e0ca49bdda7692992540191f6bc20f26be03122e1a3d2f7c9cd8bc15",
+      "bytes": 58
+    },
+    "tests/fixtures/m2-class-values/inputs/external-declaration-name-prefix.pkl": {
+      "sha256": "1b116cd00d61c0205baf37e1c23e6076cd5ff199089406560a670c87338cbf08",
+      "bytes": 55
+    },
+    "tests/fixtures/m2-class-values/inputs/external-declaration-uri-prefix.pkl": {
+      "sha256": "563f5fbbf73905310df539f67bea3b6744649414bef844626d7f687b754bf3e0",
+      "bytes": 48
+    },
+    "tests/fixtures/m2-class-values/inputs/get-class-override.pkl": {
+      "sha256": "f2d4aa2b64ef4e86000133fcaec23e89fbdc2a410a87f1197fff361a84ba5d65",
+      "bytes": 209
+    },
+    "tests/fixtures/m2-class-values/inputs/isolation.pkl": {
+      "sha256": "9a1e5d5f92fba6c126bfa51a67874c583279f3e5c4001c88a3fb3dafc2c25cb4",
+      "bytes": 111
+    },
+    "tests/fixtures/m2-class-values/inputs/module-main.pkl": {
+      "sha256": "97052163f971c4e69bf7fdb00ebf984aac14e30cbafc2864e6bcdbd1c953ef72",
+      "bytes": 250
+    },
+    "tests/fixtures/m2-class-values/inputs/partial-annotation-failure.pkl": {
+      "sha256": "d7211378ac758fc17083db92b87091c003dc4b86ae782c21da959344a1dd46ce",
+      "bytes": 63
+    },
+    "tests/fixtures/m2-class-values/inputs/partial-method-type-failure.pkl": {
+      "sha256": "b6cfdba06a126d1efca4358dd20b77e58144eefeabb801ca578e4a4eb59cca2b",
+      "bytes": 92
+    },
+    "tests/fixtures/m2-class-values/inputs/partial-missing-superclass.pkl": {
+      "sha256": "ecba066759f06bddf54e4935c91169318010eaa9e7fc3e5d93dc9b3d60b41e0a",
+      "bytes": 68
+    },
+    "tests/fixtures/m2-class-values/inputs/partial-property-type-failure.pkl": {
+      "sha256": "97f94c8ebf166d5bc1e603685a30e2f51b9a3686bc1e97e922dcedf47abe6131",
+      "bytes": 69
+    },
+    "tests/fixtures/m2-class-values/inputs/plain-module.pkl": {
+      "sha256": "deeca9ee02fe7e3400aac5ab5432d68f97973b93d73982e1569a9e21bb7b46e9",
+      "bytes": 55
+    },
+    "tests/fixtures/m2-class-values/inputs/same-name-left.pkl": {
+      "sha256": "d9c3fc8dd746586dc48f66023f45e457c935c0b8d809c20864bf49762abb9867",
+      "bytes": 34
+    },
+    "tests/fixtures/m2-class-values/inputs/same-name-main.pkl": {
+      "sha256": "a0c23e4d689656b0fb667a8490630f8dfbe61441324d99805725504de93aa33d",
+      "bytes": 139
+    },
+    "tests/fixtures/m2-class-values/inputs/same-name-right.pkl": {
+      "sha256": "b9affa774269da18211355c830e2196eb4e72de36c8b1785fdbbdc41eab4572e",
+      "bytes": 34
+    },
+    "tests/fixtures/m2-class-values/inputs/self-superclass.pkl": {
+      "sha256": "684fb19e9ab0f5412c6faf97e9a36ecc7ed1cf15ad7501acc7b52099ab183cb8",
+      "bytes": 33
+    },
+    "tests/fixtures/m2-class-values/inputs/superclass-alias.pkl": {
+      "sha256": "8ea8e24f073d5092a279ad5b27529ad2062fda50998098574ee4357f70eab81e",
+      "bytes": 56
+    },
+    "tests/fixtures/m2-class-values/inputs/superclass-nullable.pkl": {
+      "sha256": "54a8364f313d04504b7f21a05abff51b39d4ed1ee1750cdfbfaf3451cac23404",
+      "bytes": 26
+    },
+    "tests/fixtures/m2-class-values/inputs/superclass-union.pkl": {
+      "sha256": "1c929f2810e71d100173deac59c6125587e04366738b1567fdf1e9747074f44e",
+      "bytes": 35
+    },
+    "tests/fixtures/m2-class-values/inputs/unicode-class.pkl": {
+      "sha256": "e47004c079fd35643db9998dbdaa2a6bdf258320243b0b06b9a0faca4c677bd2",
+      "bytes": 63
+    },
+    "tests/fixtures/m2-class-values/inputs/values.pkl": {
+      "sha256": "4622f5fe8235c3697965be96e7569b3213a1ad7974ad6d0ab1bec51373bd030d",
+      "bytes": 407
+    },
+    "tests/fixtures/m2-class-values/manifest.json": {
+      "sha256": "6c419c84baac33f3e1512afc351d74041efec331e6caa3dd51b0d834401620a1",
+      "bytes": 5965
+    },
+    "tests/fixtures/m2-class-values/oracle-evidence.tar.gz": {
+      "sha256": "a39060fbf155947212aaae5b2e950dc2cd04381a78cb2860a7f8b1675b3657fc",
+      "bytes": 2082943
+    }
+  },
+  "canonical_authority": {
+    "path": "tests/fixtures/m2-class-metadata-completion/oracle-evidence.tar.gz",
+    "sha256": "8b111f12f87e171106ce431c28a3267d027a2d24c927249d387348fd13f5f652",
+    "bytes": 556259
+  },
+  "canonical_raw_member_count": 5564,
+  "observed_main": {
+    "sessions": 10,
+    "java_processes": 20,
+    "public_calls": 244,
+    "statuses": {
+      "success": 204,
+      "error": 40
+    },
+    "repeated_raw_equal": 10,
+    "oracle_errors": 0,
+    "api_exceptions": 0,
+    "logger_callbacks": 0,
+    "provider_create_callbacks": 284
+  },
+  "preserved_initial": {
+    "sessions": 10,
+    "java_processes": 20,
+    "public_calls": 244,
+    "statuses": {
+      "success": 184,
+      "error": 60
+    },
+    "repeated_raw_equal": 10
+  },
+  "validation": {
+    "schema": 1,
+    "scope": "Actual local Java-only authority and offline tooling validation. No candidate/Cargo/performance execution by this work.",
+    "checks": {
+      "supplement-offline": {
+        "process": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "tools/class_values_fixtures.py",
+            "--fixture",
+            "tests/fixtures/m2-class-metadata-completion"
+          ],
+          "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56",
+          "status": "executed",
+          "exit_code": 0,
+          "elapsed_ns": 5578191166,
+          "peak_rss_bytes": 37502976,
+          "user_cpu_seconds": 0.8277979999999999,
+          "system_cpu_seconds": 2.737791,
+          "stdout": {
+            "path": "target/m2/stage56-class-metadata-verification-01/supplement-offline/stdout.bin",
+            "sha256": "4e948303b7950862de39189a68e6baa109c56b095dcfb0269e513ea67bd1e1c4",
+            "bytes": 1770
+          },
+          "stderr": {
+            "path": "target/m2/stage56-class-metadata-verification-01/supplement-offline/stderr.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "process_record_sha256": "f1342d3a60b8cce6a95a4d444e9e7b1b46defe9b99f0aad75d97008e65255667"
+      },
+      "supplement-tests": {
+        "process": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "tools/tests",
+            "-p",
+            "test_class_metadata_fixtures.py",
+            "-v"
+          ],
+          "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56",
+          "status": "executed",
+          "exit_code": 0,
+          "elapsed_ns": 16162738000,
+          "peak_rss_bytes": 43089920,
+          "user_cpu_seconds": 2.681278,
+          "system_cpu_seconds": 9.087922,
+          "stdout": {
+            "path": "target/m2/stage56-class-metadata-verification-01/supplement-tests/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "target/m2/stage56-class-metadata-verification-01/supplement-tests/stderr.bin",
+            "sha256": "f08409f7f32789ae9f8fa3d3d4c77ab8032e1ce9c9cc8299c913c99fb323aeb2",
+            "bytes": 2784
+          }
+        },
+        "process_record_sha256": "c52186ad45a26d962f925626fa691bed2ef543076e979df1d1af6355baf0f586"
+      },
+      "original-tests": {
+        "process": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "tools/tests",
+            "-p",
+            "test_class_values_fixtures.py",
+            "-v"
+          ],
+          "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56",
+          "status": "executed",
+          "exit_code": 0,
+          "elapsed_ns": 95026096417,
+          "peak_rss_bytes": 96075776,
+          "user_cpu_seconds": 15.404665,
+          "system_cpu_seconds": 53.548318,
+          "stdout": {
+            "path": "target/m2/stage56-class-metadata-verification-01/original-tests/stdout.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "path": "target/m2/stage56-class-metadata-verification-01/original-tests/stderr.bin",
+            "sha256": "efe32f00a111b7a8ec2ccc6aa38ac99549fcfa8e0dcc061ffc7df011ba8b4a7e",
+            "bytes": 2741
+          }
+        },
+        "process_record_sha256": "a5a3edd75cd88403e277a7f3bb9827edef0ed36039ecdb6d39c47609b76605e4"
+      },
+      "inventory-freshness": {
+        "process": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "tools/inventory.py",
+            "--check"
+          ],
+          "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage56",
+          "status": "executed",
+          "exit_code": 0,
+          "elapsed_ns": 2882070541,
+          "peak_rss_bytes": 85753856,
+          "user_cpu_seconds": 2.381129,
+          "system_cpu_seconds": 0.236615,
+          "stdout": {
+            "path": "target/m2/stage56-class-metadata-verification-01/inventory-freshness/stdout.bin",
+            "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b",
+            "bytes": 926
+          },
+          "stderr": {
+            "path": "target/m2/stage56-class-metadata-verification-01/inventory-freshness/stderr.bin",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        "process_record_sha256": "f4cc430eb21664c6257574e7228629dd20b1a2f7cccde53d93be8d50c1329f98"
+      }
+    },
+    "tests": {
+      "supplement": 16,
+      "original_class_authority": 15
+    },
+    "source_seal": {
+      "path": "target/m2/stage56-class-metadata-publication-01/source-seal.json",
+      "sha256": "51917bab9ec0b4565e006b34c82040336e680fbe0ff6a1ae0f16c3627d9d6e36",
+      "all_ten_owned_payloads_still_equal": true
+    },
+    "main_java": {
+      "sessions": 10,
+      "java_processes": 20,
+      "public_calls": 244,
+      "statuses": {
+        "success": 204,
+        "error": 40
+      },
+      "repeated_raw_equal": 10,
+      "oracle_errors": 0,
+      "api_exceptions": 0,
+      "logger_callbacks": 0,
+      "provider_create_callbacks": 284
+    },
+    "preserved_initial_java": {
+      "sessions": 10,
+      "java_processes": 20,
+      "public_calls": 244,
+      "statuses": {
+        "success": 184,
+        "error": 60
+      },
+      "repeated_raw_equal": 10
+    },
+    "public_exports": "not-acquired-required",
+    "provider_api_parity": "not-executed-required",
+    "whole_m2": "open",
+    "actual_commit_binding": "pending"
+  },
+  "owned_payloads": {
+    "tools/class_metadata_oracle.py": {
+      "sha256": "e547884d99710da9032f973d9b5a6732f24b3dddb866780eb3eed7690639fe15",
+      "bytes": 8826
+    },
+    "tools/class_metadata_fixtures.py": {
+      "sha256": "d7b09c921c96ab4d167aad6aafb2c59c718815976c62eadeb4bf30ca83e8a9b7",
+      "bytes": 5462
+    },
+    "tools/tests/test_class_metadata_fixtures.py": {
+      "sha256": "641fa225f44e58845231d78b425401d4ea5caa33abe9534b2402b2a2f3071172",
+      "bytes": 9081
+    },
+    "tools/class_values_fixtures.py": {
+      "sha256": "7d575590d457cd8474953a2d4cdd7629df6bd963364c97890e574a3397568ab1",
+      "bytes": 6612
+    },
+    "tests/fixtures/m2-class-metadata-completion/LICENSE": {
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    "tests/fixtures/m2-class-metadata-completion/README.md": {
+      "sha256": "c653e315439f4db36ad75381418a13c4bd361a04782fc9964e95c70131b69a18",
+      "bytes": 3914
+    },
+    "tests/fixtures/m2-class-metadata-completion/cases.json": {
+      "sha256": "1ef923a3dc2cbb20f8ad84ff1679cdf6af3e184de63c1d048c104329d52c0b7e",
+      "bytes": 9282
+    },
+    "tests/fixtures/m2-class-metadata-completion/inputs/metadata.pkl": {
+      "sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "bytes": 1057
+    },
+    "tests/fixtures/m2-class-metadata-completion/manifest.json": {
+      "sha256": "77acd124af281c98d67be9a13bcc66de27b9120e5a817da5a7f7dc277b14bb5d",
+      "bytes": 789
+    },
+    "tests/fixtures/m2-class-metadata-completion/oracle-evidence.tar.gz": {
+      "sha256": "8b111f12f87e171106ce431c28a3267d027a2d24c927249d387348fd13f5f652",
+      "bytes": 556259
+    }
+  },
+  "source_seal": {
+    "path": "target/m2/stage56-class-metadata-publication-01/source-seal.json",
+    "sha256": "51917bab9ec0b4565e006b34c82040336e680fbe0ff6a1ae0f16c3627d9d6e36",
+    "bytes": 9826
+  },
+  "publication": {
+    "archive": "reports/m2/stage56-metadata-validation-evidence.tar.gz",
+    "sha256": "dfe28945ecd656f54e66b95d214bcd43afdc78094614acbaaf29ff66e9c9ce54",
+    "bytes": 71294,
+    "payload_count": 32,
+    "all_members_reread_verified": true,
+    "all_original_outputs_unchanged": true,
+    "canonical_raw_archive_not_duplicated": true
+  },
+  "source_binding": "Pending actual authorized Java supplement commit; publish a separate post-commit binding without rewriting this record.",
+  "provider_api_parity": "not-executed-required",
+  "public_exports": "not-acquired-required",
+  "whole_m2_complete": false,
+  "candidate_compatibility_claimed": false,
+  "performance_claimed": false,
+  "hosted_CI_claimed": false
+}

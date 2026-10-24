@@ -1,0 +1,281 @@
+{
+  "schema": 1,
+  "kind": "pkl-java-class-metadata-completion-v1",
+  "baseline": "Pkl 0.32.0",
+  "repetitions": 2,
+  "scope": "Actual Java-only additive authority for five pkl:base Class descriptors and ordinary lazy prototype/default/type semantics. Renderer external operations are not invoked. Candidate compatibility and public provider/export API remain separate obligations.",
+  "cases": [
+    {
+      "id": "metadata-yamlrenderer",
+      "source": "inputs/metadata.pkl",
+      "source_sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "uri": "file:///stage56-class-metadata-completion/main.pkl",
+      "expressions": [
+        "YamlRenderer.simpleName",
+        "YamlRenderer == import(\"pkl:base\").YamlRenderer",
+        "YamlRenderer is Class",
+        "YamlRenderer.getClass() == Class",
+        "YamlRenderer.toString()",
+        "yaml.getClass() == YamlRenderer",
+        "yaml is YamlRenderer",
+        "yaml is Typed",
+        "YamlRenderer == yaml",
+        "YamlRenderer == import(\"pkl:base\").YamlRenderer"
+      ],
+      "support_modules": [],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      }
+    },
+    {
+      "id": "metadata-plistrenderer",
+      "source": "inputs/metadata.pkl",
+      "source_sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "uri": "file:///stage56-class-metadata-completion/main.pkl",
+      "expressions": [
+        "PListRenderer.simpleName",
+        "PListRenderer == import(\"pkl:base\").PListRenderer",
+        "PListRenderer is Class",
+        "PListRenderer.getClass() == Class",
+        "PListRenderer.toString()",
+        "plist.getClass() == PListRenderer",
+        "plist is PListRenderer",
+        "plist is Typed",
+        "PListRenderer == plist",
+        "PListRenderer == import(\"pkl:base\").PListRenderer"
+      ],
+      "support_modules": [],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      }
+    },
+    {
+      "id": "metadata-propertiesrenderer",
+      "source": "inputs/metadata.pkl",
+      "source_sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "uri": "file:///stage56-class-metadata-completion/main.pkl",
+      "expressions": [
+        "PropertiesRenderer.simpleName",
+        "PropertiesRenderer == import(\"pkl:base\").PropertiesRenderer",
+        "PropertiesRenderer is Class",
+        "PropertiesRenderer.getClass() == Class",
+        "PropertiesRenderer.toString()",
+        "properties.getClass() == PropertiesRenderer",
+        "properties is PropertiesRenderer",
+        "properties is Typed",
+        "PropertiesRenderer == properties",
+        "PropertiesRenderer == import(\"pkl:base\").PropertiesRenderer"
+      ],
+      "support_modules": [],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      }
+    },
+    {
+      "id": "metadata-pcfrenderdirective",
+      "source": "inputs/metadata.pkl",
+      "source_sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "uri": "file:///stage56-class-metadata-completion/main.pkl",
+      "expressions": [
+        "PcfRenderDirective.simpleName",
+        "PcfRenderDirective == import(\"pkl:base\").PcfRenderDirective",
+        "PcfRenderDirective is Class",
+        "PcfRenderDirective.getClass() == Class",
+        "PcfRenderDirective.toString()",
+        "directive.getClass() == PcfRenderDirective",
+        "directive is PcfRenderDirective",
+        "directive is Typed",
+        "PcfRenderDirective == directive",
+        "PcfRenderDirective == import(\"pkl:base\").PcfRenderDirective"
+      ],
+      "support_modules": [],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      }
+    },
+    {
+      "id": "metadata-regexmatch",
+      "source": "inputs/metadata.pkl",
+      "source_sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "uri": "file:///stage56-class-metadata-completion/main.pkl",
+      "expressions": [
+        "RegexMatch.simpleName",
+        "RegexMatch == import(\"pkl:base\").RegexMatch",
+        "RegexMatch is Class",
+        "RegexMatch.getClass() == Class",
+        "RegexMatch.toString()",
+        "match.getClass() == RegexMatch",
+        "match is RegexMatch",
+        "match is Typed",
+        "RegexMatch == match",
+        "RegexMatch == import(\"pkl:base\").RegexMatch"
+      ],
+      "support_modules": [],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      }
+    },
+    {
+      "id": "renderer-ancestry-defaults",
+      "source": "inputs/metadata.pkl",
+      "source_sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "uri": "file:///stage56-class-metadata-completion/main.pkl",
+      "expressions": [
+        "yaml is ValueRenderer",
+        "yaml is BaseValueRenderer",
+        "yaml is Typed",
+        "plist is ValueRenderer",
+        "plist is BaseValueRenderer",
+        "plist is Typed",
+        "properties is ValueRenderer",
+        "properties is BaseValueRenderer",
+        "properties is Typed",
+        "yaml.extension",
+        "yaml.mode",
+        "yaml.indentWidth",
+        "yaml.omitNullProperties",
+        "yaml.isStream",
+        "plist.extension",
+        "plist.indent",
+        "properties.extension",
+        "properties.omitNullProperties",
+        "properties.restrictCharset",
+        "yaml.converters.isEmpty",
+        "plist.converters.isEmpty",
+        "properties.converters.isEmpty"
+      ],
+      "support_modules": [],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      }
+    },
+    {
+      "id": "ordinary-lazy-defaults",
+      "source": "inputs/metadata.pkl",
+      "source_sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "uri": "file:///stage56-class-metadata-completion/main.pkl",
+      "expressions": [
+        "directive.before",
+        "directive.after",
+        "directive.value",
+        "directive.before",
+        "match.groups.length",
+        "match.value",
+        "match.start",
+        "match.end",
+        "match.toString()",
+        "match.groups.length",
+        "PcfRenderDirective != RenderDirective",
+        "directive is RenderDirective"
+      ],
+      "support_modules": [],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      }
+    },
+    {
+      "id": "ordinary-valid-values",
+      "source": "inputs/metadata.pkl",
+      "source_sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "uri": "file:///stage56-class-metadata-completion/main.pkl",
+      "expressions": [
+        "validDirective.before",
+        "validDirective.value",
+        "validDirective.after",
+        "validMatch.value",
+        "validMatch.start",
+        "validMatch.end",
+        "validMatch.groups.length",
+        "validMatch.groups[0] == null",
+        "validMatch.groups[1]!!.toString()",
+        "validMatch.toString()",
+        "yaml11.mode",
+        "yaml11.indentWidth",
+        "yaml11.omitNullProperties",
+        "yaml11.isStream",
+        "plistTab.indent",
+        "propertiesAscii.omitNullProperties",
+        "propertiesAscii.restrictCharset"
+      ],
+      "support_modules": [],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      }
+    },
+    {
+      "id": "ordinary-type-constraints",
+      "source": "inputs/metadata.pkl",
+      "source_sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "uri": "file:///stage56-class-metadata-completion/main.pkl",
+      "expressions": [
+        "badMode.mode",
+        "badMode.mode",
+        "badIndentOne.indentWidth",
+        "badIndentZero.indentWidth",
+        "badIndentType.indentWidth",
+        "badGroups.groups",
+        "badGroups.groups",
+        "badMatchValue.toString()",
+        "badDirectiveBefore.before",
+        "yaml.mode",
+        "match.groups.length"
+      ],
+      "support_modules": [],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      }
+    },
+    {
+      "id": "descriptor-prototype-separation",
+      "source": "inputs/metadata.pkl",
+      "source_sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "uri": "file:///stage56-class-metadata-completion/main.pkl",
+      "expressions": [
+        "YamlRenderer.extension",
+        "YamlRenderer.mode",
+        "PListRenderer.indent",
+        "PropertiesRenderer.restrictCharset",
+        "RegexMatch.value",
+        "PcfRenderDirective.before",
+        "yaml.extension",
+        "plist.indent",
+        "match.groups.length",
+        "directive.before"
+      ],
+      "support_modules": [],
+      "logger": {
+        "mode": "capture",
+        "action": "none",
+        "callback": "",
+        "callback_after": 0
+      }
+    }
+  ]
+}

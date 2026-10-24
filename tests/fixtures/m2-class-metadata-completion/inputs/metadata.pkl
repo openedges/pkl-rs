@@ -1,0 +1,19 @@
+module stage56.metadataCompletion
+import "pkl:base"
+yaml = new YamlRenderer {}
+plist = new PListRenderer {}
+properties = new PropertiesRenderer {}
+directive = new PcfRenderDirective {}
+match = new RegexMatch {}
+validDirective = new PcfRenderDirective { before = "<"; value = 42; after = ">" }
+validMatch = new RegexMatch { value = "a𐐀"; start = 1; end = 4; groups = List(null, new RegexMatch { value = "b"; start = 0; end = 1; groups = List() }) }
+yaml11 = new YamlRenderer { mode = "1.1"; indentWidth = 3; omitNullProperties = false; isStream = true }
+plistTab = new PListRenderer { indent = "\t" }
+propertiesAscii = new PropertiesRenderer { omitNullProperties = false; restrictCharset = true }
+badMode = new YamlRenderer { mode = "1.3" }
+badIndentOne = new YamlRenderer { indentWidth = 1 }
+badIndentZero = new YamlRenderer { indentWidth = 0 }
+badIndentType = new YamlRenderer { indentWidth = "two" }
+badGroups = new RegexMatch { groups = List(1) }
+badMatchValue = new RegexMatch { value = 1 }
+badDirectiveBefore = new PcfRenderDirective { before = 1 }

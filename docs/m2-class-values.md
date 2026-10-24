@@ -119,6 +119,38 @@ query compiles its own query AST. Precompiled path-query caches or wrapper
 expressions must not change that boundary. Authored support modules retain their
 exact source bytes and URI mappings.
 
+## Additive base-class metadata authority
+
+The separate [metadata fixture](../tests/fixtures/m2-class-metadata-completion/README.md)
+covers `YamlRenderer`, `PListRenderer`, `PropertiesRenderer`, `RegexMatch`, and
+`PcfRenderDirective`. Its [Java checkpoint](../reports/m2/stage56-metadata-oracle-checkpoint.json)
+and [validation archive](../reports/m2/stage56-metadata-validation-evidence.tar.gz)
+retain the original local checks. Reviewing all 56 top-level base Class declarations exposed
+these five descriptor gaps in the second candidate. The original 44-session
+fixture and archive remain unchanged.
+
+The supplement records ten sessions with two fresh JVM repetitions: 244 public
+queries, comprising 204 successes and 40 ordinary language errors. Every repeated
+session has identical raw observations. Its 284 provider-create observations are
+actual Java callbacks; exported-Class identity was not acquired by this
+supplement and remains explicitly required. The complete earlier acquisition,
+including its lexical-import query errors, is preserved as history.
+
+Class identity, default-scope and qualified access, instance/prototype separation,
+ancestry, lazy defaults, overrides, and complete constraint/type diagnostics are
+separate from renderer algorithms and regex matching. The new fixture's explicit
+kind, independent archive/file-set pins, and verifier prevent substituting it for
+the original authority. Offline verification is available with:
+
+```sh
+python3 -B tools/class_values_fixtures.py --fixture tests/fixtures/m2-class-metadata-completion
+python3 -B -m unittest discover -s tools/tests -p test_class_metadata_fixtures.py
+```
+
+These Java and integrity results do not establish candidate or platform parity.
+Candidate capture must retain the supplemental verifier and acquisition helper
+in its source closure whenever this authority is selected.
+
 ## Raw channels and callback ordering
 
 The common boundary includes complete result/error UTF-8 bytes, UTF-16BE code

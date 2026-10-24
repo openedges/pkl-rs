@@ -38,6 +38,11 @@ def summary(report):
 
 def verify(root=DEFAULT):
     root = Path(root)
+    dispatch = json.loads((root / 'manifest.json').read_bytes())
+    if 'kind' in dispatch:
+        import class_metadata_fixtures
+        require(dispatch['kind'] == class_metadata_fixtures.metadata.KIND, 'unknown Class fixture authority kind')
+        return class_metadata_fixtures.verify(root)
     require(not (root / 'report.json').exists(), 'fixture has an unexpected root report')
     actual = oracle.inventory(root)
     actual.pop('manifest.json', None)

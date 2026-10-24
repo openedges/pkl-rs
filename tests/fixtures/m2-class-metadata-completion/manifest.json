@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "kind": "pkl-java-class-metadata-completion-v1",
+  "baseline": "Pkl 0.32.0",
+  "files": {
+    "LICENSE": {
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    "README.md": {
+      "sha256": "c653e315439f4db36ad75381418a13c4bd361a04782fc9964e95c70131b69a18",
+      "bytes": 3914
+    },
+    "cases.json": {
+      "sha256": "1ef923a3dc2cbb20f8ad84ff1679cdf6af3e184de63c1d048c104329d52c0b7e",
+      "bytes": 9282
+    },
+    "inputs/metadata.pkl": {
+      "sha256": "133acfc3795af77c3949e9af3e7d99c004fdf0f9989c7d04461ddbecde8d289b",
+      "bytes": 1057
+    },
+    "oracle-evidence.tar.gz": {
+      "sha256": "8b111f12f87e171106ce431c28a3267d027a2d24c927249d387348fd13f5f652",
+      "bytes": 556259
+    }
+  }
+}
