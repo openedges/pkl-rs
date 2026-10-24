@@ -1,0 +1,429 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "boundary": "string",
+  "module_uri": "file:///stage63/set-endpoints.pkl",
+  "repetitions": 2,
+  "rows": [
+    {
+      "expression": "Set().first",
+      "group": "empty",
+      "id": "set-empty-first",
+      "mode": "string"
+    },
+    {
+      "expression": "Set().firstOrNull",
+      "group": "empty",
+      "id": "set-empty-first-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "Set().last",
+      "group": "empty",
+      "id": "set-empty-last",
+      "mode": "string"
+    },
+    {
+      "expression": "Set().lastOrNull",
+      "group": "empty",
+      "id": "set-empty-last-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "List().first",
+      "group": "empty",
+      "id": "list-empty-first",
+      "mode": "string"
+    },
+    {
+      "expression": "List().firstOrNull",
+      "group": "empty",
+      "id": "list-empty-first-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "List().last",
+      "group": "empty",
+      "id": "list-empty-last",
+      "mode": "string"
+    },
+    {
+      "expression": "List().lastOrNull",
+      "group": "empty",
+      "id": "list-empty-last-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(7).first",
+      "group": "single",
+      "id": "set-single-first",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(7).firstOrNull",
+      "group": "single",
+      "id": "set-single-first-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(7).last",
+      "group": "single",
+      "id": "set-single-last",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(7).lastOrNull",
+      "group": "single",
+      "id": "set-single-last-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(null).first",
+      "group": "single",
+      "id": "set-null-first",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(null).firstOrNull",
+      "group": "single",
+      "id": "set-null-first-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(null).last",
+      "group": "single",
+      "id": "set-null-last",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(null).lastOrNull",
+      "group": "single",
+      "id": "set-null-last-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "List(7).first",
+      "group": "single",
+      "id": "list-single-first",
+      "mode": "string"
+    },
+    {
+      "expression": "List(7).last",
+      "group": "single",
+      "id": "list-single-last",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(3, 1, 2).first",
+      "group": "order",
+      "id": "set-many-first",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(3, 1, 2).firstOrNull",
+      "group": "order",
+      "id": "set-many-first-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(3, 1, 2).last",
+      "group": "order",
+      "id": "set-many-last",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(3, 1, 2).lastOrNull",
+      "group": "order",
+      "id": "set-many-last-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(3, 1, 3, 2, 1).first",
+      "group": "order",
+      "id": "set-dup-first",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(3, 1, 3, 2, 1).firstOrNull",
+      "group": "order",
+      "id": "set-dup-first-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(3, 1, 3, 2, 1).last",
+      "group": "order",
+      "id": "set-dup-last",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(3, 1, 3, 2, 1).lastOrNull",
+      "group": "order",
+      "id": "set-dup-last-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1) + List(2, 1, 3)).first",
+      "group": "order",
+      "id": "union-list-first",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1) + List(2, 1, 3)).last",
+      "group": "order",
+      "id": "union-list-last",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1) + Set(2, 3)).first",
+      "group": "order",
+      "id": "union-set-first",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1) + Set(2, 3)).last",
+      "group": "order",
+      "id": "union-set-last",
+      "mode": "string"
+    },
+    {
+      "expression": "List(3, 1, 2).first",
+      "group": "order",
+      "id": "list-many-first",
+      "mode": "string"
+    },
+    {
+      "expression": "List(3, 1, 2).last",
+      "group": "order",
+      "id": "list-many-last",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1.min, 60.s).first.unit",
+      "group": "retained-value",
+      "id": "set-duration-first-unit",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1.min, 60.s).last.unit",
+      "group": "retained-value",
+      "id": "set-duration-last-unit",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(60.s, 1.min).first.unit",
+      "group": "retained-value",
+      "id": "set-duration-reverse-first-unit",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(60.s, 1.min).last.unit",
+      "group": "retained-value",
+      "id": "set-duration-reverse-last-unit",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1.min) + Set(60.s)).first.unit",
+      "group": "retained-value",
+      "id": "union-duration-left-unit",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(60.s) + Set(1.min)).last.unit",
+      "group": "retained-value",
+      "id": "union-duration-right-unit",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(new Dynamic { value = 1 }).first.value",
+      "group": "retained-value",
+      "id": "set-object-first-value",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(new Dynamic { value = 1 }).last.value",
+      "group": "retained-value",
+      "id": "set-object-last-value",
+      "mode": "string"
+    },
+    {
+      "expression": "Set((x) -> x + 1).first.apply(2)",
+      "group": "retained-value",
+      "id": "set-function-first-apply",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(new Dynamic { value = throw(\"hash-first\") }).first",
+      "group": "force",
+      "id": "set-hash-before-first",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1, new Dynamic { value = throw(\"hash-last\") }).last",
+      "group": "force",
+      "id": "set-hash-before-last",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(throw(\"argument\")).first",
+      "group": "force",
+      "id": "set-arg-before-empty-check",
+      "mode": "string"
+    },
+    {
+      "expression": "List(new Dynamic { value = throw(\"nested\") }).first.getClass()",
+      "group": "force",
+      "id": "list-lazy-first-class",
+      "mode": "string"
+    },
+    {
+      "expression": "List(new Dynamic { value = throw(\"nested\") }).first.value",
+      "group": "force",
+      "id": "list-lazy-first-read",
+      "mode": "string"
+    },
+    {
+      "expression": "Set().first ?? 9",
+      "group": "force",
+      "id": "set-empty-first-fallback",
+      "mode": "string"
+    },
+    {
+      "expression": "Set().firstOrNull ?? 9",
+      "group": "force",
+      "id": "set-empty-or-null-fallback",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1).first()",
+      "group": "diagnostic",
+      "id": "set-first-as-method",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1).last()",
+      "group": "diagnostic",
+      "id": "set-last-as-method",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1).firstOrNull()",
+      "group": "diagnostic",
+      "id": "set-first-or-null-as-method",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1).lastOrNull()",
+      "group": "diagnostic",
+      "id": "set-last-or-null-as-method",
+      "mode": "string"
+    },
+    {
+      "expression": "Set().first()",
+      "group": "diagnostic",
+      "id": "set-empty-first-as-method",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1).frist",
+      "group": "diagnostic",
+      "id": "set-misspelled-first",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1).first(throw(\"argument\"))",
+      "group": "diagnostic",
+      "id": "set-method-argument-throw",
+      "mode": "string"
+    },
+    {
+      "expression": "Set().first(throw(\"argument\"))",
+      "group": "diagnostic",
+      "id": "set-empty-method-argument-throw",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1).first()",
+      "group": "diagnostic",
+      "id": "list-first-as-method",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1).last()",
+      "group": "diagnostic",
+      "id": "list-last-as-method",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1) + List(2, 1, 3)).firstOrNull",
+      "group": "additional",
+      "id": "union-list-first-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1) + List(2, 1, 3)).lastOrNull",
+      "group": "additional",
+      "id": "union-list-last-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1) + Set(2, 3)).firstOrNull",
+      "group": "additional",
+      "id": "union-set-first-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set(1) + Set(2, 3)).lastOrNull",
+      "group": "additional",
+      "id": "union-set-last-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set() + List()).first",
+      "group": "additional",
+      "id": "empty-union-first",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set() + List()).firstOrNull",
+      "group": "additional",
+      "id": "empty-union-first-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set() + List()).last",
+      "group": "additional",
+      "id": "empty-union-last",
+      "mode": "string"
+    },
+    {
+      "expression": "(Set() + List()).lastOrNull",
+      "group": "additional",
+      "id": "empty-union-last-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(null, 1).firstOrNull",
+      "group": "additional",
+      "id": "null-many-first-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1, null).lastOrNull",
+      "group": "additional",
+      "id": "null-many-last-or-null",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1).firstOrNull(throw(\"argument\"))",
+      "group": "additional",
+      "id": "first-or-null-method-argument-throw",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1).lastOrNull(throw(\"argument\"))",
+      "group": "additional",
+      "id": "last-or-null-method-argument-throw",
+      "mode": "string"
+    }
+  ],
+  "schema": 1
+}

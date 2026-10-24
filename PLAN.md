@@ -2077,6 +2077,21 @@ fixture 검증·Python 검사·JavaScript 검사·identity 보충 자료·소스
 게시 명령의 실제 stdout·stderr·종료 코드도 별도로 기록했습니다. 이 단계는
 독립 Java 기준이며 Rust·실제 플랫폼·M2 완료 판정은 후속 검증입니다.
 
+#### Stage 63 A2 — Set 양끝 원소 조회 기준
+
+덧셈 결과의 첫·마지막 원소를 확인하는 과정에서 필요한 Set의 `first`·`last`·
+`firstOrNull`·`lastOrNull`을 [별도 Java 기준](reports/m2/stage63-set-endpoints-java-checkpoint.json)으로
+검증합니다. 식 70개는 세션별 성공 47개·일반 오류 23개이며, 두 독립 JVM의
+원시 결과와 process protocol이 일치합니다. 빈 Set·null 원소·중복과 삽입 순서,
+결합 결과·지연 값·List 대조군을 포함합니다. Set 생성 중 발생하는 오류와 실제
+조회 오류를 구분합니다.
+
+처음 취득한 결과의 producer 사본 연결 오류를 보존하고, 실제 실행한 producer를
+포함하는 새 취득으로 고정했습니다. 여덟 검증 명령이 통과했고 입력 415개의
+실행 전후 바이트가 같습니다. 기존 일곱 기준은 유지하며 여덟 번째 비교 profile을
+추가했습니다. 이 기록 역시 Java 기준의 검증이며 Rust·플랫폼·M2 완료 결과가
+아닙니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

@@ -25,6 +25,21 @@ stdout, stderr, and exit are recorded separately. M2 implementation-link
 freshness waits for the concurrent runtime freeze. This Java authority claims
 no Rust, Node, browser, full M2, or performance compatibility pass.
 
+The separate [Set endpoint Java checkpoint](stage63-set-endpoints-java-checkpoint.json)
+seals 70 string observations per session: 47 successes and 23 ordinary errors.
+Its [fixture](../../tests/fixtures/m2-set-endpoints/README.md) covers `first`,
+`last`, `firstOrNull`, and `lastOrNull`, including empty and null-containing Sets,
+insertion order, duplicate representatives, unions, lazy values, and List
+controls. Errors raised while constructing a Set are distinguished from endpoint
+evaluation. Two fresh JVM sessions match all raw channels and process output.
+
+The [endpoint evidence](stage63-set-endpoints-java-evidence.tar.gz) retains the
+first canonical capture's incorrect archived producer copy and its corrected
+successor. Eight recorded checks pass with 415 stable source copies. The final
+fixture has 2,990 verified members; the separate evidence archive has 11,926.
+This eighth comparison profile preserves the existing seven authorities and
+claims no Rust candidate or full M2 pass.
+
 ### Stage62 collection conversions — implementation and local comparisons
 
 The [implementation checkpoint](stage62-implementation-checkpoint.json) records

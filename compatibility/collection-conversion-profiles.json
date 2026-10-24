@@ -143,6 +143,28 @@
         "tools/collection_conversions_fixtures.py",
         "tools/collection_conversions_oracle.py"
       ]
+    },
+    {
+      "module_uri": "file:///stage63/set-endpoints.pkl",
+      "fixture": "tests/fixtures/m2-set-endpoints",
+      "rows": 70,
+      "repetitions": 2,
+      "validator_module": "set_endpoints_fixtures",
+      "validator_script": "tools/set_endpoints_fixtures.py",
+      "archive_prefix": "capture-02",
+      "input_hashes": {
+        "cases.json": "d70067c1ea0f45960e6b693db60165521a2b45b2ac35c8285f300446c2043c02",
+        "module.pkl": "add28c5d462e41c7c5d8fa273817669d6e1234f85adc2ac8fac5ea0b3160fe70",
+        "queries.tsv": "eb9e0db1e0e62f87077a8c9c20b6bde4fa8636f85e0634b574f4a5fbd7dce7d4"
+      },
+      "tool_sources": [
+        "tools/set_endpoints_fixtures.py",
+        "tools/set_endpoints_oracle.py",
+        "tools/tests/test_set_endpoints_fixtures.py",
+        "tools/java/CollectionConversionsOracle.java",
+        "tools/collection_conversions_fixtures.py",
+        "tools/collection_conversions_oracle.py"
+      ]
     }
   ]
 }

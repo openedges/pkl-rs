@@ -1,0 +1,16 @@
+{
+  "archive_sha256": "9a1326f0220b92607779bd02e2fc41d81d7a9cea8f40a3f404a55f3be03e1ae9",
+  "captures": {
+    "capture-02": "stage63-set-endpoints-oracle-02"
+  },
+  "fileset_sha256": "2c09fa7ccef3c42e6ea8a12644440969ee575eef5e4701eb21886d93347c39fe",
+  "members": 2990,
+  "oracle_input_sha256": {
+    "CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+    "cases.json": "d70067c1ea0f45960e6b693db60165521a2b45b2ac35c8285f300446c2043c02",
+    "module.pkl": "add28c5d462e41c7c5d8fa273817669d6e1234f85adc2ac8fac5ea0b3160fe70",
+    "queries.tsv": "eb9e0db1e0e62f87077a8c9c20b6bde4fa8636f85e0634b574f4a5fbd7dce7d4",
+    "run.py": "cd8fa1d9f7ce2c73eeb4cd774f92c46a1633ac61a46d820170871bb104e5c1b3"
+  },
+  "schema": 1
+}

@@ -1,0 +1,70 @@
+string	set-empty-first	Set().first
+string	set-empty-first-or-null	Set().firstOrNull
+string	set-empty-last	Set().last
+string	set-empty-last-or-null	Set().lastOrNull
+string	list-empty-first	List().first
+string	list-empty-first-or-null	List().firstOrNull
+string	list-empty-last	List().last
+string	list-empty-last-or-null	List().lastOrNull
+string	set-single-first	Set(7).first
+string	set-single-first-or-null	Set(7).firstOrNull
+string	set-single-last	Set(7).last
+string	set-single-last-or-null	Set(7).lastOrNull
+string	set-null-first	Set(null).first
+string	set-null-first-or-null	Set(null).firstOrNull
+string	set-null-last	Set(null).last
+string	set-null-last-or-null	Set(null).lastOrNull
+string	list-single-first	List(7).first
+string	list-single-last	List(7).last
+string	set-many-first	Set(3, 1, 2).first
+string	set-many-first-or-null	Set(3, 1, 2).firstOrNull
+string	set-many-last	Set(3, 1, 2).last
+string	set-many-last-or-null	Set(3, 1, 2).lastOrNull
+string	set-dup-first	Set(3, 1, 3, 2, 1).first
+string	set-dup-first-or-null	Set(3, 1, 3, 2, 1).firstOrNull
+string	set-dup-last	Set(3, 1, 3, 2, 1).last
+string	set-dup-last-or-null	Set(3, 1, 3, 2, 1).lastOrNull
+string	union-list-first	(Set(1) + List(2, 1, 3)).first
+string	union-list-last	(Set(1) + List(2, 1, 3)).last
+string	union-set-first	(Set(1) + Set(2, 3)).first
+string	union-set-last	(Set(1) + Set(2, 3)).last
+string	list-many-first	List(3, 1, 2).first
+string	list-many-last	List(3, 1, 2).last
+string	set-duration-first-unit	Set(1.min, 60.s).first.unit
+string	set-duration-last-unit	Set(1.min, 60.s).last.unit
+string	set-duration-reverse-first-unit	Set(60.s, 1.min).first.unit
+string	set-duration-reverse-last-unit	Set(60.s, 1.min).last.unit
+string	union-duration-left-unit	(Set(1.min) + Set(60.s)).first.unit
+string	union-duration-right-unit	(Set(60.s) + Set(1.min)).last.unit
+string	set-object-first-value	Set(new Dynamic { value = 1 }).first.value
+string	set-object-last-value	Set(new Dynamic { value = 1 }).last.value
+string	set-function-first-apply	Set((x) -> x + 1).first.apply(2)
+string	set-hash-before-first	Set(new Dynamic { value = throw("hash-first") }).first
+string	set-hash-before-last	Set(1, new Dynamic { value = throw("hash-last") }).last
+string	set-arg-before-empty-check	Set(throw("argument")).first
+string	list-lazy-first-class	List(new Dynamic { value = throw("nested") }).first.getClass()
+string	list-lazy-first-read	List(new Dynamic { value = throw("nested") }).first.value
+string	set-empty-first-fallback	Set().first ?? 9
+string	set-empty-or-null-fallback	Set().firstOrNull ?? 9
+string	set-first-as-method	Set(1).first()
+string	set-last-as-method	Set(1).last()
+string	set-first-or-null-as-method	Set(1).firstOrNull()
+string	set-last-or-null-as-method	Set(1).lastOrNull()
+string	set-empty-first-as-method	Set().first()
+string	set-misspelled-first	Set(1).frist
+string	set-method-argument-throw	Set(1).first(throw("argument"))
+string	set-empty-method-argument-throw	Set().first(throw("argument"))
+string	list-first-as-method	List(1).first()
+string	list-last-as-method	List(1).last()
+string	union-list-first-or-null	(Set(1) + List(2, 1, 3)).firstOrNull
+string	union-list-last-or-null	(Set(1) + List(2, 1, 3)).lastOrNull
+string	union-set-first-or-null	(Set(1) + Set(2, 3)).firstOrNull
+string	union-set-last-or-null	(Set(1) + Set(2, 3)).lastOrNull
+string	empty-union-first	(Set() + List()).first
+string	empty-union-first-or-null	(Set() + List()).firstOrNull
+string	empty-union-last	(Set() + List()).last
+string	empty-union-last-or-null	(Set() + List()).lastOrNull
+string	null-many-first-or-null	Set(null, 1).firstOrNull
+string	null-many-last-or-null	Set(1, null).lastOrNull
+string	first-or-null-method-argument-throw	Set(1).firstOrNull(throw("argument"))
+string	last-or-null-method-argument-throw	Set(1).lastOrNull(throw("argument"))
