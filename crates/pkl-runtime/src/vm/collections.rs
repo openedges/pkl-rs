@@ -26,6 +26,10 @@ pub(super) fn typed_class(heap: &Heap, mut id: ObjectId) -> Result<Option<Class>
 
 use super::equality::same_key;
 
+#[cfg(test)]
+#[path = "collections_tests.rs"]
+mod tests;
+
 pub(super) fn join_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -74,6 +78,43 @@ impl JoinRun {
 }
 
 impl Vm {
+    pub(super) fn empty_object(&mut self, kind: CollectionKind) -> ObjectId {
+        let (index, class) = match kind {
+            CollectionKind::Dynamic => (0, classes::BuiltinClass::Dynamic),
+            CollectionKind::Listing => (1, classes::BuiltinClass::Listing),
+            CollectionKind::Mapping => (2, classes::BuiltinClass::Mapping),
+            _ => unreachable!("lazy empty object"),
+        };
+        // Like the strict empty cache, this is weak: a retained value preserves
+        // its identity, while an unreferenced singleton does not keep a heap
+        // alive after a query. Generational handles prevent stale-slot reuse.
+        if let Some(id) = self.empty_objects[index]
+            && self.heap.get(id).is_ok()
+        {
+            return id;
+        }
+        let class = self.canonical_builtin_class(class);
+        let parent = self.heap.get_class(class).expect("builtin class").prototype;
+        let id = self.heap.allocate(Object {
+            parent: Some(parent),
+            collection_kind: kind,
+            ..Object::default()
+        });
+        self.empty_objects[index] = Some(id);
+        id
+    }
+
+    fn amendment_class_parent(&self, class: ObjectId) -> Result<ObjectId, RuntimeError> {
+        let prototype = self.heap.get_class(class)?.prototype;
+        self.check_class_instantiable(self.heap.class_definition(class)?)?;
+        if self.class_external(class)? {
+            return Err(external_amendment_error(
+                &self.heap.class_display_name(class)?,
+            ));
+        }
+        Ok(prototype)
+    }
+
     pub(super) fn empty_strict_collection(&mut self, kind: CollectionKind) -> ObjectId {
         let index = match kind {
             CollectionKind::List => 0,
@@ -1293,7 +1334,14 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
             let Value::Int(index) = key else {
                 return Err(RuntimeError::new(
                     ErrorKind::Type,
-                    "Listing keys must have type `Int`.",
+                    format!(
+                        "Expected key of type `Int`, but got type `{}`.",
+                        crate::diagnostic_values::type_name(
+                            &key,
+                            &self.heap,
+                            &self.program.module_name
+                        )?
+                    ),
                 ));
             };
             let parent_length = parent
@@ -1492,6 +1540,14 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
             if matches!(self.stack.last(), Some(Value::Function(_))) {
                 return Ok(());
             }
+            if let Some(Value::Object(id)) = self.stack.last()
+                && !matches!(
+                    self.heap.get(*id)?.collection_kind,
+                    CollectionKind::List | CollectionKind::Set | CollectionKind::Map
+                )
+            {
+                return Ok(());
+            }
             if let Some(Value::NullWithDefault(id)) = self.stack.last() {
                 let value = self.heap.null_default(*id)?;
                 *self.stack.last_mut().expect("null parent") = value;
@@ -1523,12 +1579,15 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         value = self.heap.null_default(id)?;
                     }
                     match value {
-                        Value::Null => None,
+                        Value::Null => Some(self.empty_object(CollectionKind::Dynamic)),
+                        Value::Class(class) => Some(self.amendment_class_parent(class)?),
                         value @ (Value::Bool(_)
                         | Value::Int(_)
                         | Value::Float(_)
                         | Value::Duration(_)
                         | Value::IntSeq(_)
+                        | Value::Bytes(_)
+                        | Value::TypeAlias(_)
                         | Value::DataSize(_)
                         | Value::String(_)) => {
                             return Err(external_amendment_error(value_type_name(&value)));
@@ -1542,6 +1601,9 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                     let object = self.heap.get(id)?;
                     if object.reference.is_some() {
                         return Err(external_amendment_error("pkl.ref#Reference"));
+                    }
+                    if let Some(class) = typed_class(&self.heap, id)? {
+                        self.check_class_instantiable(&class)?;
                     }
                     if matches!(
                         object.collection_kind,
@@ -2636,8 +2698,25 @@ crate::diagnostic_values::render(
             .pop()
             .ok_or_else(|| invalid("missing collection builder"))?;
         let object = self.heap.get(id)?;
-        let result = if object.specialized_literal && object.members.is_empty() {
-            object.parent.unwrap_or(id)
+        let result = if object.members.is_empty() {
+            if let Some(parent) = object.parent {
+                let prototype = self.heap.get(parent)?;
+                if prototype.class_definition.is_some()
+                    && matches!(prototype.builtin_type, Some(TypeCheck::Collection(_)))
+                {
+                    self.empty_object(object.collection_kind)
+                } else {
+                    parent
+                }
+            } else if matches!(
+                object.collection_kind,
+                CollectionKind::Dynamic | CollectionKind::Listing | CollectionKind::Mapping
+            ) && object.collection_default.is_none()
+            {
+                self.empty_object(object.collection_kind)
+            } else {
+                id
+            }
         } else {
             id
         };

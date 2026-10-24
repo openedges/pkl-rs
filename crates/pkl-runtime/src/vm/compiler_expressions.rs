@@ -71,6 +71,7 @@ enum Work<'a> {
         bool,
         Option<Span>,
     ),
+    CollectionBody(&'a Expr),
     ObjectEnd(Vec<crate::syntax::Member>, Option<Span>, usize, bool),
     PropertyBegin(&'a crate::syntax::Member),
     PropertyEnd(Box<PropertyCompilation<'a>>),
@@ -551,6 +552,43 @@ impl Compiler<'_> {
                                 .contains(&expression.span),
                         });
                     }
+                    Work::CollectionBody(expression) => {
+                        let ExprKind::Object {
+                            parent,
+                            members,
+                            parameters,
+                        } = &expression.kind
+                        else {
+                            unreachable!("scheduled object body")
+                        };
+                        let begin = output.len();
+                        self.collection_body(
+                            members,
+                            parameters,
+                            crate::heap::CollectionKind::Dynamic,
+                            parent.is_some(),
+                            output,
+                        )?;
+                        if let Some(parent) = parent {
+                            for index in begin..output.len() {
+                                if matches!(
+                                    output[index],
+                                    Instruction::PrepareFunctionAmendment { .. }
+                                        | Instruction::BeginFunctionAmendment { .. }
+                                        | Instruction::BeginCollection { .. }
+                                        | Instruction::AmendEmpty
+                                ) {
+                                    output.spans[index] = Some(parent.unparenthesized().span);
+                                }
+                                if matches!(
+                                    output[index],
+                                    Instruction::BeginCollection { .. } | Instruction::AmendEmpty
+                                ) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
                     Work::ObjectBody(members, parameters, kind, has_parent, parent_span) => {
                         let mut begin = output.len();
                         if has_parent && members.is_empty() {
@@ -746,6 +784,8 @@ impl Compiler<'_> {
                                 .map_or(member.name_span.end, |ty| ty.span.end),
                         );
                         self.block(instructions, Some(header_span))?;
+                        self.program.metadata[code].amendment_parent_span =
+                            member.is_amendment().then_some(member.name_span);
                         self.program.metadata[code].hidden = member
                             .modifiers
                             .iter()
@@ -1164,6 +1204,15 @@ impl Compiler<'_> {
                     parent.is_some(),
                     parent.as_ref().map(|parent| parent.unparenthesized().span),
                 ));
+                if let Some(parent) = parent {
+                    work.push(Work::Visit(parent));
+                }
+            }
+            ExprKind::Object { parent, .. } => {
+                // Mixed bodies use the same parent worklist as property-only
+                // bodies. Retaining a recursive expression compiler frame for
+                // each amendment would exhaust small native thread stacks.
+                work.push(Work::CollectionBody(expression));
                 if let Some(parent) = parent {
                     work.push(Work::Visit(parent));
                 }

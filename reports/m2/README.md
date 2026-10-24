@@ -1,5 +1,72 @@
 # M2 language evidence
 
+### Stage64 amendment construction — implementation and local comparisons
+
+The [implementation checkpoint](stage64-implementation-checkpoint.json) records
+repeated property, entry, and predicate amendment bodies, class-valued parents,
+and empty-result identity in the shared evaluator. Long amendment chains use
+parser and compiler worklists under the existing 256 KiB frontend test limit.
+Class construction retains abstract/external error precedence, generic defaults,
+and prototype identity. `Listing.fold` validates its callback, shallow-forces
+receiver values before callbacks, and preserves pending values through Host
+suspension, reentry, GC, cancellation, and retry. Nested values remain lazy.
+Diagnostics preserve the first authored body span, synthetic source-section
+fallback, real caller frames, and unqualified base-class names.
+
+Nine sealed Java string profiles contain 868 expressions. Native, actual N-API,
+and Chromium each match all 1,736 observations across two sessions, comparing
+seven raw channels and the whole process protocol. The independent acquisition
+review checks 81,228 raw channel comparisons across those profiles and four
+scalar groups. IntSeq, Bytes, Duration, and DataSize retain 474, 600, 548, and
+510 observations per target. Any portable remains at 170 matches and two
+`scalar-regex` mismatches per target; its strict comparison fails. M1's
+architecture contract passes while its two Regex compatibility gaps remain.
+
+The separate [prototype diagnostic fixture](../../tests/fixtures/m2-prototype-diagnostics/README.md)
+contains 39 Java rows per fresh JVM: 35 ordinary errors and four successful
+values. Two JVM captures retain 1,721 archive members and 70 copied source
+inputs. The focused Rust run compares 259 Java rows across construction,
+declarations, frontend controls, and prototype diagnostics, and passes 53
+top-level tests. These distinct scopes are not additional whole-program passes.
+
+All five required Rust checks pass. The workspace has 972 distinct passing
+tests, zero failures, and two ignored tests. Its raw total of 985 contains
+thirteen nested child summaries also represented by parent tests. The new
+audit corrects the earlier distinct totals for Stage 62 from 964 to 956 and
+Stage 63 from 971 to 963. Raw logs and historical checkpoint JSON are preserved;
+this correction changes the accounting, not the observed test outcomes.
+Tool validation passes 94 Python tests normally and under `-O`, 49 JavaScript
+tests, eight mapping tests in both Python modes, and both inventory checks.
+
+The original selection contains 116 programs: 52 match, 30 mismatch,
+33 are unsupported, and one fails in Java under the unchanged `-Xmx512m`.
+All 37 prior passes remain passes. `generators/spreadSyntaxDynamic.pkl` and
+`basic/amendsChains.pkl` change from mismatch to pass; the added 25 have
+thirteen matches, eleven mismatches, and one unsupported result. Two required
+package/HTTP/TLS cases remain unexecuted. Independent review checks all 464
+stdout/stderr streams and the first raw difference for every nonpass. The
+selected original gate remains failed. New object-construction scope and
+inference failures, including the unqualified `getClass` call in
+`basic/newInAmendingModuleMethod.pkl`, remain implementation work.
+
+The 29 reviewed mapping entries remain partial and expand to 42 partially
+mapped requirements, with 433 requirements unimplemented. The inventory keeps
+475 requirements and 4,527 case rows: 4,416 ready, 71 unimplemented, and
+40 unmapped. Ready means connected to an execution adapter, not passed.
+
+Publication preserves the first Rust semantic regression, the second run's
+ENOSPC and incomplete report, the third run's damaged build artifact, and the
+successful fourth run. The original damaged bytes and verified cache-recovery
+metadata remain available. Unexecuted preparations remain unexecuted, and the
+comparison command's initial argument error remains separate from its successful
+corrected invocation. The later Java-authority publication receipts are included
+explicitly in the supplement. Actual implementation publication, assembly, and
+Git source binding have separate process evidence.
+
+These are local macOS arm64 results. All nine M2 workstreams, full language
+compatibility, typed exports, product APIs, release platform coverage, and
+speed/memory targets remain open.
+
 ### Stage64 amendment construction — independent Java authority
 
 The [Java checkpoint](stage64-java-checkpoint.json) records two separately sealed
@@ -51,8 +118,10 @@ target, with strict comparison failed. The M1 architecture contract passes
 while its two Java Regex compatibility differences remain failures.
 
 All five required Rust checks pass. The raw workspace harness reports 976
-passes; five nested frontend child summaries are also counted by their parent.
-The unique result is 971 passed, zero failed and two ignored. Tool validation
+passes; thirteen nested child summaries are also counted by their parent.
+The corrected distinct result is 963 passed, zero failed and two ignored.
+The Stage 64 audit corrects the earlier reported 971 without rewriting the
+historical raw archive or checkpoint JSON. Tool validation
 passes 75 Python tests normally and under `-O`, 49 JavaScript tests, eight
 mapping tests in both Python modes, and both inventory checks. Its incomplete
 first tracing attempt is preserved separately.
@@ -159,9 +228,11 @@ original PklString names for output. The rejected candidate, failed attempts,
 and the test-only URI correction remain archived separately.
 
 All five required local Rust checks pass. Workspace output contains 969 passed
-harness executions and two ignored tests; removing five nested frontend child
-summaries duplicated by their parent leaves 964 unique passes, zero failures,
-and two ignored tests. Python tooling has 61 passes normally and under `-O`,
+harness executions and two ignored tests; removing thirteen nested child
+summaries duplicated by their parent leaves 956 distinct passes, zero failures,
+and two ignored tests. The Stage 64 audit corrects the earlier reported 964;
+the historical raw archive and checkpoint JSON remain unchanged.
+Python tooling has 61 passes normally and under `-O`,
 JavaScript has 16 passes, and inventory checks pass. The final source inventory
 contains 165,344 reconstructible entries with 22 inputs copied directly.
 The M2 manifest changes 102 implementation-link hashes only; its 4,527 cases,

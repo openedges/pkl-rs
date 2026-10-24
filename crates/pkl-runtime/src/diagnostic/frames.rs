@@ -32,9 +32,20 @@ struct FrameKey<'a> {
 }
 
 fn key<'a>(frame: &'a RenderFrame<'_>) -> Option<FrameKey<'a>> {
-    let start = frame.source.position(frame.span.start)?;
+    let mut start = frame.source.position(frame.span.start)?;
     let (end_line, end_column) = if let Some(width) = frame.highlight_length_utf16 {
-        (start.line, start.column_utf16 + width.saturating_sub(1))
+        let source_length = frame.source.position(frame.source.text().len())?.utf16;
+        if source_length - start.utf16 < width {
+            // Pinned Truffle SourceSectionLoaded exposes 1:1 coordinates for
+            // an invalid section. A parser insertion at exact EOF has width
+            // one and is invalid; a following space or newline makes it valid.
+            // Preserve the parser's authored span and apply the source-section
+            // rule only when converting it to observable frame coordinates.
+            start = frame.source.position(0)?;
+            (1, 1)
+        } else {
+            (start.line, start.column_utf16 + width.saturating_sub(1))
+        }
     } else if let Some((offset, ch)) = frame.source.slice(frame.span)?.char_indices().next_back() {
         let end = frame.source.position(frame.span.start + offset)?;
         (end.line, end.column_utf16 + ch.len_utf16() - 1)

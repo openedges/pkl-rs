@@ -1989,9 +1989,11 @@ String 키도 같은 UTF-16 인코딩으로 구분합니다. 수정 후 전체 �
 각 환경에서 일치합니다. Any portable은 환경별 170회 일치·기존 Regex 두 회
 불일치로 strict gate가 실패하며, M1의 두 Regex 차이도 그대로 남습니다.
 
-필수 Rust 검사 다섯 개가 통과했고 최종 workspace는 고유 테스트 **964개 통과·
+필수 Rust 검사 다섯 개가 통과했고 최종 workspace는 고유 테스트 **956개 통과·
 실패 0개·ignored 2개**입니다. 원시 harness 합계 969개에는 부모 결과에 포함된
-frontend 자식 프로세스 검사 다섯 개가 중복됩니다. Python은 61개를 일반·`-O`로,
+자식 프로세스 검사 13개가 중복됩니다. Stage 64 집계 감사에서 기존 964개를
+956개로 정정했으며 당시 원시 archive·checkpoint JSON은 수정하지 않습니다.
+Python은 61개를 일반·`-O`로,
 JavaScript는 16개를 실행했습니다. 소스 165,344개를 재구성할 수 있도록 기록했으며
 입력 22개는 직접 복사했습니다. 목록은 구현 연결 hash 102개만 달라졌고
 4,527개 행·475개 요구사항·ready 4,416개·미구현 71개·미연결 40개는 그대로입니다.
@@ -2106,9 +2108,11 @@ hash·equality 도중 Host 중단·재진입·GC·취소·재시도를 같은 co
 일치합니다. Any portable의 170회 일치·Regex 두 회 불일치와 M1의 두 Regex
 차이는 실패로 유지합니다.
 
-필수 Rust 검사 다섯 개가 통과했습니다. Workspace는 고유 테스트 **971개 통과·
-실패 0개·ignored 2개**이며, 원시 합계 976개에는 frontend 자식 검사 다섯 개가
-중복됩니다. Python 75개를 일반·`-O`로, JavaScript 49개와 mapping 검사 8개를
+필수 Rust 검사 다섯 개가 통과했습니다. Workspace는 고유 테스트 **963개 통과·
+실패 0개·ignored 2개**이며, 원시 합계 976개에는 자식 검사 13개가 중복됩니다.
+Stage 64 집계 감사에서 기존 971개를 963개로 정정했으며 당시 원시 archive·
+checkpoint JSON은 수정하지 않습니다. Python 75개를 일반·`-O`로,
+JavaScript 49개와 mapping 검사 8개를
 Python 두 모드로 실행했고 목록 검사도 통과했습니다. 부분 mapping은 27개에서
 29개로 늘었으며 manifest의 63개 값이 바뀌었습니다. 4,527개 행·475개 요구사항과
 ready 4,416개·미구현 71개·미연결 40개 accounting 상태는 그대로입니다.
@@ -2199,6 +2203,58 @@ Java/tool 검증 명령 다섯 개가 통과했습니다. 두 fixture verifier�
 소스 고정 뒤 재생성·검증할 의무를 유지합니다. 실제 게시 process 영수증은 자신의
 archive 밖에 보존해 후속 B 증거에 연결합니다. **이 단계는 Java 기준 고정이며
 Rust·실제 플랫폼·M2 전체 완료 판정은 아닙니다.**
+
+#### Stage 64 B — 공유 구현·플랫폼·원본 검증
+
+[구현 체크포인트](reports/m2/stage64-implementation-checkpoint.json)는 연속
+속성·entry·predicate amendment, class 값 부모와 빈 결과의 identity를 기록합니다.
+긴 본문 체인은 parser·compiler worklist로 처리하고 기존 256 KiB frontend
+조건을 유지합니다. abstract·external 오류 순서, prototype·generic 기본값과
+첫 authored 본문 위치를 보존합니다. `Listing.fold`는 callback 타입 검사 뒤
+전체 receiver 값을 shallow-force하며, Host 중단·재진입·GC·취소·재시도 중
+상태를 유지합니다. 중첩 값은 지연 평가합니다.
+
+아홉 Java 기준의 식 868개를 두 번씩 비교하여 native·실제 N-API·Chromium
+각각 **1,736회 관찰이 일치**합니다. 일곱 원시 채널과 전체 process protocol을
+비교했으며, 독립 검토는 기존 스칼라 네 그룹을 포함해 81,228개 채널을
+대조했습니다. IntSeq 474회·Bytes 600회·Duration 548회·DataSize 510회도
+환경별 일치합니다. Any portable의 170회 일치·Regex 두 회 불일치와 M1의
+두 Regex 차이는 실패로 유지합니다.
+
+prototype 진단은 기존 문자열·선언 기준과 별도인 39개 Java fixture로 추가했습니다.
+새 JVM 두 개에서 각각 일반 오류 35개·성공 4개이며, 원시 archive 1,721개
+member와 입력 소스 70개를 보존합니다. 집중 Rust 검사는 전체 Java 행 259개와
+고유 테스트 53개를 검증합니다. 이 수치를 원본 프로그램 통과 수에 합산하지 않습니다.
+
+필수 Rust 검사 다섯 개가 통과했고 workspace는 **고유 972개 통과·실패 0개·
+ignored 2개**입니다. 원시 합계 985개에서 부모 검사에 중복된 자식 summary
+13개를 제외했습니다. 같은 감사로 Stage 62의 기존 964개를 956개로, Stage 63의
+971개를 963개로 정정합니다. 당시 원시 로그·archive·checkpoint JSON은 유지합니다.
+Python 94개를 일반·`-O`로, JavaScript 49개와 mapping 검사 8개를 Python 두
+모드로 실행했고 목록 freshness 검사도 통과했습니다.
+
+수정하지 않은 원본 116개는 **52개 일치·30개 불일치·33개 미지원·Java 오류
+1개**입니다. 기존 통과 37개는 모두 유지되고 `generators/spreadSyntaxDynamic.pkl`과
+`basic/amendsChains.pkl`이 불일치에서 일치로 바뀌었습니다. 추가한 25개는
+13개 일치·11개 불일치·1개 미지원입니다. `api/list.pkl`의 Java `-Xmx512m`
+힙 오류와 별도 package·HTTP·TLS 필수 사례 두 개의 미실행 의무를 유지합니다.
+독립 검토는 stdout·stderr 464개와 모든 비통과 사례의 첫 원시 차이를 확인했습니다.
+원본 선택 gate는 실패이며 전체 완료율로 계산하지 않습니다.
+
+검토된 mapping 입력 29개는 모두 partial이며, 요구사항 기준으로는 partial 42개·
+미구현 433개입니다. 475개 요구사항과 4,527개 행, ready 4,416개·미구현 71개·
+미연결 40개 상태를 유지합니다. ready는 실행 연결이며 통과 판정이 아닙니다.
+
+첫 Rust 실행의 실제 진단 회귀, 두 번째 실행의 ENOSPC·미완성 보고서,
+세 번째 실행의 손상된 빌드 산출물과 네 번째 성공 기록을 각각 보존합니다.
+기존 손상 바이트·검증한 캐시 보존 기록, 미실행 준비와 초기 비교 명령의 인자
+오류도 별도 기록으로 유지합니다. 게시 후 생성된 Java A 실행 기록을 B 보충
+증거에 명시적으로 포함하고, 실제 B 게시·assembly·Git 소스 연결은 별도 기록합니다.
+
+다음에는 `basic/newInAmendingModuleMethod.pkl`의 unqualified `getClass` 호출과
+`newInsideIf.pkl`·`newInsideLet.pkl`·`newType.pkl`의 객체 생성·추론 실패를
+원본 첫 차이에 따라 조사합니다. **M2 아홉 영역과 전체 호환성·제품 API·릴리스
+플랫폼·성능 조건은 계속 열려 있습니다.**
 
 ## M3 — 표준 라이브러리와 출력
 

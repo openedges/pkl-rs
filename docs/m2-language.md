@@ -1,13 +1,36 @@
 # M2 language verification
 
-Stage 64 is implementing repeated amendment bodies, class-valued construction
-parents, zero-effective generators, and Listing.fold forcing order. Its
-[independent Java checkpoint](../reports/m2/stage64-java-checkpoint.json) seals
-188 string queries and eleven separate declaration modules. The main string
-fixture is the ninth shared native/portable comparison profile; declaration,
-direct VM identity, logger, and additional frontend controls retain separate
-boundaries. This authority checkpoint does not establish Rust compatibility.
-The last completed implementation checkpoint is Stage 63 below.
+Stage 64 implements repeated amendment bodies, class-valued construction
+parents, empty-result identity, and `Listing.fold` forcing order. Its
+[implementation checkpoint](../reports/m2/stage64-implementation-checkpoint.json)
+records nine independent Java profiles: 868 expressions and 1,736 observations
+on each of native, actual N-API, and Chromium. All seven raw channels and the
+whole process protocols match. Declaration modules, direct VM identity, Host
+traces, frontend controls, and the separate 39-row prototype-diagnostic fixture
+retain their own verification boundaries.
+
+All five required Rust checks pass, with 972 distinct workspace tests passing,
+zero failures, and two ignored tests. The raw harness sum of 985 includes
+thirteen child summaries duplicated by parent tests. The Stage 64 count audit
+also corrects Stage 62 to 956 and Stage 63 to 963 distinct passes; their original
+raw archives and historical checkpoint JSON remain unchanged. Earlier semantic,
+disk-space, and damaged-build-artifact failures remain recorded separately.
+
+The unchanged original selection expands to 116 programs: 52 matches,
+30 mismatches, 33 unsupported results, and one Java heap error. All 37 prior
+passes remain passes; `generators/spreadSyntaxDynamic.pkl` and
+`basic/amendsChains.pkl` now match. Of 25 added programs, thirteen match,
+eleven mismatch, and one is unsupported. Two further package/HTTP/TLS cases
+remain required and unexecuted. The selected original gate fails. The first
+new mismatch, `basic/newInAmendingModuleMethod.pkl`, reaches a missing
+unqualified `getClass` call in Rust and remains a follow-up implementation task.
+
+Existing IntSeq, Bytes, Duration, and DataSize comparisons retain 474, 600,
+548, and 510 matches per target. Any portable retains 170 matches and two
+Regex mismatches per target, and M1 retains its two Regex compatibility gaps.
+All nine M2 workstreams remain open. These are recorded local macOS arm64
+results, with full language, product API, release platform, and performance
+requirements still incomplete.
 
 Stage 63 adds strict List/Set concatenation, Map merging, and Set endpoint
 properties to the shared VM. Its
@@ -19,7 +42,8 @@ representatives, Map replacement order, empty-right identity and nonforcing
 operand diagnostics have dedicated cases. Host suspension, reentry, GC,
 cancellation and retry retain the pending operands and builder.
 
-All five required Rust checks pass, with 971 unique workspace tests passing,
+All five required Rust checks pass, with 963 distinct workspace tests passing
+(corrected by the Stage 64 count audit from the earlier reported 971),
 zero failures and two ignored tests. IntSeq, Bytes, Duration and DataSize retain
 474, 600, 548 and 510 exact observations per target. Any portable still has
 170 matches and two Regex mismatches per target; its strict gate fails. The

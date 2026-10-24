@@ -130,6 +130,40 @@ fn authored_chains_parse_clone_resolve_compile_and_drop_on_small_stack() {
                 &format!("result: Int = {}\n", nested("(", "42", ")", DEPTH)),
                 false,
             ));
+            // Declaration body chains share the authored amendment root while
+            // each body has its own scope. Exercise complete clone/resolve/
+            // compilation/drop, including entry and generator body shapes.
+            let bodies = "{ local n = 1; value = n }".repeat(DEPTH);
+            for (shape, source) in [
+                ("module-property-chain", format!("result {bodies}\n")),
+                (
+                    "class-property-chain",
+                    format!("abstract class C {{ abstract result {bodies} }}\n"),
+                ),
+                (
+                    "object-property-chain",
+                    format!("result = new Dynamic {{ value {bodies} }}\n"),
+                ),
+                (
+                    "entry-body-chain",
+                    format!("result = new Mapping {{ [\"key\"] {bodies} }}\n"),
+                ),
+                (
+                    "predicate-body-chain",
+                    format!("result = new Dynamic {{ [[true]] {bodies} }}\n"),
+                ),
+                (
+                    "mixed-property-chain",
+                    format!("result {}\n", "{ value = 1; [0] = 2 }".repeat(DEPTH)),
+                ),
+                (
+                    "generator-property-chain",
+                    format!("result {}\n", "{ when (false) { [0] = 2 } }".repeat(DEPTH)),
+                ),
+            ] {
+                println!("authored frontend shape={shape}");
+                drop(compile_and_release(&source, false));
+            }
             // A standalone exported expression also owns its tree independently.
             let expression = parse_expression(&nested("(", "42", ")", DEPTH)).unwrap();
             assert!(matches!(
@@ -338,6 +372,19 @@ fn authored_scope_type_and_shared_work_guards_release_on_small_stack() {
             assert_eq!(error.kind, DiagnosticKind::Unsupported);
             assert_eq!(error.message, "Expression work limit exceeded.");
             drop(error);
+            for source in [
+                format!("result {}\n", "{}".repeat(70_000)),
+                format!("result = new Dynamic {{ value {} }}\n", "{}".repeat(70_000)),
+                format!(
+                    "result = new Mapping {{ [\"key\"] {} }}\n",
+                    "{}".repeat(70_000)
+                ),
+            ] {
+                let error = parse_module(&source).unwrap_err();
+                assert_eq!(error.kind, DiagnosticKind::Unsupported);
+                assert_eq!(error.message, "Expression work limit exceeded.");
+                drop(error);
+            }
             drop(compile_and_release("result = 42\n", false));
         },
     );

@@ -405,6 +405,11 @@ impl Vm {
         };
         let prototype = self.heap.allocate(Object {
             members,
+            collection_kind: match key {
+                BuiltinClass::Listing => CollectionKind::Listing,
+                BuiltinClass::Mapping => CollectionKind::Mapping,
+                _ => CollectionKind::Dynamic,
+            },
             builtin_type: Some(key.ty()),
             class_definition: Some(Class {
                 module: Some(

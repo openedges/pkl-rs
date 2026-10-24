@@ -1,0 +1,16 @@
+{
+  "archive_sha256": "2edd02820027c84c618458ef93d72a3cfa69071153c77fed557da1096f739ca8",
+  "captures": {
+    "capture-02": "stage64-prototype-diagnostics-oracle-02"
+  },
+  "fileset_sha256": "9044a9efb5fbec2c8210f515bae1aa63e80bfb5bf2e30b7bab539b9fcf4f72a9",
+  "members": 1721,
+  "oracle_input_sha256": {
+    "CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+    "cases.json": "922a8ccc31b1186c721b027679ee91b55901f7bca6152cd091c0ed6ed44ecbd5",
+    "module.pkl": "c217850d73f32877b45b488d111a42daa02acb4ac97585801eb694da00efa2de",
+    "queries.tsv": "26b884ecf1e1356cf04e3c93c84b00e031d6fd0cee732dfe72db470fc373a6dd",
+    "run.py": "14357f39128604af777eaf8ecd757492298b0aa6dd8e9493a1f5cc2e72592e15"
+  },
+  "schema": 1
+}

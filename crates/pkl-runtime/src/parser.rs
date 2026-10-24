@@ -416,7 +416,6 @@ struct ObjectBuild {
     parent: Option<Expr>,
     ty: Option<Type>,
     members: Vec<ObjectMember>,
-    missing_delimiter: bool,
     postfix: bool,
 }
 
@@ -424,6 +423,7 @@ struct PropertyHead {
     start: usize,
     name: String,
     name_span: Span,
+    amendment_body_start: Option<usize>,
     local: bool,
     modifiers: Vec<Modifier>,
     ty: Option<Type>,
@@ -766,8 +766,7 @@ impl<'a> Parser<'a> {
             let ty = self.type_expression()?;
             let mut parameters = Vec::new();
             let members = if self.is_symbol('{') {
-                let mut build =
-                    self.start_object(None, None, self.token.span.start, true, false)?;
+                let mut build = self.start_object(None, None, self.token.span.start, false)?;
                 parameters = std::mem::take(&mut build.parameters);
                 let mut body = self.expression_machine(0, Some(build))?;
                 Self::take_object_members(&mut body)
@@ -950,6 +949,7 @@ impl<'a> Parser<'a> {
             annotations: Vec::new(),
             name,
             name_span: span,
+            amendment_body_span: None,
             expr: Expr {
                 kind: ExprKind::Import {
                     uri,
@@ -1030,6 +1030,7 @@ impl<'a> Parser<'a> {
         }
         let (name, name_span) = self.identifier()?;
         self.member_path.push(name.clone().into());
+        let mut amendment_body_span = None;
         let (expr, ty) = if class {
             let type_parameters = self.type_parameters()?;
             let superclass = if self.is_name("extends") {
@@ -1129,6 +1130,7 @@ impl<'a> Parser<'a> {
                     "Properties with type annotations cannot have object bodies.\n\nTo define both a type annotation and an object body, try using assignment instead.\nFor example: `obj: Bird = new { ... }`.",
                 ));
             } else if self.is_symbol('{') {
+                let body_start = self.token.span.start;
                 let parent = Expr {
                     kind: ExprKind::Member(
                         Box::new(Expr {
@@ -1139,7 +1141,13 @@ impl<'a> Parser<'a> {
                     ),
                     span: name_span,
                 };
-                self.object(Some(parent))?
+                let mut value = self.object(Some(parent))?;
+                amendment_body_span = Some(Span::new(body_start, value.span.end));
+                while self.is_symbol('{') {
+                    self.expression_step()?;
+                    value = self.object(Some(value))?;
+                }
+                value
             } else if context != MemberContext::Object && ty.is_some() {
                 Expr {
                     kind: ExprKind::Uninitialized,
@@ -1183,6 +1191,7 @@ impl<'a> Parser<'a> {
             annotations,
             name,
             name_span,
+            amendment_body_span,
             expr,
             span: Span::new(start, end),
             local,
@@ -1309,7 +1318,7 @@ impl<'a> Parser<'a> {
     ) -> Result<ExpressionFlow, Diagnostic> {
         if let Some(mut build) = machine.object_build.take() {
             if self.is_symbol('}') || self.token.kind == Kind::Eof {
-                if self.token.kind == Kind::Eof && build.missing_delimiter {
+                if self.token.kind == Kind::Eof {
                     let mut error = self.unexpected(None);
                     error.message = "Missing `}` delimiter.".to_owned().into();
                     return Err(error);
@@ -1340,17 +1349,19 @@ impl<'a> Parser<'a> {
                         && machine.frames.last().is_some_and(|frame| {
                             matches!(
                                 &frame.2,
-                                ExpressionFrame::ObjectValue(
-                                    _,
-                                    ObjectValue::Entry(_, _, _, true, _)
-                                )
+                                ExpressionFrame::ObjectValue(_, ObjectValue::Property(_))
+                                    | ExpressionFrame::ObjectValue(
+                                        _,
+                                        ObjectValue::Entry(_, _, _, true, _)
+                                    )
                             )
                         })
                     {
-                        let parent = machine.current.take().expect("entry amendment");
+                        self.expression_step()?;
+                        let parent = machine.current.take().expect("member amendment");
                         let start = parent.span.start;
                         machine.object_build =
-                            Some(self.start_object(Some(parent), None, start, true, false)?);
+                            Some(self.start_object(Some(parent), None, start, false)?);
                         return Ok(ExpressionFlow::Continue);
                     }
                     machine.finish_expression = true;
@@ -1413,7 +1424,7 @@ impl<'a> Parser<'a> {
                         ExpressionFrame::ObjectKey(build, start, predicate),
                     ));
                 } else if self.object_property()? {
-                    let head = self.object_property_head()?;
+                    let mut head = self.object_property_head()?;
                     if self.is_symbol('=') {
                         self.advance()?;
                         machine.frames.push((
@@ -1425,6 +1436,7 @@ impl<'a> Parser<'a> {
                             ),
                         ));
                     } else if self.is_symbol('{') && head.ty.is_none() && head.method.is_none() {
+                        head.amendment_body_start = Some(self.token.span.start);
                         let parent = Expr {
                             kind: ExprKind::Member(
                                 Box::new(Expr {
@@ -1435,13 +1447,8 @@ impl<'a> Parser<'a> {
                             ),
                             span: head.name_span,
                         };
-                        let child = self.start_object(
-                            Some(parent),
-                            None,
-                            head.name_span.start,
-                            true,
-                            false,
-                        )?;
+                        let child =
+                            self.start_object(Some(parent), None, head.name_span.start, false)?;
                         machine.frames.push((
                             machine.minimum,
                             self.expectation.clone(),
@@ -1713,8 +1720,7 @@ impl<'a> Parser<'a> {
                     ));
                 }
                 let start = left.span.start;
-                machine.object_build =
-                    Some(self.start_object(Some(left), None, start, true, true)?);
+                machine.object_build = Some(self.start_object(Some(left), None, start, true)?);
                 return Ok(ExpressionFlow::Continue);
             }
             if self.is_symbol('(') && self.same_line() {
@@ -2029,7 +2035,7 @@ impl<'a> Parser<'a> {
                         span: Span::new(start, self.previous_end),
                     };
                     machine.object_build =
-                        Some(self.start_object(Some(parent), None, start, true, false)?);
+                        Some(self.start_object(Some(parent), None, start, false)?);
                     machine.frames.push((
                         machine.minimum,
                         self.expectation.clone(),
@@ -2045,7 +2051,7 @@ impl<'a> Parser<'a> {
             ExpressionFrame::WhenCondition(build, start) => {
                 self.expect(')')?;
                 machine.object_build =
-                    Some(self.start_object(None, None, self.token.span.start, false, false)?);
+                    Some(self.start_object(None, None, self.token.span.start, false)?);
                 machine.frames.push((
                     machine.minimum,
                     self.expectation.clone(),
@@ -2060,7 +2066,7 @@ impl<'a> Parser<'a> {
                 if self.is_name("else") {
                     self.advance()?;
                     machine.object_build =
-                        Some(self.start_object(None, None, self.token.span.start, false, false)?);
+                        Some(self.start_object(None, None, self.token.span.start, false)?);
                     machine.frames.push((
                         machine.minimum,
                         self.expectation.clone(),
@@ -2113,7 +2119,7 @@ impl<'a> Parser<'a> {
             ExpressionFrame::ForIterable(build, start, parameters) => {
                 self.expect(')')?;
                 machine.object_build =
-                    Some(self.start_object(None, None, self.token.span.start, false, false)?);
+                    Some(self.start_object(None, None, self.token.span.start, false)?);
                 machine.frames.push((
                     machine.minimum,
                     self.expectation.clone(),
@@ -2173,7 +2179,6 @@ impl<'a> Parser<'a> {
         parent: Option<Expr>,
         ty: Option<Type>,
         start: usize,
-        missing_delimiter: bool,
         postfix: bool,
     ) -> Result<Box<ObjectBuild>, Diagnostic> {
         self.enter_expression_scope()?;
@@ -2185,7 +2190,6 @@ impl<'a> Parser<'a> {
             parent,
             ty,
             members: Vec::new(),
-            missing_delimiter,
             postfix,
         }))
     }
@@ -2296,6 +2300,7 @@ impl<'a> Parser<'a> {
             start,
             name,
             name_span,
+            amendment_body_start: None,
             local,
             modifiers,
             ty,
@@ -2308,12 +2313,27 @@ impl<'a> Parser<'a> {
             start,
             name,
             name_span,
+            amendment_body_start,
             local,
             modifiers,
             ty,
             method,
         } = head;
         let end = expr.span.end;
+        let amendment_body_span = amendment_body_start.map(|start| {
+            let mut first_body = &expr;
+            while let ExprKind::Object {
+                parent: Some(parent),
+                ..
+            } = &first_body.kind
+            {
+                if parent.span == name_span {
+                    break;
+                }
+                first_body = parent;
+            }
+            Span::new(start, first_body.span.end)
+        });
         if let Some(MethodHead {
             type_parameters,
             type_parameters_span,
@@ -2363,6 +2383,7 @@ impl<'a> Parser<'a> {
             annotations: Vec::new(),
             name,
             name_span,
+            amendment_body_span,
             expr,
             span: Span::new(start, end),
             local,
@@ -2377,7 +2398,7 @@ impl<'a> Parser<'a> {
         let start = parent
             .as_ref()
             .map_or(self.token.span.start, |expr| expr.span.start);
-        let build = self.start_object(parent, None, start, true, false)?;
+        let build = self.start_object(parent, None, start, false)?;
         self.expression_machine(0, Some(build))
     }
 

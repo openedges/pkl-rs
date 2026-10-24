@@ -521,7 +521,7 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
@@ -565,7 +565,7 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties3.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語_error.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e_error.pkl"
         ],
         "state": "partial"
       }
@@ -1640,7 +1640,7 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
@@ -2449,6 +2449,34 @@
           {
             "path": "crates/pkl-runtime/src/vm.rs",
             "symbol": "inherited_member"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "expression_machine_step"
+          },
+          {
+            "path": "crates/pkl-runtime/src/syntax.rs",
+            "symbol": "is_amendment"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "symbol": "validate_member"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "symbol": "schedule_expression"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collections.rs",
+            "symbol": "amendment_class_parent"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collections.rs",
+            "symbol": "end_collection"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/amendment.rs",
+            "symbol": "continue_function_amendment"
           }
         ],
         "state": "partial"
@@ -2457,7 +2485,7 @@
         "General module amendments, function amendments, generic and cyclic object inheritance, and the complete amendment corpus remain open."
       ],
       "requirement": "semantic:amendment",
-      "scope": "Selected fixed instance amendments are rejected; extracting the fixed property value still permits amendment of that value. Empty receiver amendments preserve fixed values. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
+      "scope": "Selected fixed instance amendments are rejected; extracting the fixed property value still permits amendment of that value. Empty receiver amendments preserve fixed values. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage64 adds repeated authored property/entry/predicate bodies, class-valued construction parents, no-effective-generator parent identity, function/curry construction paths, first-body local declaration diagnostics, and bounded iterative frontend/compiler lifetime handling. Independent Java string/declaration/frontend authorities and native Host/identity regressions are distinct from the unchanged original CLI cases; their remaining raw outcomes stay required.",
       "tests": {
         "case_ids": [
           "fixed-stage11-instance-amend-object",
@@ -2517,7 +2545,10 @@
           "map-stage22-adversarial-inherited-entry-key",
           "set-stage23-inherited-element",
           "diagnostic-stage32-amendment",
-          "diagnostic-stage32-nested-amendment"
+          "diagnostic-stage32-nested-amendment",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/amendsChains.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/new.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/generators/generatorNoMembers.pkl"
         ],
         "state": "partial"
       }
@@ -7561,6 +7592,26 @@
           {
             "path": "crates/pkl-runtime/src/vm/collection_transforms.rs",
             "symbol": "collection_endpoint"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collections.rs",
+            "symbol": "amendment_class_parent"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collections.rs",
+            "symbol": "end_collection"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/int_seq.rs",
+            "symbol": "begin_int_seq"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/int_seq.rs",
+            "symbol": "int_seq_next"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/forcing.rs",
+            "symbol": "force_shallow_frame"
           }
         ],
         "state": "partial"
@@ -7570,13 +7621,16 @@
         "All original collection/type-check and public API contracts must execute with matching raw results before this semantic family can be marked complete."
       ],
       "requirement": "semantic:collections",
-      "scope": "Stage63 connects ordered strict collection addition to shared hashing, equality, insertion and GC/Host continuations, and supplies the four Set endpoint properties through the existing endpoint primitive. The linked original List/Set/Map and Mapping type-check programs are preserved unchanged. Focused string results and internal ownership checks do not establish the full original-program or collection requirement.",
+      "scope": "Stage63 connects ordered strict collection addition to shared hashing, equality, insertion and GC/Host continuations, and supplies the four Set endpoint properties through the existing endpoint primitive. The linked original List/Set/Map and Mapping type-check programs are preserved unchanged. Focused string results and internal ownership checks do not establish the full original-program or collection requirement. Stage64 connects Listing.fold to shallow forcing before callbacks and inherited ordered cached values, retaining Host suspension/reentry/retry/cancellation roots. Empty builtin class construction uses weak canonical instances; zero-effective object generators reuse their parent. The linked original programs remain whole-program obligations, not passing verdicts inferred from focused controls.",
       "tests": {
         "case_ids": [
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/list.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/set.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/map.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings/typeCheck.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings/typeCheck.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/amendsChains.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/generators/generatorNoMembers.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/listing.pkl"
         ],
         "state": "partial"
       }

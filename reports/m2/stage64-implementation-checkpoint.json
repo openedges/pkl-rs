@@ -1,0 +1,1066 @@
+{
+  "any_if_non_null": {
+    "chromium": {
+      "mismatch": 2,
+      "pass": 170
+    },
+    "napi": {
+      "mismatch": 2,
+      "pass": 170
+    }
+  },
+  "assembly": {
+    "actual_assembly_process_receipt": "Recorded separately in stage64-publication-execution-01 and published later in C; not claimed in these B archives.",
+    "all_direct_target_inputs_bound_to_published_member_union": true,
+    "all_thirteen_publications_fully_read_back": true,
+    "captured_target_file_expectations_bound": 137574,
+    "execution_wrapper_review_identity_only": {
+      "bytes": 3555,
+      "path": "target/m2/stage64-publication-execution-01/run.py",
+      "sha256": "ff383d8cf04668516b28b52d5569cfd248b7bc0d5c2ca83b5eac057e7a2b4b41"
+    },
+    "groups": [
+      "closeout",
+      "development",
+      "java-supplement",
+      "native-catalog",
+      "native-regressions",
+      "platform",
+      "preparation",
+      "recovery",
+      "rust-history-01",
+      "rust-history-02",
+      "rust-history-03",
+      "rust-validation",
+      "tooling"
+    ],
+    "independent_preparation_review": {
+      "bytes": 10564,
+      "path": "target/m2/stage64-publication-preparation-review-01/report.json",
+      "sha256": "e37a218241bc3029562dec645f53e15003b391730d6ae71f7ec3c2069ef9c587"
+    },
+    "layout": {
+      "bytes": 80674,
+      "path": "target/m2/stage64-publication-01/layout.json",
+      "sha256": "d5ebea16187eae7cf756a5e3b17c1578069c2d336bd53acc422c0cfc92dd6f23"
+    },
+    "preparer": {
+      "bytes": 51133,
+      "path": "target/m2/stage64-checkpoint-01/prepare.py",
+      "sha256": "18e65c3cf950f6eb906abb161c156b3b8a1d74f406f92ba256f63bd70788b2ea"
+    }
+  },
+  "baseline": "Pkl 0.32.0",
+  "collection": {
+    "amendment-construction": {
+      "chromium": {
+        "pass": 376
+      },
+      "compared_rows_per_target": 376,
+      "module_uri": "file:///stage64/amendment-construction.pkl",
+      "napi": {
+        "pass": 376
+      },
+      "native": {
+        "pass": 376
+      },
+      "native_report": {
+        "bytes": 117257,
+        "path": "target/m2/stage64-amendment-construction-native-comparison-02/report.json",
+        "sha256": "6b6629bf305032f06824b862669fd7b2873e9cc0ada5a59bb45faeae8e5595a0"
+      },
+      "portable_report": {
+        "bytes": 47930,
+        "path": "target/m2/stage64-amendment-construction-portable-capture-02/report.json",
+        "sha256": "5688ccc5c42c2e46cf2cb80db0929e7e0e5f48478a5c6dba33a7bfe32573a53f"
+      },
+      "rows": 188
+    },
+    "collection-addition": {
+      "chromium": {
+        "pass": 250
+      },
+      "compared_rows_per_target": 250,
+      "module_uri": "file:///stage63/collection-addition.pkl",
+      "napi": {
+        "pass": 250
+      },
+      "native": {
+        "pass": 250
+      },
+      "native_report": {
+        "bytes": 99682,
+        "path": "target/m2/stage64-collection-addition-native-comparison-02/report.json",
+        "sha256": "ae75b892a6ebb7c2950bfbcc997c9416cbe03ed9376357b676892ff4a58bbabb"
+      },
+      "portable_report": {
+        "bytes": 45755,
+        "path": "target/m2/stage64-collection-addition-portable-capture-02/report.json",
+        "sha256": "a2dcaaecbdd3f8598bda5a8a224c33f145b86243af6c9e7f8d07e77ee4cd84a9"
+      },
+      "rows": 125
+    },
+    "collection-conversion-controls": {
+      "chromium": {
+        "pass": 116
+      },
+      "compared_rows_per_target": 116,
+      "module_uri": "file:///stage62/collection-conversion-controls.pkl",
+      "napi": {
+        "pass": 116
+      },
+      "native": {
+        "pass": 116
+      },
+      "native_report": {
+        "bytes": 82863,
+        "path": "target/m2/stage64-collection-conversion-controls-native-comparison-02/report.json",
+        "sha256": "0fc716e6e53cec4cff47bfdd38fb0789aff46f26f6ae0516047f652dcbc0df8c"
+      },
+      "portable_report": {
+        "bytes": 44966,
+        "path": "target/m2/stage64-collection-conversion-controls-portable-capture-02/report.json",
+        "sha256": "da2d20dc7f96d763fd13671f234647c4a8535f1e16bdf67db7dcc162c109790c"
+      },
+      "rows": 58
+    },
+    "collection-conversions": {
+      "chromium": {
+        "pass": 472
+      },
+      "compared_rows_per_target": 472,
+      "module_uri": "file:///stage62/collection-conversions.pkl",
+      "napi": {
+        "pass": 472
+      },
+      "native": {
+        "pass": 472
+      },
+      "native_report": {
+        "bytes": 130402,
+        "path": "target/m2/stage64-collection-conversions-native-comparison-02/report.json",
+        "sha256": "0033ba545af3b77ef3054ea62fabb020a8d37e7a771b622afc3fad080e727d92"
+      },
+      "portable_report": {
+        "bytes": 49372,
+        "path": "target/m2/stage64-collection-conversions-portable-capture-02/report.json",
+        "sha256": "9e1911af6622e036ad5b5de8c09699815634e42987a366048fd89b525ec08ff7"
+      },
+      "rows": 236
+    },
+    "collection-default-contracts": {
+      "chromium": {
+        "pass": 44
+      },
+      "compared_rows_per_target": 44,
+      "module_uri": "file:///stage62/collection-default-contracts.pkl",
+      "napi": {
+        "pass": 44
+      },
+      "native": {
+        "pass": 44
+      },
+      "native_report": {
+        "bytes": 72814,
+        "path": "target/m2/stage64-collection-default-contracts-native-comparison-02/report.json",
+        "sha256": "0563304ab62880554f68dcbe0d51aad4f5e5d048dbed134650901965a16e480c"
+      },
+      "portable_report": {
+        "bytes": 43709,
+        "path": "target/m2/stage64-collection-default-contracts-portable-capture-02/report.json",
+        "sha256": "5246142a5a35dc0c9eecbb5209b4886004a0e568f8dcc2666094df95c8bd18c4"
+      },
+      "rows": 22
+    },
+    "collection-dynamic-render": {
+      "chromium": {
+        "pass": 20
+      },
+      "compared_rows_per_target": 20,
+      "module_uri": "file:///stage62/dynamic-render.pkl",
+      "napi": {
+        "pass": 20
+      },
+      "native": {
+        "pass": 20
+      },
+      "native_report": {
+        "bytes": 69211,
+        "path": "target/m2/stage64-collection-dynamic-render-native-comparison-02/report.json",
+        "sha256": "4f88c82a75bcfad236fd3e19271ffb64c2646b3330e81bf536fcd0105e8d0b67"
+      },
+      "portable_report": {
+        "bytes": 42961,
+        "path": "target/m2/stage64-collection-dynamic-render-portable-capture-02/report.json",
+        "sha256": "f2080d6fb75544865e2b9c75a2c65d56c45f886281a46fca367137717e470f9c"
+      },
+      "rows": 10
+    },
+    "collection-lookups": {
+      "chromium": {
+        "pass": 266
+      },
+      "compared_rows_per_target": 266,
+      "module_uri": "file:///stage62/collection-lookups.pkl",
+      "napi": {
+        "pass": 266
+      },
+      "native": {
+        "pass": 266
+      },
+      "native_report": {
+        "bytes": 102679,
+        "path": "target/m2/stage64-collection-lookups-native-comparison-02/report.json",
+        "sha256": "523a4b7fb01fe399095bd7ab30b65db066abd9626b1bbc352fdf80ebe5d3d7c9"
+      },
+      "portable_report": {
+        "bytes": 46356,
+        "path": "target/m2/stage64-collection-lookups-portable-capture-02/report.json",
+        "sha256": "19266ba5fd7b734df76d8a6de8cda969cb0b38f76dba453f6b49678fb89501b5"
+      },
+      "rows": 133
+    },
+    "collection-property-names": {
+      "chromium": {
+        "pass": 52
+      },
+      "compared_rows_per_target": 52,
+      "module_uri": "file:///stage62/collection-property-names.pkl",
+      "napi": {
+        "pass": 52
+      },
+      "native": {
+        "pass": 52
+      },
+      "native_report": {
+        "bytes": 73371,
+        "path": "target/m2/stage64-collection-property-names-native-comparison-02/report.json",
+        "sha256": "3b8d14e20f1e2febc6033265dbdc31b4b67f71c815bd32449cacd9a8f90cb2ec"
+      },
+      "portable_report": {
+        "bytes": 43357,
+        "path": "target/m2/stage64-collection-property-names-portable-capture-02/report.json",
+        "sha256": "09d21a71b2126d52b88df0f6541444e01cb7e85e92807da67659294fe8f76450"
+      },
+      "rows": 26
+    },
+    "set-endpoints": {
+      "chromium": {
+        "pass": 140
+      },
+      "compared_rows_per_target": 140,
+      "module_uri": "file:///stage63/set-endpoints.pkl",
+      "napi": {
+        "pass": 140
+      },
+      "native": {
+        "pass": 140
+      },
+      "native_report": {
+        "bytes": 85513,
+        "path": "target/m2/stage64-set-endpoints-native-comparison-02/report.json",
+        "sha256": "5a20e27c48bbe72ed4d97c02a1a115cddd66f30d3884631a1397b022f5d2ecb2"
+      },
+      "portable_report": {
+        "bytes": 44292,
+        "path": "target/m2/stage64-set-endpoints-portable-capture-02/report.json",
+        "sha256": "09521f0ef63f36fafdac82514c3c4b312193c9834f017b4ec443c4718ca662bd"
+      },
+      "rows": 70
+    }
+  },
+  "comparison": {
+    "boundary": "Two complete native, N-API and Chromium sessions per string fixture; seven exact common channels, with known Regex failures retained.",
+    "report": {
+      "bytes": 60720,
+      "path": "target/m2/stage64-comparison-validation-02/report.json",
+      "sha256": "f06ed9a3ddbe8741cb8d87d8e8e56f558274f050faf463085ed20efd904dbecc"
+    }
+  },
+  "evidence": {
+    "closeout": {
+      "archive": {
+        "bytes": 24090384,
+        "path": "reports/m2/stage64-closeout-evidence.tar.gz",
+        "sha256": "f6aaaae5217989e021ed447916bf54614aaa3606d852daec904449f2e67dc21f"
+      },
+      "full_member_readback_verified": true,
+      "members": 6724,
+      "publication": {
+        "bytes": 1655118,
+        "path": "reports/m2/stage64-closeout-publication.json",
+        "sha256": "2e225db2746eddb3c9e7558f2f3c91039bcab14b7444e5a659eb5b7e7518fbdd"
+      }
+    },
+    "development": {
+      "archive": {
+        "bytes": 1878095,
+        "path": "reports/m2/stage64-development-evidence.tar.gz",
+        "sha256": "bc553a8f202cef330858ebc8065c02d90327f5ab727808acec11354783a66b17"
+      },
+      "full_member_readback_verified": true,
+      "members": 201,
+      "publication": {
+        "bytes": 53712,
+        "path": "reports/m2/stage64-development-publication.json",
+        "sha256": "7810c5c23009f45a6d547816034a513f60c5b20cfa2dbc18fd283cd086aca9df"
+      }
+    },
+    "java-supplement": {
+      "archive": {
+        "bytes": 1123702,
+        "path": "reports/m2/stage64-java-supplement-evidence.tar.gz",
+        "sha256": "f887e806e2cdfa97ce33de036e9f6fcd6c1874361fc083a4dd8af92d0bf6cdd8"
+      },
+      "full_member_readback_verified": true,
+      "members": 5252,
+      "publication": {
+        "bytes": 1323059,
+        "path": "reports/m2/stage64-java-supplement-publication.json",
+        "sha256": "661bf42d3586e81a1e80221c0b7c6c569ddeb48acaa04ef0991f5350e70f5e6e"
+      }
+    },
+    "native-catalog": {
+      "archive": {
+        "bytes": 84821728,
+        "path": "reports/m2/stage64-native-catalog-evidence.tar.gz",
+        "sha256": "34abd140e8790dd9169bb34681e03d2d1422cc21b51f60a9ec8df76a6875e025"
+      },
+      "full_member_readback_verified": true,
+      "members": 22349,
+      "publication": {
+        "bytes": 5842300,
+        "path": "reports/m2/stage64-native-catalog-publication.json",
+        "sha256": "96e1a9c261ebca05f7e0e9638f6b53c2a7441a686fe4a76d2500a1cd4473b5eb"
+      }
+    },
+    "native-regressions": {
+      "archive": {
+        "bytes": 51566559,
+        "path": "reports/m2/stage64-native-regressions-evidence.tar.gz",
+        "sha256": "7fe4d6155606294ea56cf24c89e8df5baa63a6064aeb6e592f4000694e2ba870"
+      },
+      "full_member_readback_verified": true,
+      "members": 25038,
+      "publication": {
+        "bytes": 6004497,
+        "path": "reports/m2/stage64-native-regressions-publication.json",
+        "sha256": "0c11daee8f0871d4e9582d223a85d479b393c68649261a8daf3c0eba19b6caa1"
+      }
+    },
+    "platform": {
+      "archive": {
+        "bytes": 17596419,
+        "path": "reports/m2/stage64-platform-evidence.tar.gz",
+        "sha256": "ab60a452c989ec3eaf20eaf2e84d5bf65de36d5e0fed05ec5660ca413d24359b"
+      },
+      "full_member_readback_verified": true,
+      "members": 90244,
+      "publication": {
+        "bytes": 22767741,
+        "path": "reports/m2/stage64-platform-publication.json",
+        "sha256": "da899ff13ede49a55368159bb61768a5a066c009b4a8f49a918664cdfffd23f8"
+      }
+    },
+    "preparation": {
+      "archive": {
+        "bytes": 183605,
+        "path": "reports/m2/stage64-preparation-evidence.tar.gz",
+        "sha256": "612384d7cf09ea3b090b48217296189a227c3fe917ce82539def3b13c12702b6"
+      },
+      "full_member_readback_verified": true,
+      "members": 66,
+      "publication": {
+        "bytes": 27787,
+        "path": "reports/m2/stage64-preparation-publication.json",
+        "sha256": "21e0bc746fb0ffa49527155e73e73e447acba0dc05dee8c2f98ae7508ce4b420"
+      }
+    },
+    "recovery": {
+      "archive": {
+        "bytes": 10561557,
+        "path": "reports/m2/stage64-recovery-evidence.tar.gz",
+        "sha256": "0da28d5398320742bca2884b4b8d5ed0db53a7af96e5f5dbf54a17007ac4e699"
+      },
+      "full_member_readback_verified": true,
+      "members": 2009,
+      "publication": {
+        "bytes": 427118,
+        "path": "reports/m2/stage64-recovery-publication.json",
+        "sha256": "99fd4c48cf01c2dd8ab46269bbec160d72048a0325cef21ef584926a55c2df2d"
+      }
+    },
+    "rust-history-01": {
+      "archive": {
+        "bytes": 13387957,
+        "path": "reports/m2/stage64-rust-history-01-evidence.tar.gz",
+        "sha256": "94a10300712167a7e963bbbf9ac7a2af577c525467705a6a723c71ac1e32b379"
+      },
+      "full_member_readback_verified": true,
+      "members": 63,
+      "publication": {
+        "bytes": 26103,
+        "path": "reports/m2/stage64-rust-history-01-publication.json",
+        "sha256": "3101fca27504282fc721448823aa17ba83206382b0ffefd06df1873c27262900"
+      }
+    },
+    "rust-history-02": {
+      "archive": {
+        "bytes": 7330109,
+        "path": "reports/m2/stage64-rust-history-02-evidence.tar.gz",
+        "sha256": "0b5d72968ae15493bb9b6676d8a0350553fd077245949cbff5b424fd2460969a"
+      },
+      "full_member_readback_verified": true,
+      "members": 77,
+      "publication": {
+        "bytes": 29340,
+        "path": "reports/m2/stage64-rust-history-02-publication.json",
+        "sha256": "ece0f271ef75ec711ac0ed1ad3add6340bfa55455a7c857beae05efa4323f676"
+      }
+    },
+    "rust-history-03": {
+      "archive": {
+        "bytes": 13624208,
+        "path": "reports/m2/stage64-rust-history-03-evidence.tar.gz",
+        "sha256": "d482258a26663ef25ae5ba1e7f3d2ce3108e0b5c9d4576c3b8b1e9077005773e"
+      },
+      "full_member_readback_verified": true,
+      "members": 85,
+      "publication": {
+        "bytes": 30978,
+        "path": "reports/m2/stage64-rust-history-03-publication.json",
+        "sha256": "f8fdce174f066784743070481040311d630af28e6a6b9a1f4aba31a772d05028"
+      }
+    },
+    "rust-validation": {
+      "archive": {
+        "bytes": 13639547,
+        "path": "reports/m2/stage64-rust-validation-evidence.tar.gz",
+        "sha256": "f0976c9895d41e438a42397e446be7a503bd4d9a2ad05a7ed8e708c0203e3d6f"
+      },
+      "full_member_readback_verified": true,
+      "members": 79,
+      "publication": {
+        "bytes": 29702,
+        "path": "reports/m2/stage64-rust-validation-publication.json",
+        "sha256": "56f3bf8da475031b8ea638c041c39ffc5a2b2639cb77bec497a079050eff94a7"
+      }
+    },
+    "tooling": {
+      "archive": {
+        "bytes": 7250577,
+        "path": "reports/m2/stage64-tooling-evidence.tar.gz",
+        "sha256": "2ca7ebe70b093109b124f530a7bcb3c7908a6ccf8cb40577d12a2369ccffe675"
+      },
+      "full_member_readback_verified": true,
+      "members": 6601,
+      "publication": {
+        "bytes": 1695475,
+        "path": "reports/m2/stage64-tooling-publication.json",
+        "sha256": "7c74a4868e625c3dc92203a994b53901e9a483862e37aa1f3c6fcf91e40fae4d"
+      }
+    }
+  },
+  "full_m2_complete": false,
+  "full_public_api_comparison_passed": false,
+  "independent_capture_review": {
+    "report": {
+      "bytes": 10761,
+      "path": "target/m2/stage64-review-01/report.json",
+      "sha256": "d51b1da579850ea294986686786a4f6dae7edea7684a0e18cc2da9954ad5482e"
+    },
+    "scope": "Native/platform/comparison evidence only; original116 audit is separate"
+  },
+  "java_authority": {
+    "actual_Java_A_publication_process": {
+      "bytes": 6955,
+      "path": "target/m2/stage64-java-publication-execution-01/process.json",
+      "sha256": "2c88f914b24bff95bb8ce6118b773528fb5bfaedbafb7b600f891207ddeaed6a"
+    },
+    "actual_Java_A_receipt_publication_group": "java-supplement",
+    "canonical_declarations": {
+      "fixture_archive": {
+        "bytes": 180514,
+        "path": "tests/fixtures/m2-amendment-declarations/oracle-evidence.tar.gz",
+        "sha256": "7eb633d508b3a28db95c29789f92a84cfb273fe811312d93b3696ce72bb6ffa3"
+      },
+      "programs": 11,
+      "statuses": {
+        "error": 8,
+        "success": 3
+      }
+    },
+    "catalog": {
+      "file:///stage62/collection-conversion-controls.pkl": {
+        "checkpoint": {
+          "bytes": 9684,
+          "path": "reports/m2/stage62-controls-java-checkpoint.json",
+          "sha256": "02e8632e3cf85ccdf06253a9b54831cec97c2ce22ebab6109e20b6dfb665a86a"
+        },
+        "fixture_archive": {
+          "bytes": 223024,
+          "path": "tests/fixtures/m2-collection-conversion-controls/oracle-evidence.tar.gz",
+          "sha256": "c254f3cad568223c1da8f75bd5dad0a74f64867132a292bf1f1a312414f7f9da"
+        },
+        "repetitions": 2,
+        "rows": 58,
+        "statuses_per_session": {
+          "error": 14,
+          "success": 44
+        }
+      },
+      "file:///stage62/collection-conversions.pkl": {
+        "checkpoint": {
+          "bytes": 13204,
+          "path": "reports/m2/stage62-java-checkpoint.json",
+          "sha256": "1fa10f11d7162442becb15a80adbe96f2e63505a9f84442e6727f63f4ba8d45d"
+        },
+        "fixture_archive": {
+          "bytes": 513094,
+          "path": "tests/fixtures/m2-collection-conversions/oracle-evidence.tar.gz",
+          "sha256": "e2e7db0435308cd2b3ff0656e0ba799e621535054a67c45ef0fd08594b00d8f6"
+        },
+        "repetitions": 2,
+        "rows": 236,
+        "statuses_per_session": {
+          "error": 78,
+          "success": 158
+        }
+      },
+      "file:///stage62/collection-default-contracts.pkl": {
+        "checkpoint": {
+          "bytes": 9873,
+          "path": "reports/m2/stage62-default-contracts-java-checkpoint.json",
+          "sha256": "7600fc9bc84892bcfdf2a70dd5555a71180efd4714b10312b3c6fbeb18faed80"
+        },
+        "fixture_archive": {
+          "bytes": 155316,
+          "path": "tests/fixtures/m2-collection-default-contracts/oracle-evidence.tar.gz",
+          "sha256": "0c7ed42e1f786ea02086f6cf1c736b1c326835801221512568ed695dfc96c126"
+        },
+        "repetitions": 2,
+        "rows": 22,
+        "statuses_per_session": {
+          "error": 10,
+          "success": 12
+        }
+      },
+      "file:///stage62/collection-lookups.pkl": {
+        "checkpoint": {
+          "bytes": 10741,
+          "path": "reports/m2/stage62-lookups-java-checkpoint.json",
+          "sha256": "f97ba22d7062daaec7a124c6b0ccd4e4d22808fa9487c77432dfbb765de8a85e"
+        },
+        "fixture_archive": {
+          "bytes": 371632,
+          "path": "tests/fixtures/m2-collection-lookups/oracle-evidence.tar.gz",
+          "sha256": "2c75876849e8b9d0f87a72c1b4aa874c0f613d2d40cbdbb3e03fd23d48fa6317"
+        },
+        "repetitions": 2,
+        "rows": 133,
+        "statuses_per_session": {
+          "error": 51,
+          "success": 82
+        }
+      },
+      "file:///stage62/collection-property-names.pkl": {
+        "checkpoint": {
+          "bytes": 10941,
+          "path": "reports/m2/stage62-property-names-java-checkpoint.json",
+          "sha256": "fed36269559335503b6436e44525e68049231c11e01595e51a55401c22275a50"
+        },
+        "fixture_archive": {
+          "bytes": 158570,
+          "path": "tests/fixtures/m2-collection-property-names/oracle-evidence.tar.gz",
+          "sha256": "4fd0bab6188625485f311e592a4e02303ddfcf05d63a86d9c30ec668ed875ac2"
+        },
+        "repetitions": 2,
+        "rows": 26,
+        "statuses_per_session": {
+          "success": 26
+        }
+      },
+      "file:///stage62/dynamic-render.pkl": {
+        "checkpoint": {
+          "bytes": 9415,
+          "path": "reports/m2/stage62-dynamic-render-java-checkpoint.json",
+          "sha256": "b34aee47774773601688415f555ab3e7260c6933257706b00b2b0f2e7076adca"
+        },
+        "fixture_archive": {
+          "bytes": 147108,
+          "path": "tests/fixtures/m2-collection-dynamic-render/oracle-evidence.tar.gz",
+          "sha256": "29344c12e72341e574e8da0e20d56a43818a75872afecb997c6a062d787cd483"
+        },
+        "repetitions": 2,
+        "rows": 10,
+        "statuses_per_session": {
+          "success": 10
+        }
+      },
+      "file:///stage63/collection-addition.pkl": {
+        "checkpoint": {
+          "bytes": 22633,
+          "path": "reports/m2/stage63-java-checkpoint.json",
+          "sha256": "81947e1f1392c6c67bcac00d41f10cf429b7980c0ca7d789a732b685fa8da5d3"
+        },
+        "fixture_archive": {
+          "bytes": 250740,
+          "path": "tests/fixtures/m2-collection-addition/oracle-evidence.tar.gz",
+          "sha256": "5e14a08075c7f488ca0a5dd2632956366a1a5f368428b5e325da584c499f801d"
+        },
+        "repetitions": 2,
+        "rows": 125,
+        "statuses_per_session": {
+          "error": 39,
+          "success": 86
+        }
+      },
+      "file:///stage63/set-endpoints.pkl": {
+        "checkpoint": {
+          "bytes": 19318,
+          "path": "reports/m2/stage63-set-endpoints-java-checkpoint.json",
+          "sha256": "3560c0faf9a7eafc7282777563a7c9c35a7f51c647174a3fec334ab947783515"
+        },
+        "fixture_archive": {
+          "bytes": 182591,
+          "path": "tests/fixtures/m2-set-endpoints/oracle-evidence.tar.gz",
+          "sha256": "9a1326f0220b92607779bd02e2fc41d81d7a9cea8f40a3f404a55f3be03e1ae9"
+        },
+        "repetitions": 2,
+        "rows": 70,
+        "statuses_per_session": {
+          "error": 23,
+          "success": 47
+        }
+      },
+      "file:///stage64/amendment-construction.pkl": {
+        "checkpoint": {
+          "bytes": 20745,
+          "path": "reports/m2/stage64-java-checkpoint.json",
+          "sha256": "f1b06fafa3d8b182b3d24542ee137a29a01060502a708cc6085d362a133d00bf"
+        },
+        "fixture_archive": {
+          "bytes": 326267,
+          "path": "tests/fixtures/m2-amendment-construction/oracle-evidence.tar.gz",
+          "sha256": "77c4a0f285dacdbf56a6f47cc39e67fc164bd76457510a125d7396b3034e9214"
+        },
+        "repetitions": 2,
+        "rows": 188,
+        "statuses_per_session": {
+          "error": 86,
+          "success": 102
+        }
+      }
+    },
+    "prototype_diagnostics": {
+      "boundary": "Java/native-focused supplement; not a tenth portable catalog profile",
+      "fixture_archive": {
+        "bytes": 184931,
+        "path": "tests/fixtures/m2-prototype-diagnostics/oracle-evidence.tar.gz",
+        "sha256": "2edd02820027c84c618458ef93d72a3cfa69071153c77fed557da1096f739ca8"
+      },
+      "rows": 39,
+      "seal": {
+        "bytes": 372,
+        "path": "target/m2/stage64-prototype-diagnostics-seal-02/report.json",
+        "sha256": "f0dc0b463f6dfca1149f6d398e818fa07b71b546c359d3914a9e08651079e78d"
+      },
+      "statuses": {
+        "error": 35,
+        "success": 4
+      }
+    },
+    "stage64_publication": {
+      "bytes": 10750107,
+      "path": "reports/m2/stage64-java-evidence.tar.gz",
+      "sha256": "6589ad61464daaa0796d108221d0d2299299b4fa97b9dbd9444b1c94a4cc73d1"
+    }
+  },
+  "kind": "stage64-amendment-construction-and-listing-fold-implementation-checkpoint",
+  "native_and_platform": {
+    "m1_platform_contract": {
+      "compatibility_status": "fail",
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "report": {
+        "bytes": 3390519,
+        "path": "target/m2/stage64-m1-platform-contract-02/report.json",
+        "sha256": "d067b871ceb7c60597a9a2316ff2537fb9760ac340b106528dfc3a69dff0775e"
+      },
+      "status": "pass"
+    },
+    "native_acquisition": {
+      "bytes": 25582,
+      "path": "target/m2/stage64-native-acquisition-02/report.json",
+      "sha256": "23cd366854bdee7ffbf508f2065afe683825e1558baf03a284f2e5e55e3e957b"
+    },
+    "native_build": {
+      "bytes": 4970,
+      "path": "target/m2/stage64-native-build-02/build.json",
+      "sha256": "927a5e0768bc34dcc5cab0fb732962554f4db7bff8031d3e0dcccbf2a5c263ec"
+    },
+    "native_commands": [
+      "collection-conversions",
+      "collection-conversion-controls",
+      "collection-lookups",
+      "collection-default-contracts",
+      "collection-dynamic-render",
+      "collection-property-names",
+      "collection-addition",
+      "set-endpoints",
+      "amendment-construction",
+      "intseq",
+      "bytes",
+      "duration",
+      "data-size"
+    ],
+    "platform_commands": [
+      "m1-contract",
+      "collection-conversions",
+      "collection-conversion-controls",
+      "collection-lookups",
+      "collection-default-contracts",
+      "collection-dynamic-render",
+      "collection-property-names",
+      "collection-addition",
+      "set-endpoints",
+      "amendment-construction",
+      "int-seq-values",
+      "bytes-values",
+      "duration-values",
+      "any-if-non-null",
+      "data-size"
+    ],
+    "platform_validation": {
+      "bytes": 194872,
+      "path": "target/m2/stage64-platform-validation-02/report.json",
+      "sha256": "6ca0ba1b69b39fcb8fbe14b83766e43b9de92081533e97fd319a8f5e28e7dac5"
+    }
+  },
+  "original_modules": {
+    "added25_statuses": {
+      "candidate-unsupported": 1,
+      "mismatch": 11,
+      "pass": 13
+    },
+    "blocked_required": 2,
+    "failure_audit": {
+      "bytes": 654406,
+      "path": "target/m2/stage64-original-failure-audit-01/report.json",
+      "sha256": "157ea62fb27fdf4c16f6afd6496b86b98d39aeedca16585cdcf2cbc9e2fbf6d2"
+    },
+    "failure_audit_process": {
+      "bytes": 4632,
+      "path": "target/m2/stage64-original-failure-audit-01/process.json",
+      "sha256": "45909a29f6c20696cd48f98af678b0a1150ca9505eb5f1f5125f5d454aec95fe"
+    },
+    "full_m2_complete": false,
+    "independent_original_review": {
+      "bytes": 3335,
+      "path": "target/m2/stage64-original-failure-review-01/report.json",
+      "sha256": "34797b19ebac2479b182dd2caa5f6a8d010da3e313c9b13e50e18cbdc8990465"
+    },
+    "launch": {
+      "bytes": 8541,
+      "path": "target/m2/stage64-original-amendment-launch-05/report.json",
+      "sha256": "74f80b3f19f260934c9ade5a120e767f000a265a4fd1d51da500c644791e7a07"
+    },
+    "prior91_newly_passing": [
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/generators/spreadSyntaxDynamic.pkl",
+      "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/amendsChains.pkl"
+    ],
+    "prior91_pass_regressions": [],
+    "prior91_public_archive_proof": {
+      "archive": {
+        "bytes": 31570334,
+        "path": "reports/m2/stage63-closeout-evidence.tar.gz",
+        "sha256": "c5c6979afc99c78db2d3f2a915910f438ee5fc290183ac0faaf443197743aa97"
+      },
+      "member": "target/m2/stage63-original-addition-01/report.json",
+      "member_identity": {
+        "bytes": 1763887,
+        "path": "target/m2/stage63-original-addition-01/report.json",
+        "sha256": "dee864f4411f9d971730671f719cc9f971d2fbf8f2115db588f46fdd47bda6c7"
+      },
+      "publication": {
+        "bytes": 1743716,
+        "path": "reports/m2/stage63-closeout-publication.json",
+        "sha256": "635818adb7f36f79be3ade2849128868954304b9ad3c95a749bb36b34ea064fa"
+      }
+    },
+    "prior91_status_transitions": {
+      "candidate-unsupported->candidate-unsupported": 32,
+      "mismatch->mismatch": 19,
+      "mismatch->pass": 2,
+      "oracle-error->oracle-error": 1,
+      "pass->pass": 37
+    },
+    "report": {
+      "bytes": 1937134,
+      "path": "target/m2/stage64-original-amendment-01/report.json",
+      "sha256": "60d33e700b1003ac40af81b1070bad2c32ec50286277d31e379cc9453cd8cee9"
+    },
+    "selected": 116,
+    "selected_status": "failed",
+    "selection_origin": {
+      "bytes": 393367,
+      "path": "target/m2/stage64-original-selection-03/selection-origin.json",
+      "sha256": "7d597082265baa13195e5e20bb7d1216be5beeb25521b7231015ba3531f15d69"
+    },
+    "statuses": {
+      "candidate-unsupported": 33,
+      "mismatch": 30,
+      "oracle-error": 1,
+      "pass": 52
+    }
+  },
+  "performance_targets_achieved": false,
+  "remaining": [
+    "All strict M2 whole-language completion gates and unmapped/unimplemented inventory requirements remain open.",
+    "Original selected failures, the Java oracle error and two blocked HTTP/TLS originals remain required.",
+    "Known Regex mismatches remain failed compatibility cases despite the M1 shared-engine contract passing.",
+    "Complete typed/public API, user-class identity and release-platform coverage remain separate obligations.",
+    "Java-compatible speed and peak-memory targets are unverified; no overall completion percentage is inferred from selected tests."
+  ],
+  "retained_history": {
+    "cache_archives": "Original removed cache bytes remain under target/cache-preservation at the exact recovery manifest paths; backup archive files are outside this publication.",
+    "comparison_argument_failure": {
+      "bytes": 807,
+      "path": "target/m2/stage64-comparison-invocation-01/tool-observation.json",
+      "sha256": "ccead64677b5f384654fbc50a8e61efaf47ed33c1f30ac0d742666d8211e2aad"
+    },
+    "corrupt_artifacts": {
+      "bytes": 1690,
+      "path": "target/m2/stage64-corrupt-build-artifacts-01/report.json",
+      "sha256": "40fc4df23a25343d12b50b9543bdaea91bafbd4365a7a19559bfbb24f6699dc4"
+    },
+    "focused_and_recovery_histories": "Every directory remains in the exact published layout; failed and unexecuted attempts are not passes.",
+    "rust": {
+      "1": {
+        "complete": true,
+        "exits": [
+          0,
+          0,
+          0,
+          101,
+          0
+        ],
+        "report": {
+          "bytes": 5862,
+          "path": "target/m2/stage64-rust-validation-01/report.json",
+          "sha256": "c83cd92018dadd997ed99928ae30c81c5dd4c0328626341da4f2e015d41b1af9"
+        }
+      },
+      "2": {
+        "complete": false,
+        "exits": [
+          0,
+          0,
+          0,
+          101,
+          0
+        ],
+        "report": {
+          "bytes": 5625,
+          "path": "target/m2/stage64-rust-validation-02/report.json",
+          "sha256": "3fa901b87ffd88c94447b632b5996bc438c5bd380780ef9b8f09e230574573aa"
+        },
+        "terminal_observation": {
+          "bytes": 1587,
+          "path": "target/m2/stage64-rust-validation-02-observation/observation.json",
+          "sha256": "5a7006cb23ad9ad4f2bc6a26925ee5da814a90989d24152481ca583329c2a026"
+        }
+      },
+      "3": {
+        "complete": true,
+        "execution": {
+          "bytes": 1192,
+          "path": "target/m2/stage64-rust-validation-03/execution.json",
+          "sha256": "6e1e0bae707c108eb0412133978bf8e7f4420f5f62f925e8eb24b4d0b1af5c9d"
+        },
+        "exits": [
+          0,
+          0,
+          0,
+          101,
+          0
+        ],
+        "report": {
+          "bytes": 6288,
+          "path": "target/m2/stage64-rust-validation-03/report.json",
+          "sha256": "9beead42085b6a7a40a4de5f557f85561c7acea7976a349d1531205e012095f2"
+        }
+      }
+    },
+    "unexecuted_preparations": [
+      "stage64-tool-development-01",
+      "stage64-native-build-01",
+      "stage64-native-acquisition-01",
+      "stage64-bytes-native-regression-launch-01",
+      "stage64-duration-native-regression-launch-01",
+      "stage64-data-size-native-regression-01",
+      "stage64-platform-validation-01",
+      "stage64-comparison-validation-01",
+      "stage64-original-amendment-launch-01",
+      "stage64-original-amendment-launch-02",
+      "stage64-original-amendment-launch-03",
+      "stage64-original-amendment-launch-04",
+      "stage64-space-recovery-04",
+      "stage64-space-recovery-07"
+    ]
+  },
+  "rust_validation": {
+    "base_commit": "cba8882d7fa7dbe1abd2273e4e12b041c683e599",
+    "child_summaries": 13,
+    "copied_sources": 32,
+    "core_freeze": {
+      "bytes": 14122,
+      "path": "target/m2/stage64-core-freeze-02/freeze.json",
+      "sha256": "3936c5df94a3bcb99440fbf6ff77d38357d07130abed82b48c801c046530317f"
+    },
+    "count_correction": {
+      "bytes": 15110,
+      "path": "target/m2/stage64-validation-count-review-01/report.json",
+      "sha256": "0837a19c7dba9ec7a50f66ee4284ff1248640109e8f0dd3552c46923808e29f8"
+    },
+    "distinct_top_level_tests": {
+      "failed": 0,
+      "ignored": 2,
+      "passed": 972
+    },
+    "execution": {
+      "bytes": 1189,
+      "path": "target/m2/stage64-rust-validation-04/execution.json",
+      "sha256": "49220c1bae1620e533a68a3d36b998f1230aa2c1c32ebc6d768fac5eb718b956"
+    },
+    "historical_distinct_counts": {
+      "Stage62": 956,
+      "Stage63": 963
+    },
+    "old_raw_archives_rewritten": false,
+    "raw_harness_totals": {
+      "failed": 0,
+      "ignored": 2,
+      "passed": 985
+    },
+    "report": {
+      "bytes": 6286,
+      "path": "target/m2/stage64-rust-validation-04/report.json",
+      "sha256": "1e0ab60c2a167a600097dbf672262965313cd197c5bd6ffbd561ed0be9faa382"
+    },
+    "runtime_source_entries": 274,
+    "source_entries": 165398,
+    "source_manifest": {
+      "bytes": 108288137,
+      "path": "target/m2/stage64-rust-validation-04/sources.json",
+      "sha256": "2759d86058fa408ec60e402c009e810306d2823045fd6cc95f6ade9b3eb96641"
+    },
+    "summary_count": 153
+  },
+  "scalar_regressions": {
+    "bytes": {
+      "chromium": {
+        "pass": 600
+      },
+      "napi": {
+        "pass": 600
+      },
+      "native": {
+        "pass": 600
+      }
+    },
+    "data-size": {
+      "chromium": {
+        "pass": 510
+      },
+      "napi": {
+        "pass": 510
+      },
+      "native": {
+        "pass": 510
+      }
+    },
+    "duration": {
+      "chromium": {
+        "pass": 548
+      },
+      "napi": {
+        "pass": 548
+      },
+      "native": {
+        "pass": 548
+      }
+    },
+    "intseq": {
+      "chromium": {
+        "pass": 474
+      },
+      "napi": {
+        "pass": 474
+      },
+      "native": {
+        "pass": 474
+      }
+    }
+  },
+  "schema": 1,
+  "source_binding": {
+    "base_commit": "cba8882d7fa7dbe1abd2273e4e12b041c683e599",
+    "historical_document_bytes": "Capture snapshots are preserved; do not replace them with later edited documentation.",
+    "status": "Captured source provenance and current runtime freeze; actual implementation Git binding follows separately."
+  },
+  "tool_validation_and_inventory": {
+    "actual_python_reads": 6481,
+    "copied_sources": 6541,
+    "counts": {
+      "js-protocol": 49,
+      "m2-mappings": 8,
+      "m2-mappings-O": 8,
+      "python-nine-profile and declaration-prototype supplements": 94,
+      "python-nine-profile and declaration-prototype supplements-O": 94
+    },
+    "final_HEAD_diff": {
+      "bytes": 214373,
+      "path": "target/m2/stage64-checkpoint-01/manifest-head-audit.json",
+      "sha256": "5783a13baaf5b8a694aad260ba5ce13f8057b043b291f0443af509b9917584f8"
+    },
+    "full_m2_complete": false,
+    "inventory_counts": {
+      "cases": 4527,
+      "cases_by_execution": {
+        "ready": 4416,
+        "unimplemented": 71,
+        "unmapped": 40
+      },
+      "requirements": 475,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 31,
+        "specification": 198
+      }
+    },
+    "manifest": {
+      "bytes": 6709863,
+      "path": "compatibility/m2-language.json",
+      "sha256": "bf2724712cbe2a954a17af750b5f95f2666034d558382e8ccad644947eed9cbf"
+    },
+    "mapping_entries": 29,
+    "mapping_refresh": {
+      "bytes": 873,
+      "path": "target/m2/stage64-mapping-update-02/manifest-audit.json",
+      "sha256": "10dede17375e546411958efce79e85ed65ec8cb437b90e164858d43dffa89f9f"
+    },
+    "partial_requirements": 42,
+    "report": {
+      "bytes": 3909542,
+      "path": "target/m2/stage64-tool-development-02/report.json",
+      "sha256": "b6a6b99b7b303a123848fe32b8dabdc53dd0452c9ebb54a87997d58bf957d799"
+    },
+    "tool01": "unexecuted preparation; no pass claimed",
+    "unimplemented_requirements": 433
+  },
+  "verification_provenance": "Recorded local execution; hosted CI is separate."
+}

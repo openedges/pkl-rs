@@ -237,14 +237,27 @@ impl Vm {
                                 .as_deref()
                                 .unwrap_or(&source.module_name),
                         )
-                        .concat(
-                            &diagnostic
-                                .member
-                                .as_ref()
-                                .map_or_else(PklString::default, |suffix| {
+                        .concat(&diagnostic.member.as_ref().map_or_else(
+                            PklString::default,
+                            |suffix| {
+                                if source.uri.as_ref() == "repl:text"
+                                    && source.module_name.is_empty()
+                                {
+                                    // Expression AST scopes descend from
+                                    // the synthetic repl root. Real module
+                                    // declarations retain their # boundary.
+                                    if suffix.is_empty()
+                                        || suffix.encode_utf16().next() == Some(b'.' as u16)
+                                    {
+                                        suffix.as_ref().clone()
+                                    } else {
+                                        PklString::from(".").concat(suffix)
+                                    }
+                                } else {
                                     PklString::from("#").concat(suffix)
-                                }),
-                        )
+                                }
+                            },
+                        ))
                     };
                     let member =
                         if diagnostic.member.is_some() || diagnostic.module_name.is_some() {

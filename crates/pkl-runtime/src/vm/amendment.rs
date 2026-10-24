@@ -58,6 +58,23 @@ pub(super) fn blocks(
     (amend, identity)
 }
 impl Vm {
+    fn amended_function_member(&self, block: usize) -> PklString {
+        let metadata = &self.program.metadata[block];
+        let member: PklString = if metadata.member.is_empty() {
+            metadata
+                .source
+                .as_ref()
+                .map_or_else(
+                    || self.program.module_name.to_string(),
+                    |source| source.uri.to_string(),
+                )
+                .into()
+        } else {
+            metadata.member.clone()
+        };
+        member.concat(&".<function>".into())
+    }
+
     pub(super) fn identity_mixin(&mut self, ty: TypeCheck, origin: Option<RuntimeFrame>) -> Value {
         Value::Function(
             self.heap.allocate(Object {
@@ -169,12 +186,24 @@ impl Vm {
                             | Value::Float(_)
                             | Value::Duration(_)
                             | Value::DataSize(_)
+                            | Value::Bytes(_)
+                            | Value::IntSeq(_)
+                            | Value::TypeAlias(_)
                             | Value::String(_)
                     )
                 ) {
                     return Ok(());
                 }
-                (value.and_then(Value::heap_id), kind, typed)
+                let id = match value {
+                    Some(Value::Class(class)) => {
+                        if self.class_external(*class)? {
+                            return Ok(());
+                        }
+                        Some(self.heap.get_class(*class)?.prototype)
+                    }
+                    _ => value.and_then(Value::heap_id),
+                };
+                (id, kind, typed)
             }
             ParameterTarget::Builder { .. } => (
                 self.frames
@@ -285,7 +314,7 @@ impl Vm {
                     .map(|span| RuntimeFrame {
                         source: metadata.source.clone(),
                         span,
-                        member: metadata.member.concat(&".<function>".into()),
+                        member: self.amended_function_member(frame.block),
                     })
             }),
         };
@@ -365,16 +394,13 @@ impl Vm {
             self.stack.push(value);
             return Ok(());
         }
+        let diagnostic_member = self.amended_function_member(amendment.block);
         let frame = self.frames.last_mut().unwrap();
         frame.block = amendment.block;
         frame.pc = amendment.start;
         frame.amendment_end = Some(amendment.end);
         frame.environment = environment;
-        frame.diagnostic_member = Some(
-            self.program.metadata[amendment.block]
-                .member
-                .concat(&".<function>".into()),
-        );
+        frame.diagnostic_member = Some(diagnostic_member);
         Ok(())
     }
 }

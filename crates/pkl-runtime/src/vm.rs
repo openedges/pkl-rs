@@ -862,6 +862,8 @@ pub struct BlockMetadata {
     /// Module/class properties use a separate PropertyTypeNode call, even local ones.
     pub inline_property_typecheck: bool,
     pub(crate) amendment: bool,
+    /// The synthetic super read in `name { ... }` has no Java source section.
+    pub(crate) amendment_parent_span: Option<Span>,
     pub(crate) fixed_span: Option<Span>,
     pub(crate) const_span: Option<Span>,
     pub(crate) initialization_error: Option<RuntimeError>,
@@ -1263,6 +1265,7 @@ pub struct Vm {
     /// Weak handles: live empty strict values share Java's EMPTY identity, but
     /// this lookup does not keep discarded values or producer scopes alive.
     empty_collections: [Option<ObjectId>; 3],
+    empty_objects: [Option<ObjectId>; 3],
     resolved_declarations: BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
     /// Static call targets own code state, never captured receivers/environments.
     executable_roots: BTreeMap<usize, ExecutableOwnerId>,
@@ -1334,6 +1337,7 @@ impl Vm {
             builtin_classes: BTreeMap::new(),
             alias_singletons: BTreeMap::new(),
             empty_collections: [None; 3],
+            empty_objects: [None; 3],
             resolved_declarations: BTreeMap::new(),
             executable_roots: BTreeMap::new(),
             code_arenas: Vec::new(),
@@ -1746,6 +1750,7 @@ impl Vm {
         self.builtin_classes.clear();
         self.alias_singletons.clear();
         self.empty_collections = [None; 3];
+        self.empty_objects = [None; 3];
         self.resolved_declarations.clear();
         self.executable_roots.clear();
         self.code_arenas.clear();
@@ -1945,6 +1950,23 @@ impl Vm {
     }
 
     fn fail(&mut self, mut error: RuntimeError) {
+        if error.span.is_none()
+            && let Some(frame) = self.frames.last()
+            && let Some(metadata) = self.program.metadata.get(frame.block)
+            && metadata.amendment_parent_span.is_some()
+            && metadata
+                .spans
+                .get(frame.pc.saturating_sub(1))
+                .copied()
+                .flatten()
+                == metadata.amendment_parent_span
+            && matches!(
+                self.program.blocks[frame.block].get(frame.pc.saturating_sub(1)),
+                Some(Instruction::BeginCollection { .. } | Instruction::AmendEmpty)
+            )
+        {
+            error.unavailable_origin = true;
+        }
         if error.undefined_value && self.catch_force_undefined(self.guest_catch_boundary(&error)) {
             return;
         }
@@ -3529,6 +3551,12 @@ impl Vm {
         parent: ObjectId,
         members: &[Member],
     ) -> Result<(), RuntimeError> {
+        if collections::typed_class(&self.heap, parent)?.is_none() {
+            for member in members.iter().filter(|member| !member.local) {
+                self.validate_object_override(parent, member)?;
+            }
+            return Ok(());
+        }
         let mut ancestor = Some(parent);
         let mut declared = BTreeSet::new();
         let mut property_names = Vec::new();
@@ -6690,6 +6718,8 @@ impl Compiler<'_> {
         self.program.metadata[code].initialization_error = initialization_error;
         self.program.metadata[code].property_typecheck = property_typecheck;
         self.program.metadata[code].amendment = member.is_amendment();
+        self.program.metadata[code].amendment_parent_span =
+            member.is_amendment().then_some(member.name_span);
         self.program.metadata[code].fixed_span = member.override_fixed_span;
         self.program.metadata[code].const_span = member.override_const_span;
         if let crate::syntax::ExprKind::Function {
@@ -6759,6 +6789,7 @@ impl Compiler<'_> {
                 property_typecheck: None,
                 inline_property_typecheck: false,
                 amendment: false,
+                amendment_parent_span: None,
                 fixed_span: None,
                 const_span: None,
                 initialization_error: None,

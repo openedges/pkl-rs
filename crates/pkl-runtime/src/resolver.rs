@@ -1814,6 +1814,23 @@ impl<'a> Resolver<'a> {
             error.member = self.diagnostic_owners.name().map(Into::into);
             return Err(error);
         }
+        if object
+            && has(M::Local)
+            && let Some(span) = member.amendment_body_span
+        {
+            // AstBuilder rejects an authored local amendment after entering
+            // its property scope, before visiting the first body's members.
+            self.diagnostic_owner_requested = true;
+            let mut error = Diagnostic::language(
+                DiagnosticOrigin::Resolver,
+                DiagnosticKind::Syntax,
+                span,
+                "A local property definition cannot be amended.",
+            );
+            error = error.with_hint("Use definition syntax instead, for example `local person = new { ... }` instead of `local person { ... }`.");
+            error.member = self.diagnostic_owners.name().map(Into::into);
+            return Err(error);
+        }
         if let ExprKind::Function {
             method: true,
             body,

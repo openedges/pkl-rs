@@ -1,4 +1,4 @@
-//! Arithmetic sequence transforms and strict List folds share resumable cursors.
+//! Arithmetic sequence transforms and List/Listing folds share resumable cursors.
 use super::*;
 use crate::{heap::CollectionKind, int_seq::IntSeq};
 
@@ -96,9 +96,15 @@ pub(super) fn blocks(
             "external function fold<Result>(initial: Result, operator: (Result, Element) -> Result): Result",
             Operation::Fold,
         ),
+        (
+            "Listing",
+            "fold",
+            "external function fold<Result>(initial: Result, operator: (Result, Element) -> Result): Result",
+            Operation::Fold,
+        ),
     ] {
-        let class = if class_name == "List" {
-            source.text.find("external class List<").unwrap()
+        let class = if matches!(class_name, "List" | "Listing") {
+            source.text.find(&format!("class {class_name}<")).unwrap()
         } else {
             class
         };
@@ -130,7 +136,7 @@ pub(super) fn blocks(
             }
             let function_type = if operation == Operation::Map {
                 "(Int) -> Result"
-            } else if class_name == "List" {
+            } else if matches!(class_name, "List" | "Listing") {
                 "(Result, Element) -> Result"
             } else {
                 "(Result, Int) -> Result"
@@ -198,6 +204,7 @@ pub(super) struct Run {
     cursor: Cursor,
     callback: Option<Value>,
     accumulator: Option<Value>,
+    shallow: bool,
 }
 impl Run {
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
@@ -290,7 +297,11 @@ impl Vm {
         let cursor = match receiver {
             Value::IntSeq(sequence) => Cursor::IntSeq(sequence.cursor(false)),
             Value::Object(source)
-                if operation == Operation::Fold && self.is_list(&Value::Object(source)) =>
+                if operation == Operation::Fold
+                    && matches!(
+                        self.heap.get(source)?.collection_kind,
+                        CollectionKind::List | CollectionKind::Listing
+                    ) =>
             {
                 Cursor::List {
                     source,
@@ -300,12 +311,21 @@ impl Vm {
             }
             _ => return Err(invalid("sequence loop receiver")),
         };
+        let shallow_source = match &cursor {
+            Cursor::List { source, .. }
+                if self.heap.get(*source)?.collection_kind == CollectionKind::Listing =>
+            {
+                Some(*source)
+            }
+            _ => None,
+        };
         let frame = self.frames.last_mut().expect("sequence frame");
         frame.int_seq_run = Some(Box::new(Run {
             operation,
             cursor,
             callback,
             accumulator,
+            shallow: shallow_source.is_some(),
         }));
         if operation != Operation::Fold {
             let builder = self.heap.allocate(Object {
@@ -318,9 +338,29 @@ impl Vm {
             });
             frame.builders.push(builder);
         }
+        if let Some(source) = shallow_source {
+            // Java validates Function2 first, then forces all receiver member
+            // values before calling it. Nested member objects remain lazy.
+            self.force_shallow_frame(Value::Object(source))?;
+        }
         Ok(())
     }
     pub(super) fn int_seq_next(&mut self, end: usize) -> Result<(), RuntimeError> {
+        if self
+            .frames
+            .last()
+            .and_then(|frame| frame.int_seq_run.as_ref())
+            .is_some_and(|run| run.shallow)
+        {
+            self.pop()?;
+            self.frames
+                .last_mut()
+                .unwrap()
+                .int_seq_run
+                .as_mut()
+                .unwrap()
+                .shallow = false;
+        }
         let run = self
             .frames
             .last_mut()

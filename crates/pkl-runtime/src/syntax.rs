@@ -22,6 +22,9 @@ pub struct Member {
     pub annotations: Vec<Expr>,
     pub name: String,
     pub name_span: Span,
+    /// The first authored `{ ... }` body, excluding the property header and
+    /// any later bodies. Retained separately from the synthetic super read.
+    pub amendment_body_span: Option<Span>,
     pub expr: Expr,
     pub span: Span,
     pub local: bool,
@@ -35,12 +38,25 @@ pub struct Member {
 
 impl Member {
     /// An authored `property { ... }` carries a synthetic super read at the
-    /// property's name. An explicit amendment expression keeps its own span.
+    /// property's name, including when more object bodies wrap that read.
+    /// An explicit amendment expression keeps its own span.
     pub(crate) fn is_amendment(&self) -> bool {
-        matches!(
-            &self.expr.kind,
-            ExprKind::Object { parent: Some(parent), .. } if parent.span == self.name_span
-        )
+        let mut expression = &self.expr;
+        while let ExprKind::Object {
+            parent: Some(parent),
+            ..
+        } = &expression.kind
+        {
+            if parent.span == self.name_span {
+                return matches!(
+                    &parent.kind,
+                    ExprKind::Member(receiver, name)
+                        if matches!(receiver.kind, ExprKind::Super) && name == &self.name
+                );
+            }
+            expression = parent;
+        }
+        false
     }
 }
 
@@ -440,6 +456,7 @@ fn clone_member(member: &Member, expr: Expr) -> Member {
         annotations: member.annotations.clone(),
         name: member.name.clone(),
         name_span: member.name_span,
+        amendment_body_span: member.amendment_body_span,
         expr,
         span: member.span,
         local: member.local,

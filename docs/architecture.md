@@ -217,7 +217,9 @@ structural token stream for resolution, equality and diagnostic rendering.
 Compiler continuations preserve child order, short-circuit targets, source spans
 and power-assertion observations.
 
-If, let, lambda and property-only object paths also use continuations. Type parsing
+If, let, lambda, property-only object bodies, and amendment parent chains also
+use continuations. Mixed-body amendments schedule their parents on the same
+worklist; their member and generator compilation still uses recursive helpers. Type parsing
 uses a work stack with a logical-depth and constructed-height limit of 32. The
 65,536-step expression work budget is shared across interpolated expressions.
 Guard rejection and successful processing below a guard are separate obligations.
@@ -334,6 +336,28 @@ generator headers execute during construction; member bodies remain lazy.
 Each generated member captures its own local environment while retaining the
 receiver used when that member is eventually forced. Amending a collection
 keeps inherited positions and replaces matching members.
+
+Repeated property bodies form an ordered amendment chain. Their syntax retains
+the first body span and distinguishes an authored amendment declaration from an
+explicit assignment. Class-valued parents are validated before runtime member
+construction, then use the class prototype. Parser and compiler failures retain
+their earlier precedence. Function amendments defer construction until invocation;
+nullable and inferred parents retain their default and ownership rules.
+
+An empty body or a generator body that produces no members returns its object
+parent. For class-valued Dynamic, Listing and Mapping parents, it returns a
+canonical empty object with a neutral environment and a prototype backlink;
+user-class parents return the prototype. The lazy empty-object cache holds weak
+generational handles, so a live result preserves identity without retaining a
+discarded producer environment. Generic builders with attached defaults retain
+their default metadata.
+
+Listing.fold validates its Function2 callback, shallow-forces receiver member
+values in child-to-parent order, then invokes the callback in inherited element
+order using the receiver's cached override values. A later member failure
+therefore precedes the first callback. The source, callback, accumulator and
+pending force are traced across Host suspension, reentry and retry; nested
+member objects remain lazy.
 
 Properties and entries use separate cache namespaces. A tag distinguishes them
 even when a quoted property contains the same bytes as an internal entry name;
@@ -586,8 +610,8 @@ and colored-output behavior remain open.
 Cyclic key preparation
 currently reports a Rust cycle error;
 the observed Java cases fail inside the JVM. Full format-time wrapper checks,
-function/class amendments, and the remaining types and metadata also remain
-unimplemented or unverified. No new speed or memory parity claim is made.
+uncovered function/class amendment cases, and the remaining types and metadata
+remain unimplemented or unverified. No new speed or memory parity claim is made.
 
 
 Deferred Reference values retain the domain, data, normalized referent type,
@@ -1067,6 +1091,17 @@ source lines and UTF-16 positions, before display transformations. Loop margins
 and the first hint are rendered together. Selected recursive and mutual-alias
 failures exercise this path with power assertions enabled and disabled; general
 stack overflow, colored output and the complete diagnostic corpus remain open.
+
+Synthetic super reads in authored amendment declarations have unavailable source
+sections. Parent-validation failures omit that unavailable innermost frame while
+retaining real callers. A synthetic UTF-16 source section extending past the
+source end uses Truffle's line-1/column-1 fallback; valid EOF sections retain their
+actual position. Nested expression scopes use the synthetic root's dotted name,
+while real module declarations retain the separate `#` boundary.
+
+Diagnostic type names use simple names for canonical `pkl.base` class identities,
+including objects reached through a class prototype. User classes and `pkl.ref`
+classes retain their qualified names; displaying a type does not force its members.
 
 Diagnostic member paths retain `PklString` values from parser/resolver/compiler scope
 tracking through block metadata, suspended runtime frames and compression keys.

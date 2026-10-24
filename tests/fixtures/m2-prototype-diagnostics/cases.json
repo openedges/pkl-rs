@@ -1,0 +1,243 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "boundary": "string",
+  "module_uri": "file:///stage64/prototype-diagnostics.pkl",
+  "repetitions": 2,
+  "rows": [
+    {
+      "expression": "1 |> (Dynamic) {}",
+      "group": "pipe",
+      "id": "pipe-dynamic-empty-class",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> new Dynamic {}",
+      "group": "pipe",
+      "id": "pipe-dynamic-empty-new",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> (Dynamic) { when (false) { x = 1 } }",
+      "group": "pipe",
+      "id": "pipe-dynamic-empty-generator",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> (Dynamic) { x = 1 }",
+      "group": "pipe",
+      "id": "pipe-dynamic-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> (Listing) {}",
+      "group": "pipe",
+      "id": "pipe-listing-empty-class",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> new Listing {}",
+      "group": "pipe",
+      "id": "pipe-listing-empty-new",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> (Listing) { when (false) { 1 } }",
+      "group": "pipe",
+      "id": "pipe-listing-empty-generator",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> (Listing) { 1 }",
+      "group": "pipe",
+      "id": "pipe-listing-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> (Mapping) {}",
+      "group": "pipe",
+      "id": "pipe-mapping-empty-class",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> new Mapping {}",
+      "group": "pipe",
+      "id": "pipe-mapping-empty-new",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> (Mapping) { when (false) { [\"x\"] = 1 } }",
+      "group": "pipe",
+      "id": "pipe-mapping-empty-generator",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> (Mapping) { [\"x\"] = 1 }",
+      "group": "pipe",
+      "id": "pipe-mapping-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> (Plain) {}",
+      "group": "pipe",
+      "id": "pipe-user-empty-class",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> new Plain {}",
+      "group": "pipe",
+      "id": "pipe-user-empty-new",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> new C {}",
+      "group": "pipe",
+      "id": "pipe-user-lazy",
+      "mode": "string"
+    },
+    {
+      "expression": "1 |> Dynamic",
+      "group": "pipe",
+      "id": "pipe-class-value",
+      "mode": "string"
+    },
+    {
+      "expression": "(Dynamic) {} + 1",
+      "group": "add",
+      "id": "add-dynamic-empty-left",
+      "mode": "string"
+    },
+    {
+      "expression": "1 + (Dynamic) {}",
+      "group": "add",
+      "id": "add-dynamic-empty-right",
+      "mode": "string"
+    },
+    {
+      "expression": "(Listing) {} + 1",
+      "group": "add",
+      "id": "add-listing-empty-left",
+      "mode": "string"
+    },
+    {
+      "expression": "1 + (Listing) {}",
+      "group": "add",
+      "id": "add-listing-empty-right",
+      "mode": "string"
+    },
+    {
+      "expression": "(Mapping) {} + 1",
+      "group": "add",
+      "id": "add-mapping-empty-left",
+      "mode": "string"
+    },
+    {
+      "expression": "1 + (Mapping) {}",
+      "group": "add",
+      "id": "add-mapping-empty-right",
+      "mode": "string"
+    },
+    {
+      "expression": "1 + (Dynamic) { x = 1 }",
+      "group": "add",
+      "id": "add-dynamic-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "1 + (Listing) { 1 }",
+      "group": "add",
+      "id": "add-listing-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "1 + (Mapping) { [\"x\"] = 1 }",
+      "group": "add",
+      "id": "add-mapping-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "1 + (Plain) {}",
+      "group": "add",
+      "id": "add-user-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "1 + new C {}",
+      "group": "add",
+      "id": "add-user-lazy",
+      "mode": "string"
+    },
+    {
+      "expression": "((Dynamic) {}).missingMethod()",
+      "group": "method",
+      "id": "method-dynamic-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "((Dynamic) { x = 1 }).missingMethod()",
+      "group": "method",
+      "id": "method-dynamic-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "((Listing) {}).missingMethod()",
+      "group": "method",
+      "id": "method-listing-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "((Listing) { 1 }).missingMethod()",
+      "group": "method",
+      "id": "method-listing-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "((Mapping) {}).missingMethod()",
+      "group": "method",
+      "id": "method-mapping-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "((Mapping) { [\"x\"] = 1 }).missingMethod()",
+      "group": "method",
+      "id": "method-mapping-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "((Plain) {}).missingMethod()",
+      "group": "method",
+      "id": "method-user-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "(new C {}).missingMethod()",
+      "group": "method",
+      "id": "method-user-lazy",
+      "mode": "string"
+    },
+    {
+      "expression": "((Dynamic) {}).getClass().simpleName",
+      "group": "class",
+      "id": "class-dynamic-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "((Listing) {}).getClass().simpleName",
+      "group": "class",
+      "id": "class-listing-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "((Mapping) {}).getClass().simpleName",
+      "group": "class",
+      "id": "class-mapping-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "((Plain) {}).getClass().simpleName",
+      "group": "class",
+      "id": "class-user-empty",
+      "mode": "string"
+    }
+  ],
+  "schema": 1
+}

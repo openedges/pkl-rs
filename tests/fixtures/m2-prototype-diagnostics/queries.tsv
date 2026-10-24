@@ -1,0 +1,39 @@
+string	pipe-dynamic-empty-class	1 |> (Dynamic) {}
+string	pipe-dynamic-empty-new	1 |> new Dynamic {}
+string	pipe-dynamic-empty-generator	1 |> (Dynamic) { when (false) { x = 1 } }
+string	pipe-dynamic-nonempty	1 |> (Dynamic) { x = 1 }
+string	pipe-listing-empty-class	1 |> (Listing) {}
+string	pipe-listing-empty-new	1 |> new Listing {}
+string	pipe-listing-empty-generator	1 |> (Listing) { when (false) { 1 } }
+string	pipe-listing-nonempty	1 |> (Listing) { 1 }
+string	pipe-mapping-empty-class	1 |> (Mapping) {}
+string	pipe-mapping-empty-new	1 |> new Mapping {}
+string	pipe-mapping-empty-generator	1 |> (Mapping) { when (false) { ["x"] = 1 } }
+string	pipe-mapping-nonempty	1 |> (Mapping) { ["x"] = 1 }
+string	pipe-user-empty-class	1 |> (Plain) {}
+string	pipe-user-empty-new	1 |> new Plain {}
+string	pipe-user-lazy	1 |> new C {}
+string	pipe-class-value	1 |> Dynamic
+string	add-dynamic-empty-left	(Dynamic) {} + 1
+string	add-dynamic-empty-right	1 + (Dynamic) {}
+string	add-listing-empty-left	(Listing) {} + 1
+string	add-listing-empty-right	1 + (Listing) {}
+string	add-mapping-empty-left	(Mapping) {} + 1
+string	add-mapping-empty-right	1 + (Mapping) {}
+string	add-dynamic-nonempty	1 + (Dynamic) { x = 1 }
+string	add-listing-nonempty	1 + (Listing) { 1 }
+string	add-mapping-nonempty	1 + (Mapping) { ["x"] = 1 }
+string	add-user-empty	1 + (Plain) {}
+string	add-user-lazy	1 + new C {}
+string	method-dynamic-empty	((Dynamic) {}).missingMethod()
+string	method-dynamic-nonempty	((Dynamic) { x = 1 }).missingMethod()
+string	method-listing-empty	((Listing) {}).missingMethod()
+string	method-listing-nonempty	((Listing) { 1 }).missingMethod()
+string	method-mapping-empty	((Mapping) {}).missingMethod()
+string	method-mapping-nonempty	((Mapping) { ["x"] = 1 }).missingMethod()
+string	method-user-empty	((Plain) {}).missingMethod()
+string	method-user-lazy	(new C {}).missingMethod()
+string	class-dynamic-empty	((Dynamic) {}).getClass().simpleName
+string	class-listing-empty	((Listing) {}).getClass().simpleName
+string	class-mapping-empty	((Mapping) {}).getClass().simpleName
+string	class-user-empty	((Plain) {}).getClass().simpleName

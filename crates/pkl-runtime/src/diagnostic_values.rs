@@ -102,7 +102,9 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
                         } else {
                             class.module.as_deref().unwrap_or(module)
                         };
-                        name = if crate::vm::builtins::name(class.id).is_some() {
+                        name = if crate::vm::builtins::name(class.id).is_some()
+                            || crate::vm::classes::base_class_name(class.id).is_some()
+                        {
                             class.name.to_string()
                         } else {
                             format!("{defining_module}#{}", class.name)

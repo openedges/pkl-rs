@@ -247,7 +247,9 @@ Stage 64's independent amendment authorities have separate offline verifiers:
 ```sh
 python3 tools/amendment_construction_fixtures.py
 python3 tools/amendment_declarations_fixtures.py
+python3 tools/prototype_diagnostics_fixtures.py
 python3 -m unittest tools.tests.test_amendment_construction_fixtures tools.tests.test_amendment_declarations_fixtures
+python3 -m unittest tools.tests.test_prototype_diagnostics_fixtures
 ```
 
 The construction fixture contains 188 ordered public string queries and is
@@ -257,6 +259,12 @@ VM identity, Host logs, and the additional local-amendment/EOF controls in the
 [Java checkpoint](reports/m2/stage64-java-checkpoint.json) retain their own
 observation boundaries. Fixture verification establishes the Java authority;
 candidate process, native, Node, browser, and full M2 checks remain required.
+
+The separate [prototype diagnostic fixture](tests/fixtures/m2-prototype-diagnostics/README.md)
+contains 39 queries in two fresh Java sessions. It retains complete operator,
+missing-method and class-name observations for builtin and user prototypes,
+including unforced member displays. It does not change the construction or
+declaration authorities and is not registered in the shared comparison catalog.
 
 The [DataSize contract](docs/m2-data-size.md) defines two complete ordered string
 sessions per target against the independent split Java fixture. Verify native

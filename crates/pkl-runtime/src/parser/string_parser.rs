@@ -99,9 +99,7 @@ impl<'a> Parser<'a> {
                         } else {
                             Some(self.type_expression_expected(Some("{"))?)
                         };
-                        let missing_delimiter = ty.is_none();
-                        machine.object_build =
-                            Some(self.start_object(None, ty, start, missing_delimiter, true)?);
+                        machine.object_build = Some(self.start_object(None, ty, start, true)?);
                     }
                     ExpressionFlow::TypeOperand { cast } => {
                         let ty = self.type_expression()?;

@@ -1,0 +1,639 @@
+{
+  "archive": {
+    "bytes": 183605,
+    "full_member_readback_verified": true,
+    "members": 66,
+    "path": "reports/m2/stage64-preparation-evidence.tar.gz",
+    "sha256": "612384d7cf09ea3b090b48217296189a227c3fe917ce82539def3b13c12702b6"
+  },
+  "catalog": {
+    "count": 9,
+    "observations_per_target": 1736,
+    "profiles": [
+      {
+        "archive_prefix": "capture-04",
+        "fixture": "tests/fixtures/m2-collection-conversions",
+        "input_hashes": {
+          "cases.json": "a45146b0387754d879109cfed5dd280bf6aad215c9e4197e10644d432a444c3b",
+          "module.pkl": "a24a1e717919fd710c219f7c7e27e6c9baa93b575749c840d96a58ae0f886b4a",
+          "queries.tsv": "39416e2d5adb7db5fe531289ff736a14f8926af3af8bf64fcbf9aad2ad3021cc"
+        },
+        "module_uri": "file:///stage62/collection-conversions.pkl",
+        "repetitions": 2,
+        "rows": 236,
+        "tool_sources": [
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py",
+          "tools/tests/test_collection_conversions_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_conversions_fixtures",
+        "validator_script": "tools/collection_conversions_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-02",
+        "fixture": "tests/fixtures/m2-collection-conversion-controls",
+        "input_hashes": {
+          "cases.json": "2dbd453c55268cf80fdb8765d6bcea44535eed917f418eff27d3566f78f0d453",
+          "module.pkl": "90c2a9ef0fabcc8f8b22e4abf036caedbe7773663e605363ebecf9a16a7d9102",
+          "queries.tsv": "f7affd443c1fa5d0287b820e3ede1eb0d67782edf80000c4518b72f35aad1c09"
+        },
+        "module_uri": "file:///stage62/collection-conversion-controls.pkl",
+        "repetitions": 2,
+        "rows": 58,
+        "tool_sources": [
+          "tools/collection_conversion_controls_fixtures.py",
+          "tools/collection_conversion_controls_oracle.py",
+          "tools/tests/test_collection_conversion_controls_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_conversion_controls_fixtures",
+        "validator_script": "tools/collection_conversion_controls_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-03",
+        "fixture": "tests/fixtures/m2-collection-lookups",
+        "input_hashes": {
+          "cases.json": "a95d66add782756fbd2b0533fe2b4660de872f172abde76f56a712f7b12eab32",
+          "module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+          "queries.tsv": "1096a8cd0bdf65b615c104fd25592ddb58fbe4e7ca3b12a3e0f8ac2a5b971f18"
+        },
+        "module_uri": "file:///stage62/collection-lookups.pkl",
+        "repetitions": 2,
+        "rows": 133,
+        "tool_sources": [
+          "tools/collection_lookups_fixtures.py",
+          "tools/collection_lookups_oracle.py",
+          "tools/tests/test_collection_lookups_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_lookups_fixtures",
+        "validator_script": "tools/collection_lookups_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-01",
+        "fixture": "tests/fixtures/m2-collection-default-contracts",
+        "input_hashes": {
+          "cases.json": "15cb06a0db6c9e6c90edf2afa199c1d86734920d5ff4432c6cb3de1c521d9e0a",
+          "module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+          "queries.tsv": "375fc16968ee997b25d7223380398205ed756352c07b0d6e443c457f4b1ea143"
+        },
+        "module_uri": "file:///stage62/collection-default-contracts.pkl",
+        "repetitions": 2,
+        "rows": 22,
+        "tool_sources": [
+          "tools/collection_default_contracts_fixtures.py",
+          "tools/collection_default_contracts_oracle.py",
+          "tools/tests/test_collection_default_contracts_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_default_contracts_fixtures",
+        "validator_script": "tools/collection_default_contracts_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-01",
+        "fixture": "tests/fixtures/m2-collection-dynamic-render",
+        "input_hashes": {
+          "cases.json": "cc2a09354e1e2c7907fd2ad993bff28dd0bf793058c939f5154d549800b66dae",
+          "module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+          "queries.tsv": "d0ab652f9c4f422fc0392c9e1a3adb985ee9f77cb601cf2b9ba72aa2bfe07bdc"
+        },
+        "module_uri": "file:///stage62/dynamic-render.pkl",
+        "repetitions": 2,
+        "rows": 10,
+        "tool_sources": [
+          "tools/collection_dynamic_render_fixtures.py",
+          "tools/collection_dynamic_render_oracle.py",
+          "tools/tests/test_collection_dynamic_render_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_dynamic_render_fixtures",
+        "validator_script": "tools/collection_dynamic_render_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-02",
+        "fixture": "tests/fixtures/m2-collection-property-names",
+        "input_hashes": {
+          "cases.json": "341f6b953b8dcd39e623dc6d1a04a0ac0a2aa786f7f13dce7f6f81a98bba50b4",
+          "module.pkl": "7f80ba30b4248cff7cca4b036bde2f5a7f3a215408765e622b2b124eb5a5b1ce",
+          "queries.tsv": "59e7145df48a51493f10fb16ea9093711c18e9ff50a30a67c3f81043a0b1b239"
+        },
+        "module_uri": "file:///stage62/collection-property-names.pkl",
+        "repetitions": 2,
+        "rows": 26,
+        "tool_sources": [
+          "tools/collection_property_names_fixtures.py",
+          "tools/collection_property_names_oracle.py",
+          "tools/tests/test_collection_property_names_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_property_names_fixtures",
+        "validator_script": "tools/collection_property_names_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-04",
+        "fixture": "tests/fixtures/m2-collection-addition",
+        "input_hashes": {
+          "cases.json": "3a79ba3caa4ff3cd3180271e659b7323a7ca0f3b75fba9e15172ecb7d36cafd2",
+          "module.pkl": "50fc462c877bebd2a06bb9a295c2c9e89874705b5246e69aba7b7e9fbf41a3eb",
+          "queries.tsv": "2081dfb9db79a5695e58c4149783fbd4b46c4c045b764de314ff68300d1d532f"
+        },
+        "module_uri": "file:///stage63/collection-addition.pkl",
+        "repetitions": 2,
+        "rows": 125,
+        "tool_sources": [
+          "tools/collection_addition_fixtures.py",
+          "tools/collection_addition_oracle.py",
+          "tools/tests/test_collection_addition_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java",
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py"
+        ],
+        "validator_module": "collection_addition_fixtures",
+        "validator_script": "tools/collection_addition_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-02",
+        "fixture": "tests/fixtures/m2-set-endpoints",
+        "input_hashes": {
+          "cases.json": "d70067c1ea0f45960e6b693db60165521a2b45b2ac35c8285f300446c2043c02",
+          "module.pkl": "add28c5d462e41c7c5d8fa273817669d6e1234f85adc2ac8fac5ea0b3160fe70",
+          "queries.tsv": "eb9e0db1e0e62f87077a8c9c20b6bde4fa8636f85e0634b574f4a5fbd7dce7d4"
+        },
+        "module_uri": "file:///stage63/set-endpoints.pkl",
+        "repetitions": 2,
+        "rows": 70,
+        "tool_sources": [
+          "tools/set_endpoints_fixtures.py",
+          "tools/set_endpoints_oracle.py",
+          "tools/tests/test_set_endpoints_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java",
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py"
+        ],
+        "validator_module": "set_endpoints_fixtures",
+        "validator_script": "tools/set_endpoints_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-01",
+        "fixture": "tests/fixtures/m2-amendment-construction",
+        "input_hashes": {
+          "cases.json": "97fa9ae8551b14f39dea2b352c9e00d22eae574c6c5ba25e7840742700343f84",
+          "module.pkl": "28ed759288cd664505347ef6e649d95c9495901787bfbea160c1aa5e6bc8efc6",
+          "queries.tsv": "0f8105fad96003a6bcebc71c5c9e235148f6b3d33a1132e06c3eb0e69fda10d9"
+        },
+        "module_uri": "file:///stage64/amendment-construction.pkl",
+        "repetitions": 2,
+        "rows": 188,
+        "tool_sources": [
+          "tools/amendment_construction_fixtures.py",
+          "tools/amendment_construction_oracle.py",
+          "tools/tests/test_amendment_construction_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java",
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py"
+        ],
+        "validator_module": "amendment_construction_fixtures",
+        "validator_script": "tools/amendment_construction_fixtures.py"
+      }
+    ],
+    "rows": 868,
+    "source": {
+      "bytes": 8538,
+      "path": "compatibility/collection-conversion-profiles.json",
+      "sha256": "a76229290e1779881f7747b142faab4b95a28a5c18ee583a41bd1c2c48361c62"
+    }
+  },
+  "elapsed_seconds": 0.197,
+  "excluded": [
+    "stage64-original-amendment-01-workspace"
+  ],
+  "historical_limitations": [
+    "Rust01 has an actual builtin diagnostic-name regression; Rust02 has link ENOSPC plus a terminal incomplete after manifest; Rust03 has damaged nonexecutable artifacts after strip ENOSPC; Rust04 is the successful corrected-source required-five run.",
+    "Focused/setup/compile failures and both freeze candidates remain preserved. Tool01 and earlier wrapper generations are unexecuted preparations, not passing runs.",
+    "The independent count audit corrects distinct top-level Rust passes to Stage64=972, Stage63=963, Stage62=956; thirteen child invocations per workspace are not additional distinct tests. Two ignored tests remain ignored.",
+    "Prototype39 is a separate Java/native-focused diagnostic supplement, not a tenth shared catalog profile or a portable API completion claim.",
+    "Known Regex compatibility failures and all original-program mismatches/unsupported/blocked outcomes remain visible. No full M2, typed API, release-platform, or performance completion claim."
+  ],
+  "kind": "Stage64 local preparation evidence publication",
+  "member_inventory": {
+    "target/m2/stage64-bytes-native-regression-launch-01/run.py": {
+      "bytes": 3185,
+      "mode": 420,
+      "sha256": "39451b4d6ee22b4a85cab036fea6364447cbfd76b3cb9e57edc7cb6516bb0851"
+    },
+    "target/m2/stage64-capture-preparation-01/__pycache__/common.cpython-314.pyc": {
+      "bytes": 5511,
+      "mode": 420,
+      "sha256": "997e5d320b0b1719796489e9b22966402ee3938acf980746a7317c7c68e0c910"
+    },
+    "target/m2/stage64-capture-preparation-01/common.py": {
+      "bytes": 2803,
+      "mode": 420,
+      "sha256": "9a0c14cd775ec5b60bd4afc87b997648f984b26d85ceda38d4c1919f7aa5876b"
+    },
+    "target/m2/stage64-capture-preparation-01/preparation.json": {
+      "bytes": 12526,
+      "mode": 420,
+      "sha256": "441126117c2b52e59d618c01e100a619216b7ddf1367d937fadb9f9554305ab1"
+    },
+    "target/m2/stage64-capture-preparation-01/prepare.py": {
+      "bytes": 5066,
+      "mode": 420,
+      "sha256": "69b4ac9647cb709b7319845b559afda5a5b60de7fe902d493852aff4d6b6b9e1"
+    },
+    "target/m2/stage64-capture-preparation-01/source-contracts.json": {
+      "bytes": 23258,
+      "mode": 420,
+      "sha256": "97e115c6bce1b2564fe2ef0cc8d39da1d6c26d6051498ab5b682736be5e9cfb5"
+    },
+    "target/m2/stage64-capture-preparation-02/__pycache__/common.cpython-314.pyc": {
+      "bytes": 5511,
+      "mode": 420,
+      "sha256": "8ad7c15512fc25f9fb76f5ca292fa3a5f43e96a27f026cf3a46b570256ff0877"
+    },
+    "target/m2/stage64-capture-preparation-02/common.py": {
+      "bytes": 2803,
+      "mode": 420,
+      "sha256": "b7d90a00bcbdea32c3eb8cbb1f7a0d8f238ed37ad4898955ff3872b219f2c52a"
+    },
+    "target/m2/stage64-capture-preparation-02/preparation.json": {
+      "bytes": 12526,
+      "mode": 420,
+      "sha256": "34114ded849adf33c34f42708826a305d4c769d4414ae4e058afcec9db03efa1"
+    },
+    "target/m2/stage64-capture-preparation-02/prepare.py": {
+      "bytes": 5066,
+      "mode": 420,
+      "sha256": "2f6ec1f0a12f8f9e61c7b2706fe1641fbed0f7954de3ba118d843d8ecff0b404"
+    },
+    "target/m2/stage64-capture-preparation-02/source-contracts.json": {
+      "bytes": 23258,
+      "mode": 420,
+      "sha256": "97e115c6bce1b2564fe2ef0cc8d39da1d6c26d6051498ab5b682736be5e9cfb5"
+    },
+    "target/m2/stage64-comparison-validation-01/preparation.json": {
+      "bytes": 1949,
+      "mode": 420,
+      "sha256": "f7851026feb9ae360a8f77e1a9507af1518fb537a38fed9c23b677380fd6d4ba"
+    },
+    "target/m2/stage64-comparison-validation-01/prepare.py": {
+      "bytes": 4001,
+      "mode": 420,
+      "sha256": "4f9585163b5e2420eaa70de55999f70d651711e156135b6edccf3c3fa722e8ef"
+    },
+    "target/m2/stage64-comparison-validation-01/run.py": {
+      "bytes": 32680,
+      "mode": 420,
+      "sha256": "8981d24ca4a58a7f3ce1645466eb439e66e0108d59b5c9546691bdac4d62842c"
+    },
+    "target/m2/stage64-data-size-native-regression-01/run.py": {
+      "bytes": 5995,
+      "mode": 420,
+      "sha256": "43ceeac0ab8899e4d6c13863530cac6bc64e47c7cee40193a3426bde6d240b2c"
+    },
+    "target/m2/stage64-duration-native-regression-launch-01/run.py": {
+      "bytes": 3212,
+      "mode": 420,
+      "sha256": "c84c3f9dd37e59565f0f6f77e3ec31cff88e8f50160c3dc524f087cc0b75c60a"
+    },
+    "target/m2/stage64-native-acquisition-01/run.py": {
+      "bytes": 6287,
+      "mode": 420,
+      "sha256": "cdb8f0f5eab259680e03a02e993c559059c9aeb6eda6df9b4adaae10966dee80"
+    },
+    "target/m2/stage64-native-build-01/run.py": {
+      "bytes": 2900,
+      "mode": 420,
+      "sha256": "2246182c21427ba661d9e5c705a026f6b1f765144fdbffabd8f29524b43046e2"
+    },
+    "target/m2/stage64-original-amendment-launch-01/preparation.json": {
+      "bytes": 1567,
+      "mode": 420,
+      "sha256": "6baf8077a15a16d8aa9331b93be6f31f3e41b0230631267a661110958b18e186"
+    },
+    "target/m2/stage64-original-amendment-launch-01/run.py": {
+      "bytes": 9684,
+      "mode": 420,
+      "sha256": "219b690c300eeaa57af4ba3349450cdf5ff4d9d2a481cf164505f55858b26d2f"
+    },
+    "target/m2/stage64-original-amendment-launch-02/preparation.json": {
+      "bytes": 1568,
+      "mode": 420,
+      "sha256": "5fc85b03d7e76e3e58e7b7869dda3182f7fff3ee6bb1770005d4f3531b550a3a"
+    },
+    "target/m2/stage64-original-amendment-launch-02/run.py": {
+      "bytes": 9684,
+      "mode": 420,
+      "sha256": "b1cdf95da121aabc40ce37ff15904a86a6ff1c7ecaab4133ef1dec2060b3e08e"
+    },
+    "target/m2/stage64-original-amendment-launch-03/preparation.json": {
+      "bytes": 1568,
+      "mode": 420,
+      "sha256": "7594c90a34e0acbb30c14db63c5482ea735ed93c6fc085205e2565c0ff332cd1"
+    },
+    "target/m2/stage64-original-amendment-launch-03/run.py": {
+      "bytes": 9684,
+      "mode": 420,
+      "sha256": "ac84279ecbceb6673f38607abd769c915dd834b0dd79bec97c846c83844de8c8"
+    },
+    "target/m2/stage64-original-amendment-launch-04/preparation.json": {
+      "bytes": 1967,
+      "mode": 420,
+      "sha256": "004cf64e1f6c39be41739a208320e85fbd9740f193288f5450f18cf48c5eaf69"
+    },
+    "target/m2/stage64-original-amendment-launch-04/run.py": {
+      "bytes": 9684,
+      "mode": 420,
+      "sha256": "5dd1848a1483d5eeccfccbd80dbf51d7561651a4488fc5e95c16a495cc626da1"
+    },
+    "target/m2/stage64-original-amendment-prep-01/preparation.json": {
+      "bytes": 918,
+      "mode": 420,
+      "sha256": "61571ff184bac010c6669a1f9424fa88b735cd0249125477871cee399d3e92a1"
+    },
+    "target/m2/stage64-original-amendment-prep-01/run.py": {
+      "bytes": 13619,
+      "mode": 420,
+      "sha256": "983a854e2a4f56383f988d8cd4554924c245a713cb3f15ca77383d4e14a429d8"
+    },
+    "target/m2/stage64-original-amendment-prep-02/preparation.json": {
+      "bytes": 986,
+      "mode": 420,
+      "sha256": "b7a1f436fd9694595fa99671ff576192e8e1b8a1fd074ee3f0fa6956b03b667d"
+    },
+    "target/m2/stage64-original-amendment-prep-02/run.py": {
+      "bytes": 13619,
+      "mode": 420,
+      "sha256": "0f9271ffa08c17aeb7cfe708f3674dbc6befbf276498fe3ecb81e85c21f8f3fc"
+    },
+    "target/m2/stage64-original-amendment-prep-03/preparation.json": {
+      "bytes": 965,
+      "mode": 420,
+      "sha256": "6a40b36a0fda6a004f0e6915ae2149a5fe7f65eb81cc75561e185a4e522ea373"
+    },
+    "target/m2/stage64-original-amendment-prep-03/run.py": {
+      "bytes": 13619,
+      "mode": 420,
+      "sha256": "bb7db4aa2375c95a9a6c9e4f0badcc3674f6a776f9c599d7322388c97bb396f7"
+    },
+    "target/m2/stage64-original-selection-01/prepare-attempt-01.py": {
+      "bytes": 8706,
+      "mode": 420,
+      "sha256": "d02bb45c3f8ee9fc3320e5c92d42c222c86e31021d5163a27664e68828e4193f"
+    },
+    "target/m2/stage64-original-selection-01/prepare.py": {
+      "bytes": 9098,
+      "mode": 420,
+      "sha256": "1c8ea458ca4f2293d80f7857dbba69bb78c2924c9522b80df82cff5ca4a2b635"
+    },
+    "target/m2/stage64-original-selection-01/selection-origin.json": {
+      "bytes": 393284,
+      "mode": 420,
+      "sha256": "2a256a5c5eae79fece31a3e13d09add099819151394377134c705f5f89a2e0b0"
+    },
+    "target/m2/stage64-original-selection-02/historical-terminal-states.json": {
+      "bytes": 3262,
+      "mode": 420,
+      "sha256": "f06666c38e80f03e5a4d8667ef383d2134dcc69a12baf2be992e1990a805a6ed"
+    },
+    "target/m2/stage64-original-selection-02/prepare.py": {
+      "bytes": 9661,
+      "mode": 420,
+      "sha256": "78a78943e19dfa6c99bb8ba2f6af1019cea8699d43c76ef503616d1983703ab3"
+    },
+    "target/m2/stage64-original-selection-02/selection-origin.json": {
+      "bytes": 393284,
+      "mode": 420,
+      "sha256": "4fe16f7430e11625d76cfe782aa881cac4efead6b49d86a82bb38f312810e945"
+    },
+    "target/m2/stage64-original-selection-03/historical-terminal-states.json": {
+      "bytes": 3262,
+      "mode": 420,
+      "sha256": "f06666c38e80f03e5a4d8667ef383d2134dcc69a12baf2be992e1990a805a6ed"
+    },
+    "target/m2/stage64-original-selection-03/prepare.py": {
+      "bytes": 9744,
+      "mode": 420,
+      "sha256": "28915f8537a255e64cf1b1d967c0c7b8c8a0f2309b13b10094fe8d2a733c9c38"
+    },
+    "target/m2/stage64-original-selection-03/selection-origin.json": {
+      "bytes": 393367,
+      "mode": 420,
+      "sha256": "7d597082265baa13195e5e20bb7d1216be5beeb25521b7231015ba3531f15d69"
+    },
+    "target/m2/stage64-platform-validation-01/preparation.json": {
+      "bytes": 1156,
+      "mode": 420,
+      "sha256": "5be8fdf6908636d2fc7a4d2dcf8eb5b94f32a6f06a7102ff36bb41794613dfa2"
+    },
+    "target/m2/stage64-platform-validation-01/prepare.py": {
+      "bytes": 2754,
+      "mode": 420,
+      "sha256": "13d8871efaec5b3f8533c0aa06e289b578468da7d317a66b4482fe082426b37d"
+    },
+    "target/m2/stage64-platform-validation-01/run.py": {
+      "bytes": 8600,
+      "mode": 420,
+      "sha256": "c1cd8748f76c7d524198fff1ca15a9da12b4e6c1a284516d9cb43b1f592fef40"
+    },
+    "target/m2/stage64-publication-01/README.md": {
+      "bytes": 5615,
+      "mode": 420,
+      "sha256": "3fe4381251b6aea44886229430c49e2b5a64a7126c7f276322fa9585f88e4577"
+    },
+    "target/m2/stage64-publication-01/adapt.py": {
+      "bytes": 8372,
+      "mode": 420,
+      "sha256": "10811ec13e514e3527494ff34bc0bac871326172200e06fc36f6de27f8d0d5c4"
+    },
+    "target/m2/stage64-publication-01/check.py": {
+      "bytes": 2896,
+      "mode": 420,
+      "sha256": "e8affa6a9416710931fdc5dd2ded2b8c02c931047587c146825d88ab29d2e930"
+    },
+    "target/m2/stage64-publication-01/initial-preparation/README.md": {
+      "bytes": 5233,
+      "mode": 420,
+      "sha256": "762da56aca187bac3b90084eecdc417eda895aac31aa99eb1ae581eabc954fe2"
+    },
+    "target/m2/stage64-publication-01/initial-preparation/adapt.py": {
+      "bytes": 8322,
+      "mode": 420,
+      "sha256": "b93fb3628e79ad26531b122b7b7c7bb708c19d445aa6624b9589c8ce9a63690b"
+    },
+    "target/m2/stage64-publication-01/initial-preparation/check.py": {
+      "bytes": 2884,
+      "mode": 420,
+      "sha256": "4799de65d5242c57e28f20941b5b509e30f20a909056557b2e0f4051fbea3355"
+    },
+    "target/m2/stage64-publication-01/initial-preparation/layout.json": {
+      "bytes": 80235,
+      "mode": 420,
+      "sha256": "94daedd36e0d7c936b48fe9c6c61d6ba05671bc058a410fcf7a62e6e2b52c9e5"
+    },
+    "target/m2/stage64-publication-01/initial-preparation/preflight-check.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage64-publication-01/initial-preparation/preflight-check.stdout.bin": {
+      "bytes": 10477,
+      "mode": 420,
+      "sha256": "620ec7b35e735db99188408c82fe4078e49af92ca202c112bb598cd663f480bd"
+    },
+    "target/m2/stage64-publication-01/initial-preparation/preflight.py": {
+      "bytes": 12607,
+      "mode": 420,
+      "sha256": "b50239927d9f7e95486634ab871e35ea3d3b0f862bd670d91a423c8e433f4c4f"
+    },
+    "target/m2/stage64-publication-01/initial-preparation/preparation.json": {
+      "bytes": 5496,
+      "mode": 420,
+      "sha256": "7574381d63d924814e2d1bb6ed7d62396a01161dbbe7c8d95de8dd96fe42dd6b"
+    },
+    "target/m2/stage64-publication-01/initial-preparation/publish.py": {
+      "bytes": 10944,
+      "mode": 420,
+      "sha256": "4ebf5fbc7242f88a01000adf2a4183092bcfa89b894bdbd134fd0999fecb3b88"
+    },
+    "target/m2/stage64-publication-01/initial-preparation/static-check.json": {
+      "bytes": 14555,
+      "mode": 420,
+      "sha256": "00e7e25bf918c65c6290725cec76e0fb31d2a5ba1e889d4ea4ad006272f04dd4"
+    },
+    "target/m2/stage64-publication-01/layout.json": {
+      "bytes": 80674,
+      "mode": 420,
+      "sha256": "d5ebea16187eae7cf756a5e3b17c1578069c2d336bd53acc422c0cfc92dd6f23"
+    },
+    "target/m2/stage64-publication-01/preflight-check.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage64-publication-01/preflight-check.stdout.bin": {
+      "bytes": 11635,
+      "mode": 420,
+      "sha256": "7c863a21bc0c7a7b4518b667df414c7771dd05a3734eedddb4f71e8628460b6f"
+    },
+    "target/m2/stage64-publication-01/preflight.py": {
+      "bytes": 14228,
+      "mode": 420,
+      "sha256": "10cf67357683e416e22ac9507c4f1d6dd6f8f8aa893e27488fb86c2c6e87f280"
+    },
+    "target/m2/stage64-publication-01/preparation-run.json": {
+      "bytes": 4386,
+      "mode": 420,
+      "sha256": "9ffea0868578ba444dd62f6e07109109fa5a28c2b1177d97fca8fb011bdfb2e0"
+    },
+    "target/m2/stage64-publication-01/preparation.json": {
+      "bytes": 8746,
+      "mode": 420,
+      "sha256": "8078f0e918470dabd06966736987027a2222b7372a6bd001903cea23dcf2b18a"
+    },
+    "target/m2/stage64-publication-01/publish.py": {
+      "bytes": 11201,
+      "mode": 420,
+      "sha256": "38caf67d2cffd17da4c2b88abde2f785f9b94511426f3b47340cfbbc1a9323de"
+    },
+    "target/m2/stage64-publication-01/refine.py": {
+      "bytes": 4991,
+      "mode": 420,
+      "sha256": "397e6bea65e327f347664c0b27d7cf38d2ed6cec2ec68f83fde0a40ed7eb4239"
+    },
+    "target/m2/stage64-publication-01/static-check.json": {
+      "bytes": 16147,
+      "mode": 420,
+      "sha256": "c0a8309546afd8430d9c732308c4e30a7cd7ef2a36ab23343253d0b992328f5d"
+    }
+  },
+  "publisher_inputs": [
+    "target/m2/stage64-publication-01/adapt.py",
+    "target/m2/stage64-publication-01/layout.json",
+    "target/m2/stage64-publication-01/preflight.py",
+    "target/m2/stage64-publication-01/publish.py",
+    "target/m2/stage64-publication-01/check.py",
+    "target/m2/stage64-publication-01/README.md",
+    "target/m2/stage64-publication-01/preparation.json",
+    "target/m2/stage64-publication-01/static-check.json",
+    "target/m2/stage64-publication-01/preflight-check.stdout.bin",
+    "target/m2/stage64-publication-01/preflight-check.stderr.bin",
+    "target/m2/stage64-publication-01/refine.py",
+    "target/m2/stage64-publication-01/initial-preparation/adapt.py",
+    "target/m2/stage64-publication-01/initial-preparation/layout.json",
+    "target/m2/stage64-publication-01/initial-preparation/preflight.py",
+    "target/m2/stage64-publication-01/initial-preparation/publish.py",
+    "target/m2/stage64-publication-01/initial-preparation/check.py",
+    "target/m2/stage64-publication-01/initial-preparation/README.md",
+    "target/m2/stage64-publication-01/initial-preparation/preparation.json",
+    "target/m2/stage64-publication-01/initial-preparation/static-check.json",
+    "target/m2/stage64-publication-01/initial-preparation/preflight-check.stdout.bin",
+    "target/m2/stage64-publication-01/initial-preparation/preflight-check.stderr.bin",
+    "target/m2/stage64-publication-01/preparation-run.json"
+  ],
+  "readiness": {
+    "compatibility_pass_claimed": false,
+    "directories": [
+      "stage64-capture-preparation-01",
+      "stage64-capture-preparation-02",
+      "stage64-native-build-01",
+      "stage64-native-acquisition-01",
+      "stage64-bytes-native-regression-launch-01",
+      "stage64-duration-native-regression-launch-01",
+      "stage64-data-size-native-regression-01",
+      "stage64-platform-validation-01",
+      "stage64-comparison-validation-01",
+      "stage64-original-selection-01",
+      "stage64-original-selection-02",
+      "stage64-original-selection-03",
+      "stage64-original-amendment-prep-01",
+      "stage64-original-amendment-prep-02",
+      "stage64-original-amendment-prep-03",
+      "stage64-original-amendment-launch-01",
+      "stage64-original-amendment-launch-02",
+      "stage64-original-amendment-launch-03",
+      "stage64-original-amendment-launch-04"
+    ],
+    "group": "preparation",
+    "note": "Readiness means terminal/stable evidence is eligible for byte-preserving publication; known semantic failures remain unchanged.",
+    "process_check": {
+      "argv": [
+        "ps",
+        "-axo",
+        "pid=,ppid=,command="
+      ],
+      "matching_processes": 0,
+      "stdout_sha256": "c154f80782571ffbcaecd2c8edc1d8f36a2ca641a101b02695a5ca219157492c"
+    },
+    "ready": true
+  },
+  "schema": 1,
+  "scope": "Recorded local captures, including failures; no full M2, public API, release platform, or performance completion claim",
+  "selected_directories": [
+    "target/m2/stage64-capture-preparation-01",
+    "target/m2/stage64-capture-preparation-02",
+    "target/m2/stage64-native-build-01",
+    "target/m2/stage64-native-acquisition-01",
+    "target/m2/stage64-bytes-native-regression-launch-01",
+    "target/m2/stage64-duration-native-regression-launch-01",
+    "target/m2/stage64-data-size-native-regression-01",
+    "target/m2/stage64-platform-validation-01",
+    "target/m2/stage64-comparison-validation-01",
+    "target/m2/stage64-original-selection-01",
+    "target/m2/stage64-original-selection-02",
+    "target/m2/stage64-original-selection-03",
+    "target/m2/stage64-original-amendment-prep-01",
+    "target/m2/stage64-original-amendment-prep-02",
+    "target/m2/stage64-original-amendment-prep-03",
+    "target/m2/stage64-original-amendment-launch-01",
+    "target/m2/stage64-original-amendment-launch-02",
+    "target/m2/stage64-original-amendment-launch-03",
+    "target/m2/stage64-original-amendment-launch-04"
+  ],
+  "source_before_after": {
+    "file_set_after_sha256": "e742716f0c84c977718428518713c6acc14eee2d60e03857be256883bb521a35",
+    "file_set_before_sha256": "e742716f0c84c977718428518713c6acc14eee2d60e03857be256883bb521a35",
+    "stable": true
+  }
+}

@@ -322,6 +322,11 @@ impl Vm {
             Value::String(_) => "String",
             Value::Object(_) if self.is_list(receiver) => "List",
             Value::Object(_) if self.is_set(receiver) => "Set",
+            Value::Object(id)
+                if self.heap.get(*id)?.collection_kind == crate::heap::CollectionKind::Listing =>
+            {
+                "Listing"
+            }
             _ => return Ok(false),
         };
         if method
