@@ -15,6 +15,7 @@ import m2_manifest as contract
 import m2_module_eval
 import m2_jvm_classpath
 import m2_source_inputs
+import m2_workspace
 import compat
 import oracle
 
@@ -199,7 +200,8 @@ def selected_cases(manifest, adapters=None):
 
 
 def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
-            module_candidate=None, module_workspace=None, classpath_candidate=None, classpath_workspace=None):
+            module_candidate=None, module_workspace=None, classpath_candidate=None, classpath_workspace=None,
+            module_workspace_profile=m2_workspace.DEFAULT_PROFILE):
     validate_workers(workers)
     manifest = contract.current_manifest()
     selected = selected_cases(manifest, adapters)
@@ -208,6 +210,10 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
     scalars = [row for row in selected if row['adapter'] == 'language-api-string']
     modules = [row for row in selected if row['adapter'] == m2_module_eval.ADAPTER]
     classpath = [row for row in selected if row['adapter'] == m2_jvm_classpath.ADAPTER]
+    if module_workspace_profile not in m2_workspace.PROFILES:
+        raise ValueError('unknown module workspace profile')
+    if not modules and module_workspace_profile != m2_workspace.DEFAULT_PROFILE:
+        raise ValueError('module workspace profile supplied for an unselected adapter')
     if (candidate is not None and not scalars) or ((module_candidate is not None or module_workspace is not None) and not modules):
         raise ValueError('candidate/workspace supplied for an unselected adapter')
     if (classpath_candidate is not None or classpath_workspace is not None) and not classpath:
@@ -267,24 +273,29 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
         results += acquire_cases(scalars, output, metadata, artifacts / 'language_probe', workers)
     module_context = None
     if modules:
+        corpus = contract.load(Path('compatibility/corpus.json'))
+        workspace_profile = m2_workspace.profile_record(module_workspace_profile, corpus, modules)
         workspace = module_workspace or output.with_name(output.name + '-workspace')
         compat.validate_paths(ROOT, workspace, output)
         if not workspace.exists():
-            compat.prepare_workspace(ROOT, workspace)
+            m2_workspace.prepare(ROOT, workspace, workspace_profile)
         else:
-            expected = dict(schema_version=1, repository=str(ROOT.resolve()), workspace=str(workspace.resolve()))
+            expected = m2_workspace.workspace_identity(ROOT, workspace, workspace_profile)
             if not (workspace / compat.MARKER).is_file() or compat.read_json(workspace / compat.MARKER) != expected:
-                raise ValueError('module-eval workspace is not owned by this checkout')
-        corpus = contract.load(Path('compatibility/corpus.json'))
+                raise ValueError('module-eval workspace ownership or profile differs')
         original_manifest = dict(sources=corpus['sources'], cases=[case['upstream_case'] for case in modules])
         verified_inputs = compat.validate_inputs(ROOT, original_manifest, workspace)
         (output / 'module-inputs.json').write_bytes(contract.encoded(verified_inputs))
         baseline = compat.snapshot(workspace)
         m2_module_eval.validate_resource_set(baseline, corpus['sources'])
+        m2_workspace.validate_baseline(baseline, corpus, workspace_profile)
         (output / 'module-workspace.json').write_bytes(contract.encoded(baseline))
+        (output / 'module-workspace-profile.json').write_bytes(contract.encoded(workspace_profile))
         module_context = dict(workspace=str(workspace), workers=1, watchdog_seconds=m2_module_eval.CAPTURE_TIMEOUT_SECONDS,
                               baseline_sha256=oracle.sha256(output / 'module-workspace.json'),
-                              input_validation_sha256=oracle.sha256(output / 'module-inputs.json'))
+                              input_validation_sha256=oracle.sha256(output / 'module-inputs.json'),
+                              workspace_profile=module_workspace_profile,
+                              workspace_profile_sha256=oracle.sha256(output / 'module-workspace-profile.json'))
         for case in modules:
             if compat.snapshot(workspace) != baseline:
                 raise ValueError('module-eval shared workspace changed before acquisition')
@@ -312,7 +323,7 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
     results = [by_id[row['id']] for row in selected]
     relation_manifest = dict(manifest, cases=scalars)
     relations = check_relations(relation_manifest, output)
-    report = dict(schema_version=4 if classpath else 3, scope=manifest['comparison_boundary'],
+    report = dict(schema_version=5 if modules else 4 if classpath else 3, scope=manifest['comparison_boundary'],
                   module_scope=manifest.get('module_comparison_boundary'),
                   inventory_counts=manifest['counts'], selected_count=len(selected),
                   selection=selection,
@@ -425,9 +436,16 @@ def check_report(directory: Path):
         raise ValueError('empty executable adapter selection')
     has_modules = any(row['adapter'] == m2_module_eval.ADAPTER for row in selected.values())
     has_classpath = any(row['adapter'] == m2_jvm_classpath.ADAPTER for row in selected.values())
-    if has_modules and (type(report.get('schema_version')) is not int or report['schema_version'] not in (3, 4)):
+    if not has_modules and (report.get('module_eval') is not None
+                            or (directory / 'module-workspace-profile.json').exists()
+                            or report.get('schema_version') == 5):
+        raise ValueError('unselected module workspace context or profile')
+    if has_modules and (type(report.get('schema_version')) is not int or report['schema_version'] not in (3, 4, 5)):
         raise ValueError('module-eval requires the current report schema')
-    if has_classpath and report.get('schema_version') != 4:
+    if (has_modules and 'tools/m2_workspace.py' in report['source_sha256']
+            and report.get('schema_version') != 5):
+        raise ValueError('captured workspace-profile tooling requires report schema 5')
+    if has_classpath and report.get('schema_version') not in (4, 5):
         raise ValueError('JVM-classpath requires the bound child report schema')
     if report.get('schema_version', 2) >= 3:
         selection = report.get('selection')
@@ -472,8 +490,23 @@ def check_report(directory: Path):
                 or oracle.sha256(directory / 'module-workspace.json') != context['baseline_sha256']
                 or oracle.sha256(directory / 'module-inputs.json') != context['input_validation_sha256']):
             raise ValueError('module-eval staged input provenance differs')
-        corpus = json.loads((directory / 'sources/compatibility/corpus.json').read_bytes())
-        m2_module_eval.validate_resource_set(json.loads((directory / 'module-workspace.json').read_bytes()), corpus['sources'])
+        corpus_path = directory / 'sources/compatibility/corpus.json'
+        if (report['schema_version'] == 5
+                and oracle.sha256(corpus_path) != manifest.get('sources', {}).get('compatibility/corpus.json')):
+            raise ValueError('module-eval corpus differs from the authoritative manifest pin')
+        corpus = json.loads(corpus_path.read_bytes())
+        baseline = json.loads((directory / 'module-workspace.json').read_bytes())
+        m2_module_eval.validate_resource_set(baseline, corpus['sources'])
+        if report['schema_version'] == 5:
+            profile = m2_workspace.profile_record(context.get('workspace_profile'), corpus,
+                [case for case in selected.values() if case['adapter'] == m2_module_eval.ADAPTER])
+            profile_path = directory / 'module-workspace-profile.json'
+            if (profile_path.read_bytes() != contract.encoded(profile)
+                    or oracle.sha256(profile_path) != context.get('workspace_profile_sha256')):
+                raise ValueError('module-eval workspace profile provenance differs')
+            m2_workspace.validate_baseline(baseline, corpus, profile)
+        elif any(name in context for name in ('workspace_profile', 'workspace_profile_sha256')):
+            raise ValueError('workspace profile requires report schema 5')
         declared = {resource['path']: resource['sha256'] for source in corpus['sources'] for resource in source['resources']}
         for case in selected.values():
             if case['adapter'] == m2_module_eval.ADAPTER:
@@ -645,6 +678,8 @@ def main():
                         help='explicit focused acquisition; omitted adapters remain required in the full gate')
     parser.add_argument('--module-candidate', type=Path, help='override module-eval build; source binding remains unverified')
     parser.add_argument('--module-workspace', type=Path, help='exclusive managed physical workspace shared by Java and module candidate')
+    parser.add_argument('--module-workspace-profile', choices=m2_workspace.PROFILES,
+                        help='explicit filesystem profile; default preserves legacy project-fixture copying')
     parser.add_argument('--classpath-candidate', type=Path, help='override the JVM-profile native artifact; parent binding remains unverified')
     parser.add_argument('--classpath-workspace', type=Path, help='fresh JVM-profile workspace outside the parent evidence directory')
     parser.add_argument('--workers', type=worker_argument, default=1,
@@ -654,7 +689,7 @@ def main():
         parser.error('--record-only requires --output')
     if args.workers != 1 and not args.output:
         parser.error('--workers requires --output')
-    if (args.adapter or args.module_candidate or args.module_workspace or args.classpath_candidate or args.classpath_workspace) and not args.output:
+    if (args.adapter or args.module_candidate or args.module_workspace or args.module_workspace_profile or args.classpath_candidate or args.classpath_workspace) and not args.output:
         parser.error('adapter/module acquisition settings require --output')
     extra = {}
     if args.adapter is not None:
@@ -663,6 +698,8 @@ def main():
         extra['module_candidate'] = args.module_candidate.resolve()
     if args.module_workspace is not None:
         extra['module_workspace'] = args.module_workspace.absolute()
+    if args.module_workspace_profile is not None:
+        extra['module_workspace_profile'] = args.module_workspace_profile
     if args.classpath_candidate is not None:
         extra['classpath_candidate'] = args.classpath_candidate.resolve()
     if args.classpath_workspace is not None:

@@ -184,11 +184,14 @@ def validate_resource(root: Path, staged: Path, resource: dict, verified: dict) 
     verified[relative] = resource["sha256"]
 
 
-def prepare_workspace(root: Path, workspace: Path) -> None:
+def prepare_workspace(root: Path, workspace: Path, *, include_project_fixtures: bool = True,
+                      workspace_profile: dict | None = None) -> None:
     """Recreate only an empty or explicitly owned generated workspace below target."""
     validate_paths(root, workspace)
     workspace = workspace.resolve()
     identity = {"schema_version": 1, "repository": str(root.resolve()), "workspace": str(workspace)}
+    if workspace_profile is not None:
+        identity["workspace_profile"] = workspace_profile
     if workspace.exists() and any(workspace.iterdir()):
         if not (workspace / MARKER).is_file() or read_json(workspace / MARKER) != identity:
             raise ValueError("Refusing to replace an unowned nonempty workspace; choose a new path")
@@ -208,7 +211,7 @@ def prepare_workspace(root: Path, workspace: Path) -> None:
             else:
                 shutil.copy2(src, dst)
     fixtures = root / "tests/fixtures"
-    if fixtures.exists():
+    if include_project_fixtures and fixtures.exists():
         for path in fixtures.rglob("*"):
             if path.is_symlink():
                 contained(root, path.relative_to(root).as_posix())

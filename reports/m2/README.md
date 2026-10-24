@@ -1,5 +1,23 @@
 # M2 language evidence
 
+The [Stage52 tooling checkpoint](stage52-tooling-checkpoint.json) admits all
+752 previously unconnected original-ready snippets. The generated module registry
+contains all 888 original-ready cases and the preserved blocked `import1b` record.
+Every original case ID, order, argument, input, resource and expected outcome is
+preserved. The whole inventory now has 4,416 ready rows, 71 unimplemented rows and
+40 unmapped rows. Readiness is execution connectivity, not compatibility.
+
+An explicit original-module workspace retains the complete pinned Pkl and Pantry
+trees while omitting unrelated project fixture copies. Schema-5 reports bind this
+filesystem boundary to the authoritative corpus digest. Capture exceptions retain
+their raw evidence and attempt workspace restoration. The default workspace is
+unchanged. Local validation passed 184 Python tests and all nine recorded commands
+with 3,955 inputs unchanged. [Raw evidence](stage52-tooling-evidence.tar.gz) includes
+the audits, source snapshots, failed setup/inspection records and actual checks.
+Rust evaluator code is unchanged. The all-original Java/Rust acquisition follows
+this tooling checkpoint; no new language passes, whole M2, platform or performance
+completion are claimed here.
+
 ### Stage51 strict collection transforms and callback lifecycles
 
 The [implementation checkpoint](stage51-implementation-checkpoint.json) records a bounded local candidate04 result for the shared Rust engine. It adds eleven transforms: List and Set `map`, `mapIndexed`, `mapNonNull`, and `mapNonNullIndexed`, plus Map `map`, `mapKeys`, and `mapValues`. Supporting conversion/projection paths, `Null(default)` and function diagnostics, partial Duration values and reference identity, weak canonical empty strict collections, and explicit receiver selection were also corrected. Callback order, lazy Map value reads, hashing/insertion, Host suspension/reentry and GC use shared execution paths. Duration arithmetic/conversions, DataSize, general lazy collections and the remaining standard library are still incomplete.

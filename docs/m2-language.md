@@ -22,6 +22,12 @@ source path. The frontend-only API retains its unsupported output boundary;
 portable comparisons select actual output separately with `output-bytes`.
 Original setup-dependent cases remain incomplete when the observed Java outcome
 does not satisfy the original expected exit status, even if raw channels agree.
+The generated original-module registry includes all 888 original-ready snippets;
+registration does not establish that they execute successfully. The explicit
+`upstream-original-modules-v1` workspace profile retains complete pinned reference
+trees while omitting unrelated project fixtures. Its filesystem boundary and
+source inventory digests are recorded in schema-5 evidence, separately from
+historical acquisitions using the default workspace.
 
 The [original JVM-classpath profile](m2-jvm-classpath.md) separately compares the
 unchanged `basic/import1b.pkl` input through the upstream JVM API/classloader
@@ -59,6 +65,7 @@ implementations to selected cases. Every entry remains partial and records its
 remaining scope.
 
 ```sh
+python3 tools/m2_module_eval.py --check
 python3 tools/m2_manifest.py --check
 python3 tools/m2_identifier_tables.py --output target/m2/identifiers-new
 python3 tools/m2_unicode_escape_tables.py --output target/m2/unicode-escapes-new

@@ -1,12 +1,35 @@
 """Exact original module-eval process contracts; no renderer or golden replay."""
+import argparse
 from pathlib import Path
 import json
+import sys
 
 import compat
 import oracle
 
 ADAPTER = 'language-module-eval'
 CAPTURE_TIMEOUT_SECONDS = 60
+ROOT = Path(__file__).resolve().parents[1]
+REGISTRY = Path('compatibility/m2-module-eval.json')
+# Retain the original CLI record without promoting its unresolved fixture setup.
+# The separate reviewed JVM execution profile owns this case's ready execution.
+PRESERVED_BLOCKED_IDS = frozenset({
+    'pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl',
+})
+
+
+def build_registry(corpus):
+    """Admit every original-ready language snippet, never a semantic selection."""
+    cases = [case for case in corpus['cases'] if case['suite'] == 'language-snippet'
+             and (case['execution']['status'] == 'ready' or case['id'] in PRESERVED_BLOCKED_IDS)]
+    return dict(schema_version=1, adapter=ADAPTER, baseline=corpus['baseline'],
+                scope='Every original-ready upstream language snippet in corpus order, plus the '
+                      'preserved blocked import1b CLI record. Entries authenticate unchanged original '
+                      'commands, cwd, environment, resources, output and expected exit contracts. '
+                      'Registration permits execution attempts; it establishes no semantic pass or '
+                      'requirement mapping and does not fulfill blocked fixture prerequisites.',
+                cases=[dict(id=case['id'], input_sha256=case['source']['sha256'],
+                            upstream_case_sha256=compat.digest(compat.encoded(case))) for case in cases])
 
 
 def registry_cases(root, corpus, registry):
@@ -18,7 +41,10 @@ def registry_cases(root, corpus, registry):
             or not isinstance(registry['cases'], list) or not registry['cases']):
         raise ValueError('invalid original module-eval adapter registry')
     originals = {case['id']: case for case in corpus['cases']}
+    if len(originals) != len(corpus['cases']):
+        raise ValueError('duplicate original corpus case')
     found = {}
+    checked = {}
     for entry in registry['cases']:
         if not isinstance(entry, dict) or set(entry) != {'id', 'input_sha256', 'upstream_case_sha256'}:
             raise ValueError('invalid module-eval registry entry')
@@ -35,7 +61,11 @@ def registry_cases(root, corpus, registry):
         path = root / 'external/pkl' / case['source']['path']
         if oracle.sha256(path) != entry['input_sha256']:
             raise ValueError('original module-eval source changed: ' + identifier)
+        for resource in case['resources']:
+            compat.validate_resource(root, root, resource, checked)
         found[identifier] = entry
+    if registry != build_registry(corpus):
+        raise ValueError('original module-eval coverage/order is stale; regenerate with tools/m2_module_eval.py')
     return found
 
 
@@ -81,20 +111,103 @@ def validate_staged_case(root, workspace, case):
 
 def capture_process(root, workspace, case, prefix, environment, directory, timeout=CAPTURE_TIMEOUT_SECONDS):
     """A fresh process, original argv/cwd/env, and complete filesystem changes."""
+    if (directory / 'acquisition-failure.json').exists():
+        raise ValueError('failed module-eval acquisition requires a new output directory')
     original = case['upstream_case']
     validate_staged_case(root, workspace, case)
     command, process_environment, generated, recorded_environment = compat.case_execution(
         original, prefix, environment, workspace)
     cwd = compat.contained(workspace, original['cwd'])
     before = compat.snapshot(workspace)
+    captured = capture_error = restoration_error = None
     try:
         captured = compat.capture(command, cwd, process_environment, timeout, generated)
     except compat.CaptureTimeout as error:
         captured = error.result
-    after = compat.snapshot(workspace)
-    changes, secondary = compat.restore_changes(root, workspace, before, after)
-    if compat.snapshot(workspace) != before:
-        raise ValueError('module-eval workspace could not be restored')
+    except BaseException as error:
+        # Restoration also applies to interrupted or failed acquisition. A
+        # failed process launch is never a comparable language observation.
+        capture_error = error
+    after = None
+    changes, secondary, retained = {}, {}, {}
+    retention_errors = []
+    try:
+        after = compat.snapshot(workspace)
+        changes = {name: dict(before=before.get(name), after=after.get(name))
+                   for name in sorted(before.keys() | after.keys()) if before.get(name) != after.get(name)}
+        # restore_changes may fail after deleting some changed files. Retain
+        # their original bytes before cleanup so that failure is reviewable.
+        for name, change in changes.items():
+            if change['after'] is not None and change['after']['kind'] != 'directory':
+                try:
+                    retained[f'workspace/{name}'] = compat.resource_bytes(compat.relative_path(workspace, name))
+                except Exception as error:
+                    retention_errors.append(f'{name}: {type(error).__name__}: {error}')
+        changes, secondary = compat.restore_changes(root, workspace, before, after)
+        if compat.snapshot(workspace) != before:
+            raise ValueError('module-eval workspace could not be restored')
+    except BaseException as error:
+        restoration_error = error
+    if capture_error is not None or restoration_error is not None:
+        import traceback
+
+        def failure(error):
+            if error is None:
+                return None
+            return dict(type=f'{type(error).__module__}.{type(error).__qualname__}',
+                        message=str(error), representation=repr(error),
+                        traceback=''.join(traceback.format_exception(error)))
+
+        primary = capture_error if capture_error is not None else restoration_error
+        record = dict(schema_version=1, status='acquisition-failure', case_id=case['id'],
+                      command=command, cwd=str(cwd), environment=recorded_environment,
+                      source_uri=(workspace / case['input']).as_uri(),
+                      upstream_case_sha256=compat.digest(compat.encoded(original)),
+                      watchdog_seconds=timeout, capture_error=failure(capture_error),
+                      restoration_error=failure(restoration_error),
+                      workspace_restored=restoration_error is None,
+                      workspace_before_sha256=compat.digest(compat.encoded(before)),
+                      workspace_after_sha256=None if after is None else compat.digest(compat.encoded(after)),
+                      workspace_changes=changes, capture_result_available=captured is not None,
+                      raw_channels={}, files_sha256={}, retention_errors=retention_errors)
+        try:
+            directory.mkdir(parents=True, exist_ok=True)
+            # Write the failure identity before attempting any optional payload
+            # retention; an unreadable payload must not erase the failed attempt.
+            compat.write_json(directory / 'acquisition-failure.json', record)
+            for channel in ('stdout', 'stderr'):
+                data = captured.get(channel) if captured is not None else getattr(capture_error, channel, None)
+                if channel == 'stdout' and data is None:
+                    data = getattr(capture_error, 'output', None)
+                record['raw_channels'][channel] = None
+                if isinstance(data, bytes):
+                    path = directory / f'failure-{channel}.bin'
+                    path.write_bytes(data)
+                    record['raw_channels'][channel] = dict(path=path.name, sha256=compat.digest(data))
+            if captured is not None:
+                record['process'] = {key: captured[key] for key in ('exit_code', 'timed_out', 'elapsed_ns')}
+                retained.update({f'generated/{name}': data for name, data in captured['files'].items()})
+            else:
+                try:
+                    retained.update({f'generated/{name}': data for name, data in compat.output_files(generated).items()})
+                except Exception as error:
+                    retention_errors.append(f'generated files: {type(error).__name__}: {error}')
+            try:
+                private = compat.output_files(workspace / '.state' / compat.case_directory(case['id']))
+                retained.update({f'private-state/{name}': data for name, data in private.items()})
+            except Exception as error:
+                retention_errors.append(f'private state: {type(error).__name__}: {error}')
+            for name, data in retained.items():
+                path = compat.contained(directory / 'failure-files', name)
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(data)
+                record['files_sha256'][name] = compat.digest(data)
+            compat.write_json(directory / 'acquisition-failure.json', record)
+        except BaseException as error:
+            primary.add_note(f'Could not retain module-eval acquisition failure evidence: {error!r}')
+        if capture_error is not None and restoration_error is not None:
+            capture_error.add_note(f'Module-eval workspace restoration also failed: {restoration_error!r}')
+        raise primary
     captured['files'] = {**{f'generated/{name}': data for name, data in captured['files'].items()}, **secondary}
     captured['workspace_changes'] = changes
     stored = compat.store_capture(directory, captured)
@@ -227,3 +340,27 @@ def verify_case(root, workspace, case, row, output, metadata, binary, baseline):
             ('upstream_expected_exit_match', not row['java']['timed_out'] and row['java']['exit_code'] in original['expected_exit'])]:
         if field in row and row[field] is not expected:
             raise ValueError('module-eval raw/contract match metadata changed')
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--check', action='store_true',
+                        help='check complete original-ready admission and fixture integrity, not compatibility')
+    args = parser.parse_args()
+    corpus = json.loads((ROOT / 'compatibility/corpus.json').read_bytes())
+    registry = json.loads((ROOT / REGISTRY).read_bytes()) if args.check else build_registry(corpus)
+    entries = registry_cases(ROOT, corpus, registry)
+    if not args.check:
+        (ROOT / REGISTRY).write_bytes(compat.encoded(registry))
+    print(json.dumps(dict(registered=len(entries),
+                          original_ready=sum(case['id'] in entries and case['execution']['status'] == 'ready'
+                                             for case in corpus['cases'])), sort_keys=True))
+    return 0
+
+
+if __name__ == '__main__':
+    try:
+        sys.exit(main())
+    except (OSError, ValueError, KeyError) as error:
+        print(f'Module-eval registry error: {error}', file=sys.stderr)
+        sys.exit(1)

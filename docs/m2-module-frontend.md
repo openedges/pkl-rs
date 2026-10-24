@@ -15,18 +15,36 @@ those dependencies and all unexecuted language cases.
 
 ## Original inputs and process comparisons
 
-`compatibility/m2-module-eval.json` registers reviewed original upstream case IDs.
+`compatibility/m2-module-eval.json` registers original upstream case IDs.
 Each entry binds both the input bytes and the complete original corpus case,
 including its arguments, working directory, environment, and resources. The
-registry selects the original 72 frontend error cases, 30 output/loading
-cases, and 35 additional module cases. Together these include all 41 original
-`input/modules` cases without changing the previous 102 entries. Registration
+registry now includes all 888 original language snippets whose original execution
+prerequisites are ready, plus the preserved blocked `basic/import1b` record.
+The 137 earlier registrations retain their complete input and case identities;
+the generated registry uses original corpus order. The 752 added registrations
+do not change any original case, input, argument, environment, requirement or
+expected outcome. Registration
 means the comparison can be attempted; it does not mean
 the candidate passes or that its original execution prerequisites are fulfilled.
 The JVM-classpath-dependent `basic/import1b` case remains blocked in the original
 corpus. A matching CLI failure cannot satisfy its expected successful outcome.
 Reports retain raw channel equality separately from that original expectation;
 an unmet expectation is `oracle-contract-mismatch`, even if both processes agree.
+
+Regenerate or verify the complete registry with:
+
+```sh
+python3 tools/m2_module_eval.py
+python3 tools/m2_module_eval.py --check
+python3 tools/m2_manifest.py
+python3 tools/m2_manifest.py --check
+```
+
+The check rejects omitted ready originals, changed case/input hashes, missing
+declared resources, and unreviewed blocked registrations. The 68 other blocked
+originals, three selected historical regressions and 40 unmapped accounting rows
+retain their obligations. Readiness and execution coverage are distinct from
+raw compatibility results and semantic requirement coverage.
 
 `tools/m2_language.py` acquires both the scalar expression adapter and the
 original module adapter by default. A focused acquisition can select either
@@ -56,6 +74,40 @@ baseline and input. Host-private home and temporary files are retained separatel
 as provenance. They are outside the original public generated-files comparison.
 Unexpected public workspace writes are failed observations and are restored
 before the next process.
+
+If acquisition or restoration raises an exception, the tool retains an
+`acquisition-failure.json` record, available raw channels and changed-file bytes.
+It attempts restoration even after a failed launch or interruption. A restoration
+failure is recorded separately without replacing the original capture exception.
+Such an attempt does not produce a passing comparison and requires a new output
+directory before retrying.
+
+## Explicit original-corpus workspace
+
+The default `legacy-full` workspace still copies both complete pinned reference
+trees and the project's local `tests/fixtures` tree. A broad original-module
+experiment can explicitly select a smaller filesystem boundary:
+
+```sh
+python3 tools/m2_language.py --adapter language-module-eval --module-workspace-profile upstream-original-modules-v1 --output target/m2/upstream-modules-new --record-only
+```
+
+This profile retains every declared file and symlink in the complete pinned
+Pkl and Pantry trees. It omits only the additional project-owned fixture copy;
+every selected original input and declared resource must remain inside the
+retained inventories. Original arguments, working directories, environment,
+source paths, raw output/error/file comparisons and process watchdogs are
+unchanged. The profile is an explicit experimental filesystem condition, not a
+claim of equivalent results under every possible surrounding directory tree or
+of improved evaluator speed or memory use.
+
+The workspace marker and schema-5 report bind the selected profile and source
+inventory digests. Offline verification requires the exact retained baseline,
+including directory paths and symlink identities, and rejects missing or extra
+files. An existing workspace with a different profile cannot be reused. Each
+Java and Rust capture still hashes the complete selected workspace before and
+after execution; no timestamp cache replaces byte checks. Historical reports
+retain their original workspace boundary and results.
 
 The shared argument parser accepts the selected `eval` profile with `--no-cache`,
 `--no-project`, `--settings pkl:settings`, ordered `--property` and `--env-var`

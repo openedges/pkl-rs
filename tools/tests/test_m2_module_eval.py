@@ -23,7 +23,11 @@ class RegistryTests(unittest.TestCase):
         corpus = m2_manifest.load(Path('compatibility/corpus.json'))
         registry = m2_manifest.load(m2_manifest.MODULE_ADAPTERS)
         valid = module.registry_cases(root, corpus, registry)
-        self.assertEqual(len(valid), 137)
+        expected_ids = [case['id'] for case in corpus['cases']
+                        if case['suite'] == 'language-snippet' and (
+                            case['execution']['status'] == 'ready'
+                            or case['id'] in module.PRESERVED_BLOCKED_IDS)]
+        self.assertEqual(list(valid), expected_ids)
         module_cases = {case['id'] for case in corpus['cases']
                         if case['suite'] == 'language-snippet' and case['source']['path'].startswith(
                             'pkl-core/src/test/files/LanguageSnippetTests/input/modules/')}
@@ -58,9 +62,10 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(case['execution'], dict(state='ready', reason=None))
         self.assertNotIn(case, m2_language.selected_cases(manifest, [module.ADAPTER]))
         self.assertIn(case, m2_language.selected_cases(manifest, [jvm.ADAPTER]))
-        self.assertEqual(manifest['counts']['cases_by_execution'], dict(ready=3664, unimplemented=823, unmapped=40))
         selected = m2_language.selected_cases(manifest)
-        self.assertEqual(len(selected), 3664)
+        self.assertEqual(len(selected), manifest['counts']['cases_by_execution']['ready'])
+        self.assertEqual(manifest['counts']['cases_by_execution']['unimplemented'], 68 + 3)
+        self.assertEqual(manifest['counts']['cases_by_execution']['unmapped'], 40)
         # The explicit profile still requires actual successful execution.
         self.assertIn('required case incomplete: ' + identifier,
                       m2_manifest.full_gate_failures(manifest, []))
@@ -70,6 +75,75 @@ class RegistryTests(unittest.TestCase):
         next(row for row in forged['cases'] if row['id'] == identifier)['adapter'] = module.ADAPTER
         with self.assertRaisesRegex(ValueError, 'original JVM execution profile contract differs'):
             m2_manifest.validate_manifest(forged)
+
+
+class RegistryGenerationTests(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        source = self.root / 'external/pkl/input.pkl'
+        source.parent.mkdir(parents=True)
+        source.write_bytes(b'value = 42\n')
+        resource = self.root / 'external/pkl/fixture.bin'
+        resource.write_bytes(b'raw fixture\x00\xff')
+        case = dict(id='original:ready', suite='language-snippet',
+                    execution=dict(status='ready', reason=None),
+                    source=dict(path='input.pkl', sha256=compat.digest(source.read_bytes())),
+                    command=['eval', '--settings', 'pkl:settings', 'external/pkl/input.pkl'],
+                    cwd='.', environment={'LANG': 'C.UTF-8'}, expected_exit=[0],
+                    output=None, resources=[dict(path='external/pkl/fixture.bin',
+                                                sha256=compat.digest(resource.read_bytes()))])
+        blocked = copy.deepcopy(case)
+        blocked.update(id='original:unresolved-fixture',
+                       execution=dict(status='blocked', reason='Missing fixture adapter'))
+        historical = copy.deepcopy(blocked)
+        historical['id'] = next(iter(module.PRESERVED_BLOCKED_IDS))
+        self.corpus = dict(baseline='0.32.0', cases=[blocked, case, historical])
+        self.registry = module.build_registry(self.corpus)
+
+    def test_exhaustive_admission_retains_corpus_order_and_blocked_prerequisites(self):
+        self.assertEqual(list(module.registry_cases(self.root, self.corpus, self.registry)),
+                         ['original:ready', next(iter(module.PRESERVED_BLOCKED_IDS))])
+        blocked, ready, historical = self.corpus['cases']
+        self.assertEqual(module.execution_state(ready, True), dict(state='ready', reason=None))
+        for original in (blocked, historical):
+            self.assertEqual(module.execution_state(original, True),
+                             dict(state='unimplemented', reason='Missing fixture adapter'))
+        self.assertEqual(self.registry, module.build_registry(self.corpus))
+
+    def test_dropped_reordered_or_extra_blocked_entries_cannot_hide_coverage(self):
+        for change in ('drop', 'reorder', 'blocked'):
+            registry = copy.deepcopy(self.registry)
+            if change == 'drop': registry['cases'].pop(0)
+            elif change == 'reorder': registry['cases'].reverse()
+            else:
+                blocked = self.corpus['cases'][0]
+                registry['cases'].append(dict(id=blocked['id'], input_sha256=blocked['source']['sha256'],
+                                             upstream_case_sha256=compat.digest(compat.encoded(blocked))))
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, 'coverage/order'):
+                module.registry_cases(self.root, self.corpus, registry)
+
+    def test_missing_or_changed_original_input_and_declared_fixture_are_rejected(self):
+        for relative in ('external/pkl/input.pkl', 'external/pkl/fixture.bin'):
+            path = self.root / relative
+            original = path.read_bytes()
+            for mutation in ('missing', 'changed'):
+                if mutation == 'missing': path.unlink()
+                else: path.write_bytes(original + b'changed')
+                with self.subTest(relative=relative, mutation=mutation), self.assertRaises((OSError, ValueError)):
+                    module.registry_cases(self.root, self.corpus, self.registry)
+                path.write_bytes(original)
+
+    def test_complete_original_contract_is_authenticated_including_output(self):
+        for key, value in [('command', ['eval', '--test-mode', 'external/pkl/input.pkl']),
+                           ('cwd', 'external/pkl'), ('environment', {'LANG': 'C'}),
+                           ('expected_exit', [1]), ('resources', []),
+                           ('output', dict(kind='multiple', path='generated'))]:
+            corpus = copy.deepcopy(self.corpus)
+            corpus['cases'][1][key] = value
+            with self.subTest(key=key), self.assertRaisesRegex(ValueError, 'contract changed'):
+                module.registry_cases(self.root, corpus, self.registry)
 
 
 class ModuleExecutionTests(unittest.TestCase):

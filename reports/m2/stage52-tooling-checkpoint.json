@@ -1,0 +1,244 @@
+{
+  "schema": 1,
+  "scope": "Stage52 original-corpus admission and capture tooling checkpoint; not runtime or language compatibility completion.",
+  "baseCommit": "ea2cab56b171e865fb1b9cde30066c6d7eedd10c",
+  "rustImplementationChanged": false,
+  "admissions": {
+    "addedOriginalReadyCases": 752,
+    "originalReadyModuleCases": 888,
+    "registryEntries": 889,
+    "preservedExistingRegistryRecords": 137,
+    "inventoryCases": 4527,
+    "requirements": 475,
+    "originalCaseIdsAndOrderPreserved": true,
+    "originalContractsPreserved": true,
+    "caseFieldsChanged": [
+      "adapter",
+      "execution"
+    ]
+  },
+  "inventoryCounts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 4416,
+      "unimplemented": 71,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "remaining": {
+    "blockedOriginals": 68,
+    "selectedHistoricalRegressions": 3,
+    "unmappedRows": 40
+  },
+  "workspace": {
+    "default": "legacy-full",
+    "explicitProfile": "upstream-original-modules-v1",
+    "schemaVersion": 5,
+    "completePinnedReferenceResources": 5584,
+    "declaredInputAndResourcePaths": 1770,
+    "omitted": "Only the additional project-owned tests/fixtures copy.",
+    "qualification": "An explicit experimental filesystem condition. No equivalence with arbitrary surrounding trees, runtime speed or memory claim."
+  },
+  "captureFailureHandling": "Restoration is attempted after exceptions; primary capture failures, cleanup failures and available raw bytes are retained separately. No failed acquisition is a passing language observation.",
+  "localValidation": {
+    "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "pythonExecutable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "inputFiles": 3955,
+    "changedInputs": [],
+    "commands": [
+      {
+        "label": "m2-unit-tests",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "-W",
+          "error::ResourceWarning",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-p",
+          "test_m2_*.py",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage52",
+        "pid": 73270,
+        "exitCode": 0,
+        "startedUtc": "2026-10-24T00:42:21.071297+00:00",
+        "finishedUtc": "2026-10-24T00:44:34.714144+00:00",
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "54ea0ef5e2f9c86547212ad8c57bb899834e3b585ff84114ef47b68daffe6bfd"
+      },
+      {
+        "label": "compat-unit-tests",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "-W",
+          "error::ResourceWarning",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-p",
+          "test_compat.py",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage52",
+        "pid": 74199,
+        "exitCode": 0,
+        "startedUtc": "2026-10-24T00:44:34.716340+00:00",
+        "finishedUtc": "2026-10-24T00:44:35.488160+00:00",
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "0e5a811df18438f38aa7494f8c60fe6f407365b083fbce08bd0f615a67cac209"
+      },
+      {
+        "label": "module-registry-check",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "tools/m2_module_eval.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage52",
+        "pid": 74213,
+        "exitCode": 0,
+        "startedUtc": "2026-10-24T00:44:35.489101+00:00",
+        "finishedUtc": "2026-10-24T00:44:36.040940+00:00",
+        "stdoutSha256": "4c1d0acc701c3bab7140a1496e1877763a88b5c75c2f352ab2150f410bfb146f",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "m2-manifest-check",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage52",
+        "pid": 74217,
+        "exitCode": 0,
+        "startedUtc": "2026-10-24T00:44:36.041720+00:00",
+        "finishedUtc": "2026-10-24T00:44:40.387313+00:00",
+        "stdoutSha256": "9eb043eed64a997a50c295ceaeaf22c94a1f9b4076d0e809c793460b394260e3",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "inventory-check",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "tools/inventory.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage52",
+        "pid": 74268,
+        "exitCode": 0,
+        "startedUtc": "2026-10-24T00:44:40.388065+00:00",
+        "finishedUtc": "2026-10-24T00:44:43.416424+00:00",
+        "stdoutSha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "corpus-check",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "tools/discover.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage52",
+        "pid": 74274,
+        "exitCode": 0,
+        "startedUtc": "2026-10-24T00:44:43.417287+00:00",
+        "finishedUtc": "2026-10-24T00:44:45.079323+00:00",
+        "stdoutSha256": "728426b228f32e69b8bb35aedc6c1dad352bdf9ed1ee9287525941098f2d5850",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "regression-check",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "tools/regression_manifest.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage52",
+        "pid": 74294,
+        "exitCode": 0,
+        "startedUtc": "2026-10-24T00:44:45.080208+00:00",
+        "finishedUtc": "2026-10-24T00:44:45.166930+00:00",
+        "stdoutSha256": "217946fe72373579b8e2b9cd645c387eb49efa1a70cec4111629ce6b2b0ef460",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "smoke-check",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-B",
+          "tools/smoke_manifest.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage52",
+        "pid": 74295,
+        "exitCode": 0,
+        "startedUtc": "2026-10-24T00:44:45.167618+00:00",
+        "finishedUtc": "2026-10-24T00:44:45.237192+00:00",
+        "stdoutSha256": "f30a4f6442ba37b66127198ba7953e78937b9ce71557dda6850cbe152e13e6b9",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "reference-verification",
+        "argv": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage52",
+        "pid": 74296,
+        "exitCode": 0,
+        "startedUtc": "2026-10-24T00:44:45.237844+00:00",
+        "finishedUtc": "2026-10-24T00:44:47.649902+00:00",
+        "stdoutSha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+        "stderrSha256": "6bbc01d9bc7931fe7d78a0d197121c1c52f8fd279c8a11260659bf1380a60018"
+      }
+    ],
+    "pythonTests": {
+      "m2": 165,
+      "compatibilityTooling": 19,
+      "total": 184,
+      "failed": 0
+    },
+    "additionalRustChecks": "cargo xtask verify only; no Rust implementation or binding changes. No new full Rust/platform compatibility claim."
+  },
+  "evidence": {
+    "archive": "stage52-tooling-evidence.tar.gz",
+    "sha256": "754602cb6f18d42bafcd080b21b64d8c049e4d0ed6fa5945c378130d3d4e4777",
+    "bytes": 4548793,
+    "payloadFiles": 4030,
+    "createExitCode": 0,
+    "separateVerifyExitCode": 0,
+    "originalModes": "selection.json; tar headers use normalized mode0644 and mtime0"
+  },
+  "finalValidationTerminal": {
+    "session": 4769,
+    "exitCode": 0,
+    "chunk": "91676e"
+  },
+  "newOriginalModuleCompatibilityResults": 0,
+  "nextStep": "Freeze this commit and acquire all 888 original-ready module cases under the explicit profile; preserve every pass, mismatch, unsupported, oracle error and timeout.",
+  "fullM2Complete": false,
+  "hostedCiClaimed": false,
+  "performanceTargetClaimed": false
+}

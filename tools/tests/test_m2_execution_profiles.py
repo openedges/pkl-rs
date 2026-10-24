@@ -24,7 +24,7 @@ class ProfileMappingTests(unittest.TestCase):
         self.assertEqual(rows[0]['adapter'], jvm.ADAPTER)
         self.assertEqual(rows[0]['upstream_case']['execution']['status'], 'blocked')
         self.assertEqual(rows[0]['upstream_case']['expected_exit'], [0])
-        self.assertEqual(len(language.selected_cases(current)), 3664)
+        self.assertEqual(len(language.selected_cases(current)), current['counts']['cases_by_execution']['ready'])
         self.assertEqual(len(language.selected_cases(current, [jvm.ADAPTER])), 1)
         self.assertIn('required case incomplete: ' + jvm.CASE_ID, manifest.full_gate_failures(current, []))
         failures = manifest.full_gate_failures(current, [dict(id=jvm.CASE_ID, status='pass')])
@@ -40,7 +40,8 @@ class ProfileMappingTests(unittest.TestCase):
         self.assertEqual(len(actual), 957)
         self.assertEqual(current['counts']['cases'], 4527)
         self.assertEqual(current['counts']['requirements'], 475)
-        self.assertEqual(current['counts']['cases_by_execution'], dict(ready=3664, unimplemented=823, unmapped=40))
+        self.assertEqual(current['counts']['cases_by_execution']['unimplemented'], 68 + 3)
+        self.assertEqual(current['counts']['cases_by_execution']['unmapped'], 40)
         import m2_module_eval
         registered = m2_module_eval.registry_cases(manifest.ROOT, corpus, manifest.load(manifest.MODULE_ADAPTERS))
         for original, case in zip(originals, actual):

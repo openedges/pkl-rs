@@ -13,7 +13,7 @@ INPUTS = ('references.lock', 'compatibility/inventory.json', 'compatibility/corp
 
 def source_paths(root: Path):
     paths = set(INPUTS) | {MANIFEST, 'tools/m2_source_inputs.py', 'tools/m2_manifest.py',
-        'tools/m2_language.py', 'tools/m2_module_eval.py', 'tools/m2_jvm_classpath.py',
+        'tools/m2_language.py', 'tools/m2_module_eval.py', 'tools/m2_workspace.py', 'tools/m2_jvm_classpath.py',
         'tools/m2_execution_profiles.py', 'tools/compat.py', 'tools/m2_generate.py',
         'tools/m2_identifier_tables.py', 'tools/java/M2IdentifierProbe.java',
         'tools/m2_unicode_escape_tables.py', 'tools/java/M2UnicodeEscapeProbe.java',
