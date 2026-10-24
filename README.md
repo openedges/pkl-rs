@@ -63,9 +63,20 @@ The [DataSize checkpoint](docs/m2-data-size.md) adds shared unit conversion,
 value operations, type checks, rendering and related Bytes construction/size
 behavior. Its selected string comparisons match Java on native, N-API and
 Chromium; the unchanged basic/API DataSize programs also match. The expanded
-original selection still has eight mismatches involving Bytes, Duration,
+Stage 57 original selection still had eight mismatches involving Bytes, Duration,
 `Any.ifNonNull` and the Pkl Binary test path. Typed exports and complete standard
 library coverage remain open; see the [recorded evidence](reports/m2/README.md).
+
+The [Any.ifNonNull checkpoint](docs/m2-any-if-non-null.md) adds shared VM
+method lookup and callback behavior, including null defaults and Host lifecycle
+checks. Its independent Java fixtures and selected native comparison retain
+four mismatched Regex and IntSeq constructor executions across two repeats.
+The N-API and Chromium string comparisons also match 168 of 172 executions
+each; their integrity gates pass and strict string gates fail on those rows.
+The unchanged `api/any.pkl` original program now passes raw comparison. Across
+17 original programs, ten pass and seven still mismatch. The DataSize native,
+N-API, and Chromium string regressions each retain 510 of 510 matches.
+Typed exports, full M2, and performance requirements remain open.
 
 ## Goals
 

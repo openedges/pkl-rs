@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { runDataSizeSession } from './data-size-session.mjs';
+import { runDataSizeSession, runStringSession } from './data-size-session.mjs';
 
 const u = text => Uint16Array.from({ length: text.length }, (_, index) => text.charCodeAt(index));
 const value = text => ({ kind: 'value', value: u(text) });
@@ -133,4 +133,24 @@ test('closed heap and owned buffers are checked; malformed and duplicate query i
     assert.notEqual(result.acquisitionError, null);
     assert.equal(m.calls.length, 0);
   }
+});
+
+// The generic entrypoint emits the Java string-only contract at session close.
+test('generic string sessions preserve failure bytes and emit their own complete protocol', () => {
+  const input = { ...fixture([['nullable', 'null.ifNonNull((x) -> x)'],
+    ['missing', 'Regex("x").ifNonNull((x) -> x)']]), uri: 'file:///stage58/any-if-non-null.pkl' };
+  const m = mock([[value('null')], [failure('unsupported\r\n', 'unsupported')]]);
+  const result = runStringSession(m.api, input);
+  assert.equal(result.acquisitionError, null);
+  assert.deepEqual(result.protocol, [
+    'session-open mode=string rows=2',
+    'call-enter=string-0-nullable', 'call-exit=string-0-nullable status=success',
+    'call-enter=string-1-missing', 'call-exit=string-1-missing status=candidate-error',
+    'session-closed mode=string rows=2 public-calls=2 success=1 errors=1',
+  ]);
+  assert.equal(Buffer.from(result.protocolBytes).toString(), result.protocol.join('\n') + '\n');
+  assert.equal(decoded(result, 1, 'result.stderr.bin'), 'unsupported\r\n');
+  assert.equal(result.architecture.terminalSlots, 0);
+  assert.equal(result.architecture.terminalDepth, 0);
+  assert.equal(result.protocol.some(line => line.includes('datasize-rows')), false);
 });

@@ -4,6 +4,7 @@ use super::*;
 #[derive(Clone, Copy, Debug)]
 pub enum Operation {
     DataSize(data_size::Operation),
+    IfNonNull,
     Between,
     Uppercase,
     Contains,
@@ -123,6 +124,7 @@ pub(super) fn blocks(
         result.insert((class.into(), name.into()), block);
     }
     result.extend(data_size::blocks(blocks, metadata));
+    result.extend(any::blocks(blocks, metadata));
     result
 }
 
@@ -327,8 +329,7 @@ impl Vm {
             };
             let arity = match name {
                 "isBetween" => 2,
-                "contains" | "dropLast" | "xor" | "implies" | "toDataSize" | "toUnit"
-                | "ifNonNull" => 1,
+                "contains" | "dropLast" | "xor" | "implies" | "toDataSize" | "toUnit" => 1,
                 _ => 0,
             };
             let id = self.heap.allocate(Object {
@@ -378,6 +379,7 @@ impl Vm {
             .ok_or_else(|| invalid("primitive receiver"))?;
         match operation {
             Operation::DataSize(operation) => self.data_size_operation(receiver, operation)?,
+            Operation::IfNonNull => self.if_non_null(receiver)?,
             Operation::BooleanXor | Operation::BooleanImplies => {
                 let Value::Bool(left) = receiver else {
                     return Err(invalid("Boolean method receiver"));

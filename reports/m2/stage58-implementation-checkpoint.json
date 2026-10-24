@@ -1,0 +1,309 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "canonical": {
+    "boundary": "Seven exact UTF8/UTF16/status query channels and complete ordered protocol; Java error class remains producer metadata.",
+    "integrity_status": "passed",
+    "known_mismatch_ids": [
+      "scalar-regex",
+      "scalar-intseq"
+    ],
+    "mismatch_scope": "Each constructor-related row mismatches in both repeats on each target. The whole process protocol also differs; neither row nor protocol mismatches are normalized.",
+    "native_artifact": {
+      "bytes": 16874496,
+      "sha256": "5e35a21c81d976f80ea94d1934547b2fa7378509be4cd74cca1d7a46126ba3ba"
+    },
+    "portable_artifacts": {
+      "napi": {
+        "bytes": 4793392,
+        "sha256": "9ed0d57a80eba290311184905dddc4d9fdd4cc77514731b58b6f8c5974225d68"
+      },
+      "wasm_bg": {
+        "bytes": 3877079,
+        "sha256": "220249ae40eccaae5718428f55d1f6d4acc228ef113a0e92b38d27df1b8fac68"
+      },
+      "wasm_js": {
+        "bytes": 42154,
+        "sha256": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc"
+      }
+    },
+    "repetitions_per_target": 2,
+    "rows": 86,
+    "strict_string_status": "failed",
+    "targets": {
+      "chromium": {
+        "mismatch": 4,
+        "pass": 168
+      },
+      "napi": {
+        "mismatch": 4,
+        "pass": 168
+      },
+      "native": {
+        "mismatch": 4,
+        "pass": 168
+      }
+    }
+  },
+  "data_size_regression": {
+    "chromium": {
+      "pass": 510
+    },
+    "napi": {
+      "pass": 510
+    },
+    "native": {
+      "pass": 510
+    },
+    "repetitions_per_target": 2,
+    "rows": 255,
+    "scope": "Existing raw string boundary and full session protocol only; typed exports remain unexecuted."
+  },
+  "evidence": {
+    "closeout": {
+      "archive": {
+        "bytes": 9642362,
+        "path": "reports/m2/stage58-closeout-evidence.tar.gz",
+        "sha256": "3c890d93e9ee02a9be3a5e50000e3c22d3ec72fae6e8c2863ae4feabfcc5d535"
+      },
+      "publication": {
+        "bytes": 1165093,
+        "path": "reports/m2/stage58-closeout-publication.json",
+        "sha256": "83d1b454310e58c3fef564d98f367c6d324ae2af1857de1844911d164a82439b"
+      }
+    },
+    "native": {
+      "archive": {
+        "bytes": 8808804,
+        "path": "reports/m2/stage58-native-evidence.tar.gz",
+        "sha256": "8d3a65d7936534ec297f9d9f55055b16cdcc7e22f828412836219f01faeaa47b"
+      },
+      "publication": {
+        "bytes": 1844333,
+        "path": "reports/m2/stage58-native-publication.json",
+        "sha256": "06ba666f115955a8ec1d0ce0954c94ce4df9d5ad7748cfacc199883d00864517"
+      }
+    },
+    "platform": {
+      "archive": {
+        "bytes": 8896665,
+        "path": "reports/m2/stage58-platform-evidence.tar.gz",
+        "sha256": "9502de123f58faf07998d5453af3150e0661a41e9ca1f38dfa5f53d2919d512a"
+      },
+      "publication": {
+        "bytes": 3809326,
+        "path": "reports/m2/stage58-platform-publication.json",
+        "sha256": "1e51d9d01b2bb98e0cd46dc45aa33c88a38d0018295ae1076ee2fbdfe7468c95"
+      }
+    },
+    "validation": {
+      "archive": {
+        "bytes": 13797542,
+        "path": "reports/m2/stage58-validation-evidence.tar.gz",
+        "sha256": "33fb97a3f59b79b57f5be39a8ab69703a3cf74a590fdd48bc1ae3387232763bb"
+      },
+      "publication": {
+        "bytes": 29001,
+        "path": "reports/m2/stage58-validation-publication.json",
+        "sha256": "4cc37981553e4eb49ce56d73c5e8a76c3aade13f9c0c86e0c659afa475494b7e"
+      }
+    }
+  },
+  "full_m2_complete": false,
+  "full_public_api_comparison_passed": false,
+  "implementation": [
+    "Shared inherited Any.ifNonNull for existing Value kinds, replacing DataSize-only dispatch.",
+    "Normal method ancestry, overrides, local/super/implicit lookup and lookup-dependent const restrictions.",
+    "Eager argument/Function1 checking before null body; identical NullWithDefault return and deferred callback parameter/return checks.",
+    "Shared ordinary callback invocation, frames, error ordering, capture/GC and Host suspension lifecycle.",
+    "Shared native/JS session adapters preserve legacy DataSize and generic string protocols."
+  ],
+  "inventory": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 4416,
+      "unimplemented": 71,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "java_authority": {
+    "bytes": 8195,
+    "path": "reports/m2/stage58-java-checkpoint.json",
+    "sha256": "5e0704810d965711246faa62dfd0e4efe8244c105dfde2fc4d85c6d7e8c1bf1b"
+  },
+  "kind": "stage58-any-if-non-null-implementation-checkpoint",
+  "m1_platform_regression": {
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "oracle_passed": {
+      "browser": 6076,
+      "node": 6076,
+      "rust": 6076
+    },
+    "shared_engine_passed": 6078,
+    "source_stability": true,
+    "total": 6078
+  },
+  "original_modules": {
+    "candidate_sha256": "c89d3bbada7e011b9705275645229aff499a95ebdbb53a282525b643c92d360a",
+    "current_whole_language_verdict": false,
+    "executions_per_case": {
+      "java": 1,
+      "rust": 1
+    },
+    "integrity_status": "passed",
+    "new_match": "api/any.pkl",
+    "remaining_first_failures": {
+      "api/bytes.pkl": "Rust reports `expected an object` at the Bytes.md5 call",
+      "api/duration.pkl": "Rust reports `expected an object` at the Duration.isBetween call",
+      "basic/bytes.pkl": "Rust reports `expected an object` at the Bytes.toList call",
+      "basic/duration.pkl": "Duration addition unsupported",
+      "errors/invalidBytes4.pkl": "List.toBytes lookup differs from Java UInt8 type constraint error",
+      "pklbinary/datasize.msgpack.yaml.pkl": "module.toMap lookup before encoding",
+      "pklbinary/duration.msgpack.yaml.pkl": "module.toMap lookup before encoding"
+    },
+    "report": {
+      "bytes": 1254055,
+      "path": "target/m2/stage58-original-any-01/report.json",
+      "sha256": "9a970705e12b56f39e04e650506a16266d86cd695849c669172b62d151262d70"
+    },
+    "status_counts": {
+      "mismatch": 7,
+      "pass": 10
+    },
+    "strict_selected_status": "failed",
+    "total": 17
+  },
+  "performance_targets_achieved": false,
+  "remaining": [
+    "All nine M2 workstreams and whole-language completion gate remain open.",
+    "Regex and IntSeq constructors, Duration/Bytes operations, metadata/reflection and original corpus obligations.",
+    "Typed public exports, complete diagnostic/API/lifecycle coverage and product/release-platform obligations.",
+    "Java-compatible speed and peak-memory targets are not established."
+  ],
+  "rust_validation": {
+    "checks": [
+      {
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0,
+        "name": "references"
+      },
+      {
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "name": "format"
+      },
+      {
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "name": "clippy"
+      },
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "name": "workspace-tests"
+      },
+      {
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "name": "wasm-runtime"
+      }
+    ],
+    "host": {
+      "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+      "uname": {
+        "machine": "arm64",
+        "node": "research-macmini1.local",
+        "processor": "arm",
+        "release": "27.0.0",
+        "system": "Darwin",
+        "version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:27 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8103"
+      }
+    },
+    "ignored_scope": "Two explicit Regex/IntSeq constructor gaps plus the existing frontend probe.",
+    "report": {
+      "bytes": 5494,
+      "path": "target/m2/stage58-rust-validation-01/report.json",
+      "sha256": "aa02b212de92d396c664af0ae5f966340131d38f64c8880abb66b2d7d71a0f31"
+    },
+    "source_count": 165231,
+    "source_stable": true,
+    "test_executions": {
+      "fail": 0,
+      "ignored": 3,
+      "pass": 929
+    },
+    "toolchain": "1.98.1"
+  },
+  "schema": 1,
+  "source_binding": {
+    "base_commit": "2e3f575f1dc88b5fbbf07df84d4b4bc3ac06c3dd",
+    "gitlinks": {
+      "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+    },
+    "java_authority_commit": "c21d0d7472b5a5874d7fc05d5f2b89a6ba68f223",
+    "status": "precommit-verified-source-snapshots; actual implementation Git commit binding follows separately"
+  },
+  "supplement": {
+    "java_repetitions": 2,
+    "java_rows": 13,
+    "java_statuses_per_session": {
+      "error": 1,
+      "success": 12
+    },
+    "provenance_limit": "Supplemental Python run.py imports a helper not historically copied/hashed; Java producer/module/query/JAR/JDK/raw bytes remain bound. Complete historical Python driver closure is not claimed.",
+    "rust_regression": "All 13 exact Java payloads passed in workspace test m2_any_if_non_null_supplement.",
+    "separate_platform_supplement_comparison": "not executed; no pass claimed"
+  },
+  "tool_validation": {
+    "freshness": "M2 manifest and original registry freshness passed; only 46 implementation-link SHA values changed.",
+    "historical_failure": "Tool validation01 omitted Python -m and exited 2 before unittest execution; preserved, not counted as a pass.",
+    "javascript_tests": 17,
+    "python_provenance": "Tool validation02 ran 19 tests normally and with -O. The later native verifier closure guard and new deletion test were validated by native-checks01 (nine native tests normally and with -O). The union contains 20 tests.",
+    "unique_python_tests": 20
+  },
+  "verification_provenance": "Recorded local macOS arm64 execution, not hosted CI."
+}

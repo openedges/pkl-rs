@@ -257,6 +257,18 @@ and console errors remain distinct from operating-system process channels. Both
 native and portable full API gates remain unsuccessful while typed exports are
 unexecuted. Original upstream programs retain their own complete CLI contract.
 
+The [Any.ifNonNull contract](docs/m2-any-if-non-null.md) uses separately sealed
+86-row and 13-row Java authorities. Its native and portable verifiers compare
+exact ordered expression-string channels; `--gate integrity` checks complete
+source-bound evidence, while `--gate string` requires every selected row in both
+repetitions. The portable verifier takes `--capture` and `--m1`; both verifiers
+retain the unsupported Regex and IntSeq constructor rows as failures. The
+required typed export and full M2 gates remain open. The Stage 58 recorded
+comparisons have 168/172 matches per native, N-API, and Chromium target; the
+DataSize regression retains 510/510 on each target. Of 17 unchanged original
+upstream programs, ten pass complete raw comparison and seven mismatch,
+including Bytes, Duration, and Pkl Binary cases.
+
 The [method-deprecation contract](docs/m2-deprecation.md) records the pinned Java
 logger matrix and a separate experiment with sequential evaluators in one JVM.
 Its independent fixture verifier checks raw UTF-8, UTF-16, frame, and callback

@@ -4,6 +4,10 @@ The [DataSize contract](m2-data-size.md) separates shared value operations and
 raw native/Node/Chromium string comparisons from required typed exports,
 remaining Bytes behavior, and unchanged original-module failures.
 
+The [Any.ifNonNull contract](m2-any-if-non-null.md) records shared VM lookup,
+callback and null-default behavior, independent Java string authority, native
+and portable raw comparison gates, and the remaining constructor gaps.
+
 The [Class-value contract](m2-class-values.md) records declaration/prototype
 identity, superclass and converter rules, and independent Java observations.
 Common query/logger comparisons and the required provider/export supplements

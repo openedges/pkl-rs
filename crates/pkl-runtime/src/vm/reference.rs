@@ -806,6 +806,10 @@ impl Vm {
         name: &str,
         method: bool,
     ) -> Result<bool, RuntimeError> {
+        if method && name == "ifNonNull" {
+            // Any methods use the same inherited lookup as ordinary objects.
+            return Ok(false);
+        }
         if self.heap.get(id)?.ref_module {
             let value = match (name, method) {
                 ("Reference", true) => self.native_reference_method(Value::Object(id), "Reference"),

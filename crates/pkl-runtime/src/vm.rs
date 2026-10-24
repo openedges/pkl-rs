@@ -12,6 +12,7 @@ use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, RuntimeFrame, Value};
 pub(crate) mod amendment;
 pub(crate) mod annotations;
+mod any;
 pub(crate) mod builtins;
 mod bytes;
 pub(crate) mod classes;
@@ -2470,6 +2471,14 @@ impl Vm {
                 owner = match object.parent {
                     Some(parent) => parent,
                     None if method
+                        && name.as_ref() == "ifNonNull"
+                        && (object.class_definition.is_none()
+                            || object.class_superclass_initialized) =>
+                    {
+                        self.any_method(Value::Object(receiver));
+                        return Ok(());
+                    }
+                    None if method
                         && name.as_ref() == "getClass"
                         && object.class_superclass_initialized =>
                     {
@@ -2815,13 +2824,8 @@ impl Vm {
             }
             owner = object.parent;
         }
-        if method && name == "toString" {
-            let mut error = RuntimeError::new(
-                ErrorKind::Type,
-                "Cannot call method `toString` from here because it is not `const`.",
-            );
-            error.hint = Some("To fix, do either of:\n1. Add modifier `const` to method `toString`\n2. Self-import this module, and reference this method from the import.".into());
-            return Err(error);
+        if method && matches!(name, "toString" | "ifNonNull") {
+            return Err(Self::non_const_method_error(name));
         }
         Ok(())
     }
@@ -4372,7 +4376,15 @@ impl Vm {
                 if method {
                     self.retire_saturated_method_cache(&receiver, name)?;
                 }
-                if self.class_member(&receiver, name, method)?
+                if needs_const
+                    && method
+                    && name.as_ref() == "ifNonNull"
+                    && !matches!(receiver, Value::Object(_))
+                {
+                    return Err(Self::non_const_method_error(name));
+                }
+                if self.any_member(&receiver, name, method)
+                    || self.class_member(&receiver, name, method)?
                     || self.primitive_member(&receiver, name, method)?
                 {
                     return Ok(());
@@ -4512,7 +4524,8 @@ impl Vm {
                 if method {
                     self.retire_saturated_method_cache(&receiver, name)?;
                 }
-                if self.class_member(&receiver, name, method)?
+                if self.any_member(&receiver, name, method)
+                    || self.class_member(&receiver, name, method)?
                     || self.primitive_member(&receiver, name, method)?
                 {
                     return Ok(());

@@ -1,4 +1,5 @@
-// One public SourceProbe for an entire ordered canonical DataSize string session.
+// One public SourceProbe for an entire ordered string session.
+// The DataSize entry point retains its original protocol footer.
 // Java typed export and exception-class metadata remain separate authority.
 import { completeDefaultModuleRequest, completeFixtureModuleKey, validateModuleRequest } from './module-policy-session.mjs';
 import { javaUtf8Bytes } from './resource-session.mjs';
@@ -15,9 +16,11 @@ const callbackOrigin = value => {
 const defaultKinds = new Set(['check-import', 'select-key', 'query-cache-policy',
   'query-fragment-paths', 'resolve', 'resolve-key', 'resolve-import-uri']);
 
-export function runDataSizeSession(api, fixture, budget = 1) {
+function runSession(api, fixture, budget, dataSizeProtocol) {
   const result = { schema: 1, rows: [], protocol: [], trace: [], acquisitionError: null,
-    boundary: 'String query status and complete UTF16/Java UTF8 output only; Java error class and typed DataSize export are not synthesized.',
+    boundary: dataSizeProtocol
+      ? 'String query status and complete UTF16/Java UTF8 output only; Java error class and typed DataSize export are not synthesized.'
+      : 'String query status and complete UTF16/Java UTF8 output only; Java error class and typed exports are not synthesized.',
     architecture: { sessionCreated: false, polls: 0, collections: 0, terminalSlots: null,
       terminalDepth: null, retainedPayloadsStable: null, closed: false } };
   let session;
@@ -150,7 +153,8 @@ export function runDataSizeSession(api, fixture, budget = 1) {
       throw Error('nonzero state after terminal close');
     const success = result.rows.filter(row => row.status === 'success').length;
     result.protocol.push(`session-closed mode=string rows=${result.rows.length} public-calls=${result.rows.length}`
-      + ` success=${success} errors=${result.rows.length - success} datasize-rows=0 repeated-export-calls=0`);
+      + ` success=${success} errors=${result.rows.length - success}`
+      + (dataSizeProtocol ? ' datasize-rows=0 repeated-export-calls=0' : ''));
   } catch (error) { result.acquisitionError = errorRecord(error); }
   finally {
     if (session) try {
@@ -168,4 +172,12 @@ export function runDataSizeSession(api, fixture, budget = 1) {
     result.protocolBytes = Array.from(new TextEncoder().encode(result.protocol.join('\n') + '\n'));
   }
   return result;
+}
+
+export function runDataSizeSession(api, fixture, budget = 1) {
+  return runSession(api, fixture, budget, true);
+}
+
+export function runStringSession(api, fixture, budget = 1) {
+  return runSession(api, fixture, budget, false);
 }

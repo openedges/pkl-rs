@@ -1,6 +1,44 @@
 # M2 language evidence
 
-The latest [Stage57 implementation checkpoint](stage57-implementation-checkpoint.json)
+The latest [Stage58 implementation checkpoint](stage58-implementation-checkpoint.json)
+adds inherited `Any.ifNonNull` to the shared runtime, with ordinary lookup,
+const restrictions, callback checks, preserved null defaults and Host/GC
+continuations. See the [development contract](../../docs/m2-any-if-non-null.md).
+
+Native, N-API and Chromium each match 168 of 172 canonical query executions.
+The Regex and IntSeq constructor rows mismatch in both repetitions, and the
+whole session protocols retain those differences. Evidence integrity passes;
+strict string compatibility fails. Thirteen additive Java observations pass
+their Rust regression test; that supplement has no separate portable result.
+The [Java checkpoint](stage58-java-checkpoint.json) records its Python acquisition
+helper provenance limitation without weakening the sealed Java raw observations.
+
+The unchanged original selection now has ten CLI matches and seven mismatches.
+`api/any.pkl` passes after the shared method change. Bytes and Duration operations
+and the Binary test's `module.toMap()` precondition remain failures. Each of the
+17 original programs was executed once in Java and once in Rust; offline
+verification does not add guest repetitions. This is not a current whole-language
+verdict. DataSize string regressions match all 510 observations on each target.
+
+All five required Rust checks pass locally with Rust 1.98.1: 929 passing test
+executions, no failures and three ignored tests, including the two explicit
+constructor gaps. The final tool checks cover 20 unique Python tests and 17 JS
+tests. The initial Python invocation error is retained in the validation archive.
+M1 still records 6,076 Java matches out of 6,078 per target and both known regex
+differences. Its architecture contract passes while strict compatibility fails.
+
+The [validation](stage58-validation-evidence.tar.gz),
+[native](stage58-native-evidence.tar.gz),
+[platform](stage58-platform-evidence.tar.gz), and
+[closeout](stage58-closeout-evidence.tar.gz) archives include raw captures,
+source/build identities, original programs and failed gates. Their publication
+records verify every archived member. Full M2, typed exports, complete product
+APIs, release platforms, speed and peak-memory targets remain open. These are
+local macOS arm64 records, not hosted CI results.
+
+### Stage57 DataSize values
+
+The [Stage57 implementation checkpoint](stage57-implementation-checkpoint.json)
 adds the shared DataSize value, conversion, arithmetic, comparison, type,
 rendering and diagnostic paths, plus related Bytes construction and cached size.
 The [DataSize contract](../../docs/m2-data-size.md) defines the exact boundaries.

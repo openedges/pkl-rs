@@ -9,7 +9,6 @@ pub enum Operation {
     ToUnit,
     ToBinary,
     ToDecimal,
-    IfNonNull,
 }
 
 pub(super) fn unit_type() -> (TypeCheck, Span) {
@@ -129,36 +128,6 @@ pub(super) fn blocks(
         });
         result.insert((class.into(), name.into()), block);
     }
-    let signature = "external function ifNonNull<Result>(transform: (NonNull) -> Result): Result?";
-    let start = source.text.find(signature).unwrap();
-    let type_start = start + signature.find("(NonNull) -> Result").unwrap();
-    let block = blocks.len();
-    blocks.push(vec![
-        Instruction::LoadLocal(0),
-        Instruction::CheckType(TypeCheck::Function {
-            parameters: Some(vec![TypeCheck::NonNull]),
-            result: Box::new(TypeCheck::Unknown),
-            syntax: true,
-        }),
-        Instruction::Primitive(primitives::Operation::DataSize(Operation::IfNonNull)),
-        Instruction::Return,
-    ]);
-    metadata.push(BlockMetadata {
-        source: Some(source),
-        member: "#Any.ifNonNull".into(),
-        declaration: Some(Span::new(start, start + signature.len())),
-        spans: vec![
-            None,
-            Some(Span::new(
-                type_start,
-                type_start + "(NonNull) -> Result".len(),
-            )),
-            None,
-            None,
-        ],
-        ..Default::default()
-    });
-    result.insert(("DataSize".into(), "ifNonNull".into()), block);
     result
 }
 
@@ -168,12 +137,6 @@ impl Vm {
         receiver: Value,
         operation: Operation,
     ) -> Result<(), RuntimeError> {
-        if matches!(operation, Operation::IfNonNull) {
-            let Value::Function(function) = self.pop()? else {
-                return Err(invalid("checked ifNonNull function"));
-            };
-            return self.invoke_function(function, vec![receiver], false);
-        }
         if matches!(operation, Operation::FromNumber) {
             let number = match receiver {
                 Value::Int(value) => value.get() as f64,
@@ -201,7 +164,7 @@ impl Vm {
             Operation::ToUnit => Value::DataSize(size.to_unit(checked_unit(self.pop()?)?)),
             Operation::ToBinary => Value::DataSize(size.to_binary_unit()),
             Operation::ToDecimal => Value::DataSize(size.to_decimal_unit()),
-            Operation::FromNumber | Operation::IfNonNull => unreachable!(),
+            Operation::FromNumber => unreachable!(),
         };
         self.stack.push(result);
         Ok(())
