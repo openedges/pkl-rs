@@ -1,0 +1,1947 @@
+{
+  "binding_report": {
+    "B_archive_blobs": {
+      "closeout": {
+        "B_oid": "1e341812a34d5d30579901dc90278b1bb2a3870d",
+        "bytes": 17528887,
+        "path": "reports/m2/stage62-closeout-evidence.tar.gz",
+        "sha256": "896646708dd0cb0b0a5aea3cf0af1ec636d6787bd51b3ab92a7194866054adc8"
+      },
+      "native": {
+        "B_oid": "5a0c0181d099f7ace4f54556984e100dfc0258f5",
+        "bytes": 96038306,
+        "path": "reports/m2/stage62-native-evidence.tar.gz",
+        "sha256": "5e5d768b5afe5a5e735490f263c590d1ee3d946b503d39feac01c3c99f5a867a"
+      },
+      "platform": {
+        "B_oid": "caf56bcf5af5897e92605679beb4a4f1dd8d19b8",
+        "bytes": 15777951,
+        "path": "reports/m2/stage62-platform-evidence.tar.gz",
+        "sha256": "3ed9c1814794171e484386962aebe8661b6183fb249245da590fbc2f27d616cf"
+      },
+      "validation": {
+        "B_oid": "7b7dbcd4796374b23982851ad564a6e83894d6de",
+        "bytes": 44866659,
+        "path": "reports/m2/stage62-validation-evidence.tar.gz",
+        "sha256": "ffcfc8af338d43e72e083572c2c50c940617409922e84d5ecce45fcfabf57b4d"
+      }
+    },
+    "B_commit": "aac28e5b8d7a2182bc3e385410ff12228f246fb0",
+    "B_implementation_checkpoint": {
+      "B_oid": "bee94b03a13817c848df8057f86d0af4e7374cdc",
+      "bytes": 50057,
+      "path": "reports/m2/stage62-implementation-checkpoint.json",
+      "sha256": "601be8c596fcb4d77511bdc5726ab19a621ca2915d19670f5674eb3be2cfb220"
+    },
+    "B_publication_blobs": {
+      "closeout": {
+        "B_oid": "db69fbdb1573957a59254d744f7323920b6ca6a0",
+        "bytes": 1562222,
+        "path": "reports/m2/stage62-closeout-publication.json",
+        "sha256": "3e6fb5496c30173e76c407f0496d6f0eeca92a3075e90b786f4c66616fe89fe1"
+      },
+      "native": {
+        "B_oid": "4e2b1001ae9ab45c9ae3063d94c780dba81aca4a",
+        "bytes": 9258642,
+        "path": "reports/m2/stage62-native-publication.json",
+        "sha256": "a194581a4d4dd48f252289b6d4c34394380da87b3c7e99726d850023d7a3f7b6"
+      },
+      "platform": {
+        "B_oid": "ebd61993a9ebe96423529e0ac80a9ac4ce469058",
+        "bytes": 18391484,
+        "path": "reports/m2/stage62-platform-publication.json",
+        "sha256": "f6dbe53871849bd6bcc4666b2e33988bc3d1f460e7929df95154abbd08bab61e"
+      },
+      "validation": {
+        "B_oid": "4bf09d938641923ec5aa460f432c7c2f0572816f",
+        "bytes": 9942903,
+        "path": "reports/m2/stage62-validation-publication.json",
+        "sha256": "0218cfdf6656d1af6616360e993edfa15adcb026876f6d1805f7454869c630ba"
+      }
+    },
+    "archived_control_members": {
+      "closeout": [
+        "target/m2/stage62-comparison-validation-01/report.json",
+        "target/m2/stage62-comparison-validation-01/source-after.json",
+        "target/m2/stage62-comparison-validation-01/source-before.json",
+        "target/m2/stage62-original-conversions-01/report.json",
+        "target/m2/stage62-original-conversions-01/selection.json",
+        "target/m2/stage62-original-conversions-01/sources.json",
+        "target/m2/stage62-original-conversions-launch-01/report.json"
+      ],
+      "native": [
+        "target/m2/stage62-bytes-native-regression-01/build/build.json",
+        "target/m2/stage62-bytes-native-regression-01/build/data_size_fixture_probe",
+        "target/m2/stage62-bytes-native-regression-01/build/source-after.json",
+        "target/m2/stage62-bytes-native-regression-01/build/source-before.json",
+        "target/m2/stage62-bytes-native-regression-01/build/string_session_probe",
+        "target/m2/stage62-bytes-native-regression-01/inventory.json",
+        "target/m2/stage62-bytes-native-regression-01/report.json",
+        "target/m2/stage62-bytes-native-regression-launch-01/report.json",
+        "target/m2/stage62-collection-conversion-controls-native-comparison-01/build/build.json",
+        "target/m2/stage62-collection-conversion-controls-native-comparison-01/build/data_size_fixture_probe",
+        "target/m2/stage62-collection-conversion-controls-native-comparison-01/build/source-after.json",
+        "target/m2/stage62-collection-conversion-controls-native-comparison-01/build/source-before.json",
+        "target/m2/stage62-collection-conversion-controls-native-comparison-01/build/string_session_probe",
+        "target/m2/stage62-collection-conversion-controls-native-comparison-01/inventory.json",
+        "target/m2/stage62-collection-conversion-controls-native-comparison-01/report.json",
+        "target/m2/stage62-collection-conversions-native-comparison-01/build/build.json",
+        "target/m2/stage62-collection-conversions-native-comparison-01/build/data_size_fixture_probe",
+        "target/m2/stage62-collection-conversions-native-comparison-01/build/source-after.json",
+        "target/m2/stage62-collection-conversions-native-comparison-01/build/source-before.json",
+        "target/m2/stage62-collection-conversions-native-comparison-01/build/string_session_probe",
+        "target/m2/stage62-collection-conversions-native-comparison-01/inventory.json",
+        "target/m2/stage62-collection-conversions-native-comparison-01/report.json",
+        "target/m2/stage62-collection-default-contracts-native-comparison-01/build/build.json",
+        "target/m2/stage62-collection-default-contracts-native-comparison-01/build/data_size_fixture_probe",
+        "target/m2/stage62-collection-default-contracts-native-comparison-01/build/source-after.json",
+        "target/m2/stage62-collection-default-contracts-native-comparison-01/build/source-before.json",
+        "target/m2/stage62-collection-default-contracts-native-comparison-01/build/string_session_probe",
+        "target/m2/stage62-collection-default-contracts-native-comparison-01/inventory.json",
+        "target/m2/stage62-collection-default-contracts-native-comparison-01/report.json",
+        "target/m2/stage62-collection-dynamic-render-native-comparison-01/build/build.json",
+        "target/m2/stage62-collection-dynamic-render-native-comparison-01/build/data_size_fixture_probe",
+        "target/m2/stage62-collection-dynamic-render-native-comparison-01/build/source-after.json",
+        "target/m2/stage62-collection-dynamic-render-native-comparison-01/build/source-before.json",
+        "target/m2/stage62-collection-dynamic-render-native-comparison-01/build/string_session_probe",
+        "target/m2/stage62-collection-dynamic-render-native-comparison-01/inventory.json",
+        "target/m2/stage62-collection-dynamic-render-native-comparison-01/report.json",
+        "target/m2/stage62-collection-lookups-native-comparison-01/build/build.json",
+        "target/m2/stage62-collection-lookups-native-comparison-01/build/data_size_fixture_probe",
+        "target/m2/stage62-collection-lookups-native-comparison-01/build/source-after.json",
+        "target/m2/stage62-collection-lookups-native-comparison-01/build/source-before.json",
+        "target/m2/stage62-collection-lookups-native-comparison-01/build/string_session_probe",
+        "target/m2/stage62-collection-lookups-native-comparison-01/inventory.json",
+        "target/m2/stage62-collection-lookups-native-comparison-01/report.json",
+        "target/m2/stage62-collection-property-names-native-comparison-01/build/build.json",
+        "target/m2/stage62-collection-property-names-native-comparison-01/build/data_size_fixture_probe",
+        "target/m2/stage62-collection-property-names-native-comparison-01/build/source-after.json",
+        "target/m2/stage62-collection-property-names-native-comparison-01/build/source-before.json",
+        "target/m2/stage62-collection-property-names-native-comparison-01/build/string_session_probe",
+        "target/m2/stage62-collection-property-names-native-comparison-01/inventory.json",
+        "target/m2/stage62-collection-property-names-native-comparison-01/report.json",
+        "target/m2/stage62-data-size-native-regression-01/inventory.json",
+        "target/m2/stage62-data-size-native-regression-01/report.json",
+        "target/m2/stage62-data-size-native-regression-01/source-after.json",
+        "target/m2/stage62-data-size-native-regression-01/source-before.json",
+        "target/m2/stage62-duration-native-regression-01/build/build.json",
+        "target/m2/stage62-duration-native-regression-01/build/data_size_fixture_probe",
+        "target/m2/stage62-duration-native-regression-01/build/source-after.json",
+        "target/m2/stage62-duration-native-regression-01/build/source-before.json",
+        "target/m2/stage62-duration-native-regression-01/build/string_session_probe",
+        "target/m2/stage62-duration-native-regression-01/inventory.json",
+        "target/m2/stage62-duration-native-regression-01/report.json",
+        "target/m2/stage62-duration-native-regression-launch-01/report.json",
+        "target/m2/stage62-intseq-native-comparison-01/build/build.json",
+        "target/m2/stage62-intseq-native-comparison-01/build/data_size_fixture_probe",
+        "target/m2/stage62-intseq-native-comparison-01/build/source-after.json",
+        "target/m2/stage62-intseq-native-comparison-01/build/source-before.json",
+        "target/m2/stage62-intseq-native-comparison-01/build/string_session_probe",
+        "target/m2/stage62-intseq-native-comparison-01/inventory.json",
+        "target/m2/stage62-intseq-native-comparison-01/report.json",
+        "target/m2/stage62-native-acquisition-01/cohort-after.json",
+        "target/m2/stage62-native-acquisition-01/cohort-before.json",
+        "target/m2/stage62-native-acquisition-01/report.json",
+        "target/m2/stage62-native-build-01/build.json",
+        "target/m2/stage62-native-build-01/data_size_fixture_probe",
+        "target/m2/stage62-native-build-01/source-after.json",
+        "target/m2/stage62-native-build-01/source-before.json",
+        "target/m2/stage62-native-build-01/string_session_probe"
+      ],
+      "platform": [
+        "target/m2/stage62-any-if-non-null-portable-capture-01/report.json",
+        "target/m2/stage62-bytes-values-portable-capture-01/report.json",
+        "target/m2/stage62-collection-conversion-controls-portable-capture-01/report.json",
+        "target/m2/stage62-collection-conversions-portable-capture-01/report.json",
+        "target/m2/stage62-collection-default-contracts-portable-capture-01/report.json",
+        "target/m2/stage62-collection-dynamic-render-portable-capture-01/report.json",
+        "target/m2/stage62-collection-lookups-portable-capture-01/report.json",
+        "target/m2/stage62-collection-property-names-portable-capture-01/report.json",
+        "target/m2/stage62-data-size-portable-capture-01/report.json",
+        "target/m2/stage62-duration-values-portable-capture-01/report.json",
+        "target/m2/stage62-int-seq-values-portable-capture-01/report.json",
+        "target/m2/stage62-m1-platform-contract-01/pkl_napi.node",
+        "target/m2/stage62-m1-platform-contract-01/report.json",
+        "target/m2/stage62-m1-platform-contract-01/sources.json",
+        "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.d.ts",
+        "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.js",
+        "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm",
+        "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm.d.ts",
+        "target/m2/stage62-platform-validation-01/report.json",
+        "target/m2/stage62-platform-validation-01/source-after.json",
+        "target/m2/stage62-platform-validation-01/source-before.json"
+      ],
+      "validation": [
+        "target/m2/stage62-rust-validation-02/report.json",
+        "target/m2/stage62-rust-validation-02/sources-after.json",
+        "target/m2/stage62-rust-validation-02/sources.json",
+        "target/m2/stage62-tool-development-05/report.json",
+        "target/m2/stage62-tool-development-05/source-after.json",
+        "target/m2/stage62-tool-development-05/source-before.json"
+      ]
+    },
+    "archived_execution_wrappers": [
+      {
+        "B_archive_oid": "7b7dbcd4796374b23982851ad564a6e83894d6de",
+        "archive": "reports/m2/stage62-validation-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-rust-validation-02/run.py",
+        "bytes": 9331,
+        "category": "rust_validation",
+        "sha256": "04f251688b7a61dd9d1c8ba62bb00f9d7363671bcf82ec66641799a481c7a541",
+        "source_path": "target/m2/stage62-rust-validation-02/run.py",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "5a0c0181d099f7ace4f54556984e100dfc0258f5",
+        "archive": "reports/m2/stage62-native-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-native-build-01/run.py",
+        "bytes": 2498,
+        "category": "native_build",
+        "sha256": "2a85bb2f3759cf0fd7a0f2bab45846e1868b594c0000334d2b511acae7828e8e",
+        "source_path": "target/m2/stage62-native-build-01/run.py",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "5a0c0181d099f7ace4f54556984e100dfc0258f5",
+        "archive": "reports/m2/stage62-native-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-native-acquisition-01/run.py",
+        "bytes": 5213,
+        "category": "native_cohort",
+        "sha256": "faaf038abde142ee3db2422b59bc9d7d720c19695f4ca96576ad6a9580bdda46",
+        "source_path": "target/m2/stage62-native-acquisition-01/run.py",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "caf56bcf5af5897e92605679beb4a4f1dd8d19b8",
+        "archive": "reports/m2/stage62-platform-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-platform-validation-01/run.py",
+        "bytes": 5397,
+        "category": "platform_wrapper",
+        "sha256": "8a8f10686aa37c493335000b9d7da539442f6f20d9e507ac81c0107197b5adaa",
+        "source_path": "target/m2/stage62-platform-validation-01/run.py",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "caf56bcf5af5897e92605679beb4a4f1dd8d19b8",
+        "archive": "reports/m2/stage62-platform-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-platform-validation-01/preparation-02.json",
+        "bytes": 635,
+        "category": "platform_wrapper",
+        "sha256": "5f9da349272bab95885c3f4c62392c9dbb7c8a2ccefcbbe1100551f0ceaf1ada",
+        "source_path": "target/m2/stage62-platform-validation-01/preparation-02.json",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "1e341812a34d5d30579901dc90278b1bb2a3870d",
+        "archive": "reports/m2/stage62-closeout-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-comparison-validation-01/run.py",
+        "bytes": 22748,
+        "category": "comparison_wrapper",
+        "sha256": "4e685ed779263f77745c1e200e647939e7e9112333e3d9ec41bb659113546500",
+        "source_path": "target/m2/stage62-comparison-validation-01/run.py",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "caf56bcf5af5897e92605679beb4a4f1dd8d19b8",
+        "archive": "reports/m2/stage62-platform-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-platform-validation-01/run.py",
+        "bytes": 5397,
+        "category": "comparison_wrapper",
+        "sha256": "8a8f10686aa37c493335000b9d7da539442f6f20d9e507ac81c0107197b5adaa",
+        "source_path": "target/m2/stage62-platform-validation-01/run.py",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "caf56bcf5af5897e92605679beb4a4f1dd8d19b8",
+        "archive": "reports/m2/stage62-platform-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-platform-validation-01/preparation-02.json",
+        "bytes": 635,
+        "category": "comparison_wrapper",
+        "sha256": "5f9da349272bab95885c3f4c62392c9dbb7c8a2ccefcbbe1100551f0ceaf1ada",
+        "source_path": "target/m2/stage62-platform-validation-01/preparation-02.json",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "1e341812a34d5d30579901dc90278b1bb2a3870d",
+        "archive": "reports/m2/stage62-closeout-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-original-conversions-01/runner.py",
+        "bytes": 21966,
+        "category": "original_conversions",
+        "sha256": "de56d317f02c0ecdbe952ae8c61e94883908c9c3cc878fd3358709cb803d01a1",
+        "source_path": "target/m2/stage62-original-conversions-prep-01/run.py",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "1e341812a34d5d30579901dc90278b1bb2a3870d",
+        "archive": "reports/m2/stage62-closeout-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-original-conversions-launch-01/run.py",
+        "bytes": 2271,
+        "category": "original_launch",
+        "sha256": "ef5eb8d50638b2937aef36aa128b4389c66cb5d87607e17437acbc4da6354bc0",
+        "source_path": "target/m2/stage62-original-conversions-launch-01/run.py",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "7b7dbcd4796374b23982851ad564a6e83894d6de",
+        "archive": "reports/m2/stage62-validation-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-tool-development-05/run.py",
+        "bytes": 3470,
+        "category": "tool_validation",
+        "sha256": "2720df4d3f632fada36f7470f3b4b0d81fb79c84d964f559f2265f6b605ff0f3",
+        "source_path": "target/m2/stage62-tool-development-05/run.py",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "5a0c0181d099f7ace4f54556984e100dfc0258f5",
+        "archive": "reports/m2/stage62-native-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-data-size-native-regression-01/run.py",
+        "bytes": 5534,
+        "category": "data_size_regression",
+        "sha256": "369a2b4c7ad5ee8b0ba8be41623910ca1ca0ff91033bb604ede97ecc03c2646f",
+        "source_path": "target/m2/stage62-data-size-native-regression-01/run.py",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "5a0c0181d099f7ace4f54556984e100dfc0258f5",
+        "archive": "reports/m2/stage62-native-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-bytes-native-regression-launch-01/run.py",
+        "bytes": 2792,
+        "category": "bytes_launch",
+        "sha256": "b556e37dfd5be01c764cc6df12c7c538db8731914cf1c9dfbe5838443613adb8",
+        "source_path": "target/m2/stage62-bytes-native-regression-launch-01/run.py",
+        "status": "archived_execution_tool_not_B"
+      },
+      {
+        "B_archive_oid": "5a0c0181d099f7ace4f54556984e100dfc0258f5",
+        "archive": "reports/m2/stage62-native-evidence.tar.gz",
+        "archive_member": "target/m2/stage62-duration-native-regression-launch-01/run.py",
+        "bytes": 2819,
+        "category": "duration_launch",
+        "sha256": "aea246ca022b990979d0289d5c8b3bdf3f5370f60ef9527a9c56495ecb5d362a",
+        "source_path": "target/m2/stage62-duration-native-regression-launch-01/run.py",
+        "status": "archived_execution_tool_not_B"
+      }
+    ],
+    "archived_source_member_counts": {
+      "comparison_wrapper": 723,
+      "data_size_regression": 16,
+      "m1_platforms": 246,
+      "native_build": 278,
+      "native_bytes_build": 278,
+      "native_bytes_fixture": 7,
+      "native_bytes_tools": 7,
+      "native_cohort": 69,
+      "native_collection_conversion_controls_build": 278,
+      "native_collection_conversion_controls_fixture": 7,
+      "native_collection_conversion_controls_tools": 27,
+      "native_collection_conversions_build": 278,
+      "native_collection_conversions_fixture": 7,
+      "native_collection_conversions_tools": 27,
+      "native_collection_default_contracts_build": 278,
+      "native_collection_default_contracts_fixture": 7,
+      "native_collection_default_contracts_tools": 27,
+      "native_collection_dynamic_render_build": 278,
+      "native_collection_dynamic_render_fixture": 7,
+      "native_collection_dynamic_render_tools": 27,
+      "native_collection_lookups_build": 278,
+      "native_collection_lookups_fixture": 7,
+      "native_collection_lookups_tools": 27,
+      "native_collection_property_names_build": 278,
+      "native_collection_property_names_fixture": 7,
+      "native_collection_property_names_tools": 27,
+      "native_duration_build": 278,
+      "native_duration_fixture": 7,
+      "native_duration_tools": 7,
+      "native_intseq_build": 278,
+      "native_intseq_fixture": 9,
+      "native_intseq_tools": 7,
+      "original_conversions": 4599,
+      "platform_wrapper": 653,
+      "rust_validation": 22,
+      "tool_validation": 1090
+    },
+    "binder": {
+      "bytes": 55049,
+      "path": "target/m2/stage62-source-binding-03/bind.py",
+      "sha256": "ebcd65984c9a3e9a56f8d9ee8fab01e4958764db3eb1dd773fe360a263c7cace"
+    },
+    "capture_controls": {
+      "comparison": {
+        "bytes": 31310,
+        "counts": {
+          "any-portable": {
+            "chromium": {
+              "mismatch": 2,
+              "pass": 170
+            },
+            "napi": {
+              "mismatch": 2,
+              "pass": 170
+            }
+          },
+          "bytes-native": {
+            "pass": 600
+          },
+          "bytes-portable": {
+            "chromium": {
+              "pass": 600
+            },
+            "napi": {
+              "pass": 600
+            }
+          },
+          "collection-conversion-controls-native": {
+            "pass": 116
+          },
+          "collection-conversion-controls-portable": {
+            "chromium": {
+              "pass": 116
+            },
+            "napi": {
+              "pass": 116
+            }
+          },
+          "collection-conversions-native": {
+            "pass": 472
+          },
+          "collection-conversions-portable": {
+            "chromium": {
+              "pass": 472
+            },
+            "napi": {
+              "pass": 472
+            }
+          },
+          "collection-default-contracts-native": {
+            "pass": 44
+          },
+          "collection-default-contracts-portable": {
+            "chromium": {
+              "pass": 44
+            },
+            "napi": {
+              "pass": 44
+            }
+          },
+          "collection-dynamic-render-native": {
+            "pass": 20
+          },
+          "collection-dynamic-render-portable": {
+            "chromium": {
+              "pass": 20
+            },
+            "napi": {
+              "pass": 20
+            }
+          },
+          "collection-lookups-native": {
+            "pass": 266
+          },
+          "collection-lookups-portable": {
+            "chromium": {
+              "pass": 266
+            },
+            "napi": {
+              "pass": 266
+            }
+          },
+          "collection-property-names-native": {
+            "pass": 52
+          },
+          "collection-property-names-portable": {
+            "chromium": {
+              "pass": 52
+            },
+            "napi": {
+              "pass": 52
+            }
+          },
+          "data-size-native": {
+            "pass": 510
+          },
+          "data-size-portable": {
+            "chromium": {
+              "pass": 510
+            },
+            "napi": {
+              "pass": 510
+            }
+          },
+          "duration-native": {
+            "pass": 548
+          },
+          "duration-portable": {
+            "chromium": {
+              "pass": 548
+            },
+            "napi": {
+              "pass": 548
+            }
+          },
+          "intseq-native": {
+            "pass": 474
+          },
+          "intseq-portable": {
+            "chromium": {
+              "pass": 474
+            },
+            "napi": {
+              "pass": 474
+            }
+          }
+        },
+        "known_regex_failures_preserved": true,
+        "path": "target/m2/stage62-comparison-validation-01/report.json",
+        "sha256": "958d719b4322d7e156c26e5afd7857a91c1976698521cbdfc2ff6b2f4a67fe96"
+      },
+      "data_size": {
+        "bytes": 52841,
+        "path": "target/m2/stage62-data-size-native-regression-01/report.json",
+        "sha256": "810ec90012cd31afc961f1a0e565cbf1257b385742a2eb1f1c525dc4211a7b16"
+      },
+      "native": {
+        "bytes": {
+          "bytes": 132207,
+          "counts": {
+            "pass": 600
+          },
+          "path": "target/m2/stage62-bytes-native-regression-01/report.json",
+          "repetitions": 2,
+          "rows": 300,
+          "sha256": "fa5d27497626d23f82c6fee58d79aa056753591445a111f62e093cdec1b5857e"
+        },
+        "collection-conversion-controls": {
+          "bytes": 76165,
+          "counts": {
+            "pass": 116
+          },
+          "path": "target/m2/stage62-collection-conversion-controls-native-comparison-01/report.json",
+          "repetitions": 2,
+          "rows": 58,
+          "sha256": "71801de0ac84aa077c956fb0a01faf7c851f23930ae91e5180dec70dd9fd6654"
+        },
+        "collection-conversions": {
+          "bytes": 123703,
+          "counts": {
+            "pass": 472
+          },
+          "path": "target/m2/stage62-collection-conversions-native-comparison-01/report.json",
+          "repetitions": 2,
+          "rows": 236,
+          "sha256": "ee906b2b96ed564bffa016cef6a9b58d7269a6b9b048611009d878d7ead2207f"
+        },
+        "collection-default-contracts": {
+          "bytes": 66115,
+          "counts": {
+            "pass": 44
+          },
+          "path": "target/m2/stage62-collection-default-contracts-native-comparison-01/report.json",
+          "repetitions": 2,
+          "rows": 22,
+          "sha256": "a07f217c47b55e80dad1d61a14fa3e74ccc9f23bb6fbbbe38f1d89aff26d112f"
+        },
+        "collection-dynamic-render": {
+          "bytes": 62511,
+          "counts": {
+            "pass": 20
+          },
+          "path": "target/m2/stage62-collection-dynamic-render-native-comparison-01/report.json",
+          "repetitions": 2,
+          "rows": 10,
+          "sha256": "0ec5c44f819aab11859ea3a0e604c73ba1da4e49d795eab3576ef90b67c14243"
+        },
+        "collection-lookups": {
+          "bytes": 95978,
+          "counts": {
+            "pass": 266
+          },
+          "path": "target/m2/stage62-collection-lookups-native-comparison-01/report.json",
+          "repetitions": 2,
+          "rows": 133,
+          "sha256": "ee3b12cc490de43b225e39d473eae5f562d7adb57cd4848a87a0ca75735d3a8c"
+        },
+        "collection-property-names": {
+          "bytes": 66671,
+          "counts": {
+            "pass": 52
+          },
+          "path": "target/m2/stage62-collection-property-names-native-comparison-01/report.json",
+          "repetitions": 2,
+          "rows": 26,
+          "sha256": "929742af6fa9ec195a9d1b12a830d57ed775b1b106e02950ac9ebca86d4e7c19"
+        },
+        "duration": {
+          "bytes": 122588,
+          "counts": {
+            "pass": 548
+          },
+          "path": "target/m2/stage62-duration-native-regression-01/report.json",
+          "repetitions": 2,
+          "rows": 274,
+          "sha256": "017c6fa9bb2993a009ecbb44df8d0a287785a9d4593a9364b6576ba79292513d"
+        },
+        "intseq": {
+          "bytes": 114409,
+          "counts": {
+            "pass": 474
+          },
+          "path": "target/m2/stage62-intseq-native-comparison-01/report.json",
+          "repetitions": 2,
+          "rows": 237,
+          "sha256": "06f6e9c6c7059c142d688db23201febc25c7aa5421b0332db9501f2ae53fb519"
+        }
+      },
+      "native_cohort": {
+        "bytes": 13247,
+        "path": "target/m2/stage62-native-acquisition-01/report.json",
+        "sha256": "484d6abb8a32ec1fbdc0faa8e4e2ccc4db11b05f3ee7f7999a6b9e7d784cb250"
+      },
+      "portable": {
+        "any-if-non-null": {
+          "binding": {
+            "built_artifacts": {
+              "target/m2/stage62-m1-platform-contract-01/pkl_napi.node": "94bc453562496c972aa7971f8a2b7c8660678207ddcecbe815ebfc6021b38447",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.d.ts": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.js": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm": "b0628d0f7aeda36cb4424728130beed2410e924e16665f224a57b8664a8f7d32",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm.d.ts": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+            },
+            "capture_specific_source_inputs": {
+              "tools/java/AnyIfNonNullOracle.java": "107a2111c5cd48e4bfaff3568d134e4e1fca7d70e70726b154fdad8efd3d4969",
+              "tools/tests/test_any_if_non_null_fixtures.py": "41ce7097ac9bb3f5bc34e91d43b4b187c023c253cdcee8c9d4ffaab5b9de19b6",
+              "tools/tests/test_any_if_non_null_portable_compare.py": "eece049858d8b9c2366d25b2b0ddbd38d915f1c76a25a772d586af62dfda8694"
+            },
+            "recorded_external_runtime_inputs": {
+              "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+              "/opt/homebrew/opt/python@3.14/bin/python3.14": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+            },
+            "source_inputs": {
+              "tests/fixtures/m2-any-if-non-null/README.md": "4cb8ad59cfbd8dfd822d186d0a2c1d0e3642ecc1390ba52a7e1eff61f53a2230",
+              "tests/fixtures/m2-any-if-non-null/archive-identity.json": "d2782c1db862e199c67ac5f5b1ff9367fd5caf8b41fbe0a3ac89e9c883c21b36",
+              "tests/fixtures/m2-any-if-non-null/cases.json": "20f0edce5c6572cbe77601330f3e1103f6526f152ab474bff4e3e08ea919de2a",
+              "tests/fixtures/m2-any-if-non-null/manifest.json": "b848e641c3b9a809f3b97004a8889f307612df9629199c6d03a799d7d48fff69",
+              "tests/fixtures/m2-any-if-non-null/module.pkl": "85358ebdc895643dfaea6bb7a25347e7dc4c52e32f8eb44c892fcb42032592ff",
+              "tests/fixtures/m2-any-if-non-null/oracle-evidence.tar.gz": "4d6bd68d384654cfc779583d3c5fd67df4c083aaf1bfbe68ed5ff40631599adf",
+              "tests/fixtures/m2-any-if-non-null/queries.tsv": "d4d6d5550c2bd11775d37e7d32a8f66793d30102c881cf4e23b42ea17e3ea45b",
+              "tools/any_if_non_null_fixtures.py": "e2b2d6e447b5dc037375cec0b36431c7b86a74a4e10b3f81aee6b45615a7de73",
+              "tools/any_if_non_null_oracle.py": "517ff27ab70ceb10bd129fa1179dbe5080454ed810f46151783128e37db2d1ff",
+              "tools/any_if_non_null_portable_compare.py": "3d038e87bd33853fb43f22043833ba01b04d78149f125e5891fe16927a2205c3",
+              "tools/data_size_fixtures.py": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705",
+              "tools/data_size_portable_compare.py": "0301d6da719e577142f6799fcea734f0787b1025f85b7a477bda4214bbb2ebc5",
+              "tools/m1_platforms.py": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af",
+              "tools/m2_source_inputs.py": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d",
+              "tools/platform/capture-any-if-non-null.mjs": "a85275fc172d56f983ec087c98862d71cd3544c150aea7e77d6ba377b2a557b0",
+              "tools/platform/capture-any-if-non-null.test.mjs": "6a4e5a09e205e5eecdf53db8f1eebfc6624e0f86b62872f59d414f8fb18b46c4",
+              "tools/platform/data-size-session.mjs": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6",
+              "tools/platform/data-size-session.test.mjs": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7",
+              "tools/platform/module-policy-session.mjs": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3",
+              "tools/platform/package-lock.json": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+              "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+              "tools/platform/resource-session.mjs": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda"
+            }
+          },
+          "bytes": 32443,
+          "path": "target/m2/stage62-any-if-non-null-portable-capture-01/report.json",
+          "rows": 86,
+          "sha256": "d5e2cbd22eb3c5955d9a0544a325031299e4c50d29e31cdbe2ac02dccc5b329b"
+        },
+        "bytes-values": {
+          "binding": {
+            "built_artifacts": {
+              "target/m2/stage62-m1-platform-contract-01/pkl_napi.node": "94bc453562496c972aa7971f8a2b7c8660678207ddcecbe815ebfc6021b38447",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.d.ts": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.js": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm": "b0628d0f7aeda36cb4424728130beed2410e924e16665f224a57b8664a8f7d32",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm.d.ts": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+            },
+            "capture_specific_source_inputs": {},
+            "recorded_external_runtime_inputs": {
+              "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+              "/opt/homebrew/opt/python@3.14/bin/python3.14": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+            },
+            "source_inputs": {
+              "tests/fixtures/m2-bytes-values/README.md": "a92723d406d96e373ac318c590140b8ad69f77b4c0c6451d68024f3b6f42cc02",
+              "tests/fixtures/m2-bytes-values/archive-identity.json": "50365687b0e8c5968145b740c929c20f4b1665ac0aa1f13d4e125fb3b1307977",
+              "tests/fixtures/m2-bytes-values/cases.json": "29daee757930fa16a7ae72b10a866d5ad4e74f108a6a449f0c45117cab008c0e",
+              "tests/fixtures/m2-bytes-values/manifest.json": "9c6205e81ee88add83c75c3dd196c499a3e16d458b9e37067f633f724d1b50e9",
+              "tests/fixtures/m2-bytes-values/module.pkl": "a6a4e57b3bf4cd47f9f5964232f7036c1591b6c81878b314a16c6e8f73463232",
+              "tests/fixtures/m2-bytes-values/oracle-evidence.tar.gz": "d0eb7a027bcb735c53b73289c1981a942e15150cbc63163575dd2b0e7624cab6",
+              "tests/fixtures/m2-bytes-values/queries.tsv": "a805ca66a7345079ef345a4af9fbc52a816bd1b3ee7a9c1e5db14d557d421397",
+              "tools/bytes_values_compare.py": "418231d65c224735ae396861bf93d5bd12d9bea2bf5900c79442c50aedccab53",
+              "tools/bytes_values_fixtures.py": "20b52b3e3260bc00f9898dcd9fced3a2632724dc41647d82e3f51dc9514d2088",
+              "tools/bytes_values_oracle.py": "182f72ad04f4bcea8c41b54fb239eec110ae4b5ae3569825e8405e4b25064cee",
+              "tools/bytes_values_portable_compare.py": "85bb3c7bf992b85832f46c8c5037ae0c1aadbc07316d660763a8d99eb1f24a2c",
+              "tools/data_size_compare.py": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10",
+              "tools/data_size_fixtures.py": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705",
+              "tools/data_size_oracle.py": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803",
+              "tools/data_size_portable_compare.py": "0301d6da719e577142f6799fcea734f0787b1025f85b7a477bda4214bbb2ebc5",
+              "tools/java/BytesValuesOracle.java": "51b94eb214e2afed5fa8d66f66c9e5a1fd98d143e90afafea39178de1f78fe3b",
+              "tools/m1_platforms.py": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af",
+              "tools/m1_semantics.py": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927",
+              "tools/m2_source_inputs.py": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d",
+              "tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+              "tools/platform/capture-bytes-values.mjs": "db0eb5f0844e1bb98a37e0ee7314e4251d255a6176757bb3808361a70aa9f67e",
+              "tools/platform/capture-bytes-values.test.mjs": "ff7f55d64fb4a475896fe2d69fbb2a04fe2b527d01e5084d0c3eed27f01f6993",
+              "tools/platform/data-size-session.mjs": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6",
+              "tools/platform/data-size-session.test.mjs": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7",
+              "tools/platform/module-policy-session.mjs": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3",
+              "tools/platform/package-lock.json": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+              "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+              "tools/platform/resource-session.mjs": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda",
+              "tools/tests/test_bytes_values_fixtures.py": "3bdd63cd8089bfea719b906d01e307acbea3f17745fa8524d555006adac31a82",
+              "tools/tests/test_bytes_values_portable_compare.py": "f7e133bfe749f2cbef74bfec7cc09fa75d93834c9f1801690cb8e484a7106e86"
+            }
+          },
+          "bytes": 40916,
+          "path": "target/m2/stage62-bytes-values-portable-capture-01/report.json",
+          "rows": 300,
+          "sha256": "7ae5f5e745fcf28d746ca8886e7f17d05e331d9fb655c590be576374e697d36d"
+        },
+        "collection-conversion-controls": {
+          "binding": {
+            "built_artifacts": {
+              "target/m2/stage62-m1-platform-contract-01/pkl_napi.node": "94bc453562496c972aa7971f8a2b7c8660678207ddcecbe815ebfc6021b38447",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.d.ts": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.js": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm": "b0628d0f7aeda36cb4424728130beed2410e924e16665f224a57b8664a8f7d32",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm.d.ts": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+            },
+            "capture_specific_source_inputs": {},
+            "recorded_external_runtime_inputs": {
+              "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+              "/opt/homebrew/opt/python@3.14/bin/python3.14": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+            },
+            "source_inputs": {
+              "compatibility/collection-conversion-profiles.json": "013b5167ac3c643613df6426d5b3c68d0e4b0f53110c39ec1b0803686db95cb6",
+              "tests/fixtures/m2-collection-conversion-controls/README.md": "d06365f13ced36edc0d2385fa54624b7ff7752d3e416a36051a5744ccfc5767c",
+              "tests/fixtures/m2-collection-conversion-controls/archive-identity.json": "80dbf83b2a8445fac202f1f2290bbe2e62cf2ac180e4670863a88c1fbbca7c88",
+              "tests/fixtures/m2-collection-conversion-controls/cases.json": "2dbd453c55268cf80fdb8765d6bcea44535eed917f418eff27d3566f78f0d453",
+              "tests/fixtures/m2-collection-conversion-controls/manifest.json": "abb85b72dca74c8e5cc28b30f0a2335ca30f59c59fe14b7d34a4ae3164692cc1",
+              "tests/fixtures/m2-collection-conversion-controls/module.pkl": "90c2a9ef0fabcc8f8b22e4abf036caedbe7773663e605363ebecf9a16a7d9102",
+              "tests/fixtures/m2-collection-conversion-controls/oracle-evidence.tar.gz": "c254f3cad568223c1da8f75bd5dad0a74f64867132a292bf1f1a312414f7f9da",
+              "tests/fixtures/m2-collection-conversion-controls/queries.tsv": "f7affd443c1fa5d0287b820e3ede1eb0d67782edf80000c4518b72f35aad1c09",
+              "tools/collection_conversion_controls_fixtures.py": "309c86d94353cef1ef5b4138ccdefe710d49911ad67d00c50411324d7216ac0d",
+              "tools/collection_conversion_controls_oracle.py": "7d86029f9f4cd2dbd5feb357292dd7ffeabcfb14f967d693f3458e739c0db9ac",
+              "tools/collection_conversion_profiles.py": "761d5b57c225555d6627066bff59e13ac294e319f65a9520a49ceb35d368cd5c",
+              "tools/collection_conversions_compare.py": "19525891c2992bd4675934aeecf24eb57a6ebc193d4e00dfb931f3d71c9d32fc",
+              "tools/collection_conversions_fixtures.py": "06eb22a1d4c961790d5a67e5a2e05eeddc2154938be0ea83e29f3972c2ddd3e4",
+              "tools/collection_conversions_oracle.py": "fd61e2566ec29789d280114d5ca6613005880c10a32682ced64a16d3189f31ad",
+              "tools/collection_conversions_portable_compare.py": "55457c537e1ea63b9e5ec70cce603468670e20a4a5a9f1e82cd0a36894f6b412",
+              "tools/collection_default_contracts_fixtures.py": "494e1032d4bcbde5c411f326baa28c2a05f362a4e6551b3070cc0edeba4f8389",
+              "tools/collection_default_contracts_oracle.py": "2b640e7db2671e1c7e747e62610ffa7a476ae7f6cfad17d7873cbad28d352a7e",
+              "tools/collection_dynamic_render_fixtures.py": "9d7774c9adf4eb9220120532912ffda3753c024dd64316a781534b7132e6ded2",
+              "tools/collection_dynamic_render_oracle.py": "5802a1dd8077f6c5f00c0b06ba36179c5cc0122bd58a43753aad2a2a4f66deb2",
+              "tools/collection_lookups_fixtures.py": "35874aebf14adea027bf09f9f714632ec5c2c1ca514e71dbf1ccdfb2d973717f",
+              "tools/collection_lookups_oracle.py": "a041aeddad6651bbc9676339e00beddafab79fc26fc05dbda35b434d3c4d1411",
+              "tools/collection_property_names_fixtures.py": "110bf2806cb89a19749a20533cc21c0bbebb2099b0c435dcb322092f0df3958e",
+              "tools/collection_property_names_oracle.py": "122cfe187eddd253922eca5cf9cf752046b12e6d3cf1885071aa5b432c8dd1b5",
+              "tools/data_size_compare.py": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10",
+              "tools/data_size_fixtures.py": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705",
+              "tools/data_size_oracle.py": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803",
+              "tools/data_size_portable_compare.py": "0301d6da719e577142f6799fcea734f0787b1025f85b7a477bda4214bbb2ebc5",
+              "tools/java/CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+              "tools/m1_platforms.py": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af",
+              "tools/m1_semantics.py": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927",
+              "tools/m2_source_inputs.py": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d",
+              "tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+              "tools/platform/capture-collection-conversions.mjs": "8ad104d4c2d1e70be81166a804a07640165c3368ad610af33f161f1c2753ae22",
+              "tools/platform/capture-collection-conversions.test.mjs": "15b894024b9d68c63ab0a156f821046e718563e7818509af1271a1b028291ea9",
+              "tools/platform/data-size-session.mjs": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6",
+              "tools/platform/data-size-session.test.mjs": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7",
+              "tools/platform/module-policy-session.mjs": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3",
+              "tools/platform/package-lock.json": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+              "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+              "tools/platform/resource-session.mjs": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda",
+              "tools/tests/test_collection_conversion_controls_fixtures.py": "5be0579de9de406ccdf7a4038519448a09cecb9144440fa1a24b6d085f8667a5",
+              "tools/tests/test_collection_conversions_fixtures.py": "c470063ce03f8fda670e6418ed74edc7970744e6c3a2b17a54fd92276ece4772",
+              "tools/tests/test_collection_conversions_portable_compare.py": "43555f8db5220a42bbbca4eddd4b3bf57d04e59e3171816a15ffcc5c0286f452",
+              "tools/tests/test_collection_default_contracts_fixtures.py": "9d845b864d8d7700f10ab02cca89df4597abc90b60160e0331e043930c61c893",
+              "tools/tests/test_collection_dynamic_render_fixtures.py": "f2a2b467af555f4524a4a01aa85a7e0b21e34c0f1bb3c700ace6d8d8ce1796d3",
+              "tools/tests/test_collection_lookups_fixtures.py": "2afba66671260a2cdfad3b1980fb2f785412b9bb37caf9d3ad02224517b27975",
+              "tools/tests/test_collection_property_names_fixtures.py": "46a72021657b92c19b01c0f02d0c79ad3b9deb9bb4e0ee381c632bbeaadb5ea7"
+            }
+          },
+          "bytes": 42086,
+          "path": "target/m2/stage62-collection-conversion-controls-portable-capture-01/report.json",
+          "rows": 58,
+          "sha256": "77c00fd2daeba38e7ac720df2d7ed3d24f418779d19da92c127a0d8cc102f2e6"
+        },
+        "collection-conversions": {
+          "binding": {
+            "built_artifacts": {
+              "target/m2/stage62-m1-platform-contract-01/pkl_napi.node": "94bc453562496c972aa7971f8a2b7c8660678207ddcecbe815ebfc6021b38447",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.d.ts": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.js": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm": "b0628d0f7aeda36cb4424728130beed2410e924e16665f224a57b8664a8f7d32",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm.d.ts": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+            },
+            "capture_specific_source_inputs": {},
+            "recorded_external_runtime_inputs": {
+              "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+              "/opt/homebrew/opt/python@3.14/bin/python3.14": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+            },
+            "source_inputs": {
+              "compatibility/collection-conversion-profiles.json": "013b5167ac3c643613df6426d5b3c68d0e4b0f53110c39ec1b0803686db95cb6",
+              "tests/fixtures/m2-collection-conversions/README.md": "97c9507223d8be86c14c2a9f85e8d26eb5751ba2750d6fe77dccecf6a1b6aea7",
+              "tests/fixtures/m2-collection-conversions/archive-identity.json": "fe9d619a4c9340e5a7335fcba30d762ae40f8c26b8ccd67c5f34b7416c17cb5e",
+              "tests/fixtures/m2-collection-conversions/cases.json": "a45146b0387754d879109cfed5dd280bf6aad215c9e4197e10644d432a444c3b",
+              "tests/fixtures/m2-collection-conversions/manifest.json": "33e8096434dc734cb6b05be944c371d40c4445fe30ab261cc3e48f6df587eb89",
+              "tests/fixtures/m2-collection-conversions/module.pkl": "a24a1e717919fd710c219f7c7e27e6c9baa93b575749c840d96a58ae0f886b4a",
+              "tests/fixtures/m2-collection-conversions/oracle-evidence.tar.gz": "e2e7db0435308cd2b3ff0656e0ba799e621535054a67c45ef0fd08594b00d8f6",
+              "tests/fixtures/m2-collection-conversions/queries.tsv": "39416e2d5adb7db5fe531289ff736a14f8926af3af8bf64fcbf9aad2ad3021cc",
+              "tools/collection_conversion_controls_fixtures.py": "309c86d94353cef1ef5b4138ccdefe710d49911ad67d00c50411324d7216ac0d",
+              "tools/collection_conversion_controls_oracle.py": "7d86029f9f4cd2dbd5feb357292dd7ffeabcfb14f967d693f3458e739c0db9ac",
+              "tools/collection_conversion_profiles.py": "761d5b57c225555d6627066bff59e13ac294e319f65a9520a49ceb35d368cd5c",
+              "tools/collection_conversions_compare.py": "19525891c2992bd4675934aeecf24eb57a6ebc193d4e00dfb931f3d71c9d32fc",
+              "tools/collection_conversions_fixtures.py": "06eb22a1d4c961790d5a67e5a2e05eeddc2154938be0ea83e29f3972c2ddd3e4",
+              "tools/collection_conversions_oracle.py": "fd61e2566ec29789d280114d5ca6613005880c10a32682ced64a16d3189f31ad",
+              "tools/collection_conversions_portable_compare.py": "55457c537e1ea63b9e5ec70cce603468670e20a4a5a9f1e82cd0a36894f6b412",
+              "tools/collection_default_contracts_fixtures.py": "494e1032d4bcbde5c411f326baa28c2a05f362a4e6551b3070cc0edeba4f8389",
+              "tools/collection_default_contracts_oracle.py": "2b640e7db2671e1c7e747e62610ffa7a476ae7f6cfad17d7873cbad28d352a7e",
+              "tools/collection_dynamic_render_fixtures.py": "9d7774c9adf4eb9220120532912ffda3753c024dd64316a781534b7132e6ded2",
+              "tools/collection_dynamic_render_oracle.py": "5802a1dd8077f6c5f00c0b06ba36179c5cc0122bd58a43753aad2a2a4f66deb2",
+              "tools/collection_lookups_fixtures.py": "35874aebf14adea027bf09f9f714632ec5c2c1ca514e71dbf1ccdfb2d973717f",
+              "tools/collection_lookups_oracle.py": "a041aeddad6651bbc9676339e00beddafab79fc26fc05dbda35b434d3c4d1411",
+              "tools/collection_property_names_fixtures.py": "110bf2806cb89a19749a20533cc21c0bbebb2099b0c435dcb322092f0df3958e",
+              "tools/collection_property_names_oracle.py": "122cfe187eddd253922eca5cf9cf752046b12e6d3cf1885071aa5b432c8dd1b5",
+              "tools/data_size_compare.py": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10",
+              "tools/data_size_fixtures.py": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705",
+              "tools/data_size_oracle.py": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803",
+              "tools/data_size_portable_compare.py": "0301d6da719e577142f6799fcea734f0787b1025f85b7a477bda4214bbb2ebc5",
+              "tools/java/CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+              "tools/m1_platforms.py": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af",
+              "tools/m1_semantics.py": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927",
+              "tools/m2_source_inputs.py": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d",
+              "tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+              "tools/platform/capture-collection-conversions.mjs": "8ad104d4c2d1e70be81166a804a07640165c3368ad610af33f161f1c2753ae22",
+              "tools/platform/capture-collection-conversions.test.mjs": "15b894024b9d68c63ab0a156f821046e718563e7818509af1271a1b028291ea9",
+              "tools/platform/data-size-session.mjs": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6",
+              "tools/platform/data-size-session.test.mjs": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7",
+              "tools/platform/module-policy-session.mjs": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3",
+              "tools/platform/package-lock.json": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+              "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+              "tools/platform/resource-session.mjs": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda",
+              "tools/tests/test_collection_conversion_controls_fixtures.py": "5be0579de9de406ccdf7a4038519448a09cecb9144440fa1a24b6d085f8667a5",
+              "tools/tests/test_collection_conversions_fixtures.py": "c470063ce03f8fda670e6418ed74edc7970744e6c3a2b17a54fd92276ece4772",
+              "tools/tests/test_collection_conversions_portable_compare.py": "43555f8db5220a42bbbca4eddd4b3bf57d04e59e3171816a15ffcc5c0286f452",
+              "tools/tests/test_collection_default_contracts_fixtures.py": "9d845b864d8d7700f10ab02cca89df4597abc90b60160e0331e043930c61c893",
+              "tools/tests/test_collection_dynamic_render_fixtures.py": "f2a2b467af555f4524a4a01aa85a7e0b21e34c0f1bb3c700ace6d8d8ce1796d3",
+              "tools/tests/test_collection_lookups_fixtures.py": "2afba66671260a2cdfad3b1980fb2f785412b9bb37caf9d3ad02224517b27975",
+              "tools/tests/test_collection_property_names_fixtures.py": "46a72021657b92c19b01c0f02d0c79ad3b9deb9bb4e0ee381c632bbeaadb5ea7"
+            }
+          },
+          "bytes": 46492,
+          "path": "target/m2/stage62-collection-conversions-portable-capture-01/report.json",
+          "rows": 236,
+          "sha256": "5b401b08657d2ec4857b6d459c78f070c5417a7e455a0bfbb743e81d7ccdb430"
+        },
+        "collection-default-contracts": {
+          "binding": {
+            "built_artifacts": {
+              "target/m2/stage62-m1-platform-contract-01/pkl_napi.node": "94bc453562496c972aa7971f8a2b7c8660678207ddcecbe815ebfc6021b38447",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.d.ts": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.js": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm": "b0628d0f7aeda36cb4424728130beed2410e924e16665f224a57b8664a8f7d32",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm.d.ts": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+            },
+            "capture_specific_source_inputs": {},
+            "recorded_external_runtime_inputs": {
+              "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+              "/opt/homebrew/opt/python@3.14/bin/python3.14": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+            },
+            "source_inputs": {
+              "compatibility/collection-conversion-profiles.json": "013b5167ac3c643613df6426d5b3c68d0e4b0f53110c39ec1b0803686db95cb6",
+              "tests/fixtures/m2-collection-default-contracts/README.md": "0b396692ae1f5aedf318304da137d6570c82e06db933401e98e009986f556171",
+              "tests/fixtures/m2-collection-default-contracts/archive-identity.json": "8cf32c2500a2d9f68a59575fc2201f124a1add87d0eaf43aab30d5d87d27b7ee",
+              "tests/fixtures/m2-collection-default-contracts/cases.json": "15cb06a0db6c9e6c90edf2afa199c1d86734920d5ff4432c6cb3de1c521d9e0a",
+              "tests/fixtures/m2-collection-default-contracts/manifest.json": "03fa1629cf5bbcf18753154b97c18bfa551c681534e73ec77c6d2f95a7a00455",
+              "tests/fixtures/m2-collection-default-contracts/module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+              "tests/fixtures/m2-collection-default-contracts/oracle-evidence.tar.gz": "0c7ed42e1f786ea02086f6cf1c736b1c326835801221512568ed695dfc96c126",
+              "tests/fixtures/m2-collection-default-contracts/queries.tsv": "375fc16968ee997b25d7223380398205ed756352c07b0d6e443c457f4b1ea143",
+              "tools/collection_conversion_controls_fixtures.py": "309c86d94353cef1ef5b4138ccdefe710d49911ad67d00c50411324d7216ac0d",
+              "tools/collection_conversion_controls_oracle.py": "7d86029f9f4cd2dbd5feb357292dd7ffeabcfb14f967d693f3458e739c0db9ac",
+              "tools/collection_conversion_profiles.py": "761d5b57c225555d6627066bff59e13ac294e319f65a9520a49ceb35d368cd5c",
+              "tools/collection_conversions_compare.py": "19525891c2992bd4675934aeecf24eb57a6ebc193d4e00dfb931f3d71c9d32fc",
+              "tools/collection_conversions_fixtures.py": "06eb22a1d4c961790d5a67e5a2e05eeddc2154938be0ea83e29f3972c2ddd3e4",
+              "tools/collection_conversions_oracle.py": "fd61e2566ec29789d280114d5ca6613005880c10a32682ced64a16d3189f31ad",
+              "tools/collection_conversions_portable_compare.py": "55457c537e1ea63b9e5ec70cce603468670e20a4a5a9f1e82cd0a36894f6b412",
+              "tools/collection_default_contracts_fixtures.py": "494e1032d4bcbde5c411f326baa28c2a05f362a4e6551b3070cc0edeba4f8389",
+              "tools/collection_default_contracts_oracle.py": "2b640e7db2671e1c7e747e62610ffa7a476ae7f6cfad17d7873cbad28d352a7e",
+              "tools/collection_dynamic_render_fixtures.py": "9d7774c9adf4eb9220120532912ffda3753c024dd64316a781534b7132e6ded2",
+              "tools/collection_dynamic_render_oracle.py": "5802a1dd8077f6c5f00c0b06ba36179c5cc0122bd58a43753aad2a2a4f66deb2",
+              "tools/collection_lookups_fixtures.py": "35874aebf14adea027bf09f9f714632ec5c2c1ca514e71dbf1ccdfb2d973717f",
+              "tools/collection_lookups_oracle.py": "a041aeddad6651bbc9676339e00beddafab79fc26fc05dbda35b434d3c4d1411",
+              "tools/collection_property_names_fixtures.py": "110bf2806cb89a19749a20533cc21c0bbebb2099b0c435dcb322092f0df3958e",
+              "tools/collection_property_names_oracle.py": "122cfe187eddd253922eca5cf9cf752046b12e6d3cf1885071aa5b432c8dd1b5",
+              "tools/data_size_compare.py": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10",
+              "tools/data_size_fixtures.py": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705",
+              "tools/data_size_oracle.py": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803",
+              "tools/data_size_portable_compare.py": "0301d6da719e577142f6799fcea734f0787b1025f85b7a477bda4214bbb2ebc5",
+              "tools/java/CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+              "tools/m1_platforms.py": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af",
+              "tools/m1_semantics.py": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927",
+              "tools/m2_source_inputs.py": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d",
+              "tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+              "tools/platform/capture-collection-conversions.mjs": "8ad104d4c2d1e70be81166a804a07640165c3368ad610af33f161f1c2753ae22",
+              "tools/platform/capture-collection-conversions.test.mjs": "15b894024b9d68c63ab0a156f821046e718563e7818509af1271a1b028291ea9",
+              "tools/platform/data-size-session.mjs": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6",
+              "tools/platform/data-size-session.test.mjs": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7",
+              "tools/platform/module-policy-session.mjs": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3",
+              "tools/platform/package-lock.json": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+              "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+              "tools/platform/resource-session.mjs": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda",
+              "tools/tests/test_collection_conversion_controls_fixtures.py": "5be0579de9de406ccdf7a4038519448a09cecb9144440fa1a24b6d085f8667a5",
+              "tools/tests/test_collection_conversions_fixtures.py": "c470063ce03f8fda670e6418ed74edc7970744e6c3a2b17a54fd92276ece4772",
+              "tools/tests/test_collection_conversions_portable_compare.py": "43555f8db5220a42bbbca4eddd4b3bf57d04e59e3171816a15ffcc5c0286f452",
+              "tools/tests/test_collection_default_contracts_fixtures.py": "9d845b864d8d7700f10ab02cca89df4597abc90b60160e0331e043930c61c893",
+              "tools/tests/test_collection_dynamic_render_fixtures.py": "f2a2b467af555f4524a4a01aa85a7e0b21e34c0f1bb3c700ace6d8d8ce1796d3",
+              "tools/tests/test_collection_lookups_fixtures.py": "2afba66671260a2cdfad3b1980fb2f785412b9bb37caf9d3ad02224517b27975",
+              "tools/tests/test_collection_property_names_fixtures.py": "46a72021657b92c19b01c0f02d0c79ad3b9deb9bb4e0ee381c632bbeaadb5ea7"
+            }
+          },
+          "bytes": 40829,
+          "path": "target/m2/stage62-collection-default-contracts-portable-capture-01/report.json",
+          "rows": 22,
+          "sha256": "f08f0f856bca4aa907788b7767b5865c3907374b29d66f62f31f4243c573fa88"
+        },
+        "collection-dynamic-render": {
+          "binding": {
+            "built_artifacts": {
+              "target/m2/stage62-m1-platform-contract-01/pkl_napi.node": "94bc453562496c972aa7971f8a2b7c8660678207ddcecbe815ebfc6021b38447",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.d.ts": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.js": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm": "b0628d0f7aeda36cb4424728130beed2410e924e16665f224a57b8664a8f7d32",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm.d.ts": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+            },
+            "capture_specific_source_inputs": {},
+            "recorded_external_runtime_inputs": {
+              "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+              "/opt/homebrew/opt/python@3.14/bin/python3.14": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+            },
+            "source_inputs": {
+              "compatibility/collection-conversion-profiles.json": "013b5167ac3c643613df6426d5b3c68d0e4b0f53110c39ec1b0803686db95cb6",
+              "tests/fixtures/m2-collection-dynamic-render/README.md": "f9c18f171483f149a1f163486cd9a04816cd3c4ef48fc97d764e623d04cbea4f",
+              "tests/fixtures/m2-collection-dynamic-render/archive-identity.json": "fb891e4c80d7d1bad418695cdbeba05e0c8d8b19eff232bc159f8047b36d3d5b",
+              "tests/fixtures/m2-collection-dynamic-render/cases.json": "cc2a09354e1e2c7907fd2ad993bff28dd0bf793058c939f5154d549800b66dae",
+              "tests/fixtures/m2-collection-dynamic-render/manifest.json": "e9a983c8f12a3747908532653fa66329a6b4e324e66a90edd7427e45c31e5d79",
+              "tests/fixtures/m2-collection-dynamic-render/module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+              "tests/fixtures/m2-collection-dynamic-render/oracle-evidence.tar.gz": "29344c12e72341e574e8da0e20d56a43818a75872afecb997c6a062d787cd483",
+              "tests/fixtures/m2-collection-dynamic-render/queries.tsv": "d0ab652f9c4f422fc0392c9e1a3adb985ee9f77cb601cf2b9ba72aa2bfe07bdc",
+              "tools/collection_conversion_controls_fixtures.py": "309c86d94353cef1ef5b4138ccdefe710d49911ad67d00c50411324d7216ac0d",
+              "tools/collection_conversion_controls_oracle.py": "7d86029f9f4cd2dbd5feb357292dd7ffeabcfb14f967d693f3458e739c0db9ac",
+              "tools/collection_conversion_profiles.py": "761d5b57c225555d6627066bff59e13ac294e319f65a9520a49ceb35d368cd5c",
+              "tools/collection_conversions_compare.py": "19525891c2992bd4675934aeecf24eb57a6ebc193d4e00dfb931f3d71c9d32fc",
+              "tools/collection_conversions_fixtures.py": "06eb22a1d4c961790d5a67e5a2e05eeddc2154938be0ea83e29f3972c2ddd3e4",
+              "tools/collection_conversions_oracle.py": "fd61e2566ec29789d280114d5ca6613005880c10a32682ced64a16d3189f31ad",
+              "tools/collection_conversions_portable_compare.py": "55457c537e1ea63b9e5ec70cce603468670e20a4a5a9f1e82cd0a36894f6b412",
+              "tools/collection_default_contracts_fixtures.py": "494e1032d4bcbde5c411f326baa28c2a05f362a4e6551b3070cc0edeba4f8389",
+              "tools/collection_default_contracts_oracle.py": "2b640e7db2671e1c7e747e62610ffa7a476ae7f6cfad17d7873cbad28d352a7e",
+              "tools/collection_dynamic_render_fixtures.py": "9d7774c9adf4eb9220120532912ffda3753c024dd64316a781534b7132e6ded2",
+              "tools/collection_dynamic_render_oracle.py": "5802a1dd8077f6c5f00c0b06ba36179c5cc0122bd58a43753aad2a2a4f66deb2",
+              "tools/collection_lookups_fixtures.py": "35874aebf14adea027bf09f9f714632ec5c2c1ca514e71dbf1ccdfb2d973717f",
+              "tools/collection_lookups_oracle.py": "a041aeddad6651bbc9676339e00beddafab79fc26fc05dbda35b434d3c4d1411",
+              "tools/collection_property_names_fixtures.py": "110bf2806cb89a19749a20533cc21c0bbebb2099b0c435dcb322092f0df3958e",
+              "tools/collection_property_names_oracle.py": "122cfe187eddd253922eca5cf9cf752046b12e6d3cf1885071aa5b432c8dd1b5",
+              "tools/data_size_compare.py": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10",
+              "tools/data_size_fixtures.py": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705",
+              "tools/data_size_oracle.py": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803",
+              "tools/data_size_portable_compare.py": "0301d6da719e577142f6799fcea734f0787b1025f85b7a477bda4214bbb2ebc5",
+              "tools/java/CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+              "tools/m1_platforms.py": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af",
+              "tools/m1_semantics.py": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927",
+              "tools/m2_source_inputs.py": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d",
+              "tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+              "tools/platform/capture-collection-conversions.mjs": "8ad104d4c2d1e70be81166a804a07640165c3368ad610af33f161f1c2753ae22",
+              "tools/platform/capture-collection-conversions.test.mjs": "15b894024b9d68c63ab0a156f821046e718563e7818509af1271a1b028291ea9",
+              "tools/platform/data-size-session.mjs": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6",
+              "tools/platform/data-size-session.test.mjs": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7",
+              "tools/platform/module-policy-session.mjs": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3",
+              "tools/platform/package-lock.json": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+              "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+              "tools/platform/resource-session.mjs": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda",
+              "tools/tests/test_collection_conversion_controls_fixtures.py": "5be0579de9de406ccdf7a4038519448a09cecb9144440fa1a24b6d085f8667a5",
+              "tools/tests/test_collection_conversions_fixtures.py": "c470063ce03f8fda670e6418ed74edc7970744e6c3a2b17a54fd92276ece4772",
+              "tools/tests/test_collection_conversions_portable_compare.py": "43555f8db5220a42bbbca4eddd4b3bf57d04e59e3171816a15ffcc5c0286f452",
+              "tools/tests/test_collection_default_contracts_fixtures.py": "9d845b864d8d7700f10ab02cca89df4597abc90b60160e0331e043930c61c893",
+              "tools/tests/test_collection_dynamic_render_fixtures.py": "f2a2b467af555f4524a4a01aa85a7e0b21e34c0f1bb3c700ace6d8d8ce1796d3",
+              "tools/tests/test_collection_lookups_fixtures.py": "2afba66671260a2cdfad3b1980fb2f785412b9bb37caf9d3ad02224517b27975",
+              "tools/tests/test_collection_property_names_fixtures.py": "46a72021657b92c19b01c0f02d0c79ad3b9deb9bb4e0ee381c632bbeaadb5ea7"
+            }
+          },
+          "bytes": 40081,
+          "path": "target/m2/stage62-collection-dynamic-render-portable-capture-01/report.json",
+          "rows": 10,
+          "sha256": "a4137fb6fc31fe42222322fbf481cc53b071c0c2791a6dd40b05c5bc740c22dc"
+        },
+        "collection-lookups": {
+          "binding": {
+            "built_artifacts": {
+              "target/m2/stage62-m1-platform-contract-01/pkl_napi.node": "94bc453562496c972aa7971f8a2b7c8660678207ddcecbe815ebfc6021b38447",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.d.ts": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.js": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm": "b0628d0f7aeda36cb4424728130beed2410e924e16665f224a57b8664a8f7d32",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm.d.ts": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+            },
+            "capture_specific_source_inputs": {},
+            "recorded_external_runtime_inputs": {
+              "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+              "/opt/homebrew/opt/python@3.14/bin/python3.14": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+            },
+            "source_inputs": {
+              "compatibility/collection-conversion-profiles.json": "013b5167ac3c643613df6426d5b3c68d0e4b0f53110c39ec1b0803686db95cb6",
+              "tests/fixtures/m2-collection-lookups/README.md": "d39a8788d9e6af136eb87bfdc584808ae5bae19106e7df506f2444f46b73707b",
+              "tests/fixtures/m2-collection-lookups/archive-identity.json": "8233982adb972ba935708cf435cb9b13288dee4aec531c3b2ed3da6b83606fe1",
+              "tests/fixtures/m2-collection-lookups/cases.json": "a95d66add782756fbd2b0533fe2b4660de872f172abde76f56a712f7b12eab32",
+              "tests/fixtures/m2-collection-lookups/manifest.json": "5690790700f39d0d519742a1ec852f6c71419636030ee3e0d91571ecc1a67cc2",
+              "tests/fixtures/m2-collection-lookups/module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+              "tests/fixtures/m2-collection-lookups/oracle-evidence.tar.gz": "2c75876849e8b9d0f87a72c1b4aa874c0f613d2d40cbdbb3e03fd23d48fa6317",
+              "tests/fixtures/m2-collection-lookups/queries.tsv": "1096a8cd0bdf65b615c104fd25592ddb58fbe4e7ca3b12a3e0f8ac2a5b971f18",
+              "tools/collection_conversion_controls_fixtures.py": "309c86d94353cef1ef5b4138ccdefe710d49911ad67d00c50411324d7216ac0d",
+              "tools/collection_conversion_controls_oracle.py": "7d86029f9f4cd2dbd5feb357292dd7ffeabcfb14f967d693f3458e739c0db9ac",
+              "tools/collection_conversion_profiles.py": "761d5b57c225555d6627066bff59e13ac294e319f65a9520a49ceb35d368cd5c",
+              "tools/collection_conversions_compare.py": "19525891c2992bd4675934aeecf24eb57a6ebc193d4e00dfb931f3d71c9d32fc",
+              "tools/collection_conversions_fixtures.py": "06eb22a1d4c961790d5a67e5a2e05eeddc2154938be0ea83e29f3972c2ddd3e4",
+              "tools/collection_conversions_oracle.py": "fd61e2566ec29789d280114d5ca6613005880c10a32682ced64a16d3189f31ad",
+              "tools/collection_conversions_portable_compare.py": "55457c537e1ea63b9e5ec70cce603468670e20a4a5a9f1e82cd0a36894f6b412",
+              "tools/collection_default_contracts_fixtures.py": "494e1032d4bcbde5c411f326baa28c2a05f362a4e6551b3070cc0edeba4f8389",
+              "tools/collection_default_contracts_oracle.py": "2b640e7db2671e1c7e747e62610ffa7a476ae7f6cfad17d7873cbad28d352a7e",
+              "tools/collection_dynamic_render_fixtures.py": "9d7774c9adf4eb9220120532912ffda3753c024dd64316a781534b7132e6ded2",
+              "tools/collection_dynamic_render_oracle.py": "5802a1dd8077f6c5f00c0b06ba36179c5cc0122bd58a43753aad2a2a4f66deb2",
+              "tools/collection_lookups_fixtures.py": "35874aebf14adea027bf09f9f714632ec5c2c1ca514e71dbf1ccdfb2d973717f",
+              "tools/collection_lookups_oracle.py": "a041aeddad6651bbc9676339e00beddafab79fc26fc05dbda35b434d3c4d1411",
+              "tools/collection_property_names_fixtures.py": "110bf2806cb89a19749a20533cc21c0bbebb2099b0c435dcb322092f0df3958e",
+              "tools/collection_property_names_oracle.py": "122cfe187eddd253922eca5cf9cf752046b12e6d3cf1885071aa5b432c8dd1b5",
+              "tools/data_size_compare.py": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10",
+              "tools/data_size_fixtures.py": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705",
+              "tools/data_size_oracle.py": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803",
+              "tools/data_size_portable_compare.py": "0301d6da719e577142f6799fcea734f0787b1025f85b7a477bda4214bbb2ebc5",
+              "tools/java/CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+              "tools/m1_platforms.py": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af",
+              "tools/m1_semantics.py": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927",
+              "tools/m2_source_inputs.py": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d",
+              "tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+              "tools/platform/capture-collection-conversions.mjs": "8ad104d4c2d1e70be81166a804a07640165c3368ad610af33f161f1c2753ae22",
+              "tools/platform/capture-collection-conversions.test.mjs": "15b894024b9d68c63ab0a156f821046e718563e7818509af1271a1b028291ea9",
+              "tools/platform/data-size-session.mjs": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6",
+              "tools/platform/data-size-session.test.mjs": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7",
+              "tools/platform/module-policy-session.mjs": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3",
+              "tools/platform/package-lock.json": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+              "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+              "tools/platform/resource-session.mjs": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda",
+              "tools/tests/test_collection_conversion_controls_fixtures.py": "5be0579de9de406ccdf7a4038519448a09cecb9144440fa1a24b6d085f8667a5",
+              "tools/tests/test_collection_conversions_fixtures.py": "c470063ce03f8fda670e6418ed74edc7970744e6c3a2b17a54fd92276ece4772",
+              "tools/tests/test_collection_conversions_portable_compare.py": "43555f8db5220a42bbbca4eddd4b3bf57d04e59e3171816a15ffcc5c0286f452",
+              "tools/tests/test_collection_default_contracts_fixtures.py": "9d845b864d8d7700f10ab02cca89df4597abc90b60160e0331e043930c61c893",
+              "tools/tests/test_collection_dynamic_render_fixtures.py": "f2a2b467af555f4524a4a01aa85a7e0b21e34c0f1bb3c700ace6d8d8ce1796d3",
+              "tools/tests/test_collection_lookups_fixtures.py": "2afba66671260a2cdfad3b1980fb2f785412b9bb37caf9d3ad02224517b27975",
+              "tools/tests/test_collection_property_names_fixtures.py": "46a72021657b92c19b01c0f02d0c79ad3b9deb9bb4e0ee381c632bbeaadb5ea7"
+            }
+          },
+          "bytes": 43476,
+          "path": "target/m2/stage62-collection-lookups-portable-capture-01/report.json",
+          "rows": 133,
+          "sha256": "ea57d90079ffe9b0baed9dc15bcc863c69a717734b6b20fbd404a4975e5b749c"
+        },
+        "collection-property-names": {
+          "binding": {
+            "built_artifacts": {
+              "target/m2/stage62-m1-platform-contract-01/pkl_napi.node": "94bc453562496c972aa7971f8a2b7c8660678207ddcecbe815ebfc6021b38447",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.d.ts": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.js": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm": "b0628d0f7aeda36cb4424728130beed2410e924e16665f224a57b8664a8f7d32",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm.d.ts": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+            },
+            "capture_specific_source_inputs": {},
+            "recorded_external_runtime_inputs": {
+              "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+              "/opt/homebrew/opt/python@3.14/bin/python3.14": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+            },
+            "source_inputs": {
+              "compatibility/collection-conversion-profiles.json": "013b5167ac3c643613df6426d5b3c68d0e4b0f53110c39ec1b0803686db95cb6",
+              "tests/fixtures/m2-collection-property-names/README.md": "16f63734f0ccf12671d76abf0ac0c1f4782eeb03fd666866a4932454f282f100",
+              "tests/fixtures/m2-collection-property-names/archive-identity.json": "50d0a0226a5938e685e64ca3c6132f4c33b704e7eafe43fb5e1b5356a1074d1f",
+              "tests/fixtures/m2-collection-property-names/cases.json": "341f6b953b8dcd39e623dc6d1a04a0ac0a2aa786f7f13dce7f6f81a98bba50b4",
+              "tests/fixtures/m2-collection-property-names/manifest.json": "fbf1a3ab158b74d06cb1d41bd42c47d392f68d239ad66ffe29a1a2a0c4ab5c0f",
+              "tests/fixtures/m2-collection-property-names/module.pkl": "7f80ba30b4248cff7cca4b036bde2f5a7f3a215408765e622b2b124eb5a5b1ce",
+              "tests/fixtures/m2-collection-property-names/oracle-evidence.tar.gz": "4fd0bab6188625485f311e592a4e02303ddfcf05d63a86d9c30ec668ed875ac2",
+              "tests/fixtures/m2-collection-property-names/queries.tsv": "59e7145df48a51493f10fb16ea9093711c18e9ff50a30a67c3f81043a0b1b239",
+              "tools/collection_conversion_controls_fixtures.py": "309c86d94353cef1ef5b4138ccdefe710d49911ad67d00c50411324d7216ac0d",
+              "tools/collection_conversion_controls_oracle.py": "7d86029f9f4cd2dbd5feb357292dd7ffeabcfb14f967d693f3458e739c0db9ac",
+              "tools/collection_conversion_profiles.py": "761d5b57c225555d6627066bff59e13ac294e319f65a9520a49ceb35d368cd5c",
+              "tools/collection_conversions_compare.py": "19525891c2992bd4675934aeecf24eb57a6ebc193d4e00dfb931f3d71c9d32fc",
+              "tools/collection_conversions_fixtures.py": "06eb22a1d4c961790d5a67e5a2e05eeddc2154938be0ea83e29f3972c2ddd3e4",
+              "tools/collection_conversions_oracle.py": "fd61e2566ec29789d280114d5ca6613005880c10a32682ced64a16d3189f31ad",
+              "tools/collection_conversions_portable_compare.py": "55457c537e1ea63b9e5ec70cce603468670e20a4a5a9f1e82cd0a36894f6b412",
+              "tools/collection_default_contracts_fixtures.py": "494e1032d4bcbde5c411f326baa28c2a05f362a4e6551b3070cc0edeba4f8389",
+              "tools/collection_default_contracts_oracle.py": "2b640e7db2671e1c7e747e62610ffa7a476ae7f6cfad17d7873cbad28d352a7e",
+              "tools/collection_dynamic_render_fixtures.py": "9d7774c9adf4eb9220120532912ffda3753c024dd64316a781534b7132e6ded2",
+              "tools/collection_dynamic_render_oracle.py": "5802a1dd8077f6c5f00c0b06ba36179c5cc0122bd58a43753aad2a2a4f66deb2",
+              "tools/collection_lookups_fixtures.py": "35874aebf14adea027bf09f9f714632ec5c2c1ca514e71dbf1ccdfb2d973717f",
+              "tools/collection_lookups_oracle.py": "a041aeddad6651bbc9676339e00beddafab79fc26fc05dbda35b434d3c4d1411",
+              "tools/collection_property_names_fixtures.py": "110bf2806cb89a19749a20533cc21c0bbebb2099b0c435dcb322092f0df3958e",
+              "tools/collection_property_names_oracle.py": "122cfe187eddd253922eca5cf9cf752046b12e6d3cf1885071aa5b432c8dd1b5",
+              "tools/data_size_compare.py": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10",
+              "tools/data_size_fixtures.py": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705",
+              "tools/data_size_oracle.py": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803",
+              "tools/data_size_portable_compare.py": "0301d6da719e577142f6799fcea734f0787b1025f85b7a477bda4214bbb2ebc5",
+              "tools/java/CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+              "tools/m1_platforms.py": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af",
+              "tools/m1_semantics.py": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927",
+              "tools/m2_source_inputs.py": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d",
+              "tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+              "tools/platform/capture-collection-conversions.mjs": "8ad104d4c2d1e70be81166a804a07640165c3368ad610af33f161f1c2753ae22",
+              "tools/platform/capture-collection-conversions.test.mjs": "15b894024b9d68c63ab0a156f821046e718563e7818509af1271a1b028291ea9",
+              "tools/platform/data-size-session.mjs": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6",
+              "tools/platform/data-size-session.test.mjs": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7",
+              "tools/platform/module-policy-session.mjs": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3",
+              "tools/platform/package-lock.json": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+              "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+              "tools/platform/resource-session.mjs": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda",
+              "tools/tests/test_collection_conversion_controls_fixtures.py": "5be0579de9de406ccdf7a4038519448a09cecb9144440fa1a24b6d085f8667a5",
+              "tools/tests/test_collection_conversions_fixtures.py": "c470063ce03f8fda670e6418ed74edc7970744e6c3a2b17a54fd92276ece4772",
+              "tools/tests/test_collection_conversions_portable_compare.py": "43555f8db5220a42bbbca4eddd4b3bf57d04e59e3171816a15ffcc5c0286f452",
+              "tools/tests/test_collection_default_contracts_fixtures.py": "9d845b864d8d7700f10ab02cca89df4597abc90b60160e0331e043930c61c893",
+              "tools/tests/test_collection_dynamic_render_fixtures.py": "f2a2b467af555f4524a4a01aa85a7e0b21e34c0f1bb3c700ace6d8d8ce1796d3",
+              "tools/tests/test_collection_lookups_fixtures.py": "2afba66671260a2cdfad3b1980fb2f785412b9bb37caf9d3ad02224517b27975",
+              "tools/tests/test_collection_property_names_fixtures.py": "46a72021657b92c19b01c0f02d0c79ad3b9deb9bb4e0ee381c632bbeaadb5ea7"
+            }
+          },
+          "bytes": 40477,
+          "path": "target/m2/stage62-collection-property-names-portable-capture-01/report.json",
+          "rows": 26,
+          "sha256": "7914f3b0e619c425544f07387a3224205d35772a179774dcef721b94081a246f"
+        },
+        "data-size": {
+          "binding": {
+            "built_artifacts": {
+              "target/m2/stage62-m1-platform-contract-01/pkl_napi.node": "94bc453562496c972aa7971f8a2b7c8660678207ddcecbe815ebfc6021b38447",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.d.ts": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.js": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm": "b0628d0f7aeda36cb4424728130beed2410e924e16665f224a57b8664a8f7d32",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm.d.ts": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+            },
+            "capture_specific_source_inputs": {
+              "tools/java/DataSizeSplitOracle.java": "a4389bb16f2cc784288dd79859afb2991ac574ac84f63319ad56c583f91cabbb"
+            },
+            "recorded_external_runtime_inputs": {
+              "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+              "/opt/homebrew/opt/python@3.14/bin/python3.14": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+            },
+            "source_inputs": {
+              "tests/fixtures/m2-data-size/README.md": "60bb0e83119c985ca6fec89f428859a5ae9a31d199e975641bde5b409d8132b7",
+              "tests/fixtures/m2-data-size/archive-identity.json": "d0393863471e38e555a949661682ba837b1caf7def9909cb126699f9cf760c9c",
+              "tests/fixtures/m2-data-size/cases.json": "0e6f86ac0c9da84e7dce1b622bd99e2577b24cae4cf921ece7b6ef02a6a18a39",
+              "tests/fixtures/m2-data-size/manifest.json": "b6ec2a7fb2623cf3bbdac22dcb3a268b710c5203bee4a48b12188e0ab82f9ed2",
+              "tests/fixtures/m2-data-size/module.pkl": "fba4e81343683bbe433660e168905537fbd7d6b0dd44699e2b61b321b0a23982",
+              "tests/fixtures/m2-data-size/oracle-evidence.tar.gz": "51e14a2c80836141c61a9bbb18aaa708e6a963c238132854e55e7bf6493c6b8e",
+              "tests/fixtures/m2-data-size/queries.tsv": "2946ae533b25cb6ca76ab8694cd866cfb1781dfc9ec29b0c9584a28229ac4728",
+              "tools/data_size_fixtures.py": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705",
+              "tools/data_size_oracle.py": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803",
+              "tools/platform/capture-data-size.mjs": "66c77ba1d51ed6ee18373214656d83b7ac2129ebe1cd885a215c184fd260c962",
+              "tools/platform/capture-data-size.test.mjs": "5da9453339d18cdd79b473ad7abc4ef95f8fee23288d28d7d6e3f800cc29e3a5",
+              "tools/platform/data-size-session.mjs": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6",
+              "tools/platform/data-size-session.test.mjs": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7",
+              "tools/platform/module-policy-session.mjs": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3",
+              "tools/platform/package-lock.json": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+              "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+              "tools/platform/resource-session.mjs": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda"
+            }
+          },
+          "bytes": 32121,
+          "path": "target/m2/stage62-data-size-portable-capture-01/report.json",
+          "rows": 255,
+          "sha256": "fd2f37377bb57a9ae838e86b3f23ae863db816352464558e98c48dc6f651764b"
+        },
+        "duration-values": {
+          "binding": {
+            "built_artifacts": {
+              "target/m2/stage62-m1-platform-contract-01/pkl_napi.node": "94bc453562496c972aa7971f8a2b7c8660678207ddcecbe815ebfc6021b38447",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.d.ts": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.js": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm": "b0628d0f7aeda36cb4424728130beed2410e924e16665f224a57b8664a8f7d32",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm.d.ts": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+            },
+            "capture_specific_source_inputs": {},
+            "recorded_external_runtime_inputs": {
+              "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+              "/opt/homebrew/opt/python@3.14/bin/python3.14": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+            },
+            "source_inputs": {
+              "tests/fixtures/m2-duration-values/README.md": "14ac89d33e6391a6e2d53d1e975f3693d1ded9419d76ac9f38809bdd5593f2e1",
+              "tests/fixtures/m2-duration-values/archive-identity.json": "0a1bab52d84d085d63e53e635ab7286eb004d023c7db2fe03759e58348bf776a",
+              "tests/fixtures/m2-duration-values/cases.json": "5350939174115c15e671547ffa6e9d3eafb57d464b4a35fcbce4c6344deda7bb",
+              "tests/fixtures/m2-duration-values/manifest.json": "663a7d42043d9bb5c8add6598d5054b9521ad764f2b57aab67936a14398762b2",
+              "tests/fixtures/m2-duration-values/module.pkl": "0225905b404e3290b4ea72c104128d91f4f89451ce721b18b227fe062c0764fc",
+              "tests/fixtures/m2-duration-values/oracle-evidence.tar.gz": "7250661447adfeabdc5134ec883b786c90c8698e1260b8150b5492940cff59f7",
+              "tests/fixtures/m2-duration-values/queries.tsv": "b81f94def71ad51bedce0a3368a8c17465df0fc69c210233b63d358af7e88c85",
+              "tools/data_size_compare.py": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10",
+              "tools/data_size_fixtures.py": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705",
+              "tools/data_size_oracle.py": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803",
+              "tools/data_size_portable_compare.py": "0301d6da719e577142f6799fcea734f0787b1025f85b7a477bda4214bbb2ebc5",
+              "tools/duration_values_compare.py": "f7a8dce00facd789eb6ccadeb3385335ac0694dfcee24a873e0596c4c49da79b",
+              "tools/duration_values_fixtures.py": "1c72bffb64f27442a53c88d1cf416eb86d98107b401ff98429d3a8596cf84a83",
+              "tools/duration_values_oracle.py": "b98fc012e36286addd1fc135f2957d127ef9c7d4610905fd510b5d8e0a71405c",
+              "tools/duration_values_portable_compare.py": "f1af39b8be56649dddc70a35c8d178b3b641fde7f1216d0c510d431f17219d2c",
+              "tools/java/DurationValuesOracle.java": "a43092f36f9a476af1061b0d83b292a55137b0e93d3b8f12df0d22ba5819d54c",
+              "tools/m1_platforms.py": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af",
+              "tools/m1_semantics.py": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927",
+              "tools/m2_source_inputs.py": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d",
+              "tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+              "tools/platform/capture-duration-values.mjs": "c977fbe98ed1ed47de99b28f878e8929bc38bd72660257f5a467fad46846f25f",
+              "tools/platform/capture-duration-values.test.mjs": "a71bd7f187dd41a4f6a9b6449fea01351eac9d005b39a0128b766af0c8a2bcfd",
+              "tools/platform/data-size-session.mjs": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6",
+              "tools/platform/data-size-session.test.mjs": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7",
+              "tools/platform/module-policy-session.mjs": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3",
+              "tools/platform/package-lock.json": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+              "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+              "tools/platform/resource-session.mjs": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda",
+              "tools/tests/test_duration_values_fixtures.py": "686a86a9b29c738c1357bc59048674775ccf65f98fd6db7c0e7d1657a78d5f14",
+              "tools/tests/test_duration_values_portable_compare.py": "63f59dc670a813b7f01353945426ea054f0a4b26162e539eab97b0352201d841"
+            }
+          },
+          "bytes": 36561,
+          "path": "target/m2/stage62-duration-values-portable-capture-01/report.json",
+          "rows": 274,
+          "sha256": "191bff1c497c0f547dd7a32daa615215c18e97b5c8f143538e5a34a998238dcd"
+        },
+        "int-seq-values": {
+          "binding": {
+            "built_artifacts": {
+              "target/m2/stage62-m1-platform-contract-01/pkl_napi.node": "94bc453562496c972aa7971f8a2b7c8660678207ddcecbe815ebfc6021b38447",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.d.ts": "ef804fc901e52f04e417566852a4f0e489fa5b1d2636eaa7b5ae148305993f47",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm.js": "c74f8613559154b8fd633b809757aee12c59f5651b12c53ca3b73839bb0145bc",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm": "b0628d0f7aeda36cb4424728130beed2410e924e16665f224a57b8664a8f7d32",
+              "target/m2/stage62-m1-platform-contract-01/wasm/pkl_wasm_bg.wasm.d.ts": "73c18ac5d8d13ad8e9828a4e25590e2d6e2eb105df6faabb2ed20fb613c67cd8"
+            },
+            "capture_specific_source_inputs": {},
+            "recorded_external_runtime_inputs": {
+              "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright-core/package.json": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6",
+              "/Users/cody.ij.hwang/Projects/pkl-rs/tools/platform/node_modules/playwright/package.json": "313d23ce667d93962d3a1ab4be80908cefe840e4d9e48f1cd5863b91f65e8e39",
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+              "/opt/homebrew/opt/python@3.14/bin/python3.14": "7ebde552773a4045532637b114d645a313e045ac07b26f5e520bf039f1e34063"
+            },
+            "source_inputs": {
+              "tests/fixtures/m2-int-seq-values/README.md": "5b76bc9370e8a4c318b945a6f599d88df561cf0b93e0e5e6b0b75ef627f106bf",
+              "tests/fixtures/m2-int-seq-values/archive-identity.json": "d31df1cdebf558bd075b044d3ef18d4b5701182b3878eb5b4a0744068ea8fecd",
+              "tests/fixtures/m2-int-seq-values/cases.json": "ee7a51d9e6908ee3699a0d96b5b58df4c3aafdd0f76042b51afec1078b270bf4",
+              "tests/fixtures/m2-int-seq-values/export-cases.json": "441c5ae52d97039b461710423ac45693f1489cdf1b5f7fb52a8468d313099036",
+              "tests/fixtures/m2-int-seq-values/export-queries.tsv": "a3413d27cef901171b4bceb40a0c3ecf29960480dc298957f877022b3f19688b",
+              "tests/fixtures/m2-int-seq-values/manifest.json": "5f5b5c7632dd7bdc031b05e2cb7a9550876b54c94d7dc07dcdf6c3e156010b40",
+              "tests/fixtures/m2-int-seq-values/module.pkl": "3a8947ed64bfbbdfb08014751757a76d40ceed52870318328da43abcac6e458e",
+              "tests/fixtures/m2-int-seq-values/oracle-evidence.tar.gz": "7e8ce6e9b4bd05174570115f8d3cc02d7e286d54f8a24830d1fe95a9b7dbd89b",
+              "tests/fixtures/m2-int-seq-values/queries.tsv": "080d8515431599bfb68dce0967c808f7db426a69d37fd55dc613495b7e8d4e81",
+              "tools/data_size_compare.py": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10",
+              "tools/data_size_fixtures.py": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705",
+              "tools/data_size_oracle.py": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803",
+              "tools/data_size_portable_compare.py": "0301d6da719e577142f6799fcea734f0787b1025f85b7a477bda4214bbb2ebc5",
+              "tools/int_seq_values_compare.py": "436e10a36facdc5e8510222e5d7ac110f8f31062e3da305facfd8b1c9d7c82b9",
+              "tools/int_seq_values_fixtures.py": "1d13e803e19286494d599bdd8697dd14dc3a87397f4d42f1fba3c1cd738a6946",
+              "tools/int_seq_values_oracle.py": "3be0934965923e37c8c28d907303df6f59d3b0686273a813c6406e85851e7dcb",
+              "tools/int_seq_values_portable_compare.py": "79ca88b826432035d6ad46ff1590c1da9f2c41e4a79c875575f0d43c8a000979",
+              "tools/java/IntSeqValuesOracle.java": "fcd4e27282787ca5b7b454d0f0df999805ea7c301b32916962085e6257755d6d",
+              "tools/m1_platforms.py": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af",
+              "tools/m1_semantics.py": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927",
+              "tools/m2_source_inputs.py": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d",
+              "tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+              "tools/platform/capture-int-seq-values.mjs": "0bdc659b4557d4784aae45ce0df8117ed05104a83a773cdaef849ad7c88c8a96",
+              "tools/platform/capture-int-seq-values.test.mjs": "78978577bfed8c598c6aa3c6ebb9931e0c85df209b785d56b2682beb86214125",
+              "tools/platform/data-size-session.mjs": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6",
+              "tools/platform/data-size-session.test.mjs": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7",
+              "tools/platform/module-policy-session.mjs": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3",
+              "tools/platform/package-lock.json": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+              "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+              "tools/platform/resource-session.mjs": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda",
+              "tools/tests/test_int_seq_values_fixtures.py": "e1aaea16ea06ae9039272cf32e222c0408ba93a274cca3a045a049894adacd88",
+              "tools/tests/test_int_seq_values_portable_compare.py": "1fe9dd2f7c42e2a0d814fcdee3e20359e9356d2f97bd332cd9058508b0f8d85f"
+            }
+          },
+          "bytes": 39992,
+          "path": "target/m2/stage62-int-seq-values-portable-capture-01/report.json",
+          "rows": 237,
+          "sha256": "de2ffbbea85dfaba860a15fe8455782fd81ba575cdb6191fe259908ed8334cbd"
+        }
+      }
+    },
+    "category_statuses": {
+      "comparison_wrapper": {
+        "archived_execution_tool_not_B": 3,
+        "matches_B": 720
+      },
+      "data_size_regression": {
+        "archived_execution_tool_not_B": 1,
+        "matches_B": 15
+      },
+      "m1_platforms": {
+        "matches_B": 246
+      },
+      "native_build": {
+        "matches_B": 278
+      },
+      "native_bytes_build": {
+        "matches_B": 278
+      },
+      "native_bytes_fixture": {
+        "matches_B": 7
+      },
+      "native_bytes_tools": {
+        "matches_B": 7
+      },
+      "native_cohort": {
+        "matches_B": 69
+      },
+      "native_collection_conversion_controls_build": {
+        "matches_B": 278
+      },
+      "native_collection_conversion_controls_fixture": {
+        "matches_B": 7
+      },
+      "native_collection_conversion_controls_tools": {
+        "matches_B": 27
+      },
+      "native_collection_conversions_build": {
+        "matches_B": 278
+      },
+      "native_collection_conversions_fixture": {
+        "matches_B": 7
+      },
+      "native_collection_conversions_tools": {
+        "matches_B": 27
+      },
+      "native_collection_default_contracts_build": {
+        "matches_B": 278
+      },
+      "native_collection_default_contracts_fixture": {
+        "matches_B": 7
+      },
+      "native_collection_default_contracts_tools": {
+        "matches_B": 27
+      },
+      "native_collection_dynamic_render_build": {
+        "matches_B": 278
+      },
+      "native_collection_dynamic_render_fixture": {
+        "matches_B": 7
+      },
+      "native_collection_dynamic_render_tools": {
+        "matches_B": 27
+      },
+      "native_collection_lookups_build": {
+        "matches_B": 278
+      },
+      "native_collection_lookups_fixture": {
+        "matches_B": 7
+      },
+      "native_collection_lookups_tools": {
+        "matches_B": 27
+      },
+      "native_collection_property_names_build": {
+        "matches_B": 278
+      },
+      "native_collection_property_names_fixture": {
+        "matches_B": 7
+      },
+      "native_collection_property_names_tools": {
+        "matches_B": 27
+      },
+      "native_duration_build": {
+        "matches_B": 278
+      },
+      "native_duration_fixture": {
+        "matches_B": 7
+      },
+      "native_duration_tools": {
+        "matches_B": 7
+      },
+      "native_intseq_build": {
+        "matches_B": 278
+      },
+      "native_intseq_fixture": {
+        "matches_B": 9
+      },
+      "native_intseq_tools": {
+        "matches_B": 7
+      },
+      "original_conversions": {
+        "matches_B": 4599
+      },
+      "platform_wrapper": {
+        "archived_execution_tool_not_B": 2,
+        "matches_B": 651
+      },
+      "rust_validation": {
+        "historical_document_from_base": 3,
+        "matches_B": 165341
+      },
+      "tool_validation": {
+        "archived_execution_tool_not_B": 1,
+        "matches_B": 1089
+      }
+    },
+    "checkpoint_verification": {
+      "exit_code": 0,
+      "files": {
+        "report.json": {
+          "bytes": 12299,
+          "sha256": "c44a50b1aefd678e3609dc0463776729959296cde7dc31b8bbef84d9109c15ae"
+        },
+        "run.py": {
+          "bytes": 4024,
+          "sha256": "c36db5108a5ad01b5629f9fbbbd8db5238dd9220bf55a413de1fe9d7f7208ffa"
+        },
+        "source-after.json": {
+          "bytes": 2098,
+          "sha256": "3872b2ad303c1d0e476ba1dac18fcd1390c260e4033f44620b9edd82457cb1c8"
+        },
+        "source-before.json": {
+          "bytes": 2098,
+          "sha256": "3872b2ad303c1d0e476ba1dac18fcd1390c260e4033f44620b9edd82457cb1c8"
+        },
+        "stderr.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout.bin": {
+          "bytes": 2515,
+          "sha256": "782efde4491094a9d07e2547d717f8d1a72dc0ea392c69a0fc5264c71e38792c"
+        },
+        "verify.py": {
+          "bytes": 6982,
+          "sha256": "81ed293355c361e6dd511fcd84d4938bb99b3569b4d23e0d227146effe9d6d47"
+        }
+      },
+      "original_assembly_raw_available": false,
+      "path": "target/m2/stage62-checkpoint-verification-01",
+      "read_only": true,
+      "summary": {
+        "base_is_ancestor": true,
+        "checkpoint_declared_identities_checked": 87,
+        "checkpoint_identity": {
+          "bytes": 50057,
+          "path": "reports/m2/stage62-implementation-checkpoint.json",
+          "sha256": "601be8c596fcb4d77511bdc5726ab19a621ca2915d19670f5674eb3be2cfb220"
+        },
+        "current_head": "aac28e5b8d7a2182bc3e385410ff12228f246fb0",
+        "groups": {
+          "closeout": {
+            "archive": {
+              "bytes": 17528887,
+              "path": "reports/m2/stage62-closeout-evidence.tar.gz",
+              "sha256": "896646708dd0cb0b0a5aea3cf0af1ec636d6787bd51b3ab92a7194866054adc8"
+            },
+            "full_member_hash_readback": true,
+            "members": 6334,
+            "publication": {
+              "bytes": 1562222,
+              "path": "reports/m2/stage62-closeout-publication.json",
+              "sha256": "3e6fb5496c30173e76c407f0496d6f0eeca92a3075e90b786f4c66616fe89fe1"
+            }
+          },
+          "native": {
+            "archive": {
+              "bytes": 96038306,
+              "path": "reports/m2/stage62-native-evidence.tar.gz",
+              "sha256": "5e5d768b5afe5a5e735490f263c590d1ee3d946b503d39feac01c3c99f5a867a"
+            },
+            "full_member_hash_readback": true,
+            "members": 37445,
+            "publication": {
+              "bytes": 9258642,
+              "path": "reports/m2/stage62-native-publication.json",
+              "sha256": "a194581a4d4dd48f252289b6d4c34394380da87b3c7e99726d850023d7a3f7b6"
+            }
+          },
+          "platform": {
+            "archive": {
+              "bytes": 15777951,
+              "path": "reports/m2/stage62-platform-evidence.tar.gz",
+              "sha256": "3ed9c1814794171e484386962aebe8661b6183fb249245da590fbc2f27d616cf"
+            },
+            "full_member_hash_readback": true,
+            "members": 73306,
+            "publication": {
+              "bytes": 18391484,
+              "path": "reports/m2/stage62-platform-publication.json",
+              "sha256": "f6dbe53871849bd6bcc4666b2e33988bc3d1f460e7929df95154abbd08bab61e"
+            }
+          },
+          "validation": {
+            "archive": {
+              "bytes": 44866659,
+              "path": "reports/m2/stage62-validation-evidence.tar.gz",
+              "sha256": "ffcfc8af338d43e72e083572c2c50c940617409922e84d5ecce45fcfabf57b4d"
+            },
+            "full_member_hash_readback": true,
+            "members": 43492,
+            "publication": {
+              "bytes": 9942903,
+              "path": "reports/m2/stage62-validation-publication.json",
+              "sha256": "0218cfdf6656d1af6616360e993edfa15adcb026876f6d1805f7454869c630ba"
+            }
+          }
+        },
+        "independent_review": {
+          "bytes": 2184,
+          "path": "target/m2/stage62-publication-review-01/report.json",
+          "sha256": "0400d3aa2813caf024317db41c1f89c9a796fff0c05fb7403a0a27efdcc31bf8"
+        },
+        "kind": "stage62-later-checkpoint-verification",
+        "limitation": "This is a later read-only verification of existing bytes. Original checkpoint assembly stdout/stderr were not saved as local files.",
+        "member_readback_total": 160577,
+        "original_assembly_raw_available": false,
+        "read_only": true,
+        "recorded_assembly_base": "b262208ccc537af2845d2107226bb4dac0ba7ecf",
+        "schema": 1,
+        "verification_is_later": true
+      },
+      "verification_is_later": true
+    },
+    "copied_source_files_stable": 10446,
+    "deviations": {
+      "comparison_wrapper": [
+        {
+          "B_sha256": null,
+          "expected_sha256": "4e685ed779263f77745c1e200e647939e7e9112333e3d9ec41bb659113546500",
+          "path": "target/m2/stage62-comparison-validation-01/run.py",
+          "status": "archived_execution_tool_not_B"
+        },
+        {
+          "B_sha256": null,
+          "expected_sha256": "5f9da349272bab95885c3f4c62392c9dbb7c8a2ccefcbbe1100551f0ceaf1ada",
+          "path": "target/m2/stage62-platform-validation-01/preparation-02.json",
+          "status": "archived_execution_tool_not_B"
+        },
+        {
+          "B_sha256": null,
+          "expected_sha256": "8a8f10686aa37c493335000b9d7da539442f6f20d9e507ac81c0107197b5adaa",
+          "path": "target/m2/stage62-platform-validation-01/run.py",
+          "status": "archived_execution_tool_not_B"
+        }
+      ],
+      "data_size_regression": [
+        {
+          "B_sha256": null,
+          "expected_sha256": "369a2b4c7ad5ee8b0ba8be41623910ca1ca0ff91033bb604ede97ecc03c2646f",
+          "path": "target/m2/stage62-data-size-native-regression-01/run.py",
+          "status": "archived_execution_tool_not_B"
+        }
+      ],
+      "platform_wrapper": [
+        {
+          "B_sha256": null,
+          "expected_sha256": "5f9da349272bab95885c3f4c62392c9dbb7c8a2ccefcbbe1100551f0ceaf1ada",
+          "path": "target/m2/stage62-platform-validation-01/preparation-02.json",
+          "status": "archived_execution_tool_not_B"
+        },
+        {
+          "B_sha256": null,
+          "expected_sha256": "8a8f10686aa37c493335000b9d7da539442f6f20d9e507ac81c0107197b5adaa",
+          "path": "target/m2/stage62-platform-validation-01/run.py",
+          "status": "archived_execution_tool_not_B"
+        }
+      ],
+      "rust_validation": [
+        {
+          "B_sha256": "5aaa260cc7a1ae52b46f419b819856a80478e5206ba048d635168ffbfd78d8db",
+          "expected_sha256": "dad9111cfc87c0a30ff1b1a99b85589e13aedb9034cc1ca7a88b0ce9f90fe92e",
+          "path": "PLAN.md",
+          "status": "historical_document_from_base"
+        },
+        {
+          "B_sha256": "56414dc7353cac15b9b63a1171d912d2500cd122abe63359cf8645fe7032b7bd",
+          "expected_sha256": "d6caecbe520123589aee12fec09fb727b42c0b5878b2ab8b30d4fd9dcc3a0050",
+          "path": "README.md",
+          "status": "historical_document_from_base"
+        },
+        {
+          "B_sha256": "934218dd7dce525f6a726ea946796bdad9f247536aabe9cb4de728f879689fe9",
+          "expected_sha256": "69828868dc16827918db41c29342c32fe3dc08ba72e5efb995260c78c023a032",
+          "path": "docs/m2-language.md",
+          "status": "historical_document_from_base"
+        }
+      ],
+      "tool_validation": [
+        {
+          "B_sha256": null,
+          "expected_sha256": "2720df4d3f632fada36f7470f3b4b0d81fb79c84d964f559f2265f6b605ff0f3",
+          "path": "target/m2/stage62-tool-development-05/run.py",
+          "status": "archived_execution_tool_not_B"
+        }
+      ]
+    },
+    "full_archive_member_counts": {
+      "closeout": 6334,
+      "native": 37445,
+      "platform": 73306,
+      "validation": 43492
+    },
+    "gitlinks": {
+      "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+    },
+    "kind": "actual-Git-object-source-binding-for-Stage62-B",
+    "layout_guard": {
+      "bytes": 7263,
+      "path": "target/m2/stage62-source-binding-03/layout-verified.json",
+      "sha256": "b7cf857c5793588147b1093562bdfd782c1f6eaa027760396d038e94d6a61e50"
+    },
+    "limits": [
+      "Only the four named base document rows may retain verified base Git bytes when they differ from B; actual rows are counted and are not B-current source claims.",
+      "Named generated execution wrappers are separately proved by exact bytes in committed B evidence archives; they are absent from B source paths and are never counted as B-current sources.",
+      "Earlier failed compiler, build, and tooling attempts remain historical evidence; only the declared final source snapshots are compared with B-current bytes.",
+      "Four recorded portable-capture-specific sources lie outside the platform-wrapper snapshot; each receives a separate actual B mode/OID/framed-blob SHA/size proof, and the original 36 source manifests remain unchanged.",
+      "Original checkpoint assembly stdout/stderr were not saved. The separately captured later read-only verification checks existing checkpoint/publication bytes; it is not a capture or reconstruction of the original assembly execution.",
+      "Source binding does not rerun evaluators, builds or tests and does not establish full API, whole M2 or performance compatibility."
+    ],
+    "manifests": {
+      "comparison_wrapper": {
+        "bytes": 113167,
+        "path": "target/m2/stage62-comparison-validation-01/source-before.json",
+        "rows": 723,
+        "sha256": "d9cd73a41b7bf8ca60f917b347340473ebaa8455608087d3f44f5ca6c6cf7548"
+      },
+      "data_size_regression": {
+        "bytes": 2399,
+        "path": "target/m2/stage62-data-size-native-regression-01/source-before.json",
+        "rows": 16,
+        "sha256": "9f7bd96ec4c71ae2a0b15c8e695b1f3fbc936dfc5cb88203905099b5136da49a"
+      },
+      "m1_platforms": {
+        "bytes": 28121,
+        "path": "target/m2/stage62-m1-platform-contract-01/sources.json",
+        "rows": 246,
+        "sha256": "9b66534e40c9eebd0dd99d22cedc42c43fc2d494056f2cbcccba239d04a80585"
+      },
+      "native_build": {
+        "bytes": 44168,
+        "path": "target/m2/stage62-native-build-01/source-before.json",
+        "rows": 278,
+        "sha256": "8f9bbd2f8d5bdac77a86bc8e2befc4a46423959cd9f182597ed588a3060df4f9"
+      },
+      "native_bytes_build": {
+        "bytes": 44168,
+        "path": "target/m2/stage62-bytes-native-regression-01/build/source-before.json",
+        "rows": 278,
+        "sha256": "8f9bbd2f8d5bdac77a86bc8e2befc4a46423959cd9f182597ed588a3060df4f9"
+      },
+      "native_bytes_fixture": {
+        "bytes": 1176218,
+        "path": "target/m2/stage62-bytes-native-regression-01/inventory.json",
+        "rows": 7,
+        "sha256": "b412cfdcb8ea6103cdcb47df58898352c33119a1373c026a25630b742382bf76"
+      },
+      "native_bytes_tools": {
+        "bytes": 132207,
+        "path": "target/m2/stage62-bytes-native-regression-01/report.json",
+        "rows": 7,
+        "sha256": "fa5d27497626d23f82c6fee58d79aa056753591445a111f62e093cdec1b5857e"
+      },
+      "native_cohort": {
+        "bytes": 11369,
+        "path": "target/m2/stage62-native-acquisition-01/cohort-before.json",
+        "rows": 69,
+        "sha256": "e1d137b6a9a6ac9dcfb60ffe571f16f62719c87e5685b22b556bc38cffc4199f"
+      },
+      "native_collection_conversion_controls_build": {
+        "bytes": 44168,
+        "path": "target/m2/stage62-collection-conversion-controls-native-comparison-01/build/source-before.json",
+        "rows": 278,
+        "sha256": "8f9bbd2f8d5bdac77a86bc8e2befc4a46423959cd9f182597ed588a3060df4f9"
+      },
+      "native_collection_conversion_controls_fixture": {
+        "bytes": 281831,
+        "path": "target/m2/stage62-collection-conversion-controls-native-comparison-01/inventory.json",
+        "rows": 7,
+        "sha256": "28a6d602db2a80cbb64cd45ad7d4b9fe871a5f354fca2e6347e8c3aa90a8abb8"
+      },
+      "native_collection_conversion_controls_tools": {
+        "bytes": 76165,
+        "path": "target/m2/stage62-collection-conversion-controls-native-comparison-01/report.json",
+        "rows": 27,
+        "sha256": "71801de0ac84aa077c956fb0a01faf7c851f23930ae91e5180dec70dd9fd6654"
+      },
+      "native_collection_conversions_build": {
+        "bytes": 44168,
+        "path": "target/m2/stage62-collection-conversions-native-comparison-01/build/source-before.json",
+        "rows": 278,
+        "sha256": "8f9bbd2f8d5bdac77a86bc8e2befc4a46423959cd9f182597ed588a3060df4f9"
+      },
+      "native_collection_conversions_fixture": {
+        "bytes": 955357,
+        "path": "target/m2/stage62-collection-conversions-native-comparison-01/inventory.json",
+        "rows": 7,
+        "sha256": "05aaacfa18886cc4267d828db2349c208cac5fb09dad248ca5d16d5a71a76e75"
+      },
+      "native_collection_conversions_tools": {
+        "bytes": 123703,
+        "path": "target/m2/stage62-collection-conversions-native-comparison-01/report.json",
+        "rows": 27,
+        "sha256": "ee906b2b96ed564bffa016cef6a9b58d7269a6b9b048611009d878d7ead2207f"
+      },
+      "native_collection_default_contracts_build": {
+        "bytes": 44168,
+        "path": "target/m2/stage62-collection-default-contracts-native-comparison-01/build/source-before.json",
+        "rows": 278,
+        "sha256": "8f9bbd2f8d5bdac77a86bc8e2befc4a46423959cd9f182597ed588a3060df4f9"
+      },
+      "native_collection_default_contracts_fixture": {
+        "bytes": 141374,
+        "path": "target/m2/stage62-collection-default-contracts-native-comparison-01/inventory.json",
+        "rows": 7,
+        "sha256": "fddc81dd08b49e47e466fb6d6cb50a6db607352d9cfc20b25cd5646d68f4ec0b"
+      },
+      "native_collection_default_contracts_tools": {
+        "bytes": 66115,
+        "path": "target/m2/stage62-collection-default-contracts-native-comparison-01/report.json",
+        "rows": 27,
+        "sha256": "a07f217c47b55e80dad1d61a14fa3e74ccc9f23bb6fbbbe38f1d89aff26d112f"
+      },
+      "native_collection_dynamic_render_build": {
+        "bytes": 44168,
+        "path": "target/m2/stage62-collection-dynamic-render-native-comparison-01/build/source-before.json",
+        "rows": 278,
+        "sha256": "8f9bbd2f8d5bdac77a86bc8e2befc4a46423959cd9f182597ed588a3060df4f9"
+      },
+      "native_collection_dynamic_render_fixture": {
+        "bytes": 92869,
+        "path": "target/m2/stage62-collection-dynamic-render-native-comparison-01/inventory.json",
+        "rows": 7,
+        "sha256": "0ed08855c78134a1825598c00920d643f766daed9e00148735f0e60296397fe5"
+      },
+      "native_collection_dynamic_render_tools": {
+        "bytes": 62511,
+        "path": "target/m2/stage62-collection-dynamic-render-native-comparison-01/report.json",
+        "rows": 27,
+        "sha256": "0ec5c44f819aab11859ea3a0e604c73ba1da4e49d795eab3576ef90b67c14243"
+      },
+      "native_collection_lookups_build": {
+        "bytes": 44168,
+        "path": "target/m2/stage62-collection-lookups-native-comparison-01/build/source-before.json",
+        "rows": 278,
+        "sha256": "8f9bbd2f8d5bdac77a86bc8e2befc4a46423959cd9f182597ed588a3060df4f9"
+      },
+      "native_collection_lookups_fixture": {
+        "bytes": 564348,
+        "path": "target/m2/stage62-collection-lookups-native-comparison-01/inventory.json",
+        "rows": 7,
+        "sha256": "1b5c57206282125a35f6bf875332be7a0b77b75ce31c449921d37bb6361c4afa"
+      },
+      "native_collection_lookups_tools": {
+        "bytes": 95978,
+        "path": "target/m2/stage62-collection-lookups-native-comparison-01/report.json",
+        "rows": 27,
+        "sha256": "ee3b12cc490de43b225e39d473eae5f562d7adb57cd4848a87a0ca75735d3a8c"
+      },
+      "native_collection_property_names_build": {
+        "bytes": 44168,
+        "path": "target/m2/stage62-collection-property-names-native-comparison-01/build/source-before.json",
+        "rows": 278,
+        "sha256": "8f9bbd2f8d5bdac77a86bc8e2befc4a46423959cd9f182597ed588a3060df4f9"
+      },
+      "native_collection_property_names_fixture": {
+        "bytes": 151679,
+        "path": "target/m2/stage62-collection-property-names-native-comparison-01/inventory.json",
+        "rows": 7,
+        "sha256": "2f8b2558f694be1a63663e5a253a2c42b23bc41b766905f2e152b1c940b9ee68"
+      },
+      "native_collection_property_names_tools": {
+        "bytes": 66671,
+        "path": "target/m2/stage62-collection-property-names-native-comparison-01/report.json",
+        "rows": 27,
+        "sha256": "929742af6fa9ec195a9d1b12a830d57ed775b1b106e02950ac9ebca86d4e7c19"
+      },
+      "native_duration_build": {
+        "bytes": 44168,
+        "path": "target/m2/stage62-duration-native-regression-01/build/source-before.json",
+        "rows": 278,
+        "sha256": "8f9bbd2f8d5bdac77a86bc8e2befc4a46423959cd9f182597ed588a3060df4f9"
+      },
+      "native_duration_fixture": {
+        "bytes": 1047547,
+        "path": "target/m2/stage62-duration-native-regression-01/inventory.json",
+        "rows": 7,
+        "sha256": "fd43d5fbe3d6eee8553db0ed8dab5ed613fdbfd0ffe9b00bb46d3b6a3cabd46e"
+      },
+      "native_duration_tools": {
+        "bytes": 122588,
+        "path": "target/m2/stage62-duration-native-regression-01/report.json",
+        "rows": 7,
+        "sha256": "017c6fa9bb2993a009ecbb44df8d0a287785a9d4593a9364b6576ba79292513d"
+      },
+      "native_intseq_build": {
+        "bytes": 44168,
+        "path": "target/m2/stage62-intseq-native-comparison-01/build/source-before.json",
+        "rows": 278,
+        "sha256": "8f9bbd2f8d5bdac77a86bc8e2befc4a46423959cd9f182597ed588a3060df4f9"
+      },
+      "native_intseq_fixture": {
+        "bytes": 927674,
+        "path": "target/m2/stage62-intseq-native-comparison-01/inventory.json",
+        "rows": 9,
+        "sha256": "b98b37e9eb5711e04e087448f9e97320f6e7a7befcd4a34245af8670a611da05"
+      },
+      "native_intseq_tools": {
+        "bytes": 114409,
+        "path": "target/m2/stage62-intseq-native-comparison-01/report.json",
+        "rows": 7,
+        "sha256": "06f6e9c6c7059c142d688db23201febc25c7aa5421b0332db9501f2ae53fb519"
+      },
+      "original_conversions": {
+        "bytes": 621783,
+        "path": "target/m2/stage62-original-conversions-01/sources.json",
+        "rows": 4599,
+        "sha256": "061db7123236cedb712a2a3f5aa3f11f9206d32225ff33b1c38df4d59c702323"
+      },
+      "platform_wrapper": {
+        "bytes": 102466,
+        "path": "target/m2/stage62-platform-validation-01/source-before.json",
+        "rows": 653,
+        "sha256": "74f9cb826835b21c8e7eb697b6b86e705d1e1d2ff35e3478fa00f5fdc9719469"
+      },
+      "rust_validation": {
+        "bytes": 108261429,
+        "path": "target/m2/stage62-rust-validation-02/sources.json",
+        "rows": 165344,
+        "sha256": "5fedf7434652044f44641f7e4b6d621b239f98df36d54dd1152c6d062321dba9"
+      },
+      "tool_validation": {
+        "bytes": 205664,
+        "path": "target/m2/stage62-tool-development-05/source-before.json",
+        "rows": 1090,
+        "sha256": "03ad7badb2abfc104333e7eaef2f5bfb6d8e61d0ecaa42f10d9f056c75d9f175"
+      }
+    },
+    "method": "Actual base, pinned submodule and B tree OIDs/modes; SHA-1-framed Git blob reads and raw SHA-256/size; copied source bytes, required report controls and B archive members reread.",
+    "origin_counts": {
+      "base_git": 163250,
+      "captured_file": 22,
+      "pinned_submodule_git": 2072
+    },
+    "original_case_count": 90,
+    "original_checkpoint_assembly_raw_available": false,
+    "original_comparison": {
+      "selected_cases": 90,
+      "selected_status": "failed",
+      "status_counts": {
+        "candidate-unsupported": 32,
+        "mismatch": 22,
+        "oracle-error": 1,
+        "pass": 35
+      }
+    },
+    "original_selected_status": "failed",
+    "portable_capture_specific_B_source_proofs": [
+      {
+        "B_bytes": 10015,
+        "B_mode": "100644",
+        "B_oid": "c24c1162ed57442704ee76c18542096709d35463",
+        "B_sha256": "eece049858d8b9c2366d25b2b0ddbd38d915f1c76a25a772d586af62dfda8694",
+        "B_type": "blob",
+        "capture": "any-if-non-null",
+        "capture_report": "target/m2/stage62-any-if-non-null-portable-capture-01/report.json",
+        "independent_copied_source_category": "comparison_wrapper",
+        "path": "tools/tests/test_any_if_non_null_portable_compare.py",
+        "recorded_capture_sha256": "eece049858d8b9c2366d25b2b0ddbd38d915f1c76a25a772d586af62dfda8694",
+        "status": "capture_specific_source_matches_B"
+      },
+      {
+        "B_bytes": 5224,
+        "B_mode": "100644",
+        "B_oid": "3a368152d1928269abaaca9c975977c34c63a48e",
+        "B_sha256": "41ce7097ac9bb3f5bc34e91d43b4b187c023c253cdcee8c9d4ffaab5b9de19b6",
+        "B_type": "blob",
+        "capture": "any-if-non-null",
+        "capture_report": "target/m2/stage62-any-if-non-null-portable-capture-01/report.json",
+        "independent_copied_source_category": "comparison_wrapper",
+        "path": "tools/tests/test_any_if_non_null_fixtures.py",
+        "recorded_capture_sha256": "41ce7097ac9bb3f5bc34e91d43b4b187c023c253cdcee8c9d4ffaab5b9de19b6",
+        "status": "capture_specific_source_matches_B"
+      },
+      {
+        "B_bytes": 3706,
+        "B_mode": "100644",
+        "B_oid": "af3f4dc34ed5c42d7584dd6c510424793368d061",
+        "B_sha256": "107a2111c5cd48e4bfaff3568d134e4e1fca7d70e70726b154fdad8efd3d4969",
+        "B_type": "blob",
+        "capture": "any-if-non-null",
+        "capture_report": "target/m2/stage62-any-if-non-null-portable-capture-01/report.json",
+        "independent_copied_source_category": "comparison_wrapper",
+        "path": "tools/java/AnyIfNonNullOracle.java",
+        "recorded_capture_sha256": "107a2111c5cd48e4bfaff3568d134e4e1fca7d70e70726b154fdad8efd3d4969",
+        "status": "capture_specific_source_matches_B"
+      },
+      {
+        "B_bytes": 7308,
+        "B_mode": "100644",
+        "B_oid": "14ee70ad577c4bd1903febf7d0af8591b4bdaeb5",
+        "B_sha256": "a4389bb16f2cc784288dd79859afb2991ac574ac84f63319ad56c583f91cabbb",
+        "B_type": "blob",
+        "capture": "data-size",
+        "capture_report": "target/m2/stage62-data-size-portable-capture-01/report.json",
+        "independent_copied_source_category": "comparison_wrapper",
+        "path": "tools/java/DataSizeSplitOracle.java",
+        "recorded_capture_sha256": "a4389bb16f2cc784288dd79859afb2991ac574ac84f63319ad56c583f91cabbb",
+        "status": "capture_specific_source_matches_B"
+      }
+    ],
+    "recorded_base_commit": "b262208ccc537af2845d2107226bb4dac0ba7ecf",
+    "recorded_utc": "2026-10-24T14:59:11.143654+00:00",
+    "row_details": {
+      "bytes": 8724417,
+      "path": "target/m2/stage62-source-binding-03/rows.jsonl.gz",
+      "sha256": "feef208fa0379473c83709b8a5476f22b44ee2c4f1ef8333b60de45975dc9124"
+    },
+    "schema": 1,
+    "unique_blob_objects_read": {
+      ".": 13937,
+      "external/pkl": 2951,
+      "external/pkl-pantry": 1
+    },
+    "verified_symlink_sources": [
+      "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked"
+    ]
+  },
+  "evidence_archive": {
+    "bytes": 7980326,
+    "local_artifact_path": "target/m2/stage62-source-binding-03/stage62-source-binding-evidence.tar.gz",
+    "members": 28,
+    "path": "reports/m2/stage62-source-binding-evidence.tar.gz",
+    "sha256": "609298b3a8f1025bb2a020db41cf15db93d1f423afece55c3155a72e63407751"
+  },
+  "full_archive_reread_verified": true,
+  "full_public_api_comparison_passed": false,
+  "original_sources_stable_before_after": true,
+  "performance_targets_achieved": false,
+  "schema": 1,
+  "whole_M2_complete": false
+}

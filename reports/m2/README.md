@@ -49,6 +49,24 @@ groups retain failed and superseded captures, source/artifact identities and
 independent review. Full M2, typed product APIs, other release platforms, and
 the speed and memory targets remain incomplete.
 
+The implementation and its evidence were committed and pushed as
+`aac28e5b8d7a2182bc3e385410ff12228f246fb0`. The separate
+[source binding](stage62-source-binding.json) and
+[binding evidence](stage62-source-binding-evidence.tar.gz) compare actual Git
+objects with the frozen inputs and committed archives. Of the 165,344 Rust
+validation input rows, 165,341 match the implementation commit and three retain
+verified historical document bytes. The 36 source categories, 14 execution
+input proofs, and four capture-specific portable inputs retain their distinct
+provenance; generated execution inputs are not claimed as tracked source files.
+
+The failed first binding attempt remains preserved. Original checkpoint assembly
+stdout and stderr were not saved as local files. A separately recorded later
+read-only verification checks the existing checkpoint and publications; it does
+not reconstruct the original assembly process or rerun language evaluations.
+The [independent binding review](stage62-source-binding-review.json) found no
+discrepancies. Source binding leaves the compatibility failures and full
+milestone gates open.
+
 ### Stage62 collection conversions — independent Java authority
 
 The [Java checkpoint](stage62-java-checkpoint.json) seals 236 ordered public

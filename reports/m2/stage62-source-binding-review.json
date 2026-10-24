@@ -1,0 +1,96 @@
+{
+  "candidate_compatibility_passes_claimed": 0,
+  "evidence": {
+    "PLAN": {
+      "bytes": 366555,
+      "path": "PLAN.md",
+      "sha256": "993891ab4876e5b752cbdf3f744fbe59fcf2c28bcc5396beaf6332e20eb335cf"
+    },
+    "binder_run": {
+      "bytes": 4378,
+      "path": "target/m2/stage62-source-binding-run-02/report.json",
+      "sha256": "ccc5131cd9d1082a121224cce8649d71eb6e701d1a7fde0a01ee32d9a24ce4b6"
+    },
+    "binding_report": {
+      "bytes": 125907,
+      "path": "target/m2/stage62-source-binding-03/report.json",
+      "sha256": "372e9224181959c25b2843b8120afc01bca41292717bdc65812ee75f65e0ba2b"
+    },
+    "later_checkpoint_verification": {
+      "bytes": 12299,
+      "path": "target/m2/stage62-checkpoint-verification-01/report.json",
+      "sha256": "c44a50b1aefd678e3609dc0463776729959296cde7dc31b8bbef84d9109c15ae"
+    },
+    "local_archive": {
+      "bytes": 7980326,
+      "path": "target/m2/stage62-source-binding-03/stage62-source-binding-evidence.tar.gz",
+      "sha256": "609298b3a8f1025bb2a020db41cf15db93d1f423afece55c3155a72e63407751"
+    },
+    "local_publication": {
+      "bytes": 130334,
+      "path": "target/m2/stage62-source-binding-03/stage62-source-binding.json",
+      "sha256": "87b04e8271703b8f69213bc88433f6212043857e255a09dec7398942a828dad0"
+    },
+    "prior_independent_publication_review": {
+      "bytes": 2184,
+      "path": "target/m2/stage62-publication-review-01/report.json",
+      "sha256": "0400d3aa2813caf024317db41c1f89c9a796fff0c05fb7403a0a27efdcc31bf8"
+    },
+    "public_archive": {
+      "bytes": 7980326,
+      "path": "reports/m2/stage62-source-binding-evidence.tar.gz",
+      "sha256": "609298b3a8f1025bb2a020db41cf15db93d1f423afece55c3155a72e63407751"
+    },
+    "public_publication": {
+      "bytes": 130334,
+      "path": "reports/m2/stage62-source-binding.json",
+      "sha256": "87b04e8271703b8f69213bc88433f6212043857e255a09dec7398942a828dad0"
+    },
+    "reports_README": {
+      "bytes": 307492,
+      "path": "reports/m2/README.md",
+      "sha256": "b783185dda95076261f5be623b7eca9a9597b54bba868824a35592276b79221b"
+    },
+    "rows": {
+      "bytes": 8724417,
+      "path": "target/m2/stage62-source-binding-03/rows.jsonl.gz",
+      "sha256": "feef208fa0379473c83709b8a5476f22b44ee2c4f1ef8333b60de45975dc9124"
+    }
+  },
+  "findings": [],
+  "implementation_commit": "aac28e5b8d7a2182bc3e385410ff12228f246fb0",
+  "independent_checks": {
+    "B_git_blob_contents_sha1_sha256_size_verified": 16886,
+    "all_row_B_tree_path_mode_oid_matches": true,
+    "binding_archive_safe_members_full_readback": 28,
+    "binding_rows": 175768,
+    "categories": 36,
+    "copied_source_archive_members_verified": 10446,
+    "generated_wrapper_distinct_paths": 12,
+    "generated_wrapper_proof_entries": 14,
+    "historical_base_document_blobs_verified": 3,
+    "later_checkpoint_verification_is_not_original_assembly": true,
+    "pinned_gitlinks_verified": 2,
+    "portable_capture_specific_B_source_proofs": 4,
+    "public_binding_copies_byte_identical": true,
+    "rust_validation": {
+      "historical_document_from_base": 3,
+      "matches_B": 165341
+    },
+    "status_counts": {
+      "archived_execution_tool_not_B": 7,
+      "historical_document_from_base": 3,
+      "matches_B": 175758
+    }
+  },
+  "retained_limits": [
+    "Original checkpoint assembly stdout/stderr were not saved; later read-only verification is distinct.",
+    "Three Rust validation documents retain exact base Git bytes; they are not B-current source matches.",
+    "Seven manifest rows are generated execution inputs proved from committed evidence archive members, not tracked B source.",
+    "Selected Any Regex and original module failures remain failed; whole M2, full public API and performance targets remain open."
+  ],
+  "reviewed_utc": "2026-10-24T15:03:23.592298+00:00",
+  "schema": 1,
+  "scope": "Independent read-only review of actual Stage62 B source binding, raw process, local/public archive and known limits; no guest execution",
+  "source_stable": true
+}
