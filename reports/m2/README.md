@@ -66,6 +66,20 @@ coverage, and execution-time/peak-memory targets remain open. The inventory's
 4,416 ready rows out of 4,527 are execution mappings, not passing results or
 a completion percentage.
 
+Implementation and all four evidence publications were committed as
+`9e524d2988caa57e9e16733aec8f3f4b17804b94` and pushed to remote `main`.
+The [Git source audit](stage61-source-binding.json) verifies 165,289 runtime
+validation inputs against that commit, with four captured documents separately
+retained from the verified base. Native build inputs (269), M1 inputs (242),
+platform wrapper inputs (573), original-module inputs (4,590), and tool inputs
+(62) match the implementation. The comparison has 642 matching source inputs
+and one generated wrapper proved by its exact committed archive bytes.
+All four implementation archives and 6,408 copied sources were reread; six
+execution wrappers have separate archive proofs. The
+[binding archive](stage61-source-binding-evidence.tar.gz) also preserves the
+checkpoint assembly's raw successful command result. This checks recorded
+provenance and does not rerun evaluation or close any remaining M2 requirement.
+
 ### Stage60 Bytes values — implementation and local comparisons
 
 The [implementation checkpoint](stage60-implementation-checkpoint.json) adds
