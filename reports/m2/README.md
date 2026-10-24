@@ -1,6 +1,6 @@
 # M2 language evidence
 
-### Stage59 Duration values — Java authority and local implementation checks
+### Stage59 Duration values — implementation and local comparisons
 
 Stage 59 adds the shared `Duration` value and VM paths for seven units,
 conversion, arithmetic, ordering, equality and hashed keys, `isoString`,
@@ -40,10 +40,27 @@ unsupported. Three Bytes cases and two Pkl Binary `module.toMap()` cases keep
 their earlier first failures. These original programs have one execution per
 runtime and are distinct from the 274-query sessions. Tool validation passes
 26 unique Python tests normally and under `-O`, plus 17 JavaScript tests;
-the M2 inventory differs only in 49 implementation-link hashes. Platform and
-closeout evidence publication are still pending.
+the M2 inventory differs only in 49 implementation-link hashes.
 Selected results do not establish typed export/API parity, full M2
 compatibility, release-platform coverage, or performance targets.
+
+The [implementation checkpoint](stage59-implementation-checkpoint.json) and
+[validation](stage59-validation-evidence.tar.gz),
+[native](stage59-native-evidence.tar.gz),
+[platform](stage59-platform-evidence.tar.gz), and
+[closeout](stage59-closeout-evidence.tar.gz) archives were committed in
+`dd0c4492c635afacc286c1bbf5ac7877ba517f40`. Every archived member was read back
+and verified. Earlier captures with incomplete tool-source catalogs and the
+failed comparison admission remain separate from the final results.
+
+The [Git source audit](stage59-source-binding.json) binds the final runtime,
+build, platform, original-module and comparison inputs to that implementation
+commit. Rust validation has 165,245 matching inputs and four documents retained
+from the verified base commit. Tool validation has 339 matching inputs and one
+ignored execution wrapper proved by its committed archive bytes, rather than
+a source-tree entry. The failed first audit and corrected audit are preserved
+in the [binding evidence](stage59-source-binding-evidence.tar.gz). This audit
+checks recorded sources and artifacts; it does not rerun evaluation or tests.
 
 The earlier [Stage58 implementation checkpoint](stage58-implementation-checkpoint.json)
 adds inherited `Any.ifNonNull` to the shared runtime, with ordinary lookup,
