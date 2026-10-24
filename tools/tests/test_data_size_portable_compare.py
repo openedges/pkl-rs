@@ -10,6 +10,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import data_size_portable_compare as compare
 
 
+def browser_http_session():
+    return [{'path': path, 'status': 204 if path == '/favicon.ico' else 200}
+            for path in ('/', '/favicon.ico', '/pkl_wasm.js', '/pkl_wasm_bg.wasm',
+                         '/session.mjs', '/module-policy-session.mjs',
+                         '/resource-session.mjs')]
+
+
 class PortableComparisonTests(unittest.TestCase):
     def setUp(self):
         temp = tempfile.TemporaryDirectory()
@@ -192,16 +199,51 @@ class PortableComparisonTests(unittest.TestCase):
                 compare.verify_browser_launch({**row, 'launchOptions': options})
 
     def test_browser_http_log_preserves_favicon_and_rejects_404_or_extra_request(self):
-        one = [{'path': path, 'status': 204 if path == '/favicon.ico' else 200}
-               for path in ('/', '/favicon.ico', '/pkl_wasm.js', '/pkl_wasm_bg.wasm',
-                            '/session.mjs', '/module-policy-session.mjs',
-                            '/resource-session.mjs')]
+        one = browser_http_session()
         compare.verify_http_requests(one + one)
         for broken in [one + one[:-1],
                        one + one + [{'path': '/unexpected', 'status': 200}],
                        [*one[:1], {'path': '/favicon.ico', 'status': 404}, *one[2:], *one]]:
             with self.subTest(broken=broken), self.assertRaises(ValueError):
                 compare.verify_http_requests(broken)
+
+    def test_browser_http_asynchronous_completions_preserve_the_original_log(self):
+        one = browser_http_session()
+        # These are the two independently observed browser scheduling changes:
+        # favicon after the first JS asset, and reversed static helper imports.
+        first = [one[0], one[2], one[1], *one[3:]]
+        second = [*one[:5], one[6], one[5]]
+        requests = first + second
+        original_bytes = json.dumps(requests).encode()
+        compare.verify_http_requests(requests)
+        self.assertEqual(json.dumps(requests).encode(), original_bytes)
+
+    def test_browser_http_session_boundaries_and_load_dependencies_are_required(self):
+        one = browser_http_session()
+        for broken in (
+                [one[1], one[0], *one[2:]],
+                [*one[:2], one[3], one[2], *one[4:]],
+                [*one[:3], one[4], one[3], *one[5:]],
+                [*one[:4], one[5], one[4], one[6]],
+                [*one[:4], one[6], one[5], one[4]]):
+            with self.subTest(broken=broken), self.assertRaises(ValueError):
+                compare.verify_http_requests(broken + one)
+        crossed = [*one[:6], one[0], one[6], *one[1:]]
+        with self.assertRaises(ValueError):
+            compare.verify_http_requests(crossed)
+
+    def test_browser_http_requires_exact_unique_resource_status_records(self):
+        one = browser_http_session()
+        for replacement in (
+                one[2], {'path': '/unexpected', 'status': 204},
+                {'path': '/favicon.ico', 'status': 200},
+                {'path': '/favicon.ico', 'status': True},
+                {'path': '/favicon.ico', 'status': '204'},
+                {'path': '/favicon.ico', 'status': 204, 'extra': 1}):
+            with self.subTest(replacement=replacement), self.assertRaises(ValueError):
+                compare.verify_http_requests([one[0], replacement, *one[2:], *one])
+        with self.assertRaises(ValueError):
+            compare.verify_http_requests(tuple(one + one))
 
     def test_wrapper_rejects_os_channel_and_source_bookend_forgery(self):
         build_wrapper, wrapper = self.root / 'build-wrapper', self.root / 'capture-wrapper'

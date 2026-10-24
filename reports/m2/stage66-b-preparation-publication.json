@@ -1,0 +1,979 @@
+{
+  "archive": {
+    "bytes": 111975,
+    "full_member_readback_verified": true,
+    "members": 69,
+    "mode": 420,
+    "path": "reports/m2/stage66-b-preparation-evidence.tar.gz",
+    "sha256": "8d753211df439eaa8f66c1c86e11cd7298921619e910d4a57708e6dd52400b24"
+  },
+  "base_head": "c7eb4b6c8edf60d55ffc92f1b814d6ec11fdfdd9",
+  "candidate_compatibility_passes_claimed": 0,
+  "embedded_manifest_sha256": "3316124896b3d8918ac1bf525723d3dc47a139e3324b195d4d8f3bd6dc81bde0",
+  "execution_receipt_included": false,
+  "group": "preparation",
+  "kind": "stage66-B-local-evidence-publication",
+  "known_limits": [
+    "Publication integrity is not guest compatibility. All nine M2 streams and full language/product API remain open.",
+    "Original131 selected statuses are read from final raw report; prior74 pass transitions, added case and two blocked originals remain explicit.",
+    "Any scalar-regex has two mismatches per portable target; M1 compatibility fails its two known Regex gaps while architecture contract passes.",
+    "Direct Java identity is producer-only. Shared catalog 14/1081 and separate union40 programs preserve distinct boundaries.",
+    "Local macOS arm64 captures do not establish other release platforms or performance targets.",
+    "Prior failed focused/tooling/preflight/comparison attempts remain unchanged; no output normalization or Java production fallback."
+  ],
+  "member_inventory": {
+    "target/m2/stage66-capture-launch-01/capture-preparation.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-capture-launch-01/capture-preparation.stdout.bin": {
+      "bytes": 251,
+      "mode": 420,
+      "sha256": "3447c13ca40f8b3f79e7092f7a9fffa54612cf402b63c7aa3417019134ab6cf3"
+    },
+    "target/m2/stage66-capture-launch-01/comparison-preparation.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-capture-launch-01/comparison-preparation.stdout.bin": {
+      "bytes": 149,
+      "mode": 420,
+      "sha256": "7cabbd854208ef39d100f2f7f24fae9e0b6d99c05a12560d3a3e70bd4759d7e6"
+    },
+    "target/m2/stage66-capture-launch-01/native-build.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-capture-launch-01/native-build.stdout.bin": {
+      "bytes": 304,
+      "mode": 420,
+      "sha256": "88cbae346e6df9d005e1f5f29db064ccef0f2c70f0e1c1bda6fd97f833dc9bbb"
+    },
+    "target/m2/stage66-capture-launch-01/platform-preparation.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-capture-launch-01/platform-preparation.stdout.bin": {
+      "bytes": 158,
+      "mode": 420,
+      "sha256": "eb227c0142cf4b459091d4ced552912ae5f2d2e8ec99e1538cb7597b14770ce6"
+    },
+    "target/m2/stage66-capture-launch-01/report.json": {
+      "bytes": 5801,
+      "mode": 420,
+      "sha256": "8b2932462373b4b5ab529d52e7098560a94e5c178a15d7ad40305d80c65097c0"
+    },
+    "target/m2/stage66-capture-launch-01/run.py": {
+      "bytes": 2625,
+      "mode": 420,
+      "sha256": "6fefaea84a7e4afe1f0b3731d7ce029ca5d335de9a9a655b363f0780918c4e61"
+    },
+    "target/m2/stage66-capture-launch-01/sources/target/m2/stage66-capture-launch-01/run.py": {
+      "bytes": 2625,
+      "mode": 420,
+      "sha256": "6fefaea84a7e4afe1f0b3731d7ce029ca5d335de9a9a655b363f0780918c4e61"
+    },
+    "target/m2/stage66-capture-launch-01/sources/target/m2/stage66-capture-preparation-01/common.py": {
+      "bytes": 6475,
+      "mode": 420,
+      "sha256": "3c59ec7d0c73ab5397ca11202d5d3a570c2d063ed9400217ffa5fd9e926ccf10"
+    },
+    "target/m2/stage66-capture-launch-01/sources/target/m2/stage66-capture-preparation-01/prepare.py": {
+      "bytes": 4765,
+      "mode": 420,
+      "sha256": "170fab31ca0f90575a3df49f3467853f715cb564f2fef195f88baf35798ca19e"
+    },
+    "target/m2/stage66-capture-launch-01/sources/target/m2/stage66-comparison-validation-01/prepare.py": {
+      "bytes": 4944,
+      "mode": 420,
+      "sha256": "1f3d4fbbe03c3357f0e72fab89967e1bdbb68fc2e3b86c9fb69b2a4f36f5a3b6"
+    },
+    "target/m2/stage66-capture-launch-01/sources/target/m2/stage66-native-build-01/run.py": {
+      "bytes": 2942,
+      "mode": 420,
+      "sha256": "7c62027670531e505be68dbdb06f9d553570aac5c2668166137de85af0dcc5ea"
+    },
+    "target/m2/stage66-capture-launch-01/sources/target/m2/stage66-platform-validation-01/prepare.py": {
+      "bytes": 2064,
+      "mode": 420,
+      "sha256": "32243b77c68b386b5ca432c573616a89fa43114762c977971fa641d2c71a346d"
+    },
+    "target/m2/stage66-capture-preparation-01/adapt.py": {
+      "bytes": 5946,
+      "mode": 420,
+      "sha256": "5c1fadab7ace4811f296a69c903ab2cf26a50995a7e383666d74a1c43a767a3d"
+    },
+    "target/m2/stage66-capture-preparation-01/adaptation.json": {
+      "bytes": 2434,
+      "mode": 420,
+      "sha256": "27c9ee8fbecf0bc16602fead370cd6d298fb4f5a5c6784692d62bf964bf8834c"
+    },
+    "target/m2/stage66-capture-preparation-01/common.py": {
+      "bytes": 6475,
+      "mode": 420,
+      "sha256": "3c59ec7d0c73ab5397ca11202d5d3a570c2d063ed9400217ffa5fd9e926ccf10"
+    },
+    "target/m2/stage66-capture-preparation-01/initial-preparation/common.py": {
+      "bytes": 6104,
+      "mode": 420,
+      "sha256": "4d1c0801800354fb15d769de073eeb3ddffb95557af5edad7a62c9b3078f649f"
+    },
+    "target/m2/stage66-capture-preparation-01/initial-preparation/static-check.json": {
+      "bytes": 66502,
+      "mode": 420,
+      "sha256": "d39324711629be1eccf29bc25f101f5577e3c9db7a4a4beae559c4ca90a56fe2"
+    },
+    "target/m2/stage66-capture-preparation-01/preparation.json": {
+      "bytes": 18450,
+      "mode": 420,
+      "sha256": "3ce085d8fd4efdda3ce27a098b0dba2176d105d54c564c73f0eb812f68753ab8"
+    },
+    "target/m2/stage66-capture-preparation-01/prepare.py": {
+      "bytes": 4765,
+      "mode": 420,
+      "sha256": "170fab31ca0f90575a3df49f3467853f715cb564f2fef195f88baf35798ca19e"
+    },
+    "target/m2/stage66-capture-preparation-01/source-contracts.json": {
+      "bytes": 31984,
+      "mode": 420,
+      "sha256": "9fe65b982bc45a6ec0865e03adde3aae208b0aeaca802ec2aab5f863ba5f33b7"
+    },
+    "target/m2/stage66-capture-preparation-01/static-check.json": {
+      "bytes": 66502,
+      "mode": 420,
+      "sha256": "62862218082ac4afc9b98936fed4a739d3cb02b0c390e72c9c20dbc057ec3423"
+    },
+    "target/m2/stage66-capture-preparation-01/static_check.py": {
+      "bytes": 6971,
+      "mode": 420,
+      "sha256": "77fe4f6b628a154d4dc94df1a5b91f57d3540c2aacc8f61ba30933ad81616a8c"
+    },
+    "target/m2/stage66-checkpoint-publication-01/admission.py": {
+      "bytes": 15367,
+      "mode": 420,
+      "sha256": "ea823bde6b59cbe329ba44f78c685ce9cb233df7e9519e46ee3dbddc78f52526"
+    },
+    "target/m2/stage66-checkpoint-publication-01/assemble.py": {
+      "bytes": 7053,
+      "mode": 420,
+      "sha256": "d488cc3a7b5d4793d1a74adfa6a6c8af3104ed44dd31d73dc05c66d1a68c2e4b"
+    },
+    "target/m2/stage66-checkpoint-publication-01/execute.py": {
+      "bytes": 2624,
+      "mode": 420,
+      "sha256": "8cfcb5bec2ef50e313f0121fe70f83c47fe3154f3f3e1806e31db3d28e046fa8"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/admission.py": {
+      "bytes": 13686,
+      "mode": 420,
+      "sha256": "2b2b55350453858641a5f601ed362e10a45a2a9ea57cb5ec84c1cfd81657e63d"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/assemble.py": {
+      "bytes": 6196,
+      "mode": 420,
+      "sha256": "dccbbdd9591bb25340da305ec861b6605602661b04aa1962139abba153047fe1"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/execute.py": {
+      "bytes": 2624,
+      "mode": 420,
+      "sha256": "8cfcb5bec2ef50e313f0121fe70f83c47fe3154f3f3e1806e31db3d28e046fa8"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/layout.json": {
+      "bytes": 11504,
+      "mode": 420,
+      "sha256": "460f2f53365768cc580496cff05187c1f69d5847c9115b4b6bc8132f8d529a4e"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/preparation.json": {
+      "bytes": 4038,
+      "mode": 420,
+      "sha256": "c10aace1ae14fd265b2f59495943e40aa493d18cc1d7b736e3ec3db10c878324"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/prepare.py": {
+      "bytes": 3827,
+      "mode": 420,
+      "sha256": "9790ebde50a63dcc58c2e020711c85c001d12138e26637f9261ba96c09cc0844"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/publish.py": {
+      "bytes": 11189,
+      "mode": 420,
+      "sha256": "b5bd81a676ec1c638f18c039e7e43062011bc4641c28eb44007b42e4b9a12519"
+    },
+    "target/m2/stage66-checkpoint-publication-01/layout.json": {
+      "bytes": 12961,
+      "mode": 420,
+      "sha256": "b2196034ba59583b86160cc1223712b3d215ca4f1d727f42b00074dfb2999bf5"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/admission.py": {
+      "bytes": 14651,
+      "mode": 420,
+      "sha256": "86fb9e426e63dee5bc316d39759ddf78eeed28a7463873b93b071a608d8cf974"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/assemble.py": {
+      "bytes": 6561,
+      "mode": 420,
+      "sha256": "7510d937f34a9f06422d06a10be0483bae0cae1618c08faa28798077465fe987"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/execute.py": {
+      "bytes": 2624,
+      "mode": 420,
+      "sha256": "8cfcb5bec2ef50e313f0121fe70f83c47fe3154f3f3e1806e31db3d28e046fa8"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/layout.json": {
+      "bytes": 12398,
+      "mode": 420,
+      "sha256": "d61015460eee334c65592887852420cd7f05e430e5f9f24bdb1cd13dfca90066"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/preparation.json": {
+      "bytes": 5292,
+      "mode": 420,
+      "sha256": "3a05fd517d9c9caef17e12ac4a6a497877c84e0c34da86f12012a78794aa8716"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/prepare.py": {
+      "bytes": 3862,
+      "mode": 420,
+      "sha256": "ccd43ece03120f0eca187d688a581c7789d99a9a5c865140b123e905380cdc08"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/publish.py": {
+      "bytes": 11460,
+      "mode": 420,
+      "sha256": "095dfb9e411283150c29fed17740179eaad380456597347a7f775a11b85ab097"
+    },
+    "target/m2/stage66-checkpoint-publication-01/preparation-invocation.json": {
+      "bytes": 2342,
+      "mode": 420,
+      "sha256": "4beff4f890e52bff96366034cdf1211911ba0df46226fe665917fce3afa110fd"
+    },
+    "target/m2/stage66-checkpoint-publication-01/preparation.json": {
+      "bytes": 6615,
+      "mode": 420,
+      "sha256": "bb80f1d74eaa8bf6380c9d7e30147f8a84394d0f6a14fda4e69eef8d2064b72b"
+    },
+    "target/m2/stage66-checkpoint-publication-01/prepare.py": {
+      "bytes": 3862,
+      "mode": 420,
+      "sha256": "ccd43ece03120f0eca187d688a581c7789d99a9a5c865140b123e905380cdc08"
+    },
+    "target/m2/stage66-checkpoint-publication-01/publish.py": {
+      "bytes": 11539,
+      "mode": 420,
+      "sha256": "bca2f17c6261d4b1c9736e19001318da98f86a704d7745429a480dd30d44be7b"
+    },
+    "target/m2/stage66-java-commit-binding-01/report.json": {
+      "bytes": 24439,
+      "mode": 420,
+      "sha256": "3707793b8b572a3d83d771efe76fef07cb4187625be9b8e2f3126cb2803b5abc"
+    },
+    "target/m2/stage66-java-publication-01/directories.json": {
+      "bytes": 2688,
+      "mode": 420,
+      "sha256": "0f80e8c7b2b4999df42d846b4a0901ab44b3cc03318fe4d0662035e8d9c94493"
+    },
+    "target/m2/stage66-java-publication-01/process.json": {
+      "bytes": 1915,
+      "mode": 420,
+      "sha256": "6fb385735f09f5c7c6347f23db7c1f2424c9ed8b270c2b77c48ba926a114aa50"
+    },
+    "target/m2/stage66-java-publication-01/publish.py": {
+      "bytes": 7686,
+      "mode": 420,
+      "sha256": "2356072a65611d40c977ffda5d55a4795c882220b6bf35c67df06d21438b2a69"
+    },
+    "target/m2/stage66-java-publication-01/run.py": {
+      "bytes": 2621,
+      "mode": 420,
+      "sha256": "2435716a3bda295fb09f299de18c0e14661916ec6a969f1ad0e71ba49765fa1c"
+    },
+    "target/m2/stage66-java-publication-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-java-publication-01/stdout.bin": {
+      "bytes": 501,
+      "mode": 420,
+      "sha256": "8f028aa4974ce9abdd99e36e2ac473473ebac64d0d9d45c3df6a970ef0c87bd1"
+    },
+    "target/m2/stage66-original-reversal-launch-01/preparation.json": {
+      "bytes": 1991,
+      "mode": 420,
+      "sha256": "92de06049c0e3c42957a8bec8e39f8251df10adb181acaa17efc97c0abb3719e"
+    },
+    "target/m2/stage66-original-reversal-launch-01/run.py": {
+      "bytes": 13003,
+      "mode": 420,
+      "sha256": "35b0dca12aff1109b0d0ab687e86acda47690e3dbcb6aee8b15e05b7a9452f52"
+    },
+    "target/m2/stage66-original-reversal-preflight-01/report.json": {
+      "bytes": 4167,
+      "mode": 420,
+      "sha256": "fbd70efb3f0472d0159829ce154422bc373f7ed26ce8a5290a1b828aa76fbb97"
+    },
+    "target/m2/stage66-original-reversal-preflight-01/stderr.bin": {
+      "bytes": 723,
+      "mode": 420,
+      "sha256": "97abb127151428afb62403a8f0025fb9cb9f57d8f8bc21d45d28cd29294a2fe1"
+    },
+    "target/m2/stage66-original-reversal-preflight-01/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-original-reversal-prep-01/preparation.json": {
+      "bytes": 1163,
+      "mode": 420,
+      "sha256": "b567c15984311af0dd9bf11ea62bc1bb9e2cea61d82f429d004eafefdf4b1e38"
+    },
+    "target/m2/stage66-original-reversal-prep-01/run.py": {
+      "bytes": 13614,
+      "mode": 420,
+      "sha256": "1e3a24c86464605ca7f0acb3eb01e355df9d74a132e259e468f21b25cb370b44"
+    },
+    "target/m2/stage66-preparation-01/plan.md": {
+      "bytes": 9214,
+      "mode": 420,
+      "sha256": "0ef856f4e5fb621a40447a3f9ec1b4c9169cd57ab9eb2d18f9df986af216a04c"
+    },
+    "target/m2/stage66-storage-recovery-01/report.json": {
+      "bytes": 24466,
+      "mode": 420,
+      "sha256": "a007be5bd37ce76a0e2fa2801735268383ee44c928c8d4c2cba36f4a8299cf52"
+    },
+    "target/m2/stage66-storage-recovery-01/sparse-before.bin": {
+      "bytes": 107,
+      "mode": 420,
+      "sha256": "12b07721e66cd097046a790a77bda5ff998a9c6c7f7ac779cd23eb4635a9199f"
+    },
+    "target/m2/stage66-storage-recovery-02/report.json": {
+      "bytes": 5374,
+      "mode": 420,
+      "sha256": "d2d1f9eccfac7c324346c80b4011f767c1792cd6bb099ffb3fb9109a2838fe36"
+    },
+    "target/m2/stage66-storage-recovery-02/run.py": {
+      "bytes": 2570,
+      "mode": 420,
+      "sha256": "ee2423b7bab631c5ed6f40b267d1b78e80a207d68c1d0c2e5148d78e0bbc1a91"
+    },
+    "target/m2/stage66-storage-recovery-02/sparse-before.bin": {
+      "bytes": 107,
+      "mode": 420,
+      "sha256": "12b07721e66cd097046a790a77bda5ff998a9c6c7f7ac779cd23eb4635a9199f"
+    }
+  },
+  "publisher_sources": [
+    "target/m2/stage66-checkpoint-publication-01/prepare.py",
+    "target/m2/stage66-checkpoint-publication-01/publish.py",
+    "target/m2/stage66-checkpoint-publication-01/admission.py",
+    "target/m2/stage66-checkpoint-publication-01/assemble.py",
+    "target/m2/stage66-checkpoint-publication-01/execute.py",
+    "target/m2/stage66-checkpoint-publication-01/layout.json",
+    "target/m2/stage66-checkpoint-publication-01/preparation.json",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/prepare.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/publish.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/admission.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/assemble.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/execute.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/layout.json",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/preparation.json",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/prepare.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/publish.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/admission.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/assemble.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/execute.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/layout.json",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/preparation.json",
+    "target/m2/stage66-checkpoint-publication-01/preparation-invocation.json"
+  ],
+  "schema": 1,
+  "selected_directories": [
+    "stage66-capture-preparation-01",
+    "stage66-capture-launch-01",
+    "stage66-original-reversal-launch-01",
+    "stage66-original-reversal-preflight-01",
+    "stage66-original-reversal-prep-01",
+    "stage66-preparation-01",
+    "stage66-storage-recovery-01",
+    "stage66-storage-recovery-02",
+    "stage66-java-publication-01",
+    "stage66-java-commit-binding-01"
+  ],
+  "source_before_after_equal": true,
+  "terminal_admission": {
+    "candidate_compatibility_passes_claimed": 0,
+    "catalog": {
+      "observations_per_target": 2162,
+      "profiles": 14,
+      "rows": 1081
+    },
+    "comparison_counts": {
+      "amendment-construction-native": {
+        "pass": 376
+      },
+      "amendment-construction-portable": {
+        "chromium": {
+          "pass": 376
+        },
+        "napi": {
+          "pass": 376
+        }
+      },
+      "any-portable": {
+        "chromium": {
+          "mismatch": 2,
+          "pass": 170
+        },
+        "napi": {
+          "mismatch": 2,
+          "pass": 170
+        }
+      },
+      "base-constructor-constraints-native": {
+        "pass": 72
+      },
+      "base-constructor-constraints-portable": {
+        "chromium": {
+          "pass": 72
+        },
+        "napi": {
+          "pass": 72
+        }
+      },
+      "bytes-native": {
+        "pass": 600
+      },
+      "bytes-portable": {
+        "chromium": {
+          "pass": 600
+        },
+        "napi": {
+          "pass": 600
+        }
+      },
+      "collection-addition-native": {
+        "pass": 250
+      },
+      "collection-addition-portable": {
+        "chromium": {
+          "pass": 250
+        },
+        "napi": {
+          "pass": 250
+        }
+      },
+      "collection-conversion-controls-native": {
+        "pass": 116
+      },
+      "collection-conversion-controls-portable": {
+        "chromium": {
+          "pass": 116
+        },
+        "napi": {
+          "pass": 116
+        }
+      },
+      "collection-conversions-native": {
+        "pass": 472
+      },
+      "collection-conversions-portable": {
+        "chromium": {
+          "pass": 472
+        },
+        "napi": {
+          "pass": 472
+        }
+      },
+      "collection-default-contracts-native": {
+        "pass": 44
+      },
+      "collection-default-contracts-portable": {
+        "chromium": {
+          "pass": 44
+        },
+        "napi": {
+          "pass": 44
+        }
+      },
+      "collection-dynamic-render-native": {
+        "pass": 20
+      },
+      "collection-dynamic-render-portable": {
+        "chromium": {
+          "pass": 20
+        },
+        "napi": {
+          "pass": 20
+        }
+      },
+      "collection-lookups-native": {
+        "pass": 266
+      },
+      "collection-lookups-portable": {
+        "chromium": {
+          "pass": 266
+        },
+        "napi": {
+          "pass": 266
+        }
+      },
+      "collection-property-names-native": {
+        "pass": 52
+      },
+      "collection-property-names-portable": {
+        "chromium": {
+          "pass": 52
+        },
+        "napi": {
+          "pass": 52
+        }
+      },
+      "data-size-native": {
+        "pass": 510
+      },
+      "data-size-portable": {
+        "chromium": {
+          "pass": 510
+        },
+        "napi": {
+          "pass": 510
+        }
+      },
+      "duration-native": {
+        "pass": 548
+      },
+      "duration-portable": {
+        "chromium": {
+          "pass": 548
+        },
+        "napi": {
+          "pass": 548
+        }
+      },
+      "inferred-new-values-native": {
+        "pass": 144
+      },
+      "inferred-new-values-portable": {
+        "chromium": {
+          "pass": 144
+        },
+        "napi": {
+          "pass": 144
+        }
+      },
+      "intseq-native": {
+        "pass": 474
+      },
+      "intseq-portable": {
+        "chromium": {
+          "pass": 474
+        },
+        "napi": {
+          "pass": 474
+        }
+      },
+      "reversal-implicit-native": {
+        "pass": 16
+      },
+      "reversal-implicit-portable": {
+        "chromium": {
+          "pass": 16
+        },
+        "napi": {
+          "pass": 16
+        }
+      },
+      "reversal-subscript-native": {
+        "pass": 38
+      },
+      "reversal-subscript-portable": {
+        "chromium": {
+          "pass": 38
+        },
+        "napi": {
+          "pass": 38
+        }
+      },
+      "reversal-values-native": {
+        "pass": 156
+      },
+      "reversal-values-portable": {
+        "chromium": {
+          "pass": 156
+        },
+        "napi": {
+          "pass": 156
+        }
+      },
+      "set-endpoints-native": {
+        "pass": 140
+      },
+      "set-endpoints-portable": {
+        "chromium": {
+          "pass": 140
+        },
+        "napi": {
+          "pass": 140
+        }
+      },
+      "union-marker-native": {
+        "pass": 80
+      },
+      "union-marker-portable": {
+        "chromium": {
+          "pass": 80
+        },
+        "napi": {
+          "pass": 80
+        }
+      }
+    },
+    "inputs": {
+      "comparison": {
+        "bytes": 87607,
+        "path": "target/m2/stage66-comparison-validation-02/report.json",
+        "sha256": "66e38dc4a4849dbd18c7b1ecedf40a1181bf0c8ef188f59490c8b6cb5a177f6d"
+      },
+      "comparison_launch": {
+        "bytes": 2879,
+        "path": "target/m2/stage66-comparison-launch-02/report.json",
+        "sha256": "b8e070c78d88c3f1afcb4b64b1d52f536b30fa2db37d3b424b1170d6bd369319"
+      },
+      "count": {
+        "bytes": 6163,
+        "path": "target/m2/stage66-validation-count-review-01/report.json",
+        "sha256": "5f1c8fa2e59c81c086bc151b16c165b45ee07be4620fca99bb349b38e7c38fac"
+      },
+      "freeze": {
+        "bytes": 12551,
+        "path": "target/m2/stage66-core-freeze-01/freeze.json",
+        "sha256": "c37a9ea6424d6a8510740c6e965213e36a85ba4675438ab2edcb40e90b30e19c"
+      },
+      "identity_note": {
+        "bytes": 6042,
+        "path": "target/m2/stage66-core-identity-provenance-02/report.json",
+        "sha256": "5f1003ca0ef53f67618b15773db5ab43ac77bf5863ad3fe3e1f97e97a0c58e20"
+      },
+      "m1": {
+        "bytes": 3390770,
+        "path": "target/m2/stage66-m1-platform-contract-01/report.json",
+        "sha256": "6c18f63a3a631849a8e85e9d6c1332d87be5b1ac44e1725a5ed977107a0559ad"
+      },
+      "native": {
+        "bytes": 38020,
+        "path": "target/m2/stage66-native-acquisition-01/report.json",
+        "sha256": "179a2551a3d16b0b6df9ea4f687d0c8c3a292b512bc0824e95b225904c41a6f9"
+      },
+      "node_locator_admission": {
+        "bytes": 1881,
+        "path": "target/m2/stage66-node-path-verification-amendment-02/amendment.json",
+        "sha256": "27afdf36b7c8228c5262414115d491ab2b36c9e587e76932e16408d2c5944617"
+      },
+      "original": {
+        "bytes": 2036353,
+        "path": "target/m2/stage66-original-reversal-01/report.json",
+        "sha256": "36a7a355f1e36bf02ff6cf99ad9b3219879ca4e7c5fa972c2cb11a1e787b371c"
+      },
+      "original_audit": {
+        "bytes": 628490,
+        "path": "target/m2/stage66-original-failure-audit-01/report.json",
+        "sha256": "79aa9ddc26cca06c96d44dfbff498098b26f234ac6e232b3c35f4aceefffa917"
+      },
+      "original_launch": {
+        "bytes": 9024,
+        "path": "target/m2/stage66-original-reversal-launch-02/report.json",
+        "sha256": "06679f22efe6f8601cbe7f49ddbf4e3d2b9f19da7e813cc136ae459a0d2ecb5d"
+      },
+      "platform": {
+        "bytes": 333239,
+        "path": "target/m2/stage66-platform-validation-01/report.json",
+        "sha256": "6465f554b0eb4c027a33c4305218df75632d28ce1fb457a7f4f394ae4f2ebac8"
+      },
+      "review": {
+        "bytes": 6831,
+        "path": "target/m2/stage66-review-01/report.json",
+        "sha256": "db3e092e218087998effbb666be0300a20b06b5fbe08294c1f050c630c507e07"
+      },
+      "runtime_sources": {
+        "bytes": 46589,
+        "path": "target/m2/stage66-core-freeze-01/source-snapshot.json",
+        "sha256": "3ec14f5ec8cb01541c1fd1e8b52a7ee66cc23c23003a877fbabad16d4bf46e01"
+      },
+      "rust": {
+        "bytes": 6463,
+        "path": "target/m2/stage66-rust-validation-01/report.json",
+        "sha256": "3d31eb2bb304c016b159ee2ee32adfd41b60b36717eb3a2356cabbd1a1d30b79"
+      }
+    },
+    "m1": {
+      "compatibility_status": "fail",
+      "experiment_contract_status": "pass",
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "originals": {
+      "added1_statuses": {
+        "mismatch": 1
+      },
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/stringUnicode.pkl"
+      ],
+      "blocked_required": 2,
+      "integrity_status": "passed",
+      "java_heap_option": "-Xmx512m",
+      "prior130_pass_regressions": [],
+      "prior130_status_transitions": {
+        "candidate-unsupported->candidate-unsupported": 31,
+        "mismatch->mismatch": 17,
+        "mismatch->pass": 7,
+        "oracle-error->oracle-error": 1,
+        "pass->pass": 74
+      },
+      "selected": 131,
+      "selected_status": "failed",
+      "statuses": {
+        "candidate-unsupported": 31,
+        "mismatch": 18,
+        "oracle-error": 1,
+        "pass": 81
+      }
+    },
+    "post_capture_node_locator_admission": {
+      "explicit_full_api_gate_exit": 1,
+      "guest_reexecutions": 0,
+      "raw_guest_channels_modified": false,
+      "report": {
+        "bytes": 1881,
+        "path": "target/m2/stage66-node-path-verification-amendment-02/amendment.json",
+        "sha256": "27afdf36b7c8228c5262414115d491ab2b36c9e587e76932e16408d2c5944617"
+      }
+    },
+    "rust": {
+      "copied_sources": 16,
+      "git_linked_sources": 165524,
+      "nested_reruns": 13,
+      "raw": {
+        "failed": 0,
+        "ignored": 2,
+        "passed": 1017
+      },
+      "source_count": 165540,
+      "unique": {
+        "failed": 0,
+        "ignored": 2,
+        "passed": 1004
+      }
+    },
+    "tooling": {
+      "catalog": {
+        "commands": [
+          {
+            "command": [
+              "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_collection_conversions_compare",
+              "tools.tests.test_collection_conversions_portable_compare",
+              "tools.tests.test_data_size_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 43
+          },
+          {
+            "command": [
+              "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+              "-B",
+              "-O",
+              "-m",
+              "unittest",
+              "tools.tests.test_collection_conversions_compare",
+              "tools.tests.test_collection_conversions_portable_compare",
+              "tools.tests.test_data_size_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 43
+          },
+          {
+            "command": [
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+              "--test",
+              "tools/platform/capture-collection-conversions.test.mjs"
+            ],
+            "javascript_test_count": 11,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 4139,
+          "path": "target/m2/stage66-catalog-validation-02/report.json",
+          "sha256": "80047131014f26d7f3134e16ea2c440b97a80cc465001ef17dd67dd17f4d9349"
+        }
+      },
+      "http_admission": {
+        "commands": [
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_data_size_portable_compare",
+              "tools.tests.test_int_seq_values_portable_compare",
+              "tools.tests.test_bytes_values_portable_compare",
+              "tools.tests.test_duration_values_portable_compare",
+              "tools.tests.test_any_if_non_null_portable_compare",
+              "tools.tests.test_collection_conversions_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 56
+          },
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "-O",
+              "-m",
+              "unittest",
+              "tools.tests.test_data_size_portable_compare",
+              "tools.tests.test_int_seq_values_portable_compare",
+              "tools.tests.test_bytes_values_portable_compare",
+              "tools.tests.test_duration_values_portable_compare",
+              "tools.tests.test_any_if_non_null_portable_compare",
+              "tools.tests.test_collection_conversions_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 56
+          },
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "tools/inventory.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 74689,
+          "path": "target/m2/stage66-http-validation-01/report.json",
+          "sha256": "e995838f52e9ff21a670d49d8754a9a6b4f21ebf6bd16ebe375fe267cb4e973a"
+        }
+      },
+      "mapping": {
+        "commands": [
+          {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_m2_mappings"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 8
+          },
+          {
+            "command": [
+              "python3",
+              "-O",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_m2_mappings"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 8
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "tools/m2_manifest.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "tools/inventory.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 7521,
+          "path": "target/m2/stage66-mapping-validation-01/report.json",
+          "sha256": "015dfb872d71f7845156c887fc92078224e38034d3fb0e190aaf4aaf559db18a"
+        }
+      },
+      "union_native_portable": {
+        "commands": [
+          {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_union_marker_fixtures",
+              "tools.tests.test_union_marker_portable_compare",
+              "tools.tests.test_union_marker_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 17
+          },
+          {
+            "command": [
+              "python3",
+              "-O",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_union_marker_fixtures",
+              "tools.tests.test_union_marker_portable_compare",
+              "tools.tests.test_union_marker_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 17
+          },
+          {
+            "command": [
+              "node",
+              "--test",
+              "tools/platform/capture-union-marker-modules.test.mjs"
+            ],
+            "javascript_test_count": 4,
+            "python_test_count": null
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "tools/inventory.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 22383,
+          "path": "target/m2/stage66-union-marker-portable-tool-development-04/report.json",
+          "sha256": "3199527d26c23b95c0e3a787a4897f53e781490874bf764cc2c9d5c717440ec5"
+        }
+      }
+    },
+    "union_modules": 40,
+    "union_observations_per_target": 80
+  }
+}

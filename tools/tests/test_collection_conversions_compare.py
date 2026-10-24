@@ -146,7 +146,7 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "timeout"):
                 compare.compare(self.output, bad_timeout)
 
-    def test_ten_sealed_profiles_and_wrong_count_uri_or_input_are_rejected(self):
+    def test_sealed_profiles_and_wrong_count_uri_or_input_are_rejected(self):
         expected = {
             'file:///stage62/collection-conversions.pkl': 236,
             'file:///stage62/collection-conversion-controls.pkl': 58,
@@ -158,10 +158,14 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             'file:///stage63/set-endpoints.pkl': 70,
             'file:///stage64/amendment-construction.pkl': 188,
             'file:///stage65/inferred-new-values.pkl': 72,
+            'file:///stage66/reversal-values.pkl': 78,
+            'file:///stage66/reversal-implicit.pkl': 8,
+            'file:///stage66/reversal-subscript.pkl': 19,
+            'file:///stage66/base-constructors-in-constraints.pkl': 36,
         }
         self.assertEqual({uri: profile['rows'] for uri, profile in compare.profiles.PROFILES.items()},
                          expected)
-        self.assertEqual(sum(expected.values()), 940)
+        self.assertEqual(sum(expected.values()), 1081)
         for uri, rows in expected.items():
             profile = compare.profiles.PROFILES[uri]
             fixture = compare.ROOT / profile['fixture']
@@ -265,6 +269,18 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             ('file:///stage65/inferred-new-values.pkl', 72,
              {'success': 49, 'error': 23},
              'repeat-0/000-module-self-type/result.stdout.code-units.bin'),
+            ('file:///stage66/reversal-values.pkl', 78,
+             {'success': 45, 'error': 33},
+             'repeat-0/009-str-low-high/result.stdout.code-units.bin'),
+            ('file:///stage66/reversal-implicit.pkl', 8,
+             {'success': 6, 'error': 2},
+             'repeat-0/000-list-implicit/result.stdout.code-units.bin'),
+            ('file:///stage66/reversal-subscript.pkl', 19,
+             {'success': 1, 'error': 18},
+             'repeat-0/013-high-surrogate-in/result.stdout.code-units.bin'),
+            ('file:///stage66/base-constructors-in-constraints.pkl', 36,
+             {'success': 20, 'error': 16},
+             'repeat-0/000-list/result.stdout.code-units.bin'),
         ):
             with self.subTest(uri=uri):
                 profile = compare.profiles.PROFILES[uri]

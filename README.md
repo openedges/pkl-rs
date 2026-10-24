@@ -23,6 +23,13 @@ resolution, let/for const scopes, and structured source diagnostics with recursi
 and standard-library frames. The [latest checkpoint](reports/m2/README.md)
 records the accepted local verification scope, known failures, and unexecuted
 environments.
+The [Stage66 checkpoint](reports/m2/stage66-implementation-checkpoint.json)
+adds String/List/Set reversal, constructor resolution inside constraints, and
+union-marker diagnostics. Its 1,081 selected expressions and forty separate
+diagnostic modules match Java on native, N-API, and Chromium. The 131-program
+original selection has 81 matches; failures, unsupported cases, and two blocked
+originals remain explicit. These selected results do not close M2.
+
 The [M2 verification contract](docs/m2-language.md)
 keeps the complete language inventory separate from selected executable probes.
 The [original module frontend adapter](docs/m2-module-frontend.md) also compares

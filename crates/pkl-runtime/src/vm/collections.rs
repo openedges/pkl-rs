@@ -1934,13 +1934,30 @@ crate::diagnostic_values::render(
                         ));
                     };
                     if index < 0 || index.get() as usize >= object.length {
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            format!(
-                                "Element index `{index}` is out of range `0`..`{}`.",
-                                object.length as i64 - 1
-                            ),
-                        ));
+                        let message: PklString = format!(
+                            "Element index `{}` is out of range `0`..`{}`.",
+                            strings::diagnostic_integer(index.get()),
+                            strings::diagnostic_integer(object.length as i64 - 1)
+                        )
+                        .into();
+                        let message = if object.collection_kind == CollectionKind::List {
+                            PklString::join(
+                                &[
+                                    message,
+                                    "\nCollection: ".into(),
+                                    crate::diagnostic_values::render_string(
+                                        &Value::Object(receiver),
+                                        &self.heap,
+                                        &self.program.module_name,
+                                        80,
+                                    )?,
+                                ],
+                                "",
+                            )
+                        } else {
+                            message
+                        };
+                        return Err(RuntimeError::new(ErrorKind::Type, message));
                     }
                 }
                 let candidates = self.declaration_candidates(owner, &key, true)?;

@@ -30,14 +30,18 @@ export function validateProfileCatalog(catalog) {
     'collection_default_contracts_fixtures', 'collection_dynamic_render_fixtures',
     'collection_property_names_fixtures', 'collection_addition_fixtures',
     'set_endpoints_fixtures', 'amendment_construction_fixtures',
-    'inferred_new_fixtures']);
+    'inferred_new_fixtures', 'reversal_values_fixtures', 'reversal_implicit_fixtures',
+    'reversal_subscript_fixtures', 'base_constructor_constraints_fixtures']);
   const uris = new Set(), fixtures = new Set();
   for (const profile of catalog.profiles) {
     if (!profile || typeof profile.module_uri !== 'string'
         || !(/^file:\/\/\/stage62\/[a-z-]+\.pkl$/.test(profile.module_uri)
           || ['file:///stage63/collection-addition.pkl', 'file:///stage63/set-endpoints.pkl',
               'file:///stage64/amendment-construction.pkl',
-              'file:///stage65/inferred-new-values.pkl']
+              'file:///stage65/inferred-new-values.pkl',
+              'file:///stage66/reversal-values.pkl', 'file:///stage66/reversal-implicit.pkl',
+              'file:///stage66/reversal-subscript.pkl',
+              'file:///stage66/base-constructors-in-constraints.pkl']
             .includes(profile.module_uri))
         || uris.has(profile.module_uri) || fixtures.has(profile.fixture)
         || !/^tests\/fixtures\/m2-[a-z-]+$/.test(profile.fixture)
@@ -57,7 +61,9 @@ export function validateProfileCatalog(catalog) {
       `tools/${profile.validator_module.replace(/_fixtures$/, '_oracle')}.py`,
       `tools/tests/test_${profile.validator_module}.py`, 'tools/java/CollectionConversionsOracle.java'];
     if (['collection_addition_fixtures', 'set_endpoints_fixtures',
-         'amendment_construction_fixtures'].includes(profile.validator_module))
+         'amendment_construction_fixtures', 'reversal_values_fixtures',
+         'reversal_implicit_fixtures', 'reversal_subscript_fixtures',
+         'base_constructor_constraints_fixtures'].includes(profile.validator_module))
       requiredTools.push('tools/collection_conversions_fixtures.py',
         'tools/collection_conversions_oracle.py');
     if (profile.validator_module === 'inferred_new_fixtures') {
@@ -66,6 +72,9 @@ export function validateProfileCatalog(catalog) {
         throw Error('inferred-new values profile boundary differs');
       requiredTools.push('tools/amendment_construction_oracle.py');
     }
+    if (['reversal_implicit_fixtures', 'reversal_subscript_fixtures',
+         'base_constructor_constraints_fixtures'].includes(profile.validator_module))
+      requiredTools.push('tools/reversal_values_oracle.py');
     if (new Set(profile.tool_sources).size !== requiredTools.length
         || profile.tool_sources.length !== requiredTools.length
         || requiredTools.some(name => !profile.tool_sources.includes(name)))

@@ -1,0 +1,3887 @@
+{
+  "archive": {
+    "bytes": 7299972,
+    "full_member_readback_verified": true,
+    "members": 651,
+    "mode": 420,
+    "path": "reports/m2/stage66-b-tooling-evidence.tar.gz",
+    "sha256": "3fdd318c6ffeeea60346004237787fcabe35f03a0cadb2af7224a8ca94d1cb7c"
+  },
+  "base_head": "c7eb4b6c8edf60d55ffc92f1b814d6ec11fdfdd9",
+  "candidate_compatibility_passes_claimed": 0,
+  "embedded_manifest_sha256": "bf6dd8fce8b3c0427bfdd3e4de56814548d8e33ba2a33d5d1067d709e7cf673f",
+  "execution_receipt_included": false,
+  "group": "tooling",
+  "kind": "stage66-B-local-evidence-publication",
+  "known_limits": [
+    "Publication integrity is not guest compatibility. All nine M2 streams and full language/product API remain open.",
+    "Original131 selected statuses are read from final raw report; prior74 pass transitions, added case and two blocked originals remain explicit.",
+    "Any scalar-regex has two mismatches per portable target; M1 compatibility fails its two known Regex gaps while architecture contract passes.",
+    "Direct Java identity is producer-only. Shared catalog 14/1081 and separate union40 programs preserve distinct boundaries.",
+    "Local macOS arm64 captures do not establish other release platforms or performance targets.",
+    "Prior failed focused/tooling/preflight/comparison attempts remain unchanged; no output normalization or Java production fallback."
+  ],
+  "member_inventory": {
+    "target/m2/stage66-catalog-validation-01/node/process.json": {
+      "bytes": 637,
+      "mode": 420,
+      "sha256": "cbf20eeb2d7871207406eb8893233454102e25518f4d1aca09ec9694af258882"
+    },
+    "target/m2/stage66-catalog-validation-01/node/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-catalog-validation-01/node/stdout.bin": {
+      "bytes": 1134,
+      "mode": 420,
+      "sha256": "e266c2cfa56296d63f0c476be00aad5388633533b2e476ccf357e58e9004c66c"
+    },
+    "target/m2/stage66-catalog-validation-01/python-optimized/process.json": {
+      "bytes": 840,
+      "mode": 420,
+      "sha256": "590bf459363534933877c7da8536be6229b5d067b672c76a65042bcad2c2e5d8"
+    },
+    "target/m2/stage66-catalog-validation-01/python-optimized/stderr.bin": {
+      "bytes": 142,
+      "mode": 420,
+      "sha256": "0132b645ed6026a8f48f0cb7b876a57784de0d56755aa788cc4a671ccba7318a"
+    },
+    "target/m2/stage66-catalog-validation-01/python-optimized/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-catalog-validation-01/python/process.json": {
+      "bytes": 820,
+      "mode": 420,
+      "sha256": "faae90010f617b4a6be843996e151c120308f78f523a47b1b41e64d0a23169cc"
+    },
+    "target/m2/stage66-catalog-validation-01/python/stderr.bin": {
+      "bytes": 142,
+      "mode": 420,
+      "sha256": "9ea9a09f7a85e608818b37b407921ec2b7fa90719fb18fc3d2a03bf6fc12fd67"
+    },
+    "target/m2/stage66-catalog-validation-01/python/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-catalog-validation-01/report.json": {
+      "bytes": 4139,
+      "mode": 420,
+      "sha256": "0415efc6ca3ffa47b81681479bdfa755e19dd1641591e51c794adb6f3e687b3e"
+    },
+    "target/m2/stage66-catalog-validation-01/run.py": {
+      "bytes": 3671,
+      "mode": 420,
+      "sha256": "f20417d50213f8e7aab18db16f0e311928938fd145fb01d8b078a5d304f5481e"
+    },
+    "target/m2/stage66-catalog-validation-01/source-after.json": {
+      "bytes": 24956,
+      "mode": 420,
+      "sha256": "1ba39a6a540faf1258e16bdec361ca2b1702f95496c6253ce8edcda2794f9ca5"
+    },
+    "target/m2/stage66-catalog-validation-01/source-before.json": {
+      "bytes": 24956,
+      "mode": 420,
+      "sha256": "1ba39a6a540faf1258e16bdec361ca2b1702f95496c6253ce8edcda2794f9ca5"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/compatibility/collection-conversion-profiles.json": {
+      "bytes": 12431,
+      "mode": 420,
+      "sha256": "69ffc252d247982d38d50417d49688d3380b066d1d170efab7c4b0f14e31a7d9"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/target/m2/stage66-catalog-validation-01/run.py": {
+      "bytes": 3671,
+      "mode": 420,
+      "sha256": "f20417d50213f8e7aab18db16f0e311928938fd145fb01d8b078a5d304f5481e"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/README.md": {
+      "bytes": 1553,
+      "mode": 420,
+      "sha256": "ad3a9c9115ea87c9520c0841dcc98b3a6a8981db423935a6be5843bb988b7043"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/archive-identity.json": {
+      "bytes": 762,
+      "mode": 420,
+      "sha256": "98a64de5f9735c280edc3e0df5da9a1bae82ab976d8c2526da4249386dfa3bbf"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/cases.json": {
+      "bytes": 32552,
+      "mode": 420,
+      "sha256": "97fa9ae8551b14f39dea2b352c9e00d22eae574c6c5ba25e7840742700343f84"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "078b89b5461588dad7433bb34df3c4e8d20539ada4ba5667109f4f385d4a412a"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/module.pkl": {
+      "bytes": 1233,
+      "mode": 420,
+      "sha256": "28ed759288cd664505347ef6e649d95c9495901787bfbea160c1aa5e6bc8efc6"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/oracle-evidence.tar.gz": {
+      "bytes": 326267,
+      "mode": 420,
+      "sha256": "77c4a0f285dacdbf56a6f47cc39e67fc164bd76457510a125d7396b3034e9214"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/queries.tsv": {
+      "bytes": 13450,
+      "mode": 420,
+      "sha256": "0f8105fad96003a6bcebc71c5c9e235148f6b3d33a1132e06c3eb0e69fda10d9"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/README.md": {
+      "bytes": 1824,
+      "mode": 420,
+      "sha256": "e6eb6f470aa6ae61ae9864589f3b18152bb2dd41cd98bd6a903e91b4bc1d229d"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/archive-identity.json": {
+      "bytes": 772,
+      "mode": 420,
+      "sha256": "7199b08341fae4b92dfe5b458437779812d5a849de2ba720a254ac298f317a3b"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/cases.json": {
+      "bytes": 20412,
+      "mode": 420,
+      "sha256": "3a79ba3caa4ff3cd3180271e659b7323a7ca0f3b75fba9e15172ecb7d36cafd2"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "2abf8cccf433316152db8654e2d4eba863f8b5ae4cac4b7fb0aab6ac661cd449"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/module.pkl": {
+      "bytes": 219,
+      "mode": 420,
+      "sha256": "50fc462c877bebd2a06bb9a295c2c9e89874705b5246e69aba7b7e9fbf41a3eb"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/oracle-evidence.tar.gz": {
+      "bytes": 250740,
+      "mode": 420,
+      "sha256": "5e14a08075c7f488ca0a5dd2632956366a1a5f368428b5e325da584c499f801d"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/queries.tsv": {
+      "bytes": 8486,
+      "mode": 420,
+      "sha256": "2081dfb9db79a5695e58c4149783fbd4b46c4c045b764de314ff68300d1d532f"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/README.md": {
+      "bytes": 1838,
+      "mode": 420,
+      "sha256": "d06365f13ced36edc0d2385fa54624b7ff7752d3e416a36051a5744ccfc5767c"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/archive-identity.json": {
+      "bytes": 949,
+      "mode": 420,
+      "sha256": "80dbf83b2a8445fac202f1f2290bbe2e62cf2ac180e4670863a88c1fbbca7c88"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/cases.json": {
+      "bytes": 10950,
+      "mode": 420,
+      "sha256": "2dbd453c55268cf80fdb8765d6bcea44535eed917f418eff27d3566f78f0d453"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "abb85b72dca74c8e5cc28b30f0a2335ca30f59c59fe14b7d34a4ae3164692cc1"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/module.pkl": {
+      "bytes": 404,
+      "mode": 420,
+      "sha256": "90c2a9ef0fabcc8f8b22e4abf036caedbe7773663e605363ebecf9a16a7d9102"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/oracle-evidence.tar.gz": {
+      "bytes": 223024,
+      "mode": 420,
+      "sha256": "c254f3cad568223c1da8f75bd5dad0a74f64867132a292bf1f1a312414f7f9da"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/queries.tsv": {
+      "bytes": 4685,
+      "mode": 420,
+      "sha256": "f7affd443c1fa5d0287b820e3ede1eb0d67782edf80000c4518b72f35aad1c09"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/README.md": {
+      "bytes": 2159,
+      "mode": 420,
+      "sha256": "97c9507223d8be86c14c2a9f85e8d26eb5751ba2750d6fe77dccecf6a1b6aea7"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/archive-identity.json": {
+      "bytes": 952,
+      "mode": 420,
+      "sha256": "fe9d619a4c9340e5a7335fcba30d762ae40f8c26b8ccd67c5f34b7416c17cb5e"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/cases.json": {
+      "bytes": 38840,
+      "mode": 420,
+      "sha256": "a45146b0387754d879109cfed5dd280bf6aad215c9e4197e10644d432a444c3b"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "33e8096434dc734cb6b05be944c371d40c4445fe30ab261cc3e48f6df587eb89"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/module.pkl": {
+      "bytes": 838,
+      "mode": 420,
+      "sha256": "a24a1e717919fd710c219f7c7e27e6c9baa93b575749c840d96a58ae0f886b4a"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/oracle-evidence.tar.gz": {
+      "bytes": 513094,
+      "mode": 420,
+      "sha256": "e2e7db0435308cd2b3ff0656e0ba799e621535054a67c45ef0fd08594b00d8f6"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/queries.tsv": {
+      "bytes": 15430,
+      "mode": 420,
+      "sha256": "39416e2d5adb7db5fe531289ff736a14f8926af3af8bf64fcbf9aad2ad3021cc"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/README.md": {
+      "bytes": 1422,
+      "mode": 420,
+      "sha256": "0b396692ae1f5aedf318304da137d6570c82e06db933401e98e009986f556171"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/archive-identity.json": {
+      "bytes": 958,
+      "mode": 420,
+      "sha256": "8cf32c2500a2d9f68a59575fc2201f124a1add87d0eaf43aab30d5d87d27b7ee"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/cases.json": {
+      "bytes": 4629,
+      "mode": 420,
+      "sha256": "15cb06a0db6c9e6c90edf2afa199c1d86734920d5ff4432c6cb3de1c521d9e0a"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "03fa1629cf5bbcf18753154b97c18bfa551c681534e73ec77c6d2f95a7a00455"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/module.pkl": {
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/oracle-evidence.tar.gz": {
+      "bytes": 155316,
+      "mode": 420,
+      "sha256": "0c7ed42e1f786ea02086f6cf1c736b1c326835801221512568ed695dfc96c126"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/queries.tsv": {
+      "bytes": 2123,
+      "mode": 420,
+      "sha256": "375fc16968ee997b25d7223380398205ed756352c07b0d6e443c457f4b1ea143"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/README.md": {
+      "bytes": 1154,
+      "mode": 420,
+      "sha256": "f9c18f171483f149a1f163486cd9a04816cd3c4ef48fc97d764e623d04cbea4f"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/archive-identity.json": {
+      "bytes": 954,
+      "mode": 420,
+      "sha256": "fb891e4c80d7d1bad418695cdbeba05e0c8d8b19eff232bc159f8047b36d3d5b"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/cases.json": {
+      "bytes": 1836,
+      "mode": 420,
+      "sha256": "cc2a09354e1e2c7907fd2ad993bff28dd0bf793058c939f5154d549800b66dae"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "e9a983c8f12a3747908532653fa66329a6b4e324e66a90edd7427e45c31e5d79"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/module.pkl": {
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/oracle-evidence.tar.gz": {
+      "bytes": 147108,
+      "mode": 420,
+      "sha256": "29344c12e72341e574e8da0e20d56a43818a75872afecb997c6a062d787cd483"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/queries.tsv": {
+      "bytes": 644,
+      "mode": 420,
+      "sha256": "d0ab652f9c4f422fc0392c9e1a3adb985ee9f77cb601cf2b9ba72aa2bfe07bdc"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/README.md": {
+      "bytes": 2152,
+      "mode": 420,
+      "sha256": "d39a8788d9e6af136eb87bfdc584808ae5bae19106e7df506f2444f46b73707b"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/archive-identity.json": {
+      "bytes": 948,
+      "mode": 420,
+      "sha256": "8233982adb972ba935708cf435cb9b13288dee4aec531c3b2ed3da6b83606fe1"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/cases.json": {
+      "bytes": 24667,
+      "mode": 420,
+      "sha256": "a95d66add782756fbd2b0533fe2b4660de872f172abde76f56a712f7b12eab32"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "5690790700f39d0d519742a1ec852f6c71419636030ee3e0d91571ecc1a67cc2"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/module.pkl": {
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/oracle-evidence.tar.gz": {
+      "bytes": 371632,
+      "mode": 420,
+      "sha256": "2c75876849e8b9d0f87a72c1b4aa874c0f613d2d40cbdbb3e03fd23d48fa6317"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/queries.tsv": {
+      "bytes": 10038,
+      "mode": 420,
+      "sha256": "1096a8cd0bdf65b615c104fd25592ddb58fbe4e7ca3b12a3e0f8ac2a5b971f18"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/README.md": {
+      "bytes": 1650,
+      "mode": 420,
+      "sha256": "16f63734f0ccf12671d76abf0ac0c1f4782eeb03fd666866a4932454f282f100"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/archive-identity.json": {
+      "bytes": 955,
+      "mode": 420,
+      "sha256": "50d0a0226a5938e685e64ca3c6132f4c33b704e7eafe43fb5e1b5356a1074d1f"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/cases.json": {
+      "bytes": 5706,
+      "mode": 420,
+      "sha256": "341f6b953b8dcd39e623dc6d1a04a0ac0a2aa786f7f13dce7f6f81a98bba50b4"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "fbf1a3ab158b74d06cb1d41bd42c47d392f68d239ad66ffe29a1a2a0c4ab5c0f"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/module.pkl": {
+      "bytes": 32,
+      "mode": 420,
+      "sha256": "7f80ba30b4248cff7cca4b036bde2f5a7f3a215408765e622b2b124eb5a5b1ce"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/oracle-evidence.tar.gz": {
+      "bytes": 158570,
+      "mode": 420,
+      "sha256": "4fd0bab6188625485f311e592a4e02303ddfcf05d63a86d9c30ec668ed875ac2"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/queries.tsv": {
+      "bytes": 2500,
+      "mode": 420,
+      "sha256": "59e7145df48a51493f10fb16ea9093711c18e9ff50a30a67c3f81043a0b1b239"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/README.md": {
+      "bytes": 1202,
+      "mode": 420,
+      "sha256": "da091f6af60fc79ee3b474ba580f3f147d08f734d459a7cb1dfedcc0c8a1423e"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/archive-identity.json": {
+      "bytes": 417,
+      "mode": 420,
+      "sha256": "23ea2fde2e53fab5bcd82d05d92223ac4c7fcb2f87b13961b5747101da9c7786"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/cases.json": {
+      "bytes": 13454,
+      "mode": 420,
+      "sha256": "10bc691c2aab559e5ade734087e26619f8903945875924a92da9784416182057"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "3be804e356bcc13909c3e297644869aa3173e450576bee98563aa0348a622582"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/module.pkl": {
+      "bytes": 1638,
+      "mode": 420,
+      "sha256": "d0a0fc1c19a588d9188ecf73243d819d32fca34da249764573f3739b3a1dd03e"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/oracle-evidence.tar.gz": {
+      "bytes": 242059,
+      "mode": 420,
+      "sha256": "231d9c1d922cae9c1b2e0c1bd5fb15a0465681043414425f36bf89480b08763e"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/queries.tsv": {
+      "bytes": 6123,
+      "mode": 420,
+      "sha256": "6efd438f068e88f23f7864745860c4b37e01e5b531602bacddb3aae2f9d03c59"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/README.md": {
+      "bytes": 990,
+      "mode": 420,
+      "sha256": "d08be2be4375b0e6c15efef7be77adf85d2ee3a995d1cdba0bebfca654a4f076"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/archive-identity.json": {
+      "bytes": 769,
+      "mode": 420,
+      "sha256": "f22eb9bb0d7e9278625daca360e19cb43f470ac7a5268a70ac3c96e0aceadada"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/cases.json": {
+      "bytes": 1421,
+      "mode": 420,
+      "sha256": "06b6d407cb7f7049eb83ed9fd8cf2af0801accaf87064915157743694bd95cfc"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "27ad180dfe09638bb73f8f099476a964cf738c6c597b9ca918416b7a02a5c350"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/module.pkl": {
+      "bytes": 34,
+      "mode": 420,
+      "sha256": "ad7ab1ce7bc50d525b29b10b8db1c5247623ce9bce2da705cd9ee0d01723f8ca"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/oracle-evidence.tar.gz": {
+      "bytes": 182120,
+      "mode": 420,
+      "sha256": "c3a0202d3a642f8524728bdbd917970a0048ec58d9ef9031d43a6470c8086e63"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/queries.tsv": {
+      "bytes": 498,
+      "mode": 420,
+      "sha256": "2d05613d0794ca668a54a9ae9d8f9d9938776f6471d08bb24f58a52044755464"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/README.md": {
+      "bytes": 920,
+      "mode": 420,
+      "sha256": "b0cc5b27aa0a4a2a57356e987bdae964c4ab7985a1ebed3f750dccc336dd3ea6"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/archive-identity.json": {
+      "bytes": 770,
+      "mode": 420,
+      "sha256": "2969f9bc33add871754372a536299073e6b62bb92eeb773559fb9150148b67b6"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/cases.json": {
+      "bytes": 2907,
+      "mode": 420,
+      "sha256": "ea9f15510c8da63180c73d6a8cfacbd01159fe9b79e6ba72911bd776389f7899"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "55a1fa0c680066bd28a04ff32be017baf19b443efeac90ebd6cf65679ed382c6"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/module.pkl": {
+      "bytes": 35,
+      "mode": 420,
+      "sha256": "a9045c2bd08d9097c9893fe60cb017a7b17bd7efbdaa801bc247bc103a5ff168"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/oracle-evidence.tar.gz": {
+      "bytes": 176460,
+      "mode": 420,
+      "sha256": "11a400a303c07dcc81dd53848a3590696c32ab889c605924e468faf8e5f4366b"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/queries.tsv": {
+      "bytes": 918,
+      "mode": 420,
+      "sha256": "f755443fea6b0646a306da03b6da2641b37d4bb544d59f0c47af5a46e416bc0b"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/README.md": {
+      "bytes": 1857,
+      "mode": 420,
+      "sha256": "1f8480ea115f7ffea551a7c8089ac4cd2a2bec199bdb819c0d27cc24716336ea"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/archive-identity.json": {
+      "bytes": 761,
+      "mode": 420,
+      "sha256": "2b6e72d34ea1ae8f569a14b13304b8a8a0f516cf6ac767a81ffbfd7ad11cbe25"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/cases.json": {
+      "bytes": 12094,
+      "mode": 420,
+      "sha256": "b1fc4fdb79c82be4df45e491b946c27923b2a706b2184480aee4323c76d5b96d"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "870d0abaa5cb5d0b8630616619876d6e54f9d022577b2df2f4715366862b197e"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/module.pkl": {
+      "bytes": 81,
+      "mode": 420,
+      "sha256": "d5a806769a7719918a98dc7709fd15899b398ecf032d59c917371a96aadebe99"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/oracle-evidence.tar.gz": {
+      "bytes": 226596,
+      "mode": 420,
+      "sha256": "132cab831cf0021a2ff31ca2f45ede1e166f208eadd8965d5eb1498b01dfdc26"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/queries.tsv": {
+      "bytes": 4066,
+      "mode": 420,
+      "sha256": "749e6aa1daaaac6bbbbdea4b12e7369fabcad4339fd72ba0d24fcdaf9e6a4444"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/README.md": {
+      "bytes": 1269,
+      "mode": 420,
+      "sha256": "6c160749a212ce8f9757ca0960fcdfd2a14c871e7822a44f2ade3ea6a7f3d34e"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/archive-identity.json": {
+      "bytes": 766,
+      "mode": 420,
+      "sha256": "29f03b747ce869551b1dab82f59283ccf04b3d7b568caea69d0e169bcb981790"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/cases.json": {
+      "bytes": 10551,
+      "mode": 420,
+      "sha256": "d70067c1ea0f45960e6b693db60165521a2b45b2ac35c8285f300446c2043c02"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "4a85338d47a7bb47a1b191dfd8593de89f96afb9e0014f78b0aff1c20cb888b7"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/module.pkl": {
+      "bytes": 30,
+      "mode": 420,
+      "sha256": "add28c5d462e41c7c5d8fa273817669d6e1234f85adc2ac8fac5ea0b3160fe70"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/oracle-evidence.tar.gz": {
+      "bytes": 182591,
+      "mode": 420,
+      "sha256": "9a1326f0220b92607779bd02e2fc41d81d7a9cea8f40a3f404a55f3be03e1ae9"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/queries.tsv": {
+      "bytes": 3803,
+      "mode": 420,
+      "sha256": "eb9e0db1e0e62f87077a8c9c20b6bde4fa8636f85e0634b574f4a5fbd7dce7d4"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/amendment_construction_fixtures.py": {
+      "bytes": 4687,
+      "mode": 420,
+      "sha256": "67711ff231c27939f717960057972ab4327210408be6d0bf6d3057ee87ccb403"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/amendment_construction_oracle.py": {
+      "bytes": 13327,
+      "mode": 420,
+      "sha256": "a73e1fa1fd047ff4477197c3715571ce21499ac5905148ecc7b045a1c63438cb"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_addition_fixtures.py": {
+      "bytes": 4684,
+      "mode": 420,
+      "sha256": "3279f86b92ebd492abe909d00e6dc62243cb72387187d2bd0ea98d30bde9da6d"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_addition_oracle.py": {
+      "bytes": 11602,
+      "mode": 420,
+      "sha256": "4b415302fad2f295ce368fa4c81a5330414e4f23bcd7c0ee6ce409a9e2d8fac8"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_conversion_controls_fixtures.py": {
+      "bytes": 14922,
+      "mode": 420,
+      "sha256": "309c86d94353cef1ef5b4138ccdefe710d49911ad67d00c50411324d7216ac0d"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_conversion_controls_oracle.py": {
+      "bytes": 12503,
+      "mode": 420,
+      "sha256": "7d86029f9f4cd2dbd5feb357292dd7ffeabcfb14f967d693f3458e739c0db9ac"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_conversion_profiles.py": {
+      "bytes": 11029,
+      "mode": 420,
+      "sha256": "349e9d09145e2813a628123b535fb0805182797cd0b6a15b5ae90edd3ca1d4fe"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_conversions_compare.py": {
+      "bytes": 12376,
+      "mode": 420,
+      "sha256": "19525891c2992bd4675934aeecf24eb57a6ebc193d4e00dfb931f3d71c9d32fc"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_conversions_fixtures.py": {
+      "bytes": 14913,
+      "mode": 420,
+      "sha256": "06eb22a1d4c961790d5a67e5a2e05eeddc2154938be0ea83e29f3972c2ddd3e4"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_conversions_oracle.py": {
+      "bytes": 12140,
+      "mode": 420,
+      "sha256": "fd61e2566ec29789d280114d5ca6613005880c10a32682ced64a16d3189f31ad"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_conversions_portable_compare.py": {
+      "bytes": 30408,
+      "mode": 420,
+      "sha256": "c460b508a1cc2f0eb2d7eefe478e5d4668625fca35ef9c522a2e997560fb1f8d"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_default_contracts_fixtures.py": {
+      "bytes": 14941,
+      "mode": 420,
+      "sha256": "494e1032d4bcbde5c411f326baa28c2a05f362a4e6551b3070cc0edeba4f8389"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_default_contracts_oracle.py": {
+      "bytes": 12795,
+      "mode": 420,
+      "sha256": "2b640e7db2671e1c7e747e62610ffa7a476ae7f6cfad17d7873cbad28d352a7e"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_dynamic_render_fixtures.py": {
+      "bytes": 14908,
+      "mode": 420,
+      "sha256": "9d7774c9adf4eb9220120532912ffda3753c024dd64316a781534b7132e6ded2"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_dynamic_render_oracle.py": {
+      "bytes": 12838,
+      "mode": 420,
+      "sha256": "5802a1dd8077f6c5f00c0b06ba36179c5cc0122bd58a43753aad2a2a4f66deb2"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_lookups_fixtures.py": {
+      "bytes": 14893,
+      "mode": 420,
+      "sha256": "35874aebf14adea027bf09f9f714632ec5c2c1ca514e71dbf1ccdfb2d973717f"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_lookups_oracle.py": {
+      "bytes": 12747,
+      "mode": 420,
+      "sha256": "a041aeddad6651bbc9676339e00beddafab79fc26fc05dbda35b434d3c4d1411"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_property_names_fixtures.py": {
+      "bytes": 14923,
+      "mode": 420,
+      "sha256": "110bf2806cb89a19749a20533cc21c0bbebb2099b0c435dcb322092f0df3958e"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/collection_property_names_oracle.py": {
+      "bytes": 12855,
+      "mode": 420,
+      "sha256": "122cfe187eddd253922eca5cf9cf752046b12e6d3cf1885071aa5b432c8dd1b5"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/data_size_compare.py": {
+      "bytes": 20714,
+      "mode": 420,
+      "sha256": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/data_size_fixtures.py": {
+      "bytes": 10223,
+      "mode": 420,
+      "sha256": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/data_size_oracle.py": {
+      "bytes": 30347,
+      "mode": 420,
+      "sha256": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/data_size_portable_compare.py": {
+      "bytes": 40065,
+      "mode": 420,
+      "sha256": "5087d0ffc4d3ae7e45ee6c3573bf36f679e8f6f25c5f8b4985b61d6db94f9919"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/inferred_new_fixtures.py": {
+      "bytes": 16173,
+      "mode": 420,
+      "sha256": "e91d801990cafbb2902bd11f459e0659ae52b4438831debf0495cff08d8d5c21"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/inferred_new_oracle.py": {
+      "bytes": 13500,
+      "mode": 420,
+      "sha256": "2008fd21449796317b8d091f55c7220d40f1b2df1fb93427eb4fd067abee5d6c"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/java/CollectionConversionsOracle.java": {
+      "bytes": 4819,
+      "mode": 420,
+      "sha256": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/m1_platforms.py": {
+      "bytes": 12727,
+      "mode": 420,
+      "sha256": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/m1_semantics.py": {
+      "bytes": 10492,
+      "mode": 420,
+      "sha256": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/m2_source_inputs.py": {
+      "bytes": 4787,
+      "mode": 420,
+      "sha256": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/oracle.py": {
+      "bytes": 16102,
+      "mode": 420,
+      "sha256": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/platform/capture-collection-conversions.mjs": {
+      "bytes": 32877,
+      "mode": 420,
+      "sha256": "46323c468c111d1f2752ab6f664b8cc2cfcbec91eadb41605aa9d528ab337d97"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/platform/capture-collection-conversions.test.mjs": {
+      "bytes": 13658,
+      "mode": 420,
+      "sha256": "7a2bd4d9e6f8dc2a2ee1562ef781e1b4e9979cb1e9bdf10281935792f13ef926"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/platform/data-size-session.mjs": {
+      "bytes": 10744,
+      "mode": 420,
+      "sha256": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/platform/data-size-session.test.mjs": {
+      "bytes": 9567,
+      "mode": 420,
+      "sha256": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/platform/module-policy-session.mjs": {
+      "bytes": 5957,
+      "mode": 420,
+      "sha256": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/platform/package-lock.json": {
+      "bytes": 1173,
+      "mode": 420,
+      "sha256": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/platform/package.json": {
+      "bytes": 133,
+      "mode": 420,
+      "sha256": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/platform/resource-session.mjs": {
+      "bytes": 10123,
+      "mode": 420,
+      "sha256": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/reversal_implicit_fixtures.py": {
+      "bytes": 5163,
+      "mode": 420,
+      "sha256": "b0d4cd16773d7ff8d9b1a70253a518a56abfb1229c5ab260f1740b2dcaae0f2e"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/reversal_implicit_oracle.py": {
+      "bytes": 9642,
+      "mode": 420,
+      "sha256": "6d82b58c9a7233f5f33a1b017ba5b7cb1ddc8f3c21f458bc0041ede94b8d9b61"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/reversal_subscript_fixtures.py": {
+      "bytes": 5187,
+      "mode": 420,
+      "sha256": "0841b2e2a9a4b4fcf359cae2f49ad12690c7a40a0f11414f5d6f67e3296d0304"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/reversal_subscript_oracle.py": {
+      "bytes": 9232,
+      "mode": 420,
+      "sha256": "48c24e95b209311a0472ff733c3941b553c18b2ce6025c36900806ea79ad54ce"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/reversal_values_fixtures.py": {
+      "bytes": 5115,
+      "mode": 420,
+      "sha256": "5124d076737d9f937970e9c0f399baf4650c865ba2dcdd23db846b9d1605f3eb"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/reversal_values_oracle.py": {
+      "bytes": 12305,
+      "mode": 420,
+      "sha256": "e6d288c6cd6683fef9ac9ad45d1890d363ba1f2a0bbde1b85702e2c3b4d0f298"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/set_endpoints_fixtures.py": {
+      "bytes": 4798,
+      "mode": 420,
+      "sha256": "5aac78a7fa29145c1991f9a633fa45b897ca592b7e36dee601fbcfc1ccd40c8a"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/set_endpoints_oracle.py": {
+      "bytes": 11452,
+      "mode": 420,
+      "sha256": "cd8fa1d9f7ce2c73eeb4cd774f92c46a1633ac61a46d820170871bb104e5c1b3"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_amendment_construction_fixtures.py": {
+      "bytes": 5387,
+      "mode": 420,
+      "sha256": "97a983c772ccf0eed933bb127a865c7230577d138e955d174129afa05e3e6ff9"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_collection_addition_fixtures.py": {
+      "bytes": 5747,
+      "mode": 420,
+      "sha256": "73075879c7da2db9eb28abadda12251f348725c9baeb67d85bf431bc05812bb3"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_collection_conversion_controls_fixtures.py": {
+      "bytes": 4534,
+      "mode": 420,
+      "sha256": "5be0579de9de406ccdf7a4038519448a09cecb9144440fa1a24b6d085f8667a5"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_collection_conversions_compare.py": {
+      "bytes": 22312,
+      "mode": 420,
+      "sha256": "7f61e4e091c343df78d2eb550b9d7150198d8fc67858542412d8bff9648c5d11"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_collection_conversions_fixtures.py": {
+      "bytes": 4995,
+      "mode": 420,
+      "sha256": "c470063ce03f8fda670e6418ed74edc7970744e6c3a2b17a54fd92276ece4772"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_collection_conversions_portable_compare.py": {
+      "bytes": 27291,
+      "mode": 420,
+      "sha256": "58b29ccbc7846e7c0ff0d7c4cf0e1cad5cbc89f886aea4b7cc074aeab40ee1ec"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_collection_default_contracts_fixtures.py": {
+      "bytes": 4271,
+      "mode": 420,
+      "sha256": "9d845b864d8d7700f10ab02cca89df4597abc90b60160e0331e043930c61c893"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_collection_dynamic_render_fixtures.py": {
+      "bytes": 3752,
+      "mode": 420,
+      "sha256": "f2a2b467af555f4524a4a01aa85a7e0b21e34c0f1bb3c700ace6d8d8ce1796d3"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_collection_lookups_fixtures.py": {
+      "bytes": 5362,
+      "mode": 420,
+      "sha256": "2afba66671260a2cdfad3b1980fb2f785412b9bb37caf9d3ad02224517b27975"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_collection_property_names_fixtures.py": {
+      "bytes": 5448,
+      "mode": 420,
+      "sha256": "46a72021657b92c19b01c0f02d0c79ad3b9deb9bb4e0ee381c632bbeaadb5ea7"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_data_size_portable_compare.py": {
+      "bytes": 23754,
+      "mode": 420,
+      "sha256": "b61dc5fd77cf2d7a000687427d594f7d09df9b505617af0a6e17fb8a029815eb"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_inferred_new_fixtures.py": {
+      "bytes": 3360,
+      "mode": 420,
+      "sha256": "d181a2b5647bf26454f86896316a9bb39154a8e977c0ff72585bb98db08182ab"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_reversal_implicit_fixtures.py": {
+      "bytes": 4819,
+      "mode": 420,
+      "sha256": "a8f82d35cbee283390800b3bb456fbfefe8c09101ac5fa40a24b1ccfe5407a66"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_reversal_subscript_fixtures.py": {
+      "bytes": 5742,
+      "mode": 420,
+      "sha256": "0debd53bebc8afe9191f4f5d08c2ef2e59bea10cfce547f3a9f76fb3409794d4"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_reversal_values_fixtures.py": {
+      "bytes": 5278,
+      "mode": 420,
+      "sha256": "300ad46793dfd6635eb2a7a2618d7b1627019120e900bb9b6c7f0737e0d1f224"
+    },
+    "target/m2/stage66-catalog-validation-01/sources/tools/tests/test_set_endpoints_fixtures.py": {
+      "bytes": 5542,
+      "mode": 420,
+      "sha256": "03a1cdec495bedc5f84143b5dd9f5d02c830d3c25fb0f63c9830a7e513578906"
+    },
+    "target/m2/stage66-catalog-validation-02/node/process.json": {
+      "bytes": 637,
+      "mode": 420,
+      "sha256": "8bf4b533aa8481bb4eb5715c563b2909661a2e4098d4e3161ef7eaeb2b41a510"
+    },
+    "target/m2/stage66-catalog-validation-02/node/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-catalog-validation-02/node/stdout.bin": {
+      "bytes": 1132,
+      "mode": 420,
+      "sha256": "e4277e5266b437aaf85a6ca651e23e63a2fea6357c753caf34178fd351b71a80"
+    },
+    "target/m2/stage66-catalog-validation-02/python-optimized/process.json": {
+      "bytes": 840,
+      "mode": 420,
+      "sha256": "dd6a5814b0b98b8a13ea47daeffe589a86030848f0518c2c7480c047b067f236"
+    },
+    "target/m2/stage66-catalog-validation-02/python-optimized/stderr.bin": {
+      "bytes": 142,
+      "mode": 420,
+      "sha256": "46b11a00ae8ad664cb1e218ff6fc5e23139a90c700d375e997bd6904ce3d69b1"
+    },
+    "target/m2/stage66-catalog-validation-02/python-optimized/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-catalog-validation-02/python/process.json": {
+      "bytes": 820,
+      "mode": 420,
+      "sha256": "eb2f15b7ad2e3b4d51b21077da4741e8ea37a69b498312efceaf47f23223c10f"
+    },
+    "target/m2/stage66-catalog-validation-02/python/stderr.bin": {
+      "bytes": 142,
+      "mode": 420,
+      "sha256": "65da3b9fffa10ee0909a0a36d35a8e4b54206905573e88eb9540e0cb867c20d8"
+    },
+    "target/m2/stage66-catalog-validation-02/python/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-catalog-validation-02/report.json": {
+      "bytes": 4139,
+      "mode": 420,
+      "sha256": "80047131014f26d7f3134e16ea2c440b97a80cc465001ef17dd67dd17f4d9349"
+    },
+    "target/m2/stage66-catalog-validation-02/run.py": {
+      "bytes": 3671,
+      "mode": 420,
+      "sha256": "f20417d50213f8e7aab18db16f0e311928938fd145fb01d8b078a5d304f5481e"
+    },
+    "target/m2/stage66-catalog-validation-02/source-after.json": {
+      "bytes": 26658,
+      "mode": 420,
+      "sha256": "1eed7237fff678b77872451ef2ed0637e6334be96780944add289b9ab5a0816d"
+    },
+    "target/m2/stage66-catalog-validation-02/source-before.json": {
+      "bytes": 26658,
+      "mode": 420,
+      "sha256": "1eed7237fff678b77872451ef2ed0637e6334be96780944add289b9ab5a0816d"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/compatibility/collection-conversion-profiles.json": {
+      "bytes": 13527,
+      "mode": 420,
+      "sha256": "89911cea3a384448096397763446570779d7f198e8b9f4b3dde3708e9c6910de"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/target/m2/stage66-catalog-validation-02/run.py": {
+      "bytes": 3671,
+      "mode": 420,
+      "sha256": "f20417d50213f8e7aab18db16f0e311928938fd145fb01d8b078a5d304f5481e"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-amendment-construction/README.md": {
+      "bytes": 1553,
+      "mode": 420,
+      "sha256": "ad3a9c9115ea87c9520c0841dcc98b3a6a8981db423935a6be5843bb988b7043"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-amendment-construction/archive-identity.json": {
+      "bytes": 762,
+      "mode": 420,
+      "sha256": "98a64de5f9735c280edc3e0df5da9a1bae82ab976d8c2526da4249386dfa3bbf"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-amendment-construction/cases.json": {
+      "bytes": 32552,
+      "mode": 420,
+      "sha256": "97fa9ae8551b14f39dea2b352c9e00d22eae574c6c5ba25e7840742700343f84"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-amendment-construction/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "078b89b5461588dad7433bb34df3c4e8d20539ada4ba5667109f4f385d4a412a"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-amendment-construction/module.pkl": {
+      "bytes": 1233,
+      "mode": 420,
+      "sha256": "28ed759288cd664505347ef6e649d95c9495901787bfbea160c1aa5e6bc8efc6"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-amendment-construction/oracle-evidence.tar.gz": {
+      "bytes": 326267,
+      "mode": 420,
+      "sha256": "77c4a0f285dacdbf56a6f47cc39e67fc164bd76457510a125d7396b3034e9214"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-amendment-construction/queries.tsv": {
+      "bytes": 13450,
+      "mode": 420,
+      "sha256": "0f8105fad96003a6bcebc71c5c9e235148f6b3d33a1132e06c3eb0e69fda10d9"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-base-constructor-constraints/README.md": {
+      "bytes": 1470,
+      "mode": 420,
+      "sha256": "b1c0b02015b4733aa9c338ba76388146a7f08651b92b790046eece7a20295f93"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-base-constructor-constraints/archive-identity.json": {
+      "bytes": 780,
+      "mode": 420,
+      "sha256": "0b597f53cdab7cc6718993161cc0cb75145519ceedc33eb2bbc8f78c5f048ccf"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-base-constructor-constraints/cases.json": {
+      "bytes": 5898,
+      "mode": 420,
+      "sha256": "d0517af9355f95acb2d14daf83680781761b86b2732adf8dbbf6b45dfe47dea5"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-base-constructor-constraints/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "6064ea8ed3ee9c269c64863999d901efc4eee6a876ac9ed8e179fcad05c83ad7"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-base-constructor-constraints/module.pkl": {
+      "bytes": 351,
+      "mode": 420,
+      "sha256": "818236da99270a29e3326829fd85dfed08ce39a1db2a1ccf2553ff077f650bb1"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-base-constructor-constraints/oracle-evidence.tar.gz": {
+      "bytes": 223228,
+      "mode": 420,
+      "sha256": "3f5a609f62a40e004dd208bc078be9e88a3a4a94c30ee4a04ebb5450d5eb8c6e"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-base-constructor-constraints/queries.tsv": {
+      "bytes": 2060,
+      "mode": 420,
+      "sha256": "40298bcc992b9c035267816faef9b76cb990d9dae3eabfcabd94215bf758fcaf"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-addition/README.md": {
+      "bytes": 1824,
+      "mode": 420,
+      "sha256": "e6eb6f470aa6ae61ae9864589f3b18152bb2dd41cd98bd6a903e91b4bc1d229d"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-addition/archive-identity.json": {
+      "bytes": 772,
+      "mode": 420,
+      "sha256": "7199b08341fae4b92dfe5b458437779812d5a849de2ba720a254ac298f317a3b"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-addition/cases.json": {
+      "bytes": 20412,
+      "mode": 420,
+      "sha256": "3a79ba3caa4ff3cd3180271e659b7323a7ca0f3b75fba9e15172ecb7d36cafd2"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-addition/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "2abf8cccf433316152db8654e2d4eba863f8b5ae4cac4b7fb0aab6ac661cd449"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-addition/module.pkl": {
+      "bytes": 219,
+      "mode": 420,
+      "sha256": "50fc462c877bebd2a06bb9a295c2c9e89874705b5246e69aba7b7e9fbf41a3eb"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-addition/oracle-evidence.tar.gz": {
+      "bytes": 250740,
+      "mode": 420,
+      "sha256": "5e14a08075c7f488ca0a5dd2632956366a1a5f368428b5e325da584c499f801d"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-addition/queries.tsv": {
+      "bytes": 8486,
+      "mode": 420,
+      "sha256": "2081dfb9db79a5695e58c4149783fbd4b46c4c045b764de314ff68300d1d532f"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversion-controls/README.md": {
+      "bytes": 1838,
+      "mode": 420,
+      "sha256": "d06365f13ced36edc0d2385fa54624b7ff7752d3e416a36051a5744ccfc5767c"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversion-controls/archive-identity.json": {
+      "bytes": 949,
+      "mode": 420,
+      "sha256": "80dbf83b2a8445fac202f1f2290bbe2e62cf2ac180e4670863a88c1fbbca7c88"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversion-controls/cases.json": {
+      "bytes": 10950,
+      "mode": 420,
+      "sha256": "2dbd453c55268cf80fdb8765d6bcea44535eed917f418eff27d3566f78f0d453"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversion-controls/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "abb85b72dca74c8e5cc28b30f0a2335ca30f59c59fe14b7d34a4ae3164692cc1"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversion-controls/module.pkl": {
+      "bytes": 404,
+      "mode": 420,
+      "sha256": "90c2a9ef0fabcc8f8b22e4abf036caedbe7773663e605363ebecf9a16a7d9102"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversion-controls/oracle-evidence.tar.gz": {
+      "bytes": 223024,
+      "mode": 420,
+      "sha256": "c254f3cad568223c1da8f75bd5dad0a74f64867132a292bf1f1a312414f7f9da"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversion-controls/queries.tsv": {
+      "bytes": 4685,
+      "mode": 420,
+      "sha256": "f7affd443c1fa5d0287b820e3ede1eb0d67782edf80000c4518b72f35aad1c09"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversions/README.md": {
+      "bytes": 2159,
+      "mode": 420,
+      "sha256": "97c9507223d8be86c14c2a9f85e8d26eb5751ba2750d6fe77dccecf6a1b6aea7"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversions/archive-identity.json": {
+      "bytes": 952,
+      "mode": 420,
+      "sha256": "fe9d619a4c9340e5a7335fcba30d762ae40f8c26b8ccd67c5f34b7416c17cb5e"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversions/cases.json": {
+      "bytes": 38840,
+      "mode": 420,
+      "sha256": "a45146b0387754d879109cfed5dd280bf6aad215c9e4197e10644d432a444c3b"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversions/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "33e8096434dc734cb6b05be944c371d40c4445fe30ab261cc3e48f6df587eb89"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversions/module.pkl": {
+      "bytes": 838,
+      "mode": 420,
+      "sha256": "a24a1e717919fd710c219f7c7e27e6c9baa93b575749c840d96a58ae0f886b4a"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversions/oracle-evidence.tar.gz": {
+      "bytes": 513094,
+      "mode": 420,
+      "sha256": "e2e7db0435308cd2b3ff0656e0ba799e621535054a67c45ef0fd08594b00d8f6"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-conversions/queries.tsv": {
+      "bytes": 15430,
+      "mode": 420,
+      "sha256": "39416e2d5adb7db5fe531289ff736a14f8926af3af8bf64fcbf9aad2ad3021cc"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-default-contracts/README.md": {
+      "bytes": 1422,
+      "mode": 420,
+      "sha256": "0b396692ae1f5aedf318304da137d6570c82e06db933401e98e009986f556171"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-default-contracts/archive-identity.json": {
+      "bytes": 958,
+      "mode": 420,
+      "sha256": "8cf32c2500a2d9f68a59575fc2201f124a1add87d0eaf43aab30d5d87d27b7ee"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-default-contracts/cases.json": {
+      "bytes": 4629,
+      "mode": 420,
+      "sha256": "15cb06a0db6c9e6c90edf2afa199c1d86734920d5ff4432c6cb3de1c521d9e0a"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-default-contracts/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "03fa1629cf5bbcf18753154b97c18bfa551c681534e73ec77c6d2f95a7a00455"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-default-contracts/module.pkl": {
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-default-contracts/oracle-evidence.tar.gz": {
+      "bytes": 155316,
+      "mode": 420,
+      "sha256": "0c7ed42e1f786ea02086f6cf1c736b1c326835801221512568ed695dfc96c126"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-default-contracts/queries.tsv": {
+      "bytes": 2123,
+      "mode": 420,
+      "sha256": "375fc16968ee997b25d7223380398205ed756352c07b0d6e443c457f4b1ea143"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-dynamic-render/README.md": {
+      "bytes": 1154,
+      "mode": 420,
+      "sha256": "f9c18f171483f149a1f163486cd9a04816cd3c4ef48fc97d764e623d04cbea4f"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-dynamic-render/archive-identity.json": {
+      "bytes": 954,
+      "mode": 420,
+      "sha256": "fb891e4c80d7d1bad418695cdbeba05e0c8d8b19eff232bc159f8047b36d3d5b"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-dynamic-render/cases.json": {
+      "bytes": 1836,
+      "mode": 420,
+      "sha256": "cc2a09354e1e2c7907fd2ad993bff28dd0bf793058c939f5154d549800b66dae"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-dynamic-render/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "e9a983c8f12a3747908532653fa66329a6b4e324e66a90edd7427e45c31e5d79"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-dynamic-render/module.pkl": {
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-dynamic-render/oracle-evidence.tar.gz": {
+      "bytes": 147108,
+      "mode": 420,
+      "sha256": "29344c12e72341e574e8da0e20d56a43818a75872afecb997c6a062d787cd483"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-dynamic-render/queries.tsv": {
+      "bytes": 644,
+      "mode": 420,
+      "sha256": "d0ab652f9c4f422fc0392c9e1a3adb985ee9f77cb601cf2b9ba72aa2bfe07bdc"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-lookups/README.md": {
+      "bytes": 2152,
+      "mode": 420,
+      "sha256": "d39a8788d9e6af136eb87bfdc584808ae5bae19106e7df506f2444f46b73707b"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-lookups/archive-identity.json": {
+      "bytes": 948,
+      "mode": 420,
+      "sha256": "8233982adb972ba935708cf435cb9b13288dee4aec531c3b2ed3da6b83606fe1"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-lookups/cases.json": {
+      "bytes": 24667,
+      "mode": 420,
+      "sha256": "a95d66add782756fbd2b0533fe2b4660de872f172abde76f56a712f7b12eab32"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-lookups/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "5690790700f39d0d519742a1ec852f6c71419636030ee3e0d91571ecc1a67cc2"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-lookups/module.pkl": {
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-lookups/oracle-evidence.tar.gz": {
+      "bytes": 371632,
+      "mode": 420,
+      "sha256": "2c75876849e8b9d0f87a72c1b4aa874c0f613d2d40cbdbb3e03fd23d48fa6317"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-lookups/queries.tsv": {
+      "bytes": 10038,
+      "mode": 420,
+      "sha256": "1096a8cd0bdf65b615c104fd25592ddb58fbe4e7ca3b12a3e0f8ac2a5b971f18"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-property-names/README.md": {
+      "bytes": 1650,
+      "mode": 420,
+      "sha256": "16f63734f0ccf12671d76abf0ac0c1f4782eeb03fd666866a4932454f282f100"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-property-names/archive-identity.json": {
+      "bytes": 955,
+      "mode": 420,
+      "sha256": "50d0a0226a5938e685e64ca3c6132f4c33b704e7eafe43fb5e1b5356a1074d1f"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-property-names/cases.json": {
+      "bytes": 5706,
+      "mode": 420,
+      "sha256": "341f6b953b8dcd39e623dc6d1a04a0ac0a2aa786f7f13dce7f6f81a98bba50b4"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-property-names/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "fbf1a3ab158b74d06cb1d41bd42c47d392f68d239ad66ffe29a1a2a0c4ab5c0f"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-property-names/module.pkl": {
+      "bytes": 32,
+      "mode": 420,
+      "sha256": "7f80ba30b4248cff7cca4b036bde2f5a7f3a215408765e622b2b124eb5a5b1ce"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-property-names/oracle-evidence.tar.gz": {
+      "bytes": 158570,
+      "mode": 420,
+      "sha256": "4fd0bab6188625485f311e592a4e02303ddfcf05d63a86d9c30ec668ed875ac2"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-collection-property-names/queries.tsv": {
+      "bytes": 2500,
+      "mode": 420,
+      "sha256": "59e7145df48a51493f10fb16ea9093711c18e9ff50a30a67c3f81043a0b1b239"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-inferred-new-values/README.md": {
+      "bytes": 1202,
+      "mode": 420,
+      "sha256": "da091f6af60fc79ee3b474ba580f3f147d08f734d459a7cb1dfedcc0c8a1423e"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-inferred-new-values/archive-identity.json": {
+      "bytes": 417,
+      "mode": 420,
+      "sha256": "23ea2fde2e53fab5bcd82d05d92223ac4c7fcb2f87b13961b5747101da9c7786"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-inferred-new-values/cases.json": {
+      "bytes": 13454,
+      "mode": 420,
+      "sha256": "10bc691c2aab559e5ade734087e26619f8903945875924a92da9784416182057"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-inferred-new-values/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "3be804e356bcc13909c3e297644869aa3173e450576bee98563aa0348a622582"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-inferred-new-values/module.pkl": {
+      "bytes": 1638,
+      "mode": 420,
+      "sha256": "d0a0fc1c19a588d9188ecf73243d819d32fca34da249764573f3739b3a1dd03e"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-inferred-new-values/oracle-evidence.tar.gz": {
+      "bytes": 242059,
+      "mode": 420,
+      "sha256": "231d9c1d922cae9c1b2e0c1bd5fb15a0465681043414425f36bf89480b08763e"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-inferred-new-values/queries.tsv": {
+      "bytes": 6123,
+      "mode": 420,
+      "sha256": "6efd438f068e88f23f7864745860c4b37e01e5b531602bacddb3aae2f9d03c59"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-implicit/README.md": {
+      "bytes": 990,
+      "mode": 420,
+      "sha256": "d08be2be4375b0e6c15efef7be77adf85d2ee3a995d1cdba0bebfca654a4f076"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-implicit/archive-identity.json": {
+      "bytes": 769,
+      "mode": 420,
+      "sha256": "f22eb9bb0d7e9278625daca360e19cb43f470ac7a5268a70ac3c96e0aceadada"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-implicit/cases.json": {
+      "bytes": 1421,
+      "mode": 420,
+      "sha256": "06b6d407cb7f7049eb83ed9fd8cf2af0801accaf87064915157743694bd95cfc"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-implicit/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "27ad180dfe09638bb73f8f099476a964cf738c6c597b9ca918416b7a02a5c350"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-implicit/module.pkl": {
+      "bytes": 34,
+      "mode": 420,
+      "sha256": "ad7ab1ce7bc50d525b29b10b8db1c5247623ce9bce2da705cd9ee0d01723f8ca"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-implicit/oracle-evidence.tar.gz": {
+      "bytes": 182120,
+      "mode": 420,
+      "sha256": "c3a0202d3a642f8524728bdbd917970a0048ec58d9ef9031d43a6470c8086e63"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-implicit/queries.tsv": {
+      "bytes": 498,
+      "mode": 420,
+      "sha256": "2d05613d0794ca668a54a9ae9d8f9d9938776f6471d08bb24f58a52044755464"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-subscript/README.md": {
+      "bytes": 920,
+      "mode": 420,
+      "sha256": "b0cc5b27aa0a4a2a57356e987bdae964c4ab7985a1ebed3f750dccc336dd3ea6"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-subscript/archive-identity.json": {
+      "bytes": 770,
+      "mode": 420,
+      "sha256": "2969f9bc33add871754372a536299073e6b62bb92eeb773559fb9150148b67b6"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-subscript/cases.json": {
+      "bytes": 2907,
+      "mode": 420,
+      "sha256": "ea9f15510c8da63180c73d6a8cfacbd01159fe9b79e6ba72911bd776389f7899"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-subscript/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "55a1fa0c680066bd28a04ff32be017baf19b443efeac90ebd6cf65679ed382c6"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-subscript/module.pkl": {
+      "bytes": 35,
+      "mode": 420,
+      "sha256": "a9045c2bd08d9097c9893fe60cb017a7b17bd7efbdaa801bc247bc103a5ff168"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-subscript/oracle-evidence.tar.gz": {
+      "bytes": 176460,
+      "mode": 420,
+      "sha256": "11a400a303c07dcc81dd53848a3590696c32ab889c605924e468faf8e5f4366b"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-subscript/queries.tsv": {
+      "bytes": 918,
+      "mode": 420,
+      "sha256": "f755443fea6b0646a306da03b6da2641b37d4bb544d59f0c47af5a46e416bc0b"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-values/README.md": {
+      "bytes": 1857,
+      "mode": 420,
+      "sha256": "1f8480ea115f7ffea551a7c8089ac4cd2a2bec199bdb819c0d27cc24716336ea"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-values/archive-identity.json": {
+      "bytes": 761,
+      "mode": 420,
+      "sha256": "2b6e72d34ea1ae8f569a14b13304b8a8a0f516cf6ac767a81ffbfd7ad11cbe25"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-values/cases.json": {
+      "bytes": 12094,
+      "mode": 420,
+      "sha256": "b1fc4fdb79c82be4df45e491b946c27923b2a706b2184480aee4323c76d5b96d"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-values/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "870d0abaa5cb5d0b8630616619876d6e54f9d022577b2df2f4715366862b197e"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-values/module.pkl": {
+      "bytes": 81,
+      "mode": 420,
+      "sha256": "d5a806769a7719918a98dc7709fd15899b398ecf032d59c917371a96aadebe99"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-values/oracle-evidence.tar.gz": {
+      "bytes": 226596,
+      "mode": 420,
+      "sha256": "132cab831cf0021a2ff31ca2f45ede1e166f208eadd8965d5eb1498b01dfdc26"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-reversal-values/queries.tsv": {
+      "bytes": 4066,
+      "mode": 420,
+      "sha256": "749e6aa1daaaac6bbbbdea4b12e7369fabcad4339fd72ba0d24fcdaf9e6a4444"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-set-endpoints/README.md": {
+      "bytes": 1269,
+      "mode": 420,
+      "sha256": "6c160749a212ce8f9757ca0960fcdfd2a14c871e7822a44f2ade3ea6a7f3d34e"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-set-endpoints/archive-identity.json": {
+      "bytes": 766,
+      "mode": 420,
+      "sha256": "29f03b747ce869551b1dab82f59283ccf04b3d7b568caea69d0e169bcb981790"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-set-endpoints/cases.json": {
+      "bytes": 10551,
+      "mode": 420,
+      "sha256": "d70067c1ea0f45960e6b693db60165521a2b45b2ac35c8285f300446c2043c02"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-set-endpoints/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "4a85338d47a7bb47a1b191dfd8593de89f96afb9e0014f78b0aff1c20cb888b7"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-set-endpoints/module.pkl": {
+      "bytes": 30,
+      "mode": 420,
+      "sha256": "add28c5d462e41c7c5d8fa273817669d6e1234f85adc2ac8fac5ea0b3160fe70"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-set-endpoints/oracle-evidence.tar.gz": {
+      "bytes": 182591,
+      "mode": 420,
+      "sha256": "9a1326f0220b92607779bd02e2fc41d81d7a9cea8f40a3f404a55f3be03e1ae9"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tests/fixtures/m2-set-endpoints/queries.tsv": {
+      "bytes": 3803,
+      "mode": 420,
+      "sha256": "eb9e0db1e0e62f87077a8c9c20b6bde4fa8636f85e0634b574f4a5fbd7dce7d4"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/amendment_construction_fixtures.py": {
+      "bytes": 4687,
+      "mode": 420,
+      "sha256": "67711ff231c27939f717960057972ab4327210408be6d0bf6d3057ee87ccb403"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/amendment_construction_oracle.py": {
+      "bytes": 13327,
+      "mode": 420,
+      "sha256": "a73e1fa1fd047ff4477197c3715571ce21499ac5905148ecc7b045a1c63438cb"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/base_constructor_constraints_fixtures.py": {
+      "bytes": 5235,
+      "mode": 420,
+      "sha256": "feb1c5abd325e699faed49e848916a78317c41326cc0c32062b796f73d672f4a"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/base_constructor_constraints_oracle.py": {
+      "bytes": 10669,
+      "mode": 420,
+      "sha256": "9ec297ccb2248e99578110b4d5b4824764e70a149df967a2cb78cd1db8227120"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_addition_fixtures.py": {
+      "bytes": 4684,
+      "mode": 420,
+      "sha256": "3279f86b92ebd492abe909d00e6dc62243cb72387187d2bd0ea98d30bde9da6d"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_addition_oracle.py": {
+      "bytes": 11602,
+      "mode": 420,
+      "sha256": "4b415302fad2f295ce368fa4c81a5330414e4f23bcd7c0ee6ce409a9e2d8fac8"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_conversion_controls_fixtures.py": {
+      "bytes": 14922,
+      "mode": 420,
+      "sha256": "309c86d94353cef1ef5b4138ccdefe710d49911ad67d00c50411324d7216ac0d"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_conversion_controls_oracle.py": {
+      "bytes": 12503,
+      "mode": 420,
+      "sha256": "7d86029f9f4cd2dbd5feb357292dd7ffeabcfb14f967d693f3458e739c0db9ac"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_conversion_profiles.py": {
+      "bytes": 11642,
+      "mode": 420,
+      "sha256": "096b54a89dee996406eb2395c70205bf4122b1c7711d460cce1bfc5bf5214b9f"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_conversions_compare.py": {
+      "bytes": 12376,
+      "mode": 420,
+      "sha256": "19525891c2992bd4675934aeecf24eb57a6ebc193d4e00dfb931f3d71c9d32fc"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_conversions_fixtures.py": {
+      "bytes": 14913,
+      "mode": 420,
+      "sha256": "06eb22a1d4c961790d5a67e5a2e05eeddc2154938be0ea83e29f3972c2ddd3e4"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_conversions_oracle.py": {
+      "bytes": 12140,
+      "mode": 420,
+      "sha256": "fd61e2566ec29789d280114d5ca6613005880c10a32682ced64a16d3189f31ad"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_conversions_portable_compare.py": {
+      "bytes": 30408,
+      "mode": 420,
+      "sha256": "c460b508a1cc2f0eb2d7eefe478e5d4668625fca35ef9c522a2e997560fb1f8d"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_default_contracts_fixtures.py": {
+      "bytes": 14941,
+      "mode": 420,
+      "sha256": "494e1032d4bcbde5c411f326baa28c2a05f362a4e6551b3070cc0edeba4f8389"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_default_contracts_oracle.py": {
+      "bytes": 12795,
+      "mode": 420,
+      "sha256": "2b640e7db2671e1c7e747e62610ffa7a476ae7f6cfad17d7873cbad28d352a7e"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_dynamic_render_fixtures.py": {
+      "bytes": 14908,
+      "mode": 420,
+      "sha256": "9d7774c9adf4eb9220120532912ffda3753c024dd64316a781534b7132e6ded2"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_dynamic_render_oracle.py": {
+      "bytes": 12838,
+      "mode": 420,
+      "sha256": "5802a1dd8077f6c5f00c0b06ba36179c5cc0122bd58a43753aad2a2a4f66deb2"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_lookups_fixtures.py": {
+      "bytes": 14893,
+      "mode": 420,
+      "sha256": "35874aebf14adea027bf09f9f714632ec5c2c1ca514e71dbf1ccdfb2d973717f"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_lookups_oracle.py": {
+      "bytes": 12747,
+      "mode": 420,
+      "sha256": "a041aeddad6651bbc9676339e00beddafab79fc26fc05dbda35b434d3c4d1411"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_property_names_fixtures.py": {
+      "bytes": 14923,
+      "mode": 420,
+      "sha256": "110bf2806cb89a19749a20533cc21c0bbebb2099b0c435dcb322092f0df3958e"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/collection_property_names_oracle.py": {
+      "bytes": 12855,
+      "mode": 420,
+      "sha256": "122cfe187eddd253922eca5cf9cf752046b12e6d3cf1885071aa5b432c8dd1b5"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/data_size_compare.py": {
+      "bytes": 20714,
+      "mode": 420,
+      "sha256": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/data_size_fixtures.py": {
+      "bytes": 10223,
+      "mode": 420,
+      "sha256": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/data_size_oracle.py": {
+      "bytes": 30347,
+      "mode": 420,
+      "sha256": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/data_size_portable_compare.py": {
+      "bytes": 40065,
+      "mode": 420,
+      "sha256": "5087d0ffc4d3ae7e45ee6c3573bf36f679e8f6f25c5f8b4985b61d6db94f9919"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/inferred_new_fixtures.py": {
+      "bytes": 16173,
+      "mode": 420,
+      "sha256": "e91d801990cafbb2902bd11f459e0659ae52b4438831debf0495cff08d8d5c21"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/inferred_new_oracle.py": {
+      "bytes": 13500,
+      "mode": 420,
+      "sha256": "2008fd21449796317b8d091f55c7220d40f1b2df1fb93427eb4fd067abee5d6c"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/java/CollectionConversionsOracle.java": {
+      "bytes": 4819,
+      "mode": 420,
+      "sha256": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/m1_platforms.py": {
+      "bytes": 12727,
+      "mode": 420,
+      "sha256": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/m1_semantics.py": {
+      "bytes": 10492,
+      "mode": 420,
+      "sha256": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/m2_source_inputs.py": {
+      "bytes": 4787,
+      "mode": 420,
+      "sha256": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/oracle.py": {
+      "bytes": 16102,
+      "mode": 420,
+      "sha256": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/platform/capture-collection-conversions.mjs": {
+      "bytes": 33088,
+      "mode": 420,
+      "sha256": "ce812b0187021f3aa1f120a6677a781a382fe2caf4ac82b49926732bb17b6097"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/platform/capture-collection-conversions.test.mjs": {
+      "bytes": 13724,
+      "mode": 420,
+      "sha256": "5f0a0022c9189b1ced9b1a39f34194b070d3e396c115eca15bff706e9fd825e6"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/platform/data-size-session.mjs": {
+      "bytes": 10744,
+      "mode": 420,
+      "sha256": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/platform/data-size-session.test.mjs": {
+      "bytes": 9567,
+      "mode": 420,
+      "sha256": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/platform/module-policy-session.mjs": {
+      "bytes": 5957,
+      "mode": 420,
+      "sha256": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/platform/package-lock.json": {
+      "bytes": 1173,
+      "mode": 420,
+      "sha256": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/platform/package.json": {
+      "bytes": 133,
+      "mode": 420,
+      "sha256": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/platform/resource-session.mjs": {
+      "bytes": 10123,
+      "mode": 420,
+      "sha256": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/reversal_implicit_fixtures.py": {
+      "bytes": 5163,
+      "mode": 420,
+      "sha256": "b0d4cd16773d7ff8d9b1a70253a518a56abfb1229c5ab260f1740b2dcaae0f2e"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/reversal_implicit_oracle.py": {
+      "bytes": 9642,
+      "mode": 420,
+      "sha256": "6d82b58c9a7233f5f33a1b017ba5b7cb1ddc8f3c21f458bc0041ede94b8d9b61"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/reversal_subscript_fixtures.py": {
+      "bytes": 5187,
+      "mode": 420,
+      "sha256": "0841b2e2a9a4b4fcf359cae2f49ad12690c7a40a0f11414f5d6f67e3296d0304"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/reversal_subscript_oracle.py": {
+      "bytes": 9232,
+      "mode": 420,
+      "sha256": "48c24e95b209311a0472ff733c3941b553c18b2ce6025c36900806ea79ad54ce"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/reversal_values_fixtures.py": {
+      "bytes": 5115,
+      "mode": 420,
+      "sha256": "5124d076737d9f937970e9c0f399baf4650c865ba2dcdd23db846b9d1605f3eb"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/reversal_values_oracle.py": {
+      "bytes": 12305,
+      "mode": 420,
+      "sha256": "e6d288c6cd6683fef9ac9ad45d1890d363ba1f2a0bbde1b85702e2c3b4d0f298"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/set_endpoints_fixtures.py": {
+      "bytes": 4798,
+      "mode": 420,
+      "sha256": "5aac78a7fa29145c1991f9a633fa45b897ca592b7e36dee601fbcfc1ccd40c8a"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/set_endpoints_oracle.py": {
+      "bytes": 11452,
+      "mode": 420,
+      "sha256": "cd8fa1d9f7ce2c73eeb4cd774f92c46a1633ac61a46d820170871bb104e5c1b3"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_amendment_construction_fixtures.py": {
+      "bytes": 5387,
+      "mode": 420,
+      "sha256": "97a983c772ccf0eed933bb127a865c7230577d138e955d174129afa05e3e6ff9"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_base_constructor_constraints_fixtures.py": {
+      "bytes": 6187,
+      "mode": 420,
+      "sha256": "317b141d604a60fc7c4be18bb1416ace147922aaae474b8e9b2ec813a39f1f27"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_collection_addition_fixtures.py": {
+      "bytes": 5747,
+      "mode": 420,
+      "sha256": "73075879c7da2db9eb28abadda12251f348725c9baeb67d85bf431bc05812bb3"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_collection_conversion_controls_fixtures.py": {
+      "bytes": 4534,
+      "mode": 420,
+      "sha256": "5be0579de9de406ccdf7a4038519448a09cecb9144440fa1a24b6d085f8667a5"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_collection_conversions_compare.py": {
+      "bytes": 22564,
+      "mode": 420,
+      "sha256": "bd462b17ae3e7782b481c9fa8cea64993eb1ce7bd652fc317c38f93cea6204be"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_collection_conversions_fixtures.py": {
+      "bytes": 4995,
+      "mode": 420,
+      "sha256": "c470063ce03f8fda670e6418ed74edc7970744e6c3a2b17a54fd92276ece4772"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_collection_conversions_portable_compare.py": {
+      "bytes": 27509,
+      "mode": 420,
+      "sha256": "a84b0477ef98896d038454182316138c7e567d8799594747b80a27e484b66fef"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_collection_default_contracts_fixtures.py": {
+      "bytes": 4271,
+      "mode": 420,
+      "sha256": "9d845b864d8d7700f10ab02cca89df4597abc90b60160e0331e043930c61c893"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_collection_dynamic_render_fixtures.py": {
+      "bytes": 3752,
+      "mode": 420,
+      "sha256": "f2a2b467af555f4524a4a01aa85a7e0b21e34c0f1bb3c700ace6d8d8ce1796d3"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_collection_lookups_fixtures.py": {
+      "bytes": 5362,
+      "mode": 420,
+      "sha256": "2afba66671260a2cdfad3b1980fb2f785412b9bb37caf9d3ad02224517b27975"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_collection_property_names_fixtures.py": {
+      "bytes": 5448,
+      "mode": 420,
+      "sha256": "46a72021657b92c19b01c0f02d0c79ad3b9deb9bb4e0ee381c632bbeaadb5ea7"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_data_size_portable_compare.py": {
+      "bytes": 23754,
+      "mode": 420,
+      "sha256": "b61dc5fd77cf2d7a000687427d594f7d09df9b505617af0a6e17fb8a029815eb"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_inferred_new_fixtures.py": {
+      "bytes": 3360,
+      "mode": 420,
+      "sha256": "d181a2b5647bf26454f86896316a9bb39154a8e977c0ff72585bb98db08182ab"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_reversal_implicit_fixtures.py": {
+      "bytes": 4819,
+      "mode": 420,
+      "sha256": "a8f82d35cbee283390800b3bb456fbfefe8c09101ac5fa40a24b1ccfe5407a66"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_reversal_subscript_fixtures.py": {
+      "bytes": 5742,
+      "mode": 420,
+      "sha256": "0debd53bebc8afe9191f4f5d08c2ef2e59bea10cfce547f3a9f76fb3409794d4"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_reversal_values_fixtures.py": {
+      "bytes": 5278,
+      "mode": 420,
+      "sha256": "300ad46793dfd6635eb2a7a2618d7b1627019120e900bb9b6c7f0737e0d1f224"
+    },
+    "target/m2/stage66-catalog-validation-02/sources/tools/tests/test_set_endpoints_fixtures.py": {
+      "bytes": 5542,
+      "mode": 420,
+      "sha256": "03a1cdec495bedc5f84143b5dd9f5d02c830d3c25fb0f63c9830a7e513578906"
+    },
+    "target/m2/stage66-checkpoint-publication-01/admission.py": {
+      "bytes": 15367,
+      "mode": 420,
+      "sha256": "ea823bde6b59cbe329ba44f78c685ce9cb233df7e9519e46ee3dbddc78f52526"
+    },
+    "target/m2/stage66-checkpoint-publication-01/assemble.py": {
+      "bytes": 7053,
+      "mode": 420,
+      "sha256": "d488cc3a7b5d4793d1a74adfa6a6c8af3104ed44dd31d73dc05c66d1a68c2e4b"
+    },
+    "target/m2/stage66-checkpoint-publication-01/execute.py": {
+      "bytes": 2624,
+      "mode": 420,
+      "sha256": "8cfcb5bec2ef50e313f0121fe70f83c47fe3154f3f3e1806e31db3d28e046fa8"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/admission.py": {
+      "bytes": 13686,
+      "mode": 420,
+      "sha256": "2b2b55350453858641a5f601ed362e10a45a2a9ea57cb5ec84c1cfd81657e63d"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/assemble.py": {
+      "bytes": 6196,
+      "mode": 420,
+      "sha256": "dccbbdd9591bb25340da305ec861b6605602661b04aa1962139abba153047fe1"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/execute.py": {
+      "bytes": 2624,
+      "mode": 420,
+      "sha256": "8cfcb5bec2ef50e313f0121fe70f83c47fe3154f3f3e1806e31db3d28e046fa8"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/layout.json": {
+      "bytes": 11504,
+      "mode": 420,
+      "sha256": "460f2f53365768cc580496cff05187c1f69d5847c9115b4b6bc8132f8d529a4e"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/preparation.json": {
+      "bytes": 4038,
+      "mode": 420,
+      "sha256": "c10aace1ae14fd265b2f59495943e40aa493d18cc1d7b736e3ec3db10c878324"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/prepare.py": {
+      "bytes": 3827,
+      "mode": 420,
+      "sha256": "9790ebde50a63dcc58c2e020711c85c001d12138e26637f9261ba96c09cc0844"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/publish.py": {
+      "bytes": 11189,
+      "mode": 420,
+      "sha256": "b5bd81a676ec1c638f18c039e7e43062011bc4641c28eb44007b42e4b9a12519"
+    },
+    "target/m2/stage66-checkpoint-publication-01/layout.json": {
+      "bytes": 12961,
+      "mode": 420,
+      "sha256": "b2196034ba59583b86160cc1223712b3d215ca4f1d727f42b00074dfb2999bf5"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/admission.py": {
+      "bytes": 14651,
+      "mode": 420,
+      "sha256": "86fb9e426e63dee5bc316d39759ddf78eeed28a7463873b93b071a608d8cf974"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/assemble.py": {
+      "bytes": 6561,
+      "mode": 420,
+      "sha256": "7510d937f34a9f06422d06a10be0483bae0cae1618c08faa28798077465fe987"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/execute.py": {
+      "bytes": 2624,
+      "mode": 420,
+      "sha256": "8cfcb5bec2ef50e313f0121fe70f83c47fe3154f3f3e1806e31db3d28e046fa8"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/layout.json": {
+      "bytes": 12398,
+      "mode": 420,
+      "sha256": "d61015460eee334c65592887852420cd7f05e430e5f9f24bdb1cd13dfca90066"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/preparation.json": {
+      "bytes": 5292,
+      "mode": 420,
+      "sha256": "3a05fd517d9c9caef17e12ac4a6a497877c84e0c34da86f12012a78794aa8716"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/prepare.py": {
+      "bytes": 3862,
+      "mode": 420,
+      "sha256": "ccd43ece03120f0eca187d688a581c7789d99a9a5c865140b123e905380cdc08"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/publish.py": {
+      "bytes": 11460,
+      "mode": 420,
+      "sha256": "095dfb9e411283150c29fed17740179eaad380456597347a7f775a11b85ab097"
+    },
+    "target/m2/stage66-checkpoint-publication-01/preparation.json": {
+      "bytes": 6615,
+      "mode": 420,
+      "sha256": "bb80f1d74eaa8bf6380c9d7e30147f8a84394d0f6a14fda4e69eef8d2064b72b"
+    },
+    "target/m2/stage66-checkpoint-publication-01/prepare.py": {
+      "bytes": 3862,
+      "mode": 420,
+      "sha256": "ccd43ece03120f0eca187d688a581c7789d99a9a5c865140b123e905380cdc08"
+    },
+    "target/m2/stage66-checkpoint-publication-01/publish.py": {
+      "bytes": 11539,
+      "mode": 420,
+      "sha256": "bca2f17c6261d4b1c9736e19001318da98f86a704d7745429a480dd30d44be7b"
+    },
+    "target/m2/stage66-checkpoint-publication-01/tooling-invocation.json": {
+      "bytes": 2334,
+      "mode": 420,
+      "sha256": "d9082e55b921c4f4b1fbeffc6f03800d0929caf00855ede192c6641b6b60af51"
+    },
+    "target/m2/stage66-http-validation-01/inventory.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-http-validation-01/inventory.stdout.bin": {
+      "bytes": 926,
+      "mode": 420,
+      "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+    },
+    "target/m2/stage66-http-validation-01/normal.stderr.bin": {
+      "bytes": 155,
+      "mode": 420,
+      "sha256": "9a61a7b91d76e982c358cbc84973b4f640710c4dbd65584ccc4d9a293044c34e"
+    },
+    "target/m2/stage66-http-validation-01/normal.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-http-validation-01/optimized.stderr.bin": {
+      "bytes": 155,
+      "mode": 420,
+      "sha256": "53eba590e82a980b71f672ac38b2535419a4af83395f33a6b058c1ca38351141"
+    },
+    "target/m2/stage66-http-validation-01/optimized.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-http-validation-01/report.json": {
+      "bytes": 74689,
+      "mode": 420,
+      "sha256": "e995838f52e9ff21a670d49d8754a9a6b4f21ebf6bd16ebe375fe267cb4e973a"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/amendment_construction_fixtures.py": {
+      "bytes": 4687,
+      "mode": 420,
+      "sha256": "67711ff231c27939f717960057972ab4327210408be6d0bf6d3057ee87ccb403"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/amendment_construction_oracle.py": {
+      "bytes": 13327,
+      "mode": 420,
+      "sha256": "a73e1fa1fd047ff4477197c3715571ce21499ac5905148ecc7b045a1c63438cb"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/amendment_declarations_fixtures.py": {
+      "bytes": 14471,
+      "mode": 420,
+      "sha256": "cea846cad35543a33ec866d46e8369c3cdc815eacbd0dc2378c00f60253d220a"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/amendment_declarations_oracle.py": {
+      "bytes": 11435,
+      "mode": 420,
+      "sha256": "323697ef164b0f02fb773af6049f945d9f8e3942ad3b69462b040dd191540242"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/any_if_non_null_compare.py": {
+      "bytes": 11532,
+      "mode": 420,
+      "sha256": "a5c14d06de43b2d2137216a126d8104b6d837ae304517f563d7e5bed7329a865"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/any_if_non_null_fixtures.py": {
+      "bytes": 12476,
+      "mode": 420,
+      "sha256": "e2b2d6e447b5dc037375cec0b36431c7b86a74a4e10b3f81aee6b45615a7de73"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/any_if_non_null_oracle.py": {
+      "bytes": 17767,
+      "mode": 420,
+      "sha256": "517ff27ab70ceb10bd129fa1179dbe5080454ed810f46151783128e37db2d1ff"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/any_if_non_null_portable_compare.py": {
+      "bytes": 19922,
+      "mode": 420,
+      "sha256": "3d038e87bd33853fb43f22043833ba01b04d78149f125e5891fe16927a2205c3"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/any_if_non_null_supplement_fixtures.py": {
+      "bytes": 1395,
+      "mode": 420,
+      "sha256": "0d3884fd68bc3498174de99727585f8e61251194a8b8fbe0eb98ba515917e75d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/any_if_non_null_supplement_oracle.py": {
+      "bytes": 3213,
+      "mode": 420,
+      "sha256": "b68b4dbd9374dea23456eab36307f23b3211f7febbb906ba2c44ccae543cbba5"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/benchmark.py": {
+      "bytes": 33908,
+      "mode": 420,
+      "sha256": "a3822a1702abf7a6a385b1d8173d45e3ba941b5fb7e80cb66a0b86adf1681604"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/bytes_values_compare.py": {
+      "bytes": 11594,
+      "mode": 420,
+      "sha256": "418231d65c224735ae396861bf93d5bd12d9bea2bf5900c79442c50aedccab53"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/bytes_values_fixtures.py": {
+      "bytes": 13253,
+      "mode": 420,
+      "sha256": "20b52b3e3260bc00f9898dcd9fced3a2632724dc41647d82e3f51dc9514d2088"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/bytes_values_oracle.py": {
+      "bytes": 9710,
+      "mode": 420,
+      "sha256": "182f72ad04f4bcea8c41b54fb239eec110ae4b5ae3569825e8405e4b25064cee"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/bytes_values_portable_compare.py": {
+      "bytes": 29806,
+      "mode": 420,
+      "sha256": "85bb3c7bf992b85832f46c8c5037ae0c1aadbc07316d660763a8d99eb1f24a2c"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/class_metadata_fixtures.py": {
+      "bytes": 5462,
+      "mode": 420,
+      "sha256": "d7b09c921c96ab4d167aad6aafb2c59c718815976c62eadeb4bf30ca83e8a9b7"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/class_metadata_oracle.py": {
+      "bytes": 8826,
+      "mode": 420,
+      "sha256": "e547884d99710da9032f973d9b5a6732f24b3dddb866780eb3eed7690639fe15"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/class_values_compare.py": {
+      "bytes": 52562,
+      "mode": 420,
+      "sha256": "9b613466aa454dc45771b9eb085e5c9281455cce17478b8203506626610f44b7"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/class_values_exports.py": {
+      "bytes": 11004,
+      "mode": 420,
+      "sha256": "051c10b3e638223626d2edfffc18d8b17d2358e5d2ffd38f285819b7616628ab"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/class_values_fixtures.py": {
+      "bytes": 6612,
+      "mode": 420,
+      "sha256": "7d575590d457cd8474953a2d4cdd7629df6bd963364c97890e574a3397568ab1"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/class_values_oracle.py": {
+      "bytes": 19526,
+      "mode": 420,
+      "sha256": "b31c110d305e6b8bac7fb8d678802b8e52e1852bee8145caf98b462dbdcfe26f"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_addition_fixtures.py": {
+      "bytes": 4684,
+      "mode": 420,
+      "sha256": "3279f86b92ebd492abe909d00e6dc62243cb72387187d2bd0ea98d30bde9da6d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_addition_oracle.py": {
+      "bytes": 11602,
+      "mode": 420,
+      "sha256": "4b415302fad2f295ce368fa4c81a5330414e4f23bcd7c0ee6ce409a9e2d8fac8"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_conversion_controls_fixtures.py": {
+      "bytes": 14922,
+      "mode": 420,
+      "sha256": "309c86d94353cef1ef5b4138ccdefe710d49911ad67d00c50411324d7216ac0d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_conversion_controls_oracle.py": {
+      "bytes": 12503,
+      "mode": 420,
+      "sha256": "7d86029f9f4cd2dbd5feb357292dd7ffeabcfb14f967d693f3458e739c0db9ac"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_conversion_profiles.py": {
+      "bytes": 9490,
+      "mode": 420,
+      "sha256": "48c73e3c7d32ce18315773cf6dc6308a64b8009fd5522c804585f351286f8ba1"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_conversions_compare.py": {
+      "bytes": 12376,
+      "mode": 420,
+      "sha256": "19525891c2992bd4675934aeecf24eb57a6ebc193d4e00dfb931f3d71c9d32fc"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_conversions_fixtures.py": {
+      "bytes": 14913,
+      "mode": 420,
+      "sha256": "06eb22a1d4c961790d5a67e5a2e05eeddc2154938be0ea83e29f3972c2ddd3e4"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_conversions_oracle.py": {
+      "bytes": 12140,
+      "mode": 420,
+      "sha256": "fd61e2566ec29789d280114d5ca6613005880c10a32682ced64a16d3189f31ad"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_conversions_portable_compare.py": {
+      "bytes": 30408,
+      "mode": 420,
+      "sha256": "c460b508a1cc2f0eb2d7eefe478e5d4668625fca35ef9c522a2e997560fb1f8d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_default_contracts_fixtures.py": {
+      "bytes": 14941,
+      "mode": 420,
+      "sha256": "494e1032d4bcbde5c411f326baa28c2a05f362a4e6551b3070cc0edeba4f8389"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_default_contracts_oracle.py": {
+      "bytes": 12795,
+      "mode": 420,
+      "sha256": "2b640e7db2671e1c7e747e62610ffa7a476ae7f6cfad17d7873cbad28d352a7e"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_dynamic_render_fixtures.py": {
+      "bytes": 14908,
+      "mode": 420,
+      "sha256": "9d7774c9adf4eb9220120532912ffda3753c024dd64316a781534b7132e6ded2"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_dynamic_render_oracle.py": {
+      "bytes": 12838,
+      "mode": 420,
+      "sha256": "5802a1dd8077f6c5f00c0b06ba36179c5cc0122bd58a43753aad2a2a4f66deb2"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_lookups_fixtures.py": {
+      "bytes": 14893,
+      "mode": 420,
+      "sha256": "35874aebf14adea027bf09f9f714632ec5c2c1ca514e71dbf1ccdfb2d973717f"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_lookups_oracle.py": {
+      "bytes": 12747,
+      "mode": 420,
+      "sha256": "a041aeddad6651bbc9676339e00beddafab79fc26fc05dbda35b434d3c4d1411"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_property_names_fixtures.py": {
+      "bytes": 14923,
+      "mode": 420,
+      "sha256": "110bf2806cb89a19749a20533cc21c0bbebb2099b0c435dcb322092f0df3958e"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_property_names_oracle.py": {
+      "bytes": 12855,
+      "mode": 420,
+      "sha256": "122cfe187eddd253922eca5cf9cf752046b12e6d3cf1885071aa5b432c8dd1b5"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_transform_fixtures.py": {
+      "bytes": 29954,
+      "mode": 420,
+      "sha256": "80d43ac179a1b21d5b984759b246c9fc0cace7b4d605ea27cd1264331863b77f"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/collection_transform_native.py": {
+      "bytes": 17307,
+      "mode": 420,
+      "sha256": "a33db79c391cb6e42b44b93d6968539a76422c25e6bde519f0b4007887d6c386"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/compat.py": {
+      "bytes": 32414,
+      "mode": 420,
+      "sha256": "210659a90811436c0f5a3a278d1885fb548bc325918abd8344b82dd52f030f30"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/data_size_compare.py": {
+      "bytes": 20714,
+      "mode": 420,
+      "sha256": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/data_size_fixtures.py": {
+      "bytes": 10223,
+      "mode": 420,
+      "sha256": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/data_size_oracle.py": {
+      "bytes": 30347,
+      "mode": 420,
+      "sha256": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/data_size_portable_compare.py": {
+      "bytes": 40065,
+      "mode": 420,
+      "sha256": "5087d0ffc4d3ae7e45ee6c3573bf36f679e8f6f25c5f8b4985b61d6db94f9919"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/data_size_supplement_fixtures.py": {
+      "bytes": 24123,
+      "mode": 420,
+      "sha256": "ae2ffbfe8065799f7f2b620823f992ec466898ff4fde47f71a2c1abb0849c010"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/deprecation_compare.py": {
+      "bytes": 47548,
+      "mode": 420,
+      "sha256": "f2e6ebee4c864a766e0d9ae34e7d49e912367898e54644710ed9e9f41b74ffa5"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/deprecation_fixtures.py": {
+      "bytes": 4481,
+      "mode": 420,
+      "sha256": "90b1340a8cb2ad76c12aa8870ccdd1068965ce02e4dfa76ffb745e18ca7af830"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/discover.py": {
+      "bytes": 19370,
+      "mode": 420,
+      "sha256": "b8f212a0f7f74cb67cd4a4f1b54949452b58b55037585c2947b9a1f0126dffe3"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/duration_values_bits_fixtures.py": {
+      "bytes": 12793,
+      "mode": 420,
+      "sha256": "3c83211e7039cccd4966015d9fb8114238f7d6b0b1651775423496025cc7ef1c"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/duration_values_bits_oracle.py": {
+      "bytes": 9874,
+      "mode": 420,
+      "sha256": "9594aa5dd4c5af69fa7efbc06201cb53fe0b350084f52edf9d6fea092fd68a5d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/duration_values_compare.py": {
+      "bytes": 11595,
+      "mode": 420,
+      "sha256": "f7a8dce00facd789eb6ccadeb3385335ac0694dfcee24a873e0596c4c49da79b"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/duration_values_fixtures.py": {
+      "bytes": 12519,
+      "mode": 420,
+      "sha256": "1c72bffb64f27442a53c88d1cf416eb86d98107b401ff98429d3a8596cf84a83"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/duration_values_oracle.py": {
+      "bytes": 9778,
+      "mode": 420,
+      "sha256": "b98fc012e36286addd1fc135f2957d127ef9c7d4610905fd510b5d8e0a71405c"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/duration_values_portable_compare.py": {
+      "bytes": 24082,
+      "mode": 420,
+      "sha256": "f1af39b8be56649dddc70a35c8d178b3b641fde7f1216d0c510d431f17219d2c"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/evidence.py": {
+      "bytes": 4120,
+      "mode": 420,
+      "sha256": "b3224aa21497c955c865e143faefb8ebdc9c70ea48983eb678b5972be17fe62e"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/export_resource_portable.py": {
+      "bytes": 10762,
+      "mode": 420,
+      "sha256": "9a96b1437d5c9164451b4e86d1181dd7ce004b04f46e616c1d6a71e9132d3905"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/frame_transformer_compare.py": {
+      "bytes": 50422,
+      "mode": 420,
+      "sha256": "49d8754d6e17e838017ddfbfbe611c7b89f52f39a16056c820e79bc85f3f4d12"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/frame_transformer_fixtures.py": {
+      "bytes": 4317,
+      "mode": 420,
+      "sha256": "1317d59e200be12123d6809e1a8b3b50bc8a64c334c8812443f5e53aa62bbb00"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/frame_transformer_oracle.py": {
+      "bytes": 20562,
+      "mode": 420,
+      "sha256": "367b31bf07d48a8613982b822d841110d7722005c9d960df39739b4507f26dd1"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/guest_catch_fixtures.py": {
+      "bytes": 8502,
+      "mode": 420,
+      "sha256": "61318853f115334290b263460b2483f270f4b76e24aee518b1c80cb73b894e0d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/inferred_new_default_diagnostics_fixtures.py": {
+      "bytes": 11388,
+      "mode": 420,
+      "sha256": "19fd119d8a4fc8a5a4dbc9ec17d8317204d1f06282539ad786f73df4ddc66e59"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/inferred_new_default_diagnostics_oracle.py": {
+      "bytes": 7688,
+      "mode": 420,
+      "sha256": "8b797389b6f376cc91d5beb572eab5a8a49c14504c9e1ef6abca6214090a5557"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/inferred_new_fixtures.py": {
+      "bytes": 16173,
+      "mode": 420,
+      "sha256": "e91d801990cafbb2902bd11f459e0659ae52b4438831debf0495cff08d8d5c21"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/inferred_new_method_cache_fixtures.py": {
+      "bytes": 17341,
+      "mode": 420,
+      "sha256": "2ab3d2824cce9249a830554ce80be2de29190cc7b4bebdcdd88f2424a8dd4a46"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/inferred_new_method_cache_oracle.py": {
+      "bytes": 3288,
+      "mode": 420,
+      "sha256": "d4c86c6fa55ca27350cd0e7e0b8f290a67b2f9b4aa197dd4e3fa5a309cbd9613"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/inferred_new_module_receiver_fixtures.py": {
+      "bytes": 13817,
+      "mode": 420,
+      "sha256": "4e5496b0aa84b01fbe43e52c72d324bcb7e8510bc0da323a12cc8c31e75954f4"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/inferred_new_module_receiver_oracle.py": {
+      "bytes": 11251,
+      "mode": 420,
+      "sha256": "a57c03427cc5e1ab77d20628e2b75eded248ba2f139d6e0683525790f8d6bf77"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/inferred_new_oracle.py": {
+      "bytes": 13500,
+      "mode": 420,
+      "sha256": "2008fd21449796317b8d091f55c7220d40f1b2df1fb93427eb4fd067abee5d6c"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/int_seq_list_accessor_fold_fixtures.py": {
+      "bytes": 4220,
+      "mode": 420,
+      "sha256": "3865aa1daf01027c4ce0138c3ff1db2a934a4ab0b573dbc326fbb730a3e35e77"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/int_seq_list_accessor_fold_oracle.py": {
+      "bytes": 10747,
+      "mode": 420,
+      "sha256": "e2ab1bf5629c5b78efd2b718de8d0b9bce578c59099a691c18fde390d262955f"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/int_seq_list_add_fixtures.py": {
+      "bytes": 4158,
+      "mode": 420,
+      "sha256": "02833b870b8c7417eafd388d6811d180c9dc8dc92e3b6ca0ace6692542d0f2b9"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/int_seq_list_add_oracle.py": {
+      "bytes": 10379,
+      "mode": 420,
+      "sha256": "a03e230c9e234065d45681b8ff8162290c77e4c81ca2a8e641dbdd5a1cb0e92d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/int_seq_math_constants_fixtures.py": {
+      "bytes": 12075,
+      "mode": 420,
+      "sha256": "0858fdb4e3dfd0c3578272734291fc7e617ac33639055927debe1da2e602e129"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/int_seq_math_constants_oracle.py": {
+      "bytes": 9625,
+      "mode": 420,
+      "sha256": "ab57fdb5961b0c309e3a6cb4907ec72908e1bfd1a8b0a4eaf84fe91e76fbe36a"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/int_seq_values_compare.py": {
+      "bytes": 11616,
+      "mode": 420,
+      "sha256": "436e10a36facdc5e8510222e5d7ac110f8f31062e3da305facfd8b1c9d7c82b9"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/int_seq_values_fixtures.py": {
+      "bytes": 15088,
+      "mode": 420,
+      "sha256": "1d13e803e19286494d599bdd8697dd14dc3a87397f4d42f1fba3c1cd738a6946"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/int_seq_values_oracle.py": {
+      "bytes": 12357,
+      "mode": 420,
+      "sha256": "3be0934965923e37c8c28d907303df6f59d3b0686273a813c6406e85851e7dcb"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/int_seq_values_portable_compare.py": {
+      "bytes": 29893,
+      "mode": 420,
+      "sha256": "79ca88b826432035d6ad46ff1590c1da9f2c41e4a79c875575f0d43c8a000979"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/inventory.py": {
+      "bytes": 28058,
+      "mode": 420,
+      "sha256": "24868c2fe77025230522dd9888d9c17b6b992ba9554ce39516cefd57397552e3"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/logical_capability_fixtures.py": {
+      "bytes": 10522,
+      "mode": 420,
+      "sha256": "9451754dbfdad909c9af8d4c03565b898f49529b075ed161820c6cb1198819f7"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/lossless_host_fixtures.py": {
+      "bytes": 9642,
+      "mode": 420,
+      "sha256": "a871a65240e1bfca31a524fa295485c45aa000417862dc4afed9f5ea71bde67a"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m1_frontend.py": {
+      "bytes": 9596,
+      "mode": 420,
+      "sha256": "1b9147399b220da46747b0d8db597aa63edb8825f32061f7806305509d4e4217"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m1_graal.py": {
+      "bytes": 27444,
+      "mode": 420,
+      "sha256": "638f30dc648394a86decda9a595df98023528a0ef950c3aefe16fb8dc9d2cd93"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m1_host.py": {
+      "bytes": 7810,
+      "mode": 420,
+      "sha256": "bfb6fa918936e609760ac83bc762e6c304cb07edd000b124898020ab5354bbdf"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m1_lifecycle.py": {
+      "bytes": 15138,
+      "mode": 420,
+      "sha256": "c4ae56541dade02a0b2586484b25d92de612fde4b81c08d6c9b223f5f5254c55"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m1_platforms.py": {
+      "bytes": 12727,
+      "mode": 420,
+      "sha256": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m1_runtime.py": {
+      "bytes": 13263,
+      "mode": 420,
+      "sha256": "781d89cc5c54c5138c68f241d32013af56779a62f33368a3e94f7b9ad78360ed"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m1_semantics.py": {
+      "bytes": 10492,
+      "mode": 420,
+      "sha256": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m1_semantics_bench.py": {
+      "bytes": 10941,
+      "mode": 420,
+      "sha256": "08cc9b7d0deabcad2a256b60661c8da3fe34dea65cd5af7ab9a082432abdb777"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_class_lifecycle.py": {
+      "bytes": 22947,
+      "mode": 420,
+      "sha256": "d680c6067eb62cff22dadc48dce51293acb4d342a82a3e60ccbba380f33396c3"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_cycle.py": {
+      "bytes": 4059,
+      "mode": 420,
+      "sha256": "64048d6cd630564a17af409bbe24712e9043338f95ce3d20fd30adfdaa1d894e"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_deprecation.py": {
+      "bytes": 16145,
+      "mode": 420,
+      "sha256": "a16dc4735204cacb3264dc349f47275d075fc18f2fd88061592e9736474dbd52"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_execution_profiles.py": {
+      "bytes": 1592,
+      "mode": 420,
+      "sha256": "5bbe8424bd71d690de5afe54984b1c852f5c6fa176849c591331954d2eaec281"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_generate.py": {
+      "bytes": 6768,
+      "mode": 420,
+      "sha256": "eb7ae7e1dfa6b869805e2209e34231a28495ae2629705eade3b32922962539b9"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_identifier_tables.py": {
+      "bytes": 5061,
+      "mode": 420,
+      "sha256": "7aedef36d2fca482f2d7ec3675155bddfa549bdbc8cce4f8eda21796c200c536"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_jvm_classpath.py": {
+      "bytes": 31485,
+      "mode": 420,
+      "sha256": "9931d60c0d875c00847a586875237fdb01483430bb1ee83757bcfe976e6128a8"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_language.py": {
+      "bytes": 44218,
+      "mode": 420,
+      "sha256": "6e32ccbd506678927c80c6c785c586bf7a966c27fe77fcdea6f5be82333f5b16"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_manifest.py": {
+      "bytes": 20689,
+      "mode": 420,
+      "sha256": "3fa7f8b92af72c0c9c0de1358da5adac079663f7d3a16bad0ba5c8c28779e158"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_module_eval.py": {
+      "bytes": 22416,
+      "mode": 420,
+      "sha256": "270d2a3a46021e1c08a58a54db97d3b68b96028023aa7c298590af1542f7b11e"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_source_inputs.py": {
+      "bytes": 4787,
+      "mode": 420,
+      "sha256": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_stdlib_bootstrap_compare.py": {
+      "bytes": 13700,
+      "mode": 420,
+      "sha256": "8548bad8048845c2f1b49486e5340d00c5dc7447c21929190efc8312bb40b861"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_trace.py": {
+      "bytes": 20599,
+      "mode": 420,
+      "sha256": "873e82ae26c3664a3562d5fa3185df8d7681f1ffc1b6884b5830d54121601ca3"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_unicode_escape_tables.py": {
+      "bytes": 6767,
+      "mode": 420,
+      "sha256": "618c4b57bf1517c4a3706fce22d09792ff5b3103f8e8bdb744d60dcdbe7e4222"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_uppercase_tables.py": {
+      "bytes": 6901,
+      "mode": 420,
+      "sha256": "b83a09626c88b253974f0846ed5f4bcfbc8856bc8848982806467cbd75157fee"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/m2_workspace.py": {
+      "bytes": 7983,
+      "mode": 420,
+      "sha256": "cea54f2e2489b886097416dc05c83367463f973a6e3733915b9d2b7b71f424da"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/module_admission_policy_fixtures.py": {
+      "bytes": 12402,
+      "mode": 420,
+      "sha256": "d1f91dc9a44b8d1a9291f4b8b65aa35ea2e295ec74c2fb521a44ecdf89227739"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/module_inheritance_fixtures.py": {
+      "bytes": 10569,
+      "mode": 420,
+      "sha256": "6543786e89d53f6ec32ed4ad11803a5717db0511c3b2887fcba756c7c23b8011"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/module_loading_fixtures.py": {
+      "bytes": 14827,
+      "mode": 420,
+      "sha256": "22f53ac8de2feb7356700c3478c721b3f51b231495e243d7ecaba7a165c481dd"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/module_portable_fixtures.py": {
+      "bytes": 20759,
+      "mode": 420,
+      "sha256": "56c8cad6a46e943a12241468f165908f7591a74c6b1e6812d38b6a4d4f0c5610"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/moduleinfo_fixtures.py": {
+      "bytes": 8855,
+      "mode": 420,
+      "sha256": "4bd229de3cddfd292523fed6a1b5951b2da6f27843d5cbbd4c120c4ef2e7c20c"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/modulekey_extended_fixtures.py": {
+      "bytes": 22310,
+      "mode": 420,
+      "sha256": "30131893b23f908aebdcf54eec1ac37dd6666a3054ee5e017e77e935068beaaf"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/modulekey_fixtures.py": {
+      "bytes": 9951,
+      "mode": 420,
+      "sha256": "14b95a5cf0b9268b7072a0070d1b2f289c00f67c8212ca0b5ace3aa5174306c8"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/oracle.py": {
+      "bytes": 16102,
+      "mode": 420,
+      "sha256": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/pantry.py": {
+      "bytes": 20513,
+      "mode": 420,
+      "sha256": "f58abc61bc0ee71712bccfb87a1aee5b8454762e7465bae32090228e5c2b2031"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/parameterized_object_compare.py": {
+      "bytes": 14365,
+      "mode": 420,
+      "sha256": "efd26ce64e14fd7ed320a4b5004add6bbcbb52f7bdca7c4335ebe102cd5b359b"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/parameterized_object_fixtures.py": {
+      "bytes": 15069,
+      "mode": 420,
+      "sha256": "a2118696802cc290540df729c16bc7f74da6524b50266d7396bc25e918e28cc2"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/prototype_diagnostics_fixtures.py": {
+      "bytes": 4689,
+      "mode": 420,
+      "sha256": "73a657dadd4d0b38a409164990b846dfc162b546eb5037e939f035e4c3cbb883"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/prototype_diagnostics_oracle.py": {
+      "bytes": 12817,
+      "mode": 420,
+      "sha256": "14357f39128604af777eaf8ecd757492298b0aa6dd8e9493a1f5cc2e72592e15"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/regression_manifest.py": {
+      "bytes": 11557,
+      "mode": 420,
+      "sha256": "3959343f989dfeb695691f112342a5697376b17df22f678e582fdfcffb3be1d9"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/renderer_fixtures.py": {
+      "bytes": 14747,
+      "mode": 420,
+      "sha256": "2a1050393a30154cc7cfb6897c04ab7998b055033a3dc522afd30772dd9a3a13"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/renderer_identity_fixtures.py": {
+      "bytes": 14979,
+      "mode": 420,
+      "sha256": "7e9e9306e4950249a63b941eec1043b439702b1b7413071cb5c3d6f23aa20e1d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/resource_fixtures.py": {
+      "bytes": 17610,
+      "mode": 420,
+      "sha256": "9f6bed0d58ab8c34caf0eca718ee2ff1152524c9565cfb592164bed17e18c931"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/resource_oracle_fixtures.py": {
+      "bytes": 5805,
+      "mode": 420,
+      "sha256": "bd7a14cbfdf7f0fded562dad17c125a540837081ea7f3dd992bc10cb6fe4d9a3"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/security_denial_fixtures.py": {
+      "bytes": 7709,
+      "mode": 420,
+      "sha256": "6304851e510c48fab913fd8509bfac5013704ef1916096986ddcbc088bbf7f09"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/set_endpoints_fixtures.py": {
+      "bytes": 4798,
+      "mode": 420,
+      "sha256": "5aac78a7fa29145c1991f9a633fa45b897ca592b7e36dee601fbcfc1ccd40c8a"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/set_endpoints_oracle.py": {
+      "bytes": 11452,
+      "mode": 420,
+      "sha256": "cd8fa1d9f7ce2c73eeb4cd774f92c46a1633ac61a46d820170871bb104e5c1b3"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/smoke_manifest.py": {
+      "bytes": 2238,
+      "mode": 420,
+      "sha256": "2dbc51a95ffcc83dc4bb1006f5049e38bd6a8c47e2ed7882f0603bb8295773e8"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/string_subscript_fixtures.py": {
+      "bytes": 7795,
+      "mode": 420,
+      "sha256": "02b646709cf3bb8dcaa3263d3d1d480b4cab233b9d1230944bd58625e520facc"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_amendment_construction_fixtures.py": {
+      "bytes": 5387,
+      "mode": 420,
+      "sha256": "97a983c772ccf0eed933bb127a865c7230577d138e955d174129afa05e3e6ff9"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_amendment_declarations_fixtures.py": {
+      "bytes": 4781,
+      "mode": 420,
+      "sha256": "31428b99e0566978df7aedcef20b2465970591cef71afe59338f54a5a7ea0f25"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_any_if_non_null_compare.py": {
+      "bytes": 12304,
+      "mode": 420,
+      "sha256": "542621efe911d0036e9823cbce67f18a79a35cd36466e1795e2ea9cde3ede128"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_any_if_non_null_fixtures.py": {
+      "bytes": 5224,
+      "mode": 420,
+      "sha256": "41ce7097ac9bb3f5bc34e91d43b4b187c023c253cdcee8c9d4ffaab5b9de19b6"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_any_if_non_null_portable_compare.py": {
+      "bytes": 10015,
+      "mode": 420,
+      "sha256": "eece049858d8b9c2366d25b2b0ddbd38d915f1c76a25a772d586af62dfda8694"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_any_if_non_null_supplement_fixtures.py": {
+      "bytes": 1493,
+      "mode": 420,
+      "sha256": "13b4a731ab7e6bfaca2034747fa1e76dce520531f5fd2b08736129a2747a936f"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_benchmark.py": {
+      "bytes": 15960,
+      "mode": 420,
+      "sha256": "95152e76c10c8c102addbef937caa3e7388fda224acd685d4ff0e9f29569c70a"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_bytes_values_compare.py": {
+      "bytes": 12292,
+      "mode": 420,
+      "sha256": "71d12747eaf7b5e7ddc3ba969f287e34e6f7f85de0142117a6ba13c09458d9d1"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_bytes_values_fixtures.py": {
+      "bytes": 5152,
+      "mode": 420,
+      "sha256": "3bdd63cd8089bfea719b906d01e307acbea3f17745fa8524d555006adac31a82"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_bytes_values_portable_compare.py": {
+      "bytes": 21085,
+      "mode": 420,
+      "sha256": "f7e133bfe749f2cbef74bfec7cc09fa75d93834c9f1801690cb8e484a7106e86"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_class_metadata_fixtures.py": {
+      "bytes": 9081,
+      "mode": 420,
+      "sha256": "641fa225f44e58845231d78b425401d4ea5caa33abe9534b2402b2a2f3071172"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_class_values_compare.py": {
+      "bytes": 45180,
+      "mode": 420,
+      "sha256": "3f2b7365d7ae73c822f917be21181b85f2f7e4676dbaa2385805e04099f638a0"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_class_values_fixtures.py": {
+      "bytes": 8492,
+      "mode": 420,
+      "sha256": "7da77562442059a03e47061bcaf59a005474f0017bcc6bb7a5924f6584aa01d4"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_collection_addition_fixtures.py": {
+      "bytes": 5747,
+      "mode": 420,
+      "sha256": "73075879c7da2db9eb28abadda12251f348725c9baeb67d85bf431bc05812bb3"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_collection_conversion_controls_fixtures.py": {
+      "bytes": 4534,
+      "mode": 420,
+      "sha256": "5be0579de9de406ccdf7a4038519448a09cecb9144440fa1a24b6d085f8667a5"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_collection_conversions_compare.py": {
+      "bytes": 21626,
+      "mode": 420,
+      "sha256": "f2d30070a23988d4108bc9aed5caded96c9fcab555a646f55e478ac95c555cbd"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_collection_conversions_fixtures.py": {
+      "bytes": 4995,
+      "mode": 420,
+      "sha256": "c470063ce03f8fda670e6418ed74edc7970744e6c3a2b17a54fd92276ece4772"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_collection_conversions_portable_compare.py": {
+      "bytes": 26648,
+      "mode": 420,
+      "sha256": "7ee80415ee1044e91ae03d8e6141a641af5339d91a5d8a8f9e08fe883a197623"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_collection_default_contracts_fixtures.py": {
+      "bytes": 4271,
+      "mode": 420,
+      "sha256": "9d845b864d8d7700f10ab02cca89df4597abc90b60160e0331e043930c61c893"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_collection_dynamic_render_fixtures.py": {
+      "bytes": 3752,
+      "mode": 420,
+      "sha256": "f2a2b467af555f4524a4a01aa85a7e0b21e34c0f1bb3c700ace6d8d8ce1796d3"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_collection_lookups_fixtures.py": {
+      "bytes": 5362,
+      "mode": 420,
+      "sha256": "2afba66671260a2cdfad3b1980fb2f785412b9bb37caf9d3ad02224517b27975"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_collection_property_names_fixtures.py": {
+      "bytes": 5448,
+      "mode": 420,
+      "sha256": "46a72021657b92c19b01c0f02d0c79ad3b9deb9bb4e0ee381c632bbeaadb5ea7"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_collection_transform_fixtures.py": {
+      "bytes": 12305,
+      "mode": 420,
+      "sha256": "8bf128da5f2c49b6821e371852295670dea5a9ae45f8046000dbd0212fe2469c"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_collection_transform_native.py": {
+      "bytes": 12724,
+      "mode": 420,
+      "sha256": "85aec27c11f9d57e82923877c0b6dad7b507b944138b51d45e1d9e6edda65823"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_compat.py": {
+      "bytes": 20387,
+      "mode": 420,
+      "sha256": "4a43f280be487ad40b60b5d00bea1bae84abb00ecae6ca6a1e3649b08e08558a"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_data_size_compare.py": {
+      "bytes": 10304,
+      "mode": 420,
+      "sha256": "6b7df6a538723ce9dc1711f3a349d3abd82b8eb3ab046a25c32b4bc4472bb204"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_data_size_fixtures.py": {
+      "bytes": 7701,
+      "mode": 420,
+      "sha256": "91c7cf6d0b1d8d9dacbb450080a6c44c59bcec6a82d8a90ce2af5e8cf9311273"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_data_size_portable_compare.py": {
+      "bytes": 23754,
+      "mode": 420,
+      "sha256": "b61dc5fd77cf2d7a000687427d594f7d09df9b505617af0a6e17fb8a029815eb"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_data_size_supplement_fixtures.py": {
+      "bytes": 7118,
+      "mode": 420,
+      "sha256": "6738cc46326c4242490e037be4df2a45ce324a523a316588a5a97ce84dc7c00f"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_deprecation_compare.py": {
+      "bytes": 27328,
+      "mode": 420,
+      "sha256": "dfff1a937ecedd8e40dc888ba79c896742d635484aedee9510125eff1965a244"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_deprecation_fixtures.py": {
+      "bytes": 4348,
+      "mode": 420,
+      "sha256": "72fa865c1cc7f54738d2e870d2098ea73bcf12b5920a0252b6c1488b977691f1"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_discover.py": {
+      "bytes": 6052,
+      "mode": 420,
+      "sha256": "8bd8b98197480ab9ae2748b49630a878d7a2a4b9c19d1114d3e3ce764fa43611"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_duration_values_bits_fixtures.py": {
+      "bytes": 2425,
+      "mode": 420,
+      "sha256": "8a5f56ecc9b0daefdf964791a3400d603d7d90bac70197187d9c9f56642dfe2e"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_duration_values_compare.py": {
+      "bytes": 12301,
+      "mode": 420,
+      "sha256": "07a3c134819e96c708134b30ebf94ffd10203716eb1f58637c3457701aab16a0"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_duration_values_fixtures.py": {
+      "bytes": 4976,
+      "mode": 420,
+      "sha256": "686a86a9b29c738c1357bc59048674775ccf65f98fd6db7c0e7d1657a78d5f14"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_duration_values_portable_compare.py": {
+      "bytes": 15454,
+      "mode": 420,
+      "sha256": "63f59dc670a813b7f01353945426ea054f0a4b26162e539eab97b0352201d841"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_evidence.py": {
+      "bytes": 3787,
+      "mode": 420,
+      "sha256": "e69130df6ee41ae1acc1861d23c24db80e8b2816672a715b4c80822cd7d42a7f"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_frame_transformer_compare.py": {
+      "bytes": 32112,
+      "mode": 420,
+      "sha256": "db2f8cae52885ebe8728411f4134228ff5efd8f7247de889a91b8cc3f592af0a"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_frame_transformer_fixtures.py": {
+      "bytes": 7252,
+      "mode": 420,
+      "sha256": "f722b7a3081e96e1f0b9c971b9983e4c09188ad5e2ef3431d05f9994f1f66491"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_guest_catch_fixtures.py": {
+      "bytes": 3975,
+      "mode": 420,
+      "sha256": "780b7ce36413256824efca26d0cecdf25e9a5bc3411735dedf7d4f7bbfcc38a8"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_inferred_new_default_diagnostics_fixtures.py": {
+      "bytes": 3127,
+      "mode": 420,
+      "sha256": "253279a259c1752138d181b1a909b334cee34904536587aca44c971cf6427b2d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_inferred_new_fixtures.py": {
+      "bytes": 3360,
+      "mode": 420,
+      "sha256": "d181a2b5647bf26454f86896316a9bb39154a8e977c0ff72585bb98db08182ab"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_inferred_new_method_cache_fixtures.py": {
+      "bytes": 4551,
+      "mode": 420,
+      "sha256": "9ae46ec64dabbbe29afb0925543d4cfbdccd9f6293224be5db1aaf4f6ff7b6d6"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_inferred_new_module_receiver_fixtures.py": {
+      "bytes": 3510,
+      "mode": 420,
+      "sha256": "e7aa9b6585335b66b10551f7eb820adc422792d4444679458a5b573b549e3593"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_int_seq_list_accessor_fold_fixtures.py": {
+      "bytes": 4848,
+      "mode": 420,
+      "sha256": "1fac67ea527903a8090bbc266ce8cb8753df6eb24605530232fc5068d9c42c2c"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_int_seq_prerequisite_fixtures.py": {
+      "bytes": 3951,
+      "mode": 420,
+      "sha256": "5bc0f5628bf6d0f13cdaed1878b5ddf59f3e773e803d0b86cb1ac89d0f03e459"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_int_seq_values_compare.py": {
+      "bytes": 12296,
+      "mode": 420,
+      "sha256": "2da14964ccdcfa3519b26891f0608f5f0c1dd94c57af64ce094907407b110851"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_int_seq_values_fixtures.py": {
+      "bytes": 6813,
+      "mode": 420,
+      "sha256": "e1aaea16ea06ae9039272cf32e222c0408ba93a274cca3a045a049894adacd88"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_int_seq_values_portable_compare.py": {
+      "bytes": 21086,
+      "mode": 420,
+      "sha256": "1fe9dd2f7c42e2a0d814fcdee3e20359e9356d2f97bd332cd9058508b0f8d85f"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_inventory.py": {
+      "bytes": 11768,
+      "mode": 420,
+      "sha256": "d1383d18cf1a2adc8dd6a8d7def373173cad657ec50f2e07a503faff6c7a3f8d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_logical_capability_fixtures.py": {
+      "bytes": 2271,
+      "mode": 420,
+      "sha256": "53525e7cab8751be5b480bcaf7bcca8e69d0babba1ce60414a028425179a3ce5"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_lossless_host_fixtures.py": {
+      "bytes": 4393,
+      "mode": 420,
+      "sha256": "4197583136ac5be00385f42a75d59fa2b944d4ebf8beee4c347eb1ee3b4d3b7b"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m1_frontend.py": {
+      "bytes": 4326,
+      "mode": 420,
+      "sha256": "eaddff92ff8d5aca0d1a255b93bd33e2c28cc56b019061e3ae33c6b730717b1a"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m1_graal.py": {
+      "bytes": 19360,
+      "mode": 420,
+      "sha256": "ca8dc8065809122359fd12fba86a705a78167a39fcc677e30ac4dd557c85785f"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m1_host.py": {
+      "bytes": 3108,
+      "mode": 420,
+      "sha256": "a71dc11898bb120c2475cd0c43d7a6995d1fffc795d8df2b9a3a1598c7d7742e"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m1_lifecycle.py": {
+      "bytes": 8482,
+      "mode": 420,
+      "sha256": "814e0ef27f5afc39ed1b20b5ea8081f3428a22eefbeff5de3e2dd1551ad72b62"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m1_platforms.py": {
+      "bytes": 10299,
+      "mode": 420,
+      "sha256": "c8e54fa57ac49efdb4f86cbb8a7c4eef24b193e346ad42dc3aad0fe51fb82b18"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m1_runtime.py": {
+      "bytes": 4122,
+      "mode": 420,
+      "sha256": "e7a3e6feb589f7c66a4d57a28b83c7f1663a184d28904f185e6152e6485ab97c"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m1_semantics.py": {
+      "bytes": 1963,
+      "mode": 420,
+      "sha256": "e8e3b4b671c9431b8c28d15ba5e6bef950efb72f5b8638dc08c7e9ccf1583b55"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m1_semantics_bench.py": {
+      "bytes": 2008,
+      "mode": 420,
+      "sha256": "e02c2cd1a7f5a464bc1ea351b32b2290bac3bf44acf194e0ec5fdfafcc0bcef9"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_class_lifecycle.py": {
+      "bytes": 17882,
+      "mode": 420,
+      "sha256": "761aae287efb84cb9aead847fb80a3e66d4bd6acdc83468d5c93cee6afe34dd9"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_execution_profiles.py": {
+      "bytes": 7794,
+      "mode": 420,
+      "sha256": "32bafcf1869425364c524b534bf3f7a462eb0af938cec583460545a194a6ee7c"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_identifier_tables.py": {
+      "bytes": 3066,
+      "mode": 420,
+      "sha256": "917e3ca52f9ff09e6620f54e26b3c7d86ea96aab1634454317a47f6b25a1b039"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_jvm_classpath.py": {
+      "bytes": 19810,
+      "mode": 420,
+      "sha256": "1c9c91a79a4c8c9f08c3439deb20e54f2f00bbe20a9ba1e7ecbf16a99edc1c41"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_language.py": {
+      "bytes": 34618,
+      "mode": 420,
+      "sha256": "9abc1fca21818e0efee3732d9ce21e13ea34c7c4584c4ab2509a39d91f79c9df"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_mappings.py": {
+      "bytes": 8255,
+      "mode": 420,
+      "sha256": "d70e2a141b8368bf7d97465b3e780b55875b6afee674a5272a41d482664a00ed"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_module_capture_failures.py": {
+      "bytes": 9679,
+      "mode": 420,
+      "sha256": "607447ecebfe0ee717e1df7f1959a37f25df6df1771a3abbcf3ab7cef1021a69"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_module_eval.py": {
+      "bytes": 23692,
+      "mode": 420,
+      "sha256": "bf15e97ec2233f8fe51bc5a1decaedd4fe5b69f262215012ce3441614f5c5997"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_stdlib_bootstrap_compare.py": {
+      "bytes": 3347,
+      "mode": 420,
+      "sha256": "f84363f14307deea28ca01cf213b9428cf73f28f51c77b7e69c83ab99913c3fa"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_trace.py": {
+      "bytes": 4147,
+      "mode": 420,
+      "sha256": "96cb94e7d0bddc91e821f062f75768d47a203119180f3ff74e1697743e56d516"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_trace_integrity.py": {
+      "bytes": 12899,
+      "mode": 420,
+      "sha256": "6dfaa92e7dcc5512311df203c91876b4aedd242d39961ce9f63b467c97b44047"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_unicode_escape_tables.py": {
+      "bytes": 3553,
+      "mode": 420,
+      "sha256": "016a297d79fc9a22ca953ded43b6af9ffdb8274e3989963cb6b58d293b725914"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_uppercase_tables.py": {
+      "bytes": 4109,
+      "mode": 420,
+      "sha256": "73d8c252652b2e68efb7743ac483ee6e872f0ee8535775983663da2029694960"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_workspace.py": {
+      "bytes": 9574,
+      "mode": 420,
+      "sha256": "6b31780325aa661081ce40bd5cf08e9dcbc1a52f737218074115ae3239f8c222"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_m2_workspace_report.py": {
+      "bytes": 14764,
+      "mode": 420,
+      "sha256": "5c2f91bd23a49ed7cbda15b0ff6450b131c535f8c3223aff97dda2373617e0e8"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_module_admission_policy_fixtures.py": {
+      "bytes": 4894,
+      "mode": 420,
+      "sha256": "2ae726a9a636d37fe60c720a8027395b73e2acc73ba0b145036b5afe37bff2e6"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_module_inheritance_fixtures.py": {
+      "bytes": 4137,
+      "mode": 420,
+      "sha256": "ee879e7c50d2d6520fae20b5565d3a7933a252ce51bfc89b759ca7a7edfe73bb"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_module_loading_fixtures.py": {
+      "bytes": 4673,
+      "mode": 420,
+      "sha256": "bef63d6e6d6087e5d0adc3ee510a8169bde87ebcc1f6b417db6d7ef66c6bebf3"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_module_portable_fixtures.py": {
+      "bytes": 4705,
+      "mode": 420,
+      "sha256": "bf8c21404734ed40a295a84808a586650bcdea0495b5b09f901815d6d57961b0"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_moduleinfo_fixtures.py": {
+      "bytes": 3521,
+      "mode": 420,
+      "sha256": "dcbb495d9905a493e6eb073658b074562a2966d3f9ffba32652078ec8a318fda"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_modulekey_extended_fixtures.py": {
+      "bytes": 9858,
+      "mode": 420,
+      "sha256": "adb4c2006a5d60e605bfe01b74c06fba80e839046bf935bfe9a908b2d7ee75b3"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_modulekey_fixtures.py": {
+      "bytes": 3878,
+      "mode": 420,
+      "sha256": "237d023f347ede8e3d37182fd97fceb81a83ff072cd5c49358b794d776b8eee5"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_oracle.py": {
+      "bytes": 7984,
+      "mode": 420,
+      "sha256": "f5c70467cfb8f5824e41175745d86368c8759115b49f783244a06100ecda7d86"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_pantry.py": {
+      "bytes": 5065,
+      "mode": 420,
+      "sha256": "52e2bd116fdc77b88864c014ac31155d01b946087d4fbcf4f2dccb523492ad81"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_parameterized_object_compare.py": {
+      "bytes": 6245,
+      "mode": 420,
+      "sha256": "3b0991ce9878e0e19dbb624212ca440d3007c9997b83058f7062908c8b21a1c1"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_parameterized_object_fixtures.py": {
+      "bytes": 4947,
+      "mode": 420,
+      "sha256": "9187c3d39db2fed866c0511e42fbf439eac9a4c6c5d68a79f34ec056d27f98fc"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_prototype_diagnostics_fixtures.py": {
+      "bytes": 4908,
+      "mode": 420,
+      "sha256": "0b08f55087f929b582372100ca7bec874af22cd3c906277390c9fb210c4abfaf"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_regressions.py": {
+      "bytes": 4063,
+      "mode": 420,
+      "sha256": "893e238d88e25071a3ac593503ea572f9d8c0af75ef32f361bc3a40e9ea5913d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_renderer_fixtures.py": {
+      "bytes": 9697,
+      "mode": 420,
+      "sha256": "b635f5b1b80977df02cc3933fdfed81acf7c2ea641bca2a77da8c155a6e99ee7"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_renderer_identity_fixtures.py": {
+      "bytes": 4337,
+      "mode": 420,
+      "sha256": "6631301e7a1dbe53bf704a0d7a4ca26ac7ab065bfea6ef69d66b16b63527177d"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_resource_oracle_fixtures.py": {
+      "bytes": 2325,
+      "mode": 420,
+      "sha256": "62ffeac6aacd888b33cd0209a41dda1471473215dd3e285b71ad92c2cd6d15b3"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_resource_portable_fixtures.py": {
+      "bytes": 8881,
+      "mode": 420,
+      "sha256": "12f49311ce9aafca27b54c12f39d4c9db035d51c62640dbf0f793799e569b429"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_runtime_source_inputs.py": {
+      "bytes": 1797,
+      "mode": 420,
+      "sha256": "9102bf9fdf7c3aa389ef9cdb4848c52491974790adde8d60ddd5543fdf5c717a"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_security_denial_fixtures.py": {
+      "bytes": 2850,
+      "mode": 420,
+      "sha256": "e25480c6a2233919398443ad7d795b9016cad082955e37f02a6fe491bc2dac15"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_set_endpoints_fixtures.py": {
+      "bytes": 5542,
+      "mode": 420,
+      "sha256": "03a1cdec495bedc5f84143b5dd9f5d02c830d3c25fb0f63c9830a7e513578906"
+    },
+    "target/m2/stage66-http-validation-01/sources/tools/tests/test_string_subscript_fixtures.py": {
+      "bytes": 4843,
+      "mode": 420,
+      "sha256": "b885a5410e6e095ca8f6cabd96271d371806855f14c7b168946b3c86d3d0dfa5"
+    },
+    "target/m2/stage66-mapping-validation-01/00.stderr.bin": {
+      "bytes": 106,
+      "mode": 420,
+      "sha256": "e753a564c0052fad52a9fa2ef6b3ca3c6c3f68d96c3cc476205e23c494567929"
+    },
+    "target/m2/stage66-mapping-validation-01/00.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-mapping-validation-01/01.stderr.bin": {
+      "bytes": 106,
+      "mode": 420,
+      "sha256": "8291979b307800a2411ed99e4708747c62ec4cba471072141b444acc35421016"
+    },
+    "target/m2/stage66-mapping-validation-01/01.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-mapping-validation-01/02.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-mapping-validation-01/02.stdout.bin": {
+      "bytes": 231,
+      "mode": 420,
+      "sha256": "9eb043eed64a997a50c295ceaeaf22c94a1f9b4076d0e809c793460b394260e3"
+    },
+    "target/m2/stage66-mapping-validation-01/03.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-mapping-validation-01/03.stdout.bin": {
+      "bytes": 926,
+      "mode": 420,
+      "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+    },
+    "target/m2/stage66-mapping-validation-01/report.json": {
+      "bytes": 7521,
+      "mode": 420,
+      "sha256": "015dfb872d71f7845156c887fc92078224e38034d3fb0e190aaf4aaf559db18a"
+    },
+    "target/m2/stage66-mapping-validation-01/run.py": {
+      "bytes": 4174,
+      "mode": 420,
+      "sha256": "f7a3844ed566eb1f8814ebf1ef1846b90e3056e75b6bc41d2bf932d6f3f38ae9"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-01/00.stderr.bin": {
+      "bytes": 111,
+      "mode": 420,
+      "sha256": "c311ae6a8b6d9003be7f38c30bfc9dbbe61942d975f50b930f9d09fe6a6de86c"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-01/00.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-01/01.stderr.bin": {
+      "bytes": 111,
+      "mode": 420,
+      "sha256": "4ed3c64b805ba09713fe1520b8e528f3d56f7c913b2f9f0a7e4bbe7135a0672d"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-01/01.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-01/02.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-01/02.stdout.bin": {
+      "bytes": 442,
+      "mode": 420,
+      "sha256": "57f977e04620a4dbec8602cced21498b7a505d44b14ca06b8947462b0bed0a83"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-01/03.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-01/03.stdout.bin": {
+      "bytes": 926,
+      "mode": 420,
+      "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-01/report.json": {
+      "bytes": 21613,
+      "mode": 420,
+      "sha256": "cc9879c03fa2164675bdeabf1309d4440df2155631350285f46bce0ea43e0cb0"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-01/run.py": {
+      "bytes": 2398,
+      "mode": 420,
+      "sha256": "9f75c197fe0e69c7a1f6fe79bb810791b931eab3e73223f825e9b3b05c64f2f6"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-02/00.stderr.bin": {
+      "bytes": 111,
+      "mode": 420,
+      "sha256": "0dfc95aa4353cef841a8e0d8e4f8a6c44d9fd552cd6ae09469000c95ab59563c"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-02/00.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-02/01.stderr.bin": {
+      "bytes": 111,
+      "mode": 420,
+      "sha256": "0eef06a20444641039d7ada0f51e0bb19b84436c99c370638048ed7f61391208"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-02/01.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-02/02.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-02/02.stdout.bin": {
+      "bytes": 443,
+      "mode": 420,
+      "sha256": "fb3922e79a3e0a8b44ce76c794138b2e16fdee6ea5486db49c2900199b10d7c3"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-02/03.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-02/03.stdout.bin": {
+      "bytes": 926,
+      "mode": 420,
+      "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-02/report.json": {
+      "bytes": 21611,
+      "mode": 420,
+      "sha256": "e8b43edf10ecbb4e46281101ef511cfd735e2b0af71fa29e737a2605bcc7a972"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-02/run.py": {
+      "bytes": 2398,
+      "mode": 420,
+      "sha256": "9f75c197fe0e69c7a1f6fe79bb810791b931eab3e73223f825e9b3b05c64f2f6"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-03/00.stderr.bin": {
+      "bytes": 115,
+      "mode": 420,
+      "sha256": "265ac716732d5e2c430df14a3cccbb87809dc6b5572570bef8df747a74d90af6"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-03/00.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-03/01.stderr.bin": {
+      "bytes": 115,
+      "mode": 420,
+      "sha256": "3fd44cfbc6dfdcffa12a17f880dd4465ad42a8c87aaf4571751e7122fdda3950"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-03/01.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-03/02.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-03/02.stdout.bin": {
+      "bytes": 443,
+      "mode": 420,
+      "sha256": "98d6b534b7918275a262c22db258ea81fbb892093580b6cdd742f3727b3d9bf6"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-03/03.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-03/03.stdout.bin": {
+      "bytes": 926,
+      "mode": 420,
+      "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-03/report.json": {
+      "bytes": 22381,
+      "mode": 420,
+      "sha256": "f5feab4d93daad526a25067402918752ba6c06c7100094e9370391cd2ce68a22"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-03/run.py": {
+      "bytes": 2546,
+      "mode": 420,
+      "sha256": "6777f560af21894e2ab06e94cc64c7df861e92fad2b4ca7e1ed36dc1d1f5ae05"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-04/00.stderr.bin": {
+      "bytes": 116,
+      "mode": 420,
+      "sha256": "b41da8f7faea2064da3b7631b475deeb969f2e72ebf9c8bfa7e4f9a5379f9d66"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-04/00.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-04/01.stderr.bin": {
+      "bytes": 116,
+      "mode": 420,
+      "sha256": "6fbc260aa915abd4a5a0a5f885703abd9ddafefd8fe21afaa76d9151d8b4ba97"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-04/01.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-04/02.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-04/02.stdout.bin": {
+      "bytes": 443,
+      "mode": 420,
+      "sha256": "4093665a6c09885b145181b6381302fc31f1614e046d0dff41ad1d0d9fe8515b"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-04/03.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-04/03.stdout.bin": {
+      "bytes": 926,
+      "mode": 420,
+      "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-04/report.json": {
+      "bytes": 22383,
+      "mode": 420,
+      "sha256": "3199527d26c23b95c0e3a787a4897f53e781490874bf764cc2c9d5c717440ec5"
+    },
+    "target/m2/stage66-union-marker-portable-tool-development-04/run.py": {
+      "bytes": 2546,
+      "mode": 420,
+      "sha256": "6777f560af21894e2ab06e94cc64c7df861e92fad2b4ca7e1ed36dc1d1f5ae05"
+    }
+  },
+  "publisher_sources": [
+    "target/m2/stage66-checkpoint-publication-01/prepare.py",
+    "target/m2/stage66-checkpoint-publication-01/publish.py",
+    "target/m2/stage66-checkpoint-publication-01/admission.py",
+    "target/m2/stage66-checkpoint-publication-01/assemble.py",
+    "target/m2/stage66-checkpoint-publication-01/execute.py",
+    "target/m2/stage66-checkpoint-publication-01/layout.json",
+    "target/m2/stage66-checkpoint-publication-01/preparation.json",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/prepare.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/publish.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/admission.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/assemble.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/execute.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/layout.json",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/preparation.json",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/prepare.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/publish.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/admission.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/assemble.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/execute.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/layout.json",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/preparation.json",
+    "target/m2/stage66-checkpoint-publication-01/tooling-invocation.json"
+  ],
+  "schema": 1,
+  "selected_directories": [
+    "stage66-catalog-validation-01",
+    "stage66-catalog-validation-02",
+    "stage66-http-validation-01",
+    "stage66-mapping-validation-01",
+    "stage66-union-marker-portable-tool-development-01",
+    "stage66-union-marker-portable-tool-development-02",
+    "stage66-union-marker-portable-tool-development-03",
+    "stage66-union-marker-portable-tool-development-04"
+  ],
+  "source_before_after_equal": true,
+  "terminal_admission": {
+    "candidate_compatibility_passes_claimed": 0,
+    "catalog": {
+      "observations_per_target": 2162,
+      "profiles": 14,
+      "rows": 1081
+    },
+    "comparison_counts": {
+      "amendment-construction-native": {
+        "pass": 376
+      },
+      "amendment-construction-portable": {
+        "chromium": {
+          "pass": 376
+        },
+        "napi": {
+          "pass": 376
+        }
+      },
+      "any-portable": {
+        "chromium": {
+          "mismatch": 2,
+          "pass": 170
+        },
+        "napi": {
+          "mismatch": 2,
+          "pass": 170
+        }
+      },
+      "base-constructor-constraints-native": {
+        "pass": 72
+      },
+      "base-constructor-constraints-portable": {
+        "chromium": {
+          "pass": 72
+        },
+        "napi": {
+          "pass": 72
+        }
+      },
+      "bytes-native": {
+        "pass": 600
+      },
+      "bytes-portable": {
+        "chromium": {
+          "pass": 600
+        },
+        "napi": {
+          "pass": 600
+        }
+      },
+      "collection-addition-native": {
+        "pass": 250
+      },
+      "collection-addition-portable": {
+        "chromium": {
+          "pass": 250
+        },
+        "napi": {
+          "pass": 250
+        }
+      },
+      "collection-conversion-controls-native": {
+        "pass": 116
+      },
+      "collection-conversion-controls-portable": {
+        "chromium": {
+          "pass": 116
+        },
+        "napi": {
+          "pass": 116
+        }
+      },
+      "collection-conversions-native": {
+        "pass": 472
+      },
+      "collection-conversions-portable": {
+        "chromium": {
+          "pass": 472
+        },
+        "napi": {
+          "pass": 472
+        }
+      },
+      "collection-default-contracts-native": {
+        "pass": 44
+      },
+      "collection-default-contracts-portable": {
+        "chromium": {
+          "pass": 44
+        },
+        "napi": {
+          "pass": 44
+        }
+      },
+      "collection-dynamic-render-native": {
+        "pass": 20
+      },
+      "collection-dynamic-render-portable": {
+        "chromium": {
+          "pass": 20
+        },
+        "napi": {
+          "pass": 20
+        }
+      },
+      "collection-lookups-native": {
+        "pass": 266
+      },
+      "collection-lookups-portable": {
+        "chromium": {
+          "pass": 266
+        },
+        "napi": {
+          "pass": 266
+        }
+      },
+      "collection-property-names-native": {
+        "pass": 52
+      },
+      "collection-property-names-portable": {
+        "chromium": {
+          "pass": 52
+        },
+        "napi": {
+          "pass": 52
+        }
+      },
+      "data-size-native": {
+        "pass": 510
+      },
+      "data-size-portable": {
+        "chromium": {
+          "pass": 510
+        },
+        "napi": {
+          "pass": 510
+        }
+      },
+      "duration-native": {
+        "pass": 548
+      },
+      "duration-portable": {
+        "chromium": {
+          "pass": 548
+        },
+        "napi": {
+          "pass": 548
+        }
+      },
+      "inferred-new-values-native": {
+        "pass": 144
+      },
+      "inferred-new-values-portable": {
+        "chromium": {
+          "pass": 144
+        },
+        "napi": {
+          "pass": 144
+        }
+      },
+      "intseq-native": {
+        "pass": 474
+      },
+      "intseq-portable": {
+        "chromium": {
+          "pass": 474
+        },
+        "napi": {
+          "pass": 474
+        }
+      },
+      "reversal-implicit-native": {
+        "pass": 16
+      },
+      "reversal-implicit-portable": {
+        "chromium": {
+          "pass": 16
+        },
+        "napi": {
+          "pass": 16
+        }
+      },
+      "reversal-subscript-native": {
+        "pass": 38
+      },
+      "reversal-subscript-portable": {
+        "chromium": {
+          "pass": 38
+        },
+        "napi": {
+          "pass": 38
+        }
+      },
+      "reversal-values-native": {
+        "pass": 156
+      },
+      "reversal-values-portable": {
+        "chromium": {
+          "pass": 156
+        },
+        "napi": {
+          "pass": 156
+        }
+      },
+      "set-endpoints-native": {
+        "pass": 140
+      },
+      "set-endpoints-portable": {
+        "chromium": {
+          "pass": 140
+        },
+        "napi": {
+          "pass": 140
+        }
+      },
+      "union-marker-native": {
+        "pass": 80
+      },
+      "union-marker-portable": {
+        "chromium": {
+          "pass": 80
+        },
+        "napi": {
+          "pass": 80
+        }
+      }
+    },
+    "inputs": {
+      "comparison": {
+        "bytes": 87607,
+        "path": "target/m2/stage66-comparison-validation-02/report.json",
+        "sha256": "66e38dc4a4849dbd18c7b1ecedf40a1181bf0c8ef188f59490c8b6cb5a177f6d"
+      },
+      "comparison_launch": {
+        "bytes": 2879,
+        "path": "target/m2/stage66-comparison-launch-02/report.json",
+        "sha256": "b8e070c78d88c3f1afcb4b64b1d52f536b30fa2db37d3b424b1170d6bd369319"
+      },
+      "count": {
+        "bytes": 6163,
+        "path": "target/m2/stage66-validation-count-review-01/report.json",
+        "sha256": "5f1c8fa2e59c81c086bc151b16c165b45ee07be4620fca99bb349b38e7c38fac"
+      },
+      "freeze": {
+        "bytes": 12551,
+        "path": "target/m2/stage66-core-freeze-01/freeze.json",
+        "sha256": "c37a9ea6424d6a8510740c6e965213e36a85ba4675438ab2edcb40e90b30e19c"
+      },
+      "identity_note": {
+        "bytes": 6042,
+        "path": "target/m2/stage66-core-identity-provenance-02/report.json",
+        "sha256": "5f1003ca0ef53f67618b15773db5ab43ac77bf5863ad3fe3e1f97e97a0c58e20"
+      },
+      "m1": {
+        "bytes": 3390770,
+        "path": "target/m2/stage66-m1-platform-contract-01/report.json",
+        "sha256": "6c18f63a3a631849a8e85e9d6c1332d87be5b1ac44e1725a5ed977107a0559ad"
+      },
+      "native": {
+        "bytes": 38020,
+        "path": "target/m2/stage66-native-acquisition-01/report.json",
+        "sha256": "179a2551a3d16b0b6df9ea4f687d0c8c3a292b512bc0824e95b225904c41a6f9"
+      },
+      "node_locator_admission": {
+        "bytes": 1881,
+        "path": "target/m2/stage66-node-path-verification-amendment-02/amendment.json",
+        "sha256": "27afdf36b7c8228c5262414115d491ab2b36c9e587e76932e16408d2c5944617"
+      },
+      "original": {
+        "bytes": 2036353,
+        "path": "target/m2/stage66-original-reversal-01/report.json",
+        "sha256": "36a7a355f1e36bf02ff6cf99ad9b3219879ca4e7c5fa972c2cb11a1e787b371c"
+      },
+      "original_audit": {
+        "bytes": 628490,
+        "path": "target/m2/stage66-original-failure-audit-01/report.json",
+        "sha256": "79aa9ddc26cca06c96d44dfbff498098b26f234ac6e232b3c35f4aceefffa917"
+      },
+      "original_launch": {
+        "bytes": 9024,
+        "path": "target/m2/stage66-original-reversal-launch-02/report.json",
+        "sha256": "06679f22efe6f8601cbe7f49ddbf4e3d2b9f19da7e813cc136ae459a0d2ecb5d"
+      },
+      "platform": {
+        "bytes": 333239,
+        "path": "target/m2/stage66-platform-validation-01/report.json",
+        "sha256": "6465f554b0eb4c027a33c4305218df75632d28ce1fb457a7f4f394ae4f2ebac8"
+      },
+      "review": {
+        "bytes": 6831,
+        "path": "target/m2/stage66-review-01/report.json",
+        "sha256": "db3e092e218087998effbb666be0300a20b06b5fbe08294c1f050c630c507e07"
+      },
+      "runtime_sources": {
+        "bytes": 46589,
+        "path": "target/m2/stage66-core-freeze-01/source-snapshot.json",
+        "sha256": "3ec14f5ec8cb01541c1fd1e8b52a7ee66cc23c23003a877fbabad16d4bf46e01"
+      },
+      "rust": {
+        "bytes": 6463,
+        "path": "target/m2/stage66-rust-validation-01/report.json",
+        "sha256": "3d31eb2bb304c016b159ee2ee32adfd41b60b36717eb3a2356cabbd1a1d30b79"
+      }
+    },
+    "m1": {
+      "compatibility_status": "fail",
+      "experiment_contract_status": "pass",
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "originals": {
+      "added1_statuses": {
+        "mismatch": 1
+      },
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/stringUnicode.pkl"
+      ],
+      "blocked_required": 2,
+      "integrity_status": "passed",
+      "java_heap_option": "-Xmx512m",
+      "prior130_pass_regressions": [],
+      "prior130_status_transitions": {
+        "candidate-unsupported->candidate-unsupported": 31,
+        "mismatch->mismatch": 17,
+        "mismatch->pass": 7,
+        "oracle-error->oracle-error": 1,
+        "pass->pass": 74
+      },
+      "selected": 131,
+      "selected_status": "failed",
+      "statuses": {
+        "candidate-unsupported": 31,
+        "mismatch": 18,
+        "oracle-error": 1,
+        "pass": 81
+      }
+    },
+    "post_capture_node_locator_admission": {
+      "explicit_full_api_gate_exit": 1,
+      "guest_reexecutions": 0,
+      "raw_guest_channels_modified": false,
+      "report": {
+        "bytes": 1881,
+        "path": "target/m2/stage66-node-path-verification-amendment-02/amendment.json",
+        "sha256": "27afdf36b7c8228c5262414115d491ab2b36c9e587e76932e16408d2c5944617"
+      }
+    },
+    "rust": {
+      "copied_sources": 16,
+      "git_linked_sources": 165524,
+      "nested_reruns": 13,
+      "raw": {
+        "failed": 0,
+        "ignored": 2,
+        "passed": 1017
+      },
+      "source_count": 165540,
+      "unique": {
+        "failed": 0,
+        "ignored": 2,
+        "passed": 1004
+      }
+    },
+    "tooling": {
+      "catalog": {
+        "commands": [
+          {
+            "command": [
+              "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_collection_conversions_compare",
+              "tools.tests.test_collection_conversions_portable_compare",
+              "tools.tests.test_data_size_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 43
+          },
+          {
+            "command": [
+              "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+              "-B",
+              "-O",
+              "-m",
+              "unittest",
+              "tools.tests.test_collection_conversions_compare",
+              "tools.tests.test_collection_conversions_portable_compare",
+              "tools.tests.test_data_size_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 43
+          },
+          {
+            "command": [
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+              "--test",
+              "tools/platform/capture-collection-conversions.test.mjs"
+            ],
+            "javascript_test_count": 11,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 4139,
+          "path": "target/m2/stage66-catalog-validation-02/report.json",
+          "sha256": "80047131014f26d7f3134e16ea2c440b97a80cc465001ef17dd67dd17f4d9349"
+        }
+      },
+      "http_admission": {
+        "commands": [
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_data_size_portable_compare",
+              "tools.tests.test_int_seq_values_portable_compare",
+              "tools.tests.test_bytes_values_portable_compare",
+              "tools.tests.test_duration_values_portable_compare",
+              "tools.tests.test_any_if_non_null_portable_compare",
+              "tools.tests.test_collection_conversions_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 56
+          },
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "-O",
+              "-m",
+              "unittest",
+              "tools.tests.test_data_size_portable_compare",
+              "tools.tests.test_int_seq_values_portable_compare",
+              "tools.tests.test_bytes_values_portable_compare",
+              "tools.tests.test_duration_values_portable_compare",
+              "tools.tests.test_any_if_non_null_portable_compare",
+              "tools.tests.test_collection_conversions_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 56
+          },
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "tools/inventory.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 74689,
+          "path": "target/m2/stage66-http-validation-01/report.json",
+          "sha256": "e995838f52e9ff21a670d49d8754a9a6b4f21ebf6bd16ebe375fe267cb4e973a"
+        }
+      },
+      "mapping": {
+        "commands": [
+          {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_m2_mappings"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 8
+          },
+          {
+            "command": [
+              "python3",
+              "-O",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_m2_mappings"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 8
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "tools/m2_manifest.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "tools/inventory.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 7521,
+          "path": "target/m2/stage66-mapping-validation-01/report.json",
+          "sha256": "015dfb872d71f7845156c887fc92078224e38034d3fb0e190aaf4aaf559db18a"
+        }
+      },
+      "union_native_portable": {
+        "commands": [
+          {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_union_marker_fixtures",
+              "tools.tests.test_union_marker_portable_compare",
+              "tools.tests.test_union_marker_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 17
+          },
+          {
+            "command": [
+              "python3",
+              "-O",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_union_marker_fixtures",
+              "tools.tests.test_union_marker_portable_compare",
+              "tools.tests.test_union_marker_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 17
+          },
+          {
+            "command": [
+              "node",
+              "--test",
+              "tools/platform/capture-union-marker-modules.test.mjs"
+            ],
+            "javascript_test_count": 4,
+            "python_test_count": null
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "tools/inventory.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 22383,
+          "path": "target/m2/stage66-union-marker-portable-tool-development-04/report.json",
+          "sha256": "3199527d26c23b95c0e3a787a4897f53e781490874bf764cc2c9d5c717440ec5"
+        }
+      }
+    },
+    "union_modules": 40,
+    "union_observations_per_target": 80
+  }
+}

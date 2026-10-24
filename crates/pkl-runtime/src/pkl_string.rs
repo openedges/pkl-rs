@@ -133,6 +133,31 @@ impl PklString {
         }
     }
 
+    /// Match StringBuilder.reverse: reverse UTF-16 units, then restore each
+    /// reversed surrogate pair. Originally unmatched low/high surrogates can
+    /// become a new pair, so reversing twice need not recover malformed input.
+    pub(crate) fn reversed(&self) -> Self {
+        let mut units = self.encode_utf16().collect::<Vec<_>>();
+        units.reverse();
+        let mut index = 0;
+        while index + 1 < units.len() {
+            if (0xdc00..=0xdfff).contains(&units[index])
+                && (0xd800..=0xdbff).contains(&units[index + 1])
+            {
+                units.swap(index, index + 1);
+                index += 2;
+            } else {
+                index += 1;
+            }
+        }
+        let result = Self::from_utf16(units);
+        if result.is_empty() {
+            result.source_literal()
+        } else {
+            result
+        }
+    }
+
     pub fn concat(&self, other: &Self) -> Self {
         let mut builder = PklStringBuilder::default();
         builder.push_value(self);

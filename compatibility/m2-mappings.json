@@ -530,7 +530,7 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
@@ -574,7 +574,7 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties3.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e_error.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語_error.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/currentModuleType1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/currentModuleType2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType2.pkl",
@@ -660,6 +660,14 @@
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "step_generic_default"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser/type_parser.rs",
+            "symbol": "type_step"
+          },
+          {
+            "path": "crates/pkl-runtime/src/diagnostic_names.rs",
+            "symbol": "builtin_members"
           }
         ],
         "state": "partial"
@@ -673,7 +681,7 @@
         "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
       ],
       "requirement": "semantic:diagnostics",
-      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations. Original module eval frontend failures are exercised through their unchanged argv/cwd/env/resource contracts with the bundled CLI frame profile; complete output evaluation remains unsupported. Stage40 adds actual module-output operation failures without expression-string conversion or a synthetic REPL boundary; the unchanged original output/module dependency contracts remain selected even when unsupported. Stage65 retains inferred-parent error spans, typed missing-default property frames, external versus constrained no-default classification, and module class display names. Complete raw diagnostics and every existing failure remain required.",
+      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations. Original module eval frontend failures are exercised through their unchanged argv/cwd/env/resource contracts with the bundled CLI frame profile; complete output evaluation remains unsupported. Stage40 adds actual module-output operation failures without expression-string conversion or a synthetic REPL boundary; the unchanged original output/module dependency contracts remain selected even when unsupported. Stage65 retains inferred-parent error spans, typed missing-default property frames, external versus constrained no-default classification, and module class display names. Complete raw diagnostics and every existing failure remain required. Stage66 preserves the complete first type span for a non-union default marker and rejects a second default marker before parsing the next type. Scalar member catalogs and List bounds details are source-backed; forty separate-module Java fixtures require independent raw native and portable replay.",
       "tests": {
         "case_ids": [
           "reference-stage10-domain-invalid",
@@ -1664,7 +1672,7 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
@@ -6044,6 +6052,10 @@
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "validate_reference_arguments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "symbol": "resolve_session_expression"
           }
         ],
         "state": "partial"
@@ -6055,7 +6067,7 @@
         "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
       ],
       "requirement": "semantic:constraints",
-      "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
+      "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage66 admits the seven already-supported base constructor intrinsics inside custom-this constraints after lexical method lookup. Authored module/class-local methods and externally supplied query scopes have separate Java controls; complete base method resolution remains open.",
       "tests": {
         "case_ids": [
           "types-stage16-const-unused",
@@ -7745,6 +7757,10 @@
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
             "symbol": "EntryDefault"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collection_transforms.rs",
+            "symbol": "Projection"
           }
         ],
         "state": "partial"
@@ -7754,7 +7770,7 @@
         "All original collection/type-check and public API contracts must execute with matching raw results before this semantic family can be marked complete."
       ],
       "requirement": "semantic:collections",
-      "scope": "Stage63 connects ordered strict collection addition to shared hashing, equality, insertion and GC/Host continuations, and supplies the four Set endpoint properties through the existing endpoint primitive. The linked original List/Set/Map and Mapping type-check programs are preserved unchanged. Focused string results and internal ownership checks do not establish the full original-program or collection requirement. Stage64 connects Listing.fold to shallow forcing before callbacks and inherited ordered cached values, retaining Host suspension/reentry/retry/cancellation roots. Empty builtin class construction uses weak canonical instances; zero-effective object generators reuse their parent. The linked original programs remain whole-program obligations, not passing verdicts inferred from focused controls. Stage65 assigns inferred collection new expressions through receiver.default(key); bare entry amendments retain inherited-entry lookup before default fallback. Missing typed defaults fail at the default property read, preserving lazy error order.",
+      "scope": "Stage63 connects ordered strict collection addition to shared hashing, equality, insertion and GC/Host continuations, and supplies the four Set endpoint properties through the existing endpoint primitive. The linked original List/Set/Map and Mapping type-check programs are preserved unchanged. Focused string results and internal ownership checks do not establish the full original-program or collection requirement. Stage64 connects Listing.fold to shallow forcing before callbacks and inherited ordered cached values, retaining Host suspension/reentry/retry/cancellation roots. Empty builtin class construction uses weak canonical instances; zero-effective object generators reuse their parent. The linked original programs remain whole-program obligations, not passing verdicts inferred from focused controls. Stage65 assigns inferred collection new expressions through receiver.default(key); bare entry amendments retain inherited-entry lookup before default fallback. Missing typed defaults fail at the default property read, preserving lazy error order. Stage66 adds shallow List/Set reversal through the existing resumable collection builder, canonical empty List results, ordered element preservation, and List-only nonforcing bounds displays. Focused Java and lifecycle controls are separate from whole original-program and platform gates.",
       "tests": {
         "case_ids": [
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/list.pkl",
@@ -7768,6 +7784,152 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideLet.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings2/default.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/propertyDefaults.pkl"
+        ],
+        "state": "partial"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/pkl_string.rs",
+            "symbol": "PklString"
+          },
+          {
+            "path": "crates/pkl-runtime/src/pkl_string.rs",
+            "symbol": "reversed"
+          }
+        ],
+        "state": "partial"
+      },
+      "remaining": [
+        "The complete pinned string syntax, builtin API, diagnostics and upstream original programs still require passing raw differential execution.",
+        "Whole-module rendering, malformed UTF-16 transport and each target environment retain their independent execution gates; focused reversal does not close them."
+      ],
+      "requirement": "semantic:strings",
+      "scope": "Stage66 links the existing lossless UTF-16 string value and Java-compatible StringBuilder-style reversal. Paired and unpaired surrogate controls are retained in the independent reversal fixture. These source links and focused controls do not claim whole String API or original-program completion.",
+      "tests": {
+        "case_ids": [
+          "string-empty",
+          "string-unicode",
+          "string-escapes",
+          "string-custom",
+          "string-multiline",
+          "string-interpolation",
+          "string-continuation",
+          "error-interpolation-empty",
+          "error-interpolation-first",
+          "power-constraint-string-surrogate-boundary",
+          "equality-constant-negative-interpolation-span",
+          "string-stage29-high",
+          "string-stage29-low",
+          "string-stage29-pair",
+          "string-stage29-reverse",
+          "string-stage29-lengths",
+          "string-stage29-equality-controls",
+          "string-stage29-pair-scalar-equality",
+          "string-stage29-concat-pair",
+          "string-stage29-concat-pair-length",
+          "string-stage29-concat-pair-equality",
+          "string-stage29-concat-reverse",
+          "string-stage29-concat-spaced",
+          "string-stage29-interpolation-pair",
+          "string-stage29-interpolation-mixed",
+          "string-stage29-ordering",
+          "string-stage29-list-render",
+          "string-stage29-set-identity",
+          "string-stage29-set-pair-coalescing",
+          "string-stage29-map-identity",
+          "string-stage29-map-lookup",
+          "string-stage29-structural-key",
+          "string-stage29-literal-type-pair",
+          "string-stage29-literal-type-unpaired",
+          "string-stage29-throw",
+          "string-stage29-raw-high",
+          "string-stage29-multiline-high",
+          "string-stage29-literal-type-error",
+          "string-stage29-literal-default-high",
+          "string-stage29-alias-default-high",
+          "string-stage29-union-default-pair",
+          "string-stage29-literal-as-high",
+          "string-stage29-literal-as-error",
+          "string-stage29-list-tostring-identity",
+          "string-stage29-map-tostring-identity",
+          "string-stage29-set-tostring-identity",
+          "string-stage29-list-tostring-length",
+          "string-stage29-list-tostring-concat",
+          "string-stage29-hash-collision-map",
+          "string-stage29-hash-collision-set",
+          "string-stage29-type-value-high-error",
+          "string-stage29-reference-type-identity",
+          "string-stage29-reference-type-map",
+          "string-stage29-reference-type-set",
+          "string-stage29-reference-type-lookup",
+          "string-stage29-order-high-empty-unicode",
+          "string-stage29-order-high-nonhex-unicode",
+          "string-stage29-order-high-missing-brace",
+          "string-stage29-order-high-invalid-escape",
+          "string-stage29-order-high-interpolation-syntax",
+          "string-stage29-order-high-unclosed",
+          "string-stage29-order-raw-high-invalid-escape",
+          "string-stage29-order-multiline-high-indent",
+          "string-stage29-order-multiline-high-empty-later-escape",
+          "string-stage29-order-split-pair-later-syntax",
+          "diagnostic-stage30-listing-question",
+          "diagnostic-stage30-listing-low",
+          "diagnostic-stage30-dynamic-question",
+          "diagnostic-stage30-dynamic-high",
+          "diagnostic-stage30-lambda-question",
+          "diagnostic-stage30-lambda-low",
+          "diagnostic-stage30-entry-nested",
+          "diagnostic-stage30-entry-let",
+          "diagnostic-stage30-entry-reversed",
+          "diagnostic-stage30-entry-pair",
+          "diagnostic-stage30-listing-replacement-pair-control",
+          "diagnostic-stage30-overflow-high",
+          "diagnostic-stage30-listing-high-control",
+          "diagnostic-stage30-local-method-high",
+          "diagnostic-stage30-local-typed-high",
+          "diagnostic-stage30-local-typed-ascii",
+          "diagnostic-stage30-class-typed-ascii",
+          "diagnostic-stage30-overflow-dynamic-body",
+          "diagnostic-stage30-overflow-element-body",
+          "diagnostic-stage30-overflow-key-expression",
+          "diagnostic-stage30-module-local-typed-ascii",
+          "diagnostic-stage30-class-local-typed-ascii",
+          "diagnostic-stage30-object-local-typed-alias-function",
+          "diagnostic-stage31-local-string",
+          "diagnostic-stage31-class-public-string",
+          "diagnostic-stage32-entry-astral",
+          "diagnostic-stage32-quoted-name",
+          "diagnostic-stage32-astral-name",
+          "diagnostic-stage32-surrogate-name",
+          "diagnostic-stage32-entry-surrogate",
+          "diagnostic-stage33-const-quoted",
+          "diagnostic-stage33-lambda-quoted-inferred",
+          "trace-stage37-repeat-zero",
+          "trace-stage37-repeat-one",
+          "trace-stage37-repeat-normal",
+          "trace-stage37-repeat-negative",
+          "trace-stage37-repeat-float",
+          "trace-stage37-repeat-string",
+          "trace-stage37-repeat-arity-zero",
+          "trace-stage37-repeat-arity-two-throw",
+          "trace-stage37-repeat-argument-throw",
+          "trace-stage37-repeat-receiver-throw",
+          "trace-stage37-repeat-empty-zero",
+          "trace-stage37-repeat-empty-cast-negative",
+          "trace-stage37-repeat-empty-cast-zero",
+          "trace-stage37-repeat-empty-max-count",
+          "trace-stage37-repeat-overflow-int32",
+          "trace-stage37-repeat-overflow-int64",
+          "trace-stage37-repeat-supplementary-overflow",
+          "trace-stage37-repeat-lone-surrogate",
+          "trace-stage37-repeat-supplementary-normal",
+          "trace-stage37-repeat-arity-two-before-constraint",
+          "read-stage38-uri-unpaired-surrogate",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/stringUnicode.pkl"
         ],
         "state": "partial"
       }

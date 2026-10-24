@@ -18,6 +18,7 @@ pub enum Projection {
     ToList,
     ToSet,
     ToBytes,
+    Reverse,
     Add,
     KeysHash,
     KeysOrder,
@@ -146,7 +147,7 @@ pub(super) fn blocks(
 pub(super) fn projection_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> [usize; 8] {
+) -> [usize; 10] {
     let source = crate::stdlib_sources::base();
     [
         ("List", "toList", None),
@@ -157,6 +158,8 @@ pub(super) fn projection_blocks(
         ("Map", "values", Some(Projection::Values)),
         ("List", "toBytes", Some(Projection::ToBytes)),
         ("List", "add", Some(Projection::Add)),
+        ("List", "reverse", Some(Projection::Reverse)),
+        ("Set", "reverse", Some(Projection::Reverse)),
     ]
     .map(|(class, name, operation)| {
         let class_start = source
@@ -260,6 +263,8 @@ impl Vm {
             (false, "values") if self.is_map(&receiver) => 5,
             (true, "toBytes") if self.is_list(&receiver) => 6,
             (true, "add") if self.is_list(&receiver) => 7,
+            (true, "reverse") if self.is_list(&receiver) => 8,
+            (true, "reverse") if self.is_set(&receiver) => 9,
             _ => return Ok(false),
         };
         let id = self.heap.allocate(Object {
@@ -337,11 +342,14 @@ impl Vm {
             .and_then(|frame| frame.environment.this_value.clone())
             .ok_or_else(|| invalid("transform receiver"))?
             .as_object()?;
-        let members = if matches!(operation, Operation::Projection(Projection::KeysHash)) {
+        let mut members = if matches!(operation, Operation::Projection(Projection::KeysHash)) {
             self.map_hash_members(source)?
         } else {
             collections::ordered_members(&self.heap, source)?
         };
+        if matches!(operation, Operation::Projection(Projection::Reverse)) {
+            members.reverse();
+        }
         // A strict result must not capture the method's source/callback scope.
         let builder = self.heap.allocate(Object {
             collection_kind: match operation {
@@ -590,5 +598,166 @@ impl Vm {
         };
         self.stack.push(value);
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod reversal_tests {
+    use super::*;
+
+    fn ready(vm: &mut Vm, roots: &[Value]) -> Value {
+        for _ in 0..100_000 {
+            vm.collect(roots);
+            match vm.poll(1) {
+                VmPoll::Yielded => {}
+                VmPoll::Ready(value) => return value.unwrap(),
+                event => panic!("{event:?}"),
+            }
+        }
+        panic!("reversal poll bound")
+    }
+
+    fn source(kind: CollectionKind, empty: bool) -> Vec<Instruction> {
+        use Instruction as I;
+        let mut code = vec![I::BeginCollection {
+            kind,
+            has_parent: false,
+            specialized: true,
+        }];
+        if !empty {
+            for value in [I::Input(0), I::Constant(Value::Int(7.into()))] {
+                code.push(value);
+                if kind == CollectionKind::Set {
+                    code.extend([I::PrepareSetElement, I::AddSetElement]);
+                } else {
+                    code.push(I::AppendStrictElement);
+                }
+            }
+        }
+        code.extend([I::EndCollection, I::Return]);
+        code
+    }
+
+    #[test]
+    fn reversed_values_keep_elements_but_release_source_and_producer_scope() {
+        use Instruction as I;
+        for kind in [CollectionKind::List, CollectionKind::Set] {
+            for empty in [false, true] {
+                let mut vm = Vm::new(Arc::new(Program::new(vec![
+                    source(kind, empty),
+                    vec![
+                        I::Input(0),
+                        I::GetMethod("reverse".into()),
+                        I::Call {
+                            arity: 0,
+                            method: true,
+                        },
+                        I::Return,
+                    ],
+                    vec![I::Constant(Value::Null), I::Return],
+                ])));
+                let element = vm.heap.allocate(Object::default());
+                vm.start(0, vec![Value::Object(element)]).unwrap();
+                let source = ready(&mut vm, &[]);
+                let source_id = source.as_object().unwrap();
+                let producer = vm.heap.allocate(Object::default());
+                if !empty {
+                    vm.heap
+                        .get_mut(source_id)
+                        .unwrap()
+                        .environment
+                        .locals
+                        .push(Value::Object(producer));
+                }
+                vm.start(1, vec![source.clone()]).unwrap();
+                let reversed = ready(&mut vm, &[]);
+                let reversed_id = reversed.as_object().unwrap();
+                assert_eq!(
+                    vm.heap.get(reversed_id).unwrap().collection_kind,
+                    CollectionKind::List
+                );
+                if empty {
+                    assert_eq!(
+                        reversed_id,
+                        vm.empty_strict_collection(CollectionKind::List)
+                    );
+                } else {
+                    assert_ne!(reversed, source);
+                    let members = collections::ordered_members(&vm.heap, reversed_id).unwrap();
+                    assert_eq!(
+                        collections::cached_render_value(&vm.heap, reversed_id, &members[0])
+                            .unwrap(),
+                        Some(Value::Int(7.into()))
+                    );
+                    assert_eq!(
+                        collections::cached_render_value(&vm.heap, reversed_id, &members[1])
+                            .unwrap(),
+                        Some(Value::Object(element))
+                    );
+                }
+                vm.start(1, vec![reversed.clone()]).unwrap();
+                let twice = ready(&mut vm, std::slice::from_ref(&reversed));
+                assert_eq!(twice == reversed, empty);
+                vm.start(2, vec![]).unwrap();
+                assert_eq!(ready(&mut vm, std::slice::from_ref(&reversed)), Value::Null);
+                vm.collect(std::slice::from_ref(&reversed));
+                if !empty {
+                    assert!(vm.heap.get(source_id).is_err());
+                    assert!(vm.heap.get(producer).is_err());
+                    assert!(vm.heap.get(element).is_ok());
+                    let object = vm.heap.get(reversed_id).unwrap();
+                    assert!(object.parent.is_none());
+                    assert!(object.environment.locals.is_empty());
+                    assert!(object.member_environments.is_empty());
+                }
+                vm.close();
+                assert_eq!(vm.heap_stats().slots, 0);
+            }
+        }
+    }
+
+    #[test]
+    fn cancellation_reclaims_a_partially_reversed_builder() {
+        use Instruction as I;
+        let mut vm = Vm::new(Arc::new(Program::new(vec![
+            source(CollectionKind::List, false),
+            vec![
+                I::Input(0),
+                I::GetMethod("reverse".into()),
+                I::Call {
+                    arity: 0,
+                    method: true,
+                },
+                I::Return,
+            ],
+        ])));
+        vm.start(0, vec![Value::Int(1.into())]).unwrap();
+        let source = ready(&mut vm, &[]);
+        vm.start(1, vec![source.clone()]).unwrap();
+        let builder = loop {
+            vm.collect(std::slice::from_ref(&source));
+            assert!(matches!(vm.poll(1), VmPoll::Yielded));
+            if let Some(frame) = vm.frames.last()
+                && let Some(run) = &frame.collection_transform
+                && run.next == 1
+                && vm.heap.get(*frame.builders.last().unwrap()).unwrap().length == 1
+            {
+                break *frame.builders.last().unwrap();
+            }
+        };
+        vm.cancel();
+        assert!(
+            matches!(vm.poll(1), VmPoll::Ready(Err(error)) if error.kind == ErrorKind::Cancelled)
+        );
+        vm.collect(std::slice::from_ref(&source));
+        assert!(vm.heap.get(builder).is_err());
+        vm.start(1, vec![source]).unwrap();
+        let reversed = ready(&mut vm, &[]);
+        assert_eq!(
+            vm.heap.get(reversed.as_object().unwrap()).unwrap().length,
+            2
+        );
+        vm.close();
+        assert_eq!(vm.heap_stats().slots, 0);
     }
 }

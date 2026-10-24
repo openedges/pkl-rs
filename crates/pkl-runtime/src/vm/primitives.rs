@@ -11,6 +11,7 @@ pub enum Operation {
     IfNonNull,
     Between,
     Uppercase,
+    ReverseString,
     Contains,
     DropLast,
     BooleanXor,
@@ -57,6 +58,13 @@ pub(super) fn blocks(
             "toUpperCase",
             "external function toUpperCase(): String",
             Operation::Uppercase,
+            0,
+        ),
+        (
+            "String",
+            "reverse",
+            "external function reverse(): String",
+            Operation::ReverseString,
             0,
         ),
         (
@@ -137,6 +145,75 @@ pub(super) fn blocks(
 }
 
 impl Vm {
+    pub(super) fn scalar_member_error(
+        &self,
+        receiver: &Value,
+        name: &str,
+        method: bool,
+    ) -> Option<RuntimeError> {
+        let class = match receiver {
+            Value::String(_) => "String",
+            Value::Int(_) => "Int",
+            Value::Float(_) => "Float",
+            Value::Bool(_) => "Boolean",
+            Value::Null | Value::NullWithDefault(_) => "Null",
+            _ => return None,
+        };
+        let (properties, methods) = crate::diagnostic_names::builtin_members(class);
+        let arity = if method {
+            self.frames
+                .last()
+                .and_then(|frame| {
+                    self.program
+                        .metadata
+                        .get(frame.block)?
+                        .method_arities
+                        .get(&frame.pc.saturating_sub(1))
+                })
+                .copied()
+                .unwrap_or(0) as isize
+        } else {
+            -1
+        };
+        let mut error = RuntimeError::new(
+            ErrorKind::MissingMember,
+            if method {
+                format!("Cannot find method `{name}` in class `{class}`.")
+            } else {
+                format!("Cannot find property `{name}` in object of type `{class}`.")
+            },
+        );
+        error.hint = crate::diagnostic::member_suggestions(name, arity, &properties, &methods)
+            .or_else(|| {
+                let mut names = if method {
+                    methods.into_iter().map(|method| method.0).collect()
+                } else {
+                    properties
+                };
+                names.sort_by(|a, b| a.encode_utf16().cmp(b.encode_utf16()));
+                names.dedup();
+                Some(
+                    if method {
+                        format!(
+                            "Available methods in class `{class}`:\n{}",
+                            names.join("\n")
+                        )
+                    } else {
+                        format!(
+                            "Available properties:\n{}",
+                            if names.is_empty() {
+                                "(none)".into()
+                            } else {
+                                names.join("\n")
+                            }
+                        )
+                    }
+                    .into(),
+                )
+            });
+        Some(error)
+    }
+
     pub(super) fn function_member_error(
         &self,
         receiver: &Value,
@@ -471,6 +548,12 @@ impl Vm {
                 self.collection_endpoint(receiver, last, nullable)?
             }
             Operation::IfNonNull => self.if_non_null(receiver)?,
+            Operation::ReverseString => {
+                let Value::String(text) = receiver else {
+                    return Err(invalid("String.reverse receiver"));
+                };
+                self.stack.push(Value::String(text.reversed()));
+            }
             Operation::BooleanXor | Operation::BooleanImplies => {
                 let Value::Bool(left) = receiver else {
                     return Err(invalid("Boolean method receiver"));

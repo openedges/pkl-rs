@@ -1,4 +1,4 @@
-"""Pinned collection conversion, addition, endpoint, and amendment string profiles."""
+"""Pinned collection conversion, construction, and reversal string profiles."""
 from __future__ import annotations
 
 import importlib
@@ -20,6 +20,10 @@ VALIDATORS = {
     'set_endpoints_fixtures': 'tools/set_endpoints_fixtures.py',
     'amendment_construction_fixtures': 'tools/amendment_construction_fixtures.py',
     'inferred_new_fixtures': 'tools/inferred_new_fixtures.py',
+    'reversal_values_fixtures': 'tools/reversal_values_fixtures.py',
+    'reversal_implicit_fixtures': 'tools/reversal_implicit_fixtures.py',
+    'reversal_subscript_fixtures': 'tools/reversal_subscript_fixtures.py',
+    'base_constructor_constraints_fixtures': 'tools/base_constructor_constraints_fixtures.py',
 }
 PROFILE_TOOL_CLOSURES = {
     'collection_conversions_fixtures': {
@@ -89,6 +93,41 @@ PROFILE_TOOL_CLOSURES = {
         'tools/tests/test_inferred_new_fixtures.py',
         'tools/java/CollectionConversionsOracle.java',
     },
+    'reversal_values_fixtures': {
+        'tools/reversal_values_fixtures.py',
+        'tools/reversal_values_oracle.py',
+        'tools/tests/test_reversal_values_fixtures.py',
+        'tools/java/CollectionConversionsOracle.java',
+        'tools/collection_conversions_fixtures.py',
+        'tools/collection_conversions_oracle.py',
+    },
+    'reversal_implicit_fixtures': {
+        'tools/reversal_implicit_fixtures.py',
+        'tools/reversal_implicit_oracle.py',
+        'tools/reversal_values_oracle.py',
+        'tools/tests/test_reversal_implicit_fixtures.py',
+        'tools/java/CollectionConversionsOracle.java',
+        'tools/collection_conversions_fixtures.py',
+        'tools/collection_conversions_oracle.py',
+    },
+    'reversal_subscript_fixtures': {
+        'tools/reversal_subscript_fixtures.py',
+        'tools/reversal_subscript_oracle.py',
+        'tools/reversal_values_oracle.py',
+        'tools/tests/test_reversal_subscript_fixtures.py',
+        'tools/java/CollectionConversionsOracle.java',
+        'tools/collection_conversions_fixtures.py',
+        'tools/collection_conversions_oracle.py',
+    },
+    'base_constructor_constraints_fixtures': {
+        'tools/base_constructor_constraints_fixtures.py',
+        'tools/base_constructor_constraints_oracle.py',
+        'tools/reversal_values_oracle.py',
+        'tools/tests/test_base_constructor_constraints_fixtures.py',
+        'tools/java/CollectionConversionsOracle.java',
+        'tools/collection_conversions_fixtures.py',
+        'tools/collection_conversions_oracle.py',
+    },
 }
 
 
@@ -121,7 +160,11 @@ def load_profiles(path=ROOT / CATALOG):
                  uri in ('file:///stage63/collection-addition.pkl',
                          'file:///stage63/set-endpoints.pkl',
                          'file:///stage64/amendment-construction.pkl',
-                         'file:///stage65/inferred-new-values.pkl')) and uri.endswith('.pkl')
+                         'file:///stage65/inferred-new-values.pkl',
+                         'file:///stage66/reversal-values.pkl',
+                         'file:///stage66/reversal-implicit.pkl',
+                         'file:///stage66/reversal-subscript.pkl',
+                         'file:///stage66/base-constructors-in-constraints.pkl')) and uri.endswith('.pkl')
                 and type(fixture) is str and fixture.startswith('tests/fixtures/m2-')
                 and '..' not in Path(fixture).parts and fixture not in fixtures
                 and uri not in profiles and type(profile['rows']) is int and profile['rows'] > 0

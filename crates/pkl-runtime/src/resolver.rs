@@ -1422,14 +1422,30 @@ impl<'a> Resolver<'a> {
                             let mut binding = self.binding(name, true);
                             if binding == Binding::ImplicitMethod && self.is_custom_this_scope() {
                                 if is_base_method(name) {
-                                    return Err(Diagnostic::unsupported(
-                                        DiagnosticOrigin::Resolver,
-                                        "custom-this-base-method",
-                                        callee.span,
-                                        "Base-module method resolution is not implemented.",
-                                    ));
+                                    // SymbolTable resolves lexical methods before
+                                    // base methods, and base methods before the
+                                    // custom receiver. Keep existing constructor
+                                    // intrinsics on their ordinary lowering path.
+                                    if !matches!(
+                                        name.as_str(),
+                                        "List"
+                                            | "Set"
+                                            | "Map"
+                                            | "Bytes"
+                                            | "Pair"
+                                            | "IntSeq"
+                                            | "Null"
+                                    ) {
+                                        return Err(Diagnostic::unsupported(
+                                            DiagnosticOrigin::Resolver,
+                                            "custom-this-base-method",
+                                            callee.span,
+                                            "Base-module method resolution is not implemented.",
+                                        ));
+                                    }
+                                } else {
+                                    binding = Binding::CustomMethod;
                                 }
-                                binding = Binding::CustomMethod;
                             }
                             self.mark_const_binding(callee.span, binding);
                             self.names.insert(callee.span, binding);

@@ -40,6 +40,23 @@ Represent lazy members with unevaluated, evaluating, and completed cache states.
 
 Use Pkl standard library sources from the pinned upstream and implement external builtins in Rust. Compare public member inventories with builtin registrations to detect omissions. The compatibility scope includes 0.32 features such as `Reference<Domain, Type>`.
 
+### Reversal and constraint constructor dispatch
+
+String reversal operates on lossless UTF-16 units and repairs reversed surrogate
+pairs according to the pinned Java operation. Malformed low/high sequences can
+become pairs, so reversing twice is not assumed to restore every malformed
+string. List/Set reversal uses the shared resumable projection builder, preserves
+member identity without forcing nested values, and produces a neutral List.
+Canonical empty results and retained elements have separate ownership tests;
+source and producer scopes can be reclaimed after their last use.
+
+Custom-this constraints keep lexical method lookup ahead of supported base
+constructor lowering. Authored module/class-local methods and externally
+supplied evaluator expressions retain distinct resolution contexts. Missing
+scalar members and List bounds reuse common diagnostics; rendering the bounds
+value does not force nested members. Union marker validation remains a parser
+operation so its first-error ordering is shared across targets.
+
 ## Host and Public APIs
 
 Provide filesystem, HTTP, package, process, and external reader capabilities through the Host interface. The core must not depend on CLI or Wasm adapters. Evaluation waiting on a Host operation must be resumable from the same execution state, with shared definitions for cancellation, timeout, and close behavior.

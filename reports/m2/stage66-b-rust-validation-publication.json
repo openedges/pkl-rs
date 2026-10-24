@@ -1,0 +1,926 @@
+{
+  "archive": {
+    "bytes": 13353953,
+    "full_member_readback_verified": true,
+    "members": 60,
+    "mode": 420,
+    "path": "reports/m2/stage66-b-rust-validation-evidence.tar.gz",
+    "sha256": "fa5749088830471b0e82c973b29dfacb27a5bd42e13369354d283e08f1345b00"
+  },
+  "base_head": "c7eb4b6c8edf60d55ffc92f1b814d6ec11fdfdd9",
+  "candidate_compatibility_passes_claimed": 0,
+  "embedded_manifest_sha256": "151368a3298a9b03685a616ec0de553131d62a98e46e765c0a7bfeb05798d673",
+  "execution_receipt_included": false,
+  "group": "rust-validation",
+  "kind": "stage66-B-local-evidence-publication",
+  "known_limits": [
+    "Publication integrity is not guest compatibility. All nine M2 streams and full language/product API remain open.",
+    "Original131 selected statuses are read from final raw report; prior74 pass transitions, added case and two blocked originals remain explicit.",
+    "Any scalar-regex has two mismatches per portable target; M1 compatibility fails its two known Regex gaps while architecture contract passes.",
+    "Direct Java identity is producer-only. Shared catalog 14/1081 and separate union40 programs preserve distinct boundaries.",
+    "Local macOS arm64 captures do not establish other release platforms or performance targets.",
+    "Prior failed focused/tooling/preflight/comparison attempts remain unchanged; no output normalization or Java production fallback."
+  ],
+  "member_inventory": {
+    "target/m2/stage66-checkpoint-publication-01/admission.py": {
+      "bytes": 15367,
+      "mode": 420,
+      "sha256": "ea823bde6b59cbe329ba44f78c685ce9cb233df7e9519e46ee3dbddc78f52526"
+    },
+    "target/m2/stage66-checkpoint-publication-01/assemble.py": {
+      "bytes": 7053,
+      "mode": 420,
+      "sha256": "d488cc3a7b5d4793d1a74adfa6a6c8af3104ed44dd31d73dc05c66d1a68c2e4b"
+    },
+    "target/m2/stage66-checkpoint-publication-01/execute.py": {
+      "bytes": 2624,
+      "mode": 420,
+      "sha256": "8cfcb5bec2ef50e313f0121fe70f83c47fe3154f3f3e1806e31db3d28e046fa8"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/admission.py": {
+      "bytes": 13686,
+      "mode": 420,
+      "sha256": "2b2b55350453858641a5f601ed362e10a45a2a9ea57cb5ec84c1cfd81657e63d"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/assemble.py": {
+      "bytes": 6196,
+      "mode": 420,
+      "sha256": "dccbbdd9591bb25340da305ec861b6605602661b04aa1962139abba153047fe1"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/execute.py": {
+      "bytes": 2624,
+      "mode": 420,
+      "sha256": "8cfcb5bec2ef50e313f0121fe70f83c47fe3154f3f3e1806e31db3d28e046fa8"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/layout.json": {
+      "bytes": 11504,
+      "mode": 420,
+      "sha256": "460f2f53365768cc580496cff05187c1f69d5847c9115b4b6bc8132f8d529a4e"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/preparation.json": {
+      "bytes": 4038,
+      "mode": 420,
+      "sha256": "c10aace1ae14fd265b2f59495943e40aa493d18cc1d7b736e3ec3db10c878324"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/prepare.py": {
+      "bytes": 3827,
+      "mode": 420,
+      "sha256": "9790ebde50a63dcc58c2e020711c85c001d12138e26637f9261ba96c09cc0844"
+    },
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/publish.py": {
+      "bytes": 11189,
+      "mode": 420,
+      "sha256": "b5bd81a676ec1c638f18c039e7e43062011bc4641c28eb44007b42e4b9a12519"
+    },
+    "target/m2/stage66-checkpoint-publication-01/layout.json": {
+      "bytes": 12961,
+      "mode": 420,
+      "sha256": "b2196034ba59583b86160cc1223712b3d215ca4f1d727f42b00074dfb2999bf5"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/admission.py": {
+      "bytes": 14651,
+      "mode": 420,
+      "sha256": "86fb9e426e63dee5bc316d39759ddf78eeed28a7463873b93b071a608d8cf974"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/assemble.py": {
+      "bytes": 6561,
+      "mode": 420,
+      "sha256": "7510d937f34a9f06422d06a10be0483bae0cae1618c08faa28798077465fe987"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/execute.py": {
+      "bytes": 2624,
+      "mode": 420,
+      "sha256": "8cfcb5bec2ef50e313f0121fe70f83c47fe3154f3f3e1806e31db3d28e046fa8"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/layout.json": {
+      "bytes": 12398,
+      "mode": 420,
+      "sha256": "d61015460eee334c65592887852420cd7f05e430e5f9f24bdb1cd13dfca90066"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/preparation.json": {
+      "bytes": 5292,
+      "mode": 420,
+      "sha256": "3a05fd517d9c9caef17e12ac4a6a497877c84e0c34da86f12012a78794aa8716"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/prepare.py": {
+      "bytes": 3862,
+      "mode": 420,
+      "sha256": "ccd43ece03120f0eca187d688a581c7789d99a9a5c865140b123e905380cdc08"
+    },
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/publish.py": {
+      "bytes": 11460,
+      "mode": 420,
+      "sha256": "095dfb9e411283150c29fed17740179eaad380456597347a7f775a11b85ab097"
+    },
+    "target/m2/stage66-checkpoint-publication-01/preparation.json": {
+      "bytes": 6615,
+      "mode": 420,
+      "sha256": "bb80f1d74eaa8bf6380c9d7e30147f8a84394d0f6a14fda4e69eef8d2064b72b"
+    },
+    "target/m2/stage66-checkpoint-publication-01/prepare.py": {
+      "bytes": 3862,
+      "mode": 420,
+      "sha256": "ccd43ece03120f0eca187d688a581c7789d99a9a5c865140b123e905380cdc08"
+    },
+    "target/m2/stage66-checkpoint-publication-01/publish.py": {
+      "bytes": 11539,
+      "mode": 420,
+      "sha256": "bca2f17c6261d4b1c9736e19001318da98f86a704d7745429a480dd30d44be7b"
+    },
+    "target/m2/stage66-checkpoint-publication-01/rust-validation-invocation.json": {
+      "bytes": 2350,
+      "mode": 420,
+      "sha256": "a09431aa3aaec733f8b1080be78129324902140256b368bc4e04827abd3042ce"
+    },
+    "target/m2/stage66-rust-validation-01/active.json": {
+      "bytes": 98,
+      "mode": 420,
+      "sha256": "7f60cdbaeece16c642da332bd5f306635fc0046bc87a81b50a82b17ae6ccc487"
+    },
+    "target/m2/stage66-rust-validation-01/cargo-version.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-rust-validation-01/cargo-version.stdout.bin": {
+      "bytes": 335,
+      "mode": 420,
+      "sha256": "069f116aa0e4bb5642706972ee89ca375c5f7cf1e66a58c149a0842deed5c700"
+    },
+    "target/m2/stage66-rust-validation-01/clippy.stderr.bin": {
+      "bytes": 343,
+      "mode": 420,
+      "sha256": "9f4d1e80c6fc513f3ba281b023d7631aceb0cef16e44f796fa7f0e8711582738"
+    },
+    "target/m2/stage66-rust-validation-01/clippy.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-rust-validation-01/format.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-rust-validation-01/format.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-rust-validation-01/references.stderr.bin": {
+      "bytes": 101,
+      "mode": 420,
+      "sha256": "f1c61b92461aef8ca02c1beaed6df7f077e68b4b6101cd39c6e9aa5b3f09b7b1"
+    },
+    "target/m2/stage66-rust-validation-01/references.stdout.bin": {
+      "bytes": 40,
+      "mode": 420,
+      "sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb"
+    },
+    "target/m2/stage66-rust-validation-01/report.json": {
+      "bytes": 6463,
+      "mode": 420,
+      "sha256": "3d31eb2bb304c016b159ee2ee32adfd41b60b36717eb3a2356cabbd1a1d30b79"
+    },
+    "target/m2/stage66-rust-validation-01/run.py": {
+      "bytes": 11449,
+      "mode": 420,
+      "sha256": "42e0c8e417304879ef2b5a1b3644b49de3fe230022c1945aeceadc6532e9b46e"
+    },
+    "target/m2/stage66-rust-validation-01/rust-version.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-rust-validation-01/rust-version.stdout.bin": {
+      "bytes": 192,
+      "mode": 420,
+      "sha256": "e2211d4c0760a2a3b03eab88e42f8848952b7aa2ed649277a8fdbf3ce1838fd4"
+    },
+    "target/m2/stage66-rust-validation-01/sources-after.json": {
+      "bytes": 108366136,
+      "mode": 420,
+      "sha256": "fa981513a6e1d732bb3c46f089deb8d3e61da7dfafbc1f76ba67cc1dd45cec43"
+    },
+    "target/m2/stage66-rust-validation-01/sources.json": {
+      "bytes": 108366136,
+      "mode": 420,
+      "sha256": "fa981513a6e1d732bb3c46f089deb8d3e61da7dfafbc1f76ba67cc1dd45cec43"
+    },
+    "target/m2/stage66-rust-validation-01/sources/compatibility/m2-language.json": {
+      "bytes": 6729825,
+      "mode": 420,
+      "sha256": "ee60a7978c5fa5dda7161aa9d8bdb170f237e8113749fc020b6530afce5abe96"
+    },
+    "target/m2/stage66-rust-validation-01/sources/compatibility/m2-mappings.json": {
+      "bytes": 465917,
+      "mode": 420,
+      "sha256": "45060e961d8416270cbd5f301454c1b8b0dcc3b65d8905b0a2fe7487610491ea"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/src/diagnostic_names.rs": {
+      "bytes": 10698,
+      "mode": 420,
+      "sha256": "a012489271ab61aab018d1f7d099555f1c7c2569cb99331d93add41c1b6c4394"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/src/parser/type_parser.rs": {
+      "bytes": 15458,
+      "mode": 420,
+      "sha256": "c4216ed6578c3c3f379d256403242f522418b0f5ad2c89351bc08b2736fb79e6"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/src/pkl_string.rs": {
+      "bytes": 11437,
+      "mode": 420,
+      "sha256": "863b8af09fe96d53355a3b3d10c8e7ed34fa929cedf3bdc37b4d1fa287e0f68d"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/src/resolver.rs": {
+      "bytes": 103451,
+      "mode": 420,
+      "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/src/vm.rs": {
+      "bytes": 360683,
+      "mode": 420,
+      "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/src/vm/collection_transforms.rs": {
+      "bytes": 27822,
+      "mode": 420,
+      "sha256": "194dbc5b81e7830808c12ceedb8f894abc5bf32794b928925070c4a1d00ef938"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/src/vm/collections.rs": {
+      "bytes": 129065,
+      "mode": 420,
+      "sha256": "5704870584ed8ea2ec93ec43fc470f639c3399c55a176a1d437ef2bc2c4a6674"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/src/vm/primitives.rs": {
+      "bytes": 25215,
+      "mode": 420,
+      "sha256": "b4be77147fe77fc389accfc433f48a9763f9fb3cd159ab122d04b92c8a89e762"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/tests/m2_base_constructor_constraints.rs": {
+      "bytes": 13000,
+      "mode": 420,
+      "sha256": "69248221a99e19ee69c6e534a7c86bef2cc9a9c162eeb88619d79cd727860b5c"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/tests/m2_reversal_implicit.rs": {
+      "bytes": 4691,
+      "mode": 420,
+      "sha256": "0167886a460369ae66f059c67e7ce18890ec22ff1e854830e537006083bf589a"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/tests/m2_reversal_lifecycle.rs": {
+      "bytes": 6694,
+      "mode": 420,
+      "sha256": "2104de418c581c4e61a58e65420463290f48ada3433d696ccf6dd2b252e9d087"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/tests/m2_reversal_subscript.rs": {
+      "bytes": 11475,
+      "mode": 420,
+      "sha256": "00ccd4d10510a91e4bd7e70602c48bcab9eb953b6f510ecac6d40c2b93b8116f"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/tests/m2_reversal_values.rs": {
+      "bytes": 23326,
+      "mode": 420,
+      "sha256": "637f9f550f916c55069fb396b32fde96586d41344db7e527ec2f911fe1cfa198"
+    },
+    "target/m2/stage66-rust-validation-01/sources/crates/pkl-runtime/tests/m2_union_marker_diagnostics.rs": {
+      "bytes": 3700,
+      "mode": 420,
+      "sha256": "df48e1dc4ea4b0e8a27b1384d52b7489413d11edb2ae2a23dbf2634cff09469e"
+    },
+    "target/m2/stage66-rust-validation-01/wasm-runtime.stderr.bin": {
+      "bytes": 158,
+      "mode": 420,
+      "sha256": "4b3270e8fa4092e9e08942b62ae4a3392606eb1def3875eaf796d8f59ba4483a"
+    },
+    "target/m2/stage66-rust-validation-01/wasm-runtime.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage66-rust-validation-01/workspace-tests.stderr.bin": {
+      "bytes": 15998,
+      "mode": 420,
+      "sha256": "72c6ce5d609d7abf1cb955d1d77ff73fd6882c03b468a1f8adc609748a2139a7"
+    },
+    "target/m2/stage66-rust-validation-01/workspace-tests.stdout.bin": {
+      "bytes": 114482,
+      "mode": 420,
+      "sha256": "f453086b833f6efed5a2894824494a4b21521b38ca4026da75ec91e83d3a48ba"
+    },
+    "target/m2/stage66-validation-count-review-01/audit.py": {
+      "bytes": 7765,
+      "mode": 420,
+      "sha256": "9c9ab0843cf73f2fa002a889063700bc94f01b4d3d44722c26f45b061257c7b2"
+    },
+    "target/m2/stage66-validation-count-review-01/report.json": {
+      "bytes": 6163,
+      "mode": 420,
+      "sha256": "5f1c8fa2e59c81c086bc151b16c165b45ee07be4620fca99bb349b38e7c38fac"
+    }
+  },
+  "publisher_sources": [
+    "target/m2/stage66-checkpoint-publication-01/prepare.py",
+    "target/m2/stage66-checkpoint-publication-01/publish.py",
+    "target/m2/stage66-checkpoint-publication-01/admission.py",
+    "target/m2/stage66-checkpoint-publication-01/assemble.py",
+    "target/m2/stage66-checkpoint-publication-01/execute.py",
+    "target/m2/stage66-checkpoint-publication-01/layout.json",
+    "target/m2/stage66-checkpoint-publication-01/preparation.json",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/prepare.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/publish.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/admission.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/assemble.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/execute.py",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/layout.json",
+    "target/m2/stage66-checkpoint-publication-01/initial-preparation/preparation.json",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/prepare.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/publish.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/admission.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/assemble.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/execute.py",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/layout.json",
+    "target/m2/stage66-checkpoint-publication-01/pre-finalization/preparation.json",
+    "target/m2/stage66-checkpoint-publication-01/rust-validation-invocation.json"
+  ],
+  "schema": 1,
+  "selected_directories": [
+    "stage66-rust-validation-01",
+    "stage66-validation-count-review-01"
+  ],
+  "source_before_after_equal": true,
+  "terminal_admission": {
+    "candidate_compatibility_passes_claimed": 0,
+    "catalog": {
+      "observations_per_target": 2162,
+      "profiles": 14,
+      "rows": 1081
+    },
+    "comparison_counts": {
+      "amendment-construction-native": {
+        "pass": 376
+      },
+      "amendment-construction-portable": {
+        "chromium": {
+          "pass": 376
+        },
+        "napi": {
+          "pass": 376
+        }
+      },
+      "any-portable": {
+        "chromium": {
+          "mismatch": 2,
+          "pass": 170
+        },
+        "napi": {
+          "mismatch": 2,
+          "pass": 170
+        }
+      },
+      "base-constructor-constraints-native": {
+        "pass": 72
+      },
+      "base-constructor-constraints-portable": {
+        "chromium": {
+          "pass": 72
+        },
+        "napi": {
+          "pass": 72
+        }
+      },
+      "bytes-native": {
+        "pass": 600
+      },
+      "bytes-portable": {
+        "chromium": {
+          "pass": 600
+        },
+        "napi": {
+          "pass": 600
+        }
+      },
+      "collection-addition-native": {
+        "pass": 250
+      },
+      "collection-addition-portable": {
+        "chromium": {
+          "pass": 250
+        },
+        "napi": {
+          "pass": 250
+        }
+      },
+      "collection-conversion-controls-native": {
+        "pass": 116
+      },
+      "collection-conversion-controls-portable": {
+        "chromium": {
+          "pass": 116
+        },
+        "napi": {
+          "pass": 116
+        }
+      },
+      "collection-conversions-native": {
+        "pass": 472
+      },
+      "collection-conversions-portable": {
+        "chromium": {
+          "pass": 472
+        },
+        "napi": {
+          "pass": 472
+        }
+      },
+      "collection-default-contracts-native": {
+        "pass": 44
+      },
+      "collection-default-contracts-portable": {
+        "chromium": {
+          "pass": 44
+        },
+        "napi": {
+          "pass": 44
+        }
+      },
+      "collection-dynamic-render-native": {
+        "pass": 20
+      },
+      "collection-dynamic-render-portable": {
+        "chromium": {
+          "pass": 20
+        },
+        "napi": {
+          "pass": 20
+        }
+      },
+      "collection-lookups-native": {
+        "pass": 266
+      },
+      "collection-lookups-portable": {
+        "chromium": {
+          "pass": 266
+        },
+        "napi": {
+          "pass": 266
+        }
+      },
+      "collection-property-names-native": {
+        "pass": 52
+      },
+      "collection-property-names-portable": {
+        "chromium": {
+          "pass": 52
+        },
+        "napi": {
+          "pass": 52
+        }
+      },
+      "data-size-native": {
+        "pass": 510
+      },
+      "data-size-portable": {
+        "chromium": {
+          "pass": 510
+        },
+        "napi": {
+          "pass": 510
+        }
+      },
+      "duration-native": {
+        "pass": 548
+      },
+      "duration-portable": {
+        "chromium": {
+          "pass": 548
+        },
+        "napi": {
+          "pass": 548
+        }
+      },
+      "inferred-new-values-native": {
+        "pass": 144
+      },
+      "inferred-new-values-portable": {
+        "chromium": {
+          "pass": 144
+        },
+        "napi": {
+          "pass": 144
+        }
+      },
+      "intseq-native": {
+        "pass": 474
+      },
+      "intseq-portable": {
+        "chromium": {
+          "pass": 474
+        },
+        "napi": {
+          "pass": 474
+        }
+      },
+      "reversal-implicit-native": {
+        "pass": 16
+      },
+      "reversal-implicit-portable": {
+        "chromium": {
+          "pass": 16
+        },
+        "napi": {
+          "pass": 16
+        }
+      },
+      "reversal-subscript-native": {
+        "pass": 38
+      },
+      "reversal-subscript-portable": {
+        "chromium": {
+          "pass": 38
+        },
+        "napi": {
+          "pass": 38
+        }
+      },
+      "reversal-values-native": {
+        "pass": 156
+      },
+      "reversal-values-portable": {
+        "chromium": {
+          "pass": 156
+        },
+        "napi": {
+          "pass": 156
+        }
+      },
+      "set-endpoints-native": {
+        "pass": 140
+      },
+      "set-endpoints-portable": {
+        "chromium": {
+          "pass": 140
+        },
+        "napi": {
+          "pass": 140
+        }
+      },
+      "union-marker-native": {
+        "pass": 80
+      },
+      "union-marker-portable": {
+        "chromium": {
+          "pass": 80
+        },
+        "napi": {
+          "pass": 80
+        }
+      }
+    },
+    "inputs": {
+      "comparison": {
+        "bytes": 87607,
+        "path": "target/m2/stage66-comparison-validation-02/report.json",
+        "sha256": "66e38dc4a4849dbd18c7b1ecedf40a1181bf0c8ef188f59490c8b6cb5a177f6d"
+      },
+      "comparison_launch": {
+        "bytes": 2879,
+        "path": "target/m2/stage66-comparison-launch-02/report.json",
+        "sha256": "b8e070c78d88c3f1afcb4b64b1d52f536b30fa2db37d3b424b1170d6bd369319"
+      },
+      "count": {
+        "bytes": 6163,
+        "path": "target/m2/stage66-validation-count-review-01/report.json",
+        "sha256": "5f1c8fa2e59c81c086bc151b16c165b45ee07be4620fca99bb349b38e7c38fac"
+      },
+      "freeze": {
+        "bytes": 12551,
+        "path": "target/m2/stage66-core-freeze-01/freeze.json",
+        "sha256": "c37a9ea6424d6a8510740c6e965213e36a85ba4675438ab2edcb40e90b30e19c"
+      },
+      "identity_note": {
+        "bytes": 6042,
+        "path": "target/m2/stage66-core-identity-provenance-02/report.json",
+        "sha256": "5f1003ca0ef53f67618b15773db5ab43ac77bf5863ad3fe3e1f97e97a0c58e20"
+      },
+      "m1": {
+        "bytes": 3390770,
+        "path": "target/m2/stage66-m1-platform-contract-01/report.json",
+        "sha256": "6c18f63a3a631849a8e85e9d6c1332d87be5b1ac44e1725a5ed977107a0559ad"
+      },
+      "native": {
+        "bytes": 38020,
+        "path": "target/m2/stage66-native-acquisition-01/report.json",
+        "sha256": "179a2551a3d16b0b6df9ea4f687d0c8c3a292b512bc0824e95b225904c41a6f9"
+      },
+      "node_locator_admission": {
+        "bytes": 1881,
+        "path": "target/m2/stage66-node-path-verification-amendment-02/amendment.json",
+        "sha256": "27afdf36b7c8228c5262414115d491ab2b36c9e587e76932e16408d2c5944617"
+      },
+      "original": {
+        "bytes": 2036353,
+        "path": "target/m2/stage66-original-reversal-01/report.json",
+        "sha256": "36a7a355f1e36bf02ff6cf99ad9b3219879ca4e7c5fa972c2cb11a1e787b371c"
+      },
+      "original_audit": {
+        "bytes": 628490,
+        "path": "target/m2/stage66-original-failure-audit-01/report.json",
+        "sha256": "79aa9ddc26cca06c96d44dfbff498098b26f234ac6e232b3c35f4aceefffa917"
+      },
+      "original_launch": {
+        "bytes": 9024,
+        "path": "target/m2/stage66-original-reversal-launch-02/report.json",
+        "sha256": "06679f22efe6f8601cbe7f49ddbf4e3d2b9f19da7e813cc136ae459a0d2ecb5d"
+      },
+      "platform": {
+        "bytes": 333239,
+        "path": "target/m2/stage66-platform-validation-01/report.json",
+        "sha256": "6465f554b0eb4c027a33c4305218df75632d28ce1fb457a7f4f394ae4f2ebac8"
+      },
+      "review": {
+        "bytes": 6831,
+        "path": "target/m2/stage66-review-01/report.json",
+        "sha256": "db3e092e218087998effbb666be0300a20b06b5fbe08294c1f050c630c507e07"
+      },
+      "runtime_sources": {
+        "bytes": 46589,
+        "path": "target/m2/stage66-core-freeze-01/source-snapshot.json",
+        "sha256": "3ec14f5ec8cb01541c1fd1e8b52a7ee66cc23c23003a877fbabad16d4bf46e01"
+      },
+      "rust": {
+        "bytes": 6463,
+        "path": "target/m2/stage66-rust-validation-01/report.json",
+        "sha256": "3d31eb2bb304c016b159ee2ee32adfd41b60b36717eb3a2356cabbd1a1d30b79"
+      }
+    },
+    "m1": {
+      "compatibility_status": "fail",
+      "experiment_contract_status": "pass",
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "originals": {
+      "added1_statuses": {
+        "mismatch": 1
+      },
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/stringUnicode.pkl"
+      ],
+      "blocked_required": 2,
+      "integrity_status": "passed",
+      "java_heap_option": "-Xmx512m",
+      "prior130_pass_regressions": [],
+      "prior130_status_transitions": {
+        "candidate-unsupported->candidate-unsupported": 31,
+        "mismatch->mismatch": 17,
+        "mismatch->pass": 7,
+        "oracle-error->oracle-error": 1,
+        "pass->pass": 74
+      },
+      "selected": 131,
+      "selected_status": "failed",
+      "statuses": {
+        "candidate-unsupported": 31,
+        "mismatch": 18,
+        "oracle-error": 1,
+        "pass": 81
+      }
+    },
+    "post_capture_node_locator_admission": {
+      "explicit_full_api_gate_exit": 1,
+      "guest_reexecutions": 0,
+      "raw_guest_channels_modified": false,
+      "report": {
+        "bytes": 1881,
+        "path": "target/m2/stage66-node-path-verification-amendment-02/amendment.json",
+        "sha256": "27afdf36b7c8228c5262414115d491ab2b36c9e587e76932e16408d2c5944617"
+      }
+    },
+    "rust": {
+      "copied_sources": 16,
+      "git_linked_sources": 165524,
+      "nested_reruns": 13,
+      "raw": {
+        "failed": 0,
+        "ignored": 2,
+        "passed": 1017
+      },
+      "source_count": 165540,
+      "unique": {
+        "failed": 0,
+        "ignored": 2,
+        "passed": 1004
+      }
+    },
+    "tooling": {
+      "catalog": {
+        "commands": [
+          {
+            "command": [
+              "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_collection_conversions_compare",
+              "tools.tests.test_collection_conversions_portable_compare",
+              "tools.tests.test_data_size_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 43
+          },
+          {
+            "command": [
+              "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+              "-B",
+              "-O",
+              "-m",
+              "unittest",
+              "tools.tests.test_collection_conversions_compare",
+              "tools.tests.test_collection_conversions_portable_compare",
+              "tools.tests.test_data_size_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 43
+          },
+          {
+            "command": [
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+              "--test",
+              "tools/platform/capture-collection-conversions.test.mjs"
+            ],
+            "javascript_test_count": 11,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 4139,
+          "path": "target/m2/stage66-catalog-validation-02/report.json",
+          "sha256": "80047131014f26d7f3134e16ea2c440b97a80cc465001ef17dd67dd17f4d9349"
+        }
+      },
+      "http_admission": {
+        "commands": [
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_data_size_portable_compare",
+              "tools.tests.test_int_seq_values_portable_compare",
+              "tools.tests.test_bytes_values_portable_compare",
+              "tools.tests.test_duration_values_portable_compare",
+              "tools.tests.test_any_if_non_null_portable_compare",
+              "tools.tests.test_collection_conversions_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 56
+          },
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "-O",
+              "-m",
+              "unittest",
+              "tools.tests.test_data_size_portable_compare",
+              "tools.tests.test_int_seq_values_portable_compare",
+              "tools.tests.test_bytes_values_portable_compare",
+              "tools.tests.test_duration_values_portable_compare",
+              "tools.tests.test_any_if_non_null_portable_compare",
+              "tools.tests.test_collection_conversions_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 56
+          },
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "tools/inventory.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 74689,
+          "path": "target/m2/stage66-http-validation-01/report.json",
+          "sha256": "e995838f52e9ff21a670d49d8754a9a6b4f21ebf6bd16ebe375fe267cb4e973a"
+        }
+      },
+      "mapping": {
+        "commands": [
+          {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_m2_mappings"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 8
+          },
+          {
+            "command": [
+              "python3",
+              "-O",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_m2_mappings"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 8
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "tools/m2_manifest.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "tools/inventory.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 7521,
+          "path": "target/m2/stage66-mapping-validation-01/report.json",
+          "sha256": "015dfb872d71f7845156c887fc92078224e38034d3fb0e190aaf4aaf559db18a"
+        }
+      },
+      "union_native_portable": {
+        "commands": [
+          {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_union_marker_fixtures",
+              "tools.tests.test_union_marker_portable_compare",
+              "tools.tests.test_union_marker_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 17
+          },
+          {
+            "command": [
+              "python3",
+              "-O",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_union_marker_fixtures",
+              "tools.tests.test_union_marker_portable_compare",
+              "tools.tests.test_union_marker_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 17
+          },
+          {
+            "command": [
+              "node",
+              "--test",
+              "tools/platform/capture-union-marker-modules.test.mjs"
+            ],
+            "javascript_test_count": 4,
+            "python_test_count": null
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "tools/inventory.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 22383,
+          "path": "target/m2/stage66-union-marker-portable-tool-development-04/report.json",
+          "sha256": "3199527d26c23b95c0e3a787a4897f53e781490874bf764cc2c9d5c717440ec5"
+        }
+      }
+    },
+    "union_modules": 40,
+    "union_observations_per_target": 80
+  }
+}

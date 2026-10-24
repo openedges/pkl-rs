@@ -242,6 +242,39 @@ The full gate must fail while required language implementations, mappings,
 adapters, or passing executions are missing. It cannot be replaced with the
 selected-case gate.
 
+Stage66 reversal and constructor authorities are four distinct single-module
+string fixtures; union-marker diagnostics use forty separate modules:
+
+```sh
+python3 tools/reversal_values_fixtures.py
+python3 tools/reversal_implicit_fixtures.py
+python3 tools/reversal_subscript_fixtures.py
+python3 tools/base_constructor_constraints_fixtures.py
+python3 tools/union_marker_fixtures.py
+```
+
+Fixture integrity is separate from candidate compatibility. The shared collection
+catalog contains fourteen profiles and 1,081 expressions; native and portable
+comparators require two full raw repetitions per profile. The separate
+`tools/union_marker_compare.py` and
+`tools/platform/capture-union-marker-modules.mjs` run each exact diagnostic module
+in fresh native or actual N-API/Chromium sessions. Their string gates compare all
+seven common channels and whole process output; Java exception metadata and full
+API requirements remain separate.
+
+The recorded Stage66 union portable invocation used a Node symlink while
+`process.execPath` recorded its resolved binary. The original failed verification
+and unchanged capture remain preserved. The versioned adapter under
+`target/m2/stage66-node-path-verification-amendment-02` verifies both paths and
+recorded before/after executable hashes, then forwards a temporary locator
+metadata copy to the original source-pinned verifier. It changes no captured
+file or guest byte. Restore its published closeout evidence to replay that
+historical invocation; its strict string gate passes and full-API gate fails.
+New capture wrappers should record the resolved executable directly. The
+[implementation evidence](reports/m2/stage66-implementation-checkpoint.json)
+retains this admission boundary, the earlier failure, known Regex differences,
+and the separate 131-program original results.
+
 The inferred-construction authorities retain five separate observation scopes:
 72 ordinary expressions, seven real amending-module queries, two opposite
 eleven-query module-receiver orders, 44 method-cache queries, and four separate

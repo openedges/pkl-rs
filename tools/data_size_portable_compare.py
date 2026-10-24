@@ -355,12 +355,28 @@ def verify_browser_launch(playwright):
 
 
 def verify_http_requests(requests):
-    one = [{'path': path, 'status': 204 if path == '/favicon.ico' else 200}
-           for path in ('/', '/favicon.ico', '/pkl_wasm.js', '/pkl_wasm_bg.wasm',
-                        '/session.mjs', '/module-policy-session.mjs',
-                        '/resource-session.mjs')]
-    require(requests == one + one,
-            'browser HTTP resource path/status/order differs; preserve all 404s')
+    # Capture servers append asset records after asynchronous readFile. The
+    # favicon and independent static helper imports can therefore interleave.
+    # Preserve the ordered log and enforce the imports' actual dependencies.
+    statuses = {'/': 200, '/favicon.ico': 204, '/pkl_wasm.js': 200,
+                '/pkl_wasm_bg.wasm': 200, '/session.mjs': 200,
+                '/module-policy-session.mjs': 200, '/resource-session.mjs': 200}
+    require(type(requests) is list and len(requests) == 14,
+            'browser HTTP request count or two-session boundary differs')
+    for repeat in (0, 1):
+        session = requests[repeat * 7:(repeat + 1) * 7]
+        require(all(type(row) is dict and set(row) == {'path', 'status'} and
+                    type(row['path']) is str and type(row['status']) is int
+                    for row in session), 'browser HTTP record shape differs')
+        paths = [row['path'] for row in session]
+        require(paths[0] == '/' and len(set(paths)) == 7 and
+                {row['path']: row['status'] for row in session} == statuses,
+                'browser HTTP session path/status/uniqueness differs')
+        position = {path: index for index, path in enumerate(paths)}
+        require(position['/pkl_wasm.js'] < position['/pkl_wasm_bg.wasm'] <
+                position['/session.mjs'] < position['/module-policy-session.mjs'] and
+                position['/session.mjs'] < position['/resource-session.mjs'],
+                'browser HTTP source-backed dependency order differs')
 
 
 def verify_target_selection(targets):

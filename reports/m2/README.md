@@ -1,5 +1,53 @@
 # M2 language evidence
 
+### Stage66 implementation and local comparisons
+
+Stage 66 implements shared UTF-16 string reversal and shallow List/Set reversal,
+including Java surrogate-pair repair, ordered representatives, canonical empty
+List results, and nonforcing List bounds diagnostics. Base constructor calls in
+custom-this constraints preserve lexical method precedence. Union default-marker
+errors retain the first type's full span and reject a second marker before the
+following type is parsed. Scalar missing-member diagnostics use pinned member
+catalogs.
+
+All five required Rust checks pass. The workspace has 1,004 distinct passes,
+zero failures, and two ignored tests; 1,017 raw pass summaries include thirteen
+child reruns. The fixed runtime/Cargo cohort contains 291 source files.
+
+The [implementation checkpoint](stage66-implementation-checkpoint.json) records fourteen single-module Java
+profiles: 1,081 expressions and 2,162 observations on each of native, actual
+N-API, and Chromium. All seven common raw channels and whole process protocols
+match. Forty separate union-marker modules also match in eighty fresh sessions
+per target. Their module, evaluator, and producer metadata boundaries remain
+separate from the single-module catalog and the eight direct Java VM identity
+observations.
+
+The original selection preserves the previous 130 programs and adds
+`api/stringUnicode.pkl`. Its 131 outcomes are **81 matches, 18 mismatches,
+31 unsupported results, and one Java heap error** at the unchanged `-Xmx512m`.
+All 74 prior passes remain passes; seven prior mismatches now match. The added
+Unicode original fails at `String.isBlank` before reaching its reversal checks.
+Two package/HTTP/TLS originals remain required and unexecuted; the selected
+original gate still fails.
+
+IntSeq, Bytes, Duration, and DataSize retain 474, 600, 548, and 510 matches per
+target. Any retains 170 matches and two Regex mismatches per portable target;
+M1's architecture contract also preserves its two Regex compatibility failures.
+
+The browser HTTP verifier now checks complete sessions, resource/status pairs,
+and source-defined loading dependencies while preserving raw completion order.
+The first Stage66 offline comparison stopped at a Node launcher path check.
+A separately versioned amendment proves that the recorded symlink and resolved
+Node executable have the same captured binary identity before applying the
+original comparisons. It passes a temporary locator metadata copy to that
+function; captured records and guest bytes remain unchanged. Its adversarial
+tests and the subsequent 39-command comparison retain all other source,
+artifact, HTTP, process, and raw-channel checks. Earlier failures are preserved.
+
+These are local macOS arm64 results. All nine M2 workstreams, full language and
+product API compatibility, other release platforms, and performance goals
+remain incomplete. The [Java checkpoint](stage66-java-checkpoint.json) and its original history remain separate from this implementation evidence.
+
 ### Stage66 reversal and union diagnostics — Java authority checkpoint
 
 The [Java checkpoint](stage66-java-checkpoint.json) pins four single-module
@@ -12,8 +60,8 @@ The [history archive](stage66-java-evidence.tar.gz) preserves canonical Java
 acquisitions, earlier failed/provisional attempts, validation, and the prepared
 131-program original selection. The [publication receipt](stage66-java-publication.json)
 records its actual publishing process. No Rust or portable compatibility result
-is claimed by this checkpoint. Stage65 below remains the latest completed
-implementation checkpoint; Stage66 implementation and integration are in progress.
+is claimed by the Java checkpoint. The separate Stage66 implementation record
+above supplies the candidate comparisons and retains their known failures.
 
 ### Stage65 inferred construction — implementation and local comparisons
 

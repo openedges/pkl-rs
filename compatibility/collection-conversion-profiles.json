@@ -208,6 +208,97 @@
         "tools/tests/test_inferred_new_fixtures.py",
         "tools/java/CollectionConversionsOracle.java"
       ]
+    },
+    {
+      "module_uri": "file:///stage66/reversal-values.pkl",
+      "fixture": "tests/fixtures/m2-reversal-values",
+      "rows": 78,
+      "repetitions": 2,
+      "validator_module": "reversal_values_fixtures",
+      "validator_script": "tools/reversal_values_fixtures.py",
+      "archive_prefix": "capture-03",
+      "input_hashes": {
+        "cases.json": "b1fc4fdb79c82be4df45e491b946c27923b2a706b2184480aee4323c76d5b96d",
+        "module.pkl": "d5a806769a7719918a98dc7709fd15899b398ecf032d59c917371a96aadebe99",
+        "queries.tsv": "749e6aa1daaaac6bbbbdea4b12e7369fabcad4339fd72ba0d24fcdaf9e6a4444"
+      },
+      "tool_sources": [
+        "tools/collection_conversions_fixtures.py",
+        "tools/collection_conversions_oracle.py",
+        "tools/java/CollectionConversionsOracle.java",
+        "tools/reversal_values_fixtures.py",
+        "tools/reversal_values_oracle.py",
+        "tools/tests/test_reversal_values_fixtures.py"
+      ]
+    },
+    {
+      "module_uri": "file:///stage66/reversal-implicit.pkl",
+      "fixture": "tests/fixtures/m2-reversal-implicit",
+      "rows": 8,
+      "repetitions": 2,
+      "validator_module": "reversal_implicit_fixtures",
+      "validator_script": "tools/reversal_implicit_fixtures.py",
+      "archive_prefix": "capture-02",
+      "input_hashes": {
+        "cases.json": "06b6d407cb7f7049eb83ed9fd8cf2af0801accaf87064915157743694bd95cfc",
+        "module.pkl": "ad7ab1ce7bc50d525b29b10b8db1c5247623ce9bce2da705cd9ee0d01723f8ca",
+        "queries.tsv": "2d05613d0794ca668a54a9ae9d8f9d9938776f6471d08bb24f58a52044755464"
+      },
+      "tool_sources": [
+        "tools/collection_conversions_fixtures.py",
+        "tools/collection_conversions_oracle.py",
+        "tools/java/CollectionConversionsOracle.java",
+        "tools/reversal_implicit_fixtures.py",
+        "tools/reversal_implicit_oracle.py",
+        "tools/reversal_values_oracle.py",
+        "tools/tests/test_reversal_implicit_fixtures.py"
+      ]
+    },
+    {
+      "module_uri": "file:///stage66/reversal-subscript.pkl",
+      "fixture": "tests/fixtures/m2-reversal-subscript",
+      "rows": 19,
+      "repetitions": 2,
+      "validator_module": "reversal_subscript_fixtures",
+      "validator_script": "tools/reversal_subscript_fixtures.py",
+      "archive_prefix": "capture-02",
+      "input_hashes": {
+        "cases.json": "ea9f15510c8da63180c73d6a8cfacbd01159fe9b79e6ba72911bd776389f7899",
+        "module.pkl": "a9045c2bd08d9097c9893fe60cb017a7b17bd7efbdaa801bc247bc103a5ff168",
+        "queries.tsv": "f755443fea6b0646a306da03b6da2641b37d4bb544d59f0c47af5a46e416bc0b"
+      },
+      "tool_sources": [
+        "tools/collection_conversions_fixtures.py",
+        "tools/collection_conversions_oracle.py",
+        "tools/java/CollectionConversionsOracle.java",
+        "tools/reversal_subscript_fixtures.py",
+        "tools/reversal_subscript_oracle.py",
+        "tools/reversal_values_oracle.py",
+        "tools/tests/test_reversal_subscript_fixtures.py"
+      ]
+    },
+    {
+      "module_uri": "file:///stage66/base-constructors-in-constraints.pkl",
+      "fixture": "tests/fixtures/m2-base-constructor-constraints",
+      "rows": 36,
+      "repetitions": 2,
+      "validator_module": "base_constructor_constraints_fixtures",
+      "validator_script": "tools/base_constructor_constraints_fixtures.py",
+      "archive_prefix": "capture-06",
+      "input_hashes": {
+        "cases.json": "d0517af9355f95acb2d14daf83680781761b86b2732adf8dbbf6b45dfe47dea5",
+        "module.pkl": "818236da99270a29e3326829fd85dfed08ce39a1db2a1ccf2553ff077f650bb1",
+        "queries.tsv": "40298bcc992b9c035267816faef9b76cb990d9dae3eabfcabd94215bf758fcaf"
+      },
+      "tool_sources": [
+        "tools/base_constructor_constraints_fixtures.py",
+        "tools/base_constructor_constraints_oracle.py",
+        "tools/collection_conversions_fixtures.py",
+        "tools/collection_conversions_oracle.py",
+        "tools/java/CollectionConversionsOracle.java",
+        "tools/reversal_values_oracle.py",
+        "tools/tests/test_base_constructor_constraints_fixtures.py"
+      ]
     }
   ]
 }

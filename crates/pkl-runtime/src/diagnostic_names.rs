@@ -248,6 +248,11 @@ pub(crate) const LIST_METHODS: &[(&str, &str, usize)] = &[
 /// Source-derived candidates for the lazy and strict collection classes.
 /// This catalog describes declarations, including still unsupported methods.
 pub(crate) fn collection_members(class: &str) -> (Vec<String>, Vec<(String, String, usize)>) {
+    builtin_members(class)
+}
+
+/// Source-derived scalar and collection names, with their declared ancestry.
+pub(crate) fn builtin_members(class: &str) -> (Vec<String>, Vec<(String, String, usize)>) {
     type Catalog = std::collections::BTreeMap<String, (Vec<String>, Vec<(String, String, usize)>)>;
     static CATALOG: std::sync::OnceLock<Catalog> = std::sync::OnceLock::new();
     let catalog = CATALOG.get_or_init(|| {
@@ -287,10 +292,11 @@ pub(crate) fn collection_members(class: &str) -> (Vec<String>, Vec<(String, Stri
     });
     let mut properties = Vec::new();
     let mut methods: Vec<(String, String, usize)> = Vec::new();
-    let parents: &[&str] = if matches!(class, "List" | "Set") {
-        &["Any", "Collection"]
-    } else {
-        &["Any", "Object"]
+    let parents: &[&str] = match class {
+        "List" | "Set" => &["Any", "Collection"],
+        "Int" | "Float" => &["Any", "Number"],
+        "String" | "Boolean" | "Null" => &["Any"],
+        _ => &["Any", "Object"],
     };
     for name in parents.iter().copied().chain(std::iter::once(class)) {
         if let Some((props, funcs)) = catalog.get(name) {

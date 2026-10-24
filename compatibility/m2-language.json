@@ -83284,7 +83284,9 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/string.pkl",
       "input_sha256": "44c7817c4d79d7645a4fda3be2058f5dbc00354ab10e041af4f73b3b69b1067b",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:strings"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -83378,7 +83380,9 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/stringUnicode.pkl",
       "input_sha256": "fa203d33459c0f98a0e9d1dc0cf8f22b4ec22bde89270bbc10b5514e25688952",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:strings"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -164095,12 +164099,31 @@
       "description": "Escapes, custom delimiters, interpolation, multiline indentation and 0.32 continuation",
       "id": "semantic:strings",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/pkl_string.rs",
+            "sha256": "863b8af09fe96d53355a3b3d10c8e7ed34fa929cedf3bdc37b4d1fa287e0f68d",
+            "symbol": "PklString"
+          },
+          {
+            "path": "crates/pkl-runtime/src/pkl_string.rs",
+            "sha256": "863b8af09fe96d53355a3b3d10c8e7ed34fa929cedf3bdc37b4d1fa287e0f68d",
+            "symbol": "reversed"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "The complete pinned string syntax, builtin API, diagnostics and upstream original programs still require passing raw differential execution.",
+          "Whole-module rendering, malformed UTF-16 transport and each target environment retain their independent execution gates; focused reversal does not close them."
+        ],
+        "scope": "Stage66 links the existing lossless UTF-16 string value and Java-compatible StringBuilder-style reversal. Paired and unpaired surrogate controls are retained in the independent reversal fixture. These source links and focused controls do not claim whole String API or original-program completion.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "string-empty",
@@ -164220,7 +164243,9 @@
           "trace-stage37-repeat-lone-surrogate",
           "trace-stage37-repeat-supplementary-normal",
           "trace-stage37-repeat-arity-two-before-constraint",
-          "read-stage38-uri-unpaired-surrogate"
+          "read-stage38-uri-unpaired-surrogate",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/string.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/stringUnicode.pkl"
         ],
         "state": "partial"
       }
@@ -164232,12 +164257,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "binary"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "binary_error"
           },
           {
@@ -166034,12 +166059,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "validate_class_override"
           },
           {
@@ -166049,7 +166074,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "force_key"
           },
           {
@@ -168633,12 +168658,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "inherited_member"
           },
           {
@@ -168653,7 +168678,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "dace0273630c83db1f63312b297f8ceff3873085d6393cbdbe034c08d4d36a8f",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
             "symbol": "validate_member"
           },
           {
@@ -168663,12 +168688,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "9cfb7e263833f5212e7ed1c678e77183baef2bd3d92bb72b50d5e85e3d8b32bd",
+            "sha256": "5704870584ed8ea2ec93ec43fc470f639c3399c55a176a1d437ef2bc2c4a6674",
             "symbol": "amendment_class_parent"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "9cfb7e263833f5212e7ed1c678e77183baef2bd3d92bb72b50d5e85e3d8b32bd",
+            "sha256": "5704870584ed8ea2ec93ec43fc470f639c3399c55a176a1d437ef2bc2c4a6674",
             "symbol": "end_collection"
           },
           {
@@ -168895,17 +168920,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "initialize_member_types"
           }
         ],
@@ -169299,32 +169324,32 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "dace0273630c83db1f63312b297f8ceff3873085d6393cbdbe034c08d4d36a8f",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
             "symbol": "validate_modifiers"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "dace0273630c83db1f63312b297f8ceff3873085d6393cbdbe034c08d4d36a8f",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
             "symbol": "ConstLevel"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "dace0273630c83db1f63312b297f8ceff3873085d6393cbdbe034c08d4d36a8f",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
             "symbol": "ConstScope"
           },
           {
@@ -169640,12 +169665,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "compile_type_at"
           },
           {
@@ -169655,7 +169680,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "invoke_function"
           },
           {
@@ -169665,7 +169690,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "dace0273630c83db1f63312b297f8ceff3873085d6393cbdbe034c08d4d36a8f",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
             "symbol": "ConstScope"
           },
           {
@@ -170510,27 +170535,27 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "9cfb7e263833f5212e7ed1c678e77183baef2bd3d92bb72b50d5e85e3d8b32bd",
+            "sha256": "5704870584ed8ea2ec93ec43fc470f639c3399c55a176a1d437ef2bc2c4a6674",
             "symbol": "prepare_map_association"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "9cfb7e263833f5212e7ed1c678e77183baef2bd3d92bb72b50d5e85e3d8b32bd",
+            "sha256": "5704870584ed8ea2ec93ec43fc470f639c3399c55a176a1d437ef2bc2c4a6674",
             "symbol": "insert_map_entry_ordered"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collection_transforms.rs",
-            "sha256": "c2721b8b57b397089b1378b03e1f664d0b57a71e50b645e33b86db333f5a3263",
+            "sha256": "194dbc5b81e7830808c12ceedb8f894abc5bf32794b928925070c4a1d00ef938",
             "symbol": "collection_endpoint"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "9cfb7e263833f5212e7ed1c678e77183baef2bd3d92bb72b50d5e85e3d8b32bd",
+            "sha256": "5704870584ed8ea2ec93ec43fc470f639c3399c55a176a1d437ef2bc2c4a6674",
             "symbol": "amendment_class_parent"
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "9cfb7e263833f5212e7ed1c678e77183baef2bd3d92bb72b50d5e85e3d8b32bd",
+            "sha256": "5704870584ed8ea2ec93ec43fc470f639c3399c55a176a1d437ef2bc2c4a6674",
             "symbol": "end_collection"
           },
           {
@@ -170555,8 +170580,13 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/collections.rs",
-            "sha256": "9cfb7e263833f5212e7ed1c678e77183baef2bd3d92bb72b50d5e85e3d8b32bd",
+            "sha256": "5704870584ed8ea2ec93ec43fc470f639c3399c55a176a1d437ef2bc2c4a6674",
             "symbol": "EntryDefault"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collection_transforms.rs",
+            "sha256": "194dbc5b81e7830808c12ceedb8f894abc5bf32794b928925070c4a1d00ef938",
+            "symbol": "Projection"
           }
         ],
         "state": "partial"
@@ -170569,7 +170599,7 @@
           "The remaining strict and lazy collection members, custom defaults, typed wrappers, generators and complete hashing/cyclic-key behavior remain separate implementation and verification work.",
           "All original collection/type-check and public API contracts must execute with matching raw results before this semantic family can be marked complete."
         ],
-        "scope": "Stage63 connects ordered strict collection addition to shared hashing, equality, insertion and GC/Host continuations, and supplies the four Set endpoint properties through the existing endpoint primitive. The linked original List/Set/Map and Mapping type-check programs are preserved unchanged. Focused string results and internal ownership checks do not establish the full original-program or collection requirement. Stage64 connects Listing.fold to shallow forcing before callbacks and inherited ordered cached values, retaining Host suspension/reentry/retry/cancellation roots. Empty builtin class construction uses weak canonical instances; zero-effective object generators reuse their parent. The linked original programs remain whole-program obligations, not passing verdicts inferred from focused controls. Stage65 assigns inferred collection new expressions through receiver.default(key); bare entry amendments retain inherited-entry lookup before default fallback. Missing typed defaults fail at the default property read, preserving lazy error order.",
+        "scope": "Stage63 connects ordered strict collection addition to shared hashing, equality, insertion and GC/Host continuations, and supplies the four Set endpoint properties through the existing endpoint primitive. The linked original List/Set/Map and Mapping type-check programs are preserved unchanged. Focused string results and internal ownership checks do not establish the full original-program or collection requirement. Stage64 connects Listing.fold to shallow forcing before callbacks and inherited ordered cached values, retaining Host suspension/reentry/retry/cancellation roots. Empty builtin class construction uses weak canonical instances; zero-effective object generators reuse their parent. The linked original programs remain whole-program obligations, not passing verdicts inferred from focused controls. Stage65 assigns inferred collection new expressions through receiver.default(key); bare entry amendments retain inherited-entry lookup before default fallback. Missing typed defaults fail at the default property read, preserving lazy error order. Stage66 adds shallow List/Set reversal through the existing resumable collection builder, canonical empty List results, ordered element preservation, and List-only nonforcing bounds displays. Focused Java and lifecycle controls are separate from whole original-program and platform gates.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -172213,12 +172243,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "initialize_type_resolution"
           },
           {
@@ -172228,12 +172258,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "active_constraints"
           },
           {
@@ -173996,32 +174026,32 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "active_constraints"
           },
           {
@@ -174804,7 +174834,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "invoke_function"
           },
           {
@@ -174836,6 +174866,11 @@
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "sha256": "8cfff25f51af42c5167715671e748f03ca594274dd79cabeb1bb1373c823a0f9",
             "symbol": "validate_reference_arguments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
+            "symbol": "resolve_session_expression"
           }
         ],
         "state": "partial"
@@ -174850,7 +174885,7 @@
           "Selected generic let-root and finite recursive checks now match retained raw comparisons. The original exploratory outcomes, unbounded recursion abort, other known mismatches and complete language/performance gates remain separately accounted.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
+        "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage66 admits the seven already-supported base constructor intrinsics inside custom-this constraints after lexical method lookup. Authored module/class-local methods and externally supplied query scopes have separate Java controls; complete base method resolution remains open.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -175526,12 +175561,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "compile_type_at"
           },
           {
@@ -175541,12 +175576,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "initialize_type_resolution"
           },
           {
@@ -176905,7 +176940,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "dace0273630c83db1f63312b297f8ceff3873085d6393cbdbe034c08d4d36a8f",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
             "symbol": "Annotations"
           },
           {
@@ -177066,7 +177101,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "initialize_member_types"
           },
           {
@@ -177265,12 +177300,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "dace0273630c83db1f63312b297f8ceff3873085d6393cbdbe034c08d4d36a8f",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
             "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "compile_type_at"
           },
           {
@@ -177285,7 +177320,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "CheckModuleOutput"
           },
           {
@@ -177461,7 +177496,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "dace0273630c83db1f63312b297f8ceff3873085d6393cbdbe034c08d4d36a8f",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
             "symbol": "ConstScope"
           },
           {
@@ -177471,7 +177506,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/pkl_string.rs",
-            "sha256": "b4dd92b4dbdcfcaf5a372d8be6c49161993a029c3ed859d7e5efa2bd78878daa",
+            "sha256": "863b8af09fe96d53355a3b3d10c8e7ed34fa929cedf3bdc37b4d1fa287e0f68d",
             "symbol": "PklString"
           },
           {
@@ -177481,7 +177516,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "executable_value_span"
           },
           {
@@ -177523,6 +177558,16 @@
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "sha256": "8cfff25f51af42c5167715671e748f03ca594274dd79cabeb1bb1373c823a0f9",
             "symbol": "step_generic_default"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser/type_parser.rs",
+            "sha256": "c4216ed6578c3c3f379d256403242f522418b0f5ad2c89351bc08b2736fb79e6",
+            "symbol": "type_step"
+          },
+          {
+            "path": "crates/pkl-runtime/src/diagnostic_names.rs",
+            "sha256": "a012489271ab61aab018d1f7d099555f1c7c2569cb99331d93add41c1b6c4394",
+            "symbol": "builtin_members"
           }
         ],
         "state": "partial"
@@ -177539,7 +177584,7 @@
           "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
           "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations. Original module eval frontend failures are exercised through their unchanged argv/cwd/env/resource contracts with the bundled CLI frame profile; complete output evaluation remains unsupported. Stage40 adds actual module-output operation failures without expression-string conversion or a synthetic REPL boundary; the unchanged original output/module dependency contracts remain selected even when unsupported. Stage65 retains inferred-parent error spans, typed missing-default property frames, external versus constrained no-default classification, and module class display names. Complete raw diagnostics and every existing failure remain required.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations. Original module eval frontend failures are exercised through their unchanged argv/cwd/env/resource contracts with the bundled CLI frame profile; complete output evaluation remains unsupported. Stage40 adds actual module-output operation failures without expression-string conversion or a synthetic REPL boundary; the unchanged original output/module dependency contracts remain selected even when unsupported. Stage65 retains inferred-parent error spans, typed missing-default property frames, external versus constrained no-default classification, and module class display names. Complete raw diagnostics and every existing failure remain required. Stage66 preserves the complete first type span for a non-union default marker and rejects a second default marker before parsing the next type. Scalar member catalogs and List bounds details are source-backed; forty separate-module Java fixtures require independent raw native and portable replay.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -180844,7 +180889,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "dace0273630c83db1f63312b297f8ceff3873085d6393cbdbe034c08d4d36a8f",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
             "symbol": "Annotations"
           },
           {
@@ -182597,7 +182642,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "dace0273630c83db1f63312b297f8ceff3873085d6393cbdbe034c08d4d36a8f",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
             "symbol": "Annotations"
           },
           {
@@ -186521,7 +186566,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "dace0273630c83db1f63312b297f8ceff3873085d6393cbdbe034c08d4d36a8f",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
             "symbol": "Annotations"
           },
           {
@@ -187422,17 +187467,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "initialize_member_types"
           }
         ],
@@ -187865,12 +187910,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "dace0273630c83db1f63312b297f8ceff3873085d6393cbdbe034c08d4d36a8f",
+            "sha256": "9c6a43dd247f0d0299f280f4dceab2bc303c111973814686100d08a727377596",
             "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "120a161dd87be649175a7d2f66b4e00a2d2011269f20ff82bcfce0d3733fca3e",
+            "sha256": "289270c853c6112b2834b338c9c6c0c880f3e1aec8a39a3f3bb3d6f854a2ef0c",
             "symbol": "compile_type_at"
           }
         ],
@@ -190379,7 +190424,7 @@
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
     "compatibility/m2-execution-profiles.json": "198850daa534a33f0d1b87f8bc8d38d7717f1e9b792ec70a13053c0affc6f477",
     "compatibility/m2-jvm-classpath.json": "93a97f62fa55742f4ddaee342c6cf3e1509e76700bfffa9ce478352f9bab9af7",
-    "compatibility/m2-mappings.json": "534f8c03df23b70da052082efe02042499e445b10a9e014953f5aef0262d90c2",
+    "compatibility/m2-mappings.json": "45060e961d8416270cbd5f301454c1b8b0dcc3b65d8905b0a2fe7487610491ea",
     "compatibility/m2-module-eval.json": "1196b940cdd95daf5e360dabdbcf3f4329ee1c31db754879c32e4b26ea438f9c",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",

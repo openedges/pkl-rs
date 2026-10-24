@@ -871,7 +871,7 @@ pub struct Program {
     pub(crate) string_repeat_block: usize,
     pub(crate) collection_join_blocks: [usize; 2],
     collection_transform_blocks: [usize; 11],
-    collection_projection_blocks: [usize; 8],
+    collection_projection_blocks: [usize; 10],
     conversion_blocks: BTreeMap<(Arc<str>, Arc<str>), (usize, usize)>,
     conversion_delegate_block: usize,
     object_default_block: usize,
@@ -4635,6 +4635,8 @@ impl Vm {
                     return Err(self.int_seq_member_error(name, method));
                 } else if matches!(receiver, Value::Bytes(_)) {
                     return Err(self.bytes_member_error(name, method));
+                } else if let Some(error) = self.scalar_member_error(&receiver, name, method) {
+                    return Err(error);
                 } else {
                     let receiver = receiver.as_object()?;
                     if method
@@ -4732,6 +4734,9 @@ impl Vm {
                 }
                 if matches!(receiver, Value::Bytes(_)) {
                     return Err(self.bytes_member_error(name, method));
+                }
+                if let Some(error) = self.scalar_member_error(&receiver, name, method) {
+                    return Err(error);
                 }
                 let receiver = receiver.as_object()?;
                 if method || !self.collection_builtin(receiver, name)? {

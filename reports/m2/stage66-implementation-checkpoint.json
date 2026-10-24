@@ -1,0 +1,952 @@
+{
+  "assembly": {
+    "actual_process_receipt": "target/m2/stage66-checkpoint-publication-01/execution/checkpoint-assembly/process.json",
+    "receipt_boundary": "The actual terminal process/raw channels postdate this checkpoint and its B archives; C preserves them separately. This checkpoint does not claim its own receipt is archived.",
+    "source": {
+      "bytes": 7053,
+      "path": "target/m2/stage66-checkpoint-publication-01/assemble.py",
+      "sha256": "d488cc3a7b5d4793d1a74adfa6a6c8af3104ed44dd31d73dc05c66d1a68c2e4b"
+    }
+  },
+  "baseline": "Pkl 0.32.0",
+  "direct_checkpoint_inputs_reconstructible_from_B_union": true,
+  "documentation_boundary": "These six documentation files were updated after required/guest captures. Original captured document bytes remain preserved. These prose updates are not runtime291 source changes; actual implementation-commit source binding accounts for current versus historical documents separately.",
+  "documentation_updated_after_capture": [
+    "README.md",
+    "TESTING.md",
+    "docs/m2-language.md",
+    "docs/architecture.md",
+    "reports/m2/README.md",
+    "PLAN.md"
+  ],
+  "full_m2_complete": false,
+  "full_public_api_passed": false,
+  "history": {
+    "comparison_failed_before_commands": [
+      "stage66-comparison-validation-01",
+      "stage66-comparison-launch-01"
+    ],
+    "earlier_union_tool_attempts": [
+      "stage66-union-marker-portable-tool-development-01",
+      "stage66-union-marker-portable-tool-development-02",
+      "stage66-union-marker-portable-tool-development-03"
+    ],
+    "failed_generator": "stage66-java-test-generation-02",
+    "failed_identity_note": "stage66-core-identity-provenance-01",
+    "focused_failures": [
+      "stage66-core-focused-02",
+      "stage66-core-focused-04"
+    ],
+    "original_launcher01": "prepared only; launcher02 is actual execution"
+  },
+  "implementation_base": "c7eb4b6c8edf60d55ffc92f1b814d6ec11fdfdd9",
+  "java_A": {
+    "bytes": 12604,
+    "path": "reports/m2/stage66-java-checkpoint.json",
+    "sha256": "0829ba875b59c33369cd658f1fe95942f7fd0eb185f318c6a07387648ce6a37c"
+  },
+  "java_A_boundary": {
+    "direct_vm_identity_rows": 8,
+    "separate_module_programs": 40,
+    "single_module_string_rows": 141
+  },
+  "java_A_directories": 63,
+  "kind": "stage66-implementation-checkpoint",
+  "known_limits": [
+    "Publication integrity is not guest compatibility. All nine M2 streams and full language/product API remain open.",
+    "Original131 selected statuses are read from final raw report; prior74 pass transitions, added case and two blocked originals remain explicit.",
+    "Any scalar-regex has two mismatches per portable target; M1 compatibility fails its two known Regex gaps while architecture contract passes.",
+    "Direct Java identity is producer-only. Shared catalog 14/1081 and separate union40 programs preserve distinct boundaries.",
+    "Local macOS arm64 captures do not establish other release platforms or performance targets.",
+    "Prior failed focused/tooling/preflight/comparison attempts remain unchanged; no output normalization or Java production fallback."
+  ],
+  "performance_claim": false,
+  "publication_proof": "Every publisher did full SHA/size/mode member readback and checked source bookends. Assembly verifies complete archive SHA and exact embedded inventories, without repeating payload readback.",
+  "publications": {
+    "closeout": {
+      "archive": {
+        "bytes": 49449527,
+        "full_member_readback_verified": true,
+        "members": 8926,
+        "mode": 420,
+        "path": "reports/m2/stage66-b-closeout-evidence.tar.gz",
+        "sha256": "10f32b176ca93c6990e528f28e7dbe3eb4330ba4879afc1ba59fc882ab752bf4"
+      },
+      "file_members": 8925,
+      "publication": {
+        "bytes": 2224651,
+        "path": "reports/m2/stage66-b-closeout-publication.json",
+        "sha256": "a241a6e497be81ba5e56fe7ccd98eeb808f1e58b6f6654c66c396a143a67ba06"
+      },
+      "selected_directories": [
+        "stage66-comparison-validation-01",
+        "stage66-comparison-launch-01",
+        "stage66-original-reversal-01",
+        "stage66-original-reversal-launch-02",
+        "stage66-original-failure-audit-01",
+        "stage66-review-01",
+        "stage66-node-path-verification-amendment-01",
+        "stage66-comparison-validation-02",
+        "stage66-comparison-launch-02",
+        "stage66-node-path-verification-amendment-02"
+      ]
+    },
+    "development": {
+      "archive": {
+        "bytes": 579433,
+        "full_member_readback_verified": true,
+        "members": 155,
+        "mode": 420,
+        "path": "reports/m2/stage66-b-development-evidence.tar.gz",
+        "sha256": "2f7ec8ded67cc57a6a892545a8a898e1606af0078275887554ba626e6dc2d147"
+      },
+      "file_members": 154,
+      "publication": {
+        "bytes": 49993,
+        "path": "reports/m2/stage66-b-development-publication.json",
+        "sha256": "9c7ad3cb3ea926d0ff6e3722bfb1e9ae51c288a53e50e31e9ba76e93926304f0"
+      },
+      "selected_directories": [
+        "stage66-core-focused-01",
+        "stage66-core-focused-02",
+        "stage66-core-focused-03",
+        "stage66-core-focused-04",
+        "stage66-core-focused-05",
+        "stage66-core-focused-06",
+        "stage66-core-freeze-01",
+        "stage66-core-identity-provenance-01",
+        "stage66-core-identity-provenance-02",
+        "stage66-java-test-generation-01",
+        "stage66-java-test-generation-02",
+        "stage66-java-test-generation-03",
+        "stage66-java-test-generation-04",
+        "stage66-java-test-generation-05",
+        "stage66-union-marker-rust-focused-01",
+        "stage66-union-marker-rust-focused-02"
+      ]
+    },
+    "native-build": {
+      "archive": {
+        "bytes": 22865979,
+        "full_member_readback_verified": true,
+        "members": 698,
+        "mode": 420,
+        "path": "reports/m2/stage66-b-native-build-evidence.tar.gz",
+        "sha256": "b3de081185f1236186d8784c5815ab0f61c89a18f6fb356c33728ccb24539cf4"
+      },
+      "file_members": 697,
+      "publication": {
+        "bytes": 180907,
+        "path": "reports/m2/stage66-b-native-build-publication.json",
+        "sha256": "b3f0757bec74788f8b6e23e9534c75a420b0aa9cf50979ec57e0a40026970690"
+      },
+      "selected_directories": [
+        "stage66-native-build-01",
+        "stage66-native-acquisition-01",
+        "stage66-bytes-native-regression-launch-01",
+        "stage66-duration-native-regression-launch-01"
+      ]
+    },
+    "native-catalog-a": {
+      "archive": {
+        "bytes": 38354739,
+        "full_member_readback_verified": true,
+        "members": 8759,
+        "mode": 420,
+        "path": "reports/m2/stage66-b-native-catalog-a-evidence.tar.gz",
+        "sha256": "dae5635c35021d74868126f9a57b16489acc9dee6b31822da745f1b3549b2ae0"
+      },
+      "file_members": 8758,
+      "publication": {
+        "bytes": 2336044,
+        "path": "reports/m2/stage66-b-native-catalog-a-publication.json",
+        "sha256": "ae280e8626c21f8122d4dc0101899f825993a965a35f497cb1c20c6dfc51f398"
+      },
+      "selected_directories": [
+        "stage66-collection-conversions-native-comparison-01",
+        "stage66-collection-conversion-controls-native-comparison-01",
+        "stage66-collection-default-contracts-native-comparison-01",
+        "stage66-collection-dynamic-render-native-comparison-01"
+      ]
+    },
+    "native-catalog-b": {
+      "archive": {
+        "bytes": 38327040,
+        "full_member_readback_verified": true,
+        "members": 9375,
+        "mode": 420,
+        "path": "reports/m2/stage66-b-native-catalog-b-evidence.tar.gz",
+        "sha256": "aa35809734f6ea0ab16f05c415c39cf73c5e198726aaa2f6a7b978e07f08a4b9"
+      },
+      "file_members": 9374,
+      "publication": {
+        "bytes": 2425635,
+        "path": "reports/m2/stage66-b-native-catalog-b-publication.json",
+        "sha256": "37065d41eebc5f7b3e97bf61f6795943335b47a476fbf17502a361662d0976a2"
+      },
+      "selected_directories": [
+        "stage66-collection-lookups-native-comparison-01",
+        "stage66-collection-property-names-native-comparison-01",
+        "stage66-collection-addition-native-comparison-01",
+        "stage66-set-endpoints-native-comparison-01"
+      ]
+    },
+    "native-catalog-c": {
+      "archive": {
+        "bytes": 29024058,
+        "full_member_readback_verified": true,
+        "members": 8632,
+        "mode": 420,
+        "path": "reports/m2/stage66-b-native-catalog-c-evidence.tar.gz",
+        "sha256": "abdbddd7968cb5de1eb02bd16b9d1995f22beb0ea8d8cc6c33b1ac9b46ee8a67"
+      },
+      "file_members": 8631,
+      "publication": {
+        "bytes": 2237836,
+        "path": "reports/m2/stage66-b-native-catalog-c-publication.json",
+        "sha256": "6db17d9931e84d570048bc4ee0e39fff75172c06f1754c566f0c208187d7c51f"
+      },
+      "selected_directories": [
+        "stage66-amendment-construction-native-comparison-01",
+        "stage66-inferred-new-values-native-comparison-01",
+        "stage66-reversal-values-native-comparison-01"
+      ]
+    },
+    "native-catalog-d": {
+      "archive": {
+        "bytes": 28297612,
+        "full_member_readback_verified": true,
+        "members": 2582,
+        "mode": 420,
+        "path": "reports/m2/stage66-b-native-catalog-d-evidence.tar.gz",
+        "sha256": "32c9bcedbb5a4598eaec9fda771314de8536f10bb308e9f1672976578d14cc73"
+      },
+      "file_members": 2581,
+      "publication": {
+        "bytes": 683099,
+        "path": "reports/m2/stage66-b-native-catalog-d-publication.json",
+        "sha256": "fd72633edb0fab47c267b1e1b235661fff72fd0cd63c9517f7dd671e0bcc54f3"
+      },
+      "selected_directories": [
+        "stage66-reversal-implicit-native-comparison-01",
+        "stage66-reversal-subscript-native-comparison-01",
+        "stage66-base-constructor-constraints-native-comparison-01"
+      ]
+    },
+    "native-scalars": {
+      "archive": {
+        "bytes": 31487708,
+        "full_member_readback_verified": true,
+        "members": 25824,
+        "mode": 420,
+        "path": "reports/m2/stage66-b-native-scalars-evidence.tar.gz",
+        "sha256": "4a5a68c573b4a3ab445e8eed2d02cef5a3c8771d62a2e56ffaf41074f0f2e60d"
+      },
+      "file_members": 25823,
+      "publication": {
+        "bytes": 6231108,
+        "path": "reports/m2/stage66-b-native-scalars-publication.json",
+        "sha256": "d281d52e68001a57dea4aafb39bf62066fa6d45a2a1d18b355110d597f3cad42"
+      },
+      "selected_directories": [
+        "stage66-intseq-native-comparison-01",
+        "stage66-bytes-native-regression-01",
+        "stage66-duration-native-regression-01",
+        "stage66-data-size-native-regression-01",
+        "stage66-union-marker-native-comparison-01"
+      ]
+    },
+    "platform": {
+      "archive": {
+        "bytes": 22132986,
+        "full_member_readback_verified": true,
+        "members": 102529,
+        "mode": 420,
+        "path": "reports/m2/stage66-b-platform-evidence.tar.gz",
+        "sha256": "ebc27753608beb14c6b4962bfabd95c69a9f9698ca308593879463f12017d950"
+      },
+      "file_members": 102528,
+      "publication": {
+        "bytes": 25916625,
+        "path": "reports/m2/stage66-b-platform-publication.json",
+        "sha256": "924bfefc5ead454dcf26ea9d4b991678f773c305f2fa43a6ebcc9e1694c58695"
+      },
+      "selected_directories": [
+        "stage66-m1-platform-contract-01",
+        "stage66-platform-validation-01",
+        "stage66-amendment-construction-portable-capture-01",
+        "stage66-any-if-non-null-portable-capture-01",
+        "stage66-base-constructor-constraints-portable-capture-01",
+        "stage66-bytes-values-portable-capture-01",
+        "stage66-collection-addition-portable-capture-01",
+        "stage66-collection-conversion-controls-portable-capture-01",
+        "stage66-collection-conversions-portable-capture-01",
+        "stage66-collection-default-contracts-portable-capture-01",
+        "stage66-collection-dynamic-render-portable-capture-01",
+        "stage66-collection-lookups-portable-capture-01",
+        "stage66-collection-property-names-portable-capture-01",
+        "stage66-data-size-portable-capture-01",
+        "stage66-duration-values-portable-capture-01",
+        "stage66-inferred-new-values-portable-capture-01",
+        "stage66-int-seq-values-portable-capture-01",
+        "stage66-reversal-implicit-portable-capture-01",
+        "stage66-reversal-subscript-portable-capture-01",
+        "stage66-reversal-values-portable-capture-01",
+        "stage66-set-endpoints-portable-capture-01",
+        "stage66-union-marker-portable-capture-01"
+      ]
+    },
+    "preparation": {
+      "archive": {
+        "bytes": 111975,
+        "full_member_readback_verified": true,
+        "members": 69,
+        "mode": 420,
+        "path": "reports/m2/stage66-b-preparation-evidence.tar.gz",
+        "sha256": "8d753211df439eaa8f66c1c86e11cd7298921619e910d4a57708e6dd52400b24"
+      },
+      "file_members": 68,
+      "publication": {
+        "bytes": 33504,
+        "path": "reports/m2/stage66-b-preparation-publication.json",
+        "sha256": "3b6f93222888afeb0afd0aca34ba5a41383d7262cbc7dd87da2d30e0a1a72dd2"
+      },
+      "selected_directories": [
+        "stage66-capture-preparation-01",
+        "stage66-capture-launch-01",
+        "stage66-original-reversal-launch-01",
+        "stage66-original-reversal-preflight-01",
+        "stage66-original-reversal-prep-01",
+        "stage66-preparation-01",
+        "stage66-storage-recovery-01",
+        "stage66-storage-recovery-02",
+        "stage66-java-publication-01",
+        "stage66-java-commit-binding-01"
+      ]
+    },
+    "rust-validation": {
+      "archive": {
+        "bytes": 13353953,
+        "full_member_readback_verified": true,
+        "members": 60,
+        "mode": 420,
+        "path": "reports/m2/stage66-b-rust-validation-evidence.tar.gz",
+        "sha256": "fa5749088830471b0e82c973b29dfacb27a5bd42e13369354d283e08f1345b00"
+      },
+      "file_members": 59,
+      "publication": {
+        "bytes": 31772,
+        "path": "reports/m2/stage66-b-rust-validation-publication.json",
+        "sha256": "fd31ea689cda30c09195e79920b552e00cb41fd40a3c518c458c687f94ddedf8"
+      },
+      "selected_directories": [
+        "stage66-rust-validation-01",
+        "stage66-validation-count-review-01"
+      ]
+    },
+    "tooling": {
+      "archive": {
+        "bytes": 7299972,
+        "full_member_readback_verified": true,
+        "members": 651,
+        "mode": 420,
+        "path": "reports/m2/stage66-b-tooling-evidence.tar.gz",
+        "sha256": "3fdd318c6ffeeea60346004237787fcabe35f03a0cadb2af7224a8ca94d1cb7c"
+      },
+      "file_members": 650,
+      "publication": {
+        "bytes": 166663,
+        "path": "reports/m2/stage66-b-tooling-publication.json",
+        "sha256": "25562f43a5d6d403f10a89cb3aa3e777107f0e258106aec53d81e9e9d46ccc37"
+      },
+      "selected_directories": [
+        "stage66-catalog-validation-01",
+        "stage66-catalog-validation-02",
+        "stage66-http-validation-01",
+        "stage66-mapping-validation-01",
+        "stage66-union-marker-portable-tool-development-01",
+        "stage66-union-marker-portable-tool-development-02",
+        "stage66-union-marker-portable-tool-development-03",
+        "stage66-union-marker-portable-tool-development-04"
+      ]
+    }
+  },
+  "published_distinct_member_paths": 168017,
+  "results": {
+    "candidate_compatibility_passes_claimed": 0,
+    "catalog": {
+      "observations_per_target": 2162,
+      "profiles": 14,
+      "rows": 1081
+    },
+    "comparison_counts": {
+      "amendment-construction-native": {
+        "pass": 376
+      },
+      "amendment-construction-portable": {
+        "chromium": {
+          "pass": 376
+        },
+        "napi": {
+          "pass": 376
+        }
+      },
+      "any-portable": {
+        "chromium": {
+          "mismatch": 2,
+          "pass": 170
+        },
+        "napi": {
+          "mismatch": 2,
+          "pass": 170
+        }
+      },
+      "base-constructor-constraints-native": {
+        "pass": 72
+      },
+      "base-constructor-constraints-portable": {
+        "chromium": {
+          "pass": 72
+        },
+        "napi": {
+          "pass": 72
+        }
+      },
+      "bytes-native": {
+        "pass": 600
+      },
+      "bytes-portable": {
+        "chromium": {
+          "pass": 600
+        },
+        "napi": {
+          "pass": 600
+        }
+      },
+      "collection-addition-native": {
+        "pass": 250
+      },
+      "collection-addition-portable": {
+        "chromium": {
+          "pass": 250
+        },
+        "napi": {
+          "pass": 250
+        }
+      },
+      "collection-conversion-controls-native": {
+        "pass": 116
+      },
+      "collection-conversion-controls-portable": {
+        "chromium": {
+          "pass": 116
+        },
+        "napi": {
+          "pass": 116
+        }
+      },
+      "collection-conversions-native": {
+        "pass": 472
+      },
+      "collection-conversions-portable": {
+        "chromium": {
+          "pass": 472
+        },
+        "napi": {
+          "pass": 472
+        }
+      },
+      "collection-default-contracts-native": {
+        "pass": 44
+      },
+      "collection-default-contracts-portable": {
+        "chromium": {
+          "pass": 44
+        },
+        "napi": {
+          "pass": 44
+        }
+      },
+      "collection-dynamic-render-native": {
+        "pass": 20
+      },
+      "collection-dynamic-render-portable": {
+        "chromium": {
+          "pass": 20
+        },
+        "napi": {
+          "pass": 20
+        }
+      },
+      "collection-lookups-native": {
+        "pass": 266
+      },
+      "collection-lookups-portable": {
+        "chromium": {
+          "pass": 266
+        },
+        "napi": {
+          "pass": 266
+        }
+      },
+      "collection-property-names-native": {
+        "pass": 52
+      },
+      "collection-property-names-portable": {
+        "chromium": {
+          "pass": 52
+        },
+        "napi": {
+          "pass": 52
+        }
+      },
+      "data-size-native": {
+        "pass": 510
+      },
+      "data-size-portable": {
+        "chromium": {
+          "pass": 510
+        },
+        "napi": {
+          "pass": 510
+        }
+      },
+      "duration-native": {
+        "pass": 548
+      },
+      "duration-portable": {
+        "chromium": {
+          "pass": 548
+        },
+        "napi": {
+          "pass": 548
+        }
+      },
+      "inferred-new-values-native": {
+        "pass": 144
+      },
+      "inferred-new-values-portable": {
+        "chromium": {
+          "pass": 144
+        },
+        "napi": {
+          "pass": 144
+        }
+      },
+      "intseq-native": {
+        "pass": 474
+      },
+      "intseq-portable": {
+        "chromium": {
+          "pass": 474
+        },
+        "napi": {
+          "pass": 474
+        }
+      },
+      "reversal-implicit-native": {
+        "pass": 16
+      },
+      "reversal-implicit-portable": {
+        "chromium": {
+          "pass": 16
+        },
+        "napi": {
+          "pass": 16
+        }
+      },
+      "reversal-subscript-native": {
+        "pass": 38
+      },
+      "reversal-subscript-portable": {
+        "chromium": {
+          "pass": 38
+        },
+        "napi": {
+          "pass": 38
+        }
+      },
+      "reversal-values-native": {
+        "pass": 156
+      },
+      "reversal-values-portable": {
+        "chromium": {
+          "pass": 156
+        },
+        "napi": {
+          "pass": 156
+        }
+      },
+      "set-endpoints-native": {
+        "pass": 140
+      },
+      "set-endpoints-portable": {
+        "chromium": {
+          "pass": 140
+        },
+        "napi": {
+          "pass": 140
+        }
+      },
+      "union-marker-native": {
+        "pass": 80
+      },
+      "union-marker-portable": {
+        "chromium": {
+          "pass": 80
+        },
+        "napi": {
+          "pass": 80
+        }
+      }
+    },
+    "inputs": {
+      "comparison": {
+        "bytes": 87607,
+        "path": "target/m2/stage66-comparison-validation-02/report.json",
+        "sha256": "66e38dc4a4849dbd18c7b1ecedf40a1181bf0c8ef188f59490c8b6cb5a177f6d"
+      },
+      "comparison_launch": {
+        "bytes": 2879,
+        "path": "target/m2/stage66-comparison-launch-02/report.json",
+        "sha256": "b8e070c78d88c3f1afcb4b64b1d52f536b30fa2db37d3b424b1170d6bd369319"
+      },
+      "count": {
+        "bytes": 6163,
+        "path": "target/m2/stage66-validation-count-review-01/report.json",
+        "sha256": "5f1c8fa2e59c81c086bc151b16c165b45ee07be4620fca99bb349b38e7c38fac"
+      },
+      "freeze": {
+        "bytes": 12551,
+        "path": "target/m2/stage66-core-freeze-01/freeze.json",
+        "sha256": "c37a9ea6424d6a8510740c6e965213e36a85ba4675438ab2edcb40e90b30e19c"
+      },
+      "identity_note": {
+        "bytes": 6042,
+        "path": "target/m2/stage66-core-identity-provenance-02/report.json",
+        "sha256": "5f1003ca0ef53f67618b15773db5ab43ac77bf5863ad3fe3e1f97e97a0c58e20"
+      },
+      "m1": {
+        "bytes": 3390770,
+        "path": "target/m2/stage66-m1-platform-contract-01/report.json",
+        "sha256": "6c18f63a3a631849a8e85e9d6c1332d87be5b1ac44e1725a5ed977107a0559ad"
+      },
+      "native": {
+        "bytes": 38020,
+        "path": "target/m2/stage66-native-acquisition-01/report.json",
+        "sha256": "179a2551a3d16b0b6df9ea4f687d0c8c3a292b512bc0824e95b225904c41a6f9"
+      },
+      "node_locator_admission": {
+        "bytes": 1881,
+        "path": "target/m2/stage66-node-path-verification-amendment-02/amendment.json",
+        "sha256": "27afdf36b7c8228c5262414115d491ab2b36c9e587e76932e16408d2c5944617"
+      },
+      "original": {
+        "bytes": 2036353,
+        "path": "target/m2/stage66-original-reversal-01/report.json",
+        "sha256": "36a7a355f1e36bf02ff6cf99ad9b3219879ca4e7c5fa972c2cb11a1e787b371c"
+      },
+      "original_audit": {
+        "bytes": 628490,
+        "path": "target/m2/stage66-original-failure-audit-01/report.json",
+        "sha256": "79aa9ddc26cca06c96d44dfbff498098b26f234ac6e232b3c35f4aceefffa917"
+      },
+      "original_launch": {
+        "bytes": 9024,
+        "path": "target/m2/stage66-original-reversal-launch-02/report.json",
+        "sha256": "06679f22efe6f8601cbe7f49ddbf4e3d2b9f19da7e813cc136ae459a0d2ecb5d"
+      },
+      "platform": {
+        "bytes": 333239,
+        "path": "target/m2/stage66-platform-validation-01/report.json",
+        "sha256": "6465f554b0eb4c027a33c4305218df75632d28ce1fb457a7f4f394ae4f2ebac8"
+      },
+      "review": {
+        "bytes": 6831,
+        "path": "target/m2/stage66-review-01/report.json",
+        "sha256": "db3e092e218087998effbb666be0300a20b06b5fbe08294c1f050c630c507e07"
+      },
+      "runtime_sources": {
+        "bytes": 46589,
+        "path": "target/m2/stage66-core-freeze-01/source-snapshot.json",
+        "sha256": "3ec14f5ec8cb01541c1fd1e8b52a7ee66cc23c23003a877fbabad16d4bf46e01"
+      },
+      "rust": {
+        "bytes": 6463,
+        "path": "target/m2/stage66-rust-validation-01/report.json",
+        "sha256": "3d31eb2bb304c016b159ee2ee32adfd41b60b36717eb3a2356cabbd1a1d30b79"
+      }
+    },
+    "m1": {
+      "compatibility_status": "fail",
+      "experiment_contract_status": "pass",
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "originals": {
+      "added1_statuses": {
+        "mismatch": 1
+      },
+      "added_case_ids": [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/stringUnicode.pkl"
+      ],
+      "blocked_required": 2,
+      "integrity_status": "passed",
+      "java_heap_option": "-Xmx512m",
+      "prior130_pass_regressions": [],
+      "prior130_status_transitions": {
+        "candidate-unsupported->candidate-unsupported": 31,
+        "mismatch->mismatch": 17,
+        "mismatch->pass": 7,
+        "oracle-error->oracle-error": 1,
+        "pass->pass": 74
+      },
+      "selected": 131,
+      "selected_status": "failed",
+      "statuses": {
+        "candidate-unsupported": 31,
+        "mismatch": 18,
+        "oracle-error": 1,
+        "pass": 81
+      }
+    },
+    "post_capture_node_locator_admission": {
+      "explicit_full_api_gate_exit": 1,
+      "guest_reexecutions": 0,
+      "raw_guest_channels_modified": false,
+      "report": {
+        "bytes": 1881,
+        "path": "target/m2/stage66-node-path-verification-amendment-02/amendment.json",
+        "sha256": "27afdf36b7c8228c5262414115d491ab2b36c9e587e76932e16408d2c5944617"
+      }
+    },
+    "rust": {
+      "copied_sources": 16,
+      "git_linked_sources": 165524,
+      "nested_reruns": 13,
+      "raw": {
+        "failed": 0,
+        "ignored": 2,
+        "passed": 1017
+      },
+      "source_count": 165540,
+      "unique": {
+        "failed": 0,
+        "ignored": 2,
+        "passed": 1004
+      }
+    },
+    "tooling": {
+      "catalog": {
+        "commands": [
+          {
+            "command": [
+              "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_collection_conversions_compare",
+              "tools.tests.test_collection_conversions_portable_compare",
+              "tools.tests.test_data_size_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 43
+          },
+          {
+            "command": [
+              "/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+              "-B",
+              "-O",
+              "-m",
+              "unittest",
+              "tools.tests.test_collection_conversions_compare",
+              "tools.tests.test_collection_conversions_portable_compare",
+              "tools.tests.test_data_size_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 43
+          },
+          {
+            "command": [
+              "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+              "--test",
+              "tools/platform/capture-collection-conversions.test.mjs"
+            ],
+            "javascript_test_count": 11,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 4139,
+          "path": "target/m2/stage66-catalog-validation-02/report.json",
+          "sha256": "80047131014f26d7f3134e16ea2c440b97a80cc465001ef17dd67dd17f4d9349"
+        }
+      },
+      "http_admission": {
+        "commands": [
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_data_size_portable_compare",
+              "tools.tests.test_int_seq_values_portable_compare",
+              "tools.tests.test_bytes_values_portable_compare",
+              "tools.tests.test_duration_values_portable_compare",
+              "tools.tests.test_any_if_non_null_portable_compare",
+              "tools.tests.test_collection_conversions_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 56
+          },
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "-O",
+              "-m",
+              "unittest",
+              "tools.tests.test_data_size_portable_compare",
+              "tools.tests.test_int_seq_values_portable_compare",
+              "tools.tests.test_bytes_values_portable_compare",
+              "tools.tests.test_duration_values_portable_compare",
+              "tools.tests.test_any_if_non_null_portable_compare",
+              "tools.tests.test_collection_conversions_portable_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 56
+          },
+          {
+            "command": [
+              "/opt/homebrew/opt/python@3.14/bin/python3.14",
+              "-B",
+              "tools/inventory.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 74689,
+          "path": "target/m2/stage66-http-validation-01/report.json",
+          "sha256": "e995838f52e9ff21a670d49d8754a9a6b4f21ebf6bd16ebe375fe267cb4e973a"
+        }
+      },
+      "mapping": {
+        "commands": [
+          {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_m2_mappings"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 8
+          },
+          {
+            "command": [
+              "python3",
+              "-O",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_m2_mappings"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 8
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "tools/m2_manifest.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "tools/inventory.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 7521,
+          "path": "target/m2/stage66-mapping-validation-01/report.json",
+          "sha256": "015dfb872d71f7845156c887fc92078224e38034d3fb0e190aaf4aaf559db18a"
+        }
+      },
+      "union_native_portable": {
+        "commands": [
+          {
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_union_marker_fixtures",
+              "tools.tests.test_union_marker_portable_compare",
+              "tools.tests.test_union_marker_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 17
+          },
+          {
+            "command": [
+              "python3",
+              "-O",
+              "-B",
+              "-m",
+              "unittest",
+              "tools.tests.test_union_marker_fixtures",
+              "tools.tests.test_union_marker_portable_compare",
+              "tools.tests.test_union_marker_compare"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": 17
+          },
+          {
+            "command": [
+              "node",
+              "--test",
+              "tools/platform/capture-union-marker-modules.test.mjs"
+            ],
+            "javascript_test_count": 4,
+            "python_test_count": null
+          },
+          {
+            "command": [
+              "python3",
+              "-B",
+              "tools/inventory.py",
+              "--check"
+            ],
+            "javascript_test_count": null,
+            "python_test_count": null
+          }
+        ],
+        "report": {
+          "bytes": 22383,
+          "path": "target/m2/stage66-union-marker-portable-tool-development-04/report.json",
+          "sha256": "3199527d26c23b95c0e3a787a4897f53e781490874bf764cc2c9d5c717440ec5"
+        }
+      }
+    },
+    "union_modules": 40,
+    "union_observations_per_target": 80
+  },
+  "schema": 1,
+  "scope": "Local shared runtime reversal and diagnostic checkpoint; full M2 remains open."
+}

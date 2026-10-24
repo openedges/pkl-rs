@@ -135,7 +135,12 @@ impl Parser<'_> {
                     self.advance()?;
                     if self.is_symbol('*') {
                         if union.default.is_some() {
-                            return Err(self.unexpected(Some("single union default")));
+                            return Err(Diagnostic::language(
+                                DiagnosticOrigin::Parser,
+                                super::DiagnosticKind::Syntax,
+                                self.token.span,
+                                "A type union cannot have more than one default type.",
+                            ));
                         }
                         union.default = Some(union.types.len());
                         self.advance()?;
@@ -145,7 +150,12 @@ impl Parser<'_> {
                     work.push(Work::Atom(expectation));
                 } else if union.types.len() == 1 {
                     if union.default.is_some() {
-                        return Err(self.unexpected(Some("|")));
+                        return Err(Diagnostic::language(
+                            DiagnosticOrigin::Parser,
+                            super::DiagnosticKind::Syntax,
+                            Span::new(union.start, union.types[0].span.end),
+                            "Only type unions can have a default marker (*).",
+                        ));
                     }
                     values.push(Parsed {
                         ty: union.types.pop().unwrap(),

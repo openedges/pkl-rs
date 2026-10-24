@@ -324,6 +324,22 @@ class PortableCollectionConversionComparisonTests(unittest.TestCase):
              {'success': 49, 'error': 23},
              'repeat-0/000-module-self-type/result.stdout.code-units.bin',
              'ModuleClass'.encode('utf-16-be')),
+            ('file:///stage66/reversal-values.pkl', 78,
+             {'success': 45, 'error': 33},
+             'repeat-0/009-str-low-high/result.stdout.code-units.bin',
+             bytes.fromhex('d800dc00')),
+            ('file:///stage66/reversal-implicit.pkl', 8,
+             {'success': 6, 'error': 2},
+             'repeat-0/000-list-implicit/result.stdout.code-units.bin',
+             'List(1, 2)'.encode('utf-16-be')),
+            ('file:///stage66/reversal-subscript.pkl', 19,
+             {'success': 1, 'error': 18},
+             'repeat-0/013-high-surrogate-in/result.stdout.code-units.bin',
+             bytes.fromhex('d800')),
+            ('file:///stage66/base-constructors-in-constraints.pkl', 36,
+             {'success': 20, 'error': 16},
+             'repeat-0/000-list/result.stdout.code-units.bin',
+             '1'.encode('utf-16-be')),
         ):
             with self.subTest(uri=uri):
                 fixture = compare.ROOT / compare.profiles.PROFILES[uri]['fixture']
