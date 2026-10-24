@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage61/list-add-prerequisite.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "empty-add",
+      "group": "basic",
+      "expression": "List().add(1)",
+      "mode": "string"
+    },
+    {
+      "id": "nonempty-add",
+      "group": "basic",
+      "expression": "List(1,2).add(3)",
+      "mode": "string"
+    },
+    {
+      "id": "empty-length",
+      "group": "basic",
+      "expression": "List().add(1).length",
+      "mode": "string"
+    },
+    {
+      "id": "nonempty-last",
+      "group": "basic",
+      "expression": "List(1,2).add(3).last",
+      "mode": "string"
+    },
+    {
+      "id": "nested-add",
+      "group": "basic",
+      "expression": "List().add(1).add(2)",
+      "mode": "string"
+    },
+    {
+      "id": "add-list-element",
+      "group": "basic",
+      "expression": "List().add(List(1,2))",
+      "mode": "string"
+    },
+    {
+      "id": "add-null-empty",
+      "group": "null",
+      "expression": "List().add(null)",
+      "mode": "string"
+    },
+    {
+      "id": "add-null-nonempty",
+      "group": "null",
+      "expression": "List(1).add(null)",
+      "mode": "string"
+    },
+    {
+      "id": "null-last",
+      "group": "null",
+      "expression": "List(1).add(null).last == null",
+      "mode": "string"
+    },
+    {
+      "id": "object-first",
+      "group": "object",
+      "expression": "List(new Item { value = 4 }).add(new Item { value = 5 })[0].value",
+      "mode": "string"
+    },
+    {
+      "id": "object-last",
+      "group": "object",
+      "expression": "List(new Item { value = 4 }).add(new Item { value = 5 })[1].value",
+      "mode": "string"
+    },
+    {
+      "id": "object-reference-value",
+      "group": "object",
+      "expression": "let (x = new Item { value = 42 }) List(x).add(x)[1].value",
+      "mode": "string"
+    },
+    {
+      "id": "lazy-first-skipped",
+      "group": "lazy",
+      "expression": "List(new Item { value = throw(\"lazy-first\") }).add(new Item { value = 4 }).last.value",
+      "mode": "string"
+    },
+    {
+      "id": "lazy-first-forced",
+      "group": "lazy",
+      "expression": "List(new Item { value = throw(\"lazy-first\") }).add(new Item { value = 4 }).first.value",
+      "mode": "string"
+    },
+    {
+      "id": "wrong-arity-empty",
+      "group": "arity",
+      "expression": "List().add()",
+      "mode": "string"
+    },
+    {
+      "id": "wrong-arity-two",
+      "group": "arity",
+      "expression": "List().add(1,2)",
+      "mode": "string"
+    },
+    {
+      "id": "argument-error",
+      "group": "error-order",
+      "expression": "List().add(throw(\"add-error\"))",
+      "mode": "string"
+    },
+    {
+      "id": "first-add-error",
+      "group": "error-order",
+      "expression": "List().add(throw(\"first-add\")).add(throw(\"second-add\"))",
+      "mode": "string"
+    },
+    {
+      "id": "list-before-add-error",
+      "group": "error-order",
+      "expression": "List(throw(\"list-first\")).add(throw(\"add-second\"))",
+      "mode": "string"
+    },
+    {
+      "id": "add-before-fold-error",
+      "group": "error-order",
+      "expression": "List(1).add(throw(\"add-first\")).fold(0,(acc,n)->throw(\"fold-second\"))",
+      "mode": "string"
+    },
+    {
+      "id": "fold-after-add-error",
+      "group": "error-order",
+      "expression": "List(1).add(2).fold(0,(acc,n)->throw(\"fold-callback\"))",
+      "mode": "string"
+    }
+  ]
+}

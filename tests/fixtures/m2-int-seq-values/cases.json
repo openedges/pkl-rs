@@ -1,0 +1,1432 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage61/intseq-values.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "asc-start",
+      "group": "properties",
+      "expression": "IntSeq(1, 4).start",
+      "mode": "string"
+    },
+    {
+      "id": "asc-end",
+      "group": "properties",
+      "expression": "IntSeq(1, 4).end",
+      "mode": "string"
+    },
+    {
+      "id": "asc-step",
+      "group": "properties",
+      "expression": "IntSeq(1, 4).step",
+      "mode": "string"
+    },
+    {
+      "id": "asc-string",
+      "group": "representation",
+      "expression": "IntSeq(1, 4).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "zero-start",
+      "group": "properties",
+      "expression": "IntSeq(0, 0).start",
+      "mode": "string"
+    },
+    {
+      "id": "zero-end",
+      "group": "properties",
+      "expression": "IntSeq(0, 0).end",
+      "mode": "string"
+    },
+    {
+      "id": "zero-step",
+      "group": "properties",
+      "expression": "IntSeq(0, 0).step",
+      "mode": "string"
+    },
+    {
+      "id": "zero-string",
+      "group": "representation",
+      "expression": "IntSeq(0, 0).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "one-start",
+      "group": "properties",
+      "expression": "IntSeq(1, 1).start",
+      "mode": "string"
+    },
+    {
+      "id": "one-end",
+      "group": "properties",
+      "expression": "IntSeq(1, 1).end",
+      "mode": "string"
+    },
+    {
+      "id": "one-step",
+      "group": "properties",
+      "expression": "IntSeq(1, 1).step",
+      "mode": "string"
+    },
+    {
+      "id": "one-string",
+      "group": "representation",
+      "expression": "IntSeq(1, 1).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "empty-start",
+      "group": "properties",
+      "expression": "IntSeq(5, 2).start",
+      "mode": "string"
+    },
+    {
+      "id": "empty-end",
+      "group": "properties",
+      "expression": "IntSeq(5, 2).end",
+      "mode": "string"
+    },
+    {
+      "id": "empty-step",
+      "group": "properties",
+      "expression": "IntSeq(5, 2).step",
+      "mode": "string"
+    },
+    {
+      "id": "empty-string",
+      "group": "representation",
+      "expression": "IntSeq(5, 2).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "empty-neg-start",
+      "group": "properties",
+      "expression": "IntSeq(0, 2).step(-1).start",
+      "mode": "string"
+    },
+    {
+      "id": "empty-neg-end",
+      "group": "properties",
+      "expression": "IntSeq(0, 2).step(-1).end",
+      "mode": "string"
+    },
+    {
+      "id": "empty-neg-step",
+      "group": "properties",
+      "expression": "IntSeq(0, 2).step(-1).step",
+      "mode": "string"
+    },
+    {
+      "id": "empty-neg-string",
+      "group": "representation",
+      "expression": "IntSeq(0, 2).step(-1).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "desc-start",
+      "group": "properties",
+      "expression": "IntSeq(5, 1).step(-1).start",
+      "mode": "string"
+    },
+    {
+      "id": "desc-end",
+      "group": "properties",
+      "expression": "IntSeq(5, 1).step(-1).end",
+      "mode": "string"
+    },
+    {
+      "id": "desc-step",
+      "group": "properties",
+      "expression": "IntSeq(5, 1).step(-1).step",
+      "mode": "string"
+    },
+    {
+      "id": "desc-string",
+      "group": "representation",
+      "expression": "IntSeq(5, 1).step(-1).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "desc-two-start",
+      "group": "properties",
+      "expression": "IntSeq(5, 0).step(-2).start",
+      "mode": "string"
+    },
+    {
+      "id": "desc-two-end",
+      "group": "properties",
+      "expression": "IntSeq(5, 0).step(-2).end",
+      "mode": "string"
+    },
+    {
+      "id": "desc-two-step",
+      "group": "properties",
+      "expression": "IntSeq(5, 0).step(-2).step",
+      "mode": "string"
+    },
+    {
+      "id": "desc-two-string",
+      "group": "representation",
+      "expression": "IntSeq(5, 0).step(-2).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "asc-two-start",
+      "group": "properties",
+      "expression": "IntSeq(0, 5).step(2).start",
+      "mode": "string"
+    },
+    {
+      "id": "asc-two-end",
+      "group": "properties",
+      "expression": "IntSeq(0, 5).step(2).end",
+      "mode": "string"
+    },
+    {
+      "id": "asc-two-step",
+      "group": "properties",
+      "expression": "IntSeq(0, 5).step(2).step",
+      "mode": "string"
+    },
+    {
+      "id": "asc-two-string",
+      "group": "representation",
+      "expression": "IntSeq(0, 5).step(2).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "asc-over-start",
+      "group": "properties",
+      "expression": "IntSeq(0, 1).step(3).start",
+      "mode": "string"
+    },
+    {
+      "id": "asc-over-end",
+      "group": "properties",
+      "expression": "IntSeq(0, 1).step(3).end",
+      "mode": "string"
+    },
+    {
+      "id": "asc-over-step",
+      "group": "properties",
+      "expression": "IntSeq(0, 1).step(3).step",
+      "mode": "string"
+    },
+    {
+      "id": "asc-over-string",
+      "group": "representation",
+      "expression": "IntSeq(0, 1).step(3).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "cross-start",
+      "group": "properties",
+      "expression": "IntSeq(-3, 2).step(2).start",
+      "mode": "string"
+    },
+    {
+      "id": "cross-end",
+      "group": "properties",
+      "expression": "IntSeq(-3, 2).step(2).end",
+      "mode": "string"
+    },
+    {
+      "id": "cross-step",
+      "group": "properties",
+      "expression": "IntSeq(-3, 2).step(2).step",
+      "mode": "string"
+    },
+    {
+      "id": "cross-string",
+      "group": "representation",
+      "expression": "IntSeq(-3, 2).step(2).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "min-single-start",
+      "group": "properties",
+      "expression": "IntSeq(minInt, minInt).start",
+      "mode": "string"
+    },
+    {
+      "id": "min-single-end",
+      "group": "properties",
+      "expression": "IntSeq(minInt, minInt).end",
+      "mode": "string"
+    },
+    {
+      "id": "min-single-step",
+      "group": "properties",
+      "expression": "IntSeq(minInt, minInt).step",
+      "mode": "string"
+    },
+    {
+      "id": "min-single-string",
+      "group": "representation",
+      "expression": "IntSeq(minInt, minInt).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "max-single-start",
+      "group": "properties",
+      "expression": "IntSeq(maxInt, maxInt).start",
+      "mode": "string"
+    },
+    {
+      "id": "max-single-end",
+      "group": "properties",
+      "expression": "IntSeq(maxInt, maxInt).end",
+      "mode": "string"
+    },
+    {
+      "id": "max-single-step",
+      "group": "properties",
+      "expression": "IntSeq(maxInt, maxInt).step",
+      "mode": "string"
+    },
+    {
+      "id": "max-single-string",
+      "group": "representation",
+      "expression": "IntSeq(maxInt, maxInt).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-up-start",
+      "group": "properties",
+      "expression": "IntSeq(minInt, maxInt).step(maxInt).start",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-up-end",
+      "group": "properties",
+      "expression": "IntSeq(minInt, maxInt).step(maxInt).end",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-up-step",
+      "group": "properties",
+      "expression": "IntSeq(minInt, maxInt).step(maxInt).step",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-up-string",
+      "group": "representation",
+      "expression": "IntSeq(minInt, maxInt).step(maxInt).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-down-start",
+      "group": "properties",
+      "expression": "IntSeq(maxInt, minInt).step(minInt).start",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-down-end",
+      "group": "properties",
+      "expression": "IntSeq(maxInt, minInt).step(minInt).end",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-down-step",
+      "group": "properties",
+      "expression": "IntSeq(maxInt, minInt).step(minInt).step",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-down-string",
+      "group": "representation",
+      "expression": "IntSeq(maxInt, minInt).step(minInt).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "min-step-empty-start",
+      "group": "properties",
+      "expression": "IntSeq(0, 1).step(minInt).start",
+      "mode": "string"
+    },
+    {
+      "id": "min-step-empty-end",
+      "group": "properties",
+      "expression": "IntSeq(0, 1).step(minInt).end",
+      "mode": "string"
+    },
+    {
+      "id": "min-step-empty-step",
+      "group": "properties",
+      "expression": "IntSeq(0, 1).step(minInt).step",
+      "mode": "string"
+    },
+    {
+      "id": "min-step-empty-string",
+      "group": "representation",
+      "expression": "IntSeq(0, 1).step(minInt).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "asc-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(1, 4).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "asc-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(1, 4).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "asc-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(1, 4).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "asc-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(1, 4).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "zero-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 0).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "zero-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 0).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "zero-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 0).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "zero-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 0).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "one-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(1, 1).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "one-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(1, 1).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "one-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(1, 1).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "one-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(1, 1).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "empty-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(5, 2).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "empty-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(5, 2).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "empty-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(5, 2).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "empty-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(5, 2).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "empty-neg-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 2).step(-1).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "empty-neg-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 2).step(-1).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "empty-neg-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 2).step(-1).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "empty-neg-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 2).step(-1).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "desc-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(5, 1).step(-1).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "desc-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(5, 1).step(-1).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "desc-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(5, 1).step(-1).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "desc-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(5, 1).step(-1).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "desc-two-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(5, 0).step(-2).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "desc-two-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(5, 0).step(-2).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "desc-two-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(5, 0).step(-2).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "desc-two-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(5, 0).step(-2).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "asc-two-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 5).step(2).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "asc-two-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 5).step(2).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "asc-two-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 5).step(2).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "asc-two-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 5).step(2).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "asc-over-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 1).step(3).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "asc-over-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 1).step(3).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "asc-over-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 1).step(3).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "asc-over-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 1).step(3).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "cross-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(-3, 2).step(2).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "cross-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(-3, 2).step(2).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "cross-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(-3, 2).step(2).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "cross-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(-3, 2).step(2).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "min-single-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(minInt, minInt).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "min-single-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(minInt, minInt).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "min-single-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(minInt, minInt).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "min-single-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(minInt, minInt).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "max-single-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(maxInt, maxInt).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "max-single-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(maxInt, maxInt).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "max-single-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(maxInt, maxInt).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "max-single-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(maxInt, maxInt).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-up-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(minInt, maxInt).step(maxInt).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-up-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(minInt, maxInt).step(maxInt).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-up-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(minInt, maxInt).step(maxInt).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-down-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(maxInt, minInt).step(minInt).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-down-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(maxInt, minInt).step(minInt).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-down-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(maxInt, minInt).step(minInt).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "min-step-empty-list",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 1).step(minInt).toList()",
+      "mode": "string"
+    },
+    {
+      "id": "min-step-empty-map",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 1).step(minInt).map((n) -> n)",
+      "mode": "string"
+    },
+    {
+      "id": "min-step-empty-fold",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 1).step(minInt).fold(List(), (acc, n) -> acc.add(n))",
+      "mode": "string"
+    },
+    {
+      "id": "min-step-empty-listing",
+      "group": "bounded-iteration",
+      "expression": "IntSeq(0, 1).step(minInt).toListing()",
+      "mode": "string"
+    },
+    {
+      "id": "eq-same",
+      "group": "equality-hash",
+      "expression": "IntSeq(2,5) == IntSeq(2,5)",
+      "mode": "string"
+    },
+    {
+      "id": "neq-same",
+      "group": "equality-hash",
+      "expression": "IntSeq(2,5) != IntSeq(2,5)",
+      "mode": "string"
+    },
+    {
+      "id": "eq-different",
+      "group": "equality-hash",
+      "expression": "IntSeq(2,5) == IntSeq(2,6)",
+      "mode": "string"
+    },
+    {
+      "id": "neq-different",
+      "group": "equality-hash",
+      "expression": "IntSeq(2,5) != IntSeq(2,6)",
+      "mode": "string"
+    },
+    {
+      "id": "eq-empty-origins",
+      "group": "equality-hash",
+      "expression": "IntSeq(5,2) == IntSeq(100,0)",
+      "mode": "string"
+    },
+    {
+      "id": "neq-empty-origins",
+      "group": "equality-hash",
+      "expression": "IntSeq(5,2) != IntSeq(100,0)",
+      "mode": "string"
+    },
+    {
+      "id": "eq-empty-direction",
+      "group": "equality-hash",
+      "expression": "IntSeq(5,2) == IntSeq(0,2).step(-1)",
+      "mode": "string"
+    },
+    {
+      "id": "neq-empty-direction",
+      "group": "equality-hash",
+      "expression": "IntSeq(5,2) != IntSeq(0,2).step(-1)",
+      "mode": "string"
+    },
+    {
+      "id": "eq-aligned-end-up",
+      "group": "equality-hash",
+      "expression": "IntSeq(0,4).step(2) == IntSeq(0,5).step(2)",
+      "mode": "string"
+    },
+    {
+      "id": "neq-aligned-end-up",
+      "group": "equality-hash",
+      "expression": "IntSeq(0,4).step(2) != IntSeq(0,5).step(2)",
+      "mode": "string"
+    },
+    {
+      "id": "eq-aligned-end-down",
+      "group": "equality-hash",
+      "expression": "IntSeq(5,1).step(-2) == IntSeq(5,0).step(-2)",
+      "mode": "string"
+    },
+    {
+      "id": "neq-aligned-end-down",
+      "group": "equality-hash",
+      "expression": "IntSeq(5,1).step(-2) != IntSeq(5,0).step(-2)",
+      "mode": "string"
+    },
+    {
+      "id": "eq-singleton-step",
+      "group": "equality-hash",
+      "expression": "IntSeq(1,1) == IntSeq(1,1).step(2)",
+      "mode": "string"
+    },
+    {
+      "id": "neq-singleton-step",
+      "group": "equality-hash",
+      "expression": "IntSeq(1,1) != IntSeq(1,1).step(2)",
+      "mode": "string"
+    },
+    {
+      "id": "eq-singleton-negative",
+      "group": "equality-hash",
+      "expression": "IntSeq(1,1) == IntSeq(1,1).step(-1)",
+      "mode": "string"
+    },
+    {
+      "id": "neq-singleton-negative",
+      "group": "equality-hash",
+      "expression": "IntSeq(1,1) != IntSeq(1,1).step(-1)",
+      "mode": "string"
+    },
+    {
+      "id": "eq-nondivisible-step",
+      "group": "equality-hash",
+      "expression": "IntSeq(0,5).step(2) == IntSeq(0,4).step(2)",
+      "mode": "string"
+    },
+    {
+      "id": "neq-nondivisible-step",
+      "group": "equality-hash",
+      "expression": "IntSeq(0,5).step(2) != IntSeq(0,4).step(2)",
+      "mode": "string"
+    },
+    {
+      "id": "eq-opposite-direction",
+      "group": "equality-hash",
+      "expression": "IntSeq(1,3) == IntSeq(3,1).step(-1)",
+      "mode": "string"
+    },
+    {
+      "id": "neq-opposite-direction",
+      "group": "equality-hash",
+      "expression": "IntSeq(1,3) != IntSeq(3,1).step(-1)",
+      "mode": "string"
+    },
+    {
+      "id": "eq-cross-type-list",
+      "group": "equality-hash",
+      "expression": "IntSeq(1,3) == List(1,2,3)",
+      "mode": "string"
+    },
+    {
+      "id": "neq-cross-type-list",
+      "group": "equality-hash",
+      "expression": "IntSeq(1,3) != List(1,2,3)",
+      "mode": "string"
+    },
+    {
+      "id": "eq-extreme-up-self",
+      "group": "equality-hash",
+      "expression": "IntSeq(minInt,maxInt).step(maxInt) == IntSeq(minInt,maxInt).step(maxInt)",
+      "mode": "string"
+    },
+    {
+      "id": "neq-extreme-up-self",
+      "group": "equality-hash",
+      "expression": "IntSeq(minInt,maxInt).step(maxInt) != IntSeq(minInt,maxInt).step(maxInt)",
+      "mode": "string"
+    },
+    {
+      "id": "set-empty",
+      "group": "equality-hash",
+      "expression": "Set(IntSeq(5,2),IntSeq(100,0)).length",
+      "mode": "string"
+    },
+    {
+      "id": "set-aligned",
+      "group": "equality-hash",
+      "expression": "Set(IntSeq(0,4).step(2),IntSeq(0,5).step(2)).length",
+      "mode": "string"
+    },
+    {
+      "id": "set-singleton-step",
+      "group": "equality-hash",
+      "expression": "Set(IntSeq(1,1),IntSeq(1,1).step(2)).length",
+      "mode": "string"
+    },
+    {
+      "id": "map-empty",
+      "group": "equality-hash",
+      "expression": "Map(IntSeq(5,2),\"a\",IntSeq(100,0),\"b\").length",
+      "mode": "string"
+    },
+    {
+      "id": "map-aligned",
+      "group": "equality-hash",
+      "expression": "Map(IntSeq(0,4).step(2),\"a\",IntSeq(0,5).step(2),\"b\").length",
+      "mode": "string"
+    },
+    {
+      "id": "map-singleton-step",
+      "group": "equality-hash",
+      "expression": "Map(IntSeq(1,1),\"a\",IntSeq(1,1).step(2),\"b\").length",
+      "mode": "string"
+    },
+    {
+      "id": "set-threshold-five",
+      "group": "equality-hash",
+      "expression": "Set(IntSeq(1,1),IntSeq(2,2),IntSeq(3,3),IntSeq(4,4),IntSeq(1,1)).length",
+      "mode": "string"
+    },
+    {
+      "id": "for-values-asc",
+      "group": "generator",
+      "expression": "new Listing { for (n in IntSeq(1,3)) { n } }",
+      "mode": "string"
+    },
+    {
+      "id": "for-pairs-asc",
+      "group": "generator",
+      "expression": "new Listing { for (i, n in IntSeq(1,3)) { Pair(i,n) } }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-listing-asc",
+      "group": "generator",
+      "expression": "new Listing { ...IntSeq(1,3) }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-dynamic-asc",
+      "group": "generator",
+      "expression": "new Dynamic { ...IntSeq(1,3) }",
+      "mode": "string"
+    },
+    {
+      "id": "for-values-empty",
+      "group": "generator",
+      "expression": "new Listing { for (n in IntSeq(3,1)) { n } }",
+      "mode": "string"
+    },
+    {
+      "id": "for-pairs-empty",
+      "group": "generator",
+      "expression": "new Listing { for (i, n in IntSeq(3,1)) { Pair(i,n) } }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-listing-empty",
+      "group": "generator",
+      "expression": "new Listing { ...IntSeq(3,1) }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-dynamic-empty",
+      "group": "generator",
+      "expression": "new Dynamic { ...IntSeq(3,1) }",
+      "mode": "string"
+    },
+    {
+      "id": "for-values-desc",
+      "group": "generator",
+      "expression": "new Listing { for (n in IntSeq(3,1).step(-1)) { n } }",
+      "mode": "string"
+    },
+    {
+      "id": "for-pairs-desc",
+      "group": "generator",
+      "expression": "new Listing { for (i, n in IntSeq(3,1).step(-1)) { Pair(i,n) } }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-listing-desc",
+      "group": "generator",
+      "expression": "new Listing { ...IntSeq(3,1).step(-1) }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-dynamic-desc",
+      "group": "generator",
+      "expression": "new Dynamic { ...IntSeq(3,1).step(-1) }",
+      "mode": "string"
+    },
+    {
+      "id": "for-values-step",
+      "group": "generator",
+      "expression": "new Listing { for (n in IntSeq(0,5).step(2)) { n } }",
+      "mode": "string"
+    },
+    {
+      "id": "for-pairs-step",
+      "group": "generator",
+      "expression": "new Listing { for (i, n in IntSeq(0,5).step(2)) { Pair(i,n) } }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-listing-step",
+      "group": "generator",
+      "expression": "new Listing { ...IntSeq(0,5).step(2) }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-dynamic-step",
+      "group": "generator",
+      "expression": "new Dynamic { ...IntSeq(0,5).step(2) }",
+      "mode": "string"
+    },
+    {
+      "id": "for-values-extreme-up",
+      "group": "generator",
+      "expression": "new Listing { for (n in IntSeq(minInt, maxInt).step(maxInt)) { n } }",
+      "mode": "string"
+    },
+    {
+      "id": "for-pairs-extreme-up",
+      "group": "generator",
+      "expression": "new Listing { for (i, n in IntSeq(minInt, maxInt).step(maxInt)) { Pair(i,n) } }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-listing-extreme-up",
+      "group": "generator",
+      "expression": "new Listing { ...IntSeq(minInt, maxInt).step(maxInt) }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-dynamic-extreme-up",
+      "group": "generator",
+      "expression": "new Dynamic { ...IntSeq(minInt, maxInt).step(maxInt) }",
+      "mode": "string"
+    },
+    {
+      "id": "for-values-extreme-down",
+      "group": "generator",
+      "expression": "new Listing { for (n in IntSeq(maxInt, minInt).step(minInt)) { n } }",
+      "mode": "string"
+    },
+    {
+      "id": "for-pairs-extreme-down",
+      "group": "generator",
+      "expression": "new Listing { for (i, n in IntSeq(maxInt, minInt).step(minInt)) { Pair(i,n) } }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-listing-extreme-down",
+      "group": "generator",
+      "expression": "new Listing { ...IntSeq(maxInt, minInt).step(minInt) }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-dynamic-extreme-down",
+      "group": "generator",
+      "expression": "new Dynamic { ...IntSeq(maxInt, minInt).step(minInt) }",
+      "mode": "string"
+    },
+    {
+      "id": "typed-for-key",
+      "group": "generator-errors",
+      "expression": "new Listing { for (i: String, n: Int in IntSeq(1,3)) { n } }",
+      "mode": "string"
+    },
+    {
+      "id": "typed-for-value",
+      "group": "generator-errors",
+      "expression": "new Listing { for (i: Int, n: String in IntSeq(1,3)) { n } }",
+      "mode": "string"
+    },
+    {
+      "id": "typed-for-empty-key",
+      "group": "generator-errors",
+      "expression": "new Listing { for (i: String, n: Int in IntSeq(3,1)) { n } }",
+      "mode": "string"
+    },
+    {
+      "id": "typed-for-empty-value",
+      "group": "generator-errors",
+      "expression": "new Listing { for (i: Int, n: String in IntSeq(3,1)) { n } }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-mapping",
+      "group": "generator-errors",
+      "expression": "new Mapping { ...IntSeq(1,3) }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-empty-mapping",
+      "group": "generator-errors",
+      "expression": "new Mapping { ...IntSeq(3,1) }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-typed-object",
+      "group": "generator-errors",
+      "expression": "new SeqHolder { ...IntSeq(1,3) }",
+      "mode": "string"
+    },
+    {
+      "id": "spread-empty-typed-object",
+      "group": "generator-errors",
+      "expression": "new SeqHolder { ...IntSeq(3,1) }",
+      "mode": "string"
+    },
+    {
+      "id": "class",
+      "group": "any",
+      "expression": "IntSeq(1,3).getClass().simpleName",
+      "mode": "string"
+    },
+    {
+      "id": "string",
+      "group": "any",
+      "expression": "IntSeq(1,3).toString()",
+      "mode": "string"
+    },
+    {
+      "id": "ifnonnull-start",
+      "group": "any",
+      "expression": "IntSeq(1,3).ifNonNull((x) -> x.start)",
+      "mode": "string"
+    },
+    {
+      "id": "ifnonnull-length",
+      "group": "any",
+      "expression": "IntSeq(1,3).ifNonNull((x) -> x.length)",
+      "mode": "string"
+    },
+    {
+      "id": "is-intseq",
+      "group": "any",
+      "expression": "IntSeq(1,3) is IntSeq",
+      "mode": "string"
+    },
+    {
+      "id": "is-list",
+      "group": "any",
+      "expression": "IntSeq(1,3) is List",
+      "mode": "string"
+    },
+    {
+      "id": "as-intseq",
+      "group": "any",
+      "expression": "IntSeq(1,3) as IntSeq",
+      "mode": "string"
+    },
+    {
+      "id": "missing-length",
+      "group": "any",
+      "expression": "IntSeq(1,3).length",
+      "mode": "string"
+    },
+    {
+      "id": "missing-isempty",
+      "group": "any",
+      "expression": "IntSeq(1,3).isEmpty",
+      "mode": "string"
+    },
+    {
+      "id": "missing-subscript",
+      "group": "any",
+      "expression": "IntSeq(1,3)[0]",
+      "mode": "string"
+    },
+    {
+      "id": "missing-plus",
+      "group": "any",
+      "expression": "IntSeq(1,3) + IntSeq(4,5)",
+      "mode": "string"
+    },
+    {
+      "id": "missing-member",
+      "group": "any",
+      "expression": "IntSeq(1,3).missingField",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-basic-all",
+      "group": "original-bridges",
+      "expression": "IntSeq(0,255).toList().toBytes().sha256",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-basic-length",
+      "group": "original-bridges",
+      "expression": "IntSeq(0,255).toList().toBytes().length",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-basic-high-index",
+      "group": "original-bridges",
+      "expression": "IntSeq(0,255).toList().toBytes()[255]",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-api-mega-length",
+      "group": "original-bridges",
+      "expression": "IntSeq(0,999).map((_) -> 0).toBytes().length",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-api-mega-size",
+      "group": "original-bridges",
+      "expression": "IntSeq(0,999).map((_) -> 0).toBytes().size",
+      "mode": "string"
+    },
+    {
+      "id": "bytes-api-mega-hash",
+      "group": "original-bridges",
+      "expression": "IntSeq(0,999).map((_) -> 0).toBytes().sha256",
+      "mode": "string"
+    },
+    {
+      "id": "for-full-extreme-up",
+      "group": "original-bridges",
+      "expression": "new Listing { for (n in IntSeq(minInt,maxInt)) { n } }",
+      "mode": "string"
+    },
+    {
+      "id": "for-full-extreme-down",
+      "group": "original-bridges",
+      "expression": "new Listing { for (n in IntSeq(maxInt,minInt).step(-1)) { n } }",
+      "mode": "string"
+    },
+    {
+      "id": "ctor-arity-none",
+      "group": "errors",
+      "expression": "IntSeq()",
+      "mode": "string"
+    },
+    {
+      "id": "ctor-arity-one",
+      "group": "errors",
+      "expression": "IntSeq(1)",
+      "mode": "string"
+    },
+    {
+      "id": "ctor-arity-three",
+      "group": "errors",
+      "expression": "IntSeq(1,2,3)",
+      "mode": "string"
+    },
+    {
+      "id": "ctor-string-first",
+      "group": "errors",
+      "expression": "IntSeq(\"1\",2)",
+      "mode": "string"
+    },
+    {
+      "id": "ctor-string-second",
+      "group": "errors",
+      "expression": "IntSeq(1,\"2\")",
+      "mode": "string"
+    },
+    {
+      "id": "ctor-null-first",
+      "group": "errors",
+      "expression": "IntSeq(null,2)",
+      "mode": "string"
+    },
+    {
+      "id": "ctor-throw-first",
+      "group": "errors",
+      "expression": "IntSeq(throw(\"first\"),throw(\"second\"))",
+      "mode": "string"
+    },
+    {
+      "id": "ctor-throw-second",
+      "group": "errors",
+      "expression": "IntSeq(1,throw(\"second\"))",
+      "mode": "string"
+    },
+    {
+      "id": "step-zero",
+      "group": "errors",
+      "expression": "IntSeq(1,3).step(0)",
+      "mode": "string"
+    },
+    {
+      "id": "step-string",
+      "group": "errors",
+      "expression": "IntSeq(1,3).step(\"2\")",
+      "mode": "string"
+    },
+    {
+      "id": "step-null",
+      "group": "errors",
+      "expression": "IntSeq(1,3).step(null)",
+      "mode": "string"
+    },
+    {
+      "id": "step-missing",
+      "group": "errors",
+      "expression": "IntSeq(1,3).step()",
+      "mode": "string"
+    },
+    {
+      "id": "step-extra",
+      "group": "errors",
+      "expression": "IntSeq(1,3).step(1,2)",
+      "mode": "string"
+    },
+    {
+      "id": "step-throw",
+      "group": "errors",
+      "expression": "IntSeq(1,3).step(throw(\"step\"))",
+      "mode": "string"
+    },
+    {
+      "id": "map-missing",
+      "group": "errors",
+      "expression": "IntSeq(1,3).map()",
+      "mode": "string"
+    },
+    {
+      "id": "map-wrong-type",
+      "group": "errors",
+      "expression": "IntSeq(1,3).map(1)",
+      "mode": "string"
+    },
+    {
+      "id": "map-wrong-arity",
+      "group": "errors",
+      "expression": "IntSeq(1,3).map((a,b) -> a+b)",
+      "mode": "string"
+    },
+    {
+      "id": "map-empty-wrong-arity",
+      "group": "errors",
+      "expression": "IntSeq(3,1).map((a,b) -> a+b)",
+      "mode": "string"
+    },
+    {
+      "id": "map-callback-throw",
+      "group": "errors",
+      "expression": "IntSeq(1,3).map((n) -> throw(n.toString()))",
+      "mode": "string"
+    },
+    {
+      "id": "fold-missing",
+      "group": "errors",
+      "expression": "IntSeq(1,3).fold(0)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-wrong-type",
+      "group": "errors",
+      "expression": "IntSeq(1,3).fold(0,1)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-wrong-arity",
+      "group": "errors",
+      "expression": "IntSeq(1,3).fold(0,(a)->a)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-empty-wrong-arity",
+      "group": "errors",
+      "expression": "IntSeq(3,1).fold(0,(a)->a)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-empty-initial",
+      "group": "errors",
+      "expression": "IntSeq(3,1).fold(\"seed\",(a,n)->a+n.toString())",
+      "mode": "string"
+    },
+    {
+      "id": "fold-callback-throw",
+      "group": "errors",
+      "expression": "IntSeq(1,3).fold(0,(a,n)->throw(n.toString()))",
+      "mode": "string"
+    },
+    {
+      "id": "tolist-extra",
+      "group": "errors",
+      "expression": "IntSeq(1,3).toList(1)",
+      "mode": "string"
+    },
+    {
+      "id": "tolisting-extra",
+      "group": "errors",
+      "expression": "IntSeq(1,3).toListing(1)",
+      "mode": "string"
+    },
+    {
+      "id": "new-intseq",
+      "group": "errors",
+      "expression": "new IntSeq {}",
+      "mode": "string"
+    },
+    {
+      "id": "extreme-up-listing",
+      "group": "bounded-iteration",
+      "mode": "string",
+      "expression": "IntSeq(minInt,maxInt).step(maxInt).toListing()"
+    },
+    {
+      "id": "extreme-down-listing",
+      "group": "bounded-iteration",
+      "mode": "string",
+      "expression": "IntSeq(maxInt,minInt).step(minInt).toListing()"
+    },
+    {
+      "id": "render-direct-asc",
+      "group": "representation",
+      "mode": "string",
+      "expression": "IntSeq(1,4)"
+    },
+    {
+      "id": "render-direct-empty",
+      "group": "representation",
+      "mode": "string",
+      "expression": "IntSeq(5,2)"
+    },
+    {
+      "id": "render-direct-desc",
+      "group": "representation",
+      "mode": "string",
+      "expression": "IntSeq(5,1).step(-1)"
+    },
+    {
+      "id": "render-direct-extreme",
+      "group": "representation",
+      "mode": "string",
+      "expression": "IntSeq(minInt,maxInt).step(maxInt)"
+    },
+    {
+      "id": "explicit-unit-step-string",
+      "group": "representation",
+      "mode": "string",
+      "expression": "IntSeq(1,3).step(1).toString()"
+    },
+    {
+      "id": "chained-step-string",
+      "group": "representation",
+      "mode": "string",
+      "expression": "IntSeq(1,3).step(2).step(-1).toString()"
+    }
+  ],
+  "materialization_policy": "No full materialization of unbounded extremes. Small and modulo-bounded IntSeq cases only; default full-range extremes are used only in bounded for-generators."
+}

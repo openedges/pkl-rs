@@ -1782,6 +1782,33 @@ runtime 입력 165,254개가 그 커밋과 일치하고 문서 네 개가 기록
 [별도 증거](reports/m2/stage60-source-binding-evidence.tar.gz)에 보존했습니다.
 이 대조는 평가·검사를 다시 실행한 결과가 아닙니다.
 
+### Stage 61 — `IntSeq`와 원본 프로그램의 선행 기능
+
+Stage 60에서 남은 Bytes·Any의 IntSeq 의존성을 공통 런타임에 구현합니다.
+구현은 `gpt-6-astra / xhigh`, 독립 Java 기준과 검토는 각각
+`gpt-6-sol / high`에 배정합니다. 생성·`start`·`end`·`step`, `step()`·`fold`·
+`map`·`toList`·`toListing`, 동등성·해시·Any·타입·진단과 generator·spread를
+함께 다룹니다. callback·accumulator의 Host 중단·GC·취소·재시도·종료 수명주기도
+검증합니다. 기존 Bytes 세 사례만 통과시키는 것으로 범위를 줄이지 않습니다.
+
+고정 Java의 일반 iterator는 정렬된 마지막 값에서 멈추지만, `for`는 wrapping
+정수 산술로 계산한 길이를 사용합니다. 최솟값·최댓값에서 서로 다른 결과를
+유지하며, 큰 범위를 검사할 때 전체 materialization으로 무한 반복이나 과도한
+메모리 사용을 유발하지 않도록 독립 입력의 실행 조건을 기록합니다. 빈 sequence의
+동등성, singleton의 step, 빈 spread의 대상 제한과 callback 인자 오류 순서를
+별도로 확인합니다.
+
+문자열 API의 Java 기준 237개와 typed export 거부 세 사례는 별도 세션·판정으로
+유지합니다. 원본 IntSeq와 경계값 입력에 필요한 `pkl:math`는 고정 소스를 기존
+공통 bootstrap에 연결하고 선언된 상수 17개를 모두 구현합니다. 외부 math 함수는
+미구현 상태를 유지하며 상수 검증을 전체 math 호환으로 확대하지 않습니다.
+원본 `api/intseq.pkl`의 fold에 필요한 `List.add`도 원래 프로그램을 보존한 채
+공통 List 경로에 구현하고 별도의 Java 관찰로 검증합니다.
+
+최종 단계에서는 원본 IntSeq·Bytes·Any·Duration 프로그램, 기존 문자열 회귀,
+필수 Rust 검사와 실제 native·Node·Chromium을 실행합니다. 현재 새 Java 기준과
+구현은 진행 중이며, 미실행 검사나 전체 M2 종료 조건을 완료로 표시하지 않습니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

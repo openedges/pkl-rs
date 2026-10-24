@@ -1,0 +1,19 @@
+// Stage61 Pkl 0.32.0 math constant prerequisite authority.
+import "pkl:math"
+minInt = math.minInt
+minInt8 = math.minInt8
+minInt16 = math.minInt16
+minInt32 = math.minInt32
+maxInt = math.maxInt
+maxInt8 = math.maxInt8
+maxInt16 = math.maxInt16
+maxInt32 = math.maxInt32
+maxUInt = math.maxUInt
+maxUInt8 = math.maxUInt8
+maxUInt16 = math.maxUInt16
+maxUInt32 = math.maxUInt32
+minFiniteFloat = math.minFiniteFloat
+maxFiniteFloat = math.maxFiniteFloat
+minPositiveFloat = math.minPositiveFloat
+e = math.e
+pi = math.pi

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage61/intseq-values.pkl",
+  "boundary": "typed-export-supplement",
+  "repetitions": 2,
+  "materialization_policy": "No full materialization of unbounded extremes. Small and modulo-bounded IntSeq cases only; default full-range extremes are used only in bounded for-generators.",
+  "rows": [
+    {
+      "id": "export-asc",
+      "group": "public-export",
+      "expression": "IntSeq(1,3)",
+      "mode": "export"
+    },
+    {
+      "id": "export-empty",
+      "group": "public-export",
+      "expression": "IntSeq(3,1)",
+      "mode": "export"
+    },
+    {
+      "id": "export-extreme",
+      "group": "public-export",
+      "expression": "IntSeq(minInt,maxInt).step(maxInt)",
+      "mode": "export"
+    }
+  ]
+}

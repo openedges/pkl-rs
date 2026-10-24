@@ -1,0 +1,21 @@
+string	empty-add	List().add(1)
+string	nonempty-add	List(1,2).add(3)
+string	empty-length	List().add(1).length
+string	nonempty-last	List(1,2).add(3).last
+string	nested-add	List().add(1).add(2)
+string	add-list-element	List().add(List(1,2))
+string	add-null-empty	List().add(null)
+string	add-null-nonempty	List(1).add(null)
+string	null-last	List(1).add(null).last == null
+string	object-first	List(new Item { value = 4 }).add(new Item { value = 5 })[0].value
+string	object-last	List(new Item { value = 4 }).add(new Item { value = 5 })[1].value
+string	object-reference-value	let (x = new Item { value = 42 }) List(x).add(x)[1].value
+string	lazy-first-skipped	List(new Item { value = throw("lazy-first") }).add(new Item { value = 4 }).last.value
+string	lazy-first-forced	List(new Item { value = throw("lazy-first") }).add(new Item { value = 4 }).first.value
+string	wrong-arity-empty	List().add()
+string	wrong-arity-two	List().add(1,2)
+string	argument-error	List().add(throw("add-error"))
+string	first-add-error	List().add(throw("first-add")).add(throw("second-add"))
+string	list-before-add-error	List(throw("list-first")).add(throw("add-second"))
+string	add-before-fold-error	List(1).add(throw("add-first")).fold(0,(acc,n)->throw("fold-second"))
+string	fold-after-add-error	List(1).add(2).fold(0,(acc,n)->throw("fold-callback"))

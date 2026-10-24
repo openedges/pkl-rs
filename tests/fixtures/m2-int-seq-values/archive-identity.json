@@ -1,0 +1,30 @@
+{
+  "archive_sha256": "7e8ce6e9b4bd05174570115f8d3cc02d7e286d54f8a24830d1fe95a9b7dbd89b",
+  "captures": {
+    "capture-01": "stage61-intseq-oracle-string-01",
+    "export-supplement-01": "stage61-intseq-oracle-export-01"
+  },
+  "fileset_sha256": "355bc2feddfb0274821f9956a320172d36934652e9ff3b4e2180c2e0106cf158",
+  "members": 10150,
+  "oracle_input_sha256": {
+    "capture-01": {
+      "IntSeqValuesOracle.java": "fcd4e27282787ca5b7b454d0f0df999805ea7c301b32916962085e6257755d6d",
+      "audit.json": "ab95f4f54dbd231fab39b4ac8ef2f2aeb88a4af813dedbb9f2d7025d1e48d1a9",
+      "cases.json": "ee7a51d9e6908ee3699a0d96b5b58df4c3aafdd0f76042b51afec1078b270bf4",
+      "module.pkl": "3a8947ed64bfbbdfb08014751757a76d40ceed52870318328da43abcac6e458e",
+      "provenance.json": "21f0be375f408e0aeaf5877f10a158076d55b59c019085cfa9c5a04e214fbb72",
+      "queries.tsv": "080d8515431599bfb68dce0967c808f7db426a69d37fd55dc613495b7e8d4e81",
+      "run.py": "3be0934965923e37c8c28d907303df6f59d3b0686273a813c6406e85851e7dcb"
+    },
+    "export-supplement-01": {
+      "IntSeqValuesOracle.java": "fcd4e27282787ca5b7b454d0f0df999805ea7c301b32916962085e6257755d6d",
+      "audit.json": "cda65ef92c4e86f98bf5edddd650a55c79be6cb8ba27ae3e0d8418a80abc23a6",
+      "cases.json": "441c5ae52d97039b461710423ac45693f1489cdf1b5f7fb52a8468d313099036",
+      "module.pkl": "3a8947ed64bfbbdfb08014751757a76d40ceed52870318328da43abcac6e458e",
+      "provenance.json": "74544394aa107f1280add4688b0d66ab44db59d085e66d34ea0dca0d8822e9e5",
+      "queries.tsv": "a3413d27cef901171b4bceb40a0c3ecf29960480dc298957f877022b3f19688b",
+      "run.py": "3be0934965923e37c8c28d907303df6f59d3b0686273a813c6406e85851e7dcb"
+    }
+  },
+  "schema": 1
+}

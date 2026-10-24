@@ -1,0 +1,237 @@
+string	asc-start	IntSeq(1, 4).start
+string	asc-end	IntSeq(1, 4).end
+string	asc-step	IntSeq(1, 4).step
+string	asc-string	IntSeq(1, 4).toString()
+string	zero-start	IntSeq(0, 0).start
+string	zero-end	IntSeq(0, 0).end
+string	zero-step	IntSeq(0, 0).step
+string	zero-string	IntSeq(0, 0).toString()
+string	one-start	IntSeq(1, 1).start
+string	one-end	IntSeq(1, 1).end
+string	one-step	IntSeq(1, 1).step
+string	one-string	IntSeq(1, 1).toString()
+string	empty-start	IntSeq(5, 2).start
+string	empty-end	IntSeq(5, 2).end
+string	empty-step	IntSeq(5, 2).step
+string	empty-string	IntSeq(5, 2).toString()
+string	empty-neg-start	IntSeq(0, 2).step(-1).start
+string	empty-neg-end	IntSeq(0, 2).step(-1).end
+string	empty-neg-step	IntSeq(0, 2).step(-1).step
+string	empty-neg-string	IntSeq(0, 2).step(-1).toString()
+string	desc-start	IntSeq(5, 1).step(-1).start
+string	desc-end	IntSeq(5, 1).step(-1).end
+string	desc-step	IntSeq(5, 1).step(-1).step
+string	desc-string	IntSeq(5, 1).step(-1).toString()
+string	desc-two-start	IntSeq(5, 0).step(-2).start
+string	desc-two-end	IntSeq(5, 0).step(-2).end
+string	desc-two-step	IntSeq(5, 0).step(-2).step
+string	desc-two-string	IntSeq(5, 0).step(-2).toString()
+string	asc-two-start	IntSeq(0, 5).step(2).start
+string	asc-two-end	IntSeq(0, 5).step(2).end
+string	asc-two-step	IntSeq(0, 5).step(2).step
+string	asc-two-string	IntSeq(0, 5).step(2).toString()
+string	asc-over-start	IntSeq(0, 1).step(3).start
+string	asc-over-end	IntSeq(0, 1).step(3).end
+string	asc-over-step	IntSeq(0, 1).step(3).step
+string	asc-over-string	IntSeq(0, 1).step(3).toString()
+string	cross-start	IntSeq(-3, 2).step(2).start
+string	cross-end	IntSeq(-3, 2).step(2).end
+string	cross-step	IntSeq(-3, 2).step(2).step
+string	cross-string	IntSeq(-3, 2).step(2).toString()
+string	min-single-start	IntSeq(minInt, minInt).start
+string	min-single-end	IntSeq(minInt, minInt).end
+string	min-single-step	IntSeq(minInt, minInt).step
+string	min-single-string	IntSeq(minInt, minInt).toString()
+string	max-single-start	IntSeq(maxInt, maxInt).start
+string	max-single-end	IntSeq(maxInt, maxInt).end
+string	max-single-step	IntSeq(maxInt, maxInt).step
+string	max-single-string	IntSeq(maxInt, maxInt).toString()
+string	extreme-up-start	IntSeq(minInt, maxInt).step(maxInt).start
+string	extreme-up-end	IntSeq(minInt, maxInt).step(maxInt).end
+string	extreme-up-step	IntSeq(minInt, maxInt).step(maxInt).step
+string	extreme-up-string	IntSeq(minInt, maxInt).step(maxInt).toString()
+string	extreme-down-start	IntSeq(maxInt, minInt).step(minInt).start
+string	extreme-down-end	IntSeq(maxInt, minInt).step(minInt).end
+string	extreme-down-step	IntSeq(maxInt, minInt).step(minInt).step
+string	extreme-down-string	IntSeq(maxInt, minInt).step(minInt).toString()
+string	min-step-empty-start	IntSeq(0, 1).step(minInt).start
+string	min-step-empty-end	IntSeq(0, 1).step(minInt).end
+string	min-step-empty-step	IntSeq(0, 1).step(minInt).step
+string	min-step-empty-string	IntSeq(0, 1).step(minInt).toString()
+string	asc-list	IntSeq(1, 4).toList()
+string	asc-map	IntSeq(1, 4).map((n) -> n)
+string	asc-fold	IntSeq(1, 4).fold(List(), (acc, n) -> acc.add(n))
+string	asc-listing	IntSeq(1, 4).toListing()
+string	zero-list	IntSeq(0, 0).toList()
+string	zero-map	IntSeq(0, 0).map((n) -> n)
+string	zero-fold	IntSeq(0, 0).fold(List(), (acc, n) -> acc.add(n))
+string	zero-listing	IntSeq(0, 0).toListing()
+string	one-list	IntSeq(1, 1).toList()
+string	one-map	IntSeq(1, 1).map((n) -> n)
+string	one-fold	IntSeq(1, 1).fold(List(), (acc, n) -> acc.add(n))
+string	one-listing	IntSeq(1, 1).toListing()
+string	empty-list	IntSeq(5, 2).toList()
+string	empty-map	IntSeq(5, 2).map((n) -> n)
+string	empty-fold	IntSeq(5, 2).fold(List(), (acc, n) -> acc.add(n))
+string	empty-listing	IntSeq(5, 2).toListing()
+string	empty-neg-list	IntSeq(0, 2).step(-1).toList()
+string	empty-neg-map	IntSeq(0, 2).step(-1).map((n) -> n)
+string	empty-neg-fold	IntSeq(0, 2).step(-1).fold(List(), (acc, n) -> acc.add(n))
+string	empty-neg-listing	IntSeq(0, 2).step(-1).toListing()
+string	desc-list	IntSeq(5, 1).step(-1).toList()
+string	desc-map	IntSeq(5, 1).step(-1).map((n) -> n)
+string	desc-fold	IntSeq(5, 1).step(-1).fold(List(), (acc, n) -> acc.add(n))
+string	desc-listing	IntSeq(5, 1).step(-1).toListing()
+string	desc-two-list	IntSeq(5, 0).step(-2).toList()
+string	desc-two-map	IntSeq(5, 0).step(-2).map((n) -> n)
+string	desc-two-fold	IntSeq(5, 0).step(-2).fold(List(), (acc, n) -> acc.add(n))
+string	desc-two-listing	IntSeq(5, 0).step(-2).toListing()
+string	asc-two-list	IntSeq(0, 5).step(2).toList()
+string	asc-two-map	IntSeq(0, 5).step(2).map((n) -> n)
+string	asc-two-fold	IntSeq(0, 5).step(2).fold(List(), (acc, n) -> acc.add(n))
+string	asc-two-listing	IntSeq(0, 5).step(2).toListing()
+string	asc-over-list	IntSeq(0, 1).step(3).toList()
+string	asc-over-map	IntSeq(0, 1).step(3).map((n) -> n)
+string	asc-over-fold	IntSeq(0, 1).step(3).fold(List(), (acc, n) -> acc.add(n))
+string	asc-over-listing	IntSeq(0, 1).step(3).toListing()
+string	cross-list	IntSeq(-3, 2).step(2).toList()
+string	cross-map	IntSeq(-3, 2).step(2).map((n) -> n)
+string	cross-fold	IntSeq(-3, 2).step(2).fold(List(), (acc, n) -> acc.add(n))
+string	cross-listing	IntSeq(-3, 2).step(2).toListing()
+string	min-single-list	IntSeq(minInt, minInt).toList()
+string	min-single-map	IntSeq(minInt, minInt).map((n) -> n)
+string	min-single-fold	IntSeq(minInt, minInt).fold(List(), (acc, n) -> acc.add(n))
+string	min-single-listing	IntSeq(minInt, minInt).toListing()
+string	max-single-list	IntSeq(maxInt, maxInt).toList()
+string	max-single-map	IntSeq(maxInt, maxInt).map((n) -> n)
+string	max-single-fold	IntSeq(maxInt, maxInt).fold(List(), (acc, n) -> acc.add(n))
+string	max-single-listing	IntSeq(maxInt, maxInt).toListing()
+string	extreme-up-list	IntSeq(minInt, maxInt).step(maxInt).toList()
+string	extreme-up-map	IntSeq(minInt, maxInt).step(maxInt).map((n) -> n)
+string	extreme-up-fold	IntSeq(minInt, maxInt).step(maxInt).fold(List(), (acc, n) -> acc.add(n))
+string	extreme-down-list	IntSeq(maxInt, minInt).step(minInt).toList()
+string	extreme-down-map	IntSeq(maxInt, minInt).step(minInt).map((n) -> n)
+string	extreme-down-fold	IntSeq(maxInt, minInt).step(minInt).fold(List(), (acc, n) -> acc.add(n))
+string	min-step-empty-list	IntSeq(0, 1).step(minInt).toList()
+string	min-step-empty-map	IntSeq(0, 1).step(minInt).map((n) -> n)
+string	min-step-empty-fold	IntSeq(0, 1).step(minInt).fold(List(), (acc, n) -> acc.add(n))
+string	min-step-empty-listing	IntSeq(0, 1).step(minInt).toListing()
+string	eq-same	IntSeq(2,5) == IntSeq(2,5)
+string	neq-same	IntSeq(2,5) != IntSeq(2,5)
+string	eq-different	IntSeq(2,5) == IntSeq(2,6)
+string	neq-different	IntSeq(2,5) != IntSeq(2,6)
+string	eq-empty-origins	IntSeq(5,2) == IntSeq(100,0)
+string	neq-empty-origins	IntSeq(5,2) != IntSeq(100,0)
+string	eq-empty-direction	IntSeq(5,2) == IntSeq(0,2).step(-1)
+string	neq-empty-direction	IntSeq(5,2) != IntSeq(0,2).step(-1)
+string	eq-aligned-end-up	IntSeq(0,4).step(2) == IntSeq(0,5).step(2)
+string	neq-aligned-end-up	IntSeq(0,4).step(2) != IntSeq(0,5).step(2)
+string	eq-aligned-end-down	IntSeq(5,1).step(-2) == IntSeq(5,0).step(-2)
+string	neq-aligned-end-down	IntSeq(5,1).step(-2) != IntSeq(5,0).step(-2)
+string	eq-singleton-step	IntSeq(1,1) == IntSeq(1,1).step(2)
+string	neq-singleton-step	IntSeq(1,1) != IntSeq(1,1).step(2)
+string	eq-singleton-negative	IntSeq(1,1) == IntSeq(1,1).step(-1)
+string	neq-singleton-negative	IntSeq(1,1) != IntSeq(1,1).step(-1)
+string	eq-nondivisible-step	IntSeq(0,5).step(2) == IntSeq(0,4).step(2)
+string	neq-nondivisible-step	IntSeq(0,5).step(2) != IntSeq(0,4).step(2)
+string	eq-opposite-direction	IntSeq(1,3) == IntSeq(3,1).step(-1)
+string	neq-opposite-direction	IntSeq(1,3) != IntSeq(3,1).step(-1)
+string	eq-cross-type-list	IntSeq(1,3) == List(1,2,3)
+string	neq-cross-type-list	IntSeq(1,3) != List(1,2,3)
+string	eq-extreme-up-self	IntSeq(minInt,maxInt).step(maxInt) == IntSeq(minInt,maxInt).step(maxInt)
+string	neq-extreme-up-self	IntSeq(minInt,maxInt).step(maxInt) != IntSeq(minInt,maxInt).step(maxInt)
+string	set-empty	Set(IntSeq(5,2),IntSeq(100,0)).length
+string	set-aligned	Set(IntSeq(0,4).step(2),IntSeq(0,5).step(2)).length
+string	set-singleton-step	Set(IntSeq(1,1),IntSeq(1,1).step(2)).length
+string	map-empty	Map(IntSeq(5,2),"a",IntSeq(100,0),"b").length
+string	map-aligned	Map(IntSeq(0,4).step(2),"a",IntSeq(0,5).step(2),"b").length
+string	map-singleton-step	Map(IntSeq(1,1),"a",IntSeq(1,1).step(2),"b").length
+string	set-threshold-five	Set(IntSeq(1,1),IntSeq(2,2),IntSeq(3,3),IntSeq(4,4),IntSeq(1,1)).length
+string	for-values-asc	new Listing { for (n in IntSeq(1,3)) { n } }
+string	for-pairs-asc	new Listing { for (i, n in IntSeq(1,3)) { Pair(i,n) } }
+string	spread-listing-asc	new Listing { ...IntSeq(1,3) }
+string	spread-dynamic-asc	new Dynamic { ...IntSeq(1,3) }
+string	for-values-empty	new Listing { for (n in IntSeq(3,1)) { n } }
+string	for-pairs-empty	new Listing { for (i, n in IntSeq(3,1)) { Pair(i,n) } }
+string	spread-listing-empty	new Listing { ...IntSeq(3,1) }
+string	spread-dynamic-empty	new Dynamic { ...IntSeq(3,1) }
+string	for-values-desc	new Listing { for (n in IntSeq(3,1).step(-1)) { n } }
+string	for-pairs-desc	new Listing { for (i, n in IntSeq(3,1).step(-1)) { Pair(i,n) } }
+string	spread-listing-desc	new Listing { ...IntSeq(3,1).step(-1) }
+string	spread-dynamic-desc	new Dynamic { ...IntSeq(3,1).step(-1) }
+string	for-values-step	new Listing { for (n in IntSeq(0,5).step(2)) { n } }
+string	for-pairs-step	new Listing { for (i, n in IntSeq(0,5).step(2)) { Pair(i,n) } }
+string	spread-listing-step	new Listing { ...IntSeq(0,5).step(2) }
+string	spread-dynamic-step	new Dynamic { ...IntSeq(0,5).step(2) }
+string	for-values-extreme-up	new Listing { for (n in IntSeq(minInt, maxInt).step(maxInt)) { n } }
+string	for-pairs-extreme-up	new Listing { for (i, n in IntSeq(minInt, maxInt).step(maxInt)) { Pair(i,n) } }
+string	spread-listing-extreme-up	new Listing { ...IntSeq(minInt, maxInt).step(maxInt) }
+string	spread-dynamic-extreme-up	new Dynamic { ...IntSeq(minInt, maxInt).step(maxInt) }
+string	for-values-extreme-down	new Listing { for (n in IntSeq(maxInt, minInt).step(minInt)) { n } }
+string	for-pairs-extreme-down	new Listing { for (i, n in IntSeq(maxInt, minInt).step(minInt)) { Pair(i,n) } }
+string	spread-listing-extreme-down	new Listing { ...IntSeq(maxInt, minInt).step(minInt) }
+string	spread-dynamic-extreme-down	new Dynamic { ...IntSeq(maxInt, minInt).step(minInt) }
+string	typed-for-key	new Listing { for (i: String, n: Int in IntSeq(1,3)) { n } }
+string	typed-for-value	new Listing { for (i: Int, n: String in IntSeq(1,3)) { n } }
+string	typed-for-empty-key	new Listing { for (i: String, n: Int in IntSeq(3,1)) { n } }
+string	typed-for-empty-value	new Listing { for (i: Int, n: String in IntSeq(3,1)) { n } }
+string	spread-mapping	new Mapping { ...IntSeq(1,3) }
+string	spread-empty-mapping	new Mapping { ...IntSeq(3,1) }
+string	spread-typed-object	new SeqHolder { ...IntSeq(1,3) }
+string	spread-empty-typed-object	new SeqHolder { ...IntSeq(3,1) }
+string	class	IntSeq(1,3).getClass().simpleName
+string	string	IntSeq(1,3).toString()
+string	ifnonnull-start	IntSeq(1,3).ifNonNull((x) -> x.start)
+string	ifnonnull-length	IntSeq(1,3).ifNonNull((x) -> x.length)
+string	is-intseq	IntSeq(1,3) is IntSeq
+string	is-list	IntSeq(1,3) is List
+string	as-intseq	IntSeq(1,3) as IntSeq
+string	missing-length	IntSeq(1,3).length
+string	missing-isempty	IntSeq(1,3).isEmpty
+string	missing-subscript	IntSeq(1,3)[0]
+string	missing-plus	IntSeq(1,3) + IntSeq(4,5)
+string	missing-member	IntSeq(1,3).missingField
+string	bytes-basic-all	IntSeq(0,255).toList().toBytes().sha256
+string	bytes-basic-length	IntSeq(0,255).toList().toBytes().length
+string	bytes-basic-high-index	IntSeq(0,255).toList().toBytes()[255]
+string	bytes-api-mega-length	IntSeq(0,999).map((_) -> 0).toBytes().length
+string	bytes-api-mega-size	IntSeq(0,999).map((_) -> 0).toBytes().size
+string	bytes-api-mega-hash	IntSeq(0,999).map((_) -> 0).toBytes().sha256
+string	for-full-extreme-up	new Listing { for (n in IntSeq(minInt,maxInt)) { n } }
+string	for-full-extreme-down	new Listing { for (n in IntSeq(maxInt,minInt).step(-1)) { n } }
+string	ctor-arity-none	IntSeq()
+string	ctor-arity-one	IntSeq(1)
+string	ctor-arity-three	IntSeq(1,2,3)
+string	ctor-string-first	IntSeq("1",2)
+string	ctor-string-second	IntSeq(1,"2")
+string	ctor-null-first	IntSeq(null,2)
+string	ctor-throw-first	IntSeq(throw("first"),throw("second"))
+string	ctor-throw-second	IntSeq(1,throw("second"))
+string	step-zero	IntSeq(1,3).step(0)
+string	step-string	IntSeq(1,3).step("2")
+string	step-null	IntSeq(1,3).step(null)
+string	step-missing	IntSeq(1,3).step()
+string	step-extra	IntSeq(1,3).step(1,2)
+string	step-throw	IntSeq(1,3).step(throw("step"))
+string	map-missing	IntSeq(1,3).map()
+string	map-wrong-type	IntSeq(1,3).map(1)
+string	map-wrong-arity	IntSeq(1,3).map((a,b) -> a+b)
+string	map-empty-wrong-arity	IntSeq(3,1).map((a,b) -> a+b)
+string	map-callback-throw	IntSeq(1,3).map((n) -> throw(n.toString()))
+string	fold-missing	IntSeq(1,3).fold(0)
+string	fold-wrong-type	IntSeq(1,3).fold(0,1)
+string	fold-wrong-arity	IntSeq(1,3).fold(0,(a)->a)
+string	fold-empty-wrong-arity	IntSeq(3,1).fold(0,(a)->a)
+string	fold-empty-initial	IntSeq(3,1).fold("seed",(a,n)->a+n.toString())
+string	fold-callback-throw	IntSeq(1,3).fold(0,(a,n)->throw(n.toString()))
+string	tolist-extra	IntSeq(1,3).toList(1)
+string	tolisting-extra	IntSeq(1,3).toListing(1)
+string	new-intseq	new IntSeq {}
+string	extreme-up-listing	IntSeq(minInt,maxInt).step(maxInt).toListing()
+string	extreme-down-listing	IntSeq(maxInt,minInt).step(minInt).toListing()
+string	render-direct-asc	IntSeq(1,4)
+string	render-direct-empty	IntSeq(5,2)
+string	render-direct-desc	IntSeq(5,1).step(-1)
+string	render-direct-extreme	IntSeq(minInt,maxInt).step(maxInt)
+string	explicit-unit-step-string	IntSeq(1,3).step(1).toString()
+string	chained-step-string	IntSeq(1,3).step(2).step(-1).toString()

@@ -1,0 +1,16 @@
+{
+  "archive_sha256": "2fee59a7a22247698c7935e95a6391d30f16cf65106e3b6b9be2891c2cb3c864",
+  "capture": "stage61-intseq-math-constants-02",
+  "fileset_sha256": "41d256b4334758957185bd2482c322a6df965a601f719e8128b1451cc653e9fd",
+  "input_sha256": {
+    "IntSeqMathConstantsOracle.java": "c0af15cf5ea8d6bdf2b690b3353e8f333a1b5e9e55999de15cfa8c0abf2d8f09",
+    "audit.json": "f2485c02a12779b4564afb64e8875ea772937cf4911147cffe13845fbcc479b4",
+    "module.pkl": "67f3fd49aa0f2b9a6d825a4139eb991451e98e9d29d8f65f029a57314721ade5",
+    "names.txt": "0a9e6ff25844edb2188e85158d73f7e192170ffe75dc15e10d378137b11235fc",
+    "provenance.json": "47b816e5f644b59b0c901f6dd06182be6963e793665a68f5b1a31fbee6eba568",
+    "run.py": "ab57fdb5961b0c309e3a6cb4907ec72908e1bfd1a8b0a4eaf84fe91e76fbe36a"
+  },
+  "members": 528,
+  "prefix": "capture-02",
+  "schema": 1
+}

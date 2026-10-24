@@ -1,0 +1,6 @@
+// Stage61 canonical Java IntSeq values; no Rust candidate.
+import "pkl:math"
+class SeqHolder { value: Int = 0 }
+minInt = math.minInt
+maxInt = math.maxInt
+marker = "stage61-intseq-values"

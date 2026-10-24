@@ -1,0 +1,571 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical": {
+    "intseq": {
+      "archive": {
+        "bytes": 289945,
+        "sha256": "7e8ce6e9b4bd05174570115f8d3cc02d7e286d54f8a24830d1fe95a9b7dbd89b"
+      },
+      "archive_members": 10150,
+      "archive_prefix": "capture-01",
+      "export_prefix": "export-supplement-01",
+      "export_supplement_rows": 3,
+      "export_supplement_statuses_per_session": {
+        "error": 3
+      },
+      "module_uri": "file:///stage61/intseq-values.pkl",
+      "path": "tests/fixtures/m2-int-seq-values",
+      "string_rows": 237,
+      "string_statuses_per_session": {
+        "error": 39,
+        "success": 198
+      }
+    },
+    "list_add": {
+      "archive": {
+        "bytes": 63711,
+        "sha256": "02e1dea0b1114ff922d8b4f2424901eb23dcd57740db83289dd6dca2aa799ed6"
+      },
+      "archive_members": 903,
+      "archive_prefix": "capture-02",
+      "path": "tests/fixtures/m2-int-seq-list-add",
+      "rows": 21,
+      "statuses_per_session": {
+        "error": 8,
+        "success": 13
+      }
+    },
+    "math_constants": {
+      "archive": {
+        "bytes": 49856,
+        "sha256": "2fee59a7a22247698c7935e95a6391d30f16cf65106e3b6b9be2891c2cb3c864"
+      },
+      "archive_members": 528,
+      "archive_prefix": "capture-02",
+      "constants": 17,
+      "path": "tests/fixtures/m2-int-seq-math-constants",
+      "public_calls_per_session": 34,
+      "statuses_per_session": {
+        "success": 34
+      }
+    }
+  },
+  "history": {
+    "archive": "reports/m2/stage61-java-history.tar.gz",
+    "captures": {
+      "exploration-01": {
+        "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+        "jdk": {
+          "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+          "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+          "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+        },
+        "pids": [
+          24634,
+          24661
+        ],
+        "raw_repetitions_equal": true,
+        "reason_superseded": "Early authored rows exposed expression/module visibility errors.",
+        "rows": 224,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 90,
+          "success": 134
+        }
+      },
+      "exploration-02": {
+        "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+        "jdk": {
+          "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+          "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+          "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+        },
+        "pids": [
+          24738,
+          24783
+        ],
+        "raw_repetitions_equal": true,
+        "reason_superseded": "Corrected authored visibility and extended semantic exploration.",
+        "rows": 224,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 42,
+          "success": 182
+        }
+      },
+      "exploration-03": {
+        "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+        "jdk": {
+          "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+          "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+          "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+        },
+        "pids": [
+          25436,
+          25484
+        ],
+        "raw_repetitions_equal": true,
+        "reason_superseded": "Expanded to 232 exploratory rows before canonical additions.",
+        "rows": 232,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 42,
+          "success": 190
+        }
+      },
+      "list-failed-01": {
+        "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+        "jdk": {
+          "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+          "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+          "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+        },
+        "pids": [
+          31889,
+          31893
+        ],
+        "raw_repetitions_equal": true,
+        "reason_superseded": "Untyped new object expressions had no parent class.",
+        "rows": 21,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 12,
+          "success": 9
+        }
+      },
+      "math-failed-01": {
+        "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+        "jdk": {
+          "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+          "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+          "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+        },
+        "pids": [
+          31013,
+          31035
+        ],
+        "raw_repetitions_equal": true,
+        "reason_superseded": "Public expression calls could not resolve the import alias math directly.",
+        "rows": 17,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 34
+        }
+      },
+      "mixed-240": {
+        "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+        "jdk": {
+          "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+          "modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+          "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+        },
+        "pids": [
+          27563,
+          27567
+        ],
+        "raw_repetitions_equal": true,
+        "reason_superseded": "Mixed string/export boundary and reserved-word missing-member case superseded.",
+        "rows": 240,
+        "source_stable": true,
+        "statuses_per_session": {
+          "error": 42,
+          "success": 198
+        }
+      }
+    },
+    "embedded_manifest_sha256": "78f1a2a334d4824c67a3e9a4ab3f06f18720c5d9e589013885ad37ba7ac95058",
+    "identity": {
+      "bytes": 1561297,
+      "sha256": "3ffedbb9c0e2c8d70d0162a7aac158e5808f49b644279cd2b5a2ae48a260719a"
+    },
+    "member_hash_readback": true,
+    "members": 40208,
+    "source_before_after_equal": true
+  },
+  "java_runtime": {
+    "artifact_before_after_equal": true,
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "jdk_executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+    "jdk_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "jdk_release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+    "reference_revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "kind": "stage61-intseq-java-authority-checkpoint",
+  "limits": [
+    "Java public API observations only; Rust candidate, browser, Node, full M2 and performance compatibility remain separate.",
+    "The three IntSeq typed-export errors are producer-only and do not count as string candidate results.",
+    "Math functions and Java wrapper identity are outside these constant and List.add supplements.",
+    "Original upstream snippet suite replay is separate from this authored corpus.",
+    "M2 manifest freshness awaits concurrent Rust/core source freeze and regeneration when the recorded observation is stale."
+  ],
+  "schema": 1,
+  "validation": {
+    "archive": "reports/m2/stage61-java-validation.tar.gz",
+    "checks": [
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/int_seq_values_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792842511.142642,
+        "name": "intseq-verifier",
+        "started_epoch": 1792842510.739414,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 444,
+          "sha256": "f977bd2e12e693196ec1294967661591cfb25daaf344545f03352aa17e9bbda2"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "tools/int_seq_values_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792842511.566633,
+        "name": "intseq-verifier-O",
+        "started_epoch": 1792842511.1441689,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 444,
+          "sha256": "f977bd2e12e693196ec1294967661591cfb25daaf344545f03352aa17e9bbda2"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/int_seq_math_constants_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792842511.661416,
+        "name": "math-verifier",
+        "started_epoch": 1792842511.5681028,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 313,
+          "sha256": "9681c050bdf8ff04d5c5ec93077903330e64e3a3ecc1a7d216a6268fe663b314"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "tools/int_seq_math_constants_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792842511.7633421,
+        "name": "math-verifier-O",
+        "started_epoch": 1792842511.663011,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 313,
+          "sha256": "9681c050bdf8ff04d5c5ec93077903330e64e3a3ecc1a7d216a6268fe663b314"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/int_seq_list_add_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792842511.867007,
+        "name": "list-add-verifier",
+        "started_epoch": 1792842511.7650108,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 295,
+          "sha256": "394eadc8b28fe76d610c41cd6dfc89d064ae23983e0c2b75cd4491998afed54e"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "tools/int_seq_list_add_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792842511.967948,
+        "name": "list-add-verifier-O",
+        "started_epoch": 1792842511.868522,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 295,
+          "sha256": "394eadc8b28fe76d610c41cd6dfc89d064ae23983e0c2b75cd4491998afed54e"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "tools.tests.test_int_seq_values_fixtures",
+          "tools.tests.test_int_seq_prerequisite_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792842513.1251998,
+        "name": "fixture-tests",
+        "started_epoch": 1792842511.969692,
+        "stderr": {
+          "bytes": 2747,
+          "sha256": "34d00d56934b9a34565c54599f9ea12736098a199884fff6f8f4beac3cab9340"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "-m",
+          "unittest",
+          "tools.tests.test_int_seq_values_fixtures",
+          "tools.tests.test_int_seq_prerequisite_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792842514.279912,
+        "name": "fixture-tests-O",
+        "started_epoch": 1792842513.1272068,
+        "stderr": {
+          "bytes": 2747,
+          "sha256": "0b6f2381ba1205da97fe82fc650d8ff31861e660181b6d8e7233dfafcda4ba20"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/inventory.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792842517.135527,
+        "name": "source-inventory",
+        "started_epoch": 1792842514.281965,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 926,
+          "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+        }
+      }
+    ],
+    "deferred_final_integration": [
+      "M2 manifest freshness after concurrent Rust/core source freeze and regeneration"
+    ],
+    "directory": "target/m2/stage61-java-validation-01",
+    "embedded_manifest_sha256": "8b01af9c24bc0d962432a578e5fc168670b5d0ab882223ad41e6693484691678",
+    "identity": {
+      "bytes": 947584,
+      "sha256": "116f26911a74f400bd5f9de9331c872e9b129d5d1fb020da10b38a0c0502edb7"
+    },
+    "manifest_freshness_pass_claimed": false,
+    "manifest_observation": {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "environment": {
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONHASHSEED": "0",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+        "TZ": "UTC"
+      },
+      "exit_code": 1,
+      "finished_epoch": 1792842521.048298,
+      "name": "m2-manifest-observation",
+      "started_epoch": 1792842517.137274,
+      "stderr": {
+        "bytes": 75,
+        "sha256": "4ab2ba53cfffef67a6446fcecddda1a9cb82f45199d590477fcef1cccac537dd"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "member_hash_readback": true,
+    "members": 101,
+    "record": "target/m2/stage61-java-validation-01/validation.json",
+    "record_identity": {
+      "bytes": 31059,
+      "sha256": "f2dbea6ae2f25bf441d86ce275489c470f071c7e11c80d069dada0c249df1c44"
+    },
+    "source_before_after_equal": true,
+    "source_stable": true
+  }
+}

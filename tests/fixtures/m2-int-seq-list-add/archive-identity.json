@@ -1,0 +1,17 @@
+{
+  "archive_sha256": "02e1dea0b1114ff922d8b4f2424901eb23dcd57740db83289dd6dca2aa799ed6",
+  "capture": "stage61-intseq-list-add-02",
+  "fileset_sha256": "4c068bba860346af26c510b71ed9432a46b961ecd446e30a7a4bd69913966ee8",
+  "input_sha256": {
+    "IntSeqValuesOracle.java": "fcd4e27282787ca5b7b454d0f0df999805ea7c301b32916962085e6257755d6d",
+    "audit.json": "cb1460185a3240d2fb218121cee13cb55e3f79fd13510eed04a433ec8d3b0339",
+    "cases.json": "7306105e0369e43be047c91fd51a0d98816cc78a01f22822de7907a8e52cfb74",
+    "module.pkl": "1b81645b1135d48b13547c5d0d39b8f5d15206205b11f4bc390f740788022c9b",
+    "provenance.json": "7f5de97e7f48f4e9f2319f9836eeaea880c6c29fe26c6402662a0405fde590ae",
+    "queries.tsv": "3ce3395dd0eb3b646677f8f83a220196f3a14c53c3e970775f82647a97181376",
+    "run.py": "a03e230c9e234065d45681b8ff8162290c77e4c81ca2a8e641dbdd5a1cb0e92d"
+  },
+  "members": 903,
+  "prefix": "capture-02",
+  "schema": 1
+}
