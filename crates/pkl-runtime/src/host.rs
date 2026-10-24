@@ -25,6 +25,10 @@ pub enum HostPoll {
         token: String,
         event: Arc<LogEvent>,
     },
+    TransformFrame {
+        token: String,
+        frame: Arc<crate::logging::LogFrame>,
+    },
     Module {
         token: String,
         request: crate::modules::ModuleRequest,
@@ -252,6 +256,10 @@ impl HostSession {
                 token: self.token(self.contexts.last().expect("active context").id, request.id),
                 uri: request.uri,
             },
+            VmPoll::TransformFrame(request) => HostPoll::TransformFrame {
+                token: self.token(self.contexts.last().expect("active context").id, request.id),
+                frame: request.frame,
+            },
             VmPoll::Log(request) => HostPoll::Log {
                 token: self.token(self.contexts.last().expect("active context").id, request.id),
                 event: request.event,
@@ -426,6 +434,32 @@ impl HostSession {
         }
         let request = self.request_id(token)?;
         self.vm.acknowledge_log(request, completion)
+    }
+
+    pub fn complete_frame_transform(
+        &mut self,
+        token: &str,
+        completion: Result<crate::logging::LogFrame, LoggerFailure>,
+        now_ms: u64,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        self.clock(now_ms)?;
+        if self.expire(now_ms) {
+            return Err(self.terminal.clone().unwrap());
+        }
+        let request = self.request_id(token)?;
+        self.vm.complete_frame_transform(request, completion)
+    }
+
+    pub fn set_frame_transformer(
+        &mut self,
+        transformer: crate::logging::FrameTransformer,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        if self.active {
+            return Err(error(ErrorKind::Busy, "evaluation is already active"));
+        }
+        self.vm.set_frame_transformer(transformer)
     }
 
     pub fn close_from_callback(&mut self, token: &str) -> Result<(), RuntimeError> {

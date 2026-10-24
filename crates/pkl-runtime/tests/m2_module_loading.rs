@@ -120,6 +120,7 @@ fn settle(
                 session.resume_default_read(&token, &[], &[], 0).unwrap()
             }
             HostPoll::Log { token, .. } => session.acknowledge_log(&token, Ok(()), 0).unwrap(),
+            HostPoll::TransformFrame { .. } => panic!("unexpected default transformer callback"),
             HostPoll::Yielded => {}
         }
         session.collect(&[]);
@@ -321,6 +322,7 @@ fn next_module(session: &mut SourceSession) -> (String, ModuleRequest) {
                     return (token, request);
                 }
             }
+            HostPoll::TransformFrame { .. } => panic!("unexpected default transformer callback"),
             HostPoll::Yielded => {}
             other => panic!("expected module effect: {other:?}"),
         }

@@ -53,7 +53,6 @@ pub fn evaluate_member(source: &str, member: &str) -> Result<Value, String> {
                 text: source.into(),
                 uri: "repl:text".into(),
                 module_name,
-                line_anchors: false,
             }),
             crate::modules::ModuleIdentity {
                 original_uri: "repl:text".into(),
@@ -94,7 +93,7 @@ fn finish(vm: &mut Vm) -> Result<Value, RuntimeError> {
                     .ok_or_else(|| unsupported("use HostSession for asynchronous evaluation"))?;
                 vm.complete_module(request.id, completion)?;
             }
-            VmPoll::Pending(_) | VmPoll::Log(_) => {
+            VmPoll::Pending(_) | VmPoll::Log(_) | VmPoll::TransformFrame(_) => {
                 return Err(unsupported("use HostSession for asynchronous evaluation"));
             }
         }
@@ -174,7 +173,7 @@ impl HostProbe {
         match self.session.poll(now.into(), budget as usize) {
             HostPoll::Yielded => "yield".into(),
             HostPoll::Read { token, uri } => format!("read\t{token}\t{}", hex(uri.as_bytes())),
-            HostPoll::Log { .. } => {
+            HostPoll::Log { .. } | HostPoll::TransformFrame { .. } => {
                 unreachable!("fixed-bytecode Host probe has no trace instructions")
             }
             HostPoll::Module { .. } => {
@@ -236,6 +235,60 @@ pub struct SourceLog {
     pub end_column: u32,
 }
 
+/// An owned full frame for the separate transformer callback and completion.
+#[derive(Clone, Debug)]
+pub struct SourceFrame {
+    pub module_uri: Vec<u16>,
+    pub member_name: Option<Vec<u16>>,
+    pub source_lines: Vec<Vec<u16>>,
+    pub start_line: u32,
+    pub start_column: u32,
+    pub end_line: u32,
+    pub end_column: u32,
+}
+impl TryFrom<&crate::logging::LogFrame> for SourceFrame {
+    type Error = RuntimeError;
+    fn try_from(frame: &crate::logging::LogFrame) -> Result<Self, Self::Error> {
+        let position = |value| {
+            u32::try_from(value)
+                .map_err(|_| unsupported("frame position exceeds the development transport range"))
+        };
+        Ok(Self {
+            module_uri: frame.module_uri.encode_utf16().collect(),
+            member_name: frame
+                .member_name
+                .as_ref()
+                .map(|s| s.encode_utf16().collect()),
+            source_lines: frame
+                .source_lines
+                .iter()
+                .map(|s| s.encode_utf16().collect())
+                .collect(),
+            start_line: position(frame.start_line)?,
+            start_column: position(frame.start_column)?,
+            end_line: position(frame.end_line)?,
+            end_column: position(frame.end_column)?,
+        })
+    }
+}
+impl From<SourceFrame> for crate::logging::LogFrame {
+    fn from(frame: SourceFrame) -> Self {
+        Self {
+            module_uri: PklString::from_utf16(frame.module_uri),
+            member_name: frame.member_name.map(PklString::from_utf16),
+            source_lines: frame
+                .source_lines
+                .into_iter()
+                .map(PklString::from_utf16)
+                .collect(),
+            start_line: frame.start_line as usize,
+            start_column: frame.start_column as usize,
+            end_line: frame.end_line as usize,
+            end_column: frame.end_column as usize,
+        }
+    }
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct SourceEvent {
     pub kind: &'static str,
@@ -246,11 +299,13 @@ pub struct SourceEvent {
     pub error: Option<Vec<u16>>,
     pub error_bytes: Option<Vec<u8>>,
     pub log: Option<SourceLog>,
+    pub frame: Option<SourceFrame>,
     pub module: Option<SourceModuleRequest>,
     pub exit_code: Option<i32>,
     pub phase: Option<&'static str>,
     pub disposition: Option<&'static str>,
     pub reason: Option<&'static str>,
+    pub callback_origin: Option<&'static str>,
 }
 
 /// Module URIs are validated UTF-8 identities. The decimal request ID avoids
@@ -444,11 +499,13 @@ impl SourceEvent {
             error: None,
             error_bytes: None,
             log: None,
+            frame: None,
             module: None,
             exit_code: None,
             phase: None,
             disposition: None,
             reason: None,
+            callback_origin: None,
         }
     }
 }
@@ -636,7 +693,7 @@ impl SourceProbe {
         host_frame_transformer: bool,
         power_assertions: bool,
     ) -> Result<crate::evaluation::session::SourceSessionOptions, String> {
-        use crate::logging::{LogDelivery, TraceMode};
+        use crate::logging::{FrameTransformer, LogDelivery, TraceMode};
         Ok(crate::evaluation::session::SourceSessionOptions {
             evaluation: crate::evaluation::EvaluationOptions { power_assertions },
             trace_mode: match trace_mode {
@@ -649,7 +706,11 @@ impl SourceProbe {
             } else {
                 LogDelivery::Noop
             },
-            host_frame_transformer,
+            frame_transformer: if host_frame_transformer {
+                FrameTransformer::Host
+            } else {
+                FrameTransformer::Default
+            },
         })
     }
     pub fn new_output(
@@ -738,6 +799,12 @@ impl SourceProbe {
                 event.module = Some(request.into());
                 event
             }
+            HostPoll::TransformFrame { token, frame } => {
+                let mut event = SourceEvent::new("transform-frame");
+                event.token = Some(token);
+                event.frame = Some(SourceFrame::try_from(frame.as_ref())?);
+                event
+            }
             HostPoll::Log { token, event: log } => {
                 let mut event = SourceEvent::new("log");
                 event.token = Some(token);
@@ -791,6 +858,9 @@ impl SourceProbe {
                     return Err(error);
                 }
                 let mut event = SourceEvent::new("error");
+                event.callback_origin = error
+                    .callback_origin()
+                    .map(crate::logging::CallbackOrigin::as_str);
                 // This is shared implementation classification, not a Java API
                 // process exit. Expression diagnostics retain their raw units.
                 let failure = self.session.output_failure_text(error.clone());
@@ -1273,6 +1343,40 @@ impl SourceProbe {
             Err(RuntimeError::new(ErrorKind::Host, message)),
             now.into(),
         )
+    }
+    pub fn set_frame_transformer(&mut self, mode: &str) -> Result<(), RuntimeError> {
+        use crate::logging::FrameTransformer;
+        self.session.set_frame_transformer(match mode {
+            "default" => FrameTransformer::Default,
+            "identity" => FrameTransformer::Identity,
+            "host" => FrameTransformer::Host,
+            _ => {
+                return Err(unsupported(
+                    "expected frame transformer default, identity or host",
+                ));
+            }
+        })
+    }
+    pub fn complete_frame_transform(
+        &mut self,
+        token: &str,
+        frame: Option<SourceFrame>,
+        failure: Option<Vec<u16>>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        let completion = match (frame, failure) {
+            (Some(frame), None) => Ok(frame.into()),
+            (None, Some(failure)) => Err(crate::logging::LoggerFailure::new(
+                PklString::from_utf16(failure),
+            )),
+            _ => {
+                return Err(unsupported(
+                    "provide exactly one transformed frame or transformer failure",
+                ));
+            }
+        };
+        self.session
+            .complete_frame_transform(token, completion, now.into())
     }
     pub fn acknowledge_log(
         &mut self,

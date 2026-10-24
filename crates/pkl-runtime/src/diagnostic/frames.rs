@@ -12,7 +12,7 @@ use super::RenderFrame;
 use crate::pkl_string::{PklString, PklStringBuilder};
 use std::fmt::Write;
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 enum Group {
     Frame(usize),
     Loop { frames: Vec<Group>, count: usize },
@@ -151,18 +151,76 @@ fn compress_range<T: PartialEq>(
     }
 }
 
-pub(super) fn render(
-    output: &mut PklStringBuilder,
-    frames: &[RenderFrame<'_>],
-    hint: Option<&PklString>,
-) {
-    // Invalid source positions are never compressed with each other.
-    let keys: Vec<_> = frames
-        .iter()
-        .enumerate()
-        .map(|(index, frame)| key(frame).ok_or(index))
-        .collect();
-    render_groups(output, frames, &compress(&keys), hint, "", true);
+/// Compression uses the original complete frames. Transforming a leaf cannot
+/// alter the selected loop layout or cause additional callback invocations.
+#[derive(Clone, Debug)]
+pub(super) struct DiagnosticFrames {
+    frames: Vec<Option<crate::logging::LogFrame>>,
+    groups: Vec<Group>,
+    order: Vec<usize>,
+    next: usize,
+}
+impl DiagnosticFrames {
+    pub(super) fn new(frames: &[RenderFrame<'_>]) -> Self {
+        let keys: Vec<_> = frames
+            .iter()
+            .enumerate()
+            .map(|(index, frame)| key(frame).ok_or(index))
+            .collect();
+        let groups = compress(&keys);
+        fn visit(groups: &[Group], order: &mut Vec<usize>) {
+            for group in groups {
+                match group {
+                    Group::Frame(index) => order.push(*index),
+                    Group::Loop { frames, .. } => visit(frames, order),
+                }
+            }
+        }
+        let frames: Vec<_> = keys
+            .into_iter()
+            .map(|key| {
+                key.ok().map(|key| crate::logging::LogFrame {
+                    module_uri: key.uri.into(),
+                    member_name: Some(key.member.clone()),
+                    source_lines: key
+                        .source_lines
+                        .into_iter()
+                        .map(PklString::from)
+                        .collect::<Vec<_>>()
+                        .into(),
+                    start_line: key.start_line,
+                    start_column: key.start_column,
+                    end_line: key.end_line,
+                    end_column: key.end_column,
+                })
+            })
+            .collect();
+        let mut order = Vec::new();
+        visit(&groups, &mut order);
+        order.retain(|index| frames[*index].is_some());
+        Self {
+            frames,
+            groups,
+            order,
+            next: 0,
+        }
+    }
+    pub(super) fn next(&self) -> Option<&crate::logging::LogFrame> {
+        self.order
+            .get(self.next)
+            .and_then(|index| self.frames[*index].as_ref())
+    }
+    pub(super) fn replace(&mut self, frame: crate::logging::LogFrame) {
+        let index = self.order[self.next];
+        self.frames[index] = Some(frame);
+        self.next += 1;
+    }
+    pub(super) fn is_empty(&self) -> bool {
+        self.frames.is_empty()
+    }
+    pub(super) fn render(&self, output: &mut PklStringBuilder, hint: Option<&PklString>) {
+        render_groups(output, &self.frames, &self.groups, hint, "", true);
+    }
 }
 
 fn render_hint(output: &mut PklStringBuilder, hint: Option<&PklString>, margin: &str) {
@@ -175,7 +233,7 @@ fn render_hint(output: &mut PklStringBuilder, hint: Option<&PklString>, margin: 
 
 fn render_groups(
     output: &mut PklStringBuilder,
-    frames: &[RenderFrame<'_>],
+    frames: &[Option<crate::logging::LogFrame>],
     groups: &[Group],
     hint: Option<&PklString>,
     margin: &str,
@@ -207,7 +265,9 @@ fn render_groups(
                 if !first {
                     writeln!(output, "{margin}").unwrap();
                 }
-                super::render_frame(output, &frames[*index], margin);
+                if let Some(frame) = &frames[*index] {
+                    super::render_log_frame(output, frame, margin);
+                }
             }
         }
         if first {

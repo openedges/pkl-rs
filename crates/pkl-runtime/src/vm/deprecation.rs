@@ -1,6 +1,6 @@
 //! Method target installation owns deprecation effects, independently of invocation values.
 use super::*;
-use crate::logging::{LogDelivery, LogEvent, LogLevel};
+use crate::logging::{LogEvent, LogLevel};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum ReceiverClass {
@@ -430,15 +430,10 @@ impl Vm {
         // BufferedLogger runs before the transformer and delegate, including failures.
         self.log_buffer.extend(event.message.encode_utf16());
         self.log_buffer.push(u16::from(b'\n'));
-        if self.context.log_delivery == LogDelivery::Noop && !self.context.host_frame_transformer {
+        if self.begin_log_delivery(event)? {
             return self.publish_method_call(pending);
         }
-        let id = self.next_request;
-        self.next_request = id
-            .checked_add(1)
-            .ok_or_else(|| invalid("Host request IDs exhausted"))?;
         self.frames.last_mut().expect("active call frame").warning = Some(pending);
-        self.state = State::Waiting(PendingRequest::Log(LogRequest { id, event }));
         Ok(())
     }
 }

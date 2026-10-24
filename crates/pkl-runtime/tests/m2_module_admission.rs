@@ -877,7 +877,6 @@ fn successful_import_site_does_not_retain_temporary_importing_receivers() {
             text: source.into(),
             uri: "file:///site-root.pkl".into(),
             module_name: "main".into(),
-            line_anchors: false,
         }),
         ModuleIdentity {
             original_uri: "file:///site-root.pkl".into(),
@@ -972,7 +971,6 @@ fn vm_nonterminal_cancellation_retries_an_unpublished_import_site() {
                 text: source.into(),
                 uri: "file:///main.pkl".into(),
                 module_name: "main".into(),
-                line_anchors: false,
             }),
             ModuleIdentity {
                 original_uri: "file:///main.pkl".into(),

@@ -1,6 +1,6 @@
 //! Trace evaluation uses the shared forcing and renderer continuations.
 use super::*;
-use crate::logging::{LogDelivery, LogEvent, LogFrame, LogLevel, TraceMode};
+use crate::logging::{LogEvent, LogFrame, LogLevel, TraceMode};
 use crate::source::SourceMap;
 use crate::value::RuntimeSource;
 
@@ -75,21 +75,14 @@ impl Vm {
         // BufferedLogger records before frame transformation or the delegate callback.
         self.log_buffer.extend(message.encode_utf16());
         self.log_buffer.push(u16::from(b'\n'));
-        if self.context.log_delivery == LogDelivery::Noop && !self.context.host_frame_transformer {
+        let event = Arc::new(LogEvent {
+            level: LogLevel::Trace,
+            message,
+            frame,
+        });
+        if self.begin_log_delivery(event)? {
             return Ok(true);
         }
-        let id = self.next_request;
-        self.next_request = id
-            .checked_add(1)
-            .ok_or_else(|| invalid("Host request IDs exhausted"))?;
-        self.state = State::Waiting(PendingRequest::Log(LogRequest {
-            id,
-            event: Arc::new(LogEvent {
-                level: LogLevel::Trace,
-                message,
-                frame,
-            }),
-        }));
         trace.phase = Phase::Waiting;
         Ok(false)
     }
@@ -179,11 +172,7 @@ pub(super) fn source_frame(source: &RuntimeSource, span: Span) -> Result<LogFram
         .get(start.line - 1..end.line)
         .ok_or_else(|| invalid("trace source lines"))?;
     Ok(LogFrame {
-        module_uri: if source.line_anchors {
-            format!("{}#L{}", source.uri, start.line).into()
-        } else {
-            source.uri.clone().into()
-        },
+        module_uri: source.uri.clone().into(),
         member_name: None,
         source_lines: lines.to_vec().into(),
         start_line: start.line,

@@ -24,7 +24,7 @@ fn initialize_error(source: &str) -> pkl_runtime::value::RuntimeError {
         match vm.poll(100) {
             VmPoll::Ready(result) => return result.unwrap_err(),
             VmPoll::Yielded => {}
-            VmPoll::Log(_) => panic!("unexpected logger request"),
+            VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),
             VmPoll::Module(request) => vm
                 .complete_module(
                     request.id,

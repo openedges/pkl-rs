@@ -156,6 +156,7 @@ fn drive(
                 session.acknowledge_log(&token, Ok(()), 0).unwrap();
             }
             HostPoll::Read { .. } => panic!("unexpected resource effect"),
+            HostPoll::TransformFrame { .. } => panic!("unexpected default transformer callback"),
             HostPoll::Yielded => {}
         }
         session.collect(&[]);
@@ -337,6 +338,9 @@ fn import_declaration_and_inline_failures_keep_exact_phase_specific_java_frames(
                                 }
                             };
                             session.complete_module(&token, completion, 0).unwrap();
+                        }
+                        HostPoll::TransformFrame { .. } => {
+                            panic!("unexpected default transformer callback")
                         }
                         HostPoll::Yielded => {}
                         other => panic!("unexpected effect: {other:?}"),

@@ -13,7 +13,7 @@ fn done(vm: &mut Vm) -> Result<Value, RuntimeError> {
         match vm.poll(101) {
             VmPoll::Ready(value) => return value,
             VmPoll::Yielded => {}
-            VmPoll::Log(_) => panic!("unexpected logger request"),
+            VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),
             VmPoll::Module(_) => panic!("unexpected module request"),
             VmPoll::Pending(_) => panic!("unexpected Host request"),
         }
@@ -1073,7 +1073,7 @@ fn enabled_union_replays_only_after_all_alternatives_fail_and_type_tests_do_not_
         let mut requests = Vec::new();
         let outcome = loop {
             match vm.poll(1000) {
-                VmPoll::Log(_) => panic!("unexpected logger request"),
+                VmPoll::Log(_) | VmPoll::TransformFrame(_) => panic!("unexpected logger request"),
                 VmPoll::Module(_) => panic!("unexpected module request"),
                 VmPoll::Yielded => {}
                 VmPoll::Ready(result) => break result,

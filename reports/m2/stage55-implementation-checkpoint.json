@@ -1,0 +1,701 @@
+{
+  "schema": 1,
+  "stage": 55,
+  "recorded_at": "2026-10-24T05:08:12.282033+00:00",
+  "scope": "Shared raw-frame transformation and typed Host continuations, exact full-frame transports, and bounded local differential regression. This is not full M2, product API, release-platform or performance completion.",
+  "provenance": "recorded-local-verification",
+  "hosted_CI_claimed": false,
+  "host": {
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "uname": {
+      "system": "Darwin",
+      "node": "research-macmini1.local",
+      "release": "27.0.0",
+      "version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:27 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8103",
+      "machine": "arm64",
+      "processor": "arm"
+    }
+  },
+  "reference_gitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "base_commit": "6cc264eff87ad4a4b4e025309800946e33631e1d",
+  "source_binding": {
+    "status": "pending-post-implementation-commit-binding",
+    "explanation": "Original captures and manifests are immutable. A separate post-commit record binds these exact inputs to the actual implementation commit; no future commit hash is invented."
+  },
+  "implementation": [
+    "Authored source URIs and full owned UTF-16 frames remain raw until default, identity or Host policy is applied.",
+    "Distinct frame-transform and logger continuations preserve buffering, reentry, rejection, pending roots and deprecation publication order.",
+    "Diagnostic compression precedes transformation; each returned frame is checked before requesting the next callback.",
+    "Callback-origin metadata distinguishes four actual failure phases without manufacturing Java exception classes.",
+    "Foreign logger/transformer failures use the authored root declaration span while preserving real trace caller frames.",
+    "Native, N-API and Wasm use the same engine and typed transport for arbitrary UTF-16 frames."
+  ],
+  "java_authority": {
+    "path": "tests/fixtures/m2-frame-transformers/oracle-evidence.tar.gz",
+    "sha256": "53efa9f779095d54fb2fa3345bab0d01e4bc4ddfa707f45c2b3223c63b6606dc",
+    "bytes": 715205
+  },
+  "main_frame_comparison": {
+    "targets": {
+      "native": {
+        "rows": 96,
+        "statuses": {
+          "api-exception": 4,
+          "pass": 82,
+          "oracle-error": 10
+        },
+        "public_calls": 180,
+        "frame_logger_channel_comparisons": 4136
+      },
+      "napi": {
+        "rows": 96,
+        "statuses": {
+          "api-exception": 4,
+          "pass": 82,
+          "oracle-error": 10
+        },
+        "public_calls": 180,
+        "frame_logger_channel_comparisons": 4136
+      },
+      "chromium": {
+        "rows": 96,
+        "statuses": {
+          "api-exception": 4,
+          "pass": 82,
+          "oracle-error": 10
+        },
+        "public_calls": 180,
+        "frame_logger_channel_comparisons": 4136
+      }
+    },
+    "rows_total": 288,
+    "aggregate_statuses": {
+      "api-exception": 12,
+      "pass": 246,
+      "oracle-error": 30
+    },
+    "strict_main_comparison_passed": false,
+    "frame_logger_channel_comparisons": 12408,
+    "public_calls": 540,
+    "all288_frame_logger_filename_sets_and_bytes_equal": true,
+    "remaining_public_difference_scope": [
+      "per-call status",
+      "per-call stderr UTF8",
+      "per-call stderr UTF16",
+      "complete ordered protocol"
+    ],
+    "all_terminal_zero_and_poll_collection_cadence_verified": true,
+    "portable_owned_payloads_stable_sessions": 192,
+    "buffer_supplement": {
+      "status": "not-executed",
+      "authority": {
+        "sessions": 7,
+        "java_processes": 14,
+        "repeated_raw_equal": 7,
+        "public_calls": 32,
+        "transformer_callbacks": 50,
+        "logger_callbacks": 14,
+        "warning_callbacks": 0,
+        "call_status_counts": {
+          "success": 32
+        },
+        "oracle_error_calls": 0,
+        "api_exception_calls": 0,
+        "nested_oracle_error_results": 4,
+        "compatibility_passes_claimed": 0,
+        "scope": "Java-only public TestResults.logs() observations; candidate test-tool API parity is unexecuted."
+      },
+      "obligation": "Supplemental Java evaluateTest buffer observations are not executed by this main expression comparison. Test API/buffer parity remains a separate M2 obligation."
+    },
+    "isolation": {
+      "native": "96 separate recorded native process invocations",
+      "napi": "96 fresh Node child invocations; child argv/runtime identity admitted by offline verifier; OS PIDs not recorded",
+      "chromium": "96 new contexts/pages/Wasm instances within one headless browser launch, not 96 browser OS processes"
+    }
+  },
+  "legacy_deprecation": {
+    "cases": 56,
+    "repetitions": 2,
+    "targets": [
+      "native",
+      "napi",
+      "chromium"
+    ],
+    "total_rows": 336,
+    "status_counts": {
+      "pass": 306,
+      "oracle-error": 30
+    },
+    "per_target": {
+      "native": {
+        "pass": 102,
+        "oracle-error": 10
+      },
+      "napi": {
+        "pass": 102,
+        "oracle-error": 10
+      },
+      "chromium": {
+        "pass": 102,
+        "oracle-error": 10
+      }
+    },
+    "oracle_error_cases": [
+      "closed-throw-once",
+      "logger-close",
+      "logger-close-reenter",
+      "open-throw-once",
+      "super-throw-once"
+    ],
+    "new_mismatch_or_unsupported_rows": 0,
+    "infrastructure_issues": [],
+    "portable_issues": [],
+    "layout_issues": [],
+    "source_changes": [],
+    "artifact_changes": [],
+    "strict_main_comparison_passed": false,
+    "supplemental_cycles": {
+      "status": "not-executed",
+      "authority": {
+        "sessions": 6,
+        "java_processes": 12,
+        "evaluator_instances": 48,
+        "repeated_raw_equal": 6,
+        "public_calls": 96,
+        "warning_callbacks": 38,
+        "compatibility_passes_claimed": 0
+      },
+      "obligation": "Supplemental same-JVM evaluator cycles are independently verified Java authority but are not executed by this main comparison. Their parity remains a separate M2 obligation."
+    },
+    "report": {
+      "path": "target/m2/stage55-legacy-regression-01/deprecation/report.json",
+      "sha256": "566f9ae2b01ba85310a6c362e0ca4c8150afab8027b0052de8d808c9a89e3d8e",
+      "bytes": 8251890
+    }
+  },
+  "legacy_default_trace": {
+    "cases": 45,
+    "repetitions": 2,
+    "targets": [
+      "native",
+      "node",
+      "browser"
+    ],
+    "total_rows": 270,
+    "status_counts": {
+      "pass": 174,
+      "oracle-error": 96
+    },
+    "per_target": {
+      "native": {
+        "pass": 58,
+        "oracle-error": 32
+      },
+      "node": {
+        "pass": 58,
+        "oracle-error": 32
+      },
+      "browser": {
+        "pass": 58,
+        "oracle-error": 32
+      }
+    },
+    "oracle_error_cases": [
+      "bootstrap-member-annotation-close",
+      "bootstrap-member-annotation-close-reenter",
+      "bootstrap-module-annotation-close",
+      "bootstrap-module-annotation-close-reenter",
+      "design-logger-close",
+      "design-logger-throw",
+      "edge-close-arithmetic",
+      "edge-close-call-method",
+      "edge-close-callback-after-close",
+      "edge-close-read",
+      "edge-close-second-trace",
+      "edge-close-throw",
+      "output-bootstrap-member-annotation-close",
+      "read-different-resource-pending-property",
+      "read-pending-ancestor",
+      "read-same-pending-property"
+    ],
+    "new_mismatch_or_acquisition_failure_rows": 0,
+    "native_source_binding": "supplied-artifact-only",
+    "native_compatibility_complete": false,
+    "portable_compatibility_complete": false,
+    "portable_architecture_passed": true,
+    "portable_infrastructure_errors": [],
+    "portable_browser_errors": [],
+    "portable_changed_inputs": [],
+    "native_report": {
+      "path": "target/m2/stage55-legacy-regression-01/trace/report.json",
+      "sha256": "3d2d654647d9c12daea96a959b83041e66c30db3cae0806cacd8f10265034071",
+      "bytes": 1709111
+    },
+    "portable_report": {
+      "path": "target/m2/stage55-legacy-regression-01/trace-portable/execution.json",
+      "sha256": "668d10d0925b07d035053872e719847d5592d53630e732268e197a23a77f6ea8",
+      "bytes": 1698320
+    },
+    "boundary": "Existing unmodified trace contract; Java EvaluatorBuilder.preconfigured() has no custom StackFrameTransformer installed. Java class names are provenance, not candidate class-name synthesis requirements. Whole raw errors, statuses, protocol, UTF16/log fields and actual process results remain retained."
+  },
+  "required_rust": {
+    "commands": [
+      {
+        "name": "references",
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "started_utc": "2026-10-24T04:28:53.174525+00:00",
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T04:28:55.437237+00:00",
+        "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+        "stderr_sha256": "b8fa5f93e8a06de776aa3d144b9efda5c4c07fe60b6de85b8633febc830305c2"
+      },
+      {
+        "name": "format",
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "started_utc": "2026-10-24T04:28:55.438428+00:00",
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T04:28:56.495570+00:00",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "started_utc": "2026-10-24T04:28:56.496649+00:00",
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T04:28:58.240742+00:00",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "5bd30675248a28f7a8becbe7ab3af3e2c976d088f6e8dc8d1bdfe132bffacafb"
+      },
+      {
+        "name": "workspace-tests",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "started_utc": "2026-10-24T04:28:58.241680+00:00",
+        "exit_code": 0,
+        "finished_utc": "2026-10-24T04:32:17.510250+00:00",
+        "stdout_sha256": "fe2f150f6812ec7c199a8bdd9399a5fd7db276643b7b0ebb8bcba4726997129f",
+        "stderr_sha256": "37f8ec152680526141edc82d284bfc9ed202eee267802f35543d6b85f5bbf602"
+      },
+      {
+        "name": "wasm-runtime",
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "started_utc": "2026-10-24T04:32:17.516149+00:00",
+        "exit_code": 101,
+        "finished_utc": "2026-10-24T04:32:18.422444+00:00",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "082ee781b952fc83d127a77737bd1b3dd2361d9928d361878141518177cac90c"
+      }
+    ],
+    "original_complete": true,
+    "original_changed_sources": [],
+    "wasm_retry": {
+      "scope": "Retry only the required Wasm check after documented local disk exhaustion. Four passed prior checks are retained, not rerun or relabelled.",
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-24T04:41:06.691757+00:00",
+      "finished_at": "2026-10-24T04:41:38.315321+00:00",
+      "original_report_sha256": "156bd2e3d6f64d81aa6860687f4e64f7bbc975c530365b0462a349482bc51aa9",
+      "original_source_manifest_sha256": "81349df248ddcc93a5387e662b32ff4fb68789cd9d597b398cc7de04c66a6184",
+      "source_count": 163100,
+      "changed_before": [],
+      "changed_after": [],
+      "reused_passed_checks": [
+        "references",
+        "format",
+        "clippy",
+        "workspace-tests"
+      ],
+      "original_failed_check_preserved": true
+    },
+    "all_five_required_checks_satisfied": true,
+    "harness": {
+      "passed": 895,
+      "failed": 0,
+      "ignored": 1,
+      "harness_summaries": 125
+    },
+    "audit": {
+      "report_sha256": "156bd2e3d6f64d81aa6860687f4e64f7bbc975c530365b0462a349482bc51aa9",
+      "manifest_sha256": "81349df248ddcc93a5387e662b32ff4fb68789cd9d597b398cc7de04c66a6184",
+      "input_files_verified": 163100,
+      "captured_files_verified": 63,
+      "git_backed_files_verified": 163037,
+      "git_object_byte_verification": {
+        ".": {
+          "unique_blob_objects_verified": 13354,
+          "unique_blob_bytes_streamed": 202226141,
+          "commit": "6cc264eff87ad4a4b4e025309800946e33631e1d"
+        },
+        "external/pkl": {
+          "unique_blob_objects_verified": 60,
+          "unique_blob_bytes_streamed": 157119,
+          "commit": "e51fb2f91774265666f94980ec630db794a4db2d"
+        }
+      },
+      "complete_input_name_closure_recomputed": true,
+      "checks": [
+        {
+          "name": "references",
+          "argv": [
+            "cargo",
+            "xtask",
+            "verify"
+          ],
+          "exit_code": 0,
+          "stdout": {
+            "sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+            "bytes": 40
+          },
+          "stderr": {
+            "sha256": "b8fa5f93e8a06de776aa3d144b9efda5c4c07fe60b6de85b8633febc830305c2",
+            "bytes": 192
+          }
+        },
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--",
+            "--check"
+          ],
+          "exit_code": 0,
+          "stdout": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        {
+          "name": "clippy",
+          "argv": [
+            "cargo",
+            "clippy",
+            "--workspace",
+            "--all-targets",
+            "--locked",
+            "--",
+            "-D",
+            "warnings"
+          ],
+          "exit_code": 0,
+          "stdout": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "sha256": "5bd30675248a28f7a8becbe7ab3af3e2c976d088f6e8dc8d1bdfe132bffacafb",
+            "bytes": 335
+          }
+        },
+        {
+          "name": "workspace-tests",
+          "argv": [
+            "cargo",
+            "test",
+            "--workspace",
+            "--locked"
+          ],
+          "exit_code": 0,
+          "stdout": {
+            "sha256": "fe2f150f6812ec7c199a8bdd9399a5fd7db276643b7b0ebb8bcba4726997129f",
+            "bytes": 99702
+          },
+          "stderr": {
+            "sha256": "37f8ec152680526141edc82d284bfc9ed202eee267802f35543d6b85f5bbf602",
+            "bytes": 12332
+          }
+        },
+        {
+          "name": "wasm-runtime",
+          "argv": [
+            "cargo",
+            "check",
+            "-p",
+            "pkl-runtime",
+            "--target",
+            "wasm32-unknown-unknown",
+            "--locked"
+          ],
+          "exit_code": 101,
+          "stdout": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "sha256": "082ee781b952fc83d127a77737bd1b3dd2361d9928d361878141518177cac90c",
+            "bytes": 2466
+          }
+        }
+      ],
+      "original_wasm_failure": "Exit101, actual No space left on device messages preserved.",
+      "workspace_harness": {
+        "passed": 895,
+        "failed": 0,
+        "ignored": 1,
+        "harness_summaries": 125
+      },
+      "limits": "Full inherited environment is not enumerated; recorded overrides, host, pinned toolchain input and original command/log provenance remain distinct.",
+      "captured_payloads_are_regular_files": true
+    }
+  },
+  "tooling": {
+    "commands": [
+      {
+        "name": "m2-freshness",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "started_at": "2026-10-24T04:49:33.904147+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-10-24T04:49:37.502217+00:00",
+        "stdout_sha256": "9eb043eed64a997a50c295ceaeaf22c94a1f9b4076d0e809c793460b394260e3",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "source-inventory",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/inventory.py",
+          "--check"
+        ],
+        "started_at": "2026-10-24T04:49:37.502930+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-10-24T04:49:40.326471+00:00",
+        "stdout_sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "module-registry",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_module_eval.py",
+          "--check"
+        ],
+        "started_at": "2026-10-24T04:49:40.327116+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-10-24T04:49:40.754843+00:00",
+        "stdout_sha256": "4c1d0acc701c3bab7140a1496e1877763a88b5c75c2f352ab2150f410bfb146f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "frame-fixture",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/frame_transformer_fixtures.py"
+        ],
+        "started_at": "2026-10-24T04:49:40.755489+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-10-24T04:49:46.874386+00:00",
+        "stdout_sha256": "ea900d44ec4bb4258124d2b1e369746ce231a25630f39d8f1135cb0c056b0c06",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "m2-python",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-p",
+          "test_m2_*.py",
+          "-v"
+        ],
+        "started_at": "2026-10-24T04:49:46.875104+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-10-24T04:51:40.334636+00:00",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "592680be65ae04d79489940e4170cb89ae26eb545d34912ecbbb3b0712dc0b0c"
+      },
+      {
+        "name": "frame-python",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-p",
+          "test_frame_transformer_*.py",
+          "-v"
+        ],
+        "started_at": "2026-10-24T04:51:40.335599+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-10-24T04:52:07.846082+00:00",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "f69663bb24b6f84660e880a97dd8bf82790668eb96e3fd64b5ef6d30f4703c72"
+      },
+      {
+        "name": "js-transport",
+        "command": [
+          "node",
+          "--test",
+          "tools/platform/frame-transformer-session.test.mjs",
+          "tools/platform/capture-frame-transformer.test.mjs",
+          "tools/platform/deprecation-session.test.mjs",
+          "tools/platform/capture-deprecation.test.mjs",
+          "tools/platform/trace-session.test.mjs"
+        ],
+        "started_at": "2026-10-24T04:52:07.846848+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-10-24T04:52:08.893851+00:00",
+        "stdout_sha256": "7b453083f326bf794697128ce6c7de1df5b517b425826ddbbb30dc24b35f7e3c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "source_changes": [],
+    "python_tests": {
+      "m2": 165,
+      "frame_transformer": 55
+    },
+    "javascript_tests": 34
+  },
+  "shared_platform_experiment": {
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "shared_engine_passed": 6078,
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ]
+  },
+  "inventory": {
+    "requirements": 475,
+    "accounting_rows": 4527,
+    "counts": {
+      "cases": 4527,
+      "cases_by_execution": {
+        "ready": 4416,
+        "unimplemented": 71,
+        "unmapped": 40
+      },
+      "requirements": 475,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 31,
+        "specification": 198
+      }
+    },
+    "whole_completion_gate": "open"
+  },
+  "independent_audits": [
+    {
+      "path": "target/m2/stage55-final-review-01/raw-audit.json",
+      "sha256": "9b71a78dea5de6a044c31aad48a4d163f91264d21c0b16711b0b614e746ec3eb",
+      "bytes": 5302550
+    },
+    {
+      "path": "target/m2/stage55-final-review-01/validation-audit.json",
+      "sha256": "92f6bb75092ba214d66aadab9e70b41827f33331370cb7434342e0d1a02af664",
+      "bytes": 10531
+    },
+    {
+      "path": "target/m2/stage55-legacy-regression-01/summary.json",
+      "sha256": "5594ccc38bbba4f57a5bd59de6d51463893ca0e66fae464b46dcfca7a81554ae",
+      "bytes": 22498
+    },
+    {
+      "path": "target/m2/stage50-53-terminal-audit-01/audit-report.json",
+      "sha256": "a371006a5fc51484aef96b06faf193073cda3b28b22325da5ef30d979aafba82",
+      "bytes": 57115
+    }
+  ],
+  "archives": [
+    {
+      "archive": "reports/m2/stage55-candidate-evidence.tar.gz",
+      "sha256": "98501e95db6609ecb0ad5a343c38fecc1969384f9d85ebed22aff181c1885264",
+      "bytes": 39995093,
+      "payload_files": 46928,
+      "payload_bytes": 213723550,
+      "re_read_verified": true,
+      "manifest_sha256": "021425b0d9708af2a28ba701f937e398779a86f8650713630e5149607c8b8ce4"
+    },
+    {
+      "archive": "reports/m2/stage55-validation-evidence.tar.gz",
+      "sha256": "6c4267bb555720699c4e525bdcddaee794ade2c5c72f63c047b1add42cd20f48",
+      "bytes": 15067832,
+      "payload_files": 5151,
+      "payload_bytes": 176172221,
+      "re_read_verified": true,
+      "manifest_sha256": "7f2c9cc4df00fbd75bc54c4db27d4a3cd5beb558266c7e7ff5aec7c01ff4f28c"
+    },
+    {
+      "archive": "reports/m2/stage55-legacy-evidence.tar.gz",
+      "sha256": "087d2655d6d9de088c435db9cb0ad9d6a85bc75b9ee24dd87635e59c2bce2d2e",
+      "bytes": 23111593,
+      "payload_files": 38536,
+      "payload_bytes": 138029626,
+      "re_read_verified": true,
+      "manifest_sha256": "d1dcfecfcb5ef263dd9852f93b822e395db591c7ae1ffe99e605f95a808c501d"
+    }
+  ],
+  "remaining_obligations": [
+    "The 42 main Java internal/API exception sessions have remaining public status, stderr and protocol differences.",
+    "Java-only evaluateTest/TestResults.logs observations have no candidate test-tool parity claim.",
+    "Cross-evaluator standard-library executable/cache lifetime remains unimplemented.",
+    "Package/service-provider default transforms and callbacks from eager synchronous constructors remain open.",
+    "The broad Stage50/53 acquisitions terminated without final reports after disk exhaustion; their retained prefixes are not final or current-candidate results.",
+    "Full language, metadata/reflection, remaining class/type/collection rules and complete upstream corpus gates remain open.",
+    "No speed, memory, full product API or release-platform target is claimed."
+  ],
+  "whole_M2_complete": false
+}

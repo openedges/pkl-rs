@@ -15,6 +15,7 @@ def source_paths(root: Path):
     paths = set(INPUTS) | {MANIFEST, 'tools/m2_source_inputs.py', 'tools/m2_manifest.py',
         'tools/m2_language.py', 'tools/m2_module_eval.py', 'tools/m2_workspace.py', 'tools/m2_jvm_classpath.py',
         'tools/m2_execution_profiles.py', 'tools/compat.py', 'tools/m2_generate.py',
+        'tools/benchmark.py',
         'tools/parameterized_object_fixtures.py', 'tools/parameterized_object_compare.py',
         'tools/platform/compare-parameterized-objects.mjs',
         'tools/platform/compare-parameterized-objects.test.mjs',
@@ -28,6 +29,14 @@ def source_paths(root: Path):
         'tools/tests/test_deprecation_fixtures.py', 'tools/tests/test_deprecation_compare.py',
         'tools/platform/deprecation-session.mjs', 'tools/platform/deprecation-session.test.mjs',
         'tools/platform/capture-deprecation.mjs', 'tools/platform/capture-deprecation.test.mjs',
+        'tools/frame_transformer_oracle.py', 'tools/frame_transformer_fixtures.py',
+        'tools/frame_transformer_compare.py', 'tools/java/M2FrameTransformerProbe.java',
+        'tools/tests/test_frame_transformer_fixtures.py',
+        'tools/tests/test_frame_transformer_compare.py',
+        'tools/platform/frame-transformer-session.mjs',
+        'tools/platform/frame-transformer-session.test.mjs',
+        'tools/platform/capture-frame-transformer.mjs',
+        'tools/platform/capture-frame-transformer.test.mjs',
         'tools/platform/resource-session.mjs',
         'tools/m2_identifier_tables.py', 'tools/java/M2IdentifierProbe.java',
         'tools/m2_unicode_escape_tables.py', 'tools/java/M2UnicodeEscapeProbe.java',
@@ -41,6 +50,7 @@ def source_paths(root: Path):
     for directory, pattern in [('crates', '*.rs'), ('crates', '*.pkl'), ('crates', 'Cargo.toml'),
                                ('tests/fixtures/m2', '*'),
                                ('tests/fixtures/m2-deprecation', '*'),
+                               ('tests/fixtures/m2-frame-transformers', '*'),
                                ('tests/fixtures/m2-parameterized-object-bodies', '*')]:
         paths.update(path.relative_to(root).as_posix() for path in (root / directory).rglob(pattern) if path.is_file())
     profile = json.loads((root / PROFILE).read_bytes())

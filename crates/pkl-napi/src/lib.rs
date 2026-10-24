@@ -308,6 +308,49 @@ pub struct SourceLog {
     pub end_line: u32,
     pub end_column: u32,
 }
+/// Full transformer input/output; text remains owned UTF-16, including surrogates.
+#[napi(object, use_nullable = true)]
+pub struct SourceFrame {
+    pub module_uri: napi::bindgen_prelude::Uint16Array,
+    pub member_name: Option<napi::bindgen_prelude::Uint16Array>,
+    pub source_lines: Vec<napi::bindgen_prelude::Uint16Array>,
+    pub start_line: f64,
+    pub start_column: f64,
+    pub end_line: f64,
+    pub end_column: f64,
+}
+impl From<probe::SourceFrame> for SourceFrame {
+    fn from(frame: probe::SourceFrame) -> Self {
+        use napi::bindgen_prelude::Uint16Array;
+        Self {
+            module_uri: Uint16Array::new(frame.module_uri),
+            member_name: frame.member_name.map(Uint16Array::new),
+            source_lines: frame
+                .source_lines
+                .into_iter()
+                .map(Uint16Array::new)
+                .collect(),
+            start_line: frame.start_line.into(),
+            start_column: frame.start_column.into(),
+            end_line: frame.end_line.into(),
+            end_column: frame.end_column.into(),
+        }
+    }
+}
+impl TryFrom<SourceFrame> for probe::SourceFrame {
+    type Error = Error;
+    fn try_from(frame: SourceFrame) -> Result<Self> {
+        Ok(Self {
+            module_uri: frame.module_uri.to_vec(),
+            member_name: frame.member_name.map(|s| s.to_vec()),
+            source_lines: frame.source_lines.into_iter().map(|s| s.to_vec()).collect(),
+            start_line: unsigned(frame.start_line)?,
+            start_column: unsigned(frame.start_column)?,
+            end_line: unsigned(frame.end_line)?,
+            end_column: unsigned(frame.end_column)?,
+        })
+    }
+}
 #[napi(object)]
 pub struct SourceModuleRequest {
     pub id: String,
@@ -357,11 +400,13 @@ pub struct SourceEvent {
     pub error: Option<napi::bindgen_prelude::Uint16Array>,
     pub error_bytes: Option<Uint8Array>,
     pub log: Option<SourceLog>,
+    pub frame: Option<SourceFrame>,
     pub module: Option<SourceModuleRequest>,
     pub exit_code: Option<i32>,
     pub phase: Option<String>,
     pub disposition: Option<String>,
     pub reason: Option<String>,
+    pub callback_origin: Option<String>,
 }
 impl From<probe::SourceEvent> for SourceEvent {
     fn from(event: probe::SourceEvent) -> Self {
@@ -375,10 +420,12 @@ impl From<probe::SourceEvent> for SourceEvent {
             error: event.error.map(Uint16Array::new),
             error_bytes: event.error_bytes.map(Uint8Array::new),
             module: event.module.map(Into::into),
+            frame: event.frame.map(Into::into),
             exit_code: event.exit_code,
             phase: event.phase.map(Into::into),
             disposition: event.disposition.map(Into::into),
             reason: event.reason.map(Into::into),
+            callback_origin: event.callback_origin.map(Into::into),
             log: event.log.map(|log| SourceLog {
                 level: log.level.into(),
                 message: Uint16Array::new(log.message),
@@ -1023,6 +1070,30 @@ impl SourceSession {
         self.inner
             .poll(unsigned(now)?, unsigned(budget)?)
             .map(Into::into)
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn set_frame_transformer(&mut self, env: Env, mode: Utf16String) -> Result<()> {
+        self.inner
+            .set_frame_transformer(&string(&mode)?)
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn complete_frame_transform(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        frame: Option<SourceFrame>,
+        failure: Option<napi::bindgen_prelude::Uint16Array>,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .complete_frame_transform(
+                &string(&token)?,
+                frame.map(TryInto::try_into).transpose()?,
+                failure.map(|units| units.to_vec()),
+                unsigned(now)?,
+            )
             .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]

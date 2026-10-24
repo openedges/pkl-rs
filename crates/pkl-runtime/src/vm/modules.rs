@@ -367,7 +367,6 @@ impl Vm {
                     text: expression.clone(),
                     uri: "repl:text".into(),
                     module_name: "".into(),
-                    line_anchors: false,
                 }),
                 "repl:text".into(),
             ),
@@ -944,7 +943,6 @@ impl Vm {
             text: input.text.clone(),
             uri: resolved.source_uri.clone(),
             module_name: input.inferred_name,
-            line_anchors: false,
         });
         // An ImportNode's guest call frame supplies the first visible member
         // for its parser exception. Primary loading has no such guest frame.

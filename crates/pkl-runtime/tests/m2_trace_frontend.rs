@@ -32,6 +32,7 @@ fn ready(vm: &mut Vm, logs: &mut Vec<Arc<LogEvent>>, reads: &mut Vec<String>) ->
             }
             VmPoll::Module(_) => panic!("unexpected module request"),
             VmPoll::Yielded => {}
+            VmPoll::TransformFrame(_) => panic!("unexpected transformer in default trace policy"),
         }
     }
     panic!("trace test did not settle");
@@ -50,7 +51,6 @@ fn evaluate(
             text: text.into(),
             uri: URI.into(),
             module_name: "stage37-trace".into(),
-            line_anchors: false,
         })),
         log_delivery: delivery,
         ..EvaluationContext::default()

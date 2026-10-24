@@ -92,7 +92,7 @@ impl Probe<'_> {
                         .resume(&token, Ok(Value::string("resource")), 0)
                         .unwrap();
                 }
-                HostPoll::Log { .. } => {
+                HostPoll::Log { .. } | HostPoll::TransformFrame { .. } => {
                     unreachable!("default annotation adapter uses the no-op logger")
                 }
                 HostPoll::Module { .. } => {

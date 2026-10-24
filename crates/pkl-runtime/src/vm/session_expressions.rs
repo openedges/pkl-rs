@@ -105,7 +105,6 @@ fn append(
         text: resolved.module.source.clone(),
         uri: "repl:text".into(),
         module_name: "".into(),
-        line_anchors: false,
     });
     let declaration_base = program.next_declaration;
     program.next_declaration = declaration_base
@@ -147,7 +146,7 @@ fn append(
     }
     code.push(Instruction::ToString);
     code.push(Instruction::Return);
-    let entry = compiler.block(code, None)?;
+    let entry = compiler.block(code, Some(expression.span))?;
     compiler.program.metadata[entry].module_receiver_input = Some(0);
     // AstBuilder uses the synthetic ModuleInfo name for nested lexical nodes;
     // the expression's SimpleRootNode itself has an empty name.

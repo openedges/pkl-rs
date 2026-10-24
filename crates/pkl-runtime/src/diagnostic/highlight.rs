@@ -32,7 +32,7 @@ struct Scope {
     parens: i64,
 }
 struct Lexer<'a> {
-    source: &'a str,
+    source: &'a [u16],
     cursor: usize,
     start: usize,
     string: bool,
@@ -42,9 +42,15 @@ struct Lexer<'a> {
 }
 type LexResult<T> = Result<T, ()>;
 
+#[cfg(test)]
 pub(super) fn uncolored(source: &str) -> String {
+    uncolored_text(&source.into()).to_java_utf8()
+}
+
+pub(super) fn uncolored_text(source: &crate::value::PklString) -> crate::value::PklString {
+    let units: Vec<_> = source.encode_utf16().collect();
     let mut lexer = Lexer {
-        source,
+        source: &units,
         cursor: 0,
         start: 0,
         string: false,
@@ -52,18 +58,17 @@ pub(super) fn uncolored(source: &str) -> String {
         escape: false,
         scopes: Vec::new(),
     };
-    let mut output = String::with_capacity(source.len());
-    let result = replay(&mut output, &mut lexer);
-    if result.is_err() {
-        source.into()
+    let mut output = Vec::with_capacity(units.len());
+    if replay(&mut output, &mut lexer).is_err() {
+        source.clone()
     } else {
-        output
+        crate::value::PklString::from_utf16(output)
     }
 }
-fn advance(output: &mut String, lexer: &mut Lexer<'_>) -> LexResult<Token> {
+fn advance(output: &mut Vec<u16>, lexer: &mut Lexer<'_>) -> LexResult<Token> {
     let previous = lexer.cursor;
     let token = lexer.next()?;
-    output.push_str(&lexer.source[previous..lexer.start]);
+    output.extend_from_slice(&lexer.source[previous..lexer.start]);
     Ok(token)
 }
 // The Java implementation recurses between normal and string highlighting.
@@ -74,7 +79,7 @@ enum Traversal {
     String(Token),
     AfterInterpolation,
 }
-fn replay(output: &mut String, lexer: &mut Lexer<'_>) -> LexResult<()> {
+fn replay(output: &mut Vec<u16>, lexer: &mut Lexer<'_>) -> LexResult<()> {
     let mut work = vec![Traversal::Normal(lexer.next()?, Token::Eof)];
     while let Some(step) = work.pop() {
         match step {
@@ -86,7 +91,7 @@ fn replay(output: &mut String, lexer: &mut Lexer<'_>) -> LexResult<()> {
                 if token == Token::Start {
                     work.push(Traversal::String(token));
                 } else {
-                    output.push_str(lexer.text());
+                    output.extend_from_slice(lexer.text());
                 }
             }
             Traversal::NormalAdvance(end) => {
@@ -94,20 +99,20 @@ fn replay(output: &mut String, lexer: &mut Lexer<'_>) -> LexResult<()> {
             }
             Traversal::String(token) => {
                 if token == Token::End || token == Token::Eof {
-                    output.push_str(lexer.text());
+                    output.extend_from_slice(lexer.text());
                 } else if token == Token::Interpolation {
-                    output.push_str(lexer.text());
+                    output.extend_from_slice(lexer.text());
                     work.push(Traversal::AfterInterpolation);
                     work.push(Traversal::Normal(lexer.next()?, Token::RightParen));
                 } else {
-                    output.push_str(lexer.text());
+                    output.extend_from_slice(lexer.text());
                     work.push(Traversal::String(advance(output, lexer)?));
                 }
             }
             Traversal::AfterInterpolation => {
-                output.push_str(lexer.text());
+                output.extend_from_slice(lexer.text());
                 lexer.next()?;
-                output.push_str(lexer.text());
+                output.extend_from_slice(lexer.text());
                 work.push(Traversal::String(advance(output, lexer)?));
             }
         }
@@ -115,19 +120,28 @@ fn replay(output: &mut String, lexer: &mut Lexer<'_>) -> LexResult<()> {
     Ok(())
 }
 impl Lexer<'_> {
-    fn text(&self) -> &str {
+    fn text(&self) -> &[u16] {
         &self.source[self.start..self.cursor]
     }
     fn peek(&self) -> Option<char> {
-        self.source[self.cursor..].chars().next()
+        // Java's lexer consumes individual UTF-16 units. A surrogate cannot
+        // be an identifier/digit; inside strings its original unit is copied.
+        self.source
+            .get(self.cursor)
+            .map(|unit| char::from_u32(u32::from(*unit)).unwrap_or('\u{fffd}'))
     }
     fn take(&mut self) -> Option<char> {
         let ch = self.peek()?;
-        self.cursor += ch.len_utf8();
+        self.cursor += 1;
         Some(ch)
     }
     fn consume(&mut self, text: &str) -> bool {
-        if self.source[self.cursor..].starts_with(text) {
+        if self.source[self.cursor..]
+            .iter()
+            .copied()
+            .take(text.len())
+            .eq(text.encode_utf16())
+        {
             self.cursor += text.len();
             true
         } else {
@@ -192,7 +206,10 @@ impl Lexer<'_> {
                 if self.consume("/") {
                     self.line_comment();
                 } else if self.consume("*") {
-                    let Some(end) = self.source[self.cursor..].find("*/") else {
+                    let Some(end) = self.source[self.cursor..]
+                        .windows(2)
+                        .position(|units| units == [42, 47])
+                    else {
                         return Err(());
                     };
                     self.cursor += end + 2;

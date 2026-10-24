@@ -1,7 +1,7 @@
 //! Source-language scheduler and ownership checks; Java captures establish compatibility.
 use super::*;
 use crate::host::{HostPoll, HostSession};
-use crate::logging::EvaluationContext;
+use crate::logging::{EvaluationContext, LogDelivery};
 use crate::{parser::parse_module, resolver::resolve_module};
 
 const URI: &str = "file:///stage37-trace.pkl";
@@ -32,7 +32,6 @@ fn prepared(source: &str, names: &[&str]) -> (HostSession, usize, Vec<usize>) {
                     text: (*name).into(),
                     uri: "repl:text".into(),
                     module_name: "".into(),
-                    line_anchors: false,
                 })),
                 ..BlockMetadata::default()
             };
@@ -48,7 +47,6 @@ fn prepared(source: &str, names: &[&str]) -> (HostSession, usize, Vec<usize>) {
                 text: source.into(),
                 uri: URI.into(),
                 module_name: "stage37-trace".into(),
-                line_anchors: false,
             })),
             log_delivery: LogDelivery::Host,
             ..EvaluationContext::default()
@@ -378,10 +376,16 @@ fn noop_logger_still_delivers_custom_transformer_and_timeout_releases_active_tre
     let source = "first=trace(1)\ncallback=read(\"life:pending\")\n";
     let (mut host, module, entries) = setup(source, &["first", "callback"]);
     host.vm_for_test_mut().context.log_delivery = LogDelivery::Noop;
-    host.vm_for_test_mut().context.host_frame_transformer = true;
+    host.vm_for_test_mut().context.frame_transformer = crate::logging::FrameTransformer::Host;
     host.start(entries[0], vec![module.clone()], 0, Some(10))
         .unwrap();
-    let (log_token, snapshot) = log(&mut host, std::slice::from_ref(&module));
+    let HostPoll::TransformFrame {
+        token: log_token,
+        frame: snapshot,
+    } = next_event(&mut host, std::slice::from_ref(&module))
+    else {
+        panic!("expected noop logger transformation");
+    };
     host.reenter(&log_token, entries[1], vec![module.clone()], 0, None)
         .unwrap();
     let read_token = read(&mut host, &[module]);
@@ -400,8 +404,7 @@ fn noop_logger_still_delivers_custom_transformer_and_timeout_releases_active_tre
         host.resume(&read_token, Ok(Value::Int(8.into())), 10)
             .is_err()
     );
-    assert_eq!(snapshot.message, "1 = 1");
-    assert_eq!(snapshot.frame.source_lines.as_ref(), ["first=trace(1)"]);
+    assert_eq!(snapshot.source_lines.as_ref(), ["first=trace(1)"]);
 }
 
 #[test]

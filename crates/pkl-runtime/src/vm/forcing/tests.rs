@@ -487,7 +487,6 @@ failure = throw("nested")
                 text: name.into(),
                 uri: "repl:text".into(),
                 module_name: "".into(),
-                line_anchors: false,
             })),
             spans: vec![None, Some(Span::new(0, name.len())), None],
             ..BlockMetadata::default()

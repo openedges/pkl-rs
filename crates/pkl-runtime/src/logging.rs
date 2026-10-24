@@ -21,8 +21,8 @@ pub struct EvaluationContext {
     pub primary_source: Option<Arc<RuntimeSource>>,
     pub trace_mode: TraceMode,
     pub log_delivery: LogDelivery,
-    /// A custom frame transformer runs even when the logger sink is a no-op.
-    pub host_frame_transformer: bool,
+    /// Independent of the logger sink; Host runs even for a no-op logger.
+    pub frame_transformer: FrameTransformer,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -31,7 +31,7 @@ pub enum LogLevel {
     Warn,
 }
 
-/// An operand source section, independent of diagnostic stack-frame rendering.
+/// A complete raw or transformed frame shared by logging and diagnostics.
 /// Lines and columns are one-based; end columns include the final UTF-16 unit.
 /// Source lines retain their contents without physical line terminators.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -69,4 +69,58 @@ impl LoggerFailure {
 pub struct LogRequest {
     pub id: u64,
     pub event: Arc<LogEvent>,
+}
+
+/// Stack frame policy, applied to raw authored locations at each public use.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum FrameTransformer {
+    #[default]
+    Default,
+    Identity,
+    Host,
+}
+
+impl FrameTransformer {
+    /// Pinned standard-library part of StackFrameTransformers.defaultTransformer.
+    /// Package metadata and service-provider transformations remain Host capabilities.
+    pub fn transform(self, mut frame: LogFrame) -> LogFrame {
+        if self == Self::Default {
+            let units: Vec<_> = frame.module_uri.encode_utf16().collect();
+            if let Some(module) = units.strip_prefix(&[112, 107, 108, 58]) {
+                let mut uri: Vec<_> = "https://github.com/apple/pkl/blob/0.32.0/stdlib/"
+                    .encode_utf16()
+                    .collect();
+                uri.extend_from_slice(module);
+                uri.extend(format!(".pkl#L{}", frame.start_line).encode_utf16());
+                frame.module_uri = PklString::from_utf16(uri);
+            }
+        }
+        frame
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct FrameTransformRequest {
+    pub id: u64,
+    pub frame: Arc<LogFrame>,
+}
+
+/// The actual runtime producer of a failed callback path, without assigning a
+/// foreign exception class or treating unrelated Host failures as callbacks.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum CallbackOrigin {
+    LogTransformer,
+    LogDelegate,
+    DiagnosticTransformer,
+    DiagnosticRenderer,
+}
+impl CallbackOrigin {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::LogTransformer => "log-transformer",
+            Self::LogDelegate => "log-delegate",
+            Self::DiagnosticTransformer => "diagnostic-transformer",
+            Self::DiagnosticRenderer => "diagnostic-renderer",
+        }
+    }
 }

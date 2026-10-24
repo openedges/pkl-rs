@@ -22,7 +22,7 @@ pub struct SourceSessionOptions {
     pub evaluation: EvaluationOptions,
     pub trace_mode: TraceMode,
     pub log_delivery: LogDelivery,
-    pub host_frame_transformer: bool,
+    pub frame_transformer: crate::logging::FrameTransformer,
 }
 
 #[derive(Clone, Copy)]
@@ -81,7 +81,7 @@ impl SourceSession {
                 primary_source: None,
                 trace_mode: options.trace_mode,
                 log_delivery: options.log_delivery,
-                host_frame_transformer: options.host_frame_transformer,
+                frame_transformer: options.frame_transformer,
             },
         );
         host.set_power_assertions(options.evaluation.power_assertions);
@@ -343,7 +343,6 @@ impl SourceSession {
                             text: expression.clone().into(),
                             uri: "repl:text".into(),
                             module_name: "".into(),
-                            line_anchors: false,
                         });
                         let mut error = match failure {
                             crate::vm::SessionExpressionError::Frontend(diagnostic) => {
@@ -413,7 +412,6 @@ impl SourceSession {
                     text: expression.clone().into(),
                     uri: "repl:text".into(),
                     module_name: "".into(),
-                    line_anchors: false,
                 })),
                 spans,
                 module_receiver_input: Some(0),
@@ -435,11 +433,10 @@ impl SourceSession {
                 text: text.into(),
                 uri: uri.into(),
                 module_name: name.clone().into(),
-                line_anchors: false,
             })),
             trace_mode: options.trace_mode,
             log_delivery: options.log_delivery,
-            host_frame_transformer: options.host_frame_transformer,
+            frame_transformer: options.frame_transformer,
         };
         Arc::make_mut(&mut program)
             .register_primary_source(
@@ -762,6 +759,21 @@ impl SourceSession {
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
         self.host.acknowledge_log(token, completion, now_ms)
+    }
+    pub fn complete_frame_transform(
+        &mut self,
+        token: &str,
+        completion: Result<crate::logging::LogFrame, LoggerFailure>,
+        now_ms: u64,
+    ) -> Result<(), RuntimeError> {
+        self.host
+            .complete_frame_transform(token, completion, now_ms)
+    }
+    pub fn set_frame_transformer(
+        &mut self,
+        transformer: crate::logging::FrameTransformer,
+    ) -> Result<(), RuntimeError> {
+        self.host.set_frame_transformer(transformer)
     }
     pub fn close_from_callback(&mut self, token: &str) -> Result<(), RuntimeError> {
         self.host.close_from_callback(token)

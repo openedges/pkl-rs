@@ -1,7 +1,7 @@
 //! Source-driven Host scheduler assertions complement the separate Java observations.
 use super::*;
 use crate::host::{HostPoll, HostSession};
-use crate::logging::EvaluationContext;
+use crate::logging::{EvaluationContext, LogDelivery};
 use crate::{parser::parse_module, resolver::resolve_module};
 
 fn prepared(source: &str, expressions: &[&str]) -> (HostSession, usize, Vec<usize>) {
@@ -29,7 +29,6 @@ fn prepared(source: &str, expressions: &[&str]) -> (HostSession, usize, Vec<usiz
                 text: source.into(),
                 uri: "file:///deprecation.pkl".into(),
                 module_name: "deprecation".into(),
-                line_anchors: false,
             })),
             log_delivery: LogDelivery::Host,
             ..EvaluationContext::default()
@@ -658,13 +657,19 @@ fn noop_warning_still_buffers_and_custom_transformer_waits_before_binding() {
     for transformer in [false, true] {
         let (mut host, module, entries) = setup(source, &["invoke()"]);
         host.vm_for_test_mut().context.log_delivery = LogDelivery::Noop;
-        host.vm_for_test_mut().context.host_frame_transformer = transformer;
+        host.vm_for_test_mut().context.frame_transformer = if transformer {
+            crate::logging::FrameTransformer::Host
+        } else {
+            crate::logging::FrameTransformer::Default
+        };
         let roots = [module.clone()];
         start(&mut host, entries[0], &module);
         if transformer {
-            let (token, event) = log(&mut host, &roots);
-            assert_eq!(event.level, LogLevel::Warn);
-            host.acknowledge_log(&token, Ok(()), 0).unwrap();
+            let HostPoll::TransformFrame { token, frame } = next(&mut host, &roots) else {
+                panic!("expected noop logger transformation");
+            };
+            host.complete_frame_transform(&token, Ok((*frame).clone()), 0)
+                .unwrap();
         }
         assert_eq!(ready(&mut host, &roots), Ok(Value::string("1")));
         assert_eq!(

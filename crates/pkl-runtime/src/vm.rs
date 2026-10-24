@@ -7,7 +7,7 @@ use crate::heap::{
     CacheKey, Class, Environment, ExecutableOwnerId, ExecutionSite, Function, Heap, HeapStats,
     LazyState, Member, Object, Scope, TypeNodeId,
 };
-use crate::logging::{EvaluationContext, LogRequest, LoggerFailure};
+use crate::logging::{EvaluationContext, FrameTransformRequest, LogRequest, LoggerFailure};
 use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, RuntimeFrame, Value};
 pub(crate) mod amendment;
@@ -30,6 +30,7 @@ mod query_lifecycle;
 mod session_expressions;
 mod stdlib_modules;
 pub use session_expressions::{SessionExpressionError, compile_session_expression};
+mod frame_transformation;
 pub(crate) mod identity;
 mod output;
 mod pair;
@@ -959,6 +960,10 @@ impl Program {
                 None,
             ],
             member: "#Reference.toString".into(),
+            declaration: Some(Span::new(
+                return_start - "function toString(): ".len(),
+                return_start + 6,
+            )),
             ..BlockMetadata::default()
         };
         let access_members = reference::access_members(&mut blocks, &mut metadata);
@@ -1078,6 +1083,7 @@ pub enum VmPoll {
     Ready(Result<Value, RuntimeError>),
     Pending(ReadRequest),
     Log(LogRequest),
+    TransformFrame(FrameTransformRequest),
     Module(crate::modules::ModuleRequest),
     Yielded,
 }
@@ -1145,6 +1151,7 @@ impl Frame {
 pub(crate) enum PendingRequest {
     Read(ReadRequest),
     Log(LogRequest),
+    TransformFrame(Box<frame_transformation::PendingTransform>),
     Module(crate::modules::ModuleRequest),
 }
 impl PendingRequest {
@@ -1152,6 +1159,7 @@ impl PendingRequest {
         match self {
             Self::Read(request) => request.id,
             Self::Log(request) => request.id,
+            Self::TransformFrame(pending) => pending.request.id,
             Self::Module(request) => request.id,
         }
     }
@@ -1159,6 +1167,7 @@ impl PendingRequest {
         match self {
             Self::Read(request) => VmPoll::Pending(request.clone()),
             Self::Log(request) => VmPoll::Log(request.clone()),
+            Self::TransformFrame(pending) => VmPoll::TransformFrame(pending.request.clone()),
             Self::Module(request) => VmPoll::Module(request.clone()),
         }
     }
@@ -1401,7 +1410,7 @@ impl Vm {
         self.stack.clear();
         self.inputs.clear();
         self.frames.clear();
-        self.state = State::Finished(Err(error));
+        self.finish_error(error);
         Ok(())
     }
 
@@ -1597,28 +1606,18 @@ impl Vm {
         }
         match completion {
             Ok(()) => {
-                self.state = State::Running;
-                if let Some(warning) = self
-                    .frames
-                    .last_mut()
-                    .and_then(|frame| frame.warning.take())
-                {
-                    self.publish_method_call(warning)?;
-                } else {
-                    self.frames
-                        .last_mut()
-                        .and_then(|frame| frame.deep_force.as_mut())
-                        .ok_or_else(|| invalid("log outside logger continuation"))?
-                        .acknowledge_log()?;
-                }
+                self.finish_log_delivery()?;
             }
-            Err(error) => self.fail(RuntimeError::new(ErrorKind::Host, error.message)),
+            Err(error) => self.fail(RuntimeError::callback_failure(
+                crate::logging::CallbackOrigin::LogDelegate,
+                error.message,
+            )),
         }
         Ok(())
     }
 
     pub(crate) fn close_from_callback(&mut self, id: u64) -> Result<(), RuntimeError> {
-        if !matches!(&self.state, State::Waiting(request @ (PendingRequest::Read(_) | PendingRequest::Log(_) | PendingRequest::Module(_))) if request.id() == id)
+        if !matches!(&self.state, State::Waiting(request @ (PendingRequest::Read(_) | PendingRequest::Log(_) | PendingRequest::TransformFrame(_) | PendingRequest::Module(_))) if request.id() == id)
         {
             return Err(RuntimeError::new(
                 ErrorKind::Host,
@@ -1894,6 +1893,35 @@ impl Vm {
         if error.undefined_value && error.hint.is_none() {
             error.hint = self.pcf_undefined_hint();
         }
+        // Logger callbacks throw outside the language exception hierarchy.
+        // PklRootNode catches that foreign exception; MemberNode's override
+        // attaches its header section before ordinary guest stack unwinding.
+        // Truffle helper continuations (including trace forcing) are not roots.
+        let callback_root = if error.frames.is_empty()
+            && matches!(
+                error.callback_origin(),
+                Some(
+                    crate::logging::CallbackOrigin::LogTransformer
+                        | crate::logging::CallbackOrigin::LogDelegate
+                )
+            ) {
+            self.frames
+                .iter()
+                .enumerate()
+                .rev()
+                .find_map(|(index, frame)| {
+                    let metadata = self.program.metadata.get(frame.block)?;
+                    (!metadata.inline_constraint)
+                        .then_some(metadata.declaration)
+                        .flatten()
+                        .map(|span| (index, span))
+                })
+        } else {
+            None
+        };
+        if let Some((_, span)) = callback_root {
+            error.span = Some(span);
+        }
         let catch_boundary = self.guest_catch_boundary(&error);
         let unavailable_origin = error.unavailable_origin;
         if unavailable_origin {
@@ -1940,7 +1968,9 @@ impl Vm {
                     Some(Instruction::Undefined(_) | Instruction::EntryParent)
                 )
             });
-        let diagnostic_count = if caught_undefined {
+        let diagnostic_count = if let Some((index, _)) = callback_root {
+            index + 1
+        } else if caught_undefined {
             self.frames[unwind_start..]
                 .iter()
                 .rposition(|frame| {
@@ -1987,14 +2017,15 @@ impl Vm {
             // A recoverable mismatch becomes VmException only at PklRootNode.
             // Let bodies within that root do not catch the original mismatch.
             if index == 0
-                && error.type_diagnostic.is_some()
-                && !self
-                    .program
-                    .metadata
-                    .get(frame.block)
-                    .is_some_and(|metadata| {
-                        metadata.type_casts.contains(&frame.pc.saturating_sub(1))
-                    })
+                && (callback_root.is_some()
+                    || error.type_diagnostic.is_some()
+                        && !self
+                            .program
+                            .metadata
+                            .get(frame.block)
+                            .is_some_and(|metadata| {
+                                metadata.type_casts.contains(&frame.pc.saturating_sub(1))
+                            }))
             {
                 continue;
             }
@@ -2069,11 +2100,21 @@ impl Vm {
                 error.frames.push(origin);
             }
             if let Some(metadata) = self.program.metadata.get(frame.block)
-                && let Some(Some(span)) = metadata.spans.get(frame.pc.saturating_sub(1))
+                && let Some(span) = callback_root
+                    .as_ref()
+                    .filter(|(index, _)| *index == frame_index)
+                    .map(|(_, span)| span)
+                    .or_else(|| {
+                        metadata
+                            .spans
+                            .get(frame.pc.saturating_sub(1))
+                            .and_then(Option::as_ref)
+                    })
             {
                 let reading_inferred_parent = frame_index + 1 < diagnostic_frames.len()
                     && matches!(instruction(frame), Some(Instruction::InferPropertyParent));
-                if !frame.hides_callsite()
+                if (!frame.hides_callsite()
+                    || callback_root.is_some_and(|(index, _)| index == frame_index))
                     && !reading_inferred_parent
                     && !(unavailable_origin && frame_index + 1 == diagnostic_frames.len())
                 {
@@ -2263,7 +2304,7 @@ impl Vm {
             self.frames.clear();
             self.stack.clear();
             self.inputs.clear();
-            self.state = State::Finished(Err(error));
+            self.finish_error(error);
         }
     }
 

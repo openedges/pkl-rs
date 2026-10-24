@@ -44,7 +44,6 @@ fn inherited_primary_declaration_remains_primary_with_a_foreign_value_body() {
         text: text.into(),
         uri: "file:///declarations.pkl".into(),
         module_name: "primary".into(),
-        line_anchors: false,
     });
     let value_source = Arc::new(RuntimeSource {
         uri: "file:///value.pkl".into(),

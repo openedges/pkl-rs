@@ -411,7 +411,6 @@ mod tests {
                     text: parsed.source.clone(),
                     uri: "file:///stdlib-structure.pkl".into(),
                     module_name: "main".into(),
-                    line_anchors: false,
                 })),
                 ..Default::default()
             },

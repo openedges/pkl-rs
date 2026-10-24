@@ -456,7 +456,6 @@ fn inherited_collection_checks_preserve_primary_origin_in_foreign_value_frames()
         text: Arc::from(source),
         uri: Arc::from("file:///foreign-value.pkl"),
         module_name: Arc::from("foreign"),
-        line_anchors: false,
     }));
     let mut vm = Vm::new(Arc::new(program));
     vm.start(vm.program.entry, vec![]).unwrap();

@@ -123,7 +123,6 @@ pub fn scalar_expressions_text_with_options(
                 text: source_text.into(),
                 uri: uri.into(),
                 module_name: name.into(),
-                line_anchors: false,
             }),
             crate::modules::ModuleIdentity {
                 original_uri: uri.into(),
@@ -138,7 +137,6 @@ pub fn scalar_expressions_text_with_options(
                 text: source_text.into(),
                 uri: uri.into(),
                 module_name: name.into(),
-                line_anchors: false,
             })),
             ..Default::default()
         },
@@ -276,7 +274,7 @@ fn poll(vm: &mut Vm) -> Result<Value, RuntimeError> {
                 let result = crate::host::resources::default_result(&request);
                 vm.resume(request.id, result)?;
             }
-            VmPoll::Log(_) => {
+            VmPoll::Log(_) | VmPoll::TransformFrame(_) => {
                 vm.cancel();
                 return Err(RuntimeError::new(
                     ErrorKind::Unsupported,
@@ -335,10 +333,36 @@ pub(crate) fn runtime_error_text_with_profile(
     uri: &str,
     module: &str,
     expression: &str,
-    mut error: RuntimeError,
+    error: RuntimeError,
     expression_end: Option<usize>,
     profile: frontend::DiagnosticProfile,
 ) -> PklString {
+    if let Some(rendered) = &error.rendered_diagnostic {
+        return rendered.clone();
+    }
+    let policy = error.frame_transformer;
+    let mut rendering = prepare_runtime_error(
+        source,
+        uri,
+        module,
+        expression,
+        error,
+        expression_end,
+        profile,
+    );
+    rendering.transform(policy);
+    rendering.render()
+}
+
+pub(crate) fn prepare_runtime_error(
+    source: &Source,
+    uri: &str,
+    module: &str,
+    expression: &str,
+    mut error: RuntimeError,
+    expression_end: Option<usize>,
+    profile: frontend::DiagnosticProfile,
+) -> crate::diagnostic::PreparedDiagnostic {
     let mut sources = SourceMap::default();
     let repl_id = sources.add("repl:text", expression);
     let mut foreign_sources = Vec::new();
@@ -410,13 +434,6 @@ pub(crate) fn runtime_error_text_with_profile(
         .zip(&source_ids)
         .map(|(frame, id)| {
             let location = if let Some(foreign) = &frame.source {
-                if foreign.line_anchors
-                    && let Some(position) = id
-                        .and_then(|id| sources.get(id))
-                        .and_then(|source| source.position(frame.span.start))
-                {
-                    return format!("{}#L{}", foreign.uri, position.line);
-                }
                 foreign.uri.to_string()
             } else {
                 uri.to_owned()
@@ -490,5 +507,5 @@ pub(crate) fn runtime_error_text_with_profile(
             highlight_length_utf16: None,
         });
     }
-    render_error_text(&error.message, &frames, error.hint.as_ref())
+    crate::diagnostic::PreparedDiagnostic::new(&error.message, &frames, error.hint.as_ref())
 }

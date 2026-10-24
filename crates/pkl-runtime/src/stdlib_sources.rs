@@ -9,9 +9,8 @@ pub(crate) fn reference() -> Arc<RuntimeSource> {
         .get_or_init(|| {
             Arc::new(RuntimeSource {
                 text: include_str!("stdlib/ref.pkl").into(),
-                uri: "https://github.com/apple/pkl/blob/0.32.0/stdlib/ref.pkl".into(),
+                uri: "pkl:ref".into(),
                 module_name: "pkl.ref".into(),
-                line_anchors: true,
             })
         })
         .clone()
@@ -23,9 +22,8 @@ pub(crate) fn base() -> Arc<RuntimeSource> {
         .get_or_init(|| {
             Arc::new(RuntimeSource {
                 text: include_str!("stdlib/base.pkl").into(),
-                uri: "https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl".into(),
+                uri: "pkl:base".into(),
                 module_name: "pkl.base".into(),
-                line_anchors: true,
             })
         })
         .clone()
@@ -37,9 +35,8 @@ pub(crate) fn test() -> Arc<RuntimeSource> {
         .get_or_init(|| {
             Arc::new(RuntimeSource {
                 text: include_str!("stdlib/test.pkl").into(),
-                uri: "https://github.com/apple/pkl/blob/0.32.0/stdlib/test.pkl".into(),
+                uri: "pkl:test".into(),
                 module_name: "pkl.test".into(),
-                line_anchors: true,
             })
         })
         .clone()
@@ -51,9 +48,8 @@ pub(crate) fn json() -> Arc<RuntimeSource> {
         .get_or_init(|| {
             Arc::new(RuntimeSource {
                 text: include_str!("stdlib/json.pkl").into(),
-                uri: "https://github.com/apple/pkl/blob/0.32.0/stdlib/json.pkl".into(),
+                uri: "pkl:json".into(),
                 module_name: "pkl.json".into(),
-                line_anchors: true,
             })
         })
         .clone()

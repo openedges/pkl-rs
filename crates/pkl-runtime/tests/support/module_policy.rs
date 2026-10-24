@@ -18,7 +18,6 @@ pub fn register(program: &mut Program, source: &str) {
                 text: source.into(),
                 uri: "file:///runtime-test/main.pkl".into(),
                 module_name: program.module_name.clone(),
-                line_anchors: false,
             }),
             ModuleIdentity {
                 original_uri: "file:///runtime-test/main.pkl".into(),

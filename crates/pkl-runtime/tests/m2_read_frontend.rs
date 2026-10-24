@@ -35,6 +35,7 @@ fn settle(vm: &mut Vm, requests: &mut Vec<ReadRequest>) -> Value {
             }
             VmPoll::Log(request) => vm.acknowledge_log(request.id, Ok(())).unwrap(),
             VmPoll::Module(_) => panic!("unexpected module request"),
+            VmPoll::TransformFrame(_) => panic!("unexpected default transformer callback"),
             VmPoll::Yielded => {}
         }
     }

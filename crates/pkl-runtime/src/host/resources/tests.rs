@@ -193,7 +193,6 @@ fn denied_forcing_retries_after_gc_and_custom_host_can_still_complete() {
                 text: text.into(),
                 uri: "file:///primary.pkl".into(),
                 module_name: "primary".into(),
-                line_anchors: false,
             })),
             ..Default::default()
         },
@@ -255,7 +254,6 @@ fn pending_read_uses_declaration_source_and_keeps_custom_host_operand_raw() {
         text: text.into(),
         uri: "file:///foreign/module.pkl".into(),
         module_name: "foreign".into(),
-        line_anchors: false,
     });
     let mutable = Arc::make_mut(&mut program);
     for (block, metadata) in mutable.blocks.iter().zip(mutable.metadata.iter_mut()) {
@@ -274,7 +272,6 @@ fn pending_read_uses_declaration_source_and_keeps_custom_host_operand_raw() {
                 text: text.into(),
                 uri: "file:///caller/module.pkl".into(),
                 module_name: "caller".into(),
-                line_anchors: false,
             })),
             ..Default::default()
         },

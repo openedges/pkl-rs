@@ -228,7 +228,6 @@ pub fn prepare_module_text(
                 text: input.text.into(),
                 uri: input.uri.into(),
                 module_name: name.clone().into(),
-                line_anchors: false,
             }),
             crate::modules::ModuleIdentity {
                 original_uri: input.uri.into(),
@@ -489,6 +488,12 @@ fn evaluate_module_output_with_budget_and_hosts(
                             0,
                         )?;
                     }
+                }
+                HostPoll::TransformFrame { .. } => {
+                    return Err(crate::value::RuntimeError::new(
+                        crate::value::ErrorKind::Unsupported,
+                        "the synchronous module boundary does not supply a frame transformer",
+                    ));
                 }
                 HostPoll::Log { token, event } => {
                     let level = match event.level {

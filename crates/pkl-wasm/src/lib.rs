@@ -323,6 +323,75 @@ impl HostProbe {
     }
 }
 
+fn source_frame(frame: probe::SourceFrame) -> Result<JsValue, JsValue> {
+    use js_sys::{Array, Object, Reflect, Uint16Array};
+    let record = Object::new();
+    let set = |key: &str, value: JsValue| Reflect::set(&record, &key.into(), &value).map(|_| ());
+    set(
+        "moduleUri",
+        Uint16Array::from(frame.module_uri.as_slice()).into(),
+    )?;
+    set(
+        "memberName",
+        frame
+            .member_name
+            .as_deref()
+            .map_or(JsValue::NULL, |units| Uint16Array::from(units).into()),
+    )?;
+    let lines = Array::new();
+    for line in frame.source_lines {
+        lines.push(&Uint16Array::from(line.as_slice()));
+    }
+    set("sourceLines", lines.into())?;
+    for (key, value) in [
+        ("startLine", frame.start_line),
+        ("startColumn", frame.start_column),
+        ("endLine", frame.end_line),
+        ("endColumn", frame.end_column),
+    ] {
+        set(key, JsValue::from_f64(value.into()))?;
+    }
+    Ok(record.into())
+}
+fn completed_frame(value: JsValue) -> Result<probe::SourceFrame, JsValue> {
+    use js_sys::{Array, Reflect, Uint16Array};
+    let get = |key: &str| Reflect::get(&value, &key.into());
+    let units = |value: JsValue| {
+        value
+            .dyn_into::<Uint16Array>()
+            .map(|value| value.to_vec())
+            .map_err(|_| error("expected Uint16Array frame text"))
+    };
+    let member = get("memberName")?;
+    let lines = get("sourceLines")?;
+    if !Array::is_array(&lines) {
+        return Err(error("expected frame sourceLines array"));
+    }
+    let position = |key: &str| {
+        unsigned(
+            get(key)?
+                .as_f64()
+                .ok_or_else(|| error("expected numeric frame position"))?,
+        )
+    };
+    Ok(probe::SourceFrame {
+        module_uri: units(get("moduleUri")?)?,
+        member_name: if member.is_null() {
+            None
+        } else {
+            Some(units(member)?)
+        },
+        source_lines: Array::from(&lines)
+            .iter()
+            .map(units)
+            .collect::<Result<_, _>>()?,
+        start_line: position("startLine")?,
+        start_column: position("startColumn")?,
+        end_line: position("endLine")?,
+        end_column: position("endColumn")?,
+    })
+}
+
 fn source_event(event: probe::SourceEvent) -> Result<JsValue, JsValue> {
     use js_sys::{Array, Object, Reflect, Uint16Array};
     let object = Object::new();
@@ -337,6 +406,7 @@ fn source_event(event: probe::SourceEvent) -> Result<JsValue, JsValue> {
         ("phase", event.phase),
         ("disposition", event.disposition),
         ("reason", event.reason),
+        ("callbackOrigin", event.callback_origin),
     ] {
         if let Some(value) = value {
             set(&object, key, JsValue::from_str(value))?;
@@ -427,6 +497,9 @@ fn source_event(event: probe::SourceEvent) -> Result<JsValue, JsValue> {
             set(&record, key, JsValue::from_f64(value.into()))?;
         }
         set(&object, "log", record.into())?;
+    }
+    if let Some(frame) = event.frame {
+        set(&object, "frame", source_frame(frame)?)?;
     }
     Ok(object.into())
 }
@@ -1045,6 +1118,39 @@ impl SourceSession {
                 .poll(unsigned(now)?, unsigned(budget)?)
                 .map_err(|failure| text_error(failure.message))?,
         )
+    }
+    #[wasm_bindgen(js_name = setFrameTransformer)]
+    pub fn set_frame_transformer(&mut self, mode: JsString) -> Result<(), JsValue> {
+        self.inner
+            .set_frame_transformer(&string(&mode)?)
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[wasm_bindgen(js_name = completeFrameTransform)]
+    pub fn complete_frame_transform(
+        &mut self,
+        token: JsString,
+        frame: JsValue,
+        failure: Option<js_sys::Uint16Array>,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        if failure
+            .as_ref()
+            .is_some_and(|value| !JsValue::is_instance_of::<js_sys::Uint16Array>(value.as_ref()))
+        {
+            return Err(error("expected Uint16Array"));
+        }
+        self.inner
+            .complete_frame_transform(
+                &string(&token)?,
+                if frame.is_null() || frame.is_undefined() {
+                    None
+                } else {
+                    Some(completed_frame(frame)?)
+                },
+                failure.map(|value| value.to_vec()),
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = acknowledgeLog)]
     pub fn acknowledge_log(

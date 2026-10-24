@@ -330,8 +330,8 @@ pub struct RenderFrame<'a> {
 
 /// Render the ordinary, uncolored Pkl exception layout.
 ///
-/// Includes the pinned recursive frame compression. Source transformers and
-/// colored output remain separate compatibility requirements.
+/// Includes the pinned recursive frame compression and standard-library URL
+/// transformation. Host transformations use the evaluator continuation.
 pub fn render_error(message: &str, frames: &[RenderFrame<'_>], hint: Option<&str>) -> String {
     render_error_text(&message.into(), frames, hint.map(PklString::from).as_ref()).to_java_utf8()
 }
@@ -342,67 +342,132 @@ pub fn render_error_text(
     frames: &[RenderFrame<'_>],
     hint: Option<&PklString>,
 ) -> PklString {
-    let mut output = PklStringBuilder::default();
-    output.push_str("–– Pkl Error ––\n");
-    output.push_value(message);
-    output.push('\n');
-    if !frames.is_empty() {
-        output.push('\n');
-        frames::render(&mut output, frames, hint);
-    }
-    if frames.is_empty()
-        && let Some(hint) = hint
-    {
-        // Frameless hints preserve their own significant trailing newline.
-        output.push('\n');
-        output.push_value(hint);
-    }
-    output.finish()
+    let mut rendering = PreparedDiagnostic::new(message, frames, hint);
+    rendering.transform(crate::logging::FrameTransformer::Default);
+    rendering.render()
 }
 
-fn render_frame(output: &mut PklStringBuilder, frame: &RenderFrame<'_>, margin: &str) {
+/// Detached rendering continuation. Frame compression precedes transformation,
+/// and replacements retain all Java string code units and source positions.
+#[derive(Clone, Debug)]
+pub(crate) struct PreparedDiagnostic {
+    message: PklString,
+    hint: Option<PklString>,
+    frames: frames::DiagnosticFrames,
+}
+impl PreparedDiagnostic {
+    pub(crate) fn new(
+        message: &PklString,
+        frames: &[RenderFrame<'_>],
+        hint: Option<&PklString>,
+    ) -> Self {
+        Self {
+            message: message.clone(),
+            hint: hint.cloned(),
+            frames: frames::DiagnosticFrames::new(frames),
+        }
+    }
+    pub(crate) fn next_frame(&self) -> Option<&crate::logging::LogFrame> {
+        self.frames.next()
+    }
+    pub(crate) fn complete_frame(&mut self, frame: crate::logging::LogFrame) {
+        self.frames.replace(frame);
+    }
+    pub(crate) fn transform(&mut self, policy: crate::logging::FrameTransformer) {
+        while let Some(frame) = self.next_frame().cloned() {
+            self.complete_frame(policy.transform(frame));
+        }
+    }
+    pub(crate) fn render(&self) -> PklString {
+        let mut output = PklStringBuilder::default();
+        output.push_str("–– Pkl Error ––\n");
+        output.push_value(&self.message);
+        output.push('\n');
+        if !self.frames.is_empty() {
+            output.push('\n');
+            self.frames.render(&mut output, self.hint.as_ref());
+        } else if let Some(hint) = &self.hint {
+            output.push('\n');
+            output.push_value(hint);
+        }
+        output.finish()
+    }
+}
+
+/// Validate at the render step immediately following each Host callback. Java
+/// fails here before asking the transformer for the next compressed frame.
+pub(crate) fn validate_transformed_frame(
+    frame: &crate::logging::LogFrame,
+) -> Result<(), PklString> {
+    frame_line(frame).map(|_| ())
+}
+
+struct FrameLine {
+    stripped: PklString,
+    padding: usize,
+    width: usize,
+}
+
+fn frame_line(frame: &crate::logging::LogFrame) -> Result<FrameLine, PklString> {
+    let original = frame
+        .source_lines
+        .first()
+        .ok_or_else(|| PklString::from("Index 0 out of bounds for length 0"))?;
+    let units: Vec<_> = original.encode_utf16().collect();
+    let whitespace = |unit: &u16| char::from_u32(u32::from(*unit)).is_some_and(java_whitespace);
+    let leading = units.iter().take_while(|unit| whitespace(unit)).count();
+    let trailing = units[leading..]
+        .iter()
+        .rev()
+        .take_while(|unit| whitespace(unit))
+        .count();
+    let stripped = &units[leading..units.len() - trailing];
+    let start = frame.start_column as i128 - leading as i128;
+    let end = if frame.start_line == frame.end_line {
+        frame.end_column as i128 - leading as i128
+    } else {
+        stripped.len() as i128
+    };
+    let padding = format!("{} | ", frame.start_line).len() as i128 + start - 1;
+    let width = end - start + 1;
+    // String.repeat checks its space repetition before its caret repetition.
+    for count in [padding, width] {
+        if count < 0 {
+            return Err(format!("count is negative: {count}").into());
+        }
+    }
+    Ok(FrameLine {
+        stripped: PklString::from_utf16(stripped.to_vec()),
+        padding: padding as usize,
+        width: width as usize,
+    })
+}
+
+fn render_log_frame(output: &mut PklStringBuilder, frame: &crate::logging::LogFrame, margin: &str) {
     use std::fmt::Write;
-    let text = frame.source.text();
-    let Some(position) = frame.source.position(frame.span.start) else {
+    // Invalid authored locations retain the legacy renderer omission. Host
+    // replacements are validated by the continuation before reaching this code.
+    let Ok(line) = frame_line(frame) else {
         return;
     };
-    let line_start = text[..frame.span.start]
-        .rfind(['\r', '\n'])
-        .map_or(0, |index| index + 1);
-    let line_end = text[line_start..]
-        .find(['\r', '\n'])
-        .map_or(text.len(), |index| line_start + index);
-    let original = &text[line_start..line_end];
-    let stripped = original.trim_matches(java_whitespace);
-    let leading_utf16 = original
-        .chars()
-        .take_while(|ch| java_whitespace(*ch))
-        .map(char::len_utf16)
-        .sum::<usize>();
-    let column = position.column_utf16.saturating_sub(leading_utf16 + 1);
-    let width = frame.highlight_length_utf16.unwrap_or_else(|| {
-        let end = frame
-            .source
-            .position(frame.span.end)
-            .filter(|end| end.line == position.line)
-            .map_or_else(
-                || stripped.encode_utf16().count().saturating_sub(column),
-                |end| end.utf16.saturating_sub(position.utf16),
-            );
-        end.max(1)
-    });
-    let prefix = format!("{} | ", position.line);
-    writeln!(output, "{margin}{prefix}{}", highlight::uncolored(stripped)).unwrap();
+    write!(output, "{margin}{} | ", frame.start_line).unwrap();
+    output.push_value(&highlight::uncolored_text(&line.stripped));
     writeln!(
         output,
-        "{margin}{}{}",
-        " ".repeat(prefix.len() + column),
-        "^".repeat(width)
+        "\n{margin}{}{}",
+        " ".repeat(line.padding),
+        "^".repeat(line.width)
     )
     .unwrap();
-    output.push_str(&format!("{margin}at "));
-    output.push_value(frame.member);
-    writeln!(output, " ({})", frame.uri).unwrap();
+    write!(output, "{margin}at ").unwrap();
+    if let Some(member) = &frame.member_name {
+        output.push_value(member);
+    } else {
+        output.push_str("<unknown>");
+    }
+    output.push_str(" (");
+    output.push_value(&frame.module_uri);
+    output.push_str(")\n");
 }
 
 // Java Character.isWhitespace deliberately excludes the non-breaking spaces.

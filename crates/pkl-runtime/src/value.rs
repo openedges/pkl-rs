@@ -125,8 +125,6 @@ pub struct RuntimeSource {
     pub text: Arc<str>,
     pub uri: Arc<str>,
     pub module_name: Arc<str>,
-    /// Standard-library links use the displayed source line as a URL fragment.
-    pub line_anchors: bool,
 }
 
 /// A logical language frame, independent of Rust call-stack layout.
@@ -155,6 +153,11 @@ pub struct RuntimeError {
 /// compact. Field access remains available through RuntimeError's dereference.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct RuntimeErrorDetails {
+    pub(crate) callback_origin: Option<crate::logging::CallbackOrigin>,
+    /// Policy belongs to this throw, not to a cached declaration or source.
+    pub(crate) frame_transformer: crate::logging::FrameTransformer,
+    /// Completed Host diagnostic rendering, retaining the original UTF-16 units.
+    pub(crate) rendered_diagnostic: Option<PklString>,
     /// Optional rendered hint; retained with rare provenance, outside the common error.
     pub hint: Option<PklString>,
     /// External ErrorMessages template paragraphs have priority over dynamic hints.
@@ -171,6 +174,9 @@ pub struct RuntimeErrorDetails {
     pub type_diagnostic: Option<Box<crate::diagnostic::TypeDiagnostic>>,
 }
 const EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
+    callback_origin: None,
+    frame_transformer: crate::logging::FrameTransformer::Default,
+    rendered_diagnostic: None,
     hint: None,
     hint_from_template: false,
     host_language_exception: false,
@@ -222,6 +228,20 @@ impl RuntimeError {
             span: None,
             frames: Vec::new(),
         }
+    }
+
+    /// The runtime callback stage that produced this failure, if any.
+    pub fn callback_origin(&self) -> Option<crate::logging::CallbackOrigin> {
+        self.callback_origin
+    }
+
+    pub(crate) fn callback_failure(
+        origin: crate::logging::CallbackOrigin,
+        message: impl Into<PklString>,
+    ) -> Self {
+        let mut error = Self::new(ErrorKind::Host, message);
+        error.callback_origin = Some(origin);
+        error
     }
 
     /// A shared, typed Host mapping has constructed an ordinary guest error.
