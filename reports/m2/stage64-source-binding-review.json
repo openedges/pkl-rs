@@ -1,0 +1,332 @@
+{
+  "B_public_blob_count": 27,
+  "C_archive_members_fully_read_back": 146,
+  "approved": true,
+  "archived_execution_input_paths": [
+    "target/m2/stage64-bytes-native-regression-launch-02/run.py",
+    "target/m2/stage64-capture-preparation-02/common.py",
+    "target/m2/stage64-capture-preparation-02/preparation.json",
+    "target/m2/stage64-capture-preparation-02/prepare.py",
+    "target/m2/stage64-capture-preparation-02/source-contracts.json",
+    "target/m2/stage64-comparison-validation-02/preparation.json",
+    "target/m2/stage64-comparison-validation-02/prepare.py",
+    "target/m2/stage64-comparison-validation-02/run.py",
+    "target/m2/stage64-core-freeze-02/freeze.json",
+    "target/m2/stage64-core-freeze-02/source-snapshot.json",
+    "target/m2/stage64-data-size-native-regression-02/run.py",
+    "target/m2/stage64-duration-native-regression-launch-02/run.py",
+    "target/m2/stage64-native-acquisition-02/run.py",
+    "target/m2/stage64-native-build-02/run.py",
+    "target/m2/stage64-platform-validation-02/preparation.json",
+    "target/m2/stage64-platform-validation-02/prepare.py",
+    "target/m2/stage64-platform-validation-02/run.py",
+    "target/m2/stage64-tool-development-02/run.py",
+    "target/m2/stage64-tool-development-02/sitecustomize.py"
+  ],
+  "candidate_compatibility_passes_claimed": 0,
+  "complete": true,
+  "execution_receipt_is_separate_post_archive_publication": true,
+  "full_Git_blob_content_and_OID_checks": 16976,
+  "historical_documents": [
+    "PLAN.md",
+    "docs/m2-language.md"
+  ],
+  "implementation_commit": "1afd1648daba3b31fe204bf1974fcb0b6fb2fb03",
+  "inputs": {
+    "reports/m2/stage64-closeout-evidence.tar.gz": {
+      "bytes": 24090384,
+      "path": "reports/m2/stage64-closeout-evidence.tar.gz",
+      "sha256": "f6aaaae5217989e021ed447916bf54614aaa3606d852daec904449f2e67dc21f"
+    },
+    "reports/m2/stage64-closeout-publication.json": {
+      "bytes": 1655118,
+      "path": "reports/m2/stage64-closeout-publication.json",
+      "sha256": "2e225db2746eddb3c9e7558f2f3c91039bcab14b7444e5a659eb5b7e7518fbdd"
+    },
+    "reports/m2/stage64-development-evidence.tar.gz": {
+      "bytes": 1878095,
+      "path": "reports/m2/stage64-development-evidence.tar.gz",
+      "sha256": "bc553a8f202cef330858ebc8065c02d90327f5ab727808acec11354783a66b17"
+    },
+    "reports/m2/stage64-development-publication.json": {
+      "bytes": 53712,
+      "path": "reports/m2/stage64-development-publication.json",
+      "sha256": "7810c5c23009f45a6d547816034a513f60c5b20cfa2dbc18fd283cd086aca9df"
+    },
+    "reports/m2/stage64-implementation-checkpoint.json": {
+      "bytes": 36451,
+      "path": "reports/m2/stage64-implementation-checkpoint.json",
+      "sha256": "79944e850957e5b017e8114e186bcf4f06f9a2848b6edbd06957467e8284bd59"
+    },
+    "reports/m2/stage64-java-supplement-evidence.tar.gz": {
+      "bytes": 1123702,
+      "path": "reports/m2/stage64-java-supplement-evidence.tar.gz",
+      "sha256": "f887e806e2cdfa97ce33de036e9f6fcd6c1874361fc083a4dd8af92d0bf6cdd8"
+    },
+    "reports/m2/stage64-java-supplement-publication.json": {
+      "bytes": 1323059,
+      "path": "reports/m2/stage64-java-supplement-publication.json",
+      "sha256": "661bf42d3586e81a1e80221c0b7c6c569ddeb48acaa04ef0991f5350e70f5e6e"
+    },
+    "reports/m2/stage64-native-catalog-evidence.tar.gz": {
+      "bytes": 84821728,
+      "path": "reports/m2/stage64-native-catalog-evidence.tar.gz",
+      "sha256": "34abd140e8790dd9169bb34681e03d2d1422cc21b51f60a9ec8df76a6875e025"
+    },
+    "reports/m2/stage64-native-catalog-publication.json": {
+      "bytes": 5842300,
+      "path": "reports/m2/stage64-native-catalog-publication.json",
+      "sha256": "96e1a9c261ebca05f7e0e9638f6b53c2a7441a686fe4a76d2500a1cd4473b5eb"
+    },
+    "reports/m2/stage64-native-regressions-evidence.tar.gz": {
+      "bytes": 51566559,
+      "path": "reports/m2/stage64-native-regressions-evidence.tar.gz",
+      "sha256": "7fe4d6155606294ea56cf24c89e8df5baa63a6064aeb6e592f4000694e2ba870"
+    },
+    "reports/m2/stage64-native-regressions-publication.json": {
+      "bytes": 6004497,
+      "path": "reports/m2/stage64-native-regressions-publication.json",
+      "sha256": "0c11daee8f0871d4e9582d223a85d479b393c68649261a8daf3c0eba19b6caa1"
+    },
+    "reports/m2/stage64-platform-evidence.tar.gz": {
+      "bytes": 17596419,
+      "path": "reports/m2/stage64-platform-evidence.tar.gz",
+      "sha256": "ab60a452c989ec3eaf20eaf2e84d5bf65de36d5e0fed05ec5660ca413d24359b"
+    },
+    "reports/m2/stage64-platform-publication.json": {
+      "bytes": 22767741,
+      "path": "reports/m2/stage64-platform-publication.json",
+      "sha256": "da899ff13ede49a55368159bb61768a5a066c009b4a8f49a918664cdfffd23f8"
+    },
+    "reports/m2/stage64-preparation-evidence.tar.gz": {
+      "bytes": 183605,
+      "path": "reports/m2/stage64-preparation-evidence.tar.gz",
+      "sha256": "612384d7cf09ea3b090b48217296189a227c3fe917ce82539def3b13c12702b6"
+    },
+    "reports/m2/stage64-preparation-publication.json": {
+      "bytes": 27787,
+      "path": "reports/m2/stage64-preparation-publication.json",
+      "sha256": "21e0bc746fb0ffa49527155e73e73e447acba0dc05dee8c2f98ae7508ce4b420"
+    },
+    "reports/m2/stage64-recovery-evidence.tar.gz": {
+      "bytes": 10561557,
+      "path": "reports/m2/stage64-recovery-evidence.tar.gz",
+      "sha256": "0da28d5398320742bca2884b4b8d5ed0db53a7af96e5f5dbf54a17007ac4e699"
+    },
+    "reports/m2/stage64-recovery-publication.json": {
+      "bytes": 427118,
+      "path": "reports/m2/stage64-recovery-publication.json",
+      "sha256": "99fd4c48cf01c2dd8ab46269bbec160d72048a0325cef21ef584926a55c2df2d"
+    },
+    "reports/m2/stage64-rust-history-01-evidence.tar.gz": {
+      "bytes": 13387957,
+      "path": "reports/m2/stage64-rust-history-01-evidence.tar.gz",
+      "sha256": "94a10300712167a7e963bbbf9ac7a2af577c525467705a6a723c71ac1e32b379"
+    },
+    "reports/m2/stage64-rust-history-01-publication.json": {
+      "bytes": 26103,
+      "path": "reports/m2/stage64-rust-history-01-publication.json",
+      "sha256": "3101fca27504282fc721448823aa17ba83206382b0ffefd06df1873c27262900"
+    },
+    "reports/m2/stage64-rust-history-02-evidence.tar.gz": {
+      "bytes": 7330109,
+      "path": "reports/m2/stage64-rust-history-02-evidence.tar.gz",
+      "sha256": "0b5d72968ae15493bb9b6676d8a0350553fd077245949cbff5b424fd2460969a"
+    },
+    "reports/m2/stage64-rust-history-02-publication.json": {
+      "bytes": 29340,
+      "path": "reports/m2/stage64-rust-history-02-publication.json",
+      "sha256": "ece0f271ef75ec711ac0ed1ad3add6340bfa55455a7c857beae05efa4323f676"
+    },
+    "reports/m2/stage64-rust-history-03-evidence.tar.gz": {
+      "bytes": 13624208,
+      "path": "reports/m2/stage64-rust-history-03-evidence.tar.gz",
+      "sha256": "d482258a26663ef25ae5ba1e7f3d2ce3108e0b5c9d4576c3b8b1e9077005773e"
+    },
+    "reports/m2/stage64-rust-history-03-publication.json": {
+      "bytes": 30978,
+      "path": "reports/m2/stage64-rust-history-03-publication.json",
+      "sha256": "f8fdce174f066784743070481040311d630af28e6a6b9a1f4aba31a772d05028"
+    },
+    "reports/m2/stage64-rust-validation-evidence.tar.gz": {
+      "bytes": 13639547,
+      "path": "reports/m2/stage64-rust-validation-evidence.tar.gz",
+      "sha256": "f0976c9895d41e438a42397e446be7a503bd4d9a2ad05a7ed8e708c0203e3d6f"
+    },
+    "reports/m2/stage64-rust-validation-publication.json": {
+      "bytes": 29702,
+      "path": "reports/m2/stage64-rust-validation-publication.json",
+      "sha256": "56f3bf8da475031b8ea638c041c39ffc5a2b2639cb77bec497a079050eff94a7"
+    },
+    "reports/m2/stage64-source-binding-evidence.tar.gz": {
+      "bytes": 15651832,
+      "path": "reports/m2/stage64-source-binding-evidence.tar.gz",
+      "sha256": "e1c3e5ea35c2cfc372cb89c7687b3f5e4ef29b638732dc10dbfa5289eafe3fce"
+    },
+    "reports/m2/stage64-source-binding-execution.json": {
+      "bytes": 9622,
+      "path": "reports/m2/stage64-source-binding-execution.json",
+      "sha256": "2a73a4ea10bf5cbe499d03e1bc8c5170ea2b4d5bbbe5466f13ed9e11912f3624"
+    },
+    "reports/m2/stage64-source-binding.json": {
+      "bytes": 19574,
+      "path": "reports/m2/stage64-source-binding.json",
+      "sha256": "2b12adda524e912958b466dcd7b73a82e1ad9d206ae37fe8ac58a786d01a25c0"
+    },
+    "reports/m2/stage64-tooling-evidence.tar.gz": {
+      "bytes": 7250577,
+      "path": "reports/m2/stage64-tooling-evidence.tar.gz",
+      "sha256": "2ca7ebe70b093109b124f530a7bcb3c7908a6ccf8cb40577d12a2369ccffe675"
+    },
+    "reports/m2/stage64-tooling-publication.json": {
+      "bytes": 1695475,
+      "path": "reports/m2/stage64-tooling-publication.json",
+      "sha256": "7c74a4868e625c3dc92203a994b53901e9a483862e37aa1f3c6fcf91e40fae4d"
+    },
+    "target/m2/stage64-comparison-validation-02/source-before.json": {
+      "bytes": 122891,
+      "path": "target/m2/stage64-comparison-validation-02/source-before.json",
+      "sha256": "17031d73846d36972866266cdd1c02215cc5d16205fb557ced3c2d66321283a9"
+    },
+    "target/m2/stage64-core-freeze-02/source-snapshot.json": {
+      "bytes": 43835,
+      "path": "target/m2/stage64-core-freeze-02/source-snapshot.json",
+      "sha256": "5e01b65f6fd9eb68f24f575e675f8c024c17d81585cf27a9cb226739c8d3d7da"
+    },
+    "target/m2/stage64-data-size-native-regression-02/source-before.json": {
+      "bytes": 4215,
+      "path": "target/m2/stage64-data-size-native-regression-02/source-before.json",
+      "sha256": "bea7aa8adafe3d797d786e144b62af643c4d29ac3dc6ee54230eb0f3699c8921"
+    },
+    "target/m2/stage64-m1-platform-contract-02/sources.json": {
+      "bytes": 28363,
+      "path": "target/m2/stage64-m1-platform-contract-02/sources.json",
+      "sha256": "5c3c59c2c0c171e6ae08af96ca1192265696bd0be7b4e77c20c0d16fc804c239"
+    },
+    "target/m2/stage64-native-acquisition-02/cohort-before.json": {
+      "bytes": 24372,
+      "path": "target/m2/stage64-native-acquisition-02/cohort-before.json",
+      "sha256": "1b35561e3ec603e702ca226e0b7e3b1060b5e89943bbe41531f191dafb134d42"
+    },
+    "target/m2/stage64-native-build-02/source-before.json": {
+      "bytes": 47806,
+      "path": "target/m2/stage64-native-build-02/source-before.json",
+      "sha256": "663f5455b8b9d23eb66c98f0f2ee33cf5c8f1aafd20f14b5203a508e5f5f1574"
+    },
+    "target/m2/stage64-original-amendment-01/sources.json": {
+      "bytes": 623041,
+      "path": "target/m2/stage64-original-amendment-01/sources.json",
+      "sha256": "dc141009f94592b843c4e7898ecb71fcd24e8c0bccb1dcc120ccf22c8e9d5629"
+    },
+    "target/m2/stage64-platform-validation-02/source-before.json": {
+      "bytes": 100005,
+      "path": "target/m2/stage64-platform-validation-02/source-before.json",
+      "sha256": "239a3cc63b691a4ef1f7d11fd3f1b66993e9cffa190d4bab5f56640fbfc5f822"
+    },
+    "target/m2/stage64-publication-review-01/attempt05/process.json": {
+      "bytes": 2120,
+      "path": "target/m2/stage64-publication-review-01/attempt05/process.json",
+      "sha256": "b04fb3d52de7cb8a7202eb1aa62e33842310b3b2864ef933292e639fc823c8e9"
+    },
+    "target/m2/stage64-publication-review-01/report.json": {
+      "bytes": 21319,
+      "path": "target/m2/stage64-publication-review-01/report.json",
+      "sha256": "2cd44f9c51f5fc270ece88d71406638138b30a5d2cc5855fff1702f3cb24caa4"
+    },
+    "target/m2/stage64-rust-validation-04/sources.json": {
+      "bytes": 108288137,
+      "path": "target/m2/stage64-rust-validation-04/sources.json",
+      "sha256": "2759d86058fa408ec60e402c009e810306d2823045fd6cc95f6ade9b3eb96641"
+    },
+    "target/m2/stage64-source-binding-03/bind.py": {
+      "bytes": 40899,
+      "path": "target/m2/stage64-source-binding-03/bind.py",
+      "sha256": "98ee28957b26b14efdc376afcdcc6c18ce3df620a5130f6ebc46504c4b5e4548"
+    },
+    "target/m2/stage64-source-binding-03/binding-proof.json": {
+      "bytes": 19313,
+      "path": "target/m2/stage64-source-binding-03/binding-proof.json",
+      "sha256": "b2881b4c7098aad946722c2d8fb383a255b8c9987a143ccf08d0082a562f3c09"
+    },
+    "target/m2/stage64-source-binding-03/layout-verified.json": {
+      "bytes": 6933,
+      "path": "target/m2/stage64-source-binding-03/layout-verified.json",
+      "sha256": "16da49a2334fa63e5bee111c52b1280a35a7a4954980cd6d02e067d8a063d900"
+    },
+    "target/m2/stage64-source-binding-03/preparation.json": {
+      "bytes": 8471,
+      "path": "target/m2/stage64-source-binding-03/preparation.json",
+      "sha256": "bf13cdc22663bfdc045bcd48b79374952aff7ecc8535b94216ffff0a371e5590"
+    },
+    "target/m2/stage64-source-binding-03/rows.jsonl.gz": {
+      "bytes": 8322989,
+      "path": "target/m2/stage64-source-binding-03/rows.jsonl.gz",
+      "sha256": "b3cabc61847191ebc8716e0f8024fd8975a2a823f35b46e9aefb7e6d623d7487"
+    },
+    "target/m2/stage64-source-binding-review-01/review.py": {
+      "bytes": 21180,
+      "path": "target/m2/stage64-source-binding-review-01/review.py",
+      "sha256": "251e48bf2a16237cf69eae6832813c0631094839b559a7c4baff73dab39ee7cd"
+    },
+    "target/m2/stage64-source-binding-review-01/run.py": {
+      "bytes": 2255,
+      "path": "target/m2/stage64-source-binding-review-01/run.py",
+      "sha256": "1314e22939116c72207e509eadbe8226e1549b61da2c17b7906f591fdbe8424b"
+    },
+    "target/m2/stage64-source-binding-run-03/process.json": {
+      "bytes": 3305,
+      "path": "target/m2/stage64-source-binding-run-03/process.json",
+      "sha256": "8f8d190d00bafb07ade95ebecb39c3d875c5473f1a11c283c5fc47092eb379be"
+    },
+    "target/m2/stage64-source-binding-run-03/run.py": {
+      "bytes": 3379,
+      "path": "target/m2/stage64-source-binding-run-03/run.py",
+      "sha256": "ef5bb9869d4344953e0c5a43e61c4ee92c41e9e09354674f6d0c8feb9ab9c476"
+    },
+    "target/m2/stage64-source-binding-run-03/stderr.bin": {
+      "bytes": 0,
+      "path": "target/m2/stage64-source-binding-run-03/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage64-source-binding-run-03/stdout.bin": {
+      "bytes": 431,
+      "path": "target/m2/stage64-source-binding-run-03/stdout.bin",
+      "sha256": "f007001aad7f61d675d8fd4c173b1c59a4286ea8729ad96a44bf3e76755a2626"
+    },
+    "target/m2/stage64-tool-development-02/report.json": {
+      "bytes": 3909542,
+      "path": "target/m2/stage64-tool-development-02/report.json",
+      "sha256": "b6a6b99b7b303a123848fe32b8dabdc53dd0452c9ebb54a87997d58bf957d799"
+    }
+  },
+  "kind": "stage64-independent-C-source-binding-review",
+  "limits": [
+    "No guest evaluation, Cargo execution, or compatibility pass added.",
+    "Full C member readback; prior 13 B publication archives rehashed and checked as B Git blobs.",
+    "This review receipt postdates the C archive and is not claimed inside it.",
+    "Original116 failures and known Regex gaps remain; full M2/API/performance completion is open."
+  ],
+  "native_capture_profiles": 12,
+  "portable_capture_profiles": 14,
+  "schema": 1,
+  "source_binding_statuses": {
+    "B-blob": 178889,
+    "historical-A-document": 2,
+    "published-target-member": 69
+  },
+  "source_categories": {
+    "comparison_wrapper": 783,
+    "data_size_regression": 27,
+    "freeze_02": 274,
+    "m1_platform": 248,
+    "native_build": 300,
+    "native_cohort": 151,
+    "original_116": 4609,
+    "platform_wrapper": 629,
+    "rust_validation": 165398,
+    "tool_validation": 6541
+  },
+  "source_rows": 178960,
+  "source_stable": true,
+  "unique_current_B_files": 166673
+}

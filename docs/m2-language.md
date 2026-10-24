@@ -32,6 +32,14 @@ All nine M2 workstreams remain open. These are recorded local macOS arm64
 results, with full language, product API, release platform, and performance
 requirements still incomplete.
 
+Implementation commit `1afd1648daba3b31fe204bf1974fcb0b6fb2fb03` is pushed.
+The [source binding](../reports/m2/stage64-source-binding.json) and
+[independent review](../reports/m2/stage64-source-binding-review.json) connect
+the actual Git contents to the captured sources while preserving archived
+execution tools and two historical document inputs as separate categories.
+The successful binding and review process receipts are published separately
+from the archive that precedes them. No evaluations are rerun by this audit.
+
 Stage 63 adds strict List/Set concatenation, Map merging, and Set endpoint
 properties to the shared VM. Its
 [implementation checkpoint](../reports/m2/stage63-implementation-checkpoint.json)

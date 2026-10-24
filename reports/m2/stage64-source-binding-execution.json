@@ -1,0 +1,118 @@
+{
+  "archive": {
+    "bytes": 15651832,
+    "path": "reports/m2/stage64-source-binding-evidence.tar.gz",
+    "sha256": "e1c3e5ea35c2cfc372cb89c7687b3f5e4ef29b638732dc10dbfa5289eafe3fce"
+  },
+  "binder_report": {
+    "bytes": 19574,
+    "path": "reports/m2/stage64-source-binding.json",
+    "sha256": "2b12adda524e912958b466dcd7b73a82e1ad9d206ae37fe8ac58a786d01a25c0"
+  },
+  "included_in_source_binding_archive": false,
+  "kind": "stage64-source-binding-execution",
+  "process": {
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "target/m2/stage64-source-binding-03/bind.py",
+      "--commit",
+      "1afd1648daba3b31fe204bf1974fcb0b6fb2fb03",
+      "--layout",
+      "target/m2/stage64-source-binding-03/layout-verified.json"
+    ],
+    "base_commit": "cba8882d7fa7dbe1abd2273e4e12b041c683e599",
+    "complete": true,
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+    "exit_code": 0,
+    "finished_epoch": 1792869544.987521,
+    "host": {
+      "machine": "arm64",
+      "node": "research-macmini1.local",
+      "release": "27.0.0",
+      "system": "Darwin"
+    },
+    "implementation_commit": "1afd1648daba3b31fe204bf1974fcb0b6fb2fb03",
+    "kind": "stage64-post-B-source-binding-process",
+    "pid": 2996,
+    "python": {
+      "executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "version": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]"
+    },
+    "schema": 1,
+    "source_after": {
+      "target/m2/stage64-source-binding-03/bind.py": {
+        "bytes": 40899,
+        "path": "target/m2/stage64-source-binding-03/bind.py",
+        "sha256": "98ee28957b26b14efdc376afcdcc6c18ce3df620a5130f6ebc46504c4b5e4548"
+      },
+      "target/m2/stage64-source-binding-03/layout-verified.json": {
+        "bytes": 6933,
+        "path": "target/m2/stage64-source-binding-03/layout-verified.json",
+        "sha256": "16da49a2334fa63e5bee111c52b1280a35a7a4954980cd6d02e067d8a063d900"
+      },
+      "target/m2/stage64-source-binding-03/preparation.json": {
+        "bytes": 8471,
+        "path": "target/m2/stage64-source-binding-03/preparation.json",
+        "sha256": "bf13cdc22663bfdc045bcd48b79374952aff7ecc8535b94216ffff0a371e5590"
+      },
+      "target/m2/stage64-source-binding-run-03/run.py": {
+        "bytes": 3379,
+        "path": "target/m2/stage64-source-binding-run-03/run.py",
+        "sha256": "ef5bb9869d4344953e0c5a43e61c4ee92c41e9e09354674f6d0c8feb9ab9c476"
+      }
+    },
+    "source_before": {
+      "target/m2/stage64-source-binding-03/bind.py": {
+        "bytes": 40899,
+        "path": "target/m2/stage64-source-binding-03/bind.py",
+        "sha256": "98ee28957b26b14efdc376afcdcc6c18ce3df620a5130f6ebc46504c4b5e4548"
+      },
+      "target/m2/stage64-source-binding-03/layout-verified.json": {
+        "bytes": 6933,
+        "path": "target/m2/stage64-source-binding-03/layout-verified.json",
+        "sha256": "16da49a2334fa63e5bee111c52b1280a35a7a4954980cd6d02e067d8a063d900"
+      },
+      "target/m2/stage64-source-binding-03/preparation.json": {
+        "bytes": 8471,
+        "path": "target/m2/stage64-source-binding-03/preparation.json",
+        "sha256": "bf13cdc22663bfdc045bcd48b79374952aff7ecc8535b94216ffff0a371e5590"
+      },
+      "target/m2/stage64-source-binding-run-03/run.py": {
+        "bytes": 3379,
+        "path": "target/m2/stage64-source-binding-run-03/run.py",
+        "sha256": "ef5bb9869d4344953e0c5a43e61c4ee92c41e9e09354674f6d0c8feb9ab9c476"
+      }
+    },
+    "source_stable": true,
+    "started_epoch": 1792869483.626167,
+    "stderr": {
+      "bytes": 0,
+      "path": "target/m2/stage64-source-binding-run-03/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 431,
+      "path": "target/m2/stage64-source-binding-run-03/stdout.bin",
+      "sha256": "f007001aad7f61d675d8fd4c173b1c59a4286ea8729ad96a44bf3e76755a2626"
+    }
+  },
+  "process_base64": "ewogICJhcmd2IjogWwogICAgIi9vcHQvaG9tZWJyZXcvb3B0L3B5dGhvbkAzLjE0L2Jpbi9weXRob24zLjE0IiwKICAgICItQiIsCiAgICAidGFyZ2V0L20yL3N0YWdlNjQtc291cmNlLWJpbmRpbmctMDMvYmluZC5weSIsCiAgICAiLS1jb21taXQiLAogICAgIjFhZmQxNjQ4ZGFiYTNiMzFmZTIwNGJmMTk3NGZjYjBiNmZiMmZiMDMiLAogICAgIi0tbGF5b3V0IiwKICAgICJ0YXJnZXQvbTIvc3RhZ2U2NC1zb3VyY2UtYmluZGluZy0wMy9sYXlvdXQtdmVyaWZpZWQuanNvbiIKICBdLAogICJiYXNlX2NvbW1pdCI6ICJjYmE4ODgyZDdmYTdkYmUxYWJkMjI3M2U0ZTEyYjA0MWM2ODNlNTk5IiwKICAiY29tcGxldGUiOiB0cnVlLAogICJjd2QiOiAiL1VzZXJzL2NvZHkuaWouaHdhbmcvUHJvamVjdHMvcGtsLXJzLnN0YWdlNTciLAogICJleGl0X2NvZGUiOiAwLAogICJmaW5pc2hlZF9lcG9jaCI6IDE3OTI4Njk1NDQuOTg3NTIxLAogICJob3N0IjogewogICAgIm1hY2hpbmUiOiAiYXJtNjQiLAogICAgIm5vZGUiOiAicmVzZWFyY2gtbWFjbWluaTEubG9jYWwiLAogICAgInJlbGVhc2UiOiAiMjcuMC4wIiwKICAgICJzeXN0ZW0iOiAiRGFyd2luIgogIH0sCiAgImltcGxlbWVudGF0aW9uX2NvbW1pdCI6ICIxYWZkMTY0OGRhYmEzYjMxZmUyMDRiZjE5NzRmY2IwYjZmYjJmYjAzIiwKICAia2luZCI6ICJzdGFnZTY0LXBvc3QtQi1zb3VyY2UtYmluZGluZy1wcm9jZXNzIiwKICAicGlkIjogMjk5NiwKICAicHl0aG9uIjogewogICAgImV4ZWN1dGFibGUiOiAiL29wdC9ob21lYnJldy9vcHQvcHl0aG9uQDMuMTQvYmluL3B5dGhvbjMuMTQiLAogICAgInZlcnNpb24iOiAiMy4xNC44IChtYWluLCBTZXAgMzAgMjAyNiwgMTc6NTU6MDkpIFtDbGFuZyAyMS4wLjAgKGNsYW5nLTIxMDAuMy4zNC4yKV0iCiAgfSwKICAic2NoZW1hIjogMSwKICAic291cmNlX2FmdGVyIjogewogICAgInRhcmdldC9tMi9zdGFnZTY0LXNvdXJjZS1iaW5kaW5nLTAzL2JpbmQucHkiOiB7CiAgICAgICJieXRlcyI6IDQwODk5LAogICAgICAicGF0aCI6ICJ0YXJnZXQvbTIvc3RhZ2U2NC1zb3VyY2UtYmluZGluZy0wMy9iaW5kLnB5IiwKICAgICAgInNoYTI1NiI6ICI5OGVlMjg5NTdiMjZiMTRlZmRjMzc2YWZjZGNjNmMxOGNlM2RmNjIwYTUxMzBmNmViYzQ2NTA0YzRiNWU0NTQ4IgogICAgfSwKICAgICJ0YXJnZXQvbTIvc3RhZ2U2NC1zb3VyY2UtYmluZGluZy0wMy9sYXlvdXQtdmVyaWZpZWQuanNvbiI6IHsKICAgICAgImJ5dGVzIjogNjkzMywKICAgICAgInBhdGgiOiAidGFyZ2V0L20yL3N0YWdlNjQtc291cmNlLWJpbmRpbmctMDMvbGF5b3V0LXZlcmlmaWVkLmpzb24iLAogICAgICAic2hhMjU2IjogIjE2ZGE0OWEyMzM0ZmE2M2U1YmVlMTExYzUyYjEyODBhMzVhN2E0OTU0OTgwY2Q2ZDAyZTA2N2Q4YTA2M2Q5MDAiCiAgICB9LAogICAgInRhcmdldC9tMi9zdGFnZTY0LXNvdXJjZS1iaW5kaW5nLTAzL3ByZXBhcmF0aW9uLmpzb24iOiB7CiAgICAgICJieXRlcyI6IDg0NzEsCiAgICAgICJwYXRoIjogInRhcmdldC9tMi9zdGFnZTY0LXNvdXJjZS1iaW5kaW5nLTAzL3ByZXBhcmF0aW9uLmpzb24iLAogICAgICAic2hhMjU2IjogImJmMTNjZGMyMjY2M2JmZGMwNDViY2Q0OGI3OTM3NDk1MmFmZjdlY2M4NTM1Yjk0MjE2ZmZmZjBhMzcxZTU1OTAiCiAgICB9LAogICAgInRhcmdldC9tMi9zdGFnZTY0LXNvdXJjZS1iaW5kaW5nLXJ1bi0wMy9ydW4ucHkiOiB7CiAgICAgICJieXRlcyI6IDMzNzksCiAgICAgICJwYXRoIjogInRhcmdldC9tMi9zdGFnZTY0LXNvdXJjZS1iaW5kaW5nLXJ1bi0wMy9ydW4ucHkiLAogICAgICAic2hhMjU2IjogImVmNWJiOTg2OWQ0MzQ0OTUzZTBjNWE0M2U2MWM0ZWU5MmM0MWU5ZTA5MzU0Njc0ZjZkMGM4ZmViOWFiOWM0NzYiCiAgICB9CiAgfSwKICAic291cmNlX2JlZm9yZSI6IHsKICAgICJ0YXJnZXQvbTIvc3RhZ2U2NC1zb3VyY2UtYmluZGluZy0wMy9iaW5kLnB5IjogewogICAgICAiYnl0ZXMiOiA0MDg5OSwKICAgICAgInBhdGgiOiAidGFyZ2V0L20yL3N0YWdlNjQtc291cmNlLWJpbmRpbmctMDMvYmluZC5weSIsCiAgICAgICJzaGEyNTYiOiAiOThlZTI4OTU3YjI2YjE0ZWZkYzM3NmFmY2RjYzZjMThjZTNkZjYyMGE1MTMwZjZlYmM0NjUwNGM0YjVlNDU0OCIKICAgIH0sCiAgICAidGFyZ2V0L20yL3N0YWdlNjQtc291cmNlLWJpbmRpbmctMDMvbGF5b3V0LXZlcmlmaWVkLmpzb24iOiB7CiAgICAgICJieXRlcyI6IDY5MzMsCiAgICAgICJwYXRoIjogInRhcmdldC9tMi9zdGFnZTY0LXNvdXJjZS1iaW5kaW5nLTAzL2xheW91dC12ZXJpZmllZC5qc29uIiwKICAgICAgInNoYTI1NiI6ICIxNmRhNDlhMjMzNGZhNjNlNWJlZTExMWM1MmIxMjgwYTM1YTdhNDk1NDk4MGNkNmQwMmUwNjdkOGEwNjNkOTAwIgogICAgfSwKICAgICJ0YXJnZXQvbTIvc3RhZ2U2NC1zb3VyY2UtYmluZGluZy0wMy9wcmVwYXJhdGlvbi5qc29uIjogewogICAgICAiYnl0ZXMiOiA4NDcxLAogICAgICAicGF0aCI6ICJ0YXJnZXQvbTIvc3RhZ2U2NC1zb3VyY2UtYmluZGluZy0wMy9wcmVwYXJhdGlvbi5qc29uIiwKICAgICAgInNoYTI1NiI6ICJiZjEzY2RjMjI2NjNiZmRjMDQ1YmNkNDhiNzkzNzQ5NTJhZmY3ZWNjODUzNWI5NDIxNmZmZmYwYTM3MWU1NTkwIgogICAgfSwKICAgICJ0YXJnZXQvbTIvc3RhZ2U2NC1zb3VyY2UtYmluZGluZy1ydW4tMDMvcnVuLnB5IjogewogICAgICAiYnl0ZXMiOiAzMzc5LAogICAgICAicGF0aCI6ICJ0YXJnZXQvbTIvc3RhZ2U2NC1zb3VyY2UtYmluZGluZy1ydW4tMDMvcnVuLnB5IiwKICAgICAgInNoYTI1NiI6ICJlZjViYjk4NjlkNDM0NDk1M2UwYzVhNDNlNjFjNGVlOTJjNDFlOWUwOTM1NDY3NGY2ZDBjOGZlYjlhYjljNDc2IgogICAgfQogIH0sCiAgInNvdXJjZV9zdGFibGUiOiB0cnVlLAogICJzdGFydGVkX2Vwb2NoIjogMTc5Mjg2OTQ4My42MjYxNjcsCiAgInN0ZGVyciI6IHsKICAgICJieXRlcyI6IDAsCiAgICAicGF0aCI6ICJ0YXJnZXQvbTIvc3RhZ2U2NC1zb3VyY2UtYmluZGluZy1ydW4tMDMvc3RkZXJyLmJpbiIsCiAgICAic2hhMjU2IjogImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiCiAgfSwKICAic3Rkb3V0IjogewogICAgImJ5dGVzIjogNDMxLAogICAgInBhdGgiOiAidGFyZ2V0L20yL3N0YWdlNjQtc291cmNlLWJpbmRpbmctcnVuLTAzL3N0ZG91dC5iaW4iLAogICAgInNoYTI1NiI6ICJmMDA3MDAxYWFkN2Y2MWQ2NzVkOGZkNGMxNzNiMWM1OWE0Mjg2ZWE4NzI5YWQ5NmE0NGJmM2U3Njc1NWEyNjI2IgogIH0KfQo=",
+  "process_identity": {
+    "bytes": 3305,
+    "path": "target/m2/stage64-source-binding-run-03/process.json",
+    "sha256": "8f8d190d00bafb07ade95ebecb39c3d875c5473f1a11c283c5fc47092eb379be"
+  },
+  "schema": 1,
+  "scope": "Actual successful post-B binder process. This receipt was created after the binding archive and is published separately; failed prior runs remain in that archive.",
+  "stderr": {
+    "base64": "",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "base64": "eyJhcmNoaXZlIjogeyJieXRlcyI6IDE1NjUxODMyLCAiZnVsbF9tZW1iZXJfcmVhZGJhY2tfdmVyaWZpZWQiOiB0cnVlLCAibWVtYmVycyI6IDE0NiwgInBhdGgiOiAicmVwb3J0cy9tMi9zdGFnZTY0LXNvdXJjZS1iaW5kaW5nLWV2aWRlbmNlLnRhci5neiIsICJzaGEyNTYiOiAiZTFjM2U1ZWEzNWMyY2ZjMzcyY2I4OWM3Njg3YjNmNWU0ZWYyOWI2Mzg3MzJkYzEwZGJmYTUyODllYWZlM2ZjZSJ9LCAicmVwb3J0IjogeyJieXRlcyI6IDE5NTc0LCAicGF0aCI6ICJ0YXJnZXQvbTIvc3RhZ2U2NC1zb3VyY2UtYmluZGluZy0wMy9zdGFnZTY0LXNvdXJjZS1iaW5kaW5nLmpzb24iLCAic2hhMjU2IjogIjJiMTJhZGRhNTI0ZTkxMjk1OGI0NjZkY2Q3YjczYTgyZTFhZDlkMjA2YWUzN2ZlOGFjNThhNzg2ZDAxYTI1YzAifSwgInNvdXJjZV9yb3dzIjogMTc4OTYwfQo=",
+    "bytes": 431,
+    "sha256": "f007001aad7f61d675d8fd4c173b1c59a4286ea8729ad96a44bf3e76755a2626"
+  }
+}

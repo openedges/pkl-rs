@@ -2256,6 +2256,30 @@ Python 94개를 일반·`-O`로, JavaScript 49개와 mapping 검사 8개를 Pyth
 원본 첫 차이에 따라 조사합니다. **M2 아홉 영역과 전체 호환성·제품 API·릴리스
 플랫폼·성능 조건은 계속 열려 있습니다.**
 
+#### Stage 64 C — 실제 구현 커밋과 검증 소스 연결
+
+구현과 검증 자료를 `1afd1648daba3b31fe204bf1974fcb0b6fb2fb03`에 커밋·푸시했고
+원격 `main` 일치를 확인했습니다. [소스 연결](reports/m2/stage64-source-binding.json)은
+열 개 분류의 178,960개 기록을 대조합니다. 178,889개는 B에 연결된 Git blob과
+일치하고, 69개는 별도 보관한 실행 입력 19개 경로이며, 두 개는 검증 당시의
+A 문서 바이트입니다. native 12개·portable 14개 취득의 소스 계약도 이 입력
+집합과 연결했습니다. 이 기록 수는 독립 기능 수나 전체 완료율이 아닙니다.
+
+146-member archive에는 실제 게시·assembly 기록과 네 차례의 검토 도구 실패,
+두 차례의 소스 연결 도구 실패를 보존합니다. 첫 소스 대조는 upstream의 정상
+Git symlink를 거부했고, 두 번째는 상대 layout 경로를 보고서에 기록하다가
+실패했습니다. 세 번째 실행은 링크를 따라가지 않고 원래 링크 대상 바이트·
+Git mode를 대조하며, 시작 시 layout 경로를 확정해 통과했습니다. 참조 checkout과
+기존 평가 결과는 수정하지 않았습니다.
+
+[독립 검토](reports/m2/stage64-source-binding-review.json)는 모든 archive member와
+소스 기록을 실제 Git 내용으로 확인했습니다. 성공한
+[소스 연결 실행](reports/m2/stage64-source-binding-execution.json)과
+[검토 실행](reports/m2/stage64-source-binding-review-execution.json)은 archive가
+생성된 뒤 종료되므로 원시 process·출력 바이트를 별도 공개 기록에 보존합니다.
+검토 실행에는 실제 실행한 검토 스크립트도 포함합니다. guest를 다시 실행한
+결과로 집계하지 않으며 **M2 전체 미완료와 기존 원본·Regex 실패를 유지합니다.**
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

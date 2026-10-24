@@ -67,6 +67,30 @@ These are local macOS arm64 results. All nine M2 workstreams, full language
 compatibility, typed exports, product APIs, release platform coverage, and
 speed/memory targets remain open.
 
+The implementation and evidence were committed and pushed as
+`1afd1648daba3b31fe204bf1974fcb0b6fb2fb03`. The separate
+[source binding](stage64-source-binding.json) checks 178,960 rows across ten
+source categories: 178,889 match Git blobs associated with B, 69 match archived
+execution inputs at nineteen distinct paths, and two preserve exact A-version
+document bytes. It also checks the recorded source contracts of twelve native
+and fourteen portable captures against that bound source set.
+
+The [146-member binding archive](stage64-source-binding-evidence.tar.gz) retains
+the actual publication and assembly records, four failed reviewer-tool attempts,
+and both failed binding attempts. The first binding attempt rejected a legitimate
+pinned Git symlink; the next failed while formatting a relative layout path.
+The successful third attempt compares the symlink's raw target bytes and Git
+mode without following it and resolves the layout path at entry. Reference
+checkouts and recorded evaluation results are unchanged.
+
+The [independent review](stage64-source-binding-review.json) checks every binding
+archive member and all source rows against actual Git contents. The successful
+[binding execution](stage64-source-binding-execution.json) and
+[review execution](stage64-source-binding-review-execution.json) retain exact
+process and stream bytes separately because they postdate the binding archive.
+The review execution also preserves the executed review scripts. These checks
+run no guest evaluations and do not close the remaining M2 or performance gates.
+
 ### Stage64 amendment construction — independent Java authority
 
 The [Java checkpoint](stage64-java-checkpoint.json) records two separately sealed
