@@ -1950,6 +1950,15 @@ Listing·Mapping은 없는 키에서만 상속된 `Function1` 타입을 검사�
 이 기준은 공통 런타임의 default 진단 차이를 수정하는 근거이며 후보·M2 통과
 판정은 별도입니다.
 
+별도 [Dynamic 출력 기준](reports/m2/stage62-dynamic-render-java-checkpoint.json)은
+10개 성공 식을 두 새 JVM에서 관찰합니다. renderer와 식별자 lexer를 포함한
+고정 소스 68개를 기록했으며, 단독 high/low surrogate·U+FFFD·NUL 속성명을
+UTF-16 원시 채널로 구분합니다. Java UTF-8에서 단독 surrogate가 `?`로 바뀌므로
+UTF-8만 같다는 이유로 이 사례를 통과 처리하지 않습니다. 검증 명령 다섯 개와
+Python 검사 다섯 개의 일반·`-O` 실행이 통과했고 검증 소스 85개가 전후 같습니다.
+독립 검토에서 archive 1,105개 멤버와 초기 관찰의 보존을 확인했습니다. 후보
+공통 출력 경로의 속성명 수정은 이 기준과 전체 일곱 채널로 별도 비교합니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

@@ -65,6 +65,17 @@ Dynamic rendering probe; these are not added to the canonical 22-row count.
 Its 2,360 members passed independent readback. Candidate and full M2 gates
 remain open.
 
+The separate [Dynamic rendering checkpoint](stage62-dynamic-render-java-checkpoint.json)
+seals ten successful expressions in each of two fresh JVMs, with 68 pinned
+source files including the renderer and identifier lexer. Raw UTF-16 channels
+distinguish high and low unpaired surrogates, U+FFFD, and NUL in property names;
+Java UTF-8 replaces each unpaired surrogate with `?` and cannot establish that
+distinction by itself. Five validation checks pass with 85 stable source copies,
+including five Python tests normally and under `-O`. The
+[evidence archive](stage62-dynamic-render-java-evidence.tar.gz) preserves the
+earlier target-only probe separately. All 1,105 members passed independent
+readback; candidate comparison and full rendering compatibility remain open.
+
 ### Stage61 IntSeq values — implementation and local comparisons
 
 The [implementation checkpoint](stage61-implementation-checkpoint.json) adds

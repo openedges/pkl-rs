@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage62/dynamic-render.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "high-to-string",
+      "mode": "string",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic().toString()",
+      "group": "dynamic-render"
+    },
+    {
+      "id": "low-to-string",
+      "mode": "string",
+      "expression": "Map(\"\\u{dc00}\",8).toDynamic().toString()",
+      "group": "dynamic-render"
+    },
+    {
+      "id": "replacement-to-string",
+      "mode": "string",
+      "expression": "Map(\"\\u{fffd}\",9).toDynamic().toString()",
+      "group": "dynamic-render"
+    },
+    {
+      "id": "nul-to-string",
+      "mode": "string",
+      "expression": "Map(\"\\u{0000}\",10).toDynamic().toString()",
+      "group": "dynamic-render"
+    },
+    {
+      "id": "internal-like-to-string",
+      "mode": "string",
+      "expression": "Map(\"$internal\",11).toDynamic().toString()",
+      "group": "dynamic-render"
+    },
+    {
+      "id": "high-replacement-to-string",
+      "mode": "string",
+      "expression": "Map(\"\\u{d800}\",7,\"\\u{fffd}\",8).toDynamic().toString()",
+      "group": "dynamic-render"
+    },
+    {
+      "id": "high-direct-string",
+      "mode": "string",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic()",
+      "group": "dynamic-render"
+    },
+    {
+      "id": "low-direct-string",
+      "mode": "string",
+      "expression": "Map(\"\\u{dc00}\",8).toDynamic()",
+      "group": "dynamic-render"
+    },
+    {
+      "id": "nul-direct-string",
+      "mode": "string",
+      "expression": "Map(\"\\u{0000}\",10).toDynamic()",
+      "group": "dynamic-render"
+    },
+    {
+      "id": "high-to-map",
+      "mode": "string",
+      "expression": "Map(\"\\u{d800}\",7).toDynamic().toMap()",
+      "group": "dynamic-render"
+    }
+  ]
+}
