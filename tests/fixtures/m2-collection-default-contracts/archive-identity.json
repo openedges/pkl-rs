@@ -1,0 +1,18 @@
+{
+  "archive_sha256": "0c7ed42e1f786ea02086f6cf1c736b1c326835801221512568ed695dfc96c126",
+  "captures": {
+    "capture-01": "stage62-collection-default-contracts-oracle-01"
+  },
+  "fileset_sha256": "c2901c3add6930dd86d58f856987df44cb273d4eb7c69e114be246edea776ed6",
+  "members": 1004,
+  "oracle_input_sha256": {
+    "CollectionConversionsOracle.java": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0",
+    "audit.json": "fc0a549688a1c649798a6d24ef30b22ad8e52b8877f310046c2cb6ca4900616e",
+    "cases.json": "15cb06a0db6c9e6c90edf2afa199c1d86734920d5ff4432c6cb3de1c521d9e0a",
+    "module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+    "provenance.json": "689ee950a596be0c5cd73eb92f0402edc1bd9fb290e55b3a21382847b0bb44c1",
+    "queries.tsv": "375fc16968ee997b25d7223380398205ed756352c07b0d6e443c457f4b1ea143",
+    "run.py": "2b640e7db2671e1c7e747e62610ffa7a476ae7f6cfad17d7873cbad28d352a7e"
+  },
+  "schema": 1
+}

@@ -1,0 +1,261 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "baseline_head": "3e536f6d88e5f0bdf0d480f721957fcc665c7b86",
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical": {
+    "fixture_archive": {
+      "bytes": 155316,
+      "sha256": "0c7ed42e1f786ea02086f6cf1c736b1c326835801221512568ed695dfc96c126"
+    },
+    "fixture_archive_members": 1004,
+    "fixture_fileset_sha256": "c2901c3add6930dd86d58f856987df44cb273d4eb7c69e114be246edea776ed6",
+    "module_uri": "file:///stage62/collection-default-contracts.pkl",
+    "path": "target/m2/stage62-collection-default-contracts-oracle-01",
+    "pids": [
+      89676,
+      89679
+    ],
+    "raw_files_per_repetition": 464,
+    "rows": 22,
+    "source_files": 67,
+    "statuses_per_session": {
+      "error": 10,
+      "success": 12
+    }
+  },
+  "evidence": {
+    "archive": "reports/m2/stage62-default-contracts-java-evidence.tar.gz",
+    "embedded_manifest_sha256": "949de6786b629873594cc3abce788ac8b932d23b97131703829797254206648a",
+    "identity": {
+      "bytes": 1278026,
+      "sha256": "fb0d44010780fda76fbbce8248256f692a10535029caf7e9207786f60ffd60e5"
+    },
+    "member_hash_readback": true,
+    "members": 2360,
+    "source_before_after_equal": true
+  },
+  "history": {
+    "stage62-dynamic-render-01": {
+      "path": "target/m2/stage62-dynamic-render-01",
+      "raw_files_per_repetition": 212,
+      "rows": 10,
+      "scope": "Separate target-only Dynamic rendering and UTF-16 key probe; no permanent candidate compatibility claim.",
+      "statuses_per_session": {
+        "success": 10
+      }
+    },
+    "stage62-lookup-default-contract-01": {
+      "path": "target/m2/stage62-lookup-default-contract-01",
+      "raw_files_per_repetition": 338,
+      "rows": 16,
+      "scope": "Exploratory 16-row default callback and typed fallback probe; superseded by the independent 22-row permanent fixture.",
+      "statuses_per_session": {
+        "error": 6,
+        "success": 10
+      }
+    }
+  },
+  "java_runtime": {
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "jdk_executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+    "jdk_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "jdk_release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+    "reference_revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "kind": "stage62-collection-default-contracts-java-authority-checkpoint",
+  "limits": [
+    "Public Java string observations only; no Rust candidate pass is claimed.",
+    "The separate Dynamic rendering probe is target-only and uses UTF-16 for unpaired surrogate names.",
+    "Typed Java export and wrapper reference identity remain unverified.",
+    "M2 manifest freshness is deferred until concurrent Rust source changes freeze.",
+    "Original upstream programs, browser, Node, full M2 and performance gates remain separate."
+  ],
+  "schema": 1,
+  "validation": {
+    "checks": [
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/collection_default_contracts_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792848768.907325,
+        "name": "fixture-verifier",
+        "started_epoch": 1792848768.798141,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 357,
+          "sha256": "9a66a96c1ceaf5cc8710418d57b278c662022fc4bf0b15e85a7f6caeae55d958"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "tools/collection_default_contracts_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792848769.0214121,
+        "name": "fixture-verifier-O",
+        "started_epoch": 1792848768.90878,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 357,
+          "sha256": "9a66a96c1ceaf5cc8710418d57b278c662022fc4bf0b15e85a7f6caeae55d958"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "tools.tests.test_collection_default_contracts_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792848769.233259,
+        "name": "fixture-tests",
+        "started_epoch": 1792848769.0228639,
+        "stderr": {
+          "bytes": 1210,
+          "sha256": "dd029daf6a73a94ad6bd007074a7215490b7f3db753d84adbd9bea914611ae08"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "-m",
+          "unittest",
+          "tools.tests.test_collection_default_contracts_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792848769.438884,
+        "name": "fixture-tests-O",
+        "started_epoch": 1792848769.2346308,
+        "stderr": {
+          "bytes": 1210,
+          "sha256": "dd029daf6a73a94ad6bd007074a7215490b7f3db753d84adbd9bea914611ae08"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/inventory.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792848772.36836,
+        "name": "source-inventory",
+        "started_epoch": 1792848769.4403079,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 926,
+          "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+        }
+      }
+    ],
+    "copied_sources": 85,
+    "directory": "target/m2/stage62-default-contracts-java-validation-01",
+    "manifest_freshness_pass_claimed": false,
+    "record": "target/m2/stage62-default-contracts-java-validation-01/validation.json",
+    "record_identity": {
+      "bytes": 39766,
+      "sha256": "502ee3f6a2f52c8b32f5781ac2135c86d0d38f709cb21db7fdc80e45e89d52fb"
+    },
+    "source_stable": true
+  }
+}

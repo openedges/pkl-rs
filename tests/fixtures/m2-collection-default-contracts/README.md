@@ -1,0 +1,7 @@
+# Pkl 0.32.0 collection default callback contracts
+
+This independent Java fixture records 22 public string observations for `Listing.getOrDefault` and `Mapping.getOrDefault`. It tests a nonfunction default, callbacks with zero or two parameters, present and missing lookups, inherited typed defaults, explicit null, and key or value errors that occur before a default is used. It does not claim Java wrapper identity, typed export compatibility, or Rust candidate compatibility.
+
+The authored query order and module are in `cases.json`, `queries.tsv`, and `module.pkl`. `oracle-evidence.tar.gz` contains the complete standalone pinned Java acquisition, including two fresh ordered JVM sessions, all raw UTF-8 and UTF-16 channels, process transcripts, runtime identities, and copied upstream sources. `archive-identity.json` and `manifest.json` bind the archive and fixture files. Run `python3 tools/collection_default_contracts_fixtures.py` for offline verification.
+
+The 22 rows comprise 12 successes and 10 ordinary Pkl errors per JVM session. On a missing key, default values of type `Int`, `Function0`, or `Function2` fail the required `Function1` type check. A present entry, including explicit `null`, skips an invalid default. A throwing key or present value reports its own error first. These are Java observations only; the original 236 conversion, 58 conversion-control, and 133 lookup matrices remain separate.

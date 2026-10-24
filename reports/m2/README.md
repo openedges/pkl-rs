@@ -52,6 +52,19 @@ description was corrected from four to five receiver-expression changes.
 All 16,683 members passed independent readback. Candidate, platform, original
 program, and full M2 verdicts remain separate from this Java authority.
 
+The [default-function checkpoint](stage62-default-contracts-java-checkpoint.json)
+seals 22 additional Java expressions: 12 successes and ten ordinary errors in
+each of two fresh JVMs. Listing and Mapping defer inherited `Function1` checks
+until a missing key invokes the default; present values, including null, bypass
+invalid defaults. The cases preserve key/value error precedence and declaration
+frames for nonfunctions and wrong function arities. Five fresh checks pass with
+85 stable validation source copies, including six Python tests normally and
+under `-O`. The [evidence archive](stage62-default-contracts-java-evidence.tar.gz)
+also preserves a 16-row exploratory default probe and a separate ten-row
+Dynamic rendering probe; these are not added to the canonical 22-row count.
+Its 2,360 members passed independent readback. Candidate and full M2 gates
+remain open.
+
 ### Stage61 IntSeq values — implementation and local comparisons
 
 The [implementation checkpoint](stage61-implementation-checkpoint.json) adds
