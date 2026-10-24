@@ -1,0 +1,62 @@
+{
+  "additive_04_05": "Separate pending evidence; excluded from Java A publication.",
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical_observations": {
+    "datasize_export_repeat_rows_per_session": 134,
+    "export_calls_per_session": 389,
+    "export_sessions": 2,
+    "independent_feature_coverage_claimed_from_repeats": false,
+    "intentional_java_errors_per_session": 22,
+    "ordered_rows_per_session": 255,
+    "string_calls_per_session": 255,
+    "string_sessions": 2
+  },
+  "captured_runner_distinction": {
+    "canonical03_executed_run_py_sha256": "0bf1c5bdc6f17004cb42145b23ca5aec7ade2d31c739f81a098ddd172fcf200b",
+    "current_production_oracle_py_sha256": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803",
+    "fresh_reproduction_run_py_sha256": "4d472a50c7100383b909b97e71cbc23c5d8f4aa3942d371bea9cc9881dd2df3e"
+  },
+  "final_source_freeze": {
+    "files": 11,
+    "path": "target/m2/stage57-data-size-authority-checks-01/freeze.json",
+    "sha256": "9f44ec258ddb020af6a730241232281cdf9350d2e44c405fe2c20e4caf27d0c0",
+    "source_timing_limit": "Frozen SHA inventory records tool/fixture files after final validation. Original capture provenance separately records before/after Java input, JAR and pinned upstream source hashes; there is no independently timestamped pre-test SHA snapshot for the Python test process.",
+    "terminal_logs": 8
+  },
+  "fixture": {
+    "bytes": 1453461,
+    "fileset_sha256": "001ef10a6ee71f746179757c008dc46ce04d378b0d6d93814124016c06c1f2a6",
+    "members": 56870,
+    "path": "tests/fixtures/m2-data-size/oracle-evidence.tar.gz",
+    "sha256": "51e14a2c80836141c61a9bbb18aaa708e6a963c238132854e55e7bf6493c6b8e"
+  },
+  "full_public_export_candidate_comparison_passed": false,
+  "historical_01_02": "Preserved inside the fixed fixture archive; their mixed evaluator calls remain historical and separate from canonical03.",
+  "java_a_git_commit_binding": "pending separate post-commit actual Git object audit",
+  "kind": "Canonical DataSize Java authority A local validation checkpoint",
+  "native_node_browser_compatibility_passed": false,
+  "performance_targets_achieved": false,
+  "publication": {
+    "bytes": 922079,
+    "full_member_reread_verified": true,
+    "manifest_sha256": "e97cb602bdb44fdb427b3157f868289158f803829e9acf6ad0ad3d4c93273040",
+    "member_count": 22600,
+    "original_sources_unchanged_before_after": true,
+    "packaged_original_source_files": 22597,
+    "path": "reports/m2/stage57-oracle-validation-evidence.tar.gz",
+    "sha256": "77df82fe3009b76b59f578ef7feca6f95c47922e57b37b17217c148c3eb5742c"
+  },
+  "reference_revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+  "schema": 1,
+  "scope": "Actual Java string and export authority, fresh reproduction, offline fixture verification and source review; no Rust candidate comparison.",
+  "stage": 57,
+  "validation": {
+    "current_standalone_audit_of_fresh_capture": "pass, observed exit 0",
+    "final_offline_fixture": "pass, observed exit 0",
+    "final_python_tests": "16/16 pass",
+    "fresh_four_process_java_acquisition": "pass, observed exit 0",
+    "source_and_log_manifest_reread_verified": true
+  },
+  "whole_m2_complete": false
+}

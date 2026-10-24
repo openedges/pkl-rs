@@ -1,0 +1,1543 @@
+{
+  "schema": 2,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage57/datasize-oracle.pkl",
+  "repetitions": 2,
+  "boundaries": [
+    "string",
+    "export"
+  ],
+  "rows": [
+    {
+      "group": "construct",
+      "id": "int-b",
+      "expression": "7.b",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "float-b",
+      "expression": "7.25.b",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "negative-b",
+      "expression": "(-3).b",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "to-data-size-b",
+      "expression": "7.toDataSize(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "value-b",
+      "expression": "7.25.b.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "unit-b",
+      "expression": "7.25.b.unit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "binary-b",
+      "expression": "1.b.isBinaryUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "decimal-b",
+      "expression": "1.b.isDecimalUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "unit-b-to-b",
+      "expression": "1.b.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-unit-b",
+      "expression": "1.b.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-binary",
+      "expression": "1.b.toBinaryUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-decimal",
+      "expression": "1.b.toDecimalUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "int-kb",
+      "expression": "7.kb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "float-kb",
+      "expression": "7.25.kb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "negative-kb",
+      "expression": "(-3).kb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "to-data-size-kb",
+      "expression": "7.toDataSize(\"kb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "value-kb",
+      "expression": "7.25.kb.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "unit-kb",
+      "expression": "7.25.kb.unit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "binary-kb",
+      "expression": "1.kb.isBinaryUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "decimal-kb",
+      "expression": "1.kb.isDecimalUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "unit-kb-to-b",
+      "expression": "1.kb.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-unit-kb",
+      "expression": "1.b.toUnit(\"kb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "kb-to-binary",
+      "expression": "1.kb.toBinaryUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "kb-to-decimal",
+      "expression": "1.kb.toDecimalUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "int-kib",
+      "expression": "7.kib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "float-kib",
+      "expression": "7.25.kib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "negative-kib",
+      "expression": "(-3).kib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "to-data-size-kib",
+      "expression": "7.toDataSize(\"kib\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "value-kib",
+      "expression": "7.25.kib.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "unit-kib",
+      "expression": "7.25.kib.unit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "binary-kib",
+      "expression": "1.kib.isBinaryUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "decimal-kib",
+      "expression": "1.kib.isDecimalUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "unit-kib-to-b",
+      "expression": "1.kib.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-unit-kib",
+      "expression": "1.b.toUnit(\"kib\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "kib-to-binary",
+      "expression": "1.kib.toBinaryUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "kib-to-decimal",
+      "expression": "1.kib.toDecimalUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "int-mb",
+      "expression": "7.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "float-mb",
+      "expression": "7.25.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "negative-mb",
+      "expression": "(-3).mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "to-data-size-mb",
+      "expression": "7.toDataSize(\"mb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "value-mb",
+      "expression": "7.25.mb.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "unit-mb",
+      "expression": "7.25.mb.unit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "binary-mb",
+      "expression": "1.mb.isBinaryUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "decimal-mb",
+      "expression": "1.mb.isDecimalUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "unit-mb-to-b",
+      "expression": "1.mb.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-unit-mb",
+      "expression": "1.b.toUnit(\"mb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "mb-to-binary",
+      "expression": "1.mb.toBinaryUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "mb-to-decimal",
+      "expression": "1.mb.toDecimalUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "int-mib",
+      "expression": "7.mib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "float-mib",
+      "expression": "7.25.mib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "negative-mib",
+      "expression": "(-3).mib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "to-data-size-mib",
+      "expression": "7.toDataSize(\"mib\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "value-mib",
+      "expression": "7.25.mib.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "unit-mib",
+      "expression": "7.25.mib.unit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "binary-mib",
+      "expression": "1.mib.isBinaryUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "decimal-mib",
+      "expression": "1.mib.isDecimalUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "unit-mib-to-b",
+      "expression": "1.mib.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-unit-mib",
+      "expression": "1.b.toUnit(\"mib\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "mib-to-binary",
+      "expression": "1.mib.toBinaryUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "mib-to-decimal",
+      "expression": "1.mib.toDecimalUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "int-gb",
+      "expression": "7.gb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "float-gb",
+      "expression": "7.25.gb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "negative-gb",
+      "expression": "(-3).gb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "to-data-size-gb",
+      "expression": "7.toDataSize(\"gb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "value-gb",
+      "expression": "7.25.gb.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "unit-gb",
+      "expression": "7.25.gb.unit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "binary-gb",
+      "expression": "1.gb.isBinaryUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "decimal-gb",
+      "expression": "1.gb.isDecimalUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "unit-gb-to-b",
+      "expression": "1.gb.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-unit-gb",
+      "expression": "1.b.toUnit(\"gb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "gb-to-binary",
+      "expression": "1.gb.toBinaryUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "gb-to-decimal",
+      "expression": "1.gb.toDecimalUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "int-gib",
+      "expression": "7.gib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "float-gib",
+      "expression": "7.25.gib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "negative-gib",
+      "expression": "(-3).gib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "to-data-size-gib",
+      "expression": "7.toDataSize(\"gib\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "value-gib",
+      "expression": "7.25.gib.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "unit-gib",
+      "expression": "7.25.gib.unit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "binary-gib",
+      "expression": "1.gib.isBinaryUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "decimal-gib",
+      "expression": "1.gib.isDecimalUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "unit-gib-to-b",
+      "expression": "1.gib.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-unit-gib",
+      "expression": "1.b.toUnit(\"gib\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "gib-to-binary",
+      "expression": "1.gib.toBinaryUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "gib-to-decimal",
+      "expression": "1.gib.toDecimalUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "int-tb",
+      "expression": "7.tb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "float-tb",
+      "expression": "7.25.tb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "negative-tb",
+      "expression": "(-3).tb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "to-data-size-tb",
+      "expression": "7.toDataSize(\"tb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "value-tb",
+      "expression": "7.25.tb.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "unit-tb",
+      "expression": "7.25.tb.unit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "binary-tb",
+      "expression": "1.tb.isBinaryUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "decimal-tb",
+      "expression": "1.tb.isDecimalUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "unit-tb-to-b",
+      "expression": "1.tb.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-unit-tb",
+      "expression": "1.b.toUnit(\"tb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "tb-to-binary",
+      "expression": "1.tb.toBinaryUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "tb-to-decimal",
+      "expression": "1.tb.toDecimalUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "int-tib",
+      "expression": "7.tib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "float-tib",
+      "expression": "7.25.tib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "negative-tib",
+      "expression": "(-3).tib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "to-data-size-tib",
+      "expression": "7.toDataSize(\"tib\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "value-tib",
+      "expression": "7.25.tib.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "unit-tib",
+      "expression": "7.25.tib.unit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "binary-tib",
+      "expression": "1.tib.isBinaryUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "decimal-tib",
+      "expression": "1.tib.isDecimalUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "unit-tib-to-b",
+      "expression": "1.tib.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-unit-tib",
+      "expression": "1.b.toUnit(\"tib\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "tib-to-binary",
+      "expression": "1.tib.toBinaryUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "tib-to-decimal",
+      "expression": "1.tib.toDecimalUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "int-pb",
+      "expression": "7.pb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "float-pb",
+      "expression": "7.25.pb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "negative-pb",
+      "expression": "(-3).pb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "to-data-size-pb",
+      "expression": "7.toDataSize(\"pb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "value-pb",
+      "expression": "7.25.pb.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "unit-pb",
+      "expression": "7.25.pb.unit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "binary-pb",
+      "expression": "1.pb.isBinaryUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "decimal-pb",
+      "expression": "1.pb.isDecimalUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "unit-pb-to-b",
+      "expression": "1.pb.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-unit-pb",
+      "expression": "1.b.toUnit(\"pb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "pb-to-binary",
+      "expression": "1.pb.toBinaryUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "pb-to-decimal",
+      "expression": "1.pb.toDecimalUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "int-pib",
+      "expression": "7.pib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "float-pib",
+      "expression": "7.25.pib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "negative-pib",
+      "expression": "(-3).pib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "construct",
+      "id": "to-data-size-pib",
+      "expression": "7.toDataSize(\"pib\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "value-pib",
+      "expression": "7.25.pib.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "unit-pib",
+      "expression": "7.25.pib.unit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "binary-pib",
+      "expression": "1.pib.isBinaryUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "members",
+      "id": "decimal-pib",
+      "expression": "1.pib.isDecimalUnit",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "unit-pib-to-b",
+      "expression": "1.pib.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "b-to-unit-pib",
+      "expression": "1.b.toUnit(\"pib\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "pib-to-binary",
+      "expression": "1.pib.toBinaryUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion",
+      "id": "pib-to-decimal",
+      "expression": "1.pib.toDecimalUnit()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "large-int",
+      "expression": "9007199254740993.b",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "max-int",
+      "expression": "9223372036854775807.b",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "min-int",
+      "expression": "(-9223372036854775808).b",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "positive-zero",
+      "expression": "0.0.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "negative-zero",
+      "expression": "(-0.0).mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "positive-infinity",
+      "expression": "(1.0 / 0.0).mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "negative-infinity",
+      "expression": "(-1.0 / 0.0).mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "nan",
+      "expression": "(0.0 / 0.0).mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "subnormal",
+      "expression": "(1.0e-320).pib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "max-double",
+      "expression": "(1.0e308).pib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "very-small",
+      "expression": "(1.0e-300).pib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "integer-value",
+      "expression": "4.0.mb.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "negative-zero-value",
+      "expression": "(-0.0).mb.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "large-value",
+      "expression": "(1.0e100).mb.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "nan-value",
+      "expression": "(0.0/0.0).mb.value",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "mixed-decimal-binary",
+      "expression": "1.mib.toUnit(\"mb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "roundtrip",
+      "expression": "1.pib.toUnit(\"b\").toUnit(\"pib\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "positive-zero-predicate",
+      "expression": "0.0.mb.isPositive",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "negative-zero-predicate",
+      "expression": "(-0.0).mb.isPositive",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "nan-predicate",
+      "expression": "(0.0/0.0).mb.isPositive",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "is-between-inclusive",
+      "expression": "3.kb.isBetween(2000.b,3000.b)",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "is-between-reversed",
+      "expression": "3.kb.isBetween(4.kb,2.kb)",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "boundaries",
+      "id": "is-between-mixed",
+      "expression": "1.mib.isBetween(1000.kb,2.mb)",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "add",
+      "expression": "1.mb + 1.kb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "add-reverse",
+      "expression": "1.kb + 1.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "add-mixed",
+      "expression": "1.mib + 1.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "add-mixed-reverse",
+      "expression": "1.mb + 1.mib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "subtract",
+      "expression": "1.mb - 1000.kb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "subtract-reverse",
+      "expression": "1000.kb - 1.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "multiply-int",
+      "expression": "2.mb * 3",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "multiply-int-reverse",
+      "expression": "3 * 2.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "multiply-float",
+      "expression": "2.mb * 1.25",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "multiply-float-reverse",
+      "expression": "1.25 * 2.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "divide-scalar",
+      "expression": "5.mb / 2",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "divide-size",
+      "expression": "1.mib / 1.kb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "divide-size-reverse",
+      "expression": "1.kb / 1.mib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "int-divide-scalar",
+      "expression": "5.mb ~/ 2",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "int-divide-size",
+      "expression": "5.mb ~/ 2.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "int-divide-mixed",
+      "expression": "1.mib ~/ 1.kb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "remainder",
+      "expression": "5.mb % 2",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "power-int",
+      "expression": "2.mb ** 3",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "power-float",
+      "expression": "2.mb ** 0.5",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "unary-minus",
+      "expression": "-2.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "less-mixed",
+      "expression": "1.mb < 1.mib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "less-reverse",
+      "expression": "1.mib < 1.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "le-equal",
+      "expression": "1.mb <= 1000.kb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "greater",
+      "expression": "2.kb > 1999.b",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "ge",
+      "expression": "1.mib >= 1.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "nan-less",
+      "expression": "(0.0/0.0).mb < 1.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "nan-greater",
+      "expression": "(0.0/0.0).mb > 1.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operators",
+      "id": "zero-order",
+      "expression": "(-0.0).mb < 0.0.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operator-boundaries",
+      "id": "pow-neg-zero",
+      "expression": "(-0.0).mb ** 3",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operator-boundaries",
+      "id": "pow-negative-exponent",
+      "expression": "2.mb ** -1",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operator-boundaries",
+      "id": "pow-nan-zero",
+      "expression": "(0.0/0.0).mb ** 0",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operator-boundaries",
+      "id": "pow-negative-fraction",
+      "expression": "(-2).mb ** 0.5",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operator-boundaries",
+      "id": "pow-overflow",
+      "expression": "2.mb ** 1024",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operator-boundaries",
+      "id": "trunc-negative",
+      "expression": "(-1).mb ~/ 2",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operator-boundaries",
+      "id": "trunc-mixed-reverse",
+      "expression": "1.kb ~/ 1.mib",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "operator-boundaries",
+      "id": "trunc-nan-ratio",
+      "expression": "(0.0/0.0).mb ~/ 1.mb",
+      "intended_outcome": "truncation-error"
+    },
+    {
+      "group": "conversion-bits",
+      "id": "fraction-kib-kb",
+      "expression": "1.2345678901234567.kib.toUnit(\"kb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion-bits",
+      "id": "fraction-kb-kib",
+      "expression": "1.2345678901234567.kb.toUnit(\"kib\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion-bits",
+      "id": "large-pib-b",
+      "expression": "(1.0e308).pib.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion-bits",
+      "id": "small-pib-b",
+      "expression": "(1.0e-320).pib.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion-bits",
+      "id": "large-int-kb-b",
+      "expression": "9007199254740993.kb.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion-bits",
+      "id": "negative-zero-kb-b",
+      "expression": "(-0.0).kb.toUnit(\"b\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "conversion-bits",
+      "id": "nan-mb-kb",
+      "expression": "(0.0/0.0).mb.toUnit(\"kb\")",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "same-unit",
+      "expression": "1.mb == 1.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "cross-unit",
+      "expression": "1.mb == 1000.kb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "cross-unit-reverse",
+      "expression": "1000.kb == 1.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "different",
+      "expression": "1.mb != 2.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "nan-self",
+      "expression": "nanSize == nanSize",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "nan-distinct",
+      "expression": "(0.0/0.0).mb == (0.0/0.0).mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "zero-equality",
+      "expression": "(-0.0).mb == 0.0.mb",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "set-equal",
+      "expression": "Set(1.mb,1000.kb).length",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "set-different",
+      "expression": "Set(1.mb,1.mib).length",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "set-nan-self",
+      "expression": "Set(nanSize,nanSize).length",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "set-nan-distinct",
+      "expression": "Set((0.0/0.0).mb,(0.0/0.0).mb).length",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "set-zero",
+      "expression": "Set((-0.0).mb,0.0.mb).length",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "map-equal",
+      "expression": "Map(1.mb,\"first\",1000.kb,\"second\").length",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "map-nan-self",
+      "expression": "Map(nanSize,1,nanSize,2).length",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "list-equality",
+      "expression": "List(1.mb,2.kb) == List(1000.kb,2.kb)",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "equality-keys",
+      "id": "typed-object-equality",
+      "expression": "new Dynamic { x = 1.mb } == new Dynamic { x = 1000.kb }",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "class",
+      "expression": "1.mb.getClass().simpleName",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "is-datasize",
+      "expression": "1.mb is DataSize",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "is-any",
+      "expression": "1.mb is Any",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "is-number",
+      "expression": "1.mb is Number",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "is-typed",
+      "expression": "1.mb is Typed",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "as-datasize",
+      "expression": "1.mb as DataSize",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "as-number",
+      "expression": "1.mb as Number",
+      "intended_outcome": "type-error"
+    },
+    {
+      "group": "types-defaults",
+      "id": "nullable",
+      "expression": "1.mb is DataSize?",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "union",
+      "expression": "1.mb is DataSize|String",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "unit-valid",
+      "expression": "new UnitHolder {}.x",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "unit-invalid",
+      "expression": "new UnitHolder { x = \"MB\" }.x",
+      "intended_outcome": "type-error"
+    },
+    {
+      "group": "types-defaults",
+      "id": "typed-property",
+      "expression": "new SizeHolder {}.x",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "typed-property-wrong",
+      "expression": "new SizeHolder { x = 1 }.x",
+      "intended_outcome": "type-error"
+    },
+    {
+      "group": "types-defaults",
+      "id": "typed-default-missing",
+      "expression": "new RequiredSize {}.x",
+      "intended_outcome": "undefined-member"
+    },
+    {
+      "group": "types-defaults",
+      "id": "typed-default-null",
+      "expression": "new SizeHolder { x = null }.x",
+      "intended_outcome": "type-error"
+    },
+    {
+      "group": "types-defaults",
+      "id": "typed-method",
+      "expression": "useDataSize(1.mb)",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "typed-method-wrong",
+      "expression": "useDataSize(1)",
+      "intended_outcome": "type-error"
+    },
+    {
+      "group": "types-defaults",
+      "id": "alias",
+      "expression": "(1.mb is DataSizeAlias)",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "types-defaults",
+      "id": "bytes-size",
+      "expression": "Bytes(1,2,3).size",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "renderers",
+      "id": "to-string",
+      "expression": "1.mb.toString()",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "renderers",
+      "id": "interpolation",
+      "expression": "\"value=\\(1.25.mib)\"",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "renderers",
+      "id": "pcf",
+      "expression": "new PcfRenderer {}.renderValue(1.25.mib)",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "renderers",
+      "id": "pcf-converter",
+      "expression": "new PcfRenderer { converters { [DataSize] = (it) -> \"converted\" } }.renderValue(1.mb)",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "renderers",
+      "id": "pcf-any-converter",
+      "expression": "new PcfRenderer { converters { [Any] = (it) -> \"any\" } }.renderValue(1.mb)",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "renderers",
+      "id": "json-unsupported",
+      "expression": "new JsonRenderer {}.renderValue(1.mb)",
+      "intended_outcome": "renderer-error"
+    },
+    {
+      "group": "renderers",
+      "id": "json-converter",
+      "expression": "new JsonRenderer { converters { [DataSize] = (it) -> it.value } }.renderValue(1.mb)",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "renderers",
+      "id": "pcf-document-top",
+      "expression": "new PcfRenderer {}.renderDocument(1.mb)",
+      "intended_outcome": "renderer-error"
+    },
+    {
+      "group": "errors",
+      "id": "invalid-to-unit",
+      "expression": "1.mb.toUnit(\"bogus\")",
+      "intended_outcome": "type-error"
+    },
+    {
+      "group": "errors",
+      "id": "invalid-to-data-size",
+      "expression": "1.toDataSize(\"bogus\")",
+      "intended_outcome": "type-error"
+    },
+    {
+      "group": "errors",
+      "id": "wrong-to-unit-type",
+      "expression": "1.mb.toUnit(1)",
+      "intended_outcome": "type-error"
+    },
+    {
+      "group": "errors",
+      "id": "wrong-between-type",
+      "expression": "1.mb.isBetween(0.mb,\"bad\")",
+      "intended_outcome": "type-error"
+    },
+    {
+      "group": "errors",
+      "id": "wrong-add",
+      "expression": "1.mb + 1",
+      "intended_outcome": "invalid-operator-or-call"
+    },
+    {
+      "group": "errors",
+      "id": "wrong-multiply",
+      "expression": "1.mb * 1.mb",
+      "intended_outcome": "invalid-operator-or-call"
+    },
+    {
+      "group": "errors",
+      "id": "wrong-divide",
+      "expression": "1 / 1.mb",
+      "intended_outcome": "invalid-operator-or-call"
+    },
+    {
+      "group": "errors",
+      "id": "wrong-remainder",
+      "expression": "1.mb % 1.mb",
+      "intended_outcome": "invalid-operator-or-call"
+    },
+    {
+      "group": "errors",
+      "id": "division-by-zero",
+      "expression": "1.mb / 0",
+      "intended_outcome": "ordinary-value"
+    },
+    {
+      "group": "errors",
+      "id": "trunc-divide-by-zero",
+      "expression": "1.mb ~/ 0",
+      "intended_outcome": "truncation-error"
+    },
+    {
+      "group": "errors",
+      "id": "trunc-ratio-by-zero",
+      "expression": "1.mb ~/ 0.mb",
+      "intended_outcome": "truncation-error"
+    },
+    {
+      "group": "errors",
+      "id": "too-large-trunc",
+      "expression": "(1.0e308).mb ~/ 1.b",
+      "intended_outcome": "truncation-error"
+    },
+    {
+      "group": "errors",
+      "id": "nan-trunc",
+      "expression": "(0.0/0.0).mb ~/ 1",
+      "intended_outcome": "truncation-error"
+    },
+    {
+      "group": "errors",
+      "id": "too-many-arguments",
+      "expression": "1.mb.toUnit(\"kb\",\"mb\")",
+      "intended_outcome": "invalid-operator-or-call"
+    }
+  ],
+  "classification_scope": "Authored semantic intent, not generated expected output bytes; actual Java statuses remain separately recorded."
+}

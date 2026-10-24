@@ -1,0 +1,255 @@
+int-b	7.b
+float-b	7.25.b
+negative-b	(-3).b
+to-data-size-b	7.toDataSize("b")
+value-b	7.25.b.value
+unit-b	7.25.b.unit
+binary-b	1.b.isBinaryUnit
+decimal-b	1.b.isDecimalUnit
+unit-b-to-b	1.b.toUnit("b")
+b-to-unit-b	1.b.toUnit("b")
+b-to-binary	1.b.toBinaryUnit()
+b-to-decimal	1.b.toDecimalUnit()
+int-kb	7.kb
+float-kb	7.25.kb
+negative-kb	(-3).kb
+to-data-size-kb	7.toDataSize("kb")
+value-kb	7.25.kb.value
+unit-kb	7.25.kb.unit
+binary-kb	1.kb.isBinaryUnit
+decimal-kb	1.kb.isDecimalUnit
+unit-kb-to-b	1.kb.toUnit("b")
+b-to-unit-kb	1.b.toUnit("kb")
+kb-to-binary	1.kb.toBinaryUnit()
+kb-to-decimal	1.kb.toDecimalUnit()
+int-kib	7.kib
+float-kib	7.25.kib
+negative-kib	(-3).kib
+to-data-size-kib	7.toDataSize("kib")
+value-kib	7.25.kib.value
+unit-kib	7.25.kib.unit
+binary-kib	1.kib.isBinaryUnit
+decimal-kib	1.kib.isDecimalUnit
+unit-kib-to-b	1.kib.toUnit("b")
+b-to-unit-kib	1.b.toUnit("kib")
+kib-to-binary	1.kib.toBinaryUnit()
+kib-to-decimal	1.kib.toDecimalUnit()
+int-mb	7.mb
+float-mb	7.25.mb
+negative-mb	(-3).mb
+to-data-size-mb	7.toDataSize("mb")
+value-mb	7.25.mb.value
+unit-mb	7.25.mb.unit
+binary-mb	1.mb.isBinaryUnit
+decimal-mb	1.mb.isDecimalUnit
+unit-mb-to-b	1.mb.toUnit("b")
+b-to-unit-mb	1.b.toUnit("mb")
+mb-to-binary	1.mb.toBinaryUnit()
+mb-to-decimal	1.mb.toDecimalUnit()
+int-mib	7.mib
+float-mib	7.25.mib
+negative-mib	(-3).mib
+to-data-size-mib	7.toDataSize("mib")
+value-mib	7.25.mib.value
+unit-mib	7.25.mib.unit
+binary-mib	1.mib.isBinaryUnit
+decimal-mib	1.mib.isDecimalUnit
+unit-mib-to-b	1.mib.toUnit("b")
+b-to-unit-mib	1.b.toUnit("mib")
+mib-to-binary	1.mib.toBinaryUnit()
+mib-to-decimal	1.mib.toDecimalUnit()
+int-gb	7.gb
+float-gb	7.25.gb
+negative-gb	(-3).gb
+to-data-size-gb	7.toDataSize("gb")
+value-gb	7.25.gb.value
+unit-gb	7.25.gb.unit
+binary-gb	1.gb.isBinaryUnit
+decimal-gb	1.gb.isDecimalUnit
+unit-gb-to-b	1.gb.toUnit("b")
+b-to-unit-gb	1.b.toUnit("gb")
+gb-to-binary	1.gb.toBinaryUnit()
+gb-to-decimal	1.gb.toDecimalUnit()
+int-gib	7.gib
+float-gib	7.25.gib
+negative-gib	(-3).gib
+to-data-size-gib	7.toDataSize("gib")
+value-gib	7.25.gib.value
+unit-gib	7.25.gib.unit
+binary-gib	1.gib.isBinaryUnit
+decimal-gib	1.gib.isDecimalUnit
+unit-gib-to-b	1.gib.toUnit("b")
+b-to-unit-gib	1.b.toUnit("gib")
+gib-to-binary	1.gib.toBinaryUnit()
+gib-to-decimal	1.gib.toDecimalUnit()
+int-tb	7.tb
+float-tb	7.25.tb
+negative-tb	(-3).tb
+to-data-size-tb	7.toDataSize("tb")
+value-tb	7.25.tb.value
+unit-tb	7.25.tb.unit
+binary-tb	1.tb.isBinaryUnit
+decimal-tb	1.tb.isDecimalUnit
+unit-tb-to-b	1.tb.toUnit("b")
+b-to-unit-tb	1.b.toUnit("tb")
+tb-to-binary	1.tb.toBinaryUnit()
+tb-to-decimal	1.tb.toDecimalUnit()
+int-tib	7.tib
+float-tib	7.25.tib
+negative-tib	(-3).tib
+to-data-size-tib	7.toDataSize("tib")
+value-tib	7.25.tib.value
+unit-tib	7.25.tib.unit
+binary-tib	1.tib.isBinaryUnit
+decimal-tib	1.tib.isDecimalUnit
+unit-tib-to-b	1.tib.toUnit("b")
+b-to-unit-tib	1.b.toUnit("tib")
+tib-to-binary	1.tib.toBinaryUnit()
+tib-to-decimal	1.tib.toDecimalUnit()
+int-pb	7.pb
+float-pb	7.25.pb
+negative-pb	(-3).pb
+to-data-size-pb	7.toDataSize("pb")
+value-pb	7.25.pb.value
+unit-pb	7.25.pb.unit
+binary-pb	1.pb.isBinaryUnit
+decimal-pb	1.pb.isDecimalUnit
+unit-pb-to-b	1.pb.toUnit("b")
+b-to-unit-pb	1.b.toUnit("pb")
+pb-to-binary	1.pb.toBinaryUnit()
+pb-to-decimal	1.pb.toDecimalUnit()
+int-pib	7.pib
+float-pib	7.25.pib
+negative-pib	(-3).pib
+to-data-size-pib	7.toDataSize("pib")
+value-pib	7.25.pib.value
+unit-pib	7.25.pib.unit
+binary-pib	1.pib.isBinaryUnit
+decimal-pib	1.pib.isDecimalUnit
+unit-pib-to-b	1.pib.toUnit("b")
+b-to-unit-pib	1.b.toUnit("pib")
+pib-to-binary	1.pib.toBinaryUnit()
+pib-to-decimal	1.pib.toDecimalUnit()
+large-int	9007199254740993.b
+max-int	9223372036854775807.b
+min-int	(-9223372036854775808).b
+positive-zero	0.0.mb
+negative-zero	(-0.0).mb
+positive-infinity	(1.0 / 0.0).mb
+negative-infinity	(-1.0 / 0.0).mb
+nan	(0.0 / 0.0).mb
+subnormal	(1.0e-320).pib
+max-double	(1.0e308).pib
+very-small	(1.0e-300).pib
+integer-value	4.0.mb.value
+negative-zero-value	(-0.0).mb.value
+large-value	(1.0e100).mb.value
+nan-value	(0.0/0.0).mb.value
+mixed-decimal-binary	1.mib.toUnit("mb")
+roundtrip	1.pib.toUnit("b").toUnit("pib")
+positive-zero-predicate	0.0.mb.isPositive
+negative-zero-predicate	(-0.0).mb.isPositive
+nan-predicate	(0.0/0.0).mb.isPositive
+is-between-inclusive	3.kb.isBetween(2000.b,3000.b)
+is-between-reversed	3.kb.isBetween(4.kb,2.kb)
+is-between-mixed	1.mib.isBetween(1000.kb,2.mb)
+add	1.mb + 1.kb
+add-reverse	1.kb + 1.mb
+add-mixed	1.mib + 1.mb
+add-mixed-reverse	1.mb + 1.mib
+subtract	1.mb - 1000.kb
+subtract-reverse	1000.kb - 1.mb
+multiply-int	2.mb * 3
+multiply-int-reverse	3 * 2.mb
+multiply-float	2.mb * 1.25
+multiply-float-reverse	1.25 * 2.mb
+divide-scalar	5.mb / 2
+divide-size	1.mib / 1.kb
+divide-size-reverse	1.kb / 1.mib
+int-divide-scalar	5.mb ~/ 2
+int-divide-size	5.mb ~/ 2.mb
+int-divide-mixed	1.mib ~/ 1.kb
+remainder	5.mb % 2
+power-int	2.mb ** 3
+power-float	2.mb ** 0.5
+unary-minus	-2.mb
+less-mixed	1.mb < 1.mib
+less-reverse	1.mib < 1.mb
+le-equal	1.mb <= 1000.kb
+greater	2.kb > 1999.b
+ge	1.mib >= 1.mb
+nan-less	(0.0/0.0).mb < 1.mb
+nan-greater	(0.0/0.0).mb > 1.mb
+zero-order	(-0.0).mb < 0.0.mb
+pow-neg-zero	(-0.0).mb ** 3
+pow-negative-exponent	2.mb ** -1
+pow-nan-zero	(0.0/0.0).mb ** 0
+pow-negative-fraction	(-2).mb ** 0.5
+pow-overflow	2.mb ** 1024
+trunc-negative	(-1).mb ~/ 2
+trunc-mixed-reverse	1.kb ~/ 1.mib
+trunc-nan-ratio	(0.0/0.0).mb ~/ 1.mb
+fraction-kib-kb	1.2345678901234567.kib.toUnit("kb")
+fraction-kb-kib	1.2345678901234567.kb.toUnit("kib")
+large-pib-b	(1.0e308).pib.toUnit("b")
+small-pib-b	(1.0e-320).pib.toUnit("b")
+large-int-kb-b	9007199254740993.kb.toUnit("b")
+negative-zero-kb-b	(-0.0).kb.toUnit("b")
+nan-mb-kb	(0.0/0.0).mb.toUnit("kb")
+same-unit	1.mb == 1.mb
+cross-unit	1.mb == 1000.kb
+cross-unit-reverse	1000.kb == 1.mb
+different	1.mb != 2.mb
+nan-self	nanSize == nanSize
+nan-distinct	(0.0/0.0).mb == (0.0/0.0).mb
+zero-equality	(-0.0).mb == 0.0.mb
+set-equal	Set(1.mb,1000.kb).length
+set-different	Set(1.mb,1.mib).length
+set-nan-self	Set(nanSize,nanSize).length
+set-nan-distinct	Set((0.0/0.0).mb,(0.0/0.0).mb).length
+set-zero	Set((-0.0).mb,0.0.mb).length
+map-equal	Map(1.mb,"first",1000.kb,"second").length
+map-nan-self	Map(nanSize,1,nanSize,2).length
+list-equality	List(1.mb,2.kb) == List(1000.kb,2.kb)
+typed-object-equality	new Dynamic { x = 1.mb } == new Dynamic { x = 1000.kb }
+class	1.mb.getClass().simpleName
+is-datasize	1.mb is DataSize
+is-any	1.mb is Any
+is-number	1.mb is Number
+is-typed	1.mb is Typed
+as-datasize	1.mb as DataSize
+as-number	1.mb as Number
+nullable	1.mb is DataSize?
+union	1.mb is DataSize|String
+unit-valid	new UnitHolder {}.x
+unit-invalid	new UnitHolder { x = "MB" }.x
+typed-property	new SizeHolder {}.x
+typed-property-wrong	new SizeHolder { x = 1 }.x
+typed-default-missing	new RequiredSize {}.x
+typed-default-null	new SizeHolder { x = null }.x
+typed-method	useDataSize(1.mb)
+typed-method-wrong	useDataSize(1)
+alias	(1.mb is DataSizeAlias)
+bytes-size	Bytes(1,2,3).size
+to-string	1.mb.toString()
+interpolation	"value=\(1.25.mib)"
+pcf	new PcfRenderer {}.renderValue(1.25.mib)
+pcf-converter	new PcfRenderer { converters { [DataSize] = (it) -> "converted" } }.renderValue(1.mb)
+pcf-any-converter	new PcfRenderer { converters { [Any] = (it) -> "any" } }.renderValue(1.mb)
+json-unsupported	new JsonRenderer {}.renderValue(1.mb)
+json-converter	new JsonRenderer { converters { [DataSize] = (it) -> it.value } }.renderValue(1.mb)
+pcf-document-top	new PcfRenderer {}.renderDocument(1.mb)
+invalid-to-unit	1.mb.toUnit("bogus")
+invalid-to-data-size	1.toDataSize("bogus")
+wrong-to-unit-type	1.mb.toUnit(1)
+wrong-between-type	1.mb.isBetween(0.mb,"bad")
+wrong-add	1.mb + 1
+wrong-multiply	1.mb * 1.mb
+wrong-divide	1 / 1.mb
+wrong-remainder	1.mb % 1.mb
+division-by-zero	1.mb / 0
+trunc-divide-by-zero	1.mb ~/ 0
+trunc-ratio-by-zero	1.mb ~/ 0.mb
+too-large-trunc	(1.0e308).mb ~/ 1.b
+nan-trunc	(0.0/0.0).mb ~/ 1
+too-many-arguments	1.mb.toUnit("kb","mb")
