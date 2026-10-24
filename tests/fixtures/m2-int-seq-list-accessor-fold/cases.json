@@ -1,0 +1,399 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage61/list-accessor-fold.pkl",
+  "boundary": "string",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "empty-first",
+      "group": "accessor",
+      "expression": "List().first",
+      "mode": "string"
+    },
+    {
+      "id": "empty-first-or-null",
+      "group": "accessor",
+      "expression": "List().firstOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "empty-last",
+      "group": "accessor",
+      "expression": "List().last",
+      "mode": "string"
+    },
+    {
+      "id": "empty-last-or-null",
+      "group": "accessor",
+      "expression": "List().lastOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "single-first",
+      "group": "accessor",
+      "expression": "List(7).first",
+      "mode": "string"
+    },
+    {
+      "id": "single-first-or-null",
+      "group": "accessor",
+      "expression": "List(7).firstOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "single-last",
+      "group": "accessor",
+      "expression": "List(7).last",
+      "mode": "string"
+    },
+    {
+      "id": "single-last-or-null",
+      "group": "accessor",
+      "expression": "List(7).lastOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "many-first",
+      "group": "accessor",
+      "expression": "List(1,2,3).first",
+      "mode": "string"
+    },
+    {
+      "id": "many-first-or-null",
+      "group": "accessor",
+      "expression": "List(1,2,3).firstOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "many-last",
+      "group": "accessor",
+      "expression": "List(1,2,3).last",
+      "mode": "string"
+    },
+    {
+      "id": "many-last-or-null",
+      "group": "accessor",
+      "expression": "List(1,2,3).lastOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "null-first",
+      "group": "accessor",
+      "expression": "List(null).first",
+      "mode": "string"
+    },
+    {
+      "id": "null-first-or-null",
+      "group": "accessor",
+      "expression": "List(null).firstOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "null-last",
+      "group": "accessor",
+      "expression": "List(null).last",
+      "mode": "string"
+    },
+    {
+      "id": "null-last-or-null",
+      "group": "accessor",
+      "expression": "List(null).lastOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "mixed-first-null",
+      "group": "accessor",
+      "expression": "List(null,1).first",
+      "mode": "string"
+    },
+    {
+      "id": "mixed-last-value",
+      "group": "accessor",
+      "expression": "List(null,1).last",
+      "mode": "string"
+    },
+    {
+      "id": "mixed-first-value",
+      "group": "accessor",
+      "expression": "List(1,null).first",
+      "mode": "string"
+    },
+    {
+      "id": "mixed-last-null",
+      "group": "accessor",
+      "expression": "List(1,null).last",
+      "mode": "string"
+    },
+    {
+      "id": "mixed-first-or-null",
+      "group": "accessor",
+      "expression": "List(null,1).firstOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "mixed-last-or-null",
+      "group": "accessor",
+      "expression": "List(1,null).lastOrNull",
+      "mode": "string"
+    },
+    {
+      "id": "lazy-first-skipped",
+      "group": "lazy-accessor",
+      "expression": "List(new Item { value = throw(\"lazy-first\") },new Item { value = 7 }).last.value",
+      "mode": "string"
+    },
+    {
+      "id": "lazy-first-forced",
+      "group": "lazy-accessor",
+      "expression": "List(new Item { value = throw(\"lazy-first\") },new Item { value = 7 }).first.value",
+      "mode": "string"
+    },
+    {
+      "id": "lazy-first-or-null-forced",
+      "group": "lazy-accessor",
+      "expression": "List(new Item { value = throw(\"lazy-first\") }).firstOrNull.value",
+      "mode": "string"
+    },
+    {
+      "id": "lazy-last-skipped",
+      "group": "lazy-accessor",
+      "expression": "List(new Item { value = 7 },new Item { value = throw(\"lazy-last\") }).first.value",
+      "mode": "string"
+    },
+    {
+      "id": "lazy-last-forced",
+      "group": "lazy-accessor",
+      "expression": "List(new Item { value = 7 },new Item { value = throw(\"lazy-last\") }).last.value",
+      "mode": "string"
+    },
+    {
+      "id": "lazy-last-or-null-forced",
+      "group": "lazy-accessor",
+      "expression": "List(new Item { value = throw(\"lazy-last\") }).lastOrNull.value",
+      "mode": "string"
+    },
+    {
+      "id": "first-call",
+      "group": "accessor-diagnostic",
+      "expression": "List(1).first()",
+      "mode": "string"
+    },
+    {
+      "id": "first-or-null-call",
+      "group": "accessor-diagnostic",
+      "expression": "List(1).firstOrNull()",
+      "mode": "string"
+    },
+    {
+      "id": "last-call",
+      "group": "accessor-diagnostic",
+      "expression": "List(1).last()",
+      "mode": "string"
+    },
+    {
+      "id": "last-or-null-call",
+      "group": "accessor-diagnostic",
+      "expression": "List(1).lastOrNull()",
+      "mode": "string"
+    },
+    {
+      "id": "first-call-empty",
+      "group": "accessor-diagnostic",
+      "expression": "List().first()",
+      "mode": "string"
+    },
+    {
+      "id": "last-call-empty",
+      "group": "accessor-diagnostic",
+      "expression": "List().last()",
+      "mode": "string"
+    },
+    {
+      "id": "fold-empty-int",
+      "group": "fold-value",
+      "expression": "List().fold(17,(acc,x)->acc+x)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-empty-list",
+      "group": "fold-value",
+      "expression": "List().fold(List(9),(acc,x)->acc.add(x))",
+      "mode": "string"
+    },
+    {
+      "id": "fold-empty-null",
+      "group": "fold-value",
+      "expression": "List().fold(null,(acc,x)->x)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-empty-object",
+      "group": "fold-value",
+      "expression": "List().fold(new Item { value = 5 },(acc,x)->acc).value",
+      "mode": "string"
+    },
+    {
+      "id": "fold-single-sum",
+      "group": "fold-value",
+      "expression": "List(7).fold(3,(acc,x)->acc+x)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-many-sum",
+      "group": "fold-value",
+      "expression": "List(1,2,3).fold(0,(acc,x)->acc+x)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-many-order",
+      "group": "fold-value",
+      "expression": "List(1,2,3).fold(0,(acc,x)->acc*10+x)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-list-collect",
+      "group": "fold-value",
+      "expression": "List(1,2,3).fold(List(),(acc,x)->acc.add(x))",
+      "mode": "string"
+    },
+    {
+      "id": "fold-list-initial",
+      "group": "fold-value",
+      "expression": "List(1,2).fold(List(0),(acc,x)->acc.add(x))",
+      "mode": "string"
+    },
+    {
+      "id": "fold-change-acc-type",
+      "group": "fold-value",
+      "expression": "List(1,2).fold(null,(acc,x)->if (acc == null) x.toString() else acc + x.toString())",
+      "mode": "string"
+    },
+    {
+      "id": "fold-nested",
+      "group": "fold-value",
+      "expression": "List(List(1,2),List(3)).fold(List(),(acc,x)->x.fold(acc,(inner,y)->inner.add(y)))",
+      "mode": "string"
+    },
+    {
+      "id": "fold-null-element",
+      "group": "fold-value",
+      "expression": "List(null,2).fold(0,(acc,x)->if (x == null) acc else acc+x)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-object-values",
+      "group": "fold-value",
+      "expression": "List(new Item { value = 2 },new Item { value = 3 }).fold(0,(acc,x)->acc+x.value)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-lazy-ignore",
+      "group": "fold-value",
+      "expression": "List(new Item { value = throw(\"lazy-value\") }).fold(11,(acc,x)->acc)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-lazy-force",
+      "group": "fold-value",
+      "expression": "List(new Item { value = throw(\"lazy-value\") }).fold(11,(acc,x)->acc+x.value)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-list-add",
+      "group": "fold-value",
+      "expression": "List(1,2).fold(List(),(acc,x)->acc.add(x)).last",
+      "mode": "string"
+    },
+    {
+      "id": "fold-no-args",
+      "group": "fold-diagnostic",
+      "expression": "List().fold()",
+      "mode": "string"
+    },
+    {
+      "id": "fold-one-arg",
+      "group": "fold-diagnostic",
+      "expression": "List().fold(0)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-three-args",
+      "group": "fold-diagnostic",
+      "expression": "List().fold(0,(acc,x)->acc,1)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-empty-wrong-callback-type",
+      "group": "fold-diagnostic",
+      "expression": "List().fold(0,42)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-single-wrong-callback-type",
+      "group": "fold-diagnostic",
+      "expression": "List(1).fold(0,42)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-empty-callback-one-param",
+      "group": "fold-diagnostic",
+      "expression": "List().fold(0,(acc)->acc)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-empty-callback-three-param",
+      "group": "fold-diagnostic",
+      "expression": "List().fold(0,(acc,x,y)->acc)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-single-callback-one-param",
+      "group": "fold-diagnostic",
+      "expression": "List(1).fold(0,(acc)->acc)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-initial-throw",
+      "group": "fold-diagnostic",
+      "expression": "List().fold(throw(\"initial-error\"),(acc,x)->acc)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-callback-arg-throw",
+      "group": "fold-diagnostic",
+      "expression": "List().fold(0,throw(\"operator-error\"))",
+      "mode": "string"
+    },
+    {
+      "id": "fold-first-callback-throw",
+      "group": "fold-diagnostic",
+      "expression": "List(1,2).fold(0,(acc,x)->throw(\"first-callback\"))",
+      "mode": "string"
+    },
+    {
+      "id": "fold-callback-before-lazy",
+      "group": "fold-diagnostic",
+      "expression": "List(new Item { value = 1 },new Item { value = throw(\"later-value\") }).fold(0,(acc,x)->throw(\"first-callback\"))",
+      "mode": "string"
+    },
+    {
+      "id": "fold-lazy-after-first",
+      "group": "fold-diagnostic",
+      "expression": "List(new Item { value = 1 },new Item { value = throw(\"later-value\") }).fold(0,(acc,x)->acc+x.value)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-list-before-initial",
+      "group": "fold-diagnostic",
+      "expression": "List(throw(\"list-error\")).fold(throw(\"initial-error\"),(acc,x)->acc)",
+      "mode": "string"
+    },
+    {
+      "id": "fold-initial-before-operator",
+      "group": "fold-diagnostic",
+      "expression": "List().fold(throw(\"initial-error\"),throw(\"operator-error\"))",
+      "mode": "string"
+    }
+  ]
+}

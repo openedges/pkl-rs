@@ -1,0 +1,65 @@
+string	empty-first	List().first
+string	empty-first-or-null	List().firstOrNull
+string	empty-last	List().last
+string	empty-last-or-null	List().lastOrNull
+string	single-first	List(7).first
+string	single-first-or-null	List(7).firstOrNull
+string	single-last	List(7).last
+string	single-last-or-null	List(7).lastOrNull
+string	many-first	List(1,2,3).first
+string	many-first-or-null	List(1,2,3).firstOrNull
+string	many-last	List(1,2,3).last
+string	many-last-or-null	List(1,2,3).lastOrNull
+string	null-first	List(null).first
+string	null-first-or-null	List(null).firstOrNull
+string	null-last	List(null).last
+string	null-last-or-null	List(null).lastOrNull
+string	mixed-first-null	List(null,1).first
+string	mixed-last-value	List(null,1).last
+string	mixed-first-value	List(1,null).first
+string	mixed-last-null	List(1,null).last
+string	mixed-first-or-null	List(null,1).firstOrNull
+string	mixed-last-or-null	List(1,null).lastOrNull
+string	lazy-first-skipped	List(new Item { value = throw("lazy-first") },new Item { value = 7 }).last.value
+string	lazy-first-forced	List(new Item { value = throw("lazy-first") },new Item { value = 7 }).first.value
+string	lazy-first-or-null-forced	List(new Item { value = throw("lazy-first") }).firstOrNull.value
+string	lazy-last-skipped	List(new Item { value = 7 },new Item { value = throw("lazy-last") }).first.value
+string	lazy-last-forced	List(new Item { value = 7 },new Item { value = throw("lazy-last") }).last.value
+string	lazy-last-or-null-forced	List(new Item { value = throw("lazy-last") }).lastOrNull.value
+string	first-call	List(1).first()
+string	first-or-null-call	List(1).firstOrNull()
+string	last-call	List(1).last()
+string	last-or-null-call	List(1).lastOrNull()
+string	first-call-empty	List().first()
+string	last-call-empty	List().last()
+string	fold-empty-int	List().fold(17,(acc,x)->acc+x)
+string	fold-empty-list	List().fold(List(9),(acc,x)->acc.add(x))
+string	fold-empty-null	List().fold(null,(acc,x)->x)
+string	fold-empty-object	List().fold(new Item { value = 5 },(acc,x)->acc).value
+string	fold-single-sum	List(7).fold(3,(acc,x)->acc+x)
+string	fold-many-sum	List(1,2,3).fold(0,(acc,x)->acc+x)
+string	fold-many-order	List(1,2,3).fold(0,(acc,x)->acc*10+x)
+string	fold-list-collect	List(1,2,3).fold(List(),(acc,x)->acc.add(x))
+string	fold-list-initial	List(1,2).fold(List(0),(acc,x)->acc.add(x))
+string	fold-change-acc-type	List(1,2).fold(null,(acc,x)->if (acc == null) x.toString() else acc + x.toString())
+string	fold-nested	List(List(1,2),List(3)).fold(List(),(acc,x)->x.fold(acc,(inner,y)->inner.add(y)))
+string	fold-null-element	List(null,2).fold(0,(acc,x)->if (x == null) acc else acc+x)
+string	fold-object-values	List(new Item { value = 2 },new Item { value = 3 }).fold(0,(acc,x)->acc+x.value)
+string	fold-lazy-ignore	List(new Item { value = throw("lazy-value") }).fold(11,(acc,x)->acc)
+string	fold-lazy-force	List(new Item { value = throw("lazy-value") }).fold(11,(acc,x)->acc+x.value)
+string	fold-list-add	List(1,2).fold(List(),(acc,x)->acc.add(x)).last
+string	fold-no-args	List().fold()
+string	fold-one-arg	List().fold(0)
+string	fold-three-args	List().fold(0,(acc,x)->acc,1)
+string	fold-empty-wrong-callback-type	List().fold(0,42)
+string	fold-single-wrong-callback-type	List(1).fold(0,42)
+string	fold-empty-callback-one-param	List().fold(0,(acc)->acc)
+string	fold-empty-callback-three-param	List().fold(0,(acc,x,y)->acc)
+string	fold-single-callback-one-param	List(1).fold(0,(acc)->acc)
+string	fold-initial-throw	List().fold(throw("initial-error"),(acc,x)->acc)
+string	fold-callback-arg-throw	List().fold(0,throw("operator-error"))
+string	fold-first-callback-throw	List(1,2).fold(0,(acc,x)->throw("first-callback"))
+string	fold-callback-before-lazy	List(new Item { value = 1 },new Item { value = throw("later-value") }).fold(0,(acc,x)->throw("first-callback"))
+string	fold-lazy-after-first	List(new Item { value = 1 },new Item { value = throw("later-value") }).fold(0,(acc,x)->acc+x.value)
+string	fold-list-before-initial	List(throw("list-error")).fold(throw("initial-error"),(acc,x)->acc)
+string	fold-initial-before-operator	List().fold(throw("initial-error"),throw("operator-error"))

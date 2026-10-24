@@ -1,0 +1,17 @@
+{
+  "archive_sha256": "e6ce4f1ba66f6b8cc241fd768309862dadc449a5b1652cc31d8d61e1ebebb90c",
+  "capture": "stage61-intseq-list-accessor-fold-04",
+  "fileset_sha256": "1eddaeaf4fcf6572de3174642e5afb15fb82f3c71d66cc20a75ed0ce0a97b027",
+  "input_sha256": {
+    "IntSeqValuesOracle.java": "fcd4e27282787ca5b7b454d0f0df999805ea7c301b32916962085e6257755d6d",
+    "audit.json": "2a1a3041d364859a29efaa488e4808d54650cfcbb7f0f46fb58cca4552c31836",
+    "cases.json": "ed6822ee9e7c46129a7e86a4451ecd4f446925297cf7da2dd3783e737fea7646",
+    "module.pkl": "6ff7fac0d9a9d5ecd971ec2f3b315e860b71c878d290ce189c58c786097ae350",
+    "provenance.json": "039ed478ebba28371b7df9cc7254463aebbb67cd7b51c7a375e4aa3540330aeb",
+    "queries.tsv": "5f025959aa4d15d872e5a160aa04a358763ebc09fe86f6bb99c6969de91096fa",
+    "run.py": "e2ab1bf5629c5b78efd2b718de8d0b9bce578c59099a691c18fde390d262955f"
+  },
+  "members": 2755,
+  "prefix": "capture-04",
+  "schema": 1
+}

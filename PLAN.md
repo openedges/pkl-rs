@@ -1805,6 +1805,14 @@ Stage 60에서 남은 Bytes·Any의 IntSeq 의존성을 공통 런타임에 구�
 원본 `api/intseq.pkl`의 fold에 필요한 `List.add`도 원래 프로그램을 보존한 채
 공통 List 경로에 구현하고 별도의 Java 관찰로 검증합니다.
 
+첫 [Java 기준](reports/m2/stage61-java-checkpoint.json)은 `8656c3f`에 커밋·푸시했습니다.
+독립 문자열 237개는 성공 198개·오류 39개이며, export 거부 세 사례와 math 상수
+17개의 문자열·숫자 bit, `List.add` 21개는 서로 다른 경계로 기록했습니다.
+List 검증에서 드러난 `first`·`last`·`firstOrNull`·`lastOrNull`·`fold` 의존성도
+공통 경로에 구현합니다. 별도의 [Java 보충 기준](reports/m2/stage61-list-accessor-fold-java-checkpoint.json)은
+65개 식의 성공 37개·오류 28개를 두 JVM에서 관찰합니다. 앞선 기준과 원본 입력은
+바꾸지 않았으며, source 목록이 불완전했던 초기 관찰도 별도로 보존합니다.
+
 최종 단계에서는 원본 IntSeq·Bytes·Any·Duration 프로그램, 기존 문자열 회귀,
 필수 Rust 검사와 실제 native·Node·Chromium을 실행합니다. 현재 새 Java 기준과
 구현은 진행 중이며, 미실행 검사나 전체 M2 종료 조건을 완료로 표시하지 않습니다.

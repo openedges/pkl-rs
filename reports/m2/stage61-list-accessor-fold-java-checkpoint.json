@@ -1,0 +1,293 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical": {
+    "archive_prefix": "capture-04",
+    "capture": "target/m2/stage61-intseq-list-accessor-fold-04",
+    "fixture": "tests/fixtures/m2-int-seq-list-accessor-fold",
+    "fixture_archive": {
+      "bytes": 102971,
+      "sha256": "e6ce4f1ba66f6b8cc241fd768309862dadc449a5b1652cc31d8d61e1ebebb90c"
+    },
+    "fixture_archive_members": 2755,
+    "fixture_fileset_sha256": "1eddaeaf4fcf6572de3174642e5afb15fb82f3c71d66cc20a75ed0ce0a97b027",
+    "module_uri": "file:///stage61/list-accessor-fold.pkl",
+    "pids": [
+      37614,
+      37617
+    ],
+    "raw_files_per_repetition": 1367,
+    "raw_repetitions_equal": true,
+    "rows": 65,
+    "source_files": 12,
+    "source_stable": true,
+    "statuses_per_session": {
+      "error": 28,
+      "success": 37
+    }
+  },
+  "evidence": {
+    "archive": "reports/m2/stage61-list-accessor-fold-java-evidence.tar.gz",
+    "embedded_manifest_sha256": "b2dfc92b1978685cc1c24b6e071e0600baf045ab89fc3cbe886ff9570049b1c8",
+    "identity": {
+      "bytes": 1137504,
+      "sha256": "68f08c44e9a3909224639666ba3b7d2b031049c2459fd4a76e28201484ce7b83"
+    },
+    "member_hash_readback": true,
+    "members": 8311,
+    "source_before_after_equal": true
+  },
+  "history": {
+    "stage61-intseq-list-accessor-fold-01": {
+      "capture": "target/m2/stage61-intseq-list-accessor-fold-01",
+      "pids": [
+        36940,
+        36941
+      ],
+      "raw_files_per_repetition": 1367,
+      "raw_repetitions_equal": true,
+      "reason_superseded": "Missing pinned fold callback dispatch, inherited empty check and null implementation sources.",
+      "rows": 65,
+      "source_files": 8,
+      "source_stable": true,
+      "statuses_per_session": {
+        "error": 28,
+        "success": 37
+      }
+    },
+    "stage61-intseq-list-accessor-fold-02": {
+      "capture": "target/m2/stage61-intseq-list-accessor-fold-02",
+      "pids": [
+        37281,
+        37284
+      ],
+      "raw_files_per_repetition": 1367,
+      "raw_repetitions_equal": true,
+      "reason_superseded": "Missing pinned inherited empty check and null implementation sources.",
+      "rows": 65,
+      "source_files": 10,
+      "source_stable": true,
+      "statuses_per_session": {
+        "error": 28,
+        "success": 37
+      }
+    },
+    "stage61-intseq-list-accessor-fold-03": {
+      "capture": "target/m2/stage61-intseq-list-accessor-fold-03",
+      "pids": [
+        37488,
+        37490
+      ],
+      "raw_files_per_repetition": 1367,
+      "raw_repetitions_equal": true,
+      "reason_superseded": "Missing pinned null implementation source.",
+      "rows": 65,
+      "source_files": 11,
+      "source_stable": true,
+      "statuses_per_session": {
+        "error": 28,
+        "success": 37
+      }
+    }
+  },
+  "java_runtime": {
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "jdk_executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+    "jdk_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+    "jdk_release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+    "reference_revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "kind": "stage61-list-accessor-fold-java-authority-checkpoint",
+  "limits": [
+    "Java public API string observations only; no Rust candidate pass is claimed.",
+    "Object and accumulator rows show Pkl values, not Java reference identity.",
+    "Original upstream snippet replay, browser, Node, full M2 and performance remain separate."
+  ],
+  "schema": 1,
+  "validation": {
+    "checks": [
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/int_seq_list_accessor_fold_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792843037.651315,
+        "name": "fixture-verifier",
+        "started_epoch": 1792843037.4940941,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 296,
+          "sha256": "9a8e142c680b160f77a93558283cb6a0cefe74f2cce479ba15f1b492bbae54c2"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "tools/int_seq_list_accessor_fold_fixtures.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792843037.8106098,
+        "name": "fixture-verifier-O",
+        "started_epoch": 1792843037.6528351,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 296,
+          "sha256": "9a8e142c680b160f77a93558283cb6a0cefe74f2cce479ba15f1b492bbae54c2"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "tools.tests.test_int_seq_list_accessor_fold_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792843038.155895,
+        "name": "fixture-tests",
+        "started_epoch": 1792843037.812267,
+        "stderr": {
+          "bytes": 1202,
+          "sha256": "875a4409940c569e7b246bf1311b9126393626b0527db34195e9d18d431a91e6"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-O",
+          "-m",
+          "unittest",
+          "tools.tests.test_int_seq_list_accessor_fold_fixtures",
+          "-v"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792843038.488257,
+        "name": "fixture-tests-O",
+        "started_epoch": 1792843038.157428,
+        "stderr": {
+          "bytes": 1202,
+          "sha256": "fad5121f0846bf3e5c35f24e68e52017ae5e0b273eb3f7b1570f3020eb6e3998"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/inventory.py",
+          "--check"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+        "environment": {
+          "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/home",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "NO_COLOR": "1",
+          "PATH": "/bin:/usr/bin",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TERM": "dumb",
+          "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/tmp",
+          "TZ": "UTC"
+        },
+        "exit_code": 0,
+        "finished_epoch": 1792843041.3730009,
+        "name": "source-inventory",
+        "started_epoch": 1792843038.490051,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 926,
+          "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+        }
+      }
+    ],
+    "copied_sources": 29,
+    "directory": "target/m2/stage61-list-accessor-fold-java-validation-01",
+    "record": "target/m2/stage61-list-accessor-fold-java-validation-01/validation.json",
+    "record_identity": {
+      "bytes": 14993,
+      "sha256": "3f3ad171abd022df506fbb52d49a0f4b6244963594da40f07cac30329c7289c3"
+    },
+    "source_stable": true
+  }
+}
