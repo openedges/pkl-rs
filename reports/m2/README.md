@@ -34,6 +34,16 @@ workstreams remain open. The selected results do not establish full M2, product
 API, platform release, or performance parity. The [implementation checkpoint](stage76-78-implementation-checkpoint.json) retains the failed
 attempts and exact source/artifact identities.
 
+The [source binding](stage76-78-source-binding.json) connects the recorded
+178,382 input paths and a separate 72-input appendix to implementation commit
+`7ce4769`, pinned references, or preserved pre-change copies. Eight
+documentation/tool transitions are recorded separately. The first binding
+attempt failed with insufficient disk space; a fresh read-only completion
+verified the retained maps and exited zero. This adds no compatibility passes
+and does not claim that the recorded maps cover every compiler input.
+The [independent publication review](stage76-78-source-binding-review.json)
+checks the published maps, archive payloads, and separate completion records.
+
 ## Stage76–78 isolated candidate validation
 
 Before canonical integration, the isolated candidate completed nine continuation

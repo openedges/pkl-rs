@@ -1,0 +1,165 @@
+{
+  "approved": true,
+  "blockers": [],
+  "cache_archive_Git_or_runtime_mutations": 0,
+  "compatibility_tests_or_compiler_runs_by_review": 0,
+  "complete": true,
+  "execution": {
+    "fresh_completion_exit": 0,
+    "fresh_completion_source_stable": true,
+    "original_ENOSPC_failure_preserved": true,
+    "original_child_exit": "unrecorded",
+    "public_embedded_actual_process_channels_equal_originals": true,
+    "publication_exit": 0,
+    "publication_source_stable": true
+  },
+  "final_transitions": {
+    "count": 8,
+    "old_M1_tools": 2,
+    "old_documents": 6,
+    "validated_preimages_and_final_commit_versions_separate": true
+  },
+  "finished_epoch": 1792963008.700845,
+  "full_archive_readback": {
+    "all_payload_bytes_size_mode_SHA": true,
+    "exact_member_order_and_closure": true,
+    "gzip_EOF_CRC_verified": true,
+    "logical_bytes": 2608929,
+    "materializations": 0,
+    "regular_members": 55,
+    "tar_suffix_zero": true
+  },
+  "implementation_commit": "7ce4769026430c624fe748de334ad8d236496294",
+  "inputs": [
+    {
+      "bytes": 1525,
+      "mode": 420,
+      "path": "target/m2/stage76-78-source-binding-publication-01/handoff.json",
+      "sha256": "ee9fb4417edff812eff9d8a2af66df97a38f1b58ae57b61ae2cb0a7ef855f359"
+    },
+    {
+      "bytes": 14828,
+      "mode": 420,
+      "path": "target/m2/stage76-78-source-binding-publication-01/selection.json",
+      "sha256": "c05e583a29eafa363190786480b1c93ca003e098045d3800abf4b5eceda7d300"
+    },
+    {
+      "bytes": 26409,
+      "mode": 420,
+      "path": "target/m2/stage76-78-source-binding-publication-01/report.json",
+      "sha256": "f1fd022615d93632e78ff4065248dcf12fd2faa913ae7696fa0d1a45efd86b86"
+    },
+    {
+      "bytes": 967,
+      "mode": 420,
+      "path": "target/m2/stage76-78-source-binding-publication-01/execution-01/process.json",
+      "sha256": "ee45d154a705306931fbaffb7c5636a5460af72d266dc9e02affd1e5f0906cbe"
+    },
+    {
+      "bytes": 5607,
+      "mode": 420,
+      "path": "target/m2/stage76-78-implementation-git-binding-completion-01/report.json",
+      "sha256": "4048ee17de1f7ae451613ac02634128e7a5790929dd707d346f873698ca34b17"
+    },
+    {
+      "bytes": 984,
+      "mode": 420,
+      "path": "target/m2/stage76-78-implementation-git-binding-completion-process-01/process.json",
+      "sha256": "6d5dcfe71fb65cd8de1f17855c5e7e6c010bfade27698751bc88501c233f18fa"
+    },
+    {
+      "bytes": 33458,
+      "mode": 420,
+      "path": "reports/m2/stage76-78-source-binding-publication.json",
+      "sha256": "3f81c71b6cb9e96c608cb4bb697b5ac5fce78eb9d2a108e07237a69253d79e38"
+    },
+    {
+      "bytes": 13961,
+      "mode": 420,
+      "path": "target/m2/stage76-78-source-binding-publication-review-01/verify.py",
+      "sha256": "c882d565a7dfbb0497f130b25838b41dacd24c3de3ff6e3d0ebb57470d7bcbf6"
+    }
+  ],
+  "kind": "stage76-78-source-binding-independent-publication-readback",
+  "limits": [
+    "This approves the public source/Git provenance metadata and exact raw evidence archive, not a compatibility rerun or a complete compiler-input-closure claim.",
+    "The 178382-path original map was not retroexpanded. The 72-input meaningful target recheck remains a distinct appendix.",
+    "The original ENOSPC attempt remains incomplete with unknown child exit; only fresh completion and publication have successful terminal receipts.",
+    "Root-owned three document link additions are subsequent metadata and are not relabeled as validated implementation source.",
+    "No new M2/API/platform/performance passes or Stage79-83 canonical integration are claimed."
+  ],
+  "post_binding_document_changes": [
+    {
+      "added_text": "[\uc18c\uc2a4 \uc5f0\uacb0 \uae30\ub85d](reports/m2/stage76-78-source-binding.json)\uc740 \uae30\ub85d\ub41c \uc785\ub825\n178,382\uac1c\uc640 \ubcc4\ub3c4 \uc785\ub825 72\uac1c\ub97c \uad6c\ud604 \ucee4\ubc0b `7ce4769`, \uace0\uc815 \ucc38\uc870 \ub610\ub294 \ubcf4\uc874\ub41c\n\ubcc0\uacbd \uc804 \uc6d0\ubcf8\uc5d0 \uc5f0\uacb0\ud55c\ub2e4. \ubb38\uc11c\u00b7\ub3c4\uad6c \ubcc0\uacbd 8\uac1c\ub294 \ubcc4\ub3c4\ub85c \uae30\ub85d\ud588\ub2e4. \ub514\uc2a4\ud06c \ubd80\uc871\uc73c\ub85c\n\uc2e4\ud328\ud55c \ucd5c\ucd08 \uc2dc\ub3c4\ub97c \ubcf4\uc874\ud558\uace0 \uc0c8 \uc77d\uae30 \uc804\uc6a9 \uac80\uc99d\uc758 \uc885\ub8cc 0\uc744 \uad6c\ubd84\ud55c\ub2e4. \uc774 \uae30\ub85d\uc740\n\ud638\ud658 \ud1b5\uacfc \uc218\ub97c \ub298\ub9ac\uac70\ub098 \uc804\uccb4 \ucef4\ud30c\uc77c \uc785\ub825\uc758 \uc644\uc804\ud55c \ud3ec\uad04\uc744 \uc99d\uba85\ud558\uc9c0 \uc54a\ub294\ub2e4.\n\n",
+      "current": {
+        "bytes": 429829,
+        "mode": 420,
+        "path": "PLAN.md",
+        "sha256": "b5f02175964064bc8b90ef55578a25c31090edb17b162dc3da78f64b02d0e11f"
+      },
+      "path": "PLAN.md"
+    },
+    {
+      "added_text": "\nThe [source binding](../reports/m2/stage76-78-source-binding.json) connects the\nrecorded 178,382 input paths and a separate 72-input appendix to implementation\ncommit `7ce4769`, pinned references, or preserved pre-change copies. Eight\ndocumentation/tool transitions are recorded separately. The first binding\nattempt failed with insufficient disk space; a fresh read-only completion\nverified the retained maps and exited zero. This adds no compatibility passes\nand does not claim that the recorded maps cover every compiler input.\n",
+      "current": {
+        "bytes": 69399,
+        "mode": 420,
+        "path": "docs/m2-language.md",
+        "sha256": "e1f159610baf205407b17bda251f5eeedd676b43940cb674750d50237d8d047d"
+      },
+      "path": "docs/m2-language.md"
+    },
+    {
+      "added_text": "\nThe [source binding](stage76-78-source-binding.json) connects the recorded\n178,382 input paths and a separate 72-input appendix to implementation commit\n`7ce4769`, pinned references, or preserved pre-change copies. Eight\ndocumentation/tool transitions are recorded separately. The first binding\nattempt failed with insufficient disk space; a fresh read-only completion\nverified the retained maps and exited zero. This adds no compatibility passes\nand does not claim that the recorded maps cover every compiler input.\n",
+      "current": {
+        "bytes": 354815,
+        "mode": 420,
+        "path": "reports/m2/README.md",
+        "sha256": "cc1032d47f1cb961f2a38d543f488cd12a3189dc4ce350bcb477defd3b0e915f"
+      },
+      "path": "reports/m2/README.md"
+    }
+  ],
+  "public_archive": {
+    "bytes": 385851,
+    "mode": 420,
+    "path": "reports/m2/stage76-78-source-binding-evidence.tar.gz",
+    "sha256": "219e5e9d31710bfbd318bb49bf9d585e0736b9a625fa6cda542ccb72c10fcf2e"
+  },
+  "public_descriptor": {
+    "bytes": 12654,
+    "mode": 420,
+    "path": "reports/m2/stage76-78-source-binding.json",
+    "sha256": "00d9de95b0775de53b2dddc03c22d49c68b070292cbca8a14f05683dc6b89648"
+  },
+  "public_maps": {
+    "additional72.json.gz": {
+      "bytes": 5746,
+      "mode": 420,
+      "path": "reports/m2/stage76-78-source-binding-additional72.json.gz",
+      "sha256": "c93905b28ee7d6fd4c89479ba96f6aa10027d4bed929cea2ae84b472e4f0cdc4"
+    },
+    "paths.jsonl.gz": {
+      "bytes": 6384076,
+      "mode": 420,
+      "path": "reports/m2/stage76-78-source-binding-paths.jsonl.gz",
+      "sha256": "73d7e998a2e1ebbc57ad565bf48dac3df0f0441825b2bb88ac32502fb0f96506"
+    }
+  },
+  "read_only": true,
+  "source_scope": {
+    "additional_unique": 72,
+    "all_public_rows_match_original_recorded_maps": true,
+    "complete_compiler_closure_claimed": false,
+    "origins": {
+      "base-archive-member": 2,
+      "implementation-blob": 178289,
+      "parent-document-blob": 6,
+      "pinned-reference-blob": 85
+    },
+    "recorded": 178382,
+    "subset": 17774,
+    "total_unique": 178454
+  },
+  "started_epoch": 1792963007.4986172
+}
