@@ -299,6 +299,28 @@
         "tools/reversal_values_oracle.py",
         "tools/tests/test_base_constructor_constraints_fixtures.py"
       ]
+    },
+    {
+      "module_uri": "file:///stage67/string-properties.pkl",
+      "fixture": "tests/fixtures/m2-string-properties",
+      "rows": 146,
+      "repetitions": 2,
+      "validator_module": "string_properties_fixtures",
+      "validator_script": "tools/string_properties_fixtures.py",
+      "archive_prefix": "capture-02",
+      "input_hashes": {
+        "cases.json": "79e5064d943ac38f074e014a3ec516d8ac3835e7d52e1d358c09658a2e96258b",
+        "module.pkl": "809e32ea351d9ef6d60ba10fa7382ae24078c087dbd292958581f0bb624051d2",
+        "queries.tsv": "7082d796c57fa9b4d220957c0f58dbe79ee327a8d57fcd743018de7aa8845eb3"
+      },
+      "tool_sources": [
+        "tools/collection_conversions_fixtures.py",
+        "tools/collection_conversions_oracle.py",
+        "tools/java/CollectionConversionsOracle.java",
+        "tools/string_properties_fixtures.py",
+        "tools/string_properties_oracle.py",
+        "tools/tests/test_string_properties_fixtures.py"
+      ]
     }
   ]
 }

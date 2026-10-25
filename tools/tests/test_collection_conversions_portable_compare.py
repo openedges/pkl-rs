@@ -340,6 +340,10 @@ class PortableCollectionConversionComparisonTests(unittest.TestCase):
              {'success': 20, 'error': 16},
              'repeat-0/000-list/result.stdout.code-units.bin',
              '1'.encode('utf-16-be')),
+            ('file:///stage67/string-properties.pkl', 146,
+             {'success': 117, 'error': 29},
+             'repeat-0/000-empty/result.stdout.code-units.bin',
+             'true'.encode('utf-16-be')),
         ):
             with self.subTest(uri=uri):
                 fixture = compare.ROOT / compare.profiles.PROFILES[uri]['fixture']

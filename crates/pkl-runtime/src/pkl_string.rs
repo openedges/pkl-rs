@@ -133,6 +133,27 @@ impl PklString {
         }
     }
 
+    /// Pinned StringUtils.isBlank tests Unicode White_Space on Java char units.
+    /// Keep its exact 25-unit set independent of Rust and JDK Unicode tables.
+    pub(crate) fn is_blank(&self) -> bool {
+        self.encode_utf16().all(|unit| {
+            matches!(
+                unit,
+                0x0009..=0x000d
+                    | 0x0020
+                    | 0x0085
+                    | 0x00a0
+                    | 0x1680
+                    | 0x2000..=0x200a
+                    | 0x2028
+                    | 0x2029
+                    | 0x202f
+                    | 0x205f
+                    | 0x3000
+            )
+        })
+    }
+
     /// Match StringBuilder.reverse: reverse UTF-16 units, then restore each
     /// reversed surrogate pair. Originally unmatched low/high surrogates can
     /// become a new pair, so reversing twice need not recover malformed input.
@@ -373,5 +394,24 @@ impl PklString {
     }
     pub(crate) fn push_str(&mut self, suffix: &str) {
         *self = self.concat(&suffix.into());
+    }
+}
+
+#[cfg(test)]
+mod string_properties_tests {
+    use super::PklString;
+
+    #[test]
+    fn every_bmp_unit_matches_pinned_java_whitespace() {
+        // Captured from the pinned Java StringUtils, not a Rust Unicode table.
+        // The fixture verifier binds this file to both Java producer sessions.
+        const EXPECTED: &[u8; 8192] = include_bytes!(
+            "../../../tests/fixtures/m2-string-properties/pkl-whitespace-bmp.bitset.bin"
+        );
+        for unit in 0..=u16::MAX {
+            let expected = EXPECTED[usize::from(unit) >> 3] & (1 << (unit & 7)) != 0;
+            let text = PklString::from_utf16(vec![unit]);
+            assert_eq!(text.is_blank(), expected, "UTF-16 unit U+{unit:04X}");
+        }
     }
 }

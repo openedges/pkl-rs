@@ -162,10 +162,11 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             'file:///stage66/reversal-implicit.pkl': 8,
             'file:///stage66/reversal-subscript.pkl': 19,
             'file:///stage66/base-constructors-in-constraints.pkl': 36,
+            'file:///stage67/string-properties.pkl': 146,
         }
         self.assertEqual({uri: profile['rows'] for uri, profile in compare.profiles.PROFILES.items()},
                          expected)
-        self.assertEqual(sum(expected.values()), 1081)
+        self.assertEqual(sum(expected.values()), 1227)
         for uri, rows in expected.items():
             profile = compare.profiles.PROFILES[uri]
             fixture = compare.ROOT / profile['fixture']
@@ -281,6 +282,9 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             ('file:///stage66/base-constructors-in-constraints.pkl', 36,
              {'success': 20, 'error': 16},
              'repeat-0/000-list/result.stdout.code-units.bin'),
+            ('file:///stage67/string-properties.pkl', 146,
+             {'success': 117, 'error': 29},
+             'repeat-0/000-empty/result.stdout.code-units.bin'),
         ):
             with self.subTest(uri=uri):
                 profile = compare.profiles.PROFILES[uri]

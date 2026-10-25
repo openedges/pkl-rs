@@ -1,4 +1,4 @@
-"""Pinned collection conversion, construction, and reversal string profiles."""
+"""Pinned conversion, construction, reversal, and String property profiles."""
 from __future__ import annotations
 
 import importlib
@@ -24,6 +24,7 @@ VALIDATORS = {
     'reversal_implicit_fixtures': 'tools/reversal_implicit_fixtures.py',
     'reversal_subscript_fixtures': 'tools/reversal_subscript_fixtures.py',
     'base_constructor_constraints_fixtures': 'tools/base_constructor_constraints_fixtures.py',
+    'string_properties_fixtures': 'tools/string_properties_fixtures.py',
 }
 PROFILE_TOOL_CLOSURES = {
     'collection_conversions_fixtures': {
@@ -128,6 +129,14 @@ PROFILE_TOOL_CLOSURES = {
         'tools/collection_conversions_fixtures.py',
         'tools/collection_conversions_oracle.py',
     },
+    'string_properties_fixtures': {
+        'tools/string_properties_fixtures.py',
+        'tools/string_properties_oracle.py',
+        'tools/tests/test_string_properties_fixtures.py',
+        'tools/java/CollectionConversionsOracle.java',
+        'tools/collection_conversions_fixtures.py',
+        'tools/collection_conversions_oracle.py',
+    },
 }
 
 
@@ -164,7 +173,8 @@ def load_profiles(path=ROOT / CATALOG):
                          'file:///stage66/reversal-values.pkl',
                          'file:///stage66/reversal-implicit.pkl',
                          'file:///stage66/reversal-subscript.pkl',
-                         'file:///stage66/base-constructors-in-constraints.pkl')) and uri.endswith('.pkl')
+                         'file:///stage66/base-constructors-in-constraints.pkl',
+                         'file:///stage67/string-properties.pkl')) and uri.endswith('.pkl')
                 and type(fixture) is str and fixture.startswith('tests/fixtures/m2-')
                 and '..' not in Path(fixture).parts and fixture not in fixtures
                 and uri not in profiles and type(profile['rows']) is int and profile['rows'] > 0

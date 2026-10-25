@@ -92,6 +92,7 @@ test('separate Java authorities retain distinct input identities and complete se
     ['file:///stage66/reversal-implicit.pkl', 8],
     ['file:///stage66/reversal-subscript.pkl', 19],
     ['file:///stage66/base-constructors-in-constraints.pkl', 36],
+    ['file:///stage67/string-properties.pkl', 146],
   ]);
   assert.equal(CONVERSION_PROFILES.length, sizes.size);
   for (const profile of CONVERSION_PROFILES) {

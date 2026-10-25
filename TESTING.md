@@ -242,6 +242,17 @@ The full gate must fail while required language implementations, mappings,
 adapters, or passing executions are missing. It cannot be replaced with the
 selected-case gate.
 
+Stage67 adds the String property authority (`python3 tools/string_properties_fixtures.py`)
+and a fifteenth collection catalog profile. The current catalog has 1,227
+expressions and requires two complete raw observations per expression on each
+target. Its selected comparisons are separate from the full ready corpus.
+The [Stage67 checkpoint](reports/m2/stage67-implementation-checkpoint.json)
+records 4,416 ready comparisons: 4,142 matches, 128 mismatches, 143 unsupported
+results, two Java oracle errors, and one Rust internal error. Strict full
+verification exits 1 with 1,802 unmet gate entries. Preserve the 111 unready
+cases, inherited scalar regressions, and Any/M1 Regex failures. A successful
+record-only acquisition verifies evidence integrity, not M2 completion.
+
 Stage66 reversal and constructor authorities are four distinct single-module
 string fixtures; union-marker diagnostics use forty separate modules:
 
@@ -253,8 +264,8 @@ python3 tools/base_constructor_constraints_fixtures.py
 python3 tools/union_marker_fixtures.py
 ```
 
-Fixture integrity is separate from candidate compatibility. The shared collection
-catalog contains fourteen profiles and 1,081 expressions; native and portable
+Fixture integrity is separate from candidate compatibility. The Stage66 collection
+catalog snapshot contains fourteen profiles and 1,081 expressions; native and portable
 comparators require two full raw repetitions per profile. The separate
 `tools/union_marker_compare.py` and
 `tools/platform/capture-union-marker-modules.mjs` run each exact diagnostic module

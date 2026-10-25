@@ -251,42 +251,50 @@ pub(crate) fn collection_members(class: &str) -> (Vec<String>, Vec<(String, Stri
     builtin_members(class)
 }
 
-/// Source-derived scalar and collection names, with their declared ancestry.
+/// Source-derived builtin names, with their declared ancestry.
 pub(crate) fn builtin_members(class: &str) -> (Vec<String>, Vec<(String, String, usize)>) {
     type Catalog = std::collections::BTreeMap<String, (Vec<String>, Vec<(String, String, usize)>)>;
     static CATALOG: std::sync::OnceLock<Catalog> = std::sync::OnceLock::new();
     let catalog = CATALOG.get_or_init(|| {
-        let parsed = crate::parser::parse_module(&crate::stdlib_sources::base().text)
-            .expect("pinned base declarations");
         let mut catalog = Catalog::new();
-        for declaration in &parsed.members {
-            let crate::syntax::ExprKind::Class { members, .. } = &declaration.expr.kind else {
-                continue;
-            };
-            let mut properties = Vec::new();
-            let mut methods = Vec::new();
-            for member in members.iter().filter(|member| !member.local) {
-                if let crate::syntax::ExprKind::Function {
-                    parameters,
-                    method: true,
-                    ..
-                } = &member.expr.kind
-                {
-                    let signature = format!(
-                        "{}({})",
-                        member.name,
-                        parameters
-                            .iter()
-                            .map(|p| p.name.as_str())
-                            .collect::<Vec<_>>()
-                            .join(", ")
-                    );
-                    methods.push((member.name.clone(), signature, parameters.len()));
-                } else {
-                    properties.push(member.name.clone());
+        for (prefix, source) in [
+            ("", crate::stdlib_sources::base()),
+            ("pkl.ref#", crate::stdlib_sources::reference()),
+        ] {
+            let parsed =
+                crate::parser::parse_module(&source.text).expect("pinned builtin declarations");
+            for declaration in &parsed.members {
+                let crate::syntax::ExprKind::Class { members, .. } = &declaration.expr.kind else {
+                    continue;
+                };
+                let mut properties = Vec::new();
+                let mut methods = Vec::new();
+                for member in members.iter().filter(|member| !member.local) {
+                    if let crate::syntax::ExprKind::Function {
+                        parameters,
+                        method: true,
+                        ..
+                    } = &member.expr.kind
+                    {
+                        let signature = format!(
+                            "{}({})",
+                            member.name,
+                            parameters
+                                .iter()
+                                .map(|p| p.name.as_str())
+                                .collect::<Vec<_>>()
+                                .join(", ")
+                        );
+                        methods.push((member.name.clone(), signature, parameters.len()));
+                    } else {
+                        properties.push(member.name.clone());
+                    }
                 }
+                catalog.insert(
+                    format!("{prefix}{}", declaration.name),
+                    (properties, methods),
+                );
             }
-            catalog.insert(declaration.name.clone(), (properties, methods));
         }
         catalog
     });
@@ -296,6 +304,7 @@ pub(crate) fn builtin_members(class: &str) -> (Vec<String>, Vec<(String, String,
         "List" | "Set" => &["Any", "Collection"],
         "Int" | "Float" => &["Any", "Number"],
         "String" | "Boolean" | "Null" => &["Any"],
+        "pkl.ref#Reference" => &["Any", "Object", "Typed"],
         _ => &["Any", "Object"],
     };
     for name in parents.iter().copied().chain(std::iter::once(class)) {

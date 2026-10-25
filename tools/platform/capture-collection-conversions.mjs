@@ -31,7 +31,8 @@ export function validateProfileCatalog(catalog) {
     'collection_property_names_fixtures', 'collection_addition_fixtures',
     'set_endpoints_fixtures', 'amendment_construction_fixtures',
     'inferred_new_fixtures', 'reversal_values_fixtures', 'reversal_implicit_fixtures',
-    'reversal_subscript_fixtures', 'base_constructor_constraints_fixtures']);
+    'reversal_subscript_fixtures', 'base_constructor_constraints_fixtures',
+    'string_properties_fixtures']);
   const uris = new Set(), fixtures = new Set();
   for (const profile of catalog.profiles) {
     if (!profile || typeof profile.module_uri !== 'string'
@@ -41,7 +42,8 @@ export function validateProfileCatalog(catalog) {
               'file:///stage65/inferred-new-values.pkl',
               'file:///stage66/reversal-values.pkl', 'file:///stage66/reversal-implicit.pkl',
               'file:///stage66/reversal-subscript.pkl',
-              'file:///stage66/base-constructors-in-constraints.pkl']
+              'file:///stage66/base-constructors-in-constraints.pkl',
+              'file:///stage67/string-properties.pkl']
             .includes(profile.module_uri))
         || uris.has(profile.module_uri) || fixtures.has(profile.fixture)
         || !/^tests\/fixtures\/m2-[a-z-]+$/.test(profile.fixture)
@@ -63,7 +65,8 @@ export function validateProfileCatalog(catalog) {
     if (['collection_addition_fixtures', 'set_endpoints_fixtures',
          'amendment_construction_fixtures', 'reversal_values_fixtures',
          'reversal_implicit_fixtures', 'reversal_subscript_fixtures',
-         'base_constructor_constraints_fixtures'].includes(profile.validator_module))
+         'base_constructor_constraints_fixtures', 'string_properties_fixtures']
+        .includes(profile.validator_module))
       requiredTools.push('tools/collection_conversions_fixtures.py',
         'tools/collection_conversions_oracle.py');
     if (profile.validator_module === 'inferred_new_fixtures') {

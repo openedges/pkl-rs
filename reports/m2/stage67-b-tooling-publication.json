@@ -1,0 +1,1603 @@
+{
+  "archive": {
+    "bytes": 3897332,
+    "full_member_readback_verified": true,
+    "members": 224,
+    "mode": 420,
+    "path": "reports/m2/stage67-b-tooling-evidence.tar.gz",
+    "sha256": "db8a57711a3d3280b047cf55c581045add50779a1ffdc47ff34643b31d422de8"
+  },
+  "base_head": "a497f6fb901c451650ae371762e3dbaebf9eff6d",
+  "candidate_compatibility_passes_claimed": 0,
+  "embedded_manifest_sha256": "1d8234a752b9733868c1a06addbe7eae3ecf00157a3d96c22af9c24ad6a81f5f",
+  "execution_receipt_included": false,
+  "group": "tooling",
+  "kind": "stage67-B-local-evidence-publication",
+  "known_limits": [
+    "15-profile 1227-row selected catalog, 2454 observations per target, is distinct from full4416 original-ready inventory.",
+    "Any two Regex mismatches per portable target and M1 Regex compatibility failures remain literal failures.",
+    "Full4416 record-only acquisition and strict --verify-full are distinct; selected failures must remain failures.",
+    "111 unready full inventory cases and two prior blocked requirements remain outside selected success claims.",
+    "No full M2, full public API, or performance completion is claimed.",
+    "Full4416 has an inherited Reference amendment regression versus earlier Stage47/48; preserve its actual current raw failure and source investigation, with no regression-free claim.",
+    "The full4416 run also revealed set-stage23-constructor-listing-default mismatch; preserve the actual raw status and type-default investigation, with no regression-free claim.",
+    "Finite committed Stage63/62 duplicate recovery05 was terminal and reclaimed about 1.63 GiB; it did not meet a 3 GiB free-space target and did not run compatibility guests.",
+    "Six late scalar nonpasses in full4416 are historical Stage47/48 mismatches (Int32 narrowing\u00d72, unpaired URI\u00d71, malformed HTTP\u00d73), not newly introduced regressions; raw statuses remain nonpasses.",
+    "Recovery06 exhausted the finite Stage61/60 duplicate scope after reclaiming about 821 MiB; its additional 1.5 GiB aim was not met, although measured total free rose above 3 GiB."
+  ],
+  "member_inventory": {
+    "target/m2/stage67-catalog-validation-01/inventory/process.json": {
+      "bytes": 668,
+      "mode": 420,
+      "sha256": "78641f58f983e31d12eb9706522a6cbd2ecd77c57315a911ad8573cd149c107b"
+    },
+    "target/m2/stage67-catalog-validation-01/inventory/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage67-catalog-validation-01/inventory/stdout.bin": {
+      "bytes": 926,
+      "mode": 420,
+      "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+    },
+    "target/m2/stage67-catalog-validation-01/node/process.json": {
+      "bytes": 637,
+      "mode": 420,
+      "sha256": "bb7412ffe04dc52580edacd734282b3665e716aa86587758419febb0e456395e"
+    },
+    "target/m2/stage67-catalog-validation-01/node/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage67-catalog-validation-01/node/stdout.bin": {
+      "bytes": 1136,
+      "mode": 420,
+      "sha256": "1f9f8a51bbdb96d21e6af98ddcb674faeff8bc6d7053834486192caf57dcf068"
+    },
+    "target/m2/stage67-catalog-validation-01/python-optimized/process.json": {
+      "bytes": 789,
+      "mode": 420,
+      "sha256": "2a885ec073a14fd37fbef6383812fe1375c07c205caf28ea3b71c940f258280e"
+    },
+    "target/m2/stage67-catalog-validation-01/python-optimized/stderr.bin": {
+      "bytes": 125,
+      "mode": 420,
+      "sha256": "22a85d231ce300264e7a565b4d04a501047c0d0cdeb16529d85d70e6eef253f8"
+    },
+    "target/m2/stage67-catalog-validation-01/python-optimized/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage67-catalog-validation-01/python/process.json": {
+      "bytes": 769,
+      "mode": 420,
+      "sha256": "a4e9ac1030f850492dac79659de6ad3c56878c7bcc66950e91131cb9883ed019"
+    },
+    "target/m2/stage67-catalog-validation-01/python/stderr.bin": {
+      "bytes": 125,
+      "mode": 420,
+      "sha256": "26c5f4a8052b3e7058f6c06bc84ed2deaf00c0efc11c57991f468e7e3970452a"
+    },
+    "target/m2/stage67-catalog-validation-01/python/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage67-catalog-validation-01/report.json": {
+      "bytes": 4798,
+      "mode": 420,
+      "sha256": "b5ac38fa20805eb052f1d369a1d977d2ca3cf4198059ba31102c27464b4dc332"
+    },
+    "target/m2/stage67-catalog-validation-01/run.py": {
+      "bytes": 3735,
+      "mode": 420,
+      "sha256": "5981f7aaefb37a2b88245c9e96e1c76a0fd8013f13b5747f3101ea647e353cab"
+    },
+    "target/m2/stage67-catalog-validation-01/source-after.json": {
+      "bytes": 28404,
+      "mode": 420,
+      "sha256": "409d1f46a8228daaf7a8969185da5f172a276609920893b67aebfa5fa48c6e0b"
+    },
+    "target/m2/stage67-catalog-validation-01/source-before.json": {
+      "bytes": 28404,
+      "mode": 420,
+      "sha256": "409d1f46a8228daaf7a8969185da5f172a276609920893b67aebfa5fa48c6e0b"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/compatibility/collection-conversion-profiles.json": {
+      "bytes": 14500,
+      "mode": 420,
+      "sha256": "2dbfa1ec651eaaecdf3a9167e0b3be0e55d91f954d940263bd8891f53963466c"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/target/m2/stage67-catalog-validation-01/run.py": {
+      "bytes": 3735,
+      "mode": 420,
+      "sha256": "5981f7aaefb37a2b88245c9e96e1c76a0fd8013f13b5747f3101ea647e353cab"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/README.md": {
+      "bytes": 1553,
+      "mode": 420,
+      "sha256": "ad3a9c9115ea87c9520c0841dcc98b3a6a8981db423935a6be5843bb988b7043"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/archive-identity.json": {
+      "bytes": 762,
+      "mode": 420,
+      "sha256": "98a64de5f9735c280edc3e0df5da9a1bae82ab976d8c2526da4249386dfa3bbf"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/cases.json": {
+      "bytes": 32552,
+      "mode": 420,
+      "sha256": "97fa9ae8551b14f39dea2b352c9e00d22eae574c6c5ba25e7840742700343f84"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "078b89b5461588dad7433bb34df3c4e8d20539ada4ba5667109f4f385d4a412a"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/module.pkl": {
+      "bytes": 1233,
+      "mode": 420,
+      "sha256": "28ed759288cd664505347ef6e649d95c9495901787bfbea160c1aa5e6bc8efc6"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/oracle-evidence.tar.gz": {
+      "bytes": 326267,
+      "mode": 420,
+      "sha256": "77c4a0f285dacdbf56a6f47cc39e67fc164bd76457510a125d7396b3034e9214"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-amendment-construction/queries.tsv": {
+      "bytes": 13450,
+      "mode": 420,
+      "sha256": "0f8105fad96003a6bcebc71c5c9e235148f6b3d33a1132e06c3eb0e69fda10d9"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-base-constructor-constraints/README.md": {
+      "bytes": 1470,
+      "mode": 420,
+      "sha256": "b1c0b02015b4733aa9c338ba76388146a7f08651b92b790046eece7a20295f93"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-base-constructor-constraints/archive-identity.json": {
+      "bytes": 780,
+      "mode": 420,
+      "sha256": "0b597f53cdab7cc6718993161cc0cb75145519ceedc33eb2bbc8f78c5f048ccf"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-base-constructor-constraints/cases.json": {
+      "bytes": 5898,
+      "mode": 420,
+      "sha256": "d0517af9355f95acb2d14daf83680781761b86b2732adf8dbbf6b45dfe47dea5"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-base-constructor-constraints/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "6064ea8ed3ee9c269c64863999d901efc4eee6a876ac9ed8e179fcad05c83ad7"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-base-constructor-constraints/module.pkl": {
+      "bytes": 351,
+      "mode": 420,
+      "sha256": "818236da99270a29e3326829fd85dfed08ce39a1db2a1ccf2553ff077f650bb1"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-base-constructor-constraints/oracle-evidence.tar.gz": {
+      "bytes": 223228,
+      "mode": 420,
+      "sha256": "3f5a609f62a40e004dd208bc078be9e88a3a4a94c30ee4a04ebb5450d5eb8c6e"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-base-constructor-constraints/queries.tsv": {
+      "bytes": 2060,
+      "mode": 420,
+      "sha256": "40298bcc992b9c035267816faef9b76cb990d9dae3eabfcabd94215bf758fcaf"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/README.md": {
+      "bytes": 1824,
+      "mode": 420,
+      "sha256": "e6eb6f470aa6ae61ae9864589f3b18152bb2dd41cd98bd6a903e91b4bc1d229d"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/archive-identity.json": {
+      "bytes": 772,
+      "mode": 420,
+      "sha256": "7199b08341fae4b92dfe5b458437779812d5a849de2ba720a254ac298f317a3b"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/cases.json": {
+      "bytes": 20412,
+      "mode": 420,
+      "sha256": "3a79ba3caa4ff3cd3180271e659b7323a7ca0f3b75fba9e15172ecb7d36cafd2"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "2abf8cccf433316152db8654e2d4eba863f8b5ae4cac4b7fb0aab6ac661cd449"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/module.pkl": {
+      "bytes": 219,
+      "mode": 420,
+      "sha256": "50fc462c877bebd2a06bb9a295c2c9e89874705b5246e69aba7b7e9fbf41a3eb"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/oracle-evidence.tar.gz": {
+      "bytes": 250740,
+      "mode": 420,
+      "sha256": "5e14a08075c7f488ca0a5dd2632956366a1a5f368428b5e325da584c499f801d"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-addition/queries.tsv": {
+      "bytes": 8486,
+      "mode": 420,
+      "sha256": "2081dfb9db79a5695e58c4149783fbd4b46c4c045b764de314ff68300d1d532f"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/README.md": {
+      "bytes": 1838,
+      "mode": 420,
+      "sha256": "d06365f13ced36edc0d2385fa54624b7ff7752d3e416a36051a5744ccfc5767c"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/archive-identity.json": {
+      "bytes": 949,
+      "mode": 420,
+      "sha256": "80dbf83b2a8445fac202f1f2290bbe2e62cf2ac180e4670863a88c1fbbca7c88"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/cases.json": {
+      "bytes": 10950,
+      "mode": 420,
+      "sha256": "2dbd453c55268cf80fdb8765d6bcea44535eed917f418eff27d3566f78f0d453"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "abb85b72dca74c8e5cc28b30f0a2335ca30f59c59fe14b7d34a4ae3164692cc1"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/module.pkl": {
+      "bytes": 404,
+      "mode": 420,
+      "sha256": "90c2a9ef0fabcc8f8b22e4abf036caedbe7773663e605363ebecf9a16a7d9102"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/oracle-evidence.tar.gz": {
+      "bytes": 223024,
+      "mode": 420,
+      "sha256": "c254f3cad568223c1da8f75bd5dad0a74f64867132a292bf1f1a312414f7f9da"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversion-controls/queries.tsv": {
+      "bytes": 4685,
+      "mode": 420,
+      "sha256": "f7affd443c1fa5d0287b820e3ede1eb0d67782edf80000c4518b72f35aad1c09"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/README.md": {
+      "bytes": 2159,
+      "mode": 420,
+      "sha256": "97c9507223d8be86c14c2a9f85e8d26eb5751ba2750d6fe77dccecf6a1b6aea7"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/archive-identity.json": {
+      "bytes": 952,
+      "mode": 420,
+      "sha256": "fe9d619a4c9340e5a7335fcba30d762ae40f8c26b8ccd67c5f34b7416c17cb5e"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/cases.json": {
+      "bytes": 38840,
+      "mode": 420,
+      "sha256": "a45146b0387754d879109cfed5dd280bf6aad215c9e4197e10644d432a444c3b"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "33e8096434dc734cb6b05be944c371d40c4445fe30ab261cc3e48f6df587eb89"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/module.pkl": {
+      "bytes": 838,
+      "mode": 420,
+      "sha256": "a24a1e717919fd710c219f7c7e27e6c9baa93b575749c840d96a58ae0f886b4a"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/oracle-evidence.tar.gz": {
+      "bytes": 513094,
+      "mode": 420,
+      "sha256": "e2e7db0435308cd2b3ff0656e0ba799e621535054a67c45ef0fd08594b00d8f6"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-conversions/queries.tsv": {
+      "bytes": 15430,
+      "mode": 420,
+      "sha256": "39416e2d5adb7db5fe531289ff736a14f8926af3af8bf64fcbf9aad2ad3021cc"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/README.md": {
+      "bytes": 1422,
+      "mode": 420,
+      "sha256": "0b396692ae1f5aedf318304da137d6570c82e06db933401e98e009986f556171"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/archive-identity.json": {
+      "bytes": 958,
+      "mode": 420,
+      "sha256": "8cf32c2500a2d9f68a59575fc2201f124a1add87d0eaf43aab30d5d87d27b7ee"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/cases.json": {
+      "bytes": 4629,
+      "mode": 420,
+      "sha256": "15cb06a0db6c9e6c90edf2afa199c1d86734920d5ff4432c6cb3de1c521d9e0a"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "03fa1629cf5bbcf18753154b97c18bfa551c681534e73ec77c6d2f95a7a00455"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/module.pkl": {
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/oracle-evidence.tar.gz": {
+      "bytes": 155316,
+      "mode": 420,
+      "sha256": "0c7ed42e1f786ea02086f6cf1c736b1c326835801221512568ed695dfc96c126"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-default-contracts/queries.tsv": {
+      "bytes": 2123,
+      "mode": 420,
+      "sha256": "375fc16968ee997b25d7223380398205ed756352c07b0d6e443c457f4b1ea143"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/README.md": {
+      "bytes": 1154,
+      "mode": 420,
+      "sha256": "f9c18f171483f149a1f163486cd9a04816cd3c4ef48fc97d764e623d04cbea4f"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/archive-identity.json": {
+      "bytes": 954,
+      "mode": 420,
+      "sha256": "fb891e4c80d7d1bad418695cdbeba05e0c8d8b19eff232bc159f8047b36d3d5b"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/cases.json": {
+      "bytes": 1836,
+      "mode": 420,
+      "sha256": "cc2a09354e1e2c7907fd2ad993bff28dd0bf793058c939f5154d549800b66dae"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "e9a983c8f12a3747908532653fa66329a6b4e324e66a90edd7427e45c31e5d79"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/module.pkl": {
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/oracle-evidence.tar.gz": {
+      "bytes": 147108,
+      "mode": 420,
+      "sha256": "29344c12e72341e574e8da0e20d56a43818a75872afecb997c6a062d787cd483"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-dynamic-render/queries.tsv": {
+      "bytes": 644,
+      "mode": 420,
+      "sha256": "d0ab652f9c4f422fc0392c9e1a3adb985ee9f77cb601cf2b9ba72aa2bfe07bdc"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/README.md": {
+      "bytes": 2152,
+      "mode": 420,
+      "sha256": "d39a8788d9e6af136eb87bfdc584808ae5bae19106e7df506f2444f46b73707b"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/archive-identity.json": {
+      "bytes": 948,
+      "mode": 420,
+      "sha256": "8233982adb972ba935708cf435cb9b13288dee4aec531c3b2ed3da6b83606fe1"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/cases.json": {
+      "bytes": 24667,
+      "mode": 420,
+      "sha256": "a95d66add782756fbd2b0533fe2b4660de872f172abde76f56a712f7b12eab32"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "5690790700f39d0d519742a1ec852f6c71419636030ee3e0d91571ecc1a67cc2"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/module.pkl": {
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/oracle-evidence.tar.gz": {
+      "bytes": 371632,
+      "mode": 420,
+      "sha256": "2c75876849e8b9d0f87a72c1b4aa874c0f613d2d40cbdbb3e03fd23d48fa6317"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-lookups/queries.tsv": {
+      "bytes": 10038,
+      "mode": 420,
+      "sha256": "1096a8cd0bdf65b615c104fd25592ddb58fbe4e7ca3b12a3e0f8ac2a5b971f18"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/README.md": {
+      "bytes": 1650,
+      "mode": 420,
+      "sha256": "16f63734f0ccf12671d76abf0ac0c1f4782eeb03fd666866a4932454f282f100"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/archive-identity.json": {
+      "bytes": 955,
+      "mode": 420,
+      "sha256": "50d0a0226a5938e685e64ca3c6132f4c33b704e7eafe43fb5e1b5356a1074d1f"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/cases.json": {
+      "bytes": 5706,
+      "mode": 420,
+      "sha256": "341f6b953b8dcd39e623dc6d1a04a0ac0a2aa786f7f13dce7f6f81a98bba50b4"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "fbf1a3ab158b74d06cb1d41bd42c47d392f68d239ad66ffe29a1a2a0c4ab5c0f"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/module.pkl": {
+      "bytes": 32,
+      "mode": 420,
+      "sha256": "7f80ba30b4248cff7cca4b036bde2f5a7f3a215408765e622b2b124eb5a5b1ce"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/oracle-evidence.tar.gz": {
+      "bytes": 158570,
+      "mode": 420,
+      "sha256": "4fd0bab6188625485f311e592a4e02303ddfcf05d63a86d9c30ec668ed875ac2"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-collection-property-names/queries.tsv": {
+      "bytes": 2500,
+      "mode": 420,
+      "sha256": "59e7145df48a51493f10fb16ea9093711c18e9ff50a30a67c3f81043a0b1b239"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/README.md": {
+      "bytes": 1202,
+      "mode": 420,
+      "sha256": "da091f6af60fc79ee3b474ba580f3f147d08f734d459a7cb1dfedcc0c8a1423e"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/archive-identity.json": {
+      "bytes": 417,
+      "mode": 420,
+      "sha256": "23ea2fde2e53fab5bcd82d05d92223ac4c7fcb2f87b13961b5747101da9c7786"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/cases.json": {
+      "bytes": 13454,
+      "mode": 420,
+      "sha256": "10bc691c2aab559e5ade734087e26619f8903945875924a92da9784416182057"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "3be804e356bcc13909c3e297644869aa3173e450576bee98563aa0348a622582"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/module.pkl": {
+      "bytes": 1638,
+      "mode": 420,
+      "sha256": "d0a0fc1c19a588d9188ecf73243d819d32fca34da249764573f3739b3a1dd03e"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/oracle-evidence.tar.gz": {
+      "bytes": 242059,
+      "mode": 420,
+      "sha256": "231d9c1d922cae9c1b2e0c1bd5fb15a0465681043414425f36bf89480b08763e"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-inferred-new-values/queries.tsv": {
+      "bytes": 6123,
+      "mode": 420,
+      "sha256": "6efd438f068e88f23f7864745860c4b37e01e5b531602bacddb3aae2f9d03c59"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/README.md": {
+      "bytes": 990,
+      "mode": 420,
+      "sha256": "d08be2be4375b0e6c15efef7be77adf85d2ee3a995d1cdba0bebfca654a4f076"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/archive-identity.json": {
+      "bytes": 769,
+      "mode": 420,
+      "sha256": "f22eb9bb0d7e9278625daca360e19cb43f470ac7a5268a70ac3c96e0aceadada"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/cases.json": {
+      "bytes": 1421,
+      "mode": 420,
+      "sha256": "06b6d407cb7f7049eb83ed9fd8cf2af0801accaf87064915157743694bd95cfc"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "27ad180dfe09638bb73f8f099476a964cf738c6c597b9ca918416b7a02a5c350"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/module.pkl": {
+      "bytes": 34,
+      "mode": 420,
+      "sha256": "ad7ab1ce7bc50d525b29b10b8db1c5247623ce9bce2da705cd9ee0d01723f8ca"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/oracle-evidence.tar.gz": {
+      "bytes": 182120,
+      "mode": 420,
+      "sha256": "c3a0202d3a642f8524728bdbd917970a0048ec58d9ef9031d43a6470c8086e63"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-implicit/queries.tsv": {
+      "bytes": 498,
+      "mode": 420,
+      "sha256": "2d05613d0794ca668a54a9ae9d8f9d9938776f6471d08bb24f58a52044755464"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/README.md": {
+      "bytes": 920,
+      "mode": 420,
+      "sha256": "b0cc5b27aa0a4a2a57356e987bdae964c4ab7985a1ebed3f750dccc336dd3ea6"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/archive-identity.json": {
+      "bytes": 770,
+      "mode": 420,
+      "sha256": "2969f9bc33add871754372a536299073e6b62bb92eeb773559fb9150148b67b6"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/cases.json": {
+      "bytes": 2907,
+      "mode": 420,
+      "sha256": "ea9f15510c8da63180c73d6a8cfacbd01159fe9b79e6ba72911bd776389f7899"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "55a1fa0c680066bd28a04ff32be017baf19b443efeac90ebd6cf65679ed382c6"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/module.pkl": {
+      "bytes": 35,
+      "mode": 420,
+      "sha256": "a9045c2bd08d9097c9893fe60cb017a7b17bd7efbdaa801bc247bc103a5ff168"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/oracle-evidence.tar.gz": {
+      "bytes": 176460,
+      "mode": 420,
+      "sha256": "11a400a303c07dcc81dd53848a3590696c32ab889c605924e468faf8e5f4366b"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-subscript/queries.tsv": {
+      "bytes": 918,
+      "mode": 420,
+      "sha256": "f755443fea6b0646a306da03b6da2641b37d4bb544d59f0c47af5a46e416bc0b"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/README.md": {
+      "bytes": 1857,
+      "mode": 420,
+      "sha256": "1f8480ea115f7ffea551a7c8089ac4cd2a2bec199bdb819c0d27cc24716336ea"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/archive-identity.json": {
+      "bytes": 761,
+      "mode": 420,
+      "sha256": "2b6e72d34ea1ae8f569a14b13304b8a8a0f516cf6ac767a81ffbfd7ad11cbe25"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/cases.json": {
+      "bytes": 12094,
+      "mode": 420,
+      "sha256": "b1fc4fdb79c82be4df45e491b946c27923b2a706b2184480aee4323c76d5b96d"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "870d0abaa5cb5d0b8630616619876d6e54f9d022577b2df2f4715366862b197e"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/module.pkl": {
+      "bytes": 81,
+      "mode": 420,
+      "sha256": "d5a806769a7719918a98dc7709fd15899b398ecf032d59c917371a96aadebe99"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/oracle-evidence.tar.gz": {
+      "bytes": 226596,
+      "mode": 420,
+      "sha256": "132cab831cf0021a2ff31ca2f45ede1e166f208eadd8965d5eb1498b01dfdc26"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-reversal-values/queries.tsv": {
+      "bytes": 4066,
+      "mode": 420,
+      "sha256": "749e6aa1daaaac6bbbbdea4b12e7369fabcad4339fd72ba0d24fcdaf9e6a4444"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/README.md": {
+      "bytes": 1269,
+      "mode": 420,
+      "sha256": "6c160749a212ce8f9757ca0960fcdfd2a14c871e7822a44f2ade3ea6a7f3d34e"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/archive-identity.json": {
+      "bytes": 766,
+      "mode": 420,
+      "sha256": "29f03b747ce869551b1dab82f59283ccf04b3d7b568caea69d0e169bcb981790"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/cases.json": {
+      "bytes": 10551,
+      "mode": 420,
+      "sha256": "d70067c1ea0f45960e6b693db60165521a2b45b2ac35c8285f300446c2043c02"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/manifest.json": {
+      "bytes": 602,
+      "mode": 420,
+      "sha256": "4a85338d47a7bb47a1b191dfd8593de89f96afb9e0014f78b0aff1c20cb888b7"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/module.pkl": {
+      "bytes": 30,
+      "mode": 420,
+      "sha256": "add28c5d462e41c7c5d8fa273817669d6e1234f85adc2ac8fac5ea0b3160fe70"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/oracle-evidence.tar.gz": {
+      "bytes": 182591,
+      "mode": 420,
+      "sha256": "9a1326f0220b92607779bd02e2fc41d81d7a9cea8f40a3f404a55f3be03e1ae9"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-set-endpoints/queries.tsv": {
+      "bytes": 3803,
+      "mode": 420,
+      "sha256": "eb9e0db1e0e62f87077a8c9c20b6bde4fa8636f85e0634b574f4a5fbd7dce7d4"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-string-properties/README.md": {
+      "bytes": 1211,
+      "mode": 420,
+      "sha256": "5d98a3abc6e4f181e2cf8392249a6e3929673c6a2a118835af93ae388a33cbd5"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-string-properties/archive-identity.json": {
+      "bytes": 1334,
+      "mode": 420,
+      "sha256": "f4fe523baef75447a29ef931e8be4a92367722c0b5c490d000e332f0932e6d5a"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-string-properties/cases.json": {
+      "bytes": 21989,
+      "mode": 420,
+      "sha256": "79e5064d943ac38f074e014a3ec516d8ac3835e7d52e1d358c09658a2e96258b"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-string-properties/manifest.json": {
+      "bytes": 707,
+      "mode": 420,
+      "sha256": "c81056f931e6aa3da1e44badf8251d87fb0299470c5368c7218376c2245a8e26"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-string-properties/module.pkl": {
+      "bytes": 1133,
+      "mode": 420,
+      "sha256": "809e32ea351d9ef6d60ba10fa7382ae24078c087dbd292958581f0bb624051d2"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-string-properties/oracle-evidence.tar.gz": {
+      "bytes": 441969,
+      "mode": 420,
+      "sha256": "a0dc5929d76467b30c92bb82fb54867e8a4ba4b4cac6d648eb344d03af596ae5"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-string-properties/pkl-whitespace-bmp.bitset.bin": {
+      "bytes": 8192,
+      "mode": 420,
+      "sha256": "2861bb010a0faac3ae03df880d56379f8ea0890e5d1d7089cd4cd9a804d43e57"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tests/fixtures/m2-string-properties/queries.tsv": {
+      "bytes": 7266,
+      "mode": 420,
+      "sha256": "7082d796c57fa9b4d220957c0f58dbe79ee327a8d57fcd743018de7aa8845eb3"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/amendment_construction_fixtures.py": {
+      "bytes": 4687,
+      "mode": 420,
+      "sha256": "67711ff231c27939f717960057972ab4327210408be6d0bf6d3057ee87ccb403"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/amendment_construction_oracle.py": {
+      "bytes": 13327,
+      "mode": 420,
+      "sha256": "a73e1fa1fd047ff4477197c3715571ce21499ac5905148ecc7b045a1c63438cb"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/base_constructor_constraints_fixtures.py": {
+      "bytes": 5235,
+      "mode": 420,
+      "sha256": "feb1c5abd325e699faed49e848916a78317c41326cc0c32062b796f73d672f4a"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/base_constructor_constraints_oracle.py": {
+      "bytes": 10669,
+      "mode": 420,
+      "sha256": "9ec297ccb2248e99578110b4d5b4824764e70a149df967a2cb78cd1db8227120"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_addition_fixtures.py": {
+      "bytes": 4684,
+      "mode": 420,
+      "sha256": "3279f86b92ebd492abe909d00e6dc62243cb72387187d2bd0ea98d30bde9da6d"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_addition_oracle.py": {
+      "bytes": 11602,
+      "mode": 420,
+      "sha256": "4b415302fad2f295ce368fa4c81a5330414e4f23bcd7c0ee6ce409a9e2d8fac8"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_conversion_controls_fixtures.py": {
+      "bytes": 14922,
+      "mode": 420,
+      "sha256": "309c86d94353cef1ef5b4138ccdefe710d49911ad67d00c50411324d7216ac0d"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_conversion_controls_oracle.py": {
+      "bytes": 12503,
+      "mode": 420,
+      "sha256": "7d86029f9f4cd2dbd5feb357292dd7ffeabcfb14f967d693f3458e739c0db9ac"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_conversion_profiles.py": {
+      "bytes": 12130,
+      "mode": 420,
+      "sha256": "997958e0e89ef902cb8093fd9467fef58d7bced24b8e632d67b68a58c6d0933c"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_conversions_compare.py": {
+      "bytes": 12376,
+      "mode": 420,
+      "sha256": "19525891c2992bd4675934aeecf24eb57a6ebc193d4e00dfb931f3d71c9d32fc"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_conversions_fixtures.py": {
+      "bytes": 14913,
+      "mode": 420,
+      "sha256": "06eb22a1d4c961790d5a67e5a2e05eeddc2154938be0ea83e29f3972c2ddd3e4"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_conversions_oracle.py": {
+      "bytes": 12140,
+      "mode": 420,
+      "sha256": "fd61e2566ec29789d280114d5ca6613005880c10a32682ced64a16d3189f31ad"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_conversions_portable_compare.py": {
+      "bytes": 30408,
+      "mode": 420,
+      "sha256": "c460b508a1cc2f0eb2d7eefe478e5d4668625fca35ef9c522a2e997560fb1f8d"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_default_contracts_fixtures.py": {
+      "bytes": 14941,
+      "mode": 420,
+      "sha256": "494e1032d4bcbde5c411f326baa28c2a05f362a4e6551b3070cc0edeba4f8389"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_default_contracts_oracle.py": {
+      "bytes": 12795,
+      "mode": 420,
+      "sha256": "2b640e7db2671e1c7e747e62610ffa7a476ae7f6cfad17d7873cbad28d352a7e"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_dynamic_render_fixtures.py": {
+      "bytes": 14908,
+      "mode": 420,
+      "sha256": "9d7774c9adf4eb9220120532912ffda3753c024dd64316a781534b7132e6ded2"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_dynamic_render_oracle.py": {
+      "bytes": 12838,
+      "mode": 420,
+      "sha256": "5802a1dd8077f6c5f00c0b06ba36179c5cc0122bd58a43753aad2a2a4f66deb2"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_lookups_fixtures.py": {
+      "bytes": 14893,
+      "mode": 420,
+      "sha256": "35874aebf14adea027bf09f9f714632ec5c2c1ca514e71dbf1ccdfb2d973717f"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_lookups_oracle.py": {
+      "bytes": 12747,
+      "mode": 420,
+      "sha256": "a041aeddad6651bbc9676339e00beddafab79fc26fc05dbda35b434d3c4d1411"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_property_names_fixtures.py": {
+      "bytes": 14923,
+      "mode": 420,
+      "sha256": "110bf2806cb89a19749a20533cc21c0bbebb2099b0c435dcb322092f0df3958e"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/collection_property_names_oracle.py": {
+      "bytes": 12855,
+      "mode": 420,
+      "sha256": "122cfe187eddd253922eca5cf9cf752046b12e6d3cf1885071aa5b432c8dd1b5"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/data_size_compare.py": {
+      "bytes": 20714,
+      "mode": 420,
+      "sha256": "331bbbfba9bb8b9e49a49d5e09de15ce7e1e1f73c54b70a29004c190ec793a10"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/data_size_fixtures.py": {
+      "bytes": 10223,
+      "mode": 420,
+      "sha256": "91d83a349196a285c44ca790f07199029bca767fd0c7d556b1e40f9d1da38705"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/data_size_oracle.py": {
+      "bytes": 30347,
+      "mode": 420,
+      "sha256": "f5c57a29c301c40ca27df37a68cae352c7f0453777192252047b6ba3e3705803"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/data_size_portable_compare.py": {
+      "bytes": 40065,
+      "mode": 420,
+      "sha256": "5087d0ffc4d3ae7e45ee6c3573bf36f679e8f6f25c5f8b4985b61d6db94f9919"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/inferred_new_fixtures.py": {
+      "bytes": 16173,
+      "mode": 420,
+      "sha256": "e91d801990cafbb2902bd11f459e0659ae52b4438831debf0495cff08d8d5c21"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/inferred_new_oracle.py": {
+      "bytes": 13500,
+      "mode": 420,
+      "sha256": "2008fd21449796317b8d091f55c7220d40f1b2df1fb93427eb4fd067abee5d6c"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/inventory.py": {
+      "bytes": 28058,
+      "mode": 420,
+      "sha256": "24868c2fe77025230522dd9888d9c17b6b992ba9554ce39516cefd57397552e3"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/java/CollectionConversionsOracle.java": {
+      "bytes": 4819,
+      "mode": 420,
+      "sha256": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/m1_platforms.py": {
+      "bytes": 12727,
+      "mode": 420,
+      "sha256": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/m1_semantics.py": {
+      "bytes": 10492,
+      "mode": 420,
+      "sha256": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/m2_source_inputs.py": {
+      "bytes": 4787,
+      "mode": 420,
+      "sha256": "3ece4f917c45f69d7cfbae8eeaab0aa2e6a7126cd6cf6c6ab84cd2bd0356d72d"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/oracle.py": {
+      "bytes": 16102,
+      "mode": 420,
+      "sha256": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/platform/capture-collection-conversions.mjs": {
+      "bytes": 33216,
+      "mode": 420,
+      "sha256": "03d9258936b4a3d18e8bcacbb879a2b8317e15ec089c6c83d6c4cd92049cdf72"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/platform/capture-collection-conversions.test.mjs": {
+      "bytes": 13776,
+      "mode": 420,
+      "sha256": "c961984b3a6432f2328349d0a207b8e8942a41bbf4fa6bcf4f66b7535d647e68"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/platform/data-size-session.mjs": {
+      "bytes": 10744,
+      "mode": 420,
+      "sha256": "ac55de7fd708886f2b7afb694f8078048a65cf7034e130c59b012583b82ce0a6"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/platform/data-size-session.test.mjs": {
+      "bytes": 9567,
+      "mode": 420,
+      "sha256": "c4f5ce22419036cf268c7985e4525ae055e5d8d5aab060948293a42accfb62a7"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/platform/module-policy-session.mjs": {
+      "bytes": 5957,
+      "mode": 420,
+      "sha256": "71708eb48f2a6283c9bdfe4ae13a92da5ae8d4c861d785035e900958948545f3"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/platform/package-lock.json": {
+      "bytes": 1173,
+      "mode": 420,
+      "sha256": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/platform/package.json": {
+      "bytes": 133,
+      "mode": 420,
+      "sha256": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/platform/resource-session.mjs": {
+      "bytes": 10123,
+      "mode": 420,
+      "sha256": "a062236e8c05afabdc071f277ec8296da06cf3e2f16b8b66ecda46e812e42fda"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/reversal_implicit_fixtures.py": {
+      "bytes": 5163,
+      "mode": 420,
+      "sha256": "b0d4cd16773d7ff8d9b1a70253a518a56abfb1229c5ab260f1740b2dcaae0f2e"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/reversal_implicit_oracle.py": {
+      "bytes": 9642,
+      "mode": 420,
+      "sha256": "6d82b58c9a7233f5f33a1b017ba5b7cb1ddc8f3c21f458bc0041ede94b8d9b61"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/reversal_subscript_fixtures.py": {
+      "bytes": 5187,
+      "mode": 420,
+      "sha256": "0841b2e2a9a4b4fcf359cae2f49ad12690c7a40a0f11414f5d6f67e3296d0304"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/reversal_subscript_oracle.py": {
+      "bytes": 9232,
+      "mode": 420,
+      "sha256": "48c24e95b209311a0472ff733c3941b553c18b2ce6025c36900806ea79ad54ce"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/reversal_values_fixtures.py": {
+      "bytes": 5115,
+      "mode": 420,
+      "sha256": "5124d076737d9f937970e9c0f399baf4650c865ba2dcdd23db846b9d1605f3eb"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/reversal_values_oracle.py": {
+      "bytes": 12305,
+      "mode": 420,
+      "sha256": "e6d288c6cd6683fef9ac9ad45d1890d363ba1f2a0bbde1b85702e2c3b4d0f298"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/set_endpoints_fixtures.py": {
+      "bytes": 4798,
+      "mode": 420,
+      "sha256": "5aac78a7fa29145c1991f9a633fa45b897ca592b7e36dee601fbcfc1ccd40c8a"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/set_endpoints_oracle.py": {
+      "bytes": 11452,
+      "mode": 420,
+      "sha256": "cd8fa1d9f7ce2c73eeb4cd774f92c46a1633ac61a46d820170871bb104e5c1b3"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/string_properties_fixtures.py": {
+      "bytes": 12336,
+      "mode": 420,
+      "sha256": "59240fc536f8fbbef3c6dcf2d6d04a394483b0824a5e8380f873d2aacd51842b"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/string_properties_oracle.py": {
+      "bytes": 13984,
+      "mode": 420,
+      "sha256": "c6386efeb90c02550fd6f71917282a4e830f2e69bf2dc24e7cef1f7bf39b091a"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_amendment_construction_fixtures.py": {
+      "bytes": 5387,
+      "mode": 420,
+      "sha256": "97a983c772ccf0eed933bb127a865c7230577d138e955d174129afa05e3e6ff9"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_base_constructor_constraints_fixtures.py": {
+      "bytes": 6187,
+      "mode": 420,
+      "sha256": "317b141d604a60fc7c4be18bb1416ace147922aaae474b8e9b2ec813a39f1f27"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_collection_addition_fixtures.py": {
+      "bytes": 5747,
+      "mode": 420,
+      "sha256": "73075879c7da2db9eb28abadda12251f348725c9baeb67d85bf431bc05812bb3"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_collection_conversion_controls_fixtures.py": {
+      "bytes": 4534,
+      "mode": 420,
+      "sha256": "5be0579de9de406ccdf7a4038519448a09cecb9144440fa1a24b6d085f8667a5"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_collection_conversions_compare.py": {
+      "bytes": 22790,
+      "mode": 420,
+      "sha256": "709ab0a53af07f2e5bc97ccffc261795da1297b0acc0efa467672d721738961c"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_collection_conversions_fixtures.py": {
+      "bytes": 4995,
+      "mode": 420,
+      "sha256": "c470063ce03f8fda670e6418ed74edc7970744e6c3a2b17a54fd92276ece4772"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_collection_conversions_portable_compare.py": {
+      "bytes": 27718,
+      "mode": 420,
+      "sha256": "7fe33619d54b9d1cb8aa8360e37114e1c7b4a33d3149dc6602d92ccb4a4a4052"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_collection_default_contracts_fixtures.py": {
+      "bytes": 4271,
+      "mode": 420,
+      "sha256": "9d845b864d8d7700f10ab02cca89df4597abc90b60160e0331e043930c61c893"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_collection_dynamic_render_fixtures.py": {
+      "bytes": 3752,
+      "mode": 420,
+      "sha256": "f2a2b467af555f4524a4a01aa85a7e0b21e34c0f1bb3c700ace6d8d8ce1796d3"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_collection_lookups_fixtures.py": {
+      "bytes": 5362,
+      "mode": 420,
+      "sha256": "2afba66671260a2cdfad3b1980fb2f785412b9bb37caf9d3ad02224517b27975"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_collection_property_names_fixtures.py": {
+      "bytes": 5448,
+      "mode": 420,
+      "sha256": "46a72021657b92c19b01c0f02d0c79ad3b9deb9bb4e0ee381c632bbeaadb5ea7"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_inferred_new_fixtures.py": {
+      "bytes": 3360,
+      "mode": 420,
+      "sha256": "d181a2b5647bf26454f86896316a9bb39154a8e977c0ff72585bb98db08182ab"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_reversal_implicit_fixtures.py": {
+      "bytes": 4819,
+      "mode": 420,
+      "sha256": "a8f82d35cbee283390800b3bb456fbfefe8c09101ac5fa40a24b1ccfe5407a66"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_reversal_subscript_fixtures.py": {
+      "bytes": 5742,
+      "mode": 420,
+      "sha256": "0debd53bebc8afe9191f4f5d08c2ef2e59bea10cfce547f3a9f76fb3409794d4"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_reversal_values_fixtures.py": {
+      "bytes": 5278,
+      "mode": 420,
+      "sha256": "300ad46793dfd6635eb2a7a2618d7b1627019120e900bb9b6c7f0737e0d1f224"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_set_endpoints_fixtures.py": {
+      "bytes": 5542,
+      "mode": 420,
+      "sha256": "03a1cdec495bedc5f84143b5dd9f5d02c830d3c25fb0f63c9830a7e513578906"
+    },
+    "target/m2/stage67-catalog-validation-01/sources/tools/tests/test_string_properties_fixtures.py": {
+      "bytes": 6540,
+      "mode": 420,
+      "sha256": "2dd6bd6be35cada8c1ceff7d33b85f6e9d91886f856a3207a0391a14832416c1"
+    },
+    "target/m2/stage67-checkpoint-publication-01/admission.py": {
+      "bytes": 19492,
+      "mode": 420,
+      "sha256": "efb10d20d5fcca6c334d1dad494a6af0b7da2856fbbd99e96946e4e336c12ad6"
+    },
+    "target/m2/stage67-checkpoint-publication-01/assemble.py": {
+      "bytes": 6545,
+      "mode": 420,
+      "sha256": "656eff6dd72f6efee5a954f5a99c0dfb3e902d4db7dda11d988487585ec741c8"
+    },
+    "target/m2/stage67-checkpoint-publication-01/execute.py": {
+      "bytes": 2624,
+      "mode": 420,
+      "sha256": "46ab42ccb6dcf2525553859e125f03e428cbba334226d1400ef40a67cbba3667"
+    },
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/admission.py": {
+      "bytes": 18376,
+      "mode": 420,
+      "sha256": "6e1a171e9d01f870927825e7e5775a5ac21dca849a810a2ca5e231350a2039f9"
+    },
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/draft.json": {
+      "bytes": 2180,
+      "mode": 420,
+      "sha256": "2d2fc61b92541b206bdf7a61b7952ca01e232efec8b67f097f8fd72ffad2a2ef"
+    },
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/execution-plan.md": {
+      "bytes": 3918,
+      "mode": 420,
+      "sha256": "d1cd6b7fc30687a5f0873918a3bff2069692de52d1f6b84d40228cd9f5000ac0"
+    },
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/layout.json": {
+      "bytes": 11533,
+      "mode": 420,
+      "sha256": "79f8c100749a90f1d233b9916595089f7fe6da9f65408bff1d1418e2c90dae72"
+    },
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/manifest.json": {
+      "bytes": 1305,
+      "mode": 420,
+      "sha256": "4dd7385fab7df4305c5d4f1f5b5dc1b14467286618fea9759c33d937e3a7f558"
+    },
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/publish.py": {
+      "bytes": 11891,
+      "mode": 420,
+      "sha256": "b0543db906abb36ea619762503742e4c8aee24bad49532ade5e5a8d2bc739f85"
+    },
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/review.py": {
+      "bytes": 12691,
+      "mode": 420,
+      "sha256": "b7e4c7da8d384f6f48d2ce56476fc3be6d5ff49d67247c12c8d3b7155c796a49"
+    },
+    "target/m2/stage67-checkpoint-publication-01/layout.json": {
+      "bytes": 12763,
+      "mode": 420,
+      "sha256": "9f0fdc4f2696b22b7e5f322043a9a9d18252e2f5444babff448788f4c2baf413"
+    },
+    "target/m2/stage67-checkpoint-publication-01/preparation-02.json": {
+      "bytes": 7353,
+      "mode": 420,
+      "sha256": "3c89931bdd9e9c005eaface6a6da1aeaba451bd6500fc3db18eaf8d694611172"
+    },
+    "target/m2/stage67-checkpoint-publication-01/preparation-03.json": {
+      "bytes": 18278,
+      "mode": 420,
+      "sha256": "a2bea91675e31a98fe8a39b6017a176f53378ee506fb06e599b361cedad4b6ac"
+    },
+    "target/m2/stage67-checkpoint-publication-01/preparation-04.json": {
+      "bytes": 20153,
+      "mode": 420,
+      "sha256": "442714a4978414b897b6bc7ac899a83351038445a6bc34cc5e2da642176f2daa"
+    },
+    "target/m2/stage67-checkpoint-publication-01/preparation-attempt-01.json": {
+      "bytes": 453,
+      "mode": 420,
+      "sha256": "225a54cc361017f5c42d6bf251f8642be3538d8d7aae8ef7c0ad28fe5f68c2ed"
+    },
+    "target/m2/stage67-checkpoint-publication-01/preparation.json": {
+      "bytes": 6565,
+      "mode": 420,
+      "sha256": "82af5ca53cdd42aa918ad63e5a51deefc764886b71e95fabec6a643cf51f013b"
+    },
+    "target/m2/stage67-checkpoint-publication-01/prepare.py": {
+      "bytes": 4185,
+      "mode": 420,
+      "sha256": "ea702678e722370f4c52dde22d685c632917852e6f12472e7432e0841e4e110f"
+    },
+    "target/m2/stage67-checkpoint-publication-01/prepare03.py": {
+      "bytes": 5455,
+      "mode": 420,
+      "sha256": "f75d59f4e349373cd2f6314271d119d71b2ec6330b556d129b583286dbdb6ce5"
+    },
+    "target/m2/stage67-checkpoint-publication-01/prepare04.py": {
+      "bytes": 6121,
+      "mode": 420,
+      "sha256": "5376f64723ac8303affbef5ea807cdc6d2b76e6c9e5e459cc4363ff31e6aaec5"
+    },
+    "target/m2/stage67-checkpoint-publication-01/publish.py": {
+      "bytes": 12159,
+      "mode": 420,
+      "sha256": "690e7f06a9a8ffcb384ed21c9247b4e0c8c0057093ee77940ed942c0edcca9da"
+    },
+    "target/m2/stage67-checkpoint-publication-01/tooling-invocation.json": {
+      "bytes": 2128,
+      "mode": 420,
+      "sha256": "46e1f37a753ba374079237e5e1f22117c23c17efad7b300cd9d5e17be8d7fe24"
+    },
+    "target/m2/stage67-mapping-validation-01/00.stderr.bin": {
+      "bytes": 106,
+      "mode": 420,
+      "sha256": "8291979b307800a2411ed99e4708747c62ec4cba471072141b444acc35421016"
+    },
+    "target/m2/stage67-mapping-validation-01/00.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage67-mapping-validation-01/01.stderr.bin": {
+      "bytes": 106,
+      "mode": 420,
+      "sha256": "f41dcd6bb4c47a8cfd051c6146cc5c4ce810845249725ce89362bfcb2b60bb01"
+    },
+    "target/m2/stage67-mapping-validation-01/01.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage67-mapping-validation-01/02.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage67-mapping-validation-01/02.stdout.bin": {
+      "bytes": 231,
+      "mode": 420,
+      "sha256": "9eb043eed64a997a50c295ceaeaf22c94a1f9b4076d0e809c793460b394260e3"
+    },
+    "target/m2/stage67-mapping-validation-01/03.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage67-mapping-validation-01/03.stdout.bin": {
+      "bytes": 926,
+      "mode": 420,
+      "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+    },
+    "target/m2/stage67-mapping-validation-01/report.json": {
+      "bytes": 8947,
+      "mode": 420,
+      "sha256": "f1876b68f25491d7972b26f56efbe6345495b0579adb8ca8d17f1c6a78182ae0"
+    },
+    "target/m2/stage67-mapping-validation-01/run.py": {
+      "bytes": 5066,
+      "mode": 420,
+      "sha256": "431f628574fb98f8613ac4b2529c1d2746aa62f85ed919ad0d246e9dad92e288"
+    }
+  },
+  "publisher_sources": [
+    "target/m2/stage67-checkpoint-publication-01/prepare.py",
+    "target/m2/stage67-checkpoint-publication-01/publish.py",
+    "target/m2/stage67-checkpoint-publication-01/admission.py",
+    "target/m2/stage67-checkpoint-publication-01/assemble.py",
+    "target/m2/stage67-checkpoint-publication-01/execute.py",
+    "target/m2/stage67-checkpoint-publication-01/layout.json",
+    "target/m2/stage67-checkpoint-publication-01/preparation-attempt-01.json",
+    "target/m2/stage67-checkpoint-publication-01/preparation.json",
+    "target/m2/stage67-checkpoint-publication-01/preparation-02.json",
+    "target/m2/stage67-checkpoint-publication-01/prepare03.py",
+    "target/m2/stage67-checkpoint-publication-01/preparation-03.json",
+    "target/m2/stage67-checkpoint-publication-01/prepare04.py",
+    "target/m2/stage67-checkpoint-publication-01/preparation-04.json",
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/layout.json",
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/publish.py",
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/review.py",
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/execution-plan.md",
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/draft.json",
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/admission.py",
+    "target/m2/stage67-checkpoint-publication-01/initial-revision/manifest.json",
+    "target/m2/stage67-checkpoint-publication-01/tooling-invocation.json"
+  ],
+  "schema": 1,
+  "selected_directories": [
+    "stage67-catalog-validation-01",
+    "stage67-mapping-validation-01"
+  ],
+  "source_before_after_equal": true,
+  "terminal_admission": {
+    "candidate_compatibility_passes_claimed": 0,
+    "catalog": {
+      "observations_per_target": 2454,
+      "profiles": 15,
+      "rows": 1227
+    },
+    "comparison_counts": {
+      "amendment-construction-native": {
+        "pass": 376
+      },
+      "amendment-construction-portable": {
+        "chromium": {
+          "pass": 376
+        },
+        "napi": {
+          "pass": 376
+        }
+      },
+      "any-portable": {
+        "chromium": {
+          "mismatch": 2,
+          "pass": 170
+        },
+        "napi": {
+          "mismatch": 2,
+          "pass": 170
+        }
+      },
+      "base-constructor-constraints-native": {
+        "pass": 72
+      },
+      "base-constructor-constraints-portable": {
+        "chromium": {
+          "pass": 72
+        },
+        "napi": {
+          "pass": 72
+        }
+      },
+      "bytes-native": {
+        "pass": 600
+      },
+      "bytes-portable": {
+        "chromium": {
+          "pass": 600
+        },
+        "napi": {
+          "pass": 600
+        }
+      },
+      "collection-addition-native": {
+        "pass": 250
+      },
+      "collection-addition-portable": {
+        "chromium": {
+          "pass": 250
+        },
+        "napi": {
+          "pass": 250
+        }
+      },
+      "collection-conversion-controls-native": {
+        "pass": 116
+      },
+      "collection-conversion-controls-portable": {
+        "chromium": {
+          "pass": 116
+        },
+        "napi": {
+          "pass": 116
+        }
+      },
+      "collection-conversions-native": {
+        "pass": 472
+      },
+      "collection-conversions-portable": {
+        "chromium": {
+          "pass": 472
+        },
+        "napi": {
+          "pass": 472
+        }
+      },
+      "collection-default-contracts-native": {
+        "pass": 44
+      },
+      "collection-default-contracts-portable": {
+        "chromium": {
+          "pass": 44
+        },
+        "napi": {
+          "pass": 44
+        }
+      },
+      "collection-dynamic-render-native": {
+        "pass": 20
+      },
+      "collection-dynamic-render-portable": {
+        "chromium": {
+          "pass": 20
+        },
+        "napi": {
+          "pass": 20
+        }
+      },
+      "collection-lookups-native": {
+        "pass": 266
+      },
+      "collection-lookups-portable": {
+        "chromium": {
+          "pass": 266
+        },
+        "napi": {
+          "pass": 266
+        }
+      },
+      "collection-property-names-native": {
+        "pass": 52
+      },
+      "collection-property-names-portable": {
+        "chromium": {
+          "pass": 52
+        },
+        "napi": {
+          "pass": 52
+        }
+      },
+      "data-size-native": {
+        "pass": 510
+      },
+      "data-size-portable": {
+        "chromium": {
+          "pass": 510
+        },
+        "napi": {
+          "pass": 510
+        }
+      },
+      "duration-native": {
+        "pass": 548
+      },
+      "duration-portable": {
+        "chromium": {
+          "pass": 548
+        },
+        "napi": {
+          "pass": 548
+        }
+      },
+      "inferred-new-values-native": {
+        "pass": 144
+      },
+      "inferred-new-values-portable": {
+        "chromium": {
+          "pass": 144
+        },
+        "napi": {
+          "pass": 144
+        }
+      },
+      "intseq-native": {
+        "pass": 474
+      },
+      "intseq-portable": {
+        "chromium": {
+          "pass": 474
+        },
+        "napi": {
+          "pass": 474
+        }
+      },
+      "reversal-implicit-native": {
+        "pass": 16
+      },
+      "reversal-implicit-portable": {
+        "chromium": {
+          "pass": 16
+        },
+        "napi": {
+          "pass": 16
+        }
+      },
+      "reversal-subscript-native": {
+        "pass": 38
+      },
+      "reversal-subscript-portable": {
+        "chromium": {
+          "pass": 38
+        },
+        "napi": {
+          "pass": 38
+        }
+      },
+      "reversal-values-native": {
+        "pass": 156
+      },
+      "reversal-values-portable": {
+        "chromium": {
+          "pass": 156
+        },
+        "napi": {
+          "pass": 156
+        }
+      },
+      "set-endpoints-native": {
+        "pass": 140
+      },
+      "set-endpoints-portable": {
+        "chromium": {
+          "pass": 140
+        },
+        "napi": {
+          "pass": 140
+        }
+      },
+      "string-properties-native": {
+        "pass": 292
+      },
+      "string-properties-portable": {
+        "chromium": {
+          "pass": 292
+        },
+        "napi": {
+          "pass": 292
+        }
+      },
+      "union-marker-native": {
+        "pass": 80
+      },
+      "union-marker-portable": {
+        "chromium": {
+          "pass": 80
+        },
+        "napi": {
+          "pass": 80
+        }
+      }
+    },
+    "full_inventory": {
+      "adapter_status_counts": {
+        "language-api-string": {
+          "mismatch": 10,
+          "oracle-error": 1,
+          "pass": 3516
+        },
+        "language-jvm-classpath-output": {
+          "pass": 1
+        },
+        "language-module-eval": {
+          "candidate-internal-error": 1,
+          "candidate-unsupported": 143,
+          "mismatch": 118,
+          "oracle-error": 1,
+          "pass": 625
+        }
+      },
+      "full_gate_failure_count": 1802,
+      "prior131_transitions": {
+        "candidate-unsupported->candidate-unsupported": 31,
+        "mismatch->mismatch": 18,
+        "oracle-error->oracle-error": 1,
+        "pass->pass": 81
+      },
+      "prior_pass_regressions": [],
+      "selected": 4416,
+      "status_counts": {
+        "candidate-internal-error": 1,
+        "candidate-unsupported": 143,
+        "mismatch": 128,
+        "oracle-error": 2,
+        "pass": 4142
+      },
+      "strict_verify_full_exit": 1,
+      "unready_cases_outside_selected": 111
+    },
+    "full_terminal_admitted": true,
+    "inputs": {
+      "catalog": {
+        "bytes": 4798,
+        "path": "target/m2/stage67-catalog-validation-01/report.json",
+        "sha256": "b5ac38fa20805eb052f1d369a1d977d2ca3cf4198059ba31102c27464b4dc332"
+      },
+      "comparison": {
+        "bytes": 91669,
+        "path": "target/m2/stage67-comparison-validation-01/report.json",
+        "sha256": "a92a71112073b4f5c7c154f504984acf55368174aebc71f98a36e0e360ff5dbd"
+      },
+      "comparison_launch": {
+        "bytes": 5229,
+        "path": "target/m2/stage67-comparison-launch-01/report.json",
+        "sha256": "fe7b44818c79234a04918a29b336c3b913ea5e98e5a9c5d3f3db7cafa2c8092b"
+      },
+      "comparison_review": {
+        "bytes": 2890,
+        "path": "target/m2/stage67-comparison-review-01/report.json",
+        "sha256": "4fe6ed69ea3c06cb940aa48a50e7a744e4c842ef1522b349a1e0ccd99ede65af"
+      },
+      "count": {
+        "bytes": 6163,
+        "path": "target/m2/stage67-validation-count-review-01/report.json",
+        "sha256": "29e52c0ff635cf24b80f5170a3821506f757bac0d18ee05789134a820b84b10e"
+      },
+      "freeze": {
+        "bytes": 12376,
+        "path": "target/m2/stage67-core-freeze-01/freeze.json",
+        "sha256": "9470e29da951f88af20ab3f762a2d82a83e19e8ebecfb93684c657b88c5cb7bf"
+      },
+      "full": {
+        "bytes": 20949022,
+        "path": "target/m2/stage67-full-regression-01/report.json",
+        "sha256": "ff8ab42bf33e922c7864142fa256e758a8e2ceaf41227f886129261bf705997e"
+      },
+      "full_launch": {
+        "bytes": 4478148,
+        "path": "target/m2/stage67-full-regression-prep-01/execution-01/report.json",
+        "sha256": "b8230a60f8fd902ba60d1c8351f4c9868bd98e7f1444e4deb105750cf0a0a2d1"
+      },
+      "full_review": {
+        "bytes": 304070,
+        "path": "target/m2/stage67-full-regression-review-01/report.json",
+        "sha256": "7ff3fc0319dbb625933c83ef5a1d7cd1cf33a4dc7759d676404eefd29c9de192"
+      },
+      "java_A": {
+        "bytes": 4450,
+        "path": "reports/m2/stage67-java-checkpoint.json",
+        "sha256": "d09e4170985605eb035dc61f6a924910a6de79e8d0bf7b2511f20109c79b66fb"
+      },
+      "m1": {
+        "bytes": 3390770,
+        "path": "target/m2/stage67-m1-platform-contract-01/report.json",
+        "sha256": "f4dd2b82a196e542cffb85d3fbf3ca0e69edf9ea3a8c86a5ea6a71032989c3b6"
+      },
+      "mapping": {
+        "bytes": 8947,
+        "path": "target/m2/stage67-mapping-validation-01/report.json",
+        "sha256": "f1876b68f25491d7972b26f56efbe6345495b0579adb8ca8d17f1c6a78182ae0"
+      },
+      "native": {
+        "bytes": 40239,
+        "path": "target/m2/stage67-native-acquisition-01/report.json",
+        "sha256": "9fb26ddc978214e33b5097ed931d660e187f49ab85528452b4f9247086f3df95"
+      },
+      "platform": {
+        "bytes": 360860,
+        "path": "target/m2/stage67-platform-validation-01/report.json",
+        "sha256": "f80338172b36a259c0f74f13c2197b08ee599d55ddca92ee38fd6b312416c13a"
+      },
+      "recovery05": {
+        "bytes": 39892,
+        "path": "target/m2/stage67-storage-recovery-05/report.json",
+        "sha256": "0cfeeca4c0e400ee4c8763206bff6cfc6914a3c4565f14bfaec2db0ae20eff2f"
+      },
+      "recovery05_postcheck": {
+        "bytes": 1009,
+        "path": "target/m2/stage67-storage-recovery-05/postcheck.json",
+        "sha256": "05ba6365d6f1b1ae81499b4728058aa3ac1a35e57c705143ce9f65b5c35be0be"
+      },
+      "recovery05_process": {
+        "bytes": 1966,
+        "path": "target/m2/stage67-storage-recovery-05/process.json",
+        "sha256": "7eed47b44a2c6c0ae9513f35d270f8a0f31375d5d0f82439da6a76954455421e"
+      },
+      "recovery06": {
+        "bytes": 16157,
+        "path": "target/m2/stage67-storage-recovery-06/report.json",
+        "sha256": "ddf8c0cfe31e1cf90b8aacf2780e39f85c6b04a2a5bfbdddc99fd6b3a9b6adb5"
+      },
+      "recovery06_postcheck": {
+        "bytes": 970,
+        "path": "target/m2/stage67-storage-recovery-06/postcheck-02.json",
+        "sha256": "1cda93c30e5ce585a56e72c05cb64a02c53f858aa7093a15e1c58753ba3eb156"
+      },
+      "recovery06_process": {
+        "bytes": 1965,
+        "path": "target/m2/stage67-storage-recovery-06/process.json",
+        "sha256": "c6789a9be44e78e8ab20a78d2c0329240a6d422eb50ae05a44b6c728a914398c"
+      },
+      "runtime_sources": {
+        "bytes": 46922,
+        "path": "target/m2/stage67-core-freeze-01/source-snapshot.json",
+        "sha256": "daa702a3a4bac81f2f5b669bdf134e7ca903edcbda290c2640b48eca4c384901"
+      },
+      "rust": {
+        "bytes": 6482,
+        "path": "target/m2/stage67-rust-validation-01/report.json",
+        "sha256": "54436732c7034967c3758995819fa586020471762db2871368fc318d866d5a81"
+      },
+      "rust_sources": {
+        "bytes": 108372318,
+        "path": "target/m2/stage67-rust-validation-01/sources.json",
+        "sha256": "cf17c9e129295af6aada7de803c5d776b891ac53a5c7214256df4133bc9fd8b7"
+      },
+      "subset_audit": {
+        "bytes": 430687,
+        "path": "target/m2/stage67-full-regression-subset-audit-01/report.json",
+        "sha256": "a47011694d2fb12fd3a8ba1be89b3042585898fac7ce0013ad5dda6ee8994b4e"
+      }
+    },
+    "m1": {
+      "compatibility_status": "fail",
+      "experiment_contract_status": "pass",
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "runtime_sources": 293,
+    "rust": {
+      "copied_source_rows": 9,
+      "distinct_tests": {
+        "failed": 0,
+        "ignored": 2,
+        "passed": 1008
+      },
+      "raw_harness_totals": {
+        "failed": 0,
+        "ignored": 2,
+        "passed": 1021
+      },
+      "source_rows": 165550
+    },
+    "tooling": {
+      "catalog_node_tests": 11,
+      "catalog_python_tests_each_mode": 26,
+      "mapping_python_tests_each_mode": 8,
+      "recorded_base_commit": "1a07503cf01076e5a187d6cde86cd5f1c9b4c44c"
+    }
+  }
+}

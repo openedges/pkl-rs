@@ -4596,15 +4596,6 @@ impl Vm {
                 }
                 if method && name.as_ref() == "repeat" && matches!(receiver, Value::String(_)) {
                     self.string_repeat_method(receiver);
-                } else if !method
-                    && let Value::String(text) = &receiver
-                    && matches!(name.as_ref(), "length" | "isEmpty")
-                {
-                    self.stack.push(if name.as_ref() == "length" {
-                        Value::Int((text.code_point_len() as i64).into())
-                    } else {
-                        Value::Bool(text.is_empty())
-                    });
                 } else if method
                     && name.as_ref() == "getClass"
                     && (!matches!(receiver, Value::Object(id) if self.heap.object_class(id)?.is_some()))

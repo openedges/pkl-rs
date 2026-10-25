@@ -845,10 +845,7 @@ impl Vm {
                     self.native_reference_method(Value::Object(id), name)
                 }
                 _ => {
-                    return Err(RuntimeError::new(
-                        ErrorKind::MissingMember,
-                        format!("Cannot find method `{name}` in class `pkl.ref#Reference`."),
-                    ));
+                    return Err(self.builtin_member_error("pkl.ref#Reference", name, true));
                 }
             }
         } else {
@@ -1350,8 +1347,17 @@ impl Vm {
                     _ => Err(fail()),
                 }
             }
-            TypeCheck::String if property == Some("length") => Ok(TypeCheck::Int),
-            TypeCheck::String if property == Some("isEmpty") => Ok(TypeCheck::Boolean),
+            TypeCheck::String if matches!(property, Some("length" | "lastIndex")) => {
+                Ok(TypeCheck::Int)
+            }
+            TypeCheck::String
+                if matches!(
+                    property,
+                    Some("isEmpty" | "isNotEmpty" | "isBlank" | "isNotBlank")
+                ) =>
+            {
+                Ok(TypeCheck::Boolean)
+            }
             _ => Err(fail()),
         }
     }

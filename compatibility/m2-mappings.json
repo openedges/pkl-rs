@@ -530,7 +530,7 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
@@ -574,7 +574,7 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleProperties3.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語_error.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e_error.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/currentModuleType1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/currentModuleType2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType2.pkl",
@@ -1672,7 +1672,7 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
@@ -7798,6 +7798,22 @@
           {
             "path": "crates/pkl-runtime/src/pkl_string.rs",
             "symbol": "reversed"
+          },
+          {
+            "path": "crates/pkl-runtime/src/pkl_string.rs",
+            "symbol": "is_blank"
+          },
+          {
+            "path": "crates/pkl-runtime/src/pkl_string.rs",
+            "symbol": "code_point_len"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/primitives.rs",
+            "symbol": "primitive_member"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "symbol": "reference_candidate"
           }
         ],
         "state": "partial"
@@ -7807,7 +7823,7 @@
         "Whole-module rendering, malformed UTF-16 transport and each target environment retain their independent execution gates; focused reversal does not close them."
       ],
       "requirement": "semantic:strings",
-      "scope": "Stage66 links the existing lossless UTF-16 string value and Java-compatible StringBuilder-style reversal. Paired and unpaired surrogate controls are retained in the independent reversal fixture. These source links and focused controls do not claim whole String API or original-program completion.",
+      "scope": "Stage66 links the existing lossless UTF-16 string value and Java-compatible StringBuilder-style reversal. Stage67 adds shared length, isEmpty, isNotEmpty, isBlank, isNotBlank and lastIndex property lookup for explicit access and implicit constraints, plus synthetic Reference property types. Blankness uses the pinned Pkl StringUtils 25-unit White_Space set, while lastIndex uses code-point count minus one. Independent Java fixtures retain paired/unpaired surrogates, direct BMP membership and full diagnostic controls. These partial source links and selected comparisons do not claim the complete String API or original-program completion.",
       "tests": {
         "case_ids": [
           "string-empty",

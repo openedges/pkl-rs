@@ -159,6 +159,15 @@ impl Vm {
             Value::Null | Value::NullWithDefault(_) => "Null",
             _ => return None,
         };
+        Some(self.builtin_member_error(class, name, method))
+    }
+
+    pub(super) fn builtin_member_error(
+        &self,
+        class: &str,
+        name: &str,
+        method: bool,
+    ) -> RuntimeError {
         let (properties, methods) = crate::diagnostic_names::builtin_members(class);
         let arity = if method {
             self.frames
@@ -211,7 +220,7 @@ impl Vm {
                     .into(),
                 )
             });
-        Some(error)
+        error
     }
 
     pub(super) fn function_member_error(
@@ -289,6 +298,21 @@ impl Vm {
         method: bool,
     ) -> Result<bool, RuntimeError> {
         if !method {
+            if let Value::String(text) = receiver {
+                let value = match name {
+                    "length" => Some(Value::Int((text.code_point_len() as i64).into())),
+                    "lastIndex" => Some(Value::Int((text.code_point_len() as i64 - 1).into())),
+                    "isEmpty" => Some(Value::Bool(text.is_empty())),
+                    "isNotEmpty" => Some(Value::Bool(!text.is_empty())),
+                    "isBlank" => Some(Value::Bool(text.is_blank())),
+                    "isNotBlank" => Some(Value::Bool(!text.is_blank())),
+                    _ => None,
+                };
+                if let Some(value) = value {
+                    self.stack.push(value);
+                    return Ok(true);
+                }
+            }
             if let Some(unit) = crate::data_size::DataSizeUnit::parse(name) {
                 let number = match receiver {
                     Value::Int(value) => Some(value.get() as f64),

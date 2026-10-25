@@ -1,0 +1,806 @@
+{
+  "assembly": {
+    "actual_process_receipt": "target/m2/stage67-checkpoint-publication-01/execution/checkpoint-assembly/process.json",
+    "receipt_boundary": "Actual publisher/assembly process receipts postdate B archives and belong in C.",
+    "source": {
+      "bytes": 6545,
+      "path": "target/m2/stage67-checkpoint-publication-01/assemble.py",
+      "sha256": "656eff6dd72f6efee5a954f5a99c0dfb3e902d4db7dda11d988487585ec741c8"
+    }
+  },
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "direct_checkpoint_inputs_reconstructible_from_B_union_except_separate_Java_A": true,
+  "documentation_boundary": "Captured source/document bytes retain their recorded identities; later documentation edits require separate post-B Git/source binding.",
+  "full_m2_complete": false,
+  "full_public_api_passed": false,
+  "history": [
+    "Stage67 Java A 23 directories and public Java archive remain separately committed.",
+    "Storage recovery 01\u201304 histories and focused01/02 remain in B; no failed status promotion.",
+    "Actual publisher/assembly process receipts postdate B archives and belong in C.",
+    "Full4416 output/review/audit are pending terminal acquisition at this draft.",
+    "A source-identified Reference amendment fast-path bypass is under target-only investigation; classify any Stage67-prefixed investigation directory before publication freeze.",
+    "Reviewer source analysis is captured in stage67-type-default-regression-analysis-01; it is development evidence, not a repaired candidate or pass.",
+    "stage67-storage-recovery-05 preserves exact 11 committed publication identities, 62 verified duplicate unlinks, raw process streams, and a read-only corrected postcheck; the first postcheck assumption failure is labeled.",
+    "stage67-prior-scalar-nonpasses-analysis-01 pins six historical mismatch identities without changing full4416 raw outcomes.",
+    "stage67-storage-recovery-06 preserves 22 verified committed duplicate unlinks, raw process streams and corrected postcheck-02; initial postcheck.json prose remains historical.",
+    "stage67-docs-draft-01 is target-only drafting evidence with unresolved full4416/B/C fields; it is not a final verified tracked-document update.",
+    "stage67-docs-finalization-01 is a target-only, unexecuted postterminal insertion preparer; its outputs require the actual full4416 terminal report, independent strict review, and prior131 audit. Historical 79-directory publication sources are preserved under initial-revision/.",
+    "Terminal4416 record-only integrity passed; strict full gate exited1 with1802 unmet gate entries. Prior131 statuses unchanged, including81 passes. Historical preparation records remain immutable."
+  ],
+  "implementation_base": "a497f6fb901c451650ae371762e3dbaebf9eff6d",
+  "java_A": {
+    "bytes": 4450,
+    "path": "reports/m2/stage67-java-checkpoint.json",
+    "sha256": "d09e4170985605eb035dc61f6a924910a6de79e8d0bf7b2511f20109c79b66fb"
+  },
+  "java_A_boundary": {
+    "ordinary_pkl_errors": 29,
+    "public_expression_rows": 146,
+    "public_successes": 117
+  },
+  "java_A_directories": 23,
+  "kind": "stage67-implementation-checkpoint",
+  "known_limits": [
+    "15-profile 1227-row selected catalog, 2454 observations per target, is distinct from full4416 original-ready inventory.",
+    "Any two Regex mismatches per portable target and M1 Regex compatibility failures remain literal failures.",
+    "Full4416 record-only acquisition and strict --verify-full are distinct; selected failures must remain failures.",
+    "111 unready full inventory cases and two prior blocked requirements remain outside selected success claims.",
+    "No full M2, full public API, or performance completion is claimed.",
+    "Full4416 has an inherited Reference amendment regression versus earlier Stage47/48; preserve its actual current raw failure and source investigation, with no regression-free claim.",
+    "The full4416 run also revealed set-stage23-constructor-listing-default mismatch; preserve the actual raw status and type-default investigation, with no regression-free claim.",
+    "Finite committed Stage63/62 duplicate recovery05 was terminal and reclaimed about 1.63 GiB; it did not meet a 3 GiB free-space target and did not run compatibility guests.",
+    "Six late scalar nonpasses in full4416 are historical Stage47/48 mismatches (Int32 narrowing\u00d72, unpaired URI\u00d71, malformed HTTP\u00d73), not newly introduced regressions; raw statuses remain nonpasses.",
+    "Recovery06 exhausted the finite Stage61/60 duplicate scope after reclaiming about 821 MiB; its additional 1.5 GiB aim was not met, although measured total free rose above 3 GiB."
+  ],
+  "performance_claim": false,
+  "publication_proof": "Every publisher performed SHA/size/mode full member readback and source bookends; assembly rechecks artifact SHA and exact embedded inventories.",
+  "publications": {
+    "closeout": {
+      "archive": {
+        "bytes": 7114020,
+        "full_member_readback_verified": true,
+        "members": 159,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-closeout-evidence.tar.gz",
+        "sha256": "a158ecbb10cfd182ecc6818d6b290d11ebeae88a31fd4f0d1cc7a3178a059012"
+      },
+      "file_members": 158,
+      "publication": {
+        "bytes": 49537,
+        "path": "reports/m2/stage67-b-closeout-publication.json",
+        "sha256": "5036fbf215f6ac2226e0734145340904038a2b7cd5d42cfe6fcee2563f6f6fdc"
+      },
+      "selected_directories": [
+        "stage67-comparison-launch-01",
+        "stage67-comparison-validation-01",
+        "stage67-comparison-review-01"
+      ]
+    },
+    "development": {
+      "archive": {
+        "bytes": 290819,
+        "full_member_readback_verified": true,
+        "members": 73,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-development-evidence.tar.gz",
+        "sha256": "4ab48dd8db49385b1dd847bf7dde768dfe1f1953d4ab980943b58a03b8846687"
+      },
+      "file_members": 72,
+      "publication": {
+        "bytes": 29754,
+        "path": "reports/m2/stage67-b-development-publication.json",
+        "sha256": "1caa3c23fb22f7c6c898cf495a0aac02448b063ab929ed18e251d3909d15e582"
+      },
+      "selected_directories": [
+        "stage67-core-focused-01",
+        "stage67-core-focused-02",
+        "stage67-core-freeze-01",
+        "stage67-java-test-generation-01",
+        "stage67-type-default-regression-analysis-01",
+        "stage67-prior-scalar-nonpasses-analysis-01"
+      ]
+    },
+    "full-inventory": {
+      "archive": {
+        "bytes": 57911607,
+        "full_member_readback_verified": true,
+        "members": 46437,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-full-inventory-evidence.tar.gz",
+        "sha256": "fe02d2c88552ca4974273554214be2d4f415c985844216f1c1df63135e0a0fb8"
+      },
+      "file_members": 46436,
+      "publication": {
+        "bytes": 11059059,
+        "path": "reports/m2/stage67-b-full-inventory-publication.json",
+        "sha256": "eccc18c0431dc40519e5b3b908e7bc0e3b1dfd5a4015836cee9601eca9d42933"
+      },
+      "selected_directories": [
+        "stage67-full-regression-01",
+        "stage67-full-regression-review-01",
+        "stage67-full-regression-subset-audit-01"
+      ]
+    },
+    "native-build": {
+      "archive": {
+        "bytes": 23338094,
+        "full_member_readback_verified": true,
+        "members": 720,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-native-build-evidence.tar.gz",
+        "sha256": "1c0a02b360a95803968ab1a00f13097faa4a2c4fe868b5ab3b6d71d7bc64498d"
+      },
+      "file_members": 719,
+      "publication": {
+        "bytes": 182180,
+        "path": "reports/m2/stage67-b-native-build-publication.json",
+        "sha256": "e5785aaccb8f9712b7f362c5c84dc3d92e0cbc6720b47c80ad704fe37327e59e"
+      },
+      "selected_directories": [
+        "stage67-native-build-01",
+        "stage67-native-acquisition-01",
+        "stage67-bytes-native-regression-launch-01",
+        "stage67-duration-native-regression-launch-01"
+      ]
+    },
+    "native-catalog-a": {
+      "archive": {
+        "bytes": 38438202,
+        "full_member_readback_verified": true,
+        "members": 8786,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-native-catalog-a-evidence.tar.gz",
+        "sha256": "03df4015553ee95973684d6536b6d3990bedea01ce5fe5cd8000f63c27863f4c"
+      },
+      "file_members": 8785,
+      "publication": {
+        "bytes": 2339156,
+        "path": "reports/m2/stage67-b-native-catalog-a-publication.json",
+        "sha256": "200f71c5b60fcbed45990ebc3302bbba87c4b9ce2a5e96ab0e99f734f19e70ea"
+      },
+      "selected_directories": [
+        "stage67-collection-conversions-native-comparison-01",
+        "stage67-collection-conversion-controls-native-comparison-01",
+        "stage67-collection-default-contracts-native-comparison-01",
+        "stage67-collection-dynamic-render-native-comparison-01"
+      ]
+    },
+    "native-catalog-b": {
+      "archive": {
+        "bytes": 38408389,
+        "full_member_readback_verified": true,
+        "members": 9402,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-native-catalog-b-evidence.tar.gz",
+        "sha256": "29c11541485e2b2f34184e9bdff174d09dc83ac1464b811186cf7d78a8f5bd1a"
+      },
+      "file_members": 9401,
+      "publication": {
+        "bytes": 2428537,
+        "path": "reports/m2/stage67-b-native-catalog-b-publication.json",
+        "sha256": "258a71ee98ec933f425423d6057b9ce27e0461cd71347654b7b87e0bc57a0a71"
+      },
+      "selected_directories": [
+        "stage67-collection-lookups-native-comparison-01",
+        "stage67-collection-property-names-native-comparison-01",
+        "stage67-collection-addition-native-comparison-01",
+        "stage67-set-endpoints-native-comparison-01"
+      ]
+    },
+    "native-catalog-c": {
+      "archive": {
+        "bytes": 29091068,
+        "full_member_readback_verified": true,
+        "members": 8652,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-native-catalog-c-evidence.tar.gz",
+        "sha256": "5666eb9e66c46c4bfbcd55307d829c6d151fb6096b1d48beda825c338376ed23"
+      },
+      "file_members": 8651,
+      "publication": {
+        "bytes": 2238962,
+        "path": "reports/m2/stage67-b-native-catalog-c-publication.json",
+        "sha256": "228a124348d138aa496d25ac9685c22eb0aaa130a2a9a2745524521604e5e124"
+      },
+      "selected_directories": [
+        "stage67-amendment-construction-native-comparison-01",
+        "stage67-inferred-new-values-native-comparison-01",
+        "stage67-reversal-values-native-comparison-01"
+      ]
+    },
+    "native-catalog-d": {
+      "archive": {
+        "bytes": 38227772,
+        "full_member_readback_verified": true,
+        "members": 6213,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-native-catalog-d-evidence.tar.gz",
+        "sha256": "c600f22330dcf08ebf3e501ba42cecc78442618096f2a60bcfd288b7f69d2b16"
+      },
+      "file_members": 6212,
+      "publication": {
+        "bytes": 1599725,
+        "path": "reports/m2/stage67-b-native-catalog-d-publication.json",
+        "sha256": "7f44cb36bf4669020e5d9d6a9de8a79e1abfe6aa280ab0d6ff0403e1a6a69af3"
+      },
+      "selected_directories": [
+        "stage67-reversal-implicit-native-comparison-01",
+        "stage67-reversal-subscript-native-comparison-01",
+        "stage67-base-constructor-constraints-native-comparison-01",
+        "stage67-string-properties-native-comparison-01"
+      ]
+    },
+    "native-scalars": {
+      "archive": {
+        "bytes": 31536267,
+        "full_member_readback_verified": true,
+        "members": 25837,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-native-scalars-evidence.tar.gz",
+        "sha256": "ef68c85f66e76a40e596a6906c9329c0a7a1a0353d914ce0ca7d6b6e3744002a"
+      },
+      "file_members": 25836,
+      "publication": {
+        "bytes": 6230472,
+        "path": "reports/m2/stage67-b-native-scalars-publication.json",
+        "sha256": "12c3fcf637700f76e6f377c772ea2312aa846670f9cc59bbe829420ba7527201"
+      },
+      "selected_directories": [
+        "stage67-intseq-native-comparison-01",
+        "stage67-bytes-native-regression-01",
+        "stage67-duration-native-regression-01",
+        "stage67-data-size-native-regression-01",
+        "stage67-union-marker-native-comparison-01"
+      ]
+    },
+    "platform": {
+      "archive": {
+        "bytes": 23041708,
+        "full_member_readback_verified": true,
+        "members": 108996,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-platform-evidence.tar.gz",
+        "sha256": "0720e4093fd470740f953acf312eacd7ee098fec2ac0edf5558e5c22ab85b06a"
+      },
+      "file_members": 108995,
+      "publication": {
+        "bytes": 27545235,
+        "path": "reports/m2/stage67-b-platform-publication.json",
+        "sha256": "5f68d7e2608fcc13ee1c85c48f0608c85a34c2cc15a6c8782e188ad81b17aeb4"
+      },
+      "selected_directories": [
+        "stage67-m1-platform-contract-01",
+        "stage67-platform-validation-01",
+        "stage67-amendment-construction-portable-capture-01",
+        "stage67-any-if-non-null-portable-capture-01",
+        "stage67-base-constructor-constraints-portable-capture-01",
+        "stage67-bytes-values-portable-capture-01",
+        "stage67-collection-addition-portable-capture-01",
+        "stage67-collection-conversion-controls-portable-capture-01",
+        "stage67-collection-conversions-portable-capture-01",
+        "stage67-collection-default-contracts-portable-capture-01",
+        "stage67-collection-dynamic-render-portable-capture-01",
+        "stage67-collection-lookups-portable-capture-01",
+        "stage67-collection-property-names-portable-capture-01",
+        "stage67-data-size-portable-capture-01",
+        "stage67-duration-values-portable-capture-01",
+        "stage67-inferred-new-values-portable-capture-01",
+        "stage67-int-seq-values-portable-capture-01",
+        "stage67-reversal-implicit-portable-capture-01",
+        "stage67-reversal-subscript-portable-capture-01",
+        "stage67-reversal-values-portable-capture-01",
+        "stage67-set-endpoints-portable-capture-01",
+        "stage67-string-properties-portable-capture-01",
+        "stage67-union-marker-portable-capture-01"
+      ]
+    },
+    "preparation": {
+      "archive": {
+        "bytes": 2112664,
+        "full_member_readback_verified": true,
+        "members": 168,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-preparation-evidence.tar.gz",
+        "sha256": "c7be10c976784caac1d88cf3ec866031245a799826b8d21afafdba3c79b92c3a"
+      },
+      "file_members": 167,
+      "publication": {
+        "bytes": 49043,
+        "path": "reports/m2/stage67-b-preparation-publication.json",
+        "sha256": "678a3e079b0beda6ce5750af92d8376a64f583c588d06fd921b775580d07b685"
+      },
+      "selected_directories": [
+        "stage67-capture-preparation-01",
+        "stage67-capture-launch-01",
+        "stage67-native-platform-launch-01",
+        "stage67-comparison-preparation-01",
+        "stage67-full-regression-prep-01",
+        "stage67-storage-recovery-01",
+        "stage67-storage-recovery-02",
+        "stage67-storage-recovery-03",
+        "stage67-storage-recovery-04",
+        "stage67-java-publication-01",
+        "stage67-java-publication-review-01",
+        "stage67-java-commit-binding-01",
+        "stage67-b-publication-prep-01",
+        "stage67-storage-recovery-05",
+        "stage67-storage-recovery-06",
+        "stage67-docs-draft-01",
+        "stage67-docs-finalization-01"
+      ]
+    },
+    "rust-validation": {
+      "archive": {
+        "bytes": 13326965,
+        "full_member_readback_verified": true,
+        "members": 52,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-rust-validation-evidence.tar.gz",
+        "sha256": "a5822375e13dbd2dd1eec30408eefdb62ec1745c135a7d63fbf93ba57dafddcb"
+      },
+      "file_members": 51,
+      "publication": {
+        "bytes": 25945,
+        "path": "reports/m2/stage67-b-rust-validation-publication.json",
+        "sha256": "2a57ac6a020276011b79d6e5627934a340cbfa056f7b7f1b3a9917dfed87038d"
+      },
+      "selected_directories": [
+        "stage67-rust-validation-01",
+        "stage67-validation-count-review-01"
+      ]
+    },
+    "tooling": {
+      "archive": {
+        "bytes": 3897332,
+        "full_member_readback_verified": true,
+        "members": 224,
+        "mode": 420,
+        "path": "reports/m2/stage67-b-tooling-evidence.tar.gz",
+        "sha256": "db8a57711a3d3280b047cf55c581045add50779a1ffdc47ff34643b31d422de8"
+      },
+      "file_members": 223,
+      "publication": {
+        "bytes": 66452,
+        "path": "reports/m2/stage67-b-tooling-publication.json",
+        "sha256": "f562960e819086b59075365b5ea33507609c2b8ed1b35f10f5866b6d21832aa3"
+      },
+      "selected_directories": [
+        "stage67-catalog-validation-01",
+        "stage67-mapping-validation-01"
+      ]
+    }
+  },
+  "published_distinct_member_paths": 215466,
+  "results": {
+    "candidate_compatibility_passes_claimed": 0,
+    "catalog": {
+      "observations_per_target": 2454,
+      "profiles": 15,
+      "rows": 1227
+    },
+    "comparison_counts": {
+      "amendment-construction-native": {
+        "pass": 376
+      },
+      "amendment-construction-portable": {
+        "chromium": {
+          "pass": 376
+        },
+        "napi": {
+          "pass": 376
+        }
+      },
+      "any-portable": {
+        "chromium": {
+          "mismatch": 2,
+          "pass": 170
+        },
+        "napi": {
+          "mismatch": 2,
+          "pass": 170
+        }
+      },
+      "base-constructor-constraints-native": {
+        "pass": 72
+      },
+      "base-constructor-constraints-portable": {
+        "chromium": {
+          "pass": 72
+        },
+        "napi": {
+          "pass": 72
+        }
+      },
+      "bytes-native": {
+        "pass": 600
+      },
+      "bytes-portable": {
+        "chromium": {
+          "pass": 600
+        },
+        "napi": {
+          "pass": 600
+        }
+      },
+      "collection-addition-native": {
+        "pass": 250
+      },
+      "collection-addition-portable": {
+        "chromium": {
+          "pass": 250
+        },
+        "napi": {
+          "pass": 250
+        }
+      },
+      "collection-conversion-controls-native": {
+        "pass": 116
+      },
+      "collection-conversion-controls-portable": {
+        "chromium": {
+          "pass": 116
+        },
+        "napi": {
+          "pass": 116
+        }
+      },
+      "collection-conversions-native": {
+        "pass": 472
+      },
+      "collection-conversions-portable": {
+        "chromium": {
+          "pass": 472
+        },
+        "napi": {
+          "pass": 472
+        }
+      },
+      "collection-default-contracts-native": {
+        "pass": 44
+      },
+      "collection-default-contracts-portable": {
+        "chromium": {
+          "pass": 44
+        },
+        "napi": {
+          "pass": 44
+        }
+      },
+      "collection-dynamic-render-native": {
+        "pass": 20
+      },
+      "collection-dynamic-render-portable": {
+        "chromium": {
+          "pass": 20
+        },
+        "napi": {
+          "pass": 20
+        }
+      },
+      "collection-lookups-native": {
+        "pass": 266
+      },
+      "collection-lookups-portable": {
+        "chromium": {
+          "pass": 266
+        },
+        "napi": {
+          "pass": 266
+        }
+      },
+      "collection-property-names-native": {
+        "pass": 52
+      },
+      "collection-property-names-portable": {
+        "chromium": {
+          "pass": 52
+        },
+        "napi": {
+          "pass": 52
+        }
+      },
+      "data-size-native": {
+        "pass": 510
+      },
+      "data-size-portable": {
+        "chromium": {
+          "pass": 510
+        },
+        "napi": {
+          "pass": 510
+        }
+      },
+      "duration-native": {
+        "pass": 548
+      },
+      "duration-portable": {
+        "chromium": {
+          "pass": 548
+        },
+        "napi": {
+          "pass": 548
+        }
+      },
+      "inferred-new-values-native": {
+        "pass": 144
+      },
+      "inferred-new-values-portable": {
+        "chromium": {
+          "pass": 144
+        },
+        "napi": {
+          "pass": 144
+        }
+      },
+      "intseq-native": {
+        "pass": 474
+      },
+      "intseq-portable": {
+        "chromium": {
+          "pass": 474
+        },
+        "napi": {
+          "pass": 474
+        }
+      },
+      "reversal-implicit-native": {
+        "pass": 16
+      },
+      "reversal-implicit-portable": {
+        "chromium": {
+          "pass": 16
+        },
+        "napi": {
+          "pass": 16
+        }
+      },
+      "reversal-subscript-native": {
+        "pass": 38
+      },
+      "reversal-subscript-portable": {
+        "chromium": {
+          "pass": 38
+        },
+        "napi": {
+          "pass": 38
+        }
+      },
+      "reversal-values-native": {
+        "pass": 156
+      },
+      "reversal-values-portable": {
+        "chromium": {
+          "pass": 156
+        },
+        "napi": {
+          "pass": 156
+        }
+      },
+      "set-endpoints-native": {
+        "pass": 140
+      },
+      "set-endpoints-portable": {
+        "chromium": {
+          "pass": 140
+        },
+        "napi": {
+          "pass": 140
+        }
+      },
+      "string-properties-native": {
+        "pass": 292
+      },
+      "string-properties-portable": {
+        "chromium": {
+          "pass": 292
+        },
+        "napi": {
+          "pass": 292
+        }
+      },
+      "union-marker-native": {
+        "pass": 80
+      },
+      "union-marker-portable": {
+        "chromium": {
+          "pass": 80
+        },
+        "napi": {
+          "pass": 80
+        }
+      }
+    },
+    "full_inventory": {
+      "adapter_status_counts": {
+        "language-api-string": {
+          "mismatch": 10,
+          "oracle-error": 1,
+          "pass": 3516
+        },
+        "language-jvm-classpath-output": {
+          "pass": 1
+        },
+        "language-module-eval": {
+          "candidate-internal-error": 1,
+          "candidate-unsupported": 143,
+          "mismatch": 118,
+          "oracle-error": 1,
+          "pass": 625
+        }
+      },
+      "full_gate_failure_count": 1802,
+      "prior131_transitions": {
+        "candidate-unsupported->candidate-unsupported": 31,
+        "mismatch->mismatch": 18,
+        "oracle-error->oracle-error": 1,
+        "pass->pass": 81
+      },
+      "prior_pass_regressions": [],
+      "selected": 4416,
+      "status_counts": {
+        "candidate-internal-error": 1,
+        "candidate-unsupported": 143,
+        "mismatch": 128,
+        "oracle-error": 2,
+        "pass": 4142
+      },
+      "strict_verify_full_exit": 1,
+      "unready_cases_outside_selected": 111
+    },
+    "full_terminal_admitted": true,
+    "inputs": {
+      "catalog": {
+        "bytes": 4798,
+        "path": "target/m2/stage67-catalog-validation-01/report.json",
+        "sha256": "b5ac38fa20805eb052f1d369a1d977d2ca3cf4198059ba31102c27464b4dc332"
+      },
+      "comparison": {
+        "bytes": 91669,
+        "path": "target/m2/stage67-comparison-validation-01/report.json",
+        "sha256": "a92a71112073b4f5c7c154f504984acf55368174aebc71f98a36e0e360ff5dbd"
+      },
+      "comparison_launch": {
+        "bytes": 5229,
+        "path": "target/m2/stage67-comparison-launch-01/report.json",
+        "sha256": "fe7b44818c79234a04918a29b336c3b913ea5e98e5a9c5d3f3db7cafa2c8092b"
+      },
+      "comparison_review": {
+        "bytes": 2890,
+        "path": "target/m2/stage67-comparison-review-01/report.json",
+        "sha256": "4fe6ed69ea3c06cb940aa48a50e7a744e4c842ef1522b349a1e0ccd99ede65af"
+      },
+      "count": {
+        "bytes": 6163,
+        "path": "target/m2/stage67-validation-count-review-01/report.json",
+        "sha256": "29e52c0ff635cf24b80f5170a3821506f757bac0d18ee05789134a820b84b10e"
+      },
+      "freeze": {
+        "bytes": 12376,
+        "path": "target/m2/stage67-core-freeze-01/freeze.json",
+        "sha256": "9470e29da951f88af20ab3f762a2d82a83e19e8ebecfb93684c657b88c5cb7bf"
+      },
+      "full": {
+        "bytes": 20949022,
+        "path": "target/m2/stage67-full-regression-01/report.json",
+        "sha256": "ff8ab42bf33e922c7864142fa256e758a8e2ceaf41227f886129261bf705997e"
+      },
+      "full_launch": {
+        "bytes": 4478148,
+        "path": "target/m2/stage67-full-regression-prep-01/execution-01/report.json",
+        "sha256": "b8230a60f8fd902ba60d1c8351f4c9868bd98e7f1444e4deb105750cf0a0a2d1"
+      },
+      "full_review": {
+        "bytes": 304070,
+        "path": "target/m2/stage67-full-regression-review-01/report.json",
+        "sha256": "7ff3fc0319dbb625933c83ef5a1d7cd1cf33a4dc7759d676404eefd29c9de192"
+      },
+      "java_A": {
+        "bytes": 4450,
+        "path": "reports/m2/stage67-java-checkpoint.json",
+        "sha256": "d09e4170985605eb035dc61f6a924910a6de79e8d0bf7b2511f20109c79b66fb"
+      },
+      "m1": {
+        "bytes": 3390770,
+        "path": "target/m2/stage67-m1-platform-contract-01/report.json",
+        "sha256": "f4dd2b82a196e542cffb85d3fbf3ca0e69edf9ea3a8c86a5ea6a71032989c3b6"
+      },
+      "mapping": {
+        "bytes": 8947,
+        "path": "target/m2/stage67-mapping-validation-01/report.json",
+        "sha256": "f1876b68f25491d7972b26f56efbe6345495b0579adb8ca8d17f1c6a78182ae0"
+      },
+      "native": {
+        "bytes": 40239,
+        "path": "target/m2/stage67-native-acquisition-01/report.json",
+        "sha256": "9fb26ddc978214e33b5097ed931d660e187f49ab85528452b4f9247086f3df95"
+      },
+      "platform": {
+        "bytes": 360860,
+        "path": "target/m2/stage67-platform-validation-01/report.json",
+        "sha256": "f80338172b36a259c0f74f13c2197b08ee599d55ddca92ee38fd6b312416c13a"
+      },
+      "recovery05": {
+        "bytes": 39892,
+        "path": "target/m2/stage67-storage-recovery-05/report.json",
+        "sha256": "0cfeeca4c0e400ee4c8763206bff6cfc6914a3c4565f14bfaec2db0ae20eff2f"
+      },
+      "recovery05_postcheck": {
+        "bytes": 1009,
+        "path": "target/m2/stage67-storage-recovery-05/postcheck.json",
+        "sha256": "05ba6365d6f1b1ae81499b4728058aa3ac1a35e57c705143ce9f65b5c35be0be"
+      },
+      "recovery05_process": {
+        "bytes": 1966,
+        "path": "target/m2/stage67-storage-recovery-05/process.json",
+        "sha256": "7eed47b44a2c6c0ae9513f35d270f8a0f31375d5d0f82439da6a76954455421e"
+      },
+      "recovery06": {
+        "bytes": 16157,
+        "path": "target/m2/stage67-storage-recovery-06/report.json",
+        "sha256": "ddf8c0cfe31e1cf90b8aacf2780e39f85c6b04a2a5bfbdddc99fd6b3a9b6adb5"
+      },
+      "recovery06_postcheck": {
+        "bytes": 970,
+        "path": "target/m2/stage67-storage-recovery-06/postcheck-02.json",
+        "sha256": "1cda93c30e5ce585a56e72c05cb64a02c53f858aa7093a15e1c58753ba3eb156"
+      },
+      "recovery06_process": {
+        "bytes": 1965,
+        "path": "target/m2/stage67-storage-recovery-06/process.json",
+        "sha256": "c6789a9be44e78e8ab20a78d2c0329240a6d422eb50ae05a44b6c728a914398c"
+      },
+      "runtime_sources": {
+        "bytes": 46922,
+        "path": "target/m2/stage67-core-freeze-01/source-snapshot.json",
+        "sha256": "daa702a3a4bac81f2f5b669bdf134e7ca903edcbda290c2640b48eca4c384901"
+      },
+      "rust": {
+        "bytes": 6482,
+        "path": "target/m2/stage67-rust-validation-01/report.json",
+        "sha256": "54436732c7034967c3758995819fa586020471762db2871368fc318d866d5a81"
+      },
+      "rust_sources": {
+        "bytes": 108372318,
+        "path": "target/m2/stage67-rust-validation-01/sources.json",
+        "sha256": "cf17c9e129295af6aada7de803c5d776b891ac53a5c7214256df4133bc9fd8b7"
+      },
+      "subset_audit": {
+        "bytes": 430687,
+        "path": "target/m2/stage67-full-regression-subset-audit-01/report.json",
+        "sha256": "a47011694d2fb12fd3a8ba1be89b3042585898fac7ce0013ad5dda6ee8994b4e"
+      }
+    },
+    "m1": {
+      "compatibility_status": "fail",
+      "experiment_contract_status": "pass",
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "runtime_sources": 293,
+    "rust": {
+      "copied_source_rows": 9,
+      "distinct_tests": {
+        "failed": 0,
+        "ignored": 2,
+        "passed": 1008
+      },
+      "raw_harness_totals": {
+        "failed": 0,
+        "ignored": 2,
+        "passed": 1021
+      },
+      "source_rows": 165550
+    },
+    "tooling": {
+      "catalog_node_tests": 11,
+      "catalog_python_tests_each_mode": 26,
+      "mapping_python_tests_each_mode": 8,
+      "recorded_base_commit": "1a07503cf01076e5a187d6cde86cd5f1c9b4c44c"
+    }
+  },
+  "schema": 1,
+  "scope": "Local String property and full-ready acquisition checkpoint; full M2 remains open."
+}

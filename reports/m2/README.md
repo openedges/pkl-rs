@@ -22,6 +22,37 @@ freshness, and independent source/fixture review passed. This checkpoint claims
 zero candidate compatibility passes. Rust, actual platform, full current
 corpus, and M2 completion results remain separate; existing failures stay open.
 
+### Stage67 implementation and complete ready-corpus comparison
+
+The [implementation checkpoint](stage67-implementation-checkpoint.json) records
+String blankness, emptiness, and code-point index properties in the shared engine.
+All five required Rust checks passed: 1,008 distinct tests passed, none failed,
+and two were ignored. Native, actual N-API, and Chromium each match 2,454 raw
+observations from the 15-profile, 1,227-expression catalog. Existing Any/M1 Regex
+mismatches remain failures.
+
+The full ready acquisition completed 4,416 comparisons: **4,142 matches,
+128 mismatches, 143 unsupported results, two Java oracle errors, and one Rust
+internal error**. Original modules account for 625 matches out of 888; expression
+strings account for 3,516 out of 3,527, and the JVM classpath case matches in both
+recorded repetitions. All 131 previous original outcomes are unchanged, including
+81 passes. Three inherited scalar regressions remain failed; separate Stage 68
+lab fixes are not included in this candidate's results.
+
+Strict `--verify-full` exited 1 with 1,802 unmet gate entries. The additional
+111 unready cases and all nine M2 workstreams remain open. Evidence integrity
+and the selected platform comparisons do not establish full language/API or
+performance compatibility.
+
+Thirteen archives cover 80 evidence directories. Each publisher verified every
+payload byte, file mode, member set, and source bookend; each archive is below
+95 MiB. Their identities and individual publication records are linked from the
+checkpoint. The full-review first attempt failed on an omitted scalar adapter
+field; its corrected review uses the source-bound manifest without changing any
+captured result. The Java A authority remains separately committed. A subsequent
+C checkpoint will record the implementation commit, publication process receipts,
+and documentation provenance. All results are recorded local macOS arm64 evidence.
+
 ### Stage66 implementation and local comparisons
 
 Stage 66 implements shared UTF-16 string reversal and shallow List/Set reversal,

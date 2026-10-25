@@ -1,5 +1,41 @@
 # M2 language verification
 
+## Stage 67 — String properties and full ready-corpus comparison
+
+The shared runtime implements String `isBlank`, `isNotBlank`, `isNotEmpty`, and
+`lastIndex` alongside `length` and `isEmpty`. Blankness uses Pkl's exact 25-character
+UTF-16 whitespace set; the last index counts code points. Explicit access,
+implicit constraints, synthetic Reference properties, and first-error ordering
+are covered by 146 pinned Java expressions in two fresh JVM sessions.
+
+The [implementation checkpoint](../reports/m2/stage67-implementation-checkpoint.json)
+records all five required Rust checks, 1,008 distinct passing tests, zero failures,
+and two ignored tests. The 15-profile catalog contains 1,227 expressions; native,
+actual N-API, and Chromium each match 2,454 raw observations. The separate Any
+comparison and M1 experiments retain their two Regex mismatches per portable target.
+
+The complete ready selection has the following raw Java/Rust outcomes:
+
+| Adapter | Selected | Matches | Other outcomes |
+| --- | ---: | ---: | --- |
+| Expression strings | 3,527 | 3,516 | 10 mismatches, one Java oracle error |
+| Original modules | 888 | 625 | 118 mismatches, 143 unsupported, one Java oracle error, one Rust internal error |
+| JVM classpath output | 1 | 1 | None |
+
+Acquisition integrity passed with stable inputs, sources, and artifacts. Strict
+`--verify-full` exited 1 with 1,802 unmet gate entries; those entries overlap and
+are not a count of distinct features. The other 111 inventory cases remain
+unimplemented or unmapped. All 131 previously selected originals retain their
+statuses, including all 81 prior passes.
+
+Three inherited scalar regressions remain failed: `reference-stage10-reference-amendment-invalid`,
+`types-stage18-default-listing-literal`, and `set-stage23-constructor-listing-default`.
+Corrections tested in the separate Stage 68 lab are not results for this frozen
+candidate. The 13 published archives preserve the raw failures, corrected review
+attempts, and source identities. These are local macOS arm64 results; all nine M2
+workstreams, full language/API compatibility, release platforms, and performance
+goals remain open. The later C checkpoint will bind this evidence to its implementation commit.
+
 ## Stage 66 — reversal and union diagnostics
 
 Stage 66 implements shared UTF-16 string reversal and shallow List/Set reversal,
