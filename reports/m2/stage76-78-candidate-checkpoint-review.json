@@ -1,0 +1,240 @@
+{
+  "approval_scope": "Frozen source/raw archives, current four public copies and exact applied documentation fragments; final public checkpoint metadata must apply only the listed successor changes.",
+  "approved": true,
+  "approved_public_metadata_successor": {
+    "add_provenance": [
+      "public draft path/bytes/mode/SHA",
+      "this independent publication review identity",
+      "public standalone117 addendum and archive identities"
+    ],
+    "all_other_counts_raw_receipts_source_flags_archive_identity_preserved": true,
+    "draft_sha256": "b057a92b9f8aab4cbaec269c06e62909ea91ef69517321d2ca329055f6983253",
+    "final_public_json_not_yet_created_or_reviewed": true,
+    "no_archive_remake_or_runtime_retest_required": true,
+    "preserve_public_draft": "reports/m2/stage76-78-candidate-checkpoint-draft.json",
+    "publication_ready": true,
+    "ready_condition": "This independent review is approved and all four public copies already match exact bytes/modes.",
+    "rename_scope_field": {
+      "from": "original_standalone_outer_tests",
+      "to": "recovered_command00_outer_tests",
+      "value": 3
+    }
+  },
+  "blockers": [],
+  "complete": true,
+  "created_utc": "2026-10-25T16:38:54.729139+00:00",
+  "current_canonical_non_document_source_guard": {
+    "bytes_mode_sha_equal_to_C_map": true,
+    "count": 3265,
+    "three_intentional_doc_updates_are_allowed_and_verified_as_exact_prepared_fragments": true
+  },
+  "documents": [
+    {
+      "applied_document": {
+        "bytes": 428823,
+        "mode": 420,
+        "path": "PLAN.md",
+        "sha256": "e47662c53094e93e2e22b90497c4e6aca5e6244ddf47ecdc06563de5ad7c1c98"
+      },
+      "draft": {
+        "bytes": 1575,
+        "mode": 420,
+        "path": "target/m2/stage76-78-candidate-docs-prep-01/plan-section.md",
+        "sha256": "1c200194a7dce6d633a2f098c1623ec4d91d9536c9e57a942852133ff9ccdd6e"
+      },
+      "exact_fragment_present_once": true
+    },
+    {
+      "applied_document": {
+        "bytes": 67365,
+        "mode": 420,
+        "path": "docs/m2-language.md",
+        "sha256": "16df1f0d56a7aed795b466cd99208c8682e3ab20882e0b98c907c637c313a06d"
+      },
+      "draft": {
+        "bytes": 1686,
+        "mode": 420,
+        "path": "target/m2/stage76-78-candidate-docs-prep-01/language-section.md",
+        "sha256": "55d809160fb2e1169f94a0341478c7a3eb3a03d718555bbec72c530c271516c0"
+      },
+      "exact_fragment_present_once": true
+    },
+    {
+      "applied_document": {
+        "bytes": 352814,
+        "mode": 420,
+        "path": "reports/m2/README.md",
+        "sha256": "82c3afae752577d0169c216cb433bec3f825a3c4a43316c68b8bc0d4dcccf3e0"
+      },
+      "draft": {
+        "bytes": 1672,
+        "mode": 420,
+        "path": "target/m2/stage76-78-candidate-docs-prep-01/report-section.md",
+        "sha256": "2771f4eb09be5a14723b464b18f4a65774f0d0a8bfa86f667c18d9f7ea00fab0"
+      },
+      "exact_fragment_present_once": true
+    }
+  ],
+  "history_and_accounting": {
+    "candidate_Stage76_rows": 389,
+    "candidate_Stage77_originals": 3,
+    "candidate_distinct_outer_functions": 29,
+    "candidate_numeric_rows": 72,
+    "compiler_and_build_binaries_not_bundled": true,
+    "compiler_artifact_catalog_entries": 18,
+    "continued_command_indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "failed00_controller_exit": 1,
+    "local_compiler_binary_and_dependency_identities_declared_in_archived_plans_and_raw_lineage": true,
+    "new_commands_rerunning00": false,
+    "numeric_expected_error_rows": 10,
+    "original00_Cargo_exit": 0,
+    "original_error_and_false_release_preserved": true,
+    "separate_read_only_recovery_preserved": true,
+    "vendor117_addendum_separate_from_candidate29": true,
+    "vendor_focused8_not_added_to117": true
+  },
+  "inputs": {
+    "actual_candidate_review": {
+      "bytes": 25740,
+      "mode": 420,
+      "path": "target/m2/stage76-next-candidate-lab-10/actual-review-01/report.json",
+      "sha256": "8dac4695ec8cece2c597db3b2271a8883b4b4aba446baa015a4da6be02005e30"
+    },
+    "author_readback": {
+      "bytes": 748,
+      "mode": 420,
+      "path": "target/m2/stage76-78-candidate-publication-prep-02/readback.json",
+      "sha256": "e648ac7dbc1d0928170789426176c6fbc623cbafdad0c2216e272d0d545fc282"
+    },
+    "main_draft": {
+      "bytes": 23212,
+      "mode": 420,
+      "path": "target/m2/stage76-78-candidate-publication-prep-02/stage76-78-candidate-checkpoint.json",
+      "sha256": "b057a92b9f8aab4cbaec269c06e62909ea91ef69517321d2ca329055f6983253"
+    },
+    "public_copy_receipt": {
+      "bytes": 1271,
+      "mode": 420,
+      "path": "target/m2/stage76-78-candidate-publication-root-01/copies.json",
+      "sha256": "36a8c5782114d66417c93ca672c2ef8b26334f005b760e3ba011656b46a718b8"
+    },
+    "publisher": {
+      "bytes": 19707,
+      "mode": 420,
+      "path": "target/m2/stage76-78-candidate-publication-prep-02/publish.py",
+      "sha256": "a585b65ca53d8e4b2e1e01bb3410d51381659c42ea619b94caaa2ec527ed09c8"
+    },
+    "standalone_addendum": {
+      "bytes": 1595,
+      "mode": 420,
+      "path": "target/m2/stage76-78-candidate-publication-prep-03/stage76-78-candidate-standalone117-addendum.json",
+      "sha256": "751acff1919301bc0fdbb71f40cd3afb5628504aee70eff71bd1ea016e005085"
+    }
+  },
+  "kind": "stage76-78-candidate-publication-independent-full-readback",
+  "limits": [
+    "Candidate checkpoint only: canonical integration, requiredfive on integrated candidate, full ready-corpus replay, native/Node/browser and fullAPI/performance gates remain pending.",
+    "Remaining63 fixture links and local compiler/cache binaries are declared dependencies; the archive is not a self-contained portable workspace or complete Java authority package.",
+    "No historical before00 byte invariance is claimed for three build aliases or four previously metadata-only Unicode companions.",
+    "No compiler/Cargo/Java/guest run or existing source/cache/archive/Git mutation by this reviewer.",
+    "Final derived public metadata should be checked against the exact allowed delta before commit."
+  ],
+  "main_archive_readback": {
+    "archive": {
+      "bytes": 5349940,
+      "mode": 420,
+      "path": "target/m2/stage76-78-candidate-publication-prep-02/stage76-78-candidate-checkpoint-evidence.tar.gz",
+      "sha256": "5b2f6f1547ab7868366c61452af5638b1816e59e8420a7fa10014955f27c9f68"
+    },
+    "embedded_manifest": {
+      "bytes": 3182435,
+      "mode": 420,
+      "sha256": "742bf5208b345370581665fb7078bdb7a158308984b1e69a0f7194c5fdd771b6"
+    },
+    "full_member_bytes_mode_sha_equal": true,
+    "gzip_crc_and_eof_verified": true,
+    "payload_members": 10723,
+    "raw_payload_bytes_including_manifest": 35798001,
+    "regular_members_including_manifest": 10724,
+    "tar_bytes": 53954560,
+    "zero_trailing_bytes": 10240
+  },
+  "public_copies": [
+    {
+      "bytes": 5349940,
+      "mode": 420,
+      "public": "reports/m2/stage76-78-candidate-checkpoint-evidence.tar.gz",
+      "sha256": "5b2f6f1547ab7868366c61452af5638b1816e59e8420a7fa10014955f27c9f68",
+      "source": "target/m2/stage76-78-candidate-publication-prep-02/stage76-78-candidate-checkpoint-evidence.tar.gz"
+    },
+    {
+      "bytes": 23212,
+      "mode": 420,
+      "public": "reports/m2/stage76-78-candidate-checkpoint-draft.json",
+      "sha256": "b057a92b9f8aab4cbaec269c06e62909ea91ef69517321d2ca329055f6983253",
+      "source": "target/m2/stage76-78-candidate-publication-prep-02/stage76-78-candidate-checkpoint.json"
+    },
+    {
+      "bytes": 8838,
+      "mode": 420,
+      "public": "reports/m2/stage76-78-candidate-standalone117-evidence.tar.gz",
+      "sha256": "4f084bbeede13bb4fb2ad7f29cc97d0f91cf22e7d6a41515776b63dddb310b16",
+      "source": "target/m2/stage76-78-candidate-publication-prep-03/stage76-78-candidate-standalone117-evidence.tar.gz"
+    },
+    {
+      "bytes": 1595,
+      "mode": 420,
+      "public": "reports/m2/stage76-78-candidate-standalone117-addendum.json",
+      "sha256": "751acff1919301bc0fdbb71f40cd3afb5628504aee70eff71bd1ea016e005085",
+      "source": "target/m2/stage76-78-candidate-publication-prep-03/stage76-78-candidate-standalone117-addendum.json"
+    }
+  ],
+  "source_closure": {
+    "all_current_external_dependency_bytes_mode_sha_match_source_map": true,
+    "all_remaining_paths_targets_and_hashes_recorded": true,
+    "archived_evidence_payload_files": 179,
+    "archived_source_payload_files": 10544,
+    "dependency_meaning": "All66 borrowed links name prior private fixture workspaces. External here means outside this archive, not upstream external/ checkouts. The22 external/pkl paths are owned regular source files and are archived.",
+    "full_source_map_files": 14329,
+    "manifest_members": 1,
+    "materialized_private_borrowed_fixture_files": 3571,
+    "materialized_roots": [
+      "tests/fixtures/m2-collection-single",
+      "tests/fixtures/m2-regex-language",
+      "tests/fixtures/m2-string-regex-predicates"
+    ],
+    "owned_regular_sources": 6973,
+    "remaining_borrowed_links": 63,
+    "remaining_dependency_files_pinned_outside_archive": 3785
+  },
+  "standalone_archive_readback": {
+    "archive": {
+      "bytes": 8838,
+      "mode": 420,
+      "path": "target/m2/stage76-78-candidate-publication-prep-03/stage76-78-candidate-standalone117-evidence.tar.gz",
+      "sha256": "4f084bbeede13bb4fb2ad7f29cc97d0f91cf22e7d6a41515776b63dddb310b16"
+    },
+    "embedded_manifest": {
+      "bytes": 2476,
+      "mode": 420,
+      "sha256": "ac48799ae6815b2d2785f916cfe1c24d193377deea99a74b10a64856df6b8bb2"
+    },
+    "full_member_bytes_mode_sha_equal": true,
+    "gzip_crc_and_eof_verified": true,
+    "payload_members": 12,
+    "raw_payload_bytes_including_manifest": 52382,
+    "regular_members_including_manifest": 13,
+    "tar_bytes": 71680,
+    "zero_trailing_bytes": 10240
+  }
+}

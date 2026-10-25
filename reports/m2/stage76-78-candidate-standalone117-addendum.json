@@ -1,0 +1,45 @@
+{
+  "archive": {
+    "bytes": 8838,
+    "full_raw_mode_sha_readback": true,
+    "members": 13,
+    "mode": 420,
+    "proposed_public_path": "reports/m2/stage76-78-candidate-standalone117-evidence.tar.gz",
+    "sha256": "4f084bbeede13bb4fb2ad7f29cc97d0f91cf22e7d6a41515776b63dddb310b16",
+    "source_path": "target/m2/stage76-78-candidate-publication-prep-03/stage76-78-candidate-standalone117-evidence.tar.gz"
+  },
+  "binary_not_archived": {
+    "bytes": 4161232,
+    "mode": 493,
+    "sha256": "ec1c4e66db7eca409344cf7b67c24592cc7b2e1c6782ab3c196cee664f9c7860"
+  },
+  "candidate10_completed_test_function_count_unchanged": 29,
+  "complete": true,
+  "distinct_from_candidate10_recovered_command00_outer_tests": true,
+  "failed_vendor_unit_tests": 0,
+  "fresh_compile_in_suite": false,
+  "full_api_complete": false,
+  "full_m2_complete": false,
+  "kind": "stage76-78-candidate-standalone-vendor117-addendum-v1",
+  "listed_and_passed_vendor_unit_tests": 117,
+  "main_checkpoint": {
+    "archive": {
+      "bytes": 5349940,
+      "mode": 420,
+      "sha256": "5b2f6f1547ab7868366c61452af5638b1816e59e8420a7fa10014955f27c9f68"
+    },
+    "report": {
+      "bytes": 23212,
+      "mode": 420,
+      "sha256": "b057a92b9f8aab4cbaec269c06e62909ea91ef69517321d2ca329055f6983253"
+    }
+  },
+  "new_cargo_or_java_runs_by_addendum": 0,
+  "platforms_validated": false,
+  "proposed_public_report_path": "reports/m2/stage76-78-candidate-standalone117-addendum.json",
+  "suite_receipt": {
+    "bytes": 667,
+    "mode": 420,
+    "sha256": "9beb91d3d0f9f5f14fc204659b0c542aaeb99a0bf65e2b0917257b7a55297446"
+  }
+}

@@ -1,5 +1,33 @@
 # M2 language evidence
 
+## Stage76–78 isolated candidate validation
+
+The isolated candidate completed nine continuation commands successfully after
+an independent review recovered the first command's artifact provenance. The
+original first-command controller failure remains recorded: Cargo and its tests
+succeeded, but the checker expected an `.rlib` where rustc consumed the fresh
+unit's `.rmeta`, and three recreated build-script aliases exceeded its initial
+cache scope. The continuation preserves that failure and does not rerun command
+00.
+
+The ten command results together account for 29 named outer Rust test functions,
+excluding nested child repetitions. They include 389 selected Regex/String and
+collection rows, 72 numeric rows, three unchanged upstream syntax cases, the
+56-row M1 control, and lifecycle/cache controls. The numeric matrix compares
+result kind and complete result text; it does not establish all exported API
+channels or logger compatibility. A separate standalone vendor suite passed all
+117 tests and is not added to the runtime test count.
+
+This is local macOS arm64 candidate evidence. The candidate sources remain
+isolated from the canonical runtime. Canonical integration, the five required
+Rust checks for that integration, native/Node/browser comparisons, and a fresh
+full ready-corpus replay are still pending. The official 4,163/4,416 match count,
+111 unready cases, and all nine open M2 workstreams are unchanged.
+
+The [candidate checkpoint](stage76-78-candidate-checkpoint.json) preserves raw
+outcomes, source identities, scope, and the prior failed attempt. Its source and
+raw-evidence archive does not package the compiler or compiled test binaries.
+
 ## Stage 73–75 implementation evidence
 
 The source integration, 3,270-path canonical freeze, five-command Rust
