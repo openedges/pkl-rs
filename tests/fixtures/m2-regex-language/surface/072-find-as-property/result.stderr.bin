@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find property `findMatchesIn` in object of type `Regex`.
+
+1 | Regex("a").findMatchesIn
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+groupCount
+pattern

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Error replacing matches for regex `(a)` with `${a`: `named capturing group is missing trailing '}'`
+
+1 | "ab".replaceAll(Regex("(a)"), "${a")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

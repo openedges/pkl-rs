@@ -304,7 +304,7 @@ pub(crate) fn builtin_members(class: &str) -> (Vec<String>, Vec<(String, String,
         "List" | "Set" => &["Any", "Collection"],
         "Int" | "Float" => &["Any", "Number"],
         "String" | "Boolean" | "Null" => &["Any"],
-        "pkl.ref#Reference" => &["Any", "Object", "Typed"],
+        "pkl.ref#Reference" | "Regex" => &["Any", "Object", "Typed"],
         _ => &["Any", "Object"],
     };
     for name in parents.iter().copied().chain(std::iter::once(class)) {

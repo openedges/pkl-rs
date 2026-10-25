@@ -1,0 +1,904 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "programs": [
+    {
+      "id": "string-regex-transforms",
+      "module_file": "modules/string-regex-transforms.pkl",
+      "module_sha256": "bd142e4d1259ed6d915ceaaedfc8309dec33e21e5a7416b0b7521de420d3db1f",
+      "module_uri": "file:///stage76/string-regex-transforms.pkl",
+      "rows": [
+        {
+          "expression": "\"a,b,c\".split(\",\")",
+          "group": "split-literal-ordinary",
+          "id": "transform-000-split-literal-ordinary",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".split(\",\")",
+          "group": "split-literal-leading-trailing",
+          "id": "transform-001-split-literal-leading-trailing",
+          "mode": "string"
+        },
+        {
+          "expression": "\",,,\".split(\",\")",
+          "group": "split-literal-all-separators",
+          "id": "transform-002-split-literal-all-separators",
+          "mode": "string"
+        },
+        {
+          "expression": "\"\".split(\",\")",
+          "group": "split-literal-empty-input",
+          "id": "transform-003-split-literal-empty-input",
+          "mode": "string"
+        },
+        {
+          "expression": "\"\".split(\"\")",
+          "group": "split-literal-empty-both",
+          "id": "transform-004-split-literal-empty-both",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".split(\"\")",
+          "group": "split-literal-empty-pattern",
+          "id": "transform-005-split-literal-empty-pattern",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".split(\"\")",
+          "group": "split-literal-supplementary-empty",
+          "id": "transform-006-split-literal-supplementary-empty",
+          "mode": "string"
+        },
+        {
+          "expression": "\"\\u{d800}x\".split(\"\")",
+          "group": "split-literal-lone-high",
+          "id": "transform-007-split-literal-lone-high",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".split(\"\\u{de00}\")",
+          "group": "split-literal-pair-low",
+          "id": "transform-008-split-literal-pair-low",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a.b.c\".split(\".\")",
+          "group": "split-literal-metacharacter",
+          "id": "transform-009-split-literal-metacharacter",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(\",\", 1)",
+          "group": "limit-literal-1",
+          "id": "transform-010-limit-literal-1",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(\",\", 2)",
+          "group": "limit-literal-2",
+          "id": "transform-011-limit-literal-2",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(\",\", 0)",
+          "group": "limit-literal-0",
+          "id": "transform-012-limit-literal-0",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(\",\", -1)",
+          "group": "limit-literal-negative-1",
+          "id": "transform-013-limit-literal-negative-1",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(\",\", 2147483647)",
+          "group": "limit-literal-2147483647",
+          "id": "transform-014-limit-literal-2147483647",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(\",\", 2147483648)",
+          "group": "limit-literal-2147483648",
+          "id": "transform-015-limit-literal-2147483648",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(\",\", 4294967296)",
+          "group": "limit-literal-4294967296",
+          "id": "transform-016-limit-literal-4294967296",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(\",\", 4294967297)",
+          "group": "limit-literal-4294967297",
+          "id": "transform-017-limit-literal-4294967297",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(\",\", 9223372036854775807)",
+          "group": "limit-literal-9223372036854775807",
+          "id": "transform-018-limit-literal-9223372036854775807",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a,b,c\".split(Regex(\",\"))",
+          "group": "split-regex-ordinary",
+          "id": "transform-019-split-regex-ordinary",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".split(Regex(\",\"))",
+          "group": "split-regex-leading-trailing",
+          "id": "transform-020-split-regex-leading-trailing",
+          "mode": "string"
+        },
+        {
+          "expression": "\",,,\".split(Regex(\",\"))",
+          "group": "split-regex-all-separators",
+          "id": "transform-021-split-regex-all-separators",
+          "mode": "string"
+        },
+        {
+          "expression": "\"\".split(Regex(\",\"))",
+          "group": "split-regex-empty-input",
+          "id": "transform-022-split-regex-empty-input",
+          "mode": "string"
+        },
+        {
+          "expression": "\"\".split(Regex(\"\"))",
+          "group": "split-regex-empty-both",
+          "id": "transform-023-split-regex-empty-both",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".split(Regex(\"\"))",
+          "group": "split-regex-empty-pattern",
+          "id": "transform-024-split-regex-empty-pattern",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".split(Regex(\"\"))",
+          "group": "split-regex-supplementary-empty",
+          "id": "transform-025-split-regex-supplementary-empty",
+          "mode": "string"
+        },
+        {
+          "expression": "\"\\u{d800}x\".split(Regex(\"\"))",
+          "group": "split-regex-lone-high",
+          "id": "transform-026-split-regex-lone-high",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".split(Regex(\"\\u{de00}\"))",
+          "group": "split-regex-pair-low",
+          "id": "transform-027-split-regex-pair-low",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a.b.c\".split(Regex(\".\"))",
+          "group": "split-regex-metacharacter",
+          "id": "transform-028-split-regex-metacharacter",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(Regex(\",\"), 1)",
+          "group": "limit-regex-1",
+          "id": "transform-029-limit-regex-1",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(Regex(\",\"), 2)",
+          "group": "limit-regex-2",
+          "id": "transform-030-limit-regex-2",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(Regex(\",\"), 0)",
+          "group": "limit-regex-0",
+          "id": "transform-031-limit-regex-0",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(Regex(\",\"), -1)",
+          "group": "limit-regex-negative-1",
+          "id": "transform-032-limit-regex-negative-1",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(Regex(\",\"), 2147483647)",
+          "group": "limit-regex-2147483647",
+          "id": "transform-033-limit-regex-2147483647",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(Regex(\",\"), 2147483648)",
+          "group": "limit-regex-2147483648",
+          "id": "transform-034-limit-regex-2147483648",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(Regex(\",\"), 4294967296)",
+          "group": "limit-regex-4294967296",
+          "id": "transform-035-limit-regex-4294967296",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(Regex(\",\"), 4294967297)",
+          "group": "limit-regex-4294967297",
+          "id": "transform-036-limit-regex-4294967297",
+          "mode": "string"
+        },
+        {
+          "expression": "\",a,,b,\".splitLimit(Regex(\",\"), 9223372036854775807)",
+          "group": "limit-regex-9223372036854775807",
+          "id": "transform-037-limit-regex-9223372036854775807",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".split(Regex(\"(?=a)\"))",
+          "group": "split-zero-width-lookahead",
+          "id": "transform-038-split-zero-width-lookahead",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a,b,,c\".split(Regex(\"(,)\"))",
+          "group": "split-capturing-separator",
+          "id": "transform-039-split-capturing-separator",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".splitLimit(Regex(\"\"), 2)",
+          "group": "split-positive-limit-empty",
+          "id": "transform-040-split-positive-limit-empty",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".split(null)",
+          "group": "split-wrong-pattern",
+          "id": "transform-041-split-wrong-pattern",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".splitLimit(\",\", null)",
+          "group": "split-wrong-limit-type",
+          "id": "transform-042-split-wrong-limit-type",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".splitLimit(null, throw(\"limit evaluated\"))",
+          "group": "split-eager-argument-order",
+          "id": "transform-043-split-eager-argument-order",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ababa\".replaceAll(\"aba\", \"x\")",
+          "group": "replaceall-literal-overlap",
+          "id": "transform-044-replaceall-literal-overlap",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ababa\".replaceAll(Regex(\"aba\"), \"x\")",
+          "group": "replaceall-regex-overlap",
+          "id": "transform-045-replaceall-regex-overlap",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceAll(\"\", \"-\")",
+          "group": "replaceall-literal-empty-pair",
+          "id": "transform-046-replaceall-literal-empty-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceAll(Regex(\"\"), \"-\")",
+          "group": "replaceall-regex-empty-pair",
+          "id": "transform-047-replaceall-regex-empty-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceAll(\"\\u{de00}\", \"x\")",
+          "group": "replaceall-literal-low-pair",
+          "id": "transform-048-replaceall-literal-low-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceAll(Regex(\"\\u{de00}\"), \"x\")",
+          "group": "replaceall-regex-low-pair",
+          "id": "transform-049-replaceall-regex-low-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceAll(\"a\", \"$1\")",
+          "group": "replaceall-literal-dollar",
+          "id": "transform-050-replaceall-literal-dollar",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAll(Regex(\"(a)\"), \"$1\")",
+          "group": "replaceall-group",
+          "id": "transform-051-replaceall-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"b\".replaceAll(Regex(\"(a)?b\"), \"<$1>\")",
+          "group": "replaceall-absent-group",
+          "id": "transform-052-replaceall-absent-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceAll(Regex(\"a\"), \"$\")",
+          "group": "replaceall-bad-dollar-match",
+          "id": "transform-053-replaceall-bad-dollar-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceAll(Regex(\"z\"), \"$\")",
+          "group": "replaceall-bad-dollar-no-match",
+          "id": "transform-054-replaceall-bad-dollar-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceAll(Regex(\"a\"), \"\\\\\")",
+          "group": "replaceall-bad-slash-match",
+          "id": "transform-055-replaceall-bad-slash-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceAll(Regex(\"z\"), \"\\\\\")",
+          "group": "replaceall-bad-slash-no-match",
+          "id": "transform-056-replaceall-bad-slash-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAll(Regex(\"(?<=a)b\"), \"x\")",
+          "group": "replaceall-lookbehind",
+          "id": "transform-057-replaceall-lookbehind",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAll(Regex(\"a(?=b)\"), \"x\")",
+          "group": "replaceall-lookahead",
+          "id": "transform-058-replaceall-lookahead",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ababa\".replaceFirst(\"aba\", \"x\")",
+          "group": "replacefirst-literal-overlap",
+          "id": "transform-059-replacefirst-literal-overlap",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ababa\".replaceFirst(Regex(\"aba\"), \"x\")",
+          "group": "replacefirst-regex-overlap",
+          "id": "transform-060-replacefirst-regex-overlap",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceFirst(\"\", \"-\")",
+          "group": "replacefirst-literal-empty-pair",
+          "id": "transform-061-replacefirst-literal-empty-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceFirst(Regex(\"\"), \"-\")",
+          "group": "replacefirst-regex-empty-pair",
+          "id": "transform-062-replacefirst-regex-empty-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceFirst(\"\\u{de00}\", \"x\")",
+          "group": "replacefirst-literal-low-pair",
+          "id": "transform-063-replacefirst-literal-low-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceFirst(Regex(\"\\u{de00}\"), \"x\")",
+          "group": "replacefirst-regex-low-pair",
+          "id": "transform-064-replacefirst-regex-low-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceFirst(\"a\", \"$1\")",
+          "group": "replacefirst-literal-dollar",
+          "id": "transform-065-replacefirst-literal-dollar",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceFirst(Regex(\"(a)\"), \"$1\")",
+          "group": "replacefirst-group",
+          "id": "transform-066-replacefirst-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"b\".replaceFirst(Regex(\"(a)?b\"), \"<$1>\")",
+          "group": "replacefirst-absent-group",
+          "id": "transform-067-replacefirst-absent-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceFirst(Regex(\"a\"), \"$\")",
+          "group": "replacefirst-bad-dollar-match",
+          "id": "transform-068-replacefirst-bad-dollar-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceFirst(Regex(\"z\"), \"$\")",
+          "group": "replacefirst-bad-dollar-no-match",
+          "id": "transform-069-replacefirst-bad-dollar-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceFirst(Regex(\"a\"), \"\\\\\")",
+          "group": "replacefirst-bad-slash-match",
+          "id": "transform-070-replacefirst-bad-slash-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceFirst(Regex(\"z\"), \"\\\\\")",
+          "group": "replacefirst-bad-slash-no-match",
+          "id": "transform-071-replacefirst-bad-slash-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceFirst(Regex(\"(?<=a)b\"), \"x\")",
+          "group": "replacefirst-lookbehind",
+          "id": "transform-072-replacefirst-lookbehind",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceFirst(Regex(\"a(?=b)\"), \"x\")",
+          "group": "replacefirst-lookahead",
+          "id": "transform-073-replacefirst-lookahead",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ababa\".replaceLast(\"aba\", \"x\")",
+          "group": "replacelast-literal-overlap",
+          "id": "transform-074-replacelast-literal-overlap",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ababa\".replaceLast(Regex(\"aba\"), \"x\")",
+          "group": "replacelast-regex-overlap",
+          "id": "transform-075-replacelast-regex-overlap",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceLast(\"\", \"-\")",
+          "group": "replacelast-literal-empty-pair",
+          "id": "transform-076-replacelast-literal-empty-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceLast(Regex(\"\"), \"-\")",
+          "group": "replacelast-regex-empty-pair",
+          "id": "transform-077-replacelast-regex-empty-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceLast(\"\\u{de00}\", \"x\")",
+          "group": "replacelast-literal-low-pair",
+          "id": "transform-078-replacelast-literal-low-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceLast(Regex(\"\\u{de00}\"), \"x\")",
+          "group": "replacelast-regex-low-pair",
+          "id": "transform-079-replacelast-regex-low-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceLast(\"a\", \"$1\")",
+          "group": "replacelast-literal-dollar",
+          "id": "transform-080-replacelast-literal-dollar",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceLast(Regex(\"(a)\"), \"$1\")",
+          "group": "replacelast-group",
+          "id": "transform-081-replacelast-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"b\".replaceLast(Regex(\"(a)?b\"), \"<$1>\")",
+          "group": "replacelast-absent-group",
+          "id": "transform-082-replacelast-absent-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceLast(Regex(\"a\"), \"$\")",
+          "group": "replacelast-bad-dollar-match",
+          "id": "transform-083-replacelast-bad-dollar-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceLast(Regex(\"z\"), \"$\")",
+          "group": "replacelast-bad-dollar-no-match",
+          "id": "transform-084-replacelast-bad-dollar-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceLast(Regex(\"a\"), \"\\\\\")",
+          "group": "replacelast-bad-slash-match",
+          "id": "transform-085-replacelast-bad-slash-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceLast(Regex(\"z\"), \"\\\\\")",
+          "group": "replacelast-bad-slash-no-match",
+          "id": "transform-086-replacelast-bad-slash-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceLast(Regex(\"(?<=a)b\"), \"x\")",
+          "group": "replacelast-lookbehind",
+          "id": "transform-087-replacelast-lookbehind",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceLast(Regex(\"a(?=b)\"), \"x\")",
+          "group": "replacelast-lookahead",
+          "id": "transform-088-replacelast-lookahead",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAll(Regex(\"(?<a>a)\"), \"${a}\")",
+          "group": "named-group",
+          "id": "transform-089-named-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAll(Regex(\"(a)\"), \"${missing}\")",
+          "group": "missing-named-group",
+          "id": "transform-090-missing-named-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAll(Regex(\"(a)\"), \"${a\")",
+          "group": "malformed-named-group",
+          "id": "transform-091-malformed-named-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAll(Regex(\"(a)\"), \"$12\")",
+          "group": "numeric-greedy-group",
+          "id": "transform-092-numeric-greedy-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAll(Regex(\"(a)\"), \"$01\")",
+          "group": "numeric-leading-zero",
+          "id": "transform-093-numeric-leading-zero",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAll(Regex(\"(a)\"), \"$0\")",
+          "group": "whole-match-group",
+          "id": "transform-094-whole-match-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAll(Regex(\"(a)\"), \"$9\")",
+          "group": "missing-numeric-group",
+          "id": "transform-095-missing-numeric-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAll(Regex(\"(a)\"), \"\\\\$1\")",
+          "group": "escaped-dollar",
+          "id": "transform-096-escaped-dollar",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAll(Regex(\"(a)\"), \"\\\\\\\\\")",
+          "group": "escaped-backslash",
+          "id": "transform-097-escaped-backslash",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceAll(null, \"x\")",
+          "group": "replacement-null-pattern",
+          "id": "transform-098-replacement-null-pattern",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceAll(Regex(\"z\"), null)",
+          "group": "replacement-null-value",
+          "id": "transform-099-replacement-null-value",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceAllMapped(\"a\", (m) -> m.value)",
+          "group": "replaceallmapped-literal",
+          "id": "transform-100-replaceallmapped-literal",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceAllMapped(Regex(\"(a)\"), (m) -> m.groups[1].value)",
+          "group": "replaceallmapped-group",
+          "id": "transform-101-replaceallmapped-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceAllMapped(Regex(\"a\"), (m) -> \"$\")",
+          "group": "replaceallmapped-dollar",
+          "id": "transform-102-replaceallmapped-dollar",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceAllMapped(Regex(\"a\"), (m) -> \"\\\\\")",
+          "group": "replaceallmapped-slash",
+          "id": "transform-103-replaceallmapped-slash",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceAllMapped(Regex(\"\"), (m) -> \"-\")",
+          "group": "replaceallmapped-empty-pair",
+          "id": "transform-104-replaceallmapped-empty-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceAllMapped(Regex(\"z\"), (a, b) -> \"x\")",
+          "group": "replaceallmapped-arity-no-match",
+          "id": "transform-105-replaceallmapped-arity-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceAllMapped(Regex(\"a\"), (a, b) -> \"x\")",
+          "group": "replaceallmapped-arity-match",
+          "id": "transform-106-replaceallmapped-arity-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceAllMapped(Regex(\"z\"), (m) -> 42)",
+          "group": "replaceallmapped-return-no-match",
+          "id": "transform-107-replaceallmapped-return-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceAllMapped(Regex(\"a\"), (m) -> 42)",
+          "group": "replaceallmapped-return-match",
+          "id": "transform-108-replaceallmapped-return-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceAllMapped(Regex(\"z\"), null)",
+          "group": "replaceallmapped-null-no-match",
+          "id": "transform-109-replaceallmapped-null-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAllMapped(Regex(\"(?<=a)b\"), (m) -> trace(m.value))",
+          "group": "replaceallmapped-lookbehind-trace",
+          "id": "transform-110-replaceallmapped-lookbehind-trace",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceAllMapped(Regex(\"a(?=b)\"), (m) -> trace(m.value))",
+          "group": "replaceallmapped-lookahead-trace",
+          "id": "transform-111-replaceallmapped-lookahead-trace",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceAllMapped(Regex(\".\"), (m) -> trace(m.value))",
+          "group": "replaceallmapped-ordered-trace",
+          "id": "transform-112-replaceallmapped-ordered-trace",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceAllMapped(Regex(\".\"), (m) -> if (m.value == \"b\") throw(\"mapped b\") else trace(m.value))",
+          "group": "replaceallmapped-later-throw",
+          "id": "transform-113-replaceallmapped-later-throw",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceAllMapped(Regex(\".\"), (m) -> throw(\"mapped first\"))",
+          "group": "replaceallmapped-first-throw",
+          "id": "transform-114-replaceallmapped-first-throw",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceFirstMapped(\"a\", (m) -> m.value)",
+          "group": "replacefirstmapped-literal",
+          "id": "transform-115-replacefirstmapped-literal",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceFirstMapped(Regex(\"(a)\"), (m) -> m.groups[1].value)",
+          "group": "replacefirstmapped-group",
+          "id": "transform-116-replacefirstmapped-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceFirstMapped(Regex(\"a\"), (m) -> \"$\")",
+          "group": "replacefirstmapped-dollar",
+          "id": "transform-117-replacefirstmapped-dollar",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceFirstMapped(Regex(\"a\"), (m) -> \"\\\\\")",
+          "group": "replacefirstmapped-slash",
+          "id": "transform-118-replacefirstmapped-slash",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceFirstMapped(Regex(\"\"), (m) -> \"-\")",
+          "group": "replacefirstmapped-empty-pair",
+          "id": "transform-119-replacefirstmapped-empty-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceFirstMapped(Regex(\"z\"), (a, b) -> \"x\")",
+          "group": "replacefirstmapped-arity-no-match",
+          "id": "transform-120-replacefirstmapped-arity-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceFirstMapped(Regex(\"a\"), (a, b) -> \"x\")",
+          "group": "replacefirstmapped-arity-match",
+          "id": "transform-121-replacefirstmapped-arity-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceFirstMapped(Regex(\"z\"), (m) -> 42)",
+          "group": "replacefirstmapped-return-no-match",
+          "id": "transform-122-replacefirstmapped-return-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceFirstMapped(Regex(\"a\"), (m) -> 42)",
+          "group": "replacefirstmapped-return-match",
+          "id": "transform-123-replacefirstmapped-return-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceFirstMapped(Regex(\"z\"), null)",
+          "group": "replacefirstmapped-null-no-match",
+          "id": "transform-124-replacefirstmapped-null-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceFirstMapped(Regex(\"(?<=a)b\"), (m) -> trace(m.value))",
+          "group": "replacefirstmapped-lookbehind-trace",
+          "id": "transform-125-replacefirstmapped-lookbehind-trace",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceFirstMapped(Regex(\"a(?=b)\"), (m) -> trace(m.value))",
+          "group": "replacefirstmapped-lookahead-trace",
+          "id": "transform-126-replacefirstmapped-lookahead-trace",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceFirstMapped(Regex(\".\"), (m) -> trace(m.value))",
+          "group": "replacefirstmapped-ordered-trace",
+          "id": "transform-127-replacefirstmapped-ordered-trace",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceFirstMapped(Regex(\".\"), (m) -> if (m.value == \"b\") throw(\"mapped b\") else trace(m.value))",
+          "group": "replacefirstmapped-later-throw",
+          "id": "transform-128-replacefirstmapped-later-throw",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceFirstMapped(Regex(\".\"), (m) -> throw(\"mapped first\"))",
+          "group": "replacefirstmapped-first-throw",
+          "id": "transform-129-replacefirstmapped-first-throw",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceLastMapped(\"a\", (m) -> m.value)",
+          "group": "replacelastmapped-literal",
+          "id": "transform-130-replacelastmapped-literal",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceLastMapped(Regex(\"(a)\"), (m) -> m.groups[1].value)",
+          "group": "replacelastmapped-group",
+          "id": "transform-131-replacelastmapped-group",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceLastMapped(Regex(\"a\"), (m) -> \"$\")",
+          "group": "replacelastmapped-dollar",
+          "id": "transform-132-replacelastmapped-dollar",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceLastMapped(Regex(\"a\"), (m) -> \"\\\\\")",
+          "group": "replacelastmapped-slash",
+          "id": "transform-133-replacelastmapped-slash",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".replaceLastMapped(Regex(\"\"), (m) -> \"-\")",
+          "group": "replacelastmapped-empty-pair",
+          "id": "transform-134-replacelastmapped-empty-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceLastMapped(Regex(\"z\"), (a, b) -> \"x\")",
+          "group": "replacelastmapped-arity-no-match",
+          "id": "transform-135-replacelastmapped-arity-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceLastMapped(Regex(\"a\"), (a, b) -> \"x\")",
+          "group": "replacelastmapped-arity-match",
+          "id": "transform-136-replacelastmapped-arity-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceLastMapped(Regex(\"z\"), (m) -> 42)",
+          "group": "replacelastmapped-return-no-match",
+          "id": "transform-137-replacelastmapped-return-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceLastMapped(Regex(\"a\"), (m) -> 42)",
+          "group": "replacelastmapped-return-match",
+          "id": "transform-138-replacelastmapped-return-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceLastMapped(Regex(\"z\"), null)",
+          "group": "replacelastmapped-null-no-match",
+          "id": "transform-139-replacelastmapped-null-no-match",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceLastMapped(Regex(\"(?<=a)b\"), (m) -> trace(m.value))",
+          "group": "replacelastmapped-lookbehind-trace",
+          "id": "transform-140-replacelastmapped-lookbehind-trace",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ab\".replaceLastMapped(Regex(\"a(?=b)\"), (m) -> trace(m.value))",
+          "group": "replacelastmapped-lookahead-trace",
+          "id": "transform-141-replacelastmapped-lookahead-trace",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceLastMapped(Regex(\".\"), (m) -> trace(m.value))",
+          "group": "replacelastmapped-ordered-trace",
+          "id": "transform-142-replacelastmapped-ordered-trace",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceLastMapped(Regex(\".\"), (m) -> if (m.value == \"b\") throw(\"mapped b\") else trace(m.value))",
+          "group": "replacelastmapped-later-throw",
+          "id": "transform-143-replacelastmapped-later-throw",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\".replaceLastMapped(Regex(\".\"), (m) -> throw(\"mapped first\"))",
+          "group": "replacelastmapped-first-throw",
+          "id": "transform-144-replacelastmapped-first-throw",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".replaceAllMapped(null, throw(\"mapper evaluated\"))",
+          "group": "mapped-eager-argument-order",
+          "id": "transform-145-mapped-eager-argument-order",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a,b\" as String(split(\",\").length == 2)",
+          "group": "implicit-split-constraint",
+          "id": "transform-146-implicit-split-constraint",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aba\" as String(replaceLast(Regex(\"a\"), \"x\") == \"abx\")",
+          "group": "implicit-replacement-constraint",
+          "id": "transform-147-implicit-replacement-constraint",
+          "mode": "string"
+        }
+      ]
+    }
+  ],
+  "repetitions": 2,
+  "schema": 1
+}

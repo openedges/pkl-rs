@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+receiver first
+
+1 | (throw("receiver first")).matches(throw("argument second"))
+     ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

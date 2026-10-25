@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `String | Regex`, but got `null`.
+Value: null
+
+1605 | external function split(pattern: String | Regex): List<String>
+                                        ^^^^^^^^^^^^^^
+at pkl.base#String.split (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1605)
+
+1 | "a".split(null)
+    ^^^^^^^^^^^^^^^
+at  (repl:text)

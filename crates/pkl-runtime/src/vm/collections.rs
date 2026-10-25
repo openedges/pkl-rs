@@ -1589,6 +1589,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         | Value::Float(_)
                         | Value::Duration(_)
                         | Value::IntSeq(_)
+                        | Value::Regex(_)
                         | Value::Bytes(_)
                         | Value::TypeAlias(_)
                         | Value::DataSize(_)

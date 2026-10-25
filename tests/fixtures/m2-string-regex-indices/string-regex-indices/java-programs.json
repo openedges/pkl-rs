@@ -1,0 +1,160 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "programs": [
+    {
+      "id": "string-regex-indices",
+      "module_file": "modules/string-regex-indices.pkl",
+      "module_sha256": "bd142e4d1259ed6d915ceaaedfc8309dec33e21e5a7416b0b7521de420d3db1f",
+      "module_uri": "file:///stage76/string-regex-indices.pkl",
+      "rows": [
+        {
+          "expression": "\"ababa\".indexOf(\"aba\")",
+          "group": "literal-first",
+          "id": "index-000-literal-first",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ababa\".lastIndexOf(\"aba\")",
+          "group": "literal-last-overlap",
+          "id": "index-001-literal-last-overlap",
+          "mode": "string"
+        },
+        {
+          "expression": "\"ababa\".lastIndexOf(Regex(\"aba\"))",
+          "group": "regex-last-nonoverlap",
+          "id": "index-002-regex-last-nonoverlap",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".indexOf(Regex(\"x\"))",
+          "group": "regex-code-point-index",
+          "id": "index-003-regex-code-point-index",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".indexOf(\"x\")",
+          "group": "literal-code-point-index",
+          "id": "index-004-literal-code-point-index",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".indexOf(\"\")",
+          "group": "literal-empty-first",
+          "id": "index-005-literal-empty-first",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\".lastIndexOf(\"\")",
+          "group": "literal-empty-last",
+          "id": "index-006-literal-empty-last",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀\".indexOf(\"\\u{de00}\")",
+          "group": "literal-low-inside-pair",
+          "id": "index-007-literal-low-inside-pair",
+          "mode": "string"
+        },
+        {
+          "expression": "\"\\u{d800}x\".lastIndexOf(\"x\")",
+          "group": "literal-lone-high",
+          "id": "index-008-literal-lone-high",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀\".lastIndexOf(Regex(\"\"))",
+          "group": "regex-empty-last",
+          "id": "index-009-regex-empty-last",
+          "mode": "string"
+        },
+        {
+          "expression": "\"abc\".indexOf(\"z\")",
+          "group": "missing-literal-first",
+          "id": "index-010-missing-literal-first",
+          "mode": "string"
+        },
+        {
+          "expression": "\"abc\".indexOf(Regex(\"z\"))",
+          "group": "missing-regex-first",
+          "id": "index-011-missing-regex-first",
+          "mode": "string"
+        },
+        {
+          "expression": "\"abc\".lastIndexOf(\"z\")",
+          "group": "missing-literal-last",
+          "id": "index-012-missing-literal-last",
+          "mode": "string"
+        },
+        {
+          "expression": "\"abc\".lastIndexOf(Regex(\"z\"))",
+          "group": "missing-regex-last",
+          "id": "index-013-missing-regex-last",
+          "mode": "string"
+        },
+        {
+          "expression": "\"abc\".indexOfOrNull(\"z\")",
+          "group": "nullable-literal-first",
+          "id": "index-014-nullable-literal-first",
+          "mode": "string"
+        },
+        {
+          "expression": "\"abc\".lastIndexOfOrNull(Regex(\"z\"))",
+          "group": "nullable-regex-last",
+          "id": "index-015-nullable-regex-last",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".indexOf(null)",
+          "group": "wrong-null",
+          "id": "index-016-wrong-null",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".lastIndexOfOrNull(42)",
+          "group": "wrong-int",
+          "id": "index-017-wrong-int",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".indexOf(throw(\"argument first\"))",
+          "group": "argument-first",
+          "id": "index-018-argument-first",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".indexOf()",
+          "group": "wrong-arity",
+          "id": "index-019-wrong-arity",
+          "mode": "string"
+        },
+        {
+          "expression": "\"a\".lastIndexOf",
+          "group": "method-property",
+          "id": "index-020-method-property",
+          "mode": "string"
+        },
+        {
+          "expression": "\"😀x\" as String(indexOf(Regex(\"x\")) == 1)",
+          "group": "implicit-constraint",
+          "id": "index-021-implicit-constraint",
+          "mode": "string"
+        },
+        {
+          "expression": "\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\".indexOf(Regex(\"z\"))",
+          "group": "no-match-render-width",
+          "id": "index-022-no-match-render-width",
+          "mode": "string"
+        }
+      ]
+    }
+  ],
+  "proposal": {
+    "cases_path": "target/m2/stage76-string-regex-index-prep-01/cases.json",
+    "cases_sha256": "f51f106a71f936fd0474c924d1d73bf91bd97d7ef35ce3808096486892e68da9",
+    "module_path": "target/m2/stage76-string-regex-index-prep-01/module.pkl",
+    "module_sha256": "bd142e4d1259ed6d915ceaaedfc8309dec33e21e5a7416b0b7521de420d3db1f"
+  },
+  "repetitions": 2,
+  "schema": 1
+}

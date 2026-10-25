@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected value of type `String`, but got `null`.
+
+1539 | external function replaceAll(pattern: String | Regex, replacement: String): String
+                                                                          ^^^^^^
+at pkl.base#String.replaceAll (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1539)
+
+1 | "a".replaceAll(Regex("z"), null)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

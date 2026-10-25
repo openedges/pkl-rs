@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Type constraint `matches(Regex("a"))` violated.
+Value: "ab"
+
+1 | "ab" as String(matches(Regex("a")))
+                   ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

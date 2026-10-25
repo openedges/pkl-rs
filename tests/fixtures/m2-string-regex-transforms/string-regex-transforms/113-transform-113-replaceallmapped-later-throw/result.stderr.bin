@@ -1,0 +1,10 @@
+–– Pkl Error ––
+mapped b
+
+1 | "aba".replaceAllMapped(Regex("."), (m) -> if (m.value == "b") throw("mapped b") else trace(m.value))
+                                                                  ^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | "aba".replaceAllMapped(Regex("."), (m) -> if (m.value == "b") throw("mapped b") else trace(m.value))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

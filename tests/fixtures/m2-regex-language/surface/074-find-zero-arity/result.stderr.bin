@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+1727 | external function findMatchesIn(input: String): List<RegexMatch>
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Regex.findMatchesIn (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1727)
+
+1 | Regex("a").findMatchesIn()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

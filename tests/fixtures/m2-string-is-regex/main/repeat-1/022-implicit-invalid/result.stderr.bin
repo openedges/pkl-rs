@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Type constraint `isRegex` violated.
+Value: "("
+
+1 | "(" as String(isRegex)
+                  ^^^^^^^
+at  (repl:text)

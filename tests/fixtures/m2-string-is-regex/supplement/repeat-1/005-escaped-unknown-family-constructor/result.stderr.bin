@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Syntax error in regex `\p{\q}`: Unknown character property name {\q} near index 5
+\p{\q}
+     ^
+
+1 | Regex(#"\p{\q}"#)
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)

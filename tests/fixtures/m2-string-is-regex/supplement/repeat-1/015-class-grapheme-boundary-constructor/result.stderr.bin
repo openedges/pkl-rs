@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Syntax error in regex `[\b{g}]`: Illegal/unsupported escape sequence near index 2
+[\b{g}]
+  ^
+
+1 | Regex(#"[\b{g}]"#)
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

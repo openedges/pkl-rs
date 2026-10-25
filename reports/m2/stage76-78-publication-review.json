@@ -1,0 +1,391 @@
+{
+  "Git_binding_pending": true,
+  "M1": {
+    "final_tool_transitions": [
+      {
+        "base": {
+          "bytes": 12870,
+          "group": "canonical-source-test-vendor",
+          "mode": 420,
+          "path": "tools/m1_platforms.py",
+          "sha256": "29027f6771f7594c98b2ddb4934e9ac558807c3e3e8acd4e67976633c8d6884e"
+        },
+        "current_source": "tools/m1_platforms.py",
+        "new": {
+          "bytes": 13083,
+          "mode": 420,
+          "sha256": "682edf9d1ccaf6d4f0b49bb95905d16359c0f21c5909b504b30df836c14b7ace"
+        },
+        "new_member": "target/m2/stage76-78-terminal-evidence-selection-01/final-source/tools/m1_platforms.py",
+        "old_member": "tools/m1_platforms.py",
+        "policy_report": "target/m2/stage76-78-m1-policy-apply-01/report.json"
+      },
+      {
+        "base": {
+          "bytes": 10637,
+          "group": "canonical-source-test-vendor",
+          "mode": 420,
+          "path": "tools/tests/test_m1_platforms.py",
+          "sha256": "debc238a2fe4e588347f997dbef34a6450868b73b595292048f9a2789edb6a07"
+        },
+        "current_source": "tools/tests/test_m1_platforms.py",
+        "new": {
+          "bytes": 11506,
+          "mode": 420,
+          "sha256": "1acb940d5bb40818f12c3a308ea3b84276af606dea3fb47c97ad7e2bf9230027"
+        },
+        "new_member": "target/m2/stage76-78-terminal-evidence-selection-01/final-source/tools/tests/test_m1_platforms.py",
+        "old_member": "tools/tests/test_m1_platforms.py",
+        "policy_report": "target/m2/stage76-78-m1-policy-apply-01/report.json"
+      }
+    ],
+    "historical_old_policy_failure_retained": true,
+    "new_zero_gap_contract_pass": true,
+    "oracle_passed": {
+      "browser": 6078,
+      "node": 6078,
+      "rust": 6078
+    },
+    "total": 6078
+  },
+  "approved": true,
+  "archive": {
+    "bytes": 11154822,
+    "mode": 420,
+    "path": "target/m2/stage76-78-publication-terminal-archive-01/stage76-78-implementation-terminal-evidence.tar.gz",
+    "sha256": "589ab47882afbf2f737c8afe16722a8db5d823754f3b7a6b1a955f8aa3ea2d51"
+  },
+  "blockers": [],
+  "complete": true,
+  "descriptor_correction_only_actual_archive_selection": true,
+  "finished_unix": 1792961140.543731,
+  "full_stream_verification": {
+    "PAX_path_only_members": 5838,
+    "all_member_bytes_size_mode_SHA_equal_selection": true,
+    "exact_order_and_unique_paths": true,
+    "extractions": 0,
+    "gzip_EOF_CRC_verified": true,
+    "member_identity_chain_sha256": "f0be92aa226ec5124df064905a38f7262b7a07286fdc8ce7639ec1998ad93c77",
+    "payload_bytes": 75436856,
+    "regular_members": 14324,
+    "tar_suffix_zero": true
+  },
+  "inputs": [
+    {
+      "bytes": 460372,
+      "mode": 420,
+      "path": "target/m2/stage76-78-publication-terminal-archive-01/selection.json.gz",
+      "sha256": "19f38d14a3b90335ee1821b1413ad24faa873b38bb602a0f9f5b6db0d662b0a2"
+    },
+    {
+      "bytes": 459999,
+      "mode": 420,
+      "path": "target/m2/stage76-78-terminal-evidence-selection-01/selection.json.gz",
+      "sha256": "0d6d68c085edcacdbc5c954e05a009dd4d8680e3f200e2dde9138787ad7f7f83"
+    },
+    {
+      "bytes": 22,
+      "mode": 420,
+      "path": "target/m2/stage76-78-publication-terminal-archive-01/selection-overrides.json",
+      "sha256": "9c3fb5e89aa40a0364258e831d5aa34a2a4b72dbbbd067b356ada825fa6cc271"
+    },
+    {
+      "bytes": 652,
+      "mode": 420,
+      "path": "target/m2/stage76-78-publication-terminal-archive-01/report.json",
+      "sha256": "32ef3719c38cab7178ec2ef6f35ad70f1ecf2b54353bc0ecd31b3fff6ddbe731"
+    },
+    {
+      "bytes": 971,
+      "mode": 420,
+      "path": "target/m2/stage76-78-publication-terminal-archive-01/execution-01/process.json",
+      "sha256": "1d7c632f62ea1217783769a3fda6c366812d5ab5c66f88d3e7c80891c6feed11"
+    },
+    {
+      "bytes": 1571,
+      "mode": 420,
+      "path": "target/m2/stage76-78-terminal-evidence-selection-01/terminal-receipts.json",
+      "sha256": "86e7af26e4f0ad46606aad5aaad9d3016caa51c06d00c380eb8a3bd5c05906ff"
+    },
+    {
+      "bytes": 5774,
+      "mode": 420,
+      "path": "target/m2/stage76-78-terminal-evidence-selection-01/dedup-and-exclusions.json",
+      "sha256": "a48e7d48c29f645bc7d34b9b19e8fbcf933c1bec0c6d8c6cd93b49ccd7d20c3a"
+    },
+    {
+      "bytes": 8882012,
+      "mode": 420,
+      "path": "target/m2/stage76-78-full-replay-01/replay/report.json",
+      "sha256": "304e1a5d5e97a2b20ddb2f4963fc7e52679f81f4dbcbf21d1f00db72faa1321c"
+    },
+    {
+      "bytes": 1058137,
+      "mode": 420,
+      "path": "target/m2/stage76-78-full-replay-01/regression-audit/report.json",
+      "sha256": "b47b50250b67d4a5e2fcd564741b1cb190d3cdc22854f09584d11a90123ece8e"
+    },
+    {
+      "bytes": 8874367,
+      "mode": 420,
+      "path": "target/m2/stage73-75-full-replay-05/replay/report.json",
+      "sha256": "8b93cd8ab854bfef7d44812f0442ed30fbb57f0948bbbde970b4fb6daefe9d0c"
+    },
+    {
+      "bytes": 3397669,
+      "mode": 420,
+      "path": "target/m2/stage76-78-m1-validation-01/contract/experiment/report.json",
+      "sha256": "beb0aaa94339b2326374ad5fff9885c8dfb371cf4cdfea4feca8bfed5611c9bf"
+    },
+    {
+      "bytes": 2071,
+      "mode": 420,
+      "path": "target/m2/stage76-78-publication-copy-01/report.json",
+      "sha256": "ce9594e8a2b4022e5cafcdf5b6fa2242bd64d0e49e055f5a7670497ca93fa840"
+    },
+    {
+      "bytes": 503,
+      "mode": 420,
+      "path": "target/m2/stage76-78-publication-descriptor-correction-01/report.json",
+      "sha256": "dfcd539f7ca890d20b39c67d43bf6a17d8764f66f56faa26b01bc2402746e9d1"
+    },
+    {
+      "bytes": 5464,
+      "mode": 420,
+      "path": "target/m2/stage76-78-publication-base-archive-review-01/report.json",
+      "sha256": "53a94a0043469dd53c6f66aa27cc1ac85ffca57f432ca8755ed279f9708ca7e9"
+    },
+    {
+      "bytes": 21189,
+      "mode": 420,
+      "path": "target/m2/stage76-78-publication-terminal-archive-review-01/verify.py",
+      "sha256": "3a3efedf7a4cb3a9ac09df433bb9e89de136bc52170c50e87b9f0dac6031282f"
+    }
+  ],
+  "kind": "stage76-78-final-publication-independent-terminal-readback",
+  "limits": [
+    "Approval is for this truthful local Stage76-78 implementation checkpoint and exact two public archives; final Git commit and source binding remain separate.",
+    "Known mismatch, unsupported, two Java errors, constraints14 internal error, 111 unready cases, and 1791 overlapping full-gate obligations remain failures or incomplete obligations.",
+    "Base original M1 tools and terminal final tool copies have distinct identities. Historical policy/descriptor/copy records remain historical rather than being relabeled.",
+    "Compiled binaries and caches are intentionally excluded; exact local artifact identities and historical Java archive authority links are retained.",
+    "Monitor evidence proves sampled capacity and bounded owned executable quiescence, not continuous peak or arbitrary descendant proof.",
+    "No full M2/API/performance/release-platform completion, Stage79-83 canonical integration, or new semantic execution is claimed."
+  ],
+  "outer_replay_monitors": {
+    "replay": {
+      "continuous_peak_space_proof": false,
+      "full_descendant_quiescence_proven": false,
+      "identity": {
+        "bytes": 3999276,
+        "mode": 420,
+        "path": "target/m2/stage76-78-full-replay-launch-01/replay-space-monitor/report.json",
+        "sha256": "0e1033f6bddbbd60746f07fb1af248175e04291f5ad476eaa7c513a63e86f27f"
+      },
+      "sampled_min_free_bytes": 579252224
+    },
+    "verify": {
+      "continuous_peak_space_proof": false,
+      "full_descendant_quiescence_proven": false,
+      "identity": {
+        "bytes": 86600,
+        "mode": 420,
+        "path": "target/m2/stage76-78-full-replay-launch-01/verify-space-monitor/report.json",
+        "sha256": "74c398c4bbf3057e4421c5890f7344174c7a39f7cc6746b07cdc24fac59ce734"
+      },
+      "sampled_min_free_bytes": 1087205376
+    }
+  },
+  "post_validation_documents": {
+    "EOF_correction_recorded": {
+      "bytes": 1440,
+      "sha256": "fb4f74e4611fe20e0174dd554d7ee4c4d9bb4602d807944090c1937006520ec8"
+    },
+    "six_document_apply_readback": {
+      "bytes": 3590,
+      "mode": 420,
+      "path": "target/m2/stage76-78-documents-apply-01/final-readback-01/report.json",
+      "sha256": "123f147c28f32f9aed55f2804278216a737f145f4288093ae9f4d1bc4fa7e05d"
+    },
+    "two_checkpoint_link_edits": {
+      "docs/m2-language.md": {
+        "after": "API, platform release, or performance parity. The [implementation checkpoint](../reports/m2/stage76-78-implementation-checkpoint.json) retains the failed\nattempts and exact source/artifact identities.\n",
+        "before": "API, platform release, or performance parity. The eventual implementation\ncheckpoint must retain the failed attempts and exact source/artifact identities.\n"
+      },
+      "reports/m2/README.md": {
+        "after": "API, platform release, or performance parity. The [implementation checkpoint](stage76-78-implementation-checkpoint.json) retains the failed\nattempts and exact source/artifact identities.\n",
+        "before": "API, platform release, or performance parity. The eventual implementation\ncheckpoint must retain the failed attempts and exact source/artifact identities.\n"
+      }
+    }
+  },
+  "public_checkpoint": {
+    "bytes": 14012,
+    "mode": 420,
+    "path": "reports/m2/stage76-78-implementation-checkpoint.json",
+    "sha256": "91d26410da3140073e98bda5b3317ad6adc818629f570132e26f70563da9f56f"
+  },
+  "public_copies_exact_bytes_and_modes": true,
+  "publication_admitted_for_checkpoint_commit": true,
+  "raw_replay_evidence": {
+    "JVM_raw_files": 8,
+    "all_replay_evidence_hashes_bound_except_explicit_compiled_payloads": true,
+    "case_files": 14133,
+    "compiled_payload_exclusions": [
+      "artifacts/jvm_snippet_probe",
+      "artifacts/language_probe",
+      "artifacts/module_eval_probe",
+      "jvm-classpath/artifacts/jvm_snippet_probe"
+    ],
+    "fresh_Java_processes": 0
+  },
+  "read_only": true,
+  "replay": {
+    "full_gate_breakdown": {
+      "explanation": "Requirement implementation/test/execution obligations and required-case obligations are separate gate items. Case reasons overlap; their individual counts must not be added. A passing execution can still lack requirement mappings. Unselected cases are missing results, not executed failures or passes.",
+      "failure_items_by_kind": {
+        "implementation incomplete": 475,
+        "required case incomplete": 841,
+        "test mapping incomplete": 475
+      },
+      "required_case_disjoint_reason_masks": {
+        "no_requirement_mapping": 502,
+        "no_requirement_mapping + execution_not_ready + no_result": 111,
+        "no_requirement_mapping + result_nonpass": 214,
+        "result_nonpass": 14
+      },
+      "required_case_failure_union": 841,
+      "required_case_reasons_overlap": {
+        "execution_not_ready": 111,
+        "no_requirement_mapping": 827,
+        "no_result": 111,
+        "result_nonpass": 228
+      }
+    },
+    "full_gate_failures": 1791,
+    "improvements": 25,
+    "internal_error_case": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/constraints14.pkl",
+    "new_guest_or_Java_evaluations_by_this_review": 0,
+    "oracle_errors_preserved": 2,
+    "prior_pass_regressions": 0,
+    "prior_passes": 4163,
+    "ready": 4416,
+    "status_counts": {
+      "candidate-internal-error": 1,
+      "candidate-unsupported": 139,
+      "mismatch": 86,
+      "oracle-error": 2,
+      "pass": 4188
+    },
+    "unready": 111
+  },
+  "selection": {
+    "base_members": 73163,
+    "base_payloads_recopied": false,
+    "finite_producer_additions": [
+      "target/m2/stage76-78-publication-terminal-archive-01/archive.py",
+      "target/m2/stage76-78-publication-terminal-archive-01/selection-overrides.json",
+      "target/m2/stage76-78-terminal-evidence-selection-01/dedup-and-exclusions.json",
+      "target/m2/stage76-78-terminal-evidence-selection-01/report.json",
+      "target/m2/stage76-78-terminal-evidence-selection-01/select.py",
+      "target/m2/stage76-78-terminal-evidence-selection-01/selection.json.gz",
+      "target/m2/stage76-78-terminal-evidence-selection-01/terminal-receipts.json"
+    ],
+    "frozen_members": 14317,
+    "groups": {
+      "historical-producer-and-publication-links": 13,
+      "m1-contract-producer": 11,
+      "m1-contract-producer-review": 1,
+      "m1-policy-apply-validation": 16,
+      "m1-terminal-contract": 40,
+      "post-contract-final-tools": 2,
+      "replay-build-control": 11,
+      "replay-cache-exclusion-receipt": 4,
+      "replay-launch-verify-audit": 39,
+      "replay-producer-review": 1,
+      "replay-producers": 18,
+      "terminal-full4416": 14161,
+      "terminal-selection-and-archive-producer": 7
+    },
+    "terminal_members": 14324,
+    "total_distinct_members": 87487
+  },
+  "started_unix": 1792961139.458613,
+  "terminals": {
+    "audit": {
+      "complete": true,
+      "exit_code": 0,
+      "identity": {
+        "bytes": 1078,
+        "mode": 420,
+        "path": "target/m2/stage76-78-full-replay-launch-01/audit-process/process.json",
+        "sha256": "fb38df685eb770131b5181240facde07cc0c2c0f25b5bb23b9ccec5103397fa5"
+      },
+      "source_stable": true
+    },
+    "m1_contract": {
+      "complete": true,
+      "exit_code": 0,
+      "identity": {
+        "bytes": 4849,
+        "mode": 420,
+        "path": "target/m2/stage76-78-m1-validation-01/contract/process.json",
+        "sha256": "2318197c7ed929c85f150c1ba49a559817fc1685730216012a6c7bbbb8a76cab"
+      },
+      "source_stable": true
+    },
+    "manifest_check": {
+      "complete": true,
+      "exit_code": 0,
+      "identity": {
+        "bytes": 941,
+        "mode": 420,
+        "path": "target/m2/stage76-78-m1-policy-apply-01/manifest-check/process.json",
+        "sha256": "287f6c8e2067879338b2d500d635c51f9f90d731fdf5cc32111b55975730c07c"
+      },
+      "source_stable": true
+    },
+    "replay": {
+      "complete": true,
+      "exit_code": 0,
+      "identity": {
+        "bytes": 1443,
+        "mode": 420,
+        "path": "target/m2/stage76-78-full-replay-launch-01/replay-process/process.json",
+        "sha256": "b23b9e029822008a19617d21d708b073e5182e174f0b5276582970a73c8d8bf2"
+      },
+      "source_stable": true
+    },
+    "tool_tests_normal": {
+      "complete": true,
+      "exit_code": 0,
+      "identity": {
+        "bytes": 1007,
+        "mode": 420,
+        "path": "target/m2/stage76-78-m1-policy-apply-01/tests-normal/process.json",
+        "sha256": "5e7c9b0f7a4633e3e6641483ff545194192b6174953eb11557a56906e8fea9b1"
+      },
+      "source_stable": true
+    },
+    "tool_tests_optimized": {
+      "complete": true,
+      "exit_code": 0,
+      "identity": {
+        "bytes": 1017,
+        "mode": 420,
+        "path": "target/m2/stage76-78-m1-policy-apply-01/tests-optimized/process.json",
+        "sha256": "74466213ae0e72fda4e5cbdcbaa239d1ce60fb6920b8d41247deee609afd0ab6"
+      },
+      "source_stable": true
+    },
+    "verify": {
+      "complete": true,
+      "exit_code": 0,
+      "identity": {
+        "bytes": 1083,
+        "mode": 420,
+        "path": "target/m2/stage76-78-full-replay-launch-01/verify-process/process.json",
+        "sha256": "c70bee4d305fe4437392f10f2aecd13bfe2755c6257fbcbb84e1c0645180eb9c"
+      },
+      "source_stable": true
+    }
+  }
+}

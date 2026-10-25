@@ -1,0 +1,48 @@
+string	int-sign-pos	123.sign
+string	int-sign-neg	(-123).sign
+string	int-sign-zero	0.sign
+string	int-abs-neg	(-123).abs
+string	int-abs-min	module.minimumInt.abs
+string	int-ceil	(-123).ceil
+string	int-floor	123.floor
+string	int-round	(-123).round()
+string	int-truncate	123.truncate()
+string	int-sign-as-method	123.sign()
+string	int-round-as-property	123.round
+string	int-round-extra-arg	123.round(1)
+string	int-truncate-extra-arg	123.truncate(1)
+string	float-sign-pos	2.5.sign
+string	float-sign-neg	(-2.5).sign
+string	float-sign-plus-zero	0.0.sign
+string	float-sign-minus-zero	(-0.0).sign
+string	float-sign-nan	NaN.sign
+string	float-sign-pos-inf	Infinity.sign
+string	float-sign-neg-inf	(-Infinity).sign
+string	float-abs-minus-zero	(-0.0).abs
+string	float-abs-nan	NaN.abs
+string	float-abs-neg-inf	(-Infinity).abs
+string	float-ceil-minus-zero	(-0.0).ceil
+string	float-ceil-small-neg	(-0.2).ceil
+string	float-floor-plus-zero	0.0.floor
+string	float-floor-small-pos	0.2.floor
+string	float-round-half-zero	0.5.round()
+string	float-round-half-negzero	(-0.5).round()
+string	float-round-half-even	2.5.round()
+string	float-round-half-odd	3.5.round()
+string	float-round-neg-half-even	(-2.5).round()
+string	float-round-neg-half-odd	(-3.5).round()
+string	float-round-nan	NaN.round()
+string	float-round-inf	Infinity.round()
+string	float-truncate-small-neg	(-0.2).truncate()
+string	float-truncate-minus-zero	(-0.0).truncate()
+string	float-truncate-nan	NaN.truncate()
+string	float-truncate-neg-inf	(-Infinity).truncate()
+string	float-sign-as-method	2.5.sign()
+string	float-round-as-property	2.5.round
+string	float-round-extra-arg	2.5.round(1)
+string	ref-int-sign-type	module.refInt.sign is ref.Reference<D, Int>
+string	ref-int-abs-type	module.refInt.abs is ref.Reference<D, Int>
+string	ref-float-sign-type	module.refFloat.sign is ref.Reference<D, Float>
+string	ref-float-floor-type	module.refFloat.floor is ref.Reference<D, Float>
+string	ref-int-round-method	module.refInt.round()
+string	ref-float-truncate-method	module.refFloat.truncate()

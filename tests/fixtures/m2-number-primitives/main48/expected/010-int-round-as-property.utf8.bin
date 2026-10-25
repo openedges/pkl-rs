@@ -1,0 +1,38 @@
+–– Pkl Error ––
+Cannot find property `round` in object of type `Int`.
+
+1 | 123.round
+    ^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+abs
+b
+ceil
+d
+floor
+gb
+gib
+h
+inv
+isEven
+isFinite
+isInfinite
+isNaN
+isNonZero
+isOdd
+isPositive
+kb
+kib
+mb
+mib
+min
+ms
+ns
+pb
+pib
+s
+sign
+tb
+tib
+us

@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Syntax error in regex `*`: Dangling meta character '*' near index 0
+*
+^
+
+1 | Regex("*")
+    ^^^^^^^^^^
+at  (repl:text)

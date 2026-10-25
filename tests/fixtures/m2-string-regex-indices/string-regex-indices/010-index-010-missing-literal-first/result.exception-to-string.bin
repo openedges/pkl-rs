@@ -1,0 +1,8 @@
+org.pkl.core.PklException: –– Pkl Error ––
+String does not contain a match for literal pattern.
+String : "abc"
+Pattern: "z"
+
+1 | "abc".indexOf("z")
+    ^^^^^^^^^^^^^^^^^^
+at  (repl:text)

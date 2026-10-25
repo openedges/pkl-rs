@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Error replacing matches for regex `a` with `$4`: `No group 4`
+
+1 | "ab".replaceAll(Regex("a"), "$4")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

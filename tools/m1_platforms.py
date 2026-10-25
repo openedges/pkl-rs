@@ -2,7 +2,7 @@
 """Build and execute shared M1 probes in native Rust, Node, and Chromium.
 
 Strict comparison exits 1 for any oracle mismatch. --verify-contract checks the
-experiment and its exact known-gap inventory, never declaring compatibility.
+experiment and its exact mismatch inventory; neither proves full Pkl API coverage.
 """
 import argparse
 import hashlib
@@ -17,7 +17,10 @@ import sys
 from m1_semantics import decode_capture, generate_cases
 
 ROOT = Path(__file__).resolve().parents[1]
-KNOWN_GAPS = {'regex-unicode-15-vs-16', 'regex-zero-width-supplementary'}
+# Stage76–78 strict raw result (target/m2/stage76-78-m1-validation-01/strict/
+# experiment/report.json, SHA256 777e1f700559f400b76adf5764f080daf85944a0ffdfdd95779abefb8177e384)
+# matches Java for all 6,078 rows, including the two previously known Regex cases.
+KNOWN_GAPS = set()
 REQUIRED_SCENARIOS = {
     'shared-parser-resolver-vm', 'utf8-utf16-string-boundary',
     'lossless-i64-bigint-range', 'owned-byte-array-boundary',
@@ -162,6 +165,9 @@ def source_paths(root=ROOT):
                 path = Path(directory) / name
                 if path.suffix in suffixes and path.is_file():
                     paths.add(path)
+    from vendor_sources import vendor_source_paths
+    paths.add(root / 'tools/vendor_sources.py')
+    paths.update(vendor_source_paths(root))
     return sorted(paths)
 
 

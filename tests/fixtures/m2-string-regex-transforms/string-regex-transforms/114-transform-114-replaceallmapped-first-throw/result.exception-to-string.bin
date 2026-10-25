@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+mapped first
+
+1 | "aba".replaceAllMapped(Regex("."), (m) -> throw("mapped first"))
+                                              ^^^^^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | "aba".replaceAllMapped(Regex("."), (m) -> throw("mapped first"))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

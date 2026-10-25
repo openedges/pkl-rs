@@ -1446,3 +1446,20 @@ owners, but the model does not yet cover every Pkl declaration, module
 initialization, reflection, or error path. The linked full-corpus replay completed separate integrity verification and independent regression review. Its remaining compatibility failures are recorded in the implementation checkpoint.
 
 See the [implementation checkpoint](../reports/m2/stage73-75-implementation-checkpoint.json) for raw evidence and execution provenance. These local records do not establish full M2, product API, release-platform, or performance compatibility.
+
+## Selected Stage76–78 shared primitives and frontend
+
+Regex parsing and `String.isRegex` use the shared runtime across native, Wasm,
+and N-API. The frontend consumes a leading shebang and reports the selected
+empty parenthesized-type error at its authored site. Numeric Int/Float `sign`,
+`abs`, `ceil`, `floor`, `round()` and `truncate()` use the shared value model;
+Java-first cases include overflow, signed zero, NaN, Infinity, arity, and
+Reference metadata controls. Platform I/O remains behind Host.
+
+These implementations were integrated into canonical sources and exercised by
+the local required Rust checks, selected platform comparisons, and a full
+ready-corpus replay. The replay retains one Rust internal error, unsupported
+cases, ordinary mismatches, and Java oracle errors. Its separate integrity
+verification and independent regression audit succeeded without a prior-pass
+regression. This architecture covers selected paths only and does
+not imply complete regex syntax, numeric API, frontend grammar, or M2 parity.

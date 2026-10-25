@@ -1,0 +1,18 @@
+{
+  "candidate_compatibility_passes_claimed": 0,
+  "complete": true,
+  "jvm_repetitions": 2,
+  "launch_process_sha256": "d3130035094bcc17775fcc2b43e9c50679d1e09e110ab55112b1479921ed061f",
+  "oracle_audit_sha256": "9389ed76692735fbf799a485c199c4af3fc1c6d7966ac96ebb29ab7659cee8ea",
+  "oracle_report_sha256": "52257c72d8404259138ca734d081d6ba38d1d7ca246d3e356909157677f0f1cf",
+  "program_rows": 23,
+  "raw_process_streams_verified": 4,
+  "raw_repeats_byte_equal": true,
+  "raw_row_files_verified": 1012,
+  "scope": "Offline raw readback and input/source checks; no guest or Rust rerun",
+  "source_stable": true,
+  "status_counts": {
+    "error": 10,
+    "success": 13
+  }
+}

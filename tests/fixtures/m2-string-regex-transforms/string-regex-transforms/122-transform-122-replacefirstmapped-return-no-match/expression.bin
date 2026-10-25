@@ -1,0 +1,1 @@
+"a".replaceFirstMapped(Regex("z"), (m) -> 42)

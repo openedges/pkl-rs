@@ -1,0 +1,1 @@
+"aba".replaceLastMapped(Regex("."), (m) -> trace(m.value))

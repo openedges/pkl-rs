@@ -1,0 +1,65 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "error_class_and_cause_compared_by_rust": false,
+  "logger_authority_recorded": false,
+  "main_expected_rows": 48,
+  "profiles": {
+    "main48": {
+      "capture": "stage78-number-primitives-oracle-03",
+      "cases": {
+        "bytes": 6552,
+        "mode": 420,
+        "sha256": "99bfe113a4377a09afc1397621e6e32ab21ed8673742a0494576107a360342c1"
+      },
+      "module": {
+        "bytes": 280,
+        "mode": 420,
+        "sha256": "e929beaac8c24a03a1458ff7e399abc25345416872e101351b1df1e1981bd9ff"
+      },
+      "module_uri": "file:///stage78/number-primitives.pkl",
+      "ordinary_errors": 10,
+      "provenance": {
+        "bytes": 29552,
+        "mode": 420,
+        "sha256": "218ea532bf76f93ef0cf173101a4f058025c79d56c6a8c60448c380b020a4efe"
+      },
+      "queries": {
+        "bytes": 2023,
+        "mode": 420,
+        "sha256": "50add6bc32048714ecbec6b21a8c95c57dff9298a941465d61d3c5c8ed8eba8d"
+      },
+      "rows": 48,
+      "successes": 38
+    },
+    "reference24": {
+      "capture": "stage78-number-reference-supplement-oracle-01",
+      "cases": {
+        "bytes": 4403,
+        "mode": 420,
+        "sha256": "a153a4a222c62fe6d54e35df77397bf932021b77148398994331ac2d788cea84"
+      },
+      "module": {
+        "bytes": 285,
+        "mode": 420,
+        "sha256": "8b34eb179b7d94cbb28b239f4970551cb38c7bb5b395d2c67686c35ccbe57ad7"
+      },
+      "module_uri": "file:///stage78/number-reference-supplement.pkl",
+      "ordinary_errors": 0,
+      "provenance": {
+        "bytes": 30068,
+        "mode": 420,
+        "sha256": "17b8b49519ea0b71e079098236048410c4ada7a589c937d0a2ebd1209cbca9a0"
+      },
+      "queries": {
+        "bytes": 1820,
+        "mode": 420,
+        "sha256": "a2a2c6c8a1d6e3e03794be511982a51cef913a0d4994c0a5e066e5b6084d60ca"
+      },
+      "rows": 24,
+      "successes": 24
+    }
+  },
+  "reference_expected_rows": 24,
+  "schema": 1
+}

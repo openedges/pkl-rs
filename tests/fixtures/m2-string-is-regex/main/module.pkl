@@ -1,0 +1,7 @@
+import "pkl:ref"
+class D extends ref.Domain {
+  function renderReference(reference: ref.Reference<D, Any>): String = "ref"
+}
+local domain = new D {}
+refString = ref.Reference(domain, String, null)
+refIsRegexType = refString.isRegex is ref.Reference<D, Boolean>

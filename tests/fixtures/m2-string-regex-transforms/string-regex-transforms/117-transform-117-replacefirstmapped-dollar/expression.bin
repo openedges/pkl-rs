@@ -1,0 +1,1 @@
+"aba".replaceFirstMapped(Regex("a"), (m) -> "$")

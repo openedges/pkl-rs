@@ -1,0 +1,1 @@
+Regex("\u{d800}").findMatchesIn("\u{d800}").length

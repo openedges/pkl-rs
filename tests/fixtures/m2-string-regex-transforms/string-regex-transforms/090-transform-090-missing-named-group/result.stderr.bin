@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Error replacing matches for regex `(a)` with `${missing}`: `No group with name {missing}`
+
+1 | "ab".replaceAll(Regex("(a)"), "${missing}")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

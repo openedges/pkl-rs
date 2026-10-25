@@ -7,12 +7,29 @@ pub enum Operation {
     Duration(duration::Operation),
     Bytes(bytes::Operation),
     IntSeq(int_seq::Operation),
-    CollectionEndpoint { last: bool, nullable: bool },
+    Regex(regex::Operation),
+    StringTransform(string_transforms::Operation),
+    CollectionEndpoint {
+        last: bool,
+        nullable: bool,
+        single: bool,
+    },
     IfNonNull,
     Between,
+    NumberRound {
+        truncate: bool,
+    },
     Uppercase,
     ReverseString,
+    CheckStringPattern,
+    StringIndex {
+        last: bool,
+        nullable: bool,
+    },
     Contains,
+    Matches,
+    StartsWith,
+    EndsWith,
     DropLast,
     BooleanXor,
     BooleanImplies,
@@ -54,6 +71,34 @@ pub(super) fn blocks(
             2,
         ),
         (
+            "Int",
+            "round",
+            "external function round(): Int",
+            Operation::NumberRound { truncate: false },
+            0,
+        ),
+        (
+            "Int",
+            "truncate",
+            "external function truncate(): Int",
+            Operation::NumberRound { truncate: true },
+            0,
+        ),
+        (
+            "Float",
+            "round",
+            "external function round(): Float",
+            Operation::NumberRound { truncate: false },
+            0,
+        ),
+        (
+            "Float",
+            "truncate",
+            "external function truncate(): Float",
+            Operation::NumberRound { truncate: true },
+            0,
+        ),
+        (
             "String",
             "toUpperCase",
             "external function toUpperCase(): String",
@@ -81,6 +126,67 @@ pub(super) fn blocks(
             Operation::DropLast,
             1,
         ),
+        (
+            "String",
+            "matches",
+            "external function matches(regex: Regex): Boolean",
+            Operation::Matches,
+            1,
+        ),
+        (
+            "String",
+            "startsWith",
+            "external function startsWith(pattern: String | Regex): Boolean",
+            Operation::StartsWith,
+            1,
+        ),
+        (
+            "String",
+            "endsWith",
+            "external function endsWith(pattern: String | Regex): Boolean",
+            Operation::EndsWith,
+            1,
+        ),
+        (
+            "String",
+            "indexOf",
+            "external function indexOf(pattern: String | Regex): Int",
+            Operation::StringIndex {
+                last: false,
+                nullable: false,
+            },
+            1,
+        ),
+        (
+            "String",
+            "indexOfOrNull",
+            "external function indexOfOrNull(pattern: String | Regex): Int?",
+            Operation::StringIndex {
+                last: false,
+                nullable: true,
+            },
+            1,
+        ),
+        (
+            "String",
+            "lastIndexOf",
+            "external function lastIndexOf(pattern: String | Regex): Int",
+            Operation::StringIndex {
+                last: true,
+                nullable: false,
+            },
+            1,
+        ),
+        (
+            "String",
+            "lastIndexOfOrNull",
+            "external function lastIndexOfOrNull(pattern: String | Regex): Int?",
+            Operation::StringIndex {
+                last: true,
+                nullable: true,
+            },
+            1,
+        ),
     ] {
         let class_start = source
             .text
@@ -105,6 +211,24 @@ pub(super) fn blocks(
                     start + signature.find(parameter).unwrap() + parameter.find("Number").unwrap();
                 code.push(Instruction::CheckType(TypeCheck::Number));
                 spans.push(Some(Span::new(offset, offset + 6)));
+            } else if matches!(
+                operation,
+                Operation::Contains
+                    | Operation::StartsWith
+                    | Operation::EndsWith
+                    | Operation::StringIndex { .. }
+            ) {
+                let offset = start + signature.find("String | Regex").unwrap();
+                code.push(Instruction::Primitive(Operation::CheckStringPattern));
+                spans.push(Some(Span::new(offset, offset + 14)));
+            } else if matches!(operation, Operation::Matches) {
+                let offset = start + signature.find(": Regex").unwrap() + 2;
+                code.push(Instruction::CheckType(TypeCheck::Class {
+                    module: None,
+                    id: classes::REGEX,
+                    name: "Regex".into(),
+                }));
+                spans.push(Some(Span::new(offset, offset + 5)));
             } else if matches!(operation, Operation::DropLast) {
                 let offset = start + signature.find("Int").unwrap();
                 code.push(Instruction::CheckType(TypeCheck::Int));
@@ -116,12 +240,7 @@ pub(super) fn blocks(
             }
         }
         code.push(Instruction::Primitive(operation));
-        spans.push(if matches!(operation, Operation::Contains) {
-            let offset = start + signature.find("String | Regex").unwrap();
-            Some(Span::new(offset, offset + 14))
-        } else {
-            None
-        });
+        spans.push(None);
         code.push(Instruction::Return);
         spans.push(None);
         let block = blocks.len();
@@ -139,9 +258,32 @@ pub(super) fn blocks(
     result.extend(duration::blocks(blocks, metadata));
     result.extend(bytes::blocks(blocks, metadata));
     result.extend(int_seq::blocks(blocks, metadata));
+    result.extend(regex::blocks(blocks, metadata));
     result.extend(collection_transforms::endpoint_blocks(blocks, metadata));
     result.extend(any::blocks(blocks, metadata));
+    result.extend(string_transforms::blocks(blocks, metadata));
     result
+}
+
+fn string_pattern_type_error(
+    pattern: &Value,
+    heap: &Heap,
+    module: &str,
+) -> Result<RuntimeError, RuntimeError> {
+    let name = crate::diagnostic_values::type_name(pattern, heap, module)?;
+    let rendered = crate::diagnostic_values::render(pattern, heap, module, 80)?;
+    let actual = if pattern.is_null() {
+        "`null`".to_owned()
+    } else {
+        format!("type `{name}`")
+    };
+    Ok(RuntimeError::new(
+        ErrorKind::Type,
+        PklString::from(format!(
+            "Expected value of type `String | Regex`, but got {actual}.\nValue: "
+        ))
+        .concat(&rendered),
+    ))
 }
 
 impl Vm {
@@ -153,6 +295,7 @@ impl Vm {
     ) -> Option<RuntimeError> {
         let class = match receiver {
             Value::String(_) => "String",
+            Value::Regex(_) => "Regex",
             Value::Int(_) => "Int",
             Value::Float(_) => "Float",
             Value::Bool(_) => "Boolean",
@@ -301,6 +444,51 @@ impl Vm {
             return Ok(true);
         }
         if !method {
+            if let Value::Regex(regex) = receiver {
+                let value = match name {
+                    "pattern" => Some(Value::String(regex.pattern().clone())),
+                    "groupCount" => Some(Value::Int((regex.group_count() as i64).into())),
+                    _ => None,
+                };
+                if let Some(value) = value {
+                    self.stack.push(value);
+                    return Ok(true);
+                }
+            }
+            let numeric = match receiver {
+                Value::Int(value) => match name {
+                    "sign" => Some(Value::Int(value.get().signum().into())),
+                    "abs" => Some(Value::Int(
+                        value
+                            .get()
+                            .checked_abs()
+                            .ok_or_else(|| {
+                                RuntimeError::new(ErrorKind::Arithmetic, "Integer overflow.")
+                            })?
+                            .into(),
+                    )),
+                    "ceil" | "floor" => Some(Value::Int(value.get().into())),
+                    _ => None,
+                },
+                Value::Float(value) => {
+                    let number = value.get();
+                    let result = match name {
+                        // StrictMath.signum retains both zero signs and NaN.
+                        "sign" if number == 0.0 || number.is_nan() => Some(number),
+                        "sign" => Some(number.signum()),
+                        "abs" => Some(number.abs()),
+                        "ceil" => Some(number.ceil()),
+                        "floor" => Some(number.floor()),
+                        _ => None,
+                    };
+                    result.map(|number| Value::Float(number.into()))
+                }
+                _ => None,
+            };
+            if let Some(value) = numeric {
+                self.stack.push(value);
+                return Ok(true);
+            }
             if let Value::String(text) = receiver {
                 let value = match name {
                     "length" => Some(Value::Int((text.code_point_len() as i64).into())),
@@ -309,6 +497,10 @@ impl Vm {
                     "isNotEmpty" => Some(Value::Bool(!text.is_empty())),
                     "isBlank" => Some(Value::Bool(text.is_blank())),
                     "isNotBlank" => Some(Value::Bool(!text.is_blank())),
+                    "isRegex" => Some(Value::Bool(
+                        crate::pkl_regex::PklRegex::is_valid_pattern(text)
+                            .map_err(|error| regex::backend_error(error, text))?,
+                    )),
                     "isBase64" => Some(Value::Bool(resources::decode_base64(text).is_ok())),
                     "base64" => Some(Value::String(resources::base64(
                         text.to_java_utf8().as_bytes(),
@@ -431,6 +623,7 @@ impl Vm {
             Value::Bytes(_) => "Bytes",
             Value::IntSeq(_) => "IntSeq",
             Value::String(_) => "String",
+            Value::Regex(_) => "Regex",
             Value::Object(_) if self.is_list(receiver) => "List",
             Value::Object(_) if self.is_set(receiver) => "Set",
             Value::Object(id)
@@ -442,7 +635,10 @@ impl Vm {
         };
         if method
             && matches!(class, "List" | "Set")
-            && matches!(name, "first" | "firstOrNull" | "last" | "lastOrNull")
+            && matches!(
+                name,
+                "first" | "firstOrNull" | "last" | "lastOrNull" | "single" | "singleOrNull"
+            )
         {
             let mut error = RuntimeError::new(
                 ErrorKind::MissingMember,
@@ -484,7 +680,10 @@ impl Vm {
         }
         if !method
             && matches!(class, "List" | "Set")
-            && matches!(name, "first" | "firstOrNull" | "last" | "lastOrNull")
+            && matches!(
+                name,
+                "first" | "firstOrNull" | "last" | "lastOrNull" | "single" | "singleOrNull"
+            )
         {
             let block = self.program.primitive_methods[&(class.into(), name.into())];
             let id = self.heap.allocate(Object {
@@ -522,10 +721,14 @@ impl Vm {
                 return Ok(false);
             };
             let arity = match name {
-                "isBetween" | "fold" => 2,
-                "step" | "map" => 1,
-                "contains" | "dropLast" | "xor" | "implies" | "toDataSize" | "toDuration"
-                | "toUnit" | "getOrNull" | "decodeToString" => 1,
+                "isBetween" | "fold" | "splitLimit" | "replaceAll" | "replaceFirst"
+                | "replaceLast" | "replaceAllMapped" | "replaceFirstMapped"
+                | "replaceLastMapped" => 2,
+                "step" | "map" | "findMatchesIn" | "matchEntire" | "split" => 1,
+                "contains" | "matches" | "startsWith" | "endsWith" | "indexOf"
+                | "indexOfOrNull" | "lastIndexOf" | "lastIndexOfOrNull" | "dropLast" | "xor"
+                | "implies" | "toDataSize" | "toDuration" | "toUnit" | "getOrNull"
+                | "decodeToString" => 1,
                 _ => 0,
             };
             let id = self.heap.allocate(Object {
@@ -578,10 +781,35 @@ impl Vm {
             Operation::Duration(operation) => self.duration_operation(receiver, operation)?,
             Operation::Bytes(operation) => self.bytes_operation(receiver, operation)?,
             Operation::IntSeq(operation) => self.int_seq_operation(receiver, operation)?,
-            Operation::CollectionEndpoint { last, nullable } => {
-                self.collection_endpoint(receiver, last, nullable)?
-            }
+            Operation::Regex(operation) => self.regex_operation(receiver, operation)?,
+            Operation::StringTransform(operation) => self.string_transform(receiver, operation)?,
+            Operation::CollectionEndpoint {
+                last,
+                nullable,
+                single,
+            } => self.collection_endpoint(receiver, last, nullable, single)?,
             Operation::IfNonNull => self.if_non_null(receiver)?,
+            Operation::NumberRound { truncate } => {
+                let result = match receiver {
+                    Value::Int(value) => Value::Int(value.get().into()),
+                    Value::Float(value) => {
+                        let number = value.get();
+                        let rounded = if truncate {
+                            // VmSafeMath.truncate chooses ceil only for negative values.
+                            if number < 0.0 {
+                                number.ceil()
+                            } else {
+                                number.floor()
+                            }
+                        } else {
+                            number.round_ties_even()
+                        };
+                        Value::Float(rounded.into())
+                    }
+                    _ => return Err(invalid("Number rounding receiver")),
+                };
+                self.stack.push(result);
+            }
             Operation::ReverseString => {
                 let Value::String(text) = receiver else {
                     return Err(invalid("String.reverse receiver"));
@@ -645,6 +873,80 @@ impl Vm {
                     text.drop_last_code_points(count.get() as u64),
                 ));
             }
+            Operation::CheckStringPattern => {
+                let pattern = self
+                    .stack
+                    .last()
+                    .ok_or_else(|| invalid("String pattern argument"))?;
+                if !matches!(pattern, Value::String(_) | Value::Regex(_)) {
+                    return Err(string_pattern_type_error(
+                        pattern,
+                        &self.heap,
+                        &self.program.module_name,
+                    )?);
+                }
+            }
+            Operation::StringIndex { last, nullable } => {
+                let pattern = self.pop()?;
+                let Value::String(text) = receiver else {
+                    return Err(invalid("String index receiver"));
+                };
+                let position = match &pattern {
+                    Value::Regex(regex_pattern) => regex_pattern
+                        .find_index(&text, last)
+                        .map_err(|error| regex::backend_error(error, regex_pattern.pattern()))?,
+                    Value::String(literal) => {
+                        let units = text.encode_utf16().collect::<Vec<_>>();
+                        let literal = literal.encode_utf16().collect::<Vec<_>>();
+                        let unit_index = if literal.is_empty() {
+                            Some(if last { units.len() } else { 0 })
+                        } else if last {
+                            units
+                                .windows(literal.len())
+                                .rposition(|part| part == literal)
+                        } else {
+                            units
+                                .windows(literal.len())
+                                .position(|part| part == literal)
+                        };
+                        unit_index.map(|index| {
+                            PklString::from_utf16(units[..index].to_vec()).code_point_len()
+                        })
+                    }
+                    _ => return Err(invalid("unchecked String index pattern")),
+                };
+                match position {
+                    Some(position) => self.stack.push(Value::Int(
+                        i64::try_from(position)
+                            .map_err(|_| invalid("String index exceeds Int range"))?
+                            .into(),
+                    )),
+                    None if nullable => self.stack.push(Value::Null),
+                    None => {
+                        let kind = if matches!(pattern, Value::Regex(_)) {
+                            "regex"
+                        } else {
+                            "literal"
+                        };
+                        let text = crate::diagnostic_values::render(
+                            &Value::String(text),
+                            &self.heap,
+                            &self.program.module_name,
+                            80,
+                        )?;
+                        let pattern = crate::diagnostic_values::render(
+                            &pattern,
+                            &self.heap,
+                            &self.program.module_name,
+                            80,
+                        )?;
+                        return Err(RuntimeError::new(ErrorKind::Type, PklString::join(&[
+                            format!("String does not contain a match for {kind} pattern.\nString : ").into(),
+                            text, "\nPattern: ".into(), pattern,
+                        ], "")));
+                    }
+                }
+            }
             Operation::Uppercase => {
                 let Value::String(value) = receiver else {
                     return Err(invalid("String uppercase receiver"));
@@ -652,35 +954,50 @@ impl Vm {
                 self.stack
                     .push(Value::String(crate::string_case::uppercase(&value)));
             }
-            Operation::Contains => {
+            Operation::Contains
+            | Operation::Matches
+            | Operation::StartsWith
+            | Operation::EndsWith => {
                 let pattern = self.pop()?;
                 let Value::String(text) = receiver else {
-                    return Err(invalid("String contains receiver"));
+                    return Err(invalid("String predicate receiver"));
                 };
-                let Value::String(pattern) = pattern else {
-                    let name = crate::diagnostic_values::type_name(
-                        &pattern,
-                        &self.heap,
-                        &self.program.module_name,
-                    )?;
-                    let rendered = crate::diagnostic_values::render(
-                        &pattern,
-                        &self.heap,
-                        &self.program.module_name,
-                        80,
-                    )?;
-                    return Err(RuntimeError::new(
-                        ErrorKind::Type,
-                        PklString::from(format!(
-                            "Expected value of type `String | Regex`, but got type `{name}`.\nValue: "
-                        )).concat(&rendered),
-                    ));
+                let result = match pattern {
+                    Value::Regex(pattern) => {
+                        use crate::pkl_regex::StringPredicate;
+                        let predicate = match operation {
+                            Operation::Contains => StringPredicate::Contains,
+                            Operation::Matches => StringPredicate::Matches,
+                            Operation::StartsWith => StringPredicate::StartsWith,
+                            Operation::EndsWith => StringPredicate::EndsWith,
+                            _ => unreachable!(),
+                        };
+                        pattern
+                            .string_predicate(&text, predicate)
+                            .map_err(|error| regex::backend_error(error, pattern.pattern()))?
+                    }
+                    Value::String(pattern) if !matches!(operation, Operation::Matches) => {
+                        let text = text.encode_utf16().collect::<Vec<_>>();
+                        let pattern = pattern.encode_utf16().collect::<Vec<_>>();
+                        match operation {
+                            Operation::Contains => {
+                                pattern.is_empty()
+                                    || text.windows(pattern.len()).any(|part| part == pattern)
+                            }
+                            Operation::StartsWith => text.starts_with(&pattern),
+                            Operation::EndsWith => text.ends_with(&pattern),
+                            _ => unreachable!(),
+                        }
+                    }
+                    _ => {
+                        // The Regex-only matches argument is checked by CheckType.
+                        if matches!(operation, Operation::Matches) {
+                            return Err(invalid("unchecked String.matches argument"));
+                        }
+                        return Err(invalid("unchecked String pattern argument"));
+                    }
                 };
-                let text = text.encode_utf16().collect::<Vec<_>>();
-                let pattern = pattern.encode_utf16().collect::<Vec<_>>();
-                self.stack.push(Value::Bool(
-                    pattern.is_empty() || text.windows(pattern.len()).any(|part| part == pattern),
-                ));
+                self.stack.push(Value::Bool(result));
             }
         }
         Ok(())

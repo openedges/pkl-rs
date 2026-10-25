@@ -630,6 +630,18 @@ impl Vm {
                         }
                         run.append(&value.to_string());
                     }
+                    Value::Regex(value) => {
+                        if run.format == Format::Json {
+                            return self.pcf_unrenderable(run, &Value::Regex(value));
+                        }
+                        run.append("Regex(");
+                        run.output.push_value(&super::pcf_format::string(
+                            value.pattern(),
+                            &run.indentation(depth),
+                            run.custom,
+                        ));
+                        run.append(")");
+                    }
                     Value::Duration(value) => {
                         if run.format == Format::Json {
                             return self.pcf_unrenderable(run, &Value::Duration(value));

@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+mapper evaluated
+
+1 | "a".replaceAllMapped(null, throw("mapper evaluated"))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

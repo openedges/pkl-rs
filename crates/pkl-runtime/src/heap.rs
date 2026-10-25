@@ -202,6 +202,8 @@ pub struct Object {
     /// Reader payload has no heap edges. Factory property nodes read their
     /// declaration owner's payload, including when inherited by an amendment.
     pub resource: Option<Arc<crate::resources::Resource>>,
+    /// Immutable match result has no heap edges; factory reads declaration owner.
+    pub regex_match: Option<Arc<crate::pkl_regex::RegexMatchData>>,
     /// Recursive force publishes this mark before traversing children.
     pub forced: bool,
     /// Evaluator-owned canonical identity, populated only after key hashing succeeds.
@@ -336,6 +338,7 @@ pub(crate) enum ExecutionSite {
     TypeChild(usize),
     Constraint(usize),
     Function { block: usize, instruction: usize },
+    RegexConstructor { block: usize, instruction: usize },
     Generator { block: usize, instruction: usize },
     Member(usize),
 }
@@ -355,6 +358,7 @@ struct ExecutableState {
     // activation. Distinct executable clones retain distinct node state.
     imported_modules: BTreeMap<(usize, usize), ObjectId>,
     method_calls: BTreeMap<(usize, usize), crate::vm::deprecation::CallCache>,
+    regex_constructor: crate::pkl_regex::ConstructorCache,
 }
 
 impl ExecutableOwnerId {
@@ -618,6 +622,13 @@ impl Heap {
                 "invalid executable owner",
             )),
         }
+    }
+
+    pub(crate) fn regex_constructor_cache(
+        &mut self,
+        owner: ExecutableOwnerId,
+    ) -> Result<&mut crate::pkl_regex::ConstructorCache, RuntimeError> {
+        Ok(&mut self.executable_mut(owner)?.regex_constructor)
     }
 
     pub(crate) fn executable_is_live(&self, owner: ExecutableOwnerId) -> bool {

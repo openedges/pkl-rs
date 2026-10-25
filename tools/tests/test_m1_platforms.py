@@ -1,3 +1,4 @@
+import json
 import sys
 import tempfile
 from pathlib import Path
@@ -13,12 +14,16 @@ class PlatformEvidenceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             fixed = {'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml',
-                     'tools/m1_platforms.py', 'tools/m1_semantics.py',
+                     'tools/m1_platforms.py', 'tools/m1_semantics.py', 'tools/vendor_sources.py',
                      'tools/java/M1SemanticsProbe.java', 'tests/fixtures/m1/semantics/cases.json',
                      'crates/pkl-runtime/Cargo.toml',
                      'crates/pkl-runtime/examples/semantics_probe.rs',
                      'crates/pkl-runtime/src/stdlib/modules.txt'}
-            selected = fixed | {'crates/pkl-runtime/src/value.rs',
+            selected = fixed | {'vendor/java_regex/src/lib.rs',
+                                'vendor/java_regex/src/utf16/name-pool.bin',
+                                'vendor/java_regex/src/utf16/property-aliases.tsv',
+                                'vendor/java_regex/LICENSE-MIT',
+                                'crates/pkl-runtime/src/value.rs',
                                 'crates/pkl-wasm/src/lib.rs', 'crates/pkl-napi/src/lib.rs',
                                 'crates/pkl-napi/Cargo.toml', 'tools/platform/run.mjs',
                                 'tools/platform/package.json', 'tools/platform/example.pkl',
@@ -27,7 +32,7 @@ class PlatformEvidenceTests(unittest.TestCase):
             excluded_names = {'node_modules', 'target', '.cache'}
             ignored = {'tools/platform/ignored.txt', 'tools/platform/ignored.RS'}
             for folder in ['crates/pkl-runtime/src', 'crates/pkl-wasm',
-                           'crates/pkl-napi', 'tools/platform']:
+                           'crates/pkl-napi', 'tools/platform', 'vendor/java_regex']:
                 ignored.update(f'{folder}/{name}/nested/cache.json' for name in excluded_names)
             for name in selected | ignored:
                 path = root / name
@@ -178,15 +183,29 @@ class PlatformEvidenceTests(unittest.TestCase):
         captures['browser'] = b'61'
         with self.assertRaises(ValueError): m1_platforms.compare([{'id': 'a'}], captures)
 
-    def test_known_gaps_are_failures_and_contract_requires_exact_inventory(self):
-        cases = [{'id': name} for name in sorted(m1_platforms.KNOWN_GAPS)]
-        captures = {'java': self.capture([b'a', b'a']), **{name: self.capture([b'b', b'b']) for name in ['rust', 'node', 'browser']}}
-        rows = m1_platforms.compare(cases, captures)
-        self.assertTrue(m1_platforms.contract_matches(rows))
-        self.assertFalse(any(row['oracle_matches']['rust'] for row in rows))
-        self.assertFalse(m1_platforms.contract_matches(rows[:1]))
-        rows[0]['shared_engine_match'] = False
-        self.assertFalse(m1_platforms.contract_matches(rows))
+    def test_resolved_regex_cases_remain_and_contract_requires_zero_mismatches(self):
+        former_gaps = {'regex-unicode-15-vs-16', 'regex-zero-width-supplementary'}
+        inventory = json.loads((m1_platforms.ROOT / 'tests/fixtures/m1/semantics/cases.json').read_bytes())['cases']
+        ids = [case['id'] for case in inventory]
+        self.assertEqual(m1_platforms.KNOWN_GAPS, set())
+        for case_id in former_gaps:
+            self.assertEqual(ids.count(case_id), 1)
+
+        cases = [{'id': case_id} for case_id in sorted(former_gaps)]
+        equal = {name: self.capture([b'a', b'a']) for name in ['java', 'rust', 'node', 'browser']}
+        self.assertTrue(m1_platforms.contract_matches(m1_platforms.compare(cases, equal)))
+
+        # A future common mismatch cannot become an accepted exception.
+        all_wrong = {**equal, **{name: self.capture([b'b', b'b']) for name in ['rust', 'node', 'browser']}}
+        wrong_rows = m1_platforms.compare(cases, all_wrong)
+        self.assertTrue(all(row['shared_engine_match'] for row in wrong_rows))
+        self.assertFalse(m1_platforms.contract_matches(wrong_rows))
+
+        # Platform disagreement remains a contract failure even with complete captures.
+        browser_wrong = {**equal, 'browser': self.capture([b'b', b'b'])}
+        divergent_rows = m1_platforms.compare(cases, browser_wrong)
+        self.assertFalse(all(row['shared_engine_match'] for row in divergent_rows))
+        self.assertFalse(m1_platforms.contract_matches(divergent_rows))
 
 
 if __name__ == '__main__':

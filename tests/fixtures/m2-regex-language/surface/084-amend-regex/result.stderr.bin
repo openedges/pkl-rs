@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot instantiate, or amend an instance of, external class `Regex`.
+
+1 | (Regex("a")) {}
+     ^^^^^^^^^^
+at  (repl:text)
+
+To create an instance of an external class, use its literal syntax or constructor method.
+Examples:
+* `123` uses literal syntax to create an instance of class `Int`.
+* `Pair(1, 2)` uses the `Pair()` constructor method to create an instance of class `Pair`.

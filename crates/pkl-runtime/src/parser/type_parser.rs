@@ -317,6 +317,7 @@ impl Parser<'_> {
                 if !self.is_symbol(')') {
                     return Err(self.unexpected(Some(",` or `)")));
                 }
+                let closing = self.token.span;
                 self.advance()?;
                 if self.is_operator("->") {
                     self.advance()?;
@@ -324,6 +325,16 @@ impl Parser<'_> {
                     work.push(Work::Return(parameters));
                     work.push(Work::Type(expectation));
                 } else {
+                    if parameters.parameters.is_empty() {
+                        // ParserImpl.parseTypeAtom reports the closing token
+                        // of an empty non-function type, not a missing arrow.
+                        return Err(Diagnostic::language(
+                            DiagnosticOrigin::Parser,
+                            super::DiagnosticKind::Syntax,
+                            closing,
+                            "Unexpected token `)`. Expected a type.",
+                        ));
+                    }
                     if parameters.parameters.len() != 1 {
                         return Err(self.unexpected(Some("->")));
                     }

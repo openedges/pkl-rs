@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `String | Regex`, but got `null`.
+Value: null
+
+1464 | external function startsWith(pattern: String | Regex): Boolean
+                                             ^^^^^^^^^^^^^^
+at pkl.base#String.startsWith (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1464)
+
+1 | "a".startsWith(null)
+    ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+1461 | external function matches(regex: Regex): Boolean
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#String.matches (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1461)
+
+1 | "a".matches()
+    ^^^^^^^^^^^^^
+at  (repl:text)

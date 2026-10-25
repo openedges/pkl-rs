@@ -1,0 +1,8 @@
+–– Pkl Error ––
+String does not contain a match for regex pattern.
+String : "abc"
+Pattern: Regex("z")
+
+1 | "abc".lastIndexOf(Regex("z"))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

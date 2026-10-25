@@ -140,6 +140,9 @@ def run(output, candidate):
     source_paths += [p.relative_to(ROOT).as_posix() for p in sorted(
         (ROOT/'tests/fixtures/m1/semantics/references').iterdir())
         if p.is_file() and p.relative_to(ROOT).as_posix() not in source_paths]
+    from vendor_sources import vendor_source_paths
+    source_paths.append('tools/vendor_sources.py')
+    source_paths.extend(path.relative_to(ROOT).as_posix() for path in vendor_source_paths(ROOT))
     report = dict(schema=1, scope=manifest['scope'], oracle=metadata,
                   candidate=dict(path=str(candidate), sha256=sha256(candidate)),
                   sources={p: sha256(ROOT/p) for p in source_paths}, fixture_sha256=sha256(FIXTURE),

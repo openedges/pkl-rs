@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Syntax error in regex `\X(`: Unclosed group near index 3
+\X(
+
+1 | Regex(#"\X("#)
+    ^^^^^^^^^^^^^^
+at  (repl:text)

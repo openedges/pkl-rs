@@ -1,0 +1,1 @@
+"a".replaceFirstMapped(Regex("a"), (a, b) -> "x")

@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Syntax error in regex `\p{gc=NotACategory}`: Unknown Unicode property {name=<gc>, value=<NotACategory>} near index 18
+\p{gc=NotACategory}
+                  ^
+
+1 | Regex(#"\p{gc=NotACategory}"#)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

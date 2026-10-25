@@ -1,0 +1,1 @@
+"aba".replaceLastMapped(Regex("."), (m) -> throw("mapped first"))

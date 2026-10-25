@@ -1,0 +1,1 @@
+"ab".replaceFirstMapped(Regex("(?<=a)b"), (m) -> trace(m.value))

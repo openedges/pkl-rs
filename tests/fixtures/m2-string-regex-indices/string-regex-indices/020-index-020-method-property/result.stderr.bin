@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Cannot find property `lastIndexOf` in object of type `String`.
+
+1 | "a".lastIndexOf
+    ^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+lastIndex
+lastIndexOfOrNull(pattern)
+indexOf(pattern)

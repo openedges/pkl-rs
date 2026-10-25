@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected a single-element collection.
+Collection: Set(1, 2)
+
+1 | Set(1, 2).single
+    ^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -649,6 +649,7 @@ impl Vm {
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
+            string_transform: None,
             int_seq_run: None,
             conversion_run: None,
             collection_addition: None,

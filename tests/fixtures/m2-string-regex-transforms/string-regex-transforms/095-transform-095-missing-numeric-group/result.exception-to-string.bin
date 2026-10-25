@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Error replacing matches for regex `(a)` with `$9`: `No group 9`
+
+1 | "ab".replaceAll(Regex("(a)"), "$9")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

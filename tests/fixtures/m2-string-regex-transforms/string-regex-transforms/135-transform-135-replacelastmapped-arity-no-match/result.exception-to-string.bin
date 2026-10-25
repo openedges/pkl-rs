@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Function1`, but got type `Function2`.
+Value: new Function2 {}
+
+1554 | mapper: (RegexMatch) -> String,
+               ^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#String.replaceLastMapped (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1554)
+
+1 | "a".replaceLastMapped(Regex("z"), (a, b) -> "x")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

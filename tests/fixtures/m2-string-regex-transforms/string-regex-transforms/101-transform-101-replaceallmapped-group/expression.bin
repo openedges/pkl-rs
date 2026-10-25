@@ -1,0 +1,1 @@
+"aba".replaceAllMapped(Regex("(a)"), (m) -> m.groups[1].value)

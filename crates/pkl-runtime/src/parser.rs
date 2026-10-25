@@ -111,6 +111,7 @@ enum Kind {
     DocComment,
     LineComment,
     BlockComment,
+    Shebang,
     StringStart(char),
     Symbol(char),
     Eof,
@@ -241,6 +242,14 @@ impl Lexer<'_> {
             || (ch == '.' && self.peek().is_some_and(|ch| ch.is_ascii_digit()))
         {
             self.number(start, ch)?
+        } else if ch == '#' && self.peek() == Some('!') {
+            // SHEBANG is a grammar token, not a comment: only parseModule
+            // consumes a leading occurrence. Retain later occurrences so the
+            // ordinary declaration/expression error owns the complete span.
+            while self.peek().is_some_and(|ch| ch != '\n' && ch != '\r') {
+                self.advance();
+            }
+            Kind::Shebang
         } else if ch == '"' || ch == '#' {
             if let Some((end, error)) = self.cached_string_error(start) {
                 self.cursor = end;
@@ -2669,6 +2678,9 @@ pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
 /// with ModuleKey operations in the upstream visitor's order.
 pub(crate) fn parse_module_for_evaluation(source: &str) -> Result<Module, Diagnostic> {
     let mut parser = Parser::new(source)?;
+    if parser.token.kind == Kind::Shebang {
+        parser.advance()?;
+    }
     let documented = parser.doc_comment()?;
     let annotations = parser.annotations()?;
     let modifiers = parser.modifiers()?;

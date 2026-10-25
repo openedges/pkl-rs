@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "repetitions": 2,
+  "candidate_compatibility_passes_claimed": 0,
+  "programs": [
+    {
+      "id": "string-is-regex-supplement",
+      "module_file": "modules/string-is-regex-supplement.pkl",
+      "module_uri": "file:///stage76/string-is-regex-supplement.pkl",
+      "module_sha256": "1764937465481f484b69ed518a1f4afacbd517800fb7259294a983dc52684efe",
+      "rows": [
+        {
+          "id": "lowercase-posix-property",
+          "expression": "#\"\\p{alpha}\"#.isRegex"
+        },
+        {
+          "id": "lowercase-posix-constructor",
+          "expression": "Regex(#\"\\p{alpha}\"#)"
+        },
+        {
+          "id": "unclosed-unknown-family-property",
+          "expression": "#\"\\p{Lx\"#.isRegex"
+        },
+        {
+          "id": "unclosed-unknown-family-constructor",
+          "expression": "Regex(#\"\\p{Lx\"#)"
+        },
+        {
+          "id": "escaped-unknown-family-property",
+          "expression": "#\"\\p{\\q}\"#.isRegex"
+        },
+        {
+          "id": "escaped-unknown-family-constructor",
+          "expression": "Regex(#\"\\p{\\q}\"#)"
+        },
+        {
+          "id": "unclosed-escaped-family-property",
+          "expression": "#\"\\p{L\\q\"#.isRegex"
+        },
+        {
+          "id": "unclosed-escaped-family-constructor",
+          "expression": "Regex(#\"\\p{L\\q\"#)"
+        },
+        {
+          "id": "grapheme-cluster-invalid-tail-property",
+          "expression": "#\"\\X(\"#.isRegex"
+        },
+        {
+          "id": "grapheme-cluster-invalid-tail-constructor",
+          "expression": "Regex(#\"\\X(\"#)"
+        },
+        {
+          "id": "grapheme-boundary-invalid-tail-property",
+          "expression": "#\"\\b{g}(\"#.isRegex"
+        },
+        {
+          "id": "grapheme-boundary-invalid-tail-constructor",
+          "expression": "Regex(#\"\\b{g}(\"#)"
+        },
+        {
+          "id": "class-grapheme-cluster-property",
+          "expression": "#\"[\\X]\"#.isRegex"
+        },
+        {
+          "id": "class-grapheme-cluster-constructor",
+          "expression": "Regex(#\"[\\X]\"#)"
+        },
+        {
+          "id": "class-grapheme-boundary-property",
+          "expression": "#\"[\\b{g}]\"#.isRegex"
+        },
+        {
+          "id": "class-grapheme-boundary-constructor",
+          "expression": "Regex(#\"[\\b{g}]\"#)"
+        },
+        {
+          "id": "named-character-valid-property",
+          "expression": "#\"\\N{LATIN CAPITAL LETTER A}\"#.isRegex"
+        },
+        {
+          "id": "named-character-valid-constructor",
+          "expression": "Regex(#\"\\N{LATIN CAPITAL LETTER A}\"#)"
+        },
+        {
+          "id": "named-character-unknown-property",
+          "expression": "#\"\\N{NO SUCH CHARACTER}\"#.isRegex"
+        },
+        {
+          "id": "named-character-unknown-constructor",
+          "expression": "Regex(#\"\\N{NO SUCH CHARACTER}\"#)"
+        },
+        {
+          "id": "named-character-unclosed-property",
+          "expression": "#\"\\N{LATIN CAPITAL LETTER A\"#.isRegex"
+        },
+        {
+          "id": "named-character-unclosed-constructor",
+          "expression": "Regex(#\"\\N{LATIN CAPITAL LETTER A\"#)"
+        },
+        {
+          "id": "uppercase-property-key-property",
+          "expression": "#\"\\p{GC=Lu}\"#.isRegex"
+        },
+        {
+          "id": "uppercase-property-key-constructor",
+          "expression": "Regex(#\"\\p{GC=Lu}\"#)"
+        }
+      ]
+    }
+  ]
+}

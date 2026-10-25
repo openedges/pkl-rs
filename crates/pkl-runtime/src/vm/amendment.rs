@@ -200,6 +200,7 @@ impl Vm {
                             | Value::DataSize(_)
                             | Value::Bytes(_)
                             | Value::IntSeq(_)
+                            | Value::Regex(_)
                             | Value::TypeAlias(_)
                             | Value::String(_)
                     )

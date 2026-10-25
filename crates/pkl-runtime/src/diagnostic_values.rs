@@ -74,6 +74,7 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
         Value::String(_) => "String".into(),
         Value::Bytes(_) => "Bytes".into(),
         Value::IntSeq(_) => "IntSeq".into(),
+        Value::Regex(_) => "Regex".into(),
         Value::Function(id) => function_name(*id, heap)?,
         Value::Class(_) => "Class".into(),
         Value::TypeAlias(_) => "TypeAlias".into(),
@@ -383,6 +384,7 @@ impl Renderer<'_> {
             Value::Float(value) => self.append(&crate::numeric::double_to_string(**value)),
             Value::Duration(value) => self.append(&value.to_string()),
             Value::IntSeq(value) => self.append(&value.to_string()),
+            Value::Regex(value) => self.append_units(crate::vm::regex_string(value).encode_utf16()),
             Value::DataSize(value) => self.append(&value.to_string()),
             Value::String(value) => {
                 self.append_units(value.quoted().encode_utf16());

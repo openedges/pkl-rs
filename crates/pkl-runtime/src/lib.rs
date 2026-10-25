@@ -17,6 +17,7 @@ pub mod logging;
 pub mod modules;
 pub mod numeric;
 pub mod parser;
+mod pkl_regex;
 mod pkl_string;
 mod power_assertions;
 pub mod probe;

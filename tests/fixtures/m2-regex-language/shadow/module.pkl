@@ -1,0 +1,6 @@
+import "pkl:base" as b
+function Regex(pattern: String): String = "shadow"
+shadowConstructor = Regex("x")
+shadowIsRegex = Regex("x") is b.Regex
+qualifiedUnderShadow = b.Regex("x").pattern
+qualifiedIsRegex = b.Regex("x") is b.Regex

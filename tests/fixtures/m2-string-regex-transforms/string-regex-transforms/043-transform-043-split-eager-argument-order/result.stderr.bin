@@ -1,0 +1,6 @@
+–– Pkl Error ––
+limit evaluated
+
+1 | "a".splitLimit(null, throw("limit evaluated"))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

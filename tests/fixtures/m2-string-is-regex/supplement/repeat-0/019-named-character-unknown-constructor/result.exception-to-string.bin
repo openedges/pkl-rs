@@ -1,0 +1,8 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Syntax error in regex `\N{NO SUCH CHARACTER}`: Unknown character name [NO SUCH CHARACTER] near index 20
+\N{NO SUCH CHARACTER}
+                    ^
+
+1 | Regex(#"\N{NO SUCH CHARACTER}"#)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

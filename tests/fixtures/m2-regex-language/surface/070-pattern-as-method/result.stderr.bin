@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find method `pattern` in class `Regex`.
+
+1 | Regex("a").pattern()
+    ^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+pattern

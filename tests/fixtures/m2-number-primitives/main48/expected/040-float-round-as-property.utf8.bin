@@ -1,0 +1,35 @@
+–– Pkl Error ––
+Cannot find property `round` in object of type `Float`.
+
+1 | 2.5.round
+    ^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+abs
+b
+ceil
+d
+floor
+gb
+gib
+h
+isFinite
+isInfinite
+isNaN
+isNonZero
+isPositive
+kb
+kib
+mb
+mib
+min
+ms
+ns
+pb
+pib
+s
+sign
+tb
+tib
+us

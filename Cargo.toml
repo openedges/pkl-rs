@@ -1,6 +1,7 @@
 [workspace]
 members = ["crates/pkl-runtime", "crates/pkl-wasm", "crates/pkl-napi", "xtask"]
 resolver = "3"
+exclude = ["vendor/java_regex"]
 
 [workspace.package]
 version = "0.1.0"
@@ -15,3 +16,6 @@ unsafe_code = "deny"
 [profile.release]
 lto = "thin"
 codegen-units = 1
+
+[patch.crates-io]
+java_regex = { path = "vendor/java_regex" }

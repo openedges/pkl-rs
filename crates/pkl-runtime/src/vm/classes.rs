@@ -81,6 +81,7 @@ pub(super) fn runtime_class(value: &Value, heap: &Heap) -> Result<RuntimeClass, 
         Value::String(_) => B::String,
         Value::Bytes(_) => B::Bytes,
         Value::IntSeq(_) => B::IntSeq,
+        Value::Regex(_) => B::Regex,
         Value::Class(_) => B::Class,
         Value::TypeAlias(_) => B::TypeAlias,
         Value::Function(id) => {
@@ -144,7 +145,7 @@ pub(super) fn specialized_type(module: Option<&str>, name: &str) -> Option<TypeC
 pub(crate) const OBJECT: usize = usize::MAX - 40;
 pub(crate) const TYPED: usize = usize::MAX - 41;
 const DATA_SIZE: usize = usize::MAX - 42;
-const REGEX: usize = usize::MAX - 43;
+pub(super) const REGEX: usize = usize::MAX - 43;
 const INT_SEQ: usize = usize::MAX - 44;
 const VAR_ARGS: usize = usize::MAX - 45;
 

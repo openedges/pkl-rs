@@ -1,0 +1,297 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage78/number-primitives.pkl",
+  "boundary": "number",
+  "repetitions": 2,
+  "rows": [
+    {
+      "group": "int",
+      "id": "int-sign-pos",
+      "mode": "string",
+      "expression": "123.sign"
+    },
+    {
+      "group": "int",
+      "id": "int-sign-neg",
+      "mode": "string",
+      "expression": "(-123).sign"
+    },
+    {
+      "group": "int",
+      "id": "int-sign-zero",
+      "mode": "string",
+      "expression": "0.sign"
+    },
+    {
+      "group": "int",
+      "id": "int-abs-neg",
+      "mode": "string",
+      "expression": "(-123).abs"
+    },
+    {
+      "group": "int",
+      "id": "int-abs-min",
+      "mode": "string",
+      "expression": "module.minimumInt.abs"
+    },
+    {
+      "group": "int",
+      "id": "int-ceil",
+      "mode": "string",
+      "expression": "(-123).ceil"
+    },
+    {
+      "group": "int",
+      "id": "int-floor",
+      "mode": "string",
+      "expression": "123.floor"
+    },
+    {
+      "group": "int",
+      "id": "int-round",
+      "mode": "string",
+      "expression": "(-123).round()"
+    },
+    {
+      "group": "int",
+      "id": "int-truncate",
+      "mode": "string",
+      "expression": "123.truncate()"
+    },
+    {
+      "group": "int",
+      "id": "int-sign-as-method",
+      "mode": "string",
+      "expression": "123.sign()"
+    },
+    {
+      "group": "int",
+      "id": "int-round-as-property",
+      "mode": "string",
+      "expression": "123.round"
+    },
+    {
+      "group": "int",
+      "id": "int-round-extra-arg",
+      "mode": "string",
+      "expression": "123.round(1)"
+    },
+    {
+      "group": "int",
+      "id": "int-truncate-extra-arg",
+      "mode": "string",
+      "expression": "123.truncate(1)"
+    },
+    {
+      "group": "float",
+      "id": "float-sign-pos",
+      "mode": "string",
+      "expression": "2.5.sign"
+    },
+    {
+      "group": "float",
+      "id": "float-sign-neg",
+      "mode": "string",
+      "expression": "(-2.5).sign"
+    },
+    {
+      "group": "float",
+      "id": "float-sign-plus-zero",
+      "mode": "string",
+      "expression": "0.0.sign"
+    },
+    {
+      "group": "float",
+      "id": "float-sign-minus-zero",
+      "mode": "string",
+      "expression": "(-0.0).sign"
+    },
+    {
+      "group": "float",
+      "id": "float-sign-nan",
+      "mode": "string",
+      "expression": "NaN.sign"
+    },
+    {
+      "group": "float",
+      "id": "float-sign-pos-inf",
+      "mode": "string",
+      "expression": "Infinity.sign"
+    },
+    {
+      "group": "float",
+      "id": "float-sign-neg-inf",
+      "mode": "string",
+      "expression": "(-Infinity).sign"
+    },
+    {
+      "group": "float",
+      "id": "float-abs-minus-zero",
+      "mode": "string",
+      "expression": "(-0.0).abs"
+    },
+    {
+      "group": "float",
+      "id": "float-abs-nan",
+      "mode": "string",
+      "expression": "NaN.abs"
+    },
+    {
+      "group": "float",
+      "id": "float-abs-neg-inf",
+      "mode": "string",
+      "expression": "(-Infinity).abs"
+    },
+    {
+      "group": "float",
+      "id": "float-ceil-minus-zero",
+      "mode": "string",
+      "expression": "(-0.0).ceil"
+    },
+    {
+      "group": "float",
+      "id": "float-ceil-small-neg",
+      "mode": "string",
+      "expression": "(-0.2).ceil"
+    },
+    {
+      "group": "float",
+      "id": "float-floor-plus-zero",
+      "mode": "string",
+      "expression": "0.0.floor"
+    },
+    {
+      "group": "float",
+      "id": "float-floor-small-pos",
+      "mode": "string",
+      "expression": "0.2.floor"
+    },
+    {
+      "group": "float",
+      "id": "float-round-half-zero",
+      "mode": "string",
+      "expression": "0.5.round()"
+    },
+    {
+      "group": "float",
+      "id": "float-round-half-negzero",
+      "mode": "string",
+      "expression": "(-0.5).round()"
+    },
+    {
+      "group": "float",
+      "id": "float-round-half-even",
+      "mode": "string",
+      "expression": "2.5.round()"
+    },
+    {
+      "group": "float",
+      "id": "float-round-half-odd",
+      "mode": "string",
+      "expression": "3.5.round()"
+    },
+    {
+      "group": "float",
+      "id": "float-round-neg-half-even",
+      "mode": "string",
+      "expression": "(-2.5).round()"
+    },
+    {
+      "group": "float",
+      "id": "float-round-neg-half-odd",
+      "mode": "string",
+      "expression": "(-3.5).round()"
+    },
+    {
+      "group": "float",
+      "id": "float-round-nan",
+      "mode": "string",
+      "expression": "NaN.round()"
+    },
+    {
+      "group": "float",
+      "id": "float-round-inf",
+      "mode": "string",
+      "expression": "Infinity.round()"
+    },
+    {
+      "group": "float",
+      "id": "float-truncate-small-neg",
+      "mode": "string",
+      "expression": "(-0.2).truncate()"
+    },
+    {
+      "group": "float",
+      "id": "float-truncate-minus-zero",
+      "mode": "string",
+      "expression": "(-0.0).truncate()"
+    },
+    {
+      "group": "float",
+      "id": "float-truncate-nan",
+      "mode": "string",
+      "expression": "NaN.truncate()"
+    },
+    {
+      "group": "float",
+      "id": "float-truncate-neg-inf",
+      "mode": "string",
+      "expression": "(-Infinity).truncate()"
+    },
+    {
+      "group": "float",
+      "id": "float-sign-as-method",
+      "mode": "string",
+      "expression": "2.5.sign()"
+    },
+    {
+      "group": "float",
+      "id": "float-round-as-property",
+      "mode": "string",
+      "expression": "2.5.round"
+    },
+    {
+      "group": "float",
+      "id": "float-round-extra-arg",
+      "mode": "string",
+      "expression": "2.5.round(1)"
+    },
+    {
+      "group": "reference",
+      "id": "ref-int-sign-type",
+      "mode": "string",
+      "expression": "module.refInt.sign is ref.Reference<D, Int>"
+    },
+    {
+      "group": "reference",
+      "id": "ref-int-abs-type",
+      "mode": "string",
+      "expression": "module.refInt.abs is ref.Reference<D, Int>"
+    },
+    {
+      "group": "reference",
+      "id": "ref-float-sign-type",
+      "mode": "string",
+      "expression": "module.refFloat.sign is ref.Reference<D, Float>"
+    },
+    {
+      "group": "reference",
+      "id": "ref-float-floor-type",
+      "mode": "string",
+      "expression": "module.refFloat.floor is ref.Reference<D, Float>"
+    },
+    {
+      "group": "reference",
+      "id": "ref-int-round-method",
+      "mode": "string",
+      "expression": "module.refInt.round()"
+    },
+    {
+      "group": "reference",
+      "id": "ref-float-truncate-method",
+      "mode": "string",
+      "expression": "module.refFloat.truncate()"
+    }
+  ]
+}

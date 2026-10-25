@@ -1,0 +1,1 @@
+Regex(#"(?i)é"#).matchEntire("É")

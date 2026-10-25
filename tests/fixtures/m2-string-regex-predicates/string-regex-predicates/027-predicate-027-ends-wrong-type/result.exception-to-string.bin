@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `String | Regex`, but got type `Int`.
+Value: 1
+
+1467 | external function endsWith(pattern: String | Regex): Boolean
+                                           ^^^^^^^^^^^^^^
+at pkl.base#String.endsWith (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1467)
+
+1 | "a".endsWith(1)
+    ^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -67,4 +67,7 @@ def source_paths(root: Path):
     paths.update(profile['reference']['sources'])
     paths.update(profile['classpath_resources'])
     paths.add(profile['input']['path'])
+    from vendor_sources import vendor_source_paths
+    paths.add('tools/vendor_sources.py')
+    paths.update(path.relative_to(root).as_posix() for path in vendor_source_paths(root))
     return sorted(paths)

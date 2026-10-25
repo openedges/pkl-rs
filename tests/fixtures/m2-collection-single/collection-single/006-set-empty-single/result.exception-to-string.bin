@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected a single-element collection.
+Collection: Set()
+
+1 | Set().single
+    ^^^^^^^^^^^^
+at  (repl:text)

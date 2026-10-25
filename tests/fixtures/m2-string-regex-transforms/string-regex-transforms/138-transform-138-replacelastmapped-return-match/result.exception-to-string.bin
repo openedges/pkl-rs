@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 42
+
+1 | "a".replaceLastMapped(Regex("a"), (m) -> 42)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

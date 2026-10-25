@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Unexpected token `)`. Expected a type.
+
+1 | foo: Int|()|String = "foo"
+              ^
+at emptyParenthesizedTypeAnnotation (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/emptyParenthesizedTypeAnnotation.pkl, line 1)

@@ -3,6 +3,7 @@
 use std::fmt;
 use std::sync::Arc;
 
+pub use crate::pkl_regex::PklRegex;
 pub use crate::pkl_string::PklString;
 use crate::source::Span;
 pub use crate::value_identity::{Bytes, Number};
@@ -28,6 +29,7 @@ pub enum Value {
     String(PklString),
     Bytes(Bytes),
     IntSeq(crate::int_seq::IntSeq),
+    Regex(PklRegex),
     Object(ObjectId),
     Function(ObjectId),
     Class(ObjectId),
@@ -46,6 +48,7 @@ impl PartialEq for Value {
             (Self::String(a), Self::String(b)) => a == b,
             (Self::Bytes(a), Self::Bytes(b)) => a == b,
             (Self::IntSeq(a), Self::IntSeq(b)) => a == b,
+            (Self::Regex(a), Self::Regex(b)) => a == b,
             (Self::Object(a), Self::Object(b))
             | (Self::Function(a), Self::Function(b))
             | (Self::Class(a), Self::Class(b))
@@ -73,6 +76,7 @@ impl Value {
             Self::DataSize(value) => Some(Reference::Scalar(value.reference())),
             Self::Bytes(value) => Some(Reference::Scalar(value.reference())),
             Self::IntSeq(value) => Some(Reference::Scalar(value.reference())),
+            Self::Regex(value) => Some(Reference::Scalar(value.reference())),
             Self::String(value) => Some(Reference::Scalar(value.reference())),
             Self::Bool(value) => Some(Reference::Scalar(Token::boolean(*value))),
             Self::Null => Some(Reference::Scalar(Token::null())),

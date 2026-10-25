@@ -1,0 +1,1088 @@
+{
+  "candidate_compatibility_passes_claimed": 0,
+  "module_uri": "file:///stage78/number-reference-supplement.pkl",
+  "rows": [
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refInt.sign is ref.Reference<D, Float>",
+      "id": "int-sign-not-float",
+      "index": 0,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/000-int-sign-not-float",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 8,
+        "mode": 420,
+        "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+      },
+      "expected_utf8": {
+        "bytes": 4,
+        "mode": 420,
+        "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+      },
+      "expression": "module.refInt.sign is ref.Reference<D, Number>",
+      "id": "int-sign-is-number",
+      "index": 1,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/001-int-sign-is-number",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refInt.abs is ref.Reference<D, Float>",
+      "id": "int-abs-not-float",
+      "index": 2,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/002-int-abs-not-float",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 8,
+        "mode": 420,
+        "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+      },
+      "expected_utf8": {
+        "bytes": 4,
+        "mode": 420,
+        "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+      },
+      "expression": "module.refInt.abs is ref.Reference<D, Number>",
+      "id": "int-abs-is-number",
+      "index": 3,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/003-int-abs-is-number",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refFloat.sign is ref.Reference<D, Int>",
+      "id": "float-sign-not-int",
+      "index": 4,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/004-float-sign-not-int",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 8,
+        "mode": 420,
+        "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+      },
+      "expected_utf8": {
+        "bytes": 4,
+        "mode": 420,
+        "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+      },
+      "expression": "module.refFloat.sign is ref.Reference<D, Number>",
+      "id": "float-sign-is-number",
+      "index": 5,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/005-float-sign-is-number",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refFloat.floor is ref.Reference<D, Int>",
+      "id": "float-floor-not-int",
+      "index": 6,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/006-float-floor-not-int",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 8,
+        "mode": 420,
+        "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+      },
+      "expected_utf8": {
+        "bytes": 4,
+        "mode": 420,
+        "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+      },
+      "expression": "module.refFloat.floor is ref.Reference<D, Number>",
+      "id": "float-floor-is-number",
+      "index": 7,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/007-float-floor-is-number",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 8,
+        "mode": 420,
+        "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+      },
+      "expected_utf8": {
+        "bytes": 4,
+        "mode": 420,
+        "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+      },
+      "expression": "module.refNumber.sign is ref.Reference<D, Number>",
+      "id": "number-sign-is-number",
+      "index": 8,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/008-number-sign-is-number",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refNumber.sign is ref.Reference<D, Int>",
+      "id": "number-sign-is-int",
+      "index": 9,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/009-number-sign-is-int",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refNumber.sign is ref.Reference<D, Float>",
+      "id": "number-sign-is-float",
+      "index": 10,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/010-number-sign-is-float",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refNumber.sign is ref.Reference<D, String>",
+      "id": "number-sign-is-string",
+      "index": 11,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/011-number-sign-is-string",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 8,
+        "mode": 420,
+        "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+      },
+      "expected_utf8": {
+        "bytes": 4,
+        "mode": 420,
+        "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+      },
+      "expression": "module.refNumber.abs is ref.Reference<D, Number>",
+      "id": "number-abs-is-number",
+      "index": 12,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/012-number-abs-is-number",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refNumber.abs is ref.Reference<D, Int>",
+      "id": "number-abs-is-int",
+      "index": 13,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/013-number-abs-is-int",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refNumber.abs is ref.Reference<D, Float>",
+      "id": "number-abs-is-float",
+      "index": 14,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/014-number-abs-is-float",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refNumber.abs is ref.Reference<D, String>",
+      "id": "number-abs-is-string",
+      "index": 15,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/015-number-abs-is-string",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 8,
+        "mode": 420,
+        "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+      },
+      "expected_utf8": {
+        "bytes": 4,
+        "mode": 420,
+        "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+      },
+      "expression": "module.refNumber.ceil is ref.Reference<D, Number>",
+      "id": "number-ceil-is-number",
+      "index": 16,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/016-number-ceil-is-number",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refNumber.ceil is ref.Reference<D, Int>",
+      "id": "number-ceil-is-int",
+      "index": 17,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/017-number-ceil-is-int",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refNumber.ceil is ref.Reference<D, Float>",
+      "id": "number-ceil-is-float",
+      "index": 18,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/018-number-ceil-is-float",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refNumber.ceil is ref.Reference<D, String>",
+      "id": "number-ceil-is-string",
+      "index": 19,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/019-number-ceil-is-string",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 8,
+        "mode": 420,
+        "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+      },
+      "expected_utf8": {
+        "bytes": 4,
+        "mode": 420,
+        "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+      },
+      "expression": "module.refNumber.floor is ref.Reference<D, Number>",
+      "id": "number-floor-is-number",
+      "index": 20,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/020-number-floor-is-number",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refNumber.floor is ref.Reference<D, Int>",
+      "id": "number-floor-is-int",
+      "index": 21,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/021-number-floor-is-int",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refNumber.floor is ref.Reference<D, Float>",
+      "id": "number-floor-is-float",
+      "index": 22,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/022-number-floor-is-float",
+      "runtime_kind": "value"
+    },
+    {
+      "expected_utf16be": {
+        "bytes": 10,
+        "mode": 420,
+        "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+      },
+      "expected_utf8": {
+        "bytes": 5,
+        "mode": 420,
+        "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+      },
+      "expression": "module.refNumber.floor is ref.Reference<D, String>",
+      "id": "number-floor-is-string",
+      "index": 23,
+      "java_exception_and_cause": {
+        "result.cause-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-message": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.cause-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.error-class": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "result.exception-to-string": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "java_status": "success",
+      "raw_source": "target/m2/stage78-number-reference-supplement-oracle-01/repeat-0/023-number-floor-is-string",
+      "runtime_kind": "value"
+    }
+  ],
+  "schema": 1,
+  "source": "stage78-number-reference-supplement-oracle-01"
+}

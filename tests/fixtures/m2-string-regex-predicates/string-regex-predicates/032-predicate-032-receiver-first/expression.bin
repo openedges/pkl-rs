@@ -1,0 +1,1 @@
+(throw("receiver first")).matches(throw("argument second"))

@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "module_uri": "file:///stage78/number-reference-supplement.pkl",
+  "boundary": "number-reference",
+  "repetitions": 2,
+  "rows": [
+    {
+      "group": "reference-type",
+      "id": "int-sign-not-float",
+      "mode": "string",
+      "expression": "module.refInt.sign is ref.Reference<D, Float>"
+    },
+    {
+      "group": "reference-type",
+      "id": "int-sign-is-number",
+      "mode": "string",
+      "expression": "module.refInt.sign is ref.Reference<D, Number>"
+    },
+    {
+      "group": "reference-type",
+      "id": "int-abs-not-float",
+      "mode": "string",
+      "expression": "module.refInt.abs is ref.Reference<D, Float>"
+    },
+    {
+      "group": "reference-type",
+      "id": "int-abs-is-number",
+      "mode": "string",
+      "expression": "module.refInt.abs is ref.Reference<D, Number>"
+    },
+    {
+      "group": "reference-type",
+      "id": "float-sign-not-int",
+      "mode": "string",
+      "expression": "module.refFloat.sign is ref.Reference<D, Int>"
+    },
+    {
+      "group": "reference-type",
+      "id": "float-sign-is-number",
+      "mode": "string",
+      "expression": "module.refFloat.sign is ref.Reference<D, Number>"
+    },
+    {
+      "group": "reference-type",
+      "id": "float-floor-not-int",
+      "mode": "string",
+      "expression": "module.refFloat.floor is ref.Reference<D, Int>"
+    },
+    {
+      "group": "reference-type",
+      "id": "float-floor-is-number",
+      "mode": "string",
+      "expression": "module.refFloat.floor is ref.Reference<D, Number>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-sign-is-number",
+      "mode": "string",
+      "expression": "module.refNumber.sign is ref.Reference<D, Number>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-sign-is-int",
+      "mode": "string",
+      "expression": "module.refNumber.sign is ref.Reference<D, Int>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-sign-is-float",
+      "mode": "string",
+      "expression": "module.refNumber.sign is ref.Reference<D, Float>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-sign-is-string",
+      "mode": "string",
+      "expression": "module.refNumber.sign is ref.Reference<D, String>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-abs-is-number",
+      "mode": "string",
+      "expression": "module.refNumber.abs is ref.Reference<D, Number>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-abs-is-int",
+      "mode": "string",
+      "expression": "module.refNumber.abs is ref.Reference<D, Int>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-abs-is-float",
+      "mode": "string",
+      "expression": "module.refNumber.abs is ref.Reference<D, Float>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-abs-is-string",
+      "mode": "string",
+      "expression": "module.refNumber.abs is ref.Reference<D, String>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-ceil-is-number",
+      "mode": "string",
+      "expression": "module.refNumber.ceil is ref.Reference<D, Number>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-ceil-is-int",
+      "mode": "string",
+      "expression": "module.refNumber.ceil is ref.Reference<D, Int>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-ceil-is-float",
+      "mode": "string",
+      "expression": "module.refNumber.ceil is ref.Reference<D, Float>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-ceil-is-string",
+      "mode": "string",
+      "expression": "module.refNumber.ceil is ref.Reference<D, String>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-floor-is-number",
+      "mode": "string",
+      "expression": "module.refNumber.floor is ref.Reference<D, Number>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-floor-is-int",
+      "mode": "string",
+      "expression": "module.refNumber.floor is ref.Reference<D, Int>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-floor-is-float",
+      "mode": "string",
+      "expression": "module.refNumber.floor is ref.Reference<D, Float>"
+    },
+    {
+      "group": "reference-type",
+      "id": "number-floor-is-string",
+      "mode": "string",
+      "expression": "module.refNumber.floor is ref.Reference<D, String>"
+    }
+  ]
+}

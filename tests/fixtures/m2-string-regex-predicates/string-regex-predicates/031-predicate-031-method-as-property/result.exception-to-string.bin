@@ -1,0 +1,26 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `contains` in object of type `String`.
+
+1 | "a".contains
+    ^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+base64
+base64Decoded
+base64DecodedBytes
+chars
+codePoints
+isBase64
+isBlank
+isEmpty
+isGlobPattern
+isNotBlank
+isNotEmpty
+isRegex
+lastIndex
+length
+md5
+sha1
+sha256
+sha256Int

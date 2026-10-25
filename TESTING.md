@@ -1015,6 +1015,25 @@ The linked replay, separate integrity verifier, and independent regression audit
 
 See the [implementation checkpoint](reports/m2/stage73-75-implementation-checkpoint.json) for raw evidence and execution provenance. These local records do not establish full M2, product API, release-platform, or performance compatibility.
 
+### Stage76–78 canonical local verification boundary
+
+The integrated 17,774-path source snapshot passed the five required Rust
+commands locally. Native, N-API and Chromium selected comparisons cover 771
+queries with two observations per target; only channels present in Java authority
+receive a compatibility verdict. Strict M1 raw comparison matched 6,078/6,078
+per target. Its prior `--verify-contract` policy failed because it listed
+the two now-matching Regex cases as known gaps. The revised contract completed
+with exit zero and an empty known-gap set. Strict matching and architecture-
+contract acceptance remain distinct gates.
+
+The full selected replay recorded 4,188 matches, 86 mismatches, 139 unsupported,
+2 Java oracle errors, and 1 Rust internal error among 4,416 ready cases. The
+separate verifier and independent regression audit exited zero. The audit found
+25 improvements, zero prior-pass regressions, and 1,791 overlapping full-gate
+conditions. The `classes/constraints14.pkl` internal error, all other
+nonpasses, and 111 unready cases remain in the release gate. No complete API,
+cross-platform release, or performance result follows from these local checks.
+
 ## Performance and Memory
 
 The [initial Java benchmark contract](docs/benchmarks.md) implements cold CLI, persistent evaluator, and fresh evaluator measurements for six fixtures. Use a quiet host with the pinned optimizing runtime:

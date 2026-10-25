@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find method `groupCount` in class `Regex`.
+
+1 | Regex("a").groupCount()
+    ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+groupCount

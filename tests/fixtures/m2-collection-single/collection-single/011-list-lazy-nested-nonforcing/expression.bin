@@ -1,0 +1,1 @@
+List(new Dynamic { value = throw("nested") }).single is Dynamic

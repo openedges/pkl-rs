@@ -567,7 +567,14 @@ pub(super) fn endpoint_blocks(
             .text
             .find(&format!("external class {class_name}<"))
             .unwrap();
-        for name in ["first", "firstOrNull", "last", "lastOrNull"] {
+        for name in [
+            "first",
+            "firstOrNull",
+            "last",
+            "lastOrNull",
+            "single",
+            "singleOrNull",
+        ] {
             let signature = format!("external {name}:");
             let start = class + source.text[class..].find(&signature).unwrap();
             let end = start + source.text[start..].find('\n').unwrap();
@@ -576,6 +583,7 @@ pub(super) fn endpoint_blocks(
                 Instruction::Primitive(primitives::Operation::CollectionEndpoint {
                     last: name.starts_with("last"),
                     nullable: name.ends_with("OrNull"),
+                    single: name.starts_with("single"),
                 }),
                 Instruction::Return,
             ]);
@@ -598,9 +606,31 @@ impl Vm {
         receiver: Value,
         last: bool,
         nullable: bool,
+        single: bool,
     ) -> Result<(), RuntimeError> {
         let id = receiver.as_object()?;
         let members = collections::ordered_members(&self.heap, id)?;
+        if single && members.len() != 1 {
+            if nullable {
+                self.stack.push(Value::Null);
+                return Ok(());
+            }
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                PklString::join(
+                    &[
+                        "Expected a single-element collection.\nCollection: ".into(),
+                        crate::diagnostic_values::render_string(
+                            &receiver,
+                            &self.heap,
+                            &self.program.module_name,
+                            80,
+                        )?,
+                    ],
+                    "",
+                ),
+            ));
+        }
         let member = if last {
             members.last()
         } else {

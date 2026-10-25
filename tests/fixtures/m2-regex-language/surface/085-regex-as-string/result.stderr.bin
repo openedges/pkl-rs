@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Regex`.
+Value: Regex("a")
+
+1 | Regex("a") as String
+                  ^^^^^^
+at  (repl:text)

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `String | Regex`, but got type `Int`.
+Value: 1
+
+1457 | external function contains(pattern: String | Regex): Boolean
+                                           ^^^^^^^^^^^^^^
+at pkl.base#String.contains (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1457)
+
+1 | "a".contains(1)
+    ^^^^^^^^^^^^^^^
+at  (repl:text)

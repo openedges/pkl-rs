@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Type constraint `this > 0` violated.
+Value: -1
+
+1621 | external function splitLimit(pattern: String | Regex, limit: Int(this > 0)): List<String>
+                                                                        ^^^^^^^^
+at pkl.base#String.splitLimit (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1621)
+
+1 | ",a,,b,".splitLimit(",", -1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

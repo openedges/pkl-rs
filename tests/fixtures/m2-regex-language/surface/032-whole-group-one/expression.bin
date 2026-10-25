@@ -1,0 +1,1 @@
+Regex("(a)(b)").findMatchesIn("ab").single.groups[1].value

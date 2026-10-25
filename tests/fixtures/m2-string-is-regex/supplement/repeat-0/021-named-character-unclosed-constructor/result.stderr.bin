@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Syntax error in regex `\N{LATIN CAPITAL LETTER A`: Unclosed character name escape sequence near index 24
+\N{LATIN CAPITAL LETTER A
+                        ^
+
+1 | Regex(#"\N{LATIN CAPITAL LETTER A"#)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

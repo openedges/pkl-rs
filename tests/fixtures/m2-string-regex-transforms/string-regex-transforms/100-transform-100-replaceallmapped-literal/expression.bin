@@ -1,0 +1,1 @@
+"aba".replaceAllMapped("a", (m) -> m.value)

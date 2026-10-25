@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "repetitions": 2,
+  "candidate_compatibility_passes_claimed": 0,
+  "programs": [
+    {
+      "id": "string-is-regex",
+      "module_file": "modules/string-is-regex.pkl",
+      "module_uri": "file:///stage76/string-is-regex.pkl",
+      "module_sha256": "36397c4da712584996600d699806fb041d6408d7b1e4461c090e3f906305b98c",
+      "rows": [
+        {
+          "id": "empty",
+          "expression": "\"\".isRegex"
+        },
+        {
+          "id": "ascii",
+          "expression": "\"abc\".isRegex"
+        },
+        {
+          "id": "valid-class",
+          "expression": "#\"\\w*[0-9]\"#.isRegex"
+        },
+        {
+          "id": "unclosed-group",
+          "expression": "\"(abc\".isRegex"
+        },
+        {
+          "id": "dangling-star",
+          "expression": "\"*\".isRegex"
+        },
+        {
+          "id": "unicode-family",
+          "expression": "#\"\\p{L}\"#.isRegex"
+        },
+        {
+          "id": "unclosed-family",
+          "expression": "#\"\\p{L\"#.isRegex"
+        },
+        {
+          "id": "empty-family",
+          "expression": "#\"\\p{}\"#.isRegex"
+        },
+        {
+          "id": "unknown-family",
+          "expression": "#\"\\p{NotAPklProperty}\"#.isRegex"
+        },
+        {
+          "id": "unknown-category",
+          "expression": "#\"\\p{gc=NotACategory}\"#.isRegex"
+        },
+        {
+          "id": "unknown-script",
+          "expression": "#\"\\p{sc=NotAScript}\"#.isRegex"
+        },
+        {
+          "id": "alphabetic-property",
+          "expression": "#\"\\p{IsAlphabetic}\"#.isRegex"
+        },
+        {
+          "id": "grapheme-cluster-syntax",
+          "expression": "#\"\\X\"#.isRegex"
+        },
+        {
+          "id": "grapheme-boundary-syntax",
+          "expression": "#\"\\b{g}\"#.isRegex"
+        },
+        {
+          "id": "bad-grapheme-boundary",
+          "expression": "#\"\\b{bad}\"#.isRegex"
+        },
+        {
+          "id": "quoted-property-text",
+          "expression": "#\"\\Q\\p{Missing}\\E\"#.isRegex"
+        },
+        {
+          "id": "reserved-escape",
+          "expression": "#\"\\q\"#.isRegex"
+        },
+        {
+          "id": "lone-high",
+          "expression": "\"\\u{D800}\".isRegex"
+        },
+        {
+          "id": "lone-low",
+          "expression": "\"\\u{DC00}\".isRegex"
+        },
+        {
+          "id": "surrogate-pair",
+          "expression": "\"😀\".isRegex"
+        },
+        {
+          "id": "comment-syntax",
+          "expression": "#\"(?x)a # \\q\"#.isRegex"
+        },
+        {
+          "id": "implicit-valid",
+          "expression": "\"abc\" as String(isRegex)"
+        },
+        {
+          "id": "implicit-invalid",
+          "expression": "\"(\" as String(isRegex)"
+        },
+        {
+          "id": "this-valid",
+          "expression": "\"abc\" as String(this.isRegex)"
+        },
+        {
+          "id": "property-as-method",
+          "expression": "\"a\".isRegex(throw(\"argument\"))"
+        },
+        {
+          "id": "receiver-first",
+          "expression": "(throw(\"receiver\") as String).isRegex"
+        },
+        {
+          "id": "reference-type",
+          "expression": "refIsRegexType"
+        },
+        {
+          "id": "reference-path",
+          "expression": "refString.isRegex.getPath()[0].property"
+        },
+        {
+          "id": "reference-as-method",
+          "expression": "refString.isRegex(throw(\"argument\"))"
+        },
+        {
+          "id": "constructor-unclosed-family",
+          "expression": "Regex(#\"\\p{L\"#)"
+        },
+        {
+          "id": "constructor-unknown-family",
+          "expression": "Regex(#\"\\p{NotAPklProperty}\"#)"
+        },
+        {
+          "id": "constructor-unknown-category",
+          "expression": "Regex(#\"\\p{gc=NotACategory}\"#)"
+        }
+      ]
+    }
+  ]
+}

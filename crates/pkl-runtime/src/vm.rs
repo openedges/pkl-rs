@@ -25,6 +25,8 @@ mod data_size;
 pub(crate) mod deprecation;
 mod duration;
 mod int_seq;
+mod regex;
+mod string_transforms;
 pub use code_storage::CodeStorage;
 mod compiler_expressions;
 mod converters;
@@ -260,6 +262,9 @@ pub enum Instruction {
     MakePair,
     PairConstructor,
     IntSeqConstructor,
+    RegexConstructor,
+    MakeRegex,
+    RegexMatchProperty(regex::Property),
     MakeIntSeq,
     CheckIntSeqStep,
     BeginIntSeq(int_seq::Operation),
@@ -1001,6 +1006,7 @@ impl Program {
             &mut objects,
         ));
         builtin_members.extend(classes::ordinary_members(&mut blocks, &mut metadata));
+        builtin_members.extend(regex::builtin_members(&mut blocks, &mut metadata));
         let string_repeat_block = strings::repeat_block(&mut blocks, &mut metadata);
         let collection_join_blocks = collections::join_blocks(&mut blocks, &mut metadata);
         let collection_transform_blocks = collection_transforms::blocks(&mut blocks, &mut metadata);
@@ -1175,6 +1181,7 @@ struct Frame {
     pcf_render: Option<rendering::RenderRun>,
     collection_join: Option<collections::JoinRun>,
     collection_transform: Option<Box<collection_transforms::TransformRun>>,
+    string_transform: Option<Box<string_transforms::Run>>,
     int_seq_run: Option<Box<int_seq::Run>>,
     conversion_run: Option<Box<collection_conversions::Run>>,
     collection_addition: Option<Box<collection_addition::Run>>,
@@ -1451,6 +1458,7 @@ impl Vm {
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
+            string_transform: None,
             int_seq_run: None,
             conversion_run: None,
             collection_addition: None,
@@ -1919,6 +1927,9 @@ impl Vm {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.collection_transform {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.string_transform {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.pcf_render {
@@ -2980,6 +2991,7 @@ impl Vm {
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
+            string_transform: None,
             int_seq_run: None,
             conversion_run: None,
             collection_addition: None,
@@ -4042,6 +4054,7 @@ impl Vm {
             pcf_render: None,
             collection_join: None,
             collection_transform: None,
+            string_transform: None,
             int_seq_run: None,
             conversion_run: None,
             collection_addition: None,
@@ -4653,6 +4666,12 @@ impl Vm {
             Instruction::InvokeAmendedParent => self.invoke_amended_parent()?,
             Instruction::ContinueFunctionAmendment => self.continue_function_amendment()?,
             Instruction::CheckMixinArgument => self.check_mixin_argument()?,
+            Instruction::RegexConstructor => {
+                let value = self.regex_constructor()?;
+                self.stack.push(value);
+            }
+            Instruction::MakeRegex => self.make_regex()?,
+            Instruction::RegexMatchProperty(property) => self.regex_match_property(property)?,
             Instruction::IntSeqConstructor => {
                 let value = self.int_seq_constructor();
                 self.stack.push(value);
@@ -7534,6 +7553,9 @@ impl Compiler<'_> {
                             local: *local,
                         })
                     }
+                    Binding::ImplicitMethod if name.as_ref() == "Regex" => {
+                        output.push(Instruction::RegexConstructor)
+                    }
                     Binding::ImplicitMethod if name.as_ref() == "IntSeq" => {
                         output.push(Instruction::IntSeqConstructor)
                     }
@@ -7597,6 +7619,10 @@ impl Compiler<'_> {
     }
 }
 
+pub(crate) fn regex_string(value: &crate::pkl_regex::PklRegex) -> PklString {
+    regex::string(value)
+}
+
 fn scalar_string(value: &Value) -> Result<PklString, RuntimeError> {
     Ok(match value {
         Value::Null | Value::NullWithDefault(_) => "null".into(),
@@ -7607,6 +7633,7 @@ fn scalar_string(value: &Value) -> Result<PklString, RuntimeError> {
         Value::DataSize(value) => value.to_string().into(),
         Value::Bytes(value) => value.to_string().into(),
         Value::IntSeq(value) => value.to_string().into(),
+        Value::Regex(value) => regex::string(value),
         Value::String(value) => value.clone(),
         _ => {
             return Err(RuntimeError::new(
@@ -7821,6 +7848,7 @@ fn value_type_name(value: &Value) -> &'static str {
         Value::String(_) => "String",
         Value::Bytes(_) => "Bytes",
         Value::IntSeq(_) => "IntSeq",
+        Value::Regex(_) => "Regex",
         Value::Object(_) => "Dynamic",
         Value::Function(_) => "Function",
         Value::Class(_) => "Class",

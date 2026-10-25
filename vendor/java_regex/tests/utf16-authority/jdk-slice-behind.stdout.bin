@@ -1,0 +1,11 @@
+raw-low-slice-Uu raw=de00,0078 input=d83d,de00,0078 flags=320 root=StartS find=false find0=false find1=true [1,3:de00,0078] find2=false
+escaped-low-slice-Uu raw=005c,0075,0044,0045,0030,0030,0078 input=d83d,de00,0078 flags=320 root=Start find=true [1,3:de00,0078] find0=true [1,3:de00,0078] find1=true [1,3:de00,0078] find2=false
+raw-low-alone-Uu raw=de00 input=d83d,de00,0078 flags=320 root=StartS find=false find0=false find1=true [1,2:de00] find2=false
+escaped-low-alone-Uu raw=005c,0075,0044,0045,0030,0030 input=d83d,de00,0078 flags=320 root=StartS find=false find0=false find1=true [1,2:de00] find2=false
+class-low-Uu raw=005b,005c,0075,0044,0045,0030,0030,005d input=d83d,de00,0078 flags=320 root=StartS find=false find0=false find1=true [1,2:de00] find2=false
+raw-low-slice-no-flags raw=de00,0078 input=d83d,de00,0078 flags=0 root=StartS find=false find0=false find1=true [1,3:de00,0078] find2=false
+escaped-low-slice-no-flags raw=005c,0075,0044,0045,0030,0030,0078 input=d83d,de00,0078 flags=0 root=Start find=true [1,3:de00,0078] find0=true [1,3:de00,0078] find1=true [1,3:de00,0078] find2=false
+behind-dot-Uu raw=0028,003f,003c,003d,002e,0029,0078 input=d83d,de00,0078 flags=320 root=Start find=true [2,3:0078] find0=true [2,3:0078] find1=true [2,3:0078] find2=true [2,3:0078]
+behind-raw-pair-Uu raw=0028,003f,003c,003d,d83d,de00,0029,0078 input=d83d,de00,0078 flags=320 root=StartS find=true [2,3:0078] find0=true [2,3:0078] find1=true [2,3:0078] find2=true [2,3:0078]
+behind-escaped-pair-Uu raw=0028,003f,003c,003d,005c,0078,007b,0031,0046,0036,0030,0030,007d,0029,0078 input=d83d,de00,0078 flags=320 root=StartS find=false find0=false find1=false find2=false
+behind-low-Uu raw=0028,003f,003c,003d,005c,0075,0044,0045,0030,0030,0029,0078 input=d83d,de00,0078 flags=320 root=StartS find=true [2,3:0078] find0=true [2,3:0078] find1=true [2,3:0078] find2=true [2,3:0078]

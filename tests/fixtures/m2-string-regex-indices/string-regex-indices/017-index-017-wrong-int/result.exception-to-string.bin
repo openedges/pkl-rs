@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `String | Regex`, but got type `Int`.
+Value: 42
+
+1487 | external function lastIndexOfOrNull(pattern: String | Regex): Int?
+                                                    ^^^^^^^^^^^^^^
+at pkl.base#String.lastIndexOfOrNull (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1487)
+
+1 | "a".lastIndexOfOrNull(42)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

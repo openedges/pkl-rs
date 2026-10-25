@@ -1,0 +1,8 @@
+–– Pkl Error ––
+Syntax error in regex `\p{NotAPklProperty}`: Unknown character property name {NotAPklProperty} near index 18
+\p{NotAPklProperty}
+                  ^
+
+1 | Regex(#"\p{NotAPklProperty}"#)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

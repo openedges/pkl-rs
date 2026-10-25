@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+1701 | external const function Regex(pattern: String): Regex
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Regex (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1701)
+
+1 | Regex()
+    ^^^^^^^
+at  (repl:text)

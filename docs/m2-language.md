@@ -1,32 +1,54 @@
 # M2 language verification
 
+## Stage76–78 canonical integration and local replay
+
+The shared evaluator now includes selected Regex and String behavior, `String.isRegex`,
+the reviewed UTF-16 syntax distinction, leading shebang handling, empty
+parenthesized-type diagnostics, and Int/Float `sign`, `abs`, `ceil`, `floor`,
+`round()` and `truncate()`. The earlier isolated candidate and its failed
+first-controller check remain separate historical evidence.
+
+All five required Rust commands exited zero against the frozen 17,774-path
+canonical source set. Native, N-API, and Chromium each completed two observations
+of 771 selected queries with their Java-authorized public channels matching.
+Logger compatibility is limited to rows with Java logger authority. The strict
+M1 primitive comparison matched all 6,078 Java results per target, including
+the two formerly failing Regex rows. The old architecture contract reported
+failure because its known-gap policy named those rows. The revised contract
+completed with exit zero, all 6,078 raw results matching per target, and no
+remaining known-gap exception.
+
+The selected 4,416-case replay recorded **4,188 raw matches, 86 mismatches,
+139 unsupported results, 2 Java oracle errors, and 1 Rust internal error**.
+Original modules matched 668/888, expression strings 3,519/3,527, and the JVM
+classpath case matched. The internal error is the original
+`classes/constraints14.pkl` case. Java results were reused from sealed authority;
+the replay started no fresh Java process. The separate integrity verifier and
+independent regression audit exited zero. The audit found 25 new matches and no
+prior-pass regressions against Stage73–75. The strict full gate still has 1,791
+overlapping unmet conditions.
+
+The inventory still contains 4,527 cases: 4,416 ready, 71 unimplemented, and
+40 unmapped. Its 111 unready cases, full-gate failures, and all nine M2
+workstreams remain open. The selected results do not establish full M2, product
+API, platform release, or performance parity. The [implementation checkpoint](../reports/m2/stage76-78-implementation-checkpoint.json) retains the failed
+attempts and exact source/artifact identities.
+
 ## Stage76–78 isolated candidate validation
 
-The isolated candidate completed nine continuation commands successfully after
-an independent review recovered the first command's artifact provenance. The
-original first-command controller failure remains recorded: Cargo and its tests
-succeeded, but the checker expected an `.rlib` where rustc consumed the fresh
-unit's `.rmeta`, and three recreated build-script aliases exceeded its initial
-cache scope. The continuation preserves that failure and does not rerun command
-00.
-
-The ten command results together account for 29 named outer Rust test functions,
-excluding nested child repetitions. They include 389 selected Regex/String and
-collection rows, 72 numeric rows, three unchanged upstream syntax cases, the
-56-row M1 control, and lifecycle/cache controls. The numeric matrix compares
-result kind and complete result text; it does not establish all exported API
-channels or logger compatibility. A separate standalone vendor suite passed all
-117 tests and is not added to the runtime test count.
-
-This is local macOS arm64 candidate evidence. The candidate sources remain
-isolated from the canonical runtime. Canonical integration, the five required
-Rust checks for that integration, native/Node/browser comparisons, and a fresh
-full ready-corpus replay are still pending. The official 4,163/4,416 match count,
-111 unready cases, and all nine open M2 workstreams are unchanged.
-
-The [candidate checkpoint](../reports/m2/stage76-78-candidate-checkpoint.json) preserves raw
-outcomes, source identities, scope, and the prior failed attempt. Its source and
-raw-evidence archive does not package the compiler or compiled test binaries.
+Before canonical integration, the isolated candidate completed nine continuation
+commands after an independent review recovered the first command's artifact
+provenance. The first controller failure remains recorded: Cargo and its tests
+succeeded, but the checker expected an `.rlib` where rustc consumed `.rmeta`,
+and three build-script aliases exceeded its initial cache scope. The first
+command was not rerun. The ten actual command results cover 29 distinct outer
+Rust test functions, including 389 Regex/String/collection rows, 72 numeric
+rows, three unchanged upstream syntax cases, and a 56-row M1 control. The
+numeric tests compare result kind and full text; they do not verify every
+exported API or logger channel. The separate 117-test vendor suite is not
+added to the runtime count. This candidate checkpoint is historical and did
+not itself establish canonical or full-language compatibility. See the
+[candidate checkpoint](../reports/m2/stage76-78-candidate-checkpoint.json).
 
 ## Stage 73–75 selected implementation checkpoint
 

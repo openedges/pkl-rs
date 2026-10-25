@@ -339,6 +339,9 @@ fn append_members(
 fn base_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
     let name = declaration.name.as_str();
     match &declaration.expr.kind {
+        ExprKind::Function { method: true, .. } if name == "Regex" => {
+            return vec![Instruction::RegexConstructor];
+        }
         ExprKind::Function { method: true, .. } if name == "IntSeq" => {
             return vec![Instruction::IntSeqConstructor];
         }
@@ -499,11 +502,21 @@ mod tests {
                     LazyState::Completed(Value::Object(standard))
                 );
                 assert!(
-                    !vm.heap.get(standard).unwrap().forced,
-                    "unimplemented bindings must not be reported fully forced"
+                    vm.heap.get(standard).unwrap().forced,
+                    "base initialization must complete recursive forcing"
                 );
                 vm.start_member(standard, "Char").unwrap();
-                assert_eq!(ready(&mut vm).unwrap_err().kind, ErrorKind::Unsupported);
+                let Value::TypeAlias(char_alias) = ready(&mut vm).unwrap() else {
+                    panic!("Char was not a type alias")
+                };
+                assert_eq!(
+                    vm.heap.get(char_alias).unwrap().type_alias.as_deref(),
+                    Some("pkl.base#Char")
+                );
+                assert!(vm.heap.get(char_alias).unwrap().type_alias_initialized);
+                vm.collect(&[]);
+                vm.start_member(standard, "Char").unwrap();
+                assert_eq!(ready(&mut vm).unwrap(), Value::TypeAlias(char_alias));
             } else {
                 assert!(matches!(
                     vm.member_state(standard, "facts").unwrap(),

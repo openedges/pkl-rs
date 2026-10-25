@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Error replacing matches for regex `a` with `\`: `character to be escaped is missing`
+
+1 | "a".replaceFirst(Regex("a"), "\\")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

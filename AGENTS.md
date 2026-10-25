@@ -42,6 +42,6 @@ cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 
 - Add meaningful regression cases for behavior changes. Do not add tests for simple documentation edits or tests that merely repeat the implementation.
 - For Python verification tooling changes, run the relevant tests under `tools/tests` and the affected inventory freshness checks. Use the pinned Java oracle for integration checks; preserve failed, blocked, and inconclusive outcomes. A small CI corpus never replaces the full inventory.
-- For shared primitives or bindings, run `tools/m1_platforms.py` in a fresh output directory with the pinned browser tooling. Its strict comparison and `--verify-contract` architecture gate are different: known regex gaps remain failed compatibility cases even when the experiment contract passes. Never remove or normalize those failures to make CI green.
+- For shared primitives or bindings, run `tools/m1_platforms.py` in a fresh output directory with the pinned browser tooling. Strict raw comparison and the `--verify-contract` architecture gate are separate. Preserve any observed mismatches; never remove or normalize failures to make CI green.
 - Preserve original evidence and use new output directories for reruns. Record exact artifact/input/runtime identities and compare raw bytes. Changes to heap limits or other execution conditions require separate, explicit experiment evidence.
 - In completion reports, distinguish changes made, checks run, unverified scope, and known issues. Do not report unexecuted checks as passing.

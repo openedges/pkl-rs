@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Cannot find method `round` in class `pkl.ref#Reference`.
+
+1 | module.refInt.round()
+    ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available methods in class `pkl.ref#Reference`:
+getClass
+getData
+getDomain
+getPath
+getProperty
+getPropertyOrNull
+hasProperty
+ifNonNull
+toDynamic
+toMap
+toString

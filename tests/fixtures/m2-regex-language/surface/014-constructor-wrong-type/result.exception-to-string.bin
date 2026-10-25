@@ -1,0 +1,11 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 42
+
+1701 | external const function Regex(pattern: String): Regex
+                                              ^^^^^^
+at pkl.base#Regex (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1701)
+
+1 | Regex(42)
+    ^^^^^^^^^
+at  (repl:text)

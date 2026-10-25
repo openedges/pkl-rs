@@ -1444,6 +1444,7 @@ impl<'a> Resolver<'a> {
                                             | "Bytes"
                                             | "Pair"
                                             | "IntSeq"
+                                            | "Regex"
                                             | "Null"
                                     ) {
                                         return Err(Diagnostic::unsupported(

@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Syntax error in regex `\p{Lx`: Unclosed character family near index 5
+\p{Lx
+
+1 | Regex(#"\p{Lx"#)
+    ^^^^^^^^^^^^^^^^
+at  (repl:text)

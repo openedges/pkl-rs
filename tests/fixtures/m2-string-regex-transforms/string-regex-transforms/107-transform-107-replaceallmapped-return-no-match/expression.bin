@@ -1,0 +1,1 @@
+"a".replaceAllMapped(Regex("z"), (m) -> 42)

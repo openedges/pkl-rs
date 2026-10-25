@@ -1,0 +1,1 @@
+"b".replaceFirst(Regex("(a)?b"), "<$1>")

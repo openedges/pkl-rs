@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got `null`.
+
+1562 | mapper: (RegexMatch) -> String,
+               ^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#String.replaceAllMapped (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1562)
+
+1 | "a".replaceAllMapped(Regex("z"), null)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

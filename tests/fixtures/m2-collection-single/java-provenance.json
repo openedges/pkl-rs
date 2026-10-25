@@ -1,0 +1,1455 @@
+{
+  "Rust_executed": false,
+  "audit": {
+    "bytes": 5858,
+    "sha256": "1f6f38c536d292c1b55be009cd240ec63b07efd293f74df5eae070f8b6445750"
+  },
+  "candidate_passes_claimed": 0,
+  "capture": {
+    "bytes": 38678,
+    "sha256": "67464d203a07f8a8f381f1179234f06854eed584867600cd1e212c8b468130fd"
+  },
+  "copies": {
+    "collection-single/000-list-empty-single/expression.bin": {
+      "bytes": 13,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/expression.bin",
+      "sha256": "4f149882d24dea836583513fe72556a72cae3cd8e8e7599bc72d88cc73bdb3fb"
+    },
+    "collection-single/000-list-empty-single/expression.code-units.bin": {
+      "bytes": 26,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/expression.code-units.bin",
+      "sha256": "ca6cef3ab9fbbdc35a6d3113069dded7c07d812be42eec9831b2a7ca69c1854a"
+    },
+    "collection-single/000-list-empty-single/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/000-list-empty-single/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/000-list-empty-single/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/000-list-empty-single/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/000-list-empty-single/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/000-list-empty-single/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/000-list-empty-single/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/000-list-empty-single/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/000-list-empty-single/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/000-list-empty-single/result.error-class.bin": {
+      "bytes": 25,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.error-class.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    "collection-single/000-list-empty-single/result.error-class.code-units.bin": {
+      "bytes": 50,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.error-class.code-units.bin",
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+    },
+    "collection-single/000-list-empty-single/result.exception-to-string.bin": {
+      "bytes": 161,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.exception-to-string.bin",
+      "sha256": "7fba057a56f800991a7aee673e63d3bf64caf7fd4f272716a5b030fd76183e79"
+    },
+    "collection-single/000-list-empty-single/result.exception-to-string.code-units.bin": {
+      "bytes": 306,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.exception-to-string.code-units.bin",
+      "sha256": "c1f85f8652e88460f26831b740a3caf7921f4c00f133541d77212f1948df9eb3"
+    },
+    "collection-single/000-list-empty-single/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/000-list-empty-single/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/000-list-empty-single/result.status.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    "collection-single/000-list-empty-single/result.stderr.bin": {
+      "bytes": 134,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.stderr.bin",
+      "sha256": "0f718e2cc982b90028236bda2cde707a5a644bbf1f9c7740ad6e992719d2523a"
+    },
+    "collection-single/000-list-empty-single/result.stderr.code-units.bin": {
+      "bytes": 252,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.stderr.code-units.bin",
+      "sha256": "84d81f55def63499bb3735e05bc9cc0c767d105a8478b427e2decc81097dfa4c"
+    },
+    "collection-single/000-list-empty-single/result.stdout.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/000-list-empty-single/result.stdout.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/000-list-empty-single/result.stdout.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/expression.bin": {
+      "bytes": 14,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/expression.bin",
+      "sha256": "b37544af0e89081966cfaf3023abeb8dae7881e0af3b846b6c54547bb76366ad"
+    },
+    "collection-single/001-list-one-single/expression.code-units.bin": {
+      "bytes": 28,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/expression.code-units.bin",
+      "sha256": "4e1dd8cf75872b94d2365e5999b8e5ff1147306da99286e55c80a34932df86a9"
+    },
+    "collection-single/001-list-one-single/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/001-list-one-single/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/001-list-one-single/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/001-list-one-single/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.error-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.error-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.error-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.error-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.exception-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.exception-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.exception-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.exception-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.status.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "collection-single/001-list-one-single/result.stderr.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.stderr.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.stderr.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/001-list-one-single/result.stdout.bin": {
+      "bytes": 1,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.stdout.bin",
+      "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+    },
+    "collection-single/001-list-one-single/result.stdout.code-units.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/001-list-one-single/result.stdout.code-units.bin",
+      "sha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c"
+    },
+    "collection-single/002-list-two-single/expression.bin": {
+      "bytes": 17,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/expression.bin",
+      "sha256": "86311d3b2a5c983c99e2931275f5a733c1f122b4c55b7876e02b68fdaa6ecc0d"
+    },
+    "collection-single/002-list-two-single/expression.code-units.bin": {
+      "bytes": 34,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/expression.code-units.bin",
+      "sha256": "ec9377fe44342a93e40522c2e068b6492393c62e347e652bb32b992f85b7c457"
+    },
+    "collection-single/002-list-two-single/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/002-list-two-single/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/002-list-two-single/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/002-list-two-single/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/002-list-two-single/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/002-list-two-single/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/002-list-two-single/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/002-list-two-single/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/002-list-two-single/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/002-list-two-single/result.error-class.bin": {
+      "bytes": 25,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.error-class.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    "collection-single/002-list-two-single/result.error-class.code-units.bin": {
+      "bytes": 50,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.error-class.code-units.bin",
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+    },
+    "collection-single/002-list-two-single/result.exception-to-string.bin": {
+      "bytes": 173,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.exception-to-string.bin",
+      "sha256": "23127259f09fd335d3d5e5251019ec5bcd5205b4d7505657a63d3ef2e0c8ecb0"
+    },
+    "collection-single/002-list-two-single/result.exception-to-string.code-units.bin": {
+      "bytes": 330,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.exception-to-string.code-units.bin",
+      "sha256": "6b559ddbe983cb4e03471824b3101e3ba986e15b4fd32ea9781bbef97659be9a"
+    },
+    "collection-single/002-list-two-single/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/002-list-two-single/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/002-list-two-single/result.status.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    "collection-single/002-list-two-single/result.stderr.bin": {
+      "bytes": 146,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.stderr.bin",
+      "sha256": "19fb72c449a15234ccfaa24aec9d7c9a93b95cbd55874202bd2f5e4286f5bc49"
+    },
+    "collection-single/002-list-two-single/result.stderr.code-units.bin": {
+      "bytes": 276,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.stderr.code-units.bin",
+      "sha256": "83751f2eb4c68068703a96023a4c3cef9395fe3148c8d91be76479684cd4b975"
+    },
+    "collection-single/002-list-two-single/result.stdout.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/002-list-two-single/result.stdout.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/002-list-two-single/result.stdout.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/expression.bin": {
+      "bytes": 19,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/expression.bin",
+      "sha256": "a9a3b1559305b3a6f4177912c68d39965c9bf57d5777e0a3b8eb6de957fa69eb"
+    },
+    "collection-single/003-list-empty-single-or-null/expression.code-units.bin": {
+      "bytes": 38,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/expression.code-units.bin",
+      "sha256": "7a262a9a4a542410e639c5bd2c434110fb0946186792d2d0344f4be42102a060"
+    },
+    "collection-single/003-list-empty-single-or-null/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/003-list-empty-single-or-null/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/003-list-empty-single-or-null/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/003-list-empty-single-or-null/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.error-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.error-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.error-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.error-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.exception-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.exception-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.exception-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.exception-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.status.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "collection-single/003-list-empty-single-or-null/result.stderr.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.stderr.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.stderr.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/003-list-empty-single-or-null/result.stdout.bin": {
+      "bytes": 4,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.stdout.bin",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    "collection-single/003-list-empty-single-or-null/result.stdout.code-units.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/003-list-empty-single-or-null/result.stdout.code-units.bin",
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    "collection-single/004-list-one-single-or-null/expression.bin": {
+      "bytes": 20,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/expression.bin",
+      "sha256": "00365c7a7568d560faa84b602c5ff6be09b3aa2c0e37633eedb899e21e82c49a"
+    },
+    "collection-single/004-list-one-single-or-null/expression.code-units.bin": {
+      "bytes": 40,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/expression.code-units.bin",
+      "sha256": "f5647af2efb4fe8a7c7e3e81ce8e81e65466750cc02ece65a9cb61c41aaa9c2e"
+    },
+    "collection-single/004-list-one-single-or-null/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/004-list-one-single-or-null/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/004-list-one-single-or-null/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/004-list-one-single-or-null/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.error-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.error-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.error-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.error-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.exception-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.exception-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.exception-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.exception-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.status.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "collection-single/004-list-one-single-or-null/result.stderr.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.stderr.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.stderr.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/004-list-one-single-or-null/result.stdout.bin": {
+      "bytes": 1,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.stdout.bin",
+      "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+    },
+    "collection-single/004-list-one-single-or-null/result.stdout.code-units.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/004-list-one-single-or-null/result.stdout.code-units.bin",
+      "sha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c"
+    },
+    "collection-single/005-list-two-single-or-null/expression.bin": {
+      "bytes": 23,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/expression.bin",
+      "sha256": "3b51f72d413b340182009ff3215c1f732abd926a2e2612f34321e3bb9865bebc"
+    },
+    "collection-single/005-list-two-single-or-null/expression.code-units.bin": {
+      "bytes": 46,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/expression.code-units.bin",
+      "sha256": "5787ad6e8a812706652bc63de99d33060de32f0ae0f567ca2971decfcdc27d71"
+    },
+    "collection-single/005-list-two-single-or-null/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/005-list-two-single-or-null/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/005-list-two-single-or-null/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/005-list-two-single-or-null/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.error-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.error-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.error-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.error-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.exception-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.exception-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.exception-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.exception-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.status.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "collection-single/005-list-two-single-or-null/result.stderr.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.stderr.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.stderr.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/005-list-two-single-or-null/result.stdout.bin": {
+      "bytes": 4,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.stdout.bin",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    "collection-single/005-list-two-single-or-null/result.stdout.code-units.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/005-list-two-single-or-null/result.stdout.code-units.bin",
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    "collection-single/006-set-empty-single/expression.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/expression.bin",
+      "sha256": "06bc90a4c16dacb5bac04ec45bb1fb8856afc4196a1bbdbab6392da9dab3dad2"
+    },
+    "collection-single/006-set-empty-single/expression.code-units.bin": {
+      "bytes": 24,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/expression.code-units.bin",
+      "sha256": "a2aab75f5834f862110e1ce5d3dc478974bf98314113efe99203e1dae4138b67"
+    },
+    "collection-single/006-set-empty-single/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/006-set-empty-single/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/006-set-empty-single/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/006-set-empty-single/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/006-set-empty-single/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/006-set-empty-single/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/006-set-empty-single/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/006-set-empty-single/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/006-set-empty-single/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/006-set-empty-single/result.error-class.bin": {
+      "bytes": 25,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.error-class.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    "collection-single/006-set-empty-single/result.error-class.code-units.bin": {
+      "bytes": 50,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.error-class.code-units.bin",
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+    },
+    "collection-single/006-set-empty-single/result.exception-to-string.bin": {
+      "bytes": 158,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.exception-to-string.bin",
+      "sha256": "63f3e0d2568c3690138f86b87076b7d77e50515156574c0465718aea8b741420"
+    },
+    "collection-single/006-set-empty-single/result.exception-to-string.code-units.bin": {
+      "bytes": 300,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.exception-to-string.code-units.bin",
+      "sha256": "3d2f57680efdfd619d681d9c9e5238070bd84d909ee3d5689d3e8d24827bd3fe"
+    },
+    "collection-single/006-set-empty-single/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/006-set-empty-single/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/006-set-empty-single/result.status.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    "collection-single/006-set-empty-single/result.stderr.bin": {
+      "bytes": 131,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.stderr.bin",
+      "sha256": "723c38b331fee7aa2e2ae534d17c23464e179dc3a8fa48f8224fa8b3026596bc"
+    },
+    "collection-single/006-set-empty-single/result.stderr.code-units.bin": {
+      "bytes": 246,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.stderr.code-units.bin",
+      "sha256": "5efb8007b2e9977074cd2e19f5456a89d61af1d85ddd1e587d66c62661e41b17"
+    },
+    "collection-single/006-set-empty-single/result.stdout.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/006-set-empty-single/result.stdout.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/006-set-empty-single/result.stdout.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/expression.bin": {
+      "bytes": 13,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/expression.bin",
+      "sha256": "2117df2c714ce82c0f6ea177f8ba625815ed78de3c457a9788b816e5e1ab3f48"
+    },
+    "collection-single/007-set-one-single/expression.code-units.bin": {
+      "bytes": 26,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/expression.code-units.bin",
+      "sha256": "b972a6e199b7a243e7a8e92d2a6073688723ade8138cdbb24c1858d0490e973b"
+    },
+    "collection-single/007-set-one-single/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/007-set-one-single/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/007-set-one-single/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/007-set-one-single/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.error-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.error-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.error-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.error-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.exception-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.exception-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.exception-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.exception-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.status.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "collection-single/007-set-one-single/result.stderr.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.stderr.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.stderr.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/007-set-one-single/result.stdout.bin": {
+      "bytes": 1,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.stdout.bin",
+      "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+    },
+    "collection-single/007-set-one-single/result.stdout.code-units.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/007-set-one-single/result.stdout.code-units.bin",
+      "sha256": "2215e8ac4e2b871c2a48189e79738c956c081e23ac2f2415bf77da199dfd920c"
+    },
+    "collection-single/008-set-two-single/expression.bin": {
+      "bytes": 16,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/expression.bin",
+      "sha256": "0857d1b8b06de632dab72b9151477f5064040d70df1a7eea5f6ad44d09d0b694"
+    },
+    "collection-single/008-set-two-single/expression.code-units.bin": {
+      "bytes": 32,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/expression.code-units.bin",
+      "sha256": "23bc6dac06ddc25cb01975d08058c3119a589ff6f405b69bcddc209ec0445a42"
+    },
+    "collection-single/008-set-two-single/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/008-set-two-single/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/008-set-two-single/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/008-set-two-single/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/008-set-two-single/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/008-set-two-single/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/008-set-two-single/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/008-set-two-single/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/008-set-two-single/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/008-set-two-single/result.error-class.bin": {
+      "bytes": 25,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.error-class.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    "collection-single/008-set-two-single/result.error-class.code-units.bin": {
+      "bytes": 50,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.error-class.code-units.bin",
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+    },
+    "collection-single/008-set-two-single/result.exception-to-string.bin": {
+      "bytes": 170,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.exception-to-string.bin",
+      "sha256": "7bbd3497d6b56a29b72d2fd5deaaeedc56083b3972fa3b9a29e2204f7949505e"
+    },
+    "collection-single/008-set-two-single/result.exception-to-string.code-units.bin": {
+      "bytes": 324,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.exception-to-string.code-units.bin",
+      "sha256": "a3c39d1073768eea8650b543381bbcf16ea522d1335916974d6f595d849caeb3"
+    },
+    "collection-single/008-set-two-single/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/008-set-two-single/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/008-set-two-single/result.status.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    "collection-single/008-set-two-single/result.stderr.bin": {
+      "bytes": 143,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.stderr.bin",
+      "sha256": "b0504981490fe55bbffd00ccd66a2743bc67fbe2f63f9fc296f63f9cffd49e85"
+    },
+    "collection-single/008-set-two-single/result.stderr.code-units.bin": {
+      "bytes": 270,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.stderr.code-units.bin",
+      "sha256": "b37adeb2880df86926f893df8697135727ba9367cae2281c6a88cbadbcb58e32"
+    },
+    "collection-single/008-set-two-single/result.stdout.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/008-set-two-single/result.stdout.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/008-set-two-single/result.stdout.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/expression.bin": {
+      "bytes": 22,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/expression.bin",
+      "sha256": "03b133bc967594afee985630123425c356e9063445841e720117274830409d42"
+    },
+    "collection-single/009-set-two-single-or-null/expression.code-units.bin": {
+      "bytes": 44,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/expression.code-units.bin",
+      "sha256": "76213bf3507ec82c16b47ba78d2b55bca3797ff7e18de9a6cfa3688944bf69cd"
+    },
+    "collection-single/009-set-two-single-or-null/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/009-set-two-single-or-null/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/009-set-two-single-or-null/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/009-set-two-single-or-null/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.error-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.error-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.error-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.error-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.exception-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.exception-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.exception-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.exception-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.status.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "collection-single/009-set-two-single-or-null/result.stderr.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.stderr.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.stderr.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/009-set-two-single-or-null/result.stdout.bin": {
+      "bytes": 4,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.stdout.bin",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    "collection-single/009-set-two-single-or-null/result.stdout.code-units.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/009-set-two-single-or-null/result.stdout.code-units.bin",
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    "collection-single/010-list-null-single/expression.bin": {
+      "bytes": 17,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/expression.bin",
+      "sha256": "f13a1c9a10bedb66e398988ac8daed88204b8ceade6124e211a104b781322930"
+    },
+    "collection-single/010-list-null-single/expression.code-units.bin": {
+      "bytes": 34,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/expression.code-units.bin",
+      "sha256": "e2494047e7360d872daf133167c49102efc0e98e408e59027b29e907212788b9"
+    },
+    "collection-single/010-list-null-single/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/010-list-null-single/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/010-list-null-single/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/010-list-null-single/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.error-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.error-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.error-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.error-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.exception-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.exception-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.exception-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.exception-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.status.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "collection-single/010-list-null-single/result.stderr.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.stderr.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.stderr.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/010-list-null-single/result.stdout.bin": {
+      "bytes": 4,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.stdout.bin",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    "collection-single/010-list-null-single/result.stdout.code-units.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/010-list-null-single/result.stdout.code-units.bin",
+      "sha256": "5c7f9bb38f342d92faeedc456f94d3a78e56abb53f21ef938fe6f24d1f79d86a"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/expression.bin": {
+      "bytes": 63,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/expression.bin",
+      "sha256": "9df33b10835c1a453ab5b9d791faaffa316032649e1bd0aabb9253abbf180033"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/expression.code-units.bin": {
+      "bytes": 126,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/expression.code-units.bin",
+      "sha256": "2253ff50cfcf8b9ecf5b4399de99dc6dc1514a62320b4dfddf1d5e40daf078ae"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.error-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.error-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.error-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.error-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.exception-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.exception-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.exception-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.exception-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.status.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.status.bin",
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.stderr.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.stderr.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.stderr.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.stdout.bin": {
+      "bytes": 4,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.stdout.bin",
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    "collection-single/011-list-lazy-nested-nonforcing/result.stdout.code-units.bin": {
+      "bytes": 8,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/011-list-lazy-nested-nonforcing/result.stdout.code-units.bin",
+      "sha256": "bdabf07f3727f4c39aa7f9e2b08c6dada92c213e03715947978c7e5b92bec83b"
+    },
+    "collection-single/012-single-as-method-throwing-argument/expression.bin": {
+      "bytes": 39,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/expression.bin",
+      "sha256": "e51bd34532392c0086294c554cd055447c5b9b49fa8a7452f950ed8a5c464ebf"
+    },
+    "collection-single/012-single-as-method-throwing-argument/expression.code-units.bin": {
+      "bytes": 78,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/expression.code-units.bin",
+      "sha256": "a71b7afa8325a4ecc5a7d2734d52bcc0af8e99bf660e36574b8dfb1486ce8015"
+    },
+    "collection-single/012-single-as-method-throwing-argument/logs.count.bin": {
+      "bytes": 2,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/logs.count.bin",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "collection-single/012-single-as-method-throwing-argument/mode.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/mode.bin",
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+    },
+    "collection-single/012-single-as-method-throwing-argument/mode.code-units.bin": {
+      "bytes": 12,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/mode.code-units.bin",
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.cause-class.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.cause-class.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.cause-class.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.cause-class.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.cause-message.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.cause-message.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.cause-message.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.cause-message.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.cause-to-string.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.cause-to-string.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.cause-to-string.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.cause-to-string.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.error-class.bin": {
+      "bytes": 25,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.error-class.bin",
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.error-class.code-units.bin": {
+      "bytes": 50,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.error-class.code-units.bin",
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.exception-to-string.bin": {
+      "bytes": 268,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.exception-to-string.bin",
+      "sha256": "252a4163dec545b67ed5264ce07440bcd7315db25b5ad7bce9ba0a307b728d4c"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.exception-to-string.code-units.bin": {
+      "bytes": 520,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.exception-to-string.code-units.bin",
+      "sha256": "b724c768a86eea58a6fa498323199464aab5e3944cece918053423cef3046530"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.java-type.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.java-type.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.java-type.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.java-type.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.status.bin": {
+      "bytes": 6,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.status.bin",
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.stderr.bin": {
+      "bytes": 241,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.stderr.bin",
+      "sha256": "2d10947140c599fb1095365670edf1645d58dab3e73325cd13457c6caa1511f2"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.stderr.code-units.bin": {
+      "bytes": 466,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.stderr.code-units.bin",
+      "sha256": "a3c17d66cf633ffb43bfdb611a750ade8e0ff0f4f98a44eddfc7f5dce5fe869d"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.stdout.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/012-single-as-method-throwing-argument/result.stdout.code-units.bin": {
+      "bytes": 0,
+      "origin": "target/m2/stage76-single-oracle-02/programs/collection-single/repeat-0/012-single-as-method-throwing-argument/result.stdout.code-units.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "collection-single/module.pkl": {
+      "bytes": 11,
+      "origin": "target/m2/stage76-single-oracle-02/modules/collection-single.pkl",
+      "sha256": "9aea120dd43ed26a6fa2cee4fda9b67e581908321bb0da2833bc3752f23f4239"
+    }
+  },
+  "kind": "Java-only List/Set singleton row materialization",
+  "rows": 13,
+  "statuses": {
+    "error": 5,
+    "success": 8
+  }
+}

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+1473 | external function indexOf(pattern: String | Regex): Int
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#String.indexOf (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1473)
+
+1 | "a".indexOf()
+    ^^^^^^^^^^^^^
+at  (repl:text)

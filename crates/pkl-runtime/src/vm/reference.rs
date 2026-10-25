@@ -1395,10 +1395,26 @@ impl Vm {
                 ..
             } if property == Some("isNotEmpty") => TypeCheck::Boolean,
             TypeCheck::String if matches!(property, Some("length" | "lastIndex")) => TypeCheck::Int,
+            TypeCheck::Int if matches!(property, Some("sign" | "abs" | "ceil" | "floor")) => {
+                TypeCheck::Int
+            }
+            TypeCheck::Float if matches!(property, Some("sign" | "abs" | "ceil" | "floor")) => {
+                TypeCheck::Float
+            }
+            TypeCheck::Number if matches!(property, Some("sign" | "abs" | "ceil" | "floor")) => {
+                TypeCheck::Number
+            }
             TypeCheck::String
                 if matches!(
                     property,
-                    Some("isEmpty" | "isNotEmpty" | "isBlank" | "isNotBlank" | "isBase64")
+                    Some(
+                        "isEmpty"
+                            | "isNotEmpty"
+                            | "isBlank"
+                            | "isNotBlank"
+                            | "isBase64"
+                            | "isRegex"
+                    )
                 ) =>
             {
                 TypeCheck::Boolean

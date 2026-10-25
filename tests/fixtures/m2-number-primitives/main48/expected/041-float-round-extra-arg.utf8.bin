@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 0 function arguments but got 1.
+
+1174 | external function round(): Float
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Float.round (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1174)
+
+1 | 2.5.round(1)
+    ^^^^^^^^^^^^
+at  (repl:text)
