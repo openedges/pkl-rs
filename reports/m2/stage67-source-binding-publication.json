@@ -1,0 +1,51 @@
+{
+  "boundary": "Exact copies of the source-binding result, full-readback archive, actual process receipt and raw channels; no new guest evaluation or Cargo build.",
+  "candidate_compatibility_passes_claimed": 0,
+  "complete": true,
+  "files": [
+    {
+      "bytes": 252825,
+      "published": "reports/m2/stage67-source-binding.json",
+      "sha256": "2248c66ca334d36a44e9086d47fafd6f4284535ae43775864da605688ea28a7b",
+      "source": "target/m2/stage67-source-binding-01/report.json"
+    },
+    {
+      "bytes": 6619303,
+      "published": "reports/m2/stage67-source-binding-evidence.tar.gz",
+      "sha256": "f47462ce7ad33a64438257629c6e6450f1ba776f4a90d1e0c11bbdb350b372c6",
+      "source": "target/m2/stage67-source-binding-01/evidence.tar.gz"
+    },
+    {
+      "bytes": 8959,
+      "published": "reports/m2/stage67-source-binding-process.json",
+      "sha256": "bdc3322ad801ed7d406bac776d5e213281c208c1a653629eee08396b920ce266",
+      "source": "target/m2/stage67-source-binding-01/process.json"
+    },
+    {
+      "bytes": 22978,
+      "published": "reports/m2/stage67-source-binding.stdout.bin",
+      "sha256": "49d4fe4cef7b8b9e6d238bf0e69fd14051d655e58abaf4eb5e02365c2589bc42",
+      "source": "target/m2/stage67-source-binding-01/stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "published": "reports/m2/stage67-source-binding.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage67-source-binding-01/stderr.bin"
+    }
+  ],
+  "finished_epoch": 1792896360.6323562,
+  "host": {
+    "machine": "arm64",
+    "node": "research-macmini1.local",
+    "processor": "arm",
+    "release": "27.0.0",
+    "system": "Darwin",
+    "version": "Darwin Kernel Version 27.0.0: Tue Aug 11 21:05:27 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8103"
+  },
+  "implementation_commit": "90b15809ea126c4b7ddaaca609963c1ef26f38c3",
+  "kind": "stage67-source-binding-byte-copy-publication",
+  "published_bytes_equal": true,
+  "schema": 1,
+  "source_before_after_equal": true
+}

@@ -34,7 +34,12 @@ Corrections tested in the separate Stage 68 lab are not results for this frozen
 candidate. The 13 published archives preserve the raw failures, corrected review
 attempts, and source identities. These are local macOS arm64 results; all nine M2
 workstreams, full language/API compatibility, release platforms, and performance
-goals remain open. The later C checkpoint will bind this evidence to its implementation commit.
+goals remain open. The [C source binding](../reports/m2/stage67-source-binding.json)
+links this evidence to implementation commit `90b1580`, whose remote `main` identity
+was verified. It checks 165,550 recorded inputs, independently checks the nine
+copied inputs and all 293 runtime/Cargo blobs, and preserves the three captured
+documents changed after validation. No guest evaluations or builds were rerun
+by that provenance audit.
 
 ## Stage 66 — reversal and union diagnostics
 

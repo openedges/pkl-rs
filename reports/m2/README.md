@@ -49,9 +49,25 @@ payload byte, file mode, member set, and source bookend; each archive is below
 95 MiB. Their identities and individual publication records are linked from the
 checkpoint. The full-review first attempt failed on an omitted scalar adapter
 field; its corrected review uses the source-bound manifest without changing any
-captured result. The Java A authority remains separately committed. A subsequent
-C checkpoint will record the implementation commit, publication process receipts,
-and documentation provenance. All results are recorded local macOS arm64 evidence.
+captured result. The Java A authority remains separately committed. The corrected
+independent publication review verifies that exact A checkpoint against its Git
+blob while requiring every other checkpoint input to occur in the B archive union;
+the first review attempt and its failure remain preserved.
+
+The [C source binding](stage67-source-binding.json) links all 165,550 required
+inputs to implementation commit `90b1580`, which was pushed and matched remote
+`main`. It checks 165,541 Git-origin rows by commit/path/mode/OID, the nine copied
+inputs by bytes and Git blob identity, and all 293 runtime/Cargo entries against
+actual implementation blob bytes. Changed captured versions of `PLAN.md`,
+`TESTING.md`, and `docs/m2-language.md` retain their old bytes and both Git
+identities; this report README is classified separately as a publication document.
+
+The [C archive](stage67-source-binding-evidence.tar.gz) preserves the source
+proofs and actual publication, assembly, review, commit, and push receipts. The
+[actual audit process](stage67-source-binding-process.json) completed with exit 0,
+stable sources and Git HEAD; it and its raw channels are published separately
+because they postdate the archive. This audit performed no guest evaluations or
+builds. All results are recorded local macOS arm64 evidence, and M2 remains incomplete.
 
 ### Stage66 implementation and local comparisons
 
