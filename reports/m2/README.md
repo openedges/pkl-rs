@@ -1,5 +1,38 @@
 # M2 language evidence
 
+### Stage68 implementation and complete ready-corpus replay
+
+The [implementation checkpoint](stage68-implementation-checkpoint.json) records
+shared String Base64, collection `isNotEmpty` and `every`, Reference amendment
+rejection, inferred entry diagnostics, declaring-module class defaults, and lazy
+object-method signature checks. All five required Rust checks passed. Native,
+actual N-API, and Chromium each match 2,726 raw observations from 17 catalog
+profiles containing 1,363 expressions. The separate `every` comparison matches
+128 observations per target, including ordered logger channels. Existing Any/M1
+Regex mismatches remain failures.
+
+The full 4,416-case Rust replay records **4,152 matches, 119 mismatches, 143 unsupported results, 2 Java oracle errors, 0 Rust internal errors**.
+Original modules account for 632 matches out of 888;
+expression strings account for 3,519 out of 3,527. The JVM
+classpath case matches. All previously passing cases remain passing, and
+10 previously nonpassing cases now match. The three inherited scalar
+regressions recorded in Stage67 are fixed by this candidate.
+
+This replay reuses the sealed Stage67 Java outputs and starts **zero fresh Java
+processes**. Its acquisition and separate integrity verification both exited
+zero, with stable sources, artifacts, and restored workspaces. The strict full
+gate remains failed with 1,799 overlapping unmet entries. The 111 unready
+inventory cases and all nine M2 workstreams remain open.
+
+Sixteen archives (309,305,507 bytes in total, each below 95 MiB) preserve
+raw outcomes, complete payload/hash/mode readback, source bookends, and corrected
+attempts. The initial native `every` wrapper failed before guest execution;
+its corrected acquisition is separate. Comparison02's preparation failure and
+Comparison03's expected Regex failures remain visible. Publication and assembly
+process receipts postdate these archives and require the separate C source
+binding. These are local macOS arm64 results, not full API, performance, release
+platform, or hosted CI completion.
+
 ### Stage68 Base64, collection predicates, and method semantics — Java authority checkpoint
 
 The [Java checkpoint](stage68-java-checkpoint.json) publishes independent Pkl
@@ -20,10 +53,9 @@ archive. Their prior Rust failures are unchanged by this publication.
 The standalone fixture verifiers use tracked inputs. The installed-layout
 regression passes without a `target/` directory; the twelve predicate tests
 pass in both ordinary and optimized Python modes. These checks establish
-reference integrity. Canonical Stage68 Rust, actual native/N-API/Chromium,
-full ready-corpus replay, and implementation-source binding remain pending.
+reference integrity. At this Java-only checkpoint, candidate execution and source binding had not yet completed.
 This checkpoint claims no candidate compatibility, M2 completion, or performance
-result. Stage67 below remains the latest completed full ready-corpus comparison.
+result. The separate Stage68 implementation result is recorded above.
 
 ### Stage67 String properties — Java authority checkpoint
 

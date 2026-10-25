@@ -120,6 +120,19 @@ their declaration scope; generic arguments resolve at their use site. The
 timing of class initialization and type validation is part of compatibility,
 including declarations whose errors remain unobserved until they are used.
 
+Object-body method signatures initialize when their method value is forced.
+Local lexical calls evaluate arguments before obtaining that call target, while
+module and class declarations retain their eager signature checks. Type lookup
+uses the declaring lexical module, including an inherited member executing with
+a different receiver. Diagnostic origins distinguish an inferred entry parent
+from an explicitly authored parent expression.
+
+Collection `every` uses a shared resumable cursor. Strict collections iterate
+their stored values; Listing and Mapping force only the visited values and stop
+after the first false result. The cursor retains the receiver, callback, keys,
+and current argument across Host suspension and GC. It allocates no result
+collection, and its boxed state keeps the common VM frame size bounded.
+
 Instruction source spans and authored member names are metadata beside the
 bytecode. VM errors retain these logical frames before unwinding. A shared
 scalar evaluation boundary combines them with source URIs and module names

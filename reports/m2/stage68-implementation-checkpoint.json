@@ -1,0 +1,1191 @@
+{
+  "assembly": {
+    "receipt_boundary": "Actual publication and assembly process receipts postdate the archives and require separate source/Git binding.",
+    "source": {
+      "bytes": 9366,
+      "mode": 420,
+      "path": "target/m2/stage68-publication-review-01/assemble.py",
+      "sha256": "d249df3015774d195611057f3a7d9f448284bb0f6565b03736347e38e25812af"
+    }
+  },
+  "baseline": "Pkl 0.32.0",
+  "documentation_boundary": "Post-validation documentation changes do not alter captured source identities and require separate Git binding.",
+  "full_m2_complete": false,
+  "full_public_api_passed": false,
+  "full_ready_comparison": {
+    "by_adapter": {
+      "language-api-string": {
+        "mismatch": 7,
+        "oracle-error": 1,
+        "pass": 3519
+      },
+      "language-jvm-classpath-output": {
+        "pass": 1
+      },
+      "language-module-eval": {
+        "candidate-unsupported": 143,
+        "mismatch": 112,
+        "oracle-error": 1,
+        "pass": 632
+      }
+    },
+    "fresh_java_processes": 0,
+    "full_gate_failure_count": 1799,
+    "full_gate_passed": false,
+    "improved_cases": [
+      {
+        "after": "pass",
+        "before": "mismatch",
+        "id": "reference-stage10-reference-amendment-invalid"
+      },
+      {
+        "after": "pass",
+        "before": "mismatch",
+        "id": "types-stage18-default-listing-literal"
+      },
+      {
+        "after": "pass",
+        "before": "mismatch",
+        "id": "set-stage23-constructor-listing-default"
+      },
+      {
+        "after": "pass",
+        "before": "mismatch",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/localMethodTyped5.pkl"
+      },
+      {
+        "after": "pass",
+        "before": "mismatch",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/localMethodTyped6.pkl"
+      },
+      {
+        "after": "pass",
+        "before": "candidate-internal-error",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/localModuleMemberOverride2.pkl"
+      },
+      {
+        "after": "pass",
+        "before": "mismatch",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/listConstraints1.pkl"
+      },
+      {
+        "after": "pass",
+        "before": "mismatch",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/mapConstraints1.pkl"
+      },
+      {
+        "after": "pass",
+        "before": "mismatch",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/setConstraints1.pkl"
+      },
+      {
+        "after": "pass",
+        "before": "mismatch",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/constraintDetails3.pkl"
+      }
+    ],
+    "java_evidence_reused": true,
+    "prior_pass_regressions": [],
+    "selected": 4416,
+    "status_counts": {
+      "candidate-unsupported": 143,
+      "mismatch": 119,
+      "oracle-error": 2,
+      "pass": 4152
+    },
+    "strict_subset_passed": false
+  },
+  "guest_evaluations_executed_by_assembly": 0,
+  "historical_dependencies": {
+    "reports/m2/stage67-b-full-inventory-evidence.tar.gz": {
+      "bytes": 57911607,
+      "git_blob": "2ff3ba655761c857276b2ec9a6bb77aabae8332f",
+      "mode": 420,
+      "path": "reports/m2/stage67-b-full-inventory-evidence.tar.gz",
+      "sha256": "fe02d2c88552ca4974273554214be2d4f415c985844216f1c1df63135e0a0fb8"
+    },
+    "reports/m2/stage67-b-full-inventory-publication.json": {
+      "bytes": 11059059,
+      "git_blob": "ae1cbb527ec952f42cea804885fc1bbb1b27a0d2",
+      "mode": 420,
+      "path": "reports/m2/stage67-b-full-inventory-publication.json",
+      "sha256": "eccc18c0431dc40519e5b3b908e7bc0e3b1dfd5a4015836cee9601eca9d42933"
+    }
+  },
+  "implementation_base": "f7a22e86a78bff73f8152b8252849d86e7e2774a",
+  "inputs": {
+    "comparison_final": {
+      "bytes": 101801,
+      "mode": 420,
+      "path": "target/m2/stage68-comparison-validation-03/report.json",
+      "sha256": "616ed4bfe52680b66b512e01362408837d8a036083fffc2d24d73be3ffe8853d"
+    },
+    "comparison_initial": {
+      "bytes": 48101,
+      "mode": 420,
+      "path": "target/m2/stage68-comparison-validation-02/run.py",
+      "sha256": "cf3d9f5d9a8feea19ced59c2ed7996e97cdd666c70cec72ff7f2327e21694676"
+    },
+    "freeze": {
+      "bytes": 50304,
+      "mode": 420,
+      "path": "target/m2/stage68-core-freeze-01/source-snapshot.json",
+      "sha256": "4d55916a9e089ab38fd576da329546a675acfa2a160950076ba6121e9c62b068"
+    },
+    "freeze_report": {
+      "bytes": 536,
+      "mode": 420,
+      "path": "target/m2/stage68-core-freeze-01/report.json",
+      "sha256": "6e766099bf9b9dc3268272e20c125fc530c86d4aa28b7f9837229403cb928bb6"
+    },
+    "m1": {
+      "bytes": 3391248,
+      "mode": 420,
+      "path": "target/m2/stage68-m1-platform-contract-01/report.json",
+      "sha256": "8e31d54d490ba7b307445c089089ccb0661fa6a67a8589ba7613650b1d7247c1"
+    },
+    "native_every_corrected": {
+      "bytes": 7437,
+      "mode": 420,
+      "path": "target/m2/stage68-every-native-comparison-02/report.json",
+      "sha256": "4ff5950ee226dde4301c60c3b1f501f273de6164216c3c00906529756997922b"
+    },
+    "native_initial": {
+      "bytes": 46335,
+      "mode": 420,
+      "path": "target/m2/stage68-native-acquisition-01/report.json",
+      "sha256": "11094382753effcc6b95183ce3f7b5249c108f57a8f57df387254473c8b7cd91"
+    },
+    "platform": {
+      "bytes": 439075,
+      "mode": 420,
+      "path": "target/m2/stage68-platform-validation-01/report.json",
+      "sha256": "b1a44f500666c8e24a360048cb2a59605bcd02ed7d5d0eade391eaf599a8fd40"
+    },
+    "replay_build": {
+      "bytes": 643673,
+      "mode": 420,
+      "path": "target/m2/stage68-replay-pilot-02/build/report.json",
+      "sha256": "29b10bafad26c63c94cc8337245360140b4098b7904d54fede0ae2324ec7c681"
+    },
+    "replay_candidate": {
+      "bytes": 8862666,
+      "mode": 420,
+      "path": "target/m2/stage68-replay-pilot-02/replay/report.json",
+      "sha256": "6c6f510d3832288cf4060d7b2ede1c30675b8cdb83ac4cd2c8f5fda7db19c55e"
+    },
+    "replay_process": {
+      "bytes": 1253,
+      "mode": 420,
+      "path": "target/m2/stage68-replay-pilot-02/replay-process/process.json",
+      "sha256": "05bdc30e8a54b21c3a86b8a50c94f8d02fcfcc12b6f7522baa824352794a691c"
+    },
+    "replay_seal": {
+      "bytes": 7558725,
+      "mode": 420,
+      "path": "target/m2/stage68-replay-pilot-02/seal.json",
+      "sha256": "12b46206234b0acf1b23e42f4795638121b7efc41421b7e2e9a19bdcf4aafd69"
+    },
+    "rust": {
+      "bytes": 6441,
+      "mode": 420,
+      "path": "target/m2/stage68-rust-validation-01/report.json",
+      "sha256": "2c201e420f4a9224522755b10dbc4b4055c71a98ff7b477a3c1dee496809291c"
+    },
+    "rust_sources": {
+      "bytes": 109309040,
+      "mode": 420,
+      "path": "target/m2/stage68-rust-validation-01/sources.json",
+      "sha256": "8eab1a1dc6e7f228790a9393f9b1b256748b4b84fe9c0f51b6193ef8d18b03ea"
+    },
+    "rust_sources_after": {
+      "bytes": 109309040,
+      "mode": 420,
+      "path": "target/m2/stage68-rust-validation-01/sources-after.json",
+      "sha256": "8eab1a1dc6e7f228790a9393f9b1b256748b4b84fe9c0f51b6193ef8d18b03ea"
+    },
+    "verify_process": {
+      "bytes": 1032,
+      "mode": 420,
+      "path": "target/m2/stage68-replay-pilot-02/verify-process/process.json",
+      "sha256": "cec8462da3cd5746cb2484274e772daee51b0db97a7b1cd677974da5ff2e8136"
+    }
+  },
+  "inventory_counts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 4416,
+      "unimplemented": 71,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "java_A": {
+    "checkpoint.json": {
+      "bytes": 3408,
+      "git_blob": "ca07c3247e82c19740515356975cf8c7c72509a5",
+      "mode": 420,
+      "path": "reports/m2/stage68-java-checkpoint.json",
+      "sha256": "cf7eb2034201e85a131fb09aa88bf1873badab7482c762e96c2f162f471cc7c4"
+    },
+    "evidence.tar.gz": {
+      "bytes": 5044550,
+      "git_blob": "411a7bb5178f9cbaf4d155934878416a89c31216",
+      "mode": 420,
+      "path": "reports/m2/stage68-java-evidence.tar.gz",
+      "sha256": "2f27b403619418fd41f2ba6b5b16d157ae4285f7c64802f5b0bdfa1bb5ebf5dd"
+    },
+    "publication.json": {
+      "bytes": 4912,
+      "git_blob": "d4946873eff4523dac4d4387308cd1b796d1341e",
+      "mode": 420,
+      "path": "reports/m2/stage68-java-publication.json",
+      "sha256": "83432f73e4242d8ba56dda6cc4da38090c6dd90b6aa6b1234bb83d23988ac68f"
+    }
+  },
+  "kind": "stage68-implementation-checkpoint",
+  "known_limits": [
+    "Five required Rust commands and selected 46 offline comparisons are development gates, not full M2 completion.",
+    "Initial native acquisition command 23 failed before guest execution; 22 prior commands remain valid and corrected every02 is separate.",
+    "Comparison02 preflight failure and comparison03 terminal outcomes are distinct; expected Any Regex exit1 remains a compatibility failure.",
+    "Stage67 Java full-corpus baseline is historical and separately published; Stage68 replay must distinguish reused Java from fresh Rust.",
+    "Java A, actual B publisher/assembly process receipts, and Git commit/push receipts are separate provenance.",
+    "No performance, hosted CI, full API, or full M2 pass is asserted."
+  ],
+  "performance_claim": false,
+  "publication_proof": "Publishers performed complete payload/hash/size/mode readback and source bookends; assembly checks compressed hashes, exact embedded inventories and terminal input membership.",
+  "publications": {
+    "comparison": {
+      "archive": {
+        "bytes": 8185385,
+        "full_member_readback_verified": true,
+        "members": 3779,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-comparison-evidence.tar.gz",
+        "sha256": "0751c2dc8d8a45f33f2fee35573f069d8fdcda6413ee3ad6fa7200420cd9300c"
+      },
+      "file_members": 3778,
+      "publication": {
+        "bytes": 921031,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-comparison-publication.json",
+        "sha256": "e9aab737be48bff99447a1c295b2308eae470da4c942fb2dc0df00a9b83da4b5"
+      }
+    },
+    "development": {
+      "archive": {
+        "bytes": 905572,
+        "full_member_readback_verified": true,
+        "members": 448,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-development-evidence.tar.gz",
+        "sha256": "e930752c0b80243c801bc34cd06f071ecb7dc20d4692a7af374dfa3b0cda6273"
+      },
+      "file_members": 447,
+      "publication": {
+        "bytes": 117812,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-development-publication.json",
+        "sha256": "2b87ae23d3ce559c5e7e116dfa485d088577c1ab787da6b3a4c5d1ca6cc0573d"
+      }
+    },
+    "historical-preparation": {
+      "archive": {
+        "bytes": 135671,
+        "full_member_readback_verified": true,
+        "members": 180,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-historical-preparation-evidence.tar.gz",
+        "sha256": "982f46e4e0b172864ddae4ced5b08c3bf082e5a0e775306f415a9dcb8eec66fc"
+      },
+      "file_members": 179,
+      "publication": {
+        "bytes": 43939,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-historical-preparation-publication.json",
+        "sha256": "e6970b9a45415572bdf9299926135d703ed7a58eb05f15d3ecd128d973b71b13"
+      }
+    },
+    "native-build": {
+      "archive": {
+        "bytes": 20642761,
+        "full_member_readback_verified": true,
+        "members": 10264,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-build-evidence.tar.gz",
+        "sha256": "102675bca78ee8af03ef82a39136d1be2b53635ca9bd159d75d214ab280461c7"
+      },
+      "file_members": 10263,
+      "publication": {
+        "bytes": 2526388,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-build-publication.json",
+        "sha256": "de2d4dd1d1fdb5d8d7d51b242ae19afeca3cb61830c0ce4fe74cb021f6531c82"
+      }
+    },
+    "native-catalog-a": {
+      "archive": {
+        "bytes": 38985672,
+        "full_member_readback_verified": true,
+        "members": 10626,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-catalog-a-evidence.tar.gz",
+        "sha256": "d0e3beec5491901e15ca71b401d3cfced7bafb55c52f61d8a19e5070c8c96ef4"
+      },
+      "file_members": 10625,
+      "publication": {
+        "bytes": 2785935,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-catalog-a-publication.json",
+        "sha256": "c4a1a1533a26ce7eb7032e09e45e490e36235b40873c8ffb05e1edbd60f5a8bd"
+      }
+    },
+    "native-catalog-b": {
+      "archive": {
+        "bytes": 38773933,
+        "full_member_readback_verified": true,
+        "members": 8603,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-catalog-b-evidence.tar.gz",
+        "sha256": "578d5624b64159084d60ea43271cb54444ff3d4ec7bd53762c092652f0b6288e"
+      },
+      "file_members": 8602,
+      "publication": {
+        "bytes": 2263058,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-catalog-b-publication.json",
+        "sha256": "45d90a6fc5218defdf7986d0548b32afbb221cd228d329aa90059b53b510d571"
+      }
+    },
+    "native-catalog-c": {
+      "archive": {
+        "bytes": 29099926,
+        "full_member_readback_verified": true,
+        "members": 6338,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-catalog-c-evidence.tar.gz",
+        "sha256": "b2ef15e91a012797a7476b8c065d984bbc1a85f751e2fe5eb1c23677a771a87b"
+      },
+      "file_members": 6337,
+      "publication": {
+        "bytes": 1635832,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-catalog-c-publication.json",
+        "sha256": "6e61bf560dc7f4daa5d4e5b67f9512d070c66b72840028507f65af07d38f80e9"
+      }
+    },
+    "native-catalog-d": {
+      "archive": {
+        "bytes": 38333801,
+        "full_member_readback_verified": true,
+        "members": 5522,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-catalog-d-evidence.tar.gz",
+        "sha256": "15714377c98353f5cb92e4f79acf3b24a138384258e19f898097cba3f71e49d2"
+      },
+      "file_members": 5521,
+      "publication": {
+        "bytes": 1389111,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-catalog-d-publication.json",
+        "sha256": "6f6fc48fcaa7ac2e683262ead01fb0311c7dfc2710c722850acb1bccc326d3a3"
+      }
+    },
+    "native-catalog-e": {
+      "archive": {
+        "bytes": 19764814,
+        "full_member_readback_verified": true,
+        "members": 6011,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-catalog-e-evidence.tar.gz",
+        "sha256": "09f96e73de6bea0a8f9025f83e774cc8e98f9f6934509e756aa0dd5968e4b001"
+      },
+      "file_members": 6010,
+      "publication": {
+        "bytes": 1522263,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-catalog-e-publication.json",
+        "sha256": "d579d7704373f3a21e42813ba15474f34cd06b6fdaa45107d73e231b3d97f962"
+      }
+    },
+    "native-scalars": {
+      "archive": {
+        "bytes": 39997286,
+        "full_member_readback_verified": true,
+        "members": 25915,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-scalars-evidence.tar.gz",
+        "sha256": "bdc8cfc4e733bf17b75b11681fdd47466c21022429456c42942096cbfbf88e47"
+      },
+      "file_members": 25914,
+      "publication": {
+        "bytes": 6237348,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-native-scalars-publication.json",
+        "sha256": "04e9721d6b32c3fd5fd70135656184480c40277c66bb4fcf1017e562f087b4b0"
+      }
+    },
+    "platform": {
+      "archive": {
+        "bytes": 24802671,
+        "full_member_readback_verified": true,
+        "members": 119746,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-platform-evidence.tar.gz",
+        "sha256": "93c0d226844433a1cb1b141c4c9cb0d33f5db1d7f6651cf6179f49939630bd96"
+      },
+      "file_members": 119745,
+      "publication": {
+        "bytes": 30253451,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-platform-publication.json",
+        "sha256": "a9774b3c8e66d3a6164858f8368e6f4ce832b968733d26c19482683fea7eedc6"
+      }
+    },
+    "preparation": {
+      "archive": {
+        "bytes": 9801645,
+        "full_member_readback_verified": true,
+        "members": 7473,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-preparation-evidence.tar.gz",
+        "sha256": "bb2fc9754e6f5a0c1ba508ae4f0ea1fb80407d299d0c46805a569a35f4d69bab"
+      },
+      "file_members": 7472,
+      "publication": {
+        "bytes": 1775182,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-preparation-publication.json",
+        "sha256": "3554f094b1ac128dccfb671021a0026db79db1f6c0a72ff707b62d9e8eb19ec2"
+      }
+    },
+    "replay": {
+      "archive": {
+        "bytes": 17725589,
+        "full_member_readback_verified": true,
+        "members": 14304,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-replay-evidence.tar.gz",
+        "sha256": "6dad2247f5581fb7317b5b4080340750a5dee2a4cee569f2f36ae494eefc124e"
+      },
+      "file_members": 14303,
+      "publication": {
+        "bytes": 3360586,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-replay-publication.json",
+        "sha256": "a3816d4f3184313a9956e8e363c11299537d1d6744a3c4da06388115bf339947"
+      }
+    },
+    "rust-validation": {
+      "archive": {
+        "bytes": 13551184,
+        "full_member_readback_verified": true,
+        "members": 641,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-rust-validation-evidence.tar.gz",
+        "sha256": "f96304a877cab7d8abe2a5cdb9caa6c29dd30a9adafe251cc960deb128b119e1"
+      },
+      "file_members": 640,
+      "publication": {
+        "bytes": 170615,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-rust-validation-publication.json",
+        "sha256": "f4d24ea19e8018b9993a62efefdb6a72138198c60134c67e66089f1d5cf5873c"
+      }
+    },
+    "storage": {
+      "archive": {
+        "bytes": 6074389,
+        "full_member_readback_verified": true,
+        "members": 1053,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-storage-evidence.tar.gz",
+        "sha256": "4f89f6348ee9b2314fcbdba1fa31f961604389a1610aae3ff66bc81cee7a02ee"
+      },
+      "file_members": 1052,
+      "publication": {
+        "bytes": 239755,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-storage-publication.json",
+        "sha256": "dd0f5224ef380158db6b7a4ecaab11b513abb176c6fa22a1520fbad21d6a64c1"
+      }
+    },
+    "tooling": {
+      "archive": {
+        "bytes": 2525208,
+        "full_member_readback_verified": true,
+        "members": 838,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-tooling-evidence.tar.gz",
+        "sha256": "73c44fa6cc131c6abb7989cbaebbc0b517ed40ab6ddd79046ef7008244a928c6"
+      },
+      "file_members": 837,
+      "publication": {
+        "bytes": 226536,
+        "mode": 420,
+        "path": "reports/m2/stage68-b-tooling-publication.json",
+        "sha256": "17c816ee48e661d506fad5ea4bcd2bce8123fc681e01ce69eedc3e09cd8cdc92"
+      }
+    }
+  },
+  "published_distinct_member_paths": 221635,
+  "required_rust_commands": {
+    "all_exit_zero": true,
+    "count": 5
+  },
+  "schema": 1,
+  "scope": "Local shared-runtime implementation and full ready-corpus Rust replay against sealed Java evidence.",
+  "selected_comparison": {
+    "catalog_profiles": [
+      {
+        "archive_prefix": "capture-04",
+        "fixture": "tests/fixtures/m2-collection-conversions",
+        "input_hashes": {
+          "cases.json": "a45146b0387754d879109cfed5dd280bf6aad215c9e4197e10644d432a444c3b",
+          "module.pkl": "a24a1e717919fd710c219f7c7e27e6c9baa93b575749c840d96a58ae0f886b4a",
+          "queries.tsv": "39416e2d5adb7db5fe531289ff736a14f8926af3af8bf64fcbf9aad2ad3021cc"
+        },
+        "module_uri": "file:///stage62/collection-conversions.pkl",
+        "repetitions": 2,
+        "rows": 236,
+        "tool_sources": [
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py",
+          "tools/tests/test_collection_conversions_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_conversions_fixtures",
+        "validator_script": "tools/collection_conversions_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-02",
+        "fixture": "tests/fixtures/m2-collection-conversion-controls",
+        "input_hashes": {
+          "cases.json": "2dbd453c55268cf80fdb8765d6bcea44535eed917f418eff27d3566f78f0d453",
+          "module.pkl": "90c2a9ef0fabcc8f8b22e4abf036caedbe7773663e605363ebecf9a16a7d9102",
+          "queries.tsv": "f7affd443c1fa5d0287b820e3ede1eb0d67782edf80000c4518b72f35aad1c09"
+        },
+        "module_uri": "file:///stage62/collection-conversion-controls.pkl",
+        "repetitions": 2,
+        "rows": 58,
+        "tool_sources": [
+          "tools/collection_conversion_controls_fixtures.py",
+          "tools/collection_conversion_controls_oracle.py",
+          "tools/tests/test_collection_conversion_controls_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_conversion_controls_fixtures",
+        "validator_script": "tools/collection_conversion_controls_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-03",
+        "fixture": "tests/fixtures/m2-collection-lookups",
+        "input_hashes": {
+          "cases.json": "a95d66add782756fbd2b0533fe2b4660de872f172abde76f56a712f7b12eab32",
+          "module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+          "queries.tsv": "1096a8cd0bdf65b615c104fd25592ddb58fbe4e7ca3b12a3e0f8ac2a5b971f18"
+        },
+        "module_uri": "file:///stage62/collection-lookups.pkl",
+        "repetitions": 2,
+        "rows": 133,
+        "tool_sources": [
+          "tools/collection_lookups_fixtures.py",
+          "tools/collection_lookups_oracle.py",
+          "tools/tests/test_collection_lookups_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_lookups_fixtures",
+        "validator_script": "tools/collection_lookups_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-01",
+        "fixture": "tests/fixtures/m2-collection-default-contracts",
+        "input_hashes": {
+          "cases.json": "15cb06a0db6c9e6c90edf2afa199c1d86734920d5ff4432c6cb3de1c521d9e0a",
+          "module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+          "queries.tsv": "375fc16968ee997b25d7223380398205ed756352c07b0d6e443c457f4b1ea143"
+        },
+        "module_uri": "file:///stage62/collection-default-contracts.pkl",
+        "repetitions": 2,
+        "rows": 22,
+        "tool_sources": [
+          "tools/collection_default_contracts_fixtures.py",
+          "tools/collection_default_contracts_oracle.py",
+          "tools/tests/test_collection_default_contracts_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_default_contracts_fixtures",
+        "validator_script": "tools/collection_default_contracts_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-01",
+        "fixture": "tests/fixtures/m2-collection-dynamic-render",
+        "input_hashes": {
+          "cases.json": "cc2a09354e1e2c7907fd2ad993bff28dd0bf793058c939f5154d549800b66dae",
+          "module.pkl": "772e3e6d4976d49d436415e3cf95bba18d559d37e99530f21f465b3175c06bcc",
+          "queries.tsv": "d0ab652f9c4f422fc0392c9e1a3adb985ee9f77cb601cf2b9ba72aa2bfe07bdc"
+        },
+        "module_uri": "file:///stage62/dynamic-render.pkl",
+        "repetitions": 2,
+        "rows": 10,
+        "tool_sources": [
+          "tools/collection_dynamic_render_fixtures.py",
+          "tools/collection_dynamic_render_oracle.py",
+          "tools/tests/test_collection_dynamic_render_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_dynamic_render_fixtures",
+        "validator_script": "tools/collection_dynamic_render_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-02",
+        "fixture": "tests/fixtures/m2-collection-property-names",
+        "input_hashes": {
+          "cases.json": "341f6b953b8dcd39e623dc6d1a04a0ac0a2aa786f7f13dce7f6f81a98bba50b4",
+          "module.pkl": "7f80ba30b4248cff7cca4b036bde2f5a7f3a215408765e622b2b124eb5a5b1ce",
+          "queries.tsv": "59e7145df48a51493f10fb16ea9093711c18e9ff50a30a67c3f81043a0b1b239"
+        },
+        "module_uri": "file:///stage62/collection-property-names.pkl",
+        "repetitions": 2,
+        "rows": 26,
+        "tool_sources": [
+          "tools/collection_property_names_fixtures.py",
+          "tools/collection_property_names_oracle.py",
+          "tools/tests/test_collection_property_names_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_property_names_fixtures",
+        "validator_script": "tools/collection_property_names_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-04",
+        "fixture": "tests/fixtures/m2-collection-addition",
+        "input_hashes": {
+          "cases.json": "3a79ba3caa4ff3cd3180271e659b7323a7ca0f3b75fba9e15172ecb7d36cafd2",
+          "module.pkl": "50fc462c877bebd2a06bb9a295c2c9e89874705b5246e69aba7b7e9fbf41a3eb",
+          "queries.tsv": "2081dfb9db79a5695e58c4149783fbd4b46c4c045b764de314ff68300d1d532f"
+        },
+        "module_uri": "file:///stage63/collection-addition.pkl",
+        "repetitions": 2,
+        "rows": 125,
+        "tool_sources": [
+          "tools/collection_addition_fixtures.py",
+          "tools/collection_addition_oracle.py",
+          "tools/tests/test_collection_addition_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java",
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py"
+        ],
+        "validator_module": "collection_addition_fixtures",
+        "validator_script": "tools/collection_addition_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-02",
+        "fixture": "tests/fixtures/m2-set-endpoints",
+        "input_hashes": {
+          "cases.json": "d70067c1ea0f45960e6b693db60165521a2b45b2ac35c8285f300446c2043c02",
+          "module.pkl": "add28c5d462e41c7c5d8fa273817669d6e1234f85adc2ac8fac5ea0b3160fe70",
+          "queries.tsv": "eb9e0db1e0e62f87077a8c9c20b6bde4fa8636f85e0634b574f4a5fbd7dce7d4"
+        },
+        "module_uri": "file:///stage63/set-endpoints.pkl",
+        "repetitions": 2,
+        "rows": 70,
+        "tool_sources": [
+          "tools/set_endpoints_fixtures.py",
+          "tools/set_endpoints_oracle.py",
+          "tools/tests/test_set_endpoints_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java",
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py"
+        ],
+        "validator_module": "set_endpoints_fixtures",
+        "validator_script": "tools/set_endpoints_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-01",
+        "fixture": "tests/fixtures/m2-amendment-construction",
+        "input_hashes": {
+          "cases.json": "97fa9ae8551b14f39dea2b352c9e00d22eae574c6c5ba25e7840742700343f84",
+          "module.pkl": "28ed759288cd664505347ef6e649d95c9495901787bfbea160c1aa5e6bc8efc6",
+          "queries.tsv": "0f8105fad96003a6bcebc71c5c9e235148f6b3d33a1132e06c3eb0e69fda10d9"
+        },
+        "module_uri": "file:///stage64/amendment-construction.pkl",
+        "repetitions": 2,
+        "rows": 188,
+        "tool_sources": [
+          "tools/amendment_construction_fixtures.py",
+          "tools/amendment_construction_oracle.py",
+          "tools/tests/test_amendment_construction_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java",
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py"
+        ],
+        "validator_module": "amendment_construction_fixtures",
+        "validator_script": "tools/amendment_construction_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-01",
+        "fixture": "tests/fixtures/m2-inferred-new-values",
+        "input_hashes": {
+          "cases.json": "10bc691c2aab559e5ade734087e26619f8903945875924a92da9784416182057",
+          "module.pkl": "d0a0fc1c19a588d9188ecf73243d819d32fca34da249764573f3739b3a1dd03e",
+          "queries.tsv": "6efd438f068e88f23f7864745860c4b37e01e5b531602bacddb3aae2f9d03c59"
+        },
+        "module_uri": "file:///stage65/inferred-new-values.pkl",
+        "repetitions": 2,
+        "rows": 72,
+        "tool_sources": [
+          "tools/inferred_new_fixtures.py",
+          "tools/inferred_new_oracle.py",
+          "tools/amendment_construction_oracle.py",
+          "tools/tests/test_inferred_new_fixtures.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "inferred_new_fixtures",
+        "validator_script": "tools/inferred_new_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-03",
+        "fixture": "tests/fixtures/m2-reversal-values",
+        "input_hashes": {
+          "cases.json": "b1fc4fdb79c82be4df45e491b946c27923b2a706b2184480aee4323c76d5b96d",
+          "module.pkl": "d5a806769a7719918a98dc7709fd15899b398ecf032d59c917371a96aadebe99",
+          "queries.tsv": "749e6aa1daaaac6bbbbdea4b12e7369fabcad4339fd72ba0d24fcdaf9e6a4444"
+        },
+        "module_uri": "file:///stage66/reversal-values.pkl",
+        "repetitions": 2,
+        "rows": 78,
+        "tool_sources": [
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py",
+          "tools/java/CollectionConversionsOracle.java",
+          "tools/reversal_values_fixtures.py",
+          "tools/reversal_values_oracle.py",
+          "tools/tests/test_reversal_values_fixtures.py"
+        ],
+        "validator_module": "reversal_values_fixtures",
+        "validator_script": "tools/reversal_values_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-02",
+        "fixture": "tests/fixtures/m2-reversal-implicit",
+        "input_hashes": {
+          "cases.json": "06b6d407cb7f7049eb83ed9fd8cf2af0801accaf87064915157743694bd95cfc",
+          "module.pkl": "ad7ab1ce7bc50d525b29b10b8db1c5247623ce9bce2da705cd9ee0d01723f8ca",
+          "queries.tsv": "2d05613d0794ca668a54a9ae9d8f9d9938776f6471d08bb24f58a52044755464"
+        },
+        "module_uri": "file:///stage66/reversal-implicit.pkl",
+        "repetitions": 2,
+        "rows": 8,
+        "tool_sources": [
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py",
+          "tools/java/CollectionConversionsOracle.java",
+          "tools/reversal_implicit_fixtures.py",
+          "tools/reversal_implicit_oracle.py",
+          "tools/reversal_values_oracle.py",
+          "tools/tests/test_reversal_implicit_fixtures.py"
+        ],
+        "validator_module": "reversal_implicit_fixtures",
+        "validator_script": "tools/reversal_implicit_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-02",
+        "fixture": "tests/fixtures/m2-reversal-subscript",
+        "input_hashes": {
+          "cases.json": "ea9f15510c8da63180c73d6a8cfacbd01159fe9b79e6ba72911bd776389f7899",
+          "module.pkl": "a9045c2bd08d9097c9893fe60cb017a7b17bd7efbdaa801bc247bc103a5ff168",
+          "queries.tsv": "f755443fea6b0646a306da03b6da2641b37d4bb544d59f0c47af5a46e416bc0b"
+        },
+        "module_uri": "file:///stage66/reversal-subscript.pkl",
+        "repetitions": 2,
+        "rows": 19,
+        "tool_sources": [
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py",
+          "tools/java/CollectionConversionsOracle.java",
+          "tools/reversal_subscript_fixtures.py",
+          "tools/reversal_subscript_oracle.py",
+          "tools/reversal_values_oracle.py",
+          "tools/tests/test_reversal_subscript_fixtures.py"
+        ],
+        "validator_module": "reversal_subscript_fixtures",
+        "validator_script": "tools/reversal_subscript_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-06",
+        "fixture": "tests/fixtures/m2-base-constructor-constraints",
+        "input_hashes": {
+          "cases.json": "d0517af9355f95acb2d14daf83680781761b86b2732adf8dbbf6b45dfe47dea5",
+          "module.pkl": "818236da99270a29e3326829fd85dfed08ce39a1db2a1ccf2553ff077f650bb1",
+          "queries.tsv": "40298bcc992b9c035267816faef9b76cb990d9dae3eabfcabd94215bf758fcaf"
+        },
+        "module_uri": "file:///stage66/base-constructors-in-constraints.pkl",
+        "repetitions": 2,
+        "rows": 36,
+        "tool_sources": [
+          "tools/base_constructor_constraints_fixtures.py",
+          "tools/base_constructor_constraints_oracle.py",
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py",
+          "tools/java/CollectionConversionsOracle.java",
+          "tools/reversal_values_oracle.py",
+          "tools/tests/test_base_constructor_constraints_fixtures.py"
+        ],
+        "validator_module": "base_constructor_constraints_fixtures",
+        "validator_script": "tools/base_constructor_constraints_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-02",
+        "fixture": "tests/fixtures/m2-string-properties",
+        "input_hashes": {
+          "cases.json": "79e5064d943ac38f074e014a3ec516d8ac3835e7d52e1d358c09658a2e96258b",
+          "module.pkl": "809e32ea351d9ef6d60ba10fa7382ae24078c087dbd292958581f0bb624051d2",
+          "queries.tsv": "7082d796c57fa9b4d220957c0f58dbe79ee327a8d57fcd743018de7aa8845eb3"
+        },
+        "module_uri": "file:///stage67/string-properties.pkl",
+        "repetitions": 2,
+        "rows": 146,
+        "tool_sources": [
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py",
+          "tools/java/CollectionConversionsOracle.java",
+          "tools/string_properties_fixtures.py",
+          "tools/string_properties_oracle.py",
+          "tools/tests/test_string_properties_fixtures.py"
+        ],
+        "validator_module": "string_properties_fixtures",
+        "validator_script": "tools/string_properties_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-02",
+        "fixture": "tests/fixtures/m2-string-base64",
+        "input_hashes": {
+          "cases.json": "2175a52d34409701b49903760e22231373cc1bc4f1e3b9a4ff41f8e62f93b37c",
+          "module.pkl": "acd74334b4285e1d114c3d91e01060180c9960982fb889a81462f05a50ed7570",
+          "queries.tsv": "344db279bdd4e82ec55dbeb2a0d3127030fc602a70b89f4758811a89c8e55363"
+        },
+        "module_uri": "file:///stage68/string-base64-exploration.pkl",
+        "repetitions": 2,
+        "rows": 89,
+        "tool_sources": [
+          "tools/string_base64_fixtures.py",
+          "tools/tests/test_string_base64_fixtures.py",
+          "tools/string_properties_oracle.py",
+          "tools/collection_conversions_fixtures.py",
+          "tools/collection_conversions_oracle.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "string_base64_fixtures",
+        "validator_script": "tools/string_base64_fixtures.py"
+      },
+      {
+        "archive_prefix": "capture-02",
+        "fixture": "tests/fixtures/m2-collection-emptiness-oracle",
+        "input_hashes": {
+          "cases.json": "ad88516bf727cfdcadf61856c00b4c8da927f5fa80642dbc9ebe24ec4c4cea60",
+          "module.pkl": "5aa546077bd405724ef61998dabbdffacc8a4a6f9ddc061b51a7c9fa834f5092",
+          "queries.tsv": "e21f16a0e1daba508a6cd28f17f2e402f7b033aa4fb8d5db3e9ef248b0939aeb"
+        },
+        "module_uri": "file:///stage68/collection-emptiness.pkl",
+        "repetitions": 2,
+        "rows": 47,
+        "tool_sources": [
+          "tools/collection_emptiness_fixtures.py",
+          "tools/collection_predicate_fixtures.py",
+          "tools/collection_every_fixtures.py",
+          "tools/tests/test_collection_predicate_fixtures.py",
+          "tools/collection_conversion_controls_fixtures.py",
+          "tools/collection_conversion_controls_oracle.py",
+          "tools/java/CollectionConversionsOracle.java"
+        ],
+        "validator_module": "collection_emptiness_fixtures",
+        "validator_script": "tools/collection_emptiness_fixtures.py"
+      }
+    ],
+    "catalog_rows": 1363,
+    "counts": {
+      "amendment-construction-native": {
+        "pass": 376
+      },
+      "amendment-construction-portable": {
+        "chromium": {
+          "pass": 376
+        },
+        "napi": {
+          "pass": 376
+        }
+      },
+      "any-portable": {
+        "chromium": {
+          "mismatch": 2,
+          "pass": 170
+        },
+        "napi": {
+          "mismatch": 2,
+          "pass": 170
+        }
+      },
+      "base-constructor-constraints-native": {
+        "pass": 72
+      },
+      "base-constructor-constraints-portable": {
+        "chromium": {
+          "pass": 72
+        },
+        "napi": {
+          "pass": 72
+        }
+      },
+      "bytes-native": {
+        "pass": 600
+      },
+      "bytes-portable": {
+        "chromium": {
+          "pass": 600
+        },
+        "napi": {
+          "pass": 600
+        }
+      },
+      "collection-addition-native": {
+        "pass": 250
+      },
+      "collection-addition-portable": {
+        "chromium": {
+          "pass": 250
+        },
+        "napi": {
+          "pass": 250
+        }
+      },
+      "collection-conversion-controls-native": {
+        "pass": 116
+      },
+      "collection-conversion-controls-portable": {
+        "chromium": {
+          "pass": 116
+        },
+        "napi": {
+          "pass": 116
+        }
+      },
+      "collection-conversions-native": {
+        "pass": 472
+      },
+      "collection-conversions-portable": {
+        "chromium": {
+          "pass": 472
+        },
+        "napi": {
+          "pass": 472
+        }
+      },
+      "collection-default-contracts-native": {
+        "pass": 44
+      },
+      "collection-default-contracts-portable": {
+        "chromium": {
+          "pass": 44
+        },
+        "napi": {
+          "pass": 44
+        }
+      },
+      "collection-dynamic-render-native": {
+        "pass": 20
+      },
+      "collection-dynamic-render-portable": {
+        "chromium": {
+          "pass": 20
+        },
+        "napi": {
+          "pass": 20
+        }
+      },
+      "collection-emptiness-oracle-native": {
+        "pass": 94
+      },
+      "collection-emptiness-oracle-portable": {
+        "chromium": {
+          "pass": 94
+        },
+        "napi": {
+          "pass": 94
+        }
+      },
+      "collection-lookups-native": {
+        "pass": 266
+      },
+      "collection-lookups-portable": {
+        "chromium": {
+          "pass": 266
+        },
+        "napi": {
+          "pass": 266
+        }
+      },
+      "collection-property-names-native": {
+        "pass": 52
+      },
+      "collection-property-names-portable": {
+        "chromium": {
+          "pass": 52
+        },
+        "napi": {
+          "pass": 52
+        }
+      },
+      "data-size-native": {
+        "pass": 510
+      },
+      "data-size-portable": {
+        "chromium": {
+          "pass": 510
+        },
+        "napi": {
+          "pass": 510
+        }
+      },
+      "duration-native": {
+        "pass": 548
+      },
+      "duration-portable": {
+        "chromium": {
+          "pass": 548
+        },
+        "napi": {
+          "pass": 548
+        }
+      },
+      "every-logged": {
+        "chromium": {
+          "pass": 128
+        },
+        "napi": {
+          "pass": 128
+        },
+        "native": {
+          "pass": 128
+        }
+      },
+      "inferred-new-values-native": {
+        "pass": 144
+      },
+      "inferred-new-values-portable": {
+        "chromium": {
+          "pass": 144
+        },
+        "napi": {
+          "pass": 144
+        }
+      },
+      "intseq-native": {
+        "pass": 474
+      },
+      "intseq-portable": {
+        "chromium": {
+          "pass": 474
+        },
+        "napi": {
+          "pass": 474
+        }
+      },
+      "reversal-implicit-native": {
+        "pass": 16
+      },
+      "reversal-implicit-portable": {
+        "chromium": {
+          "pass": 16
+        },
+        "napi": {
+          "pass": 16
+        }
+      },
+      "reversal-subscript-native": {
+        "pass": 38
+      },
+      "reversal-subscript-portable": {
+        "chromium": {
+          "pass": 38
+        },
+        "napi": {
+          "pass": 38
+        }
+      },
+      "reversal-values-native": {
+        "pass": 156
+      },
+      "reversal-values-portable": {
+        "chromium": {
+          "pass": 156
+        },
+        "napi": {
+          "pass": 156
+        }
+      },
+      "set-endpoints-native": {
+        "pass": 140
+      },
+      "set-endpoints-portable": {
+        "chromium": {
+          "pass": 140
+        },
+        "napi": {
+          "pass": 140
+        }
+      },
+      "string-base64-native": {
+        "pass": 178
+      },
+      "string-base64-portable": {
+        "chromium": {
+          "pass": 178
+        },
+        "napi": {
+          "pass": 178
+        }
+      },
+      "string-properties-native": {
+        "pass": 292
+      },
+      "string-properties-portable": {
+        "chromium": {
+          "pass": 292
+        },
+        "napi": {
+          "pass": 292
+        }
+      },
+      "union-marker-native": {
+        "pass": 80
+      },
+      "union-marker-portable": {
+        "chromium": {
+          "pass": 80
+        },
+        "napi": {
+          "pass": 80
+        }
+      }
+    },
+    "known_m1_compatibility_status": "fail",
+    "m1_experiment_contract_status": "pass",
+    "observations_per_target": 2726
+  },
+  "terminal_admission": {
+    "candidate_compatibility_passes_claimed": 0,
+    "complete": true,
+    "replay_full_gate_failure_count": 1799,
+    "replay_process_exit_zero": true,
+    "reused_java_processes": 0,
+    "validated_existing_inputs": 9,
+    "verify_process_exit_zero": true
+  }
+}

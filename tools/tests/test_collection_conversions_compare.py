@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -163,10 +164,12 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             'file:///stage66/reversal-subscript.pkl': 19,
             'file:///stage66/base-constructors-in-constraints.pkl': 36,
             'file:///stage67/string-properties.pkl': 146,
+            'file:///stage68/string-base64-exploration.pkl': 89,
+            'file:///stage68/collection-emptiness.pkl': 47,
         }
         self.assertEqual({uri: profile['rows'] for uri, profile in compare.profiles.PROFILES.items()},
                          expected)
-        self.assertEqual(sum(expected.values()), 1227)
+        self.assertEqual(sum(expected.values()), 1363)
         for uri, rows in expected.items():
             profile = compare.profiles.PROFILES[uri]
             fixture = compare.ROOT / profile['fixture']
@@ -285,6 +288,12 @@ class CollectionConversionsCompareTests(unittest.TestCase):
             ('file:///stage67/string-properties.pkl', 146,
              {'success': 117, 'error': 29},
              'repeat-0/000-empty/result.stdout.code-units.bin'),
+            ('file:///stage68/string-base64-exploration.pkl', 89,
+             {'success': 67, 'error': 22},
+             'repeat-0/007-encode-high/result.stdout.code-units.bin'),
+            ('file:///stage68/collection-emptiness.pkl', 47,
+             {'success': 34, 'error': 13},
+             'repeat-0/004-list-method/result.stderr.code-units.bin'),
         ):
             with self.subTest(uri=uri):
                 profile = compare.profiles.PROFILES[uri]
@@ -308,6 +317,32 @@ class CollectionConversionsCompareTests(unittest.TestCase):
         old_fixture = compare.ROOT / old['fixture']
         self.assertEqual(compare.profiles.validator_args(old, old_fixture), [
             str(compare.ROOT / old['validator_script']), '--fixture', str(old_fixture)])
+
+    def test_stage68_verifier_cli_checks_selected_copy_and_keeps_raw_fixture_separate(self):
+        for uri, expected_fixture in (
+            ('file:///stage68/string-base64-exploration.pkl', 'tests/fixtures/m2-string-base64'),
+            ('file:///stage68/collection-emptiness.pkl', 'tests/fixtures/m2-collection-emptiness-oracle'),
+        ):
+            with self.subTest(uri=uri):
+                profile = compare.profiles.PROFILES[uri]
+                self.assertEqual(profile['fixture'], expected_fixture)
+                fixture = compare.ROOT / expected_fixture
+                copied = self.output / profile['validator_module']
+                shutil.copytree(fixture, copied)
+                argv = [sys.executable, '-B', *compare.profiles.validator_args(profile, copied)]
+                good = subprocess.run(argv, capture_output=True, check=False)
+                self.assertEqual(good.returncode, 0, good.stderr)
+                self.assertEqual(json.loads(good.stdout),
+                                 compare.profiles.authority_for_fixture(fixture).verify(fixture))
+                # The command must inspect its selected copy, not silently use DEFAULT.
+                with (copied / 'queries.tsv').open('ab') as stream:
+                    stream.write(b'\n')
+                bad = subprocess.run(argv, capture_output=True, check=False)
+                self.assertNotEqual(bad.returncode, 0)
+                self.assertEqual(bad.stdout, b'')
+        for path in ('m2-collection-emptiness', 'm2-collection-every-oracle'):
+            with self.subTest(path=path), self.assertRaises((ValueError, OSError)):
+                compare.java_files(compare.ROOT / 'tests/fixtures' / path)
 
     def test_relocated_capture_uses_recorded_path_for_command_identity(self):
         recorded = self.output / "original-place"

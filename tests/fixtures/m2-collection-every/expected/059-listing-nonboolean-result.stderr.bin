@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `Boolean`, but got type `Int`.
+Value: 42
+
+1 | (new Listing { 1 }).every((x) -> 42)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,27 @@
+–– Pkl Error ––
+Cannot find method `every` in class `Int`.
+
+1 | (1).every((x) -> true)
+    ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Available methods in class `Int`:
+and
+getClass
+ifNonNull
+isBetween
+or
+round
+shl
+shr
+toChar
+toDataSize
+toDuration
+toFixed
+toFloat
+toInt
+toRadixString
+toString
+truncate
+ushr
+xor

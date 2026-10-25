@@ -321,6 +321,51 @@
         "tools/string_properties_oracle.py",
         "tools/tests/test_string_properties_fixtures.py"
       ]
+    },
+    {
+      "module_uri": "file:///stage68/string-base64-exploration.pkl",
+      "fixture": "tests/fixtures/m2-string-base64",
+      "rows": 89,
+      "repetitions": 2,
+      "validator_module": "string_base64_fixtures",
+      "validator_script": "tools/string_base64_fixtures.py",
+      "archive_prefix": "capture-02",
+      "input_hashes": {
+        "cases.json": "2175a52d34409701b49903760e22231373cc1bc4f1e3b9a4ff41f8e62f93b37c",
+        "module.pkl": "acd74334b4285e1d114c3d91e01060180c9960982fb889a81462f05a50ed7570",
+        "queries.tsv": "344db279bdd4e82ec55dbeb2a0d3127030fc602a70b89f4758811a89c8e55363"
+      },
+      "tool_sources": [
+        "tools/string_base64_fixtures.py",
+        "tools/tests/test_string_base64_fixtures.py",
+        "tools/string_properties_oracle.py",
+        "tools/collection_conversions_fixtures.py",
+        "tools/collection_conversions_oracle.py",
+        "tools/java/CollectionConversionsOracle.java"
+      ]
+    },
+    {
+      "module_uri": "file:///stage68/collection-emptiness.pkl",
+      "fixture": "tests/fixtures/m2-collection-emptiness-oracle",
+      "rows": 47,
+      "repetitions": 2,
+      "validator_module": "collection_emptiness_fixtures",
+      "validator_script": "tools/collection_emptiness_fixtures.py",
+      "archive_prefix": "capture-02",
+      "input_hashes": {
+        "cases.json": "ad88516bf727cfdcadf61856c00b4c8da927f5fa80642dbc9ebe24ec4c4cea60",
+        "module.pkl": "5aa546077bd405724ef61998dabbdffacc8a4a6f9ddc061b51a7c9fa834f5092",
+        "queries.tsv": "e21f16a0e1daba508a6cd28f17f2e402f7b033aa4fb8d5db3e9ef248b0939aeb"
+      },
+      "tool_sources": [
+        "tools/collection_emptiness_fixtures.py",
+        "tools/collection_predicate_fixtures.py",
+        "tools/collection_every_fixtures.py",
+        "tools/tests/test_collection_predicate_fixtures.py",
+        "tools/collection_conversion_controls_fixtures.py",
+        "tools/collection_conversion_controls_oracle.py",
+        "tools/java/CollectionConversionsOracle.java"
+      ]
     }
   ]
 }

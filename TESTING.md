@@ -254,8 +254,16 @@ python3 -B tools/collection_every_fixtures.py
 These commands use tracked fixture roots and work without historical `target/`
 directories. The authorities contain 89, 47, and 64 expressions respectively;
 `every` also retains ordered logger events and their UTF-16 units. They prove
-Java reference integrity, not Rust compatibility. Canonical Stage68 Rust,
-platform, and full ready-corpus comparisons remain pending.
+Java reference integrity, not Rust compatibility. The separate
+[Stage68 implementation checkpoint](reports/m2/stage68-implementation-checkpoint.json)
+records all five required Rust checks and 2,726 exact catalog observations per
+native/N-API/Chromium target, plus 128 logged `every` observations per target.
+The full ready replay has 4,152 matches, 119 mismatches, 143 unsupported results, 2 Java oracle errors, 0 Rust internal errors;
+its 1,799 overlapping unmet full-gate entries remain failures. It reuses the
+sealed Stage67 Java evidence and executes Rust anew, with no fresh Java process.
+Replay integrity and strict compatibility remain separate verdicts. The 111
+unready cases and Any/M1 Regex failures are preserved. The Stage67 results below
+describe the earlier frozen candidate.
 
 Stage67 adds the String property authority (`python3 tools/string_properties_fixtures.py`)
 and a fifteenth collection catalog profile. The Stage67 catalog has 1,227

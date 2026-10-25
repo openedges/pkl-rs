@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Function2`.
+Value: new Function2 {}
+
+2204 | external function every(predicate: (Element) -> Boolean): Boolean
+                                          ^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Listing.every (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2204)
+
+1 | (new Listing { 1 }).every((x, y) -> true)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

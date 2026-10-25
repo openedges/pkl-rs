@@ -93,6 +93,8 @@ test('separate Java authorities retain distinct input identities and complete se
     ['file:///stage66/reversal-subscript.pkl', 19],
     ['file:///stage66/base-constructors-in-constraints.pkl', 36],
     ['file:///stage67/string-properties.pkl', 146],
+    ['file:///stage68/string-base64-exploration.pkl', 89],
+    ['file:///stage68/collection-emptiness.pkl', 47],
   ]);
   assert.equal(CONVERSION_PROFILES.length, sizes.size);
   for (const profile of CONVERSION_PROFILES) {
@@ -114,6 +116,40 @@ test('inferred-new values profile retains required verifier selector', () => {
   const old = CONVERSION_PROFILES.find(row => row.module_uri === 'file:///stage64/amendment-construction.pkl');
   assert.deepEqual(validatorArguments(old, fixture), [
     resolve(here, '../amendment_construction_fixtures.py'), '--fixture', fixture]);
+});
+
+test('Stage68 sealed profile dependencies and runtime fixture boundaries are explicit', async () => {
+  for (const [uri, fixture] of [
+    ['file:///stage68/string-base64-exploration.pkl', 'tests/fixtures/m2-string-base64'],
+    ['file:///stage68/collection-emptiness.pkl', 'tests/fixtures/m2-collection-emptiness-oracle'],
+  ]) {
+    const profile = CONVERSION_PROFILES.find(row => row.module_uri === uri);
+    assert.equal(profile.fixture, fixture);
+    assert.doesNotThrow(() => validateProfileCatalog({ schema: 1, baseline: 'Pkl 0.32.0', profiles: [profile] }));
+    for (const invalid of ['tests/fixtures/m2-../escape', '/tests/fixtures/m2-base64',
+      'tests/fixtures/m2-base64/extra', 'tests/fixtures/m2-Base64'])
+      assert.throws(() => validateProfileCatalog({ schema: 1, baseline: 'Pkl 0.32.0',
+        profiles: [{ ...profile, fixture: invalid }] }));
+    assert.deepEqual(validatorArguments(profile, '/selected/copy'),
+      [resolve(here, '../..', profile.validator_script), '--fixture', '/selected/copy']);
+    for (const source of profile.tool_sources) {
+      assert.ok(CAPTURE_TRACKED_SOURCES.includes(source));
+      const changed = structuredClone({ schema: 1, baseline: 'Pkl 0.32.0', profiles: [profile] });
+      changed.profiles[0].tool_sources = changed.profiles[0].tool_sources.filter(name => name !== source);
+      assert.throws(() => validateProfileCatalog(changed));
+    }
+    await temporary(async path => {
+      for (const name of ['cases.json', 'module.pkl', 'queries.tsv'])
+        await copyFile(resolve(here, '../..', fixture, name), join(path, name));
+      const cases = JSON.parse(await readFile(join(path, 'cases.json')));
+      [cases.rows[0], cases.rows[1]] = [cases.rows[1], cases.rows[0]];
+      await writeFile(join(path, 'cases.json'), JSON.stringify(cases));
+      await assert.rejects(loadCollectionConversionsFixture(path), /canonical input identity differs/);
+    });
+  }
+  // Runtime UTF-16 expectations and every's logging transport are not this authority.
+  await assert.rejects(loadCollectionConversionsFixture(resolve(here, '../../tests/fixtures/m2-collection-emptiness')));
+  await assert.rejects(loadCollectionConversionsFixture(resolve(here, '../../tests/fixtures/m2-collection-every-oracle')));
 });
 
 test('mixed-profile module bytes and changed profile selection cannot enter capture', async () => {

@@ -1,4 +1,4 @@
-"""Pinned conversion, construction, reversal, and String property profiles."""
+"""Pinned conversion, construction, reversal, and shared property profiles."""
 from __future__ import annotations
 
 import importlib
@@ -25,6 +25,8 @@ VALIDATORS = {
     'reversal_subscript_fixtures': 'tools/reversal_subscript_fixtures.py',
     'base_constructor_constraints_fixtures': 'tools/base_constructor_constraints_fixtures.py',
     'string_properties_fixtures': 'tools/string_properties_fixtures.py',
+    'string_base64_fixtures': 'tools/string_base64_fixtures.py',
+    'collection_emptiness_fixtures': 'tools/collection_emptiness_fixtures.py',
 }
 PROFILE_TOOL_CLOSURES = {
     'collection_conversions_fixtures': {
@@ -137,6 +139,23 @@ PROFILE_TOOL_CLOSURES = {
         'tools/collection_conversions_fixtures.py',
         'tools/collection_conversions_oracle.py',
     },
+    'string_base64_fixtures': {
+        'tools/string_base64_fixtures.py',
+        'tools/tests/test_string_base64_fixtures.py',
+        'tools/string_properties_oracle.py',
+        'tools/collection_conversions_fixtures.py',
+        'tools/collection_conversions_oracle.py',
+        'tools/java/CollectionConversionsOracle.java',
+    },
+    'collection_emptiness_fixtures': {
+        'tools/collection_emptiness_fixtures.py',
+        'tools/collection_predicate_fixtures.py',
+        'tools/collection_every_fixtures.py',
+        'tools/tests/test_collection_predicate_fixtures.py',
+        'tools/collection_conversion_controls_fixtures.py',
+        'tools/collection_conversion_controls_oracle.py',
+        'tools/java/CollectionConversionsOracle.java',
+    },
 }
 
 
@@ -174,7 +193,9 @@ def load_profiles(path=ROOT / CATALOG):
                          'file:///stage66/reversal-implicit.pkl',
                          'file:///stage66/reversal-subscript.pkl',
                          'file:///stage66/base-constructors-in-constraints.pkl',
-                         'file:///stage67/string-properties.pkl')) and uri.endswith('.pkl')
+                         'file:///stage67/string-properties.pkl',
+                         'file:///stage68/string-base64-exploration.pkl',
+                         'file:///stage68/collection-emptiness.pkl')) and uri.endswith('.pkl')
                 and type(fixture) is str and fixture.startswith('tests/fixtures/m2-')
                 and '..' not in Path(fixture).parts and fixture not in fixtures
                 and uri not in profiles and type(profile['rows']) is int and profile['rows'] > 0

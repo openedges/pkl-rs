@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find property `every` in object of type `List`.
+
+1 | List(1).every
+    ^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+reverse()

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Int`.
+Value: 1
+
+3214 | external function every(predicate: (Element) -> Boolean): Boolean
+                                          ^^^^^^^^^^^^^^^^^^^^
+at pkl.base#List.every (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L3214)
+
+1 | List(1).every(1)
+    ^^^^^^^^^^^^^^^^
+at  (repl:text)

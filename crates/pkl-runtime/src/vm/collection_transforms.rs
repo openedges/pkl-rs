@@ -27,6 +27,7 @@ pub enum Projection {
 
 #[derive(Clone, Copy)]
 enum Operation {
+    Every,
     Callback(Transform),
     Projection(Projection),
 }
@@ -235,12 +236,24 @@ pub(super) struct TransformRun {
     members: Vec<CollectionMember>,
     next: usize,
     current: Option<(Value, Value)>,
+    lazy: Option<LazyEvery>,
+}
+
+struct LazyEvery {
+    members: Vec<collections::RenderMember>,
+    seen: Vec<CollectionMember>,
+    awaiting: Option<CollectionMember>,
 }
 
 impl TransformRun {
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
         roots.push(Value::Object(self.source));
         roots.extend(self.callback.iter().cloned());
+        if let Some(lazy) = &self.lazy {
+            roots.extend(lazy.members.iter().map(|m| m.descriptor.key.clone()));
+            roots.extend(lazy.seen.iter().map(|m| m.key.clone()));
+            roots.extend(lazy.awaiting.iter().map(|m| m.key.clone()));
+        }
         if let Some((key, value)) = &self.current {
             roots.extend([key.clone(), value.clone()]);
         }
@@ -353,6 +366,7 @@ impl Vm {
         // A strict result must not capture the method's source/callback scope.
         let builder = self.heap.allocate(Object {
             collection_kind: match operation {
+                Operation::Every => unreachable!("every has no result builder"),
                 Operation::Callback(_) => self.heap.get(source)?.collection_kind,
                 Operation::Projection(Projection::ToSet | Projection::KeysHash) => {
                     CollectionKind::Set
@@ -363,14 +377,15 @@ impl Vm {
         });
         let frame = self.frames.last_mut().expect("transform frame");
         frame.builders.push(builder);
-        frame.collection_transform = Some(TransformRun {
+        frame.collection_transform = Some(Box::new(TransformRun {
             operation,
             source,
             callback,
             members,
             next: 0,
             current: None,
-        });
+            lazy: None,
+        }));
         Ok(())
     }
 
@@ -394,6 +409,14 @@ impl Vm {
     }
 
     pub(super) fn collection_transform_next(&mut self, end: usize) -> Result<(), RuntimeError> {
+        if self
+            .frames
+            .last()
+            .and_then(|f| f.collection_transform.as_ref())
+            .is_some_and(|r| r.lazy.is_some())
+        {
+            return self.collection_every_lazy_next(end);
+        }
         let run = self
             .frames
             .last()
@@ -424,12 +447,13 @@ impl Vm {
             .last_mut()
             .and_then(|frame| frame.collection_transform.as_mut())
             .expect("transform cursor");
-        if let Operation::Callback(operation) = run.operation {
+        if matches!(run.operation, Operation::Every | Operation::Callback(_)) {
             self.stack
                 .push(run.callback.clone().expect("transform callback"));
             if map {
                 self.stack.push(member.key.clone());
-            } else if operation.indexed() {
+            } else if matches!(run.operation, Operation::Callback(operation) if operation.indexed())
+            {
                 self.stack.push(Value::Int((run.next as i64).into()));
             }
             run.current = Some((member.key, value.clone()));
@@ -597,6 +621,282 @@ impl Vm {
             ));
         };
         self.stack.push(value);
+        Ok(())
+    }
+}
+
+/// Predicate calls have no result builder and do not eagerly force lazy values.
+pub(super) fn every_blocks(
+    blocks: &mut Vec<Vec<Instruction>>,
+    metadata: &mut Vec<BlockMetadata>,
+) -> [usize; 5] {
+    let source = crate::stdlib_sources::base();
+    ["List", "Set", "Map", "Listing", "Mapping"].map(|class| {
+        let class_start = source
+            .text
+            .find(&format!("class {class}<"))
+            .expect("pinned collection class");
+        let start = class_start
+            + source.text[class_start..]
+                .find("external function every(")
+                .expect("pinned every");
+        let end = start + source.text[start..].find('\n').unwrap();
+        let parameter = start + source.text[start..end].find(": ").unwrap() + 2;
+        let type_end = start + source.text[start..end].rfind("): Boolean").unwrap();
+        let arity = if matches!(class, "Map" | "Mapping") {
+            2
+        } else {
+            1
+        };
+        let code = vec![
+            Instruction::LoadLocal(0),
+            Instruction::CheckType(TypeCheck::Function {
+                parameters: Some(vec![TypeCheck::Any; arity]),
+                result: Box::new(TypeCheck::Any),
+                syntax: true,
+            }),
+            Instruction::BeginCollectionEvery,
+            Instruction::CollectionTransformNext { end: 7 },
+            Instruction::Call {
+                arity,
+                method: false,
+            },
+            Instruction::CollectionEveryAccept { next: 3 },
+            Instruction::Return,
+            Instruction::EndCollectionEvery,
+            Instruction::Return,
+        ];
+        let mut spans = vec![None; code.len()];
+        spans[1] = Some(Span::new(parameter, type_end));
+        let block = blocks.len();
+        blocks.push(code);
+        metadata.push(BlockMetadata {
+            source: Some(source.clone()),
+            member: format!("#{class}.every").into(),
+            declaration: Some(Span::new(start, end)),
+            spans,
+            ..Default::default()
+        });
+        block
+    })
+}
+
+impl Vm {
+    pub(super) fn collection_every_method(
+        &mut self,
+        receiver: Value,
+    ) -> Result<bool, RuntimeError> {
+        let Value::Object(source) = receiver else {
+            return Ok(false);
+        };
+        let object = self.heap.get(source)?;
+        if object.reference.is_some()
+            || object.pair.is_some()
+            || object.is_module
+            || collections::typed_class(&self.heap, source)?.is_some()
+        {
+            return Ok(false);
+        }
+        let index = match object.collection_kind {
+            CollectionKind::List => 0,
+            CollectionKind::Set => 1,
+            CollectionKind::Map => 2,
+            CollectionKind::Listing => 3,
+            CollectionKind::Mapping => 4,
+            _ => return Ok(false),
+        };
+        let id = self.heap.allocate(Object {
+            function: Some(Function {
+                block: self.program.collection_every_blocks[index],
+                arity: 1,
+                method: true,
+                captured_this: Some(receiver),
+            }),
+            ..Default::default()
+        });
+        self.stack.push(Value::Function(id));
+        Ok(true)
+    }
+
+    pub(super) fn begin_collection_every(&mut self) -> Result<(), RuntimeError> {
+        let callback = self.pop()?;
+        let source = self.conversion_receiver()?;
+        let lazy = matches!(
+            self.heap.get(source)?.collection_kind,
+            CollectionKind::Listing | CollectionKind::Mapping
+        );
+        let (members, lazy) = if lazy {
+            (
+                Vec::new(),
+                Some(LazyEvery {
+                    members: collections::render_members(&self.heap, source)?,
+                    seen: Vec::new(),
+                    awaiting: None,
+                }),
+            )
+        } else {
+            (collections::ordered_members(&self.heap, source)?, None)
+        };
+        self.frames.last_mut().unwrap().collection_transform = Some(Box::new(TransformRun {
+            operation: Operation::Every,
+            source,
+            callback: Some(callback),
+            members,
+            next: 0,
+            current: None,
+            lazy,
+        }));
+        Ok(())
+    }
+
+    fn collection_every_lazy_next(&mut self, end: usize) -> Result<(), RuntimeError> {
+        let run = self
+            .frames
+            .last()
+            .unwrap()
+            .collection_transform
+            .as_ref()
+            .unwrap();
+        let source = run.source;
+        let lazy = run.lazy.as_ref().unwrap();
+        if let Some(member) = lazy.awaiting.clone() {
+            let value = self.pop()?;
+            self.frames
+                .last_mut()
+                .unwrap()
+                .collection_transform
+                .as_mut()
+                .unwrap()
+                .lazy
+                .as_mut()
+                .unwrap()
+                .awaiting = None;
+            return self.collection_every_input(member, value);
+        }
+        let Some(item) = lazy.members.get(run.next).cloned() else {
+            return self.jump(end);
+        };
+        let member = item.descriptor;
+        let candidates = lazy
+            .seen
+            .iter()
+            .filter(|m| {
+                (m.kind == CollectionMemberKind::Property)
+                    == (member.kind == CollectionMemberKind::Property)
+            })
+            .map(|m| m.key.clone())
+            .collect::<Vec<_>>();
+        // These equality continuations rewind their bytecode instruction themselves.
+        if self.prepare_keys(vec![member.key.clone()])? {
+            return Ok(());
+        }
+        let hash = self.java_hash(&member.key)?;
+        let candidates = candidates
+            .into_iter()
+            .filter(|value| {
+                self.java_hash(value)
+                    .is_ok_and(|other| !hash.zip(other).is_some_and(|(a, b)| a != b))
+            })
+            .collect::<Vec<_>>();
+        if self.search_key(&member.key, candidates.clone())? {
+            return Ok(());
+        }
+        let seen = candidates
+            .iter()
+            .any(|key| equality::same_key(&self.heap, key, &member.key));
+        let frame = self.frames.last_mut().unwrap();
+        let run = frame.collection_transform.as_mut().unwrap();
+        run.next += 1;
+        if !seen {
+            run.lazy.as_mut().unwrap().seen.push(member.clone());
+        }
+        // Java marks keys visited before excluding hidden/external declarations.
+        if seen || item.skip {
+            frame.pc -= 1;
+            return Ok(());
+        }
+        if let Some(value) = collections::cached_render_value(&self.heap, source, &member)? {
+            return self.collection_every_input(member, value);
+        }
+        let frame = self.frames.last_mut().unwrap();
+        frame
+            .collection_transform
+            .as_mut()
+            .unwrap()
+            .lazy
+            .as_mut()
+            .unwrap()
+            .awaiting = Some(member.clone());
+        frame.pc -= 1;
+        self.force_key_mode(
+            source,
+            source,
+            member.name,
+            false,
+            true,
+            false,
+            member.kind != CollectionMemberKind::Property,
+            false,
+        )
+    }
+
+    fn collection_every_input(
+        &mut self,
+        member: CollectionMember,
+        value: Value,
+    ) -> Result<(), RuntimeError> {
+        let run = self
+            .frames
+            .last_mut()
+            .unwrap()
+            .collection_transform
+            .as_mut()
+            .unwrap();
+        self.stack
+            .push(run.callback.clone().expect("every callback"));
+        if self.heap.get(run.source)?.collection_kind == CollectionKind::Mapping {
+            self.stack.push(member.key.clone());
+        }
+        run.current = Some((member.key, value.clone()));
+        self.stack.push(value);
+        Ok(())
+    }
+
+    pub(super) fn collection_every_accept(&mut self, next: usize) -> Result<(), RuntimeError> {
+        let value = self.pop()?;
+        let Value::Bool(accepted) = value else {
+            // ApplyVmFunction.executeBoolean has no authored type-node span.
+            return Err(type_error(
+                &TypeCheck::Boolean,
+                &value,
+                &self.program.module_name,
+                &self.heap,
+            )?);
+        };
+        if accepted {
+            self.frames
+                .last_mut()
+                .unwrap()
+                .collection_transform
+                .as_mut()
+                .unwrap()
+                .current = None;
+            self.jump(next)
+        } else {
+            self.frames.last_mut().unwrap().collection_transform = None;
+            self.stack.push(Value::Bool(false));
+            Ok(())
+        }
+    }
+
+    pub(super) fn end_collection_every(&mut self) -> Result<(), RuntimeError> {
+        self.frames
+            .last_mut()
+            .unwrap()
+            .collection_transform
+            .take()
+            .ok_or_else(|| invalid("missing every cursor"))?;
+        self.stack.push(Value::Bool(true));
         Ok(())
     }
 }

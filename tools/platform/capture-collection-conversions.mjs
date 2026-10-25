@@ -32,7 +32,7 @@ export function validateProfileCatalog(catalog) {
     'set_endpoints_fixtures', 'amendment_construction_fixtures',
     'inferred_new_fixtures', 'reversal_values_fixtures', 'reversal_implicit_fixtures',
     'reversal_subscript_fixtures', 'base_constructor_constraints_fixtures',
-    'string_properties_fixtures']);
+    'string_properties_fixtures', 'string_base64_fixtures', 'collection_emptiness_fixtures']);
   const uris = new Set(), fixtures = new Set();
   for (const profile of catalog.profiles) {
     if (!profile || typeof profile.module_uri !== 'string'
@@ -43,10 +43,12 @@ export function validateProfileCatalog(catalog) {
               'file:///stage66/reversal-values.pkl', 'file:///stage66/reversal-implicit.pkl',
               'file:///stage66/reversal-subscript.pkl',
               'file:///stage66/base-constructors-in-constraints.pkl',
-              'file:///stage67/string-properties.pkl']
+              'file:///stage67/string-properties.pkl',
+              'file:///stage68/string-base64-exploration.pkl',
+              'file:///stage68/collection-emptiness.pkl']
             .includes(profile.module_uri))
         || uris.has(profile.module_uri) || fixtures.has(profile.fixture)
-        || !/^tests\/fixtures\/m2-[a-z-]+$/.test(profile.fixture)
+        || !/^tests\/fixtures\/m2-[a-z0-9-]+$/.test(profile.fixture)
         || !Number.isSafeInteger(profile.rows) || profile.rows < 1 || profile.repetitions !== 2
         || !validators.has(profile.validator_module)
         || profile.validator_script !== `tools/${profile.validator_module}.py`
@@ -59,7 +61,7 @@ export function validateProfileCatalog(catalog) {
         || profile.tool_sources.some(value => typeof value !== 'string'
           || !/^tools\/[A-Za-z0-9_./-]+$/.test(value) || value.split('/').includes('..')))
       throw Error('invalid or duplicate collection profile');
-    const requiredTools = [profile.validator_script,
+    let requiredTools = [profile.validator_script,
       `tools/${profile.validator_module.replace(/_fixtures$/, '_oracle')}.py`,
       `tools/tests/test_${profile.validator_module}.py`, 'tools/java/CollectionConversionsOracle.java'];
     if (['collection_addition_fixtures', 'set_endpoints_fixtures',
@@ -78,6 +80,17 @@ export function validateProfileCatalog(catalog) {
     if (['reversal_implicit_fixtures', 'reversal_subscript_fixtures',
          'base_constructor_constraints_fixtures'].includes(profile.validator_module))
       requiredTools.push('tools/reversal_values_oracle.py');
+    // These sealed envelopes retain their original producer inside the archive;
+    // their installed verifier dependencies do not follow the *_oracle naming rule.
+    if (profile.validator_module === 'string_base64_fixtures')
+      requiredTools = [profile.validator_script, 'tools/tests/test_string_base64_fixtures.py',
+        'tools/string_properties_oracle.py', 'tools/collection_conversions_fixtures.py',
+        'tools/collection_conversions_oracle.py', 'tools/java/CollectionConversionsOracle.java'];
+    if (profile.validator_module === 'collection_emptiness_fixtures')
+      requiredTools = [profile.validator_script, 'tools/collection_predicate_fixtures.py',
+        'tools/collection_every_fixtures.py', 'tools/tests/test_collection_predicate_fixtures.py',
+        'tools/collection_conversion_controls_fixtures.py',
+        'tools/collection_conversion_controls_oracle.py', 'tools/java/CollectionConversionsOracle.java'];
     if (new Set(profile.tool_sources).size !== requiredTools.length
         || profile.tool_sources.length !== requiredTools.length
         || requiredTools.some(name => !profile.tool_sources.includes(name)))

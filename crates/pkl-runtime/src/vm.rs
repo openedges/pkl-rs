@@ -95,6 +95,9 @@ pub enum Instruction {
     BeginMemberAnnotations,
     InitializeDeprecation,
     StoreDeprecation,
+    /// ObjectMethodNode initializes types via a raw call with (owner, owner).
+    BeginObjectMethodSignature,
+    EndObjectMethodSignature,
     PrepareMethodCall {
         lookup: usize,
         arity: usize,
@@ -142,6 +145,8 @@ pub enum Instruction {
     },
     LeaveForScope,
     Swap,
+    /// Place a late-resolved lexical method beneath its already evaluated arguments.
+    RotateStackRight(usize),
     BeginCollection {
         kind: crate::heap::CollectionKind,
         has_parent: bool,
@@ -232,6 +237,11 @@ pub enum Instruction {
     EndConversion,
     ConvertObject(collection_conversions::Operation),
     ReadConversionProperty,
+    BeginCollectionEvery,
+    CollectionEveryAccept {
+        next: usize,
+    },
+    EndCollectionEvery,
     BeginCollectionTransform(collection_transforms::Transform),
     BeginCollectionProjection(collection_transforms::Projection),
     CollectionKeyOrder,
@@ -833,6 +843,10 @@ pub struct BlockMetadata {
     pub(crate) amendment: bool,
     /// The synthetic super read in `name { ... }` has no Java source section.
     pub(crate) amendment_parent_span: Option<Span>,
+    /// Inferred element/entry parents use a source-less ApplyVmFunction1Node.
+    /// Keep authored `new` spans for evaluation; parent-validation errors
+    /// at these sites have an unavailable innermost Java source section.
+    pub(crate) inferred_entry_parent_spans: Vec<Span>,
     pub(crate) fixed_span: Option<Span>,
     pub(crate) const_span: Option<Span>,
     pub(crate) initialization_error: Option<RuntimeError>,
@@ -870,6 +884,7 @@ pub struct Program {
     pub(crate) typed_string_block: usize,
     pub(crate) string_repeat_block: usize,
     pub(crate) collection_join_blocks: [usize; 2],
+    collection_every_blocks: [usize; 5],
     collection_transform_blocks: [usize; 11],
     collection_projection_blocks: [usize; 10],
     conversion_blocks: BTreeMap<(Arc<str>, Arc<str>), (usize, usize)>,
@@ -992,6 +1007,8 @@ impl Program {
         let primitive_methods = primitives::blocks(&mut blocks, &mut metadata);
         let (amended_function_block, identity_mixin_block) =
             amendment::blocks(&mut blocks, &mut metadata);
+        let collection_every_blocks =
+            collection_transforms::every_blocks(&mut blocks, &mut metadata);
         Self {
             units: CodeStorage::default(),
             next_declaration: 0,
@@ -1009,6 +1026,7 @@ impl Program {
             typed_string_block,
             string_repeat_block,
             collection_join_blocks,
+            collection_every_blocks,
             collection_transform_blocks,
             collection_projection_blocks,
             conversion_blocks,
@@ -1128,7 +1146,7 @@ struct Frame {
     method_call_site: Option<Box<deprecation::CallSite>>,
     pcf_render: Option<rendering::RenderRun>,
     collection_join: Option<collections::JoinRun>,
-    collection_transform: Option<collection_transforms::TransformRun>,
+    collection_transform: Option<Box<collection_transforms::TransformRun>>,
     int_seq_run: Option<Box<int_seq::Run>>,
     conversion_run: Option<Box<collection_conversions::Run>>,
     collection_addition: Option<Box<collection_addition::Run>>,
@@ -1469,10 +1487,16 @@ impl Vm {
         let diagnostic_callers = self
             .frames
             .iter()
+            .enumerate()
             .rev()
             .skip(1)
-            .filter_map(|frame| {
-                if frame.hides_callsite() {
+            .filter_map(|(index, frame)| {
+                if frame.hides_callsite()
+                    || self
+                        .frames
+                        .get(index + 1)
+                        .is_some_and(|child| self.object_method_signature_frame(child))
+                {
                     return None;
                 }
                 let metadata = self.program.metadata.get(frame.block)?;
@@ -1925,13 +1949,13 @@ impl Vm {
         if error.span.is_none()
             && let Some(frame) = self.frames.last()
             && let Some(metadata) = self.program.metadata.get(frame.block)
-            && metadata.amendment_parent_span.is_some()
-            && metadata
+            && let Some(parent_span) = metadata
                 .spans
                 .get(frame.pc.saturating_sub(1))
                 .copied()
                 .flatten()
-                == metadata.amendment_parent_span
+            && (metadata.amendment_parent_span == Some(parent_span)
+                || metadata.inferred_entry_parent_spans.contains(&parent_span))
             && matches!(
                 self.program.blocks[frame.block].get(frame.pc.saturating_sub(1)),
                 Some(Instruction::BeginCollection { .. } | Instruction::AmendEmpty)
@@ -2175,6 +2199,9 @@ impl Vm {
                         && let_frames.contains_key(&logical_targets[frame_index]);
                 if (!frame.hides_callsite()
                     || callback_root.is_some_and(|(index, _)| index == frame_index))
+                    && !diagnostic_frames
+                        .get(frame_index + 1)
+                        .is_some_and(|child| self.object_method_signature_frame(child))
                     && !reading_inferred_parent
                     && !replaced_byte_argument
                     && !(unavailable_origin && frame_index + 1 == diagnostic_frames.len())
@@ -3654,6 +3681,21 @@ impl Vm {
         Ok(())
     }
 
+    fn object_method_signature_frame(&self, frame: &Frame) -> bool {
+        // InvokeObjectMethodNode requests this lazy call target with raw
+        // CallTarget.call(owner, owner), before creating a DirectCallNode.
+        // Derive the unavailable caller from the active initialization frame,
+        // so caught failures cannot leave a hidden flag on a retained caller.
+        frame.force.as_ref().is_some_and(|force| force.method)
+            && matches!(
+                self.program
+                    .blocks
+                    .get(frame.block)
+                    .and_then(|code| code.first()),
+                Some(Instruction::BeginObjectMethodSignature)
+            )
+    }
+
     fn executable_root(&mut self, block: usize) -> ExecutableOwnerId {
         *self
             .executable_roots
@@ -4382,6 +4424,9 @@ impl Vm {
             Instruction::EndConversion => self.end_conversion()?,
             Instruction::ConvertObject(operation) => self.convert_object(operation)?,
             Instruction::ReadConversionProperty => self.read_conversion_property()?,
+            Instruction::BeginCollectionEvery => self.begin_collection_every()?,
+            Instruction::CollectionEveryAccept { next } => self.collection_every_accept(next)?,
+            Instruction::EndCollectionEvery => self.end_collection_every()?,
             Instruction::BeginCollectionTransform(operation) => {
                 self.begin_collection_transform(operation)?
             }
@@ -5272,6 +5317,36 @@ impl Vm {
                         });
                 }
             }
+            Instruction::BeginObjectMethodSignature => {
+                let frame = self.frames.last_mut().expect("method member frame");
+                let owner = frame
+                    .force
+                    .as_ref()
+                    .ok_or_else(|| invalid("method signature owner"))?
+                    .owner;
+                frame.environment.this_value = Some(Value::Object(owner));
+                frame
+                    .environment
+                    .scopes
+                    .first_mut()
+                    .ok_or_else(|| invalid("method signature scope"))?
+                    .receiver = owner;
+            }
+            Instruction::EndObjectMethodSignature => {
+                let frame = self.frames.last_mut().expect("method member frame");
+                let receiver = frame
+                    .force
+                    .as_ref()
+                    .ok_or_else(|| invalid("method signature receiver"))?
+                    .receiver;
+                frame.environment.this_value = Some(Value::Object(receiver));
+                frame
+                    .environment
+                    .scopes
+                    .first_mut()
+                    .ok_or_else(|| invalid("method signature scope"))?
+                    .receiver = receiver;
+            }
             Instruction::MakeFunction {
                 block,
                 arity,
@@ -5402,6 +5477,14 @@ impl Vm {
                 let value = self.pop()?;
                 self.stack.push(value.clone());
                 self.stack.push(value);
+            }
+            Instruction::RotateStackRight(length) => {
+                let start = self
+                    .stack
+                    .len()
+                    .checked_sub(length)
+                    .ok_or_else(|| invalid("lexical call stack operands"))?;
+                self.stack[start..].rotate_right(1);
             }
             Instruction::Pop => {
                 self.pop()?;
@@ -6296,7 +6379,7 @@ fn compile_unit_body_at(
             if annotated {
                 compiler.member_annotations(member, &mut entry, false)?;
             }
-            compiler.initialize_member_types(std::slice::from_ref(member), &mut entry)?;
+            compiler.initialize_member_types(std::slice::from_ref(member), true, &mut entry)?;
             if annotated {
                 if method {
                     entry.push(Instruction::InitializeDeprecation);
@@ -6359,6 +6442,7 @@ fn compile_unit_body_at(
 struct Code {
     instructions: Vec<Instruction>,
     spans: Vec<Option<Span>>,
+    inferred_entry_parent_spans: Vec<Span>,
     let_scopes: Vec<LetScope>,
     type_casts: Vec<usize>,
     method_arities: BTreeMap<usize, usize>,
@@ -6598,7 +6682,18 @@ impl Compiler<'_> {
             let scope_count = self.type_scopes.len();
             let previous_member = self.member.clone();
             let previous_modifiers = self.modifiers.clone();
-            match self.object_member(member) {
+            let object_method = object_body
+                || (!class
+                    && self
+                        .resolved
+                        .module
+                        .declaration
+                        .as_ref()
+                        .and_then(|declaration| declaration.parent.as_ref())
+                        .is_some_and(|parent| {
+                            parent.kind == crate::syntax::ModuleParentKind::Amends
+                        }));
+            match self.object_member(member, object_method) {
                 Ok(compiled) => {
                     self.program.metadata[compiled.code].inline_property_typecheck =
                         object_body && member.local;
@@ -6643,9 +6738,13 @@ impl Compiler<'_> {
         Ok(index)
     }
 
-    fn object_member(&mut self, member: &crate::syntax::Member) -> Result<Member, RuntimeError> {
+    fn object_member(
+        &mut self,
+        member: &crate::syntax::Member,
+        object_method: bool,
+    ) -> Result<Member, RuntimeError> {
         let previous = std::mem::replace(&mut self.constructor_parameters_bound, false);
-        let result = self.object_member_body(member);
+        let result = self.object_member_body(member, object_method);
         self.constructor_parameters_bound = previous;
         result
     }
@@ -6653,6 +6752,7 @@ impl Compiler<'_> {
     fn object_member_body(
         &mut self,
         member: &crate::syntax::Member,
+        object_method: bool,
     ) -> Result<Member, RuntimeError> {
         let previous_modifiers = std::mem::replace(&mut self.modifiers, member.modifiers.clone());
         self.validate_modifiers(member)?;
@@ -6694,6 +6794,18 @@ impl Compiler<'_> {
             }
         }
         let mut instructions = Code::default();
+        if object_method
+            && matches!(
+                member.expr.kind,
+                crate::syntax::ExprKind::Function { method: true, .. }
+            )
+        {
+            // ObjectMethodNode resolves its signature when the lazy member's
+            // call target is requested, not when its enclosing object is built.
+            instructions.push(Instruction::BeginObjectMethodSignature);
+            self.initialize_member_types(std::slice::from_ref(member), true, &mut instructions)?;
+            instructions.push(Instruction::EndObjectMethodSignature);
+        }
         if let Some(error) = &initialization_error {
             // Annotation resolution runs when the owner is initialized. Keep a
             // stub body so compilation cannot bypass earlier type dependencies.
@@ -6808,6 +6920,7 @@ impl Compiler<'_> {
                 inline_property_typecheck: false,
                 amendment: false,
                 amendment_parent_span: None,
+                inferred_entry_parent_spans: code.inferred_entry_parent_spans,
                 fixed_span: None,
                 const_span: None,
                 initialization_error: None,
@@ -7053,7 +7166,7 @@ impl Compiler<'_> {
                             );
                             continue;
                         }
-                        self.initialize_member_types(std::slice::from_ref(member), output)?;
+                        self.initialize_member_types(std::slice::from_ref(member), true, output)?;
                         if annotated && method {
                             output.push(Instruction::InitializeDeprecation);
                             output.push(Instruction::StoreDeprecation);
@@ -7639,18 +7752,20 @@ impl Compiler<'_> {
     fn initialize_member_types(
         &mut self,
         members: &[crate::syntax::Member],
+        methods: bool,
         output: &mut Code,
     ) -> Result<(), RuntimeError> {
         for member in members {
             if let Some(ty) = &member.ty {
                 self.initialize_type_resolution(ty, output);
             }
-            if let crate::syntax::ExprKind::Function {
-                parameters,
-                return_type,
-                method: true,
-                ..
-            } = &member.expr.kind
+            if methods
+                && let crate::syntax::ExprKind::Function {
+                    parameters,
+                    return_type,
+                    method: true,
+                    ..
+                } = &member.expr.kind
             {
                 for ty in parameters
                     .iter()
@@ -8127,6 +8242,7 @@ impl Compiler<'_> {
                     self.program.blocks[block] = code.instructions;
                     let metadata = &mut self.program.metadata[block];
                     metadata.spans = code.spans;
+                    metadata.inferred_entry_parent_spans = code.inferred_entry_parent_spans;
                     metadata.let_scopes = code.let_scopes;
                     metadata.type_casts = code.type_casts;
                     metadata.method_arities = code.method_arities;

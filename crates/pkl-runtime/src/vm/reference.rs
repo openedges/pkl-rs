@@ -1347,17 +1347,28 @@ impl Vm {
                     _ => Err(fail()),
                 }
             }
+            TypeCheck::Collection(
+                CollectionKind::List | CollectionKind::Set | CollectionKind::Map,
+            )
+            | TypeCheck::ParameterizedCollection {
+                kind: CollectionKind::List | CollectionKind::Set | CollectionKind::Map,
+                ..
+            } if property == Some("isNotEmpty") => Ok(TypeCheck::Boolean),
             TypeCheck::String if matches!(property, Some("length" | "lastIndex")) => {
                 Ok(TypeCheck::Int)
             }
             TypeCheck::String
                 if matches!(
                     property,
-                    Some("isEmpty" | "isNotEmpty" | "isBlank" | "isNotBlank")
+                    Some("isEmpty" | "isNotEmpty" | "isBlank" | "isNotBlank" | "isBase64")
                 ) =>
             {
                 Ok(TypeCheck::Boolean)
             }
+            TypeCheck::String if matches!(property, Some("base64" | "base64Decoded")) => {
+                Ok(TypeCheck::String)
+            }
+            TypeCheck::String if property == Some("base64DecodedBytes") => Ok(TypeCheck::Bytes),
             _ => Err(fail()),
         }
     }

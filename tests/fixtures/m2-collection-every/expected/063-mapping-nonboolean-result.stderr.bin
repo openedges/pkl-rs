@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Expected value of type `Boolean`, but got type `Int`.
+Value: 42
+
+1 | (new Mapping { ["a"] = 1 }).every((k, v) -> 42)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

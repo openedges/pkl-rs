@@ -1094,13 +1094,13 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         }
         if object.collection_kind == CollectionKind::Dynamic
             || object.is_module
-            || !matches!(name, "length" | "isEmpty")
+            || !matches!(name, "length" | "isEmpty" | "isNotEmpty")
         {
             return Ok(false);
         }
         if object.collection_kind == CollectionKind::Mapping
             && object.mapping_length.is_none()
-            && matches!(name, "length" | "isEmpty")
+            && matches!(name, "length" | "isEmpty" | "isNotEmpty")
         {
             let mut chain = Vec::new();
             let mut owner = Some(receiver);
@@ -1150,6 +1150,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
         let value = match name {
             "length" => Value::Int((length as i64).into()),
             "isEmpty" => Value::Bool(length == 0),
+            "isNotEmpty" => Value::Bool(length != 0),
             _ => return Ok(false),
         };
         self.stack.push(value);
@@ -1540,7 +1541,9 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
             if matches!(self.stack.last(), Some(Value::Function(_))) {
                 return Ok(());
             }
+            // References use the object heap but are not Pkl VmObjectLike values.
             if let Some(Value::Object(id)) = self.stack.last()
+                && self.heap.get(*id)?.reference.is_none()
                 && !matches!(
                     self.heap.get(*id)?.collection_kind,
                     CollectionKind::List | CollectionKind::Set | CollectionKind::Map
@@ -2779,7 +2782,7 @@ impl Compiler<'_> {
                     parameter_span,
                 );
             }
-            self.initialize_member_types(&properties, output)?;
+            self.initialize_member_types(&properties, false, output)?;
         } else {
             // Construct the typed parent first, preserving class validation.
             // Generator clauses then execute in source order, including
@@ -2921,7 +2924,7 @@ impl Compiler<'_> {
             }
         }
         output.push(Instruction::EndCollection);
-        self.initialize_member_types(&properties, output)?;
+        self.initialize_member_types(&properties, false, output)?;
         self.type_scopes.pop();
         if let Some(index) = amendment {
             let end = output.len();

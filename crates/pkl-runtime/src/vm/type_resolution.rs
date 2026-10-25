@@ -1016,7 +1016,10 @@ impl Vm {
             Instruction::ResolveClassType { name, local } => {
                 let frame = self.frames.last().expect("active frame");
                 let module = match frame.environment.scopes.last() {
-                    Some(scope) => scope.receiver,
+                    // ResolveSimpleDeclaredTypeNode starts at the enclosing
+                    // lexical module, even when this member is inherited by a
+                    // different receiver. Local declarations are not overrides.
+                    Some(_) => self.declaring_module(&frame.environment, false)?,
                     None => self
                         .stack
                         .first()

@@ -1,0 +1,11 @@
+–– Pkl Error ––
+Type constraint `this > 1` violated.
+Value: 1
+
+1 | Map("a", 1).every((k, v: Int(this > 1)) -> true)
+                                 ^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | Map("a", 1).every((k, v: Int(this > 1)) -> true)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

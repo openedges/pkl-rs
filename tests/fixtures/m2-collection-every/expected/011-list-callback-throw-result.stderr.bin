@@ -1,0 +1,10 @@
+–– Pkl Error ––
+predicate
+
+1 | List(1).every((x) -> throw("predicate"))
+                         ^^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | List(1).every((x) -> throw("predicate"))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

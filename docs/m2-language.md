@@ -1,30 +1,43 @@
 # M2 language verification
 
-## Stage 68 — Java authorities and candidate integration
+## Stage 68 — predicates, method semantics, and full ready-corpus replay
 
-The next candidate covers String Base64 properties, collection `isNotEmpty`
-and `every`, Reference amendment rejection, inferred entry diagnostics,
-declaring-module class defaults, and lazy object-method type checks. Its
-implementation is being integrated; the required canonical Rust checks,
-actual native/Node/browser comparisons, full ready-corpus replay, and
-implementation commit remain pending.
+The [implementation checkpoint](../reports/m2/stage68-implementation-checkpoint.json) records
+shared String Base64, collection `isNotEmpty` and `every`, Reference amendment
+rejection, inferred entry diagnostics, declaring-module class defaults, and lazy
+object-method signature checks. All five required Rust checks passed. Native,
+actual N-API, and Chromium each match 2,726 raw observations from 17 catalog
+profiles containing 1,363 expressions. The separate `every` comparison matches
+128 observations per target, including ordered logger channels. Existing Any/M1
+Regex mismatches remain failures.
 
-The [Java authority checkpoint](../reports/m2/stage68-java-checkpoint.json)
-contains 89 Base64, 47 collection emptiness,
-and 64 `every` expressions, each observed in two JVM sessions. Their ordinary
-Pkl error outcomes remain expected errors. The `every` authority also records
-39 ordered logger events per session with lossless UTF-16 channels. Separate
-entry-parent Host and method timing/arity/owner captures preserve their own
-execution boundaries. Seven reused original-program inputs and Java outputs
-are linked to the pinned upstream sources and published Stage 67 evidence.
+The full 4,416-case Rust replay records **4,152 matches, 119 mismatches, 143 unsupported results, 2 Java oracle errors, 0 Rust internal errors**.
+Original modules account for 632 matches out of 888;
+expression strings account for 3,519 out of 3,527. The JVM
+classpath case matches. All previously passing cases remain passing, and
+10 previously nonpassing cases now match. The three inherited scalar
+regressions recorded in Stage67 are fixed by this candidate.
 
-Standalone fixture verification uses tracked inputs and does not require
-historical `target/` directories. Passing those checks establishes Java
-fixture integrity; it does not establish a Rust candidate pass. The planned
-4,416-case replay reuses the sealed Stage 67 Java evidence and runs Rust anew.
-It must preserve every case definition, unready requirement, and raw failure,
-and report that it starts no fresh Java processes. Stage 67 below remains the
-latest completed full ready-corpus comparison.
+This replay reuses the sealed Stage67 Java outputs and starts **zero fresh Java
+processes**. Its acquisition and separate integrity verification both exited
+zero, with stable sources, artifacts, and restored workspaces. The strict full
+gate remains failed with 1,799 overlapping unmet entries. The 111 unready
+inventory cases and all nine M2 workstreams remain open.
+
+Sixteen archives (309,305,507 bytes in total, each below 95 MiB) preserve
+raw outcomes, complete payload/hash/mode readback, source bookends, and corrected
+attempts. The initial native `every` wrapper failed before guest execution;
+its corrected acquisition is separate. Comparison02's preparation failure and
+Comparison03's expected Regex failures remain visible. Publication and assembly
+process receipts postdate these archives and require the separate C source
+binding. These are local macOS arm64 results, not full API, performance, release
+platform, or hosted CI completion.
+
+The separate Java authority contains 89 Base64, 47 collection emptiness,
+and 64 `every` expressions in two JVM sessions. Fixture verification uses tracked
+inputs and does not require historical `target/` directories. Passing fixture
+validation establishes reference integrity; actual candidate results above use
+the recorded runtime artifacts and full raw channels.
 
 ## Stage 67 — String properties and full ready-corpus comparison
 

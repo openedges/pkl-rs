@@ -58,6 +58,7 @@ enum Work<'a> {
     NullableMember(&'a Expr, &'a str),
     Lookup(&'a Expr, &'a Expr, &'a [Expr], usize),
     CallEnd(usize, bool, Option<usize>, Option<(usize, Span)>),
+    LocalMethodCall(&'a Expr, usize, Span),
     Cast(TypeCheck, Span),
     IfThen(&'a Expr, &'a Expr, &'a Expr),
     IfElse(&'a Expr, usize),
@@ -344,6 +345,47 @@ impl Compiler<'_> {
                             method_site,
                         ));
                         work.extend(arguments.iter().rev().map(Work::Visit));
+                    }
+                    Work::LocalMethodCall(callee, arity, span) => {
+                        let ExprKind::Name(name) = &callee.kind else {
+                            unreachable!()
+                        };
+                        let Some(Binding::Method {
+                            owner_depth,
+                            local: true,
+                        }) = self.resolved.names.get(&callee.span)
+                        else {
+                            unreachable!()
+                        };
+                        let lookup = output.len();
+                        output.push_at(
+                            Instruction::GetMethodProperty {
+                                name: Arc::from(name.as_str()),
+                                owner_depth: *owner_depth,
+                                local: true,
+                            },
+                            span,
+                        );
+                        output.method_arities.insert(lookup, arity);
+                        if self.instrument {
+                            output.push_at(Instruction::Observe(callee.span), callee.span);
+                        }
+                        output.push_at(Instruction::RotateStackRight(arity + 1), span);
+                        output.push_at(
+                            Instruction::PrepareMethodCall {
+                                lookup,
+                                arity,
+                                after_arguments: true,
+                            },
+                            span,
+                        );
+                        output.push_at(
+                            Instruction::Call {
+                                arity,
+                                method: true,
+                            },
+                            span,
+                        );
                     }
                     Work::CallEnd(arity, method, nullable_branch, method_site) => {
                         if let Some((lookup, span)) = method_site {
@@ -674,7 +716,7 @@ impl Compiler<'_> {
                             *output.spans.last_mut().expect("parameter check") = parent;
                         }
                         output.push(Instruction::EndCollection);
-                        self.initialize_member_types(&properties, output)?;
+                        self.initialize_member_types(&properties, false, output)?;
                         self.type_scopes.pop();
                         if matches!(output[begin], Instruction::BeginFunctionAmendment { .. }) {
                             let end = output.len();
@@ -744,6 +786,18 @@ impl Compiler<'_> {
                             }
                         }
                         let mut instructions = Code::default();
+                        if matches!(
+                            member.expr.kind,
+                            crate::syntax::ExprKind::Function { method: true, .. }
+                        ) {
+                            instructions.push(Instruction::BeginObjectMethodSignature);
+                            self.initialize_member_types(
+                                std::slice::from_ref(member),
+                                true,
+                                &mut instructions,
+                            )?;
+                            instructions.push(Instruction::EndObjectMethodSignature);
+                        }
                         if let Some(error) = &initialization_error {
                             // Annotation resolution runs when the owner is initialized. Keep a
                             // stub body so compilation cannot bypass earlier type dependencies.
@@ -923,6 +977,7 @@ impl Compiler<'_> {
                                     true
                                 }
                                 InferredParent::Entry => {
+                                    output.inferred_entry_parent_spans.push(span);
                                     output.push_at(Instruction::EntryDefault, span);
                                     output.push_at(Instruction::EntryKey, span);
                                     output.push_at(Instruction::ApplyEntryDefault, span);
@@ -1463,6 +1518,33 @@ impl Compiler<'_> {
                     }
                 }
                 let callee = callee.unparenthesized();
+                if let ExprKind::Name(name) = &callee.kind
+                    && let Some(Binding::Method {
+                        owner_depth,
+                        local: true,
+                    }) = self.resolved.names.get(&callee.span)
+                {
+                    // AbstractInvokeMethodLexicalNode checks const, evaluates
+                    // arguments, then requests the local method's call target.
+                    if self.resolved.const_names.contains(&callee.span) {
+                        output.push_at(
+                            Instruction::RequireConstProperty {
+                                name: Arc::from(name.as_str()),
+                                owner_depth: *owner_depth,
+                                local: true,
+                                method: true,
+                            },
+                            expression.span,
+                        );
+                    }
+                    work.push(Work::LocalMethodCall(
+                        callee,
+                        arguments.len(),
+                        expression.span,
+                    ));
+                    work.extend(arguments.iter().rev().map(Work::Visit));
+                    return Ok(());
+                }
                 work.push(Work::Lookup(expression, callee, arguments, output.len()));
                 match &callee.kind {
                     ExprKind::Member(receiver, _)

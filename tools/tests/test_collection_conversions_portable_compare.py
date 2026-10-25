@@ -344,6 +344,13 @@ class PortableCollectionConversionComparisonTests(unittest.TestCase):
              {'success': 117, 'error': 29},
              'repeat-0/000-empty/result.stdout.code-units.bin',
              'true'.encode('utf-16-be')),
+            ('file:///stage68/string-base64-exploration.pkl', 89,
+             {'success': 67, 'error': 22},
+             'repeat-0/043-decode-invalid-utf8-ff/result.stdout.code-units.bin',
+             '\ufffd'.encode('utf-16-be')),
+            ('file:///stage68/collection-emptiness.pkl', 47,
+             {'success': 34, 'error': 13},
+             'repeat-0/004-list-method/result.status.bin', b'error\n'),
         ):
             with self.subTest(uri=uri):
                 fixture = compare.ROOT / compare.profiles.PROFILES[uri]['fixture']
