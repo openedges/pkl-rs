@@ -32,6 +32,15 @@ The linked replay, separate integrity verifier, and independent regression audit
 
 See the [implementation checkpoint](../reports/m2/stage73-75-implementation-checkpoint.json) for raw evidence and execution provenance. These local records do not establish full M2, product API, release-platform, or performance compatibility.
 
+The [source binding](../reports/m2/stage73-75-source-binding.json) links 170,567
+recorded inputs to implementation commit `0202da8`, whose push to remote `main`
+was verified, or to exact preserved copies. Five post-validation documentation
+transitions remain separate from the frozen runtime and fixtures. The
+[independent publication review](../reports/m2/stage73-75-source-binding-review.json)
+verified every archive member and the separately published execution records.
+Source binding adds no guest evaluations or compatibility passes; all remaining
+M2 conditions above stay open.
+
 ## Stage69–72 — shared runtime and full ready-corpus replay
 
 The [implementation checkpoint](../reports/m2/stage69-72-implementation-checkpoint.json) records shared super entry defaults,

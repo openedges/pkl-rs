@@ -1,0 +1,36 @@
+{
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage73-75-c-source-binding-01/preparation-03/publish.py",
+    "--binding",
+    "target/m2/stage73-75-c-source-binding-01/binding-02/report.json"
+  ],
+  "compatibility_passes_claimed": 0,
+  "complete": true,
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "exit_code": 0,
+  "finished_utc": "2026-10-25T14:42:39.430336+00:00",
+  "kind": "stage68-postterminal-replay-process",
+  "launch_error": null,
+  "pid": 57913,
+  "schema": 1,
+  "source_after": {
+    "bytes": 324276,
+    "sha256": "b4388ce6384abbfa99509939bf951c7d17140898a474d2eb5180dac895993b79"
+  },
+  "source_before": {
+    "bytes": 324276,
+    "sha256": "b4388ce6384abbfa99509939bf951c7d17140898a474d2eb5180dac895993b79"
+  },
+  "source_stable": true,
+  "started_utc": "2026-10-25T14:42:33.532910+00:00",
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 277,
+    "sha256": "e8031c5dbc6938b67d83a6357e5f6c98136c6dfd775818fded39de7a7d355016"
+  }
+}

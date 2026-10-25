@@ -1,0 +1,140 @@
+{
+  "actual_publisher_process": {
+    "bytes": 1148,
+    "mode": 420,
+    "path": "target/m2/stage73-75-c-publication-01/publish-process/process.json",
+    "sha256": "3e150abfec413bc5fc4f2b96a8b55912543713a72a19467373fd944ed4b0a469"
+  },
+  "actual_publisher_raw": {
+    "stderr": {
+      "bytes": 0,
+      "mode": 420,
+      "path": "target/m2/stage73-75-c-publication-01/publish-process/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 277,
+      "mode": 420,
+      "path": "target/m2/stage73-75-c-publication-01/publish-process/stdout.bin",
+      "sha256": "e8031c5dbc6938b67d83a6357e5f6c98136c6dfd775818fded39de7a7d355016"
+    }
+  },
+  "approved": true,
+  "archive": {
+    "bytes": 8023673,
+    "mode": 420,
+    "path": "reports/m2/stage73-75-source-binding-evidence.tar.gz",
+    "sha256": "0f001b6f0740e50b370759609c5fa60c2d9f9c5fc2c09b81cf13f1e0b0b016df"
+  },
+  "binding_report": {
+    "bytes": 2126187,
+    "mode": 420,
+    "path": "target/m2/stage73-75-c-source-binding-01/binding-02/report.json",
+    "sha256": "1d0ca5b764747b2c734533e5d01490ef6a9a4fb83050020e13839af2fa60f291"
+  },
+  "binding_review": {
+    "bytes": 14292,
+    "mode": 420,
+    "path": "target/m2/stage73-75-c-source-binding-01/binding-review-02/report.json",
+    "sha256": "f848f1fa6be479c85f4b806f89f8c331d00c59ea48e27c85adf3b382fdc5d873"
+  },
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical_or_Git_mutation": false,
+  "complete": true,
+  "current_HEAD_and_remote_main_equal_B": true,
+  "execution_copies": [
+    {
+      "bytes": 1148,
+      "public": "reports/m2/stage73-75-source-binding-execution.json",
+      "sha256": "3e150abfec413bc5fc4f2b96a8b55912543713a72a19467373fd944ed4b0a469",
+      "source": "target/m2/stage73-75-c-publication-01/publish-process/process.json"
+    },
+    {
+      "bytes": 277,
+      "public": "reports/m2/stage73-75-source-binding-execution.stdout.bin",
+      "sha256": "e8031c5dbc6938b67d83a6357e5f6c98136c6dfd775818fded39de7a7d355016",
+      "source": "target/m2/stage73-75-c-publication-01/publish-process/stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "public": "reports/m2/stage73-75-source-binding-execution.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage73-75-c-publication-01/publish-process/stderr.bin"
+    },
+    {
+      "bytes": 324276,
+      "public": "reports/m2/stage73-75-source-binding-execution.source-before.json",
+      "sha256": "b4388ce6384abbfa99509939bf951c7d17140898a474d2eb5180dac895993b79",
+      "source": "target/m2/stage73-75-c-publication-01/publish-process/source-before.json"
+    },
+    {
+      "bytes": 324276,
+      "public": "reports/m2/stage73-75-source-binding-execution.source-after.json",
+      "sha256": "b4388ce6384abbfa99509939bf951c7d17140898a474d2eb5180dac895993b79",
+      "source": "target/m2/stage73-75-c-publication-01/publish-process/source-after.json"
+    }
+  ],
+  "execution_copy_report": {
+    "bytes": 1478,
+    "mode": 420,
+    "path": "target/m2/stage73-75-c-publication-01/execution-copy-01/report.json",
+    "sha256": "16925fc239ada539790400b68a49446735f281ade520fca2ecf40f55097210c0"
+  },
+  "execution_copy_total_bytes": 649977,
+  "execution_five_exact_bytes_and_modes": true,
+  "frozen_after_SHA_handoff": true,
+  "full_api_complete": false,
+  "full_archive_readback": {
+    "all_member_payloads_compared_as_raw_bytes_to_current_files": true,
+    "all_modes_uid_gid_mtime_verified": true,
+    "duplicate_unsafe_link_or_extra_members": false,
+    "embedded_manifest_bytes": 68411,
+    "expanded_tar_bytes": 14448640,
+    "gzip_complete_crc": true,
+    "manifest_matches_exact_inventory_and_B": true,
+    "members": 379,
+    "payload_bytes": 14089546,
+    "payload_files": 378,
+    "performed_read_only": true,
+    "seven_finite_current_roots_equal_inventory": true,
+    "zero_padding_bytes": 6656
+  },
+  "full_m2_complete": false,
+  "head_raw": {
+    "bytes": 41,
+    "mode": 420,
+    "path": "target/m2/stage73-75-c-publication-01/publication-review-01/head.stdout.bin",
+    "sha256": "7b346e622d90ad588bc5d1480fd6f7a4cfcf01c3c6aa4a9457ea0795e625fcca"
+  },
+  "implementation_commit": "0202da8b204adeb28e20caf08c9c305a64546c7b",
+  "kind": "stage73-75-C-independent-actual-publication-readback",
+  "new_guest_evaluations": 0,
+  "observed_epoch": 1792939608.372282,
+  "performance_target_achieved": false,
+  "postarchive_boundary": "Actual C publisher execution and its four raw/source channels are separate public files; they are not claimed as archive members. This independent readback is also outside archived roots.",
+  "preserved_failures_and_binding02_review_in_archive": true,
+  "public_binding_report": {
+    "bytes": 2126842,
+    "mode": 420,
+    "path": "reports/m2/stage73-75-source-binding.json",
+    "sha256": "c701d9ea83b7428322255e1f16119a7838e6ff4069c48153c9822038feb0f624"
+  },
+  "public_report_exact_binding_plus_three_publication_fields": true,
+  "publication": {
+    "bytes": 82048,
+    "mode": 420,
+    "path": "reports/m2/stage73-75-source-binding-publication.json",
+    "sha256": "a872d9610c7b50f2b6e223a6e86a3369537e0fe4dbc85db58a31f81f4889b288"
+  },
+  "publisher1661_source_bookends_and_current_identities_exact": true,
+  "publisher_rerun": false,
+  "publisher_terminal_exit_code": 0,
+  "remote_raw": {
+    "bytes": 57,
+    "mode": 420,
+    "path": "target/m2/stage73-75-c-publication-01/publication-review-01/remote.stdout.bin",
+    "sha256": "322f57ff1a49787e6b5d6242141ae99564e9a2026f50bb1abdf89b517a91710d"
+  },
+  "schema": 1,
+  "source_stable": true
+}

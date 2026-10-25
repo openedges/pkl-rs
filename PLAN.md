@@ -2804,6 +2804,22 @@ native·N-API·Chromium 각각 이전 235개, Reference 별칭 4개, 새 질의 
 
 [구현 체크포인트](reports/m2/stage73-75-implementation-checkpoint.json)에 원시 결과와 실행 출처를 기록했습니다.
 
+#### Stage73–75 C — 실제 커밋과 검증 입력 연결
+
+구현은 `0202da8b204adeb28e20caf08c9c305a64546c7b`에 커밋·푸시했고 원격
+`main` 일치를 확인했습니다. [소스 연결 기록](reports/m2/stage73-75-source-binding.json)은
+검증 입력 170,567개를 실제 구현 커밋과 보존된 사본에 연결합니다. 검증 후 변경한
+문서 다섯 개는 고정된 런타임·fixture와 구분하며, 과거 입력 다섯 개는 게시된
+정확한 사본의 경로·바이트·mode까지 대조했습니다. 최초 연결 실패와 부분 출력도
+그대로 보존했습니다.
+
+[독립 게시 검토](reports/m2/stage73-75-source-binding-review.json)는
+8,023,673바이트 archive의 전체 379개 항목과 원시 payload·mode를 확인했습니다.
+[게시 실행 기록](reports/m2/stage73-75-source-binding-execution.json)과 원시 채널·소스
+전후 기록은 archive 생성 후의 별도 파일입니다. 연결·게시 프로세스는 종료 0과
+입력 불변을 기록했습니다. 이 마감은 새 언어 실행이나 호환성 통과를 추가하지 않으며,
+전체 gate의 미충족 조건 1,791개와 M2의 아홉 미완료 영역은 그대로 유지합니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.
