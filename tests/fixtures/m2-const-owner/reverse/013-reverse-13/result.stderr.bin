@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find property `localValue` in object of type `const-owner#C`.
+
+1 | child.localValue
+    ^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+localRead

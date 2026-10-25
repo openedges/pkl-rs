@@ -1,0 +1,14 @@
+–– Pkl Error ––
+lazy-object-key
+
+75 | local objectKey = new Dynamic { value = throw("lazy-object-key") }
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^
+at super-entry-default#objectKey.value (file:///stage69/super-entry-default.pkl)
+
+138 | objectKeyDefaultThrow = objectDefaultThrowChild["out"]
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at super-entry-default#objectKeyDefaultThrow (file:///stage69/super-entry-default.pkl)
+
+1 | objectKeyDefaultThrow
+    ^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

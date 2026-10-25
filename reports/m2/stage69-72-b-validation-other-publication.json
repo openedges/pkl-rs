@@ -1,0 +1,523 @@
+{
+  "archive": {
+    "bytes": 66658,
+    "full_member_readback_verified": true,
+    "members": 92,
+    "mode": 420,
+    "path": "reports/m2/stage69-72-b-validation-other-evidence.tar.gz",
+    "sha256": "7b19f32b629ab9086b3d2e8262d4ba77f296e2b88d110e45f825bf98a18a5d91"
+  },
+  "base_head": "a5a3c50e999364c8437ff6daa7512af432633d7b",
+  "candidate_compatibility_passes_claimed": 0,
+  "embedded_manifest_sha256": "9139545a08d67e97317a6ab8e404b373cf1522cc79abef2b57e70488d5602aaa",
+  "execution_receipt_included": false,
+  "group": "validation-other",
+  "kind": "stage69-72-B-local-evidence-publication",
+  "known_limits": [
+    "Strict M2/full API/performance remain unclaimed.",
+    "Stage69\u201372 selected native/N-API/Chromium 235+4 captures pass all selected raw channels; M1 contract passes with known Regex strict failures; Any and full M2 remain failed/unclaimed.",
+    "No Wasmtime result is promised by the native/N-API/Chromium capture prep or M1 browser wrapper.",
+    "Stage67 baseline and physical workspaces plus Stage68 public replay proof are linked by identity rather than duplicated.",
+    "Actual Rust-only 4,416 replay: 4,158 pass, 115 mismatch, 141 candidate-unsupported, 2 oracle-error; 1,795 full-gate failures and zero Stage68 prior-pass regressions; full M2 remains open."
+  ],
+  "member_inventory": {
+    "target/m2/stage69-72-b-publication-prep-06/PLAN.md": {
+      "bytes": 3214,
+      "mode": 420,
+      "sha256": "b7433e4ba0d9ce184b9e1a8df1c7b49cd6abcc8602aa3430d25d19b71ac0d47c"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/admission.py": {
+      "bytes": 14427,
+      "mode": 420,
+      "sha256": "38851fcb6cbbeef44610492d7226ee76c8266a54ba38122ec8c84449edca6227"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/layout.json": {
+      "bytes": 16764,
+      "mode": 420,
+      "sha256": "a4570209aff67d1782aaf46d74dc3eaa580d2b4da792a689748ab02bea6113b2"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/preparation.json": {
+      "bytes": 3119,
+      "mode": 420,
+      "sha256": "18428a27e071e426072e888187051bfbba15dca51ae2dd340ee18b026b3518e6"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/publish.py": {
+      "bytes": 9012,
+      "mode": 420,
+      "sha256": "09542996ef7be01f858c497722c157a1748cb7e9964747320ffee463fc282a55"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/run.py": {
+      "bytes": 2961,
+      "mode": 420,
+      "sha256": "3a2afbe11266b49f67a817cc41c91626863481d223b66ebb372a1bdba3e42d8a"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/validation-other-invocation.json": {
+      "bytes": 665,
+      "mode": 420,
+      "sha256": "2afe4c9a961b3e9c9333964b681da7b1b51ef364d9fbd2fe42f2fb81cfb4a5dc"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-01/PLAN.md": {
+      "bytes": 2909,
+      "mode": 420,
+      "sha256": "99e8159b73dcf637dffc51d50959e31e6bab37fa62aa1274fd0e02b1cd535a35"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-01/docs-draft/PLAN-insert.md": {
+      "bytes": 1341,
+      "mode": 420,
+      "sha256": "3010ec9a9c060c5af8dad9d46e09898d1e6bc604a43b19e5b0c9d234f293ec8b"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-01/docs-draft/architecture-insert.md": {
+      "bytes": 1205,
+      "mode": 420,
+      "sha256": "4b7207fc0cb07ebe07fb9a7fad52b116042a17e91f119e0bdaca8f885475000d"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-01/docs-draft/verification-insert.md": {
+      "bytes": 1231,
+      "mode": 420,
+      "sha256": "cf901320a4e83ef6508280e24fe608469b884ed446020a3139af2c5572c05fc1"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-01/preparation.json": {
+      "bytes": 1948,
+      "mode": 420,
+      "sha256": "fa202ac055355d77f3de093dbba72d1fb269b3a1d7500fdcc5d88e40c6f3c0a0"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-01/run.py": {
+      "bytes": 16213,
+      "mode": 420,
+      "sha256": "53337639c42f32b0104db50e9cf81bf8450720ba08f8c147ccd920569a5b5446"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-01/run_tooling.py": {
+      "bytes": 4084,
+      "mode": 420,
+      "sha256": "1e5fac8ca3b755e08e6db1379adebc5927a4bab6d3b00d02090aed30ed38f2aa"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/PLAN.md": {
+      "bytes": 2919,
+      "mode": 420,
+      "sha256": "2dfd29cdc7b285dce2a22ae81154bc4e1668c90f0776c89aef42b06303b30f6b"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/docs-draft/PLAN-insert.md": {
+      "bytes": 1351,
+      "mode": 420,
+      "sha256": "7ce0696c29e689d2fd0895758ed39b1a144a028ed2b282ebc2a05fac76c82c36"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/docs-draft/architecture-insert.md": {
+      "bytes": 1205,
+      "mode": 420,
+      "sha256": "4b7207fc0cb07ebe07fb9a7fad52b116042a17e91f119e0bdaca8f885475000d"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/docs-draft/verification-insert.md": {
+      "bytes": 1231,
+      "mode": 420,
+      "sha256": "cf901320a4e83ef6508280e24fe608469b884ed446020a3139af2c5572c05fc1"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/optimized-negative/report.json": {
+      "bytes": 1085,
+      "mode": 420,
+      "sha256": "c17cc27bec7fab3582d540431462b9d98ed5cd356db1ea8845f1ed1b54c57d38"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/optimized-negative/run.py.stderr.bin": {
+      "bytes": 63,
+      "mode": 420,
+      "sha256": "d719a06b93424d0ffbad4ece73cec7ec7bb64731a1e802e0ee9f7e13fa906ff4"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/optimized-negative/run.py.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/optimized-negative/run_tooling.py.stderr.bin": {
+      "bytes": 70,
+      "mode": 420,
+      "sha256": "bbd967aa2287d7f81df9de740a8acdae741d5427cf8dec285c154dc64d716986"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/optimized-negative/run_tooling.py.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/preparation.json": {
+      "bytes": 2328,
+      "mode": 420,
+      "sha256": "32ea125b52f1935ec9600b9fa7aef61ede9b843ee56af397652a5a7da6cad443"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/run.py": {
+      "bytes": 16423,
+      "mode": 420,
+      "sha256": "11c74038d3e66f2e6a2d6898c229eedef3fcb670fa837526416fb2f57a446757"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/run_tooling.py": {
+      "bytes": 4202,
+      "mode": 420,
+      "sha256": "165b38d753159eb8e78de7762044117ef495fc40c280828ece305bc83722bb85"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-02/static-check.json": {
+      "bytes": 535,
+      "mode": 420,
+      "sha256": "731ffc5ee598f6626ae0e1390c1d177f5dcf6008222772bbcc5d9b2df19d56f3"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/PLAN.md": {
+      "bytes": 2397,
+      "mode": 420,
+      "sha256": "336600e34298961d86537239bd3db923aac66b193fd8f19efa869cef8be14cb5"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/docs-draft/PLAN-insert.md": {
+      "bytes": 1351,
+      "mode": 420,
+      "sha256": "7ce0696c29e689d2fd0895758ed39b1a144a028ed2b282ebc2a05fac76c82c36"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/docs-draft/architecture-insert.md": {
+      "bytes": 1205,
+      "mode": 420,
+      "sha256": "4b7207fc0cb07ebe07fb9a7fad52b116042a17e91f119e0bdaca8f885475000d"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/docs-draft/verification-insert.md": {
+      "bytes": 1231,
+      "mode": 420,
+      "sha256": "cf901320a4e83ef6508280e24fe608469b884ed446020a3139af2c5572c05fc1"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/optimized-negative/report.json": {
+      "bytes": 1085,
+      "mode": 420,
+      "sha256": "c17cc27bec7fab3582d540431462b9d98ed5cd356db1ea8845f1ed1b54c57d38"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/optimized-negative/run.py.stderr.bin": {
+      "bytes": 63,
+      "mode": 420,
+      "sha256": "d719a06b93424d0ffbad4ece73cec7ec7bb64731a1e802e0ee9f7e13fa906ff4"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/optimized-negative/run.py.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/optimized-negative/run_tooling.py.stderr.bin": {
+      "bytes": 70,
+      "mode": 420,
+      "sha256": "bbd967aa2287d7f81df9de740a8acdae741d5427cf8dec285c154dc64d716986"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/optimized-negative/run_tooling.py.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/preparation.json": {
+      "bytes": 2713,
+      "mode": 420,
+      "sha256": "518b4ebfb02cf315775a107231a775b8bb66432738c0d7f1e70c508edf4a21cf"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/run.py": {
+      "bytes": 19539,
+      "mode": 420,
+      "sha256": "e7fbd3a64688ca66bd792dc28b221f6c4a1071b7d4c6ea46ca79112761dd9de6"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/run_tooling.py": {
+      "bytes": 4202,
+      "mode": 420,
+      "sha256": "5e26ebef7ddc7570acf4b8a88f82643b3f2f5266de8aa624d5d0a738260240ec"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-03/static-check.json": {
+      "bytes": 928,
+      "mode": 420,
+      "sha256": "b005d25ad873e21b91f49ee887f12a20ecd88f32643e0ca77b2c5f8535378f59"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-04/ABORTED.md": {
+      "bytes": 369,
+      "mode": 420,
+      "sha256": "41c62fc1eec59e245545318c21ea211fdbca31e00087b65fbe0d6b84a9f70ddc"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-05/launch.py": {
+      "bytes": 2010,
+      "mode": 420,
+      "sha256": "11524b1ab30abe01535d42cea00783ea6bdaf027c46458e7ae7af1b11d1f3ec9"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-05/preparation.json": {
+      "bytes": 1217,
+      "mode": 420,
+      "sha256": "fcd0e4067ecf428edea1f24747a3a8d58675bda10e5cf2a63098d3be54a3e030"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-05/run.py": {
+      "bytes": 19923,
+      "mode": 420,
+      "sha256": "5d22eced81a2d212a166e8f81d1726942e440ba28c88874c2ae2fb967012e496"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-05/run_tooling.py": {
+      "bytes": 4202,
+      "mode": 420,
+      "sha256": "6ded36ac6fa866bc6adec5d0ec8639493d6efe7dc47aa3596cddc59af3b79f8d"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-06/launch.py": {
+      "bytes": 2010,
+      "mode": 420,
+      "sha256": "4a0789c7f78f8670cb35120d72240c38958903147f4d7792ef3daa50c6e36d3e"
+    },
+    "target/m2/stage69-72-canonical-validation-prep-06/run.py": {
+      "bytes": 20445,
+      "mode": 420,
+      "sha256": "05aeab01edb6195aa590960934dcf9885f8bbc49e7fd2592100518658b7915b2"
+    },
+    "target/m2/stage69-72-required-checks-launch-01/active.json": {
+      "bytes": 38,
+      "mode": 420,
+      "sha256": "c00d07a1fd5a375c1c87f2bf0595faaa12560008ba63683bf877c522221526f8"
+    },
+    "target/m2/stage69-72-required-checks-launch-01/process-initial.json": {
+      "bytes": 1134,
+      "mode": 420,
+      "sha256": "ccb901eac068b0bf7bdb436b55d451edc96a23d15d4f1c3e4f442a30482e1e97"
+    },
+    "target/m2/stage69-72-required-checks-launch-01/process.json": {
+      "bytes": 2200,
+      "mode": 420,
+      "sha256": "513b781ba1280b9e98414307d354e2fd448c374d2093cd17258d8ea1f28efedc"
+    },
+    "target/m2/stage69-72-required-checks-launch-01/run.py": {
+      "bytes": 1964,
+      "mode": 420,
+      "sha256": "1ed69c9b0105826bbc11210adb102f47cbd9a87a7fceb791adad0de4dc94cc68"
+    },
+    "target/m2/stage69-72-required-checks-launch-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-required-checks-launch-01/stdout.bin": {
+      "bytes": 308,
+      "mode": 420,
+      "sha256": "649b3fbac11c23bc8f1447e822ba9585ae58b3cfc762776c1907a3580339fb2b"
+    },
+    "target/m2/stage69-72-required-checks-launch-02/active.json": {
+      "bytes": 38,
+      "mode": 420,
+      "sha256": "c00d07a1fd5a375c1c87f2bf0595faaa12560008ba63683bf877c522221526f8"
+    },
+    "target/m2/stage69-72-required-checks-launch-02/process-initial.json": {
+      "bytes": 1134,
+      "mode": 420,
+      "sha256": "d61a83ac205f7fa205698eec5d1208bb66357863038f33cd7af71ca5a7b5938f"
+    },
+    "target/m2/stage69-72-required-checks-launch-02/process.json": {
+      "bytes": 2200,
+      "mode": 420,
+      "sha256": "6120ca24934139e6a565c3c7a05addf006dd0804ee1f6608a07cf492305e2d6c"
+    },
+    "target/m2/stage69-72-required-checks-launch-02/run.py": {
+      "bytes": 1964,
+      "mode": 420,
+      "sha256": "ded9186bc67155d36b2206858e79dba300d489cdf1fc5ffe00b133dd97ad9d9a"
+    },
+    "target/m2/stage69-72-required-checks-launch-02/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-required-checks-launch-02/stdout.bin": {
+      "bytes": 308,
+      "mode": 420,
+      "sha256": "b928b7e547d9f788b17df5a1887b5f6468b94f3d91bf51acd6dfb5232e8ee15d"
+    },
+    "target/m2/stage69-72-rust-validation-launch-03/process.json": {
+      "bytes": 1073,
+      "mode": 420,
+      "sha256": "aa9f3b2ca61dba489c4aa3344f18bdd667e11670a369a527ed25e88e80b4471d"
+    },
+    "target/m2/stage69-72-rust-validation-launch-03/stderr.bin": {
+      "bytes": 510,
+      "mode": 420,
+      "sha256": "060896ab1c588a939ea4232f17204b85e91ba763f7724d89d79840a8173c5431"
+    },
+    "target/m2/stage69-72-rust-validation-launch-03/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-rust-validation-launch-04/process.json": {
+      "bytes": 1259,
+      "mode": 420,
+      "sha256": "32b34e82a1c35c1010e10885a75017851de6aeff9099d0d091ec8332dd2e1cf8"
+    },
+    "target/m2/stage69-72-rust-validation-launch-04/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-rust-validation-launch-04/stdout.bin": {
+      "bytes": 304,
+      "mode": 420,
+      "sha256": "9be189dfb5280c9f794d90364a7663ee26bd0eeb29f72262532b28a97a1a3be0"
+    },
+    "target/m2/stage69-72-tooling-validation-01/active.json": {
+      "bytes": 110,
+      "mode": 420,
+      "sha256": "90dbcb267b9846d589408f6f287d56b5ce2f631deab24bdb42ddf0d589238fde"
+    },
+    "target/m2/stage69-72-tooling-validation-01/inputs-after.json": {
+      "bytes": 2081,
+      "mode": 420,
+      "sha256": "142d70ca409319961f9f8ac004ca0505888f39c15c474310b4fec9bd4370c16f"
+    },
+    "target/m2/stage69-72-tooling-validation-01/inputs-before.json": {
+      "bytes": 2081,
+      "mode": 420,
+      "sha256": "142d70ca409319961f9f8ac004ca0505888f39c15c474310b4fec9bd4370c16f"
+    },
+    "target/m2/stage69-72-tooling-validation-01/inventory-freshness.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-tooling-validation-01/inventory-freshness.stdout.bin": {
+      "bytes": 926,
+      "mode": 420,
+      "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b"
+    },
+    "target/m2/stage69-72-tooling-validation-01/m2-manifest-freshness.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-tooling-validation-01/m2-manifest-freshness.stdout.bin": {
+      "bytes": 231,
+      "mode": 420,
+      "sha256": "9eb043eed64a997a50c295ceaeaf22c94a1f9b4076d0e809c793460b394260e3"
+    },
+    "target/m2/stage69-72-tooling-validation-01/report-initial.json": {
+      "bytes": 2627,
+      "mode": 420,
+      "sha256": "a257862bc1fb88a22abc1ee2cf956bc876afd95e3aad89a1de9ed57e10d34c43"
+    },
+    "target/m2/stage69-72-tooling-validation-01/report-progress.json": {
+      "bytes": 7280,
+      "mode": 420,
+      "sha256": "24aebfc915657bb077cd08fe0df55d408b5e64162e7165fa68c617b00c835484"
+    },
+    "target/m2/stage69-72-tooling-validation-01/report.json": {
+      "bytes": 9642,
+      "mode": 420,
+      "sha256": "237e90a6a6ed1b6ea8582312312c9108d02257a5ab8fa3433de77504934d276f"
+    },
+    "target/m2/stage69-72-tooling-validation-01/test_inventory.py-normal.stderr.bin": {
+      "bytes": 117,
+      "mode": 420,
+      "sha256": "52708a7a6a5bf7b8a4f401a6bbb418a6c93ef495d58b79cee3a1a80a2e14df45"
+    },
+    "target/m2/stage69-72-tooling-validation-01/test_inventory.py-normal.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-tooling-validation-01/test_inventory.py-optimized.stderr.bin": {
+      "bytes": 117,
+      "mode": 420,
+      "sha256": "0cb25690e2ee67d65bc7ec8be20186e07ab5e4d242fe272b8ad73c533252b971"
+    },
+    "target/m2/stage69-72-tooling-validation-01/test_inventory.py-optimized.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-tooling-validation-01/test_m2_language.py-normal.stderr.bin": {
+      "bytes": 133,
+      "mode": 420,
+      "sha256": "5df13118502358c7be79a86dcd80254f4ae9e5c4660c5702db405081fe4e84bb"
+    },
+    "target/m2/stage69-72-tooling-validation-01/test_m2_language.py-normal.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-tooling-validation-01/test_m2_language.py-optimized.stderr.bin": {
+      "bytes": 133,
+      "mode": 420,
+      "sha256": "32b9cadb36bcf9a8b71769491faf7b98a6e9374661cf5d4baa9ad1967469b76a"
+    },
+    "target/m2/stage69-72-tooling-validation-01/test_m2_language.py-optimized.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-tooling-validation-01/test_m2_mappings.py-normal.stderr.bin": {
+      "bytes": 106,
+      "mode": 420,
+      "sha256": "5b8a3ccb28c32f172271a641e8142fdb66c37cd396f681ca016266abfdb51bb3"
+    },
+    "target/m2/stage69-72-tooling-validation-01/test_m2_mappings.py-normal.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-tooling-validation-01/test_m2_mappings.py-optimized.stderr.bin": {
+      "bytes": 106,
+      "mode": 420,
+      "sha256": "489d8fec4214192d21ef621f802a943fb57007a29204410d590ff3ceb58c5003"
+    },
+    "target/m2/stage69-72-tooling-validation-01/test_m2_mappings.py-optimized.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-warm-admission-01/prepare.py": {
+      "bytes": 8025,
+      "mode": 420,
+      "sha256": "5fa56bb64065248263e8c909b5ff0cebe9de2e8223ae4fd1c1cbc6e680b3c61a"
+    },
+    "target/m2/stage69-72-warm-admission-01/report.json": {
+      "bytes": 5131,
+      "mode": 420,
+      "sha256": "e28eb6385cf9ec8f279d6122f059faf2fd9e0f47c11ae042d5621d59ea811544"
+    },
+    "target/m2/stage69-72-warm-admission-02/prepare.py": {
+      "bytes": 5466,
+      "mode": 420,
+      "sha256": "bb10a68f8aeadc9188dafd1933ecbd5b5ba443a206908ff9f94fdb815189ec4d"
+    },
+    "target/m2/stage69-72-warm-admission-02/report.json": {
+      "bytes": 9958,
+      "mode": 420,
+      "sha256": "99a935ecdfeed3b84b7fe136709776acedd6568e368e681d5d1623202a383c3a"
+    }
+  },
+  "publisher_sources": [
+    "target/m2/stage69-72-b-publication-prep-06/layout.json",
+    "target/m2/stage69-72-b-publication-prep-06/admission.py",
+    "target/m2/stage69-72-b-publication-prep-06/publish.py",
+    "target/m2/stage69-72-b-publication-prep-06/run.py",
+    "target/m2/stage69-72-b-publication-prep-06/PLAN.md",
+    "target/m2/stage69-72-b-publication-prep-06/preparation.json",
+    "target/m2/stage69-72-b-publication-prep-06/validation-other-invocation.json"
+  ],
+  "schema": 1,
+  "selected_directories": [
+    "stage69-72-canonical-validation-prep-01",
+    "stage69-72-canonical-validation-prep-02",
+    "stage69-72-canonical-validation-prep-03",
+    "stage69-72-canonical-validation-prep-04",
+    "stage69-72-canonical-validation-prep-05",
+    "stage69-72-canonical-validation-prep-06",
+    "stage69-72-required-checks-launch-01",
+    "stage69-72-required-checks-launch-02",
+    "stage69-72-rust-validation-launch-03",
+    "stage69-72-rust-validation-launch-04",
+    "stage69-72-tooling-validation-01",
+    "stage69-72-warm-admission-01",
+    "stage69-72-warm-admission-02"
+  ],
+  "source_before_after_equal": true,
+  "terminal_admission": {
+    "candidate_compatibility_passes_claimed": 0,
+    "complete": true,
+    "java_new_processes_for_replay": 0,
+    "known_failures_preserved": true,
+    "new_passes_from_prior_nonpass": 6,
+    "new_status_counts": {
+      "candidate-unsupported": 141,
+      "mismatch": 115,
+      "oracle-error": 2,
+      "pass": 4158
+    },
+    "platform_observations_per_target": 478,
+    "replay_results": 4416,
+    "stage68_pass_to_nonpass": 0,
+    "stage68_prior_passes": 4152
+  }
+}

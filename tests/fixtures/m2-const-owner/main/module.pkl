@@ -1,0 +1,24 @@
+// Class const property body and type check should be cached at their prototype owner.
+open class C {
+  const text = trace("const-body")
+  const typed: Int(let (_ = trace("const-type")) true) = 1
+  ordinary = trace("ordinary-body")
+  marker: Int = 0
+}
+class Child extends C {}
+a = new C {}
+b = (a) { marker = 1 }
+c = new C {}
+d = new Child {}
+class FailedBody {
+  const value = let (_ = trace("failed-body")) throw("const-body-failure")
+  marker: Int = 0
+}
+failedA = new FailedBody {}
+failedB = (failedA) { marker = 1 }
+class FailedType {
+  const value: Int(let (_ = trace("failed-type")) this > 0) = 0
+  marker: Int = 0
+}
+wrongA = new FailedType {}
+wrongB = (wrongA) { marker = 1 }

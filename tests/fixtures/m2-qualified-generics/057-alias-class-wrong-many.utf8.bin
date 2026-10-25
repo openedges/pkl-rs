@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find type `Missing`.
+
+1 | Int is C<Missing, OtherMissing>
+             ^^^^^^^
+at  (repl:text)
+
+Searched in the following places:
+* Module `qualified-generics` and any supermodules
+* Module `pkl#base`

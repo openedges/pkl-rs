@@ -1,0 +1,3 @@
+import "pkl:base" as base
+typealias Comparable = Int
+result: base.Comparable = "ok"

@@ -136,7 +136,13 @@ fn append_members(
             || (uri == "pkl:base"
                 && matches!(
                     member.name.as_str(),
-                    "DataSizeUnit" | "DurationUnit" | "Charset"
+                    "DataSizeUnit"
+                        | "DurationUnit"
+                        | "Charset"
+                        | "Comparable"
+                        | "Char"
+                        | "Uri"
+                        | "Mixin"
                 ))
     });
     let resolved = crate::resolver::resolve_module(&header)

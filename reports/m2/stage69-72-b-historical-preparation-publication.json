@@ -1,0 +1,320 @@
+{
+  "archive": {
+    "bytes": 69610,
+    "full_member_readback_verified": true,
+    "members": 53,
+    "mode": 420,
+    "path": "reports/m2/stage69-72-b-historical-preparation-evidence.tar.gz",
+    "sha256": "45c16ee2b4fcd67fe553200c2dd5a8389f1f967f67551dc24874f89214f0f094"
+  },
+  "base_head": "a5a3c50e999364c8437ff6daa7512af432633d7b",
+  "candidate_compatibility_passes_claimed": 0,
+  "embedded_manifest_sha256": "9e942937ea3b891e3753d9ca0af234ff8c8d668c712ae600e8dcbc4991aa6b98",
+  "execution_receipt_included": false,
+  "group": "historical-preparation",
+  "kind": "stage69-72-B-local-evidence-publication",
+  "known_limits": [
+    "Strict M2/full API/performance remain unclaimed.",
+    "Stage69\u201372 selected native/N-API/Chromium 235+4 captures pass all selected raw channels; M1 contract passes with known Regex strict failures; Any and full M2 remain failed/unclaimed.",
+    "No Wasmtime result is promised by the native/N-API/Chromium capture prep or M1 browser wrapper.",
+    "Stage67 baseline and physical workspaces plus Stage68 public replay proof are linked by identity rather than duplicated.",
+    "Actual Rust-only 4,416 replay: 4,158 pass, 115 mismatch, 141 candidate-unsupported, 2 oracle-error; 1,795 full-gate failures and zero Stage68 prior-pass regressions; full M2 remains open."
+  ],
+  "member_inventory": {
+    "target/m2/stage69-72-b-publication-prep-01/PLAN.md": {
+      "bytes": 3789,
+      "mode": 420,
+      "sha256": "d135bcd74f323044b8bcd86e7edc15fcc3ea23927c3465a39159eb0d7e21341e"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/check_layout.py": {
+      "bytes": 4327,
+      "mode": 420,
+      "sha256": "799dc63643621083ac681bbfe5d6af5a933be67fa99837225753480c38103964"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/layout-all-initial.json": {
+      "bytes": 12302,
+      "mode": 420,
+      "sha256": "a0506f1e3dc2167bce82474fcc3c31a2aaaa6ed22a876b5464954da93da96423"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/layout-initial.json": {
+      "bytes": 7525,
+      "mode": 420,
+      "sha256": "273066eacc397d7ad6ab04d771fbf4100090c3cb5b1997b10ea63db6a34bde30"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/layout-pre-exclusion.json": {
+      "bytes": 12262,
+      "mode": 420,
+      "sha256": "12f2fd11548ed5bc38604f1f1d39a3c73a24229e681a2af0970699e3af62b5b0"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/layout-prefix-only.json": {
+      "bytes": 7773,
+      "mode": 420,
+      "sha256": "b51f57adba420deb422ddf686a1e28bc4a46f4e7153ba743df5a64e972df3baa"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/layout.json": {
+      "bytes": 12408,
+      "mode": 420,
+      "sha256": "cc41238de74cffc8b05ac599250e98655d266b3410b53c5bd51c8a5af91fe19f"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/make_layout.py": {
+      "bytes": 9344,
+      "mode": 420,
+      "sha256": "cad370450ed0489d0d0919a18382738e46279d5474f9efa7f514edcfdd7165e5"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/preparation-before-wording.json": {
+      "bytes": 1680,
+      "mode": 420,
+      "sha256": "6c527c4253ab429ea60f7e53ff7ca0a7eafa7e28dccd63af4890e93b78b43095"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/preparation-initial.json": {
+      "bytes": 1680,
+      "mode": 420,
+      "sha256": "8eb646ea06b37b4bdba808fb5bfaee047e41ed1275a9133c61a32620e153a9c9"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/preparation.json": {
+      "bytes": 1680,
+      "mode": 420,
+      "sha256": "2ddb112a6a275cac838b385242be5b674e33d0003e813f7ddc4c53213f3e92b2"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/size-estimate-02.json": {
+      "bytes": 2242,
+      "mode": 420,
+      "sha256": "7fdd463f53a27d8145f297327e06aba710c7f21ac56c03433638538c93442601"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/size-estimate-03.json": {
+      "bytes": 2604,
+      "mode": 420,
+      "sha256": "c61efcf1f7844449034882dcb272df5407b8ea6172f06370829a244b7b196f79"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/size-estimate.json": {
+      "bytes": 1962,
+      "mode": 420,
+      "sha256": "8a38baf8530c55444b7d5dc9543a88d4bcbe184efc095e650a36134d8ee6d26a"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/static-preflight-02.json": {
+      "bytes": 1711,
+      "mode": 420,
+      "sha256": "6138c078ec0589b5bfb064478627a02cba692752c779830776c91dfc94518eae"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/static-preflight-03.json": {
+      "bytes": 1711,
+      "mode": 420,
+      "sha256": "6138c078ec0589b5bfb064478627a02cba692752c779830776c91dfc94518eae"
+    },
+    "target/m2/stage69-72-b-publication-prep-01/static-preflight.json": {
+      "bytes": 1710,
+      "mode": 420,
+      "sha256": "bef1fae08a2fb2cdb44bb8e287c83988b9d5b7cd9eb02a9d09421b341c20097f"
+    },
+    "target/m2/stage69-72-b-publication-prep-02/PLAN.md": {
+      "bytes": 3890,
+      "mode": 420,
+      "sha256": "7671150c686b8ea0d6f30c84fc5324181f21efac59efb027e503591f0c0f34dd"
+    },
+    "target/m2/stage69-72-b-publication-prep-02/check_layout.py": {
+      "bytes": 4958,
+      "mode": 420,
+      "sha256": "ee3b440a440cfed2f297a87b7e73584a584f5b514010f1928342ab68665006c6"
+    },
+    "target/m2/stage69-72-b-publication-prep-02/layout-initial.json": {
+      "bytes": 12464,
+      "mode": 420,
+      "sha256": "959ad743b8d305c3c4ac506e235e8b52efaca3c5e215f4e2f6d094fb51b9f3e3"
+    },
+    "target/m2/stage69-72-b-publication-prep-02/layout.json": {
+      "bytes": 12519,
+      "mode": 420,
+      "sha256": "05bc0d4b20c7931dcbd3b7c649633e34cbd331427328fc3da416be91fb581a7b"
+    },
+    "target/m2/stage69-72-b-publication-prep-02/make_layout.py": {
+      "bytes": 9529,
+      "mode": 420,
+      "sha256": "90bea72d0c3cfda72bea054976037e0136af56a3475b94853c7620074cb6ff8c"
+    },
+    "target/m2/stage69-72-b-publication-prep-02/preparation.json": {
+      "bytes": 1672,
+      "mode": 420,
+      "sha256": "76a1391e0588d89f8eafa0f71ff3177b6f611957b988c7cd3cecce4a6d63fbf4"
+    },
+    "target/m2/stage69-72-b-publication-prep-02/size-estimate.json": {
+      "bytes": 2764,
+      "mode": 420,
+      "sha256": "76c5d6937daa2c48d8dd60d2d839e830a2c335a3302a946806325b9a4cc38672"
+    },
+    "target/m2/stage69-72-b-publication-prep-02/static-preflight-02.json": {
+      "bytes": 1665,
+      "mode": 420,
+      "sha256": "f3e94329f3b06a6065f18fdff4e83ec5780a509207628a8dafd1c208b1b960b4"
+    },
+    "target/m2/stage69-72-b-publication-prep-02/static-preflight.json": {
+      "bytes": 1665,
+      "mode": 420,
+      "sha256": "f3e94329f3b06a6065f18fdff4e83ec5780a509207628a8dafd1c208b1b960b4"
+    },
+    "target/m2/stage69-72-b-publication-prep-03/PLAN.md": {
+      "bytes": 2413,
+      "mode": 420,
+      "sha256": "5811aa40025ba30e7d5e95a42438b7f310d7972b31afc45d467d3771cdaad5e0"
+    },
+    "target/m2/stage69-72-b-publication-prep-03/admission.py": {
+      "bytes": 9289,
+      "mode": 420,
+      "sha256": "499de37576f86198dff92ece8e52da558020d71dc76ea03b7e26caf81c66c439"
+    },
+    "target/m2/stage69-72-b-publication-prep-03/layout.json": {
+      "bytes": 14403,
+      "mode": 420,
+      "sha256": "84cb45eeced082aace2a2d1447ea3ff5e6b22b3cf81853551ce7def8bea9cda0"
+    },
+    "target/m2/stage69-72-b-publication-prep-03/preparation.json": {
+      "bytes": 2229,
+      "mode": 420,
+      "sha256": "ba7ae71e9894b93021919d11a5fbcaed91cf9c8184a05ecf24a63f999dff6b4b"
+    },
+    "target/m2/stage69-72-b-publication-prep-03/publish.py": {
+      "bytes": 9013,
+      "mode": 420,
+      "sha256": "08dc0da9f914d77bd17c59fe5593f955e3e81412dca281646333178b4070eda3"
+    },
+    "target/m2/stage69-72-b-publication-prep-03/run.py": {
+      "bytes": 2961,
+      "mode": 420,
+      "sha256": "3a2afbe11266b49f67a817cc41c91626863481d223b66ebb372a1bdba3e42d8a"
+    },
+    "target/m2/stage69-72-b-publication-prep-04/PLAN.md": {
+      "bytes": 3177,
+      "mode": 420,
+      "sha256": "19adcc7d7cf20626298ec73853cd64dcd81142408cba593cf37145660a6d5246"
+    },
+    "target/m2/stage69-72-b-publication-prep-04/admission.py": {
+      "bytes": 11606,
+      "mode": 420,
+      "sha256": "ccdbb3695b78f02d07dc538a85f96907a2bf44df7f256624947641e280cd4050"
+    },
+    "target/m2/stage69-72-b-publication-prep-04/layout.json": {
+      "bytes": 15251,
+      "mode": 420,
+      "sha256": "64a770017388a77d1522d18e4c8c25f21f746b3f3c8e0013150a1b5258632ff4"
+    },
+    "target/m2/stage69-72-b-publication-prep-04/preparation.json": {
+      "bytes": 2399,
+      "mode": 420,
+      "sha256": "0c63306b94596d757638966ec9ef19e225164eaf4b868e0aac2bef0e366f0172"
+    },
+    "target/m2/stage69-72-b-publication-prep-04/publish.py": {
+      "bytes": 9013,
+      "mode": 420,
+      "sha256": "08dc0da9f914d77bd17c59fe5593f955e3e81412dca281646333178b4070eda3"
+    },
+    "target/m2/stage69-72-b-publication-prep-04/run.py": {
+      "bytes": 2961,
+      "mode": 420,
+      "sha256": "3a2afbe11266b49f67a817cc41c91626863481d223b66ebb372a1bdba3e42d8a"
+    },
+    "target/m2/stage69-72-b-publication-prep-05/PLAN.md": {
+      "bytes": 5058,
+      "mode": 420,
+      "sha256": "251c0b48b92e6c27fdb583650ddbd82c7366f8249e4894bc1f7536a9a6f0843f"
+    },
+    "target/m2/stage69-72-b-publication-prep-05/admission.py": {
+      "bytes": 14427,
+      "mode": 420,
+      "sha256": "38851fcb6cbbeef44610492d7226ee76c8266a54ba38122ec8c84449edca6227"
+    },
+    "target/m2/stage69-72-b-publication-prep-05/discard-compression-measurement.json": {
+      "bytes": 2277,
+      "mode": 420,
+      "sha256": "3552edda61476725e93e854f90782c7519d9e458ee060176f48d5e0b9acfa7eb"
+    },
+    "target/m2/stage69-72-b-publication-prep-05/layout.json": {
+      "bytes": 16090,
+      "mode": 420,
+      "sha256": "ae5023eed41f29fc6bcf9225ff654176c3c0dbbf689122101e7c4fb1c6c5f8ce"
+    },
+    "target/m2/stage69-72-b-publication-prep-05/preparation.json": {
+      "bytes": 2538,
+      "mode": 420,
+      "sha256": "c1e9a5f187eb32576ca039bd324706901cbfdb87aa3811aaa20663c937687a03"
+    },
+    "target/m2/stage69-72-b-publication-prep-05/publish.py": {
+      "bytes": 9012,
+      "mode": 420,
+      "sha256": "09542996ef7be01f858c497722c157a1748cb7e9964747320ffee463fc282a55"
+    },
+    "target/m2/stage69-72-b-publication-prep-05/run.py": {
+      "bytes": 2961,
+      "mode": 420,
+      "sha256": "3a2afbe11266b49f67a817cc41c91626863481d223b66ebb372a1bdba3e42d8a"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/PLAN.md": {
+      "bytes": 3214,
+      "mode": 420,
+      "sha256": "b7433e4ba0d9ce184b9e1a8df1c7b49cd6abcc8602aa3430d25d19b71ac0d47c"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/admission.py": {
+      "bytes": 14427,
+      "mode": 420,
+      "sha256": "38851fcb6cbbeef44610492d7226ee76c8266a54ba38122ec8c84449edca6227"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/historical-preparation-invocation.json": {
+      "bytes": 679,
+      "mode": 420,
+      "sha256": "e4652db228aa95f3913d4cc07bff1fa3ed122c6f8f04859018e348683c88ab69"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/layout.json": {
+      "bytes": 16764,
+      "mode": 420,
+      "sha256": "a4570209aff67d1782aaf46d74dc3eaa580d2b4da792a689748ab02bea6113b2"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/preparation.json": {
+      "bytes": 3119,
+      "mode": 420,
+      "sha256": "18428a27e071e426072e888187051bfbba15dca51ae2dd340ee18b026b3518e6"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/publish.py": {
+      "bytes": 9012,
+      "mode": 420,
+      "sha256": "09542996ef7be01f858c497722c157a1748cb7e9964747320ffee463fc282a55"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/run.py": {
+      "bytes": 2961,
+      "mode": 420,
+      "sha256": "3a2afbe11266b49f67a817cc41c91626863481d223b66ebb372a1bdba3e42d8a"
+    }
+  },
+  "publisher_sources": [
+    "target/m2/stage69-72-b-publication-prep-06/layout.json",
+    "target/m2/stage69-72-b-publication-prep-06/admission.py",
+    "target/m2/stage69-72-b-publication-prep-06/publish.py",
+    "target/m2/stage69-72-b-publication-prep-06/run.py",
+    "target/m2/stage69-72-b-publication-prep-06/PLAN.md",
+    "target/m2/stage69-72-b-publication-prep-06/preparation.json",
+    "target/m2/stage69-72-b-publication-prep-06/historical-preparation-invocation.json"
+  ],
+  "schema": 1,
+  "selected_directories": [
+    "stage69-72-b-publication-prep-01",
+    "stage69-72-b-publication-prep-02",
+    "stage69-72-b-publication-prep-03",
+    "stage69-72-b-publication-prep-04",
+    "stage69-72-b-publication-prep-05"
+  ],
+  "source_before_after_equal": true,
+  "terminal_admission": {
+    "candidate_compatibility_passes_claimed": 0,
+    "complete": true,
+    "java_new_processes_for_replay": 0,
+    "known_failures_preserved": true,
+    "new_passes_from_prior_nonpass": 6,
+    "new_status_counts": {
+      "candidate-unsupported": 141,
+      "mismatch": 115,
+      "oracle-error": 2,
+      "pass": 4158
+    },
+    "platform_observations_per_target": 478,
+    "replay_results": 4416,
+    "stage68_pass_to_nonpass": 0,
+    "stage68_prior_passes": 4152
+  }
+}

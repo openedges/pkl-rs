@@ -1,0 +1,7 @@
+import "pkl:base" as b
+import "pkl:ref" as ref
+class D extends ref.Domain {
+  function renderReference(_): String = "ref"
+}
+local d = new D {}
+referenceValue = ref.Reference(d, Int, null)

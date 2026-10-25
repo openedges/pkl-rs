@@ -1,0 +1,10 @@
+–– Pkl Error ––
+value first
+
+2 | result: b.VarArgs<Int> = throw("value first")
+                             ^^^^^^^^^^^^^^^^^^^^
+at varargs-boundary#result (file:///stage70/varargs-boundary.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

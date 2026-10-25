@@ -1,0 +1,69 @@
+{
+  "module_uri": "file:///stage72/const-owner.pkl",
+  "rows": [
+    {
+      "id": "reverse-00",
+      "expression": "child.constValue"
+    },
+    {
+      "id": "reverse-01",
+      "expression": "base.constValue"
+    },
+    {
+      "id": "reverse-02",
+      "expression": "sibling.constValue"
+    },
+    {
+      "id": "reverse-03",
+      "expression": "child.constValue"
+    },
+    {
+      "id": "reverse-04",
+      "expression": "child.fixedValue"
+    },
+    {
+      "id": "reverse-05",
+      "expression": "base.fixedValue"
+    },
+    {
+      "id": "reverse-06",
+      "expression": "sibling.fixedValue"
+    },
+    {
+      "id": "reverse-07",
+      "expression": "child.typedFixed"
+    },
+    {
+      "id": "reverse-08",
+      "expression": "base.typedFixed"
+    },
+    {
+      "id": "reverse-09",
+      "expression": "sibling.typedFixed"
+    },
+    {
+      "id": "reverse-10",
+      "expression": "child.localRead"
+    },
+    {
+      "id": "reverse-11",
+      "expression": "base.localRead"
+    },
+    {
+      "id": "reverse-12",
+      "expression": "sibling.localRead"
+    },
+    {
+      "id": "reverse-13",
+      "expression": "child.localValue"
+    },
+    {
+      "id": "reverse-14",
+      "expression": "base.localValue"
+    },
+    {
+      "id": "reverse-15",
+      "expression": "child.marker"
+    }
+  ]
+}

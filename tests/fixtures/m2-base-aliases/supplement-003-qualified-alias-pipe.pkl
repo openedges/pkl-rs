@@ -1,0 +1,4 @@
+import "pkl:base" as base
+typealias M = base.Mixin<Dynamic>
+f: M = new { value = "changed" }
+result = (new Dynamic { value = "original" }) |> f

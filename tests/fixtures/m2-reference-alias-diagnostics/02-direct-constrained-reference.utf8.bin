@@ -1,0 +1,6 @@
+–– Pkl Error ––
+`Reference` referent type argument may not include type constraints.
+
+2 | foo: ref.Reference<ref.Domain, String(isEmpty)>
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at reference-alias-regression (file:///stage69-72/reference-alias-regression.pkl)

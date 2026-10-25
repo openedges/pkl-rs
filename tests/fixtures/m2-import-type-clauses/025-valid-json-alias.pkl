@@ -1,0 +1,2 @@
+import "pkl:json" as json
+result = 1 is json.Value

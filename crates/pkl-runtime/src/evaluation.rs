@@ -403,11 +403,13 @@ pub(crate) fn prepare_runtime_error(
         error.hint = hint;
     }
     if error.kind == ErrorKind::MissingType {
-        let module = error
-            .frames
-            .first()
-            .and_then(|frame| frame.source.as_ref())
-            .map_or(module, |source| source.module_name.as_ref());
+        let module = error.type_lookup_module.as_deref().unwrap_or_else(|| {
+            error
+                .frames
+                .first()
+                .and_then(|frame| frame.source.as_ref())
+                .map_or(module, |source| source.module_name.as_ref())
+        });
         error.hint = Some(format!(
             "Searched in the following places:\n* Module `{module}` and any supermodules\n* Module `pkl#base`"
         ).into());

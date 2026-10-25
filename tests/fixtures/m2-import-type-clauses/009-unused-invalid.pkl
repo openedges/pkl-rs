@@ -1,0 +1,3 @@
+local base = import("pkl:base")
+unused = new base.Listing {}
+result = 1

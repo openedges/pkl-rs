@@ -1,0 +1,14 @@
+–– Pkl Error ––
+default-callback
+
+39 | default = (key) -> throw("default-callback")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+at super-entry-default#defaultThrowL.default.<function#1> (file:///stage69/super-entry-default.pkl)
+
+124 | defaultError = defaultThrowL[0]
+                     ^^^^^^^^^^^^^^^^
+at super-entry-default#defaultError (file:///stage69/super-entry-default.pkl)
+
+1 | defaultError
+    ^^^^^^^^^^^^
+at  (repl:text)

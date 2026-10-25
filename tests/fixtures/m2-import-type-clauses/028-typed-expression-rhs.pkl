@@ -1,0 +1,2 @@
+local base = import("pkl:base")
+result: base.Listing = throw("rhs must not run")

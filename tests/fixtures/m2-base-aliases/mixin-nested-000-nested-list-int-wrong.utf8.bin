@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "wrong"
+
+2 | f: base.Mixin<List<Int>>
+                       ^^^
+at mixin-default-origin-nested#f (file:///stage71/mixin-default-origin-nested.pkl)
+
+3 | result = f.apply(List("wrong"))
+             ^^^^^^^^^^^^^^^^^^^^^^
+at mixin-default-origin-nested#result (file:///stage71/mixin-default-origin-nested.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

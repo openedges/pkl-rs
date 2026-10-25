@@ -192,7 +192,9 @@ pub enum Instruction {
     Subscript {
         key_span: Span,
     },
-    SuperSubscript,
+    SuperSubscript {
+        end: usize,
+    },
     EntryParent {
         end: usize,
     },
@@ -303,6 +305,12 @@ pub enum Instruction {
         method: bool,
     },
     ResolveType(TypeCheck),
+    /// Resolve the actual declaration and class arity before argument nodes.
+    /// Canonical Class<T> skips that argument region without resolving T.
+    PrepareTypeArguments {
+        recipe: usize,
+        end: usize,
+    },
     ResolvedClass(TypeCheck),
     ResolvedDefault {
         ty: TypeCheck,
@@ -444,6 +452,12 @@ pub enum TypeCheck {
         result: Box<TypeCheck>,
         syntax: bool,
     },
+    /// Public parameterized VarArgs preserves its argument metadata but rejects
+    /// value checking/default acquisition at the corresponding runtime boundary.
+    VarArgs {
+        element: Box<TypeCheck>,
+        span: Span,
+    },
     MetaClass(Arc<str>),
     IntegerAlias {
         name: Arc<str>,
@@ -550,6 +564,10 @@ impl TypeCheck {
             }
             let equal = match (left, right) {
                 (Self::MetaClass(a), Self::MetaClass(b)) => a == b,
+                (Self::VarArgs { element: a, .. }, Self::VarArgs { element: b, .. }) => {
+                    pending.push((a, b));
+                    true
+                }
                 (
                     Self::Function {
                         parameters: a,
@@ -781,7 +799,7 @@ impl TypeCheck {
             Self::IntegerAlias { min, max, .. } => {
                 matches!(value,Value::Int(i) if i>=min && i<=max)
             }
-            Self::Nothing => false,
+            Self::Nothing | Self::VarArgs { .. } => false,
             Self::NonNull => !value.is_null(),
             Self::Null => value.is_null(),
             Self::Boolean => matches!(value, Value::Bool(_)),
@@ -897,6 +915,7 @@ pub struct Program {
     primitive_methods: BTreeMap<(Arc<str>, Arc<str>), usize>,
     pub(crate) amended_function_block: usize,
     pub(crate) identity_mixin_block: usize,
+    pub(crate) base_mixin_declaration: Option<usize>,
     pub(crate) access_members: Vec<Member>,
     pub(crate) builtin_members: BTreeMap<usize, Vec<Member>>,
     pub(crate) constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
@@ -1039,6 +1058,7 @@ impl Program {
             primitive_methods,
             amended_function_block,
             identity_mixin_block,
+            base_mixin_declaration: None,
             access_members,
             builtin_members,
             constraint_origins: BTreeMap::new(),
@@ -1123,6 +1143,9 @@ struct Force {
     owner: ObjectId,
     name: Arc<str>,
     cache: Option<CacheKey>,
+    /// A nonlocal const read acquires and checks its value at the prototype owner.
+    /// Only its successful result is copied into the original receiver cache.
+    const_receiver: Option<Box<(ObjectId, CacheKey)>>,
     method: bool,
     inherited_types: Vec<(TypeCheck, Span, PklString, ObjectId)>,
     collection_casts: Vec<crate::heap::CollectionCast>,
@@ -1135,7 +1158,7 @@ struct Frame {
     pc: usize,
     base: usize,
     environment: Environment,
-    force: Option<Force>,
+    force: Option<Box<Force>>,
     lambda: bool,
     type_run: Option<TypeRun>,
     type_resolution: Option<type_resolution::DeclaredRun>,
@@ -1927,6 +1950,9 @@ impl Vm {
                 if let Some(force) = &frame.force {
                     roots.push(Value::Object(force.receiver));
                     roots.push(Value::Object(force.owner));
+                    if let Some(copy) = &force.const_receiver {
+                        roots.push(Value::Object(copy.0));
+                    }
                     for cast in &force.collection_casts {
                         typecheck::environment_roots(&cast.environment, &mut roots);
                         roots.extend(cast.node.map(|node| node.0.root()));
@@ -1946,6 +1972,17 @@ impl Vm {
     }
 
     fn fail(&mut self, mut error: RuntimeError) {
+        if error.kind == ErrorKind::MissingType
+            && error.type_lookup_module.is_none()
+            && let Some(frame) = self.frames.last()
+            && let Ok(owner) = self.declaring_module(&frame.environment, false)
+            && let Ok(module) = self.heap.get(owner)
+            && let Some(unit) = module
+                .module_unit
+                .and_then(|id| self.program.units.get(id.0 as usize))
+        {
+            error.type_lookup_module = Some(unit.name.clone());
+        }
         if error.span.is_none()
             && let Some(frame) = self.frames.last()
             && let Some(metadata) = self.program.metadata.get(frame.block)
@@ -2496,6 +2533,71 @@ impl Vm {
         )
     }
 
+    /// Publish a completed owner result without enlarging the ordinary VM
+    /// instruction dispatch stack frame with the rare receiver-copy payload.
+    #[inline(never)]
+    fn publish_const_receiver(&mut self, value: &Value) -> Result<bool, RuntimeError> {
+        let copy = self
+            .frames
+            .last_mut()
+            .and_then(|frame| frame.force.as_mut())
+            .and_then(|force| force.const_receiver.take());
+        let Some(copy) = copy else {
+            return Ok(false);
+        };
+        let (receiver, key) = *copy;
+        self.complete_cache(receiver, key, value.clone())?;
+        self.stack.push(value.clone());
+        self.frames.last_mut().expect("active frame").pc -= 1;
+        Ok(true)
+    }
+
+    // Keep the rare const forwarding locals out of the ordinary member-force
+    // stack frame: deep source recovery is required to fit a 256 KiB stack.
+    #[inline(never)]
+    fn force_const_owner(
+        &mut self,
+        receiver: ObjectId,
+        owner: ObjectId,
+        name: Arc<str>,
+        key: CacheKey,
+        member: Member,
+        predicate: bool,
+    ) -> Result<(), RuntimeError> {
+        let previous_frames = self.frames.len();
+        self.force_key_mode_prepared(
+            owner,
+            owner,
+            name,
+            false,
+            true,
+            false,
+            false,
+            predicate,
+            true,
+            Some(member),
+        )?;
+        if self.frames.len() == previous_frames {
+            let value = self
+                .stack
+                .last()
+                .cloned()
+                .ok_or_else(|| invalid("missing const owner value"))?;
+            self.complete_cache(receiver, key, value)?;
+        } else {
+            let force = self
+                .frames
+                .last_mut()
+                .and_then(|frame| frame.force.as_mut())
+                .ok_or_else(|| invalid("missing const owner force"))?;
+            // The owner is the sole pending cache attempt. In particular,
+            // failure/cancellation must not poison a child's cache, and a
+            // reentrant callback must still use the shared owner attempt.
+            force.const_receiver = Some(Box::new((receiver, key)));
+        }
+        Ok(())
+    }
+
     #[allow(clippy::too_many_arguments)]
     fn force_key_mode_prepared(
         &mut self,
@@ -2607,6 +2709,12 @@ impl Vm {
                 };
             }
         };
+        // VmUtils.doReadMember acquires inherited const properties from their
+        // prototype owner, including the owner's type check. Local properties
+        // and uncached super-property reads have separate upstream semantics.
+        if memoize && !local && !method && !entry && member.constant && owner != receiver {
+            return self.force_const_owner(receiver, owner, name, key, member, predicate);
+        }
         // Only direct class declaration call targets bypass ordinary lazy cycles.
         // Other reads execute BeginClass, whose early return still publishes the
         // successful ordinary member cache through the normal return machinery.
@@ -2881,17 +2989,18 @@ impl Vm {
             module_load: None,
             uri_resolution: None,
             module_receiver: None,
-            force: Some(Force {
+            force: Some(Box::new(Force {
                 entry,
                 receiver,
                 owner,
                 name,
                 cache: memoize.then_some(key),
+                const_receiver: None,
                 method,
                 inherited_types,
                 collection_casts,
                 skip_typecheck: !memoize && !method,
-            }),
+            })),
         });
         Ok(())
     }
@@ -3791,6 +3900,12 @@ impl Vm {
                 .amendment
                 .as_ref()
                 .and_then(|amendment| amendment.origin.clone())
+                .or_else(|| {
+                    object
+                        .mixin
+                        .as_ref()
+                        .and_then(|(_, _, origin)| origin.clone())
+                })
             {
                 error.frames.push(origin);
             } else if let Some(metadata) = self.program.metadata.get(function.block)
@@ -3981,7 +4096,7 @@ impl Vm {
                 | Instruction::PredicateNext { .. }
                 | Instruction::AddPredicateMember(_)
                 | Instruction::Subscript { .. }
-                | Instruction::SuperSubscript
+                | Instruction::SuperSubscript { .. }
                 | Instruction::EntryParent { .. }
                 | Instruction::EntryDefault
                 | Instruction::EntryKey
@@ -3999,6 +4114,7 @@ impl Vm {
                 | Instruction::BuiltinClass(_)
                 | Instruction::TestType(_)
                 | Instruction::ResolveType(_)
+                | Instruction::PrepareTypeArguments { .. }
                 | Instruction::ResolvedClass(_)
                 | Instruction::ResolvedDefault { .. }
                 | Instruction::ResolvedInferredParent { .. }
@@ -4030,6 +4146,7 @@ impl Vm {
             | Instruction::BuiltinClass(_)
             | Instruction::TestType(_)
             | Instruction::ResolveType(_)
+            | Instruction::PrepareTypeArguments { .. }
             | Instruction::ResolvedClass(_)
             | Instruction::ResolvedDefault { .. }
             | Instruction::ResolvedInferredParent { .. }
@@ -4262,7 +4379,7 @@ impl Vm {
             | Instruction::PredicateNext { .. }
             | Instruction::AddPredicateMember(_)
             | Instruction::Subscript { .. }
-            | Instruction::SuperSubscript
+            | Instruction::SuperSubscript { .. }
             | Instruction::EntryParent { .. }
             | Instruction::EntryDefault
             | Instruction::EntryKey
@@ -5738,158 +5855,162 @@ impl Vm {
                 self.begin_read_resolution(request)?;
             }
             Instruction::Return => {
-                let base = self.frames.last().expect("active frame").base;
-                if self.stack.len() != base + 1 {
-                    return Err(invalid("unbalanced return stack"));
-                }
-                let value = self.pop()?;
-                if let Some(force) = &mut self.frames.last_mut().expect("active frame").force
-                    && !force.skip_typecheck
-                    && !force.inherited_types.is_empty()
-                {
-                    let receiver = force.receiver;
-                    let (ty, span, member, owner) = force.inherited_types.remove(0);
-                    let declaration = self
-                        .heap
-                        .get(owner)?
-                        .members
-                        .iter()
-                        .find(|m| m.name == force.name && !m.method)
-                        .ok_or_else(|| invalid("missing inherited declaration"))?
-                        .code;
-                    let ty = ty.substituted(&self.heap.get(owner)?.environment)?;
-                    let source = self
-                        .program
-                        .metadata
-                        .get(declaration)
-                        .and_then(|m| m.source.clone());
-                    let node = if typecheck::needs_custom_this(&ty) {
-                        let executable = if let Some(parent) =
-                            self.heap.get(owner)?.environment.executable_owner
-                        {
-                            self.heap
-                                .executable_child(parent, ExecutionSite::Member(declaration))?
-                        } else {
-                            self.executable_root(declaration)
-                        };
-                        // Synthetic stdlib members carry annotation metadata without
-                        // an authored CheckType instruction. Their declaration still
-                        // owns a distinct annotation site, shared with direct checks.
-                        Some(TypeNodeId(self.heap.executable_child(
-                            executable,
-                            ExecutionSite::PropertyType(declaration),
-                        )?))
-                    } else {
-                        None
-                    };
-                    let mut frames = vec![RuntimeFrame {
-                        source,
-                        span,
-                        member,
-                    }];
-                    let frame = self.frames.last().expect("active frame");
-                    if let Some(metadata) = self.program.metadata.get(frame.block)
-                        && let Some(span) = metadata.value_span
-                    {
-                        frames.push(RuntimeFrame {
-                            source: metadata.source.clone(),
-                            span,
-                            member: metadata.member.clone(),
-                        });
-                    }
-                    self.begin_type_node(ty, value, TypeDestination::Return, frames, node)?;
-                    let mut environment = self.heap.get(owner)?.environment.clone();
-                    environment.outer_value = environment.this_value.clone();
-                    environment.this_value = Some(Value::Object(receiver));
-                    environment.scopes.insert(0, Scope { receiver, owner });
-                    environment.custom_this = self
-                        .frames
-                        .last()
-                        .expect("type frame")
-                        .environment
-                        .custom_this;
-                    self.frames
-                        .last_mut()
-                        .expect("type frame")
-                        .type_run
-                        .as_mut()
-                        .expect("type run")
-                        .environment = environment;
-                    return Ok(());
-                }
-                if let Some(force) = &mut self.frames.last_mut().expect("active frame").force
-                    && !force.skip_typecheck
-                    && !force.collection_casts.is_empty()
-                {
-                    let cast = force.collection_casts.remove(0);
-                    let mut frames = vec![RuntimeFrame {
-                        source: cast.source,
-                        span: cast.span,
-                        member: cast.member,
-                    }];
-                    let frame = self.frames.last().expect("active frame");
-                    if let Some(metadata) = self.program.metadata.get(frame.block)
-                        && let Some(span) = metadata.value_span
-                    {
-                        frames.push(RuntimeFrame {
-                            source: metadata.source.clone(),
-                            span,
-                            member: metadata.member.clone(),
-                        });
-                    }
-                    self.begin_type_node(
-                        cast.ty,
-                        value,
-                        TypeDestination::Return,
-                        frames,
-                        cast.node,
-                    )?;
-                    let mut environment = cast.environment;
-                    environment.custom_this = self
-                        .frames
-                        .last()
-                        .expect("type frame")
-                        .environment
-                        .custom_this;
-                    self.frames
-                        .last_mut()
-                        .expect("type frame")
-                        .type_run
-                        .as_mut()
-                        .expect("type run")
-                        .environment = environment;
-                    return Ok(());
-                }
-                if let Some(force) = self.frames.last_mut().expect("active frame").force.as_mut()
-                    && let Some(key) = force.cache.take()
-                {
-                    let receiver = force.receiver;
-                    self.complete_cache(receiver, key, value.clone())?;
-                    if self.frames.len() > 1 {
-                        let caller = self.frames.len() - 2;
-                        self.frames[caller].callsite_hidden = true;
-                    }
-                    self.stack.push(value);
-                    self.frames.last_mut().expect("active frame").pc -= 1;
-                    return Ok(());
-                }
-                let frame = self.frames.pop().expect("active frame");
-                if frame.return_to_type {
-                    self.frames
-                        .last_mut()
-                        .and_then(|frame| frame.type_run.as_mut())
-                        .ok_or_else(|| invalid("missing constraint continuation"))?
-                        .returned = Some(value);
-                    return Ok(());
-                }
-                if let Some(caller) = self.frames.last_mut() {
-                    caller.callsite_hidden = false;
-                }
-                self.stack.push(value);
-                if self.frames.is_empty() {
-                    self.finish_top()?;
-                }
+                return self.finish_return();
             }
+        }
+        Ok(())
+    }
+
+    // A returned Frame and type-check continuations are large cold locals.
+    // Keep them off the stack of every non-Return VM instruction.
+    #[inline(never)]
+    fn finish_return(&mut self) -> Result<(), RuntimeError> {
+        let base = self.frames.last().expect("active frame").base;
+        if self.stack.len() != base + 1 {
+            return Err(invalid("unbalanced return stack"));
+        }
+        let value = self.pop()?;
+        if let Some(force) = &mut self.frames.last_mut().expect("active frame").force
+            && !force.skip_typecheck
+            && !force.inherited_types.is_empty()
+        {
+            let receiver = force.receiver;
+            let (ty, span, member, owner) = force.inherited_types.remove(0);
+            let declaration = self
+                .heap
+                .get(owner)?
+                .members
+                .iter()
+                .find(|m| m.name == force.name && !m.method)
+                .ok_or_else(|| invalid("missing inherited declaration"))?
+                .code;
+            let ty = ty.substituted(&self.heap.get(owner)?.environment)?;
+            let source = self
+                .program
+                .metadata
+                .get(declaration)
+                .and_then(|m| m.source.clone());
+            let node = if typecheck::needs_custom_this(&ty) {
+                let executable =
+                    if let Some(parent) = self.heap.get(owner)?.environment.executable_owner {
+                        self.heap
+                            .executable_child(parent, ExecutionSite::Member(declaration))?
+                    } else {
+                        self.executable_root(declaration)
+                    };
+                // Synthetic stdlib members carry annotation metadata without
+                // an authored CheckType instruction. Their declaration still
+                // owns a distinct annotation site, shared with direct checks.
+                Some(TypeNodeId(self.heap.executable_child(
+                    executable,
+                    ExecutionSite::PropertyType(declaration),
+                )?))
+            } else {
+                None
+            };
+            let mut frames = vec![RuntimeFrame {
+                source,
+                span,
+                member,
+            }];
+            let frame = self.frames.last().expect("active frame");
+            if let Some(metadata) = self.program.metadata.get(frame.block)
+                && let Some(span) = metadata.value_span
+            {
+                frames.push(RuntimeFrame {
+                    source: metadata.source.clone(),
+                    span,
+                    member: metadata.member.clone(),
+                });
+            }
+            self.begin_type_node(ty, value, TypeDestination::Return, frames, node)?;
+            let mut environment = self.heap.get(owner)?.environment.clone();
+            environment.outer_value = environment.this_value.clone();
+            environment.this_value = Some(Value::Object(receiver));
+            environment.scopes.insert(0, Scope { receiver, owner });
+            environment.custom_this = self
+                .frames
+                .last()
+                .expect("type frame")
+                .environment
+                .custom_this;
+            self.frames
+                .last_mut()
+                .expect("type frame")
+                .type_run
+                .as_mut()
+                .expect("type run")
+                .environment = environment;
+            return Ok(());
+        }
+        if let Some(force) = &mut self.frames.last_mut().expect("active frame").force
+            && !force.skip_typecheck
+            && !force.collection_casts.is_empty()
+        {
+            let cast = force.collection_casts.remove(0);
+            let mut frames = vec![RuntimeFrame {
+                source: cast.source,
+                span: cast.span,
+                member: cast.member,
+            }];
+            let frame = self.frames.last().expect("active frame");
+            if let Some(metadata) = self.program.metadata.get(frame.block)
+                && let Some(span) = metadata.value_span
+            {
+                frames.push(RuntimeFrame {
+                    source: metadata.source.clone(),
+                    span,
+                    member: metadata.member.clone(),
+                });
+            }
+            self.begin_type_node(cast.ty, value, TypeDestination::Return, frames, cast.node)?;
+            let mut environment = cast.environment;
+            environment.custom_this = self
+                .frames
+                .last()
+                .expect("type frame")
+                .environment
+                .custom_this;
+            self.frames
+                .last_mut()
+                .expect("type frame")
+                .type_run
+                .as_mut()
+                .expect("type run")
+                .environment = environment;
+            return Ok(());
+        }
+        if let Some(force) = self.frames.last_mut().expect("active frame").force.as_mut()
+            && let Some(key) = force.cache.take()
+        {
+            let receiver = force.receiver;
+            self.complete_cache(receiver, key, value.clone())?;
+            if self.frames.len() > 1 {
+                let caller = self.frames.len() - 2;
+                self.frames[caller].callsite_hidden = true;
+            }
+            self.stack.push(value);
+            self.frames.last_mut().expect("active frame").pc -= 1;
+            return Ok(());
+        }
+        if self.publish_const_receiver(&value)? {
+            return Ok(());
+        }
+        let frame = self.frames.pop().expect("active frame");
+        if frame.return_to_type {
+            self.frames
+                .last_mut()
+                .and_then(|frame| frame.type_run.as_mut())
+                .ok_or_else(|| invalid("missing constraint continuation"))?
+                .returned = Some(value);
+            return Ok(());
+        }
+        if let Some(caller) = self.frames.last_mut() {
+            caller.callsite_hidden = false;
+        }
+        self.stack.push(value);
+        if self.frames.is_empty() {
+            self.finish_top()?;
         }
         Ok(())
     }
@@ -6968,6 +7089,11 @@ impl Compiler<'_> {
                     .expect("type aliases are declared in module scope")
                     .to_owned()
             });
+        let canonical_base_mixin = self
+            .source
+            .as_ref()
+            .is_some_and(|source| source.uri.as_ref() == "pkl:base")
+            && declaration_name == "#Mixin";
         output.push(Instruction::BeginTypeAlias {
             declaration: self.declaration_base + expression.span.start,
             name: Arc::from(declaration_name),
@@ -6992,6 +7118,9 @@ impl Compiler<'_> {
             self.compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), &formals);
         self.constraint_module = previous_module;
         if let Ok(body) = alias_body {
+            if canonical_base_mixin {
+                self.program.base_mixin_declaration = Some(declaration);
+            }
             self.program.alias_definitions.insert(
                 declaration,
                 type_resolution::AliasDefinition {
@@ -7253,7 +7382,16 @@ impl Compiler<'_> {
                     .ok_or_else(|| invalid("missing static binding"))?
                 {
                     Binding::BaseTypeAlias
-                        if matches!(name.as_ref(), "DataSizeUnit" | "DurationUnit" | "Charset") =>
+                        if matches!(
+                            name.as_ref(),
+                            "DataSizeUnit"
+                                | "DurationUnit"
+                                | "Charset"
+                                | "Comparable"
+                                | "Char"
+                                | "Uri"
+                                | "Mixin"
+                        ) =>
                     {
                         output.push(Instruction::LoadBaseModule);
                         output.push(Instruction::GetMember(name));
@@ -7486,6 +7624,7 @@ fn type_name_value_with_heap(ty: &TypeCheck, module: &str, heap: Option<&Heap>) 
         };
         let text = match ty {
             TypeCheck::Unknown => "unknown".into(),
+            TypeCheck::VarArgs { .. } => "VarArgs".into(),
             TypeCheck::MetaClass(name) => name.to_string(),
             TypeCheck::Function { parameters, .. } => parameters
                 .as_ref()
@@ -7636,6 +7775,13 @@ fn operator_name(instruction: &Instruction) -> &'static str {
         Instruction::GreaterEqual => ">=",
         _ => "unknown",
     }
+}
+
+fn internal_varargs_error() -> RuntimeError {
+    RuntimeError::new(
+        ErrorKind::Type,
+        "Class `VarArgs` can only be used by the standard library.",
+    )
 }
 
 fn unsupported_type(feature: &str) -> RuntimeError {
@@ -7817,39 +7963,62 @@ impl Compiler<'_> {
         if let Ok(check) = check
             && check.has_declared()
         {
-            // Resolve a parameterized qualified class before its arguments,
-            // then execute the authored argument plans. A statically known
-            // local class still needs initialization; materializing its
-            // TypeCheck alone does not force that declaration.
+            // An expanded alias can contain a runtime-qualified declaration.
+            // Initialize its authored declaration before materializing that
+            // expansion, just as in the ordinary named-alias path below. The
+            // alias call target owns resolution errors and partial publication.
+            if let TypeKind::Named {
+                path,
+                arguments,
+                name_spans,
+            } = &ty.kind
+                && path.len() == 1
+                && !(arguments.is_empty() && parameters.contains_key(&path[0]))
+                && let Some((member, _)) = self.find_type(&path[0], self.type_scopes.len())
+                && matches!(member.expr.kind, ExprKind::TypeAlias { .. })
+            {
+                output.push_at(
+                    Instruction::ResolveClassType {
+                        name: Arc::from(member.name.as_str()),
+                        local: crate::syntax::modifier_flags(&member.modifiers)
+                            & crate::syntax::ModifierKind::Local.flag()
+                            != 0,
+                    },
+                    name_spans[0],
+                );
+                for argument in arguments {
+                    self.type_resolution_plan(argument, parameters, output)?;
+                }
+                output.push_at(Instruction::CheckTypeAliasInitialized, ty.span);
+            }
+            // Class resolution and arity precede argument resolution. Unlike
+            // aliases, canonical Class<T> erases the argument entirely.
             if let TypeKind::Named {
                 path, arguments, ..
             } = &ty.kind
                 && path.len() > 1
                 && !arguments.is_empty()
             {
-                let mut base = ty.clone();
-                let TypeKind::Named {
-                    arguments: placeholders,
-                    ..
-                } = &mut base.kind
-                else {
-                    unreachable!()
+                let TypeCheck::Declared { recipe, .. } = check.resolved() else {
+                    unreachable!("qualified type is a declaration recipe")
                 };
-                for argument in placeholders {
-                    argument.kind = TypeKind::Unknown;
-                }
-                let base = self
-                    .compile_type_at(
-                        &base,
-                        self.type_scopes.len(),
-                        &mut BTreeSet::new(),
-                        parameters,
-                    )
-                    .map_err(|error| Box::new((error, ty.span)))?;
-                output.push_at(Instruction::ResolveType(base), ty.span);
+                let recipe = *recipe;
+                let gate = output.len();
+                output.push_at(
+                    Instruction::PrepareTypeArguments { recipe, end: 0 },
+                    ty.span,
+                );
                 for argument in arguments {
-                    self.type_resolution_plan(argument, parameters, output)?;
+                    if let Err(failure) = self.type_resolution_plan(argument, parameters, output) {
+                        let (error, span) = *failure;
+                        output.push_at(Instruction::Fail(error.at(span)), span);
+                        break;
+                    }
                 }
+                output[gate] = Instruction::PrepareTypeArguments {
+                    recipe,
+                    end: output.len(),
+                };
             }
             output.push_at(Instruction::ResolveType(check.clone()), ty.span);
             // The actual receiver determines whether this is Reference. Its
@@ -8014,9 +8183,30 @@ impl Compiler<'_> {
                 } else {
                     ty.span
                 };
+                // Alias initialization can validate a qualified Reference before the
+                // alias is expanded at its caller. That authored use still belongs to
+                // the enclosing alias body (TypeNode.ownerAlias), not the module frame.
+                let member = self
+                    .resolved
+                    .module
+                    .members
+                    .iter()
+                    .find_map(|member| match &member.expr.kind {
+                        crate::syntax::ExprKind::TypeAlias { ty: body, .. }
+                            if body.span.start <= ty.span.start && ty.span.end <= body.span.end =>
+                        {
+                            Some(PklString::from(format!(
+                                "#{}",
+                                &self.resolved.module.source
+                                    [member.name_span.start..member.name_span.end]
+                            )))
+                        }
+                        _ => None,
+                    })
+                    .unwrap_or_default();
                 error.frames.push(RuntimeFrame {
                     span,
-                    member: "".into(),
+                    member: member.clone(),
                     source: self.source.clone(),
                 });
                 error.span = Some(ty.span);
@@ -8149,7 +8339,13 @@ impl Compiler<'_> {
                 .collect::<Result<Vec<_>, _>>()?;
             let fallback = if !matches!(
                 path[0].as_str(),
-                "DataSizeUnit" | "DurationUnit" | "Charset"
+                "DataSizeUnit"
+                    | "DurationUnit"
+                    | "Charset"
+                    | "Comparable"
+                    | "Char"
+                    | "Uri"
+                    | "Mixin"
             ) && crate::diagnostic_names::BASE_PROPERTIES
                 .contains(&path[0].as_str())
             {
@@ -8311,7 +8507,11 @@ impl Compiler<'_> {
             } if path.len() == 2 => {
                 let actuals = arguments
                     .iter()
-                    .map(|argument| self.compile_type_at(argument, limit, aliases, parameters))
+                    .map(|argument| {
+                        let mut argument_aliases = aliases.clone();
+                        self.compile_type_at(argument, limit, &mut argument_aliases, parameters)
+                            .or_else(|error| self.deferred_type_error(error, argument.span))
+                    })
                     .collect::<Result<Vec<_>, _>>()?;
                 let reference = self.compile_reference_type(ty, &actuals);
                 let declared = self.declared_type(ty, actuals)?;
@@ -8507,26 +8707,14 @@ impl Compiler<'_> {
                     }
                 } else {
                     if path[0] == "Mixin" {
-                        if arguments.len() > 1 {
-                            return Err(RuntimeError::new(
-                                ErrorKind::Type,
-                                format!("Expected 1 type argument(s) but got {}.", arguments.len()),
-                            ));
-                        }
-                        let argument = arguments
-                            .first()
-                            .map(|t| self.compile_type_at(t, limit, aliases, parameters))
-                            .transpose()?
-                            .unwrap_or(TypeCheck::Unknown);
-                        let mut mixin = amendment::mixin_type(argument);
-                        if let TypeCheck::NamedAlias { default_origin, .. } = &mut mixin {
-                            *default_origin = arguments.first().map(|argument| RuntimeFrame {
-                                source: self.source.clone(),
-                                span: self.type_source_span(argument),
-                                member: self.member.clone(),
-                            });
-                        }
-                        return Ok(mixin);
+                        // Java resolves type arguments before alias arity validation.
+                        let actuals = arguments
+                            .iter()
+                            .map(|argument| {
+                                self.compile_type_at(argument, limit, aliases, parameters)
+                            })
+                            .collect::<Result<Vec<_>, _>>()?;
+                        return self.declared_type(ty, actuals);
                     }
                     if path[0] == "Pair" {
                         if !arguments.is_empty() && arguments.len() != 2 {
@@ -8545,6 +8733,23 @@ impl Compiler<'_> {
                             })
                             .collect::<Result<Vec<_>, RuntimeError>>()?;
                         return Ok(TypeCheck::Pair { arguments });
+                    }
+                    if path[0] == "VarArgs" && !arguments.is_empty() {
+                        if arguments.len() != 1 {
+                            return Err(RuntimeError::new(
+                                ErrorKind::Type,
+                                format!("Expected 1 type argument(s) but got {}.", arguments.len()),
+                            ));
+                        }
+                        return Ok(TypeCheck::VarArgs {
+                            element: Box::new(self.compile_type_at(
+                                &arguments[0],
+                                limit,
+                                aliases,
+                                parameters,
+                            )?),
+                            span: self.type_source_span(ty),
+                        });
                     }
                     if path[0] == "Class" {
                         if arguments.len() > 1 {
@@ -8608,6 +8813,23 @@ impl Compiler<'_> {
                         return Ok(TypeCheck::CollectionBase { arguments });
                     }
                     if !arguments.is_empty() {
+                        if matches!(
+                            path[0].as_str(),
+                            "Comparable"
+                                | "Char"
+                                | "Uri"
+                                | "DataSizeUnit"
+                                | "DurationUnit"
+                                | "Charset"
+                        ) {
+                            let actuals = arguments
+                                .iter()
+                                .map(|argument| {
+                                    self.compile_type_at(argument, limit, aliases, parameters)
+                                })
+                                .collect::<Result<Vec<_>, _>>()?;
+                            return self.declared_type(ty, actuals);
+                        }
                         let kind = match path[0].as_str() {
                             "Listing" => crate::heap::CollectionKind::Listing,
                             "Mapping" => crate::heap::CollectionKind::Mapping,
@@ -8672,8 +8894,15 @@ impl Compiler<'_> {
                         "Int" => TypeCheck::Int,
                         "Float" => TypeCheck::Float,
                         "Duration" => TypeCheck::Duration,
-                        "DataSizeUnit" | "DurationUnit" | "Charset" => {
-                            self.declared_type(ty, Vec::new())?
+                        "DataSizeUnit" | "DurationUnit" | "Charset" | "Comparable" | "Char"
+                        | "Uri" => {
+                            let actuals = arguments
+                                .iter()
+                                .map(|argument| {
+                                    self.compile_type_at(argument, limit, aliases, parameters)
+                                })
+                                .collect::<Result<Vec<_>, _>>()?;
+                            self.declared_type(ty, actuals)?
                         }
                         "Number" => TypeCheck::Number,
                         "String" => TypeCheck::String,
@@ -8828,6 +9057,13 @@ impl Compiler<'_> {
             return Ok(true);
         }
         match check {
+            TypeCheck::VarArgs { .. } => output.push_at(
+                Instruction::ResolvedDefault {
+                    ty: check.clone(),
+                    origin: origin.cloned(),
+                },
+                span,
+            ),
             TypeCheck::Null => output.push_at(Instruction::Constant(Value::Null), span),
             TypeCheck::Nullable(inner) => {
                 let defined = self.default_type_with_origin(inner, output, span, origin)?;
@@ -8844,7 +9080,12 @@ impl Compiler<'_> {
             TypeCheck::Constrained { base, .. } => {
                 return self.default_type_with_origin(base, output, span, origin);
             }
-            TypeCheck::NamedAlias { declaration, .. } if *declaration == amendment::MIXIN_ID => {
+            TypeCheck::NamedAlias { declaration, .. }
+                if amendment::is_base_mixin_alias(
+                    *declaration,
+                    self.program.base_mixin_declaration,
+                ) =>
+            {
                 output.push_at(
                     Instruction::GenericConstructorParent {
                         cache: !check.contains_parameter(),

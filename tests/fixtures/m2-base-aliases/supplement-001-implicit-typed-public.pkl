@@ -1,0 +1,2 @@
+f: Mixin<Dynamic> = new { value = "changed" }
+result = (new Dynamic { value = "original" }) |> f

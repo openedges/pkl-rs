@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected `base` to be a module import, but it is not.
+
+2 | result = 1 is base.Listing?
+                  ^^^^
+at import-type-oracle#result (file:///stage70/import-type-oracle.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

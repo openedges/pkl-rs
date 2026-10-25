@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected 1 type argument(s) but got 2.
+
+2 | result = 1 is b.VarArgs<Int, Missing>
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+at varargs-boundary#result (file:///stage70/varargs-boundary.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

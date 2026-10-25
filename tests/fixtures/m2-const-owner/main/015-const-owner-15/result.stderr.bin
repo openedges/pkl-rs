@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `let (_ = trace("failed-type")) this > 0` violated.
+Value: 0
+
+20 | const value: Int(let (_ = trace("failed-type")) this > 0) = 0
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at const-owner#FailedType.value (file:///stage72/const-owner.pkl)
+
+20 | const value: Int(let (_ = trace("failed-type")) this > 0) = 0
+                                                                 ^
+at const-owner#FailedType.value (file:///stage72/const-owner.pkl)
+
+1 | wrongA.value
+    ^^^^^^^^^^^^
+at  (repl:text)

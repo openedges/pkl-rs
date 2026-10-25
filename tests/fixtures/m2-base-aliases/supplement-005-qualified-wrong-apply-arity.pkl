@@ -1,0 +1,3 @@
+import "pkl:base" as base
+f = new base.Mixin<Dynamic> { value = "changed" }
+result = f.apply()

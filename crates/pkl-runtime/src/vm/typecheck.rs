@@ -749,12 +749,20 @@ impl Vm {
                     );
                     error.span = Some(diagnostic.span());
                     error.frames = run.frames;
-                    if let Mismatch::Constraint {
-                        source: Some(source),
-                        ..
+                    let mut alias_source = None;
+                    let mut inner_mismatch = &mismatch;
+                    while let Mismatch::AliasSource { inner, source } = inner_mismatch {
+                        // The innermost alias owns the failed type expression.
+                        // An alias that merely names another alias must not
+                        // replace the latter's source section.
+                        alias_source = Some(source.clone());
+                        inner_mismatch = inner;
                     }
-                    | Mismatch::AliasSource { source, .. } = &mismatch
-                    {
+                    let constraint_source = match inner_mismatch {
+                        Mismatch::Constraint { source, .. } => source.clone(),
+                        _ => None,
+                    };
+                    if let Some(source) = alias_source.or(constraint_source) {
                         // Keep the constraint's source section, but qualify its
                         // member with the same logical root that supplied
                         // TypeRun.member. An explicit frame with no source
@@ -772,7 +780,7 @@ impl Vm {
                         let module = owner_source
                             .map_or(&self.program.module_name, |source| &source.module_name);
                         let source = if &source.module_name == module {
-                            source.clone()
+                            source
                         } else {
                             Arc::new(crate::value::RuntimeSource {
                                 module_name: module.clone(),
@@ -893,6 +901,14 @@ impl Vm {
                 }
             }
             Task::Check { ty, span } => match ty.into_resolved() {
+                TypeCheck::VarArgs { span, .. } => {
+                    let mut error = internal_varargs_error().at(span);
+                    error.frames = run.frames;
+                    if let Some(frame) = error.frames.first_mut() {
+                        frame.span = span;
+                    }
+                    return Err(error);
+                }
                 TypeCheck::Pair { arguments }
                     if !arguments.is_empty()
                         && matches!(&run.value,Value::Object(id) if self.heap.get(*id)?.pair.is_some()) =>
@@ -934,13 +950,7 @@ impl Vm {
                     default_origin,
                     ..
                 } => {
-                    let span = if matches!(
-                        expanded.unaliased(),
-                        TypeCheck::Union {
-                            string_literals: true,
-                            ..
-                        }
-                    ) && let Some(origin) = default_origin
+                    let span = if let Some(origin) = default_origin
                         && let Some(source) = origin.source
                     {
                         run.tasks.push(Task::AliasSource(source));

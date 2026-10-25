@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find type `moduleName` in module `pkl.base`.
+
+2 | result = new base.moduleName {}
+                      ^^^^^^^^^^
+at import-type-oracle#result (file:///stage70/import-type-oracle.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

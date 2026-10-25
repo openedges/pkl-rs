@@ -1221,6 +1221,7 @@ pub(super) struct ArenaCheckpoint {
     declaration: usize,
     type_recipes: usize,
     aliases: BTreeSet<usize>,
+    base_mixin_declaration: Option<usize>,
 }
 impl ArenaCheckpoint {
     pub(super) fn new(program: &mut Program) -> Self {
@@ -1237,6 +1238,7 @@ impl ArenaCheckpoint {
             declaration: program.next_declaration,
             type_recipes: program.type_recipes.next_id(),
             aliases: program.alias_definitions.keys().copied().collect(),
+            base_mixin_declaration: program.base_mixin_declaration,
         }
     }
     pub(super) fn rollback(self, program: &mut Program) {
@@ -1250,6 +1252,7 @@ impl ArenaCheckpoint {
         program.initial_module_members = self.initial_members;
         program.next_declaration = self.declaration;
         program.type_recipes.rollback(self.type_recipes);
+        program.base_mixin_declaration = self.base_mixin_declaration;
         program
             .alias_definitions
             .retain(|id, _| self.aliases.contains(id));

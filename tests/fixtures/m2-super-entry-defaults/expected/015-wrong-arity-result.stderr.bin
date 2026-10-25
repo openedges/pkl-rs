@@ -1,0 +1,23 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Function0`.
+Value: new Function0 {}
+
+2068 | hidden default: (Int) -> Element = (_) -> new Dynamic {}
+                       ^^^^^^^^^^^^^^^^
+at pkl.base#Listing.default (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2068)
+
+49 | default = () -> "wrong-arity"
+               ^^^^^^^^^^^^^^^^^^^
+at super-entry-default#wrongArityL.default (file:///stage69/super-entry-default.pkl)
+
+50 | super[2]
+     ^^^^^^^^
+at super-entry-default#wrongArityL[#1] (file:///stage69/super-entry-default.pkl)
+
+127 | wrongArity = wrongArityL[0]
+                   ^^^^^^^^^^^^^^
+at super-entry-default#wrongArity (file:///stage69/super-entry-default.pkl)
+
+1 | wrongArity
+    ^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,2 @@
+local base = if (true) import("pkl:base") else import("pkl:base")
+result = new base.Listing {}

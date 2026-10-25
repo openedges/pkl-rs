@@ -1,0 +1,3 @@
+import "pkl:base" as base
+f: base.Mixin<List<Int>>
+result = f.apply(List("wrong"))

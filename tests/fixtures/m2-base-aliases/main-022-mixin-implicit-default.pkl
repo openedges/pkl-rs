@@ -1,0 +1,2 @@
+local f: Mixin<Dynamic>
+result = f(new Dynamic { value = "ok" })

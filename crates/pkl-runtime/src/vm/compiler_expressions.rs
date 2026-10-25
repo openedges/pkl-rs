@@ -53,6 +53,7 @@ enum Work<'a> {
     Visit(&'a Expr),
     Finish(&'a Expr, usize),
     Emit(Instruction, Option<Span>),
+    SuperSubscript,
     BinaryRight(BinaryOp, &'a Expr),
     LogicalEnd(BinaryOp, usize),
     NullableMember(&'a Expr, &'a str),
@@ -186,6 +187,16 @@ impl Compiler<'_> {
                         Some(span) => output.push_at(instruction, span),
                         None => output.push(instruction),
                     },
+                    Work::SuperSubscript => {
+                        // The key has already been evaluated. A successful super
+                        // read skips the fallback; otherwise its key remains
+                        // rooted beneath the lazily read receiver.default.
+                        output.push(Instruction::SuperSubscript {
+                            end: output.len() + 3,
+                        });
+                        output.push(Instruction::Swap);
+                        output.push(Instruction::ApplyEntryDefault);
+                    }
                     Work::Cast(check, span) => {
                         output.type_casts.push(output.len());
                         output.push_at(Instruction::CheckType(check), span);
@@ -1302,16 +1313,16 @@ impl Compiler<'_> {
             }
             ExprKind::Subscript { receiver, key } => {
                 let super_receiver = matches!(receiver.unparenthesized().kind, ExprKind::Super);
-                work.push(Work::Emit(
-                    if super_receiver {
-                        Instruction::SuperSubscript
-                    } else {
+                work.push(if super_receiver {
+                    Work::SuperSubscript
+                } else {
+                    Work::Emit(
                         Instruction::Subscript {
                             key_span: self.executable_value_span(key),
-                        }
-                    },
-                    None,
-                ));
+                        },
+                        None,
+                    )
+                });
                 work.push(Work::Visit(key));
                 if !super_receiver {
                     work.push(Work::Visit(receiver));

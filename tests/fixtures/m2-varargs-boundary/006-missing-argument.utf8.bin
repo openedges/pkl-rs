@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Cannot find type `Missing`.
+
+2 | result = 1 is b.VarArgs<Missing>
+                            ^^^^^^^
+at varargs-boundary#result (file:///stage70/varargs-boundary.pkl)
+
+Searched in the following places:
+* Module `varargs-boundary` and any supermodules
+* Module `pkl#base`
+
+1 | result
+    ^^^^^^
+at  (repl:text)

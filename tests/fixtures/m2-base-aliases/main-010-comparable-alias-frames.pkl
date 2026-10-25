@@ -1,0 +1,3 @@
+import "pkl:base" as base
+typealias Choice = base.Comparable
+result: Choice = true

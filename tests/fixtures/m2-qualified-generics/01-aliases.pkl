@@ -1,0 +1,4 @@
+import "pkl:base" as b
+import "pkl:ref" as ref
+typealias L<T> = b.List<T>
+typealias C<T> = b.Class<T>

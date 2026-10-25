@@ -1,0 +1,6 @@
+–– Pkl Error ––
+`Reference` referent type argument may not include type constraints.
+
+1 | ref.Reference(d, Int, null) is ref.Reference<D, Int(isPositive)>
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

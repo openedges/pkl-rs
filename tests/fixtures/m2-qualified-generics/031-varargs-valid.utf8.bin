@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Class `VarArgs` can only be used by the standard library.
+
+1 | 1 is b.VarArgs<Int>
+         ^^^^^^^^^^^^^^
+at  (repl:text)

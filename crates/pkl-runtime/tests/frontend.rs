@@ -145,10 +145,8 @@ fn base_resolution_and_iterative_ordinary_nesting_are_explicit() {
     }
 
     let module = parse_module("result = Char").unwrap();
-    assert_eq!(
-        resolve_module(&module).unwrap_err().kind,
-        DiagnosticKind::Unsupported
-    );
+    let resolved = resolve_module(&module).unwrap();
+    assert_eq!(resolved.names[&Span::new(9, 13)], Binding::BaseTypeAlias);
     let grouped = format!("{}1{}", "(".repeat(129), ")".repeat(129));
     let expression = parse_expression(&grouped).unwrap();
     assert_eq!(expression.unparenthesized().kind, ExprKind::Int(1));

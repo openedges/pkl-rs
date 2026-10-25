@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find type `Missing`.
+
+2 | result: base.Comparable<Missing> = 1
+                            ^^^^^^^
+at base-alias-oracle (file:///stage71/base-alias-oracle.pkl)
+
+Searched in the following places:
+* Module `base-alias-oracle` and any supermodules
+* Module `pkl#base`

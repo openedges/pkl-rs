@@ -1,0 +1,77 @@
+{
+  "module_uri": "file:///stage72/const-owner.pkl",
+  "rows": [
+    {
+      "id": "const-owner-00",
+      "expression": "a.text"
+    },
+    {
+      "id": "const-owner-01",
+      "expression": "b.text"
+    },
+    {
+      "id": "const-owner-02",
+      "expression": "c.text"
+    },
+    {
+      "id": "const-owner-03",
+      "expression": "d.text"
+    },
+    {
+      "id": "const-owner-04",
+      "expression": "a.typed"
+    },
+    {
+      "id": "const-owner-05",
+      "expression": "b.typed"
+    },
+    {
+      "id": "const-owner-06",
+      "expression": "c.typed"
+    },
+    {
+      "id": "const-owner-07",
+      "expression": "d.typed"
+    },
+    {
+      "id": "const-owner-08",
+      "expression": "a.ordinary"
+    },
+    {
+      "id": "const-owner-09",
+      "expression": "b.ordinary"
+    },
+    {
+      "id": "const-owner-10",
+      "expression": "c.ordinary"
+    },
+    {
+      "id": "const-owner-11",
+      "expression": "d.ordinary"
+    },
+    {
+      "id": "const-owner-12",
+      "expression": "failedA.value"
+    },
+    {
+      "id": "const-owner-13",
+      "expression": "failedB.value"
+    },
+    {
+      "id": "const-owner-14",
+      "expression": "failedA.value"
+    },
+    {
+      "id": "const-owner-15",
+      "expression": "wrongA.value"
+    },
+    {
+      "id": "const-owner-16",
+      "expression": "wrongB.value"
+    },
+    {
+      "id": "const-owner-17",
+      "expression": "wrongA.value"
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "rows": [
+    {
+      "files": [
+        "000-check-list-int.pkl",
+        "000-check-list-int.utf8.bin",
+        "000-check-list-int.utf16be.bin"
+      ],
+      "id": "check-list-int",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-boundary.pkl"
+    },
+    {
+      "files": [
+        "001-check-list-string.pkl",
+        "001-check-list-string.utf8.bin",
+        "001-check-list-string.utf16be.bin"
+      ],
+      "id": "check-list-string",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-boundary.pkl"
+    },
+    {
+      "files": [
+        "002-check-primitive.pkl",
+        "002-check-primitive.utf8.bin",
+        "002-check-primitive.utf16be.bin"
+      ],
+      "id": "check-primitive",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-boundary.pkl"
+    },
+    {
+      "files": [
+        "003-default-missing.pkl",
+        "003-default-missing.utf8.bin",
+        "003-default-missing.utf16be.bin"
+      ],
+      "id": "default-missing",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-boundary.pkl"
+    },
+    {
+      "files": [
+        "004-check-explicit-value.pkl",
+        "004-check-explicit-value.utf8.bin",
+        "004-check-explicit-value.utf16be.bin"
+      ],
+      "id": "check-explicit-value",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-boundary.pkl"
+    },
+    {
+      "files": [
+        "005-check-throwing-value.pkl",
+        "005-check-throwing-value.utf8.bin",
+        "005-check-throwing-value.utf16be.bin"
+      ],
+      "id": "check-throwing-value",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-boundary.pkl"
+    },
+    {
+      "files": [
+        "006-missing-argument.pkl",
+        "006-missing-argument.utf8.bin",
+        "006-missing-argument.utf16be.bin"
+      ],
+      "id": "missing-argument",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-boundary.pkl"
+    },
+    {
+      "files": [
+        "007-wrong-arity-with-missing.pkl",
+        "007-wrong-arity-with-missing.utf8.bin",
+        "007-wrong-arity-with-missing.utf16be.bin"
+      ],
+      "id": "wrong-arity-with-missing",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-boundary.pkl"
+    },
+    {
+      "files": [
+        "008-wrong-arity-known.pkl",
+        "008-wrong-arity-known.utf8.bin",
+        "008-wrong-arity-known.utf16be.bin"
+      ],
+      "id": "wrong-arity-known",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-boundary.pkl"
+    },
+    {
+      "files": [
+        "009-new-external-class.pkl",
+        "009-new-external-class.utf8.bin",
+        "009-new-external-class.utf16be.bin"
+      ],
+      "id": "new-external-class",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-boundary.pkl"
+    },
+    {
+      "files": [
+        "010-implicit-check.pkl",
+        "010-implicit-check.utf8.bin",
+        "010-implicit-check.utf16be.bin"
+      ],
+      "id": "implicit-check",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-boundary.pkl"
+    },
+    {
+      "files": [
+        "011-cast-throwing-operand.pkl",
+        "011-cast-throwing-operand.utf8.bin",
+        "011-cast-throwing-operand.utf16be.bin"
+      ],
+      "id": "cast-throwing-operand",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-cast-boundary.pkl"
+    },
+    {
+      "files": [
+        "012-is-throwing-operand.pkl",
+        "012-is-throwing-operand.utf8.bin",
+        "012-is-throwing-operand.utf16be.bin"
+      ],
+      "id": "is-throwing-operand",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-cast-boundary.pkl"
+    },
+    {
+      "files": [
+        "013-cast-list-value.pkl",
+        "013-cast-list-value.utf8.bin",
+        "013-cast-list-value.utf16be.bin"
+      ],
+      "id": "cast-list-value",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/varargs-cast-boundary.pkl"
+    }
+  ],
+  "schema": 1
+}

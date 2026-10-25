@@ -168,6 +168,9 @@ pub struct RuntimeErrorDetails {
     pub hint: Option<PklString>,
     /// External ErrorMessages template paragraphs have priority over dynamic hints.
     pub(crate) hint_from_template: bool,
+    /// The lexical module searched for a type can differ from its diagnostic
+    /// source (for example an external expression uses the synthetic repl URI).
+    pub(crate) type_lookup_module: Option<Arc<str>>,
     /// A typed Host SPI mapping produced an ordinary guest exception.
     pub(crate) host_language_exception: bool,
     /// The throwing helper has neither a guest node nor a source section.
@@ -185,6 +188,7 @@ const EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
     rendered_diagnostic: None,
     hint: None,
     hint_from_template: false,
+    type_lookup_module: None,
     host_language_exception: false,
     unavailable_origin: false,
     frontend: None,

@@ -1792,9 +1792,9 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                         }
                     })?;
             }
-            Instruction::Subscript { .. } | Instruction::SuperSubscript => {
+            Instruction::Subscript { .. } | Instruction::SuperSubscript { .. } => {
                 let key = self.pop()?;
-                let is_super = matches!(instruction, Instruction::SuperSubscript);
+                let is_super = matches!(instruction, Instruction::SuperSubscript { .. });
                 let receiver = if is_super {
                     self.scope(0)?.receiver
                 } else {
@@ -1822,7 +1822,7 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                     }
                     value.as_object()?
                 };
-                if self.heap.get(receiver)?.collection_kind == CollectionKind::Set {
+                if !is_super && self.heap.get(receiver)?.collection_kind == CollectionKind::Set {
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
                         PklString::join(
@@ -1886,9 +1886,18 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                     return Ok(());
                 }
                 let owner = if is_super {
-                    self.heap.get(self.scope(0)?.owner)?.parent.ok_or_else(|| {
-                        RuntimeError::new(ErrorKind::MissingMember, "super has no parent")
-                    })?
+                    let Some(parent) = self.heap.get(self.scope(0)?.owner)?.parent else {
+                        self.stack.push(key);
+                        return self.force(
+                            receiver,
+                            receiver,
+                            "default".into(),
+                            false,
+                            true,
+                            false,
+                        );
+                    };
+                    parent
                 } else {
                     receiver
                 };
@@ -1910,10 +1919,12 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                     return Ok(());
                 }
                 let object = self.heap.get(receiver)?;
-                if matches!(
-                    object.collection_kind,
-                    CollectionKind::Listing | CollectionKind::List
-                ) {
+                if !is_super
+                    && matches!(
+                        object.collection_kind,
+                        CollectionKind::Listing | CollectionKind::List
+                    )
+                {
                     let Value::Int(index) = key else {
                         let name = format!("{:?}", object.collection_kind);
                         return Err(RuntimeError::new(
@@ -1980,6 +1991,23 @@ crate::diagnostic_values::render(
                     }
                     self.stack.push(key);
                     return Ok(());
+                }
+                if let Instruction::SuperSubscript { end } = instruction {
+                    if member.is_none() {
+                        // ReadSuperEntryNode uses the dynamic receiver's default,
+                        // not the lexical owner's. Keep the evaluated key rooted
+                        // while property/type resolution or the callback suspends.
+                        self.stack.push(key);
+                        return self.force(
+                            receiver,
+                            receiver,
+                            "default".into(),
+                            false,
+                            true,
+                            false,
+                        );
+                    }
+                    self.frames.last_mut().expect("super entry frame").pc = end;
                 }
                 let member = member.ok_or_else(|| {
                     RuntimeError::new(

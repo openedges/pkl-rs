@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find module import `absent`.
+
+1 | result = new absent.Listing {}
+                 ^^^^^^
+at import-type-oracle#result (file:///stage70/import-type-oracle.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

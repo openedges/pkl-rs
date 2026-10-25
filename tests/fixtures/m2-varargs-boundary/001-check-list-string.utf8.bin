@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Class `VarArgs` can only be used by the standard library.
+
+2 | result = List("x") is b.VarArgs<Int>
+                          ^^^^^^^^^^^^^^
+at varargs-boundary#result (file:///stage70/varargs-boundary.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

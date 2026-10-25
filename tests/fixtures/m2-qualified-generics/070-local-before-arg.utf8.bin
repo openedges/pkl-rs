@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected `localBase` to be a module import, but it is not.
+
+1 | 1 is localBase.List<Missing>
+         ^^^^^^^^^
+at  (repl:text)

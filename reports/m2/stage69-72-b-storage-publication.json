@@ -1,0 +1,3000 @@
+{
+  "archive": {
+    "bytes": 10793167,
+    "full_member_readback_verified": true,
+    "members": 585,
+    "mode": 420,
+    "path": "reports/m2/stage69-72-b-storage-evidence.tar.gz",
+    "sha256": "f2b48fff62215f4f3b58161dc2d199090a7b629a1b8c9a5be33d3f421e780a99"
+  },
+  "base_head": "a5a3c50e999364c8437ff6daa7512af432633d7b",
+  "candidate_compatibility_passes_claimed": 0,
+  "embedded_manifest_sha256": "54e529409ad5032128f4375c9f0744b0bc3fc569f3e452833e45870be788c6ab",
+  "execution_receipt_included": false,
+  "group": "storage",
+  "kind": "stage69-72-B-local-evidence-publication",
+  "known_limits": [
+    "Strict M2/full API/performance remain unclaimed.",
+    "Stage69\u201372 selected native/N-API/Chromium 235+4 captures pass all selected raw channels; M1 contract passes with known Regex strict failures; Any and full M2 remain failed/unclaimed.",
+    "No Wasmtime result is promised by the native/N-API/Chromium capture prep or M1 browser wrapper.",
+    "Stage67 baseline and physical workspaces plus Stage68 public replay proof are linked by identity rather than duplicated.",
+    "Actual Rust-only 4,416 replay: 4,158 pass, 115 mismatch, 141 candidate-unsupported, 2 oracle-error; 1,795 full-gate failures and zero Stage68 prior-pass regressions; full M2 remains open."
+  ],
+  "member_inventory": {
+    "target/m2/stage69-72-b-publication-prep-06/PLAN.md": {
+      "bytes": 3214,
+      "mode": 420,
+      "sha256": "b7433e4ba0d9ce184b9e1a8df1c7b49cd6abcc8602aa3430d25d19b71ac0d47c"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/admission.py": {
+      "bytes": 14427,
+      "mode": 420,
+      "sha256": "38851fcb6cbbeef44610492d7226ee76c8266a54ba38122ec8c84449edca6227"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/layout.json": {
+      "bytes": 16764,
+      "mode": 420,
+      "sha256": "a4570209aff67d1782aaf46d74dc3eaa580d2b4da792a689748ab02bea6113b2"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/preparation.json": {
+      "bytes": 3119,
+      "mode": 420,
+      "sha256": "18428a27e071e426072e888187051bfbba15dca51ae2dd340ee18b026b3518e6"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/publish.py": {
+      "bytes": 9012,
+      "mode": 420,
+      "sha256": "09542996ef7be01f858c497722c157a1748cb7e9964747320ffee463fc282a55"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/run.py": {
+      "bytes": 2961,
+      "mode": 420,
+      "sha256": "3a2afbe11266b49f67a817cc41c91626863481d223b66ebb372a1bdba3e42d8a"
+    },
+    "target/m2/stage69-72-b-publication-prep-06/storage-invocation.json": {
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "dfb5184c21ea94a2f2118c2f436017f08143ae873527c51015542efafaba906f"
+    },
+    "target/m2/stage69-72-committed-source-audit-01/audit.py": {
+      "bytes": 11725,
+      "mode": 420,
+      "sha256": "351597fc5324a2efdc87e23c6acf9f8959162d8a0198483e229453fe6ef781d3"
+    },
+    "target/m2/stage69-72-committed-source-audit-01/report.json": {
+      "bytes": 109271,
+      "mode": 420,
+      "sha256": "bca995c86f0d8f9a88e03dbf7cdfce0ffce3f39c4420b0ea0c12559c7f83b6e7"
+    },
+    "target/m2/stage69-72-committed-source-audit-01/selected-files.jsonl.gz": {
+      "bytes": 7374269,
+      "mode": 420,
+      "sha256": "2a58c6e6e5037659e2f4e6ba8a652a8ed6ee1bcc4c4c8cad2b5a8690d322304e"
+    },
+    "target/m2/stage69-72-committed-source-execution-01/active.json": {
+      "bytes": 218,
+      "mode": 420,
+      "sha256": "1e53df628ddc8fb4b22fc8467c868bb160eeabc4469559438b57a03f1d522399"
+    },
+    "target/m2/stage69-72-committed-source-execution-01/prepared.json": {
+      "bytes": 3371,
+      "mode": 420,
+      "sha256": "6f6c4754104ff9eb77bbf8b1bf4a1d0ef40908323bacb7cb61826bd35cbcc9b0"
+    },
+    "target/m2/stage69-72-committed-source-execution-01/process.json": {
+      "bytes": 6712,
+      "mode": 420,
+      "sha256": "049661a611fb95f8dad370218a7d7a32f79d08e9129e31d1868416d53c4a1aa6"
+    },
+    "target/m2/stage69-72-committed-source-execution-01/run.py": {
+      "bytes": 2981,
+      "mode": 420,
+      "sha256": "b16898dbbbabf4e9ad4b50510f0512859c3a063a0e789c3d25aff6259e64ae41"
+    },
+    "target/m2/stage69-72-committed-source-execution-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-committed-source-execution-01/stdout.bin": {
+      "bytes": 11360,
+      "mode": 420,
+      "sha256": "326c94cd8e5a5741297a05990624e4bf3b1b004ba89ca526f0034b646cb06d12"
+    },
+    "target/m2/stage69-72-committed-source-postrestore-review-01/report.json": {
+      "bytes": 1270,
+      "mode": 420,
+      "sha256": "455bf609b8b9206bb85f747980bc3855e3a617d127a78125f1397e14708f3570"
+    },
+    "target/m2/stage69-72-committed-source-postreview-01/report.json": {
+      "bytes": 13925,
+      "mode": 420,
+      "sha256": "d4629d79d6a1a8b87be6240c3d9373d1813282f55cd51112134b4fe980d7de8a"
+    },
+    "target/m2/stage69-72-committed-source-relocation-01/journal.jsonl": {
+      "bytes": 18379,
+      "mode": 420,
+      "sha256": "39c58307267c5f3c2cab6ec5e3b470f16b06a18e329579c77f3f6d50f2d1b8c8"
+    },
+    "target/m2/stage69-72-committed-source-relocation-01/prepared.json": {
+      "bytes": 38396,
+      "mode": 420,
+      "sha256": "675ad46b3fb9e24a5f2c7f14810970094ff94ca8ec5bc9f50f82f2f0fc3c2f7b"
+    },
+    "target/m2/stage69-72-committed-source-relocation-01/report.json": {
+      "bytes": 632,
+      "mode": 420,
+      "sha256": "f8449ec242ca6829a52376e0a8566d93e66a702742febf02b259bb49c926e6b2"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-01/PLAN.md": {
+      "bytes": 2575,
+      "mode": 420,
+      "sha256": "8cdbddba1cfba9b9d98d9ac78eb6002f02fe61782d6ed4e0bac56ea5594a3edf"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-01/preparation.json": {
+      "bytes": 2196,
+      "mode": 420,
+      "sha256": "97a1443d4360960a8128e1b4b471f7c9465c9b29e0f63a1875c0c986ee333994"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-01/relocate.py": {
+      "bytes": 13418,
+      "mode": 420,
+      "sha256": "0a5088da14a93944d9e08c5657e1bb3a5ded19503606aab2328f63e65687c24e"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-01/restore.py": {
+      "bytes": 9171,
+      "mode": 420,
+      "sha256": "8b5c765e4244582ac7780cc683db61163502c607d390ce483e1f723f88549b40"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/PLAN.md": {
+      "bytes": 3515,
+      "mode": 420,
+      "sha256": "de9e011cc5ee8ec2df9c0c9e8d65863e1e16489eadf6fb12dfccf59ac3a8e195"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/preparation.json": {
+      "bytes": 3007,
+      "mode": 420,
+      "sha256": "792da3ccfd738984e65b2b99d2b9a5f8b3922434c4522adbab346550743623bb"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/relocate.py": {
+      "bytes": 14786,
+      "mode": 420,
+      "sha256": "9d231efabd60cf405d8049108086f6a1858665232114f9eb3d47c80817672db5"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/restore.py": {
+      "bytes": 10558,
+      "mode": 420,
+      "sha256": "e8c007f6928dd5b2980b09257a21bc046b98e272618b04924770f42fbe0061b4"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validate.py": {
+      "bytes": 3430,
+      "mode": 420,
+      "sha256": "f4fabdaf6409595c41024e69e183b948c2c467263c564ad1b7e621b586e72e61"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-01/00.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-01/00.stdout.bin": {
+      "bytes": 180,
+      "mode": 420,
+      "sha256": "366945774f3245eb33fbb0ffc23d4619aac38769579eae68e5963dd4d647871c"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-01/01.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-01/01.stdout.bin": {
+      "bytes": 180,
+      "mode": 420,
+      "sha256": "366945774f3245eb33fbb0ffc23d4619aac38769579eae68e5963dd4d647871c"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-01/02.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-01/02.stdout.bin": {
+      "bytes": 166,
+      "mode": 420,
+      "sha256": "7717294e54f48b55e892b234fc681b87f934dcaa69d3057d4f34734b679f7219"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-01/report.json": {
+      "bytes": 2113,
+      "mode": 420,
+      "sha256": "88a790751d5f9bbeec039b2f231d1b020be053fe23eebc035cd8fc4915a45a19"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-02/00.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-02/00.stdout.bin": {
+      "bytes": 180,
+      "mode": 420,
+      "sha256": "366945774f3245eb33fbb0ffc23d4619aac38769579eae68e5963dd4d647871c"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-02/01.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-02/01.stdout.bin": {
+      "bytes": 180,
+      "mode": 420,
+      "sha256": "366945774f3245eb33fbb0ffc23d4619aac38769579eae68e5963dd4d647871c"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-02/02.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-02/02.stdout.bin": {
+      "bytes": 166,
+      "mode": 420,
+      "sha256": "54cba682228a5d7d26a5cc57c37989fc3967e7018b0708adf56e89422cec8252"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-02/validation-02/report.json": {
+      "bytes": 2113,
+      "mode": 420,
+      "sha256": "e79a24c2727468f8f22f80afcacafe48d35cb80e2d2eed2c56272c1962b8e1c9"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-03/PLAN.md": {
+      "bytes": 3797,
+      "mode": 420,
+      "sha256": "a77c41c1a9267b596064d201ae36beeee5d75ac3614a48a9e68d5f1170515412"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-03/preparation.json": {
+      "bytes": 2717,
+      "mode": 420,
+      "sha256": "2a2babd5bafe12bd85ab1a47f0c52faa684d1ca566a96e23479442810221a6df"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-03/relocate.py": {
+      "bytes": 15005,
+      "mode": 420,
+      "sha256": "edb17e3e955ef32b0f878d4cb5ca062b0dca152f3a672cf5d0a9deca4c75f047"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-03/restore.py": {
+      "bytes": 10558,
+      "mode": 420,
+      "sha256": "e8c007f6928dd5b2980b09257a21bc046b98e272618b04924770f42fbe0061b4"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-03/validate.py": {
+      "bytes": 3948,
+      "mode": 420,
+      "sha256": "468c96ff06d289f4f7097be99142243a7f3d55708e37ca5f7c6a71b84a5207da"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-03/validation-01/00.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-03/validation-01/00.stdout.bin": {
+      "bytes": 222,
+      "mode": 420,
+      "sha256": "eea3fd40c8b5ef48e331c1b2eea62165d70ddeb0210aebed456b83045d25053d"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-03/validation-01/01.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-03/validation-01/01.stdout.bin": {
+      "bytes": 222,
+      "mode": 420,
+      "sha256": "eea3fd40c8b5ef48e331c1b2eea62165d70ddeb0210aebed456b83045d25053d"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-03/validation-01/02.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-03/validation-01/02.stdout.bin": {
+      "bytes": 166,
+      "mode": 420,
+      "sha256": "8c8c0aa8d784fffa9e22bef137b418dbdcc9418fccdde33618c0270675ef094b"
+    },
+    "target/m2/stage69-72-committed-source-relocation-prep-03/validation-01/report.json": {
+      "bytes": 2113,
+      "mode": 420,
+      "sha256": "2ba0f74c8b615e4ce3de55aa11ec7305824c061e11956a7e0092d51ea9b71feb"
+    },
+    "target/m2/stage69-72-committed-source-relocation-review-01/report.json": {
+      "bytes": 3636,
+      "mode": 420,
+      "sha256": "2084ac3a794cfd053cda0766ebcc4f888ab29b23b3a023d7ddab830c94053136"
+    },
+    "target/m2/stage69-72-committed-source-relocation-review-01/review.py": {
+      "bytes": 9004,
+      "mode": 420,
+      "sha256": "cf7d801488ff14ef4620264d3b3e228b6170894a8ba9532b96685eb90e72f909"
+    },
+    "target/m2/stage69-72-committed-source-restore-01/journal.jsonl": {
+      "bytes": 122,
+      "mode": 420,
+      "sha256": "0a802eaa4ec46b4bd6c747f4da033e48b2a30581e288cf908c173a0362b71f43"
+    },
+    "target/m2/stage69-72-committed-source-restore-01/prepared.json": {
+      "bytes": 689,
+      "mode": 420,
+      "sha256": "4145d4364385d56f66d89d1f82ceccc1076fc083eb282b6f273f0e66412cac60"
+    },
+    "target/m2/stage69-72-committed-source-restore-01/report.json": {
+      "bytes": 488,
+      "mode": 420,
+      "sha256": "cd65842a2536aef7da2409d881ca41c2dff0891f9cadf38353791c12be08ee42"
+    },
+    "target/m2/stage69-72-committed-source-restore-execution-01/prepared.json": {
+      "bytes": 2967,
+      "mode": 420,
+      "sha256": "3c9a94abb2818ee07524bfade9e8f98708ac418da7b4ed01b780bd1d24dd5411"
+    },
+    "target/m2/stage69-72-committed-source-restore-execution-01/process.json": {
+      "bytes": 5775,
+      "mode": 420,
+      "sha256": "27cbec8c18f43cab500a8483ca0fed37e1368a3027026676a700d3e6c52abf40"
+    },
+    "target/m2/stage69-72-committed-source-restore-execution-01/run.py": {
+      "bytes": 4955,
+      "mode": 420,
+      "sha256": "9829c0be3c8948a3cecf0f103ab6f5bcad510c85503cd114f34dce37b9115033"
+    },
+    "target/m2/stage69-72-committed-source-restore-execution-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-committed-source-restore-execution-01/stdout.bin": {
+      "bytes": 31,
+      "mode": 420,
+      "sha256": "85280d850f247130b731bdb0a3529c4c14f2212c8f232c6019ab70f560b5bc13"
+    },
+    "target/m2/stage69-72-git-source-relocation-execution-01/journal.jsonl": {
+      "bytes": 8982,
+      "mode": 420,
+      "sha256": "c16adb4dacbbd777f7a13bc2ddc65557576f1ed972317ae1b8979dbd6b18297e"
+    },
+    "target/m2/stage69-72-git-source-relocation-execution-01/prepared.json": {
+      "bytes": 1541,
+      "mode": 420,
+      "sha256": "529c65ebbb6431bec90e331dab3503e6c852a48422c4fd26e4b451cd9d63edd2"
+    },
+    "target/m2/stage69-72-git-source-relocation-execution-01/process.json": {
+      "bytes": 1653,
+      "mode": 420,
+      "sha256": "8bb3827675a0f50367f8a7217900ee0174d979019cdc095a330dcc50b99242a0"
+    },
+    "target/m2/stage69-72-git-source-relocation-execution-01/report.json": {
+      "bytes": 569,
+      "mode": 420,
+      "sha256": "a4f86ea6386384fb2cd0f6d5c203413558188ce2864ab32083f0f1cc9a313dac"
+    },
+    "target/m2/stage69-72-git-source-relocation-execution-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-git-source-relocation-execution-01/stdout.bin": {
+      "bytes": 93,
+      "mode": 420,
+      "sha256": "1a1cde4b9f961bad1b0d51bb73234b6789d04d0cec21de943320bb680c3b729f"
+    },
+    "target/m2/stage69-72-git-source-relocation-prep-01/execute.py": {
+      "bytes": 2223,
+      "mode": 420,
+      "sha256": "7a2530ebc45cd56a13cb36a4eba57985a864c5e531fc7dedc6778363b69ada76"
+    },
+    "target/m2/stage69-72-git-source-relocation-prep-01/initial-version/recovery.py": {
+      "bytes": 21211,
+      "mode": 420,
+      "sha256": "17ec879474a4d1d3a40158101f6e2e856a10a73e54b10dea2dc41e40a11a437a"
+    },
+    "target/m2/stage69-72-git-source-relocation-prep-01/preparation.json": {
+      "bytes": 8045,
+      "mode": 420,
+      "sha256": "aa276ad6055f252304b8d2b5c71a403a8d597d73ffb374c15f044ddc3b137418"
+    },
+    "target/m2/stage69-72-git-source-relocation-prep-01/recovery.py": {
+      "bytes": 21259,
+      "mode": 420,
+      "sha256": "243364952a85dd8e09c113db125731a0eddc697b973049f825565cf5138309b3"
+    },
+    "target/m2/stage69-72-git-source-relocation-prep-02/execute.py": {
+      "bytes": 2223,
+      "mode": 420,
+      "sha256": "7a2530ebc45cd56a13cb36a4eba57985a864c5e531fc7dedc6778363b69ada76"
+    },
+    "target/m2/stage69-72-git-source-relocation-prep-02/preparation.json": {
+      "bytes": 8045,
+      "mode": 420,
+      "sha256": "68299e50fef109bc369710d31021fe4451af484ac95e6155e4aa59fb212ebf7f"
+    },
+    "target/m2/stage69-72-git-source-relocation-prep-02/recovery.py": {
+      "bytes": 22206,
+      "mode": 420,
+      "sha256": "e1d2cd68d29a3914a4d0ba9e0a9529f5823ba2869aa914903832641e1f7d61a0"
+    },
+    "target/m2/stage69-72-git-source-relocation-review-01/report.json": {
+      "bytes": 943,
+      "mode": 420,
+      "sha256": "7e10e574eb210752589d33867f806721e719a868cc09046e61dbc30950491f53"
+    },
+    "target/m2/stage69-72-git-source-relocation-review-01/review.py": {
+      "bytes": 4990,
+      "mode": 420,
+      "sha256": "32bd9c62d43b8ae54adaefaf44e4c12df7e696185a2389df7b5b3fbea39e4d46"
+    },
+    "target/m2/stage69-72-git-source-restore-smoke-01/journal.jsonl": {
+      "bytes": 96,
+      "mode": 420,
+      "sha256": "43be4b25476732c7bd9f7bbcfe9d65a571ad70b4187ab956a7dd8c046d1028cc"
+    },
+    "target/m2/stage69-72-git-source-restore-smoke-01/prepared.json": {
+      "bytes": 706,
+      "mode": 420,
+      "sha256": "16c0b10f5d9188fef538bf4058e08aaf51cb9beae8bdb18036aea45bd8c07ed2"
+    },
+    "target/m2/stage69-72-git-source-restore-smoke-01/report.json": {
+      "bytes": 317,
+      "mode": 420,
+      "sha256": "92e148fc6d68baf9e21e86f01e15283b2c88afcf24c8c46ca2546df80fc09e50"
+    },
+    "target/m2/stage69-72-git-source-restore-smoke-02/journal.jsonl": {
+      "bytes": 96,
+      "mode": 420,
+      "sha256": "43be4b25476732c7bd9f7bbcfe9d65a571ad70b4187ab956a7dd8c046d1028cc"
+    },
+    "target/m2/stage69-72-git-source-restore-smoke-02/prepared.json": {
+      "bytes": 706,
+      "mode": 420,
+      "sha256": "dc31804067e0983088945b6126ad76e6017e41723abe5089b74e95dd44fe0ad0"
+    },
+    "target/m2/stage69-72-git-source-restore-smoke-02/report.json": {
+      "bytes": 317,
+      "mode": 420,
+      "sha256": "92e148fc6d68baf9e21e86f01e15283b2c88afcf24c8c46ca2546df80fc09e50"
+    },
+    "target/m2/stage69-72-json-relocation-01/journal.jsonl": {
+      "bytes": 429,
+      "mode": 420,
+      "sha256": "7d246fc988fd14920d2f7f82c790a9c1a8c15c4bb5c13fa3c3c8e425b06ff519"
+    },
+    "target/m2/stage69-72-json-relocation-01/prepared.json": {
+      "bytes": 4123,
+      "mode": 420,
+      "sha256": "5c05cb3d2714e88414b247480370be879812a591fcb2691dc813bfa57c0a632b"
+    },
+    "target/m2/stage69-72-json-relocation-01/report.json": {
+      "bytes": 5096,
+      "mode": 420,
+      "sha256": "a131054c81bb7c8cc95b5247c6ed03d416e193e758bfca423926d4fb4137dbcd"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/PLAN.md": {
+      "bytes": 1231,
+      "mode": 420,
+      "sha256": "1d3e19cf314764b21780b556ba051b96fc04fb57aa95d662ea8607df9376bb41"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/execution-01/process.json": {
+      "bytes": 1050,
+      "mode": 420,
+      "sha256": "354f644642feda36af2f31d025e409486becca89f4e5ec906c09fb9dadc6f59b"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/execution-01/source-after.json": {
+      "bytes": 1213,
+      "mode": 420,
+      "sha256": "68c0855428694368eee172f175046df27a1f5cebe106ba08f9c8ed03e3447d22"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/execution-01/source-before.json": {
+      "bytes": 1213,
+      "mode": 420,
+      "sha256": "68c0855428694368eee172f175046df27a1f5cebe106ba08f9c8ed03e3447d22"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/execution-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/execution-01/stdout.bin": {
+      "bytes": 192,
+      "mode": 420,
+      "sha256": "4a86f1d47f33da687ed4b217427fd1c09e39f421fbcf51b5d9ba70b3a222cf7e"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/relocate_json.py": {
+      "bytes": 9024,
+      "mode": 420,
+      "sha256": "7189422927414f89e39a86589c70aa0bf65f8303b078a7ed458e79e697592f0c"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/validation-01/assembly-tests-optimized.stderr.bin": {
+      "bytes": 783,
+      "mode": 420,
+      "sha256": "7df63559371548d4f8b50105c56080d70b142f57b7eedf04c71611034aa66a51"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/validation-01/assembly-tests-optimized.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/validation-01/assembly-tests.stderr.bin": {
+      "bytes": 783,
+      "mode": 420,
+      "sha256": "b4abb605d5b3979e9bac43ccd84afae6fec06f0e931948e45d342a8600fbb113"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/validation-01/assembly-tests.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/validation-01/readback-optimized.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/validation-01/readback-optimized.stdout.bin": {
+      "bytes": 3623,
+      "mode": 420,
+      "sha256": "fa6da6fa808f2bba9121e5915bf7a66095b8da8624c6068bb685a5b7ae27b63b"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/validation-01/readback.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/validation-01/readback.stdout.bin": {
+      "bytes": 3623,
+      "mode": 420,
+      "sha256": "33a04ed54e67cd35184d44cbdf21dde89bbba78f53fb9ff5f1001f7b004ae7c1"
+    },
+    "target/m2/stage69-72-json-relocation-prep-01/validation-01/report.json": {
+      "bytes": 1864,
+      "mode": 420,
+      "sha256": "4839ec41d308030fe0593ced7c713c78e2ed40501ebaaf7dbd29c42a706e50d5"
+    },
+    "target/m2/stage69-72-next-storage-audit-01/audit.py": {
+      "bytes": 12733,
+      "mode": 420,
+      "sha256": "9e1cca52e4f75fb5b9e973132b5c4fc927417e1f8344b6c6b391bbf6690b737b"
+    },
+    "target/m2/stage69-72-next-storage-audit-01/git-backed-files.jsonl.gz": {
+      "bytes": 2239440,
+      "mode": 420,
+      "sha256": "5bf824c89cf41bb5906260e90c02d4d665ca4c2c736892b7e3fef061b7f65731"
+    },
+    "target/m2/stage69-72-next-storage-audit-01/report.json": {
+      "bytes": 81240,
+      "mode": 420,
+      "sha256": "70f4d3b123cbf0845f0051d6e8fabff275363baca28293364a682c726efee008"
+    },
+    "target/m2/stage69-72-storage-admission-audit-01/report.json": {
+      "bytes": 4566,
+      "mode": 420,
+      "sha256": "8b2f7ff043f3b09077fb8807a9d176af4e911a187b5bc1511ff91d3705364e08"
+    },
+    "target/m2/stage69-storage-execution-01/process.json": {
+      "bytes": 2949,
+      "mode": 420,
+      "sha256": "d2fd7e7e90b796b59160a2927fb28c7e07f67624d452b76f6c09375dcae5fb1a"
+    },
+    "target/m2/stage69-storage-execution-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-execution-01/stdout.bin": {
+      "bytes": 4914,
+      "mode": 420,
+      "sha256": "eb5895a7c78c090ea69e26b16047a1b5525f160e1e860db9bcec494f1f7c6570"
+    },
+    "target/m2/stage69-storage-prep-01/PLAN.md": {
+      "bytes": 3042,
+      "mode": 420,
+      "sha256": "bdb46358ba711cd670f2c94cfb37e5f7b54a6ab9b0f677266c0e85adae9ea42d"
+    },
+    "target/m2/stage69-storage-prep-01/execute.py": {
+      "bytes": 2756,
+      "mode": 420,
+      "sha256": "73be91d5514a59fbd337b5f8804123f72ff238e94ce50aefd0cbc7a7cb8745fc"
+    },
+    "target/m2/stage69-storage-prep-01/manifest.json": {
+      "bytes": 167200,
+      "mode": 420,
+      "sha256": "7c4b8292a5c17ca843bdaa1879120a530c3eca94a58c0361fa279fcee9f9d6de"
+    },
+    "target/m2/stage69-storage-prep-01/preparation.json": {
+      "bytes": 1611,
+      "mode": 420,
+      "sha256": "ec8fb2020e0504fda661bfa7f8b3c4879acbd5b80e764ee8a0cf15bde89f9733"
+    },
+    "target/m2/stage69-storage-prep-01/restore.py": {
+      "bytes": 9426,
+      "mode": 420,
+      "sha256": "2d232739716ed33395ab1328ac88ce9b4203f47cbd3cb8fde77e68c0517dc1a8"
+    },
+    "target/m2/stage69-storage-prep-01/run.py": {
+      "bytes": 18578,
+      "mode": 420,
+      "sha256": "4114b06fc1e1ad87323ca28e4e3ed1f6d35d4279c46e6714b81f753d512bdf51"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-000/deleted.jsonl": {
+      "bytes": 442,
+      "mode": 420,
+      "sha256": "289c4f7d24140e00e07dd9bf797005b365cc86fe0a9d6b464eb8bb1c7a649b6c"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-000/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-000/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-000/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-000/pre-unlink-ps.stdout.bin": {
+      "bytes": 86493,
+      "mode": 420,
+      "sha256": "219b0cbe277df4814574806daf33da2730cba75c04c40175c1a3b856836f0d95"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-000/prepared.json": {
+      "bytes": 1873,
+      "mode": 420,
+      "sha256": "42d31fb7b73a3ca78f212e235d0ce4e68bdb5e99b0964b259a89cec20cf7fd81"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-000/result.json": {
+      "bytes": 505,
+      "mode": 420,
+      "sha256": "f718a5d43b82294551829fcab26f59f444838e687e959addf1df6a5acd8c9117"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-001/deleted.jsonl": {
+      "bytes": 438,
+      "mode": 420,
+      "sha256": "bbb3ad0143208f3a23c373d610b94ed7b7829c4fd96465bac410bdb3dfbc65ec"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-001/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-001/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-001/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-001/pre-unlink-ps.stdout.bin": {
+      "bytes": 86493,
+      "mode": 420,
+      "sha256": "ec0bd4c7c70f64953380faf04c2ceb095a70d6189ab34bd29e20c5a859bc8c31"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-001/prepared.json": {
+      "bytes": 1870,
+      "mode": 420,
+      "sha256": "9f515f07e026e4bb1b72d85b35838e75723604e648170ef95b245e58f2f50691"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-001/result.json": {
+      "bytes": 506,
+      "mode": 420,
+      "sha256": "f74adbe6422743fbb4d8b077cb2f2195f5fe777d7f60ac5ad59e9279ef739d30"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-002/deleted.jsonl": {
+      "bytes": 490,
+      "mode": 420,
+      "sha256": "d1c44e6376f523a382dfd23340919629289274bac38437af782ec002c879dc3b"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-002/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-002/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-002/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-002/pre-unlink-ps.stdout.bin": {
+      "bytes": 86493,
+      "mode": 420,
+      "sha256": "7d80e1e20ddcaa86e151e8b427d9da7a502553b063b4811e9cd4c6f24cadfb50"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-002/prepared.json": {
+      "bytes": 1922,
+      "mode": 420,
+      "sha256": "0564020e4c2c13f658f25a24475990c7ebb0d4e06b2802427eb88445d378f4c5"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-002/result.json": {
+      "bytes": 506,
+      "mode": 420,
+      "sha256": "27d168c116d4daaca09f75f04fe092de7425eba594a9ff7d092bf7e5f38e8ca8"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-003/deleted.jsonl": {
+      "bytes": 904,
+      "mode": 420,
+      "sha256": "24f87203086f3365ae09b38e44083fa37927557357a5176d31cbd6f29a34a526"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-003/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-003/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-003/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-003/pre-unlink-ps.stdout.bin": {
+      "bytes": 86551,
+      "mode": 420,
+      "sha256": "544fd3eaa43654acdd3551dba6e3e2ac591d1d1fdb7473bbb9a5c9d94396d43c"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-003/prepared.json": {
+      "bytes": 3147,
+      "mode": 420,
+      "sha256": "86534a0ad5f521f17f33adf8b54342ac6c39fe1d74e98dc77d133183eb7cdc3b"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-003/result.json": {
+      "bytes": 506,
+      "mode": 420,
+      "sha256": "d8e51c9be8fe0f5aef1d4f991ae8030395bc6f6cb39a4868b5e93379b619c776"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-004/deleted.jsonl": {
+      "bytes": 928,
+      "mode": 420,
+      "sha256": "90a040e493b56f98f3a3de682fb4bc5028175a2553978be77e6cd645131f4fe1"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-004/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-004/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-004/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-004/pre-unlink-ps.stdout.bin": {
+      "bytes": 86493,
+      "mode": 420,
+      "sha256": "e9c605318a8d9cbe51aad97f83d16bbc8e5649a47b78b7e35e6bc4a22d56727d"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-004/prepared.json": {
+      "bytes": 2702,
+      "mode": 420,
+      "sha256": "000812d839b635287a6e7a9836509ce5674e834f8cd684c06d69f534c2ca5e81"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-004/result.json": {
+      "bytes": 507,
+      "mode": 420,
+      "sha256": "2698069e0e72cdc4f082bf4e478f86940e1ca29973b1471cf11cd8263857d0df"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-005/deleted.jsonl": {
+      "bytes": 958,
+      "mode": 420,
+      "sha256": "84dffaf373aee068b39423fe8b949609318302c8e060371357f0299b210474c0"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-005/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-005/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-005/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-005/pre-unlink-ps.stdout.bin": {
+      "bytes": 86493,
+      "mode": 420,
+      "sha256": "5776e63bd8169d9f7974d48afebd3ca20eb0f43520022d31320148ab936e6ccb"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-005/prepared.json": {
+      "bytes": 2732,
+      "mode": 420,
+      "sha256": "7e0bda5c52cedf605265745d638874afbc4b64e46b5300e309b6136fa048b83b"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-005/result.json": {
+      "bytes": 507,
+      "mode": 420,
+      "sha256": "206bddaea2970743dabc1301bd961d412c69542102836d00e268ad775712f981"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-006/deleted.jsonl": {
+      "bytes": 1862,
+      "mode": 420,
+      "sha256": "34830afb3adfb61918455a1b761da2107c0fb15f6109f65405bdcb4f3f4a7ee6"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-006/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-006/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-006/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-006/pre-unlink-ps.stdout.bin": {
+      "bytes": 86493,
+      "mode": 420,
+      "sha256": "ae35cf63b224108988cdf6d8820677645c9311dae1b7d853170e2c80e238eaa2"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-006/prepared.json": {
+      "bytes": 4318,
+      "mode": 420,
+      "sha256": "3879ed7ba7d5891754f8849d74d2d79067f34a990e8e0f93832a61130b4738c5"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-006/result.json": {
+      "bytes": 509,
+      "mode": 420,
+      "sha256": "c317b2665c93b382388d2701305a1811ca954705e58a81e1e7c53e150577ea53"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-007/deleted.jsonl": {
+      "bytes": 934,
+      "mode": 420,
+      "sha256": "466089d40d7f174553261d65cc97a5fa5ee68c49a719c1bc231fc572d4828634"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-007/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-007/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-007/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-007/pre-unlink-ps.stdout.bin": {
+      "bytes": 86493,
+      "mode": 420,
+      "sha256": "7fa8c4fbf52ce8897351f327361fdef431cbfb3294aacd870184376ac6f3950f"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-007/prepared.json": {
+      "bytes": 2708,
+      "mode": 420,
+      "sha256": "07a506e48dd43c05c85310690fda90ee97e9c97abdc944771abf9ba4fb41a751"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-007/result.json": {
+      "bytes": 507,
+      "mode": 420,
+      "sha256": "c16690b2e2f924ec9c17afde5bea9664ef7bb622e347e647534c890441f01610"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-008/deleted.jsonl": {
+      "bytes": 900,
+      "mode": 420,
+      "sha256": "9f588cc6633aae4bc9f048605c638cfd44d17c2234d9232c0446c195035f32b1"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-008/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-008/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-008/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-008/pre-unlink-ps.stdout.bin": {
+      "bytes": 86890,
+      "mode": 420,
+      "sha256": "6ca8fd8c2ac40263e2e04c563b5fafa4da1df6f59e47e87c9f109f4f084dc690"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-008/prepared.json": {
+      "bytes": 2335,
+      "mode": 420,
+      "sha256": "87c392913f80b5b79c0eb60baca25a825dce3a0068f5ef56c8b17e58c334cb48"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-008/result.json": {
+      "bytes": 508,
+      "mode": 420,
+      "sha256": "ec7a8038ddbcaff7f28112728b3de26f7ec28eafe3f2bc5d241e47a97002a2ea"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-009/deleted.jsonl": {
+      "bytes": 1382,
+      "mode": 420,
+      "sha256": "fb84069d778ede40a2ca35d7a33a50d34991a747987cedad612a9334919166ff"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-009/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-009/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-009/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-009/pre-unlink-ps.stdout.bin": {
+      "bytes": 86493,
+      "mode": 420,
+      "sha256": "53e13dcb8c92221db30d066c31de81b71a5d7f5b55a3742e7dbc53a24e51a723"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-009/prepared.json": {
+      "bytes": 3157,
+      "mode": 420,
+      "sha256": "8a9f5f6d85849c41aa2d9a1b8c2056b21d532dd3ecded28451f61aaea93b5a51"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-009/result.json": {
+      "bytes": 509,
+      "mode": 420,
+      "sha256": "f036cc01ee20350523c44b32b0e0064e42a28793f450226c594e76be430d6a45"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-010/deleted.jsonl": {
+      "bytes": 1415,
+      "mode": 420,
+      "sha256": "fe09e14f260d45d3510ab1094107771ccc4d855223bbdc1c74fb6bf73ff20aa6"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-010/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-010/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-010/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-010/pre-unlink-ps.stdout.bin": {
+      "bytes": 86575,
+      "mode": 420,
+      "sha256": "3e782f537aa894b952212b3d79263a1ed169896b00d6dc69c5370bb926f31753"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-010/prepared.json": {
+      "bytes": 3532,
+      "mode": 420,
+      "sha256": "32612f1870b3e8aea42821cb71962321f4f379291458de2c62f946acb878501f"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-010/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "92922d84ec24818ed4d4c00f57addd1e91325a56677ddf88b1778c92d5af6724"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-011/deleted.jsonl": {
+      "bytes": 1888,
+      "mode": 420,
+      "sha256": "de4a07c76a54218e01d4baf6998ff8f36ba87ee2ac552ea8bcc78f30e74ad249"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-011/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-011/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-011/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-011/pre-unlink-ps.stdout.bin": {
+      "bytes": 86731,
+      "mode": 420,
+      "sha256": "065692ea9543ddae5ef766e5ab22b066031901120c68fc9039ab634d0f74f81e"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-011/prepared.json": {
+      "bytes": 4001,
+      "mode": 420,
+      "sha256": "9298fa38df4e32225b7a2a00637858c9e13f8a6adbe8ad727e354594370a93ff"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-011/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "4871173272783332d2dc9679196d98cef0702fde0f9b3bae854574995b7a0e73"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-012/deleted.jsonl": {
+      "bytes": 1866,
+      "mode": 420,
+      "sha256": "87887487353c70d0fe234974ca0b9e929961131477fa5a11b3b7b1a7bdb9a2cd"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-012/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-012/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-012/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-012/pre-unlink-ps.stdout.bin": {
+      "bytes": 86758,
+      "mode": 420,
+      "sha256": "d8628b9364a73ade4a370557c2281427da85841ea7d0c0bd644f5824b3b6aec9"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-012/prepared.json": {
+      "bytes": 3979,
+      "mode": 420,
+      "sha256": "f1e38fa05fa4db5ca80f8232dd88750cdb4cd78477a20a91b15fc9e3f2a2b63d"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-012/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "b8315c58bc57482efc2f5719773d9b63ab24d116807c5af65653405a553174c4"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-013/deleted.jsonl": {
+      "bytes": 1403,
+      "mode": 420,
+      "sha256": "ee64257997e16b74c1e1f3b9c74e48cc88e9e5e735c394f4261ca1c32634aafb"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-013/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-013/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-013/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-013/pre-unlink-ps.stdout.bin": {
+      "bytes": 86575,
+      "mode": 420,
+      "sha256": "29a6cf949db987e212cd76911b2ded759da62ead2c51d2d2a2708a65126c505b"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-013/prepared.json": {
+      "bytes": 3520,
+      "mode": 420,
+      "sha256": "7ac720c3c679b1e7fd29b0d7966a0aaaa0fd34aad2897054ff566b373a907515"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-013/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "59403cc3dc5e4cda0207e3be46d5220b8916bab8734a65ae0469d32b36edd9b3"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-014/deleted.jsonl": {
+      "bytes": 1467,
+      "mode": 420,
+      "sha256": "1d690daf5ea13866e5588789a8ce7b004b7fa254fa01bba2a2a0ba7d72ab685a"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-014/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-014/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-014/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-014/pre-unlink-ps.stdout.bin": {
+      "bytes": 86575,
+      "mode": 420,
+      "sha256": "5c6740e53b63e4655b0a4d8b0bd4a6bfb7ab22fa96c7a3f5188af11ace083113"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-014/prepared.json": {
+      "bytes": 3584,
+      "mode": 420,
+      "sha256": "f4c185523e42512d9d99cb3c30690b6977d12b8bd1ff7c9c022472d52ee2bc13"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-014/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "45b098cc0223f8e0431ca700586b20932e09381fdf519d4a21f8b3db914d67a7"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-015/deleted.jsonl": {
+      "bytes": 1425,
+      "mode": 420,
+      "sha256": "a9e4292792e9d5dd76fe958dd8fdf058b3245f6da80241f6a7dfb36402749632"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-015/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-015/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-015/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-015/pre-unlink-ps.stdout.bin": {
+      "bytes": 86493,
+      "mode": 420,
+      "sha256": "a4893330e86a125501c5b5cd3976be91800eac349ef9ecbb11e275cd701fe2c5"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-015/prepared.json": {
+      "bytes": 3542,
+      "mode": 420,
+      "sha256": "82075f9ee3d028fa7e3180f517bdf094a33709e447aa450212693df2c41a2876"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-015/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "407586f36bbdb4ed22a54d51696a432afc49d9b952578d4941d679559fb3f061"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-016/deleted.jsonl": {
+      "bytes": 2742,
+      "mode": 420,
+      "sha256": "ced7d983e52a2cf23db657442ccd2fed3d49370c8ab3dba46241d873e6a1bba7"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-016/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-016/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-016/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-016/pre-unlink-ps.stdout.bin": {
+      "bytes": 86504,
+      "mode": 420,
+      "sha256": "1d8433c664cf68d604df83c4b65623301d1cc4b60ec9061d0ec90725539c3c70"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-016/prepared.json": {
+      "bytes": 4850,
+      "mode": 420,
+      "sha256": "9f838ecaeccd1b732a95b7e64a048289e7aa4ba6372889e310dad88eba47888a"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-016/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "30dac5564519315d69a950a5d2d3c16155003713eb871978f1fb9aa934d02e0f"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-017/deleted.jsonl": {
+      "bytes": 2365,
+      "mode": 420,
+      "sha256": "c35f2bd7128fc3085d3a3b9d37991c010a672956b999b7373b450eb3bb7787b9"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-017/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-017/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-017/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-017/pre-unlink-ps.stdout.bin": {
+      "bytes": 86931,
+      "mode": 420,
+      "sha256": "b90f5bdfb0dbcd48454de782d7c6b95ac3401fdda2a9989f3fb7f79f14b82f01"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-017/prepared.json": {
+      "bytes": 4463,
+      "mode": 420,
+      "sha256": "fef356e3862b411b7dc130f32adf9e481a4271748e4d136fef0ef19ecd56fab3"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-017/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "2a3102c5aed131558b2a5232fb75f4315132e39c92031b6954f9a05daac466dc"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-018/deleted.jsonl": {
+      "bytes": 1413,
+      "mode": 420,
+      "sha256": "e7c68bd0a74a4d417c1cd2d79572b8676658e3cce96776c1888e863699552d75"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-018/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-018/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-018/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-018/pre-unlink-ps.stdout.bin": {
+      "bytes": 87013,
+      "mode": 420,
+      "sha256": "05b88c0b6f6101fceab8967cf42ff5dbb25b23840392901b303ae9ead56dcdb4"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-018/prepared.json": {
+      "bytes": 3530,
+      "mode": 420,
+      "sha256": "45f08afe434017e0a9f2033dcdbfb7b8b0116fb02bf29cbac531e530b333e243"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-018/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "53669e0ece55b64aceff478f7b50857dfd4bde828e1f4c6ecb88a8b8446ca276"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-019/deleted.jsonl": {
+      "bytes": 2337,
+      "mode": 420,
+      "sha256": "c14ccd340fdaaf5202e013afa3ec9cc1233bc83f396e0a9e3b474c81e0132502"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-019/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-019/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-019/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-019/pre-unlink-ps.stdout.bin": {
+      "bytes": 86575,
+      "mode": 420,
+      "sha256": "2d61a5b800e8453604f022029bb1d1bfba7aa034dec4ae899a244802da956a48"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-019/prepared.json": {
+      "bytes": 4439,
+      "mode": 420,
+      "sha256": "281af1e1b65cf7856217c0afc81432e5c2b26bf744141e2dec18c5ab8808a0d5"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-019/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "532ca61559af25b9839305d6c348138625aa920cea4a816c00202faa734c4693"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-020/deleted.jsonl": {
+      "bytes": 2794,
+      "mode": 420,
+      "sha256": "4ff15ecd43446d0e6176fd7e4d7f06e8bdbc491942643b6601a078695fa7a655"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-020/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-020/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-020/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-020/pre-unlink-ps.stdout.bin": {
+      "bytes": 86575,
+      "mode": 420,
+      "sha256": "7fdce203af236468a08dd2a2751afdbd4f90591f042fe5856e6a168eee695a05"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-020/prepared.json": {
+      "bytes": 7353,
+      "mode": 420,
+      "sha256": "89596bec24268b5e4dd8ca42128a2f1efd037653d8d87324b8d8e9ce797bab7f"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-020/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "2110d96b808213c23e5f96e1cdb01415a86ab639f51ba8d4a5754da4228e6fd4"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-021/deleted.jsonl": {
+      "bytes": 2814,
+      "mode": 420,
+      "sha256": "2c01c175484a6afae9129cb8eba6ca562a89fe8369a88c596ce3e2f0a59f9b96"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-021/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-021/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-021/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-021/pre-unlink-ps.stdout.bin": {
+      "bytes": 86575,
+      "mode": 420,
+      "sha256": "3d4c01a9aaee3f14272b9b1639d23b513893e01ef46eb8d75584b92d5d53ec71"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-021/prepared.json": {
+      "bytes": 4904,
+      "mode": 420,
+      "sha256": "2622275a900fcef8e688a04f40409ed426f9c8b44963400db0afc7a131880961"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-021/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "6a36b68ca7895785a607122fe51627204f94ac8f1b415391c3944310561334f7"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-022/deleted.jsonl": {
+      "bytes": 2814,
+      "mode": 420,
+      "sha256": "9d9501bb59442386144970f3c1f276641575fd981e40a999c1a9405269069785"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-022/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-022/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-022/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-022/pre-unlink-ps.stdout.bin": {
+      "bytes": 86493,
+      "mode": 420,
+      "sha256": "82f200950deba8108c094e0a5b167ca1235c0806561df716c11a8309fcfea94d"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-022/prepared.json": {
+      "bytes": 4904,
+      "mode": 420,
+      "sha256": "90a10d456e7b9e8100f483e239fcbb989be2768f391bf4eab442e51ed9065864"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-022/result.json": {
+      "bytes": 511,
+      "mode": 420,
+      "sha256": "8ab311cfd54735f58c3bea38d5c110c71ac2437097cf0257312bfe960af70dd3"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-023/deleted.jsonl": {
+      "bytes": 2413,
+      "mode": 420,
+      "sha256": "0e8334510f616126cf4148f79420b2e1b34ea9fa0b5aac98d33c4ec3ded035dd"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-023/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-023/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-023/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-023/pre-unlink-ps.stdout.bin": {
+      "bytes": 86635,
+      "mode": 420,
+      "sha256": "17998eed4fba5322b8b8f97bb2977beb2fd623c7b0e7d6e518c1a88976df86ad"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-023/prepared.json": {
+      "bytes": 4501,
+      "mode": 420,
+      "sha256": "d119d58d77ecd11900adb98044840d9ac02781359a186fb77ebf0a195e23c0f6"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-023/result.json": {
+      "bytes": 512,
+      "mode": 420,
+      "sha256": "73280f0048816ffa78a3e1e9558913de3d6cfcd5d53057b52065e9b5afb35033"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-024/deleted.jsonl": {
+      "bytes": 1429,
+      "mode": 420,
+      "sha256": "f182541cc319c741033ae09ca3e3bea9811f5d9cd6a1fc218652260d6fd87edb"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-024/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-024/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-024/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-024/pre-unlink-ps.stdout.bin": {
+      "bytes": 86493,
+      "mode": 420,
+      "sha256": "c657397f1911f8369c002615e0aa24bd29eb70f905c7e1ebab84577e95cf7589"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-024/prepared.json": {
+      "bytes": 3548,
+      "mode": 420,
+      "sha256": "c942a814ca9689625892c31ee2fc1746fc442ab3a5ceea32b2d1f45abb1b1b9c"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-024/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "0d6558f03650a5fe3a86a924d6fb6e008c3b38c97f9d38db2536c21194ae0964"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-025/deleted.jsonl": {
+      "bytes": 1469,
+      "mode": 420,
+      "sha256": "d5d2dfce65f812dbc51e7006c4ccfa84358869598b34f84840bde7bf28e7c4c5"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-025/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-025/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-025/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-025/pre-unlink-ps.stdout.bin": {
+      "bytes": 86575,
+      "mode": 420,
+      "sha256": "78bc7ba14ad848d4cdfb15195ead1c65c3d746fc0fbbf685a95938c37b0deafa"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-025/prepared.json": {
+      "bytes": 3588,
+      "mode": 420,
+      "sha256": "2e33abe7ec79b41db3e452e054c60889d42d9fbc6e90e45e5d484439a2d78dfc"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-025/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "61598105c26ad3b966da6d840228fabfde6663d49a1ee103f77e9587e48b267c"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-026/deleted.jsonl": {
+      "bytes": 1447,
+      "mode": 420,
+      "sha256": "2b7dfd17690cfc987757543f7839809fe84044297d317c0454bdd96bc9247be9"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-026/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-026/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-026/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-026/pre-unlink-ps.stdout.bin": {
+      "bytes": 86575,
+      "mode": 420,
+      "sha256": "5bcd962de2e182d28597bdcd6a8f7094fc0c45e71271efa8799b6308ff1c11ac"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-026/prepared.json": {
+      "bytes": 3566,
+      "mode": 420,
+      "sha256": "b63941c95a54dcf77b84b4e6749baaa68d21fa422fce320a8eb37ff010f827ce"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-026/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "2e894f2361452f0109782a782df869f01adb1113089a3a1d949a280419d25c66"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-027/deleted.jsonl": {
+      "bytes": 1447,
+      "mode": 420,
+      "sha256": "6377a33d34679c24c14b694c7ea804fa003230a1c9592bca0175f8b4fadd47cc"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-027/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-027/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-027/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-027/pre-unlink-ps.stdout.bin": {
+      "bytes": 86605,
+      "mode": 420,
+      "sha256": "efca45eac75a8260f6e74a589dbd7258583998514ae74969380060e9112e0007"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-027/prepared.json": {
+      "bytes": 3566,
+      "mode": 420,
+      "sha256": "db7cb6905ec3cd3b8db0dd23bcdacced111d465fdccf3cafc426a565f718d53b"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-027/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "6d3f37b582bcecbf66acd81a95f80123fb20441bb121c46b6ee3218f22d97070"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-028/deleted.jsonl": {
+      "bytes": 1437,
+      "mode": 420,
+      "sha256": "b6989378b1a3cb4f35be84f9f9fc9e680c8b188f2fb2b305b79385d2ea9785c2"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-028/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-028/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-028/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-028/pre-unlink-ps.stdout.bin": {
+      "bytes": 86717,
+      "mode": 420,
+      "sha256": "564e606d493981500edac2024b9d9fa72c9144e96b7bef84e0349eb3bbc81dc4"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-028/prepared.json": {
+      "bytes": 3556,
+      "mode": 420,
+      "sha256": "4adf7694ea0ca281655c4a25ad93a75f6d731a8327b511599577669e2555924b"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-028/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "9def1cd5ff8340d134e33248f630d786de1042fe73c642daacb2a6f8ac968f98"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-029/deleted.jsonl": {
+      "bytes": 1439,
+      "mode": 420,
+      "sha256": "34f5da6313395c9de8d0d708f8ed80a0e90bd7a0d833d376f9871456556d9f6a"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-029/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-029/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-029/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-029/pre-unlink-ps.stdout.bin": {
+      "bytes": 86575,
+      "mode": 420,
+      "sha256": "b35dc75431cda7f149fc6d95568558695606dfc5daf6467338c3257f7f46bc6c"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-029/prepared.json": {
+      "bytes": 3558,
+      "mode": 420,
+      "sha256": "35b3ab36bcc50e2a9887e7fd9dc889e7de0cbe7a4d8ca4a6bf69ae342c290ecc"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-029/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "466989fa404b58ba72e57dd1d773a7793417d1ca9cc5685acad2d909eb01ff94"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-030/deleted.jsonl": {
+      "bytes": 1439,
+      "mode": 420,
+      "sha256": "7a6d4a8f12edfdac9e01f5444ca6be23161095a2691de106b9339859fe7d8d80"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-030/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-030/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-030/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-030/pre-unlink-ps.stdout.bin": {
+      "bytes": 86575,
+      "mode": 420,
+      "sha256": "886149b2b92341ddd1539d75c7726ddf349d4916aaaa250fa76455b8f474d833"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-030/prepared.json": {
+      "bytes": 3558,
+      "mode": 420,
+      "sha256": "116d6450dea1e6d351dacd7d1e7135cfceec87f62a22309ee076ea21b6550edd"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-030/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "054643a08cd85e2e007ef90c0fa16dd81fd67cc3dd3d59b8471cac5ef4791136"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-031/deleted.jsonl": {
+      "bytes": 1447,
+      "mode": 420,
+      "sha256": "76a3af22c945358264534b196f35c879806f1b40508cfd25c2200eb67caf2ecd"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-031/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-031/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-031/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-031/pre-unlink-ps.stdout.bin": {
+      "bytes": 86766,
+      "mode": 420,
+      "sha256": "4dbdb856ebd44b29e1c5f50839bf7e05cd7ada0c3e9cac88386d0425d8a2511a"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-031/prepared.json": {
+      "bytes": 3566,
+      "mode": 420,
+      "sha256": "187ab95d7b78c3b965b387c90ac5f30d931a0e7afce2e0e6bf7481f390330866"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-031/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "48abfe90428aa212f923410c4b363cc6885a6a1da91fe1d27b580a224046a41f"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-032/deleted.jsonl": {
+      "bytes": 1427,
+      "mode": 420,
+      "sha256": "76b912a9974003e67f11f669ab30f1a97cd56539cab414abfe3e09be543a9757"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-032/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-032/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-032/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-032/pre-unlink-ps.stdout.bin": {
+      "bytes": 87997,
+      "mode": 420,
+      "sha256": "a64cac74b4812dcdf0e7e1ccb049b25b65abce7811afe97f65bf6e0e8ee601f3"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-032/prepared.json": {
+      "bytes": 3546,
+      "mode": 420,
+      "sha256": "431488ef92ffadb9e34432adf83e56de0e07fffa5a791980166b13544d713e18"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-032/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "e49e3e11e535f3619fa473935ff82ec021c6ea809c8847eb6cdf4a35819ae480"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-033/deleted.jsonl": {
+      "bytes": 1425,
+      "mode": 420,
+      "sha256": "1f8ad8ba73193bb297c2834d8b1a752d7f710483894618dc060c4471ca6b907e"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-033/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-033/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-033/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-033/pre-unlink-ps.stdout.bin": {
+      "bytes": 87997,
+      "mode": 420,
+      "sha256": "0979556fe9629c5b2b83a587ccd9176a4c32ed0d1206dae895d5956f8769bfce"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-033/prepared.json": {
+      "bytes": 3544,
+      "mode": 420,
+      "sha256": "2ed17712c4cd4279d603aa8e8b84cab0dc142b62eb0e62742dce09caba8bd9f3"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-033/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "db421315728e4dde754a681a018c7062959eba6903fcb5fb3d37325a16c3ce0d"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-034/deleted.jsonl": {
+      "bytes": 1443,
+      "mode": 420,
+      "sha256": "62ccc1080c8f8944ebdc8ff804026a1ccd9dadc3e83283151ac7f66f9413bf11"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-034/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-034/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-034/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-034/pre-unlink-ps.stdout.bin": {
+      "bytes": 88079,
+      "mode": 420,
+      "sha256": "588adf5bcd68f097e76dbf0e8b841e0b3f0172248294c3d76b27bd9bae239ca6"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-034/prepared.json": {
+      "bytes": 3562,
+      "mode": 420,
+      "sha256": "a1e42c88c8da013cab53ad318936378a177a07596ae9bf775cce12a551fcbc7e"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-034/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "1c7657f24b76abe23ff0cb671c1c7e31692cdb0ce5344297d67e16ec03483cde"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-035/deleted.jsonl": {
+      "bytes": 1429,
+      "mode": 420,
+      "sha256": "3955423ae2c80ceca2b026d80522b8eede3514d27c474bbdd9697e7a0616a1fd"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-035/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-035/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-035/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-035/pre-unlink-ps.stdout.bin": {
+      "bytes": 88079,
+      "mode": 420,
+      "sha256": "48c52c9db39157c5aa1701ebd37b3db6355ee4045a2efc891944641a21779f88"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-035/prepared.json": {
+      "bytes": 3548,
+      "mode": 420,
+      "sha256": "352c0aacb30b3c8a834e74b5dd136d0457964e9512a1a2aeecb8a058379b5cae"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-035/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "ae192a8b02e59a803a97f48f86891f3383be0f2cfef049c8faeaeff418c3c614"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-036/deleted.jsonl": {
+      "bytes": 1439,
+      "mode": 420,
+      "sha256": "484788ea9fbdc39914e16ceb8ca0cf2bdd5000aceec9aac5822096504325f168"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-036/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-036/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-036/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-036/pre-unlink-ps.stdout.bin": {
+      "bytes": 87783,
+      "mode": 420,
+      "sha256": "55e6ac7e14490d9a3a9e0945da3c8123101e7679e37ed2c450a2686a49197a52"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-036/prepared.json": {
+      "bytes": 3558,
+      "mode": 420,
+      "sha256": "52f04fa68677f69d536580b346d88aaceb19c2009de9737d50668bf74eaf36cd"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-036/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "7e88c6a10faa24679db2f28dcf368265fe73be89e29d8bed535412b0e1291d29"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-037/deleted.jsonl": {
+      "bytes": 1471,
+      "mode": 420,
+      "sha256": "facafcb6920eff8f204ec342bbb4fe6d84592d6b5d84b591b1fa04150ea48a71"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-037/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-037/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-037/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-037/pre-unlink-ps.stdout.bin": {
+      "bytes": 87783,
+      "mode": 420,
+      "sha256": "01ff86ffd14c4976a0b0ff71cbfef226d6ca15586dd10d30baf0f1196ceadc37"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-037/prepared.json": {
+      "bytes": 3590,
+      "mode": 420,
+      "sha256": "ff4d215d165bf27b9f2753df74c07f07b6b51a0723a54288e6b706912b3c9c6b"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-037/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "7eb6b0fed745cae128f42ccdb79c3157580d734585c5357aed14414bb67b66c3"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-038/deleted.jsonl": {
+      "bytes": 1453,
+      "mode": 420,
+      "sha256": "7ff20b8d3fba405e4d7f2f6faf85642cfa3cc7389ad7174c0e27248813dcfa4c"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-038/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-038/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-038/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-038/pre-unlink-ps.stdout.bin": {
+      "bytes": 87968,
+      "mode": 420,
+      "sha256": "33ea351b88d2c53577e31bfb7181845b3603b6dbb19e5a79653d99d7740867a1"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-038/prepared.json": {
+      "bytes": 3572,
+      "mode": 420,
+      "sha256": "39ba7b029fd64b4258c788a9c5ff6985e8bff8cf308fe827eb85ea27aa0b62a5"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-038/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "8212082b1e00ef58762a798454e4e4f17def21741a41d2cf19e3bb3e12ee5011"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-039/deleted.jsonl": {
+      "bytes": 1441,
+      "mode": 420,
+      "sha256": "b4821202fccec89331ef28cf2f7ccbbe83a78e8183cde1b2fd0a455538ccaffc"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-039/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-039/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-039/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-039/pre-unlink-ps.stdout.bin": {
+      "bytes": 87701,
+      "mode": 420,
+      "sha256": "61247b677daaa34a9192d702814337c19c2669774cfeac6222175933d4f5bca7"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-039/prepared.json": {
+      "bytes": 3560,
+      "mode": 420,
+      "sha256": "9505d9756fb7d444969801eea32e7cac4d09bc4961750e63835a79f227bce810"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-039/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "e1cd2d966f26d8cb3ca9845445e4ec6db154834b7f4b6e4dfbc8dd9365cb6bd9"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-040/deleted.jsonl": {
+      "bytes": 1463,
+      "mode": 420,
+      "sha256": "e186a47f6bb702f00a7fc08b9441a2ab1b736af914e8d9189c9d06f3e4295969"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-040/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-040/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-040/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-040/pre-unlink-ps.stdout.bin": {
+      "bytes": 87701,
+      "mode": 420,
+      "sha256": "d24e0455d2c2173e42d98e4053799ca6754bf6ffab82aad6b837bd3dc195ee23"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-040/prepared.json": {
+      "bytes": 3582,
+      "mode": 420,
+      "sha256": "e7f9b73a2584e8a84882247f29ed4d2d3550d3e3dcea1e9ca65b64e733417d65"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-040/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "83a2d81ed9814537059d73963846f0a9487ff8ab4659d00c6f788ae90524a540"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-041/deleted.jsonl": {
+      "bytes": 1451,
+      "mode": 420,
+      "sha256": "ccaaa8d56c1828ff6f1a01920d0a732a8f93845d09ac8a596dc2a829f3b42512"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-041/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-041/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-041/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-041/pre-unlink-ps.stdout.bin": {
+      "bytes": 87701,
+      "mode": 420,
+      "sha256": "11147260f6d66aba33640b68705b471b1f13a2e62e0b124872c7298c87e69b0b"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-041/prepared.json": {
+      "bytes": 3570,
+      "mode": 420,
+      "sha256": "0e064fba8d816116eef1f41cd71c832a5ffa7d4e005ecb2aa290e1ed49f20add"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-041/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "9cf7549ad95a812bf41a726d7d44bfb6119a624e1d3817d6e69f11fe3f5ca12f"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-042/deleted.jsonl": {
+      "bytes": 1431,
+      "mode": 420,
+      "sha256": "47499bf59ba191b9574ccca6decaa2f3fad5950cde1f7954486ad0de118ebbb9"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-042/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-042/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-042/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-042/pre-unlink-ps.stdout.bin": {
+      "bytes": 87642,
+      "mode": 420,
+      "sha256": "380887b45dd72685ec4b2e1fa2f0437715d65cd5a30baeb1456a3c80cc308354"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-042/prepared.json": {
+      "bytes": 3550,
+      "mode": 420,
+      "sha256": "415ead028aa321a5b3b45a4b6f1cc8079b1ad8b1d05a85b8981148dfd6098eb0"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-042/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "694b59fa738f5dcae9646f9c5f9b41784ede0d02815ef99aa22e10afe54445c0"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-043/deleted.jsonl": {
+      "bytes": 1409,
+      "mode": 420,
+      "sha256": "843c909f14a1bcce6f3c12090f870f7476b599476458ffa10f12c5af5764661b"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-043/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-043/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-043/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-043/pre-unlink-ps.stdout.bin": {
+      "bytes": 86511,
+      "mode": 420,
+      "sha256": "69141b7dded929174c5c7918878422906c57dcdf7a8e1e92d6199bc64a8ff8c1"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-043/prepared.json": {
+      "bytes": 3528,
+      "mode": 420,
+      "sha256": "5f69015c5909602c9110fded31561a2e431edb82384f262922889b10bb388c3a"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-043/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "383b0d98e5596cdf6230a95414d23e88e0a4a02f404ad36e2f1a39154014f51c"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-044/deleted.jsonl": {
+      "bytes": 1457,
+      "mode": 420,
+      "sha256": "b91dbbe768a660e47714665bd0ebd798206c2630c31a6bb316512518994f605d"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-044/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-044/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-044/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-044/pre-unlink-ps.stdout.bin": {
+      "bytes": 86570,
+      "mode": 420,
+      "sha256": "eb6ca2f45e20352c4ede6003e9140f32e649d4a7da74962e43ed51592560e0dd"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-044/prepared.json": {
+      "bytes": 3576,
+      "mode": 420,
+      "sha256": "2ec22e2fb0a7618bb1df4d3be3b7667e843a0cf7acb18178759b2880cdee87d5"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-044/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "ea6ba974329736fea5511cb22221e1a7c7b95d2cf0301e51c3d714720837fc73"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-045/deleted.jsonl": {
+      "bytes": 1479,
+      "mode": 420,
+      "sha256": "caa9cdc8a510bc26d8e8ca5543c67d495fc94be7c678fb4921d498c13c9e4f65"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-045/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-045/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-045/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-045/pre-unlink-ps.stdout.bin": {
+      "bytes": 86570,
+      "mode": 420,
+      "sha256": "06e449796a717b8ae0fea13836d5ca408b8c3857c0a72063ad5c5171a921545e"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-045/prepared.json": {
+      "bytes": 3598,
+      "mode": 420,
+      "sha256": "1b6119c0386f8da84a338542becf8b2676526f1386670b460b656f9b15990301"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-045/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "646e7fa6161b184e17e9808c91d7521cd3f9066cbb7385848fb535739c527c0e"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-046/deleted.jsonl": {
+      "bytes": 1405,
+      "mode": 420,
+      "sha256": "ebd65b18964559bee5ffaaf6a7c35bba7a9806f9811c7455c2dddcae477dd8a9"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-046/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-046/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-046/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-046/pre-unlink-ps.stdout.bin": {
+      "bytes": 89102,
+      "mode": 420,
+      "sha256": "d78f14a7f74a2a0ffcf7cfeaf4eb93ecc0ea1a4153e39271f037ba7ebb2eb169"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-046/prepared.json": {
+      "bytes": 3524,
+      "mode": 420,
+      "sha256": "30e251fa2dfbc54feea2cd9ea9ecb810452421d14719e1f361bc080fcb23cd3d"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-046/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "1ea45ab5a01c5058b8f6ca7fdb447a5caa075d6fcae9df3ef222d50a35785bce"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-047/deleted.jsonl": {
+      "bytes": 1395,
+      "mode": 420,
+      "sha256": "7b9b7c06a3b6850394536a629089011a88c981abb40b283fd9dff5f5aa8ab502"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-047/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-047/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-047/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-047/pre-unlink-ps.stdout.bin": {
+      "bytes": 86791,
+      "mode": 420,
+      "sha256": "30bf44c50d98a6b5c19000205c57066d2da9a288f6929ebdf28e2fccdced258f"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-047/prepared.json": {
+      "bytes": 3514,
+      "mode": 420,
+      "sha256": "e5389a271eacd37d9268c038f9b5df18ab1905663f8980680dc193aab75916e7"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-047/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "05b8a1ac3d2c8d8602ee55bfc18556022a7739ba2e6422a0621f27100b145387"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-048/deleted.jsonl": {
+      "bytes": 1417,
+      "mode": 420,
+      "sha256": "93081819a80fbdde97a82a639d2728a2713571bc20ed35662bb3c0fdbebf6a59"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-048/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-048/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-048/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-048/pre-unlink-ps.stdout.bin": {
+      "bytes": 86853,
+      "mode": 420,
+      "sha256": "285581cbbbd0b33e314a0e7c00b0af87710f29c74c268edabe106713f97ae419"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-048/prepared.json": {
+      "bytes": 3536,
+      "mode": 420,
+      "sha256": "ec3130b53f0a20b8aba07ac8dd6ea22288b6062e68f95b8da04d1607bc725afa"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-048/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "7ab38a6fe4bbd59cf24d645348fbc7edf9c063f88318a0b9449fd99924b386bc"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-049/deleted.jsonl": {
+      "bytes": 1429,
+      "mode": 420,
+      "sha256": "ea80b4e1f7c1257d087ee3b8409c0dbf0f4ad45312733a50f165ab46057f3dc8"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-049/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-049/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-049/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-049/pre-unlink-ps.stdout.bin": {
+      "bytes": 86570,
+      "mode": 420,
+      "sha256": "bd85d85e80d8dac234ce644b3c9933c425e40c76f263e21d085375105a5f9dd7"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-049/prepared.json": {
+      "bytes": 3548,
+      "mode": 420,
+      "sha256": "fe389fc44a360ff365c3b964864de0499cd199689a0f33d90af0eb7cfde8c610"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-049/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "5cb6a120133bcae00a6ffc32ff7b1a104ef5249f810f34476c4c552b237b3acf"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-050/deleted.jsonl": {
+      "bytes": 1433,
+      "mode": 420,
+      "sha256": "071aad323c8a661bfd077a56b92c08f5cb6c927bc2506d7d119c72e73d736f56"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-050/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-050/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-050/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-050/pre-unlink-ps.stdout.bin": {
+      "bytes": 86570,
+      "mode": 420,
+      "sha256": "5e1dbcc03b78c9cf47764c49b628662278e642f97e0a9756ad564605b2b6c7fa"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-050/prepared.json": {
+      "bytes": 3552,
+      "mode": 420,
+      "sha256": "b67d237e20ba6a4d09be1fe889ecee6ac6cad6b5e2e4c67edf7f2ff8fe82ee8f"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-050/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "0a410abefc8828041f3826b2950ed9883114ec66275fe0ac7ed64b611f68148c"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-051/deleted.jsonl": {
+      "bytes": 1407,
+      "mode": 420,
+      "sha256": "da70051bf0530960af6b32a378c48d768c28bbe26bd69f84762bbb4e7922338c"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-051/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-051/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-051/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-051/pre-unlink-ps.stdout.bin": {
+      "bytes": 86464,
+      "mode": 420,
+      "sha256": "ce3c7ecf147f2309f83e0408151f5c10d5adf784718ea7e7229c3ee40a490451"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-051/prepared.json": {
+      "bytes": 3526,
+      "mode": 420,
+      "sha256": "32e5e25e355614daeb53f81cdf43c2e62dc1ac5f62abaf98661de92b912c9b41"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-051/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "e7c2f535f859fb507c293449df496b1f8e2f9ef3aec65980368a705928cdd9d7"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-052/deleted.jsonl": {
+      "bytes": 1409,
+      "mode": 420,
+      "sha256": "2a67a9487b012f91a148e69f2e30372e8534d2d72f72b485e1b36b7347598b96"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-052/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-052/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-052/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-052/pre-unlink-ps.stdout.bin": {
+      "bytes": 86558,
+      "mode": 420,
+      "sha256": "5edef49deae24f4d89bbd26471c27122c22bf7f7d645a03fced8d916193851b7"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-052/prepared.json": {
+      "bytes": 3528,
+      "mode": 420,
+      "sha256": "82d465b1d13271b074b4445a873398e18916e0489d286acc9827ce6ca851e836"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-052/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "5d67717209544d7bc4055b3dbe739cf6c32cbf6f4875b8a950f4b581fd1d2a2e"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-053/deleted.jsonl": {
+      "bytes": 1415,
+      "mode": 420,
+      "sha256": "f555cd389de19ce525ebd2a2b1b965f87061a292e0abc16eb24d91508f28f0a2"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-053/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-053/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-053/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-053/pre-unlink-ps.stdout.bin": {
+      "bytes": 86464,
+      "mode": 420,
+      "sha256": "89e523f560aefa914cc21820eb188c67e1fa4abd4cc335fa873e645b5f8e1fb2"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-053/prepared.json": {
+      "bytes": 3534,
+      "mode": 420,
+      "sha256": "648e1748926e3aa4b383e1d8fc85c154cd54fd8916dab8d3f821bd6569ac392e"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-053/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "5f933bbd9697ccda9f151183bf5f9ef55a05bfe894da25f93fa81d41f7de86bf"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-054/deleted.jsonl": {
+      "bytes": 1441,
+      "mode": 420,
+      "sha256": "1cdacb0acf7254ec46f93cc2cd8442d922fc8f44db654c6bb955e3f289f5d194"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-054/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-054/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-054/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-054/pre-unlink-ps.stdout.bin": {
+      "bytes": 86382,
+      "mode": 420,
+      "sha256": "5aaa4e6f21ececb965b067f98d08e6aa049c964b6a513405d148c31cf8b156e0"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-054/prepared.json": {
+      "bytes": 3560,
+      "mode": 420,
+      "sha256": "f2adaa740fc676b783669aa86dfa40991f9103e3c667633ab592f70b5de89dd4"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-054/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "5d64c9f6b61f86870c6b6fdba08374f81d2fa76e4aa1c08df9d796fbc8e6470d"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-055/deleted.jsonl": {
+      "bytes": 1413,
+      "mode": 420,
+      "sha256": "ef76add855f077328c1e4260e61d6d58207bbd41bc14f399b93e63bf1354a378"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-055/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-055/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-055/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-055/pre-unlink-ps.stdout.bin": {
+      "bytes": 86382,
+      "mode": 420,
+      "sha256": "204a9b70e3569af4c9cd05a5e6d4ff2fae43014ba6e943d06851c1c583282c44"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-055/prepared.json": {
+      "bytes": 3532,
+      "mode": 420,
+      "sha256": "80df401c506ca5380786fb45c5298cae7f755d5742a5b644ea5f2f82b2f479cb"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-055/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "f0fceed867a06ae921f35073204e557ce37bf8a80ffa97437aa20d7f187a0b0b"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-056/deleted.jsonl": {
+      "bytes": 1455,
+      "mode": 420,
+      "sha256": "05806be8c4fa4fef96dc8d9952e7593088099f908c15170d02eaa34c41cc4930"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-056/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-056/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-056/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-056/pre-unlink-ps.stdout.bin": {
+      "bytes": 86382,
+      "mode": 420,
+      "sha256": "e0c8351171d520a94c84af00e060daa1951945bde6e30b37abbf3a2e15ad37d9"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-056/prepared.json": {
+      "bytes": 3574,
+      "mode": 420,
+      "sha256": "f81cce974fe37f8badc8e7f909ce645241ad90b940bdb51957c045584cb3206d"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-056/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "857f7013b1798072c60132db0017b2a36fcebac14f299b75b6e4b1b25e0a2a57"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-057/deleted.jsonl": {
+      "bytes": 1385,
+      "mode": 420,
+      "sha256": "56db47e478e369d0e64f6689464041c6cd94a1022f104c177664f9b7f7fa44ea"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-057/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-057/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-057/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-057/pre-unlink-ps.stdout.bin": {
+      "bytes": 88324,
+      "mode": 420,
+      "sha256": "53719b5f8bdbcd42e5ba8699f86f1f6e0999c3669d3a3438fc3b108bd821b3a4"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-057/prepared.json": {
+      "bytes": 3504,
+      "mode": 420,
+      "sha256": "6bc3212fc0f5043c484407791dfe2e090fefea2ee65ce512d1e277f491e9c30d"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-057/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "9e54135460d442d76ab5cbb71c7def7743900318f7185b9beca892a025c3d810"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-058/deleted.jsonl": {
+      "bytes": 1433,
+      "mode": 420,
+      "sha256": "cd50ab0d00e2bdc291dfd899f8ecef6d64fc44f73817edc15f47d0e0ececafc0"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-058/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-058/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-058/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-058/pre-unlink-ps.stdout.bin": {
+      "bytes": 86464,
+      "mode": 420,
+      "sha256": "40d1e78bc7cbb8d367a2894d21fa2afac98b67bfcec601161c5032644d2c5993"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-058/prepared.json": {
+      "bytes": 3552,
+      "mode": 420,
+      "sha256": "841639bc1ada24ea74494c5eb15aa528f60a3e83155296da74042966b41f1470"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-058/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "7a230adb373973aec7aa6da39de2702437176239ae77b26a2054ddb96dff120d"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-059/deleted.jsonl": {
+      "bytes": 1880,
+      "mode": 420,
+      "sha256": "d4ea803a53dc3963f444e9c4b799fe7e59dc07d204ad6678a0735b369ce9ee6d"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-059/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-059/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-059/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-059/pre-unlink-ps.stdout.bin": {
+      "bytes": 86394,
+      "mode": 420,
+      "sha256": "6913f5c3b8f8a01c1926708d522b643c83bf99e6d2a79f99d8e08b5d3bd9d374"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-059/prepared.json": {
+      "bytes": 3989,
+      "mode": 420,
+      "sha256": "ca2f164e6ae63c4703bb019a3b6058d8fd20c653b90ceb21eac044011573a2e4"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-059/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "0127f9fa322d0d989df040071fc7ec8b39f3b90c5880648e687dda9e6bb5fff5"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-060/deleted.jsonl": {
+      "bytes": 1401,
+      "mode": 420,
+      "sha256": "89b3d2d519121b5f273e64f25ef7dd3e72cf6a4e7c88380288eec6dc0f057988"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-060/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-060/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-060/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-060/pre-unlink-ps.stdout.bin": {
+      "bytes": 86405,
+      "mode": 420,
+      "sha256": "26d18a45a903ee83de76661bfb643ce228efed110e4739c80177b1ef3c5e3517"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-060/prepared.json": {
+      "bytes": 3520,
+      "mode": 420,
+      "sha256": "d55aca8119a549c5948c07a2e68dc06ecf12412f2f8efab0cd176a526754d4a1"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-060/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "5b063504d35f7de5245fbf406b3fdbe1cb2ba1e523907ad3d0b0eeb5116fa528"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-061/deleted.jsonl": {
+      "bytes": 1415,
+      "mode": 420,
+      "sha256": "3b512e66bfaa095f27f95add5180e29104b2de98a80380a98d2c31def13f28ff"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-061/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-061/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-061/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-061/pre-unlink-ps.stdout.bin": {
+      "bytes": 86394,
+      "mode": 420,
+      "sha256": "951f52b64ca1d982095fdc576ba802ba0c1583076b80118702e94006aff3514c"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-061/prepared.json": {
+      "bytes": 3534,
+      "mode": 420,
+      "sha256": "e5086330a45a893c8e2b01f6ba128f66dba0a236cab786b0d8aa868627f1e63f"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-061/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "70f86256cfb223fd333e24feddce8d15587e4b6c5f7516cc3d7bddaa37231368"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-062/deleted.jsonl": {
+      "bytes": 1429,
+      "mode": 420,
+      "sha256": "e5f4cfcebed9fa474e538b8d3700029533444d512ee5a019a750e0732829d7e6"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-062/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-062/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-062/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-062/pre-unlink-ps.stdout.bin": {
+      "bytes": 86394,
+      "mode": 420,
+      "sha256": "4d17fe4b42e3b833ecafae93824a96b79705e74ea7c9c875713e585934352455"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-062/prepared.json": {
+      "bytes": 3548,
+      "mode": 420,
+      "sha256": "b30baf3273fe1cd04584a4b9d41e2d73e1ea1fd8e88591729b205224d8a53416"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-062/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "e2468e2b032433a738cf13648239a2930b01f24a972bff8bc5db06084722cad7"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-063/deleted.jsonl": {
+      "bytes": 1379,
+      "mode": 420,
+      "sha256": "24875813d83b7e9f4da2ee5e5c8b9990b3e81a3d08909f74c9a00bb560c86d8e"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-063/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-063/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-063/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-063/pre-unlink-ps.stdout.bin": {
+      "bytes": 86312,
+      "mode": 420,
+      "sha256": "81e888d5d5815f345c8886f4d20e75900f565c4698bc48cb25cace0df6bc7b02"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-063/prepared.json": {
+      "bytes": 3498,
+      "mode": 420,
+      "sha256": "ff5b428b16db4c1fc1038e1c9c83360d2de6360bb98918bb78ba1693adec3c90"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-063/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "e2c22671ac2c608d90cfc8f72fd624f9cf937715aca642644838f0db74235b1b"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-064/deleted.jsonl": {
+      "bytes": 1385,
+      "mode": 420,
+      "sha256": "ac924ca3fb30a469ace4e5b00cad4e3af76823fa657e1373c01b3db3fd5be461"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-064/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-064/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-064/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-064/pre-unlink-ps.stdout.bin": {
+      "bytes": 86312,
+      "mode": 420,
+      "sha256": "6241e100b8d01548e15ba96bb7232af055da3d1fa92b1fe227a8904f94b94417"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-064/prepared.json": {
+      "bytes": 3504,
+      "mode": 420,
+      "sha256": "74c8f3570b22a90591997f47d039e0ed2206a19b967d447e30b23c5a77152fe8"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-064/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "ab955dfe4d66748d6b147b194497388906d0531ef1ffd3c6b5af1be4878ffd97"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-065/deleted.jsonl": {
+      "bytes": 1419,
+      "mode": 420,
+      "sha256": "0eda0eeff39abb7f86134e6fc76827a29caed5a2ef06767b3cb51044ce964cb3"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-065/pre-unlink-lsof.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-065/pre-unlink-lsof.stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-065/pre-unlink-ps.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-065/pre-unlink-ps.stdout.bin": {
+      "bytes": 86394,
+      "mode": 420,
+      "sha256": "57e64d81d69b7d205b079ba9dbb6481c60b4b92b3b91cab762e706ce6ad3ba86"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-065/prepared.json": {
+      "bytes": 3538,
+      "mode": 420,
+      "sha256": "cc63227514e3955bf71f34d97e7fc0d7f83d224f3575964997cbefc4c852b7c2"
+    },
+    "target/m2/stage69-storage-recovery-01/batch-065/result.json": {
+      "bytes": 513,
+      "mode": 420,
+      "sha256": "5e11d54799a9f2bd384f589e4f6898b3e213cd5201a5868a5be96b079c051a49"
+    },
+    "target/m2/stage69-storage-recovery-01/report.json": {
+      "bytes": 39553,
+      "mode": 420,
+      "sha256": "209ea6cef4d0e15af4fe1bcacb44f0b8cc857073be9e7eed6b8dbb0a6bae78d2"
+    },
+    "target/m2/stage69-storage-review-01/audit.py": {
+      "bytes": 12283,
+      "mode": 420,
+      "sha256": "22835bed6c56d56530b97613a54b93543481ba911ba0a1518309d340b66625d0"
+    },
+    "target/m2/stage69-storage-review-01/report.json": {
+      "bytes": 1347,
+      "mode": 420,
+      "sha256": "7bb4e6ecd1778e4e64601759feab446213dc1491e9d0b5cd4be80136cb8a1813"
+    }
+  },
+  "publisher_sources": [
+    "target/m2/stage69-72-b-publication-prep-06/layout.json",
+    "target/m2/stage69-72-b-publication-prep-06/admission.py",
+    "target/m2/stage69-72-b-publication-prep-06/publish.py",
+    "target/m2/stage69-72-b-publication-prep-06/run.py",
+    "target/m2/stage69-72-b-publication-prep-06/PLAN.md",
+    "target/m2/stage69-72-b-publication-prep-06/preparation.json",
+    "target/m2/stage69-72-b-publication-prep-06/storage-invocation.json"
+  ],
+  "schema": 1,
+  "selected_directories": [
+    "stage69-72-committed-source-audit-01",
+    "stage69-72-committed-source-execution-01",
+    "stage69-72-committed-source-postrestore-review-01",
+    "stage69-72-committed-source-postreview-01",
+    "stage69-72-committed-source-relocation-01",
+    "stage69-72-committed-source-relocation-prep-01",
+    "stage69-72-committed-source-relocation-prep-02",
+    "stage69-72-committed-source-relocation-prep-03",
+    "stage69-72-committed-source-relocation-review-01",
+    "stage69-72-committed-source-restore-01",
+    "stage69-72-committed-source-restore-execution-01",
+    "stage69-72-git-source-relocation-execution-01",
+    "stage69-72-git-source-relocation-prep-01",
+    "stage69-72-git-source-relocation-prep-02",
+    "stage69-72-git-source-relocation-review-01",
+    "stage69-72-git-source-restore-smoke-01",
+    "stage69-72-git-source-restore-smoke-02",
+    "stage69-72-json-relocation-01",
+    "stage69-72-json-relocation-prep-01",
+    "stage69-72-next-storage-audit-01",
+    "stage69-72-storage-admission-audit-01",
+    "stage69-storage-execution-01",
+    "stage69-storage-prep-01",
+    "stage69-storage-recovery-01",
+    "stage69-storage-review-01"
+  ],
+  "source_before_after_equal": true,
+  "terminal_admission": {
+    "candidate_compatibility_passes_claimed": 0,
+    "complete": true,
+    "java_new_processes_for_replay": 0,
+    "known_failures_preserved": true,
+    "new_passes_from_prior_nonpass": 6,
+    "new_status_counts": {
+      "candidate-unsupported": 141,
+      "mismatch": 115,
+      "oracle-error": 2,
+      "pass": 4158
+    },
+    "platform_observations_per_target": 478,
+    "replay_results": 4416,
+    "stage68_pass_to_nonpass": 0,
+    "stage68_prior_passes": 4152
+  }
+}

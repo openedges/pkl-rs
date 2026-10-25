@@ -1,0 +1,3 @@
+local base = import("pkl:base")
+typealias Alias = base.Listing
+result = new Alias {}

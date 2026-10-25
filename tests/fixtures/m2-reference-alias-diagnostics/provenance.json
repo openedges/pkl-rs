@@ -1,0 +1,1234 @@
+{
+  "audit": {
+    "bytes": 2741,
+    "path": "target/m2/stage69-72-reference-alias-regression-audit-01/report.json",
+    "sha256": "cf2669adff7f2d3aee0c96ca168bfdac3b36f00f266bd31e2c9331166f3db3b3"
+  },
+  "capture": {
+    "bytes": 45261,
+    "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/report.json",
+    "sha256": "f1459e4738ac8cfc0a7190abb905bb5d1522b3e05a1fc1e771e1f9ad05c1bcf8"
+  },
+  "copies": [
+    {
+      "repeat0": {
+        "bytes": 3,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/expression.bin",
+        "sha256": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae"
+      },
+      "repeat1": {
+        "bytes": 3,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/expression.bin",
+        "sha256": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/expression.code-units.bin",
+        "sha256": "0e6e800716cd8903128fc39b02c3e3679b3e3d590d82342eb16866b3f459972c"
+      },
+      "repeat1": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/expression.code-units.bin",
+        "sha256": "0e6e800716cd8903128fc39b02c3e3679b3e3d590d82342eb16866b3f459972c"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 2,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/logs.count.bin",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "repeat1": {
+        "bytes": 2,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/logs.count.bin",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/mode.bin",
+        "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+      },
+      "repeat1": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/mode.bin",
+        "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 12,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/mode.code-units.bin",
+        "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+      },
+      "repeat1": {
+        "bytes": 12,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/mode.code-units.bin",
+        "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.cause-class.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.cause-class.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.cause-class.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.cause-class.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.cause-message.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.cause-message.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.cause-message.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.cause-message.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.cause-to-string.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.cause-to-string.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.cause-to-string.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.cause-to-string.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 25,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.error-class.bin",
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+      },
+      "repeat1": {
+        "bytes": 25,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.error-class.bin",
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 50,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.error-class.code-units.bin",
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+      },
+      "repeat1": {
+        "bytes": 50,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.error-class.code-units.bin",
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 598,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.exception-to-string.bin",
+        "sha256": "7fdab79719ea8c4f9670847a8056ae50158e219b581f12c730e93af175ebc7c0"
+      },
+      "repeat1": {
+        "bytes": 598,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.exception-to-string.bin",
+        "sha256": "7fdab79719ea8c4f9670847a8056ae50158e219b581f12c730e93af175ebc7c0"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 1180,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.exception-to-string.code-units.bin",
+        "sha256": "21a687a2caf2face2739e0738ee53bb6a05978faf7cb2feb3b901a6d921e761e"
+      },
+      "repeat1": {
+        "bytes": 1180,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.exception-to-string.code-units.bin",
+        "sha256": "21a687a2caf2face2739e0738ee53bb6a05978faf7cb2feb3b901a6d921e761e"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.java-type.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.java-type.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.java-type.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.java-type.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.status.bin",
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+      },
+      "repeat1": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.status.bin",
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 571,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.stderr.bin",
+        "sha256": "3c7f36f1dd8ddbc52d38d2710cb8ab38fa67422f5fef08cd283f957f52c5f792"
+      },
+      "repeat1": {
+        "bytes": 571,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.stderr.bin",
+        "sha256": "3c7f36f1dd8ddbc52d38d2710cb8ab38fa67422f5fef08cd283f957f52c5f792"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 1126,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.stderr.code-units.bin",
+        "sha256": "10ac261a45c7046efa78446e2e3bdd320b424773d788392b6d4f3a3d495fbcbf"
+      },
+      "repeat1": {
+        "bytes": 1126,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.stderr.code-units.bin",
+        "sha256": "10ac261a45c7046efa78446e2e3bdd320b424773d788392b6d4f3a3d495fbcbf"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.stdout.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-1/000-exact-nested-alias/result.stdout.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 118,
+        "path": "tests/fixtures/m2-reference-alias-diagnostics/00-exact-nested-alias.pkl",
+        "sha256": "c4a4ef31b9976480df4a20b6be52ecc44ccde25032d9eb52169077e44efb6d48"
+      },
+      "source": {
+        "bytes": 118,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/module.pkl",
+        "sha256": "c4a4ef31b9976480df4a20b6be52ecc44ccde25032d9eb52169077e44efb6d48"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 571,
+        "path": "tests/fixtures/m2-reference-alias-diagnostics/00-exact-nested-alias.utf8.bin",
+        "sha256": "3c7f36f1dd8ddbc52d38d2710cb8ab38fa67422f5fef08cd283f957f52c5f792"
+      },
+      "source": {
+        "bytes": 571,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.stderr.bin",
+        "sha256": "3c7f36f1dd8ddbc52d38d2710cb8ab38fa67422f5fef08cd283f957f52c5f792"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 1126,
+        "path": "tests/fixtures/m2-reference-alias-diagnostics/00-exact-nested-alias.utf16be.bin",
+        "sha256": "10ac261a45c7046efa78446e2e3bdd320b424773d788392b6d4f3a3d495fbcbf"
+      },
+      "source": {
+        "bytes": 1126,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/00-exact-nested-alias/repeat-0/000-exact-nested-alias/result.stderr.code-units.bin",
+        "sha256": "10ac261a45c7046efa78446e2e3bdd320b424773d788392b6d4f3a3d495fbcbf"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 3,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/expression.bin",
+        "sha256": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae"
+      },
+      "repeat1": {
+        "bytes": 3,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/expression.bin",
+        "sha256": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/expression.code-units.bin",
+        "sha256": "0e6e800716cd8903128fc39b02c3e3679b3e3d590d82342eb16866b3f459972c"
+      },
+      "repeat1": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/expression.code-units.bin",
+        "sha256": "0e6e800716cd8903128fc39b02c3e3679b3e3d590d82342eb16866b3f459972c"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 2,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/logs.count.bin",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "repeat1": {
+        "bytes": 2,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/logs.count.bin",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/mode.bin",
+        "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+      },
+      "repeat1": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/mode.bin",
+        "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 12,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/mode.code-units.bin",
+        "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+      },
+      "repeat1": {
+        "bytes": 12,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/mode.code-units.bin",
+        "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.cause-class.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.cause-class.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.cause-class.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.cause-class.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.cause-message.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.cause-message.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.cause-message.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.cause-message.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.cause-to-string.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.cause-to-string.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.cause-to-string.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.cause-to-string.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 25,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.error-class.bin",
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+      },
+      "repeat1": {
+        "bytes": 25,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.error-class.bin",
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 50,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.error-class.code-units.bin",
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+      },
+      "repeat1": {
+        "bytes": 50,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.error-class.code-units.bin",
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 606,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.exception-to-string.bin",
+        "sha256": "acb4b2b886aed5e4e2dc755a5389cd3eee1ad9eb201556bdc06df1c9188fc043"
+      },
+      "repeat1": {
+        "bytes": 606,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.exception-to-string.bin",
+        "sha256": "acb4b2b886aed5e4e2dc755a5389cd3eee1ad9eb201556bdc06df1c9188fc043"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 1196,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.exception-to-string.code-units.bin",
+        "sha256": "73dfbf8ca413e48101a24286ec8ecb872bdc23ef321b900a66f7cf6c3a3235c2"
+      },
+      "repeat1": {
+        "bytes": 1196,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.exception-to-string.code-units.bin",
+        "sha256": "73dfbf8ca413e48101a24286ec8ecb872bdc23ef321b900a66f7cf6c3a3235c2"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.java-type.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.java-type.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.java-type.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.java-type.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.status.bin",
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+      },
+      "repeat1": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.status.bin",
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 579,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.stderr.bin",
+        "sha256": "0524766291e13432b8aed7012e50124db8dfd796c8ec46956ce57021f0f84927"
+      },
+      "repeat1": {
+        "bytes": 579,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.stderr.bin",
+        "sha256": "0524766291e13432b8aed7012e50124db8dfd796c8ec46956ce57021f0f84927"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 1142,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.stderr.code-units.bin",
+        "sha256": "599e00b1b363bf53943b9f9d91d47457da445fde4b226d3e125f672b0bba671b"
+      },
+      "repeat1": {
+        "bytes": 1142,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.stderr.code-units.bin",
+        "sha256": "599e00b1b363bf53943b9f9d91d47457da445fde4b226d3e125f672b0bba671b"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.stdout.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-1/000-constraint-at-usage/result.stdout.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 118,
+        "path": "tests/fixtures/m2-reference-alias-diagnostics/01-constraint-at-usage.pkl",
+        "sha256": "5b0e654d039467a93fc681d9ebebf655bd77be12ea6e5e6653385f141b3bfd94"
+      },
+      "source": {
+        "bytes": 118,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/module.pkl",
+        "sha256": "5b0e654d039467a93fc681d9ebebf655bd77be12ea6e5e6653385f141b3bfd94"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 579,
+        "path": "tests/fixtures/m2-reference-alias-diagnostics/01-constraint-at-usage.utf8.bin",
+        "sha256": "0524766291e13432b8aed7012e50124db8dfd796c8ec46956ce57021f0f84927"
+      },
+      "source": {
+        "bytes": 579,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.stderr.bin",
+        "sha256": "0524766291e13432b8aed7012e50124db8dfd796c8ec46956ce57021f0f84927"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 1142,
+        "path": "tests/fixtures/m2-reference-alias-diagnostics/01-constraint-at-usage.utf16be.bin",
+        "sha256": "599e00b1b363bf53943b9f9d91d47457da445fde4b226d3e125f672b0bba671b"
+      },
+      "source": {
+        "bytes": 1142,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/01-constraint-at-usage/repeat-0/000-constraint-at-usage/result.stderr.code-units.bin",
+        "sha256": "599e00b1b363bf53943b9f9d91d47457da445fde4b226d3e125f672b0bba671b"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 3,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/expression.bin",
+        "sha256": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae"
+      },
+      "repeat1": {
+        "bytes": 3,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/expression.bin",
+        "sha256": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/expression.code-units.bin",
+        "sha256": "0e6e800716cd8903128fc39b02c3e3679b3e3d590d82342eb16866b3f459972c"
+      },
+      "repeat1": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/expression.code-units.bin",
+        "sha256": "0e6e800716cd8903128fc39b02c3e3679b3e3d590d82342eb16866b3f459972c"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 2,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/logs.count.bin",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "repeat1": {
+        "bytes": 2,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/logs.count.bin",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/mode.bin",
+        "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+      },
+      "repeat1": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/mode.bin",
+        "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 12,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/mode.code-units.bin",
+        "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+      },
+      "repeat1": {
+        "bytes": 12,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/mode.code-units.bin",
+        "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.cause-class.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.cause-class.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.cause-class.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.cause-class.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.cause-message.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.cause-message.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.cause-message.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.cause-message.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.cause-to-string.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.cause-to-string.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.cause-to-string.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.cause-to-string.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 25,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.error-class.bin",
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+      },
+      "repeat1": {
+        "bytes": 25,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.error-class.bin",
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 50,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.error-class.code-units.bin",
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+      },
+      "repeat1": {
+        "bytes": 50,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.error-class.code-units.bin",
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 307,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.exception-to-string.bin",
+        "sha256": "cee6a3248c966d6e40adb99915dd34763e0e0a44144532a0b7f4c14f1f20804b"
+      },
+      "repeat1": {
+        "bytes": 307,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.exception-to-string.bin",
+        "sha256": "cee6a3248c966d6e40adb99915dd34763e0e0a44144532a0b7f4c14f1f20804b"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 598,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.exception-to-string.code-units.bin",
+        "sha256": "dd5f8a7833a0cc0879323e8f1e02b6b571d6d7747ab0868aceb6419bb75e9cf0"
+      },
+      "repeat1": {
+        "bytes": 598,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.exception-to-string.code-units.bin",
+        "sha256": "dd5f8a7833a0cc0879323e8f1e02b6b571d6d7747ab0868aceb6419bb75e9cf0"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.java-type.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.java-type.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.java-type.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.java-type.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.status.bin",
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+      },
+      "repeat1": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.status.bin",
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 280,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.stderr.bin",
+        "sha256": "30813b68c4ef054493e12d61b9f34338560a3bb49cb7905f59b495444dfe8cc1"
+      },
+      "repeat1": {
+        "bytes": 280,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.stderr.bin",
+        "sha256": "30813b68c4ef054493e12d61b9f34338560a3bb49cb7905f59b495444dfe8cc1"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 544,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.stderr.code-units.bin",
+        "sha256": "871a64a0ff991bf752c2b731f7baa673437aa8017f4cdf946186aae004deb165"
+      },
+      "repeat1": {
+        "bytes": 544,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.stderr.code-units.bin",
+        "sha256": "871a64a0ff991bf752c2b731f7baa673437aa8017f4cdf946186aae004deb165"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.stdout.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-1/000-direct-constrained-reference/result.stdout.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 64,
+        "path": "tests/fixtures/m2-reference-alias-diagnostics/02-direct-constrained-reference.pkl",
+        "sha256": "ba55866a8628c70205862bbcfb02f1d1a3d95b6376fbe6a8d2ddd20d8fb53559"
+      },
+      "source": {
+        "bytes": 64,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/module.pkl",
+        "sha256": "ba55866a8628c70205862bbcfb02f1d1a3d95b6376fbe6a8d2ddd20d8fb53559"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 280,
+        "path": "tests/fixtures/m2-reference-alias-diagnostics/02-direct-constrained-reference.utf8.bin",
+        "sha256": "30813b68c4ef054493e12d61b9f34338560a3bb49cb7905f59b495444dfe8cc1"
+      },
+      "source": {
+        "bytes": 280,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.stderr.bin",
+        "sha256": "30813b68c4ef054493e12d61b9f34338560a3bb49cb7905f59b495444dfe8cc1"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 544,
+        "path": "tests/fixtures/m2-reference-alias-diagnostics/02-direct-constrained-reference.utf16be.bin",
+        "sha256": "871a64a0ff991bf752c2b731f7baa673437aa8017f4cdf946186aae004deb165"
+      },
+      "source": {
+        "bytes": 544,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/02-direct-constrained-reference/repeat-0/000-direct-constrained-reference/result.stderr.code-units.bin",
+        "sha256": "871a64a0ff991bf752c2b731f7baa673437aa8017f4cdf946186aae004deb165"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 3,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/expression.bin",
+        "sha256": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae"
+      },
+      "repeat1": {
+        "bytes": 3,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/expression.bin",
+        "sha256": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/expression.code-units.bin",
+        "sha256": "0e6e800716cd8903128fc39b02c3e3679b3e3d590d82342eb16866b3f459972c"
+      },
+      "repeat1": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/expression.code-units.bin",
+        "sha256": "0e6e800716cd8903128fc39b02c3e3679b3e3d590d82342eb16866b3f459972c"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 2,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/logs.count.bin",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "repeat1": {
+        "bytes": 2,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/logs.count.bin",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/mode.bin",
+        "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+      },
+      "repeat1": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/mode.bin",
+        "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 12,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/mode.code-units.bin",
+        "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+      },
+      "repeat1": {
+        "bytes": 12,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/mode.code-units.bin",
+        "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.cause-class.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.cause-class.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.cause-class.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.cause-class.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.cause-message.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.cause-message.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.cause-message.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.cause-message.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.cause-to-string.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.cause-to-string.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.cause-to-string.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.cause-to-string.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 25,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.error-class.bin",
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+      },
+      "repeat1": {
+        "bytes": 25,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.error-class.bin",
+        "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 50,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.error-class.code-units.bin",
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+      },
+      "repeat1": {
+        "bytes": 50,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.error-class.code-units.bin",
+        "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 279,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.exception-to-string.bin",
+        "sha256": "a02a9aabde27e9a1398b3583e5994be2ce1cfb3fbe94659961e8214e583875c2"
+      },
+      "repeat1": {
+        "bytes": 279,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.exception-to-string.bin",
+        "sha256": "a02a9aabde27e9a1398b3583e5994be2ce1cfb3fbe94659961e8214e583875c2"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 542,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.exception-to-string.code-units.bin",
+        "sha256": "bc3a0d0b8cca212e2c3356488c8b9e7a436f390c2493216601f8ffcb248acb9e"
+      },
+      "repeat1": {
+        "bytes": 542,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.exception-to-string.code-units.bin",
+        "sha256": "bc3a0d0b8cca212e2c3356488c8b9e7a436f390c2493216601f8ffcb248acb9e"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.java-type.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.java-type.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.java-type.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.java-type.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.status.bin",
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+      },
+      "repeat1": {
+        "bytes": 6,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.status.bin",
+        "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 252,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.stderr.bin",
+        "sha256": "714c04fa41f62ee36f7cae14c5e47bc7fe8c4de9d5a7140dab3f7f6502d9b26c"
+      },
+      "repeat1": {
+        "bytes": 252,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.stderr.bin",
+        "sha256": "714c04fa41f62ee36f7cae14c5e47bc7fe8c4de9d5a7140dab3f7f6502d9b26c"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 488,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.stderr.code-units.bin",
+        "sha256": "e9e5161a4af34e0ad8d347d91feb745891f632bf0c0bc89a07b489f737425034"
+      },
+      "repeat1": {
+        "bytes": 488,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.stderr.code-units.bin",
+        "sha256": "e9e5161a4af34e0ad8d347d91feb745891f632bf0c0bc89a07b489f737425034"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "repeat0": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.stdout.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "repeat1": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-1/000-valid-unconstrained-reference/result.stdout.code-units.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 55,
+        "path": "tests/fixtures/m2-reference-alias-diagnostics/03-valid-unconstrained-reference.pkl",
+        "sha256": "f417996b0759062afdff8f8984f33e1bb23681ef44acf26c48b3784f28432079"
+      },
+      "source": {
+        "bytes": 55,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/module.pkl",
+        "sha256": "f417996b0759062afdff8f8984f33e1bb23681ef44acf26c48b3784f28432079"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 252,
+        "path": "tests/fixtures/m2-reference-alias-diagnostics/03-valid-unconstrained-reference.utf8.bin",
+        "sha256": "714c04fa41f62ee36f7cae14c5e47bc7fe8c4de9d5a7140dab3f7f6502d9b26c"
+      },
+      "source": {
+        "bytes": 252,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.stderr.bin",
+        "sha256": "714c04fa41f62ee36f7cae14c5e47bc7fe8c4de9d5a7140dab3f7f6502d9b26c"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 488,
+        "path": "tests/fixtures/m2-reference-alias-diagnostics/03-valid-unconstrained-reference.utf16be.bin",
+        "sha256": "e9e5161a4af34e0ad8d347d91feb745891f632bf0c0bc89a07b489f737425034"
+      },
+      "source": {
+        "bytes": 488,
+        "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs/03-valid-unconstrained-reference/repeat-0/000-valid-unconstrained-reference/result.stderr.code-units.bin",
+        "sha256": "e9e5161a4af34e0ad8d347d91feb745891f632bf0c0bc89a07b489f737425034"
+      }
+    }
+  ],
+  "generator": {
+    "bytes": 4879,
+    "path": "target/m2/stage69-72-reference-alias-fix-01/materialize-02.py",
+    "sha256": "02c0bdf5257437f6275c76f957e06cef8fb998fd2323388d4b25a9aac5db2f1a"
+  },
+  "kind": "java-derived-reference-alias-regression-inputs",
+  "module_uri": "file:///stage69-72/reference-alias-regression.pkl",
+  "programs": {
+    "bytes": 1629,
+    "path": "target/m2/stage69-72-reference-alias-regression-oracle-01/programs.json",
+    "sha256": "d3fbd0a2f024b6f18927e997708310c72f5e1dbe6f6688e783207e9f4ecc1cf9"
+  },
+  "rows": 4,
+  "schema": 1,
+  "scope": "Exact complete public error UTF-8 and UTF-16; Java-specific exception metadata remains provenance, not a Rust comparison. Second same-evaluator query and GC are Rust lifecycle assertions, not a fresh Java scheduling claim.",
+  "test": {
+    "bytes": 3563,
+    "path": "crates/pkl-runtime/tests/m2_reference_alias_diagnostics.rs",
+    "sha256": "4904948a03d8b7f0e47b66e1fd34a54b61fa73e47cceb65b9438a9a45e399d96"
+  }
+}

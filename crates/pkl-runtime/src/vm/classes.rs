@@ -204,6 +204,64 @@ pub(crate) fn base_class_name(id: usize) -> Option<&'static str> {
 }
 
 impl BuiltinClass {
+    /// Pinned base/ref declaration arities, selected by canonical class identity.
+    pub(super) fn type_parameter_count(self) -> usize {
+        match self {
+            Self::List
+            | Self::Set
+            | Self::Listing
+            | Self::Collection
+            | Self::Class
+            | Self::VarArgs
+            | Self::Function(None) => 1,
+            Self::Map | Self::Mapping | Self::Pair | Self::Reference => 2,
+            Self::Function(Some(arity)) => arity + 1,
+            _ => 0,
+        }
+    }
+
+    pub(super) fn parameterized_type(
+        self,
+        mut arguments: Vec<(TypeCheck, Span)>,
+        span: Span,
+    ) -> Result<TypeCheck, RuntimeError> {
+        use CollectionKind as C;
+        Ok(match self {
+            Self::List | Self::Set | Self::Listing | Self::Map | Self::Mapping => {
+                let kind = match self {
+                    Self::List => C::List,
+                    Self::Set => C::Set,
+                    Self::Listing => C::Listing,
+                    Self::Map => C::Map,
+                    Self::Mapping => C::Mapping,
+                    _ => unreachable!(),
+                };
+                TypeCheck::ParameterizedCollection { kind, arguments }
+            }
+            Self::Collection => TypeCheck::CollectionBase { arguments },
+            Self::Pair => TypeCheck::Pair { arguments },
+            Self::Class => TypeCheck::MetaClass("Class".into()),
+            Self::Function(arity) => {
+                let result = Box::new(arguments.pop().expect("function result argument").0);
+                TypeCheck::Function {
+                    parameters: arity.map(|_| arguments.into_iter().map(|(ty, _)| ty).collect()),
+                    result,
+                    syntax: false,
+                }
+            }
+            Self::Reference => {
+                let referent = Box::new(arguments.pop().expect("reference referent").0);
+                let domain = Box::new(arguments.pop().expect("reference domain").0);
+                TypeCheck::Reference { domain, referent }
+            }
+            Self::VarArgs => TypeCheck::VarArgs {
+                element: Box::new(arguments.pop().expect("VarArgs argument").0),
+                span,
+            },
+            _ => return Err(invalid("parameterized non-generic builtin class")),
+        })
+    }
+
     pub(super) fn from_type(ty: &TypeCheck) -> Option<Self> {
         use CollectionKind as C;
         Some(match ty.unaliased() {
@@ -235,6 +293,7 @@ impl BuiltinClass {
             }
             TypeCheck::RefDomain => Self::Domain,
             TypeCheck::Reference { .. } => Self::Reference,
+            TypeCheck::VarArgs { .. } => Self::VarArgs,
             TypeCheck::Class {
                 id: reference::ACCESS_ID,
                 ..
@@ -355,6 +414,18 @@ impl BuiltinClass {
 }
 
 impl Vm {
+    pub(super) fn canonical_type_class(
+        &self,
+        class: ObjectId,
+    ) -> Result<Option<BuiltinClass>, RuntimeError> {
+        let prototype = self.heap.get(self.heap.get_class(class)?.prototype)?;
+        Ok(prototype
+            .builtin_type
+            .as_ref()
+            .and_then(BuiltinClass::from_type)
+            .filter(|key| self.builtin_classes.get(key) == Some(&class)))
+    }
+
     pub(super) fn class_member(
         &mut self,
         receiver: &Value,

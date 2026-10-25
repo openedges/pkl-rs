@@ -216,3 +216,38 @@ fn default_descent_and_unwind_yield_trace_unpublished_objects_and_cancel() {
         assert_eq!(vm.heap_stats().slots, 0);
     }
 }
+
+#[test]
+fn varargs_metadata_retains_substituted_elements_without_value_checks() {
+    // VarArgs is invariant metadata. Public checks reject later; retaining the
+    // element here is necessary for aliases, Reference exports, and cache keys.
+    let ty = TypeCheck::VarArgs {
+        element: Box::new(TypeCheck::Parameter {
+            block: 7,
+            name: "T".into(),
+        }),
+        span: Span::new(3, 17),
+    };
+    let mut environment = Environment::default();
+    environment
+        .type_arguments
+        .insert((7, "T".into()), TypeCheck::Int);
+    assert!(ty.contains_parameter());
+    let resolved = ty.substituted(&environment).unwrap();
+    assert!(!resolved.contains_parameter());
+    let normalized = reference::normalize(&resolved, "module");
+    assert!(normalized.equivalent(&resolved));
+    assert!(!normalized.equivalent(&TypeCheck::VarArgs {
+        element: Box::new(TypeCheck::String),
+        span: Span::new(0, 0)
+    }));
+    assert_ne!(
+        reference::metadata_key(&resolved),
+        reference::metadata_key(&TypeCheck::VarArgs {
+            element: Box::new(TypeCheck::String),
+            span: Span::new(0, 0)
+        })
+    );
+    assert_eq!(reference::type_name(&normalized, "module"), "VarArgs<Int>");
+    assert!(!resolved.noop());
+}

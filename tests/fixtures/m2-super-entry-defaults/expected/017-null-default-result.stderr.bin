@@ -1,0 +1,22 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got `null`.
+
+2068 | hidden default: (Int) -> Element = (_) -> new Dynamic {}
+                       ^^^^^^^^^^^^^^^^
+at pkl.base#Listing.default (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2068)
+
+57 | default = null
+               ^^^^
+at super-entry-default#nullDefaultL.default (file:///stage69/super-entry-default.pkl)
+
+58 | super[2]
+     ^^^^^^^^
+at super-entry-default#nullDefaultL[#1] (file:///stage69/super-entry-default.pkl)
+
+129 | nullDefault = nullDefaultL[0]
+                    ^^^^^^^^^^^^^^^
+at super-entry-default#nullDefault (file:///stage69/super-entry-default.pkl)
+
+1 | nullDefault
+    ^^^^^^^^^^^
+at  (repl:text)

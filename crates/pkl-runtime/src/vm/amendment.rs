@@ -37,6 +37,13 @@ pub(super) fn mixin_type(argument: TypeCheck) -> TypeCheck {
         }),
     }
 }
+pub(super) fn is_base_mixin_alias(
+    declaration: usize,
+    base_mixin_declaration: Option<usize>,
+) -> bool {
+    declaration == MIXIN_ID || base_mixin_declaration == Some(declaration)
+}
+
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -75,7 +82,12 @@ impl Vm {
         member.concat(&".<function>".into())
     }
 
-    pub(super) fn identity_mixin(&mut self, ty: TypeCheck, origin: Option<RuntimeFrame>) -> Value {
+    pub(super) fn identity_mixin(
+        &mut self,
+        ty: TypeCheck,
+        origin: Option<RuntimeFrame>,
+        construction_origin: Option<RuntimeFrame>,
+    ) -> Value {
         Value::Function(
             self.heap.allocate(Object {
                 function: Some(Function {
@@ -84,7 +96,7 @@ impl Vm {
                     method: false,
                     captured_this: None,
                 }),
-                mixin: Some((ty, origin)),
+                mixin: Some((ty, origin, construction_origin)),
                 environment: self
                     .frames
                     .last()
@@ -100,7 +112,7 @@ impl Vm {
             .last()
             .and_then(|f| f.function_owner)
             .ok_or_else(|| invalid("mixin invocation"))?;
-        let (ty, origin) = self
+        let (ty, origin, _) = self
             .heap
             .get(id)?
             .mixin

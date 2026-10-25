@@ -1,0 +1,142 @@
+// Pkl 0.32.0 super-entry fallback controls. Each queried value is independent.
+local plainL = new Listing { super[0]; super[3] }
+local plainM = new Mapping { ["x"] = super["x"] }
+
+local lexicalL = new Listing { default = (key) -> "lexical-\(key)" }
+local receiverL = (lexicalL) {
+  default = (key) -> "receiver-\(key)"
+  super[3]
+  super[-1]
+}
+local presentL = new Listing {
+  default = (key) -> throw("lexical-default-must-not-run")
+  "parent-zero"
+}
+local presentReceiverL = (presentL) {
+  default = (key) -> throw("receiver-default-must-not-run")
+  super[0]
+}
+
+local lexicalM = new Mapping { default = (key) -> "lexical-\(key)" }
+local receiverM = (lexicalM) {
+  default = (key) -> "receiver-\(key)"
+  ["out"] = super["missing"]
+}
+local presentM = new Mapping {
+  default = (key) -> throw("lexical-default-must-not-run")
+  ["hit"] = "parent-hit"
+}
+local presentReceiverM = (presentM) {
+  default = (key) -> throw("receiver-default-must-not-run")
+  ["out"] = super["hit"]
+}
+
+local keyThrowL = new Listing {
+  default = (key) -> throw("default-after-key")
+  super[throw("key-before-default")]
+}
+local defaultThrowL = new Listing {
+  default = (key) -> throw("default-callback")
+  super[5]
+}
+local lazyParentL = new Listing { throw("unvisited-parent-entry") }
+local lazyMissingL = (lazyParentL) {
+  default = (key) -> "safe-\(key)"
+  super[3]
+}
+local lazyPresentL = (lazyParentL) { super[0] }
+local wrongArityL = new Listing {
+  default = () -> "wrong-arity"
+  super[2]
+}
+local wrongValueL = new Listing {
+  default = 42
+  super[2]
+}
+local nullDefaultL = new Listing {
+  default = null
+  super[2]
+}
+local traceL = new Listing {
+  default = (key) -> trace("default-\(key)")
+  super[trace(7)]
+}
+local tracePresentL = (presentL) {
+  default = (key) -> trace("unvisited-default")
+  super[trace(0)]
+}
+local functionL = new Listing {
+  default = (key) -> "function-\(key)"
+  local function fetchSuper(k) = super[k]
+  fetchSuper(8)
+}
+local wrongKeyL = new Listing { super["not-an-index"] }
+
+local objectKey = new Dynamic { value = throw("lazy-object-key") }
+local emptyObjectParent = new Mapping {}
+local smallObjectParent = new Mapping { ["one"] = 1 }
+local hashedObjectParent = new Mapping {
+  ["one"] = 1
+  ["two"] = 2
+  ["three"] = 3
+  ["four"] = 4
+  ["five"] = 5
+}
+local emptyObjectChild = (emptyObjectParent) {
+  default = (key) -> "empty-fallback"
+  ["out"] = super[objectKey]
+}
+local smallObjectChild = (smallObjectParent) {
+  default = (key) -> "small-fallback"
+  ["out"] = super[objectKey]
+}
+local hashedObjectChild = (hashedObjectParent) {
+  default = (key) -> "hashed-fallback"
+  ["out"] = super[objectKey]
+}
+local objectDefaultThrowChild = (emptyObjectParent) {
+  default = (key) -> throw("default-before-lazy-key")
+  ["out"] = super[objectKey]
+}
+local objectDefaultReadsKeyChild = (emptyObjectParent) {
+  default = (key) -> key.value
+  ["out"] = super[objectKey]
+}
+
+local validObjectKey = new Dynamic { value = 3 }
+local validObjectChild = (emptyObjectParent) {
+  default = (key) -> key.value
+  ["out"] = super[validObjectKey]
+}
+
+plainListZero = plainL[0]
+plainListThree = plainL[1]
+plainMapping = plainM["x"]
+receiverList = receiverL[0]
+receiverListNegative = receiverL[1]
+receiverListOrdinaryMissing = receiverL[3]
+presentList = presentReceiverL[1]
+parentList = presentL[0]
+receiverMapping = receiverM["out"]
+receiverMappingOrdinaryMissing = receiverM["missing"]
+presentMapping = presentReceiverM["out"]
+keyError = keyThrowL[0]
+defaultError = defaultThrowL[0]
+lazyMissing = lazyMissingL[1]
+lazyPresent = lazyPresentL[1]
+wrongArity = wrongArityL[0]
+wrongValue = wrongValueL[0]
+nullDefault = nullDefaultL[0]
+traceMissing = traceL[0]
+tracePresent = tracePresentL[1]
+functionOwner = functionL[0]
+wrongKey = wrongKeyL[0]
+
+objectKeyEmpty = emptyObjectChild["out"]
+objectKeySmall = smallObjectChild["out"]
+objectKeyHashed = hashedObjectChild["out"]
+objectKeyDefaultThrow = objectDefaultThrowChild["out"]
+objectKeyCallbackRead = objectDefaultReadsKeyChild["out"]
+
+objectKeyConstructed = objectKey is Dynamic
+validObjectCallback = validObjectChild["out"]

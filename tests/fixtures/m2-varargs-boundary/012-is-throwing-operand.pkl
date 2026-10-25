@@ -1,0 +1,2 @@
+import "pkl:base" as b
+result = throw("value first") is b.VarArgs<Int>

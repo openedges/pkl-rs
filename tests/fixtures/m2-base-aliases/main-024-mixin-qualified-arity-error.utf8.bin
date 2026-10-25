@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected 1 type argument(s) but got 2.
+
+2 | result: base.Mixin<Int, String> = (x) -> x
+            ^^^^^^^^^^^^^^^^^^^^^^^
+at base-alias-oracle (file:///stage71/base-alias-oracle.pkl)

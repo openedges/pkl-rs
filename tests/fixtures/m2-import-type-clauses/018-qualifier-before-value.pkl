@@ -1,0 +1,2 @@
+local base = throw("import value must not run")
+result = new base.Listing {}

@@ -124,6 +124,11 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
                     sequence.push(Part::Text(">".into()));
                 }
             }
+            TypeCheck::VarArgs { element, .. } => {
+                output.push_str("VarArgs<");
+                list(vec![element], ", ");
+                sequence.push(Part::Text(">".into()));
+            }
             TypeCheck::RefDomain => output.push_str("pkl.ref#Domain"),
             TypeCheck::Reference { domain, referent } => {
                 output.push_str("pkl.ref#Reference<");
@@ -249,6 +254,7 @@ pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
                 .flatten()
                 .chain(std::iter::once(result.as_ref()))
                 .collect(),
+            TypeCheck::VarArgs { element, .. } => vec![element],
             TypeCheck::Reference { domain, referent } => vec![domain, referent],
             _ => Vec::new(),
         },
@@ -313,6 +319,10 @@ pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
                         syntax: false,
                     }
                 }
+                TypeCheck::VarArgs { .. } => TypeCheck::VarArgs {
+                    element: Box::new(args.pop().expect("VarArgs element")),
+                    span: Span::new(0, 0),
+                },
                 TypeCheck::Reference { .. } => {
                     let referent = Box::new(args.pop().expect("referent"));
                     let domain = Box::new(args.pop().expect("domain"));
@@ -392,6 +402,7 @@ pub(crate) fn metadata_key(ty: &TypeCheck) -> String {
             | TypeCheck::CollectionBase { arguments } => {
                 arguments.iter().map(|(ty, _)| ty).collect()
             }
+            TypeCheck::VarArgs { element, .. } => vec![element],
             TypeCheck::Reference { domain, referent } => vec![domain, referent],
             _ => Vec::new(),
         },
@@ -420,6 +431,7 @@ pub(crate) fn metadata_key(ty: &TypeCheck) -> String {
                 TypeCheck::Pair { .. } => format!("pair:{args:?}"),
                 TypeCheck::CollectionBase { .. } => format!("collection:Collection:{args:?}"),
                 TypeCheck::Reference { .. } => format!("reference:{args:?}"),
+                TypeCheck::VarArgs { .. } => format!("varargs:{args:?}"),
                 TypeCheck::StringLiteral(value) => {
                     format!("string:{:?}", value.encode_utf16().collect::<Vec<_>>())
                 }
@@ -467,6 +479,7 @@ fn function_syntax_flags(root: &TypeCheck) -> BTreeMap<usize, bool> {
             | TypeCheck::CollectionBase { arguments } => {
                 arguments.iter().map(|(ty, _)| ty).collect()
             }
+            TypeCheck::VarArgs { element, .. } => vec![element],
             TypeCheck::Reference { domain, referent } => vec![domain, referent],
             TypeCheck::Union { types, .. } => types.iter().collect(),
             _ => Vec::new(),
@@ -646,6 +659,7 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
                         | TypeCheck::ParameterizedCollection { .. }
                         | TypeCheck::CollectionBase { .. }
                         | TypeCheck::Reference { .. }
+                        | TypeCheck::VarArgs { .. }
                         | TypeCheck::Pair { .. },
                         TypeCheck::Any,
                     ) => true,

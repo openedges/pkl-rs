@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `String | Number | Duration | DataSize`, but got type `Boolean`.
+Value: true
+
+1125 | typealias Comparable = String | Number | Duration | DataSize
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at base-alias-oracle#result (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1125)
+
+3 | result: Choice = true
+                     ^^^^
+at base-alias-oracle#result (file:///stage71/base-alias-oracle.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

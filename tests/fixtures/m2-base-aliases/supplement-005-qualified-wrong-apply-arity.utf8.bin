@@ -1,0 +1,18 @@
+–– Pkl Error ––
+Expected 1 function arguments but got 0.
+
+2 | f = new base.Mixin<Dynamic> { value = "changed" }
+            ^^^^^^^^^^^^^^^^^^^
+at base-alias-supplement#f (file:///stage71/base-alias-supplement.pkl)
+
+2 | f = new base.Mixin<Dynamic> { value = "changed" }
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at base-alias-supplement#f.<function> (file:///stage71/base-alias-supplement.pkl)
+
+3 | result = f.apply()
+             ^^^^^^^^^
+at base-alias-supplement#result (file:///stage71/base-alias-supplement.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

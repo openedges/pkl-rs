@@ -1,0 +1,2 @@
+import "pkl:base" as imported
+result = new imported.Listing {}

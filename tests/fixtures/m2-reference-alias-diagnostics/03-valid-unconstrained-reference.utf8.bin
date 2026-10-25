@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Tried to read property `foo` but its value is undefined.
+
+2 | foo: ref.Reference<ref.Domain, String>
+    ^^^
+at reference-alias-regression#foo (file:///stage69-72/reference-alias-regression.pkl)
+
+1 | foo
+    ^^^
+at  (repl:text)

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find type `Missing`.
+
+1 | ref.Reference(d, Int, null) is ref.Reference<D, Missing>
+                                                    ^^^^^^^
+at  (repl:text)
+
+Searched in the following places:
+* Module `qualified-generics` and any supermodules
+* Module `pkl#base`

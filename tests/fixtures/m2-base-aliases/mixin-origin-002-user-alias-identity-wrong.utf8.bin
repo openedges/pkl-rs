@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `String`.
+Value: "wrong"
+
+2 | typealias M = base.Mixin<Int>
+                             ^^^
+at mixin-default-origin#f (file:///stage71/mixin-default-origin.pkl)
+
+4 | result = f.apply("wrong")
+             ^^^^^^^^^^^^^^^^
+at mixin-default-origin#result (file:///stage71/mixin-default-origin.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

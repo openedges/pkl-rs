@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `String`, but got type `Int`.
+Value: 42
+
+1694 | typealias Uri = String
+                       ^^^^^^
+at base-alias-oracle#result (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1694)
+
+2 | result: base.Uri = 42
+                       ^^
+at base-alias-oracle#result (file:///stage71/base-alias-oracle.pkl)
+
+1 | result
+    ^^^^^^
+at  (repl:text)

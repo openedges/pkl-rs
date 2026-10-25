@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+const-body-failure
+
+14 | const value = let (_ = trace("failed-body")) throw("const-body-failure")
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at const-owner#FailedBody.value (file:///stage72/const-owner.pkl)
+
+14 | const value = let (_ = trace("failed-body")) throw("const-body-failure")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at const-owner#FailedBody.value.<let expr> (file:///stage72/const-owner.pkl)
+
+1 | failedA.value
+    ^^^^^^^^^^^^^
+at  (repl:text)

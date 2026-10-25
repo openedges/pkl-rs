@@ -1,0 +1,14 @@
+–– Pkl Error ––
+key-before-default
+
+36 | super[throw("key-before-default")]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at super-entry-default#keyThrowL[#1] (file:///stage69/super-entry-default.pkl)
+
+123 | keyError = keyThrowL[0]
+                 ^^^^^^^^^^^^
+at super-entry-default#keyError (file:///stage69/super-entry-default.pkl)
+
+1 | keyError
+    ^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,23 @@
+–– Pkl Error ––
+Expected value of type `Function1`, but got type `Int`.
+Value: 42
+
+2068 | hidden default: (Int) -> Element = (_) -> new Dynamic {}
+                       ^^^^^^^^^^^^^^^^
+at pkl.base#Listing.default (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L2068)
+
+53 | default = 42
+               ^^
+at super-entry-default#wrongValueL.default (file:///stage69/super-entry-default.pkl)
+
+54 | super[2]
+     ^^^^^^^^
+at super-entry-default#wrongValueL[#1] (file:///stage69/super-entry-default.pkl)
+
+128 | wrongValue = wrongValueL[0]
+                   ^^^^^^^^^^^^^^
+at super-entry-default#wrongValue (file:///stage69/super-entry-default.pkl)
+
+1 | wrongValue
+    ^^^^^^^^^^
+at  (repl:text)

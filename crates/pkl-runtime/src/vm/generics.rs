@@ -76,6 +76,10 @@ impl TypeCheck {
                     .map(|(ty, span)| Ok((sub(ty)?, *span)))
                     .collect::<Result<_, RuntimeError>>()?,
             },
+            VarArgs { element, span } => VarArgs {
+                element: Box::new(sub(element)?),
+                span: *span,
+            },
             Nullable(inner) => Nullable(Box::new(sub(inner)?)),
             Alias(inner) => Alias(Box::new(sub(inner)?)),
             GenericAlias(inner) => GenericAlias(Box::new(sub(inner)?)),
@@ -362,6 +366,11 @@ impl Vm {
                 run.value = Some(Value::Object(id));
             }
             DefaultTask::Visit(ty) => match ty.into_resolved() {
+                TypeCheck::VarArgs { .. } => {
+                    let mut error = internal_varargs_error();
+                    error.span = run.origin.as_ref().map(|origin| origin.span);
+                    return Err(error);
+                }
                 TypeCheck::Null => run.value = Some(Value::Null),
                 TypeCheck::Nullable(inner) => {
                     run.tasks.push(DefaultTask::Nullable);
@@ -373,10 +382,33 @@ impl Vm {
                     arguments,
                     default_origin,
                     ..
-                } if declaration == amendment::MIXIN_ID => {
+                } if amendment::is_base_mixin_alias(
+                    declaration,
+                    self.program.base_mixin_declaration,
+                ) =>
+                {
+                    let mut origin = default_origin.or_else(|| run.origin.clone());
+                    if let (Some(origin), Some(caller)) = (&mut origin, &run.origin) {
+                        let caller_name = caller.member.as_str().unwrap_or("");
+                        origin.member = caller_name
+                            .strip_suffix(".default")
+                            .unwrap_or(caller_name)
+                            .into();
+                    }
+                    let construction_origin = run.tasks.iter().rev().find_map(|task| {
+                        let DefaultTask::Constructor(_, source, _) = task else {
+                            return None;
+                        };
+                        origin.as_ref().map(|origin| RuntimeFrame {
+                            source: origin.source.clone(),
+                            span: source.span,
+                            member: origin.member.clone(),
+                        })
+                    });
                     run.value = Some(self.identity_mixin(
                         arguments.into_iter().next().unwrap_or(TypeCheck::Unknown),
-                        default_origin.or_else(|| run.origin.clone()),
+                        origin,
+                        construction_origin,
                     ));
                 }
                 TypeCheck::NamedAlias { expanded, .. }
@@ -521,7 +553,8 @@ impl TypeCheck {
             Self::Reference { domain, referent } => {
                 Box::new([domain.as_ref(), referent.as_ref()].into_iter())
             }
-            Self::Nullable(inner)
+            Self::VarArgs { element: inner, .. }
+            | Self::Nullable(inner)
             | Self::Alias(inner)
             | Self::GenericAlias(inner)
             | Self::Constrained { base: inner, .. } => Box::new(std::iter::once(inner.as_ref())),
@@ -666,7 +699,8 @@ impl Drop for SharedTypeCheck {
                     pending.push(*domain);
                     pending.push(*referent);
                 }
-                TypeCheck::Nullable(inner)
+                TypeCheck::VarArgs { element: inner, .. }
+                | TypeCheck::Nullable(inner)
                 | TypeCheck::Alias(inner)
                 | TypeCheck::GenericAlias(inner) => pending.push(*inner),
                 TypeCheck::ParameterizedCollection { arguments, .. }

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find type `Missing`.
+
+2 | result: base.Mixin<Int, Missing> = (x) -> x
+                            ^^^^^^^
+at base-alias-argument-order (file:///stage71/base-alias-argument-order.pkl)
+
+Searched in the following places:
+* Module `base-alias-argument-order` and any supermodules
+* Module `pkl#base`

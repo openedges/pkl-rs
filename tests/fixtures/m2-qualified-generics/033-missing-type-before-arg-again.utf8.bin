@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Cannot find type `NoSuchType` in module `pkl.base`.
+
+1 | 1 is b.NoSuchType<Missing>
+           ^^^^^^^^^^
+at  (repl:text)

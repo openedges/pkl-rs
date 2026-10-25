@@ -11,6 +11,9 @@ pub(super) struct TypeRecipe {
     pub builtin: Option<Result<TypeCheck, RuntimeError>>,
     /// Selected only after forcing the actual canonical ref-module receiver.
     pub reference: Option<Result<TypeCheck, RuntimeError>>,
+    /// A compiled argument error is evaluated only after its actual base class
+    /// admits that argument. In particular, Class<T> never evaluates this node.
+    pub failure: Option<RuntimeError>,
 }
 
 #[derive(Clone, Debug)]
@@ -103,6 +106,10 @@ impl TypeCheck {
     ) -> Result<Self, E> {
         use TypeCheck::*;
         Ok(match self.resolved() {
+            VarArgs { element, span } => VarArgs {
+                element: Box::new(map(element)?),
+                span: *span,
+            },
             Nullable(inner) => Nullable(Box::new(map(inner)?)),
             Alias(inner) => Alias(Box::new(map(inner)?)),
             GenericAlias(inner) => GenericAlias(Box::new(map(inner)?)),
@@ -193,7 +200,7 @@ impl TypeCheck {
 }
 
 impl Vm {
-    fn declaring_module(
+    pub(super) fn declaring_module(
         &self,
         environment: &Environment,
         self_type: bool,
@@ -284,12 +291,14 @@ impl Vm {
             Rebuild(TypeCheck, usize),
             Changed,
             Shared(TypeCheck, (usize, *const TypeCheck)),
-            Alias(ObjectId, usize, Context, Span),
+            Alias(ObjectId, usize, Context, Span, Option<RuntimeFrame>),
+            Parameterized(classes::BuiltinClass, Vec<Span>, Span),
             ExpandedAlias {
                 declaration: usize,
                 name: Arc<str>,
                 arguments: Vec<TypeCheck>,
                 origin: RuntimeFrame,
+                use_origin: Option<RuntimeFrame>,
             },
         }
         let mut work = vec![Work::Visit(ty.clone(), (0, Arc::new(environment.clone())))];
@@ -317,7 +326,8 @@ impl Vm {
                         continue;
                     }
                     if let TypeCheck::Declared { recipe, arguments } = ty {
-                        let self_type = self.program.type_recipes[recipe].path.is_empty();
+                        let self_type = self.program.type_recipes[recipe].path.is_empty()
+                            && self.program.type_recipes[recipe].failure.is_none();
                         let owner = self.declaring_module(&context.1, false)?;
                         let module_receiver = self_type
                             .then(|| self.declaring_module(&context.1, true))
@@ -362,15 +372,27 @@ impl Vm {
                             }
                             DeclarationValue::Value(Value::Class(id)) => {
                                 if !arguments.is_empty() {
-                                    return Err(RuntimeError::new(
-                                        ErrorKind::Type,
-                                        format!(
-                                            "Expected 0 type argument(s) but got {}.",
-                                            arguments.len()
-                                        ),
-                                    )
-                                    .at(definition.span)
-                                    .into());
+                                    let builtin = self.check_class_type_arity(
+                                        *id,
+                                        arguments.len(),
+                                        definition.span,
+                                    )?;
+                                    let builtin = builtin.ok_or_else(|| {
+                                        invalid("non-generic class passed nonempty arity")
+                                    })?;
+                                    if builtin == classes::BuiltinClass::Class {
+                                        values.push((TypeCheck::MetaClass("Class".into()), true));
+                                    } else {
+                                        work.push(Work::Parameterized(
+                                            builtin,
+                                            definition.argument_spans.clone(),
+                                            definition.span,
+                                        ));
+                                        for argument in arguments.into_iter().rev() {
+                                            work.push(Work::Visit(argument, context.clone()));
+                                        }
+                                    }
+                                    continue;
                                 }
                                 let class = self
                                     .heap
@@ -416,11 +438,24 @@ impl Vm {
                                 ));
                             }
                             DeclarationValue::Value(Value::TypeAlias(id)) => {
+                                let use_origin =
+                                    definition.argument_spans.first().and_then(|span| {
+                                        self.program
+                                            .units
+                                            .get(definition.unit.0 as usize)
+                                            .and_then(|unit| unit.source.clone())
+                                            .map(|source| RuntimeFrame {
+                                                source: Some(source),
+                                                span: *span,
+                                                member: PklString::default(),
+                                            })
+                                    });
                                 work.push(Work::Alias(
                                     *id,
                                     arguments.len(),
                                     context.clone(),
                                     definition.span,
+                                    use_origin,
                                 ));
                                 for argument in arguments.into_iter().rev() {
                                     work.push(Work::Visit(argument, context.clone()));
@@ -473,6 +508,21 @@ impl Vm {
                     }
                 }
                 Work::Changed => values.last_mut().expect("builtin type result").1 = true,
+                Work::Parameterized(builtin, spans, span) => {
+                    let count = spans.len();
+                    let arguments = values
+                        .split_off(values.len() - count)
+                        .into_iter()
+                        .zip(spans)
+                        .map(|((ty, _), span)| (ty, span))
+                        .collect();
+                    values.push((
+                        builtin
+                            .parameterized_type(arguments, span)
+                            .map_err(|error| error.at(span))?,
+                        true,
+                    ));
+                }
                 Work::Rebuild(original, count) => {
                     let children = values.split_off(values.len() - count);
                     let changed = children.iter().any(|(_, changed)| *changed);
@@ -496,7 +546,7 @@ impl Vm {
                     memo.insert(key, (original, value.clone(), changed));
                     values.push((value, changed));
                 }
-                Work::Alias(id, count, _caller, span) => {
+                Work::Alias(id, count, _caller, span, use_origin) => {
                     let arguments: Vec<_> = values
                         .split_off(values.len() - count)
                         .into_iter()
@@ -546,6 +596,7 @@ impl Vm {
                         name: alias.type_alias.clone().expect("alias name"),
                         arguments,
                         origin: metadata.origin.clone(),
+                        use_origin,
                     });
                     work.push(Work::Visit(body, context));
                 }
@@ -554,6 +605,7 @@ impl Vm {
                     name,
                     arguments,
                     origin,
+                    use_origin,
                 } => {
                     let (expanded, _) = values.pop().expect("alias expansion");
                     values.push((
@@ -562,7 +614,13 @@ impl Vm {
                             name,
                             arguments,
                             expanded: Box::new(expanded),
-                            default_origin: Some(origin),
+                            default_origin: if self.program.base_mixin_declaration
+                                == Some(declaration)
+                            {
+                                use_origin.or(Some(origin))
+                            } else {
+                                Some(origin)
+                            },
                         },
                         true,
                     ));
@@ -654,6 +712,9 @@ impl Vm {
         retry_instruction: bool,
     ) -> Result<(), RuntimeError> {
         let recipe = self.program.type_recipes[need.recipe].clone();
+        if let Some(error) = recipe.failure {
+            return Err(error);
+        }
         if recipe.path.is_empty() {
             // UnresolvedTypeNode.Module chooses finality once, using the
             // receiver at first resolution. Inherited call sites first resolved
@@ -738,9 +799,17 @@ impl Vm {
             // Unit types are authored base aliases. Resolve their retained
             // declaration after lexical/user parents, preserving its union's
             // source section instead of constructing a source-less substitute.
-            if matches!(name.as_ref(), "DataSizeUnit" | "DurationUnit" | "Charset")
-                && let Some(modules::CachedModule::Value(base)) =
-                    self.modules_stdlib.get("pkl:base")
+            if matches!(
+                name.as_ref(),
+                "DataSizeUnit"
+                    | "DurationUnit"
+                    | "Charset"
+                    | "Comparable"
+                    | "Char"
+                    | "Uri"
+                    | "Mixin"
+            ) && let Some(modules::CachedModule::Value(base)) =
+                self.modules_stdlib.get("pkl:base")
             {
                 let base = *base;
                 self.frames
@@ -845,7 +914,10 @@ impl Vm {
                                 ErrorKind::Type,
                                 format!("Expected `{name}` to be a type, but it is not."),
                             )
-                            .at(recipe.span));
+                            .at(Span::new(
+                                recipe.names[0].start,
+                                recipe.names.last().expect("qualified type name").end,
+                            )));
                         }
                         run.phase = Phase::Type;
                         self.frames.last_mut().unwrap().type_resolution = Some(run);
@@ -881,13 +953,37 @@ impl Vm {
 }
 
 impl Compiler<'_> {
+    pub(super) fn deferred_type_error(
+        &mut self,
+        error: RuntimeError,
+        span: Span,
+    ) -> Result<TypeCheck, RuntimeError> {
+        let recipe = self.program.type_recipes.try_push(TypeRecipe {
+            unit: self.unit,
+            path: Vec::new(),
+            names: Vec::new(),
+            span,
+            argument_spans: Vec::new(),
+            builtin: None,
+            reference: None,
+            failure: Some(error.at(span)),
+        })?;
+        Ok(TypeCheck::Declared {
+            recipe,
+            arguments: Vec::new(),
+        })
+    }
+
     pub(super) fn module_type(&mut self, span: Span) -> Result<TypeCheck, RuntimeError> {
         let recipe = self
             .program
             .type_recipes
             .iter_with_ids()
             .find(|(_, recipe)| {
-                recipe.unit == self.unit && recipe.span == span && recipe.path.is_empty()
+                recipe.unit == self.unit
+                    && recipe.span == span
+                    && recipe.path.is_empty()
+                    && recipe.failure.is_none()
             })
             .map(|(id, _)| id);
         let recipe = match recipe {
@@ -900,6 +996,7 @@ impl Compiler<'_> {
                 argument_spans: Vec::new(),
                 builtin: None,
                 reference: None,
+                failure: None,
             })?,
         };
         Ok(TypeCheck::Declared {
@@ -945,6 +1042,7 @@ impl Compiler<'_> {
                 argument_spans: actuals.iter().map(|argument| argument.span).collect(),
                 builtin: None,
                 reference: None,
+                failure: None,
             })?,
         };
         Ok(TypeCheck::Declared { recipe, arguments })
@@ -952,6 +1050,68 @@ impl Compiler<'_> {
 }
 
 impl Vm {
+    fn check_class_type_arity(
+        &self,
+        class: ObjectId,
+        actual: usize,
+        span: Span,
+    ) -> Result<Option<classes::BuiltinClass>, RuntimeError> {
+        let builtin = self.canonical_type_class(class)?;
+        let expected = builtin.map_or(0, classes::BuiltinClass::type_parameter_count);
+        if actual != expected {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                format!("Expected {expected} type argument(s) but got {actual}."),
+            )
+            .at(span));
+        }
+        Ok(builtin)
+    }
+
+    fn prepare_type_arguments(&mut self, recipe: usize, end: usize) -> Result<(), RuntimeError> {
+        let owner = self.declaring_module(
+            &self.frames.last().expect("type argument frame").environment,
+            false,
+        )?;
+        let Some(value) = self.resolved_declarations.get(&(recipe, owner)) else {
+            return self.begin_declared_type(
+                Need {
+                    recipe,
+                    owner,
+                    module_receiver: None,
+                },
+                true,
+            );
+        };
+        let definition = &self.program.type_recipes[recipe];
+        match value {
+            DeclarationValue::Value(Value::Class(class)) => {
+                if self.check_class_type_arity(
+                    *class,
+                    definition.argument_spans.len(),
+                    definition.span,
+                )? == Some(classes::BuiltinClass::Class)
+                {
+                    self.frames.last_mut().expect("type argument frame").pc = end;
+                }
+            }
+            DeclarationValue::Value(Value::Object(module)) => {
+                let class = collections::typed_class(&self.heap, *module)?
+                    .ok_or_else(|| invalid("module type has no class"))?;
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!("Class `{}` does not have type parameters.", class.name),
+                )
+                .at(definition.argument_spans[0]));
+            }
+            // Alias arguments resolve before alias arity/initialization checks.
+            // Ref bindings have already admitted the actual imported module.
+            DeclarationValue::Value(Value::TypeAlias(_)) | DeclarationValue::Builtin(_) => {}
+            _ => return Err(invalid("invalid parameterized type declaration")),
+        }
+        Ok(())
+    }
+
     /// Type substitution and validation have their own bounded native frame.
     /// Keeping them outside the general opcode match avoids retaining that
     /// match's debug-build temporaries during nested type metadata operations.
@@ -960,6 +1120,9 @@ impl Vm {
         instruction: Instruction,
     ) -> Result<(), RuntimeError> {
         match instruction {
+            Instruction::PrepareTypeArguments { recipe, end } => {
+                self.prepare_type_arguments(recipe, end)?;
+            }
             Instruction::ValidateTypeArguments { ty, aliases } => {
                 let frame = self.frames.last().expect("active frame");
                 let ty = ty.substituted(&frame.environment)?;
@@ -1081,6 +1244,7 @@ mod tests {
                     argument_spans: Vec::new(),
                     builtin: None,
                     reference: None,
+                    failure: None,
                 });
                 let mut vm = Vm::new(Arc::new(program));
                 let owner = vm.heap.allocate(Object {
@@ -1107,20 +1271,25 @@ mod tests {
                     }],
                     ..Environment::default()
                 };
-                for branching in [false, true] {
+                for shape in [0, 1, 2] {
                     let mut ty = TypeCheck::Declared {
                         recipe: 0,
                         arguments: Vec::new(),
                     }
                     .shared();
                     for _ in 0..20_000 {
-                        ty = if branching {
+                        ty = if shape == 1 {
                             TypeCheck::ParameterizedCollection {
                                 kind: crate::heap::CollectionKind::Mapping,
                                 arguments: vec![
                                     (ty.clone(), Span::new(0, 0)),
                                     (ty, Span::new(0, 0)),
                                 ],
+                            }
+                        } else if shape == 2 {
+                            TypeCheck::VarArgs {
+                                element: Box::new(ty),
+                                span: Span::new(0, 0),
                             }
                         } else {
                             TypeCheck::Nullable(Box::new(ty))
@@ -1135,7 +1304,7 @@ mod tests {
                     assert!(!result.has_declared());
                     let mut node = &result;
                     for _ in 0..20_000 {
-                        node = if branching {
+                        node = if shape == 1 {
                             let TypeCheck::ParameterizedCollection { arguments, .. } =
                                 node.resolved()
                             else {
@@ -1146,6 +1315,11 @@ mod tests {
                                 arguments[1].0.resolved()
                             ));
                             &arguments[0].0
+                        } else if shape == 2 {
+                            let TypeCheck::VarArgs { element: inner, .. } = node.resolved() else {
+                                panic!("VarArgs");
+                            };
+                            inner
                         } else {
                             let TypeCheck::Nullable(inner) = node.resolved() else {
                                 panic!("Nullable")

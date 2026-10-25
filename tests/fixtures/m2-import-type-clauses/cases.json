@@ -1,0 +1,335 @@
+{
+  "rows": [
+    {
+      "files": [
+        "000-upstream-original.pkl",
+        "000-upstream-original.utf8.bin",
+        "000-upstream-original.utf16be.bin"
+      ],
+      "id": "upstream-original",
+      "kind": "error",
+      "query": "listing",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "001-clause-inferred.pkl",
+        "001-clause-inferred.utf8.bin",
+        "001-clause-inferred.utf16be.bin"
+      ],
+      "id": "clause-inferred",
+      "kind": "value",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "002-clause-alias.pkl",
+        "002-clause-alias.utf8.bin",
+        "002-clause-alias.utf16be.bin"
+      ],
+      "id": "clause-alias",
+      "kind": "value",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "003-local-expression.pkl",
+        "003-local-expression.utf8.bin",
+        "003-local-expression.utf16be.bin"
+      ],
+      "id": "local-expression",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "004-plain-expression.pkl",
+        "004-plain-expression.utf8.bin",
+        "004-plain-expression.utf16be.bin"
+      ],
+      "id": "plain-expression",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "005-const-local-expression.pkl",
+        "005-const-local-expression.utf8.bin",
+        "005-const-local-expression.utf16be.bin"
+      ],
+      "id": "const-local-expression",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "006-ordinary-import-value.pkl",
+        "006-ordinary-import-value.utf8.bin",
+        "006-ordinary-import-value.utf16be.bin"
+      ],
+      "id": "ordinary-import-value",
+      "kind": "value",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "007-function-wrapper.pkl",
+        "007-function-wrapper.utf8.bin",
+        "007-function-wrapper.utf16be.bin"
+      ],
+      "id": "function-wrapper",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "008-condition-wrapper.pkl",
+        "008-condition-wrapper.utf8.bin",
+        "008-condition-wrapper.utf16be.bin"
+      ],
+      "id": "condition-wrapper",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "009-unused-invalid.pkl",
+        "009-unused-invalid.utf8.bin",
+        "009-unused-invalid.utf16be.bin"
+      ],
+      "id": "unused-invalid",
+      "kind": "value",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "010-missing-import.pkl",
+        "010-missing-import.utf8.bin",
+        "010-missing-import.utf16be.bin"
+      ],
+      "id": "missing-import",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "011-missing-type.pkl",
+        "011-missing-type.utf8.bin",
+        "011-missing-type.utf16be.bin"
+      ],
+      "id": "missing-type",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "012-non-type.pkl",
+        "012-non-type.utf8.bin",
+        "012-non-type.utf16be.bin"
+      ],
+      "id": "non-type",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "013-alias-expression.pkl",
+        "013-alias-expression.utf8.bin",
+        "013-alias-expression.utf16be.bin"
+      ],
+      "id": "alias-expression",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "014-alias-clause.pkl",
+        "014-alias-clause.utf8.bin",
+        "014-alias-clause.utf16be.bin"
+      ],
+      "id": "alias-clause",
+      "kind": "value",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "015-generic-clause.pkl",
+        "015-generic-clause.utf8.bin",
+        "015-generic-clause.utf16be.bin"
+      ],
+      "id": "generic-clause",
+      "kind": "value",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "016-nullable-expression.pkl",
+        "016-nullable-expression.utf8.bin",
+        "016-nullable-expression.utf16be.bin"
+      ],
+      "id": "nullable-expression",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "017-qualifier-before-body.pkl",
+        "017-qualifier-before-body.utf8.bin",
+        "017-qualifier-before-body.utf16be.bin"
+      ],
+      "id": "qualifier-before-body",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "018-qualifier-before-value.pkl",
+        "018-qualifier-before-value.utf8.bin",
+        "018-qualifier-before-value.utf16be.bin"
+      ],
+      "id": "qualifier-before-value",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "019-lexical-shadow.pkl",
+        "019-lexical-shadow.utf8.bin",
+        "019-lexical-shadow.utf16be.bin"
+      ],
+      "id": "lexical-shadow",
+      "kind": "value",
+      "query": "result.value",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "020-simple-clause.pkl",
+        "020-simple-clause.utf8.bin",
+        "020-simple-clause.utf16be.bin"
+      ],
+      "id": "simple-clause",
+      "kind": "value",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "021-simple-expression.pkl",
+        "021-simple-expression.utf8.bin",
+        "021-simple-expression.utf16be.bin"
+      ],
+      "id": "simple-expression",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "022-qualified-nontype.pkl",
+        "022-qualified-nontype.utf8.bin",
+        "022-qualified-nontype.utf16be.bin"
+      ],
+      "id": "qualified-nontype",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "023-qualified-missing-math.pkl",
+        "023-qualified-missing-math.utf8.bin",
+        "023-qualified-missing-math.utf16be.bin"
+      ],
+      "id": "qualified-missing-math",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "024-nontype-alias.pkl",
+        "024-nontype-alias.utf8.bin",
+        "024-nontype-alias.utf16be.bin"
+      ],
+      "id": "nontype-alias",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "025-valid-json-alias.pkl",
+        "025-valid-json-alias.utf8.bin",
+        "025-valid-json-alias.utf16be.bin"
+      ],
+      "id": "valid-json-alias",
+      "kind": "value",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "026-unused-missing.pkl",
+        "026-unused-missing.utf8.bin",
+        "026-unused-missing.utf16be.bin"
+      ],
+      "id": "unused-missing",
+      "kind": "value",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "027-typed-clause.pkl",
+        "027-typed-clause.utf8.bin",
+        "027-typed-clause.utf16be.bin"
+      ],
+      "id": "typed-clause",
+      "kind": "value",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "028-typed-expression-rhs.pkl",
+        "028-typed-expression-rhs.utf8.bin",
+        "028-typed-expression-rhs.utf16be.bin"
+      ],
+      "id": "typed-expression-rhs",
+      "kind": "error",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    },
+    {
+      "files": [
+        "029-ref-generic.pkl",
+        "029-ref-generic.utf8.bin",
+        "029-ref-generic.utf16be.bin"
+      ],
+      "id": "ref-generic",
+      "kind": "value",
+      "query": "result",
+      "uri": "file:///stage70/import-type-oracle.pkl"
+    }
+  ],
+  "schema": 1
+}

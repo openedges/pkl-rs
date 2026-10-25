@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected 1 type argument(s) but got 2.
+
+1 | result: Mixin<Int, String> = (x) -> x
+            ^^^^^^^^^^^^^^^^^^
+at base-alias-argument-order (file:///stage71/base-alias-argument-order.pkl)

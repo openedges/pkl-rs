@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Expected 0 type argument(s) but got 1.
+
+1 | (new List {}) is List<Missing>
+                     ^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Expected `base` to be a module import, but it is not.
+
+2 | listing = new base.Listing {}
+                  ^^^^
+at import-type-oracle#listing (file:///stage70/import-type-oracle.pkl)
+
+1 | listing
+    ^^^^^^^
+at  (repl:text)

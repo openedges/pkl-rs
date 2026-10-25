@@ -1,0 +1,3 @@
+import "pkl:base" as base
+local f: base.Mixin<Dynamic>
+result = f(new Dynamic { value = "ok" })

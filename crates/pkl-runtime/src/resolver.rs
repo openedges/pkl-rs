@@ -2035,6 +2035,10 @@ impl<'a> Resolver<'a> {
                             | "DataSizeUnit"
                             | "DurationUnit"
                             | "Charset"
+                            | "Comparable"
+                            | "Char"
+                            | "Uri"
+                            | "Mixin"
                     )
                 {
                     binding = Binding::BaseTypeAlias;

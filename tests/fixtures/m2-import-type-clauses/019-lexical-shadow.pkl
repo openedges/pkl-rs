@@ -1,0 +1,2 @@
+import "pkl:base" as base
+result = new Dynamic { local base = 42; value = new base.Listing {} }

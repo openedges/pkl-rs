@@ -1,0 +1,2 @@
+import "pkl:ref"
+foo: ref.Reference<ref.Domain, String>

@@ -489,6 +489,10 @@
           {
             "path": "crates/pkl-runtime/src/vm/type_resolution.rs",
             "symbol": "ModuleSelf"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "ResolveClassType"
           }
         ],
         "state": "partial"
@@ -581,7 +585,8 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType3.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType4.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType5.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInAmendingModuleMethod.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInAmendingModuleMethod.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/localModuleMemberOverride2.pkl"
         ],
         "state": "partial"
       }
@@ -1953,6 +1958,10 @@
           {
             "path": "crates/pkl-runtime/src/resolver/diagnostic_owner.rs",
             "symbol": "OwnerScopes"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "publish_const_receiver"
           }
         ],
         "state": "partial"
@@ -2181,7 +2190,8 @@
           "diagnostic-stage33-class-const-control",
           "diagnostic-stage33-module-const-control",
           "diagnostic-stage33-function-const-before-parent",
-          "diagnostic-stage33-local-const-unused-control"
+          "diagnostic-stage33-local-const-unused-control",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/constModifier5.pkl"
         ],
         "state": "partial"
       }
@@ -2204,6 +2214,10 @@
           {
             "path": "crates/pkl-runtime/src/vm.rs",
             "symbol": "initialize_member_types"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/type_resolution.rs",
+            "symbol": "ResolveClassType"
           }
         ],
         "state": "partial"
@@ -2482,7 +2496,8 @@
           "set-stage23-class-type-good",
           "set-stage23-class-type-bad",
           "diagnostic-stage32-class-control",
-          "diagnostic-stage33-class-const-control"
+          "diagnostic-stage33-class-const-control",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/localModuleMemberOverride2.pkl"
         ],
         "state": "partial"
       }
@@ -2529,6 +2544,14 @@
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "GenericDefaultRun"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "GetSuperMember"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collections.rs",
+            "symbol": "SuperSubscript"
           }
         ],
         "state": "partial"
@@ -2606,7 +2629,9 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideLet.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newType.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings2/default.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/propertyDefaults.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/propertyDefaults.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings/listing3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings2/listing3.pkl"
         ],
         "state": "partial"
       }
@@ -3490,6 +3515,14 @@
           {
             "path": "crates/pkl-runtime/src/vm/type_resolution.rs",
             "symbol": "ModuleSelf"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
+            "symbol": "append_members"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/amendment.rs",
+            "symbol": "is_base_mixin_alias"
           }
         ],
         "state": "partial"
@@ -4497,6 +4530,10 @@
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "GenericDefaultRun"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "PrepareTypeArguments"
           }
         ],
         "state": "partial"
@@ -5651,6 +5688,14 @@
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "validate_reference_arguments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "PrepareTypeArguments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/classes.rs",
+            "symbol": "VarArgs"
           }
         ],
         "state": "partial"
@@ -7761,6 +7806,10 @@
           {
             "path": "crates/pkl-runtime/src/vm/collection_transforms.rs",
             "symbol": "Projection"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/collections.rs",
+            "symbol": "SuperSubscript"
           }
         ],
         "state": "partial"
@@ -7783,7 +7832,9 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideIf.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newInsideLet.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/mappings2/default.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/propertyDefaults.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/propertyDefaults.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings/listing3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/listings2/listing3.pkl"
         ],
         "state": "partial"
       }

@@ -1,0 +1,18 @@
+–– Pkl Error ––
+unvisited-parent-entry
+
+42 | local lazyParentL = new Listing { throw("unvisited-parent-entry") }
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at super-entry-default#lazyParentL[#1] (file:///stage69/super-entry-default.pkl)
+
+47 | local lazyPresentL = (lazyParentL) { super[0] }
+                                          ^^^^^^^^
+at super-entry-default#lazyPresentL[#1] (file:///stage69/super-entry-default.pkl)
+
+126 | lazyPresent = lazyPresentL[1]
+                    ^^^^^^^^^^^^^^^
+at super-entry-default#lazyPresent (file:///stage69/super-entry-default.pkl)
+
+1 | lazyPresent
+    ^^^^^^^^^^^
+at  (repl:text)

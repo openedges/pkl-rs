@@ -1,0 +1,14 @@
+–– Pkl Error ––
+`Reference` referent type argument may not include type constraints.
+
+2 | typealias Ref<T> = ref.Reference<ref.Domain, T>
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at reference-alias-regression#Ref (file:///stage69-72/reference-alias-regression.pkl)
+
+3 | typealias Ref2<T> = Ref<T(isEmpty)>
+                        ^^^^^^^^^^^^^^^
+at reference-alias-regression#Ref2 (file:///stage69-72/reference-alias-regression.pkl)
+
+4 | foo: Ref2<String>
+         ^^^^
+at reference-alias-regression (file:///stage69-72/reference-alias-regression.pkl)

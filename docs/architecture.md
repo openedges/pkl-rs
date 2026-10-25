@@ -57,6 +57,12 @@ scalar members and List bounds reuse common diagnostics; rendering the bounds
 value does not force nested members. Union marker validation remains a parser
 operation so its first-error ordering is shared across targets.
 
+### Super defaults, qualified types, and const owners
+
+The shared VM now includes the Stage69–72 integration for super entry defaults, import-qualified types, parameterized aliases and VarArgs, compiled `pkl:base` alias/Mixin identity, and successful const owner caching. A missing `super[key]` uses the receiver's default; a present parent member avoids that fallback. Type argument preparation preserves the pinned Java error order and declaration environment. Successful inherited const values are forced on their declaring owner and then cached on the receiver; failed or cancelled evaluation does not publish a receiver value.
+
+The force continuation is boxed and retains receiver roots across Host suspension. The return path is separated from the main VM dispatch to preserve the existing 256 KiB stack controls. The integrated source passed all five required Rust checks and selected native/N-API/Chromium comparisons. The [implementation checkpoint](../reports/m2/stage69-72-implementation-checkpoint.json) records the full ready-corpus replay and its remaining failures. Reference alias diagnostics retain the authored alias frame when an existing error recipe is reused. Full language/API compatibility and performance remain open.
+
 ## Host and Public APIs
 
 Provide filesystem, HTTP, package, process, and external reader capabilities through the Host interface. The core must not depend on CLI or Wasm adapters. Evaluation waiting on a Host operation must be resumable from the same execution state, with shared definitions for cancellation, timeout, and close behavior.

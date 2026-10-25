@@ -1,0 +1,2 @@
+local base = import("pkl:base")
+result = new base.Listing { value = throw("body must not run") }

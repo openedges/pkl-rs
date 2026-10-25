@@ -1,0 +1,4 @@
+import "pkl:base" as base
+typealias M = base.Mixin<Int>
+f: M
+result = f.apply("wrong")

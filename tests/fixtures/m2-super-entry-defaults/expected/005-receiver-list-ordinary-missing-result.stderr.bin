@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Element index `3` is out of range `0`..`1`.
+
+117 | receiverListOrdinaryMissing = receiverL[3]
+                                    ^^^^^^^^^^^^
+at super-entry-default#receiverListOrdinaryMissing (file:///stage69/super-entry-default.pkl)
+
+1 | receiverListOrdinaryMissing
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

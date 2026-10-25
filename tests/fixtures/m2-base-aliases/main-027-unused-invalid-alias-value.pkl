@@ -1,0 +1,3 @@
+import "pkl:base" as base
+local bad: base.Char = "xy"
+result = 1

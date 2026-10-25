@@ -1,10 +1,41 @@
 # M2 language verification
 
+## Stage69–72 — shared runtime and full ready-corpus replay
+
+The [implementation checkpoint](../reports/m2/stage69-72-implementation-checkpoint.json) records shared super entry defaults,
+import-qualified types, generics and VarArgs, compiled base alias/Mixin identity,
+and const owner caching. It also preserves Reference alias diagnostic ownership
+and the existing 256 KiB stack controls. All five required Rust checks passed.
+
+Native, actual N-API, and Chromium each match 470 observations from 235 queries.
+A separate four-query Reference alias comparison matches eight observations per
+target. These comparisons cover selected raw string and captured Logger channels;
+91 queries in the main matrix have no Java Logger authority. They do not establish
+typed export or complete API compatibility.
+
+The full 4,416-case Rust replay records **4,158 matches, 115 mismatches, 141 unsupported results, 2 Java oracle errors, and 0 Rust internal errors**. Original modules account for 638/888 matches; expression strings account for 3,519/3,527, and the JVM classpath case matches. Compared with the latest Stage68 Rust baseline, 6 previously nonpassing cases now match and no previously passing case regresses.
+
+The replay reuses sealed Stage67 Java outputs with zero fresh Java processes.
+Acquisition, independent integrity verification, and the Stage68 regression check
+completed successfully. The strict full gate retains 1,795 overlapping unmet
+entries; the 111 unready inventory cases and all nine M2 workstreams remain open.
+
+The separate M1 experiment retains 6,078 shared-engine matches and 6,076 Java
+matches per target. Its architecture contract passes, while the two known Regex
+cases remain strict compatibility failures.
+
+13 archives (167,482,056 bytes total, each below 95 MiB) preserve raw results,
+failed attempts, source identities, and complete archive readback. Required01/02
+failures and the first Wasm linker failure remain recorded separately from their
+successful corrections. Publication and assembly receipts postdate the archives
+and require separate source/Git binding. These are local macOS arm64 results;
+full M2, product APIs, release platforms, speed, and memory targets remain open.
+
 ## Stage69–72 Java authorities
 
 The [Java reference checkpoint](../reports/m2/stage69-72-java-checkpoint.json) preserves 235 distinct authored queries covering super entry defaults, import-qualified types, generics and VarArgs, base aliases/Mixin, and const owner behavior. It retains two JVM repetitions, full raw results and logs, earlier failed capture attempts, and exact source/JDK/JAR identities. Original CLI controls remain in the separately published Stage67 evidence.
 
-These are Java authorities, not candidate compatibility passes. The [publication execution](../reports/m2/stage69-72-java-publication-execution.json) records the actual finite publication commands and raw outcomes separately from the six archives. Canonical Stage69–72 integration and checks remain pending; Stage68 below is the latest committed full ready-corpus result.
+These are Java authorities, not candidate compatibility passes. The [publication execution](../reports/m2/stage69-72-java-publication-execution.json) records the actual finite publication commands and raw outcomes separately from the six archives. The implementation and its actual Rust, platform, and full ready-corpus results are recorded in the separate implementation checkpoint above. The Java authority remains reference evidence.
 
 ## Stage 68 — predicates, method semantics, and full ready-corpus replay
 

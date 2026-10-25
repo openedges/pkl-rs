@@ -1,0 +1,12 @@
+// Reverse first access to a child while preserving separate fixed/local controls.
+open class C {
+  const constValue = trace("const-owner")
+  fixed fixedValue = trace("fixed-owner")
+  fixed typedFixed: Int(let (_ = trace("fixed-type")) true) = 1
+  local localValue = trace("local-owner")
+  localRead = localValue
+  marker: Int = 0
+}
+base = new C {}
+child = (base) { marker = 1 }
+sibling = new C {}

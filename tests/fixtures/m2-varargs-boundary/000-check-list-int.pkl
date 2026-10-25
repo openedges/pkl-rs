@@ -1,0 +1,2 @@
+import "pkl:base" as b
+result = List(1) is b.VarArgs<Int>

@@ -1,0 +1,2 @@
+import "pkl:ref" as ref
+result = 1 is ref.Reference<Any, String>

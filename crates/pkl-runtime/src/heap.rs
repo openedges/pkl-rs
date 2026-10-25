@@ -68,7 +68,10 @@ impl Member {
     pub(crate) fn declaration_flags(member: &crate::syntax::Member) -> u32 {
         crate::syntax::modifier_flags(&member.modifiers)
             | match member.expr.kind {
-                crate::syntax::ExprKind::Import { .. } => Self::IMPORT,
+                crate::syntax::ExprKind::Import {
+                    clause_alias: Some(_),
+                    ..
+                } => Self::IMPORT,
                 crate::syntax::ExprKind::Class { .. } => Self::CLASS,
                 crate::syntax::ExprKind::TypeAlias { .. } => Self::TYPE_ALIAS,
                 _ => 0,
@@ -208,7 +211,13 @@ pub struct Object {
     pub java_hash: Option<Option<i32>>,
     pub pair: Option<Box<[Value; 2]>>,
     pub amendment: Option<crate::vm::amendment::Amendment>,
-    pub mixin: Option<(crate::vm::TypeCheck, Option<crate::value::RuntimeFrame>)>,
+    /// Argument-check section and function-construction section have distinct
+    /// Java source nodes, even when both belong to the same Mixin type use.
+    pub mixin: Option<(
+        crate::vm::TypeCheck,
+        Option<crate::value::RuntimeFrame>,
+        Option<crate::value::RuntimeFrame>,
+    )>,
     pub function: Option<Function>,
     pub reference: Option<crate::vm::reference::Reference>,
     pub native_function: Option<crate::vm::reference::NativeFunction>,

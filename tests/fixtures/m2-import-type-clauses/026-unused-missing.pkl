@@ -1,0 +1,3 @@
+import "pkl:base" as base
+local bad = new absent.Listing {}
+result = 1

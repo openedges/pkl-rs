@@ -1,0 +1,3 @@
+import "pkl:math" as math
+typealias T = math.pi
+result = 1 is T
