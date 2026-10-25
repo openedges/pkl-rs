@@ -1,5 +1,13 @@
 # M2 language evidence
 
+### Stage69–72 Java authority checkpoint
+
+The [Java authority checkpoint](stage69-72-java-checkpoint.json) preserves 235 distinct authored queries against Pkl 0.32.0: 29 super entry defaults, 30 import type clauses, 81 qualified/generic types, 14 VarArgs boundaries, 47 base alias/Mixin controls, and 34 const owner cases. Two JVM repetitions remain separate raw observations. The nine alias argument-order queries share an audit and archive with the VarArgs controls; they are counted once.
+
+Six finite archives preserve full raw results and logger channels, source/input identities, pinned JDK/JAR identities, and earlier failed capture attempts. Every archived member is read back and checked for payload, size, and mode. Original CLI controls remain linked to the separately published Stage67 evidence. The [actual publication execution](stage69-72-java-publication-execution.json) records command arguments, raw stdout/stderr bytes encoded as Base64, exit codes, source bookends, and the assembled checkpoint identity; it postdates the archives.
+
+This checkpoint publishes Java reference evidence only. Stage69–72 isolated Rust results, canonical integration, required Rust checks, native/Node/browser comparisons, and the full M2 gate are separate. The latest committed full ready-corpus compatibility result remains Stage68 below; all nine M2 workstreams and known failures stay open.
+
 ### Stage68 implementation and complete ready-corpus replay
 
 The [implementation checkpoint](stage68-implementation-checkpoint.json) records

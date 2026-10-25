@@ -1,0 +1,147 @@
+{
+  "base_head": "d47d9c6c9843a2048cafc29fb7c1c19addf2a7c4",
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "complete": true,
+  "distinct_authored_queries": {
+    "alias_argument_rows_published_with_varargs": 9,
+    "aliases": 47,
+    "const": 34,
+    "distinct_authored_queries": 235,
+    "import": 30,
+    "java_repeats_are_not_distinct_queries": true,
+    "qualified": 81,
+    "super": 29,
+    "varargs": 14
+  },
+  "groups": {
+    "base-aliases": {
+      "archive": {
+        "bytes": 1250438,
+        "mode": 420,
+        "path": "reports/m2/stage69-72-java-base-aliases-evidence.tar.gz",
+        "sha256": "de73951e504d869745f75bd8a421fc4aa04bd12fd1309275c8252886c77ef700"
+      },
+      "direct_rows": 38,
+      "embedded_manifest_sha256": "701e2c61e3c0a585dc8ff9f13b87ca5b59fdc56d55fb60d44a934162121b24ff",
+      "members": 2346,
+      "publication": {
+        "bytes": 952926,
+        "mode": 420,
+        "path": "reports/m2/stage69-72-java-base-aliases-publication.json",
+        "sha256": "3f7b8dcd5501c71e079bd48b00473bf5c83c63013f5db8efddbc7f7538531eed"
+      }
+    },
+    "const-owner": {
+      "archive": {
+        "bytes": 955793,
+        "mode": 420,
+        "path": "reports/m2/stage69-72-java-const-owner-evidence.tar.gz",
+        "sha256": "131c32c244c76108cee8b274f4f04947456ba28ef20497964d8542834136f03d"
+      },
+      "direct_rows": 34,
+      "embedded_manifest_sha256": "f8c4d756a8fdd295ca92e0b9b3bbf710601149f6e767615056e75c3b4e05ee2f",
+      "members": 3161,
+      "publication": {
+        "bytes": 1085379,
+        "mode": 420,
+        "path": "reports/m2/stage69-72-java-const-owner-publication.json",
+        "sha256": "ad261414d3cd4f84537a057da2fd2dd2c71e182540116f5eebe6852e661d6453"
+      }
+    },
+    "import-types": {
+      "archive": {
+        "bytes": 1015203,
+        "mode": 420,
+        "path": "reports/m2/stage69-72-java-import-types-evidence.tar.gz",
+        "sha256": "59c75b0ae159f42f5df257b0a617cd58e07d3d12c739843ba499afc3c6ed94cb"
+      },
+      "direct_rows": 30,
+      "embedded_manifest_sha256": "08bf58742ec4a81a450fd33cb7f223ad09f7ed49d5bd82e84880cdef7080b005",
+      "members": 2354,
+      "publication": {
+        "bytes": 918355,
+        "mode": 420,
+        "path": "reports/m2/stage69-72-java-import-types-publication.json",
+        "sha256": "44cee7b0bcb526dc83e67ef2ea4c2d07e5b00781f87702919b28190ad9b5bade"
+      }
+    },
+    "qualified-generics": {
+      "archive": {
+        "bytes": 938910,
+        "mode": 420,
+        "path": "reports/m2/stage69-72-java-qualified-generics-evidence.tar.gz",
+        "sha256": "9978f819196f9d520790e509ae29f1a15ab6e78463980bb69a9ac86060d3683d"
+      },
+      "direct_rows": 81,
+      "embedded_manifest_sha256": "aa576d3d9f3991809cf9c9184c7b9b4640ada8e5efd8469cd103f2da6d54bc53",
+      "members": 3835,
+      "publication": {
+        "bytes": 1540904,
+        "mode": 420,
+        "path": "reports/m2/stage69-72-java-qualified-generics-publication.json",
+        "sha256": "16be7cbd544e515e07dad7405798ea5c7f514a3db906f431d92b61e28bfc88cf"
+      }
+    },
+    "super-entry": {
+      "archive": {
+        "bytes": 1581661,
+        "mode": 420,
+        "path": "reports/m2/stage69-72-java-super-entry-evidence.tar.gz",
+        "sha256": "9b83f7b3cc3d5532c169c817fdedb8121e32c3f5101e7160518317231bdfa5d3"
+      },
+      "direct_rows": 29,
+      "embedded_manifest_sha256": "9225d7c4182000fab5ea71abcceaa60997a88382ff388d12491fb8b94894211e",
+      "members": 5950,
+      "publication": {
+        "bytes": 2166279,
+        "mode": 420,
+        "path": "reports/m2/stage69-72-java-super-entry-publication.json",
+        "sha256": "84e748bd9f0c161bc1a210568a40615332c050240bcca461be4f377b284a3c40"
+      }
+    },
+    "varargs-and-alias-arguments": {
+      "archive": {
+        "bytes": 1027390,
+        "mode": 420,
+        "path": "reports/m2/stage69-72-java-varargs-and-alias-arguments-evidence.tar.gz",
+        "sha256": "785be2bdab54a52c5e9f512e6d85c53f45d28dc68b867aeda5b9533cd4f48f07"
+      },
+      "direct_rows": 23,
+      "embedded_manifest_sha256": "9637ff89573b654016df7f11b9aa800280df70f1ffb91848aa2a2cefe700007e",
+      "members": 1502,
+      "publication": {
+        "bytes": 602385,
+        "mode": 420,
+        "path": "reports/m2/stage69-72-java-varargs-and-alias-arguments-publication.json",
+        "sha256": "c6b68141e7a83addd73d679da26c492e9eabc563c3cb881ce607f4e3904275aa"
+      }
+    }
+  },
+  "historical_stage67_originals": {
+    "archive": {
+      "bytes": 57911607,
+      "full_member_readback_verified": true,
+      "members": 46437,
+      "mode": 420,
+      "path": "reports/m2/stage67-b-full-inventory-evidence.tar.gz",
+      "sha256": "fe02d2c88552ca4974273554214be2d4f415c985844216f1c1df63135e0a0fb8"
+    },
+    "publication": {
+      "bytes": 11059059,
+      "mode": 420,
+      "path": "reports/m2/stage67-b-full-inventory-publication.json",
+      "sha256": "eccc18c0431dc40519e5b3b908e7bc0e3b1dfd5a4015836cee9601eca9d42933"
+    }
+  },
+  "kind": "stage69-72-Java-authority-checkpoint",
+  "limits": [
+    "These are Java authority captures, not Rust candidate compatibility passes.",
+    "Two JVM runs per authored query do not double the distinct query count.",
+    "Stage67 original CLI evidence remains in its separate published archive.",
+    "Canonical Rust checks, native/Node/browser, full M2/API and performance gates remain separate."
+  ],
+  "publication_process_boundary": "The six publisher processes and this assembly process postdate archives and require separate receipts.",
+  "schema": 1,
+  "source_stable": true
+}

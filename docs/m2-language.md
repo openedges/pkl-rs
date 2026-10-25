@@ -1,5 +1,11 @@
 # M2 language verification
 
+## Stage69–72 Java authorities
+
+The [Java reference checkpoint](../reports/m2/stage69-72-java-checkpoint.json) preserves 235 distinct authored queries covering super entry defaults, import-qualified types, generics and VarArgs, base aliases/Mixin, and const owner behavior. It retains two JVM repetitions, full raw results and logs, earlier failed capture attempts, and exact source/JDK/JAR identities. Original CLI controls remain in the separately published Stage67 evidence.
+
+These are Java authorities, not candidate compatibility passes. The [publication execution](../reports/m2/stage69-72-java-publication-execution.json) records the actual finite publication commands and raw outcomes separately from the six archives. Canonical Stage69–72 integration and checks remain pending; Stage68 below is the latest committed full ready-corpus result.
+
 ## Stage 68 — predicates, method semantics, and full ready-corpus replay
 
 The [implementation checkpoint](../reports/m2/stage68-implementation-checkpoint.json) records

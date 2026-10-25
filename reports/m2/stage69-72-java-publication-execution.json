@@ -1,0 +1,488 @@
+{
+  "base_head": "d47d9c6c9843a2048cafc29fb7c1c19addf2a7c4",
+  "candidate_compatibility_passes_claimed": 0,
+  "checkpoint": {
+    "bytes": 5581,
+    "path": "reports/m2/stage69-72-java-checkpoint.json",
+    "sha256": "c782048e37b6f04004f96dd18a40e5de55152024abfa45cb946ad6a0d597abc0"
+  },
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/publish.py",
+        "--group",
+        "base-aliases",
+        "--preflight"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:47:57.070325+00:00",
+      "name": "base-aliases--preflight",
+      "pid": 2275,
+      "started_utc": "2026-10-25T05:47:56.205111+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/00.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 173,
+        "path": "target/m2/stage69-72-java-publication-execution-01/00.stdout.bin",
+        "sha256": "b071f2724fc8a2ef9d8d6d04bd92731d53065cca9879f6f1bf70e8efb6daf1ad"
+      },
+      "stdout_base64": "eyJjYW5kaWRhdGVfY29tcGF0aWJpbGl0eV9wYXNzZXNfY2xhaW1lZCI6IDAsICJncm91cCI6ICJiYXNlLWFsaWFzZXMiLCAibG9naWNhbF9ieXRlcyI6IDEwMjAyNDU0LCAicHJlZmxpZ2h0IjogdHJ1ZSwgInB1YmxpY2F0aW9uX3JlYWR5IjogdHJ1ZSwgInJvd3MiOiAzOCwgInNvdXJjZXMiOiAyMzQ1fQo="
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/publish.py",
+        "--group",
+        "const-owner",
+        "--preflight"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:47:57.835557+00:00",
+      "name": "const-owner--preflight",
+      "pid": 2295,
+      "started_utc": "2026-10-25T05:47:57.071534+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/01.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 171,
+        "path": "target/m2/stage69-72-java-publication-execution-01/01.stdout.bin",
+        "sha256": "6306c3674bb8e1f4cd1b3e461c221956877385b57481f6e0081b16921c66c32d"
+      },
+      "stdout_base64": "eyJjYW5kaWRhdGVfY29tcGF0aWJpbGl0eV9wYXNzZXNfY2xhaW1lZCI6IDAsICJncm91cCI6ICJjb25zdC1vd25lciIsICJsb2dpY2FsX2J5dGVzIjogODQ2NTQ3NSwgInByZWZsaWdodCI6IHRydWUsICJwdWJsaWNhdGlvbl9yZWFkeSI6IHRydWUsICJyb3dzIjogMzQsICJzb3VyY2VzIjogMzE2MH0K"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/publish.py",
+        "--group",
+        "import-types",
+        "--preflight"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:47:58.566136+00:00",
+      "name": "import-types--preflight",
+      "pid": 2297,
+      "started_utc": "2026-10-25T05:47:57.836558+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/02.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 172,
+        "path": "target/m2/stage69-72-java-publication-execution-01/02.stdout.bin",
+        "sha256": "6bc03733f03023ef5f5985b3bcae8660e428280887dba597bebb5d89f28b01c3"
+      },
+      "stdout_base64": "eyJjYW5kaWRhdGVfY29tcGF0aWJpbGl0eV9wYXNzZXNfY2xhaW1lZCI6IDAsICJncm91cCI6ICJpbXBvcnQtdHlwZXMiLCAibG9naWNhbF9ieXRlcyI6IDg3NDk2NTYsICJwcmVmbGlnaHQiOiB0cnVlLCAicHVibGljYXRpb25fcmVhZHkiOiB0cnVlLCAicm93cyI6IDMwLCAic291cmNlcyI6IDIzNTN9Cg=="
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/publish.py",
+        "--group",
+        "qualified-generics",
+        "--preflight"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:47:59.445136+00:00",
+      "name": "qualified-generics--preflight",
+      "pid": 2301,
+      "started_utc": "2026-10-25T05:47:58.567482+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/03.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 178,
+        "path": "target/m2/stage69-72-java-publication-execution-01/03.stdout.bin",
+        "sha256": "8794ee307b616ed07ffc635f449a408819c2e7c33276b6f41ce7abb278fc1f56"
+      },
+      "stdout_base64": "eyJjYW5kaWRhdGVfY29tcGF0aWJpbGl0eV9wYXNzZXNfY2xhaW1lZCI6IDAsICJncm91cCI6ICJxdWFsaWZpZWQtZ2VuZXJpY3MiLCAibG9naWNhbF9ieXRlcyI6IDc5NDUwNTYsICJwcmVmbGlnaHQiOiB0cnVlLCAicHVibGljYXRpb25fcmVhZHkiOiB0cnVlLCAicm93cyI6IDgxLCAic291cmNlcyI6IDM4MzR9Cg=="
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/publish.py",
+        "--group",
+        "super-entry",
+        "--preflight"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:48:00.753411+00:00",
+      "name": "super-entry--preflight",
+      "pid": 2305,
+      "started_utc": "2026-10-25T05:47:59.446164+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/04.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 172,
+        "path": "target/m2/stage69-72-java-publication-execution-01/04.stdout.bin",
+        "sha256": "b903e851d7035b6037923dac90df37992840713055c64dfd9fa417ef763fc75a"
+      },
+      "stdout_base64": "eyJjYW5kaWRhdGVfY29tcGF0aWJpbGl0eV9wYXNzZXNfY2xhaW1lZCI6IDAsICJncm91cCI6ICJzdXBlci1lbnRyeSIsICJsb2dpY2FsX2J5dGVzIjogMTE1NDE1ODcsICJwcmVmbGlnaHQiOiB0cnVlLCAicHVibGljYXRpb25fcmVhZHkiOiB0cnVlLCAicm93cyI6IDI5LCAic291cmNlcyI6IDU5NDl9Cg=="
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/publish.py",
+        "--group",
+        "varargs-and-alias-arguments",
+        "--preflight"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:48:01.384116+00:00",
+      "name": "varargs-and-alias-arguments--preflight",
+      "pid": 2308,
+      "started_utc": "2026-10-25T05:48:00.754467+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/05.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 187,
+        "path": "target/m2/stage69-72-java-publication-execution-01/05.stdout.bin",
+        "sha256": "76b28a5a28d972623a77b2bfed943f02e09b1175f50cb46fb2c97b782ebad2cd"
+      },
+      "stdout_base64": "eyJjYW5kaWRhdGVfY29tcGF0aWJpbGl0eV9wYXNzZXNfY2xhaW1lZCI6IDAsICJncm91cCI6ICJ2YXJhcmdzLWFuZC1hbGlhcy1hcmd1bWVudHMiLCAibG9naWNhbF9ieXRlcyI6IDkwMDYxMDksICJwcmVmbGlnaHQiOiB0cnVlLCAicHVibGljYXRpb25fcmVhZHkiOiB0cnVlLCAicm93cyI6IDIzLCAic291cmNlcyI6IDE1MDF9Cg=="
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/publish.py",
+        "--group",
+        "base-aliases",
+        "--publish"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:48:03.102303+00:00",
+      "name": "base-aliases--publish",
+      "pid": 2325,
+      "started_utc": "2026-10-25T05:48:01.385560+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/06.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 443,
+        "path": "target/m2/stage69-72-java-publication-execution-01/06.stdout.bin",
+        "sha256": "bc6e3bc4ae2864eb623444c943f37323df022c9f42e8cf62becdfed9bd3bd96f"
+      },
+      "stdout_base64": "eyJhcmNoaXZlIjogeyJieXRlcyI6IDEyNTA0MzgsICJtb2RlIjogNDIwLCAicGF0aCI6ICJyZXBvcnRzL20yL3N0YWdlNjktNzItamF2YS1iYXNlLWFsaWFzZXMtZXZpZGVuY2UudGFyLmd6IiwgInNoYTI1NiI6ICJkZTczOTUxZTUwNGQ4Njk3NDVmNzViZDhhNDIxZmM0YWEwNGJkMTJmZDEzMDkyNzVjODI1Mjg4NmM3N2VmNzAwIn0sICJjb21wbGV0ZSI6IHRydWUsICJncm91cCI6ICJiYXNlLWFsaWFzZXMiLCAibWVtYmVycyI6IDIzNDYsICJwdWJsaWNhdGlvbiI6IHsiYnl0ZXMiOiA5NTI5MjYsICJtb2RlIjogNDIwLCAicGF0aCI6ICJyZXBvcnRzL20yL3N0YWdlNjktNzItamF2YS1iYXNlLWFsaWFzZXMtcHVibGljYXRpb24uanNvbiIsICJzaGEyNTYiOiAiM2Y3YjhkY2Q1NTAxYzcxZTA3OWJkNDhiMDA0NzNiZjVjODNjNjMwMTNmNWRiOGVmZGRiYzdmNzUzODUzMWVlZCJ9fQo="
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/publish.py",
+        "--group",
+        "const-owner",
+        "--publish"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:48:04.858412+00:00",
+      "name": "const-owner--publish",
+      "pid": 2377,
+      "started_utc": "2026-10-25T05:48:03.103272+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/07.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 440,
+        "path": "target/m2/stage69-72-java-publication-execution-01/07.stdout.bin",
+        "sha256": "3b55a0d226ed2a6b019466ca5ce265d76555e00afb4fadb662b926842e71908a"
+      },
+      "stdout_base64": "eyJhcmNoaXZlIjogeyJieXRlcyI6IDk1NTc5MywgIm1vZGUiOiA0MjAsICJwYXRoIjogInJlcG9ydHMvbTIvc3RhZ2U2OS03Mi1qYXZhLWNvbnN0LW93bmVyLWV2aWRlbmNlLnRhci5neiIsICJzaGEyNTYiOiAiMTMxYzMyYzI0NGM3NjEwOGNlZThiMjc0ZjRmMDQ5NDc0NTZiYTI4ZWYyMDQ5Nzk2NGQ4NTQyODM0MTM2ZjAzZCJ9LCAiY29tcGxldGUiOiB0cnVlLCAiZ3JvdXAiOiAiY29uc3Qtb3duZXIiLCAibWVtYmVycyI6IDMxNjEsICJwdWJsaWNhdGlvbiI6IHsiYnl0ZXMiOiAxMDg1Mzc5LCAibW9kZSI6IDQyMCwgInBhdGgiOiAicmVwb3J0cy9tMi9zdGFnZTY5LTcyLWphdmEtY29uc3Qtb3duZXItcHVibGljYXRpb24uanNvbiIsICJzaGEyNTYiOiAiYWQyNjE0MTRkM2NkNGY4NDUzN2EwNTdkYTJmZDJkZDJjNzFlMTgyNTQwMTE2ZjVlZWJlNjg1MmU2NjFkNjQ1MyJ9fQo="
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/publish.py",
+        "--group",
+        "import-types",
+        "--publish"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:48:06.460676+00:00",
+      "name": "import-types--publish",
+      "pid": 2385,
+      "started_utc": "2026-10-25T05:48:04.859596+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/08.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 443,
+        "path": "target/m2/stage69-72-java-publication-execution-01/08.stdout.bin",
+        "sha256": "9d0d0ff4ab68e4db189f0d0e97e027e949b3b31fa06d6c11311d1d18d18428cf"
+      },
+      "stdout_base64": "eyJhcmNoaXZlIjogeyJieXRlcyI6IDEwMTUyMDMsICJtb2RlIjogNDIwLCAicGF0aCI6ICJyZXBvcnRzL20yL3N0YWdlNjktNzItamF2YS1pbXBvcnQtdHlwZXMtZXZpZGVuY2UudGFyLmd6IiwgInNoYTI1NiI6ICI1OWM3NWIwYWUxNTlmNDJmNWRmMjU3YjBhNjE3Y2Q1OGUwN2QzZDEyYzczOTg0M2JhNDk5YWZjM2M2ZWQ5NGNiIn0sICJjb21wbGV0ZSI6IHRydWUsICJncm91cCI6ICJpbXBvcnQtdHlwZXMiLCAibWVtYmVycyI6IDIzNTQsICJwdWJsaWNhdGlvbiI6IHsiYnl0ZXMiOiA5MTgzNTUsICJtb2RlIjogNDIwLCAicGF0aCI6ICJyZXBvcnRzL20yL3N0YWdlNjktNzItamF2YS1pbXBvcnQtdHlwZXMtcHVibGljYXRpb24uanNvbiIsICJzaGEyNTYiOiAiNDRjZWU3YjBiY2I1MjZkYzgzZTY3ZWYyZWE0YzJkMDdlNWIwMDc4MWY4NzcwMjkxOWIyODE5MGFkOWI1YmFkZSJ9fQo="
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/publish.py",
+        "--group",
+        "qualified-generics",
+        "--publish"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:48:08.679713+00:00",
+      "name": "qualified-generics--publish",
+      "pid": 2433,
+      "started_utc": "2026-10-25T05:48:06.461775+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/09.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 461,
+        "path": "target/m2/stage69-72-java-publication-execution-01/09.stdout.bin",
+        "sha256": "71bbb49a6960162535c45877dedcfe45dc7c3dc8ca53435345530ab4ce3e9be2"
+      },
+      "stdout_base64": "eyJhcmNoaXZlIjogeyJieXRlcyI6IDkzODkxMCwgIm1vZGUiOiA0MjAsICJwYXRoIjogInJlcG9ydHMvbTIvc3RhZ2U2OS03Mi1qYXZhLXF1YWxpZmllZC1nZW5lcmljcy1ldmlkZW5jZS50YXIuZ3oiLCAic2hhMjU2IjogIjk5NzhmODE5MTk2ZjlkNTIwNzkwZTUwOWFlMjlmMWExNWFiNmU3ODQ2Mzk4MGJiNjlhOWFjODYwNjBkMzY4M2QifSwgImNvbXBsZXRlIjogdHJ1ZSwgImdyb3VwIjogInF1YWxpZmllZC1nZW5lcmljcyIsICJtZW1iZXJzIjogMzgzNSwgInB1YmxpY2F0aW9uIjogeyJieXRlcyI6IDE1NDA5MDQsICJtb2RlIjogNDIwLCAicGF0aCI6ICJyZXBvcnRzL20yL3N0YWdlNjktNzItamF2YS1xdWFsaWZpZWQtZ2VuZXJpY3MtcHVibGljYXRpb24uanNvbiIsICJzaGEyNTYiOiAiMTZiZTdjYmQ1NDRlNTE1ZTA3ZGFkNzQwNTc5OGVhNWM3ZjUxNGEzZGI5MDZmNDMxZDkyYjYxZTI4YmZjODhjZiJ9fQo="
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/publish.py",
+        "--group",
+        "super-entry",
+        "--publish"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:48:12.113604+00:00",
+      "name": "super-entry--publish",
+      "pid": 2468,
+      "started_utc": "2026-10-25T05:48:08.680745+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/10.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 441,
+        "path": "target/m2/stage69-72-java-publication-execution-01/10.stdout.bin",
+        "sha256": "66aede30993ebc1994f88a08957afce1a89cb6591e2c5420d6e23ded1f06f46f"
+      },
+      "stdout_base64": "eyJhcmNoaXZlIjogeyJieXRlcyI6IDE1ODE2NjEsICJtb2RlIjogNDIwLCAicGF0aCI6ICJyZXBvcnRzL20yL3N0YWdlNjktNzItamF2YS1zdXBlci1lbnRyeS1ldmlkZW5jZS50YXIuZ3oiLCAic2hhMjU2IjogIjliODNmN2IzY2MzZDU1MzJjMTY5YzgxN2ZkZWRiODEyMWUzMmMzZjUxMDFlNzE2MDUxODMxNzIzMWJkZmE1ZDMifSwgImNvbXBsZXRlIjogdHJ1ZSwgImdyb3VwIjogInN1cGVyLWVudHJ5IiwgIm1lbWJlcnMiOiA1OTUwLCAicHVibGljYXRpb24iOiB7ImJ5dGVzIjogMjE2NjI3OSwgIm1vZGUiOiA0MjAsICJwYXRoIjogInJlcG9ydHMvbTIvc3RhZ2U2OS03Mi1qYXZhLXN1cGVyLWVudHJ5LXB1YmxpY2F0aW9uLmpzb24iLCAic2hhMjU2IjogIjg0ZTc0OGJkOWYwYzE2MWJjMWEyMTA1NjhhNDA2MTUzMzJjMDUwMjQwYmNjYTQ2MWJlNGYzNzdiMjg0YTNjNDAifX0K"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/publish.py",
+        "--group",
+        "varargs-and-alias-arguments",
+        "--publish"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:48:13.371403+00:00",
+      "name": "varargs-and-alias-arguments--publish",
+      "pid": 2492,
+      "started_utc": "2026-10-25T05:48:12.115114+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/11.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 488,
+        "path": "target/m2/stage69-72-java-publication-execution-01/11.stdout.bin",
+        "sha256": "bf9db3e3e5b02f13e792d14bbbfbe1eec20add9dc6a9993bba51d1dcae4b3f1a"
+      },
+      "stdout_base64": "eyJhcmNoaXZlIjogeyJieXRlcyI6IDEwMjczOTAsICJtb2RlIjogNDIwLCAicGF0aCI6ICJyZXBvcnRzL20yL3N0YWdlNjktNzItamF2YS12YXJhcmdzLWFuZC1hbGlhcy1hcmd1bWVudHMtZXZpZGVuY2UudGFyLmd6IiwgInNoYTI1NiI6ICI3ODViZTJiZGFiNTRhNTJjNWU5ZjUxMmU2ZDg1YzUzZjQ1ZDI4ZGM2OGI4NjdhZWRhNWI5NTMzY2Q0ZjQ4ZjA3In0sICJjb21wbGV0ZSI6IHRydWUsICJncm91cCI6ICJ2YXJhcmdzLWFuZC1hbGlhcy1hcmd1bWVudHMiLCAibWVtYmVycyI6IDE1MDIsICJwdWJsaWNhdGlvbiI6IHsiYnl0ZXMiOiA2MDIzODUsICJtb2RlIjogNDIwLCAicGF0aCI6ICJyZXBvcnRzL20yL3N0YWdlNjktNzItamF2YS12YXJhcmdzLWFuZC1hbGlhcy1hcmd1bWVudHMtcHVibGljYXRpb24uanNvbiIsICJzaGEyNTYiOiAiYzZiNjgxNDFlN2E4M2FkZGQ3M2Q2NzlkYTI2YzQ5MmU5ZWFiYzU2M2MzY2I4ODFjZTYwN2Y0ZTM5MDQyNzVhYSJ9fQo="
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage69-72-java-publication-prep-04/assemble.py"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+      "exit_code": 0,
+      "finished_utc": "2026-10-25T05:48:13.539636+00:00",
+      "name": "assemble",
+      "pid": 2498,
+      "started_utc": "2026-10-25T05:48:13.372989+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "target/m2/stage69-72-java-publication-execution-01/12.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_base64": "",
+      "stdout": {
+        "bytes": 242,
+        "path": "target/m2/stage69-72-java-publication-execution-01/12.stdout.bin",
+        "sha256": "2318f69b1187c5599f08252ed4b5b4ea7bede5a2aed0e8b13c7a8d9f1d821e22"
+      },
+      "stdout_base64": "eyJjaGVja3BvaW50IjogeyJieXRlcyI6IDU1ODEsICJtb2RlIjogNDIwLCAicGF0aCI6ICJyZXBvcnRzL20yL3N0YWdlNjktNzItamF2YS1jaGVja3BvaW50Lmpzb24iLCAic2hhMjU2IjogImM3ODIwNDhlMzdiNmYwNDAwNGY5NmRkMThhNDBlNWRlNTUxNTIwMjRhYmZhNDVjYjk0NmFkNmEwZDU5N2FiYzAifSwgImNvbXBsZXRlIjogdHJ1ZSwgImRpc3RpbmN0X2F1dGhvcmVkX3F1ZXJpZXMiOiAyMzUsICJncm91cHMiOiA2fQo="
+    }
+  ],
+  "complete": true,
+  "finished_utc": "2026-10-25T05:48:13.553886+00:00",
+  "guest_evaluations_executed": 0,
+  "head_after": "d47d9c6c9843a2048cafc29fb7c1c19addf2a7c4",
+  "head_stable": true,
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "kind": "stage69-72-Java-publication-actual-processes",
+  "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "python_executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+  "schema": 1,
+  "source_stable": true,
+  "sources_after": [
+    {
+      "bytes": 6743,
+      "path": "target/m2/stage69-72-java-publication-prep-04/common.py",
+      "sha256": "323380560a565cece20e8d85cfaec0ef2e3ceeabeb2309e23c43a98b270ef4b1"
+    },
+    {
+      "bytes": 3342,
+      "path": "target/m2/stage69-72-java-publication-prep-04/prepare.py",
+      "sha256": "1ee80d7cc9f86b7cd6554b7f24ee603aa64e0a6bb18fd70faa77216252be92e8"
+    },
+    {
+      "bytes": 6913,
+      "path": "target/m2/stage69-72-java-publication-prep-04/publish.py",
+      "sha256": "a7dd3895230103d3df170d76de5cf819b17c10505828947337578e610975cf46"
+    },
+    {
+      "bytes": 2980,
+      "path": "target/m2/stage69-72-java-publication-prep-04/assemble.py",
+      "sha256": "9048aa544bacc41ddffd8e41ef29ce5626bb02a9e08a499a175a4d3bc90ccea7"
+    },
+    {
+      "bytes": 10109,
+      "path": "target/m2/stage69-72-java-publication-prep-04/layout.json",
+      "sha256": "5f4efd3cb124cff46a96f2eca7c56462b187ed527e4c665da220e82aef7b0f43"
+    },
+    {
+      "bytes": 602,
+      "path": "target/m2/stage69-72-java-publication-prep-04/README.md",
+      "sha256": "904fed80d483c2ec570439a83c4513c6ea7f5e79e413014bb4dec648f1087687"
+    },
+    {
+      "bytes": 586,
+      "path": "target/m2/stage69-72-java-publication-prep-04/PLAN.md",
+      "sha256": "54637450996b02d3df54976e45c9b8c2ed36aa4c4adeb9d87348cbf4e5417709"
+    },
+    {
+      "bytes": 5509874,
+      "path": "target/m2/stage69-72-java-publication-prep-04/source-manifest.json",
+      "sha256": "05936c945b02ffeaee80d7c29111d9f56ad2ca0940218ce035ed17d70a20e73f"
+    },
+    {
+      "bytes": 1901,
+      "path": "target/m2/stage69-72-java-publication-prep-04/preparation.json",
+      "sha256": "17792a7adf2621835371d1a85c4780fd505e06256f5315523fdeb6a701d1b522"
+    },
+    {
+      "bytes": 3385,
+      "path": "target/m2/stage69-72-java-publication-execution-01/run.py",
+      "sha256": "7396ab5148a59f4ae3777f8a1dd65c2cc2cc136c2ba96007bae6c2d000f57e3c"
+    }
+  ],
+  "sources_before": [
+    {
+      "bytes": 6743,
+      "path": "target/m2/stage69-72-java-publication-prep-04/common.py",
+      "sha256": "323380560a565cece20e8d85cfaec0ef2e3ceeabeb2309e23c43a98b270ef4b1"
+    },
+    {
+      "bytes": 3342,
+      "path": "target/m2/stage69-72-java-publication-prep-04/prepare.py",
+      "sha256": "1ee80d7cc9f86b7cd6554b7f24ee603aa64e0a6bb18fd70faa77216252be92e8"
+    },
+    {
+      "bytes": 6913,
+      "path": "target/m2/stage69-72-java-publication-prep-04/publish.py",
+      "sha256": "a7dd3895230103d3df170d76de5cf819b17c10505828947337578e610975cf46"
+    },
+    {
+      "bytes": 2980,
+      "path": "target/m2/stage69-72-java-publication-prep-04/assemble.py",
+      "sha256": "9048aa544bacc41ddffd8e41ef29ce5626bb02a9e08a499a175a4d3bc90ccea7"
+    },
+    {
+      "bytes": 10109,
+      "path": "target/m2/stage69-72-java-publication-prep-04/layout.json",
+      "sha256": "5f4efd3cb124cff46a96f2eca7c56462b187ed527e4c665da220e82aef7b0f43"
+    },
+    {
+      "bytes": 602,
+      "path": "target/m2/stage69-72-java-publication-prep-04/README.md",
+      "sha256": "904fed80d483c2ec570439a83c4513c6ea7f5e79e413014bb4dec648f1087687"
+    },
+    {
+      "bytes": 586,
+      "path": "target/m2/stage69-72-java-publication-prep-04/PLAN.md",
+      "sha256": "54637450996b02d3df54976e45c9b8c2ed36aa4c4adeb9d87348cbf4e5417709"
+    },
+    {
+      "bytes": 5509874,
+      "path": "target/m2/stage69-72-java-publication-prep-04/source-manifest.json",
+      "sha256": "05936c945b02ffeaee80d7c29111d9f56ad2ca0940218ce035ed17d70a20e73f"
+    },
+    {
+      "bytes": 1901,
+      "path": "target/m2/stage69-72-java-publication-prep-04/preparation.json",
+      "sha256": "17792a7adf2621835371d1a85c4780fd505e06256f5315523fdeb6a701d1b522"
+    },
+    {
+      "bytes": 3385,
+      "path": "target/m2/stage69-72-java-publication-execution-01/run.py",
+      "sha256": "7396ab5148a59f4ae3777f8a1dd65c2cc2cc136c2ba96007bae6c2d000f57e3c"
+    }
+  ],
+  "started_utc": "2026-10-25T05:47:56.203764+00:00"
+}

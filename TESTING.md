@@ -242,6 +242,8 @@ The full gate must fail while required language implementations, mappings,
 adapters, or passing executions are missing. It cannot be replaced with the
 selected-case gate.
 
+The [Stage69–72 Java authority checkpoint](reports/m2/stage69-72-java-checkpoint.json) separately preserves 235 authored queries for super entry defaults, import/generic type lookup, VarArgs, base aliases/Mixin, and const owner behavior. Its six archives retain complete raw repetitions, logger channels, earlier failed attempts, and source/JDK/JAR identities. The [publication process record](reports/m2/stage69-72-java-publication-execution.json) contains actual commands, exits, and raw channels; Java publication is not a Rust compatibility pass. Canonical integration and subsequent platform/full-corpus checks remain pending.
+
 Stage68 adds independent Java authorities for String Base64, collection emptiness,
 and `every`. Verify their exact archives, inputs, raw repetitions, and provenance:
 
