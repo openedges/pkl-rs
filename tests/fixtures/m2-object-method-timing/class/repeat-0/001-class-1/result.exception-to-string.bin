@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find type `NonExistingType`.
+
+2 | function f(x: NonExistingType): Int = x
+                  ^^^^^^^^^^^^^^^
+at object-method-class#C (file:///stage68/object-method-class.pkl)
+
+Searched in the following places:
+* Module `object-method-class` and any supermodules
+* Module `pkl#base`
+
+1 | new C {}
+        ^
+at  (repl:text)

@@ -1,0 +1,291 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "boundary": "string",
+  "module_uri": "file:///stage68/collection-emptiness.pkl",
+  "repetitions": 2,
+  "rows": [
+    {
+      "expression": "List().isNotEmpty",
+      "group": "list",
+      "id": "list-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1).isNotEmpty",
+      "group": "list",
+      "id": "list-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1).isEmpty",
+      "group": "list",
+      "id": "list-empty-check",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1).length",
+      "group": "list",
+      "id": "list-length",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1).isNotEmpty()",
+      "group": "list",
+      "id": "list-method",
+      "mode": "string"
+    },
+    {
+      "expression": "Set().isNotEmpty",
+      "group": "set",
+      "id": "set-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1).isNotEmpty",
+      "group": "set",
+      "id": "set-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1).isEmpty",
+      "group": "set",
+      "id": "set-empty-check",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1).length",
+      "group": "set",
+      "id": "set-length",
+      "mode": "string"
+    },
+    {
+      "expression": "Set(1).isNotEmpty()",
+      "group": "set",
+      "id": "set-method",
+      "mode": "string"
+    },
+    {
+      "expression": "Map().isNotEmpty",
+      "group": "map",
+      "id": "map-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"x\", 1).isNotEmpty",
+      "group": "map",
+      "id": "map-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"x\", 1).isEmpty",
+      "group": "map",
+      "id": "map-empty-check",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"x\", 1).length",
+      "group": "map",
+      "id": "map-length",
+      "mode": "string"
+    },
+    {
+      "expression": "Map(\"x\", 1).isNotEmpty()",
+      "group": "map",
+      "id": "map-method",
+      "mode": "string"
+    },
+    {
+      "expression": "new Listing {}.isNotEmpty",
+      "group": "listing",
+      "id": "listing-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "new Listing { 1 }.isNotEmpty",
+      "group": "listing",
+      "id": "listing-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "new Listing { 1 }.isEmpty",
+      "group": "listing",
+      "id": "listing-empty-check",
+      "mode": "string"
+    },
+    {
+      "expression": "new Listing { 1 }.length",
+      "group": "listing",
+      "id": "listing-length",
+      "mode": "string"
+    },
+    {
+      "expression": "new Listing { 1 }.isNotEmpty()",
+      "group": "listing",
+      "id": "listing-method",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping {}.isNotEmpty",
+      "group": "mapping",
+      "id": "mapping-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping { [\"x\"] = 1 }.isNotEmpty",
+      "group": "mapping",
+      "id": "mapping-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping { [\"x\"] = 1 }.isEmpty",
+      "group": "mapping",
+      "id": "mapping-empty-check",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping { [\"x\"] = 1 }.length",
+      "group": "mapping",
+      "id": "mapping-length",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping { [\"x\"] = 1 }.isNotEmpty()",
+      "group": "mapping",
+      "id": "mapping-method",
+      "mode": "string"
+    },
+    {
+      "expression": "new Listing { throw(\"listing-lazy\") }.isNotEmpty",
+      "group": "lazy",
+      "id": "listing-lazy-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "new Listing { throw(\"listing-lazy\") }.isEmpty",
+      "group": "lazy",
+      "id": "listing-lazy-empty-check",
+      "mode": "string"
+    },
+    {
+      "expression": "new Listing { throw(\"listing-lazy\") }.toList()",
+      "group": "lazy",
+      "id": "listing-lazy-force",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping { [\"x\"] = throw(\"mapping-lazy\") }.isNotEmpty",
+      "group": "lazy",
+      "id": "mapping-lazy-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping { [\"x\"] = throw(\"mapping-lazy\") }.isEmpty",
+      "group": "lazy",
+      "id": "mapping-lazy-empty-check",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping { [\"x\"] = throw(\"mapping-lazy\") }.toMap()",
+      "group": "lazy",
+      "id": "mapping-lazy-force",
+      "mode": "string"
+    },
+    {
+      "expression": "List() is List(!isNotEmpty)",
+      "group": "constraint",
+      "id": "constraint-list-empty",
+      "mode": "string"
+    },
+    {
+      "expression": "List(1) is List(isNotEmpty)",
+      "group": "constraint",
+      "id": "constraint-list-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Listing { 1 }) is Listing(isNotEmpty)",
+      "group": "constraint",
+      "id": "constraint-listing-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "(new Mapping { [\"x\"] = 1 }) is Mapping(isNotEmpty)",
+      "group": "constraint",
+      "id": "constraint-mapping-nonempty",
+      "mode": "string"
+    },
+    {
+      "expression": "refContainer.list.isNotEmpty",
+      "group": "reference",
+      "id": "reference-list",
+      "mode": "string"
+    },
+    {
+      "expression": "refContainer.set.isNotEmpty",
+      "group": "reference",
+      "id": "reference-set",
+      "mode": "string"
+    },
+    {
+      "expression": "refContainer.map.isNotEmpty",
+      "group": "reference",
+      "id": "reference-map",
+      "mode": "string"
+    },
+    {
+      "expression": "refContainer.listing.isNotEmpty",
+      "group": "reference",
+      "id": "reference-listing",
+      "mode": "string"
+    },
+    {
+      "expression": "refContainer.mapping.isNotEmpty",
+      "group": "reference",
+      "id": "reference-mapping",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping { [throw(\"key-bang\")] = 1 }.isNotEmpty",
+      "group": "cardinality",
+      "id": "mapping-key-error",
+      "mode": "string"
+    },
+    {
+      "expression": "new Mapping { [\"x\"] = 1; [\"x\"] = 2 }.length",
+      "group": "cardinality",
+      "id": "mapping-duplicate",
+      "mode": "string"
+    },
+    {
+      "expression": "refContainer.list.isNotEmpty is ref.Reference<D, Boolean>",
+      "group": "reference",
+      "id": "reference-list-type",
+      "mode": "string"
+    },
+    {
+      "expression": "refContainer.set.isNotEmpty is ref.Reference<D, Boolean>",
+      "group": "reference",
+      "id": "reference-set-type",
+      "mode": "string"
+    },
+    {
+      "expression": "refContainer.map.isNotEmpty is ref.Reference<D, Boolean>",
+      "group": "reference",
+      "id": "reference-map-type",
+      "mode": "string"
+    },
+    {
+      "expression": "refContainer.listing.isNotEmpty is ref.Reference<D, Boolean>",
+      "group": "reference",
+      "id": "reference-listing-type",
+      "mode": "string"
+    },
+    {
+      "expression": "refContainer.mapping.isNotEmpty is ref.Reference<D, Boolean>",
+      "group": "reference",
+      "id": "reference-mapping-type",
+      "mode": "string"
+    }
+  ],
+  "schema": 1
+}

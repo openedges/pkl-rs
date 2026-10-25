@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Tried to read property `default` but its value is undefined.
+
+2 | function inferredText(): Listing<alias.Text> = new { new {} }
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#inferredText.default (stage68:/entry-parent-host/main.pkl)
+
+2 | function inferredText(): Listing<alias.Text> = new { new {} }
+                                                         ^^^
+at main#inferredText[#1] (stage68:/entry-parent-host/main.pkl)
+
+1 | inferredText()[0]
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)

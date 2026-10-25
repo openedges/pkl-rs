@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Cannot instantiate, or amend an instance of, external class `Set`.
+
+4 | function explicitBag(): Listing<alias.Bag> = new { new Set {} }
+                                                       ^^^^^^^^^^
+at main#explicitBag[#1] (stage68:/entry-parent-host/main.pkl)
+
+To create an instance of an external class, use its literal syntax or constructor method.
+Examples:
+* `123` uses literal syntax to create an instance of class `Int`.
+* `Pair(1, 2)` uses the `Pair()` constructor method to create an instance of class `Pair`.
+
+1 | explicitBag()[0]
+    ^^^^^^^^^^^^^^^^
+at  (repl:text)

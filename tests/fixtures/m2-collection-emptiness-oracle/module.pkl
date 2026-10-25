@@ -1,0 +1,13 @@
+import "pkl:ref"
+class D extends ref.Domain {
+  function renderReference(reference: ref.Reference<D, Any>): String = "ref"
+}
+local domain = new D {}
+class Container {
+  list: List<Int>
+  set: Set<Int>
+  map: Map<String, Int>
+  listing: Listing<Int>
+  mapping: Mapping<String, Int>
+}
+refContainer = ref.Reference(domain, Container, null)

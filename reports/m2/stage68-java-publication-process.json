@@ -1,0 +1,71 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage68-java-publication-01/publish.py"
+  ],
+  "candidate_compatibility_passes_claimed": 0,
+  "complete": true,
+  "exit_code": 0,
+  "finished_epoch": 1792897627.793876,
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "kind": "stage68-java-publication-actual-process",
+  "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "schema": 1,
+  "source_stable": true,
+  "sources_after": [
+    {
+      "bytes": 2410,
+      "path": "target/m2/stage68-java-publication-01/run.py",
+      "sha256": "34db1771338ae547066c07a36969705edd0aaffa4aae00e213cb7c1261a041e7"
+    },
+    {
+      "bytes": 12240,
+      "path": "target/m2/stage68-java-publication-01/publish.py",
+      "sha256": "a5288dba8f12424848c18bd6a82f34a4d03e1de09da3bc3429ffd199da9744ef"
+    },
+    {
+      "bytes": 6082,
+      "path": "target/m2/stage68-java-publication-01/layout.json",
+      "sha256": "74a7d83b4a04996346bc8783aca0ca359087fe09d17b93b1d4a9091f4f1af9fd"
+    },
+    {
+      "bytes": 6596,
+      "path": "target/m2/stage68-java-publication-prep-01/layout.json",
+      "sha256": "ace608aa40f1547882a51fa837dbde6ebf5cf29104fe09b54156a2be99e5ba81"
+    }
+  ],
+  "sources_before": [
+    {
+      "bytes": 2410,
+      "path": "target/m2/stage68-java-publication-01/run.py",
+      "sha256": "34db1771338ae547066c07a36969705edd0aaffa4aae00e213cb7c1261a041e7"
+    },
+    {
+      "bytes": 12240,
+      "path": "target/m2/stage68-java-publication-01/publish.py",
+      "sha256": "a5288dba8f12424848c18bd6a82f34a4d03e1de09da3bc3429ffd199da9744ef"
+    },
+    {
+      "bytes": 6082,
+      "path": "target/m2/stage68-java-publication-01/layout.json",
+      "sha256": "74a7d83b4a04996346bc8783aca0ca359087fe09d17b93b1d4a9091f4f1af9fd"
+    },
+    {
+      "bytes": 6596,
+      "path": "target/m2/stage68-java-publication-prep-01/layout.json",
+      "sha256": "ace608aa40f1547882a51fa837dbde6ebf5cf29104fe09b54156a2be99e5ba81"
+    }
+  ],
+  "started_epoch": 1792897616.486725,
+  "stderr": {
+    "bytes": 0,
+    "path": "target/m2/stage68-java-publication-01/stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 540,
+    "path": "target/m2/stage68-java-publication-01/stdout.bin",
+    "sha256": "610643918f31b0efe1f528374abb5ba36295e2bef340c7f0dcc8119db9b90e40"
+  }
+}

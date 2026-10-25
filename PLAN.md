@@ -2621,6 +2621,44 @@ OID로 대조했고, 복사 입력 9개와 런타임·Cargo freeze 293개는 실
 다음은 이미 별도 lab에서 검증한 Stage 68 Base64·collection predicate 및
 지연 메서드/기본값 회귀 수정의 정식 통합과 고정 Java 기준에 대한 Rust 재실행입니다.
 
+### Stage 68 — Base64·collection predicate와 지연 메서드 의미
+
+Stage 67 전체 비교에서 확인한 실패를 기준으로 공통 런타임의 String Base64
+속성, 다섯 collection의 `isNotEmpty`·`every`, 빈 Reference amendment 거절,
+inferred entry 기본 부모 진단, 선언 모듈의 클래스 기본값, 객체 메서드 타입의
+지연 검사와 첫 오류 순서를 보완합니다. `every`는 순서·단락 평가·callback
+타입·로그와 Host 중단 뒤 재개·GC를 함께 검증합니다. module/class 메서드의
+기존 eager 검사와 객체 메서드의 lazy 검사를 구분합니다.
+
+공통 런타임과 통합 검토에는 `gpt-6-astra / xhigh`, 독립 Java 기준·fixture
+검증과 플랫폼 전송 검토에는 `gpt-6-sol / high`를 배정합니다. 주 에이전트는
+통합·필수 검사·전체 재실행·문서와 단계별 커밋·푸시를 담당합니다. 현재 후보
+코드는 작업 트리에 반영됐지만 정식 전체 검사와 구현 커밋은 아직 남아 있습니다.
+
+Java 기준은 Base64 89개, collection emptiness 47개, `every` 64개 식의
+두 반복과 원시 채널을 보존합니다. `every`는 각 세션의 logger 사건 39개도
+순서대로 비교합니다. 별도 entry-parent Host와 object-method timing/arity/owner
+자료 및 원본 7개의 기존 Java 결과는 각자의 실제 실행 계약·출처로 연결합니다.
+fixture 검증의 성공은 Rust 호환성 통과가 아닙니다. 새 checkout에 `target/`가
+없어도 독립 Java fixture 검증이 가능하도록 설치 경로 검사를 보완했습니다.
+
+진행 순서는 Java 기준·검증 도구 게시(A), 공통 구현의 필수 Rust 검사·실제
+native/N-API/Chromium 비교와 Stage 67 Java 기준에 대한 4,416개 Rust 재실행(B),
+실제 구현 커밋과 검증 소스 연결(C)입니다. 기존 Java 원시 결과를 재사용하는
+재실행은 새 Java 취득으로 표시하지 않습니다. 4,527개 사례 정의와 미준비
+111개, 기존 Regex·원본 실패를 유지하며, 각 결과는 실제 최종 후보에서 확인한
+뒤 기록합니다. **M2의 아홉 영역과 전체 완료 조건은 계속 열려 있습니다.**
+
+#### Stage 68 A — 독립 Java 기준 게시
+
+[Java 체크포인트](reports/m2/stage68-java-checkpoint.json)는 위 기준과 실패
+이력·출처를 5,044,550바이트 아카이브로 보존합니다. 파일 21,962개와 manifest의
+전체 바이트·크기·모드 및 원본 전후 일치를 확인했습니다. 기존 원본 7개는
+Stage 67 공개 아카이브의 정확한 Java member와 upstream 입력 hash에 연결하고
+새 Java 취득으로 세지 않습니다. 설치 경로 회귀를 포함한 predicate 검사
+12개는 일반·최적화 Python에서 각각 통과했습니다. **Java 기준의 무결성
+검증이며, 후속 Rust 구현·전체 회귀의 통과 판정은 아직 남아 있습니다.**
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

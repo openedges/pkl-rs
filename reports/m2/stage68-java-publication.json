@@ -1,0 +1,110 @@
+{
+  "all_archive_members_read_back": true,
+  "archive": {
+    "bytes": 5044550,
+    "mode": 420,
+    "path": "reports/m2/stage68-java-evidence.tar.gz",
+    "sha256": "2f27b403619418fd41f2ba6b5b16d157ae4285f7c64802f5b0bdfa1bb5ebf5dd"
+  },
+  "archive_members": 21963,
+  "base_head": "362fd0bc7a9e5c186755a22d26bd0b94156b3cec",
+  "candidate_compatibility_passes_claimed": 0,
+  "checkpoint": {
+    "bytes": 3408,
+    "mode": 420,
+    "path": "reports/m2/stage68-java-checkpoint.json",
+    "sha256": "cf7eb2034201e85a131fb09aa88bf1873badab7482c762e96c2f162f471cc7c4"
+  },
+  "complete": true,
+  "embedded_manifest_sha256": "1e19596acc436ef860dcc1107049a679d07a6e4aa6c233ceeb4ed0b6b40676e3",
+  "execution_receipt_included": false,
+  "fixture_roots": [
+    "tests/fixtures/m2-string-base64",
+    "tests/fixtures/m2-collection-emptiness-oracle",
+    "tests/fixtures/m2-collection-every-oracle",
+    "tests/fixtures/m2-entry-parent-host",
+    "tests/fixtures/m2-local-module-class",
+    "tests/fixtures/m2-object-method-timing"
+  ],
+  "kind": "stage68-java-A-publication",
+  "schema": 1,
+  "selected_directories": {
+    "base64": [
+      "target/m2/stage68-base64-analysis-01",
+      "target/m2/stage68-base64-prep-01",
+      "target/m2/stage68-base64-prep-02",
+      "target/m2/stage68-base64-launch-01",
+      "target/m2/stage68-base64-launch-02",
+      "target/m2/stage68-base64-oracle-02",
+      "target/m2/stage68-fixture-draft-01"
+    ],
+    "emptiness": [
+      "target/m2/stage68-collection-emptiness-draft-01",
+      "target/m2/stage68-collection-emptiness-draft-02",
+      "target/m2/stage68-collection-emptiness-prep-01",
+      "target/m2/stage68-collection-emptiness-prep-02",
+      "target/m2/stage68-collection-emptiness-launch-01",
+      "target/m2/stage68-collection-emptiness-launch-02",
+      "target/m2/stage68-collection-emptiness-oracle-01",
+      "target/m2/stage68-collection-emptiness-oracle-02",
+      "target/m2/stage68-collection-emptiness-review-01",
+      "target/m2/stage68-collection-emptiness-review-execution-01"
+    ],
+    "entry_parent_host": [
+      "target/m2/stage68-entry-parent-host-oracle-exploration-01",
+      "target/m2/stage68-entry-parent-host-oracle-factory-order-history-01",
+      "target/m2/stage68-entry-parent-host-oracle-prep-01",
+      "target/m2/stage68-entry-parent-host-oracle-prep-02",
+      "target/m2/stage68-entry-parent-host-oracle-prep-03",
+      "target/m2/stage68-entry-parent-host-oracle-launch-01",
+      "target/m2/stage68-entry-parent-host-oracle-launch-02",
+      "target/m2/stage68-entry-parent-host-oracle-launch-03",
+      "target/m2/stage68-entry-parent-host-oracle-01",
+      "target/m2/stage68-entry-parent-host-oracle-02",
+      "target/m2/stage68-entry-parent-host-oracle-03",
+      "target/m2/stage68-entry-parent-host-oracle-audit-01"
+    ],
+    "every": [
+      "target/m2/stage68-collection-every-prep-01",
+      "target/m2/stage68-collection-every-prep-02",
+      "target/m2/stage68-collection-every-prep-03",
+      "target/m2/stage68-collection-every-launch-01",
+      "target/m2/stage68-collection-every-launch-02",
+      "target/m2/stage68-collection-every-launch-03",
+      "target/m2/stage68-collection-every-oracle-01",
+      "target/m2/stage68-collection-every-oracle-02",
+      "target/m2/stage68-collection-every-oracle-03",
+      "target/m2/stage68-collection-every-audit-01",
+      "target/m2/stage68-collection-every-audit-02",
+      "target/m2/stage68-every-independent-review-01"
+    ],
+    "fixture_and_original_provenance": [
+      "target/m2/stage68-local-module-override-history-01",
+      "target/m2/stage68-collection-predicate-fixture-draft-01",
+      "target/m2/stage68-collection-predicate-fixture-validation-05",
+      "target/m2/stage68-reused-original-provenance-review-01",
+      "target/m2/stage68-checkout-portability-validation-01"
+    ],
+    "object_method": [
+      "target/m2/stage68-object-method-original-context-01",
+      "target/m2/stage68-object-method-timing-exploration-01",
+      "target/m2/stage68-object-method-timing-prep-01",
+      "target/m2/stage68-object-method-timing-prep-02",
+      "target/m2/stage68-object-method-timing-launch-01",
+      "target/m2/stage68-object-method-timing-launch-02",
+      "target/m2/stage68-object-method-timing-oracle-02",
+      "target/m2/stage68-object-method-timing-audit-01",
+      "target/m2/stage68-object-method-arity-prep-01",
+      "target/m2/stage68-object-method-arity-launch-01",
+      "target/m2/stage68-object-method-arity-oracle-01",
+      "target/m2/stage68-object-method-owner-prep-01",
+      "target/m2/stage68-object-method-owner-prep-02",
+      "target/m2/stage68-object-method-owner-launch-01",
+      "target/m2/stage68-object-method-owner-launch-02",
+      "target/m2/stage68-object-method-owner-oracle-01",
+      "target/m2/stage68-object-method-owner-oracle-02"
+    ]
+  },
+  "source_before_after_equal": true,
+  "source_stable": true
+}

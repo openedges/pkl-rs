@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "boundary": "public evaluateExpressionString plus synchronous in-memory ModuleKey callbacks",
+  "main_uri": "stage68:/entry-parent-host/main.pkl",
+  "alias_uri": "stage68:/entry-parent-host/aliases.pkl",
+  "repetitions": 2,
+  "rows": [
+    {
+      "id": "inferred-set-alias",
+      "mode": "string",
+      "expression": "inferredBag()[0]",
+      "intent": "imported Set alias inferred object external-class failure"
+    },
+    {
+      "id": "inferred-string-alias",
+      "mode": "string",
+      "expression": "inferredText()[0]",
+      "intent": "imported String alias inferred object default failure"
+    },
+    {
+      "id": "explicit-set-control",
+      "mode": "string",
+      "expression": "explicitBag()[0]",
+      "intent": "explicit Set constructor external-class source frame control"
+    }
+  ]
+}

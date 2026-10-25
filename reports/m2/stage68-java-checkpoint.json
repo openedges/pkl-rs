@@ -1,0 +1,93 @@
+{
+  "archive": {
+    "bytes": 5044550,
+    "mode": 420,
+    "path": "reports/m2/stage68-java-evidence.tar.gz",
+    "sha256": "2f27b403619418fd41f2ba6b5b16d157ae4285f7c64802f5b0bdfa1bb5ebf5dd"
+  },
+  "archive_inventory_sha256": "1e19596acc436ef860dcc1107049a679d07a6e4aa6c233ceeb4ed0b6b40676e3",
+  "archive_members": 21963,
+  "authorities": {
+    "collection_emptiness_fixtures": {
+      "archive_sha256": "431e41e78ff9f2ad799549becb30463cd67c7d4883a147add78daaf96fecbd62",
+      "candidate_compatibility_passes_claimed": 0,
+      "kind": "collection-emptiness",
+      "members": 2057,
+      "raw_repetitions_equal": true,
+      "rows": 47,
+      "statuses": {
+        "error": 13,
+        "success": 34
+      }
+    },
+    "collection_every_fixtures": {
+      "archive_sha256": "42d5d89cd10c35de457f273da34b22d02fd48791210de7a3e15816b0955a979e",
+      "candidate_compatibility_passes_claimed": 0,
+      "kind": "collection-every",
+      "members": 3701,
+      "raw_repetitions_equal": true,
+      "rows": 64,
+      "statuses": {
+        "error": 28,
+        "success": 36
+      }
+    },
+    "string_base64_fixtures": {
+      "archive_sha256": "8b0a7d2f4a7b1e3b29218b3900ec7b0a4913799ee1224766391b80c400c832f0",
+      "baseline": "Pkl 0.32.0",
+      "candidate_compatibility_passes_claimed": 0,
+      "fileset_sha256": "8ee2a4988a818177ba18ae354567acba343c1b673e62e18fc3c137368642f257",
+      "first_attempt_preserved_as_failure": true,
+      "members": 3833,
+      "module_uri": "file:///stage68/string-base64-exploration.pkl",
+      "raw_repetitions_equal": true,
+      "rows": 89,
+      "statuses": {
+        "error": 22,
+        "success": 67
+      }
+    }
+  },
+  "base_head": "362fd0bc7a9e5c186755a22d26bd0b94156b3cec",
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "checkout_validation": {
+    "bytes": 8752,
+    "mode": 420,
+    "path": "target/m2/stage68-checkout-portability-validation-01/report.json",
+    "sha256": "73066c5ba89430c3eafbfb5e2f887e70bc6590bd8402062dffa005ad5be5f7ad"
+  },
+  "full_member_payload_size_mode_readback": true,
+  "kind": "stage68-java-authority-checkpoint",
+  "limits": [
+    "Java authority and fixture integrity only; no candidate native, N-API, browser, full original, full M2, or performance pass.",
+    "Seven original program raw records remain in the distinct committed Stage67 full-inventory archive.",
+    "Failed exploratory and superseded Java attempts retain their actual outcomes.",
+    "Publisher process receipt postdates this archive and is retained separately."
+  ],
+  "reused_originals": {
+    "raw_statuses_retained": true,
+    "review": {
+      "bytes": 17834,
+      "mode": 420,
+      "path": "target/m2/stage68-reused-original-provenance-review-01/report.json",
+      "sha256": "8aeea5452aeae15b5c893d5b61b7ee4f347ac768161f91c032b1cb7d87f24373"
+    },
+    "rows": 7,
+    "stage67_publication": {
+      "bytes": 11059059,
+      "mode": 420,
+      "path": "reports/m2/stage67-b-full-inventory-publication.json",
+      "sha256": "eccc18c0431dc40519e5b3b908e7bc0e3b1dfd5a4015836cee9601eca9d42933"
+    },
+    "stage67_published_archive": {
+      "bytes": 57911607,
+      "mode": 420,
+      "path": "reports/m2/stage67-b-full-inventory-evidence.tar.gz",
+      "sha256": "fe02d2c88552ca4974273554214be2d4f415c985844216f1c1df63135e0a0fb8"
+    }
+  },
+  "schema": 1,
+  "source_before_after_equal": true,
+  "source_files": 21962
+}

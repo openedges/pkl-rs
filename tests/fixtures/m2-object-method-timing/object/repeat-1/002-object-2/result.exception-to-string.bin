@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+argument first
+
+5 | callThrow = f(throw("argument first"))
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+at object-method-object#foo.callThrow (file:///stage68/object-method-object.pkl)
+
+1 | foo.callThrow
+    ^^^^^^^^^^^^^
+at  (repl:text)

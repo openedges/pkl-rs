@@ -1,0 +1,47 @@
+string	list-empty	List().isNotEmpty
+string	list-nonempty	List(1).isNotEmpty
+string	list-empty-check	List(1).isEmpty
+string	list-length	List(1).length
+string	list-method	List(1).isNotEmpty()
+string	set-empty	Set().isNotEmpty
+string	set-nonempty	Set(1).isNotEmpty
+string	set-empty-check	Set(1).isEmpty
+string	set-length	Set(1).length
+string	set-method	Set(1).isNotEmpty()
+string	map-empty	Map().isNotEmpty
+string	map-nonempty	Map("x", 1).isNotEmpty
+string	map-empty-check	Map("x", 1).isEmpty
+string	map-length	Map("x", 1).length
+string	map-method	Map("x", 1).isNotEmpty()
+string	listing-empty	new Listing {}.isNotEmpty
+string	listing-nonempty	new Listing { 1 }.isNotEmpty
+string	listing-empty-check	new Listing { 1 }.isEmpty
+string	listing-length	new Listing { 1 }.length
+string	listing-method	new Listing { 1 }.isNotEmpty()
+string	mapping-empty	new Mapping {}.isNotEmpty
+string	mapping-nonempty	new Mapping { ["x"] = 1 }.isNotEmpty
+string	mapping-empty-check	new Mapping { ["x"] = 1 }.isEmpty
+string	mapping-length	new Mapping { ["x"] = 1 }.length
+string	mapping-method	new Mapping { ["x"] = 1 }.isNotEmpty()
+string	listing-lazy-nonempty	new Listing { throw("listing-lazy") }.isNotEmpty
+string	listing-lazy-empty-check	new Listing { throw("listing-lazy") }.isEmpty
+string	listing-lazy-force	new Listing { throw("listing-lazy") }.toList()
+string	mapping-lazy-nonempty	new Mapping { ["x"] = throw("mapping-lazy") }.isNotEmpty
+string	mapping-lazy-empty-check	new Mapping { ["x"] = throw("mapping-lazy") }.isEmpty
+string	mapping-lazy-force	new Mapping { ["x"] = throw("mapping-lazy") }.toMap()
+string	constraint-list-empty	List() is List(!isNotEmpty)
+string	constraint-list-nonempty	List(1) is List(isNotEmpty)
+string	constraint-listing-nonempty	(new Listing { 1 }) is Listing(isNotEmpty)
+string	constraint-mapping-nonempty	(new Mapping { ["x"] = 1 }) is Mapping(isNotEmpty)
+string	reference-list	refContainer.list.isNotEmpty
+string	reference-set	refContainer.set.isNotEmpty
+string	reference-map	refContainer.map.isNotEmpty
+string	reference-listing	refContainer.listing.isNotEmpty
+string	reference-mapping	refContainer.mapping.isNotEmpty
+string	mapping-key-error	new Mapping { [throw("key-bang")] = 1 }.isNotEmpty
+string	mapping-duplicate	new Mapping { ["x"] = 1; ["x"] = 2 }.length
+string	reference-list-type	refContainer.list.isNotEmpty is ref.Reference<D, Boolean>
+string	reference-set-type	refContainer.set.isNotEmpty is ref.Reference<D, Boolean>
+string	reference-map-type	refContainer.map.isNotEmpty is ref.Reference<D, Boolean>
+string	reference-listing-type	refContainer.listing.isNotEmpty is ref.Reference<D, Boolean>
+string	reference-mapping-type	refContainer.mapping.isNotEmpty is ref.Reference<D, Boolean>

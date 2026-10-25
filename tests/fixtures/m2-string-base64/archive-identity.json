@@ -1,0 +1,53 @@
+{
+  "archive_sha256": "8b0a7d2f4a7b1e3b29218b3900ec7b0a4913799ee1224766391b80c400c832f0",
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "canonical_capture": {
+    "jvm_sessions": 2,
+    "ordinary_errors": 22,
+    "rows": 89,
+    "successes": 67
+  },
+  "captured_producer": {
+    "bytes": 14888,
+    "mode": 420,
+    "sha256": "cba17c0f83775f9a6f23904eed2f2effb5b074094a652578a64653c0f0d5a2a9"
+  },
+  "captures": {
+    "capture-02": "target/m2/stage68-base64-oracle-02",
+    "failed-launch-01": "target/m2/stage68-base64-launch-01",
+    "failed-prep-01": "target/m2/stage68-base64-prep-01",
+    "successful-launch-02": "target/m2/stage68-base64-launch-02",
+    "successful-prep-02": "target/m2/stage68-base64-prep-02"
+  },
+  "fileset_sha256": "8ee2a4988a818177ba18ae354567acba343c1b673e62e18fc3c137368642f257",
+  "first_attempt": {
+    "classification": "stale authored-case hash rejected before Java",
+    "java_sessions_started": 0,
+    "launch_exit_code": 1
+  },
+  "java_helper": {
+    "bytes": 4819,
+    "mode": 420,
+    "sha256": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0"
+  },
+  "members": 3833,
+  "root_inputs": {
+    "cases.json": {
+      "bytes": 13316,
+      "mode": 420,
+      "sha256": "2175a52d34409701b49903760e22231373cc1bc4f1e3b9a4ff41f8e62f93b37c"
+    },
+    "module.pkl": {
+      "bytes": 787,
+      "mode": 420,
+      "sha256": "acd74334b4285e1d114c3d91e01060180c9960982fb889a81462f05a50ed7570"
+    },
+    "queries.tsv": {
+      "bytes": 4493,
+      "mode": 420,
+      "sha256": "344db279bdd4e82ec55dbeb2a0d3127030fc602a70b89f4758811a89c8e55363"
+    }
+  },
+  "schema": 1
+}

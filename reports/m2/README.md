@@ -1,5 +1,30 @@
 # M2 language evidence
 
+### Stage68 Base64, collection predicates, and method semantics — Java authority checkpoint
+
+The [Java checkpoint](stage68-java-checkpoint.json) publishes independent Pkl
+0.32.0 authorities for 89 String Base64, 47 collection emptiness, and 64 `every`
+expressions. Each uses two JVM sessions. Expected ordinary error outcomes are
+retained; `every` also preserves 39 ordered logger events per session with
+UTF-16 channels. Separate captures cover entry-parent Host diagnostics and
+object-method signature timing, arity, and lexical ownership.
+
+The [publication](stage68-java-publication.json) binds the
+[5,044,550-byte archive](stage68-java-evidence.tar.gz) to 21,962 captured source
+files plus its manifest. Full member payload, size, mode, and source bookends
+match. Failed and superseded capture attempts remain in the archive. Seven
+reused original-program inputs and Java outputs are linked to pinned upstream
+sources and exact members of the separately committed Stage67 full-inventory
+archive. Their prior Rust failures are unchanged by this publication.
+
+The standalone fixture verifiers use tracked inputs. The installed-layout
+regression passes without a `target/` directory; the twelve predicate tests
+pass in both ordinary and optimized Python modes. These checks establish
+reference integrity. Canonical Stage68 Rust, actual native/N-API/Chromium,
+full ready-corpus replay, and implementation-source binding remain pending.
+This checkpoint claims no candidate compatibility, M2 completion, or performance
+result. Stage67 below remains the latest completed full ready-corpus comparison.
+
 ### Stage67 String properties — Java authority checkpoint
 
 The [Java checkpoint](stage67-java-checkpoint.json) seals 146 expressions at

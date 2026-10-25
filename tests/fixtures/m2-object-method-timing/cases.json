@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "boundary": "public evaluateExpressionString",
+  "repetitions": 2,
+  "profiles": {
+    "object": {
+      "uri": "file:///stage68/object-method-object.pkl",
+      "rows": [
+        {
+          "mode": "string",
+          "id": "object-0",
+          "expression": "foo.safe"
+        },
+        {
+          "mode": "string",
+          "id": "object-1",
+          "expression": "foo.callValue"
+        },
+        {
+          "mode": "string",
+          "id": "object-2",
+          "expression": "foo.callThrow"
+        },
+        {
+          "mode": "string",
+          "id": "object-3",
+          "expression": "foo.nested.callValue"
+        }
+      ]
+    },
+    "module": {
+      "uri": "file:///stage68/object-method-module.pkl",
+      "rows": [
+        {
+          "mode": "string",
+          "id": "module-0",
+          "expression": "safe"
+        },
+        {
+          "mode": "string",
+          "id": "module-1",
+          "expression": "callValue"
+        }
+      ]
+    },
+    "class": {
+      "uri": "file:///stage68/object-method-class.pkl",
+      "rows": [
+        {
+          "mode": "string",
+          "id": "class-0",
+          "expression": "safe"
+        },
+        {
+          "mode": "string",
+          "id": "class-1",
+          "expression": "new C {}"
+        }
+      ]
+    }
+  }
+}

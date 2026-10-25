@@ -1,0 +1,12 @@
+session-open mode=string rows=5
+call-enter=string-0-object-safe
+call-exit=string-0-object-safe status=success
+call-enter=string-1-object-one
+call-exit=string-1-object-one status=error
+call-enter=string-2-object-zero
+call-exit=string-2-object-zero status=error
+call-enter=string-3-object-many
+call-exit=string-3-object-many status=error
+call-enter=string-4-object-many-throw
+call-exit=string-4-object-many-throw status=error
+session-closed mode=string rows=5 public-calls=5 success=1 errors=4

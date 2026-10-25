@@ -242,8 +242,23 @@ The full gate must fail while required language implementations, mappings,
 adapters, or passing executions are missing. It cannot be replaced with the
 selected-case gate.
 
+Stage68 adds independent Java authorities for String Base64, collection emptiness,
+and `every`. Verify their exact archives, inputs, raw repetitions, and provenance:
+
+```sh
+python3 -B tools/string_base64_fixtures.py
+python3 -B tools/collection_emptiness_fixtures.py
+python3 -B tools/collection_every_fixtures.py
+```
+
+These commands use tracked fixture roots and work without historical `target/`
+directories. The authorities contain 89, 47, and 64 expressions respectively;
+`every` also retains ordered logger events and their UTF-16 units. They prove
+Java reference integrity, not Rust compatibility. Canonical Stage68 Rust,
+platform, and full ready-corpus comparisons remain pending.
+
 Stage67 adds the String property authority (`python3 tools/string_properties_fixtures.py`)
-and a fifteenth collection catalog profile. The current catalog has 1,227
+and a fifteenth collection catalog profile. The Stage67 catalog has 1,227
 expressions and requires two complete raw observations per expression on each
 target. Its selected comparisons are separate from the full ready corpus.
 The [Stage67 checkpoint](reports/m2/stage67-implementation-checkpoint.json)

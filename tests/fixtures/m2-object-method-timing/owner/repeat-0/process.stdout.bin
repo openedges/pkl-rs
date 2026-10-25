@@ -1,0 +1,20 @@
+session-open mode=string rows=9
+call-enter=string-0-prototype-limit
+call-exit=string-0-prototype-limit status=success
+call-enter=string-1-derived-limit
+call-exit=string-1-derived-limit status=success
+call-enter=string-2-derived-good-first
+call-exit=string-2-derived-good-first status=success
+call-enter=string-3-prototype-good
+call-exit=string-3-prototype-good status=success
+call-enter=string-4-derived-result
+call-exit=string-4-derived-result status=error
+call-enter=string-5-prototype-result
+call-exit=string-5-prototype-result status=success
+call-enter=string-6-derived-bad
+call-exit=string-6-derived-bad status=error
+call-enter=string-7-derived-good-after-failure
+call-exit=string-7-derived-good-after-failure status=success
+call-enter=string-8-prototype-result-after-failure
+call-exit=string-8-prototype-result-after-failure status=success
+session-closed mode=string rows=9 public-calls=9 success=7 errors=2

@@ -1,0 +1,26 @@
+{
+  "archive_sha256": "42d5d89cd10c35de457f273da34b22d02fd48791210de7a3e15816b0955a979e",
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "fileset_sha256": "6872aa67dc17118cd6df73d15a971f5aa0f97f79b49c1c073c6765430724089d",
+  "kind": "collection-every",
+  "members": 3701,
+  "prefixes": {
+    "audit-02": "stage68-collection-every-audit-02",
+    "capture-03": "stage68-collection-every-oracle-03",
+    "launch-03": "stage68-collection-every-launch-03",
+    "preparation-03": "stage68-collection-every-prep-03"
+  },
+  "root_inputs": {
+    "cases.json": "bec8793e348b2c17a4d4d75fbe236eb61ade9a13b4d9b18c825f2db1056396c1",
+    "module.pkl": "b8bbc394b568efe18232055ecd0e77876ca278a697316b04d47d33633a9e1756",
+    "queries.tsv": "69dbce55e4fc0f8780d48575799a01614b50ecc88a1493a5fa9c1b23aa30289a"
+  },
+  "rows": 64,
+  "schema": 1,
+  "statuses": {
+    "error": 28,
+    "success": 36
+  },
+  "uri": "file:///stage68/collection-every.pkl"
+}

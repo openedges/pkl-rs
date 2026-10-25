@@ -1,0 +1,89 @@
+string	encode-empty	"".base64
+string	encode-a	"a".base64
+string	encode-ab	"ab".base64
+string	encode-abc	"abc".base64
+string	encode-accent	"é".base64
+string	encode-emoji	"😀".base64
+string	encode-nul	"\u{0000}".base64
+string	encode-high	"\u{d800}".base64
+string	encode-low	"\u{dc00}".base64
+string	encode-pair-literals	"\u{d800}\u{dc00}".base64
+string	encode-reverse-surrogates	"\u{dc00}\u{d800}".base64
+string	encode-original-unicode	module.originalUnicodeBase64
+string	encode-original-unicode-roundtrip	module.originalUnicodeRoundTrip
+string	encode-original-ascii-roundtrip	module.originalAsciiRoundTrip
+string	validation-empty	"".isBase64
+string	validation-padded1	"YQ==".isBase64
+string	validation-unpadded1	"YQ".isBase64
+string	validation-unpadded2	"YWI".isBase64
+string	validation-four	"YWJj".isBase64
+string	validation-paddedzero	"AA==".isBase64
+string	validation-single	"A".isBase64
+string	validation-single-pad	"A===".isBase64
+string	validation-one-equal	"AA=".isBase64
+string	validation-extra-padding	"AAAA====".isBase64
+string	validation-leading-pad	"=AAA".isBase64
+string	validation-trailing-byte	"AA==A".isBase64
+string	validation-space	"Y Q==".isBase64
+string	validation-newline	"YQ==\n".isBase64
+string	validation-crlf	"YQ==\r\n".isBase64
+string	validation-urlsafe-dash	"-___".isBase64
+string	validation-urlsafe-underscore	"____".isBase64
+string	validation-slash	"////".isBase64
+string	validation-plus	"++++".isBase64
+string	validation-accent	"é".isBase64
+string	validation-emoji	"😀".isBase64
+string	validation-high	"\u{d800}".isBase64
+string	validation-nul	"\u{0000}".isBase64
+string	decode-empty	"".base64Decoded
+string	decode-one-padded	"YQ==".base64Decoded
+string	decode-one-unpadded	"YQ".base64Decoded
+string	decode-two-unpadded	"YWI".base64Decoded
+string	decode-nul	"AA==".base64Decoded
+string	decode-emoji	"8J+YgA==".base64Decoded
+string	decode-invalid-utf8-ff	"/w==".base64Decoded
+string	decode-invalid-utf8-c0	"wA==".base64Decoded
+string	decode-invalid-tilde	"~".base64Decoded
+string	decode-invalid-single	"A".base64Decoded
+string	decode-invalid-one-equal	"AA=".base64Decoded
+string	decode-invalid-trailing	"AA==A".base64Decoded
+string	decode-invalid-space	"Y Q==".base64Decoded
+string	decode-invalid-emoji	"😀".base64Decoded
+string	decode-invalid-accent	"é".base64Decoded
+string	decode-bytes-empty	"".base64DecodedBytes
+string	decode-bytes-ascii	"YQ==".base64DecodedBytes
+string	decode-bytes-sequence	"AQIDBA==".base64DecodedBytes
+string	decode-bytes-ff	"/w==".base64DecodedBytes
+string	decode-bytes-slash	"////".base64DecodedBytes
+string	decode-bytes-malformed-utf8	"wA==".base64DecodedBytes
+string	decode-bytes-invalid-tilde	"~".base64DecodedBytes
+string	decode-bytes-invalid-padding	"AA=".base64DecodedBytes
+string	decode-bytes-length	"AQIDBA==".base64DecodedBytes.length
+string	diagnostics-isbase64-call	"YQ==".isBase64()
+string	diagnostics-base64-call	"abc".base64()
+string	diagnostics-base64-arg-throw	"abc".base64(throw("argument"))
+string	diagnostics-decoded-call	"~".base64Decoded()
+string	diagnostics-decoded-arg-throw	"~".base64Decoded(throw("argument"))
+string	diagnostics-bytes-call	"YQ==".base64DecodedBytes()
+string	diagnostics-wrong-int	1.base64
+string	diagnostics-wrong-null	null.base64
+string	diagnostics-wrong-list	List(1).base64
+string	diagnostics-nullsafe	null?.base64
+string	diagnostics-receiver-first	throw("receiver").base64(throw("argument"))
+string	constraints-valid	"YQ==" as String(isBase64)
+string	constraints-invalid	"~" as String(isBase64)
+string	constraints-encode	"a" as String(base64 == "YQ==")
+string	constraints-decode	"YQ==" as String(base64Decoded == "a")
+string	constraints-bytes	"YQ==" as String(base64DecodedBytes.length == 1)
+string	constraints-decode-error	"~" as String(base64Decoded == "a")
+string	constraints-this	"YQ==" as String(this.isBase64)
+string	ref-metadata-valid-type	module.refIsBase64Type
+string	ref-metadata-encoded-type	module.refBase64Type
+string	ref-metadata-decoded-type	module.refDecodedType
+string	ref-metadata-bytes-type	module.refDecodedBytesType
+string	ref-metadata-isbase64-path	module.refString.isBase64.getPath()[0].property
+string	ref-metadata-encode-path	module.refString.base64.getPath()[0].property
+string	ref-metadata-decode-path	module.refString.base64Decoded.getPath()[0].property
+string	ref-metadata-bytes-path	module.refString.base64DecodedBytes.getPath()[0].property
+string	ref-metadata-data	module.refString.base64.getData()
+string	ref-metadata-method	module.refString.base64()

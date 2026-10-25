@@ -1,5 +1,31 @@
 # M2 language verification
 
+## Stage 68 — Java authorities and candidate integration
+
+The next candidate covers String Base64 properties, collection `isNotEmpty`
+and `every`, Reference amendment rejection, inferred entry diagnostics,
+declaring-module class defaults, and lazy object-method type checks. Its
+implementation is being integrated; the required canonical Rust checks,
+actual native/Node/browser comparisons, full ready-corpus replay, and
+implementation commit remain pending.
+
+The [Java authority checkpoint](../reports/m2/stage68-java-checkpoint.json)
+contains 89 Base64, 47 collection emptiness,
+and 64 `every` expressions, each observed in two JVM sessions. Their ordinary
+Pkl error outcomes remain expected errors. The `every` authority also records
+39 ordered logger events per session with lossless UTF-16 channels. Separate
+entry-parent Host and method timing/arity/owner captures preserve their own
+execution boundaries. Seven reused original-program inputs and Java outputs
+are linked to the pinned upstream sources and published Stage 67 evidence.
+
+Standalone fixture verification uses tracked inputs and does not require
+historical `target/` directories. Passing those checks establishes Java
+fixture integrity; it does not establish a Rust candidate pass. The planned
+4,416-case replay reuses the sealed Stage 67 Java evidence and runs Rust anew.
+It must preserve every case definition, unready requirement, and raw failure,
+and report that it starts no fresh Java processes. Stage 67 below remains the
+latest completed full ready-corpus comparison.
+
 ## Stage 67 — String properties and full ready-corpus comparison
 
 The shared runtime implements String `isBlank`, `isNotBlank`, `isNotEmpty`, and

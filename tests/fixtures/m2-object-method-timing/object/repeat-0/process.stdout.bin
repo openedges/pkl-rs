@@ -1,0 +1,10 @@
+session-open mode=string rows=4
+call-enter=string-0-object-0
+call-exit=string-0-object-0 status=success
+call-enter=string-1-object-1
+call-exit=string-1-object-1 status=error
+call-enter=string-2-object-2
+call-exit=string-2-object-2 status=error
+call-enter=string-3-object-3
+call-exit=string-3-object-3 status=error
+session-closed mode=string rows=4 public-calls=4 success=1 errors=3

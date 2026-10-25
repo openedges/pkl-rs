@@ -1,0 +1,4 @@
+class C {
+  function f(x: NonExistingType): Int = x
+}
+safe = 1

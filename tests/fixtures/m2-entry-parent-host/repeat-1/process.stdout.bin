@@ -1,0 +1,8 @@
+session-open mode=string rows=3
+call-enter=string-0-inferred-set-alias
+call-exit=string-0-inferred-set-alias status=error
+call-enter=string-1-inferred-string-alias
+call-exit=string-1-inferred-string-alias status=error
+call-enter=string-2-explicit-set-control
+call-exit=string-2-explicit-set-control status=error
+session-closed mode=string rows=3 public-calls=3 success=0 errors=3

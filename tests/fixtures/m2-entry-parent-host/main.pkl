@@ -1,0 +1,4 @@
+import "aliases.pkl" as alias
+function inferredText(): Listing<alias.Text> = new { new {} }
+function inferredBag(): Listing<alias.Bag> = new { new {} }
+function explicitBag(): Listing<alias.Bag> = new { new Set {} }

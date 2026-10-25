@@ -1,0 +1,543 @@
+{
+  "schema": 1,
+  "baseline": "Pkl 0.32.0",
+  "boundary": "string",
+  "module_uri": "file:///stage68/string-base64-exploration.pkl",
+  "repetitions": 2,
+  "rows": [
+    {
+      "mode": "string",
+      "id": "encode-empty",
+      "group": "encode",
+      "expression": "\"\".base64"
+    },
+    {
+      "mode": "string",
+      "id": "encode-a",
+      "group": "encode",
+      "expression": "\"a\".base64"
+    },
+    {
+      "mode": "string",
+      "id": "encode-ab",
+      "group": "encode",
+      "expression": "\"ab\".base64"
+    },
+    {
+      "mode": "string",
+      "id": "encode-abc",
+      "group": "encode",
+      "expression": "\"abc\".base64"
+    },
+    {
+      "mode": "string",
+      "id": "encode-accent",
+      "group": "encode",
+      "expression": "\"é\".base64"
+    },
+    {
+      "mode": "string",
+      "id": "encode-emoji",
+      "group": "encode",
+      "expression": "\"😀\".base64"
+    },
+    {
+      "mode": "string",
+      "id": "encode-nul",
+      "group": "encode",
+      "expression": "\"\\u{0000}\".base64"
+    },
+    {
+      "mode": "string",
+      "id": "encode-high",
+      "group": "encode",
+      "expression": "\"\\u{d800}\".base64"
+    },
+    {
+      "mode": "string",
+      "id": "encode-low",
+      "group": "encode",
+      "expression": "\"\\u{dc00}\".base64"
+    },
+    {
+      "mode": "string",
+      "id": "encode-pair-literals",
+      "group": "encode",
+      "expression": "\"\\u{d800}\\u{dc00}\".base64"
+    },
+    {
+      "mode": "string",
+      "id": "encode-reverse-surrogates",
+      "group": "encode",
+      "expression": "\"\\u{dc00}\\u{d800}\".base64"
+    },
+    {
+      "mode": "string",
+      "id": "encode-original-unicode",
+      "group": "encode",
+      "expression": "module.originalUnicodeBase64"
+    },
+    {
+      "mode": "string",
+      "id": "encode-original-unicode-roundtrip",
+      "group": "encode",
+      "expression": "module.originalUnicodeRoundTrip"
+    },
+    {
+      "mode": "string",
+      "id": "encode-original-ascii-roundtrip",
+      "group": "encode",
+      "expression": "module.originalAsciiRoundTrip"
+    },
+    {
+      "mode": "string",
+      "id": "validation-empty",
+      "group": "validation",
+      "expression": "\"\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-padded1",
+      "group": "validation",
+      "expression": "\"YQ==\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-unpadded1",
+      "group": "validation",
+      "expression": "\"YQ\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-unpadded2",
+      "group": "validation",
+      "expression": "\"YWI\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-four",
+      "group": "validation",
+      "expression": "\"YWJj\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-paddedzero",
+      "group": "validation",
+      "expression": "\"AA==\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-single",
+      "group": "validation",
+      "expression": "\"A\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-single-pad",
+      "group": "validation",
+      "expression": "\"A===\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-one-equal",
+      "group": "validation",
+      "expression": "\"AA=\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-extra-padding",
+      "group": "validation",
+      "expression": "\"AAAA====\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-leading-pad",
+      "group": "validation",
+      "expression": "\"=AAA\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-trailing-byte",
+      "group": "validation",
+      "expression": "\"AA==A\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-space",
+      "group": "validation",
+      "expression": "\"Y Q==\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-newline",
+      "group": "validation",
+      "expression": "\"YQ==\\n\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-crlf",
+      "group": "validation",
+      "expression": "\"YQ==\\r\\n\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-urlsafe-dash",
+      "group": "validation",
+      "expression": "\"-___\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-urlsafe-underscore",
+      "group": "validation",
+      "expression": "\"____\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-slash",
+      "group": "validation",
+      "expression": "\"////\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-plus",
+      "group": "validation",
+      "expression": "\"++++\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-accent",
+      "group": "validation",
+      "expression": "\"é\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-emoji",
+      "group": "validation",
+      "expression": "\"😀\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-high",
+      "group": "validation",
+      "expression": "\"\\u{d800}\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "validation-nul",
+      "group": "validation",
+      "expression": "\"\\u{0000}\".isBase64"
+    },
+    {
+      "mode": "string",
+      "id": "decode-empty",
+      "group": "decode",
+      "expression": "\"\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-one-padded",
+      "group": "decode",
+      "expression": "\"YQ==\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-one-unpadded",
+      "group": "decode",
+      "expression": "\"YQ\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-two-unpadded",
+      "group": "decode",
+      "expression": "\"YWI\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-nul",
+      "group": "decode",
+      "expression": "\"AA==\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-emoji",
+      "group": "decode",
+      "expression": "\"8J+YgA==\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-invalid-utf8-ff",
+      "group": "decode",
+      "expression": "\"/w==\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-invalid-utf8-c0",
+      "group": "decode",
+      "expression": "\"wA==\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-invalid-tilde",
+      "group": "decode",
+      "expression": "\"~\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-invalid-single",
+      "group": "decode",
+      "expression": "\"A\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-invalid-one-equal",
+      "group": "decode",
+      "expression": "\"AA=\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-invalid-trailing",
+      "group": "decode",
+      "expression": "\"AA==A\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-invalid-space",
+      "group": "decode",
+      "expression": "\"Y Q==\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-invalid-emoji",
+      "group": "decode",
+      "expression": "\"😀\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-invalid-accent",
+      "group": "decode",
+      "expression": "\"é\".base64Decoded"
+    },
+    {
+      "mode": "string",
+      "id": "decode-bytes-empty",
+      "group": "decode-bytes",
+      "expression": "\"\".base64DecodedBytes"
+    },
+    {
+      "mode": "string",
+      "id": "decode-bytes-ascii",
+      "group": "decode-bytes",
+      "expression": "\"YQ==\".base64DecodedBytes"
+    },
+    {
+      "mode": "string",
+      "id": "decode-bytes-sequence",
+      "group": "decode-bytes",
+      "expression": "\"AQIDBA==\".base64DecodedBytes"
+    },
+    {
+      "mode": "string",
+      "id": "decode-bytes-ff",
+      "group": "decode-bytes",
+      "expression": "\"/w==\".base64DecodedBytes"
+    },
+    {
+      "mode": "string",
+      "id": "decode-bytes-slash",
+      "group": "decode-bytes",
+      "expression": "\"////\".base64DecodedBytes"
+    },
+    {
+      "mode": "string",
+      "id": "decode-bytes-malformed-utf8",
+      "group": "decode-bytes",
+      "expression": "\"wA==\".base64DecodedBytes"
+    },
+    {
+      "mode": "string",
+      "id": "decode-bytes-invalid-tilde",
+      "group": "decode-bytes",
+      "expression": "\"~\".base64DecodedBytes"
+    },
+    {
+      "mode": "string",
+      "id": "decode-bytes-invalid-padding",
+      "group": "decode-bytes",
+      "expression": "\"AA=\".base64DecodedBytes"
+    },
+    {
+      "mode": "string",
+      "id": "decode-bytes-length",
+      "group": "decode-bytes",
+      "expression": "\"AQIDBA==\".base64DecodedBytes.length"
+    },
+    {
+      "mode": "string",
+      "id": "diagnostics-isbase64-call",
+      "group": "diagnostics",
+      "expression": "\"YQ==\".isBase64()"
+    },
+    {
+      "mode": "string",
+      "id": "diagnostics-base64-call",
+      "group": "diagnostics",
+      "expression": "\"abc\".base64()"
+    },
+    {
+      "mode": "string",
+      "id": "diagnostics-base64-arg-throw",
+      "group": "diagnostics",
+      "expression": "\"abc\".base64(throw(\"argument\"))"
+    },
+    {
+      "mode": "string",
+      "id": "diagnostics-decoded-call",
+      "group": "diagnostics",
+      "expression": "\"~\".base64Decoded()"
+    },
+    {
+      "mode": "string",
+      "id": "diagnostics-decoded-arg-throw",
+      "group": "diagnostics",
+      "expression": "\"~\".base64Decoded(throw(\"argument\"))"
+    },
+    {
+      "mode": "string",
+      "id": "diagnostics-bytes-call",
+      "group": "diagnostics",
+      "expression": "\"YQ==\".base64DecodedBytes()"
+    },
+    {
+      "mode": "string",
+      "id": "diagnostics-wrong-int",
+      "group": "diagnostics",
+      "expression": "1.base64"
+    },
+    {
+      "mode": "string",
+      "id": "diagnostics-wrong-null",
+      "group": "diagnostics",
+      "expression": "null.base64"
+    },
+    {
+      "mode": "string",
+      "id": "diagnostics-wrong-list",
+      "group": "diagnostics",
+      "expression": "List(1).base64"
+    },
+    {
+      "mode": "string",
+      "id": "diagnostics-nullsafe",
+      "group": "diagnostics",
+      "expression": "null?.base64"
+    },
+    {
+      "mode": "string",
+      "id": "diagnostics-receiver-first",
+      "group": "diagnostics",
+      "expression": "throw(\"receiver\").base64(throw(\"argument\"))"
+    },
+    {
+      "mode": "string",
+      "id": "constraints-valid",
+      "group": "constraints",
+      "expression": "\"YQ==\" as String(isBase64)"
+    },
+    {
+      "mode": "string",
+      "id": "constraints-invalid",
+      "group": "constraints",
+      "expression": "\"~\" as String(isBase64)"
+    },
+    {
+      "mode": "string",
+      "id": "constraints-encode",
+      "group": "constraints",
+      "expression": "\"a\" as String(base64 == \"YQ==\")"
+    },
+    {
+      "mode": "string",
+      "id": "constraints-decode",
+      "group": "constraints",
+      "expression": "\"YQ==\" as String(base64Decoded == \"a\")"
+    },
+    {
+      "mode": "string",
+      "id": "constraints-bytes",
+      "group": "constraints",
+      "expression": "\"YQ==\" as String(base64DecodedBytes.length == 1)"
+    },
+    {
+      "mode": "string",
+      "id": "constraints-decode-error",
+      "group": "constraints",
+      "expression": "\"~\" as String(base64Decoded == \"a\")"
+    },
+    {
+      "mode": "string",
+      "id": "constraints-this",
+      "group": "constraints",
+      "expression": "\"YQ==\" as String(this.isBase64)"
+    },
+    {
+      "mode": "string",
+      "id": "ref-metadata-valid-type",
+      "group": "ref-metadata",
+      "expression": "module.refIsBase64Type"
+    },
+    {
+      "mode": "string",
+      "id": "ref-metadata-encoded-type",
+      "group": "ref-metadata",
+      "expression": "module.refBase64Type"
+    },
+    {
+      "mode": "string",
+      "id": "ref-metadata-decoded-type",
+      "group": "ref-metadata",
+      "expression": "module.refDecodedType"
+    },
+    {
+      "mode": "string",
+      "id": "ref-metadata-bytes-type",
+      "group": "ref-metadata",
+      "expression": "module.refDecodedBytesType"
+    },
+    {
+      "mode": "string",
+      "id": "ref-metadata-isbase64-path",
+      "group": "ref-metadata",
+      "expression": "module.refString.isBase64.getPath()[0].property"
+    },
+    {
+      "mode": "string",
+      "id": "ref-metadata-encode-path",
+      "group": "ref-metadata",
+      "expression": "module.refString.base64.getPath()[0].property"
+    },
+    {
+      "mode": "string",
+      "id": "ref-metadata-decode-path",
+      "group": "ref-metadata",
+      "expression": "module.refString.base64Decoded.getPath()[0].property"
+    },
+    {
+      "mode": "string",
+      "id": "ref-metadata-bytes-path",
+      "group": "ref-metadata",
+      "expression": "module.refString.base64DecodedBytes.getPath()[0].property"
+    },
+    {
+      "mode": "string",
+      "id": "ref-metadata-data",
+      "group": "ref-metadata",
+      "expression": "module.refString.base64.getData()"
+    },
+    {
+      "mode": "string",
+      "id": "ref-metadata-method",
+      "group": "ref-metadata",
+      "expression": "module.refString.base64()"
+    }
+  ]
+}

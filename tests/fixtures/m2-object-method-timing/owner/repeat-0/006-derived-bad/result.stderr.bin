@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `isBetween(0, limit)` violated.
+Value: 3
+
+3 | local function f(x: Int(isBetween(0, limit))): Int = limit
+                            ^^^^^^^^^^^^^^^^^^^
+at object-method-owner#prototype.f (file:///stage68/object-method-owner.pkl)
+
+6 | bad = f(3)
+          ^^^^
+at object-method-owner#prototype.bad (file:///stage68/object-method-owner.pkl)
+
+1 | derived.bad
+    ^^^^^^^^^^^
+at  (repl:text)

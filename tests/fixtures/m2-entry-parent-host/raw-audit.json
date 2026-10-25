@@ -1,0 +1,62 @@
+{
+  "candidate_compatibility_passes_claimed": 0,
+  "capture": {
+    "file_count": 259,
+    "fileset_sha256": "1ee54b8a80caa283e784973f1040d45d6518be83295f847d1613e150623c5c40",
+    "path": "target/m2/stage68-entry-parent-host-oracle-03",
+    "report_sha256": "4e8ad113cc48411c081eea990bfa5a2fbc1cc217132b9dbc526b27c5dbf934f4"
+  },
+  "complete": true,
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "kind": "stage68-entry-parent-host-Java-raw-audit",
+  "limit": "Synchronous in-memory Java module callbacks; no suspended Host or Rust candidate execution.",
+  "rows": [
+    {
+      "id": "inferred-set-alias",
+      "module_events": [
+        "create\tstage68:/entry-parent-host/main.pkl",
+        "create\tstage68:/entry-parent-host/aliases.pkl",
+        "create\tstage68:/entry-parent-host/aliases.pkl",
+        "resolve\tstage68:/entry-parent-host/aliases.pkl",
+        "load\tstage68:/entry-parent-host/aliases.pkl"
+      ],
+      "status": "error",
+      "stderr_sha256": "a108648b65eda29b5c331a9b8b9c296f49434b69a443df77e7d8056a3683110d"
+    },
+    {
+      "id": "inferred-string-alias",
+      "module_events": [
+        "create\tstage68:/entry-parent-host/main.pkl"
+      ],
+      "status": "error",
+      "stderr_sha256": "1d093ff2ef44efb128c19e9b4f1fee6bea847eb8f5e7e129dad0df0ea5a19be6"
+    },
+    {
+      "id": "explicit-set-control",
+      "module_events": [
+        "create\tstage68:/entry-parent-host/main.pkl"
+      ],
+      "status": "error",
+      "stderr_sha256": "2abb4a771e1eb6a5961dac3de321ed75806c3b9165b4d4fa869cecd859f263b5"
+    }
+  ],
+  "schema": 1,
+  "sessions": [
+    {
+      "exit_code": 0,
+      "pid": 92080,
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stdout_sha256": "e2dd1ae3ba2a7c14f3890e3cfd2fef528112555a9fcef2bb7b03da8039baade4",
+      "rows": 3
+    },
+    {
+      "exit_code": 0,
+      "pid": 92085,
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stdout_sha256": "e2dd1ae3ba2a7c14f3890e3cfd2fef528112555a9fcef2bb7b03da8039baade4",
+      "rows": 3
+    }
+  ],
+  "source_count": 108,
+  "source_stable": true
+}

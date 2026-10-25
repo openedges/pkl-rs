@@ -1,0 +1,7 @@
+foo {
+  local function f(x: NonExistingType): Int = x
+  safe = 1
+  callValue = f(1)
+  callThrow = f(throw("argument first"))
+  nested { callValue = f(1) }
+}

@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find type `NonExistingType`.
+
+1 | local function f(x: NonExistingType): Int = x
+                        ^^^^^^^^^^^^^^^
+at object-method-module (file:///stage68/object-method-module.pkl)
+
+Searched in the following places:
+* Module `object-method-module` and any supermodules
+* Module `pkl#base`

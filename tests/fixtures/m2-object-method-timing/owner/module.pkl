@@ -1,0 +1,8 @@
+prototype = new Dynamic {
+  limit = 2
+  local function f(x: Int(isBetween(0, limit))): Int = limit
+  good = f(1)
+  result = f(2)
+  bad = f(3)
+}
+derived = (prototype) { limit = 1 }

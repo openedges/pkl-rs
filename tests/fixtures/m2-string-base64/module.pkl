@@ -1,0 +1,13 @@
+import "pkl:ref"
+class D extends ref.Domain {
+  function renderReference(reference: ref.Reference<D, Any>): String = "ref"
+}
+local domain = new D {}
+refString = ref.Reference(domain, String, null)
+refIsBase64Type = refString.isBase64 is ref.Reference<D, Boolean>
+refBase64Type = refString.base64 is ref.Reference<D, String>
+refDecodedType = refString.base64Decoded is ref.Reference<D, String>
+refDecodedBytesType = refString.base64DecodedBytes is ref.Reference<D, Bytes>
+originalUnicodeBase64 = "😀😈😍😎😡🤢🤣".base64
+originalUnicodeRoundTrip = "😀😈😍😎😡🤢🤣".base64.base64Decoded == "😀😈😍😎😡🤢🤣"
+originalAsciiRoundTrip = "The quick brown fox jumps over the lazy dog".base64.base64Decoded == "The quick brown fox jumps over the lazy dog"

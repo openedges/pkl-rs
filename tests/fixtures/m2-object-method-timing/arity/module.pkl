@@ -1,0 +1,8 @@
+foo {
+  local function f(x: NonExistingType): Int = x
+  safe = 1
+  callOne = f(1)
+  callZero = f()
+  callMany = f(1, 2)
+  callManyThrow = f(throw("argument first"), 2)
+}

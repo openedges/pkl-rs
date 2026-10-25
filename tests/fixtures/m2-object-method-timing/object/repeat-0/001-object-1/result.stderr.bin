@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Cannot find type `NonExistingType`.
+
+2 | local function f(x: NonExistingType): Int = x
+                        ^^^^^^^^^^^^^^^
+at object-method-object#foo.f (file:///stage68/object-method-object.pkl)
+
+Searched in the following places:
+* Module `object-method-object` and any supermodules
+* Module `pkl#base`
+
+1 | foo.callValue
+    ^^^^^^^^^^^^^
+at  (repl:text)

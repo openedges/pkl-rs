@@ -1,0 +1,26 @@
+{
+  "archive_sha256": "431e41e78ff9f2ad799549becb30463cd67c7d4883a147add78daaf96fecbd62",
+  "baseline": "Pkl 0.32.0",
+  "candidate_compatibility_passes_claimed": 0,
+  "fileset_sha256": "ed94162e8ff012786ed6281e7bb136a7168a4ffb8f74c9027d89e17d2a116b5c",
+  "kind": "collection-emptiness",
+  "members": 2057,
+  "prefixes": {
+    "capture-02": "stage68-collection-emptiness-oracle-02",
+    "launch-02": "stage68-collection-emptiness-launch-02",
+    "preparation-02": "stage68-collection-emptiness-prep-02",
+    "review-01": "stage68-collection-emptiness-review-01"
+  },
+  "root_inputs": {
+    "cases.json": "ad88516bf727cfdcadf61856c00b4c8da927f5fa80642dbc9ebe24ec4c4cea60",
+    "module.pkl": "5aa546077bd405724ef61998dabbdffacc8a4a6f9ddc061b51a7c9fa834f5092",
+    "queries.tsv": "e21f16a0e1daba508a6cd28f17f2e402f7b033aa4fb8d5db3e9ef248b0939aeb"
+  },
+  "rows": 47,
+  "schema": 1,
+  "statuses": {
+    "error": 13,
+    "success": 34
+  },
+  "uri": "file:///stage68/collection-emptiness.pkl"
+}
