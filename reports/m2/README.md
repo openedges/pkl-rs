@@ -33,6 +33,30 @@ process receipts postdate these archives and require the separate C source
 binding. These are local macOS arm64 results, not full API, performance, release
 platform, or hosted CI completion.
 
+### Stage68 source binding and implementation publication
+
+The [source binding](stage68-source-binding.json) links 167,307 recorded inputs
+to implementation commit `723687b`, whose remote `main` identity was verified.
+It checks 166,700 Git-origin rows by commit/path/mode/OID, independently checks
+607 copied inputs and all 315 frozen runtime/Cargo files against the committed
+bytes, and preserves three documents changed after validation. The report README
+is separately bound as a publication document. This audit runs no guest or build.
+
+The [6,832,706-byte C archive](stage68-source-binding-evidence.tar.gz) preserves
+the source audit, actual B publication/assembly and commit/push records, and
+corrected reviews. Full member payload/hash/mode readback passed. The first
+commit attempt failed on one EOF blank line in `tools/runtime_fixture_links.py`;
+the retry preserved its validated bytes and disabled only Git's `blank-at-eof`
+lint rule. Other whitespace checks passed. Twelve inactive generated test
+binaries remain recoverable from a separately identified local cache archive;
+frozen sources and artifacts were unchanged.
+
+The [C publication process](stage68-source-binding-execution.json) exited zero
+with stable sources. Its raw stdout, stderr, and source maps are published
+separately because they postdate the archive. M2's known failures, nine open
+workstreams, product API, release-platform, and performance requirements remain
+unchanged.
+
 ### Stage68 Base64, collection predicates, and method semantics — Java authority checkpoint
 
 The [Java checkpoint](stage68-java-checkpoint.json) publishes independent Pkl

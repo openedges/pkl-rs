@@ -39,6 +39,15 @@ inputs and does not require historical `target/` directories. Passing fixture
 validation establishes reference integrity; actual candidate results above use
 the recorded runtime artifacts and full raw channels.
 
+The [C source binding](../reports/m2/stage68-source-binding.json) links 167,307
+recorded inputs to implementation commit `723687b`, with its remote `main`
+identity verified. It independently checks the 607 copied inputs and 315 frozen
+runtime/Cargo files, preserves post-validation document changes, and retains
+actual publication, assembly, commit, and push records. Its 6,832,706-byte archive
+passed complete member readback. The actual C publication process and raw
+channels are separate post-archive records. This provenance audit adds no guest
+evaluations, builds, or compatibility passes.
+
 ## Stage 67 — String properties and full ready-corpus comparison
 
 The shared runtime implements String `isBlank`, `isNotBlank`, `isNotEmpty`, and
