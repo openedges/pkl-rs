@@ -1,0 +1,4 @@
+session-open mode=string rows=1
+call-enter=string-0-builtin-reference-negative
+call-exit=string-0-builtin-reference-negative status=error
+session-closed mode=string rows=1 public-calls=1 success=0 errors=1

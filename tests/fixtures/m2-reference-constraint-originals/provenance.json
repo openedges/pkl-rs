@@ -1,0 +1,171 @@
+{
+  "archive": {
+    "bytes": 57911607,
+    "historical_full_readback_verified": true,
+    "path": "reports/m2/stage67-b-full-inventory-evidence.tar.gz",
+    "sha256": "fe02d2c88552ca4974273554214be2d4f415c985844216f1c1df63135e0a0fb8",
+    "working_copy_read_in_this_materialization": false
+  },
+  "candidate_passes_claimed": 0,
+  "cases": [
+    {
+      "case_directory": "f85a5e430542bb33a86198e2",
+      "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/reference8.pkl",
+      "java_exit_code": 1,
+      "java_files": {},
+      "java_timed_out": false,
+      "members": {
+        "input.pkl": {
+          "bytes": 260,
+          "published_path": "target/m2/stage67-full-regression-01/cases/f85a5e430542bb33a86198e2/input.pkl",
+          "sha256": "1d5d196913ef82ba97d66f9eaf0652301ae1a50400e09fb8c71ef2e006ac54e1"
+        },
+        "process.json": {
+          "bytes": 3206,
+          "published_path": "target/m2/stage67-full-regression-01/cases/f85a5e430542bb33a86198e2/java/process.json",
+          "sha256": "9d7ecbe2a63e32bb78389ef5f456d15b8351b66576d6cc663f9c66a7dacf90d0"
+        },
+        "result.json": {
+          "bytes": 294,
+          "published_path": "target/m2/stage67-full-regression-01/cases/f85a5e430542bb33a86198e2/java/result.json",
+          "sha256": "11b106c4ea6a9fa768983fbba915eefbf66932fb2361d76ddb7f8aa4b09108bd"
+        },
+        "stderr.bin": {
+          "bytes": 1176,
+          "published_path": "target/m2/stage67-full-regression-01/cases/f85a5e430542bb33a86198e2/java/stderr.bin",
+          "sha256": "2b571ff7c396b7118413afbcd89f81893ea15d2bbe75313dc6c5f2a18783d7db"
+        },
+        "stdout.bin": {
+          "bytes": 0,
+          "published_path": "target/m2/stage67-full-regression-01/cases/f85a5e430542bb33a86198e2/java/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "number": 8,
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/reference8.pkl",
+      "source_uri_sha256": "bfbae1438368cd99f4abf3cff1c0c499889fea75d18d91ee5b8486d7a89f39e0",
+      "upstream_input_sha256": "1d5d196913ef82ba97d66f9eaf0652301ae1a50400e09fb8c71ef2e006ac54e1"
+    },
+    {
+      "case_directory": "8492222011af685bd0e76317",
+      "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/reference9.pkl",
+      "java_exit_code": 1,
+      "java_files": {},
+      "java_timed_out": false,
+      "members": {
+        "input.pkl": {
+          "bytes": 266,
+          "published_path": "target/m2/stage67-full-regression-01/cases/8492222011af685bd0e76317/input.pkl",
+          "sha256": "81450356b1ff926b2d5993c2a7b0dae9c1b9bf268bb4470285dc926bbe57b816"
+        },
+        "process.json": {
+          "bytes": 3206,
+          "published_path": "target/m2/stage67-full-regression-01/cases/8492222011af685bd0e76317/java/process.json",
+          "sha256": "d2c535ca92b5808ac92f73a618d5a78d5f2bd84342dfba80b6341843d026f196"
+        },
+        "result.json": {
+          "bytes": 294,
+          "published_path": "target/m2/stage67-full-regression-01/cases/8492222011af685bd0e76317/java/result.json",
+          "sha256": "e3d66526d45dc761356d5b308a5589aebef0afa7e44cf8d5e9fa1084085c4bbc"
+        },
+        "stderr.bin": {
+          "bytes": 1188,
+          "published_path": "target/m2/stage67-full-regression-01/cases/8492222011af685bd0e76317/java/stderr.bin",
+          "sha256": "b012375f14abd2d762ef220f825134c6bf9f9f8e02562a58063f52451391d11e"
+        },
+        "stdout.bin": {
+          "bytes": 0,
+          "published_path": "target/m2/stage67-full-regression-01/cases/8492222011af685bd0e76317/java/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "number": 9,
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/reference9.pkl",
+      "source_uri_sha256": "438be9bfe889d41417c66aac975c25c32756c183614c4e907c2b09f73e31d7f3",
+      "upstream_input_sha256": "81450356b1ff926b2d5993c2a7b0dae9c1b9bf268bb4470285dc926bbe57b816"
+    },
+    {
+      "case_directory": "1b7f78a550e9b01e3f4beec5",
+      "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/reference10.pkl",
+      "java_exit_code": 1,
+      "java_files": {},
+      "java_timed_out": false,
+      "members": {
+        "input.pkl": {
+          "bytes": 269,
+          "published_path": "target/m2/stage67-full-regression-01/cases/1b7f78a550e9b01e3f4beec5/input.pkl",
+          "sha256": "151d92f28567fa321ad8ddb147baf5da3d906ab1823c1845525938ad58d46e2c"
+        },
+        "process.json": {
+          "bytes": 3208,
+          "published_path": "target/m2/stage67-full-regression-01/cases/1b7f78a550e9b01e3f4beec5/java/process.json",
+          "sha256": "9320f559eba6bee1d978f4a0d3665191aef8ac070bc3188adf6dba28d6f891f6"
+        },
+        "result.json": {
+          "bytes": 294,
+          "published_path": "target/m2/stage67-full-regression-01/cases/1b7f78a550e9b01e3f4beec5/java/result.json",
+          "sha256": "f3d8070167fc97f19b10b9872e5e6a3261465578eb7282fe47ec6555ee89df0b"
+        },
+        "stderr.bin": {
+          "bytes": 1198,
+          "published_path": "target/m2/stage67-full-regression-01/cases/1b7f78a550e9b01e3f4beec5/java/stderr.bin",
+          "sha256": "dd48b4692c3c908eee8f9b5aa4d79479af8d82df4e966e4dd2088f92501753f3"
+        },
+        "stdout.bin": {
+          "bytes": 0,
+          "published_path": "target/m2/stage67-full-regression-01/cases/1b7f78a550e9b01e3f4beec5/java/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "number": 10,
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/reference10.pkl",
+      "source_uri_sha256": "fdd7cec29d48f40e7eb7ff7c5a8a84a702e27894c830266a961c62edbf8fb1a3",
+      "upstream_input_sha256": "151d92f28567fa321ad8ddb147baf5da3d906ab1823c1845525938ad58d46e2c"
+    },
+    {
+      "case_directory": "b417ca30272ed920827e8397",
+      "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/reference11.pkl",
+      "java_exit_code": 1,
+      "java_files": {},
+      "java_timed_out": false,
+      "members": {
+        "input.pkl": {
+          "bytes": 325,
+          "published_path": "target/m2/stage67-full-regression-01/cases/b417ca30272ed920827e8397/input.pkl",
+          "sha256": "8cb5df68af3c09bc839b577581e0e9c4f56cd719b791264fe6e4227109d3db44"
+        },
+        "process.json": {
+          "bytes": 3208,
+          "published_path": "target/m2/stage67-full-regression-01/cases/b417ca30272ed920827e8397/java/process.json",
+          "sha256": "00f11546b93cfb374e9f174d100e8fdc82096222017915a52d2db7f3ca3ebf31"
+        },
+        "result.json": {
+          "bytes": 294,
+          "published_path": "target/m2/stage67-full-regression-01/cases/b417ca30272ed920827e8397/java/result.json",
+          "sha256": "d251f1b327f95ab5a4c489939f39b6e94e3b56a6576caa704f408040cec1e402"
+        },
+        "stderr.bin": {
+          "bytes": 1768,
+          "published_path": "target/m2/stage67-full-regression-01/cases/b417ca30272ed920827e8397/java/stderr.bin",
+          "sha256": "fd64017c4b1c63af5fe1c56b248deb1b50b2c4e752894a2ce2d4b01df0a2d4ed"
+        },
+        "stdout.bin": {
+          "bytes": 0,
+          "published_path": "target/m2/stage67-full-regression-01/cases/b417ca30272ed920827e8397/java/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "number": 11,
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/reference11.pkl",
+      "source_uri_sha256": "9a481eb8e7a17c5a7380e3a041f404270918e2a038b7fdf38518cab5ff84ff4e",
+      "upstream_input_sha256": "8cb5df68af3c09bc839b577581e0e9c4f56cd719b791264fe6e4227109d3db44"
+    }
+  ],
+  "kind": "stage79-reference-originals-stage67-java-cli-fixture-v1",
+  "logger_authority": false,
+  "new_java_sessions": 0,
+  "publication": {
+    "path": "reports/m2/stage67-b-full-inventory-publication.json",
+    "sha256": "eccc18c0431dc40519e5b3b908e7bc0e3b1dfd5a4015836cee9601eca9d42933"
+  }
+}

@@ -495,6 +495,17 @@ impl Vm {
                     }
                     .into(),
                 ),
+                origin_uri: Some(
+                    if matches!(
+                        key,
+                        BuiltinClass::Reference | BuiltinClass::Domain | BuiltinClass::Access
+                    ) {
+                        "pkl:ref"
+                    } else {
+                        "pkl:base"
+                    }
+                    .into(),
+                ),
                 id,
                 name: key.name().into(),
                 abstract_: key.abstract_(),

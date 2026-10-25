@@ -1,0 +1,4 @@
+module foo.bar
+import "helper.pkl"
+class ModuleClass
+m: ModuleClass = new helper.ModuleClass {}

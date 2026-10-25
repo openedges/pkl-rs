@@ -1,0 +1,18 @@
+module pkl.base
+import "pkl:ref" as ref
+class A
+class D extends ref.Domain {
+  function renderReference(reference: ref.Reference<D, Any>): String = "unused"
+}
+local d: D = new {}
+class Holder {
+  item: A
+  mixed: A | String
+}
+local holderRef: ref.Reference<D, Holder> = ref.Reference(d, Holder, null)
+classLabel = A.toString()
+expectedMismatch: A = 1
+actualMismatch: Int = new A {}
+referenceMismatch: ref.Reference<D, Int> = holderRef.item
+unionMismatch: ref.Reference<D, Int> = holderRef.mixed
+moduleClassLabel = module.getClass().toString()

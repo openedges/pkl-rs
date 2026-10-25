@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `A`, but got type `Int`.
+Value: 1
+
+14 | expectedMismatch: A = 1
+                       ^
+at pkl.base#expectedMismatch (file:///stage82/base-display.pkl)
+
+14 | expectedMismatch: A = 1
+                           ^
+at pkl.base#expectedMismatch (file:///stage82/base-display.pkl)
+
+1 | expectedMismatch
+    ^^^^^^^^^^^^^^^^
+at  (repl:text)

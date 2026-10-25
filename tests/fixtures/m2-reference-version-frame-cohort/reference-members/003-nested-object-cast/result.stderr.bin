@@ -1,0 +1,14 @@
+–– Pkl Error ––
+`Reference` referent type argument may not include type constraints.
+
+5 | typealias Ref<T> = ref.Reference<D, T>
+                       ^^^^^^^^^^^^^^^^^^^
+at reference-members#Ref (file:///stage79-80/reference-members.pkl)
+
+15 | nestedCast = ref.Reference(d, String, "") as Ref<String(true)>
+                                                  ^^^^^^^^^^^^^^^^^
+at reference-members#objectValue.nestedCast (file:///stage79-80/reference-members.pkl)
+
+1 | objectValue.nestedCast
+    ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

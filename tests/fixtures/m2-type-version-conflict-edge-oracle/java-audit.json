@@ -1,0 +1,98 @@
+{
+  "candidate_passes_claimed": 0,
+  "capture_report": {
+    "bytes": 125200,
+    "sha256": "58d9e2c339f462770205ca70e3593926cbc21c056dfa7e16927a7985bf56d699"
+  },
+  "complete": true,
+  "fresh_java_pids": [
+    43151,
+    43192,
+    43209,
+    43216,
+    43223,
+    43231,
+    43235,
+    43245,
+    43249,
+    43254,
+    43260,
+    43267,
+    43274,
+    43278,
+    43285,
+    43295
+  ],
+  "kind": "stage82-java-edge-independent-full-raw-audit-v1",
+  "limits": [
+    "The ordinary ModuleClass row is a pinned Java API exception; it is not a compatibility pass.",
+    "No Rust candidate, native, Node, or Chromium evaluation ran.",
+    "The CollectionConversionsOracle transport records no logger events or logger authority."
+  ],
+  "logger_authority_claimed": false,
+  "outer_process": {
+    "bytes": 786,
+    "sha256": "456b0dab42c006ecdaa24a828ee20bbae510e67143acca8b99b20eb1853424ef"
+  },
+  "programs": [
+    {
+      "full_raw_repeat_equal": true,
+      "id": "ordinary-same-qualified",
+      "raw_files_per_repeat": 23,
+      "status": "error",
+      "stderr_sha256": "01711c02d2f2989f860d198ab1cba66df67fcdc953b56e63fafbc173fc5f7dab"
+    },
+    {
+      "full_raw_repeat_equal": true,
+      "id": "same-declaration-control",
+      "raw_files_per_repeat": 23,
+      "status": "success",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "full_raw_repeat_equal": true,
+      "id": "alias-same-qualified",
+      "raw_files_per_repeat": 23,
+      "status": "error",
+      "stderr_sha256": "5668e3290d2d9a49a15758af00a337665ec2dea80236836f546ab9bb0a72d267"
+    },
+    {
+      "full_raw_repeat_equal": true,
+      "id": "nullable-same-qualified",
+      "raw_files_per_repeat": 23,
+      "status": "error",
+      "stderr_sha256": "0b4f353e6e675c41a2a1d04df9b53b38fcb3e8512e12374cf3b980c38bc10d4a"
+    },
+    {
+      "full_raw_repeat_equal": true,
+      "id": "hash-delimiter-collision",
+      "raw_files_per_repeat": 23,
+      "status": "error",
+      "stderr_sha256": "c5c726fce1086fa07492809fc1b53a9cb3b37062dbe8180909d81720cdf52d6f"
+    },
+    {
+      "full_raw_repeat_equal": true,
+      "id": "builtin-pair-negative",
+      "raw_files_per_repeat": 23,
+      "status": "error",
+      "stderr_sha256": "5cfa2c14ef4a5f8fce9b043cdd5c0a4392946763c06f31ef415639a2874edcea"
+    },
+    {
+      "full_raw_repeat_equal": true,
+      "id": "builtin-reference-negative",
+      "raw_files_per_repeat": 23,
+      "status": "error",
+      "stderr_sha256": "263441b5d5a32843e9bdb53cfc087c225cbbbda23b8f05cf80cb863a00974d80"
+    },
+    {
+      "full_raw_repeat_equal": true,
+      "id": "ordinary-moduleclass-anomaly",
+      "raw_files_per_repeat": 23,
+      "status": "api-exception",
+      "stderr_sha256": "110f11a0f7d4bb6bdb0fd393b5e89b0c6f07ab71fbbeaf1e1032d1d96b3be56c"
+    }
+  ],
+  "raw_bytes": 70580,
+  "raw_cap_bytes": 25165824,
+  "read_only_java": true
+}

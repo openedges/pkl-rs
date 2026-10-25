@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Module version conflict: Expected value of type `foo.bar` defined by module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/typeMismatchWithSameQualifiedModuleName.pkl`, but got type `foo.bar` defined by module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/typeMismatchHelper.pkl`.
+
+
+5 | mod: module = typeMismatchHelper
+         ^^^^^^
+at foo.bar#mod (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/typeMismatchWithSameQualifiedModuleName.pkl, line 5)
+
+5 | mod: module = typeMismatchHelper
+                  ^^^^^^^^^^^^^^^^^^
+at foo.bar#mod (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/typeMismatchWithSameQualifiedModuleName.pkl, line 5)
+
+131 | renderer.renderDocument(value)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#Module.output.text (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L131)
+
+135 | if (renderer is BytesRenderer) renderer.renderDocument(value) else text.encodeToBytes("UTF-8")
+                                                                         ^^^^
+at pkl.base#Module.output.bytes (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L135)

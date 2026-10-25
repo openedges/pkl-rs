@@ -1,0 +1,146 @@
+{
+  "candidate_compatibility_passes_claimed": 0,
+  "kind": "stage82-class-display-Java-raw-audit",
+  "limits": [
+    "Three source modules and thirteen ordered public queries were evaluated twice with pinned Pkl 0.32.0 Java; no Rust or full M2 pass claim.",
+    "Existing Pair/type-conflict authorities remain unchanged. This capture covers module-name class display, Reference type labels/union order and one typed collision; type aliases and Host reentry are not covered. No Rust compatibility claim."
+  ],
+  "observations": [
+    {
+      "expression": "classLabel",
+      "first_error_line": "",
+      "id": "base-display-class-value",
+      "logs_count": "0",
+      "program": "base-display",
+      "status": "success",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd"
+    },
+    {
+      "expression": "expectedMismatch",
+      "first_error_line": "Expected value of type `A`, but got type `Int`.",
+      "id": "base-display-expected-class",
+      "logs_count": "0",
+      "program": "base-display",
+      "status": "error",
+      "stderr_sha256": "8abb23db0baf5b1fa29a9d2fb8b4db52928c994b6fcf6d9b1c13f299cadde80a",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "actualMismatch",
+      "first_error_line": "Expected value of type `Int`, but got type `A`.",
+      "id": "base-display-actual-instance",
+      "logs_count": "0",
+      "program": "base-display",
+      "status": "error",
+      "stderr_sha256": "21751086fff2e7b9295efc3396852cfbc7bae63f92a9b8edfe12314d8ededae0",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "referenceMismatch",
+      "first_error_line": "Expected value of type `pkl.ref#Reference<D, Int>`, but got type `pkl.ref#Reference<D, A>`.",
+      "id": "base-display-reference-class",
+      "logs_count": "0",
+      "program": "base-display",
+      "status": "error",
+      "stderr_sha256": "ae697bd6b6da197648093b8cc1726d17acc01491b79dbe9e9efec4436c784875",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "unionMismatch",
+      "first_error_line": "Expected value of type `pkl.ref#Reference<D, Int>`, but got type `pkl.ref#Reference<D, A | String>`.",
+      "id": "base-display-reference-union",
+      "logs_count": "0",
+      "program": "base-display",
+      "status": "error",
+      "stderr_sha256": "59d56eb9e585cc7b4766d70c47d1e58377983f84a18c2381b1747678f58fc1c4",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "moduleClassLabel",
+      "first_error_line": "",
+      "id": "base-display-module-class",
+      "logs_count": "0",
+      "program": "base-display",
+      "status": "success",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "bcf848e42b7824d468af5a314bd49ae3acf65eb76d209a82e140971678646a97"
+    },
+    {
+      "expression": "classLabel",
+      "first_error_line": "",
+      "id": "other-display-class-value",
+      "logs_count": "0",
+      "program": "other-display",
+      "status": "success",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "33408c5eac622a7e52eda66f3578047e2979e774d3e6d10b128f52a6fc40c04c"
+    },
+    {
+      "expression": "expectedMismatch",
+      "first_error_line": "Expected value of type `display.control#A`, but got type `Int`.",
+      "id": "other-display-expected-class",
+      "logs_count": "0",
+      "program": "other-display",
+      "status": "error",
+      "stderr_sha256": "878ed5db9f5edf231a131002a136e453c36862995cfc8c837716620c775ece39",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "actualMismatch",
+      "first_error_line": "Expected value of type `Int`, but got type `display.control#A`.",
+      "id": "other-display-actual-instance",
+      "logs_count": "0",
+      "program": "other-display",
+      "status": "error",
+      "stderr_sha256": "971e56e12e897e74cbe84321f239627901cb78e8381404b8e13c781dda39faf1",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "referenceMismatch",
+      "first_error_line": "Expected value of type `pkl.ref#Reference<display.control#D, Int>`, but got type `pkl.ref#Reference<display.control#D, display.control#A>`.",
+      "id": "other-display-reference-class",
+      "logs_count": "0",
+      "program": "other-display",
+      "status": "error",
+      "stderr_sha256": "f1bb069040cbe1ae53c0a6862424dc77b8d57de5622cff96af2ca9f44b014c16",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "unionMismatch",
+      "first_error_line": "Expected value of type `pkl.ref#Reference<display.control#D, Int>`, but got type `pkl.ref#Reference<display.control#D, String | display.control#A>`.",
+      "id": "other-display-reference-union",
+      "logs_count": "0",
+      "program": "other-display",
+      "status": "error",
+      "stderr_sha256": "4e37c95d6316a5261d36be87c6b2b102201d800a723a520b05a8ea8e6cd2dd78",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "moduleClassLabel",
+      "first_error_line": "",
+      "id": "other-display-module-class",
+      "logs_count": "0",
+      "program": "other-display",
+      "status": "success",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "dd63afbf9e5609f4596a3a357b799c94dfea099cf72e56013b0511ae67c383b3"
+    },
+    {
+      "expression": "marker",
+      "first_error_line": "Module version conflict: Expected value of type `Marker` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-class-display-oracle-prep-01/modules/typed-collision.pkl`, but got type `Marker` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-class-display-oracle-prep-01/modules/typed-collision-helper.pkl`.",
+      "id": "typed-collision",
+      "logs_count": "0",
+      "program": "typed-collision",
+      "status": "error",
+      "stderr_sha256": "3b298a5566cf658757f0bf6d310e3edaf95ac6de8a12c5720427efa91d1a4afd",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "rows": 13,
+  "schema": 1,
+  "statuses": {
+    "error": 9,
+    "success": 4
+  }
+}

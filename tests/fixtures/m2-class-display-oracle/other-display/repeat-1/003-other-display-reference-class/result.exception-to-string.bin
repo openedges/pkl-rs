@@ -1,0 +1,15 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `pkl.ref#Reference<display.control#D, Int>`, but got type `pkl.ref#Reference<display.control#D, display.control#A>`.
+Value: Reference(new D {}, display.control#A, null).item
+
+16 | referenceMismatch: ref.Reference<D, Int> = holderRef.item
+                        ^^^^^^^^^^^^^^^^^^^^^
+at display.control#referenceMismatch (file:///stage82/other-display.pkl)
+
+16 | referenceMismatch: ref.Reference<D, Int> = holderRef.item
+                                                ^^^^^^^^^^^^^^
+at display.control#referenceMismatch (file:///stage82/other-display.pkl)
+
+1 | referenceMismatch
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)

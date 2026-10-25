@@ -1,0 +1,25 @@
+{
+  "kind": "stage79-83-focused-publication-v1",
+  "complete": true,
+  "archive": {
+    "bytes": 5068226,
+    "full_member_readback": true,
+    "gzip_crc_readback": true,
+    "members": 5957,
+    "mode": 420,
+    "path": "reports/m2/stage79-83-focused-checkpoint-evidence.tar.gz",
+    "sha256": "db59155dd8fa16940f41659164631f4570db9e931bdbb2b43395639c60f99d5a",
+    "producer_path": "target/m2/stage79-83-checkpoint-selection-prep-01/stage79-83-focused-checkpoint-evidence.tar.gz"
+  },
+  "checkpoint": {
+    "path": "reports/m2/stage79-83-focused-checkpoint.json",
+    "sha256": "bc4e33f8abc0b298d39710b6ec653027ee8d99d0a8e9dc2a880468b5a94d281a",
+    "bytes": 3378
+  },
+  "all_members_read_back": 5957,
+  "gzip_crc_eof_checked": true,
+  "current_selected_sources_match": 1964,
+  "build_caches_in_archive": false,
+  "scope": "Focused implementation checkpoint only; full workspace, actual platforms and full4416 replay remain pending.",
+  "epoch": 1792967461.86675
+}

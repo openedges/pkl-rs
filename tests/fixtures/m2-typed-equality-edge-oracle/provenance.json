@@ -1,0 +1,38 @@
+{
+  "Java_audit": {
+    "bytes": 3989,
+    "mode": 420,
+    "path": "target/m2/stage81-typed-equality-edge-oracle-01/audit.json",
+    "sha256": "c05fd4e1a83cd6a468fe2ec038ebc64e9d6a33c5158d76583a35eb548bcfa38e"
+  },
+  "Java_outer": {
+    "bytes": 6541,
+    "mode": 420,
+    "path": "target/m2/stage81-typed-equality-edge-launch-01/process.json",
+    "sha256": "b77f75f0b03f3ac13fe748bf0ab7757d094becccf3c2a24427805cb9d53a4fdc"
+  },
+  "Java_report": {
+    "bytes": 49792,
+    "mode": 420,
+    "path": "target/m2/stage81-typed-equality-edge-oracle-01/report.json",
+    "sha256": "f25b8f132e8d98442c33d4a5e1ff056e54c966f7beba0bd577898dee02af5890"
+  },
+  "absent_RHS_slot_instrumented": false,
+  "compared": [
+    "status",
+    "full stdout UTF8/UTF16BE",
+    "full stderr UTF8/UTF16BE",
+    "Logger count and fields"
+  ],
+  "fresh_JVM_sessions": 6,
+  "kind": "stage81-pinned-Java9-typed-equality-edge-fixture",
+  "not_compared": [
+    "Java exception/cause class",
+    "Java Host suspension scheduling"
+  ],
+  "programs": 3,
+  "queries": 9,
+  "repetitions": 2,
+  "row_files_per_repeat": 198,
+  "source_based_null_sentinel_rule": "VmTyped.equals reads right getCachedValue nullable; Pkl VmNull is a real non-null value object."
+}

@@ -1,0 +1,6 @@
+session-open mode=string rows=2
+call-enter=string-0-quoted-class-read
+call-exit=string-0-quoted-class-read status=error
+call-enter=string-1-quoted-class-retry
+call-exit=string-1-quoted-class-retry status=error
+session-closed mode=string rows=2 public-calls=2 success=0 errors=2

@@ -141,7 +141,9 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
                 list(vec![domain, referent], ", ");
                 sequence.push(Part::Text(">".into()));
             }
-            TypeCheck::Class { id: MODULE_ID, .. } => output.push_str(module),
+            TypeCheck::Class { id: MODULE_ID, .. } => {
+                output.push_str(&crate::heap::display_class_name(module, "ModuleClass"));
+            }
             TypeCheck::Class { id: ACCESS_ID, .. } => output.push_str("pkl.ref#Access"),
             TypeCheck::Class {
                 id,
@@ -153,9 +155,9 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
                 {
                     output.push_str(name);
                 } else {
-                    output.push_str(&format!(
-                        "{}#{name}",
-                        declaring_module.as_deref().unwrap_or(module)
+                    output.push_str(&crate::heap::display_class_name(
+                        declaring_module.as_deref().unwrap_or(module),
+                        name,
                     ));
                 }
             }

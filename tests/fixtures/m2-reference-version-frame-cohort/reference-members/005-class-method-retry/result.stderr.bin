@@ -1,0 +1,14 @@
+–– Pkl Error ––
+`Reference` referent type argument may not include type constraints.
+
+5 | typealias Ref<T> = ref.Reference<D, T>
+                       ^^^^^^^^^^^^^^^^^^^
+at reference-members#Ref (file:///stage79-80/reference-members.pkl)
+
+9 | function methodCast() = ref.Reference(d, String, "") as Ref<String(true)>
+                                                            ^^^^^^^^^^^^^^^^^
+at reference-members#Holder.methodCast (file:///stage79-80/reference-members.pkl)
+
+1 | holder.methodCast()
+    ^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

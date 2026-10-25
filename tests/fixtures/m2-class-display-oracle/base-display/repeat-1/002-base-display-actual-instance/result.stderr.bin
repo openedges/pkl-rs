@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Int`, but got type `A`.
+Value: new A {}
+
+15 | actualMismatch: Int = new A {}
+                     ^^^
+at pkl.base#actualMismatch (file:///stage82/base-display.pkl)
+
+15 | actualMismatch: Int = new A {}
+                           ^^^^^^^^
+at pkl.base#actualMismatch (file:///stage82/base-display.pkl)
+
+1 | actualMismatch
+    ^^^^^^^^^^^^^^
+at  (repl:text)

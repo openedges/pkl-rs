@@ -5456,6 +5456,11 @@ impl Vm {
                         .filter(|unit| unit.mode != modules::ModuleMode::Amends)
                         .map(|unit| Class {
                             module: None,
+                            origin_uri: unit
+                                .identity
+                                .as_ref()
+                                .map(|identity| identity.original_uri.clone())
+                                .or_else(|| unit.source.as_ref().map(|source| source.uri.clone())),
                             id: unit.class_id,
                             name: if unit.id.0 == 0 {
                                 self.program.module_name.clone()
@@ -6764,6 +6769,14 @@ fn authored_type_constraints(ty: &crate::syntax::Type) -> bool {
     }
 }
 
+// Only an authored `as`/`is` expression supplies the current member as the
+// trailing Reference-use frame. Declaration annotations keep their own owner.
+#[derive(Clone, Copy)]
+enum ReferenceUseSite {
+    Declaration,
+    ExpressionCastOrTest,
+}
+
 fn reference_constrained_type(check: &TypeCheck) -> Option<&TypeCheck> {
     let mut pending = vec![check];
     let mut visited = BTreeSet::new();
@@ -7254,9 +7267,19 @@ impl Compiler<'_> {
             &mut BTreeSet::new(),
             &parameters,
         ) {
-            Ok(_) => self.initialize_type_resolution_with_parameters(ty, &parameters, output),
+            Ok(_) => self.initialize_type_resolution_with_parameters(
+                ty,
+                &parameters,
+                output,
+                ReferenceUseSite::Declaration,
+            ),
             Err(error) => {
-                self.initialize_type_resolution_with_parameters(ty, &parameters, output);
+                self.initialize_type_resolution_with_parameters(
+                    ty,
+                    &parameters,
+                    output,
+                    ReferenceUseSite::Declaration,
+                );
                 let span = error.span.unwrap_or(ty.span);
                 output.push_at(Instruction::Fail(error), span);
             }
@@ -7288,7 +7311,7 @@ impl Compiler<'_> {
                         self.identity.as_ref(),
                     )?
                 };
-                output.push(Instruction::ImportModule(spec));
+                output.push_at(Instruction::ImportModule(spec), expression.span);
             }
             ExprKind::Class {
                 type_parameters,
@@ -7304,6 +7327,11 @@ impl Compiler<'_> {
                         .source
                         .as_ref()
                         .map(|source| source.module_name.clone()),
+                    origin_uri: self
+                        .identity
+                        .as_ref()
+                        .map(|identity| identity.original_uri.clone())
+                        .or_else(|| self.source.as_ref().map(|source| source.uri.clone())),
                     id: self.declaration_base + expression.span.start,
                     name: Arc::from(
                         self.member
@@ -7659,6 +7687,63 @@ fn type_error_at_width(
     heap: &Heap,
     limit: usize,
 ) -> Result<RuntimeError, RuntimeError> {
+    // Java's Simple mismatch compares the complete qualified-name string, not
+    // separate module/name fields or class IDs. The failed nominal check has
+    // already established that this value does not have the expected type.
+    let version_conflict = (|| {
+        let (TypeCheck::Class { id, .. }, Value::Object(actual_id)) =
+            (expected.unaliased(), actual)
+        else {
+            return None;
+        };
+        if !classes::typed_instance(heap, *actual_id).ok()? {
+            return None;
+        }
+        let expected_id = heap.find_class(*id)?;
+        // Use the value's actual class handle, as VmTyped.getVmClass() does.
+        let actual_class_id = heap.object_class(*actual_id).ok()??;
+        let actual_class = heap.class_definition(actual_class_id).ok()?;
+        if heap.class_qualified_name(expected_id).ok()?
+            != heap.class_qualified_name(actual_class_id).ok()?
+        {
+            return None;
+        }
+        let expected_uri = heap
+            .class_definition(expected_id)
+            .ok()?
+            .origin_uri
+            .clone()?;
+        let actual_uri = actual_class.origin_uri.clone()?;
+        // PClassInfo.isModuleClass tests the simple class name, including its
+        // unusual behavior for a user class literally named ModuleClass.
+        let module_class = heap.class_simple_name(actual_class_id).ok()? == "ModuleClass";
+        Some((expected_uri, actual_uri, module_class))
+    })();
+    if let Some((expected_uri, actual_uri, module_class)) = version_conflict {
+        let rendered = type_name_value_with_heap(expected, module, Some(heap));
+        let qualifier = if module_class {
+            "` defined by module `"
+        } else {
+            "` defined in module `"
+        };
+        return Ok(RuntimeError::new(
+            ErrorKind::Type,
+            PklString::join(
+                &[
+                    "Module version conflict: Expected value of type `".into(),
+                    rendered.clone(),
+                    qualifier.into(),
+                    expected_uri.as_ref().into(),
+                    "`, but got type `".into(),
+                    rendered,
+                    qualifier.into(),
+                    actual_uri.as_ref().into(),
+                    "`.\n".into(),
+                ],
+                "",
+            ),
+        ));
+    }
     let actual_reference = if let Value::Object(id) = actual {
         heap.get(*id)?.reference.as_ref()
     } else {
@@ -7771,21 +7856,24 @@ fn type_name_value_with_heap(ty: &TypeCheck, module: &str, heap: Option<&Heap>) 
                 name,
                 module: declaring_module,
             } => {
-                if builtins::name(*id).is_some()
-                    || classes::base_class_name(*id).is_some()
-                    || heap
-                        .and_then(|heap| {
-                            heap.find_class(*id).and_then(|class| {
-                                heap.get_class(class)
-                                    .ok()
-                                    .and_then(|class| heap.get(class.prototype).ok())
-                            })
-                        })
-                        .is_some_and(|prototype| prototype.is_module)
-                {
+                if builtins::name(*id).is_some() || classes::base_class_name(*id).is_some() {
                     name.to_string()
+                } else if heap
+                    .and_then(|heap| {
+                        heap.find_class(*id).and_then(|class| {
+                            heap.get_class(class)
+                                .ok()
+                                .and_then(|class| heap.get(class.prototype).ok())
+                        })
+                    })
+                    .is_some_and(|prototype| prototype.is_module)
+                {
+                    crate::heap::display_class_name(name, "ModuleClass")
                 } else {
-                    format!("{}#{name}", declaring_module.as_deref().unwrap_or(module))
+                    crate::heap::display_class_name(
+                        declaring_module.as_deref().unwrap_or(module),
+                        name,
+                    )
                 }
             }
             TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {
@@ -8062,6 +8150,7 @@ impl Compiler<'_> {
             ty,
             &self.active_type_parameters.clone(),
             output,
+            ReferenceUseSite::Declaration,
         );
     }
 
@@ -8070,8 +8159,9 @@ impl Compiler<'_> {
         ty: &crate::syntax::Type,
         parameters: &BTreeMap<String, TypeCheck>,
         output: &mut Code,
+        use_site: ReferenceUseSite,
     ) {
-        if let Err(failure) = self.type_resolution_plan(ty, parameters, output) {
+        if let Err(failure) = self.type_resolution_plan(ty, parameters, output, use_site) {
             let (error, span) = *failure;
             output.push_at(Instruction::Fail(error.at(span)), span);
         }
@@ -8082,12 +8172,13 @@ impl Compiler<'_> {
         ty: &crate::syntax::Type,
         parameters: &BTreeMap<String, TypeCheck>,
         output: &mut Code,
+        use_site: ReferenceUseSite,
     ) -> Result<(), Box<(RuntimeError, Span)>> {
         use crate::syntax::{ExprKind, TypeKind};
         let reference_start = self.program.type_recipes.next_id();
         let check =
             self.compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), parameters);
-        self.reference_usage_context(reference_start, ty);
+        self.reference_usage_context(reference_start, ty, use_site);
         if let Ok(check) = check
             && check.has_declared()
         {
@@ -8115,7 +8206,7 @@ impl Compiler<'_> {
                     name_spans[0],
                 );
                 for argument in arguments {
-                    self.type_resolution_plan(argument, parameters, output)?;
+                    self.type_resolution_plan(argument, parameters, output, use_site)?;
                 }
                 output.push_at(Instruction::CheckTypeAliasInitialized, ty.span);
             }
@@ -8137,7 +8228,9 @@ impl Compiler<'_> {
                     ty.span,
                 );
                 for argument in arguments {
-                    if let Err(failure) = self.type_resolution_plan(argument, parameters, output) {
+                    if let Err(failure) =
+                        self.type_resolution_plan(argument, parameters, output, use_site)
+                    {
                         let (error, span) = *failure;
                         output.push_at(Instruction::Fail(error.at(span)), span);
                         break;
@@ -8222,7 +8315,7 @@ impl Compiler<'_> {
                     !parameter && declaration.is_none() && path.len() == 1 && path[0] == "Class";
                 if !erases_arguments {
                     for argument in arguments {
-                        self.type_resolution_plan(argument, parameters, output)?;
+                        self.type_resolution_plan(argument, parameters, output, use_site)?;
                     }
                 }
                 if alias {
@@ -8230,11 +8323,11 @@ impl Compiler<'_> {
                 }
             }
             TypeKind::Nullable(inner) | TypeKind::Constrained { base: inner, .. } => {
-                self.type_resolution_plan(inner, parameters, output)?;
+                self.type_resolution_plan(inner, parameters, output, use_site)?;
             }
             TypeKind::Union { types, .. } => {
                 for ty in types {
-                    self.type_resolution_plan(ty, parameters, output)?;
+                    self.type_resolution_plan(ty, parameters, output, use_site)?;
                 }
             }
             TypeKind::Function {
@@ -8242,9 +8335,9 @@ impl Compiler<'_> {
                 return_type,
             } => {
                 for ty in arguments {
-                    self.type_resolution_plan(ty, parameters, output)?;
+                    self.type_resolution_plan(ty, parameters, output, use_site)?;
                 }
-                self.type_resolution_plan(return_type, parameters, output)?;
+                self.type_resolution_plan(return_type, parameters, output, use_site)?;
             }
             _ => {}
         }
@@ -8270,6 +8363,18 @@ impl Compiler<'_> {
         ty: &crate::syntax::Type,
         output: &mut Code,
     ) -> Option<TypeCheck> {
+        // Let/function/collection/amendment parameter annotations retain the
+        // declaration usage frame. Keep the established two-argument entrypoint
+        // for callers outside compiler_expressions.rs.
+        self.resolve_expression_type_for_use_site(ty, output, ReferenceUseSite::Declaration)
+    }
+
+    fn resolve_expression_type_for_use_site(
+        &mut self,
+        ty: &crate::syntax::Type,
+        output: &mut Code,
+        use_site: ReferenceUseSite,
+    ) -> Option<TypeCheck> {
         match self.compile_type_at(
             ty,
             self.type_scopes.len(),
@@ -8277,23 +8382,48 @@ impl Compiler<'_> {
             &self.active_type_parameters.clone(),
         ) {
             Ok(check) => {
-                self.initialize_type_resolution(ty, output);
+                self.initialize_type_resolution_with_parameters(
+                    ty,
+                    &self.active_type_parameters.clone(),
+                    output,
+                    use_site,
+                );
                 Some(check)
             }
             Err(error) => {
-                self.initialize_type_resolution(ty, output);
+                self.initialize_type_resolution_with_parameters(
+                    ty,
+                    &self.active_type_parameters.clone(),
+                    output,
+                    use_site,
+                );
                 output.push_at(Instruction::Fail(error.at(ty.span)), ty.span);
                 None
             }
         }
     }
 
-    fn reference_usage_context(&mut self, start: usize, ty: &crate::syntax::Type) {
+    fn reference_usage_context(
+        &mut self,
+        start: usize,
+        ty: &crate::syntax::Type,
+        use_site: ReferenceUseSite,
+    ) {
+        let expression_member = if matches!(use_site, ReferenceUseSite::ExpressionCastOrTest)
+            && self.program.type_recipes.iter_from(start).any(
+                |recipe| matches!(&recipe.reference, Some(Err(error)) if !error.frames.is_empty()),
+            ) {
+            Some(self.member.clone())
+        } else {
+            None
+        };
         for recipe in self.program.type_recipes.iter_from_mut(start) {
             if let Some(Err(error)) = &mut recipe.reference
                 && !error.frames.is_empty()
             {
-                let span = if error.message
+                let span = if expression_member.is_some() {
+                    ty.span
+                } else if error.message
                     == "`Reference` referent type argument may not include type constraints."
                 {
                     match &ty.kind {
@@ -8331,7 +8461,10 @@ impl Compiler<'_> {
                         }
                         _ => None,
                     })
-                    .unwrap_or_default();
+                    // Declaration types resolve in their class/module initializer;
+                    // expression types resolve in the current executable member.
+                    // Both use the active lexical owner after alias ownership wins.
+                    .unwrap_or_else(|| self.member.clone());
                 error.frames.push(RuntimeFrame {
                     span,
                     member: member.clone(),

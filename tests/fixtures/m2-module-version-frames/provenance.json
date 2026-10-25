@@ -1,0 +1,121 @@
+{
+  "archive": {
+    "bytes": 57911607,
+    "full_member_readback_verified": true,
+    "members": 46437,
+    "mode": 420,
+    "path": "reports/m2/stage67-b-full-inventory-evidence.tar.gz",
+    "sha256": "fe02d2c88552ca4974273554214be2d4f415c985844216f1c1df63135e0a0fb8"
+  },
+  "candidate_passes_claimed": 0,
+  "cases": [
+    {
+      "case_hash": "f6bcfa3a2fbcef5df2367c96",
+      "input_sha256": "b1127913cd78ceef5ae9e9b256c1f21c3baf2658e9073a3fbf50ffb8f3f979a6",
+      "label": "Amends",
+      "members": {
+        "input.pkl": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/f6bcfa3a2fbcef5df2367c96/input.pkl",
+          "bytes": 41,
+          "sha256": "b1127913cd78ceef5ae9e9b256c1f21c3baf2658e9073a3fbf50ffb8f3f979a6"
+        },
+        "process.json": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/f6bcfa3a2fbcef5df2367c96/java/process.json",
+          "bytes": 3234,
+          "sha256": "0ca8ca66bcbf552a8a121d9cec2616053abccd35b7fcc05358888010dbd29c5d"
+        },
+        "result.json": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/f6bcfa3a2fbcef5df2367c96/java/result.json",
+          "bytes": 294,
+          "sha256": "66fd65cc0b7b499dc4bd935a4bcf1929b1351a76c6b24e7f9a8d278d48573388"
+        },
+        "stderr.bin": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/f6bcfa3a2fbcef5df2367c96/java/stderr.bin",
+          "bytes": 460,
+          "sha256": "5a5ef8d2746559b9e98377d82dd88367471eade29cf9541fdf4a8e9e911c7b11"
+        },
+        "stdout.bin": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/f6bcfa3a2fbcef5df2367c96/java/stdout.bin",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/moduleAmendsVersionCheck.pkl",
+      "uri_sha256": "ab06a7be3bfa04224b11d79356fe0824be9694300e33f464d30661017ac6b468"
+    },
+    {
+      "case_hash": "08846589fadf4717bb7f9646",
+      "input_sha256": "bb8136dda290c87fff7e6751226c5ddd98b0b5bbfe6ee13cc59932489459594e",
+      "label": "Extends",
+      "members": {
+        "input.pkl": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/08846589fadf4717bb7f9646/input.pkl",
+          "bytes": 42,
+          "sha256": "bb8136dda290c87fff7e6751226c5ddd98b0b5bbfe6ee13cc59932489459594e"
+        },
+        "process.json": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/08846589fadf4717bb7f9646/java/process.json",
+          "bytes": 3236,
+          "sha256": "1539b3b3dc19a972dfefb07eb65d56249e2a0099746623ff1e42ce66779d7d18"
+        },
+        "result.json": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/08846589fadf4717bb7f9646/java/result.json",
+          "bytes": 294,
+          "sha256": "a6a04c2841a9b86f5a9974680bd44d1d40ffb05a54a0889471c307564ba2a656"
+        },
+        "stderr.bin": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/08846589fadf4717bb7f9646/java/stderr.bin",
+          "bytes": 464,
+          "sha256": "8fb3937e6b3775d5c3a3285b9f9287d54adc95856f333b95caa791052d097266"
+        },
+        "stdout.bin": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/08846589fadf4717bb7f9646/java/stdout.bin",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/moduleExtendsVersionCheck.pkl",
+      "uri_sha256": "c0018af3155d144e186753d77b94a78e9ba63574bbf12d7f579f10d25872aff1"
+    },
+    {
+      "case_hash": "52271a1417d894b5059fb02a",
+      "input_sha256": "a8fd2cfc99a3d475ccd74f517e09a617c1f252bb1f7911f7a7fe4477c8392ada",
+      "label": "Import",
+      "members": {
+        "input.pkl": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/52271a1417d894b5059fb02a/input.pkl",
+          "bytes": 79,
+          "sha256": "a8fd2cfc99a3d475ccd74f517e09a617c1f252bb1f7911f7a7fe4477c8392ada"
+        },
+        "process.json": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/52271a1417d894b5059fb02a/java/process.json",
+          "bytes": 3234,
+          "sha256": "aba97ef5df21a4e0be918aa2a61add406f7e76a11c87309251ece1176eb9d280"
+        },
+        "result.json": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/52271a1417d894b5059fb02a/java/result.json",
+          "bytes": 294,
+          "sha256": "29af94b080da3086fa4ee1b341430202e134294cfc100d65a4d2f4ac41ed16c6"
+        },
+        "stderr.bin": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/52271a1417d894b5059fb02a/java/stderr.bin",
+          "bytes": 1257,
+          "sha256": "1b63de8d46e3203165129fe99c07207bb42f0413865f600f691449c493c2fa33"
+        },
+        "stdout.bin": {
+          "archive_member": "target/m2/stage67-full-regression-01/cases/52271a1417d894b5059fb02a/java/stdout.bin",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/moduleImportVersionCheck.pkl",
+      "uri_sha256": "5126af008587db4e4f43e753994827e702ff4ab39d7869266094d6b65a23feff"
+    }
+  ],
+  "dependency_sha256": "19888ce292a97fa8f7a8f626c44887cc839fd8a4c08a04717be4665acb2f44a5",
+  "java_sessions_started": 0,
+  "kind": "stage80-module-version-original-java-cli-v1",
+  "logger_authority": false,
+  "publication_sha256": "eccc18c0431dc40519e5b3b908e7bc0e3b1dfd5a4015836cee9601eca9d42933",
+  "rust_tests_executed": 0
+}

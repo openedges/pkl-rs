@@ -1,0 +1,89 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "programs": [
+    {
+      "id": "base-display",
+      "module_file": "modules/base-display.pkl",
+      "module_sha256": "bb1d4892701866ee9890ccc81f388db7c38a48247f21f77dea7b4f55070d88f5",
+      "module_uri": "file:///stage82/base-display.pkl",
+      "rows": [
+        {
+          "expression": "classLabel",
+          "id": "base-display-class-value"
+        },
+        {
+          "expression": "expectedMismatch",
+          "id": "base-display-expected-class"
+        },
+        {
+          "expression": "actualMismatch",
+          "id": "base-display-actual-instance"
+        },
+        {
+          "expression": "referenceMismatch",
+          "id": "base-display-reference-class"
+        },
+        {
+          "expression": "unionMismatch",
+          "id": "base-display-reference-union"
+        },
+        {
+          "expression": "moduleClassLabel",
+          "id": "base-display-module-class"
+        }
+      ]
+    },
+    {
+      "id": "other-display",
+      "module_file": "modules/other-display.pkl",
+      "module_sha256": "5199a6322dabead3795f5c70c53a83c88c1a3043b1347c8897092565a5301e92",
+      "module_uri": "file:///stage82/other-display.pkl",
+      "rows": [
+        {
+          "expression": "classLabel",
+          "id": "other-display-class-value"
+        },
+        {
+          "expression": "expectedMismatch",
+          "id": "other-display-expected-class"
+        },
+        {
+          "expression": "actualMismatch",
+          "id": "other-display-actual-instance"
+        },
+        {
+          "expression": "referenceMismatch",
+          "id": "other-display-reference-class"
+        },
+        {
+          "expression": "unionMismatch",
+          "id": "other-display-reference-union"
+        },
+        {
+          "expression": "moduleClassLabel",
+          "id": "other-display-module-class"
+        }
+      ]
+    },
+    {
+      "id": "typed-collision",
+      "module_file": "modules/typed-collision.pkl",
+      "module_sha256": "0566a3c1f961e10df22fb1d66d39cd6f63eeb9d8cbe0f2629d2999a574b12918",
+      "module_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-class-display-oracle-prep-01/modules/typed-collision.pkl",
+      "rows": [
+        {
+          "expression": "marker",
+          "id": "typed-collision"
+        }
+      ]
+    }
+  ],
+  "repetitions": 2,
+  "schema": 1,
+  "support_files": [
+    "modules/typed-collision-helper.pkl"
+  ],
+  "support_sha256": {
+    "modules/typed-collision-helper.pkl": "bbf4565339f6f624d6f6feb5d2dbba82208431e9dae2a9ea4f7d8166d71803ff"
+  }
+}

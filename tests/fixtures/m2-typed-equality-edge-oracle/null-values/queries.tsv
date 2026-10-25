@@ -1,0 +1,5 @@
+string	pkl-null-equal	nullA == nullB
+string	pkl-null-versus-zero	nullA == zero
+string	zero-versus-pkl-null	zero == nullA
+string	identity-unforced	identity
+string	deep-force-before-mismatch	forceOrder

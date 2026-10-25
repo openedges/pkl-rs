@@ -1,0 +1,178 @@
+{
+  "complete": true,
+  "free_bytes": 305590272,
+  "guest_or_compiler_executed": false,
+  "independent_review": false,
+  "limits": [
+    "Java source authority only; no Rust compatibility pass.",
+    "Type aliases are excluded; ordinary user class named ModuleClass is not added, preserving its prior Java API-exception control separately.",
+    "Timing overlaps other work and is not performance evidence."
+  ],
+  "logger_events": 0,
+  "observations": [
+    {
+      "expression": "classLabel",
+      "id": "base-display-class-value",
+      "logger_events": 0,
+      "program": "base-display",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "success",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd"
+    },
+    {
+      "expression": "expectedMismatch",
+      "id": "base-display-expected-class",
+      "logger_events": 0,
+      "program": "base-display",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "error",
+      "stderr_sha256": "8abb23db0baf5b1fa29a9d2fb8b4db52928c994b6fcf6d9b1c13f299cadde80a",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "actualMismatch",
+      "id": "base-display-actual-instance",
+      "logger_events": 0,
+      "program": "base-display",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "error",
+      "stderr_sha256": "21751086fff2e7b9295efc3396852cfbc7bae63f92a9b8edfe12314d8ededae0",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "referenceMismatch",
+      "id": "base-display-reference-class",
+      "logger_events": 0,
+      "program": "base-display",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "error",
+      "stderr_sha256": "ae697bd6b6da197648093b8cc1726d17acc01491b79dbe9e9efec4436c784875",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "unionMismatch",
+      "id": "base-display-reference-union",
+      "logger_events": 0,
+      "program": "base-display",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "error",
+      "stderr_sha256": "59d56eb9e585cc7b4766d70c47d1e58377983f84a18c2381b1747678f58fc1c4",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "moduleClassLabel",
+      "id": "base-display-module-class",
+      "logger_events": 0,
+      "program": "base-display",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "success",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "bcf848e42b7824d468af5a314bd49ae3acf65eb76d209a82e140971678646a97"
+    },
+    {
+      "expression": "classLabel",
+      "id": "other-display-class-value",
+      "logger_events": 0,
+      "program": "other-display",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "success",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "33408c5eac622a7e52eda66f3578047e2979e774d3e6d10b128f52a6fc40c04c"
+    },
+    {
+      "expression": "expectedMismatch",
+      "id": "other-display-expected-class",
+      "logger_events": 0,
+      "program": "other-display",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "error",
+      "stderr_sha256": "878ed5db9f5edf231a131002a136e453c36862995cfc8c837716620c775ece39",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "actualMismatch",
+      "id": "other-display-actual-instance",
+      "logger_events": 0,
+      "program": "other-display",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "error",
+      "stderr_sha256": "971e56e12e897e74cbe84321f239627901cb78e8381404b8e13c781dda39faf1",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "referenceMismatch",
+      "id": "other-display-reference-class",
+      "logger_events": 0,
+      "program": "other-display",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "error",
+      "stderr_sha256": "f1bb069040cbe1ae53c0a6862424dc77b8d57de5622cff96af2ca9f44b014c16",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "unionMismatch",
+      "id": "other-display-reference-union",
+      "logger_events": 0,
+      "program": "other-display",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "error",
+      "stderr_sha256": "4e37c95d6316a5261d36be87c6b2b102201d800a723a520b05a8ea8e6cd2dd78",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "moduleClassLabel",
+      "id": "other-display-module-class",
+      "logger_events": 0,
+      "program": "other-display",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "success",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "dd63afbf9e5609f4596a3a357b799c94dfea099cf72e56013b0511ae67c383b3"
+    },
+    {
+      "expression": "marker",
+      "id": "typed-collision",
+      "logger_events": 0,
+      "program": "typed-collision",
+      "raw_channels_each": 22,
+      "repetitions": 2,
+      "status": "error",
+      "stderr_sha256": "3b298a5566cf658757f0bf6d310e3edaf95ac6de8a12c5720427efa91d1a4afd",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "outer_sha256": "6dd8e700e545f322081612aeb2cd1148070e7e0c6a03272db2aaed971db5b0c5",
+  "programs": 3,
+  "query_jvm_pids": [
+    89086,
+    89087,
+    89091,
+    89092,
+    89096,
+    89097
+  ],
+  "raw_row_files_checked": 572,
+  "report_sha256": "01912d6951e613a33daec9cac3c3c2d1b5c5ceac2bb75ba479c5ed38c819a718",
+  "rows": 13,
+  "schema": "stage82-class-display-producer-readback-v1",
+  "source_and_input_bookends_current": true,
+  "source_pins": 85,
+  "status_counts": {
+    "error": 9,
+    "success": 4
+  },
+  "verifier_sha256": "f7081cf1d0bb924083c8599996937d96a3e67f40525b8a0e77cdf70ae6c4480d"
+}

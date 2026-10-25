@@ -1,0 +1,95 @@
+{
+  "adapter": "language-module-eval",
+  "execution": {
+    "reason": null,
+    "state": "ready"
+  },
+  "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateProperty.pkl",
+  "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateProperty.pkl",
+  "input_sha256": "f28fc9e8fd7cc5f8c3ec66f56269bcc0ac7e7c9ce09fbbf6f2f895cc53f08925",
+  "required": true,
+  "requirements": [],
+  "upstream_case": {
+    "assertion_count": null,
+    "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+    "channels": [
+      "stdout",
+      "stderr",
+      "exit_code",
+      "files"
+    ],
+    "command": [
+      "eval",
+      "--no-cache",
+      "--no-project",
+      "--settings",
+      "pkl:settings",
+      "--property",
+      "name1=value1",
+      "--property",
+      "name2=value2",
+      "--property",
+      "/foo/bar=foobar",
+      "--env-var",
+      "NAME1=value1",
+      "--env-var",
+      "NAME2=value2",
+      "--env-var",
+      "/foo/bar=foobar",
+      "--env-var",
+      "foo bar=foo bar",
+      "--env-var",
+      "file:///foo/bar=file:///foo/bar",
+      "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateProperty.pkl"
+    ],
+    "cwd": ".",
+    "environment": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "NO_COLOR": "1",
+      "TERM": "dumb",
+      "TZ": "UTC"
+    },
+    "execution": {
+      "reason": null,
+      "status": "ready"
+    },
+    "expected_exit": [
+      0,
+      1
+    ],
+    "expected_outcome": "observe",
+    "host_requirements": [
+      "filesystem",
+      "source-tree-resource-set"
+    ],
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateProperty.pkl",
+    "resource_set": "pkl",
+    "resources": [
+      {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/classes/duplicateProperty.err",
+        "sha256": "9cfe6abc148947221d7e33697e7942e0565f56725c41492843b3ebbc3bfec20b"
+      }
+    ],
+    "source": {
+      "path": "pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateProperty.pkl",
+      "repository": "pkl",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "sha256": "f28fc9e8fd7cc5f8c3ec66f56269bcc0ac7e7c9ce09fbbf6f2f895cc53f08925"
+    },
+    "suite": "language-snippet",
+    "target": [
+      "native",
+      "wasm",
+      "napi"
+    ],
+    "upstream_goldens": [
+      {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/classes/duplicateProperty.err",
+        "sha256": "9cfe6abc148947221d7e33697e7942e0565f56725c41492843b3ebbc3bfec20b",
+        "use": "provenance-only-normalized-by-upstream"
+      }
+    ],
+    "upstream_outcome": "error-or-logged-diagnostic"
+  }
+}

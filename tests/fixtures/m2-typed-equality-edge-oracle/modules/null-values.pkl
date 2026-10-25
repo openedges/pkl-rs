@@ -1,0 +1,9 @@
+class C {
+  first: Int = 1
+  second: Int?
+}
+nullA = new C { second = null }
+nullB = new C { second = null }
+zero = new C { second = 0 }
+identity = let (v = new C { first = throw("identity must not force"); second = null }) v == v
+forceOrder = new C { first = 0; second = 0 } == new C { first = 1; second = throw("deep force precedes mismatch") }

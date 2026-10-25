@@ -1,0 +1,4 @@
+module pkl.base
+import "typed-collision-helper.pkl" as helper
+class Marker
+marker: Marker = new helper.Marker {}

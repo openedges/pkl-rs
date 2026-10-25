@@ -1,0 +1,85 @@
+{
+  "Java_raw": [
+    {
+      "bytes": 147,
+      "mode": 420,
+      "path": "target/m2/stage67-full-regression-01/cases/741002a6d240bd41112fe706/java/stdout.bin",
+      "sha256": "7c77d2ab0d80dff6d071cf7a2e9dc0ba6dbac58344f292633ef4674fabd4a302"
+    },
+    {
+      "bytes": 0,
+      "mode": 420,
+      "path": "target/m2/stage67-full-regression-01/cases/741002a6d240bd41112fe706/java/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 294,
+      "mode": 420,
+      "path": "target/m2/stage67-full-regression-01/cases/741002a6d240bd41112fe706/java/result.json",
+      "sha256": "e201fd175cd2745351e6d8d2714b96477669f9e23d20ca92e67602efff2e0656"
+    },
+    {
+      "bytes": 3214,
+      "mode": 420,
+      "path": "target/m2/stage67-full-regression-01/cases/741002a6d240bd41112fe706/java/process.json",
+      "sha256": "e0f6308327c99e47126cdc954cb088e61dd901031e8772d23084c0afd070c9cf"
+    }
+  ],
+  "Rust_regression_executed": false,
+  "case": "741002a6d240bd41112fe706",
+  "comparison_channels": [
+    "complete stdout bytes",
+    "complete stderr bytes",
+    "exit code"
+  ],
+  "current_internal_error_raw": [
+    {
+      "bytes": 0,
+      "mode": 420,
+      "path": "target/m2/stage76-78-full-replay-01/replay/cases/741002a6d240bd41112fe706/rust/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1184,
+      "mode": 420,
+      "path": "target/m2/stage76-78-full-replay-01/replay/cases/741002a6d240bd41112fe706/rust/stderr.bin",
+      "sha256": "91689fe1c129cd661ef1284db4d11f69c6690aee48b93475eafc3ebe8d8fad3c"
+    },
+    {
+      "bytes": 293,
+      "mode": 420,
+      "path": "target/m2/stage76-78-full-replay-01/replay/cases/741002a6d240bd41112fe706/rust/result.json",
+      "sha256": "f81391ba66a66b6432c7a3411929a37e2600bd7d196205f1c46f6d55aefdf9b3"
+    },
+    {
+      "bytes": 2402,
+      "mode": 420,
+      "path": "target/m2/stage76-78-full-replay-01/replay/cases/741002a6d240bd41112fe706/rust/process.json",
+      "sha256": "4ef9f7b5643e8cf3fce152573892a44d804e461c3fd8b1a401d3073ebec5cfab"
+    }
+  ],
+  "dependencies": [
+    {
+      "bytes": 182,
+      "mode": 420,
+      "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/classes/MyClass.pkl",
+      "sha256": "8f619e6521e81a95badbe11b1937393fa1f54cfb6c7b1d806dfcfb0f4b2b7b1b"
+    },
+    {
+      "bytes": 92,
+      "mode": 420,
+      "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/classes/myClass1.pkl",
+      "sha256": "4b0f86d2fcca9fe0b6677600d5e81763ca7a39631d3d9292345aad6ccebdcb99"
+    }
+  ],
+  "kind": "stage81-unchanged-constraints14-stage67-Java-authority-v1",
+  "logger_authority": false,
+  "new_Java_sessions": 0,
+  "source_input": {
+    "bytes": 310,
+    "mode": 420,
+    "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/classes/constraints14.pkl",
+    "sha256": "d0f59a7d0f7ca29d5c0ffafcb77943370a3ceb5845ec05ecabe383e113f4bff8"
+  },
+  "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/classes/constraints14.pkl"
+}

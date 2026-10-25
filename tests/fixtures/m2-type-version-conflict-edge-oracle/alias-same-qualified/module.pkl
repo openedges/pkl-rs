@@ -1,0 +1,5 @@
+module foo.bar
+import "helper.pkl"
+class Baz
+typealias Alias = Baz
+baz: Alias = new helper.Baz {}

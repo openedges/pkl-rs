@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Module version conflict: Expected value of type `Marker` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-class-display-oracle-prep-01/modules/typed-collision.pkl`, but got type `Marker` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-class-display-oracle-prep-01/modules/typed-collision-helper.pkl`.
+
+
+4 | marker: Marker = new helper.Marker {}
+            ^^^^^^
+at pkl.base#marker (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-class-display-oracle-prep-01/modules/typed-collision.pkl)
+
+4 | marker: Marker = new helper.Marker {}
+                     ^^^^^^^^^^^^^^^^^^^^
+at pkl.base#marker (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-class-display-oracle-prep-01/modules/typed-collision.pkl)
+
+1 | marker
+    ^^^^^^
+at  (repl:text)

@@ -1,5 +1,30 @@
 # M2 language verification
 
+## Stage79–83 focused implementation checkpoint
+
+The shared runtime now preserves Reference constraint owners, the nearest authored
+minimum-version import frame, typed-equality forcing order, distinct module URIs
+in same-name type conflicts, and the enclosing owner in duplicate-class errors.
+Qualified `pkl:base.Pair` calls use the common constructor. Class labels share
+the pinned Java module-name rules across values, expected types, and Reference
+metadata, including `pkl.base` and `ModuleClass` precedence.
+
+On the final source set, 109 distinct Rust test functions passed across 24
+integration targets; two nested child reruns are not added to that count. The
+new class-display cohort compares all 13 queries twice against Java, including
+complete UTF-8/UTF-16 results and observed zero logger events. The original
+`classes/constraints14.pkl` regression now passes its full Java byte comparison.
+Formatting, reference verification, workspace/all-target Clippy, and the Wasm
+compilation check exited zero locally on macOS arm64 with Rust 1.98.1.
+
+The [focused checkpoint](../reports/m2/stage79-83-focused-checkpoint.json)
+retains earlier failures and separates their source revisions from the final
+results. The full workspace test command, current native/Node/browser
+comparisons, and the 4,416-case replay remain pending. Limited disk capacity
+required preserving and releasing inactive build artifacts between checks.
+The official aggregate below is unchanged; these focused results do not close
+M2 or establish API, release-platform, or performance parity.
+
 ## Stage76–78 canonical integration and local replay
 
 The shared evaluator now includes selected Regex and String behavior, `String.isRegex`,

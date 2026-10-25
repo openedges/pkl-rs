@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Duplicate definition of member `foo`.
+
+5 | function foo(arg): String = "foo" // duplicate
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+at duplicateFunction#Person (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateFunction.pkl, line 5)

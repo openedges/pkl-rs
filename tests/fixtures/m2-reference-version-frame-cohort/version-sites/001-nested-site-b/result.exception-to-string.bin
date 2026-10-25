@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Module `versionHigh` requires Pkl version 99.9.9 or higher, but your Pkl version is 0.32.0.
+
+1 | extends "version-high.pkl"
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at version-middle (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage79-80-frame-oracle-prep-01/modules/version-middle.pkl)
+
+1 | nestedA
+    ^^^^^^^
+at  (repl:text)

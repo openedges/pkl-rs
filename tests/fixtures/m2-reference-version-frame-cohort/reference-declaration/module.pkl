@@ -1,0 +1,10 @@
+import "pkl:ref"
+class D extends ref.Domain {
+  function renderReference(reference: ref.Reference<D, Any>): String = "ref"
+}
+typealias Ref<T> = ref.Reference<D, T>
+local d: D = new {}
+class Holder {
+  declared: Ref<String(true)> = ref.Reference(d, String, "")
+}
+holder = new Holder {}

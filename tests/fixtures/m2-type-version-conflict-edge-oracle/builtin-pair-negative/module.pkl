@@ -1,0 +1,4 @@
+module pkl.base
+import "pkl:base" as base
+class Pair
+p: Pair = base.Pair(1, 2)

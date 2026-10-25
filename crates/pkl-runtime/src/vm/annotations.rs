@@ -301,13 +301,40 @@ impl Vm {
                 .get(module)?
                 .module_unit
                 .ok_or_else(|| invalid("missing module version unit"))?;
-            return Err(RuntimeError::new(
+            let mut error = RuntimeError::new(
                 ErrorKind::Type,
                 format!(
                     "Module `{}` requires Pkl version {}.{}.{} or higher, but your Pkl version is 0.32.0.",
                     self.program.units[unit.0 as usize].name, parts[0], parts[1], parts[2]
                 ),
-            ));
+            );
+            // Java's MinPklVersionChecker attaches the importing node to this
+            // version error. Module initialization hides its synthetic callsite
+            // from the ordinary VM stack trace, so preserve that authored node
+            // here. The primary module has no importing node.
+            if let Some(caller) = self.frames.iter().rev().skip(1).find(|frame| {
+                frame
+                    .module_load
+                    .as_ref()
+                    .is_some_and(|run| run.initializing)
+                    && matches!(
+                        self.program.blocks[frame.block].get(frame.pc.saturating_sub(1)),
+                        Some(Instruction::ImportModule(_))
+                    )
+            }) {
+                let metadata = &self.program.metadata[caller.block];
+                if let Some(span) = metadata.spans[caller.pc.saturating_sub(1)] {
+                    error.frames.push(RuntimeFrame {
+                        source: metadata.source.clone(),
+                        span,
+                        member: caller
+                            .diagnostic_member
+                            .clone()
+                            .unwrap_or_else(|| metadata.member.clone()),
+                    });
+                }
+            }
+            return Err(error);
         }
         Ok(())
     }

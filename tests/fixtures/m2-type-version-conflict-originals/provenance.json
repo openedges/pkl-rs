@@ -1,0 +1,83 @@
+{
+  "candidate_passes_claimed": 0,
+  "cases": [
+    {
+      "case_directory": "8b390c1891dc5e73771f71cb",
+      "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/typeMismatchWithSameQualifiedClassName.pkl",
+      "files": {
+        "input.pkl": {
+          "bytes": 101,
+          "sha256": "aa37a05367b3932ce1d9583c3973440ba5f5eed33c51a9d12840014e4e1f3aae"
+        },
+        "process.json": {
+          "bytes": 3262,
+          "sha256": "5a0283d3429f68bb4416100edf67e86ab99c83d3b73b50c4b23b54006fa6929c"
+        },
+        "result.json": {
+          "bytes": 294,
+          "sha256": "3041527b04e473635ff536b82b8d74f4ce4d273648adc7e1ca44783271cf9816"
+        },
+        "stderr.bin": {
+          "bytes": 1634,
+          "sha256": "276a98b67f9d1f9573af41644f194aa313d77fcabbc0f9a4b6806a71e5d67461"
+        },
+        "stdout.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "uri.txt": {
+          "bytes": 212,
+          "sha256": "2a9ebfeb1d9005f4c5ddaf360d13e0bf5a57ccc8576f41892122e6222b64c358"
+        }
+      },
+      "java_exit_code": 1,
+      "original_stage67_directory": "target/m2/stage67-full-regression-01/cases/8b390c1891dc5e73771f71cb",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/typeMismatchWithSameQualifiedClassName.pkl"
+    },
+    {
+      "case_directory": "5e18b83733c0123db9317f80",
+      "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/typeMismatchWithSameQualifiedModuleName.pkl",
+      "files": {
+        "input.pkl": {
+          "bytes": 82,
+          "sha256": "b93988764185d72971e49811cd116937ed781aa29acce589c46a40a42415ced4"
+        },
+        "process.json": {
+          "bytes": 3264,
+          "sha256": "1e0b02c5b82a82ba9495c5b2fde38fc3b3df9df45ae37f75b9fa0c6811aec0c5"
+        },
+        "result.json": {
+          "bytes": 294,
+          "sha256": "de8ed80e9f37ed335524a0b4469372861623dd195a1b4ec615d49e5c04f04553"
+        },
+        "stderr.bin": {
+          "bytes": 1608,
+          "sha256": "6c61fb4d446fcd96a95f6a84541c9bd81effb78a081d9542e41c92a1cbc13955"
+        },
+        "stdout.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "uri.txt": {
+          "bytes": 213,
+          "sha256": "511533456d53cc7ed5ec801150c8c3ed830d306bc677711829bef1a3bedd84a6"
+        }
+      },
+      "java_exit_code": 1,
+      "original_stage67_directory": "target/m2/stage67-full-regression-01/cases/5e18b83733c0123db9317f80",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/typeMismatchWithSameQualifiedModuleName.pkl"
+    }
+  ],
+  "helper": {
+    "bytes": 26,
+    "fixture": "typeMismatchHelper.pkl",
+    "sha256": "533eb6cc7a4b35edcd4175c9cd271317ed84ecdad7792a20b0583bbc7ec369c3",
+    "upstream_path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/typeMismatchHelper.pkl"
+  },
+  "java_evaluations_by_materializer": 0,
+  "kind": "stage82-unchanged-stage67-java-cli-fixtures-v1",
+  "published_archive": {
+    "path": "reports/m2/stage67-b-full-inventory-evidence.tar.gz",
+    "sha256": "fe02d2c88552ca4974273554214be2d4f415c985844216f1c1df63135e0a0fb8"
+  }
+}

@@ -1,0 +1,15 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `display.control#A`, but got type `Int`.
+Value: 1
+
+14 | expectedMismatch: A = 1
+                       ^
+at display.control#expectedMismatch (file:///stage82/other-display.pkl)
+
+14 | expectedMismatch: A = 1
+                           ^
+at display.control#expectedMismatch (file:///stage82/other-display.pkl)
+
+1 | expectedMismatch
+    ^^^^^^^^^^^^^^^^
+at  (repl:text)

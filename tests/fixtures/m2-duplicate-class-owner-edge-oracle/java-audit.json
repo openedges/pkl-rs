@@ -1,0 +1,75 @@
+{
+  "candidate_compatibility_passes_claimed": 0,
+  "kind": "stage83-duplicate-owner-Java-raw-audit",
+  "limits": [
+    "Three source modules and six ordered public queries were evaluated twice with pinned Pkl 0.32.0 Java; no Rust or full M2 pass claim.",
+    "Existing four CLI originals remain separate and unchanged. These observations cover duplicate ownership/order through the synchronous public evaluator, not Host suspension/reentry parity or Rust compatibility."
+  ],
+  "observations": [
+    {
+      "expression": "value",
+      "first_error_line": "Duplicate definition of member `field.name`.",
+      "id": "quoted-class-read",
+      "logs_count": "0",
+      "program": "quoted-class",
+      "status": "error",
+      "stderr_sha256": "f6edd8598778a9d853b12ce78db3171fed17f8ccb1610dfe1258e9adf5fea222",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "value",
+      "first_error_line": "Duplicate definition of member `field.name`.",
+      "id": "quoted-class-retry",
+      "logs_count": "0",
+      "program": "quoted-class",
+      "status": "error",
+      "stderr_sha256": "f6edd8598778a9d853b12ce78db3171fed17f8ccb1610dfe1258e9adf5fea222",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "value",
+      "first_error_line": "Duplicate definition of member `f`.",
+      "id": "nested-body-read",
+      "logs_count": "0",
+      "program": "nested-body",
+      "status": "error",
+      "stderr_sha256": "63a2d08f41c06ffc161d7ba264b0daad8dc3476ce915b883662dedba8a05f92f",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "value",
+      "first_error_line": "Duplicate definition of member `f`.",
+      "id": "nested-body-retry",
+      "logs_count": "0",
+      "program": "nested-body",
+      "status": "error",
+      "stderr_sha256": "63a2d08f41c06ffc161d7ba264b0daad8dc3476ce915b883662dedba8a05f92f",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "value",
+      "first_error_line": "A non-local object property cannot have a type annotation.",
+      "id": "body-before-duplicate-read",
+      "logs_count": "0",
+      "program": "body-before-duplicate",
+      "status": "error",
+      "stderr_sha256": "edee683b74d4335ad7874bf9081c665a5521dd1e9ba880d1936ec3091870d2b0",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expression": "value",
+      "first_error_line": "A non-local object property cannot have a type annotation.",
+      "id": "body-before-duplicate-retry",
+      "logs_count": "0",
+      "program": "body-before-duplicate",
+      "status": "error",
+      "stderr_sha256": "edee683b74d4335ad7874bf9081c665a5521dd1e9ba880d1936ec3091870d2b0",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "rows": 6,
+  "schema": 1,
+  "statuses": {
+    "error": 6
+  }
+}

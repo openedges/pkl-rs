@@ -1,0 +1,7 @@
+module pkl.ref
+import "pkl:ref" as ref
+class Reference
+class D extends ref.Domain {
+  function renderReference(reference: ref.Reference<D, Any>): String = ""
+}
+r: Reference = ref.Reference(new D {}, String, null)

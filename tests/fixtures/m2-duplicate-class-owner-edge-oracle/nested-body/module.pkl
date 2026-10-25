@@ -1,0 +1,6 @@
+class Person {
+  function f() = new Dynamic { child = new { value = trace(1) } }
+  f = 0
+  function f() = new Dynamic { child = new { value = trace(2) } }
+}
+value = 42

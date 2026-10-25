@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+deep force precedes mismatch
+
+9 | forceOrder = new C { first = 0; second = 0 } == new C { first = 1; second = throw("deep force precedes mismatch") }
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at null-values#forceOrder.second (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage81-typed-equality-edge-prep-01/modules/null-values.pkl)
+
+1 | forceOrder
+    ^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,32 @@
+{
+  "authority_outer_sha256": "6dd8e700e545f322081612aeb2cd1148070e7e0c6a03272db2aaed971db5b0c5",
+  "authority_report_sha256": "01912d6951e613a33daec9cac3c3c2d1b5c5ceac2bb75ba479c5ed38c819a718",
+  "baseline": "Pkl 0.32.0",
+  "helper": {
+    "path": "target/m2/stage82-class-display-oracle-prep-01/modules/typed-collision-helper.pkl",
+    "sha256": "bbf4565339f6f624d6f6feb5d2dbba82208431e9dae2a9ea4f7d8166d71803ff"
+  },
+  "java_repetitions": 2,
+  "known_limits": [
+    "Type aliases are not included.",
+    "User class named ModuleClass prior Java API exception remains separate; these rows concern actual module class values.",
+    "No Rust validation has executed yet."
+  ],
+  "logger_events": 0,
+  "ordinary_errors": 9,
+  "programs": 3,
+  "query_jvms": 6,
+  "raw_preserved_but_not_rust_compared": [
+    "Java error class",
+    "exception.toString",
+    "cause fields",
+    "Java exported type"
+  ],
+  "rows": 13,
+  "rust_comparison_scope": [
+    "result status via value/language-error disposition",
+    "full result stdout/stderr UTF8 and UTF16",
+    "observed zero Logger count"
+  ],
+  "successes": 4
+}

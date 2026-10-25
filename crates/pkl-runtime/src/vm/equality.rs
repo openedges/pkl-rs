@@ -197,6 +197,7 @@ enum Task {
     Reject,
     Compare(Value, Value, bool),
     CompareMembers(ObjectId, ObjectId),
+    CompareTypedMember(ObjectId, ObjectId, CollectionMember),
     MapNext(ObjectId, ObjectId, usize),
     SetNext(ObjectId, ObjectId, usize),
     SetLookup(ObjectId, Value),
@@ -1147,6 +1148,26 @@ impl Vm {
                 run.roots.extend([member.key.clone(), left.clone()]);
                 run.tasks.push(Task::Match(member.key, left, candidates, 0));
             }
+            Task::CompareTypedMember(a, b, member) => {
+                // VmTyped.equals reads the next property only after the previous
+                // comparison succeeds. A recursively forced receiver can still
+                // have an in-progress later property with no cached value.
+                let left = self.cached_equality_member(a, &member)?;
+                let key = CacheKey {
+                    owner: None,
+                    name: member.name.clone(),
+                    method: false,
+                    entry: member.kind != CollectionMemberKind::Property,
+                };
+                if let Some(right) = self.cached_slot(b, &key)? {
+                    run.roots.extend([left.clone(), right.clone()]);
+                    run.tasks.push(Task::Compare(left, right, false));
+                } else {
+                    // Java compares a present left value with its missing-right
+                    // null sentinel. That sentinel is not a Pkl null value.
+                    run.reject();
+                }
+            }
             Task::CompareMembers(a, b) => {
                 if self.heap.get(a)?.collection_kind == CollectionKind::Mapping {
                     let mut pending = Vec::new();
@@ -1177,28 +1198,32 @@ impl Vm {
                 let lhs = self.comparison_members(a)?;
                 let rhs = self.equality_members(b)?;
                 let typed = self.class_identity(a)?.is_some() || self.heap.get(a)?.is_module;
-                let mut entries = Vec::new();
                 if typed {
-                    for member in lhs {
-                        let value = self.cached_equality_member(a, &member)?;
-                        entries.push((Some(member), None, value));
-                    }
-                } else {
-                    let members = self.equality_members(a)?;
-                    for slot in &self.heap.get(a)?.cache_slots {
-                        if slot.key.owner.is_some() {
-                            if matches!(
-                                self.heap.get(a)?.collection_kind,
-                                CollectionKind::Listing | CollectionKind::Mapping
-                            ) {
-                                entries.push((None, Some(slot.key.clone()), slot.value.clone()));
-                            }
-                        } else if let Some(member) = members.iter().find(|member| {
-                            member.name == slot.key.name
-                                && (member.kind != CollectionMemberKind::Property) == slot.key.entry
-                        }) {
-                            entries.push((Some(member.clone()), None, slot.value.clone()));
+                    if self.equality_members(a)?.len() != rhs.len() {
+                        run.reject();
+                    } else {
+                        for member in lhs.into_iter().rev() {
+                            run.tasks.push(Task::CompareTypedMember(a, b, member));
                         }
+                    }
+                    self.frames[frame_index].equality_run = Some(run);
+                    return Ok(());
+                }
+                let mut entries = Vec::new();
+                let members = self.equality_members(a)?;
+                for slot in &self.heap.get(a)?.cache_slots {
+                    if slot.key.owner.is_some() {
+                        if matches!(
+                            self.heap.get(a)?.collection_kind,
+                            CollectionKind::Listing | CollectionKind::Mapping
+                        ) {
+                            entries.push((None, Some(slot.key.clone()), slot.value.clone()));
+                        }
+                    } else if let Some(member) = members.iter().find(|member| {
+                        member.name == slot.key.name
+                            && (member.kind != CollectionMemberKind::Property) == slot.key.entry
+                    }) {
+                        entries.push((Some(member.clone()), None, slot.value.clone()));
                     }
                 }
                 if self.equality_members(a)?.len() != rhs.len() {

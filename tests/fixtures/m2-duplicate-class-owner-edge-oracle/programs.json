@@ -1,0 +1,57 @@
+{
+  "baseline": "Pkl 0.32.0",
+  "programs": [
+    {
+      "id": "quoted-class",
+      "module_file": "modules/quoted-class.pkl",
+      "module_sha256": "21223ac71ce05a7839a104b7b511b6094426e902d2cbbf0c6ed36a633a96a046",
+      "module_uri": "file:///stage83/quoted-class.pkl",
+      "rows": [
+        {
+          "expression": "value",
+          "id": "quoted-class-read"
+        },
+        {
+          "expression": "value",
+          "id": "quoted-class-retry"
+        }
+      ]
+    },
+    {
+      "id": "nested-body",
+      "module_file": "modules/nested-body.pkl",
+      "module_sha256": "276e39a1c3a875dbc165ccd2e5644be9aad1228cf08a43546dc1ba09aa2c6781",
+      "module_uri": "file:///stage83/nested-body.pkl",
+      "rows": [
+        {
+          "expression": "value",
+          "id": "nested-body-read"
+        },
+        {
+          "expression": "value",
+          "id": "nested-body-retry"
+        }
+      ]
+    },
+    {
+      "id": "body-before-duplicate",
+      "module_file": "modules/body-before-duplicate.pkl",
+      "module_sha256": "8719247e5ded0e1210152169889d2278b590888fa01246304e8cbb1728271525",
+      "module_uri": "file:///stage83/body-before-duplicate.pkl",
+      "rows": [
+        {
+          "expression": "value",
+          "id": "body-before-duplicate-read"
+        },
+        {
+          "expression": "value",
+          "id": "body-before-duplicate-retry"
+        }
+      ]
+    }
+  ],
+  "repetitions": 2,
+  "schema": 1,
+  "support_files": [],
+  "support_sha256": {}
+}

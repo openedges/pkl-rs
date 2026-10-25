@@ -342,6 +342,9 @@ fn base_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
         ExprKind::Function { method: true, .. } if name == "Regex" => {
             return vec![Instruction::RegexConstructor];
         }
+        ExprKind::Function { method: true, .. } if name == "Pair" => {
+            return vec![Instruction::PairConstructor];
+        }
         ExprKind::Function { method: true, .. } if name == "IntSeq" => {
             return vec![Instruction::IntSeqConstructor];
         }

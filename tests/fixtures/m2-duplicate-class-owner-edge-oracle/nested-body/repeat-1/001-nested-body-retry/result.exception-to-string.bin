@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Duplicate definition of member `f`.
+
+4 | function f() = new Dynamic { child = new { value = trace(2) } }
+    ^^^^^^^^^^^^
+at nested-body#Person (file:///stage83/nested-body.pkl)

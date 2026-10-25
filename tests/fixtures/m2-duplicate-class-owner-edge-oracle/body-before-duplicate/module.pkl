@@ -1,0 +1,5 @@
+class `quoted class` {
+  function f() = 1
+  function f() = new Dynamic { child = new { bad: Int = trace(2) } }
+}
+value = 42

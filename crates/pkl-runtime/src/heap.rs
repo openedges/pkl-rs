@@ -119,9 +119,22 @@ pub struct Function {
     pub captured_this: Option<Value>,
 }
 
+/// Class labels follow PClassInfo.getDisplayName, independently of identity or URI.
+pub(crate) fn display_class_name(module: &str, simple_name: &str) -> String {
+    if module == "pkl.base" {
+        simple_name.to_owned()
+    } else if simple_name == "ModuleClass" {
+        module.to_owned()
+    } else {
+        format!("{module}#{simple_name}")
+    }
+}
+
 #[derive(Clone, Debug)]
 pub struct Class {
     pub module: Option<Arc<str>>,
+    /// Original declaration ModuleKey URI, independent of the displayed module name.
+    pub origin_uri: Option<Arc<str>>,
     pub id: usize,
     pub name: Arc<str>,
     pub open: bool,
@@ -507,11 +520,12 @@ impl Heap {
     pub(crate) fn class_display_name(&self, id: ObjectId) -> Result<String, RuntimeError> {
         let prototype = self.get(self.get_class(id)?.prototype)?;
         let definition = self.class_definition(id)?;
-        if prototype.is_module || definition.module.as_deref() == Some("pkl.base") {
-            Ok(definition.name.to_string())
+        let module = if prototype.is_module {
+            definition.name.as_ref()
         } else {
-            self.class_qualified_name(id)
-        }
+            definition.module.as_deref().unwrap_or("")
+        };
+        Ok(display_class_name(module, self.class_simple_name(id)?))
     }
 
     pub(crate) fn declaration_object(&self, value: &Value) -> Result<ObjectId, RuntimeError> {

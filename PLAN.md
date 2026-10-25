@@ -2855,6 +2855,28 @@ artifact·프로세스 식별자를 함께 연결한다.
 실패한 최초 시도를 보존하고 새 읽기 전용 검증의 종료 0을 구분한다. 이 기록은
 호환 통과 수를 늘리거나 전체 컴파일 입력의 완전한 포괄을 증명하지 않는다.
 
+#### Stage79–83 — 언어 의미론과 클래스 표시의 국소 구현 체크포인트
+
+Reference 제약의 선언 owner, 최소 버전 오류의 가장 가까운 authored import
+프레임, typed equality의 강제 평가 순서, 같은 이름의 서로 다른 타입을 구분하는
+모듈 URI, 중복 클래스 오류의 enclosing owner를 공통 런타임에 반영했다.
+`pkl:base.Pair` 생성자 연결을 보완하고 값·기대 타입·Reference 메타데이터의
+클래스 표시를 Java의 `pkl.base`·`ModuleClass` 우선순위에 맞춰 공유했다.
+
+최종 소스에서 24개 integration target의 서로 다른 Rust 검사 109개가
+통과했다. 중첩 child 재실행 2개는 추가 검사로 세지 않는다. 새 클래스 표시
+질의 13개를 두 번씩 Java의 전체 UTF-8·UTF-16 결과와 비교했고 logger 0회
+관찰도 일치했다. 원본 `classes/constraints14.pkl`의 전체 바이트 회귀가
+통과했다. 로컬 macOS arm64·Rust 1.98.1에서 포맷·참조 검사, 전체 target
+Clippy와 Wasm 빌드 검사가 종료 0이다.
+
+[국소 체크포인트](reports/m2/stage79-83-focused-checkpoint.json)에 초기 실패와
+최종 검증 소스를 구분해 기록한다. 디스크 공간을 확보하려고 사용이 끝난 빌드
+산출물을 원본 그대로 보관한 뒤 캐시에서 해제했다. 전체 workspace 테스트 명령,
+현재 소스의 native·Node·브라우저 비교와 4,416개 전체 replay는 아직 남아 있다.
+따라서 공식 집계 4,188/4,416과 미준비 111개는 변경하지 않으며, M2 아홉 영역과
+전체 완료 조건도 계속 열린 상태로 유지한다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Duplicate definition of member `field.name`.
+
+3 | `field.name`: String
+    ^^^^^^^^^^^^^^^^^^^^
+at quoted-class#`outer.name` (file:///stage83/quoted-class.pkl)

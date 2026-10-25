@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+A non-local object property cannot have a type annotation.
+
+3 | function f() = new Dynamic { child = new { bad: Int = trace(2) } }
+                                                    ^^^
+at body-before-duplicate#`quoted class`.f.child.bad (file:///stage83/body-before-duplicate.pkl)

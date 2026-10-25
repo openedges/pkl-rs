@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `pkl.ref#Reference<D, Int>`, but got type `pkl.ref#Reference<D, A | String>`.
+Value: Reference(new D {}, A | String, null).mixed
+
+17 | unionMismatch: ref.Reference<D, Int> = holderRef.mixed
+                    ^^^^^^^^^^^^^^^^^^^^^
+at pkl.base#unionMismatch (file:///stage82/base-display.pkl)
+
+17 | unionMismatch: ref.Reference<D, Int> = holderRef.mixed
+                                            ^^^^^^^^^^^^^^^
+at pkl.base#unionMismatch (file:///stage82/base-display.pkl)
+
+1 | unionMismatch
+    ^^^^^^^^^^^^^
+at  (repl:text)

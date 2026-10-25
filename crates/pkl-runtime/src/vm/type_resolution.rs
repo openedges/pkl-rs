@@ -1319,6 +1319,7 @@ mod tests {
                     class_definition: Some(Class {
                         id: 42,
                         module: Some("owner".into()),
+                        origin_uri: None,
                         name: "C".into(),
                         open: false,
                         abstract_: false,

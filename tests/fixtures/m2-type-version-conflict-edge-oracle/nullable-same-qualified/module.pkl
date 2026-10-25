@@ -1,0 +1,4 @@
+module foo.bar
+import "helper.pkl"
+class Baz
+baz: Baz? = new helper.Baz {}

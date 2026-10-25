@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Duplicate definition of member `foo`.
+
+5 | foo: String // duplicate
+    ^^^^^^^^^^^
+at duplicateProperty#Person (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateProperty.pkl, line 5)

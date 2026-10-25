@@ -1,0 +1,18 @@
+–– Pkl Error ––
+`Reference` referent type argument may not include type constraints.
+
+5 | typealias Ref<T> = ref.Reference<D, T>
+                       ^^^^^^^^^^^^^^^^^^^
+at reference-declaration#Ref (file:///stage79-80/reference-declaration.pkl)
+
+8 | declared: Ref<String(true)> = ref.Reference(d, String, "")
+              ^^^^^^^^^^^^^^^^^
+at reference-declaration#Holder (file:///stage79-80/reference-declaration.pkl)
+
+10 | holder = new Holder {}
+                  ^^^^^^
+at reference-declaration#holder (file:///stage79-80/reference-declaration.pkl)
+
+1 | holder.declared
+    ^^^^^^
+at  (repl:text)

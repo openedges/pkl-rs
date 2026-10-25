@@ -752,12 +752,21 @@ impl<'a> Resolver<'a> {
                                 .with_hint(format!("To define a non-local {target}, extend rather than amend the parent module (which must be `open` for extension).")));
                         }
                         if !seen.insert((member.name.as_str(), is_method(member))) {
-                            return Err(Diagnostic::language(
+                            // The member visitor has exited; Java reports this
+                            // duplicate from the enclosing declaration scope.
+                            self.diagnostic_owner_requested = true;
+                            let mut error = Diagnostic::language(
                                 DiagnosticOrigin::Resolver,
                                 DiagnosticKind::DuplicateMember,
                                 member_header_span(member),
                                 format!("Duplicate definition of member `{}`.", member.name),
-                            ));
+                            );
+                            error.member = self
+                                .diagnostic_owners
+                                .name()
+                                .filter(|name| !name.is_empty())
+                                .map(Into::into);
+                            return Err(error);
                         }
                     }
                     if let Some(&member) = members.get(index) {

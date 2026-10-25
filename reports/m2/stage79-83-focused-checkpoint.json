@@ -1,0 +1,83 @@
+{
+  "archive": {
+    "bytes": 5068226,
+    "full_member_readback": true,
+    "gzip_crc_readback": true,
+    "members": 5957,
+    "mode": 420,
+    "path": "reports/m2/stage79-83-focused-checkpoint-evidence.tar.gz",
+    "sha256": "db59155dd8fa16940f41659164631f4570db9e931bdbb2b43395639c60f99d5a",
+    "producer_path": "target/m2/stage79-83-checkpoint-selection-prep-01/stage79-83-focused-checkpoint-evidence.tar.gz"
+  },
+  "complete": true,
+  "excluded": [
+    "Compiled Rust runtime/test binaries and all build caches",
+    "Sparse Stage67 Java archive working copy; committed archive identity retained",
+    "Java isolated HOME/TMP and generated Truffle dylib caches",
+    "Stage79\u201383 full workspace, native/NAPI/browser comparison, full 4416-case replay"
+  ],
+  "full_m2_complete": false,
+  "inventory": {
+    "bytes": 2106433,
+    "path_in_archive": "archive-inventory.json",
+    "sha256": "f5d9a76405bf898a2e8fab60573d82bfcfe4f5a1997301ff50328ac9dc3d1ca2"
+  },
+  "kind": "stage79-83-focused-implementation-checkpoint-v1",
+  "limits": [
+    "The initial default-profile first and new-eight failures remain failed historical commands.",
+    "The pre-helper Stage82 focused success is not relabeled as a test of the final shared helper.",
+    "Stage67 original Java CLI authority is referenced by exact committed checkpoint/publication/archive identities; sparse working archive bytes are absent and not recopied.",
+    "This is a focused implementation checkpoint. The full workspace suite, platform comparison and full 4416-case replay remain pending."
+  ],
+  "platform_or_full_replay_pass_claimed": false,
+  "scope": {
+    "class_display": {
+      "java_queries": 13,
+      "named_tests": 3,
+      "repeats": 2,
+      "targets": 1
+    },
+    "distinct_named_tests": 109,
+    "final_nine": {
+      "named_tests": 16,
+      "targets": 9
+    },
+    "nearby": {
+      "named_tests": 90,
+      "nested_child_repeats": 2,
+      "targets": 14
+    },
+    "pending": [
+      "cargo test --workspace --locked",
+      "native/NAPI/browser platform comparison",
+      "full 4416-case replay and strict completion gate"
+    ],
+    "required_checks_terminal_zero": [
+      "cargo fmt --all -- --check",
+      "cargo xtask verify",
+      "cargo clippy --workspace --all-targets --locked -- -D warnings",
+      "cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked"
+    ],
+    "selected_targets": 24,
+    "source_paths_in_common_recorded_map": 2363
+  },
+  "selected_source_logical_bytes": 8202943,
+  "selected_source_paths": 1964,
+  "selection": {
+    "bytes": 40931,
+    "mode": 420,
+    "path": "target/m2/stage79-83-checkpoint-selection-prep-01/selection.json",
+    "sha256": "4320f1bb55e9a5b0e0ea2c32d696ef7341264970b7e16ca5a2c4a90a4d8bb879",
+    "path_in_archive": "target/m2/stage79-83-checkpoint-selection-prep-01/selection.json"
+  },
+  "source_map": {
+    "bytes": 459391,
+    "mode": 420,
+    "path": "target/m2/stage79-83-checkpoint-selection-prep-01/selected-source-map.json",
+    "sha256": "07b5e928443fe63e5b1c07d9afb07c02f06a7aafe421d9f0a9e64795a500ec46",
+    "path_in_archive": "target/m2/stage79-83-checkpoint-selection-prep-01/selected-source-map.json"
+  },
+  "workspace_suite_pass_claimed": false,
+  "implementation_base_commit": "44e42a6ddbf91706785fd808ab17c1141696f91f",
+  "provenance": "Recorded local macOS arm64 execution; no hosted CI claim."
+}

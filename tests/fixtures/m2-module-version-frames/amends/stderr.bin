@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Module `moduleWithHighMinPklVersion` requires Pkl version 99.9.9 or higher, but your Pkl version is 0.32.0.
+
+1 | amends "moduleWithHighMinPklVersion.pkl"
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at moduleAmendsVersionCheck (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/moduleAmendsVersionCheck.pkl, line 1)

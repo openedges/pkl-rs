@@ -1,0 +1,7 @@
+first = 1
+later {
+  new {
+    first = 1
+    later {}
+  }
+}

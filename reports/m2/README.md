@@ -1,5 +1,20 @@
 # M2 language evidence
 
+## Stage79–83 focused implementation checkpoint
+
+The [focused checkpoint](stage79-83-focused-checkpoint.json) records shared
+Reference/version-frame, typed-equality, duplicate-owner, and type-conflict fixes,
+qualified Pair construction, and common class-display rules. Final-source local
+checks passed 109 distinct test functions across 24 integration targets, plus
+formatting, reference verification, all-target Clippy, and Wasm compilation.
+Two nested child reruns are not counted as additional tests. Java's 13-query
+class-display cohort matches on all tested public channels over two repeats.
+
+Full workspace tests, current platform execution, and the full ready-corpus
+replay remain pending. Earlier failed attempts are preserved separately; the
+Stage76–78 aggregate below is still the latest completed full replay. This is
+a focused development checkpoint, not M2 completion or performance evidence.
+
 ## Stage76–78 canonical implementation evidence
 
 The shared evaluator now includes selected Regex and String behavior, `String.isRegex`,

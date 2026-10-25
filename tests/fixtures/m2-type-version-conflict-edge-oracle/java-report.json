@@ -1,0 +1,2524 @@
+{
+  "artifact_stable": true,
+  "candidate_passes_claimed": 0,
+  "complete": true,
+  "environment": {
+    "COLUMNS": "80",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "NO_COLOR": "1",
+    "PATH": "/bin:/usr/bin",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+    "TERM": "dumb",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+    "TZ": "UTC"
+  },
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "inputs_stable": true,
+  "jar": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+  "jar_after": {
+    "bytes": 26877190,
+    "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059"
+  },
+  "jar_before": {
+    "bytes": 26877190,
+    "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059"
+  },
+  "java": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+  "jdk_after": {
+    "executable": {
+      "bytes": 70432,
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c"
+    },
+    "modules": {
+      "bytes": 140714013,
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf"
+    },
+    "release": {
+      "bytes": 1628,
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+    },
+    "src_zip": {
+      "bytes": 54198945,
+      "sha256": "173282dd3f4c4004548e6a09e6687acff25120967b1a8375a5df4c677d7f4e4e"
+    }
+  },
+  "jdk_before": {
+    "executable": {
+      "bytes": 70432,
+      "sha256": "9be1d0a740ff6502df1a762145e62860f5de4b7e17658d9cb9498da3acf9d16c"
+    },
+    "modules": {
+      "bytes": 140714013,
+      "sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf"
+    },
+    "properties": {
+      "file.encoding": "UTF-8",
+      "file.separator": "/",
+      "ftp.nonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+      "http.nonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+      "java.class.path": "",
+      "java.class.version": "65.0",
+      "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+      "java.io.tmpdir": "/var/folders/_q/s969zhkx6qd8p32v2nd87ygh0000gp/T/",
+      "java.library.path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home/Library/Java/Extensions",
+      "java.runtime.name": "OpenJDK Runtime Environment",
+      "java.runtime.version": "21.0.12.1+1-LTS",
+      "java.specification.name": "Java Platform API Specification",
+      "java.specification.vendor": "Oracle Corporation",
+      "java.specification.version": "21",
+      "java.vendor": "Eclipse Adoptium",
+      "java.vendor.url": "https://adoptium.net/",
+      "java.vendor.url.bug": "https://github.com/adoptium/adoptium-support/issues",
+      "java.vendor.version": "Temurin-21.0.12.1+1",
+      "java.version": "21.0.12.1",
+      "java.version.date": "2026-08-18",
+      "java.vm.compressedOopsMode": "Non-zero disjoint base",
+      "java.vm.info": "mixed mode, sharing",
+      "java.vm.name": "OpenJDK 64-Bit Server VM",
+      "java.vm.specification.name": "Java Virtual Machine Specification",
+      "java.vm.specification.vendor": "Oracle Corporation",
+      "java.vm.specification.version": "21",
+      "java.vm.vendor": "Eclipse Adoptium",
+      "java.vm.version": "21.0.12.1+1-LTS",
+      "jdk.debug": "release",
+      "line.separator": "\\n ",
+      "native.encoding": "US-ASCII",
+      "os.arch": "aarch64",
+      "os.name": "Mac OS X",
+      "os.version": "27.0",
+      "path.separator": ":",
+      "socksNonProxyHosts": "local|*.local|169.254/16|*.169.254/16",
+      "stderr.encoding": "US-ASCII",
+      "stdout.encoding": "US-ASCII",
+      "sun.arch.data.model": "64",
+      "sun.boot.library.path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/lib",
+      "sun.cpu.endian": "little",
+      "sun.io.unicode.encoding": "UnicodeBig",
+      "sun.java.launcher": "SUN_STANDARD",
+      "sun.jnu.encoding": "UTF-8",
+      "sun.management.compiler": "HotSpot 64-Bit Tiered Compilers",
+      "user.country": "KR",
+      "user.dir": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01",
+      "user.home": "/Users/cody.ij.hwang",
+      "user.language": "ko",
+      "user.name": "cody.ij.hwang"
+    },
+    "release": {
+      "bytes": 1628,
+      "sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1"
+    },
+    "src_zip": {
+      "bytes": 54198945,
+      "sha256": "173282dd3f4c4004548e6a09e6687acff25120967b1a8375a5df4c677d7f4e4e"
+    }
+  },
+  "kind": "stage82-java-first-edge-capture-v1",
+  "logger_authority_claimed": false,
+  "minimum_free_bytes": 681574400,
+  "oracle_source": {
+    "bytes": 4819,
+    "sha256": "6488595d614869fb59f50fe8d175f18e1d695031f768a38bfdc85f7fe28c9cc0"
+  },
+  "programs": [
+    {
+      "first_error_line": [
+        "\u2013\u2013 Pkl Error \u2013\u2013",
+        "Module version conflict: Expected value of type `foo.bar#Baz` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-same-qualified/module.pkl`, but got type `foo.bar#Baz` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-same-qualified/helper.pkl`.",
+        ""
+      ],
+      "id": "ordinary-same-qualified",
+      "inputs_after": {
+        "helper.pkl": {
+          "bytes": 25,
+          "sha256": "7f7021f300bf55420dc927e2fe5416b9184434520dfef98ed2c4ecab8af3433c"
+        },
+        "module.pkl": {
+          "bytes": 74,
+          "sha256": "9feabacb67af6ccc8041e1f401de3732be92e690619f81ea233b41907fb72d28"
+        },
+        "queries.tsv": {
+          "bytes": 35,
+          "sha256": "ab0ba7319b00a8adac2e68216e528623da26d10ed552a5bf659c6c00be31c8a5"
+        }
+      },
+      "inputs_before": {
+        "helper.pkl": {
+          "bytes": 25,
+          "sha256": "7f7021f300bf55420dc927e2fe5416b9184434520dfef98ed2c4ecab8af3433c"
+        },
+        "module.pkl": {
+          "bytes": 74,
+          "sha256": "9feabacb67af6ccc8041e1f401de3732be92e690619f81ea233b41907fb72d28"
+        },
+        "queries.tsv": {
+          "bytes": 35,
+          "sha256": "ab0ba7319b00a8adac2e68216e528623da26d10ed552a5bf659c6c00be31c8a5"
+        }
+      },
+      "repeat_equal": true,
+      "sessions": [
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-same-qualified/repeat-0",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-same-qualified",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-same-qualified/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-ordinary-same-qualified/expression.bin": {
+              "bytes": 3,
+              "sha256": "baa5a0964d3320fbc0c6a922140453c8513ea24ab8fd0577034804a967248096"
+            },
+            "000-ordinary-same-qualified/expression.code-units.bin": {
+              "bytes": 6,
+              "sha256": "705839d94f1716aa6e8274aa789ee416c92865dd4080259efbf58822bf53af68"
+            },
+            "000-ordinary-same-qualified/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-ordinary-same-qualified/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-ordinary-same-qualified/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.error-class.bin": {
+              "bytes": 25,
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "000-ordinary-same-qualified/result.error-class.code-units.bin": {
+              "bytes": 50,
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "000-ordinary-same-qualified/result.exception-to-string.bin": {
+              "bytes": 1012,
+              "sha256": "3c24578f8f84442ae61beab1011c11d0688d08f01b3bf6189e6aa7f83838ec97"
+            },
+            "000-ordinary-same-qualified/result.exception-to-string.code-units.bin": {
+              "bytes": 2008,
+              "sha256": "8f0c60fe8bc46e2c2ba8c8d42dd816b73d98eae1fd13cc8d8e5ac8d8ed0fcba4"
+            },
+            "000-ordinary-same-qualified/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.status.bin": {
+              "bytes": 6,
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "000-ordinary-same-qualified/result.stderr.bin": {
+              "bytes": 985,
+              "sha256": "01711c02d2f2989f860d198ab1cba66df67fcdc953b56e63fafbc173fc5f7dab"
+            },
+            "000-ordinary-same-qualified/result.stderr.code-units.bin": {
+              "bytes": 1954,
+              "sha256": "8526caeaa1b50d93e095c2cd82b77934747d4ae474e790a31afe053b6b30c6c9"
+            },
+            "000-ordinary-same-qualified/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 200,
+              "sha256": "431645a4772debe976d640c7eaf6a76f2fc9a7f7a55e64701245035415d6d5fa"
+            }
+          },
+          "finished_epoch": 1792959965.2942069,
+          "interruption_reason": null,
+          "pid": 43151,
+          "raw_bytes_after": 6267,
+          "repeat": 0,
+          "started_epoch": 1792959964.053209
+        },
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-same-qualified/repeat-1",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-same-qualified",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-same-qualified/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-ordinary-same-qualified/expression.bin": {
+              "bytes": 3,
+              "sha256": "baa5a0964d3320fbc0c6a922140453c8513ea24ab8fd0577034804a967248096"
+            },
+            "000-ordinary-same-qualified/expression.code-units.bin": {
+              "bytes": 6,
+              "sha256": "705839d94f1716aa6e8274aa789ee416c92865dd4080259efbf58822bf53af68"
+            },
+            "000-ordinary-same-qualified/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-ordinary-same-qualified/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-ordinary-same-qualified/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.error-class.bin": {
+              "bytes": 25,
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "000-ordinary-same-qualified/result.error-class.code-units.bin": {
+              "bytes": 50,
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "000-ordinary-same-qualified/result.exception-to-string.bin": {
+              "bytes": 1012,
+              "sha256": "3c24578f8f84442ae61beab1011c11d0688d08f01b3bf6189e6aa7f83838ec97"
+            },
+            "000-ordinary-same-qualified/result.exception-to-string.code-units.bin": {
+              "bytes": 2008,
+              "sha256": "8f0c60fe8bc46e2c2ba8c8d42dd816b73d98eae1fd13cc8d8e5ac8d8ed0fcba4"
+            },
+            "000-ordinary-same-qualified/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.status.bin": {
+              "bytes": 6,
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "000-ordinary-same-qualified/result.stderr.bin": {
+              "bytes": 985,
+              "sha256": "01711c02d2f2989f860d198ab1cba66df67fcdc953b56e63fafbc173fc5f7dab"
+            },
+            "000-ordinary-same-qualified/result.stderr.code-units.bin": {
+              "bytes": 1954,
+              "sha256": "8526caeaa1b50d93e095c2cd82b77934747d4ae474e790a31afe053b6b30c6c9"
+            },
+            "000-ordinary-same-qualified/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-same-qualified/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 200,
+              "sha256": "431645a4772debe976d640c7eaf6a76f2fc9a7f7a55e64701245035415d6d5fa"
+            }
+          },
+          "finished_epoch": 1792959966.12386,
+          "interruption_reason": null,
+          "pid": 43192,
+          "raw_bytes_after": 12534,
+          "repeat": 1,
+          "started_epoch": 1792959965.3059971
+        }
+      ],
+      "status": "error",
+      "stdout": "",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-same-qualified/module.pkl"
+    },
+    {
+      "first_error_line": [],
+      "id": "same-declaration-control",
+      "inputs_after": {
+        "helper.pkl": {
+          "bytes": 25,
+          "sha256": "7f7021f300bf55420dc927e2fe5416b9184434520dfef98ed2c4ecab8af3433c"
+        },
+        "module.pkl": {
+          "bytes": 71,
+          "sha256": "81f2a4ea03f3e94b5591a63ba9e54adba29fdc5ac1ea6b15392d613c08a101b3"
+        },
+        "queries.tsv": {
+          "bytes": 36,
+          "sha256": "bcacbb4bf2954cb5003f0392c532cdf117501f48a3c3ec5eb716237917aff4df"
+        }
+      },
+      "inputs_before": {
+        "helper.pkl": {
+          "bytes": 25,
+          "sha256": "7f7021f300bf55420dc927e2fe5416b9184434520dfef98ed2c4ecab8af3433c"
+        },
+        "module.pkl": {
+          "bytes": 71,
+          "sha256": "81f2a4ea03f3e94b5591a63ba9e54adba29fdc5ac1ea6b15392d613c08a101b3"
+        },
+        "queries.tsv": {
+          "bytes": 36,
+          "sha256": "bcacbb4bf2954cb5003f0392c532cdf117501f48a3c3ec5eb716237917aff4df"
+        }
+      },
+      "repeat_equal": true,
+      "sessions": [
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/same-declaration-control/repeat-0",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/same-declaration-control",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/same-declaration-control/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-same-declaration-control/expression.bin": {
+              "bytes": 3,
+              "sha256": "baa5a0964d3320fbc0c6a922140453c8513ea24ab8fd0577034804a967248096"
+            },
+            "000-same-declaration-control/expression.code-units.bin": {
+              "bytes": 6,
+              "sha256": "705839d94f1716aa6e8274aa789ee416c92865dd4080259efbf58822bf53af68"
+            },
+            "000-same-declaration-control/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-same-declaration-control/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-same-declaration-control/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.error-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.error-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.exception-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.exception-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.status.bin": {
+              "bytes": 8,
+              "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+            },
+            "000-same-declaration-control/result.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.stderr.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.stdout.bin": {
+              "bytes": 10,
+              "sha256": "22ab54e8136eb79679101e2118dc4dab544800df3a0fb04c1a7302fa2a741339"
+            },
+            "000-same-declaration-control/result.stdout.code-units.bin": {
+              "bytes": 20,
+              "sha256": "a20bb00ac14ca2ad397bcf87583a53e0f5dd5767504ac9af40a023529bfcbb28"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 204,
+              "sha256": "1a634ebd2267f911894d164a71025a178f1e085603696543b39549b4ee20fea0"
+            }
+          },
+          "finished_epoch": 1792959966.9491851,
+          "interruption_reason": null,
+          "pid": 43209,
+          "raw_bytes_after": 12803,
+          "repeat": 0,
+          "started_epoch": 1792959966.140919
+        },
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/same-declaration-control/repeat-1",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/same-declaration-control",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/same-declaration-control/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-same-declaration-control/expression.bin": {
+              "bytes": 3,
+              "sha256": "baa5a0964d3320fbc0c6a922140453c8513ea24ab8fd0577034804a967248096"
+            },
+            "000-same-declaration-control/expression.code-units.bin": {
+              "bytes": 6,
+              "sha256": "705839d94f1716aa6e8274aa789ee416c92865dd4080259efbf58822bf53af68"
+            },
+            "000-same-declaration-control/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-same-declaration-control/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-same-declaration-control/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.error-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.error-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.exception-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.exception-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.status.bin": {
+              "bytes": 8,
+              "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+            },
+            "000-same-declaration-control/result.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.stderr.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-same-declaration-control/result.stdout.bin": {
+              "bytes": 10,
+              "sha256": "22ab54e8136eb79679101e2118dc4dab544800df3a0fb04c1a7302fa2a741339"
+            },
+            "000-same-declaration-control/result.stdout.code-units.bin": {
+              "bytes": 20,
+              "sha256": "a20bb00ac14ca2ad397bcf87583a53e0f5dd5767504ac9af40a023529bfcbb28"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 204,
+              "sha256": "1a634ebd2267f911894d164a71025a178f1e085603696543b39549b4ee20fea0"
+            }
+          },
+          "finished_epoch": 1792959967.746353,
+          "interruption_reason": null,
+          "pid": 43216,
+          "raw_bytes_after": 13072,
+          "repeat": 1,
+          "started_epoch": 1792959966.957943
+        }
+      ],
+      "status": "success",
+      "stdout": "new Baz {}",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/same-declaration-control/module.pkl"
+    },
+    {
+      "first_error_line": [
+        "\u2013\u2013 Pkl Error \u2013\u2013",
+        "Module version conflict: Expected value of type `foo.bar#Baz` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/alias-same-qualified/module.pkl`, but got type `foo.bar#Baz` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/alias-same-qualified/helper.pkl`.",
+        ""
+      ],
+      "id": "alias-same-qualified",
+      "inputs_after": {
+        "helper.pkl": {
+          "bytes": 25,
+          "sha256": "7f7021f300bf55420dc927e2fe5416b9184434520dfef98ed2c4ecab8af3433c"
+        },
+        "module.pkl": {
+          "bytes": 98,
+          "sha256": "b670a428bc1a1d6f450d7ad3fed08523fb111bc9da5d9057d287f35b15aa57dc"
+        },
+        "queries.tsv": {
+          "bytes": 32,
+          "sha256": "b14f403c766296ff385a07437e550e969eac1204b6793d528c065e37dfb857aa"
+        }
+      },
+      "inputs_before": {
+        "helper.pkl": {
+          "bytes": 25,
+          "sha256": "7f7021f300bf55420dc927e2fe5416b9184434520dfef98ed2c4ecab8af3433c"
+        },
+        "module.pkl": {
+          "bytes": 98,
+          "sha256": "b670a428bc1a1d6f450d7ad3fed08523fb111bc9da5d9057d287f35b15aa57dc"
+        },
+        "queries.tsv": {
+          "bytes": 32,
+          "sha256": "b14f403c766296ff385a07437e550e969eac1204b6793d528c065e37dfb857aa"
+        }
+      },
+      "repeat_equal": true,
+      "sessions": [
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/alias-same-qualified/repeat-0",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/alias-same-qualified",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/alias-same-qualified/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-alias-same-qualified/expression.bin": {
+              "bytes": 3,
+              "sha256": "baa5a0964d3320fbc0c6a922140453c8513ea24ab8fd0577034804a967248096"
+            },
+            "000-alias-same-qualified/expression.code-units.bin": {
+              "bytes": 6,
+              "sha256": "705839d94f1716aa6e8274aa789ee416c92865dd4080259efbf58822bf53af68"
+            },
+            "000-alias-same-qualified/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-alias-same-qualified/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-alias-same-qualified/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.error-class.bin": {
+              "bytes": 25,
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "000-alias-same-qualified/result.error-class.code-units.bin": {
+              "bytes": 50,
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "000-alias-same-qualified/result.exception-to-string.bin": {
+              "bytes": 1010,
+              "sha256": "c0124c08a76d68cbe1d464d7c492dbbe9de7384e602ea279319a0145cff25854"
+            },
+            "000-alias-same-qualified/result.exception-to-string.code-units.bin": {
+              "bytes": 2004,
+              "sha256": "6448883b39f3e6eb903792fbc72c062b09a2b6087240d993060271b7628df359"
+            },
+            "000-alias-same-qualified/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.status.bin": {
+              "bytes": 6,
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "000-alias-same-qualified/result.stderr.bin": {
+              "bytes": 983,
+              "sha256": "5668e3290d2d9a49a15758af00a337665ec2dea80236836f546ab9bb0a72d267"
+            },
+            "000-alias-same-qualified/result.stderr.code-units.bin": {
+              "bytes": 1950,
+              "sha256": "f59fed0e6da28676692ac56a1185cd3958e002c7cd0228729726284a72ea48e1"
+            },
+            "000-alias-same-qualified/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 194,
+              "sha256": "70885f9a4e1eb41e25963814b9582833613c3e4edb132394bfe7a6945452e1a9"
+            }
+          },
+          "finished_epoch": 1792959968.5897799,
+          "interruption_reason": null,
+          "pid": 43223,
+          "raw_bytes_after": 19321,
+          "repeat": 0,
+          "started_epoch": 1792959967.7730298
+        },
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/alias-same-qualified/repeat-1",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/alias-same-qualified",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/alias-same-qualified/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-alias-same-qualified/expression.bin": {
+              "bytes": 3,
+              "sha256": "baa5a0964d3320fbc0c6a922140453c8513ea24ab8fd0577034804a967248096"
+            },
+            "000-alias-same-qualified/expression.code-units.bin": {
+              "bytes": 6,
+              "sha256": "705839d94f1716aa6e8274aa789ee416c92865dd4080259efbf58822bf53af68"
+            },
+            "000-alias-same-qualified/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-alias-same-qualified/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-alias-same-qualified/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.error-class.bin": {
+              "bytes": 25,
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "000-alias-same-qualified/result.error-class.code-units.bin": {
+              "bytes": 50,
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "000-alias-same-qualified/result.exception-to-string.bin": {
+              "bytes": 1010,
+              "sha256": "c0124c08a76d68cbe1d464d7c492dbbe9de7384e602ea279319a0145cff25854"
+            },
+            "000-alias-same-qualified/result.exception-to-string.code-units.bin": {
+              "bytes": 2004,
+              "sha256": "6448883b39f3e6eb903792fbc72c062b09a2b6087240d993060271b7628df359"
+            },
+            "000-alias-same-qualified/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.status.bin": {
+              "bytes": 6,
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "000-alias-same-qualified/result.stderr.bin": {
+              "bytes": 983,
+              "sha256": "5668e3290d2d9a49a15758af00a337665ec2dea80236836f546ab9bb0a72d267"
+            },
+            "000-alias-same-qualified/result.stderr.code-units.bin": {
+              "bytes": 1950,
+              "sha256": "f59fed0e6da28676692ac56a1185cd3958e002c7cd0228729726284a72ea48e1"
+            },
+            "000-alias-same-qualified/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-alias-same-qualified/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 194,
+              "sha256": "70885f9a4e1eb41e25963814b9582833613c3e4edb132394bfe7a6945452e1a9"
+            }
+          },
+          "finished_epoch": 1792959969.40835,
+          "interruption_reason": null,
+          "pid": 43231,
+          "raw_bytes_after": 25570,
+          "repeat": 1,
+          "started_epoch": 1792959968.599509
+        }
+      ],
+      "status": "error",
+      "stdout": "",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/alias-same-qualified/module.pkl"
+    },
+    {
+      "first_error_line": [
+        "\u2013\u2013 Pkl Error \u2013\u2013",
+        "Module version conflict: Expected value of type `foo.bar#Baz` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified/module.pkl`, but got type `foo.bar#Baz` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified/helper.pkl`.",
+        ""
+      ],
+      "id": "nullable-same-qualified",
+      "inputs_after": {
+        "helper.pkl": {
+          "bytes": 25,
+          "sha256": "7f7021f300bf55420dc927e2fe5416b9184434520dfef98ed2c4ecab8af3433c"
+        },
+        "module.pkl": {
+          "bytes": 75,
+          "sha256": "5908462dfafe9f25029378aff8b27732b5842a60e2288a516bb864d0a0cc4ada"
+        },
+        "queries.tsv": {
+          "bytes": 35,
+          "sha256": "28012c44b1417ba8337671c8a874a4305b79c6a30fc1c178a6db741c3ac53057"
+        }
+      },
+      "inputs_before": {
+        "helper.pkl": {
+          "bytes": 25,
+          "sha256": "7f7021f300bf55420dc927e2fe5416b9184434520dfef98ed2c4ecab8af3433c"
+        },
+        "module.pkl": {
+          "bytes": 75,
+          "sha256": "5908462dfafe9f25029378aff8b27732b5842a60e2288a516bb864d0a0cc4ada"
+        },
+        "queries.tsv": {
+          "bytes": 35,
+          "sha256": "28012c44b1417ba8337671c8a874a4305b79c6a30fc1c178a6db741c3ac53057"
+        }
+      },
+      "repeat_equal": true,
+      "sessions": [
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified/repeat-0",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-nullable-same-qualified/expression.bin": {
+              "bytes": 3,
+              "sha256": "baa5a0964d3320fbc0c6a922140453c8513ea24ab8fd0577034804a967248096"
+            },
+            "000-nullable-same-qualified/expression.code-units.bin": {
+              "bytes": 6,
+              "sha256": "705839d94f1716aa6e8274aa789ee416c92865dd4080259efbf58822bf53af68"
+            },
+            "000-nullable-same-qualified/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-nullable-same-qualified/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-nullable-same-qualified/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.error-class.bin": {
+              "bytes": 25,
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "000-nullable-same-qualified/result.error-class.code-units.bin": {
+              "bytes": 50,
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "000-nullable-same-qualified/result.exception-to-string.bin": {
+              "bytes": 1015,
+              "sha256": "dcb8b4271cf10c21186c309ce2bac5d5999feb0063c10b96ec7197c7a1ee1106"
+            },
+            "000-nullable-same-qualified/result.exception-to-string.code-units.bin": {
+              "bytes": 2014,
+              "sha256": "1da970a10dc6a462938b80e529496f0540a2814a2d9fc8ef44e602caa379d85c"
+            },
+            "000-nullable-same-qualified/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.status.bin": {
+              "bytes": 6,
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "000-nullable-same-qualified/result.stderr.bin": {
+              "bytes": 988,
+              "sha256": "0b4f353e6e675c41a2a1d04df9b53b38fcb3e8512e12374cf3b980c38bc10d4a"
+            },
+            "000-nullable-same-qualified/result.stderr.code-units.bin": {
+              "bytes": 1960,
+              "sha256": "c75c4fac832db8b85dbd51ed52a712f66fb1e573822ce5dbe22181edef8aedc4"
+            },
+            "000-nullable-same-qualified/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 200,
+              "sha256": "c65d01efa1739798ad7162561e4e93154b716c8e9a4602ee4089509ed080fb0c"
+            }
+          },
+          "finished_epoch": 1792959970.2550368,
+          "interruption_reason": null,
+          "pid": 43235,
+          "raw_bytes_after": 31855,
+          "repeat": 0,
+          "started_epoch": 1792959969.434305
+        },
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified/repeat-1",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-nullable-same-qualified/expression.bin": {
+              "bytes": 3,
+              "sha256": "baa5a0964d3320fbc0c6a922140453c8513ea24ab8fd0577034804a967248096"
+            },
+            "000-nullable-same-qualified/expression.code-units.bin": {
+              "bytes": 6,
+              "sha256": "705839d94f1716aa6e8274aa789ee416c92865dd4080259efbf58822bf53af68"
+            },
+            "000-nullable-same-qualified/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-nullable-same-qualified/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-nullable-same-qualified/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.error-class.bin": {
+              "bytes": 25,
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "000-nullable-same-qualified/result.error-class.code-units.bin": {
+              "bytes": 50,
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "000-nullable-same-qualified/result.exception-to-string.bin": {
+              "bytes": 1015,
+              "sha256": "dcb8b4271cf10c21186c309ce2bac5d5999feb0063c10b96ec7197c7a1ee1106"
+            },
+            "000-nullable-same-qualified/result.exception-to-string.code-units.bin": {
+              "bytes": 2014,
+              "sha256": "1da970a10dc6a462938b80e529496f0540a2814a2d9fc8ef44e602caa379d85c"
+            },
+            "000-nullable-same-qualified/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.status.bin": {
+              "bytes": 6,
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "000-nullable-same-qualified/result.stderr.bin": {
+              "bytes": 988,
+              "sha256": "0b4f353e6e675c41a2a1d04df9b53b38fcb3e8512e12374cf3b980c38bc10d4a"
+            },
+            "000-nullable-same-qualified/result.stderr.code-units.bin": {
+              "bytes": 1960,
+              "sha256": "c75c4fac832db8b85dbd51ed52a712f66fb1e573822ce5dbe22181edef8aedc4"
+            },
+            "000-nullable-same-qualified/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-nullable-same-qualified/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 200,
+              "sha256": "c65d01efa1739798ad7162561e4e93154b716c8e9a4602ee4089509ed080fb0c"
+            }
+          },
+          "finished_epoch": 1792959971.105319,
+          "interruption_reason": null,
+          "pid": 43245,
+          "raw_bytes_after": 38140,
+          "repeat": 1,
+          "started_epoch": 1792959970.267584
+        }
+      ],
+      "status": "error",
+      "stdout": "",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified/module.pkl"
+    },
+    {
+      "first_error_line": [
+        "\u2013\u2013 Pkl Error \u2013\u2013",
+        "Module version conflict: Expected value of type `foo#bar#Baz` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/hash-delimiter-collision/module.pkl`, but got type `foo#bar#Baz` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/hash-delimiter-collision/helper.pkl`.",
+        ""
+      ],
+      "id": "hash-delimiter-collision",
+      "inputs_after": {
+        "helper.pkl": {
+          "bytes": 27,
+          "sha256": "03a735973bbd0ee6d699f707dbee89f03278989a5dc5885900f157cf6f2652ad"
+        },
+        "module.pkl": {
+          "bytes": 82,
+          "sha256": "ded23ae711f30d93944eba76d1e7994a598a446f1b207f365af491a3cdd7d3bf"
+        },
+        "queries.tsv": {
+          "bytes": 36,
+          "sha256": "71b550c0c8d376805655ca3803574b73b100ccd4e0879a96177a42c9d5177338"
+        }
+      },
+      "inputs_before": {
+        "helper.pkl": {
+          "bytes": 27,
+          "sha256": "03a735973bbd0ee6d699f707dbee89f03278989a5dc5885900f157cf6f2652ad"
+        },
+        "module.pkl": {
+          "bytes": 82,
+          "sha256": "ded23ae711f30d93944eba76d1e7994a598a446f1b207f365af491a3cdd7d3bf"
+        },
+        "queries.tsv": {
+          "bytes": 36,
+          "sha256": "71b550c0c8d376805655ca3803574b73b100ccd4e0879a96177a42c9d5177338"
+        }
+      },
+      "repeat_equal": true,
+      "sessions": [
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/hash-delimiter-collision/repeat-0",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/hash-delimiter-collision",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/hash-delimiter-collision/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-hash-delimiter-collision/expression.bin": {
+              "bytes": 3,
+              "sha256": "baa5a0964d3320fbc0c6a922140453c8513ea24ab8fd0577034804a967248096"
+            },
+            "000-hash-delimiter-collision/expression.code-units.bin": {
+              "bytes": 6,
+              "sha256": "705839d94f1716aa6e8274aa789ee416c92865dd4080259efbf58822bf53af68"
+            },
+            "000-hash-delimiter-collision/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-hash-delimiter-collision/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-hash-delimiter-collision/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.error-class.bin": {
+              "bytes": 25,
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "000-hash-delimiter-collision/result.error-class.code-units.bin": {
+              "bytes": 50,
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "000-hash-delimiter-collision/result.exception-to-string.bin": {
+              "bytes": 1034,
+              "sha256": "d4ddae2330bd8d26f6c830431a33cd8b08b62f2272c47b6398a6f82b4193417d"
+            },
+            "000-hash-delimiter-collision/result.exception-to-string.code-units.bin": {
+              "bytes": 2052,
+              "sha256": "6ffd26894564031fa5bb4890d0f4e67c4d0b78b03ecb64573959b57cc5f4dd33"
+            },
+            "000-hash-delimiter-collision/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.status.bin": {
+              "bytes": 6,
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "000-hash-delimiter-collision/result.stderr.bin": {
+              "bytes": 1007,
+              "sha256": "c5c726fce1086fa07492809fc1b53a9cb3b37062dbe8180909d81720cdf52d6f"
+            },
+            "000-hash-delimiter-collision/result.stderr.code-units.bin": {
+              "bytes": 1998,
+              "sha256": "0ccdd37bbc953fcbc36ac291890805a11f301338dd50161e321b686fdcfc9549"
+            },
+            "000-hash-delimiter-collision/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 202,
+              "sha256": "5c4d1cc0bb7281ae3f77b5f573e762987fc26d7ee43bedd97f95903c6165d700"
+            }
+          },
+          "finished_epoch": 1792959971.950912,
+          "interruption_reason": null,
+          "pid": 43249,
+          "raw_bytes_after": 44541,
+          "repeat": 0,
+          "started_epoch": 1792959971.124289
+        },
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/hash-delimiter-collision/repeat-1",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/hash-delimiter-collision",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/hash-delimiter-collision/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-hash-delimiter-collision/expression.bin": {
+              "bytes": 3,
+              "sha256": "baa5a0964d3320fbc0c6a922140453c8513ea24ab8fd0577034804a967248096"
+            },
+            "000-hash-delimiter-collision/expression.code-units.bin": {
+              "bytes": 6,
+              "sha256": "705839d94f1716aa6e8274aa789ee416c92865dd4080259efbf58822bf53af68"
+            },
+            "000-hash-delimiter-collision/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-hash-delimiter-collision/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-hash-delimiter-collision/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.error-class.bin": {
+              "bytes": 25,
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "000-hash-delimiter-collision/result.error-class.code-units.bin": {
+              "bytes": 50,
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "000-hash-delimiter-collision/result.exception-to-string.bin": {
+              "bytes": 1034,
+              "sha256": "d4ddae2330bd8d26f6c830431a33cd8b08b62f2272c47b6398a6f82b4193417d"
+            },
+            "000-hash-delimiter-collision/result.exception-to-string.code-units.bin": {
+              "bytes": 2052,
+              "sha256": "6ffd26894564031fa5bb4890d0f4e67c4d0b78b03ecb64573959b57cc5f4dd33"
+            },
+            "000-hash-delimiter-collision/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.status.bin": {
+              "bytes": 6,
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "000-hash-delimiter-collision/result.stderr.bin": {
+              "bytes": 1007,
+              "sha256": "c5c726fce1086fa07492809fc1b53a9cb3b37062dbe8180909d81720cdf52d6f"
+            },
+            "000-hash-delimiter-collision/result.stderr.code-units.bin": {
+              "bytes": 1998,
+              "sha256": "0ccdd37bbc953fcbc36ac291890805a11f301338dd50161e321b686fdcfc9549"
+            },
+            "000-hash-delimiter-collision/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-hash-delimiter-collision/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 202,
+              "sha256": "5c4d1cc0bb7281ae3f77b5f573e762987fc26d7ee43bedd97f95903c6165d700"
+            }
+          },
+          "finished_epoch": 1792959972.790009,
+          "interruption_reason": null,
+          "pid": 43254,
+          "raw_bytes_after": 50942,
+          "repeat": 1,
+          "started_epoch": 1792959971.9616792
+        }
+      ],
+      "status": "error",
+      "stdout": "",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/hash-delimiter-collision/module.pkl"
+    },
+    {
+      "first_error_line": [
+        "\u2013\u2013 Pkl Error \u2013\u2013",
+        "Expected value of type `Pair`, but got type `Pair`.",
+        "Value: Pair(1, 2)"
+      ],
+      "id": "builtin-pair-negative",
+      "inputs_after": {
+        "module.pkl": {
+          "bytes": 79,
+          "sha256": "bc9e94acaa3e6bfb1154a709bfa399aa2ebc5819b303dcf781c18566ee716c0c"
+        },
+        "queries.tsv": {
+          "bytes": 31,
+          "sha256": "ab09c577f312e2ffcb6a3b2e84c5efa726a2e6d1c88dee4600b9f91579d8fcd3"
+        }
+      },
+      "inputs_before": {
+        "module.pkl": {
+          "bytes": 79,
+          "sha256": "bc9e94acaa3e6bfb1154a709bfa399aa2ebc5819b303dcf781c18566ee716c0c"
+        },
+        "queries.tsv": {
+          "bytes": 31,
+          "sha256": "ab09c577f312e2ffcb6a3b2e84c5efa726a2e6d1c88dee4600b9f91579d8fcd3"
+        }
+      },
+      "repeat_equal": true,
+      "sessions": [
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-pair-negative/repeat-0",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-pair-negative",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-pair-negative/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-builtin-pair-negative/expression.bin": {
+              "bytes": 1,
+              "sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940"
+            },
+            "000-builtin-pair-negative/expression.code-units.bin": {
+              "bytes": 2,
+              "sha256": "4cf5af027d9a949a881e505bd7c7b14c5eb61ff47d159b585a331d690501d13d"
+            },
+            "000-builtin-pair-negative/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-builtin-pair-negative/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-builtin-pair-negative/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.error-class.bin": {
+              "bytes": 25,
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "000-builtin-pair-negative/result.error-class.code-units.bin": {
+              "bytes": 50,
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "000-builtin-pair-negative/result.exception-to-string.bin": {
+              "bytes": 606,
+              "sha256": "9fbc721cfcbfe84e729e531618865c8f288fa534c0d782a5606d1c63c95ad415"
+            },
+            "000-builtin-pair-negative/result.exception-to-string.code-units.bin": {
+              "bytes": 1196,
+              "sha256": "d7921b8dd55580aa872b57c9b697a62d147543eabe4bebc51f4bfafb22898a8c"
+            },
+            "000-builtin-pair-negative/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.status.bin": {
+              "bytes": 6,
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "000-builtin-pair-negative/result.stderr.bin": {
+              "bytes": 579,
+              "sha256": "5cfa2c14ef4a5f8fce9b043cdd5c0a4392946763c06f31ef415639a2874edcea"
+            },
+            "000-builtin-pair-negative/result.stderr.code-units.bin": {
+              "bytes": 1142,
+              "sha256": "1243fdf7f235c8f83b4da2eb5a6ab1cc9c906940007919519d6f88c90b39d138"
+            },
+            "000-builtin-pair-negative/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 196,
+              "sha256": "c497a7ef44c6d805d5859725bd347664d786ed75799d0f48493e8f1f4deb0baa"
+            }
+          },
+          "finished_epoch": 1792959973.634666,
+          "interruption_reason": null,
+          "pid": 43260,
+          "raw_bytes_after": 54763,
+          "repeat": 0,
+          "started_epoch": 1792959972.812495
+        },
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-pair-negative/repeat-1",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-pair-negative",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-pair-negative/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-builtin-pair-negative/expression.bin": {
+              "bytes": 1,
+              "sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940"
+            },
+            "000-builtin-pair-negative/expression.code-units.bin": {
+              "bytes": 2,
+              "sha256": "4cf5af027d9a949a881e505bd7c7b14c5eb61ff47d159b585a331d690501d13d"
+            },
+            "000-builtin-pair-negative/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-builtin-pair-negative/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-builtin-pair-negative/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.error-class.bin": {
+              "bytes": 25,
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "000-builtin-pair-negative/result.error-class.code-units.bin": {
+              "bytes": 50,
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "000-builtin-pair-negative/result.exception-to-string.bin": {
+              "bytes": 606,
+              "sha256": "9fbc721cfcbfe84e729e531618865c8f288fa534c0d782a5606d1c63c95ad415"
+            },
+            "000-builtin-pair-negative/result.exception-to-string.code-units.bin": {
+              "bytes": 1196,
+              "sha256": "d7921b8dd55580aa872b57c9b697a62d147543eabe4bebc51f4bfafb22898a8c"
+            },
+            "000-builtin-pair-negative/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.status.bin": {
+              "bytes": 6,
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "000-builtin-pair-negative/result.stderr.bin": {
+              "bytes": 579,
+              "sha256": "5cfa2c14ef4a5f8fce9b043cdd5c0a4392946763c06f31ef415639a2874edcea"
+            },
+            "000-builtin-pair-negative/result.stderr.code-units.bin": {
+              "bytes": 1142,
+              "sha256": "1243fdf7f235c8f83b4da2eb5a6ab1cc9c906940007919519d6f88c90b39d138"
+            },
+            "000-builtin-pair-negative/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-pair-negative/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 196,
+              "sha256": "c497a7ef44c6d805d5859725bd347664d786ed75799d0f48493e8f1f4deb0baa"
+            }
+          },
+          "finished_epoch": 1792959974.45553,
+          "interruption_reason": null,
+          "pid": 43267,
+          "raw_bytes_after": 58584,
+          "repeat": 1,
+          "started_epoch": 1792959973.647181
+        }
+      ],
+      "status": "error",
+      "stdout": "",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-pair-negative/module.pkl"
+    },
+    {
+      "first_error_line": [
+        "\u2013\u2013 Pkl Error \u2013\u2013",
+        "Expected value of type `pkl.ref#Reference`, but got type `pkl.ref#Reference`.",
+        "Value: Reference(new D {}, String, null)"
+      ],
+      "id": "builtin-reference-negative",
+      "inputs_after": {
+        "module.pkl": {
+          "bytes": 213,
+          "sha256": "dfaf1216f59e0bd3ab819ec42a62f4d36f34fc4799f5eb117044e08de914784a"
+        },
+        "queries.tsv": {
+          "bytes": 36,
+          "sha256": "5f772e690784e1e88038c4be33986df5ee04e7aa946e50ee8d3e6a1fbe6b9a7d"
+        }
+      },
+      "inputs_before": {
+        "module.pkl": {
+          "bytes": 213,
+          "sha256": "dfaf1216f59e0bd3ab819ec42a62f4d36f34fc4799f5eb117044e08de914784a"
+        },
+        "queries.tsv": {
+          "bytes": 36,
+          "sha256": "5f772e690784e1e88038c4be33986df5ee04e7aa946e50ee8d3e6a1fbe6b9a7d"
+        }
+      },
+      "repeat_equal": true,
+      "sessions": [
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-reference-negative/repeat-0",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-reference-negative",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-reference-negative/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-builtin-reference-negative/expression.bin": {
+              "bytes": 1,
+              "sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1"
+            },
+            "000-builtin-reference-negative/expression.code-units.bin": {
+              "bytes": 2,
+              "sha256": "6a9997023a65253995105d37bf8f950a39d5e75667f1b8e0a65bf12f2ddf06c2"
+            },
+            "000-builtin-reference-negative/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-builtin-reference-negative/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-builtin-reference-negative/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.error-class.bin": {
+              "bytes": 25,
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "000-builtin-reference-negative/result.error-class.code-units.bin": {
+              "bytes": 50,
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "000-builtin-reference-negative/result.exception-to-string.bin": {
+              "bytes": 749,
+              "sha256": "baecead63ccd79bee3edec28669b8bcb69d2b70398a191a2d9665e2a6d7a1b2e"
+            },
+            "000-builtin-reference-negative/result.exception-to-string.code-units.bin": {
+              "bytes": 1482,
+              "sha256": "862841f6ccfdcdb33fd550e56abddf9c2f77bf2ac7408adc23bef7869ca14b44"
+            },
+            "000-builtin-reference-negative/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.status.bin": {
+              "bytes": 6,
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "000-builtin-reference-negative/result.stderr.bin": {
+              "bytes": 722,
+              "sha256": "263441b5d5a32843e9bdb53cfc087c225cbbbda23b8f05cf80cb863a00974d80"
+            },
+            "000-builtin-reference-negative/result.stderr.code-units.bin": {
+              "bytes": 1428,
+              "sha256": "c600fea5011bd9ccc8e86a8dc3176896c6e88925fd30c495c1b9d904ef4280a4"
+            },
+            "000-builtin-reference-negative/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 206,
+              "sha256": "659d40a8a52d0286e8bef3728da008fb6b7ac3030cfdb1d07d45345fca698832"
+            }
+          },
+          "finished_epoch": 1792959975.314682,
+          "interruption_reason": null,
+          "pid": 43274,
+          "raw_bytes_after": 63273,
+          "repeat": 0,
+          "started_epoch": 1792959974.4750028
+        },
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-reference-negative/repeat-1",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-reference-negative",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-reference-negative/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-builtin-reference-negative/expression.bin": {
+              "bytes": 1,
+              "sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1"
+            },
+            "000-builtin-reference-negative/expression.code-units.bin": {
+              "bytes": 2,
+              "sha256": "6a9997023a65253995105d37bf8f950a39d5e75667f1b8e0a65bf12f2ddf06c2"
+            },
+            "000-builtin-reference-negative/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-builtin-reference-negative/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-builtin-reference-negative/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.error-class.bin": {
+              "bytes": 25,
+              "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+            },
+            "000-builtin-reference-negative/result.error-class.code-units.bin": {
+              "bytes": 50,
+              "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+            },
+            "000-builtin-reference-negative/result.exception-to-string.bin": {
+              "bytes": 749,
+              "sha256": "baecead63ccd79bee3edec28669b8bcb69d2b70398a191a2d9665e2a6d7a1b2e"
+            },
+            "000-builtin-reference-negative/result.exception-to-string.code-units.bin": {
+              "bytes": 1482,
+              "sha256": "862841f6ccfdcdb33fd550e56abddf9c2f77bf2ac7408adc23bef7869ca14b44"
+            },
+            "000-builtin-reference-negative/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.status.bin": {
+              "bytes": 6,
+              "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+            },
+            "000-builtin-reference-negative/result.stderr.bin": {
+              "bytes": 722,
+              "sha256": "263441b5d5a32843e9bdb53cfc087c225cbbbda23b8f05cf80cb863a00974d80"
+            },
+            "000-builtin-reference-negative/result.stderr.code-units.bin": {
+              "bytes": 1428,
+              "sha256": "c600fea5011bd9ccc8e86a8dc3176896c6e88925fd30c495c1b9d904ef4280a4"
+            },
+            "000-builtin-reference-negative/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-builtin-reference-negative/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 206,
+              "sha256": "659d40a8a52d0286e8bef3728da008fb6b7ac3030cfdb1d07d45345fca698832"
+            }
+          },
+          "finished_epoch": 1792959976.1518312,
+          "interruption_reason": null,
+          "pid": 43278,
+          "raw_bytes_after": 67962,
+          "repeat": 1,
+          "started_epoch": 1792959975.3264441
+        }
+      ],
+      "status": "error",
+      "stdout": "",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-reference-negative/module.pkl"
+    },
+    {
+      "first_error_line": [
+        "Cannot invoke \"org.pkl.core.runtime.ModuleInfo.getModuleKey()\" because the return value of \"org.pkl.core.runtime.VmTyped.getModuleInfo()\" is null"
+      ],
+      "id": "ordinary-moduleclass-anomaly",
+      "inputs_after": {
+        "helper.pkl": {
+          "bytes": 33,
+          "sha256": "18503fd7805fa5f35670db74d5e06abff400ba9d1d7a14412f4dea1fe4a7bde2"
+        },
+        "module.pkl": {
+          "bytes": 96,
+          "sha256": "211e17af3a07b6104798d012a2f9dae8927cd775fd366fa736dd087ba74c44cf"
+        },
+        "queries.tsv": {
+          "bytes": 38,
+          "sha256": "fae41523f3469195b9d772ea041228018e43292afc208b667878fcd0b151cca5"
+        }
+      },
+      "inputs_before": {
+        "helper.pkl": {
+          "bytes": 33,
+          "sha256": "18503fd7805fa5f35670db74d5e06abff400ba9d1d7a14412f4dea1fe4a7bde2"
+        },
+        "module.pkl": {
+          "bytes": 96,
+          "sha256": "211e17af3a07b6104798d012a2f9dae8927cd775fd366fa736dd087ba74c44cf"
+        },
+        "queries.tsv": {
+          "bytes": 38,
+          "sha256": "fae41523f3469195b9d772ea041228018e43292afc208b667878fcd0b151cca5"
+        }
+      },
+      "repeat_equal": true,
+      "sessions": [
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-moduleclass-anomaly/repeat-0",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-moduleclass-anomaly",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-moduleclass-anomaly/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-ordinary-moduleclass-anomaly/expression.bin": {
+              "bytes": 1,
+              "sha256": "62c66a7a5dd70c3146618063c344e531e6d4b59e379808443ce962b3abd63c5a"
+            },
+            "000-ordinary-moduleclass-anomaly/expression.code-units.bin": {
+              "bytes": 2,
+              "sha256": "8c941a526a0adc76166600d48309556769aac616405011874d3ca7c2048064e7"
+            },
+            "000-ordinary-moduleclass-anomaly/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-ordinary-moduleclass-anomaly/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-ordinary-moduleclass-anomaly/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.error-class.bin": {
+              "bytes": 30,
+              "sha256": "0580e6836107c406c3b3a0cac1d8b48bc16b5e41599889bf5350ceeae81ba214"
+            },
+            "000-ordinary-moduleclass-anomaly/result.error-class.code-units.bin": {
+              "bytes": 60,
+              "sha256": "c9b5f93ebd5512cb9556cdf9ea5643cf84ce62688d7bfc65bb3e3c951c618d90"
+            },
+            "000-ordinary-moduleclass-anomaly/result.exception-to-string.bin": {
+              "bytes": 177,
+              "sha256": "add4490e8fd289a63b097b38a5117d64b6e0482104dc4f7782484ee6a92c0bec"
+            },
+            "000-ordinary-moduleclass-anomaly/result.exception-to-string.code-units.bin": {
+              "bytes": 354,
+              "sha256": "f3a583c4afb334b7af19dc24581fae1f9e3a4517fd4202a824624b0178b8ca03"
+            },
+            "000-ordinary-moduleclass-anomaly/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.status.bin": {
+              "bytes": 14,
+              "sha256": "cbbfaff7f7330166c8b98e8b67b0bc107c3e37eec0736920b2f469160963272d"
+            },
+            "000-ordinary-moduleclass-anomaly/result.stderr.bin": {
+              "bytes": 145,
+              "sha256": "110f11a0f7d4bb6bdb0fd393b5e89b0c6f07ab71fbbeaf1e1032d1d96b3be56c"
+            },
+            "000-ordinary-moduleclass-anomaly/result.stderr.code-units.bin": {
+              "bytes": 290,
+              "sha256": "9e93967c7045538d9debc6dcc8096b906f6571afbe76c0605bdafa388d5eadd9"
+            },
+            "000-ordinary-moduleclass-anomaly/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 218,
+              "sha256": "fdf6a280581a1c31115c005e4f9456636c3a31b262a48dfbd8712df963ad1e80"
+            }
+          },
+          "finished_epoch": 1792959976.992762,
+          "interruption_reason": null,
+          "pid": 43285,
+          "raw_bytes_after": 69271,
+          "repeat": 0,
+          "started_epoch": 1792959976.173048
+        },
+        {
+          "command": [
+            "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java",
+            "-Xms64m",
+            "-Xmx512m",
+            "-Dfile.encoding=UTF-8",
+            "-Dstdout.encoding=UTF-8",
+            "-Dstderr.encoding=UTF-8",
+            "-Duser.language=en",
+            "-Duser.country=US",
+            "-Duser.timezone=UTC",
+            "-Djava.awt.headless=true",
+            "-Duser.name=oracle",
+            "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-home",
+            "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/host-tmp",
+            "-cp",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/.cache/oracle/pkl-tools-0.32.0.jar",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/CollectionConversionsOracle.java",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-moduleclass-anomaly/repeat-1",
+            "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-moduleclass-anomaly",
+            "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-moduleclass-anomaly/module.pkl"
+          ],
+          "exit_code": 0,
+          "files": {
+            "000-ordinary-moduleclass-anomaly/expression.bin": {
+              "bytes": 1,
+              "sha256": "62c66a7a5dd70c3146618063c344e531e6d4b59e379808443ce962b3abd63c5a"
+            },
+            "000-ordinary-moduleclass-anomaly/expression.code-units.bin": {
+              "bytes": 2,
+              "sha256": "8c941a526a0adc76166600d48309556769aac616405011874d3ca7c2048064e7"
+            },
+            "000-ordinary-moduleclass-anomaly/mode.bin": {
+              "bytes": 6,
+              "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+            },
+            "000-ordinary-moduleclass-anomaly/mode.code-units.bin": {
+              "bytes": 12,
+              "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+            },
+            "000-ordinary-moduleclass-anomaly/result.cause-class.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.cause-class.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.cause-message.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.cause-message.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.cause-to-string.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.cause-to-string.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.error-class.bin": {
+              "bytes": 30,
+              "sha256": "0580e6836107c406c3b3a0cac1d8b48bc16b5e41599889bf5350ceeae81ba214"
+            },
+            "000-ordinary-moduleclass-anomaly/result.error-class.code-units.bin": {
+              "bytes": 60,
+              "sha256": "c9b5f93ebd5512cb9556cdf9ea5643cf84ce62688d7bfc65bb3e3c951c618d90"
+            },
+            "000-ordinary-moduleclass-anomaly/result.exception-to-string.bin": {
+              "bytes": 177,
+              "sha256": "add4490e8fd289a63b097b38a5117d64b6e0482104dc4f7782484ee6a92c0bec"
+            },
+            "000-ordinary-moduleclass-anomaly/result.exception-to-string.code-units.bin": {
+              "bytes": 354,
+              "sha256": "f3a583c4afb334b7af19dc24581fae1f9e3a4517fd4202a824624b0178b8ca03"
+            },
+            "000-ordinary-moduleclass-anomaly/result.java-type.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.java-type.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.status.bin": {
+              "bytes": 14,
+              "sha256": "cbbfaff7f7330166c8b98e8b67b0bc107c3e37eec0736920b2f469160963272d"
+            },
+            "000-ordinary-moduleclass-anomaly/result.stderr.bin": {
+              "bytes": 145,
+              "sha256": "110f11a0f7d4bb6bdb0fd393b5e89b0c6f07ab71fbbeaf1e1032d1d96b3be56c"
+            },
+            "000-ordinary-moduleclass-anomaly/result.stderr.code-units.bin": {
+              "bytes": 290,
+              "sha256": "9e93967c7045538d9debc6dcc8096b906f6571afbe76c0605bdafa388d5eadd9"
+            },
+            "000-ordinary-moduleclass-anomaly/result.stdout.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "000-ordinary-moduleclass-anomaly/result.stdout.code-units.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stderr.bin": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "process.stdout.bin": {
+              "bytes": 218,
+              "sha256": "fdf6a280581a1c31115c005e4f9456636c3a31b262a48dfbd8712df963ad1e80"
+            }
+          },
+          "finished_epoch": 1792959977.812052,
+          "interruption_reason": null,
+          "pid": 43295,
+          "raw_bytes_after": 70580,
+          "repeat": 1,
+          "started_epoch": 1792959977.004342
+        }
+      ],
+      "status": "api-exception",
+      "stdout": "",
+      "uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/ordinary-moduleclass-anomaly/module.pkl"
+    }
+  ],
+  "raw_bytes": 70580,
+  "raw_cap_bytes": 25165824,
+  "runner": {
+    "bytes": 11108,
+    "sha256": "e428391dc0a5167714de67d3309509af77b46faa8acad499cbc1280214fd67de"
+  },
+  "source_after": {
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/PClassInfo.java": {
+      "bytes": 11254,
+      "sha256": "88e981821d22794ee689cf11f9b8218b4fe098aa6a10605589df4b582acb9e78"
+    },
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/type/TypeNode.java": {
+      "bytes": 100483,
+      "sha256": "9c05775d80ecadafb618de8f06b91b410cfc9fa617ae0627826206a70ea57286"
+    },
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/type/VmTypeMismatchException.java": {
+      "bytes": 13067,
+      "sha256": "3e96fd734e965923c44685f6c4311215f90f45f6ecb54716b607f1e1e79341a5"
+    },
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmClass.java": {
+      "bytes": 26863,
+      "sha256": "a11d5d69f6c6d51e3f524a6b1b00f5444905ef0de188da3b7d5e60f3080c8526"
+    },
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmPair.java": {
+      "bytes": 2984,
+      "sha256": "25dd338ad95cf282c3dd2252587e5a6a414b103ad40574689227b490a1e615f0"
+    },
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmReference.java": {
+      "bytes": 20781,
+      "sha256": "bb576166ef28e6e8d1b6d154d5717d9e79134d3be48243d29b7d104c77a33b50"
+    },
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmTyped.java": {
+      "bytes": 6859,
+      "sha256": "c59fa8b230ac2f9a7c0215676957e356e3c1fb282c387c83a22463990dbf1073"
+    },
+    "external/pkl/stdlib/base.pkl": {
+      "bytes": 126112,
+      "sha256": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb"
+    },
+    "external/pkl/stdlib/ref.pkl": {
+      "bytes": 8213,
+      "sha256": "aefca000fc62f11a4bdefe81ac2afc517c2d07214b35e3d10dd8ce3d40f86a12"
+    },
+    "oracle.lock.json": {
+      "bytes": 4421,
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b"
+    },
+    "references.lock": {
+      "bytes": 648,
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b"
+    }
+  },
+  "source_before": {
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/PClassInfo.java": {
+      "bytes": 11254,
+      "sha256": "88e981821d22794ee689cf11f9b8218b4fe098aa6a10605589df4b582acb9e78"
+    },
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/type/TypeNode.java": {
+      "bytes": 100483,
+      "sha256": "9c05775d80ecadafb618de8f06b91b410cfc9fa617ae0627826206a70ea57286"
+    },
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/ast/type/VmTypeMismatchException.java": {
+      "bytes": 13067,
+      "sha256": "3e96fd734e965923c44685f6c4311215f90f45f6ecb54716b607f1e1e79341a5"
+    },
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmClass.java": {
+      "bytes": 26863,
+      "sha256": "a11d5d69f6c6d51e3f524a6b1b00f5444905ef0de188da3b7d5e60f3080c8526"
+    },
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmPair.java": {
+      "bytes": 2984,
+      "sha256": "25dd338ad95cf282c3dd2252587e5a6a414b103ad40574689227b490a1e615f0"
+    },
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmReference.java": {
+      "bytes": 20781,
+      "sha256": "bb576166ef28e6e8d1b6d154d5717d9e79134d3be48243d29b7d104c77a33b50"
+    },
+    "external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmTyped.java": {
+      "bytes": 6859,
+      "sha256": "c59fa8b230ac2f9a7c0215676957e356e3c1fb282c387c83a22463990dbf1073"
+    },
+    "external/pkl/stdlib/base.pkl": {
+      "bytes": 126112,
+      "sha256": "fddb53666b6e37bc5b70e2d7a2864730c1eab2a4edd90b5c2defefcfdd0b57fb"
+    },
+    "external/pkl/stdlib/ref.pkl": {
+      "bytes": 8213,
+      "sha256": "aefca000fc62f11a4bdefe81ac2afc517c2d07214b35e3d10dd8ce3d40f86a12"
+    },
+    "oracle.lock.json": {
+      "bytes": 4421,
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b"
+    },
+    "references.lock": {
+      "bytes": 648,
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b"
+    }
+  },
+  "source_stable": true
+}

@@ -1,0 +1,17 @@
+import "pkl:ref"
+class D extends ref.Domain {
+  function renderReference(reference: ref.Reference<D, Any>): String = "ref"
+}
+typealias Ref<T> = ref.Reference<D, T>
+local d: D = new {}
+class Holder {
+  propertyCast = ref.Reference(d, String, "") as Ref<String(true)>
+  function methodCast() = ref.Reference(d, String, "") as Ref<String(true)>
+  function methodIs() = ref.Reference(d, String, "") is Ref<String(true)>
+  function qualifiedCast() = ref.Reference(d, String, "") as ref.Reference<D, String(true)>
+}
+holder = new Holder {}
+objectValue = new Dynamic {
+  nestedCast = ref.Reference(d, String, "") as Ref<String(true)>
+}
+stable = 42

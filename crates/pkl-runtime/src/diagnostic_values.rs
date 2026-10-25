@@ -107,7 +107,7 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
                         {
                             class.name.to_string()
                         } else {
-                            format!("{defining_module}#{}", class.name)
+                            crate::heap::display_class_name(defining_module, &class.name)
                         };
                         break;
                     }
@@ -738,6 +738,7 @@ mod tests {
         let class = heap.allocate(Object {
             class_definition: Some(Class {
                 module: None,
+                origin_uri: None,
                 id: 1,
                 name: "Child".into(),
                 open: false,

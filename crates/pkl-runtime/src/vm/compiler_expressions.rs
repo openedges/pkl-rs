@@ -1298,7 +1298,11 @@ impl Compiler<'_> {
                 work.push(Work::Visit(value));
             }
             ExprKind::TypeCheck { value, ty } | ExprKind::TypeCast { value, ty } => {
-                if let Some(check) = self.resolve_expression_type(ty, output) {
+                if let Some(check) = self.resolve_expression_type_for_use_site(
+                    ty,
+                    output,
+                    ReferenceUseSite::ExpressionCastOrTest,
+                ) {
                     work.push(if matches!(expression.kind, ExprKind::TypeCast { .. }) {
                         Work::Cast(check, self.type_source_span(ty))
                     } else {

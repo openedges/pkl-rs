@@ -1,0 +1,195 @@
+{
+  "authority": "unchanged Stage67 Java CLI observations; no new Java execution",
+  "baseline": "Pkl 0.32.0",
+  "cases": [
+    {
+      "capture": "target/m2/stage67-full-regression-01/cases/aff0af674be0330345e9763f",
+      "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateFunction.pkl",
+      "case_key": "aff0af674be0330345e9763f",
+      "files": {
+        "exit.txt": {
+          "bytes": 1,
+          "mode": 420,
+          "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+        },
+        "input.pkl": {
+          "bytes": 142,
+          "mode": 420,
+          "sha256": "4d05b59abdfea32813bd2a6f0f5b3366c53d049a53fac0c03089d3830d275691"
+        },
+        "process.json": {
+          "bytes": 3222,
+          "mode": 420,
+          "sha256": "10a1c8c89afac40ce03b8d53b3826055a94d6196bc0372fbdb56da64065ae727"
+        },
+        "result.json": {
+          "bytes": 295,
+          "mode": 420,
+          "sha256": "d17d80d73b5fa6fdc8f52bfef284a20cda80ffa0d000e6c892ddedd3a0ade8e6"
+        },
+        "stderr.bin": {
+          "bytes": 375,
+          "mode": 420,
+          "sha256": "b00c0afe75ff463ae93093d2dbf356161d48898515a8ccf9d1086a4555a97e0f"
+        },
+        "stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "uri.txt": {
+          "bytes": 192,
+          "mode": 420,
+          "sha256": "8602f8009b5e9d44163f1d5287ab95c9dd1e6a6dd99be0fe6daca34e04271e3c"
+        }
+      },
+      "label": "class-function",
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateFunction.pkl",
+      "upstream": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateFunction.pkl"
+    },
+    {
+      "capture": "target/m2/stage67-full-regression-01/cases/5f21c8fdc9ed565684111769",
+      "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateProperty.pkl",
+      "case_key": "5f21c8fdc9ed565684111769",
+      "files": {
+        "exit.txt": {
+          "bytes": 1,
+          "mode": 420,
+          "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+        },
+        "input.pkl": {
+          "bytes": 104,
+          "mode": 420,
+          "sha256": "f28fc9e8fd7cc5f8c3ec66f56269bcc0ac7e7c9ce09fbbf6f2f895cc53f08925"
+        },
+        "process.json": {
+          "bytes": 3222,
+          "mode": 420,
+          "sha256": "7d90f13f9f632dce6c267c8aa88a4cebf9a4ee873bbc5dd1e73e31eff861e193"
+        },
+        "result.json": {
+          "bytes": 294,
+          "mode": 420,
+          "sha256": "0628e40445e16ff75e3559f738293906aa9711116d932d7331d5dded762f6068"
+        },
+        "stderr.bin": {
+          "bytes": 339,
+          "mode": 420,
+          "sha256": "38f21bd122cf59ff8e0ecd4d989717f724f27f4d5bc8ab741796dd8523d3b2d9"
+        },
+        "stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "uri.txt": {
+          "bytes": 192,
+          "mode": 420,
+          "sha256": "ccbe4f0c6bfe8790bb27ac9a86c29c6ef4b920885b6600b389dd9b9dd6f34a76"
+        }
+      },
+      "label": "class-property",
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateProperty.pkl",
+      "upstream": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/classes/duplicateProperty.pkl"
+    },
+    {
+      "capture": "target/m2/stage67-full-regression-01/cases/89528f1e9f6f421c32c941c5",
+      "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateFunction.pkl",
+      "case_key": "89528f1e9f6f421c32c941c5",
+      "files": {
+        "exit.txt": {
+          "bytes": 1,
+          "mode": 420,
+          "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+        },
+        "input.pkl": {
+          "bytes": 107,
+          "mode": 420,
+          "sha256": "cca92012a574d761fb7fa91c2775baf6aaaf2771aa10992a7753186e18fcba11"
+        },
+        "process.json": {
+          "bytes": 3222,
+          "mode": 420,
+          "sha256": "7ffc1883a470a5380c5774b9c5671a833eb7c7c3ceb93d811323b08d027b6866"
+        },
+        "result.json": {
+          "bytes": 295,
+          "mode": 420,
+          "sha256": "55b9445faa0c8c5670f8ea9d306a58c5935682a9d41a5a110663803d9242c2c4"
+        },
+        "stderr.bin": {
+          "bytes": 354,
+          "mode": 420,
+          "sha256": "01d343efac17bc815f3aca26b9915c2c48db38e15039473bc514294869d8006a"
+        },
+        "stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "uri.txt": {
+          "bytes": 192,
+          "mode": 420,
+          "sha256": "36c457affa452d87160d4f5d8aa751321d54074a751b098475ce1b71495d43f7"
+        }
+      },
+      "label": "module-function",
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateFunction.pkl",
+      "upstream": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateFunction.pkl"
+    },
+    {
+      "capture": "target/m2/stage67-full-regression-01/cases/d14bdef6d639bbc4420cdc00",
+      "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty1.pkl",
+      "case_key": "d14bdef6d639bbc4420cdc00",
+      "files": {
+        "exit.txt": {
+          "bytes": 1,
+          "mode": 420,
+          "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+        },
+        "input.pkl": {
+          "bytes": 46,
+          "mode": 420,
+          "sha256": "e5a7b3491e4a254c7a557d3f5e9f703689b9ce0ee190e71f377e048064614252"
+        },
+        "process.json": {
+          "bytes": 3224,
+          "mode": 420,
+          "sha256": "ad9c5563cd06f6f43eba1b73caad13c27d5ec17d10397d525ea88a2dfbff69fa"
+        },
+        "result.json": {
+          "bytes": 294,
+          "mode": 420,
+          "sha256": "7a96730a50f81e794336cbf78062f529779227764472dcf873a2152a88d3a8ba"
+        },
+        "stderr.bin": {
+          "bytes": 330,
+          "mode": 420,
+          "sha256": "df6c20562081d6ed2a4a40d1182b0e86bb3992428909426b2071f761243b4561"
+        },
+        "stdout.bin": {
+          "bytes": 0,
+          "mode": 420,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "uri.txt": {
+          "bytes": 193,
+          "mode": 420,
+          "sha256": "cbf97455550d4064f9b6de251f8b3480a0f25ad94a16613c64322d52b3c5b5ba"
+        }
+      },
+      "label": "module-property",
+      "source_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage67-full-regression-01-workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty1.pkl",
+      "upstream": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/duplicateProperty1.pkl"
+    }
+  ],
+  "comparison_scope": [
+    "exit_code",
+    "complete stdout bytes",
+    "complete stderr bytes"
+  ],
+  "not_compared": [
+    "Host-private state",
+    "Logger callback channels (not captured by this CLI authority)"
+  ]
+}

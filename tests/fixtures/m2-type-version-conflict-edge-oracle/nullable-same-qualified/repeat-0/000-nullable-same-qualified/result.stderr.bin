@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Module version conflict: Expected value of type `foo.bar#Baz` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified/module.pkl`, but got type `foo.bar#Baz` defined in module `file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified/helper.pkl`.
+
+
+4 | baz: Baz? = new helper.Baz {}
+         ^^^
+at foo.bar#baz (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified/module.pkl)
+
+4 | baz: Baz? = new helper.Baz {}
+                ^^^^^^^^^^^^^^^^^
+at foo.bar#baz (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/nullable-same-qualified/module.pkl)
+
+1 | baz
+    ^^^
+at  (repl:text)

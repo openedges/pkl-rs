@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Expected value of type `Pair`, but got type `Pair`.
+Value: Pair(1, 2)
+
+4 | p: Pair = base.Pair(1, 2)
+       ^^^^
+at pkl.base#p (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-pair-negative/module.pkl)
+
+4 | p: Pair = base.Pair(1, 2)
+              ^^^^^^^^^^^^^^^
+at pkl.base#p (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage82-type-version-conflict-edge-oracle-01/capture-01/programs/builtin-pair-negative/module.pkl)
+
+1 | p
+    ^
+at  (repl:text)
