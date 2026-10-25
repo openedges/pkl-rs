@@ -1,0 +1,15 @@
+–– Pkl Error ––
+Type constraint `!(this is Null)` violated.
+Value: null
+
+1 | typealias Mine = Any(!(this is Null))
+                         ^^^^^^^^^^^^^^^
+at nonnull-alias#value (file:///stage75/nonnull-alias.pkl)
+
+2 | value: Mine = null
+                  ^^^^
+at nonnull-alias#value (file:///stage75/nonnull-alias.pkl)
+
+1 | value
+    ^^^^^
+at  (repl:text)

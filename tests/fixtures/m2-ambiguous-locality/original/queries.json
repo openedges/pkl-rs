@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "rows": [
+    {
+      "id": "res2-branch",
+      "expression": "res2.prop.theBranch"
+    },
+    {
+      "id": "res3-branch",
+      "expression": "res3.prop.theBranch"
+    },
+    {
+      "id": "res2-public",
+      "expression": "res2.prop.qux"
+    },
+    {
+      "id": "res3-local",
+      "expression": "res3.prop.qux"
+    }
+  ]
+}

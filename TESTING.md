@@ -997,6 +997,24 @@ always remains `oracle-error`, even when its payload matches. Per-case power
 assertion flags override the shared context and are recorded in each execution.
 See the [resource-read contract](docs/m2-resource-reads.md).
 
+### Stage 73–75 local verification boundary
+
+The integrated evaluator's five required Rust commands ran against a frozen
+3,270-path canonical source snapshot and all exited zero. The workspace test
+count is 1,069 distinct passes, zero failures, and two ignored; 13 nested
+child reruns also appear in raw harness output and are not additional tests.
+Selected native, N-API, and Chromium comparisons each cover 310 queries with
+two observations, 620 per target. Preserve the 91 earlier queries whose Java
+capture lacks logger channels as public-result comparisons only. The separate
+M1 experiment passed its architecture contract and retained two Regex
+compatibility failures per target.
+
+The full 4,416-case Rust replay records **4,163 matches, 110 mismatches, 141 unsupported results, 2 Java oracle errors, and 0 Rust internal errors**. Original modules match 643/888; expression strings match 3,519/3,527. The JVM classpath case matches. Compared with Stage69–72, 5 previously nonpassing cases now match, with no prior-pass regressions.
+
+The linked replay, separate integrity verifier, and independent regression audit completed successfully. The replay reuses sealed Stage67 Java outputs and starts no fresh Java process. The strict full gate retains 1,791 overlapping unmet conditions. The 111 unready inventory cases and all nine M2 workstreams remain open. Earlier mapping rejection, interruption, ENOSPC, and monitor failures remain recorded separately.
+
+See the [implementation checkpoint](reports/m2/stage73-75-implementation-checkpoint.json) for raw evidence and execution provenance. These local records do not establish full M2, product API, release-platform, or performance compatibility.
+
 ## Performance and Memory
 
 The [initial Java benchmark contract](docs/benchmarks.md) implements cold CLI, persistent evaluator, and fresh evaluator measurements for six fixtures. Use a quiet host with the pinned optimizing runtime:

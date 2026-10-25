@@ -561,9 +561,52 @@ impl Vm {
                         .at(span)
                         .into());
                     }
+                    // Only BuiltinTypeAlias creates initialized alias values
+                    // without an authored declaration. Declared resolution in
+                    // the pinned VM selects intrinsic nodes for these base
+                    // aliases; user aliases with the same name retain their
+                    // declaration/recipe and never enter this branch.
+                    if alias.type_alias_declaration.is_none() {
+                        let name = alias
+                            .type_alias
+                            .as_deref()
+                            .ok_or_else(|| invalid("builtin alias name missing"))?;
+                        let ty = match name {
+                            "NonNull" => TypeCheck::NonNull,
+                            "Int8" | "Int16" | "Int32" | "UInt8" | "UInt16" | "UInt32" | "UInt" => {
+                                let (min, max) = match name {
+                                    "Int8" => (i8::MIN as i64, i8::MAX as i64),
+                                    "Int16" => (i16::MIN as i64, i16::MAX as i64),
+                                    "Int32" => (i32::MIN as i64, i32::MAX as i64),
+                                    "UInt8" => (0, u8::MAX as i64),
+                                    "UInt16" => (0, u16::MAX as i64),
+                                    "UInt32" => (0, u32::MAX as i64),
+                                    _ => (0, i64::MAX),
+                                };
+                                TypeCheck::IntegerAlias {
+                                    name: name.into(),
+                                    min,
+                                    max,
+                                }
+                            }
+                            _ => return Err(invalid("unrecognized builtin alias").into()),
+                        };
+                        // Work::Alias runs after its argument visits, matching
+                        // TypeAliasTypeNode's check after resolving arguments.
+                        if !arguments.is_empty() {
+                            return Err(RuntimeError::new(
+                                ErrorKind::Type,
+                                format!("Expected 0 type argument(s) but got {}.", arguments.len()),
+                            )
+                            .at(span)
+                            .into());
+                        }
+                        values.push((ty, true));
+                        continue;
+                    }
                     let declaration = alias
                         .type_alias_declaration
-                        .ok_or_else(|| invalid("resolved alias declaration missing"))?;
+                        .expect("authored alias declaration");
                     let metadata = self
                         .program
                         .alias_definitions
@@ -638,6 +681,27 @@ impl Vm {
         environment: &Environment,
         for_default: bool,
     ) -> Result<Option<TypeCheck>, RuntimeError> {
+        self.resolve_runtime_type_retry(ty, environment, for_default, false)
+    }
+
+    /// Resolve exported declaration metadata while preserving the read site's
+    /// operands. Rewind only after successful resolution, keeping a failing
+    /// declaration's caller at its original source instruction.
+    pub(super) fn resolve_metadata_type(
+        &mut self,
+        ty: &TypeCheck,
+        environment: &Environment,
+    ) -> Result<Option<TypeCheck>, RuntimeError> {
+        self.resolve_runtime_type_retry(ty, environment, false, true)
+    }
+
+    fn resolve_runtime_type_retry(
+        &mut self,
+        ty: &TypeCheck,
+        environment: &Environment,
+        for_default: bool,
+        retry_instruction: bool,
+    ) -> Result<Option<TypeCheck>, RuntimeError> {
         if !ty.has_declared() {
             return Ok(Some(ty.clone()));
         }
@@ -645,7 +709,7 @@ impl Vm {
             Ok(resolved) => Ok(Some(resolved)),
             Err(ResolutionFailure::Error(error)) => Err(error),
             Err(ResolutionFailure::Need(need)) => {
-                self.begin_declared_type(need, false)?;
+                self.begin_declared_type(need, retry_instruction)?;
                 Ok(None)
             }
         }

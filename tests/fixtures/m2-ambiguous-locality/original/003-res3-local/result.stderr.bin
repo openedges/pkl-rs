@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find property `qux` in object of type `Dynamic`.
+
+1 | res3.prop.qux
+    ^^^^^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+default
+theBranch

@@ -1,0 +1,1649 @@
+{
+  "audit": {
+    "bytes": 7347,
+    "path": "target/m2/stage75-nonnull-audit-01/report.json",
+    "sha256": "c60ab7158608a7155a7d781d9ad5a840f579d2e4bb67f5ae6aba9baf248e4c7b"
+  },
+  "java": {
+    "bytes": 72114,
+    "path": "target/m2/stage75-nonnull-oracle-01/report.json",
+    "sha256": "52dbe87c81556259f8c5b3988f0423621d85935197e9dca67896d11fedda7a44"
+  },
+  "original": {
+    "source": {
+      "bytes": 1183,
+      "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/typeAliases.pkl",
+      "sha256": "791d1cca1cba87501be1f21e958c85e9e8a955509862ec635733d7bd7ff89582"
+    },
+    "stderr": {
+      "bytes": 0,
+      "path": "target/m2/stage67-full-regression-01/cases/7c8dc53e62deed2f30b9fb6d/java/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 1064,
+      "path": "target/m2/stage67-full-regression-01/cases/7c8dc53e62deed2f30b9fb6d/java/stdout.bin",
+      "sha256": "5e776f2e866ced3d9eeab75398316916ca581a95a670a7eada7029c14e2774be"
+    }
+  },
+  "original_control": {
+    "bytes": 616,
+    "path": "target/m2/stage75-nonnull-audit-01/original-input-control.json",
+    "sha256": "7165ab74ae49e863866f75ad4b2f183f75a9228962662c01a9921653a1093516"
+  },
+  "rows": [
+    {
+      "channel": "stderr",
+      "expression": "value",
+      "id": "typed-null",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 25,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        {
+          "bytes": 50,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        {
+          "bytes": 473,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.exception-to-string.bin",
+          "sha256": "f430e4db8dbd7b462f6dfbf9235b8439de3baa23ef000607dc0558eeb9da31d9"
+        },
+        {
+          "bytes": 926,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.exception-to-string.code-units.bin",
+          "sha256": "2e2e5f4a7e561daf54b05045c1e761214921e12574efe9607d1473da26d8290b"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        {
+          "bytes": 446,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.stderr.bin",
+          "sha256": "6ba77b1ad245279f66f916801a705ddf44b5e585f72d42abde87dbb0a24d51e8"
+        },
+        {
+          "bytes": 872,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.stderr.code-units.bin",
+          "sha256": "c35d2b98b4d9994c0637868bc9d959e5fc7e4536b6674413121cefec6d771926"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/00-typed-null/repeat-0/000-typed-null/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 22,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/00-typed-null.pkl",
+        "sha256": "f272dd4c3cf20b951b8fc65a95f8e4d3caebec30a1b532e519325aa0b6254aa9"
+      }
+    },
+    {
+      "channel": "stderr",
+      "expression": "value",
+      "id": "typed-null-default",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 25,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        {
+          "bytes": 50,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        {
+          "bytes": 505,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.exception-to-string.bin",
+          "sha256": "cb1ee0f658839ffe7589b600f259dc371bc7dcc5b8431b8400a79e44e1bc0bc7"
+        },
+        {
+          "bytes": 990,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.exception-to-string.code-units.bin",
+          "sha256": "2d5988356e4cd8cb1145dfe15ece482987a09872f89d0f8a78d4bfbb2433c995"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        {
+          "bytes": 478,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.stderr.bin",
+          "sha256": "a434ecaa4498dc27295f78390dc594f578d6eb72d80ac935569d89d9320c369f"
+        },
+        {
+          "bytes": 936,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.stderr.code-units.bin",
+          "sha256": "560259ec1740aa1571563c72b8e859d37538b48f091c70472d1ac97b92be929b"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/01-typed-null-default/repeat-0/000-typed-null-default/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 38,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/01-typed-null-default.pkl",
+        "sha256": "4e15bfc26b6af041a0e9f0be16b575c459408290821c36f3aedcc98edbab804c"
+      }
+    },
+    {
+      "channel": "stdout",
+      "expression": "value",
+      "id": "typed-int",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 8,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.stdout.bin",
+          "sha256": "73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17dc651b3a8049"
+        },
+        {
+          "bytes": 4,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/02-typed-int/repeat-0/000-typed-int/result.stdout.code-units.bin",
+          "sha256": "425ee600f0a2d99174e87870296cc04f48c9535194e381e18b5036ee08c523b7"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 20,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/02-typed-int.pkl",
+        "sha256": "e138c766913e954f21da411faa61aaa6cb4572cddaf0f20bf66375f9c3ecc8c9"
+      }
+    },
+    {
+      "channel": "stdout",
+      "expression": "value",
+      "id": "typed-empty-string",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 8,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/03-typed-empty-string/repeat-0/000-typed-empty-string/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 20,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/03-typed-empty-string.pkl",
+        "sha256": "c4aa87aa0f73fa8ef5d938dfa2ea76262aa6aeea5dec9db6168f804bb2db3976"
+      }
+    },
+    {
+      "channel": "stderr",
+      "expression": "value",
+      "id": "wrapped-alias-null",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 25,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        {
+          "bytes": 50,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        {
+          "bytes": 473,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.exception-to-string.bin",
+          "sha256": "d1465c48c3188660a2372b9a3a1010d62ec1639fe4c68dffa339c2577557ee5c"
+        },
+        {
+          "bytes": 926,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.exception-to-string.code-units.bin",
+          "sha256": "d824acd44379e601e998e4021593f3c113f397b611ee892cfca7f971602750fb"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        {
+          "bytes": 446,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.stderr.bin",
+          "sha256": "750a7e7441155c8c0e7d3fc3642660ebc7bd665db0f229ed0a98c51c3ba287a5"
+        },
+        {
+          "bytes": 872,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.stderr.code-units.bin",
+          "sha256": "77b28109c403147ddb2f3bffa17ea0c5276f20c332bc479c0dbc992863d77fe2"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/04-wrapped-alias-null/repeat-0/000-wrapped-alias-null/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 50,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/04-wrapped-alias-null.pkl",
+        "sha256": "fe634ced26ee9deea95b01d7cb6e234d09fd682f8a1c93a604cfa7d61294a48c"
+      }
+    },
+    {
+      "channel": "stderr",
+      "expression": "value",
+      "id": "qualified-alias-null",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 25,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        {
+          "bytes": 50,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        {
+          "bytes": 477,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.exception-to-string.bin",
+          "sha256": "8268c03d80888a9a1e9cede814e4e818bf3fde61920a5447639ba2e31c2e782f"
+        },
+        {
+          "bytes": 934,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.exception-to-string.code-units.bin",
+          "sha256": "50ebd86e13368c8b1bd8d6ace549c0e5363797f161434a9c52beaf1ebd2f184f"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        {
+          "bytes": 450,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.stderr.bin",
+          "sha256": "1282f9a7b0e73fdaf2c243166dc0ba8249b590ce5da514aaf470a062c2a5d46b"
+        },
+        {
+          "bytes": 880,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.stderr.code-units.bin",
+          "sha256": "7ff5da59f36a01dd211f5702a84fd20e474134f20ec537b409f1c069cf62dc40"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/05-qualified-alias-null/repeat-0/000-qualified-alias-null/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 47,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/05-qualified-alias-null.pkl",
+        "sha256": "dcbc92935100bd51c6dee14dd0c443dcbda1bba780f7ba3596e5c76359f155cd"
+      }
+    },
+    {
+      "channel": "stderr",
+      "expression": "value",
+      "id": "function-argument-null",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 25,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        {
+          "bytes": 50,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        {
+          "bytes": 457,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.exception-to-string.bin",
+          "sha256": "2a4d3370f68db829379d6870e17a87598129cbd37b9bff4ff02ebb6c1a1499cc"
+        },
+        {
+          "bytes": 894,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.exception-to-string.code-units.bin",
+          "sha256": "eb810cb8c5277189756f6d9c75e8a74874aa4c028a9e6ae888c6e44a99deec92"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        {
+          "bytes": 430,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.stderr.bin",
+          "sha256": "ec48a8dbe4a26e2cc22a5d09b579559b9218d2e027e10753cf03bdfaaa510d25"
+        },
+        {
+          "bytes": 840,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.stderr.code-units.bin",
+          "sha256": "4485056576ac08671cdd9563623aac8b4ee61b3dd9a178c6edc243f2701acddc"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/06-function-argument-null/repeat-0/000-function-argument-null/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 48,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/06-function-argument-null.pkl",
+        "sha256": "5b4c308dcd6a48bbce70eef9ea01db21a1c39e42da6da79fa609d8ab2cff68bd"
+      }
+    },
+    {
+      "channel": "stderr",
+      "expression": "value",
+      "id": "function-return-null",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 25,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        {
+          "bytes": 50,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        {
+          "bytes": 449,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.exception-to-string.bin",
+          "sha256": "5d8e2f736b1261df56d949c97e6b6ffcd74c0118d03ca53314348f01f90e8597"
+        },
+        {
+          "bytes": 878,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.exception-to-string.code-units.bin",
+          "sha256": "c8d935be502bf32b9c0a88e226b1a43f1bc2768a9dfd97b5961147ce4ecb4db6"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        {
+          "bytes": 422,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.stderr.bin",
+          "sha256": "ada87260ccdf0a5f52dabb3204c3d1c0a8ce7d8aa787a9c3394d5b47a25c8bef"
+        },
+        {
+          "bytes": 824,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.stderr.code-units.bin",
+          "sha256": "2566fecf3f7903e5143a3b61417855d2960e9e6848f725da9cfd0ef2b26d9e34"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/07-function-return-null/repeat-0/000-function-return-null/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 41,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/07-function-return-null.pkl",
+        "sha256": "ccf119afb4de283749331c73c09d3db229da65baa07263f3a17a94b05c41f8c0"
+      }
+    },
+    {
+      "channel": "stdout",
+      "expression": "value",
+      "id": "is-null",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 8,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.stdout.bin",
+          "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/08-is-null/repeat-0/000-is-null/result.stdout.code-units.bin",
+          "sha256": "1b30a8e4fae58346c18e377b3b362856c5de87bb2e029ba81d93abd63d3f04c9"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 24,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/08-is-null.pkl",
+        "sha256": "10f651adfae763b71333e0dfc77f7fe696b4b83467fa620a3d6f8d88fe0e9fc5"
+      }
+    },
+    {
+      "channel": "stderr",
+      "expression": "value",
+      "id": "as-null",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 25,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        {
+          "bytes": 50,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        {
+          "bytes": 361,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.exception-to-string.bin",
+          "sha256": "918b993867877089e99ec4bb0907d1e5df3195d41a7185c7085f5c5b2a83711e"
+        },
+        {
+          "bytes": 702,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.exception-to-string.code-units.bin",
+          "sha256": "4a4f614f2e5122dbd89fc987480686500bc3404b9f41a2473ffee8e82e3d327e"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        {
+          "bytes": 334,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.stderr.bin",
+          "sha256": "98ea7b4e158cbf470f7e83ca4c699e76dda2fdff6c52b2577c13a960d4f39b0c"
+        },
+        {
+          "bytes": 648,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.stderr.code-units.bin",
+          "sha256": "c29f2ff6c404f4c843ca6fb22fae50dc357acc263c68ca0102eba24f9492b800"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/09-as-null/repeat-0/000-as-null/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 24,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/09-as-null.pkl",
+        "sha256": "e11c1b625b0ab404886b7fef2a02c9da00b715f3343731598024303670e27625"
+      }
+    },
+    {
+      "channel": "stderr",
+      "expression": "value",
+      "id": "user-constraint-null",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 25,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.error-class.bin",
+          "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591"
+        },
+        {
+          "bytes": 50,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.error-class.code-units.bin",
+          "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34"
+        },
+        {
+          "bytes": 393,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.exception-to-string.bin",
+          "sha256": "f6d47b39f1000385f5a5988f89104f6203c72862e86dbf1005493860f82416c2"
+        },
+        {
+          "bytes": 770,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.exception-to-string.code-units.bin",
+          "sha256": "64d9f60491406b20b0e5c093a79774aaabfcc46b80367cabddc77b84f66f89b1"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.status.bin",
+          "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b"
+        },
+        {
+          "bytes": 366,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.stderr.bin",
+          "sha256": "efb4943b9c321de4dd98ae47bcb7a3bd7dd30ebc9ec937edb8bdef275f13f054"
+        },
+        {
+          "bytes": 716,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.stderr.code-units.bin",
+          "sha256": "ac064290e39ca97aa2b3d6959b74336478791bf661378eb088b096126f53b71d"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/10-user-constraint-null/repeat-0/000-user-constraint-null/result.stdout.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 57,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/10-user-constraint-null.pkl",
+        "sha256": "67e7521ed225e2c37a5f71067a590b74e5d7b9303e73eec99ddf088067de019e"
+      }
+    },
+    {
+      "channel": "stdout",
+      "expression": "value",
+      "id": "caught-typed-null",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 8,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 55,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.stdout.bin",
+          "sha256": "0273e1c7e5c9f6e49dd7081b0bda4dd99c73fa4dbd95b4ab4f3829fe4c53518f"
+        },
+        {
+          "bytes": 110,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/11-caught-typed-null/repeat-0/000-caught-typed-null/result.stdout.code-units.bin",
+          "sha256": "405d648147bd171dea805d2c878ba457ea802d48a9d65a30733953cc84a24efc"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 109,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/11-caught-typed-null.pkl",
+        "sha256": "c4cd351b29316ce5612d2955870ff5c502bc4e37356d43cbc4249eccd5148837"
+      }
+    },
+    {
+      "channel": "stdout",
+      "expression": "value",
+      "id": "caught-default-null",
+      "logger_events": 0,
+      "raw": [
+        {
+          "bytes": 5,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/expression.bin",
+          "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619"
+        },
+        {
+          "bytes": 10,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/expression.code-units.bin",
+          "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f"
+        },
+        {
+          "bytes": 2,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/logs.count.bin",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "bytes": 6,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/mode.bin",
+          "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
+        },
+        {
+          "bytes": 12,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/mode.code-units.bin",
+          "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.cause-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.cause-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.cause-message.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.cause-message.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.cause-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.cause-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.error-class.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.error-class.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.exception-to-string.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.exception-to-string.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.java-type.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.java-type.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 8,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.status.bin",
+          "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.stderr.code-units.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 55,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.stdout.bin",
+          "sha256": "0273e1c7e5c9f6e49dd7081b0bda4dd99c73fa4dbd95b4ab4f3829fe4c53518f"
+        },
+        {
+          "bytes": 110,
+          "path": "target/m2/stage75-nonnull-oracle-01/programs/12-caught-default-null/repeat-0/000-caught-default-null/result.stdout.code-units.bin",
+          "sha256": "405d648147bd171dea805d2c878ba457ea802d48a9d65a30733953cc84a24efc"
+        }
+      ],
+      "repeats_equal": true,
+      "source": {
+        "bytes": 125,
+        "path": "target/m2/stage75-nonnull-oracle-01/modules/12-caught-default-null.pkl",
+        "sha256": "d5a09c737b769acd105dacc0450bec4175e1bdd34f0456502bb784f3d417d5e2"
+      }
+    }
+  ],
+  "scope": "Full public UTF-8/UTF-16 strings and captured zero-logger controls; Java exception metadata is retained in the authority but not asserted by this SourceProbe test."
+}

@@ -1429,3 +1429,20 @@ frames do not invoke the transformer.
 See the [frame contract](m2-frame-transformers.md) for the actual comparisons and
 remaining exception/API, eager-constructor, package/service-provider, and
 cross-evaluator obligations.
+
+## Selected property and type-resolution owners
+
+The Stage 73–75 shared VM records the first local/public property decision at
+the executable owner and call position, so later reads use that same decision
+without changing the receiver that owns the value. `Reference` class-property
+metadata resolves declared types in the prototype's lexical environment while
+retaining the access receiver and key across suspension and retry. `NonNull`
+and qualified builtin aliases retain their source declaration and argument
+order for error selection. These paths use the shared engine for native, N-API,
+and Wasm; the Host remains responsible for platform I/O.
+
+The selected platform comparisons and local lifecycle tests exercise those
+owners, but the model does not yet cover every Pkl declaration, module
+initialization, reflection, or error path. The linked full-corpus replay completed separate integrity verification and independent regression review. Its remaining compatibility failures are recorded in the implementation checkpoint.
+
+See the [implementation checkpoint](../reports/m2/stage73-75-implementation-checkpoint.json) for raw evidence and execution provenance. These local records do not establish full M2, product API, release-platform, or performance compatibility.

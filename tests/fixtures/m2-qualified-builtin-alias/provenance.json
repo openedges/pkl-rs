@@ -1,0 +1,2272 @@
+{
+  "authority": {
+    "audit": {
+      "bytes": 6683,
+      "mode": 420,
+      "sha256": "251ac4e0d498e976ff230ff2906b045c20028dbf64a51e5a04933c662fc2a01c"
+    },
+    "report": {
+      "bytes": 76495,
+      "mode": 420,
+      "sha256": "2b0ddcba107266afb682de0d7f54547553b4c35fe52f576b77eb899094d42c4b"
+    }
+  },
+  "expected_source": "Only repeated pinned Java raw bytes; no Rust result materialization.",
+  "files": [
+    {
+      "bytes": 47,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/module.pkl",
+      "mode": 420,
+      "sha256": "dcbc92935100bd51c6dee14dd0c443dcbda1bba780f7ba3596e5c76359f155cd",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 25,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.error-class.bin",
+      "mode": 420,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.error-class.bin"
+    },
+    {
+      "bytes": 50,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 507,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "c9f9780b29739fc8117460fc817826b5b0797a05da86bc43f415b88d90382620",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 994,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "99bd70f492daf6b66781bb030c1c43686822f9f06eeb35492d6d18384b0ea72f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.status.bin",
+      "mode": 420,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.status.bin"
+    },
+    {
+      "bytes": 480,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.stderr.bin",
+      "mode": 420,
+      "sha256": "8be4da9cc526a11b7cffe6086a760d6d9edd41c3c25835bf0751b952ba30affc",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.stderr.bin"
+    },
+    {
+      "bytes": 940,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "2e529e4e430f771d5c62c9da7df3d9d4935efcd1f6a985a10e61905cd55471d9",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.stdout.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/00-nonnull-null/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/00-nonnull-null/repeat-0/000-nonnull-null/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 45,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/module.pkl",
+      "mode": 420,
+      "sha256": "d3e5cb32745e12ba61c62b9f9a2bd260fe6a694a3968bc350401b7b14211c009",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.error-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.error-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 8,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.status.bin",
+      "mode": 420,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.status.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.stderr.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.stderr.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.stdout.bin",
+      "mode": 420,
+      "sha256": "73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17dc651b3a8049",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.stdout.bin"
+    },
+    {
+      "bytes": 4,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/01-nonnull-int/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "425ee600f0a2d99174e87870296cc04f48c9535194e381e18b5036ee08c523b7",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/01-nonnull-int/repeat-0/000-nonnull-int/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 43,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/module.pkl",
+      "mode": 420,
+      "sha256": "c24fd4079823fc9d69824df1401a29461f272cb763d0b6717477cff88c6b6241",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.error-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.error-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 8,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.status.bin",
+      "mode": 420,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.status.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.stderr.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.stderr.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 3,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.stdout.bin",
+      "mode": 420,
+      "sha256": "922c7954216ccfe7a61def609305ce1dc7c67e225f873f256d30d7a8ee4f404c",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.stdout.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/02-int8-valid/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "f82abf95665df77dedfe4c77223df7ae88126b17cd1dacf78a888f9593ac7790",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/02-int8-valid/repeat-0/000-int8-valid/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 43,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/module.pkl",
+      "mode": 420,
+      "sha256": "27f1910b3351cdfd67eed173e1d3c556cc7a02b79846c21b3270923972cda193",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 25,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.error-class.bin",
+      "mode": 420,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.error-class.bin"
+    },
+    {
+      "bytes": 50,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 518,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "fecc6f57ab68ba96ada8eae4d4e4c053a6d5d18d5337a8be41d95f14fe6d76ad",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 1016,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "0ba8d3de70c19bfe81b8e9a0122d3c51ddb6ee6290fc5c96c36ae2c20c824dab",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.status.bin",
+      "mode": 420,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.status.bin"
+    },
+    {
+      "bytes": 491,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.stderr.bin",
+      "mode": 420,
+      "sha256": "321a6a047b02145c9177afa19ae4d3f699e0e8ef9afc644270236da18a0117d4",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.stderr.bin"
+    },
+    {
+      "bytes": 962,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "b288d9acdaabf69a9b6f0f893d37b7ef327c8d95d76a5b67aca5942efb2015e9",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.stdout.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/03-int8-range-error/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/03-int8-range-error/repeat-0/000-int8-range-error/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 44,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/module.pkl",
+      "mode": 420,
+      "sha256": "61c534535f0f143cc130f984f91a5889c2876cfc51931816e3447816a36c8115",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.error-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.error-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 8,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.status.bin",
+      "mode": 420,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.status.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.stderr.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.stderr.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 3,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.stdout.bin",
+      "mode": 420,
+      "sha256": "9556b82499cc0aaf86aee7f0d253e17c61b7ef73d48a295f37d98f08b04ffa7f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.stdout.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/04-uint8-valid/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "40518412e696743d856b517f0a0260851ee3b68e952c13ecf2bba1f6ba973999",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/04-uint8-valid/repeat-0/000-uint8-valid/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 44,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/module.pkl",
+      "mode": 420,
+      "sha256": "d663fd66de9577cadd9a12b0beef85cfe5e5609a7a1f337b62667a9317c9065b",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 25,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.error-class.bin",
+      "mode": 420,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.error-class.bin"
+    },
+    {
+      "bytes": 50,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 510,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "268ed8e5a99f80baad602cc5c80a87e7349f9fe8f2d9f0ed9a28ce7dd5c7a7de",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 1000,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "7ac1a1e79a2ba9214f606743be11b769ae9b5e78244141a82b79fc774f5d529e",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.status.bin",
+      "mode": 420,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.status.bin"
+    },
+    {
+      "bytes": 483,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.stderr.bin",
+      "mode": 420,
+      "sha256": "5ba9c6b8762f2c04e54f98e4d5c5c5d27737600450e789e0fc4a747043342f4a",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.stderr.bin"
+    },
+    {
+      "bytes": 946,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "4c58cc8c94173d79ce87866b9d209a6659273c02f34d17efffcaa17fdd43de95",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.stdout.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/05-uint8-range-error/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/05-uint8-range-error/repeat-0/000-uint8-range-error/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 50,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/module.pkl",
+      "mode": 420,
+      "sha256": "1fcbac050ea82b21d4b87d9226f7cf46d9ff1cd27282aba78aea5c4d19569e92",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 25,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.error-class.bin",
+      "mode": 420,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.error-class.bin"
+    },
+    {
+      "bytes": 50,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 221,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "a21d29d109faf795dc3b813028469e6280277e83ab27ef29e123a7928c338382",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 426,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "ba5bae159c0256fb42324f636b1daa9c1403f3463ca77baa2bcea34ca7e8c22e",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.status.bin",
+      "mode": 420,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.status.bin"
+    },
+    {
+      "bytes": 194,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.stderr.bin",
+      "mode": 420,
+      "sha256": "1ba2c7f27d328b9674beabe916f8e8586fa2642bc07cb8b193d1d6dd024a23a2",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.stderr.bin"
+    },
+    {
+      "bytes": 372,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "434720366b602846a02cf869b2b693dcd0f115b08e5de035d194bb98957a0eec",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.stdout.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/06-nonnull-extra-known-argument/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/06-nonnull-extra-known-argument/repeat-0/000-nonnull-extra-known-argument/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 54,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/module.pkl",
+      "mode": 420,
+      "sha256": "a63e2e7e558e39f5ca4a80a339e5a6d6b974cc601044d1a783a5fe6a75ddab8d",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 25,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.error-class.bin",
+      "mode": 420,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.error-class.bin"
+    },
+    {
+      "bytes": 50,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 328,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "d7af4f953042a238b73782d5d05d5e359984294e0bca4e42dd0ce43bf2dcb753",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 640,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "720b448dd57bb802dc1ae79e2765a1bbf6c40dd8e00d77c9925022b4f98adf10",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.status.bin",
+      "mode": 420,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.status.bin"
+    },
+    {
+      "bytes": 301,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.stderr.bin",
+      "mode": 420,
+      "sha256": "2fcf5f5e2e636e100f11bb5168455b5214d81f3521d1eede3824ef694bad5954",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.stderr.bin"
+    },
+    {
+      "bytes": 586,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "97b189817c9fd857524ea95fb532c8b3572456c93f24ee4317b2eca2274b520d",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.stdout.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/07-nonnull-extra-missing-argument/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/07-nonnull-extra-missing-argument/repeat-0/000-nonnull-extra-missing-argument/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 59,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/module.pkl",
+      "mode": 420,
+      "sha256": "0537982f70f1e5b00050d583324303018f2002acc6b6292790aae0c54e08609c",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 25,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.error-class.bin",
+      "mode": 420,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.error-class.bin"
+    },
+    {
+      "bytes": 50,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 338,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "43c2fda0c7c7a0be02d8440571a1b9096b3f8600eebe84604777ae32a430dee3",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 660,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "706cdad466b0ce4f7416c390cf80519d3c895689dece559dd93e0c0f3c9f218f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.status.bin",
+      "mode": 420,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.status.bin"
+    },
+    {
+      "bytes": 311,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.stderr.bin",
+      "mode": 420,
+      "sha256": "a07b162d2145f3b4500a24f31685409e9984f0bab20588ac2557a18100273aba",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.stderr.bin"
+    },
+    {
+      "bytes": 606,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "1b0219b8d52ecf30dcdbd0798780d2b3acf7cfc97d552d8a07bf3e2112c8990e",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.stdout.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/08-nonnull-two-arguments/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/08-nonnull-two-arguments/repeat-0/000-nonnull-two-arguments/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 50,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/module.pkl",
+      "mode": 420,
+      "sha256": "f7b294dc78b3b0a62a4ff926524f8f42e60619e9ca2a5ef9f8e98b71e00acab7",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 25,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.error-class.bin",
+      "mode": 420,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.error-class.bin"
+    },
+    {
+      "bytes": 50,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 321,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "c1fe17ea96a138eee24c9badc8189cbaf54786203f626a19d3d042bfc1cf7289",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 626,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "b12d26b20c08196dd0fed9b2715b35a21fb0d3eb1860e229cc527f70b46f7124",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.status.bin",
+      "mode": 420,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.status.bin"
+    },
+    {
+      "bytes": 294,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.stderr.bin",
+      "mode": 420,
+      "sha256": "62ee6e032f1d52ff46cbcc46fccf8a1438b26e62c311c305b1b909d3e35aa948",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.stderr.bin"
+    },
+    {
+      "bytes": 572,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "d82cb145df9a8eb72b501910d39510b35d7096d3707e366638ef78b22b38b035",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.stdout.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/09-int8-extra-missing-argument/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/09-int8-extra-missing-argument/repeat-0/000-int8-extra-missing-argument/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 49,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/module.pkl",
+      "mode": 420,
+      "sha256": "161080ff13b2eaf6293c26af3b6e49246f0551341fe054be9b7333bc758d2db6",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.error-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.error-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 8,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.status.bin",
+      "mode": 420,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.status.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.stderr.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.stderr.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.stdout.bin",
+      "mode": 420,
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.stdout.bin"
+    },
+    {
+      "bytes": 4,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/10-user-shadow-success/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "21c3294f550c5980c36e3a2542b178706d021b5648b2a2eb9097214a2de6e16a",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/10-user-shadow-success/repeat-0/000-user-shadow-success/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 49,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/module.pkl",
+      "mode": 420,
+      "sha256": "cb576b05e7b4c0c152269650dd10d839cddb0a5e185e1144a5ba89c5ada58386",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 25,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.error-class.bin",
+      "mode": 420,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.error-class.bin"
+    },
+    {
+      "bytes": 50,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 411,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "1c65bc1f012d3ebd2b0fd3906c37228d65527fe9f6e154a0843d352f8a4b1d51",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 806,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "b85cf32f3293ded75b9858e8455d1911e0ac9a53fbe8c28af09bb010226f155f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.status.bin",
+      "mode": 420,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.status.bin"
+    },
+    {
+      "bytes": 384,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.stderr.bin",
+      "mode": 420,
+      "sha256": "7918b3ef970a1015134ad7b97c398e4e35ae28c9ad0b8dd7856042c7ad1f582f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.stderr.bin"
+    },
+    {
+      "bytes": 752,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "c15483e8ed93d395a7239e69d531aca4a98f6ec962df32682cd93fbb3c763ac7",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.stdout.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/11-user-shadow-null/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/11-user-shadow-null/repeat-0/000-user-shadow-null/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 43,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/module.pkl",
+      "mode": 420,
+      "sha256": "4a07686d73cfffc59a175d5c77b59644e3370e5a87c8db7d02ed18f7a5d4d1f8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.error-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.error-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 8,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.status.bin",
+      "mode": 420,
+      "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.status.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.stderr.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.stderr.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.stdout.bin",
+      "mode": 420,
+      "sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.stdout.bin"
+    },
+    {
+      "bytes": 4,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/12-user-shadow-int8/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "21c3294f550c5980c36e3a2542b178706d021b5648b2a2eb9097214a2de6e16a",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/12-user-shadow-int8/repeat-0/000-user-shadow-int8/result.stdout.code-units.bin"
+    },
+    {
+      "bytes": 74,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/module.pkl",
+      "mode": 420,
+      "sha256": "f76f6675bcbce8cc6c5fb4d92047f2c8bd4bd557f8722e5a1057926ffd4e123f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/module.pkl"
+    },
+    {
+      "bytes": 5,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/expression.bin",
+      "mode": 420,
+      "sha256": "cd42404d52ad55ccfa9aca4adc828aa5800ad9d385a0671fbcbf724118320619",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/expression.bin"
+    },
+    {
+      "bytes": 10,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/expression.code-units.bin",
+      "mode": 420,
+      "sha256": "845f2300840149e04bd7f052692d98162794772ccbdb815ac047b6fcf7fdeb8f",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/expression.code-units.bin"
+    },
+    {
+      "bytes": 2,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/logs.count.bin",
+      "mode": 420,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/logs.count.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/mode.bin",
+      "mode": 420,
+      "sha256": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/mode.bin"
+    },
+    {
+      "bytes": 12,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/mode.code-units.bin",
+      "mode": 420,
+      "sha256": "7cacc7475f0b2cfc8ee3970ff529ab12a31d8ea08deb6908bad3245e250c0faf",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/mode.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.cause-class.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.cause-class.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.cause-class.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.cause-class.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.cause-message.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.cause-message.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.cause-message.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.cause-message.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.cause-to-string.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.cause-to-string.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.cause-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.cause-to-string.code-units.bin"
+    },
+    {
+      "bytes": 25,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.error-class.bin",
+      "mode": 420,
+      "sha256": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.error-class.bin"
+    },
+    {
+      "bytes": 50,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.error-class.code-units.bin",
+      "mode": 420,
+      "sha256": "f8c4d7347e87424d8d3b71e2c198a8ef21ab981abb782574820b1c41b2f2dd34",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.error-class.code-units.bin"
+    },
+    {
+      "bytes": 507,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.exception-to-string.bin",
+      "mode": 420,
+      "sha256": "924343c52afc058ff68ee14c1c1a6ac33c29c540b8a1e7c87e05f4b829258998",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.exception-to-string.bin"
+    },
+    {
+      "bytes": 994,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.exception-to-string.code-units.bin",
+      "mode": 420,
+      "sha256": "9de183a2c8b61047165f899e16067e4e9df9ee22116ae36ea38d156722086fbc",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.exception-to-string.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.java-type.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.java-type.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.java-type.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.java-type.code-units.bin"
+    },
+    {
+      "bytes": 6,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.status.bin",
+      "mode": 420,
+      "sha256": "f097b5f4f46cda2da21b954c9ff4097e1e14ae7064ecdee2c2cec2d3c1f08e6b",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.status.bin"
+    },
+    {
+      "bytes": 480,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.stderr.bin",
+      "mode": 420,
+      "sha256": "cbe7372c4cbd2785caf78e66ef9ad198d131cd2e2c27a501db189a74a676eaa8",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.stderr.bin"
+    },
+    {
+      "bytes": 940,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.stderr.code-units.bin",
+      "mode": 420,
+      "sha256": "bfbf353661530ee97a7e8fba0f3d6d1e6ce6086e73dca97da192dccfd4a69752",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.stderr.code-units.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.stdout.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "copy": "tests/fixtures/m2-qualified-builtin-alias/13-qualified-under-shadow/result.stdout.code-units.bin",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "target/m2/stage75-qualified-alias-oracle-01/programs/13-qualified-under-shadow/repeat-0/000-qualified-under-shadow/result.stdout.code-units.bin"
+    }
+  ],
+  "rows": 14
+}

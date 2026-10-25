@@ -26,6 +26,14 @@
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "validate_reference_arguments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "symbol": "reference_candidate"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/type_resolution.rs",
+            "symbol": "resolve_metadata_type"
           }
         ],
         "state": "partial"
@@ -37,7 +45,7 @@
         "Generic Reference referent rejection is restored after parameter substitution, while known complete-frame mismatches in these exploratory cases remain open."
       ],
       "requirement": "semantic:reference",
-      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
+      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage74 isolated controls resolve a declared property type in its prototype's lexical environment during Reference metadata access, retaining operands across Host suspension and the original reference output bytes. Canonical full-corpus and platform validation remain separate.",
       "tests": {
         "case_ids": [
           "reference-stage10-constructor-data",
@@ -243,7 +251,8 @@
           "types-stage18-reference-before-throw-let",
           "types-stage19-grow-reference-27",
           "types-stage19-grow-reference-28",
-          "types-stage19-grow-reference-30"
+          "types-stage19-grow-reference-30",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/reference.pkl"
         ],
         "state": "partial"
       }
@@ -274,6 +283,10 @@
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "step_generic_default"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/type_resolution.rs",
+            "symbol": "resolve_metadata_type"
           }
         ],
         "state": "partial"
@@ -282,7 +295,7 @@
         "The full reflection API, module/class/type metadata inventory, dynamic nested declaration identity and generic class metadata remain unimplemented or unverified."
       ],
       "requirement": "semantic:reflection-metadata",
-      "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics.",
+      "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage74 isolated Reference controls cover selected declaration-owned property type metadata and retry/error ordering. This does not complete reflection metadata or the original suite.",
       "tests": {
         "case_ids": [
           "reference-stage10-property-unforced",
@@ -430,7 +443,8 @@
           "collection-stage24-reference-collection-int-ispositive-as-collection-int",
           "collection-stage24-reference-collection-int-ispositive-as-collection-any",
           "collection-stage24-reference-collection-int-ispositive-as-list-int",
-          "collection-stage24-reference-collection-int-ispositive-as-set-int"
+          "collection-stage24-reference-collection-int-ispositive-as-set-int",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/reference.pkl"
         ],
         "state": "partial"
       }
@@ -3523,6 +3537,10 @@
           {
             "path": "crates/pkl-runtime/src/vm/amendment.rs",
             "symbol": "is_base_mixin_alias"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/type_resolution.rs",
+            "symbol": "resolve_runtime_type"
           }
         ],
         "state": "partial"
@@ -3537,7 +3555,7 @@
         "The retained inherited local-object-method alias shape produces pinned Java PklBugException oracle errors; those observations remain unresolved and are not compatibility passes."
       ],
       "requirement": "semantic:type-aliases",
-      "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage65 preserves receiver-dependent open-module aliases separately from first-resolved closed module types and inferred method parents. Canonical Java string authorities and original CLI executions remain separate boundaries.",
+      "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage65 preserves receiver-dependent open-module aliases separately from first-resolved closed module types and inferred method parents. Canonical Java string authorities and original CLI executions remain separate boundaries. Stage75 isolated controls cover selected implicit and qualified NonNull aliases, first-error ordering, and original typeAliases output against pinned Java bytes. This does not establish complete alias or original-suite compatibility.",
       "tests": {
         "case_ids": [
           "types-stage13-alias-value",
@@ -4158,7 +4176,9 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/types/moduleType5.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/newType.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/propertyDefaults.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/noDefault2.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/noDefault2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/typeAliases.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/nonNull.pkl"
         ],
         "state": "partial"
       }
@@ -7124,6 +7144,18 @@
           {
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
             "symbol": "RenderRun"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "symbol": "AmbiguousProperty"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "symbol": "ambiguous_locality"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "read_ambiguous_property"
           }
         ],
         "state": "partial"
@@ -7134,7 +7166,7 @@
         "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
       ],
       "requirement": "semantic:objects",
-      "scope": "Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations.",
+      "scope": "Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage73 isolated evidence covers first-access local/public generator property selection by executable owner and call site, including the original localProperty5 output and 24 Java-authored rows. Canonical full-corpus and platform validation remain separate.",
       "tests": {
         "case_ids": [
           "object-string-stage36-dynamic-amend-force-child-first",
@@ -7219,7 +7251,8 @@
           "object-string-stage36-review-string-entry-hash-collision",
           "object-string-stage36-review-modifier-import-bit",
           "object-string-stage36-review-modifier-class-bit",
-          "object-string-stage36-review-modifier-type-alias-bit"
+          "object-string-stage36-review-modifier-type-alias-bit",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/localProperty5.pkl"
         ],
         "state": "partial"
       }

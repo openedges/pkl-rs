@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "rows": [
+    {
+      "id": "local-only",
+      "expression": "localOnly.answer"
+    },
+    {
+      "id": "public-only",
+      "expression": "publicOnly.answer"
+    },
+    {
+      "id": "local-direct",
+      "expression": "localOnly.x"
+    },
+    {
+      "id": "public-direct",
+      "expression": "publicOnly.x"
+    },
+    {
+      "id": "a-direct",
+      "expression": "a.child.x"
+    },
+    {
+      "id": "b-direct",
+      "expression": "b.child.x"
+    },
+    {
+      "id": "b-answer",
+      "expression": "b.child.answer"
+    },
+    {
+      "id": "a-answer",
+      "expression": "a.child.answer"
+    },
+    {
+      "id": "b-again",
+      "expression": "b.child.answer"
+    },
+    {
+      "id": "a-again",
+      "expression": "a.child.answer"
+    }
+  ]
+}

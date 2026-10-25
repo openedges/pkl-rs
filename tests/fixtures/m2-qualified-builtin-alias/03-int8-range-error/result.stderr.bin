@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Type constraint `isBetween(-128, 127)` violated.
+Value: 128
+
+    isBetween(-128, 127)
+    │
+    false
+
+1100 | typealias Int8 = Int(isBetween(-128, 127))
+                            ^^^^^^^^^^^^^^^^^^^^
+at qualified-builtin-alias#value (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L1100)
+
+2 | value: b.Int8 = 128
+                    ^^^
+at qualified-builtin-alias#value (file:///stage75/qualified-builtin-alias.pkl)
+
+1 | value
+    ^^^^^
+at  (repl:text)

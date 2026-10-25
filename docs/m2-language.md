@@ -1,5 +1,37 @@
 # M2 language verification
 
+## Stage 73–75 selected implementation checkpoint
+
+The shared evaluator now has selected handling for first-access local/public
+property resolution, declared `Reference` type metadata in the prototype's
+lexical environment, and `NonNull` and qualified builtin alias error ordering.
+These changes were integrated into the canonical source tree. The M2 inventory
+still records 475 requirements and 4,527 cases: 4,416 ready, 71 unimplemented,
+and 40 unmapped. The implementation links do not promote remaining scopes to
+complete.
+
+The canonical source-bound local validation completed all five required Rust
+commands with exit code zero. Workspace test output contains 1,069 distinct
+passes, no failures, and two ignored tests; 13 nested child reruns account for
+the difference from the 1,082 raw pass lines. These are local test results,
+not Java compatibility outcomes.
+
+Selected Java-authorized platform comparisons cover 235 earlier queries, four
+`Reference` alias queries, and 71 new queries. Native, N-API, and Chromium each
+completed two observations per query, 620 per target, with all selected public
+channels matching their recorded authority. The earlier cohort has 91 queries
+without Java logger authority, or 182 observations per target; their logger
+channels cannot be counted as compared. The 71 new queries preserve each
+authored module/evaluator boundary and captured logger channels. The separate
+M1 platform experiment passed its architecture contract while retaining the
+two known Regex compatibility failures on each target.
+
+The full 4,416-case Rust replay records **4,163 matches, 110 mismatches, 141 unsupported results, 2 Java oracle errors, and 0 Rust internal errors**. Original modules match 643/888; expression strings match 3,519/3,527. The JVM classpath case matches. Compared with Stage69–72, 5 previously nonpassing cases now match, with no prior-pass regressions.
+
+The linked replay, separate integrity verifier, and independent regression audit completed successfully. The replay reuses sealed Stage67 Java outputs and starts no fresh Java process. The strict full gate retains 1,791 overlapping unmet conditions. The 111 unready inventory cases and all nine M2 workstreams remain open. Earlier mapping rejection, interruption, ENOSPC, and monitor failures remain recorded separately.
+
+See the [implementation checkpoint](../reports/m2/stage73-75-implementation-checkpoint.json) for raw evidence and execution provenance. These local records do not establish full M2, product API, release-platform, or performance compatibility.
+
 ## Stage69–72 — shared runtime and full ready-corpus replay
 
 The [implementation checkpoint](../reports/m2/stage69-72-implementation-checkpoint.json) records shared super entry defaults,

@@ -1,0 +1,2 @@
+function f(x: NonNull): Any = x
+value = f(null)

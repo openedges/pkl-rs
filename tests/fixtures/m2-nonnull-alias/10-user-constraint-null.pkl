@@ -1,0 +1,2 @@
+typealias Mine = Any(!(this is Null))
+value: Mine = null

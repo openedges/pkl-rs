@@ -1,0 +1,25 @@
+import "pkl:ref" as ref
+import "pkl:base" as base
+class D extends ref.Domain {
+  function renderReference(reference: ref.Reference<D, Any>): String = reference.getData().toString()
+}
+local d: D = new {}
+local typealias Ref<T> = ref.Reference<D, T>
+local typealias OptionalMap<T> = Mapping<String, T?>
+class Inner {
+  optional: Mapping<String, Int?>
+}
+class Holder {
+  optional: Mapping<String, Int?>
+  aliased: OptionalMap<Int>
+  qualified: base.Mapping<String, base.Int?>
+  nested: Mapping<String, Listing<Int?>>
+  inner: Inner
+  lazy: Mapping<String, Int?> = let (_ = trace("lazy-body")) throw("lazy-failure")
+}
+holderRef: Ref<Holder> = ref.Reference(d, Holder, null)
+class LazyHolder {
+  lazy: Mapping<String, Int?> = let (_ = trace("lazy-direct-body")) throw("lazy-direct-failure")
+}
+lazyInstance = new LazyHolder {}
+lazyRef: Ref<LazyHolder> = ref.Reference(d, LazyHolder, null)

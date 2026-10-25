@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Operator `[]` is not defined for operand types `pkl.ref#Reference<reference-type#D, Mapping<String, Int | Null>>` and `Int`.
+Left operand : Reference(new D {}, Mapping<String, Int | Null>, null).qualified
+Right operand: 1
+
+1 | holderRef.qualified[1]
+    ^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Operator `[]` is not defined for operand types `Mapping<String, Int | Null>` and `Int`.

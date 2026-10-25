@@ -330,6 +330,11 @@ pub enum Instruction {
         owner_depth: usize,
         local: bool,
     },
+    GetAmbiguousProperty {
+        name: Arc<str>,
+        owner_depth: usize,
+        needs_const: bool,
+    },
     GetMethodProperty {
         name: Arc<str>,
         owner_depth: usize,
@@ -2166,7 +2171,9 @@ impl Vm {
         if error.kind == ErrorKind::MissingMember
             && let Some(frame) = self.frames.last()
             && let Some(
-                Instruction::GetProperty { name, .. } | Instruction::GetImplicitProperty(name),
+                Instruction::GetProperty { name, .. }
+                | Instruction::GetAmbiguousProperty { name, .. }
+                | Instruction::GetImplicitProperty(name),
             ) = self
                 .program
                 .blocks
@@ -3826,6 +3833,80 @@ impl Vm {
         Ok(self.executable_root(frame.block))
     }
 
+    /// The pinned Java node replaces itself before evaluating either selected
+    /// read. Keep both that choice and the local declaration across failed or
+    /// suspended values, while each invocation still supplies owner/receiver.
+    #[inline(never)]
+    fn read_ambiguous_property(
+        &mut self,
+        name: Arc<str>,
+        owner_depth: usize,
+        needs_const: bool,
+    ) -> Result<(), RuntimeError> {
+        let scope = self.scope(owner_depth)?;
+        let executable = self.current_executable()?;
+        let frame = self.frames.last().expect("ambiguous read frame");
+        let site = (frame.block, frame.pc - 1);
+        let local = match self.heap.ambiguous_locality(executable, site)? {
+            Some(local) => local,
+            None => {
+                // VmObject.hasMember checks only this receiver's declarations,
+                // with local identifiers distinct from public identifiers.
+                let local = !self.heap.get(scope.receiver)?.members.iter().any(|member| {
+                    member.name == name && !member.local && !member.method && !member.entry
+                });
+                self.heap.specialize_locality(executable, site, local)?;
+                local
+            }
+        };
+        let resolved = if local {
+            match self.heap.resolved_local(executable, site)? {
+                Some(member) => Some(member),
+                None => {
+                    let member = self
+                        .heap
+                        .get(scope.owner)?
+                        .members
+                        .iter()
+                        .find(|member| {
+                            member.name == name && member.local && !member.method && !member.entry
+                        })
+                        .cloned()
+                        .ok_or_else(|| {
+                            RuntimeError::new(
+                                ErrorKind::MissingMember,
+                                format!("missing local member {name}"),
+                            )
+                        })?;
+                    // ReadLocalPropertyNode publishes its declaration before
+                    // checking constness; a failed value must not re-resolve it.
+                    self.heap.publish_local(executable, site, member.clone())?;
+                    if needs_const {
+                        self.require_const(scope.owner, &name, true, false)?;
+                    }
+                    Some(member)
+                }
+            }
+        } else {
+            if needs_const {
+                self.require_const(scope.receiver, &name, false, false)?;
+            }
+            None
+        };
+        self.force_key_mode_prepared(
+            scope.receiver,
+            if local { scope.owner } else { scope.receiver },
+            name,
+            local,
+            true,
+            false,
+            false,
+            false,
+            false,
+            resolved,
+        )
+    }
+
     fn current_custom_this(&self) -> Result<Option<Value>, RuntimeError> {
         match self
             .frames
@@ -4822,6 +4903,13 @@ impl Vm {
                         self.force(receiver, receiver, name.clone(), false, true, method)?;
                     }
                 }
+            }
+            Instruction::GetAmbiguousProperty {
+                ref name,
+                owner_depth,
+                needs_const,
+            } => {
+                self.read_ambiguous_property(name.clone(), owner_depth, needs_const)?;
             }
             Instruction::GetProperty {
                 ref name,
@@ -7354,7 +7442,12 @@ impl Compiler<'_> {
                 ));
             }
             ExprKind::Name(name) => {
-                if self.resolved.const_names.contains(&expression.span) {
+                if self.resolved.const_names.contains(&expression.span)
+                    && !matches!(
+                        self.resolved.names.get(&expression.span),
+                        Some(Binding::AmbiguousProperty { .. })
+                    )
+                {
                     let (owner_depth, local, method) =
                         match self.resolved.names.get(&expression.span) {
                             Some(Binding::Property { owner_depth, local }) => {
@@ -7420,6 +7513,13 @@ impl Compiler<'_> {
                         output.push(Instruction::LoadLocal(*depth))
                     }
                     Binding::Lexical { .. } => return Err(invalid("unsupported lexical slot")),
+                    Binding::AmbiguousProperty { owner_depth } => {
+                        output.push(Instruction::GetAmbiguousProperty {
+                            name,
+                            owner_depth: *owner_depth,
+                            needs_const: self.resolved.const_names.contains(&expression.span),
+                        })
+                    }
                     Binding::Property { owner_depth, local } => {
                         output.push(Instruction::GetProperty {
                             name,

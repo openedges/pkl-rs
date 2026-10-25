@@ -188,6 +188,10 @@ pub enum Binding {
         owner_depth: usize,
         local: bool,
     },
+    /// Generator branches declare the same property with different locality.
+    AmbiguousProperty {
+        owner_depth: usize,
+    },
     /// No lexical declaration: lookup only on the current receiver.
     ImplicitThis,
     /// Methods occupy a namespace separate from properties.
@@ -443,6 +447,12 @@ impl<'a> Resolver<'a> {
                             Binding::Method {
                                 owner_depth: owner_depth.max(0) as usize,
                                 local: member.local,
+                            }
+                        } else if members.iter().any(|other| {
+                            other.name == name && !is_method(other) && other.local != member.local
+                        }) {
+                            Binding::AmbiguousProperty {
+                                owner_depth: owner_depth.max(0) as usize,
                             }
                         } else {
                             Binding::Property {
@@ -1953,9 +1963,9 @@ impl<'a> Resolver<'a> {
 
     fn mark_const_binding(&mut self, span: Span, binding: Binding) {
         let needed = match binding {
-            Binding::Property { owner_depth, .. } | Binding::Method { owner_depth, .. } => {
-                self.needs_const(owner_depth)
-            }
+            Binding::Property { owner_depth, .. }
+            | Binding::AmbiguousProperty { owner_depth }
+            | Binding::Method { owner_depth, .. } => self.needs_const(owner_depth),
             Binding::ImplicitThis | Binding::ImplicitMethod => {
                 self.const_level == ConstLevel::All && self.const_scope_count() == 0
             }

@@ -1,0 +1,21 @@
+hidden proto {
+  flag = true
+  child {
+    when (flag) {
+      local x = trace("local-x")
+    } else {
+      x = trace("public-x")
+    }
+    answer = x
+  }
+}
+a = (proto) { flag = true }
+b = (proto) { flag = false }
+localOnly {
+  local x = trace("local-only")
+  answer = x
+}
+publicOnly {
+  x = trace("public-only")
+  answer = x
+}

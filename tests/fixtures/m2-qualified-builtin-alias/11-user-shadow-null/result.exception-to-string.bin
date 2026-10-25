@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `String`, but got `null`.
+
+1 | typealias NonNull = String
+                        ^^^^^^
+at qualified-builtin-alias#value (file:///stage75/qualified-builtin-alias.pkl)
+
+2 | value: NonNull = null
+                     ^^^^
+at qualified-builtin-alias#value (file:///stage75/qualified-builtin-alias.pkl)
+
+1 | value
+    ^^^^^
+at  (repl:text)

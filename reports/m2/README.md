@@ -1,5 +1,27 @@
 # M2 language evidence
 
+## Stage 73–75 implementation evidence
+
+The source integration, 3,270-path canonical freeze, five-command Rust
+validation, native/N-API/Wasm build, three selected platform cohorts, and M1
+experiment are recorded separately in the Stage 73–75 local evidence. The
+required Rust commands exited zero. The workspace count audit reports 1,069
+distinct passes and two ignored tests; 13 nested child reruns are retained
+without counting them again as distinct tests.
+
+For each of native, N-API, and Chromium, the platform cohorts comprise 310
+distinct authored queries and 620 ordered observations. Selected public result
+channels matched their Java authority. Ninety-one earlier queries have no
+recorded Java logger authority, so their 182 observations per target carry no
+logger compatibility verdict. The M1 experiment's contract passes, but its
+two Regex differences per target remain compatibility failures.
+
+The full 4,416-case Rust replay records **4,163 matches, 110 mismatches, 141 unsupported results, 2 Java oracle errors, and 0 Rust internal errors**. Original modules match 643/888; expression strings match 3,519/3,527. The JVM classpath case matches. Compared with Stage69–72, 5 previously nonpassing cases now match, with no prior-pass regressions.
+
+The linked replay, separate integrity verifier, and independent regression audit completed successfully. The replay reuses sealed Stage67 Java outputs and starts no fresh Java process. The strict full gate retains 1,791 overlapping unmet conditions. The 111 unready inventory cases and all nine M2 workstreams remain open. Earlier mapping rejection, interruption, ENOSPC, and monitor failures remain recorded separately.
+
+See the [implementation checkpoint](stage73-75-implementation-checkpoint.json) for raw evidence and execution provenance. These local records do not establish full M2, product API, release-platform, or performance compatibility.
+
 ## Stage69–72 — shared runtime and full ready-corpus replay
 
 The [implementation checkpoint](stage69-72-implementation-checkpoint.json) records shared super entry defaults,

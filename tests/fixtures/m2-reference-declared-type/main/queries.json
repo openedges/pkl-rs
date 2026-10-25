@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "rows": [
+    {
+      "id": "optional-eq",
+      "expression": "holderRef.optional[\"k\"] == holderRef.optional[\"k\"]"
+    },
+    {
+      "id": "optional-type",
+      "expression": "holderRef.optional[\"k\"] is ref.Reference<D, Int?>"
+    },
+    {
+      "id": "optional-is-wrong",
+      "expression": "holderRef.optional[\"k\"] is ref.Reference<D, String>"
+    },
+    {
+      "id": "optional-path",
+      "expression": "holderRef.optional[\"k\"].getPath().length"
+    },
+    {
+      "id": "optional-data",
+      "expression": "holderRef.optional[\"k\"].getData()"
+    },
+    {
+      "id": "aliased-type",
+      "expression": "holderRef.aliased[\"k\"] is ref.Reference<D, Int?>"
+    },
+    {
+      "id": "qualified-type",
+      "expression": "holderRef.qualified[\"k\"] is ref.Reference<D, Int?>"
+    },
+    {
+      "id": "nested-listing",
+      "expression": "holderRef.nested[\"k\"][0].getPath().length"
+    },
+    {
+      "id": "inner-optional",
+      "expression": "holderRef.inner.optional[\"k\"].getPath().length"
+    },
+    {
+      "id": "lazy-reference",
+      "expression": "holderRef.lazy[\"k\"].getPath().length"
+    },
+    {
+      "id": "path-first",
+      "expression": "holderRef.optional[\"k\"].getPath()[0].property"
+    },
+    {
+      "id": "path-second",
+      "expression": "holderRef.optional[\"k\"].getPath()[1].key"
+    },
+    {
+      "id": "wrong-key",
+      "expression": "holderRef.optional[1]"
+    },
+    {
+      "id": "aliased-wrong-key",
+      "expression": "holderRef.aliased[1]"
+    },
+    {
+      "id": "qualified-wrong-key",
+      "expression": "holderRef.qualified[1]"
+    },
+    {
+      "id": "throwing-key",
+      "expression": "holderRef.optional[throw(\"key-failure\")]"
+    },
+    {
+      "id": "missing-property",
+      "expression": "holderRef.missing[throw(\"key-failure\")]"
+    },
+    {
+      "id": "lazy-ref",
+      "expression": "lazyRef.lazy[\"k\"].getPath().length"
+    },
+    {
+      "id": "lazy-direct",
+      "expression": "lazyInstance.lazy"
+    },
+    {
+      "id": "lazy-owner",
+      "expression": "holderRef.lazy.getPath().length"
+    }
+  ]
+}

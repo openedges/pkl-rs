@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find type `Missing`.
+
+2 | value: b.NonNull<Int, Missing> = 42
+                          ^^^^^^^
+at qualified-builtin-alias (file:///stage75/qualified-builtin-alias.pkl)
+
+Searched in the following places:
+* Module `qualified-builtin-alias` and any supermodules
+* Module `pkl#base`

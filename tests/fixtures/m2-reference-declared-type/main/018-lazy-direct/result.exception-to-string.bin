@@ -1,0 +1,14 @@
+org.pkl.core.PklException: –– Pkl Error ––
+lazy-direct-failure
+
+22 | lazy: Mapping<String, Int?> = let (_ = trace("lazy-direct-body")) throw("lazy-direct-failure")
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at reference-type#LazyHolder.lazy (file:///stage74/reference-type.pkl)
+
+22 | lazy: Mapping<String, Int?> = let (_ = trace("lazy-direct-body")) throw("lazy-direct-failure")
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at reference-type#LazyHolder.lazy.<let expr> (file:///stage74/reference-type.pkl)
+
+1 | lazyInstance.lazy
+    ^^^^^^^^^^^^^^^^^
+at  (repl:text)

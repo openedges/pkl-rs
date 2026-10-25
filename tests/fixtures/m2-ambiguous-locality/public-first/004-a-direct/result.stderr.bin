@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find property `x` in object of type `Dynamic`.
+
+1 | a.child.x
+    ^^^^^^^^^
+at  (repl:text)
+
+Available properties:
+answer
+default

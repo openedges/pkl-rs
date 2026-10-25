@@ -1,0 +1,4 @@
+import "pkl:test"
+class C { value: NonNull = null }
+local bad = new C {}
+value = test.catch(() -> bad.value)

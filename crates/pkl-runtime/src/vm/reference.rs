@@ -15,6 +15,12 @@ pub struct Reference {
     pub classes: Vec<ObjectId>,
     pub forced: bool,
 }
+enum Candidate {
+    Type(TypeCheck),
+    Unavailable,
+    Pending,
+}
+
 #[derive(Clone, Debug)]
 pub struct NativeFunction {
     pub receiver: Value,
@@ -863,7 +869,15 @@ impl Vm {
                 }
             }
         } else {
-            self.reference_access(id, Some(name), None)?
+            // Keep the original operand below any declaration-resolution
+            // continuation. A suspended lookup retries this instruction;
+            // it must not rebuild or force the referent value.
+            self.stack.push(Value::Object(id));
+            let Some(value) = self.reference_access(id, Some(name), None)? else {
+                return Ok(true);
+            };
+            self.pop()?;
+            value
         };
         self.stack.push(value);
         Ok(true)
@@ -1138,7 +1152,7 @@ impl Vm {
         id: ObjectId,
         property: Option<&str>,
         key: Option<Value>,
-    ) -> Result<Value, RuntimeError> {
+    ) -> Result<Option<Value>, RuntimeError> {
         let mut reference = self
             .heap
             .get(id)?
@@ -1152,23 +1166,33 @@ impl Vm {
         };
         let mut candidates = Vec::new();
         for ty in types {
-            let candidate = self
-                .reference_candidate(&ty, property, key.as_ref())
-                .map_err(|_| {
-                    self.reference_access_error(id, &reference, &ty, property, key.as_ref())
-                        .unwrap_or_else(|error| error)
-                })?;
-            candidates.push(candidate);
+            match self.reference_candidate(&ty, property, key.as_ref())? {
+                Candidate::Type(candidate) => candidates.push(candidate),
+                Candidate::Unavailable => {
+                    return Err(self.reference_access_error(
+                        id,
+                        &reference,
+                        &ty,
+                        property,
+                        key.as_ref(),
+                    )?);
+                }
+                Candidate::Pending => {
+                    // The declaration continuation owns the pending resolution.
+                    // Restored operands are roots below that continuation.
+                    return Ok(None);
+                }
+            }
         }
         reference.referent = union(candidates, &self.program.module_name);
         reference.forced = false;
         reference
             .path
             .push(self.reference_access_value(property, key));
-        Ok(Value::Object(self.heap.allocate(Object {
+        Ok(Some(Value::Object(self.heap.allocate(Object {
             reference: Some(reference),
             ..Object::default()
-        })))
+        }))))
     }
 
     fn reference_access_error(
@@ -1279,41 +1303,24 @@ impl Vm {
     }
 
     fn reference_candidate(
-        &self,
+        &mut self,
         ty: &TypeCheck,
         property: Option<&str>,
         key: Option<&Value>,
-    ) -> Result<TypeCheck, RuntimeError> {
+    ) -> Result<Candidate, RuntimeError> {
         let ty = ty.resolved();
-        let fail = || {
-            RuntimeError::new(
-                ErrorKind::MissingMember,
-                PklString::join(
-                    &[
-                        format!(
-                            "Cannot reference {} in type `",
-                            property
-                                .map_or_else(|| "subscript".into(), |p| format!("property `{p}`"))
-                        )
-                        .into(),
-                        type_name_value(ty, &self.program.module_name),
-                        "`.".into(),
-                    ],
-                    "",
-                ),
-            )
-        };
-        match ty {
-            TypeCheck::Unknown => Ok(TypeCheck::Unknown),
-            TypeCheck::Null => Ok(TypeCheck::Null),
+        let candidate = match ty {
+            TypeCheck::Unknown => TypeCheck::Unknown,
+            TypeCheck::Null => TypeCheck::Null,
             TypeCheck::Collection(CollectionKind::Dynamic) => {
                 if property == Some("default") {
-                    Err(fail())
-                } else {
-                    Ok(TypeCheck::Unknown)
+                    return Ok(Candidate::Unavailable);
                 }
+                TypeCheck::Unknown
             }
-            TypeCheck::Class { id: MODULE_ID, .. } if property == Some("output") => Err(fail()),
+            TypeCheck::Class { id: MODULE_ID, .. } if property == Some("output") => {
+                return Ok(Candidate::Unavailable);
+            }
             TypeCheck::Class { id, .. } if property.is_some() => {
                 let name = property.expect("property access");
                 let mut current = self
@@ -1322,11 +1329,11 @@ impl Vm {
                     .map(|class| self.heap.get_class(class).expect("live class").prototype);
                 let mut found = false;
                 let mut visited = BTreeSet::new();
-                while let Some(id) = current {
-                    if !visited.insert(id) {
+                while let Some(owner) = current {
+                    if !visited.insert(owner) {
                         return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
                     }
-                    let object = self.heap.get(id)?;
+                    let object = self.heap.get(owner)?;
                     if let Some(member) = object
                         .members
                         .iter()
@@ -1334,16 +1341,35 @@ impl Vm {
                     {
                         found = true;
                         if let Some(ty) = &member.ty {
-                            return Ok(normalize(ty, &self.program.module_name));
+                            let ty = ty.clone();
+                            // Class metadata carries a lexical declaration recipe,
+                            // not a value check. Resolve it in the declaring
+                            // prototype's environment before exporting metadata.
+                            let mut environment = object.environment.clone();
+                            environment.this_value = Some(Value::Object(owner));
+                            environment.scopes.insert(
+                                0,
+                                Scope {
+                                    receiver: owner,
+                                    owner,
+                                },
+                            );
+                            let Some(resolved) = self.resolve_metadata_type(&ty, &environment)?
+                            else {
+                                return Ok(Candidate::Pending);
+                            };
+                            return Ok(Candidate::Type(normalize(
+                                &resolved,
+                                &self.program.module_name,
+                            )));
                         }
                     }
                     current = object.parent;
                 }
-                if found {
-                    Ok(TypeCheck::Unknown)
-                } else {
-                    Err(fail())
+                if !found {
+                    return Ok(Candidate::Unavailable);
                 }
+                TypeCheck::Unknown
             }
             TypeCheck::ParameterizedCollection { kind, arguments } if property.is_none() => {
                 let key = key.expect("subscript key");
@@ -1351,14 +1377,14 @@ impl Vm {
                     CollectionKind::List | CollectionKind::Listing
                         if matches!(key, Value::Int(_)) =>
                     {
-                        Ok(normalize(&arguments[0].0, &self.program.module_name))
+                        normalize(&arguments[0].0, &self.program.module_name)
                     }
                     CollectionKind::Mapping | CollectionKind::Map
                         if reference_key_matches(&arguments[0].0, key, &self.heap) =>
                     {
-                        Ok(normalize(&arguments[1].0, &self.program.module_name))
+                        normalize(&arguments[1].0, &self.program.module_name)
                     }
-                    _ => Err(fail()),
+                    _ => return Ok(Candidate::Unavailable),
                 }
             }
             TypeCheck::Collection(
@@ -1367,24 +1393,23 @@ impl Vm {
             | TypeCheck::ParameterizedCollection {
                 kind: CollectionKind::List | CollectionKind::Set | CollectionKind::Map,
                 ..
-            } if property == Some("isNotEmpty") => Ok(TypeCheck::Boolean),
-            TypeCheck::String if matches!(property, Some("length" | "lastIndex")) => {
-                Ok(TypeCheck::Int)
-            }
+            } if property == Some("isNotEmpty") => TypeCheck::Boolean,
+            TypeCheck::String if matches!(property, Some("length" | "lastIndex")) => TypeCheck::Int,
             TypeCheck::String
                 if matches!(
                     property,
                     Some("isEmpty" | "isNotEmpty" | "isBlank" | "isNotBlank" | "isBase64")
                 ) =>
             {
-                Ok(TypeCheck::Boolean)
+                TypeCheck::Boolean
             }
             TypeCheck::String if matches!(property, Some("base64" | "base64Decoded")) => {
-                Ok(TypeCheck::String)
+                TypeCheck::String
             }
-            TypeCheck::String if property == Some("base64DecodedBytes") => Ok(TypeCheck::Bytes),
-            _ => Err(fail()),
-        }
+            TypeCheck::String if property == Some("base64DecodedBytes") => TypeCheck::Bytes,
+            _ => return Ok(Candidate::Unavailable),
+        };
+        Ok(Candidate::Type(candidate))
     }
 }
 fn reference_key_matches(ty: &TypeCheck, key: &Value, heap: &Heap) -> bool {

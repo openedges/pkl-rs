@@ -1069,6 +1069,39 @@ impl Vm {
                     run.tasks.push(Task::AfterBase { constraints });
                     self.push_type_child(&mut run, *base, base_span, 0)?;
                 }
+                TypeCheck::NonNull => {
+                    run.outcome = Some(if !run.value.is_null() {
+                        Ok(run.value.clone())
+                    } else {
+                        // The pinned NonNullTypeAliasTypeNode reports the base
+                        // alias constraint, with one synthetic false observation.
+                        // Preserve that source inside any enclosing user alias.
+                        let source = crate::stdlib_sources::base();
+                        let declaration = "typealias NonNull = Any(";
+                        let start = source.text.find(declaration).expect("pinned NonNull alias")
+                            + declaration.len();
+                        let end = start + source.text[start..].find('\n').expect("alias line") - 1;
+                        let predicate = Span::new(start, end);
+                        let mut observations = Trace::new();
+                        observations.insert(
+                            predicate,
+                            Observation {
+                                value: ObservedValue::NativeLiteral("false".into()),
+                                executions: 1,
+                            },
+                        );
+                        Err(Mismatch::AliasSource {
+                            source: source.clone(),
+                            inner: Box::new(Mismatch::Constraint {
+                                source: Some(source),
+                                span: predicate,
+                                value: run.value.clone(),
+                                body_span: predicate,
+                                observations: Some(observations),
+                            }),
+                        })
+                    });
+                }
                 TypeCheck::IntegerAlias { name, min, max } => {
                     let source = crate::stdlib_sources::base();
                     let declaration = source

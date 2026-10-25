@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find property `x`.
+
+9 | answer = x
+             ^
+at public-first#proto.child.answer (file:///stage73/public-first.pkl)
+
+1 | a.child.answer
+    ^^^^^^^^^^^^^^
+at  (repl:text)

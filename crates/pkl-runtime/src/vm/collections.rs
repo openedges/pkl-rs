@@ -1881,8 +1881,13 @@ crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 8
                     return Ok(());
                 }
                 if !is_super && self.heap.get(receiver)?.reference.is_some() {
-                    let result = self.reference_access(receiver, None, Some(key))?;
-                    self.stack.push(result);
+                    self.stack.push(Value::Object(receiver));
+                    self.stack.push(key.clone());
+                    if let Some(result) = self.reference_access(receiver, None, Some(key))? {
+                        self.pop()?;
+                        self.pop()?;
+                        self.stack.push(result);
+                    }
                     return Ok(());
                 }
                 let owner = if is_super {

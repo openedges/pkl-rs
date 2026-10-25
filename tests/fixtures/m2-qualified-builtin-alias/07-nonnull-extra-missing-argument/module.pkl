@@ -1,0 +1,2 @@
+import "pkl:base" as b
+value: b.NonNull<Missing> = 42

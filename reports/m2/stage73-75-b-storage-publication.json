@@ -1,0 +1,1302 @@
+{
+  "archive": {
+    "bytes": 51301395,
+    "full_member_readback_verified": true,
+    "members": 244,
+    "mode": 420,
+    "path": "reports/m2/stage73-75-b-storage-evidence.tar.gz",
+    "sha256": "943ab713fb6a470e76e9f6bc0067b270bb466457858c31cc037f723c3d782a1b"
+  },
+  "base_head": "04b1762c5da04955ad9a9377253b3b710c10e910",
+  "candidate_compatibility_passes_claimed": 0,
+  "embedded_manifest_sha256": "77853f46823e592ccb15b9eb399283b4abb9920d1420e47fa01c17644437aa0c",
+  "execution_receipt_included": false,
+  "group": "storage",
+  "kind": "stage73-75-A-B-local-evidence-publication",
+  "known_limits": [
+    "Full M2/API/performance remain unclaimed; strict inventory, release and performance gates remain separate.",
+    "The first replay had a mapping admission failure before guests; retry02 was interrupted after 222 partial scalar JSON records and has no candidate report.",
+    "The versioned exact-four-scope amendment is separate from the unchanged Stage67 Java seal and Stage68 recorded-build verifier.",
+    "M1 experiment contract passes with two known Regex strict mismatches; this is retained as failure evidence.",
+    "The new 31-program/71-row Java logger authority and prior235+alias4 selected platform captures do not close the whole M2 gate.",
+    "Failed retry03 retained 3652 partial decoded records after ENOSPC while writing source-after; no terminal candidate.",
+    "Failed retry04 retained zero completed rows after macOS lsof mixed-selection handling caused monitor interruption; no terminal candidate.",
+    "The earlier prep03 handoff was mutated after a frozen announcement; preserved prep04 incident records this and prep05 is a fresh lineage."
+  ],
+  "member_inventory": {
+    "target/m2/stage73-75-old-metadata-only-audit-01/audit.py": {
+      "bytes": 6121,
+      "mode": 420,
+      "sha256": "b0a7030efbbe072bfb1dd61b1c7098c835a8ce6b5ee60a00a4b572c8a38cb279"
+    },
+    "target/m2/stage73-75-old-metadata-only-audit-01/prepare.py": {
+      "bytes": 1984,
+      "mode": 420,
+      "sha256": "8456651babf902b82ae4a7791b0cba6f972c322bed1dfec9557a6976ad5e98be"
+    },
+    "target/m2/stage73-75-old-metadata-only-audit-01/report.json": {
+      "bytes": 41410,
+      "mode": 420,
+      "sha256": "859a61dc338746949be0c88bc37d2b5414c7f33f2ff304d165a72fbc260563b4"
+    },
+    "target/m2/stage73-75-old-metadata-only-audit-01/selection.json": {
+      "bytes": 27671,
+      "mode": 420,
+      "sha256": "ed82704dbe73d2f0bb7c55211b0fef15c391b52f2994f6a8197d984bfb3aed19"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/PLAN.md": {
+      "bytes": 1952,
+      "mode": 420,
+      "sha256": "cf0889a23638d86885b5585eec7ecd3404a8aef442865f59f91bd9b7aaf98bf6"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/check-01.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/check-01.stdout.json": {
+      "bytes": 9524,
+      "mode": 420,
+      "sha256": "dae3391242bed588b48fa3ad2c1bfc6ede540af92a427c490aaae5285d3bc0ae"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/execution-01/journal.jsonl": {
+      "bytes": 10747,
+      "mode": 420,
+      "sha256": "d00bd759c4cd9021fb374f1a8b5c1dc1cc4400d0c2f374b50075632a5ec7bb3e"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/execution-01/prepared.json": {
+      "bytes": 10903,
+      "mode": 420,
+      "sha256": "a88aec1dbf660e6e1f4478f8d9082baabf1fa01f5cff0ddeb8642c109e7259a6"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/execution-01/report.json": {
+      "bytes": 11090,
+      "mode": 420,
+      "sha256": "0575e548d63fb7deb5787af73d68edcd3741abe78a73f5818152e9aa79d3ca46"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/execution-process-01/process.json": {
+      "bytes": 1022,
+      "mode": 420,
+      "sha256": "2d3a44b045aca707709bf9c02b721ef35c145d304d7263168934aefd17e4f1e9"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/execution-process-01/source-after.json": {
+      "bytes": 872,
+      "mode": 420,
+      "sha256": "f2bf912ea177f6b4cf61f8a6e89b9483b5f6733eaa0696fb2366f2b8b0fd2b39"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/execution-process-01/source-before.json": {
+      "bytes": 872,
+      "mode": 420,
+      "sha256": "f2bf912ea177f6b4cf61f8a6e89b9483b5f6733eaa0696fb2366f2b8b0fd2b39"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/execution-process-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/execution-process-01/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/preparation.json": {
+      "bytes": 2084,
+      "mode": 420,
+      "sha256": "b06f473f95c6fa669b1cc14a2e1a155ec6cd4445ec2e59ecb12bae96045baa77"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/relocate.py": {
+      "bytes": 14380,
+      "mode": 420,
+      "sha256": "c0ff2c144fe274fd27b86332d164d61b89c706df3ab4adc4449132f0249e214d"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/test-flow-01.stderr.bin": {
+      "bytes": 1122,
+      "mode": 420,
+      "sha256": "39c4fde57e11431bb580d11349940329c6c711f1623d11313c263b7511f1c59e"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/test-flow-01.stdout.json": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/test-flow-02.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/test-flow-02.stdout.json": {
+      "bytes": 166,
+      "mode": 420,
+      "sha256": "75d4ec92047430e877a7405e6ffb90a1931b9b6b85d033872885acab66e22eea"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-01/test_flow.py": {
+      "bytes": 5749,
+      "mode": 420,
+      "sha256": "1e2956c631d6787cae067f3c86fdbdcfd68ccf52bb9f3f130d878910ff5ca86f"
+    },
+    "target/m2/stage73-75-old-metadata-only-relocation-review-01/report.json": {
+      "bytes": 966,
+      "mode": 420,
+      "sha256": "365e5e5ca430716f2560474109aeee4d6b885ed8fd85d9e52624f3561e2a4060"
+    },
+    "target/m2/stage73-75-old-platform-metadata-audit-01/audit.py": {
+      "bytes": 6050,
+      "mode": 420,
+      "sha256": "bf553d3abf088b0df119a121ceb5971cb41d2086db3c032f61a07a85c9536631"
+    },
+    "target/m2/stage73-75-old-platform-metadata-audit-01/initial-attempt/audit.py": {
+      "bytes": 5999,
+      "mode": 420,
+      "sha256": "d2c52c1761e7c87e6fcf68352ab1785a762b2727067cc6f49aecdbdd3964ba30"
+    },
+    "target/m2/stage73-75-old-platform-metadata-audit-01/report.json": {
+      "bytes": 57789,
+      "mode": 420,
+      "sha256": "3184bad9ffca1ded06f0cb822b6c1c05948dd4143df462319a632b241abb6732"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/__pycache__/archive_copies.cpython-314.pyc": {
+      "bytes": 36540,
+      "mode": 420,
+      "sha256": "4e8d2a773243f3900ffce5fda1b70307193a0936eb0dbfa0c7dec28b51f6663c"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/archive_copies.py": {
+      "bytes": 21254,
+      "mode": 420,
+      "sha256": "f1686586946f90f989d88fee5c97985a69da99fd6b0526c8978e085cac7fc172"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/execution-01/admission.json": {
+      "bytes": 2340,
+      "mode": 420,
+      "sha256": "a76d785b8055615eb5b7a66c75af70b83dfc4724351ee73c6d39cdc70a5adfac"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/execution-01/journal.jsonl": {
+      "bytes": 198,
+      "mode": 420,
+      "sha256": "0cfa757f6c5b92562da9e09f6f13123c2ae0782bdbabfb6ff917cd5260b35f2a"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/execution-process-01/process.json": {
+      "bytes": 1023,
+      "mode": 420,
+      "sha256": "ec489dfc15ad61878b50b98976144f69cffaa2f01192a22ec421bdffea6c1bcf"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/execution-process-01/source-after.json": {
+      "bytes": 867,
+      "mode": 420,
+      "sha256": "83360f8e867bdec8d0e526315d050c60d029250863b848034cc195b7ac1cc3ad"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/execution-process-01/source-before.json": {
+      "bytes": 867,
+      "mode": 420,
+      "sha256": "83360f8e867bdec8d0e526315d050c60d029250863b848034cc195b7ac1cc3ad"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/execution-process-01/stderr.bin": {
+      "bytes": 934,
+      "mode": 420,
+      "sha256": "193165e898cf6a8954724964132a1098e1cacab38dd3893ad74c385204f5e6eb"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/execution-process-01/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/initial-attempt/archive_copies.py": {
+      "bytes": 21022,
+      "mode": 420,
+      "sha256": "bd8fd782d36788ffaf1b37306806012d84de913a01fc01bbbcefbd51fb906630"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/COMMIT_EDITMSG": {
+      "bytes": 2,
+      "mode": 420,
+      "sha256": "73cb3858a687a8494ca3323053016282f3dad39d42cf62ca4e79dda2aac7d9ac"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/HEAD": {
+      "bytes": 23,
+      "mode": 420,
+      "sha256": "f6f2b945f6c411b02ba3da9c7ace88dcf71b6af65ba2e0d89aa82900042b5a10"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/config": {
+      "bytes": 238,
+      "mode": 420,
+      "sha256": "b6c60b2b54caea1cc778dba5f41605e7d727f27ae62ae507b32ee554bae0dc30"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/description": {
+      "bytes": 73,
+      "mode": 420,
+      "sha256": "85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/applypatch-msg.sample": {
+      "bytes": 478,
+      "mode": 493,
+      "sha256": "0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/commit-msg.sample": {
+      "bytes": 1972,
+      "mode": 493,
+      "sha256": "efc1401b0e99d1ff51494d154d98b46c1e99059bcd8bf9f73cecde19fd3eb23b"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/fsmonitor-watchman.sample": {
+      "bytes": 4611,
+      "mode": 493,
+      "sha256": "9159720099ad5595b8e66645cbfd47763c1e920f46e0b50ae75e642bbec57ef0"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/post-update.sample": {
+      "bytes": 189,
+      "mode": 493,
+      "sha256": "81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/pre-applypatch.sample": {
+      "bytes": 424,
+      "mode": 493,
+      "sha256": "e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/pre-commit.sample": {
+      "bytes": 1649,
+      "mode": 493,
+      "sha256": "57185b7b9f05239d7ab52db045f5b89eb31348d7b2177eab214f5eb872e1971b"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/pre-merge-commit.sample": {
+      "bytes": 416,
+      "mode": 493,
+      "sha256": "d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/pre-push.sample": {
+      "bytes": 1374,
+      "mode": 493,
+      "sha256": "ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/pre-rebase.sample": {
+      "bytes": 4898,
+      "mode": 493,
+      "sha256": "4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/pre-receive.sample": {
+      "bytes": 544,
+      "mode": 493,
+      "sha256": "a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/prepare-commit-msg.sample": {
+      "bytes": 1492,
+      "mode": 493,
+      "sha256": "e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/push-to-checkout.sample": {
+      "bytes": 2783,
+      "mode": 493,
+      "sha256": "a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/sendemail-validate.sample": {
+      "bytes": 2308,
+      "mode": 493,
+      "sha256": "44ebfc923dc5466bc009602f0ecf067b9c65459abfe8868ddc49b78e6ced7a92"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/hooks/update.sample": {
+      "bytes": 3650,
+      "mode": 493,
+      "sha256": "8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/index": {
+      "bytes": 139,
+      "mode": 420,
+      "sha256": "d23695de21589906ea985c6cab117d1109ba59cc3cb912ce21c3006501c3517e"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/info/exclude": {
+      "bytes": 240,
+      "mode": 420,
+      "sha256": "6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/info/sparse-checkout": {
+      "bytes": 8,
+      "mode": 420,
+      "sha256": "6c3928915f72024a4fb10aca277d079059b914f3415476b49d5ca76db00fb8e4"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/logs/HEAD": {
+      "bytes": 147,
+      "mode": 420,
+      "sha256": "6d34df422da776906ac99a754b9d80a24856acc930dc7cf625c4a5d758a36d7e"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/logs/refs/heads/master": {
+      "bytes": 147,
+      "mode": 420,
+      "sha256": "6d34df422da776906ac99a754b9d80a24856acc930dc7cf625c4a5d758a36d7e"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/objects/0a/dcad5d245a10ce6888e3fd8bbaf8389da505aa": {
+      "bytes": 46,
+      "mode": 292,
+      "sha256": "ee0f017c8b095aad1477580a8046163b4798371b94e0947cc5630c2b3ed48d9c"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/objects/13/5736c3fe9cf136ebf49f21197780f03aa4c55a": {
+      "bytes": 120,
+      "mode": 292,
+      "sha256": "c0183150303f21c16278fd5cac23057614e46cedb47fa0df8364378444c7616b"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/objects/33/e0dea0c7d62ab6ea8e1605a9abcc068e82937e": {
+      "bytes": 49,
+      "mode": 292,
+      "sha256": "e1e154e670c1cab66033614977cb07176aa35fe3ec8b36141f9ff1f559da4470"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/objects/c1/48d5fe232f9c7c071a6f7e974f398ad83fe933": {
+      "bytes": 25,
+      "mode": 292,
+      "sha256": "857463101c200d202a187994712c7c59cadc38e37ec9770ec7e00be955aa86cc"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/.git/refs/heads/master": {
+      "bytes": 41,
+      "mode": 420,
+      "sha256": "343b2b96a587dcd538f451e000d0c9d52fc7c902b9dbda6ae6cee640209d49ab"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/isolated-git-test-01/report.json": {
+      "bytes": 2162,
+      "mode": 420,
+      "sha256": "e5c346eb8b7261de115fadd846330e23f2bf3d2786b1e7e29fe9d251ce2f1154"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/preparation.json": {
+      "bytes": 444,
+      "mode": 420,
+      "sha256": "2251219f48f2ffe09cd84fdf415dde34814a81c0d2fe25e3bbc35a8e97d52a4b"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/restore-present-validation-01/admission.json": {
+      "bytes": 430,
+      "mode": 420,
+      "sha256": "f2977a8646f10493139d099a406bdc9bb57b74f6216092b1aa9e3bbf3276fc4f"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/restore-present-validation-01/journal.jsonl": {
+      "bytes": 82,
+      "mode": 420,
+      "sha256": "9d992cc2a9cf7a8a73676cea13218b9a18ee9c89393576eec7cd4dbb5b0a3b8e"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/restore-present-validation-02/admission.json": {
+      "bytes": 430,
+      "mode": 420,
+      "sha256": "f2977a8646f10493139d099a406bdc9bb57b74f6216092b1aa9e3bbf3276fc4f"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/restore-present-validation-02/journal.jsonl": {
+      "bytes": 143,
+      "mode": 420,
+      "sha256": "45d0efdd0338576a150dc479d9df749025ab9ba709bc13dc810d875620762eae"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/restore-present-validation-02/report.json": {
+      "bytes": 510,
+      "mode": 420,
+      "sha256": "09987defb8bdb5560090b9baec0cdefcf03a306f0b81f36de2ccfbec0cf2bbae"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/restore-stream-validation-01/report.json": {
+      "bytes": 727,
+      "mode": 420,
+      "sha256": "3d42cb08f73dd405d6e91bf2d4aecf8c89675fe0b15159cca6a2fc21280e4c8a"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/selection.json": {
+      "bytes": 18019,
+      "mode": 420,
+      "sha256": "a7159a0d2d0b9b4167234a8b5a07440c9c7bc402cd87c50afdef288bcfb3fc35"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/validate_restore_stream.py": {
+      "bytes": 2897,
+      "mode": 420,
+      "sha256": "823f9a14bcfac35ce3a4b14a6a9ec3e5972cac67c465dea3148a8e34e8b137f9"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/validation-01/report.json": {
+      "bytes": 640,
+      "mode": 420,
+      "sha256": "d83455a46e3a70583d092b04de735d9475182b3c45829abbe870e09bf47eadfc"
+    },
+    "target/m2/stage73-75-old-report-dehydration-01/validation-02/report.json": {
+      "bytes": 640,
+      "mode": 420,
+      "sha256": "088d2ad9fb04c5f7b8c8dd8c21cd4772825de91004b8b37d9f8bf5b76e364628"
+    },
+    "target/m2/stage73-75-old-report-dehydration-02/__pycache__/archive_copies.cpython-314.pyc": {
+      "bytes": 36521,
+      "mode": 420,
+      "sha256": "242091e4c84eb357dd9846a1ce1613f2261d4dfcfd66295112531cbe3841f3cd"
+    },
+    "target/m2/stage73-75-old-report-dehydration-02/archive_copies.py": {
+      "bytes": 21530,
+      "mode": 420,
+      "sha256": "ef26f4c3c255f0649f4d5023a7121c459cee8b34720f5f49f89191d9be9c43a9"
+    },
+    "target/m2/stage73-75-old-report-dehydration-02/preparation.json": {
+      "bytes": 444,
+      "mode": 420,
+      "sha256": "2251219f48f2ffe09cd84fdf415dde34814a81c0d2fe25e3bbc35a8e97d52a4b"
+    },
+    "target/m2/stage73-75-old-report-dehydration-02/selection.json": {
+      "bytes": 18019,
+      "mode": 420,
+      "sha256": "a7159a0d2d0b9b4167234a8b5a07440c9c7bc402cd87c50afdef288bcfb3fc35"
+    },
+    "target/m2/stage73-75-old-report-dehydration-02/sparse-order-validation.json": {
+      "bytes": 378,
+      "mode": 420,
+      "sha256": "c36c517fdcd761b0ab8a8b271f4afc71a38ef8774d2b6c57fae4fb30c5f9ceb9"
+    },
+    "target/m2/stage73-75-old-report-dehydration-02/validate_sparse_order.py": {
+      "bytes": 3757,
+      "mode": 420,
+      "sha256": "b36e1dd3453637672628a74ea3540a8eaf1fc0d61794df046ee029c56b332699"
+    },
+    "target/m2/stage73-75-old-report-dehydration-02/validation-01/report.json": {
+      "bytes": 640,
+      "mode": 420,
+      "sha256": "c5156b8d69df8c628e64f719c3634af2278d4935542f9d68c5acd6e5f38a4778"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/__pycache__/archive_copies.cpython-314.pyc": {
+      "bytes": 36509,
+      "mode": 420,
+      "sha256": "3ebe6fb615317011e0e3065f3e2eca00d1bf69194cdab3073dc2389a442f9c38"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/archive_copies.py": {
+      "bytes": 21530,
+      "mode": 420,
+      "sha256": "a2391adfaf983191939e61f955a897da8f4f60c10b33becd40f24413e805aa07"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/execution-01/admission.json": {
+      "bytes": 2340,
+      "mode": 420,
+      "sha256": "a76d785b8055615eb5b7a66c75af70b83dfc4724351ee73c6d39cdc70a5adfac"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/execution-01/journal.jsonl": {
+      "bytes": 11480,
+      "mode": 420,
+      "sha256": "efd4f227a35c624f80eaa84f0739fd95412487609acf28b52a51db2bd206e584"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/execution-01/report.json": {
+      "bytes": 471,
+      "mode": 420,
+      "sha256": "afae51cd66df90b716c548f3893801d44059e5997c32aad1a01a1ac3a728e0c2"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/execution-process-01/process.json": {
+      "bytes": 1021,
+      "mode": 420,
+      "sha256": "93e1230d81d0d7531c61b5a90b25d151579722dec35118d740f7b9cc3f73f1e2"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/execution-process-01/source-after.json": {
+      "bytes": 867,
+      "mode": 420,
+      "sha256": "a37cefcd8284a95df1dc93db7805ff10adfba36176a8e4533ffd03bc7245f3da"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/execution-process-01/source-before.json": {
+      "bytes": 867,
+      "mode": 420,
+      "sha256": "a37cefcd8284a95df1dc93db7805ff10adfba36176a8e4533ffd03bc7245f3da"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/execution-process-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/execution-process-01/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/full-flow-validation.json": {
+      "bytes": 377,
+      "mode": 420,
+      "sha256": "37c2f97782df99a91e8e21de0f08ffcbe94770429de6c80640357c3f5fb450b3"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/preparation.json": {
+      "bytes": 444,
+      "mode": 420,
+      "sha256": "2251219f48f2ffe09cd84fdf415dde34814a81c0d2fe25e3bbc35a8e97d52a4b"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/selection.json": {
+      "bytes": 18019,
+      "mode": 420,
+      "sha256": "a7159a0d2d0b9b4167234a8b5a07440c9c7bc402cd87c50afdef288bcfb3fc35"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/validate_full_flow.py": {
+      "bytes": 4045,
+      "mode": 420,
+      "sha256": "dbd40338e7e95051ac1f61cbeb3fb2431498b9f4101574fbc99f67b8659a3c59"
+    },
+    "target/m2/stage73-75-old-report-dehydration-03/validation-01/report.json": {
+      "bytes": 640,
+      "mode": 420,
+      "sha256": "4d87b7b243bc3e8717ab4b5236514ef2c9db984ae510432943fcb210c394fe57"
+    },
+    "target/m2/stage73-75-old-runtime-fingerprint-audit-01/audit.py": {
+      "bytes": 5314,
+      "mode": 420,
+      "sha256": "971d66344420bdd32488033a1cb7d16542275e374daee8bd1eca8f83282e93f5"
+    },
+    "target/m2/stage73-75-old-runtime-fingerprint-audit-02/audit.py": {
+      "bytes": 6367,
+      "mode": 420,
+      "sha256": "cc182306d9ed087f69bc8e967679b1398480a2245a4bd6e78e513d9de0cbc80e"
+    },
+    "target/m2/stage73-75-old-runtime-fingerprint-audit-02/report.json": {
+      "bytes": 223603,
+      "mode": 420,
+      "sha256": "7d73e65a03a615537af7fdb02f202907e46382466bc9077c407f246c1ebf5a5d"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/PLAN.md": {
+      "bytes": 3445,
+      "mode": 420,
+      "sha256": "bd53d9d9f8e275df0eae6e05041021a7e358984ade944e681ce1a6fde9643cd9"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/backup-01/admission.json": {
+      "bytes": 124,
+      "mode": 420,
+      "sha256": "812931d9f405c7df0cc69ec0b42434404273cb045e54d8bfee6da9526bb6ae72"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/backup-01/oldcache.tar.gz": {
+      "bytes": 51826682,
+      "mode": 420,
+      "sha256": "0ef6e530b7cbb659652742d5b5694c8b8a4a76064cd2059e57cf63ba5d37204e"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/backup-01/report.json": {
+      "bytes": 645,
+      "mode": 420,
+      "sha256": "9ccb93a647e2345521bea39152ff98756d4657acdfb3a181979677b104a349bf"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/backup-launch-01/process.json": {
+      "bytes": 1009,
+      "mode": 420,
+      "sha256": "292ee1d1f1a408dcc1a6862a3e250fbc67ebcbc9f358382f4caa4fbae1cc8960"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/backup-launch-01/source-after.json": {
+      "bytes": 874,
+      "mode": 420,
+      "sha256": "8c977928b19f855263015d5ee5cc4063b475f3182747989d5c44a1bd4bd67b8e"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/backup-launch-01/source-before.json": {
+      "bytes": 874,
+      "mode": 420,
+      "sha256": "8c977928b19f855263015d5ee5cc4063b475f3182747989d5c44a1bd4bd67b8e"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/backup-launch-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/backup-launch-01/stdout.bin": {
+      "bytes": 581,
+      "mode": 420,
+      "sha256": "05b16071071ce9334bfaa9aed4cae899e0df17ddb4372543dd69c342b978767f"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/handoff.json": {
+      "bytes": 2844,
+      "mode": 420,
+      "sha256": "9f3dd216d8449b34cb894b3b5dfc4909ea22a7fbedd7c9fd587af4c1a97635c9"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/oldcache.py": {
+      "bytes": 18629,
+      "mode": 420,
+      "sha256": "2bf4409b8b8fb46c70b52aa743df4a5f8c46a40341507124e936588fd71e01bf"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/preparation.json": {
+      "bytes": 447,
+      "mode": 420,
+      "sha256": "1eeb7b0df1c569d35b355cd600a20e4adb2852e4208a4b575e0a7f69307a77a8"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/prepare-launch-01/process.json": {
+      "bytes": 975,
+      "mode": 420,
+      "sha256": "052094db4740d9b636743de4f4d0778a7bfdbf4c781225cf17393704acc697c8"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/prepare-launch-01/source-after.json": {
+      "bytes": 881,
+      "mode": 420,
+      "sha256": "4ee7562e414761039ad5a23cd0a469acb6e4c20377b6ba436e31cf2af686e789"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/prepare-launch-01/source-before.json": {
+      "bytes": 881,
+      "mode": 420,
+      "sha256": "4ee7562e414761039ad5a23cd0a469acb6e4c20377b6ba436e31cf2af686e789"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/prepare-launch-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/prepare-launch-01/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/removal-01/admission.json": {
+      "bytes": 59424,
+      "mode": 420,
+      "sha256": "30686b0328a3d9b4fcfd45695df7e506d05c1f6db6025697cdd2ef4a488fd79c"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/removal-01/journal.jsonl": {
+      "bytes": 223024,
+      "mode": 420,
+      "sha256": "49fd78c62ff3150a672ec9612786dc5ecb2596d73e7e729c2bc3237395429cc1"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/removal-01/report.json": {
+      "bytes": 573,
+      "mode": 420,
+      "sha256": "d559205480e95d77bc70c2d07b6b7c2b49a026008201ec8fbaad589546494003"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/root-backup-admission-01.json": {
+      "bytes": 165,
+      "mode": 420,
+      "sha256": "38cd93db68e70e332a520138e82ad64741b5c99f5bf845d387eaadf54a803736"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/selection.json": {
+      "bytes": 933309,
+      "mode": 420,
+      "sha256": "7be410090c311eedd6f7a5a872c357f2839febfc840e8678d9080c74ecda8748"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/test_oldcache.py": {
+      "bytes": 5713,
+      "mode": 420,
+      "sha256": "d95405c961097a8d344ae5bdbbbe5bf59cc41bedaf3d73c3d85f5950019bbdf8"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/tests-normal-01/process.json": {
+      "bytes": 1069,
+      "mode": 420,
+      "sha256": "6449ca70753576637965470b23b046753cbe69da1d3ae183f56ef764148f61df"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/tests-normal-01/source-after.json": {
+      "bytes": 515,
+      "mode": 420,
+      "sha256": "25e612cef625104a5c46146a88cf285c1f53f390c5a9f6eecdece6237bd14c4a"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/tests-normal-01/source-before.json": {
+      "bytes": 515,
+      "mode": 420,
+      "sha256": "25e612cef625104a5c46146a88cf285c1f53f390c5a9f6eecdece6237bd14c4a"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/tests-normal-01/stderr.bin": {
+      "bytes": 878,
+      "mode": 420,
+      "sha256": "a5d979b5886be1222ded9a1e57864a7bef32cc481ea1797fde5b5a4b9ebf5777"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/tests-normal-01/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/tests-optimized-01/process.json": {
+      "bytes": 1079,
+      "mode": 420,
+      "sha256": "b7cc046b597ced627778f9329c98a0bf9be1ed086f94720247d6f8c0e4375e34"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/tests-optimized-01/source-after.json": {
+      "bytes": 515,
+      "mode": 420,
+      "sha256": "25e612cef625104a5c46146a88cf285c1f53f390c5a9f6eecdece6237bd14c4a"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/tests-optimized-01/source-before.json": {
+      "bytes": 515,
+      "mode": 420,
+      "sha256": "25e612cef625104a5c46146a88cf285c1f53f390c5a9f6eecdece6237bd14c4a"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/tests-optimized-01/stderr.bin": {
+      "bytes": 878,
+      "mode": 420,
+      "sha256": "02dad55df3cbeb453603e43969b7b3a6b4793f556f4727fa7292bfdbb2970004"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/tests-optimized-01/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/verify-01/report.json": {
+      "bytes": 328,
+      "mode": 420,
+      "sha256": "954357ee96cd9b230be87f75dfba9a260dc74051fa21c7ffefc552a287317a7d"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/verify-launch-01/process.json": {
+      "bytes": 1042,
+      "mode": 420,
+      "sha256": "0bf313638fe240ac495b53159becc8b74161f608a979cec4d28f0fe0af903fc5"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/verify-launch-01/source-after.json": {
+      "bytes": 693,
+      "mode": 420,
+      "sha256": "3fedff194d65e99d8b04123173571b94d8c0f7879151560ea4054a75ecb861eb"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/verify-launch-01/source-before.json": {
+      "bytes": 693,
+      "mode": 420,
+      "sha256": "3fedff194d65e99d8b04123173571b94d8c0f7879151560ea4054a75ecb861eb"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/verify-launch-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-oldcache-backup-prep-01/verify-launch-01/stdout.bin": {
+      "bytes": 288,
+      "mode": 420,
+      "sha256": "0e17b2e4a51a1fbfdc23a05fe62f60d6a973721c9a38f26098c2d2dbeadb23b5"
+    },
+    "target/m2/stage73-75-oldcache-removal-postreview-01/report.json": {
+      "bytes": 7102,
+      "mode": 420,
+      "sha256": "fd067a1ac388512ddc7e5809ec12ab44f39e571bdb0970d39a40c5e26c25ec57"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/PLAN.md": {
+      "bytes": 1504,
+      "mode": 420,
+      "sha256": "b1f32861bef5b225153f4795d527e518f4ce2c436c2e340822711d1ce3eb608b"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/execution-01/process.json": {
+      "bytes": 1030,
+      "mode": 420,
+      "sha256": "002a081cd419f2cfdf5149bc660fd06bcff8e13ee83c77e4ae23d419d798b1ce"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/execution-01/source-after.json": {
+      "bytes": 1395,
+      "mode": 420,
+      "sha256": "3dfa678c3de895d709ee201d3fef0b885d07bab94b43d60a159ed86100a6883c"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/execution-01/source-before.json": {
+      "bytes": 1395,
+      "mode": 420,
+      "sha256": "3dfa678c3de895d709ee201d3fef0b885d07bab94b43d60a159ed86100a6883c"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/execution-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/execution-01/stdout.bin": {
+      "bytes": 523,
+      "mode": 420,
+      "sha256": "0bd06aa35d5f74eadafc6d7657854173ed59c03ca1ecd4c39cdf4e1a7374464a"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/remove.py": {
+      "bytes": 5120,
+      "mode": 420,
+      "sha256": "85237e5947de946f07588eb293c434a3db5bada4cc7b1e5259f6bf65448b422a"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/root-after-execution.json": {
+      "bytes": 257,
+      "mode": 420,
+      "sha256": "40fe8b8a12231cb17a37726caf7f24e7f470a51686f53eeed0a83f70d39c61d7"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/root-before-execution.json": {
+      "bytes": 213,
+      "mode": 420,
+      "sha256": "13051f7def2fe5e9ce8788fe5d0888a6fa8ae9ab307284a63cdd7e6709515487"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/test_remove.py": {
+      "bytes": 2149,
+      "mode": 420,
+      "sha256": "7232bbdefb7001421f00f9330f1a845d13f6b003aff50cc04cdec4bcd998c6b6"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/tests-normal-01/process.json": {
+      "bytes": 1068,
+      "mode": 420,
+      "sha256": "d19de2ba07bce620e73de2569448cdcc3f51c1b26c245978f07cce2a8903ae3b"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/tests-normal-01/source-after.json": {
+      "bytes": 682,
+      "mode": 420,
+      "sha256": "8ac65326afb9e49e26ee05cebab0c0a493944d008082accf81ff72c79d2cb8d1"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/tests-normal-01/source-before.json": {
+      "bytes": 682,
+      "mode": 420,
+      "sha256": "8ac65326afb9e49e26ee05cebab0c0a493944d008082accf81ff72c79d2cb8d1"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/tests-normal-01/stderr.bin": {
+      "bytes": 501,
+      "mode": 420,
+      "sha256": "43b45d1562471861be5a3c8ffdc2ed2d13a9b6fd8a997dc0be5c324bba18bea7"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/tests-normal-01/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/tests-optimized-01/process.json": {
+      "bytes": 1078,
+      "mode": 420,
+      "sha256": "c73ffecafa8ae58db14296b6b38f148407be09a52d698997bb13b6558be2ea89"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/tests-optimized-01/source-after.json": {
+      "bytes": 682,
+      "mode": 420,
+      "sha256": "8ac65326afb9e49e26ee05cebab0c0a493944d008082accf81ff72c79d2cb8d1"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/tests-optimized-01/source-before.json": {
+      "bytes": 682,
+      "mode": 420,
+      "sha256": "8ac65326afb9e49e26ee05cebab0c0a493944d008082accf81ff72c79d2cb8d1"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/tests-optimized-01/stderr.bin": {
+      "bytes": 501,
+      "mode": 420,
+      "sha256": "b1cdd1d5a7370bb8e3c2c6426b4de56456060d09612f6a45bfdfc71f9ed5b574"
+    },
+    "target/m2/stage73-75-oldcache-removal-prep-01/tests-optimized-01/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-oldcache-removal-review-01/report.json": {
+      "bytes": 9001,
+      "mode": 420,
+      "sha256": "a90adf40b3a300ca960b580277095624e7587d1dfa3434d3fbe306cf1fcb597f"
+    },
+    "target/m2/stage73-75-publication-prep-06/DOCUMENTS.md": {
+      "bytes": 2104,
+      "mode": 420,
+      "sha256": "9b5389ede46f7d0ff57e52a315dee07beeb30d22753d90b3c190b42535f6bdb2"
+    },
+    "target/m2/stage73-75-publication-prep-06/PLAN.md": {
+      "bytes": 4484,
+      "mode": 420,
+      "sha256": "a83b444684eaf9345d1e754340b659c98f3c098f8303bce5618c1a9931f0e149"
+    },
+    "target/m2/stage73-75-publication-prep-06/admission.py": {
+      "bytes": 14356,
+      "mode": 420,
+      "sha256": "0e0542ed48e9ab537cabd4181b5648afd8d1ce8a30f6e04aa32153a0cb047bf8"
+    },
+    "target/m2/stage73-75-publication-prep-06/assemble.py": {
+      "bytes": 9121,
+      "mode": 420,
+      "sha256": "090d6d3b53586b8f342c6ca66244152000faa203c0aeb7c9d7c1b2f7a5db637c"
+    },
+    "target/m2/stage73-75-publication-prep-06/incident.json": {
+      "bytes": 2147,
+      "mode": 420,
+      "sha256": "c984d093594ed5dc21928dcc2ed129d98e9645bd0fd2e01f9a95de7a7ce9b0df"
+    },
+    "target/m2/stage73-75-publication-prep-06/layout.json": {
+      "bytes": 18549,
+      "mode": 420,
+      "sha256": "02a687e306c354d2c13f087e334acccad1b7e417210db42bb1a8126d0b63b456"
+    },
+    "target/m2/stage73-75-publication-prep-06/lineage.json": {
+      "bytes": 2307,
+      "mode": 420,
+      "sha256": "5390e336362ea4679725438ec5a9ce39b2d06069f0e1657935ef3af5a953f7bb"
+    },
+    "target/m2/stage73-75-publication-prep-06/preflight-01.json": {
+      "bytes": 4582,
+      "mode": 420,
+      "sha256": "3c211d45b31a52fdc389884ef034f4f915f028c938aea83267f05e8dadd99bfe"
+    },
+    "target/m2/stage73-75-publication-prep-06/preflight-02.json": {
+      "bytes": 4908,
+      "mode": 420,
+      "sha256": "1aa87f222d711d52fed3265e81bebc79627d4e54580e3978b2a1dd50f53c9a0d"
+    },
+    "target/m2/stage73-75-publication-prep-06/preparation.json": {
+      "bytes": 5868,
+      "mode": 420,
+      "sha256": "65ae8ffc4b89ab61365a54d6f86cba35d981ae254941391012c4980453fd78aa"
+    },
+    "target/m2/stage73-75-publication-prep-06/publish.py": {
+      "bytes": 11231,
+      "mode": 420,
+      "sha256": "2155afcc047bd1591edbb79f2990fb4c9ca6001b886841e6532581785c9d1881"
+    },
+    "target/m2/stage73-75-publication-prep-06/run.py": {
+      "bytes": 3665,
+      "mode": 420,
+      "sha256": "1fc294e489ba8f5ca816e10479cfdee9ed831e704dcc5cb91d9e5656fe2a5435"
+    },
+    "target/m2/stage73-75-publication-prep-06/storage-invocation.json": {
+      "bytes": 648,
+      "mode": 420,
+      "sha256": "ba0e2e946e7415467820d0cfa0c6563d865e9ce2cd7ecd93af5928c30ec13a58"
+    },
+    "target/m2/stage73-75-publication-prep-06/test_publication.py": {
+      "bytes": 13416,
+      "mode": 420,
+      "sha256": "540595434e02ffb4df90a1044bfa5c9e868c0c742df6f09f3c4be70571857e3a"
+    },
+    "target/m2/stage73-75-publication-prep-06/validate.py": {
+      "bytes": 2429,
+      "mode": 420,
+      "sha256": "362f2aa805b382790dfae7f6f2b0a5650e929f90f3d59f7bfa4ecc46a06dea6e"
+    },
+    "target/m2/stage73-75-publication-prep-06/validation-01/report.json": {
+      "bytes": 4826,
+      "mode": 420,
+      "sha256": "098cd8f1cdb67912d72519139ac8630b65cf6a2c523516f548ab570be5e3af13"
+    },
+    "target/m2/stage73-75-publication-prep-06/validation-02/report.json": {
+      "bytes": 5102,
+      "mode": 420,
+      "sha256": "54457de273985b3d606bdb7b577a892137165ff7ca506a5e826274c29802d6b0"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-postreview-01/report.json": {
+      "bytes": 5779,
+      "mode": 420,
+      "sha256": "62806e98abca1b0c0b2846deb038ffed90a6fee631b072b02937993702279f78"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-01/PLAN.md": {
+      "bytes": 1896,
+      "mode": 420,
+      "sha256": "3ddf6f6355622832b11d3f4f089e729baa09e566cfc2e3861293cfb54f7a8357"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-01/__pycache__/archive_copies.cpython-314.pyc": {
+      "bytes": 39105,
+      "mode": 420,
+      "sha256": "befbb628899d2450ede855cfe8d95d29d03e161af5816b16b40e453c5ac5283a"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-01/archive_copies.py": {
+      "bytes": 23198,
+      "mode": 420,
+      "sha256": "83efbf3422a4c7bb409afec17c3b08c6ca214fadf90d801be611691b3c070425"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-01/audit-01/report.json": {
+      "bytes": 640,
+      "mode": 420,
+      "sha256": "f71a0ab10c8c469110f460c88db915ab7b94d40e89ffc6fa16a2c6added5cc55"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-01/audit-process.json": {
+      "bytes": 699,
+      "mode": 420,
+      "sha256": "5d4f0b84daca40db8639cd10a8c289a52fd77bf3f3ecedadc0c678a67cc9a94b"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-01/audit.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-01/audit.stdout.bin": {
+      "bytes": 608,
+      "mode": 420,
+      "sha256": "ef03479a7bc6885edcdd6039ea12bf0621b86ef2488fd068a8078c51d5d8af9a"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-01/preparation.json": {
+      "bytes": 455,
+      "mode": 420,
+      "sha256": "e835a670097a0abfa30c8947183c1e554285478d0c7c3459ac350cc8fd3b900d"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-01/prepare-process.json": {
+      "bytes": 669,
+      "mode": 420,
+      "sha256": "c996849848c6d9656f1e9d37a23a36a1a3df50739b76d3ffc4cb693f0579d89c"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-01/prepare.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-01/prepare.stdout.bin": {
+      "bytes": 153,
+      "mode": 420,
+      "sha256": "309dc8250fb53d7b23e946bcb89d046dffac8d206d5ed9b4384aa586fba4b452"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-01/selection.json": {
+      "bytes": 17581,
+      "mode": 420,
+      "sha256": "1a3ba4708dab858a1577404095aaf477965e304e7a762fb6c4808d54bc0c076c"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/PLAN.md": {
+      "bytes": 3287,
+      "mode": 420,
+      "sha256": "16b73017cbb609ef125100a3056c884c0c918fe0a2d4f6b54a49f1bbff287d37"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/archive_copies.py": {
+      "bytes": 28811,
+      "mode": 420,
+      "sha256": "1945f811a68128f4adf53b4f35902c7efb6bc7e199bfa0561d766047bf515fc6"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/audit-01/report.json": {
+      "bytes": 640,
+      "mode": 420,
+      "sha256": "7020f0df23a39180f77b8017482e2a165d05bbb9539e3c94b046906a95f5cb1f"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/audit-02/report.json": {
+      "bytes": 640,
+      "mode": 420,
+      "sha256": "7020f0df23a39180f77b8017482e2a165d05bbb9539e3c94b046906a95f5cb1f"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/audit-launch-02/process.json": {
+      "bytes": 1025,
+      "mode": 420,
+      "sha256": "bd85a2a417def0090629da2e37f4bb14f22b5f5e7c311960561ca6cca2e2f725"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/audit-launch-02/source-after.json": {
+      "bytes": 729,
+      "mode": 420,
+      "sha256": "a04f11e0333ef0052e0752553d32238ba47d15bc65d3d31c379dcd05f52f2657"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/audit-launch-02/source-before.json": {
+      "bytes": 729,
+      "mode": 420,
+      "sha256": "a04f11e0333ef0052e0752553d32238ba47d15bc65d3d31c379dcd05f52f2657"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/audit-launch-02/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/audit-launch-02/stdout.bin": {
+      "bytes": 608,
+      "mode": 420,
+      "sha256": "93c754867077087dd01789e03796228e3a87a020f48dfc3cc259976f2185c046"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/audit-process.json": {
+      "bytes": 699,
+      "mode": 420,
+      "sha256": "48af3e086e8ece0d2d945e7da34df39bc18c3376c5b4ec7ae230a75933e77749"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/audit.stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/audit.stdout.bin": {
+      "bytes": 608,
+      "mode": 420,
+      "sha256": "93c754867077087dd01789e03796228e3a87a020f48dfc3cc259976f2185c046"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/execution-01/admission.json": {
+      "bytes": 1743,
+      "mode": 420,
+      "sha256": "92d6b3a02ad7dfcbeec4e4f8ab25f4189dc787bfdb9f47d37f5259ad7a85d1cb"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/execution-01/journal.jsonl": {
+      "bytes": 7532,
+      "mode": 420,
+      "sha256": "5c9b5d7ec26dbf8fa601fea314f5478f3e276d2a3262d6387defebbd90f0b92c"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/execution-01/report.json": {
+      "bytes": 471,
+      "mode": 420,
+      "sha256": "d547c27faf1aa25d3161dfb043a9cf5d549ab7711c007655a11c86751aaa36e8"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/execution-launch-01/process.json": {
+      "bytes": 1031,
+      "mode": 420,
+      "sha256": "17bd7bec4eb5a0316d036aa472b63bc86d1995b32f52afcc6b2ae6cfd7bfbab3"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/execution-launch-01/source-after.json": {
+      "bytes": 912,
+      "mode": 420,
+      "sha256": "3ccb3c05e671cff5c4f6c6470195a3bf9e9b6486a1ddc420413b7ecd8a14d36c"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/execution-launch-01/source-before.json": {
+      "bytes": 912,
+      "mode": 420,
+      "sha256": "3ccb3c05e671cff5c4f6c6470195a3bf9e9b6486a1ddc420413b7ecd8a14d36c"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/execution-launch-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/execution-launch-01/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/handoff.json": {
+      "bytes": 1608,
+      "mode": 420,
+      "sha256": "144ba018341dfe0bbcd5502a32921848434d3269ced03a240c24e5e9f38ebdfd"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/preparation.json": {
+      "bytes": 455,
+      "mode": 420,
+      "sha256": "e835a670097a0abfa30c8947183c1e554285478d0c7c3459ac350cc8fd3b900d"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/root-after-execution.json": {
+      "bytes": 298,
+      "mode": 420,
+      "sha256": "7ed7b27423683c37696f6bf9276890ed2099388b694bb2f9d3751c15754b4b94"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/root-before-execution.json": {
+      "bytes": 213,
+      "mode": 420,
+      "sha256": "14a0461c2cff30c859708bed609a57a7609e9a9037c5c7bc72c644b776ed9e5f"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/selection.json": {
+      "bytes": 17581,
+      "mode": 420,
+      "sha256": "1a3ba4708dab858a1577404095aaf477965e304e7a762fb6c4808d54bc0c076c"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/test_archive_copies.py": {
+      "bytes": 6392,
+      "mode": 420,
+      "sha256": "aeb6a44d46b4bd15f3b69c5f8f3e54e730af892935a1d2d369a5f144ee7250be"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/tests-process.json": {
+      "bytes": 1311,
+      "mode": 420,
+      "sha256": "b96d737231387f82af8ba634d13adda3ec96f4264bec6d4d0c5a80baa4d40c61"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/tests.stderr.bin": {
+      "bytes": 96,
+      "mode": 420,
+      "sha256": "c18ebb72b99c51b356c91d05acc6402f50ff4768a506317dc7c5a99b697e8b07"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-prep-02/tests.stdout.bin": {
+      "bytes": 146,
+      "mode": 420,
+      "sha256": "8b0d37e214546d0d2e86bdae2cdc1d0584d95c43cbce62620b1c3e16052001a0"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-review-01/report.json": {
+      "bytes": 6694,
+      "mode": 420,
+      "sha256": "65320d8fe59913ee04ec4264f9b58eaa8324776a47fbd57244d11d0901e3ab5f"
+    },
+    "target/m2/stage73-75-stage69-archive-dehydration-review-02/report.json": {
+      "bytes": 7181,
+      "mode": 420,
+      "sha256": "f0769fafa78406d8c751f9f0f710c8cec9bfbf1d83eed117e60a7cf8074e0b0c"
+    },
+    "target/m2/stage73-75-stage69-json-audit-01/audit.py": {
+      "bytes": 6749,
+      "mode": 420,
+      "sha256": "4ebe1dddc969dbaacbb5afc494b5c80711d864f35488018d028c58a77e6857c8"
+    },
+    "target/m2/stage73-75-stage69-json-audit-01/initial-draft/audit.py": {
+      "bytes": 5487,
+      "mode": 420,
+      "sha256": "9c0a7847606f4778ae251c15c30948aa5bc2b5576ff14d15c41c123026d5d963"
+    },
+    "target/m2/stage73-75-stage69-json-audit-01/report.json": {
+      "bytes": 5404,
+      "mode": 420,
+      "sha256": "8797f2fb1c1a40a4e1e09b8d0655171cbf35b0fe7a6df5d8756fbac35ef6afb1"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-01/__pycache__/relocate.cpython-314.pyc": {
+      "bytes": 29802,
+      "mode": 420,
+      "sha256": "855a1a87f403494ea79b3411af5e7983ed6862cb00fa3fe2fbcd6d2b22ca2db3"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-01/full-flow-validation.json": {
+      "bytes": 345,
+      "mode": 420,
+      "sha256": "3a198f8c19fe328502bf31d603681809429506f1c926eba53756f3ddbf33de39"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-01/relocate.py": {
+      "bytes": 15420,
+      "mode": 420,
+      "sha256": "9ec4e426e9c2f1a7d381c1fe779f08a00e560245394ad8508a1793ca256894ad"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-01/validate_full_flow.py": {
+      "bytes": 5060,
+      "mode": 420,
+      "sha256": "cb6fbcb49c8359e395233bc4dc621195c277c2781109aab9f98c22a41b8fbd0e"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/__pycache__/relocate.cpython-314.pyc": {
+      "bytes": 34185,
+      "mode": 420,
+      "sha256": "aebfe290d58f107e5c5a2451f1fc349db9cf118694f159e83613febb7955f1ba"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/execution-01/journal.jsonl": {
+      "bytes": 220,
+      "mode": 420,
+      "sha256": "e230eb0a88558b0dfcf68389ecb9c485619bdc521b957f41823e26396e88ecbd"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/execution-01/prepared.json": {
+      "bytes": 1936,
+      "mode": 420,
+      "sha256": "ff07a0d9d4eac731a214fe48469dd0cc6836a8ea236fb07900ff654a9c9faf15"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/execution-01/report.json": {
+      "bytes": 2124,
+      "mode": 420,
+      "sha256": "48f565b8da1f940704b3184f9dc8e95b6e4eca1caa6579c51288c5adea95a124"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/execution-process-01/process.json": {
+      "bytes": 1017,
+      "mode": 420,
+      "sha256": "be7ee8ae4af810cfffeafc7a75e3ae3bfe766e902553d55af79349309d8b42b3"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/execution-process-01/source-after.json": {
+      "bytes": 679,
+      "mode": 420,
+      "sha256": "947859d7b50c96f10a4fd4bcd1877381a24d59efe4a95835aefc5d84cf29fb75"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/execution-process-01/source-before.json": {
+      "bytes": 679,
+      "mode": 420,
+      "sha256": "947859d7b50c96f10a4fd4bcd1877381a24d59efe4a95835aefc5d84cf29fb75"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/execution-process-01/stderr.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/execution-process-01/stdout.bin": {
+      "bytes": 0,
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/full-flow-validation-02.json": {
+      "bytes": 526,
+      "mode": 420,
+      "sha256": "2237d57930d3e975193b21250b531df1dce0f53a5f8841599af9894de51dcce2"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/full-flow-validation.json": {
+      "bytes": 526,
+      "mode": 420,
+      "sha256": "456dc4f6b4057713debc670df9cc9d1663c3e3b4c9d693135ed84280af30adcb"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/relocate.py": {
+      "bytes": 17865,
+      "mode": 420,
+      "sha256": "ad434c18827262757a6ad4980fd21968bf977ae7a9aaba24998acb1e6aff0613"
+    },
+    "target/m2/stage73-75-stage69-json-relocation-02/validate_full_flow.py": {
+      "bytes": 8292,
+      "mode": 420,
+      "sha256": "77638a94f8ecd31275d3e7635c987f80ecec1b3377559afea05896e5de970fcc"
+    }
+  },
+  "publisher_sources": [
+    "target/m2/stage73-75-publication-prep-06/layout.json",
+    "target/m2/stage73-75-publication-prep-06/admission.py",
+    "target/m2/stage73-75-publication-prep-06/publish.py",
+    "target/m2/stage73-75-publication-prep-06/run.py",
+    "target/m2/stage73-75-publication-prep-06/assemble.py",
+    "target/m2/stage73-75-publication-prep-06/DOCUMENTS.md",
+    "target/m2/stage73-75-publication-prep-06/PLAN.md",
+    "target/m2/stage73-75-publication-prep-06/preparation.json",
+    "target/m2/stage73-75-publication-prep-06/lineage.json",
+    "target/m2/stage73-75-publication-prep-06/incident.json",
+    "target/m2/stage73-75-publication-prep-06/preflight-01.json",
+    "target/m2/stage73-75-publication-prep-06/preflight-02.json",
+    "target/m2/stage73-75-publication-prep-06/test_publication.py",
+    "target/m2/stage73-75-publication-prep-06/validate.py",
+    "target/m2/stage73-75-publication-prep-06/validation-01/report.json",
+    "target/m2/stage73-75-publication-prep-06/validation-02/report.json",
+    "target/m2/stage73-75-publication-prep-06/storage-invocation.json"
+  ],
+  "schema": 1,
+  "selected_directories": [
+    "stage73-75-old-metadata-only-audit-01",
+    "stage73-75-old-metadata-only-relocation-01",
+    "stage73-75-old-metadata-only-relocation-review-01",
+    "stage73-75-old-platform-metadata-audit-01",
+    "stage73-75-old-report-dehydration-01",
+    "stage73-75-old-report-dehydration-02",
+    "stage73-75-old-report-dehydration-03",
+    "stage73-75-old-runtime-fingerprint-audit-01",
+    "stage73-75-old-runtime-fingerprint-audit-02",
+    "stage73-75-stage69-json-audit-01",
+    "stage73-75-stage69-json-relocation-01",
+    "stage73-75-stage69-json-relocation-02",
+    "stage73-75-oldcache-backup-prep-01",
+    "stage73-75-oldcache-removal-postreview-01",
+    "stage73-75-oldcache-removal-prep-01",
+    "stage73-75-oldcache-removal-review-01",
+    "stage73-75-stage69-archive-dehydration-postreview-01",
+    "stage73-75-stage69-archive-dehydration-prep-01",
+    "stage73-75-stage69-archive-dehydration-prep-02",
+    "stage73-75-stage69-archive-dehydration-review-01",
+    "stage73-75-stage69-archive-dehydration-review-02"
+  ],
+  "source_before_after_equal": true,
+  "terminal_admission": {
+    "candidate_compatibility_passes_claimed": 0,
+    "complete": true,
+    "full_gate_failure_count": 1791,
+    "java_evidence_reused": true,
+    "known_failures_preserved": true,
+    "prior_pass_regressions": [],
+    "selected_rows": 4416,
+    "status_counts": {
+      "candidate-unsupported": 141,
+      "mismatch": 110,
+      "oracle-error": 2,
+      "pass": 4163
+    }
+  }
+}

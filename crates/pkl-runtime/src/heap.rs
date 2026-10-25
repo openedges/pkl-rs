@@ -347,6 +347,9 @@ struct ExecutableState {
     // ObjectMember belongs to the declaration, whereas owner/receiver are read
     // from the current frame on every invocation. Never retain the first receiver.
     local_properties: BTreeMap<(usize, usize), Member>,
+    // ReadAmbiguousLocalityPropertyNode replaces itself on its first execution.
+    // The choice belongs to this executable clone, never to a receiver object.
+    ambiguous_localities: BTreeMap<(usize, usize), bool>,
     local_kinds: BTreeMap<(usize, usize), crate::vm::identity::SlotKind>,
     // ImportNode caches its successful result, not the importing receiver or
     // activation. Distinct executable clones retain distinct node state.
@@ -707,6 +710,30 @@ impl Heap {
         kind: crate::vm::identity::SlotKind,
     ) -> Result<(), RuntimeError> {
         self.executable_mut(owner)?.local_kinds.insert(slot, kind);
+        Ok(())
+    }
+
+    pub(crate) fn ambiguous_locality(
+        &self,
+        owner: ExecutableOwnerId,
+        site: (usize, usize),
+    ) -> Result<Option<bool>, RuntimeError> {
+        Ok(self
+            .executable(owner)?
+            .ambiguous_localities
+            .get(&site)
+            .copied())
+    }
+
+    pub(crate) fn specialize_locality(
+        &mut self,
+        owner: ExecutableOwnerId,
+        site: (usize, usize),
+        local: bool,
+    ) -> Result<(), RuntimeError> {
+        self.executable_mut(owner)?
+            .ambiguous_localities
+            .insert(site, local);
         Ok(())
     }
 

@@ -1,0 +1,19 @@
+–– Pkl Error ––
+Type constraint `!(this is Null)` violated.
+Value: null
+
+    !(this is Null)
+    │
+    false
+
+69 | typealias NonNull = Any(!(this is Null))
+                             ^^^^^^^^^^^^^^^
+at nonnull-alias#value (https://github.com/apple/pkl/blob/0.32.0/stdlib/base.pkl#L69)
+
+2 | value: b.NonNull = null
+                       ^^^^
+at nonnull-alias#value (file:///stage75/nonnull-alias.pkl)
+
+1 | value
+    ^^^^^
+at  (repl:text)

@@ -1,0 +1,3 @@
+import "pkl:base" as b
+typealias NonNull = String
+value: b.NonNull = null
