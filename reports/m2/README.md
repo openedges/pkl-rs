@@ -31,6 +31,22 @@ successful corrections. Publication and assembly receipts postdate the archives
 and require separate source/Git binding. These are local macOS arm64 results;
 full M2, product APIs, release platforms, speed, and memory targets remain open.
 
+### Actual implementation source binding
+
+The [source binding](stage69-72-source-binding.json) connects the verified inputs
+to implementation commit `a7c4b02`, whose push to remote `main` was verified.
+It accounts for 169,117 inputs: 167,589 Git-backed inputs and 1,528 captured files,
+plus 1,824 frozen paths and five historical documentation versions. The initial
+Git whitespace check exited two for trailing blank lines in two unchanged
+upstream fixtures. Their exact pinned Git blobs justify that narrow exception;
+the failed check is preserved. All 1,551 committed paths, modes, and object IDs
+match the reviewed index.
+
+The 7,628,060-byte archive passed full readback of all 160 members. The
+[publication execution](stage69-72-source-binding-execution.json) and its raw
+channels are published separately. Source binding runs no guest evaluations or
+Cargo checks and leaves the full M2 failures unchanged.
+
 ### Stage69–72 Java authority checkpoint
 
 The [Java authority checkpoint](stage69-72-java-checkpoint.json) preserves 235 distinct authored queries against Pkl 0.32.0: 29 super entry defaults, 30 import type clauses, 81 qualified/generic types, 14 VarArgs boundaries, 47 base alias/Mixin controls, and 34 const owner cases. Two JVM repetitions remain separate raw observations. The nine alias argument-order queries share an audit and archive with the VarArgs controls; they are counted once.

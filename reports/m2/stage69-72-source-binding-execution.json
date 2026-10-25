@@ -1,0 +1,36 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "target/m2/stage69-72-c-source-binding-prep-01/publish.py",
+    "--binding",
+    "target/m2/stage69-72-c-source-binding-01/binding-01/report.json"
+  ],
+  "compatibility_passes_claimed": 0,
+  "complete": true,
+  "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57",
+  "exit_code": 0,
+  "finished_utc": "2026-10-25T09:22:40.551749+00:00",
+  "kind": "stage68-postterminal-replay-process",
+  "launch_error": null,
+  "pid": 54721,
+  "schema": 1,
+  "source_after": {
+    "bytes": 1048,
+    "sha256": "82203e3e6a539d76a39a1679ee31e1e79ab56104980290a28c2f0a1a5d46bf48"
+  },
+  "source_before": {
+    "bytes": 1048,
+    "sha256": "82203e3e6a539d76a39a1679ee31e1e79ab56104980290a28c2f0a1a5d46bf48"
+  },
+  "source_stable": true,
+  "started_utc": "2026-10-25T09:22:39.965758+00:00",
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 277,
+    "sha256": "7c20cef31840415d1ca80272b87946cd09a42a2bb8ddb90a7b21421d2b66675e"
+  }
+}
