@@ -1,0 +1,16 @@
+{
+  "kind": "stage79-83-focused-source-binding-v1",
+  "complete": true,
+  "implementation_commit": "8d25b6fcadc6401facd6b389980f50f74e997c9d",
+  "recorded_source_paths": 2363,
+  "recorded_map": {
+    "path": "target/m2/stage79-83-final-nine-01/sources-after.json",
+    "sha256": "39e35b8acc3e294fc04ad1eca774959e6648288c2c8bc4e08cc09119043ecb8f",
+    "path_in_archive": "target/m2/stage79-83-final-nine-01/sources-after.json"
+  },
+  "evidence_archive": "reports/m2/stage79-83-focused-checkpoint-evidence.tar.gz",
+  "all_recorded_source_bytes_match_commit": true,
+  "complete_compiler_input_closure_claimed": false,
+  "scope": "Binds the common recorded map used by the final focused tests, xtask, Clippy and Wasm check. Pinned references remain separately checked; this adds no evaluations or compatibility passes.",
+  "epoch": 1792967725.152802
+}

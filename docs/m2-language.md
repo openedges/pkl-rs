@@ -25,6 +25,10 @@ required preserving and releasing inactive build artifacts between checks.
 The official aggregate below is unchanged; these focused results do not close
 M2 or establish API, release-platform, or performance parity.
 
+The [source binding](../reports/m2/stage79-83-focused-source-binding.json)
+matches all 2,363 recorded source paths to implementation commit `8d25b6f`.
+It does not claim complete compiler-input coverage or add compatibility passes.
+
 ## Stage76–78 canonical integration and local replay
 
 The shared evaluator now includes selected Regex and String behavior, `String.isRegex`,

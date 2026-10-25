@@ -15,6 +15,10 @@ replay remain pending. Earlier failed attempts are preserved separately; the
 Stage76–78 aggregate below is still the latest completed full replay. This is
 a focused development checkpoint, not M2 completion or performance evidence.
 
+The [source binding](stage79-83-focused-source-binding.json) connects all 2,363
+recorded source paths to implementation commit `8d25b6f`. It adds no executions
+and does not claim complete compiler-input coverage.
+
 ## Stage76–78 canonical implementation evidence
 
 The shared evaluator now includes selected Regex and String behavior, `String.isRegex`,
