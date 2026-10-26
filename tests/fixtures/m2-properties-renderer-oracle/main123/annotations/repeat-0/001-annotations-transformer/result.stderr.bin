@@ -1,0 +1,10 @@
+–– Pkl Error ––
+Cannot find property `Rename`.
+
+1 | new PropertiesRenderer { convertPropertyTransformers { [Rename] { suffix = "-override" } } }.renderDocument(new Holder {})
+                                                            ^^^^^^
+at repl:text.convertPropertyTransformers (repl:text)
+
+1 | new PropertiesRenderer { convertPropertyTransformers { [Rename] { suffix = "-override" } } }.renderDocument(new Holder {})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

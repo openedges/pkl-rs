@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot find method `chars` in class `String`.
+
+1 | "ab".chars().toString()
+    ^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+chars

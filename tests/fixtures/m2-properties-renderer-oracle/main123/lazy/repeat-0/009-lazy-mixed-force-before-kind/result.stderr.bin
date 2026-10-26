@@ -1,0 +1,10 @@
+–– Pkl Error ––
+member before mixed kind
+
+1 | r.renderDocument(new Dynamic { 1; x = throw("member before mixed kind") })
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at repl:text.x (repl:text)
+
+1 | r.renderDocument(new Dynamic { 1; x = throw("member before mixed kind") })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

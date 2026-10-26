@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot render value of type `Dynamic` as Properties.
+Value: new Dynamic { x = ? }
+
+1 | r.renderValue(new Dynamic { x = throw("not forced") })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.

@@ -1,0 +1,1 @@
+new PropertiesRenderer { extension = throw("unused extension") }.renderValue("x")

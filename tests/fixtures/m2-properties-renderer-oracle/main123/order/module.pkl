@@ -1,0 +1,7 @@
+module stage91.order
+hidden options = new PropertiesRenderer {
+  omitNullProperties = trace(false)
+  restrictCharset = trace(true)
+  converters = if (trace("converters") == "converters") new Mapping {} else new Mapping {}
+  convertPropertyTransformers = if (trace("transformers") == "transformers") new Mapping {} else new Mapping {}
+}

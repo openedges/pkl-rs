@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { [Int] = (_) -> new Dynamic { x = 1 } } }.renderValue(1)

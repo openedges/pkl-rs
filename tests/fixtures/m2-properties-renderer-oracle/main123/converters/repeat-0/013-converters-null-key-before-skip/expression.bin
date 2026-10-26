@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { [String] = (v) -> trace(v) } }.renderDocument(Map("key", null))

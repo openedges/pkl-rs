@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { [Int] = (_) -> "type"; ["x"] = (_) -> "path" } }.renderDocument(new Dynamic { x = 1 })

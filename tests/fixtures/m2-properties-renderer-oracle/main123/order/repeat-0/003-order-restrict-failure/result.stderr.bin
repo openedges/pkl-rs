@@ -1,0 +1,10 @@
+–– Pkl Error ––
+restrict
+
+1 | new PropertiesRenderer { omitNullProperties = trace(true); restrictCharset = throw("restrict"); converters = throw("converters") }.renderValue("x")
+                                                                                 ^^^^^^^^^^^^^^^^^
+at repl:text.restrictCharset (repl:text)
+
+1 | new PropertiesRenderer { omitNullProperties = trace(true); restrictCharset = throw("restrict"); converters = throw("converters") }.renderValue("x")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

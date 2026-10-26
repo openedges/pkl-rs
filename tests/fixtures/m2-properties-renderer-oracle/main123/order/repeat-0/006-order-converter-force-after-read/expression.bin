@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { [Int] = throw("converter entry") }; convertPropertyTransformers = throw("transformer getter") }.renderValue("x")

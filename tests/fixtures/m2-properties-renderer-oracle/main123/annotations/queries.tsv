@@ -1,0 +1,6 @@
+string	annotations-typed-rename	new PropertiesRenderer {}.renderDocument(new Holder {})
+string	annotations-transformer	new PropertiesRenderer { convertPropertyTransformers { [Rename] { suffix = "-override" } } }.renderDocument(new Holder {})
+string	annotations-inherited-order	new PropertiesRenderer {}.renderDocument(new Child {})
+string	annotations-path-after-annotation	new PropertiesRenderer { converters { ["value"] = (v) -> trace(v) } }.renderDocument(new Holder {})
+string	annotations-dynamic-annotation	new PropertiesRenderer {}.renderDocument(new Dynamic { @Rename {} value = "v" })
+string	annotations-directive-recursive-render	new PropertiesRenderer {}.renderDocument(new DirectiveHolder {})

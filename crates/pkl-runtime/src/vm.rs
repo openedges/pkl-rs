@@ -88,6 +88,9 @@ pub enum Instruction {
     RenderJson {
         document: bool,
     },
+    RenderProperties {
+        document: bool,
+    },
     CheckAnnotationClass,
     PublishModuleMember {
         code: usize,
@@ -933,7 +936,7 @@ pub struct Program {
     pub(crate) string_repeat_block: usize,
     pub(crate) collection_join_blocks: [usize; 3],
     collection_every_blocks: [usize; 5],
-    collection_transform_blocks: [usize; 14],
+    collection_transform_blocks: [usize; 15],
     collection_projection_blocks: [usize; 13],
     conversion_blocks: BTreeMap<(Arc<str>, Arc<str>), (usize, usize)>,
     conversion_delegate_block: usize,
@@ -4322,6 +4325,9 @@ impl Vm {
             }
             Instruction::RenderJson { document } => {
                 self.begin_render(document, rendering::Format::Json)?
+            }
+            Instruction::RenderProperties { document } => {
+                self.begin_render(document, rendering::Format::Properties)?
             }
             Instruction::PublishModuleMember { code } => {
                 let owner = self

@@ -315,7 +315,13 @@ pub(in crate::vm) fn builtin_members(
             members.push(d.method(
                 name,
                 method,
-                Instruction::Unsupported(format!("{name}.{method} is not implemented.").into()),
+                if id == output::PROPERTIES_RENDERER {
+                    Instruction::RenderProperties {
+                        document: method == "renderDocument",
+                    }
+                } else {
+                    Instruction::Unsupported(format!("{name}.{method} is not implemented.").into())
+                },
             ));
         }
         result.insert(id, members);

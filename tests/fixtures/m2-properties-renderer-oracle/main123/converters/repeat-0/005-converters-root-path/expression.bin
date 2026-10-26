@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { ["^"] = (_) -> new Dynamic { x = 1 }; [Dynamic] = (_) -> "wrong" } }.renderDocument("input")

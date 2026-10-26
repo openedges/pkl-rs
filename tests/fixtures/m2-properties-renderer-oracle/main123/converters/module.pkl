@@ -1,0 +1,4 @@
+module stage91.converters
+open class Parent { value: Int = 1 }
+class Child extends Parent {}
+hidden r = new PropertiesRenderer {}

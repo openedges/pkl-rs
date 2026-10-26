@@ -1,0 +1,1 @@
+r.renderDocument(new RenderDirective { text = "RAW:=\n"; bytes = throw("bytes unused") })

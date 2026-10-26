@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { [Int] = throw("converter entry") } }.renderDocument(null)

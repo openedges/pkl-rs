@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+predicate failure
+
+1 | List(1, 2, 3).count((v) -> if (trace(v) == 2) throw("predicate failure") else true).toString()
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at repl:text.<function#1> (repl:text)
+
+1 | List(1, 2, 3).count((v) -> if (trace(v) == 2) throw("predicate failure") else true).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

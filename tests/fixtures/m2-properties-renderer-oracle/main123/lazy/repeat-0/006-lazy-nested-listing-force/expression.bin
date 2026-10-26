@@ -1,0 +1,1 @@
+r.renderDocument(new Dynamic { x = new Listing { trace(1); throw("element") } })

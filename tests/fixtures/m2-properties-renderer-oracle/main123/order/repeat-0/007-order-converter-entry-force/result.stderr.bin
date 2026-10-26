@@ -1,0 +1,10 @@
+–– Pkl Error ––
+converter entry
+
+1 | new PropertiesRenderer { converters { [Int] = throw("converter entry") } }.renderDocument(null)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^
+at repl:text.converters[#1] (repl:text)
+
+1 | new PropertiesRenderer { converters { [Int] = throw("converter entry") } }.renderDocument(null)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

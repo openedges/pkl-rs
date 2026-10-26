@@ -1,0 +1,10 @@
+–– Pkl Error ––
+outer later
+
+1 | r.renderDocument(new Dynamic { nested = new Dynamic { bad = throw("nested") }; later = throw("outer later") })
+                                                                                           ^^^^^^^^^^^^^^^^^^^^
+at repl:text.later (repl:text)
+
+1 | r.renderDocument(new Dynamic { nested = new Dynamic { bad = throw("nested") }; later = throw("outer later") })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

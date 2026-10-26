@@ -1,0 +1,6 @@
+–– Pkl Error ––
+receiver failure
+
+1 | List(trace(1), throw("receiver failure")).count(throw("operator failure")).toString()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,6 @@
+–– Pkl Error ––
+Unexpected token `@`. Expected `}`.
+
+1 | new PropertiesRenderer {}.renderDocument(new Dynamic { @Rename {} value = "v" })
+                                                           ^
+at repl:text (repl:text)

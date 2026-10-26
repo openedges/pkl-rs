@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { ["x"] = (v) -> if (trace(v.getClass().simpleName) == "Listing") "wrapped" else new Dynamic { throw("unforced element") } } }.renderDocument(new Dynamic { x = "initial" })

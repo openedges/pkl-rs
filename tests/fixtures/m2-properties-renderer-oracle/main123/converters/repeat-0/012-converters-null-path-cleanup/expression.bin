@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { ["object.property"] = (_) -> "converted"; ["mapping[key]"] = (_) -> "converted"; ["map[key]"] = (_) -> "converted" } }.renderDocument(new Dynamic { object { nullable = null; property = "v" }; mapping { ["nullable"] = null; ["key"] = "v" }; map = Map("nullable", null, "key", "v") })

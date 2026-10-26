@@ -1,0 +1,10 @@
+org.pkl.core.PklException: –– Pkl Error ––
+omit
+
+1 | new PropertiesRenderer { omitNullProperties = throw("omit"); restrictCharset = trace(true); converters = throw("converters") }.renderDocument(1)
+                                                  ^^^^^^^^^^^^^
+at repl:text.omitNullProperties (repl:text)
+
+1 | new PropertiesRenderer { omitNullProperties = throw("omit"); restrictCharset = trace(true); converters = throw("converters") }.renderDocument(1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

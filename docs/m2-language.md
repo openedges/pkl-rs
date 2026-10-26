@@ -24,6 +24,39 @@ obligations. Passing an execution does not close a missing requirement mapping.
 All nine M2 workstreams, complete APIs, release platforms, and performance and
 memory targets remain open. See the [full replay checkpoint](../reports/m2/stage86-full-replay-checkpoint.json).
 
+## Stage91 PropertiesRenderer checkpoint
+
+The shared renderer now implements PropertiesRenderer document/value rendering,
+converters, annotation transforms, path flattening, directives and lossless
+UTF-16 escaping. String `chars`/`codePoints` and List `count` support the pinned
+originals. Host suspension, roots, cancellation and retries use the existing
+shared continuations. The [checkpoint](../reports/m2/stage91-properties-renderer-checkpoint.json)
+records the scoped implementation and its preserved failed attempts.
+
+Formatting, repository verification, Clippy and Wasm compilation pass locally.
+The complete default workspace target set was checked in bounded Cargo cohorts:
+230 test executables, 25 compile-only examples and two doctest libraries. The
+first acquisition recorded 1,275 passes, one stale unsupported-renderer assertion
+failure and one ignored probe. After changing only that test source, its whole
+10-test target passed. Independent source and compiler dependency review composes
+the final **1,276 passes, zero failures and one ignored test**, excluding 13
+nested child summaries. The original failed run remains failed; this is complete
+target coverage through multiple invocations, not a single workspace command.
+
+The selected portable comparison has 147 new queries and 64 collection regressions.
+Native, N-API and Chromium each match **422/422 repeated observations**, including
+represented UTF-8/UTF-16, ordinary errors and ordered Logger fields. A single M1
+acquisition matches 6,078 primitive results per target and passes its separate
+architecture contract. Fourteen unchanged PropertiesRenderer originals also
+match two isolated native CLI-argv probe captures and two API byte-vector runs.
+Java exception metadata, complete product CLI behavior and nonempty generated
+files remain outside those comparisons.
+
+The inventory still has 4,527 cases, with 4,416 ready, 71 unimplemented and 40
+unmapped. The full-corpus aggregate above has not been rerun on Stage91 sources.
+Historical-case admission and YAML work remain separate, unfinished changes;
+all nine M2 workstreams and the release and performance requirements stay open.
+
 ## Stage90 lazy collection checkpoint
 
 The shared evaluator now implements cached Listing endpoint properties,

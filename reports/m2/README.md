@@ -17,6 +17,37 @@ The 111 unready cases, 1,791 overlapping full-gate obligations, and all nine M2
 workstreams remain open. Full API, platform-release, speed, and memory targets
 are not established by these counts.
 
+## Stage91 PropertiesRenderer checkpoint
+
+The [checkpoint](stage91-properties-renderer-checkpoint.json) records shared
+PropertiesRenderer support and its String code-point projections and List count
+dependencies. It preserves option, converter, annotation, forcing and error
+order, UTF-16 escaping, and Host/GC lifecycle controls.
+
+Formatting, repository verification, Clippy and Wasm compilation pass. Complete
+default workspace coverage spans 230 test executables, 25 compile-only examples
+and two doctest libraries through 36 initial Cargo invocations plus one affected
+target rerun. The initial run's unsupported-PropertiesRenderer assertion failure
+is retained. Only its test source changed; actual dependency closure proves
+that the other 229 targets and all ordinary library/example producers were
+unaffected. Final composed results are **1,276 passed, zero failed and one
+ignored**, with 13 nested child summaries counted separately. This is not a
+claim that the original failed run or a single workspace command passed.
+
+Native, N-API and Chromium each match 422 observations from 211 queries repeated
+twice. One M1 acquisition matches 6,078 primitive results per target and passes
+its separate architecture contract. The isolated candidate also compares 14
+unchanged originals twice through a native CLI-argv module probe and twice
+through API byte vectors. All raw compared channels and ordinary errors remain
+intact; Java exception metadata and nonempty generated-file support are not
+claimed. Generated payload dispositions retain exact hashes and producer/source
+records without promising restoration of the original binaries.
+
+The latest whole-corpus result remains Stage86. Historical admission and YAML
+work are separate from this publication. The 111 unready inventory cases, all
+nine M2 workstreams, full product APIs, release platforms and performance targets
+remain open.
+
 ## Stage90 lazy collection checkpoint
 
 The integrated collection changes add Listing endpoints, indexed folds,

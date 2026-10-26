@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `TypeAlias` as Properties.
+Value: stage91.rootTypes#TextAlias
+
+1 | r.renderValue(aliasValue)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.

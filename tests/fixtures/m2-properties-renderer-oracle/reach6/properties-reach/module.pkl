@@ -1,0 +1,39 @@
+module stage91.propertiesReach
+class Rename extends ConvertProperty {
+  suffix: String = "-renamed"
+  render = (p, renderer) -> Pair(p.first + suffix, p.second + "!")
+}
+class Holder {
+  @Rename {}
+  value: String = "v"
+}
+open class Parent {
+  @Rename { suffix = "-base" }
+  value: String = "base"
+}
+class Child extends Parent {
+  @Rename { suffix = "-child" }
+  value = "child"
+}
+class TypedChild extends Parent {
+  @Rename { suffix = "-typed" }
+  value: String = "typed"
+}
+class DoubleHolder {
+  @Rename { suffix = "-first" }
+  @Rename { suffix = "-second" }
+  value: String = "double"
+}
+hidden classRenderer = new PropertiesRenderer {
+  converters {
+    [module.Parent] = (v) -> "parent-converted"
+    [module.Child] = (v) -> "child-converted"
+  }
+}
+hidden transformedRenderer = new PropertiesRenderer {
+  convertPropertyTransformers {
+    [module.Rename] {
+      render = (p, renderer) -> Pair(p.first, "override:" + p.second)
+    }
+  }
+}

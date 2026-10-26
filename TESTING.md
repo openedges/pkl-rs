@@ -21,6 +21,26 @@ comparison requirements nor the full language, platform, or performance gates.
 
 ## Current Checks
 
+The [Stage91 PropertiesRenderer checkpoint](reports/m2/stage91-properties-renderer-checkpoint.json)
+records passing formatting, repository verification, Clippy and Wasm compilation
+on macOS arm64 with Rust 1.98.1. Complete default workspace test coverage was
+obtained through 36 bounded Cargo invocations and one affected-target rerun:
+**1,276 passed, zero failed, and one existing ignored probe**. All 230 distinct
+test executables, 25 compile-only examples and two doctest libraries are covered;
+13 nested child summaries are excluded from the total. This was not one literal
+`cargo test --workspace` invocation. The first acquisition's stale unsupported
+PropertiesRenderer assertion remains a recorded failure. Only that test source
+changed, and actual compiler dependencies establish that the other targets'
+results remain applicable.
+
+Native, N-API and Chromium each match 422 observations from 211 queries repeated
+twice. One M1 acquisition matches 6,078 primitive results per target and passes
+the separate architecture contract. Generated test and completed private-cache
+payloads were reclaimed only after recorded identity and consumer checks;
+source, raw results, dep-info and producer evidence remain. These results do not
+update the Stage86 whole-corpus aggregate or establish full CLI, generated-file,
+release-platform, speed or memory compatibility.
+
 The [Stage90 collection checkpoint](reports/m2/stage90-lazy-collections-checkpoint.json)
 completes all five required Rust checks locally on macOS arm64 with Rust 1.98.1.
 The workspace records 1,247 passing tests, zero failures, and one existing

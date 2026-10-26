@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot find property `renderValue` in object of type `PropertiesRenderer`.
+
+1 | (new PropertiesRenderer {}).renderValue.toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Did you mean any of the following?
+renderDocument(value)

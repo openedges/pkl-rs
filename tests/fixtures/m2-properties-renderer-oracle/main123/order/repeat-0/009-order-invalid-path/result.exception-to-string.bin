@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Converter path `x[` has invalid syntax.
+
+1 | new PropertiesRenderer { converters { ["x["] = (v) -> v } }.renderValue("x")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

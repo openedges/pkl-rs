@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot render value of type `Bytes` as Properties.
+Value: Bytes(1, 2)
+
+1 | r.renderValue(Bytes(1, 2))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.

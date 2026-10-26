@@ -1,0 +1,6 @@
+org.pkl.core.PklException: –– Pkl Error ––
+operator failure
+
+1 | List(trace(1), trace(2)).count(throw("operator failure")).toString()
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,14 @@
+–– Pkl Error ––
+Cannot find property `Parent`.
+
+1 | new PropertiesRenderer { converters { [Parent] = (_) -> "parent"; [Child] = (_) -> "child" } }.renderDocument(new Dynamic { a = new Child {}; b = new Parent {} })
+                                           ^^^^^^
+at repl:text.converters (repl:text)
+
+Did you mean any of the following?
+Pair
+Pair(first, second)
+
+1 | new PropertiesRenderer { converters { [Parent] = (_) -> "parent"; [Child] = (_) -> "child" } }.renderDocument(new Dynamic { a = new Child {}; b = new Parent {} })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

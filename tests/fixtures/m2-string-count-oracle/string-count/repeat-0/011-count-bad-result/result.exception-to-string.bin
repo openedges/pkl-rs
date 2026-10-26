@@ -1,0 +1,7 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Expected value of type `Boolean`, but got type `Int`.
+Value: 7
+
+1 | List(1).count((v) -> 7).toString()
+    ^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -1,0 +1,10 @@
+–– Pkl Error ––
+element
+
+1 | r.renderDocument(new Dynamic { x = new Listing { trace(1); throw("element") } })
+                                                               ^^^^^^^^^^^^^^^^
+at repl:text.x[#2] (repl:text)
+
+1 | r.renderDocument(new Dynamic { x = new Listing { trace(1); throw("element") } })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

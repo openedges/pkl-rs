@@ -1,0 +1,25 @@
+module stage91.annotations
+class Rename extends ConvertProperty {
+  suffix: String = "-renamed"
+  render = (p, renderer) -> Pair(p.first + suffix, p.second + "!")
+}
+class Holder {
+  @Rename {}
+  value: String = "v"
+}
+open class Parent {
+  @Rename { suffix = "-base" }
+  value: String = "base"
+}
+class Child extends Parent {
+  @Rename { suffix = "-child" }
+  value = "child"
+}
+class DirectiveHolder {
+  @ConvertProperty {
+    render = (p, renderer) -> Pair(p.first, new RenderDirective {
+      text = "RAW:" + (renderer as ValueRenderer).renderValue(p.second)
+    })
+  }
+  value: String = "v"
+}

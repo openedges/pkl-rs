@@ -1,0 +1,3 @@
+module stage91.stringCount
+hidden text = "A😀\u{d800}X\u{dc00}"
+hidden limit = 1

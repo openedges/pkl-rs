@@ -152,7 +152,7 @@ impl Definitions<'_> {
             .expect("class");
         let start = start
             + self.source.text[start..]
-                .find(&format!("function {name}("))
+                .find(&format!("external function {name}("))
                 .expect("method");
         let end = start + self.source.text[start..].find('\n').unwrap();
         let body_block = self.blocks.len();
@@ -170,6 +170,7 @@ impl Definitions<'_> {
             source: Some(self.source.clone()),
             member: format!("#{class}.{name}").into(),
             declaration: Some(Span::new(start, end)),
+            method_signature: Some((format!("{name}(value)"), 1)),
             spans: vec![None; 5],
             ..Default::default()
         });
@@ -187,6 +188,7 @@ impl Definitions<'_> {
             source: Some(self.source.clone()),
             member: format!("#{class}.{name}").into(),
             declaration: Some(Span::new(start, end)),
+            method_signature: Some((format!("{name}(value)"), 1)),
             spans: vec![None; 2],
             ..Default::default()
         });

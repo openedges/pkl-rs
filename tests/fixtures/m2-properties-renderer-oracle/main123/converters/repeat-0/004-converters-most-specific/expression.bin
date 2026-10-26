@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { [Parent] = (_) -> "parent"; [Child] = (_) -> "child" } }.renderDocument(new Dynamic { a = new Child {}; b = new Parent {} })

@@ -1,0 +1,13 @@
+{
+  "authority": "target/m2/stage91-string-count-oracle-readback-01/report.json",
+  "authority_sha256": "c519f00f38b818815169ab361e3a6545060fa46cb6da35b78b78d3ab5598f164",
+  "source_plan": {
+    "bytes": 5439,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage57/target/m2/stage91-string-count-oracle-prep-01/query-source-plan.json",
+    "sha256": "c43dd2d8a629bdc6eb9898ee48a70fe3b3b6062f79212d01a0e7cccc8c2a2fb7"
+  },
+  "queries": 18,
+  "repetitions": 2,
+  "comparison_fields": "full status/stdout/stderr UTF8+UTF16 and ordered Logger; Java class/cause raw retained but not compared by SourceProbe",
+  "main129_original14": "unchanged separate cohorts"
+}

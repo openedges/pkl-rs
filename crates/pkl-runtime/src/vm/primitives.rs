@@ -518,6 +518,51 @@ impl Vm {
                 return Ok(true);
             }
             if let Value::String(text) = receiver {
+                if matches!(name, "chars" | "codePoints") {
+                    if text.is_empty() {
+                        let empty = self.empty_strict_collection(crate::heap::CollectionKind::List);
+                        self.stack.push(Value::Object(empty));
+                        return Ok(true);
+                    }
+                    let builder = self.heap.allocate(Object {
+                        collection_kind: crate::heap::CollectionKind::List,
+                        ..Default::default()
+                    });
+                    self.frames
+                        .last_mut()
+                        .expect("String property frame")
+                        .builders
+                        .push(builder);
+                    // Java String.codePoints combines valid pairs and preserves
+                    // unpaired UTF-16 units. Iterate once, without replacement.
+                    for point in char::decode_utf16(text.encode_utf16()) {
+                        let value = if name == "chars" {
+                            Value::String(match point {
+                                Ok(point) => point.to_string().into(),
+                                Err(point) => {
+                                    PklString::from_utf16(vec![point.unpaired_surrogate()])
+                                }
+                            })
+                        } else {
+                            Value::Int(
+                                match point {
+                                    Ok(point) => i64::from(u32::from(point)),
+                                    Err(point) => i64::from(point.unpaired_surrogate()),
+                                }
+                                .into(),
+                            )
+                        };
+                        self.stack.push(value);
+                        self.append_strict_element()?;
+                    }
+                    self.frames
+                        .last_mut()
+                        .expect("String property frame")
+                        .builders
+                        .pop();
+                    self.stack.push(Value::Object(builder));
+                    return Ok(true);
+                }
                 let value = match name {
                     "length" => Some(Value::Int((text.code_point_len() as i64).into())),
                     "lastIndex" => Some(Value::Int((text.code_point_len() as i64 - 1).into())),

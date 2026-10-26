@@ -1,0 +1,18 @@
+string	chars-empty	"".chars.toString()
+string	points-empty	"".codePoints.toString()
+string	chars-bmp	"a\\a".chars.toString()
+string	chars-mixed-length	text.chars.length.toString()
+string	chars-high	text.chars[2]
+string	chars-low	text.chars[4]
+string	chars-supplementary	text.chars[1]
+string	points-mixed	text.codePoints.toString()
+string	chars-property-called	"ab".chars().toString()
+string	count-ordered	List(1, 2, 3).count((v) -> trace(v) > 1).toString()
+string	count-empty-bad-arity	List().count(() -> true).toString()
+string	count-bad-result	List(1).count((v) -> 7).toString()
+string	count-callback-failure	List(1, 2, 3).count((v) -> if (trace(v) == 2) throw("predicate failure") else true).toString()
+string	count-operator-failure	List(trace(1), trace(2)).count(throw("operator failure")).toString()
+string	count-lazy-element	List(new Dynamic { bad = throw("unforced element") }).count((v) -> true).toString()
+string	count-lexical-capture	List(0, 1, 2).count((v) -> v > module.limit).toString()
+string	count-empty-unvisited	List().count((v) -> throw("unvisited predicate")).toString()
+string	count-receiver-failure	List(trace(1), throw("receiver failure")).count(throw("operator failure")).toString()

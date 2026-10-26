@@ -1,0 +1,4 @@
+module stage91.lazy
+class Bad { first: Int = trace(1); later: Int = throw("typed later") }
+class Missing { value: String }
+hidden r = new PropertiesRenderer {}

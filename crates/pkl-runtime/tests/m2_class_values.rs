@@ -457,21 +457,20 @@ fn ordinary_lazy_defaults_survive_undefined_member_failures() {
 
 #[test]
 fn unimplemented_renderer_algorithms_remain_explicit_at_invocation() {
+    // PropertiesRenderer bytes are covered by m2_properties_renderer_oracle.
     let mut probe = metadata_probe(&[
         "yaml.extension",
         "yaml.renderDocument(1)",
         "yaml.renderValue(1)",
         "plist.renderDocument(1)",
         "plist.renderValue(1)",
-        "properties.renderDocument(1)",
-        "properties.renderValue(1)",
         "yaml.extension",
     ]);
     value(&mut probe, 0, "yaml");
-    for index in 1..7 {
+    for index in 1..5 {
         let event = evaluate(&mut probe, index);
         assert_eq!(event.kind, "error");
         assert_eq!(event.disposition, Some("unsupported"));
     }
-    value(&mut probe, 7, "yaml");
+    value(&mut probe, 5, "yaml");
 }

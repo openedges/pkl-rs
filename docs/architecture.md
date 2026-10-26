@@ -1257,6 +1257,24 @@ the shared diagnostic text, source spans, UTF-16 widths and hint precedence.
 Selected differential regressions do not establish complete reference identity,
 standard-module lifecycle, renderer coverage or the performance targets.
 
+### Properties rendering and scalar projections
+
+PropertiesRenderer uses the shared renderer continuation for options, converters,
+annotation transforms, lazy members and Host suspension. Document rendering
+flattens property paths and emits escaped key/value lines; value rendering keeps
+its separate top-level and scalar rules. Deferred keys and render directives
+retain their receiver and path roots across evaluation, cancellation and retry.
+The emitter operates on lossless UTF-16 units, preserving Java escaping and
+`restrictCharset` behavior, including unpaired surrogates. Runtime wrapper class
+identity and renderer method signatures also feed the shared diagnostics.
+
+String `chars` and `codePoints` traverse Java-compatible code points, combining
+valid surrogate pairs while preserving unpaired units. List `count` uses the
+existing resumable callback visitor, so predicate order, empty-list behavior
+and roots during Host suspension remain shared across targets. These operations
+support the pinned PropertiesRenderer originals; their selected comparisons do
+not establish complete renderer, product CLI or generated-file compatibility.
+
 ### Strict transforms and quantity identity
 
 Collection transforms retain their source, callback, iteration cursor and

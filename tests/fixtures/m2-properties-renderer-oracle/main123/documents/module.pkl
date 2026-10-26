@@ -1,0 +1,3 @@
+module stage91.documents
+class Thing { x: Int = 1; child: Dynamic = new { y = true } }
+hidden r = new PropertiesRenderer {}

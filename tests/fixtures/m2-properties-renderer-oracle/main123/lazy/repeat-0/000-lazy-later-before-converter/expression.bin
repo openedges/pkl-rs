@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { [Int] = (v) -> trace("converter") } }.renderDocument(new Dynamic { first = trace(1); later = throw("outer later") })

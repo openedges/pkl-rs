@@ -14,6 +14,7 @@ pub enum Transform {
     Find,
     Filter,
     FlatMap,
+    Count,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -50,6 +51,7 @@ impl Transform {
             Self::Find => "find",
             Self::Filter => "filter",
             Self::FlatMap => "flatMap",
+            Self::Count => "count",
         }
     }
 
@@ -61,7 +63,7 @@ impl Transform {
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> [usize; 14] {
+) -> [usize; 15] {
     use Transform::*;
     let source = crate::stdlib_sources::base();
     let methods = [
@@ -79,13 +81,14 @@ pub(super) fn blocks(
         ("List", Find),
         ("List", Filter),
         ("List", FlatMap),
+        ("List", Count),
     ];
     methods.map(|(class, operation)| {
         let class_start = source
             .text
             .find(&format!("external class {class}<"))
             .expect("pinned class");
-        let predicate = matches!(operation, Find | Filter);
+        let predicate = matches!(operation, Find | Filter | Count);
         let delimiter = if predicate { '(' } else { '<' };
         let start = class_start
             + source.text[class_start..]
@@ -146,6 +149,7 @@ pub(super) fn blocks(
             // A successful find leaves the original element on the stack and
             // releases its cursor. A false predicate jumps back to instruction 3.
             Find => code.push(Instruction::Return),
+            Count => code.push(Instruction::Jump(3)),
             FlatMap => code.extend([
                 Instruction::CollectionFlatMapNext { end: 3 },
                 Instruction::AppendStrictElement,
@@ -296,6 +300,7 @@ pub(super) struct TransformRun {
     members: Vec<CollectionMember>,
     next: usize,
     current: Option<(Value, Value)>,
+    matched: i64,
     lazy: Option<LazyEvery>,
     inner: Option<FlatMapRun>,
     distinct: Option<DistinctRun>,
@@ -392,6 +397,7 @@ impl Vm {
             (0, "find") => 11,
             (0, "filter") => 12,
             (0, "flatMap") => 13,
+            (0, "count") => 14,
             _ => return false,
         };
         let id = self.heap.allocate(Object {
@@ -444,7 +450,7 @@ impl Vm {
         // A strict result must not capture the method's source/callback scope.
         let builder = if matches!(
             operation,
-            Operation::Callback(Transform::Find)
+            Operation::Callback(Transform::Find | Transform::Count)
                 | Operation::Projection(Projection::IsDistinct | Projection::Contains)
         ) {
             None
@@ -472,6 +478,7 @@ impl Vm {
             members,
             next: 0,
             current: None,
+            matched: 0,
             lazy: None,
             inner: None,
             distinct: match operation {
@@ -642,7 +649,7 @@ impl Vm {
             (operation, run.source, key, input)
         };
         match operation {
-            Transform::Find | Transform::Filter => {
+            Transform::Find | Transform::Filter | Transform::Count => {
                 // ApplyVmFunction1Node.executeBoolean checks the callback's
                 // actual result; there is no authored return type-node span.
                 let Value::Bool(accepted) = value else {
@@ -653,7 +660,17 @@ impl Vm {
                         &self.heap,
                     )?);
                 };
-                if accepted {
+                if matches!(operation, Transform::Count) {
+                    if accepted {
+                        self.frames
+                            .last_mut()
+                            .unwrap()
+                            .collection_transform
+                            .as_mut()
+                            .unwrap()
+                            .matched += 1;
+                    }
+                } else if accepted {
                     if matches!(operation, Transform::Find) {
                         self.frames.last_mut().unwrap().collection_transform = None;
                     }
@@ -775,6 +792,10 @@ impl Vm {
                     "",
                 ),
             ));
+        }
+        if matches!(run.operation, Operation::Callback(Transform::Count)) {
+            self.stack.push(Value::Int(run.matched.into()));
+            return Ok(());
         }
         if matches!(run.operation, Operation::Projection(Projection::Contains)) {
             self.stack.push(Value::Bool(false));
@@ -1066,6 +1087,7 @@ impl Vm {
             members,
             next: 0,
             current: None,
+            matched: 0,
             lazy,
             inner: None,
             distinct: None,

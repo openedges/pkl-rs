@@ -1,0 +1,340 @@
+{
+  "actual_gates": {
+    "M1": {
+      "report": {
+        "bytes": 10073,
+        "mode": 420,
+        "path": "target/m2/stage91-m1-validation-01/contract/process.json",
+        "sha256": "14b1c1d6c30a66ef46a7cc2166d624d26c40b24bfeb6d57b7f0bd31c3fdece15"
+      },
+      "status": "passed"
+    },
+    "M1_independent_review": {
+      "report": {
+        "bytes": 44872,
+        "mode": 420,
+        "path": "target/m2/stage91-m1-independent-review-01/report.json",
+        "sha256": "5cc3fc1de8cf5b335c41265bc335bb8cccf5dfbd4a73715b497ad3048ac3ce56"
+      },
+      "status": "passed"
+    },
+    "binding": {
+      "report": {
+        "bytes": 13431,
+        "mode": 420,
+        "path": "target/m2/stage91-platform-artifact-binding-01/report.json",
+        "sha256": "8066ddf411d89d048a1c3bdc2c487396c026bcc0ca304a14413ab9b424d54a00"
+      },
+      "status": "passed"
+    },
+    "candidate_independent_review": {
+      "report": {
+        "bytes": 7280,
+        "mode": 420,
+        "path": "target/m2/stage91-candidate-independent-review-01/report.json",
+        "sha256": "58bbaf79d77d38fb7f0f9a73dd9514b847a68a98654d51aea17ee5bdd9bf1277"
+      },
+      "status": "passed"
+    },
+    "capture": {
+      "report": {
+        "bytes": 96745,
+        "mode": 420,
+        "path": "target/m2/stage91-platform-capture-01/report.json",
+        "sha256": "64a085618741293d10f67f50f18a96338b167ddd8b4ff504c8ccbe38682ae052"
+      },
+      "status": "passed"
+    },
+    "composed_default_targets": {
+      "report": {
+        "bytes": 6953,
+        "mode": 420,
+        "path": "target/m2/stage91-workspace-composed-independent-review-01/report.json",
+        "sha256": "261589f07af13a6a75c933efa2e4455544b91dcf1c0d1988b1a308bac69c9796"
+      },
+      "status": "passed"
+    },
+    "final_documents": {
+      "report": {
+        "bytes": 1013,
+        "mode": 420,
+        "path": "target/m2/stage91-final-documents-01/report.json",
+        "sha256": "c48c14a1e25c4f590c0a1df992791628a7b87e473370738a217848daad76d1b5"
+      },
+      "status": "passed"
+    },
+    "native": {
+      "report": {
+        "bytes": 9115,
+        "mode": 420,
+        "path": "target/m2/stage91-native-adapter-01/report.json",
+        "sha256": "78ea139e7c7d13a66352f819dadb3df7db113b881a7cf758cef53489f55389e4"
+      },
+      "status": "passed"
+    },
+    "selected_platform_independent_review": {
+      "report": {
+        "bytes": 101729,
+        "mode": 420,
+        "path": "target/m2/stage91-platform-actual-review-01/report.json",
+        "sha256": "0f70fe873dcf3ff6adf8947d7741a56ae897315cd20897c8af51786ba968d8df"
+      },
+      "status": "passed"
+    },
+    "wasm_bindgen_lineage_supplement": {
+      "report": {
+        "bytes": 7434,
+        "mode": 420,
+        "path": "target/m2/stage91-platform-actual-review-01/bindgen-producer-supplement.json",
+        "sha256": "5a15ce59c2f14001cf6b16f24795732fc672a72c7bee067c7783807b04b5badf"
+      },
+      "status": "passed"
+    }
+  },
+  "archive": {
+    "full_payload_hash_mode_order_readback": true,
+    "gzip_eof_verified": true,
+    "intended_public_path": "reports/m2/stage91-properties-renderer-evidence.tar.gz",
+    "members_including_manifest": 39388,
+    "producer": {
+      "bytes": 43276200,
+      "mode": 420,
+      "path": "target/m2/stage91-checkpoint-publication-01/stage91-properties-renderer-evidence.tar.gz",
+      "sha256": "681fe1b3859a25e599850d06b82e6837173d6a27cc207f39401ae9fafe43efbc"
+    },
+    "public": {
+      "bytes": 43276200,
+      "mode": 420,
+      "path": "reports/m2/stage91-properties-renderer-evidence.tar.gz",
+      "sha256": "681fe1b3859a25e599850d06b82e6837173d6a27cc207f39401ae9fafe43efbc"
+    }
+  },
+  "candidate_focused_history": {
+    "final": {
+      "bytes": 3498,
+      "mode": 420,
+      "path": "target/m2/stage91-properties-candidate-01/focused-02/report.json",
+      "sha256": "a987369989c2d2f710b14e9a51f92689d61051c100c4a85cf4d4cb91ea042944"
+    },
+    "initial": {
+      "bytes": 3346,
+      "mode": 420,
+      "path": "target/m2/stage91-properties-candidate-01/focused-01/report.json",
+      "sha256": "ae39068d42536cad54013c2c33e73402c0becdcb14bde18f3e7b2644bd4a8829"
+    }
+  },
+  "candidate_review": {
+    "bytes": 7280,
+    "mode": 420,
+    "path": "target/m2/stage91-candidate-independent-review-01/report.json",
+    "sha256": "58bbaf79d77d38fb7f0f9a73dd9514b847a68a98654d51aea17ee5bdd9bf1277"
+  },
+  "canonical_default_target_coverage": {
+    "compile_only_examples": 25,
+    "distinct_test_executables": 230,
+    "doctest_libraries": 2,
+    "failed": 0,
+    "ignored": 1,
+    "independent_composed_GO": {
+      "bytes": 6953,
+      "mode": 420,
+      "path": "target/m2/stage91-workspace-composed-independent-review-01/report.json",
+      "sha256": "261589f07af13a6a75c933efa2e4455544b91dcf1c0d1988b1a308bac69c9796"
+    },
+    "mode": "composed-partitioned",
+    "nested_child_counts_excluded": 13,
+    "original_failed_run": {
+      "bytes": 264269,
+      "mode": 420,
+      "path": "target/m2/stage91-workspace-partitioned-01/report.json",
+      "sha256": "363fec92e7fd81f1dd7ea604aedaf7e2f7945378f931a07cefc7ba1b00022c13"
+    },
+    "passed": 1276,
+    "successful_affected_target_rerun": {
+      "bytes": 6041,
+      "mode": 420,
+      "path": "target/m2/stage91-workspace-repair-01/report.json",
+      "sha256": "fb7a178581e69b4e01ef8d3c977153da2528a7dd89da0a04a3eeb6aa4b96b609"
+    }
+  },
+  "canonical_payloads": 3624,
+  "compatibility_baseline": "Pkl 0.32.0",
+  "complete": true,
+  "documentation": [
+    {
+      "bytes": 447892,
+      "mode": 420,
+      "path": "PLAN.md",
+      "sha256": "62cae7367656dfd0f7772ddb8e39697b5e1375459f3f6712259d1e832a937b7a"
+    },
+    {
+      "bytes": 76275,
+      "mode": 420,
+      "path": "TESTING.md",
+      "sha256": "e1d534889ae1468e226255d08cae563039224acde058179e223415c7814c502e"
+    },
+    {
+      "bytes": 98223,
+      "mode": 420,
+      "path": "docs/architecture.md",
+      "sha256": "b7b41b8353e854341f8f750686ed8746e411ceb85cf19c1b687a81223d08433a"
+    },
+    {
+      "bytes": 86266,
+      "mode": 420,
+      "path": "docs/m2-language.md",
+      "sha256": "46ccf71235f66180f9f55df7c06e3eacdd7d333ff71a5a168f68f12e185e5dc3"
+    },
+    {
+      "bytes": 365314,
+      "mode": 420,
+      "path": "reports/m2/README.md",
+      "sha256": "c8db145f887ad916d209d8f28575ca8eae1353e529fa22274f2bedd9fefb8fbf"
+    }
+  ],
+  "extra_test_only_repair": {
+    "bytes": 995,
+    "mode": 420,
+    "path": "target/m2/stage91-class-values-repair-01/report.json",
+    "sha256": "d32d63cd027396c9920edb29730edb1f1471623ea8ad44a4e73395a4fab3d0b9"
+  },
+  "full_API_complete": false,
+  "full_m2_complete": false,
+  "git_binding": {
+    "closeout": "Root verifies exact staged and committed Git blobs, then performs a non-force push and checks the remote head. No commit or push is claimed by this descriptor before those actions occur.",
+    "method": "The containing publication commit carries the reviewed source and documentation bytes. Local executions used recorded uncommitted source snapshots; execution on the later publication commit is not claimed.",
+    "source_parent": "20e884127b5465c893309f5ba31663189b938696"
+  },
+  "independent_publication_review": {
+    "bytes": 8049,
+    "mode": 420,
+    "path": "reports/m2/stage91-properties-renderer-publication-review.json",
+    "sha256": "b0ce3f8037194cb19e433c9c07d3b7d157403e4912bde4d2f06e23132560ad9d"
+  },
+  "integration": {
+    "bytes": 673,
+    "mode": 420,
+    "path": "target/m2/stage91-integration-01/report.json",
+    "sha256": "68ce603bd35a5816a994df63f48d60fabb0947ef2c9c6d8900476db003a2e7d7"
+  },
+  "intended_public_paths": {
+    "archive": "reports/m2/stage91-properties-renderer-evidence.tar.gz",
+    "checkpoint": "reports/m2/stage91-properties-renderer-checkpoint.json",
+    "independent_review": "reports/m2/stage91-properties-renderer-publication-review.json"
+  },
+  "kind": "stage91-properties-renderer-development-checkpoint-v1",
+  "latest_completed_official_full_replay": {
+    "pass": 4214,
+    "ready_selected": 4416,
+    "source_checkpoint": "Stage86 full replay; no Stage91 aggregate update claimed",
+    "unready": 111
+  },
+  "limits": [
+    "Partitioned default-target coverage plus one target rerun is not a single cargo test workspace invocation.",
+    "Original failed assertions, early Java intent-not-reached errors and setup/source failures remain preserved.",
+    "Released regenerable binaries are represented by original identities/producers/dispositions; exact binary restoration is not claimed.",
+    "Runtime/JDK/JAR/helper/toolchain and prior baseline source/fixtures remain explicit local/pinned dependencies; not a self-contained evaluator distribution.",
+    "New selected query and original-module results do not establish complete CLI/Host/files/API/language/performance compatibility."
+  ],
+  "new_Java_API_authority": {
+    "Rust_expected_bytes_generated": false,
+    "properties": 123,
+    "repetitions": 2,
+    "separate_reached_controls": 6,
+    "string_count": 18,
+    "unique": 147
+  },
+  "original_modules": {
+    "Java_CLI": "Exact reused Stage67 original authority; one recorded original contract/module.",
+    "modules": 14,
+    "native_observations": 28,
+    "native_repetitions": 2,
+    "scope": "Raw stdout/stderr/exit; Java public file maps empty. Nonempty generated-file/native output writer coverage is not claimed."
+  },
+  "performance_targets_met": false,
+  "prior_committed_authority_not_repacked": [
+    {
+      "bytes": 17511,
+      "commit": "20e884127b5465c893309f5ba31663189b938696",
+      "git_oid": "ea43bb91e831241b0f00a89827d76a7032d9250b",
+      "kind": "committed-Git-blob-not-repacked",
+      "mode": 420,
+      "path": "reports/m2/stage90-lazy-collections-checkpoint.json",
+      "sha256": "80ef924c39f6a20290257d75ba5d02c4aa1020df484817370be5e2ffb105b4ec"
+    },
+    {
+      "bytes": 31549689,
+      "commit": "20e884127b5465c893309f5ba31663189b938696",
+      "git_oid": "09132b7fe813ebe0308620f8fb9a087950414625",
+      "kind": "committed-Git-blob-not-repacked",
+      "mode": 420,
+      "path": "reports/m2/stage90-lazy-collections-evidence.tar.gz",
+      "sha256": "3cbc88380100d5f0a07a32b225398f5dcefdc13b1d938448aac0ac9910907987"
+    }
+  ],
+  "producer_checkpoint_draft": {
+    "bytes": 10571,
+    "mode": 420,
+    "path": "target/m2/stage91-checkpoint-publication-01/checkpoint-draft.json",
+    "sha256": "896a7d1feb82d3bef22b5d9754b7e4c984242af57f38917a4d9d764f2023c719"
+  },
+  "publication_ready": true,
+  "ready_for_independent_publication_review": true,
+  "selected_platform_scope": {
+    "Java_internal_exception_metadata_compared": false,
+    "Logger_events_per_target": 132,
+    "new_queries": 147,
+    "observations_per_target": 422,
+    "per_target_status_counts": {
+      "ordinary_error": 192,
+      "success": 230
+    },
+    "prior_C2_regression_queries": 64,
+    "raw_public_fields_per_target": 4696,
+    "repetitions": 2,
+    "targets": [
+      "native",
+      "napi",
+      "chromium"
+    ],
+    "unique_queries": 211
+  },
+  "single_M1_scope": {
+    "acquisitions": 1,
+    "strict_and_architecture_are_separate_verdicts": true,
+    "strict_cases_per_target": 6078,
+    "targets": [
+      "rust",
+      "node",
+      "browser"
+    ]
+  },
+  "source_freeze": {
+    "bytes": 3358284,
+    "mode": 420,
+    "path": "target/m2/stage91-final-canonical-freeze-01/sources.json",
+    "sha256": "aa6d185636f244bda81bf493e47ac734471efe5c9399a1b632583a3e8d50ff78"
+  },
+  "wasm_bindgen_producer_supplement": {
+    "bytes": 7434,
+    "mode": 420,
+    "path": "target/m2/stage91-platform-actual-review-01/bindgen-producer-supplement.json",
+    "sha256": "5a15ce59c2f14001cf6b16f24795732fc672a72c7bee067c7783807b04b5badf"
+  },
+  "wasm_bindgen_provenance_correction": {
+    "authoritative_supplement": {
+      "bytes": 7434,
+      "mode": 420,
+      "path": "target/m2/stage91-platform-actual-review-01/bindgen-producer-supplement.json",
+      "sha256": "5a15ce59c2f14001cf6b16f24795732fc672a72c7bee067c7783807b04b5badf"
+    },
+    "correction": "Original wasm_js.bindgen_input_wasm_sha256 field contains generated wasm_bg output hash; it is not the rustc-produced Wasm input identity.",
+    "original_binding_preserved": {
+      "bytes": 13431,
+      "mode": 420,
+      "path": "target/m2/stage91-platform-artifact-binding-01/report.json",
+      "sha256": "8066ddf411d89d048a1c3bdc2c487396c026bcc0ca304a14413ab9b424d54a00"
+    },
+    "scope": "Supplement records actual argv and distinct input/output/JS identities; no guest rerun or original receipt rewrite."
+  }
+}

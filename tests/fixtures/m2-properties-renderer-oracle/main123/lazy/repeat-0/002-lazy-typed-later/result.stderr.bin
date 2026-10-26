@@ -1,0 +1,10 @@
+–– Pkl Error ––
+typed later
+
+2 | class Bad { first: Int = trace(1); later: Int = throw("typed later") }
+                                                    ^^^^^^^^^^^^^^^^^^^^
+at stage91.lazy#Bad.later (file:///stage91/lazy.pkl)
+
+1 | new PropertiesRenderer { converters { [Int] = (v) -> trace("converter") } }.renderDocument(new Bad {})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

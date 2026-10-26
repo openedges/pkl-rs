@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot render value of type `stage91.rootTypes#Thing` as Properties.
+Value: new Thing { value = ? }
+
+1 | r.renderValue(new Thing {})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.

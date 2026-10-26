@@ -1,0 +1,201 @@
+{
+  "actual_failure_history_and_generated_payload_dispositions_retained": true,
+  "actual_outer_launch": {
+    "bytes": 6262,
+    "mode": 420,
+    "path": "target/m2/stage91-checkpoint-publication-launch-01/process.json",
+    "sha256": "6fe6df075486aa683b8d38dd5e35bbe4a497a21f859f5a916aa90c2af975bd42"
+  },
+  "actual_producer_report": {
+    "bytes": 942,
+    "mode": 420,
+    "path": "target/m2/stage91-checkpoint-publication-01/report.json",
+    "sha256": "8f734ab48bef1af50ae8e9cf77cca4e24856a526b7414570e0010fe760509240"
+  },
+  "approved_for_publication": true,
+  "archive": {
+    "bytes": 43276200,
+    "mode": 420,
+    "path": "target/m2/stage91-checkpoint-publication-01/stage91-properties-renderer-evidence.tar.gz",
+    "sha256": "681fe1b3859a25e599850d06b82e6837173d6a27cc207f39401ae9fafe43efbc"
+  },
+  "canonical_payloads": {
+    "existing_runtime_preimages_checked_against_parent_Git": 7,
+    "extra_isolated_test_repair": 1,
+    "final_documents": 5,
+    "integrated": 3624,
+    "inventory_manifest_retained": true,
+    "new_paths_absent_in_parent_Git": 3617,
+    "parent": "20e884127b5465c893309f5ba31663189b938696"
+  },
+  "canonical_source_mutations_by_review": 0,
+  "checkpoint_draft": {
+    "bytes": 10571,
+    "mode": 420,
+    "path": "target/m2/stage91-checkpoint-publication-01/checkpoint-draft.json",
+    "sha256": "896a7d1feb82d3bef22b5d9754b7e4c984242af57f38917a4d9d764f2023c719"
+  },
+  "complete": true,
+  "descriptor_scope": "Accurate composed1276/0/1 coverage,230targets/25examples/2doctestlibs;422selected observations pertarget; single6078M1 strict and architecture judgments; Stage86remainslatestwholecorpus. Originalfailure remainsfailed. Full M2/API/performance false.",
+  "external_prior_Stage90_Java_authority_files_exactly_covered": 3684,
+  "finished_epoch": 1793004555.409006,
+  "full_stream": {
+    "all_selected_local_sources_postchecked": 39387,
+    "archive_extracted": false,
+    "decompressed_tar_bytes": 345169920,
+    "file_modes_counts": {
+      "420": 39387
+    },
+    "manifest_bytes_exact": true,
+    "member_order_exact": true,
+    "members_including_manifest": 39388,
+    "no_appended_gzip_or_garbage": true,
+    "payload_logical_bytes": 257808476,
+    "regular_payloads": 39387,
+    "single_gzip_member_CRC_EOF_verified": true,
+    "trailing_zero_padding_bytes": 3584
+  },
+  "gates": {
+    "M1": {
+      "report": {
+        "bytes": 10073,
+        "mode": 420,
+        "path": "target/m2/stage91-m1-validation-01/contract/process.json",
+        "sha256": "14b1c1d6c30a66ef46a7cc2166d624d26c40b24bfeb6d57b7f0bd31c3fdece15"
+      },
+      "status": "passed"
+    },
+    "M1_independent_review": {
+      "report": {
+        "bytes": 44872,
+        "mode": 420,
+        "path": "target/m2/stage91-m1-independent-review-01/report.json",
+        "sha256": "5cc3fc1de8cf5b335c41265bc335bb8cccf5dfbd4a73715b497ad3048ac3ce56"
+      },
+      "status": "passed"
+    },
+    "binding": {
+      "report": {
+        "bytes": 13431,
+        "mode": 420,
+        "path": "target/m2/stage91-platform-artifact-binding-01/report.json",
+        "sha256": "8066ddf411d89d048a1c3bdc2c487396c026bcc0ca304a14413ab9b424d54a00"
+      },
+      "status": "passed"
+    },
+    "candidate_independent_review": {
+      "report": {
+        "bytes": 7280,
+        "mode": 420,
+        "path": "target/m2/stage91-candidate-independent-review-01/report.json",
+        "sha256": "58bbaf79d77d38fb7f0f9a73dd9514b847a68a98654d51aea17ee5bdd9bf1277"
+      },
+      "status": "passed"
+    },
+    "capture": {
+      "report": {
+        "bytes": 96745,
+        "mode": 420,
+        "path": "target/m2/stage91-platform-capture-01/report.json",
+        "sha256": "64a085618741293d10f67f50f18a96338b167ddd8b4ff504c8ccbe38682ae052"
+      },
+      "status": "passed"
+    },
+    "composed_default_targets": {
+      "report": {
+        "bytes": 6953,
+        "mode": 420,
+        "path": "target/m2/stage91-workspace-composed-independent-review-01/report.json",
+        "sha256": "261589f07af13a6a75c933efa2e4455544b91dcf1c0d1988b1a308bac69c9796"
+      },
+      "status": "passed"
+    },
+    "final_documents": {
+      "report": {
+        "bytes": 1013,
+        "mode": 420,
+        "path": "target/m2/stage91-final-documents-01/report.json",
+        "sha256": "c48c14a1e25c4f590c0a1df992791628a7b87e473370738a217848daad76d1b5"
+      },
+      "status": "passed"
+    },
+    "native": {
+      "report": {
+        "bytes": 9115,
+        "mode": 420,
+        "path": "target/m2/stage91-native-adapter-01/report.json",
+        "sha256": "78ea139e7c7d13a66352f819dadb3df7db113b881a7cf758cef53489f55389e4"
+      },
+      "status": "passed"
+    },
+    "selected_platform_independent_review": {
+      "report": {
+        "bytes": 101729,
+        "mode": 420,
+        "path": "target/m2/stage91-platform-actual-review-01/report.json",
+        "sha256": "0f70fe873dcf3ff6adf8947d7741a56ae897315cd20897c8af51786ba968d8df"
+      },
+      "status": "passed"
+    },
+    "wasm_bindgen_lineage_supplement": {
+      "report": {
+        "bytes": 7434,
+        "mode": 420,
+        "path": "target/m2/stage91-platform-actual-review-01/bindgen-producer-supplement.json",
+        "sha256": "5a15ce59c2f14001cf6b16f24795732fc672a72c7bee067c7783807b04b5badf"
+      },
+      "status": "passed"
+    }
+  },
+  "guest_compiler_invocations_by_review": 0,
+  "kind": "stage91-publication-full-stream-independent-review",
+  "limits": [
+    "Stage91-only development checkpoint; no full M2/API/release-platform/performance or new whole-corpus result.",
+    "Prior committed Stage90 authority is an explicit external Git blob/archive dependency, not repacked or relabeled as Stage91 execution.",
+    "Regenerable binaries are omitted with original identity/source/.d/raw/disposition evidence retained; exact historical binary restoration is not guaranteed.",
+    "Publication archive is not a self-contained compiler/runtime/JDK/Node/browser/evaluator distribution."
+  ],
+  "permitted_public_descriptor_transform": "Root may update publication_ready and truthful public archive/review paths plus actual commit/push intent/identities after publication. Runtime sources, archived selection/payload bytes, raw outcomes, comparison verdicts and preserved failures must remain unchanged. No actual commit/push has been performed or verified by this review.",
+  "prior_committed_authorities": [
+    {
+      "bytes": 17511,
+      "commit": "20e884127b5465c893309f5ba31663189b938696",
+      "git_oid": "ea43bb91e831241b0f00a89827d76a7032d9250b",
+      "kind": "committed-Git-blob-not-repacked",
+      "mode": 420,
+      "path": "reports/m2/stage90-lazy-collections-checkpoint.json",
+      "sha256": "80ef924c39f6a20290257d75ba5d02c4aa1020df484817370be5e2ffb105b4ec"
+    },
+    {
+      "bytes": 31549689,
+      "commit": "20e884127b5465c893309f5ba31663189b938696",
+      "git_oid": "09132b7fe813ebe0308620f8fb9a087950414625",
+      "kind": "committed-Git-blob-not-repacked",
+      "mode": 420,
+      "path": "reports/m2/stage90-lazy-collections-evidence.tar.gz",
+      "sha256": "3cbc88380100d5f0a07a32b225398f5dcefdc13b1d938448aac0ac9910907987"
+    }
+  ],
+  "public_mutations_by_review": 0,
+  "required_bindgen_producer_supplement": {
+    "bytes": 7434,
+    "mode": 420,
+    "path": "target/m2/stage91-platform-actual-review-01/bindgen-producer-supplement.json",
+    "sha256": "5a15ce59c2f14001cf6b16f24795732fc672a72c7bee067c7783807b04b5badf"
+  },
+  "reviewed_document_language": "New PLAN prose Korean; four standard documentation updates English. Commands/paths and original fixtures preserved.",
+  "schema_version": 1,
+  "scope_exclusions": {
+    "Stage92_Stage93_payloads": 0,
+    "compiler_binary_cache_payloads": 0,
+    "protected_partial_touched": false,
+    "reference_checkout_payloads": 0
+  },
+  "selection": {
+    "bytes": 17711649,
+    "mode": 420,
+    "path": "target/m2/stage91-checkpoint-publication-01/selection.json",
+    "sha256": "478ba7458f87a482336d2c3ab30127aedc6cef90801250ffb2ffaf75d44a4a56"
+  },
+  "verdict": "GO for finite Stage91 development checkpoint publication"
+}

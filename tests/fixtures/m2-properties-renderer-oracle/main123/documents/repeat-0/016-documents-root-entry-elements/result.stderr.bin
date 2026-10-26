@@ -1,0 +1,7 @@
+–– Pkl Error ––
+Cannot render object with both elements and properties/entries as Properties.
+Object: new Dynamic { ["x"] = 1; 2 }
+
+1 | r.renderDocument(new Dynamic { ["x"] = 1; 2 })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

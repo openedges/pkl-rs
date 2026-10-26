@@ -1,0 +1,1 @@
+r.renderDocument(new Dynamic { x = new RenderDirective { text = "raw:\nnext"; bytes = throw("unused") } })

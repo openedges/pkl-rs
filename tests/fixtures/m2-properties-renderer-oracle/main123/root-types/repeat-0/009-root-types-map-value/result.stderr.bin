@@ -1,0 +1,9 @@
+–– Pkl Error ––
+Cannot render value of type `Map` as Properties.
+Value: Map("x", 1)
+
+1 | r.renderValue(Map("x", 1))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.

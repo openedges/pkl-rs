@@ -1,0 +1,13 @@
+module stage91.rootTypes
+import "pkl:ref"
+class Thing { value: Int = 7 }
+typealias TextAlias = String
+class Domain extends ref.Domain {
+  function renderReference(reference: ref.Reference<Domain, Any>): String = "ref"
+}
+local domain = new Domain {}
+hidden referenceValue = ref.Reference(domain, Int, null)
+hidden classValue = Thing
+hidden aliasValue = TextAlias
+hidden functionValue = (value) -> value
+hidden r = new PropertiesRenderer {}

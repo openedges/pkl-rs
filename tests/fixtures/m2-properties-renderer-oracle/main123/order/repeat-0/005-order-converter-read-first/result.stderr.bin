@@ -1,0 +1,10 @@
+–– Pkl Error ––
+converter getter
+
+1 | new PropertiesRenderer { converters = throw("converter getter"); convertPropertyTransformers = throw("transformer getter") }.renderValue("x")
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+at repl:text.converters (repl:text)
+
+1 | new PropertiesRenderer { converters = throw("converter getter"); convertPropertyTransformers = throw("transformer getter") }.renderValue("x")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

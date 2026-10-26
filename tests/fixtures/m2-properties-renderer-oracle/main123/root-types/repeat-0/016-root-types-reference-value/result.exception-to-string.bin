@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+Cannot render value of type `pkl.ref#Reference` as Properties.
+Value: Reference(new Domain {}, Int, null)
+
+1 | r.renderValue(referenceValue)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+Consider adding a converter to `output.converters`.

@@ -1,0 +1,1 @@
+List(new Dynamic { bad = throw("unforced element") }).count((v) -> true).toString()

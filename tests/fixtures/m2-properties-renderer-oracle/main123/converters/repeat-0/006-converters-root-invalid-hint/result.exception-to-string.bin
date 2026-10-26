@@ -1,0 +1,9 @@
+org.pkl.core.PklException: –– Pkl Error ––
+The top-level value of a Java properties file must have type `Typed`, `Dynamic`, `Mapping`, or `Map`, but got type `Int`.
+Value: 1
+
+1 | new PropertiesRenderer { converters { [Dynamic] = (_) -> 1 } }.renderDocument(new Dynamic { x = 2 })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)
+
+This value was converted during rendering. Previous: new Dynamic { x = ? }. After: 1.

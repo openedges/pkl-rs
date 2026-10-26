@@ -1,0 +1,1 @@
+new PropertiesRenderer { restrictCharset = true; converters { [String] = (v) -> new RenderDirective { text = "raw " + v } } }.renderDocument(Map("a=b", "c:d"))

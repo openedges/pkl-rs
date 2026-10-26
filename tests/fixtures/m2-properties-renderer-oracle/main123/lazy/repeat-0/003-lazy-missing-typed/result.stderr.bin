@@ -1,0 +1,12 @@
+–– Pkl Error ––
+Tried to read property `value` but its value is undefined.
+
+3 | class Missing { value: String }
+                    ^^^^^
+at stage91.lazy#Missing.value (file:///stage91/lazy.pkl)
+
+The above error occurred when rendering path `value`.
+
+1 | r.renderDocument(new Missing {})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

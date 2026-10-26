@@ -1,0 +1,1 @@
+new PropertiesRenderer { convertPropertyTransformers { [Rename] { suffix = "-override" } } }.renderDocument(new Holder {})

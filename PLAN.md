@@ -3056,6 +3056,41 @@ stdout·stderr·종료 상태가 일치했고 첫 후보의 원본 실패 세 �
 다음에는 원본 언어 사례에 필요한 PropertiesRenderer를 구현하고, 실제 검증한
 historical 입력의 생성 파일·실행 계약을 전체 inventory와 runner에 연결한다.
 
+### Stage91 — PropertiesRenderer 정본 통합과 전체 대상 검증
+
+독립 검토를 통과한 PropertiesRenderer와 `String.chars`·`codePoints`, `List.count`를
+정본에 통합했다. 공유 renderer continuation에서 옵션·converter·annotation·경로와
+지연 평가 순서를 처리하고 UTF-16 escaping, Host 중단·GC·취소·재시도를 보존한다.
+격리 후보는 신규 147개와 기존 회귀 64개 질의를 두 번씩 비교했으며, 원본 모듈
+14개의 stdout·stderr·종료 상태 및 별도 API byte-vector도 두 번씩 일치했다.
+Java 내부 예외 메타데이터, 제품 CLI와 비어 있지 않은 생성 파일은 이 결과에
+포함하지 않는다.
+
+정본의 포맷·목록 freshness·저장소 검증·Clippy·Wasm 컴파일을 완료했다.
+저장 공간에 맞춰 Cargo가 선언한 기본 대상 전체를 36개 명령으로 나누어 실행했다.
+실행 대상은 테스트 실행 파일 230개·doctest 묶음 2개·컴파일 전용 예제 25개다.
+하나의 `cargo test --workspace` 실행으로 기록하지 않으며 동일한 opt1·debug0·
+symbol stripping·assertion·overflow 설정과 원시 결과를 보존한다.
+
+첫 전체 실행은 1,275개 통과·1개 실패·기존 ignored 1개였다. 실패는 기존 클래스
+검사가 새로 구현한 PropertiesRenderer를 여전히 미지원으로 요구한 항목이다.
+YAML·Plist 미지원 검사는 유지하고 Properties는 전용 Java 원시 fixture 검사로
+검증한다. 테스트 파일 하나만 수정한 뒤 해당 대상의 전체 10개 검사를 다시
+실행해 통과했다. 최초 실패와 수정·재실행을 구분하며, 나머지 대상 결과를
+재사용할 수 있음을 실제 compiler dep-info로 확인했다. 독립 검토한 최종 조합은
+**1,276개 통과·실패 0개·기존 ignored 1개**이며 중첩 자식 요약 13개는 제외한다.
+원래 실패한 실행을 통과로 바꾸거나 단일 workspace 명령 실행으로 표시하지 않는다.
+
+정본 Native·N-API·Chromium은 211개 질의를 두 번씩 실행한 **422/422개 관찰**이
+각각 일치했다. M1 한 번의 실행도 환경별 primitive 6,078개 원시 비교와 별도
+구조 계약을 통과했다. [체크포인트](reports/m2/stage91-properties-renderer-checkpoint.json)에
+정확한 소스·실행·실패 계보와 완료된 생성 파일 정리 기록을 게시한다.
+전체 코퍼스 확정 집계는 여전히 Stage86의
+4,214/4,416이며 전체 M2 완료율로 환산하지 않는다. Historical 입력 8개 연결은
+혼합 schema 6 검증 결함을 수정하고 독립 재검토를 통과했으나 아직 정본에
+통합하지 않았다. 다음 YAML 구현의 Java 관찰에서도 일반 오류·내부 oracle 오류와
+의도한 동작에 도달하지 못한 질의를 구분해 보존한다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

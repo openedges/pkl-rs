@@ -260,6 +260,12 @@ impl Vm {
         run.awaiting = true;
         self.frames[frame].collection_join = Some(run);
 
+        self.java_value_string(value)
+    }
+
+    // Java Object.toString is also used for PropertiesRenderer path components.
+    // Preserve the same forcing and reference behavior as collection join.
+    pub(super) fn java_value_string(&mut self, value: Value) -> Result<(), RuntimeError> {
         // StringBuilder.append(Object) invokes Java value stringification, not
         // Pkl's virtual Typed.toString. Objects force deeply; strict collections
         // render their cached contents without forcing nested objects.

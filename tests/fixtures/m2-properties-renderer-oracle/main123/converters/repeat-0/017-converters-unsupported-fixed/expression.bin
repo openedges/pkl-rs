@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { [Duration] = (v) -> v.toString() } }.renderValue(1.s)

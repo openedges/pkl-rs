@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { [String] = (v) -> v.toUpperCase(); ["[LOWER]"] = (_) -> "path" } }.renderDocument(Map("lower", "value"))

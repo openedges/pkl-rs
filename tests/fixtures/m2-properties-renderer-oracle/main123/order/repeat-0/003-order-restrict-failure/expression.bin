@@ -1,0 +1,1 @@
+new PropertiesRenderer { omitNullProperties = trace(true); restrictCharset = throw("restrict"); converters = throw("converters") }.renderValue("x")

@@ -1,0 +1,6 @@
+string	class-specific-child	classRenderer.renderValue(new Child {})
+string	class-specific-parent	classRenderer.renderValue(new Parent {})
+string	annotation-transformer	transformedRenderer.renderDocument(new Holder {})
+string	annotation-dynamic-view	new PropertiesRenderer {}.renderDocument((new Holder {}).toDynamic())
+string	annotation-typed-inheritance	new PropertiesRenderer {}.renderDocument(new TypedChild {})
+string	annotation-two-in-order	new PropertiesRenderer {}.renderDocument(new DoubleHolder {})

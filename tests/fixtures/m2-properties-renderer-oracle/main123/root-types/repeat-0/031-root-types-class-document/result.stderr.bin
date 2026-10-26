@@ -1,0 +1,7 @@
+–– Pkl Error ––
+The top-level value of a Java properties file must have type `Typed`, `Dynamic`, `Mapping`, or `Map`, but got type `Class`.
+Value: stage91.rootTypes#Thing
+
+1 | r.renderDocument(classValue)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at  (repl:text)

@@ -7,12 +7,14 @@ use crate::heap::{CollectionKind, CollectionMember, CollectionMemberKind};
 pub(super) enum Format {
     Pcf,
     Json,
+    Properties,
 }
 impl Format {
     fn name(self) -> &'static str {
         match self {
             Self::Pcf => "Pcf",
             Self::Json => "JSON",
+            Self::Properties => "Properties",
         }
     }
 }
@@ -51,6 +53,15 @@ struct PropertyRun {
     step: usize,
 }
 enum Task {
+    PropertiesKey {
+        path: Vec<PathPart>,
+        next: usize,
+        following: bool,
+    },
+    PropertiesDirective {
+        receiver: ObjectId,
+        path: Vec<PathPart>,
+    },
     Visit {
         value: Value,
         depth: usize,
@@ -82,6 +93,9 @@ enum Task {
     },
 }
 enum Await {
+    PropertiesKey {
+        verbatim: bool,
+    },
     Option(usize),
     Mapping,
     Shallow,
@@ -112,6 +126,8 @@ pub(super) struct RenderRun {
     output: crate::pkl_string::PklStringBuilder,
     indent: PklString,
     omit_null: bool,
+    restrict_charset: bool,
+    properties_document: bool,
     custom: bool,
     started: bool,
     converters: Converters,
@@ -131,6 +147,11 @@ impl RenderRun {
         }
         for task in &self.tasks {
             match task {
+                Task::PropertiesKey { path, .. } => path_roots(path, roots),
+                Task::PropertiesDirective { receiver, path } => {
+                    roots.push(Value::Object(*receiver));
+                    path_roots(path, roots);
+                }
                 Task::Visit { value, path, .. } => {
                     roots.push(value.clone());
                     path_roots(path, roots);
@@ -194,6 +215,25 @@ impl RenderRun {
         if !self.indent.is_empty() {
             self.append("\n");
             self.output.push_value(&self.indentation(depth));
+        }
+    }
+    fn properties_value(&mut self, value: PklString, path: Vec<PathPart>) {
+        if self.properties_document {
+            self.tasks.push(Task::Text("\n".into()));
+            self.tasks.push(Task::Text(properties_string(
+                &value,
+                false,
+                self.restrict_charset,
+            )));
+            self.tasks.push(Task::Text(" = ".into()));
+            self.tasks.push(Task::PropertiesKey {
+                path,
+                next: 0,
+                following: false,
+            });
+        } else {
+            self.output
+                .push_value(&properties_string(&value, false, self.restrict_charset));
         }
     }
     fn value(
@@ -373,6 +413,8 @@ impl Vm {
             output: Default::default(),
             indent: Default::default(),
             omit_null: false,
+            restrict_charset: false,
+            properties_document: false,
             custom: false,
             started: false,
             converters: Converters::default(),
@@ -398,6 +440,20 @@ impl Vm {
     fn advance_pcf(&mut self, run: &mut RenderRun) -> Result<bool, RuntimeError> {
         if let Some(await_) = run.await_.take() {
             match await_ {
+                Await::PropertiesKey { verbatim } => {
+                    let Value::String(text) = self.pop()? else {
+                        return Err(invalid("Properties key string"));
+                    };
+                    if verbatim {
+                        run.output.push_value(&text);
+                    } else {
+                        run.output.push_value(&properties_string(
+                            &text,
+                            true,
+                            run.restrict_charset,
+                        ));
+                    }
+                }
                 Await::Option(index) => {
                     let value = self.pop()?;
                     assert_eq!(index, run.options.len());
@@ -444,6 +500,9 @@ impl Vm {
                         return Err(invalid("checked render directive text"));
                     };
                     run.output.push_value(&text);
+                    if run.format == Format::Properties && run.properties_document {
+                        run.append("\n");
+                    }
                 }
                 Await::KeyEquality => {
                     let Value::Bool(equal) = self.pop()? else {
@@ -473,10 +532,17 @@ impl Vm {
                 "converters",
                 "convertPropertyTransformers",
             ]
-        } else {
+        } else if run.format == Format::Json {
             &[
                 "indent",
                 "omitNullProperties",
+                "converters",
+                "convertPropertyTransformers",
+            ]
+        } else {
+            &[
+                "omitNullProperties",
+                "restrictCharset",
                 "converters",
                 "convertPropertyTransformers",
             ]
@@ -504,14 +570,23 @@ impl Vm {
         }
         if !run.started {
             run.started = true;
-            let Value::String(indent) = &run.options[0] else {
-                return Err(invalid("renderer indent type"));
-            };
-            run.indent = indent.clone();
-            let Value::Bool(omit) = run.options[1] else {
-                return Err(invalid("renderer omit type"));
-            };
-            run.omit_null = omit;
+            if run.format == Format::Properties {
+                let (Value::Bool(omit), Value::Bool(restrict)) = (&run.options[0], &run.options[1])
+                else {
+                    return Err(invalid("Properties renderer options"));
+                };
+                run.omit_null = *omit;
+                run.restrict_charset = *restrict;
+            } else {
+                let Value::String(indent) = &run.options[0] else {
+                    return Err(invalid("renderer indent type"));
+                };
+                run.indent = indent.clone();
+                let Value::Bool(omit) = run.options[1] else {
+                    return Err(invalid("renderer omit type"));
+                };
+                run.omit_null = omit;
+            }
             if run.format == Format::Pcf {
                 let Value::Bool(custom) = run.options[2] else {
                     return Err(invalid("renderer delimiter type"));
@@ -536,12 +611,58 @@ impl Vm {
             return Ok(false);
         }
         let Some(task) = run.tasks.pop() else {
-            if run.document && (run.format == Format::Json || !run.output.is_empty()) {
+            if run.document
+                && run.format != Format::Properties
+                && (run.format == Format::Json || !run.output.is_empty())
+            {
                 run.append("\n");
             }
             return Ok(true);
         };
         match task {
+            Task::PropertiesKey {
+                path,
+                mut next,
+                mut following,
+            } => {
+                let Some(part) = path.get(next).cloned() else {
+                    return Ok(false);
+                };
+                next += 1;
+                if !matches!(part, PathPart::Root) {
+                    if following {
+                        run.append(".");
+                    }
+                    following = true;
+                }
+                run.tasks.push(Task::PropertiesKey {
+                    path,
+                    next,
+                    following,
+                });
+                match part {
+                    PathPart::Root => {}
+                    PathPart::Property(name) => {
+                        run.output
+                            .push_value(&properties_string(&name, true, run.restrict_charset))
+                    }
+                    PathPart::Entry(value) => {
+                        if let Value::Object(id) = value
+                            && self.is_render_directive(id)?
+                        {
+                            run.await_ = Some(Await::PropertiesKey { verbatim: true });
+                            self.force(id, id, "text".into(), false, true, false)?;
+                        } else {
+                            run.await_ = Some(Await::PropertiesKey { verbatim: false });
+                            self.java_value_string(value)?;
+                        }
+                    }
+                }
+            }
+            Task::PropertiesDirective { receiver, path } => {
+                run.await_ = Some(Await::Directive { receiver, path });
+                self.force(receiver, receiver, "text".into(), false, true, false)?;
+            }
             Task::RestoreSource(source) => {
                 run.source = source;
             }
@@ -574,6 +695,30 @@ impl Vm {
                         run.document_original = Some(run.root.clone());
                     }
                     run.root = value.clone();
+                    if run.format == Format::Properties {
+                        let valid = self.properties_document_value(&value)?;
+                        let directive =
+                            matches!(&value, Value::Object(id) if self.is_render_directive(*id)?);
+                        if run.document && !valid {
+                            let ty = crate::diagnostic_values::type_name(
+                                &value,
+                                &self.heap,
+                                &self.program.module_name,
+                            )?;
+                            let text = crate::diagnostic_values::render(
+                                &value,
+                                &self.heap,
+                                &self.program.module_name,
+                                80,
+                            )?;
+                            return Err(RuntimeError::new(ErrorKind::Type,
+                                PklString::from(format!("The top-level value of a Java properties file must have type `Typed`, `Dynamic`, `Mapping`, or `Map`, but got type `{ty}`.\nValue: ")).concat(&text)));
+                        }
+                        if !run.document && valid && !directive {
+                            return self.pcf_unrenderable(run, &value);
+                        }
+                        run.properties_document = run.document && !directive;
+                    }
                     if run.format == Format::Pcf
                         && run.document
                         && !self.pcf_document_value(&value)?
@@ -593,6 +738,26 @@ impl Vm {
                             ErrorKind::Type,
                             PklString::from(format!("The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `{ty}`.\nValue: ")).concat(&text),
                         ));
+                    }
+                }
+                if run.format == Format::Properties {
+                    match &value {
+                        Value::Null | Value::NullWithDefault(_) => {
+                            if run.properties_document {
+                                run.properties_value("".into(), path);
+                            }
+                            return Ok(false);
+                        }
+                        Value::String(text) => {
+                            run.properties_value(text.clone(), path);
+                            return Ok(false);
+                        }
+                        Value::Bool(_) | Value::Int(_) | Value::Float(_) => {
+                            run.properties_value(scalar_string(&value)?, path);
+                            return Ok(false);
+                        }
+                        Value::Object(_) => {}
+                        _ => return self.pcf_unrenderable(run, &value),
                     }
                 }
                 match value {
@@ -672,12 +837,25 @@ impl Vm {
                     }
                     Value::Object(id) => {
                         if self.is_render_directive(id)? {
+                            if run.format == Format::Properties && run.properties_document {
+                                run.tasks.push(Task::PropertiesDirective {
+                                    receiver: id,
+                                    path: path.clone(),
+                                });
+                                run.tasks.push(Task::Text(" = ".into()));
+                                run.tasks.push(Task::PropertiesKey {
+                                    path,
+                                    next: 0,
+                                    following: false,
+                                });
+                                return Ok(false);
+                            }
                             run.await_ = Some(Await::Directive { receiver: id, path });
                             self.force(id, id, "text".into(), false, true, false)?;
                             return Ok(false);
                         }
                         if let Some(pair) = self.heap.get(id)?.pair.clone() {
-                            if run.format == Format::Json {
+                            if run.format != Format::Pcf {
                                 return self.pcf_unrenderable(run, &Value::Object(id));
                             }
                             run.append("Pair(");
@@ -703,15 +881,20 @@ impl Vm {
                         );
                         if strict {
                             let array = kind != CollectionKind::Map;
-                            run.append(if run.format == Format::Json {
-                                if array { "[" } else { "{" }
-                            } else {
-                                match kind {
-                                    CollectionKind::List => "List(",
-                                    CollectionKind::Map => "Map(",
-                                    _ => "Set(",
-                                }
-                            });
+                            if run.format == Format::Properties && array {
+                                return self.pcf_unrenderable(run, &Value::Object(id));
+                            }
+                            if run.format != Format::Properties {
+                                run.append(if run.format == Format::Json {
+                                    if array { "[" } else { "{" }
+                                } else {
+                                    match kind {
+                                        CollectionKind::List => "List(",
+                                        CollectionKind::Map => "Map(",
+                                        _ => "Set(",
+                                    }
+                                });
+                            }
                             let members = collections::ordered_members(&self.heap, id)?
                                 .into_iter()
                                 .map(|descriptor| collections::RenderMember {
@@ -757,13 +940,18 @@ impl Vm {
                 root,
                 path,
             } => {
+                if run.format == Format::Properties
+                    && self.heap.get(receiver)?.collection_kind == CollectionKind::Listing
+                {
+                    return self.pcf_unrenderable(run, &Value::Object(receiver));
+                }
                 let members = collections::render_members(&self.heap, receiver)?;
                 let array = self.heap.get(receiver)?.collection_kind == CollectionKind::Listing
                     || members
                         .iter()
                         .any(|m| !m.skip && m.descriptor.kind == CollectionMemberKind::Element);
                 let doc = run.format == Format::Pcf && run.document && root;
-                if !doc {
+                if !doc && run.format != Format::Properties {
                     if run.format == Format::Pcf && standalone {
                         run.append("new ");
                     }
@@ -807,31 +995,33 @@ impl Vm {
                 }
                 let item = m.members[m.next].clone();
                 let descriptor = &item.descriptor;
-                if !m.prepared {
+                if !(run.format == Format::Properties && m.strict) && !m.prepared {
                     m.prepared = true;
                     let key = descriptor.key.clone();
                     run.tasks.push(Task::Members(m));
                     self.prepare_render_key(key);
                     return Ok(false);
                 }
-                m.hash = self.java_hash(&descriptor.key)?;
-                while m.compare < m.seen.len() {
-                    let (seen, hash) = &m.seen[m.compare];
-                    m.compare += 1;
-                    if (seen.kind == CollectionMemberKind::Property)
-                        != (descriptor.kind == CollectionMemberKind::Property)
-                        || hash.zip(m.hash).is_some_and(|(a, b)| a != b)
-                    {
-                        continue;
+                if !(run.format == Format::Properties && m.strict) {
+                    m.hash = self.java_hash(&descriptor.key)?;
+                    while m.compare < m.seen.len() {
+                        let (seen, hash) = &m.seen[m.compare];
+                        m.compare += 1;
+                        if (seen.kind == CollectionMemberKind::Property)
+                            != (descriptor.kind == CollectionMemberKind::Property)
+                            || hash.zip(m.hash).is_some_and(|(a, b)| a != b)
+                        {
+                            continue;
+                        }
+                        let left = seen.key.clone();
+                        let right = descriptor.key.clone();
+                        run.tasks.push(Task::Members(m));
+                        run.await_ = Some(Await::KeyEquality);
+                        self.begin_equality(left, right, false);
+                        return Ok(false);
                     }
-                    let left = seen.key.clone();
-                    let right = descriptor.key.clone();
-                    run.tasks.push(Task::Members(m));
-                    run.await_ = Some(Await::KeyEquality);
-                    self.begin_equality(left, right, false);
-                    return Ok(false);
+                    m.seen.push((descriptor.clone(), m.hash));
                 }
-                m.seen.push((descriptor.clone(), m.hash));
                 m.next += 1;
                 m.compare = 0;
                 m.prepared = false;
@@ -839,7 +1029,7 @@ impl Vm {
                     run.tasks.push(Task::Members(m));
                     return Ok(false);
                 }
-                if run.format == Format::Json
+                if matches!(run.format, Format::Json | Format::Properties)
                     && m.array
                     && descriptor.kind != CollectionMemberKind::Element
                 {
@@ -850,7 +1040,7 @@ impl Vm {
                         80,
                     )?;
                     return Err(RuntimeError::new(ErrorKind::Type,
-                        PklString::from("Cannot render object with both elements and properties/entries as JSON.\nObject: ").concat(&rendered)));
+                        PklString::from(format!("Cannot render object with both elements and properties/entries as {}.\nObject: ", run.format.name())).concat(&rendered)));
                 }
                 let value = collections::cached_render_value(&self.heap, m.receiver, descriptor)?
                     .ok_or_else(|| invalid("shallow-forced member is uncached"))?;
@@ -955,7 +1145,7 @@ impl Vm {
                     ..
                 } = member;
                 if (descriptor.kind == CollectionMemberKind::Property
-                    || (run.format == Format::Json
+                    || (run.format != Format::Pcf
                         && descriptor.kind == CollectionMemberKind::Entry))
                     && run.omit_null
                     && value.is_null()
@@ -965,7 +1155,45 @@ impl Vm {
                     return Ok(false);
                 }
                 let depth = m.depth;
-                if run.format == Format::Json {
+                if run.format == Format::Properties {
+                    run.tasks.push(Task::Members(m));
+                    run.tasks.push(Task::RestoreSource(previous_source));
+                    // Root Dynamic elements are converted, then deliberately ignored.
+                    if descriptor.kind == CollectionMemberKind::Element {
+                        return Ok(false);
+                    }
+                    // A keyed Dynamic with elements is wrapped as a Listing and
+                    // converted once more at this same path, as in pinned Java.
+                    if let Value::Object(id) = &value
+                        && self.heap.get(*id)?.collection_kind == CollectionKind::Dynamic
+                        && collections::typed_class(&self.heap, *id)?.is_none()
+                        && !self.heap.get(*id)?.is_module
+                        && self.heap.get(*id)?.length != 0
+                    {
+                        // A VmListing view keeps the Dynamic as its member parent,
+                        // but has Listing identity for converter/class dispatch.
+                        let class = self.canonical_builtin_class(classes::BuiltinClass::Listing);
+                        let object = Object {
+                            parent: Some(*id),
+                            instance_class: Some(class),
+                            collection_kind: CollectionKind::Listing,
+                            length: self.heap.get(*id)?.length,
+                            ..Default::default()
+                        };
+                        let wrapper = self.heap.allocate(object);
+                        run.tasks.push(Task::Visit {
+                            value: Value::Object(wrapper),
+                            depth,
+                            standalone: false,
+                            root: false,
+                            string_element: false,
+                            path,
+                            converted: false,
+                        });
+                    } else {
+                        run.value(value, depth, false, false, false, path);
+                    }
+                } else if run.format == Format::Json {
                     if m.emitted {
                         run.append(",");
                     }
@@ -1143,7 +1371,9 @@ impl Vm {
                 strict,
                 array,
             } => {
-                if run.format == Format::Json {
+                if run.format == Format::Properties {
+                    // Flattened output has no container delimiters.
+                } else if run.format == Format::Json {
                     if emitted {
                         run.json_newline(depth - 1);
                     }
@@ -1224,6 +1454,15 @@ impl Vm {
     fn pcf_object_like(&self, value: &Value) -> Result<bool, RuntimeError> {
         Ok(
             matches!(value,Value::Object(id) if self.heap.get(*id)?.reference.is_none() && self.heap.get(*id)?.pair.is_none() && !matches!(self.heap.get(*id)?.collection_kind,CollectionKind::List|CollectionKind::Map|CollectionKind::Set)),
+        )
+    }
+    fn properties_document_value(&self, value: &Value) -> Result<bool, RuntimeError> {
+        Ok(
+            matches!(value, Value::Object(id) if self.heap.get(*id)?.reference.is_none()
+            && self.heap.get(*id)?.pair.is_none()
+            && (collections::typed_class(&self.heap, *id)?.is_some()
+                || matches!(self.heap.get(*id)?.collection_kind,
+                    CollectionKind::Dynamic | CollectionKind::Mapping | CollectionKind::Map))),
         )
     }
     fn pcf_document_value(&self, value: &Value) -> Result<bool, RuntimeError> {
@@ -1311,4 +1550,31 @@ fn path_roots(path: &[PathPart], roots: &mut Vec<Value>) {
             None
         }
     }));
+}
+
+/// Pinned PropertiesUtils operates on UTF-16 chars, including lone surrogates.
+fn properties_string(value: &PklString, key: bool, restrict: bool) -> PklString {
+    let mut out = Vec::new();
+    for (index, unit) in value.encode_utf16().enumerate() {
+        let escape = match unit {
+            9 => Some(b't'),
+            10 => Some(b'n'),
+            12 => Some(b'f'),
+            13 => Some(b'r'),
+            32 if key || index == 0 => Some(b' '),
+            33 | 35 | 58 | 61 | 92 => Some(unit as u8),
+            _ => None,
+        };
+        if let Some(escaped) = escape {
+            out.extend([92, escaped as u16]);
+        } else if restrict && !(32..=126).contains(&unit) {
+            out.extend([92, b'u' as u16]);
+            for shift in [12, 8, 4, 0] {
+                out.push(b"0123456789ABCDEF"[((unit >> shift) & 15) as usize] as u16);
+            }
+        } else {
+            out.push(unit);
+        }
+    }
+    PklString::from_utf16(out)
 }

@@ -1,0 +1,1 @@
+new PropertiesRenderer { converters { [String] = (_) -> null } }.renderDocument(new Dynamic { x = "omit"; y = 1 })

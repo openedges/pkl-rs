@@ -1,0 +1,1156 @@
+{
+  "kind": "pinned-java-properties-oracle-fixtures",
+  "complete": true,
+  "cohorts": [
+    {
+      "name": "main123",
+      "readback": {
+        "path": "target/m2/stage91-properties-oracle-readback-01/report.json",
+        "bytes": 112909,
+        "mode": 420,
+        "sha256": "787894660bebc177c2fe139d7e7015f4947c90dcd4430fc45616481d5dda27c0"
+      },
+      "source_plan": {
+        "path": "target/m2/stage91-properties-oracle-plan-02/queries.json",
+        "bytes": 40545,
+        "mode": 420,
+        "sha256": "c40dde73546c1af396a7d6d5aab2d4ebb8f139657529b0c79d8158afc352211a"
+      },
+      "queries": 123,
+      "limits": "Java type/error class/exception/cause remain stored raw but are not exposed by Rust SourceProbe. Process/JDK/JAR identities and repeat-1 full raw are retained in the referenced original acquisition, not recopied."
+    },
+    {
+      "name": "reach6",
+      "readback": {
+        "path": "target/m2/stage91-properties-reach-oracle-readback-02/report.json",
+        "bytes": 6801,
+        "mode": 420,
+        "sha256": "8e7766d35fc815ae8d0e8cc5d49841b2b102f49f87a7b95a9697355cb3b6e711"
+      },
+      "source_plan": {
+        "path": "target/m2/stage91-properties-reach-oracle-prep-02/query-source-plan.json",
+        "bytes": 3596,
+        "mode": 420,
+        "sha256": "97c4143ebadbdb3be404e872b57a3d676ed17aaf8b372e3d5618ff493d1ac570"
+      },
+      "queries": 6,
+      "limits": "Java type/error class/exception/cause remain stored raw but are not exposed by Rust SourceProbe. Process/JDK/JAR identities and repeat-1 full raw are retained in the referenced original acquisition, not recopied."
+    }
+  ],
+  "programs": [
+    {
+      "cohort": "main123",
+      "id": "scalars",
+      "uri": "file:///stage91/scalars.pkl",
+      "rows": [
+        {
+          "id": "scalars-empty",
+          "wire_id": "scalars-empty",
+          "directory": "000-scalars-empty",
+          "expression": "r.renderValue(\"\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-ascii-all",
+          "wire_id": "scalars-ascii-all",
+          "directory": "001-scalars-ascii-all",
+          "expression": "r.renderValue(ascii)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-ascii-all-restricted",
+          "wire_id": "scalars-ascii-all-restricted",
+          "directory": "002-scalars-ascii-all-restricted",
+          "expression": "new PropertiesRenderer { restrictCharset = true }.renderValue(ascii)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-spaces",
+          "wire_id": "scalars-spaces",
+          "directory": "003-scalars-spaces",
+          "expression": "r.renderValue(\"  a b  \")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-specials",
+          "wire_id": "scalars-specials",
+          "directory": "004-scalars-specials",
+          "expression": "r.renderValue(\"!#:=\\\\\\t\\n\\u{0c}\\r\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-unicode",
+          "wire_id": "scalars-unicode",
+          "directory": "005-scalars-unicode",
+          "expression": "r.renderValue(\"café\\u{00a0}😀\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-unicode-restricted",
+          "wire_id": "scalars-unicode-restricted",
+          "directory": "006-scalars-unicode-restricted",
+          "expression": "new PropertiesRenderer { restrictCharset = true }.renderValue(\"café\\u{00a0}😀\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-surrogates",
+          "wire_id": "scalars-surrogates",
+          "directory": "007-scalars-surrogates",
+          "expression": "r.renderValue(\"\\u{d800}x\\u{dc00}\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-surrogates-restricted",
+          "wire_id": "scalars-surrogates-restricted",
+          "directory": "008-scalars-surrogates-restricted",
+          "expression": "new PropertiesRenderer { restrictCharset = true }.renderValue(\"\\u{d800}x\\u{dc00}\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-int-min",
+          "wire_id": "scalars-int-min",
+          "directory": "009-scalars-int-min",
+          "expression": "r.renderValue(-9223372036854775808)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-int-max",
+          "wire_id": "scalars-int-max",
+          "directory": "010-scalars-int-max",
+          "expression": "r.renderValue(9223372036854775807)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-float-integer",
+          "wire_id": "scalars-float-integer",
+          "directory": "011-scalars-float-integer",
+          "expression": "r.renderValue(1.0)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-float-negative-zero",
+          "wire_id": "scalars-float-negative-zero",
+          "directory": "012-scalars-float-negative-zero",
+          "expression": "r.renderValue(-0.0)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-float-small",
+          "wire_id": "scalars-float-small",
+          "directory": "013-scalars-float-small",
+          "expression": "r.renderValue(1.0e-8)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-float-large",
+          "wire_id": "scalars-float-large",
+          "directory": "014-scalars-float-large",
+          "expression": "r.renderValue(1.0e20)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-nan",
+          "wire_id": "scalars-nan",
+          "directory": "015-scalars-nan",
+          "expression": "r.renderValue(NaN)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-positive-infinity",
+          "wire_id": "scalars-positive-infinity",
+          "directory": "016-scalars-positive-infinity",
+          "expression": "r.renderValue(Infinity)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-negative-infinity",
+          "wire_id": "scalars-negative-infinity",
+          "directory": "017-scalars-negative-infinity",
+          "expression": "r.renderValue(-Infinity)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-boolean",
+          "wire_id": "scalars-boolean",
+          "directory": "018-scalars-boolean",
+          "expression": "r.renderValue(false)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-null",
+          "wire_id": "scalars-null",
+          "directory": "019-scalars-null",
+          "expression": "r.renderValue(null)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-null-retained",
+          "wire_id": "scalars-null-retained",
+          "directory": "020-scalars-null-retained",
+          "expression": "new PropertiesRenderer { omitNullProperties = false }.renderValue(null)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-directive-value",
+          "wire_id": "scalars-directive-value",
+          "directory": "021-scalars-directive-value",
+          "expression": "r.renderValue(new RenderDirective { text = \"RAW:=\\n\"; bytes = throw(\"bytes unused\") })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "scalars-directive-document",
+          "wire_id": "scalars-directive-document",
+          "directory": "022-scalars-directive-document",
+          "expression": "r.renderDocument(new RenderDirective { text = \"RAW:=\\n\"; bytes = throw(\"bytes unused\") })",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage91-properties-oracle-01/programs/scalars"
+    },
+    {
+      "cohort": "main123",
+      "id": "root-types",
+      "uri": "file:///stage91/root-types.pkl",
+      "rows": [
+        {
+          "id": "root-types-duration-value",
+          "wire_id": "root-types-duration-value",
+          "directory": "000-root-types-duration-value",
+          "expression": "r.renderValue(1.s)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-datasize-value",
+          "wire_id": "root-types-datasize-value",
+          "directory": "001-root-types-datasize-value",
+          "expression": "r.renderValue(1.mb)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-bytes-value",
+          "wire_id": "root-types-bytes-value",
+          "directory": "002-root-types-bytes-value",
+          "expression": "r.renderValue(Bytes(1, 2))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-intseq-value",
+          "wire_id": "root-types-intseq-value",
+          "directory": "003-root-types-intseq-value",
+          "expression": "r.renderValue(IntSeq(1, 3))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-pair-value",
+          "wire_id": "root-types-pair-value",
+          "directory": "004-root-types-pair-value",
+          "expression": "r.renderValue(Pair(1, 2))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-regex-value",
+          "wire_id": "root-types-regex-value",
+          "directory": "005-root-types-regex-value",
+          "expression": "r.renderValue(Regex(\"a\"))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-list-value",
+          "wire_id": "root-types-list-value",
+          "directory": "006-root-types-list-value",
+          "expression": "r.renderValue(List(1))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-set-value",
+          "wire_id": "root-types-set-value",
+          "directory": "007-root-types-set-value",
+          "expression": "r.renderValue(Set(1))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-listing-value",
+          "wire_id": "root-types-listing-value",
+          "directory": "008-root-types-listing-value",
+          "expression": "r.renderValue(new Listing { 1 })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-map-value",
+          "wire_id": "root-types-map-value",
+          "directory": "009-root-types-map-value",
+          "expression": "r.renderValue(Map(\"x\", 1))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-mapping-value",
+          "wire_id": "root-types-mapping-value",
+          "directory": "010-root-types-mapping-value",
+          "expression": "r.renderValue(new Mapping { [\"x\"] = 1 })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-dynamic-value",
+          "wire_id": "root-types-dynamic-value",
+          "directory": "011-root-types-dynamic-value",
+          "expression": "r.renderValue(new Dynamic { x = 1 })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-typed-value",
+          "wire_id": "root-types-typed-value",
+          "directory": "012-root-types-typed-value",
+          "expression": "r.renderValue(new Thing {})",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-class-value",
+          "wire_id": "root-types-class-value",
+          "directory": "013-root-types-class-value",
+          "expression": "r.renderValue(classValue)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-alias-value",
+          "wire_id": "root-types-alias-value",
+          "directory": "014-root-types-alias-value",
+          "expression": "r.renderValue(aliasValue)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-function-value",
+          "wire_id": "root-types-function-value",
+          "directory": "015-root-types-function-value",
+          "expression": "r.renderValue(functionValue)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-reference-value",
+          "wire_id": "root-types-reference-value",
+          "directory": "016-root-types-reference-value",
+          "expression": "r.renderValue(referenceValue)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-null-document",
+          "wire_id": "root-types-null-document",
+          "directory": "017-root-types-null-document",
+          "expression": "r.renderDocument(null)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-int-document",
+          "wire_id": "root-types-int-document",
+          "directory": "018-root-types-int-document",
+          "expression": "r.renderDocument(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-float-document",
+          "wire_id": "root-types-float-document",
+          "directory": "019-root-types-float-document",
+          "expression": "r.renderDocument(1.5)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-boolean-document",
+          "wire_id": "root-types-boolean-document",
+          "directory": "020-root-types-boolean-document",
+          "expression": "r.renderDocument(true)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-string-document",
+          "wire_id": "root-types-string-document",
+          "directory": "021-root-types-string-document",
+          "expression": "r.renderDocument(\"x\")",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-duration-document",
+          "wire_id": "root-types-duration-document",
+          "directory": "022-root-types-duration-document",
+          "expression": "r.renderDocument(1.s)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-datasize-document",
+          "wire_id": "root-types-datasize-document",
+          "directory": "023-root-types-datasize-document",
+          "expression": "r.renderDocument(1.mb)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-bytes-document",
+          "wire_id": "root-types-bytes-document",
+          "directory": "024-root-types-bytes-document",
+          "expression": "r.renderDocument(Bytes(1, 2))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-intseq-document",
+          "wire_id": "root-types-intseq-document",
+          "directory": "025-root-types-intseq-document",
+          "expression": "r.renderDocument(IntSeq(1, 3))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-pair-document",
+          "wire_id": "root-types-pair-document",
+          "directory": "026-root-types-pair-document",
+          "expression": "r.renderDocument(Pair(1, 2))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-regex-document",
+          "wire_id": "root-types-regex-document",
+          "directory": "027-root-types-regex-document",
+          "expression": "r.renderDocument(Regex(\"a\"))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-list-document",
+          "wire_id": "root-types-list-document",
+          "directory": "028-root-types-list-document",
+          "expression": "r.renderDocument(List(1))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-set-document",
+          "wire_id": "root-types-set-document",
+          "directory": "029-root-types-set-document",
+          "expression": "r.renderDocument(Set(1))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-listing-document",
+          "wire_id": "root-types-listing-document",
+          "directory": "030-root-types-listing-document",
+          "expression": "r.renderDocument(new Listing { 1 })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-class-document",
+          "wire_id": "root-types-class-document",
+          "directory": "031-root-types-class-document",
+          "expression": "r.renderDocument(classValue)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-alias-document",
+          "wire_id": "root-types-alias-document",
+          "directory": "032-root-types-alias-document",
+          "expression": "r.renderDocument(aliasValue)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-function-document",
+          "wire_id": "root-types-function-document",
+          "directory": "033-root-types-function-document",
+          "expression": "r.renderDocument(functionValue)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "root-types-reference-document",
+          "wire_id": "root-types-reference-document",
+          "directory": "034-root-types-reference-document",
+          "expression": "r.renderDocument(referenceValue)",
+          "status": "error",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage91-properties-oracle-01/programs/root-types"
+    },
+    {
+      "cohort": "main123",
+      "id": "documents",
+      "uri": "file:///stage91/documents.pkl",
+      "rows": [
+        {
+          "id": "documents-empty-dynamic",
+          "wire_id": "documents-empty-dynamic",
+          "directory": "000-documents-empty-dynamic",
+          "expression": "r.renderDocument(new Dynamic {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-empty-mapping",
+          "wire_id": "documents-empty-mapping",
+          "directory": "001-documents-empty-mapping",
+          "expression": "r.renderDocument(new Mapping {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-empty-map",
+          "wire_id": "documents-empty-map",
+          "directory": "002-documents-empty-map",
+          "expression": "r.renderDocument(Map())",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-typed",
+          "wire_id": "documents-typed",
+          "directory": "003-documents-typed",
+          "expression": "r.renderDocument(new Thing {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-nested",
+          "wire_id": "documents-nested",
+          "directory": "004-documents-nested",
+          "expression": "r.renderDocument(new Dynamic { a { b = 1 }; [\"c\"] = Map(\"d\", new Dynamic { e = true }) })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-scalar-keys",
+          "wire_id": "documents-scalar-keys",
+          "directory": "005-documents-scalar-keys",
+          "expression": "r.renderDocument(Map(1, \"int\", true, \"bool\", null, \"null\", 2.5, \"float\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-object-key",
+          "wire_id": "documents-object-key",
+          "directory": "006-documents-object-key",
+          "expression": "r.renderDocument(Map(new Thing {}, \"object\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-escaped-key",
+          "wire_id": "documents-escaped-key",
+          "directory": "007-documents-escaped-key",
+          "expression": "r.renderDocument(Map(\" a b!#:=\\\\\\t\\n\", \" v \"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-unicode-key",
+          "wire_id": "documents-unicode-key",
+          "directory": "008-documents-unicode-key",
+          "expression": "new PropertiesRenderer { restrictCharset = true }.renderDocument(Map(\"é😀\", \"\\u{d800}x\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-dotted-collision",
+          "wire_id": "documents-dotted-collision",
+          "directory": "009-documents-dotted-collision",
+          "expression": "r.renderDocument(new Dynamic { [\"a.b\"] = 1; a { b = 2 } })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-null-omit",
+          "wire_id": "documents-null-omit",
+          "directory": "010-documents-null-omit",
+          "expression": "r.renderDocument(new Dynamic { a = null; b { [\"x\"] = null; [\"y\"] = 1 }; c = Map(\"x\", null, \"y\", 2) })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-null-keep",
+          "wire_id": "documents-null-keep",
+          "directory": "011-documents-null-keep",
+          "expression": "new PropertiesRenderer { omitNullProperties = false }.renderDocument(new Dynamic { a = null; b = Map(\"x\", null) })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-directive-leaf",
+          "wire_id": "documents-directive-leaf",
+          "directory": "012-documents-directive-leaf",
+          "expression": "r.renderDocument(new Dynamic { x = new RenderDirective { text = \"raw:\\nnext\"; bytes = throw(\"unused\") } })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-directive-key",
+          "wire_id": "documents-directive-key",
+          "directory": "013-documents-directive-key",
+          "expression": "r.renderDocument(Map(new RenderDirective { text = \"un escaped:=key\" }, \"value\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "documents-root-elements",
+          "wire_id": "documents-root-elements",
+          "directory": "014-documents-root-elements",
+          "expression": "r.renderDocument(new Dynamic { trace(1); trace(2) })",
+          "status": "success",
+          "logs": 2
+        },
+        {
+          "id": "documents-root-mixed",
+          "wire_id": "documents-root-mixed",
+          "directory": "015-documents-root-mixed",
+          "expression": "r.renderDocument(new Dynamic { 1; x = 2 })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "documents-root-entry-elements",
+          "wire_id": "documents-root-entry-elements",
+          "directory": "016-documents-root-entry-elements",
+          "expression": "r.renderDocument(new Dynamic { [\"x\"] = 1; 2 })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "documents-nested-elements",
+          "wire_id": "documents-nested-elements",
+          "directory": "017-documents-nested-elements",
+          "expression": "r.renderDocument(new Dynamic { x = new Dynamic { 1; 2 } })",
+          "status": "error",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage91-properties-oracle-01/programs/documents"
+    },
+    {
+      "cohort": "main123",
+      "id": "converters",
+      "uri": "file:///stage91/converters.pkl",
+      "rows": [
+        {
+          "id": "converters-one-per-value",
+          "wire_id": "converters-one-per-value",
+          "directory": "000-converters-one-per-value",
+          "expression": "new PropertiesRenderer { converters { [Int] = (v) -> v.toString(); [String] = (v) -> \"again\" } }.renderValue(7)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-components-recurse",
+          "wire_id": "converters-components-recurse",
+          "directory": "001-converters-components-recurse",
+          "expression": "new PropertiesRenderer { converters { [Int] = (_) -> new Dynamic { child = \"x\" }; [String] = (_) -> \"leaf\" } }.renderDocument(7)",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-path-over-type",
+          "wire_id": "converters-path-over-type",
+          "directory": "002-converters-path-over-type",
+          "expression": "new PropertiesRenderer { converters { [Int] = (_) -> \"type\"; [\"x\"] = (_) -> \"path\" } }.renderDocument(new Dynamic { x = 1 })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-first-path",
+          "wire_id": "converters-first-path",
+          "directory": "003-converters-first-path",
+          "expression": "new PropertiesRenderer { converters { [\"*\"] = (_) -> \"first\"; [\"x\"] = (_) -> \"second\" } }.renderDocument(new Dynamic { x = 1 })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-most-specific",
+          "wire_id": "converters-most-specific",
+          "directory": "004-converters-most-specific",
+          "expression": "new PropertiesRenderer { converters { [Parent] = (_) -> \"parent\"; [Child] = (_) -> \"child\" } }.renderDocument(new Dynamic { a = new Child {}; b = new Parent {} })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "converters-root-path",
+          "wire_id": "converters-root-path",
+          "directory": "005-converters-root-path",
+          "expression": "new PropertiesRenderer { converters { [\"^\"] = (_) -> new Dynamic { x = 1 }; [Dynamic] = (_) -> \"wrong\" } }.renderDocument(\"input\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-root-invalid-hint",
+          "wire_id": "converters-root-invalid-hint",
+          "directory": "006-converters-root-invalid-hint",
+          "expression": "new PropertiesRenderer { converters { [Dynamic] = (_) -> 1 } }.renderDocument(new Dynamic { x = 2 })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "converters-value-container",
+          "wire_id": "converters-value-container",
+          "directory": "007-converters-value-container",
+          "expression": "new PropertiesRenderer { converters { [Int] = (_) -> new Dynamic { x = 1 } } }.renderValue(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "converters-key-and-path",
+          "wire_id": "converters-key-and-path",
+          "directory": "008-converters-key-and-path",
+          "expression": "new PropertiesRenderer { converters { [String] = (v) -> v.toUpperCase(); [\"[LOWER]\"] = (_) -> \"path\" } }.renderDocument(Map(\"lower\", \"value\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-key-directive",
+          "wire_id": "converters-key-directive",
+          "directory": "009-converters-key-directive",
+          "expression": "new PropertiesRenderer { restrictCharset = true; converters { [String] = (v) -> new RenderDirective { text = \"raw \" + v } } }.renderDocument(Map(\"a=b\", \"c:d\"))",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-null-to-value",
+          "wire_id": "converters-null-to-value",
+          "directory": "010-converters-null-to-value",
+          "expression": "new PropertiesRenderer { converters { [Null] = (_) -> \"present\" } }.renderDocument(new Dynamic { x = null })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-value-to-null",
+          "wire_id": "converters-value-to-null",
+          "directory": "011-converters-value-to-null",
+          "expression": "new PropertiesRenderer { converters { [String] = (_) -> null } }.renderDocument(new Dynamic { x = \"omit\"; y = 1 })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-null-path-cleanup",
+          "wire_id": "converters-null-path-cleanup",
+          "directory": "012-converters-null-path-cleanup",
+          "expression": "new PropertiesRenderer { converters { [\"object.property\"] = (_) -> \"converted\"; [\"mapping[key]\"] = (_) -> \"converted\"; [\"map[key]\"] = (_) -> \"converted\" } }.renderDocument(new Dynamic { object { nullable = null; property = \"v\" }; mapping { [\"nullable\"] = null; [\"key\"] = \"v\" }; map = Map(\"nullable\", null, \"key\", \"v\") })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-null-key-before-skip",
+          "wire_id": "converters-null-key-before-skip",
+          "directory": "013-converters-null-key-before-skip",
+          "expression": "new PropertiesRenderer { converters { [String] = (v) -> trace(v) } }.renderDocument(Map(\"key\", null))",
+          "status": "success",
+          "logs": 1
+        },
+        {
+          "id": "converters-listing-converter",
+          "wire_id": "converters-listing-converter",
+          "directory": "014-converters-listing-converter",
+          "expression": "new PropertiesRenderer { converters { [Listing] = (_) -> \"wrapped\" } }.renderDocument(new Dynamic { x = new Dynamic { 1; 2 } })",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "converters-converted-dynamic-elements",
+          "wire_id": "converters-converted-dynamic-elements",
+          "directory": "015-converters-converted-dynamic-elements",
+          "expression": "new PropertiesRenderer { converters { [\"x\"] = (v) -> if (trace(v.getClass().simpleName) == \"Listing\") \"wrapped\" else new Dynamic { throw(\"unforced element\") } } }.renderDocument(new Dynamic { x = \"initial\" })",
+          "status": "success",
+          "logs": 2
+        },
+        {
+          "id": "converters-unrenderable-converted",
+          "wire_id": "converters-unrenderable-converted",
+          "directory": "016-converters-unrenderable-converted",
+          "expression": "new PropertiesRenderer { converters { [Int] = (_) -> List(1) } }.renderValue(7)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "converters-unsupported-fixed",
+          "wire_id": "converters-unsupported-fixed",
+          "directory": "017-converters-unsupported-fixed",
+          "expression": "new PropertiesRenderer { converters { [Duration] = (v) -> v.toString() } }.renderValue(1.s)",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage91-properties-oracle-01/programs/converters"
+    },
+    {
+      "cohort": "main123",
+      "id": "order",
+      "uri": "file:///stage91/order.pkl",
+      "rows": [
+        {
+          "id": "order-options-first",
+          "wire_id": "order-options-first",
+          "directory": "000-order-options-first",
+          "expression": "options.renderValue(trace(\"argument\"))",
+          "status": "success",
+          "logs": 5
+        },
+        {
+          "id": "order-options-cached",
+          "wire_id": "order-options-cached",
+          "directory": "001-order-options-cached",
+          "expression": "options.renderValue(\"again\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "order-omit-failure",
+          "wire_id": "order-omit-failure",
+          "directory": "002-order-omit-failure",
+          "expression": "new PropertiesRenderer { omitNullProperties = throw(\"omit\"); restrictCharset = trace(true); converters = throw(\"converters\") }.renderDocument(1)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-restrict-failure",
+          "wire_id": "order-restrict-failure",
+          "directory": "003-order-restrict-failure",
+          "expression": "new PropertiesRenderer { omitNullProperties = trace(true); restrictCharset = throw(\"restrict\"); converters = throw(\"converters\") }.renderValue(\"x\")",
+          "status": "error",
+          "logs": 1
+        },
+        {
+          "id": "order-argument-failure",
+          "wire_id": "order-argument-failure",
+          "directory": "004-order-argument-failure",
+          "expression": "options.renderValue(throw(\"argument\"))",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-converter-read-first",
+          "wire_id": "order-converter-read-first",
+          "directory": "005-order-converter-read-first",
+          "expression": "new PropertiesRenderer { converters = throw(\"converter getter\"); convertPropertyTransformers = throw(\"transformer getter\") }.renderValue(\"x\")",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-converter-force-after-read",
+          "wire_id": "order-converter-force-after-read",
+          "directory": "006-order-converter-force-after-read",
+          "expression": "new PropertiesRenderer { converters { [Int] = throw(\"converter entry\") }; convertPropertyTransformers = throw(\"transformer getter\") }.renderValue(\"x\")",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-converter-entry-force",
+          "wire_id": "order-converter-entry-force",
+          "directory": "007-order-converter-entry-force",
+          "expression": "new PropertiesRenderer { converters { [Int] = throw(\"converter entry\") } }.renderDocument(null)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-transformer-entry-force",
+          "wire_id": "order-transformer-entry-force",
+          "directory": "008-order-transformer-entry-force",
+          "expression": "new PropertiesRenderer { convertPropertyTransformers { [ConvertProperty] = throw(\"transformer entry\") } }.renderDocument(null)",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-invalid-path",
+          "wire_id": "order-invalid-path",
+          "directory": "009-order-invalid-path",
+          "expression": "new PropertiesRenderer { converters { [\"x[\"] = (v) -> v } }.renderValue(\"x\")",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-unused-extension",
+          "wire_id": "order-unused-extension",
+          "directory": "010-order-unused-extension",
+          "expression": "new PropertiesRenderer { extension = throw(\"unused extension\") }.renderValue(\"x\")",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "order-method-reference",
+          "wire_id": "order-method-reference",
+          "directory": "011-order-method-reference",
+          "expression": "(new PropertiesRenderer {}).renderValue.toString()",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "order-method-arity",
+          "wire_id": "order-method-arity",
+          "directory": "012-order-method-arity",
+          "expression": "new PropertiesRenderer {}.renderValue()",
+          "status": "error",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage91-properties-oracle-01/programs/order"
+    },
+    {
+      "cohort": "main123",
+      "id": "annotations",
+      "uri": "file:///stage91/annotations.pkl",
+      "rows": [
+        {
+          "id": "annotations-typed-rename",
+          "wire_id": "annotations-typed-rename",
+          "directory": "000-annotations-typed-rename",
+          "expression": "new PropertiesRenderer {}.renderDocument(new Holder {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-transformer",
+          "wire_id": "annotations-transformer",
+          "directory": "001-annotations-transformer",
+          "expression": "new PropertiesRenderer { convertPropertyTransformers { [Rename] { suffix = \"-override\" } } }.renderDocument(new Holder {})",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "annotations-inherited-order",
+          "wire_id": "annotations-inherited-order",
+          "directory": "002-annotations-inherited-order",
+          "expression": "new PropertiesRenderer {}.renderDocument(new Child {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotations-path-after-annotation",
+          "wire_id": "annotations-path-after-annotation",
+          "directory": "003-annotations-path-after-annotation",
+          "expression": "new PropertiesRenderer { converters { [\"value\"] = (v) -> trace(v) } }.renderDocument(new Holder {})",
+          "status": "success",
+          "logs": 1
+        },
+        {
+          "id": "annotations-dynamic-annotation",
+          "wire_id": "annotations-dynamic-annotation",
+          "directory": "004-annotations-dynamic-annotation",
+          "expression": "new PropertiesRenderer {}.renderDocument(new Dynamic { @Rename {} value = \"v\" })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "annotations-directive-recursive-render",
+          "wire_id": "annotations-directive-recursive-render",
+          "directory": "005-annotations-directive-recursive-render",
+          "expression": "new PropertiesRenderer {}.renderDocument(new DirectiveHolder {})",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage91-properties-oracle-01/programs/annotations"
+    },
+    {
+      "cohort": "main123",
+      "id": "lazy",
+      "uri": "file:///stage91/lazy.pkl",
+      "rows": [
+        {
+          "id": "lazy-later-before-converter",
+          "wire_id": "lazy-later-before-converter",
+          "directory": "000-lazy-later-before-converter",
+          "expression": "new PropertiesRenderer { converters { [Int] = (v) -> trace(\"converter\") } }.renderDocument(new Dynamic { first = trace(1); later = throw(\"outer later\") })",
+          "status": "error",
+          "logs": 1
+        },
+        {
+          "id": "lazy-nested-before-outer",
+          "wire_id": "lazy-nested-before-outer",
+          "directory": "001-lazy-nested-before-outer",
+          "expression": "r.renderDocument(new Dynamic { nested = new Dynamic { bad = throw(\"nested\") }; later = throw(\"outer later\") })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "lazy-typed-later",
+          "wire_id": "lazy-typed-later",
+          "directory": "002-lazy-typed-later",
+          "expression": "new PropertiesRenderer { converters { [Int] = (v) -> trace(\"converter\") } }.renderDocument(new Bad {})",
+          "status": "error",
+          "logs": 1
+        },
+        {
+          "id": "lazy-missing-typed",
+          "wire_id": "lazy-missing-typed",
+          "directory": "003-lazy-missing-typed",
+          "expression": "r.renderDocument(new Missing {})",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "lazy-invalid-listing-root",
+          "wire_id": "lazy-invalid-listing-root",
+          "directory": "004-lazy-invalid-listing-root",
+          "expression": "r.renderDocument(new Listing { throw(\"element\") })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "lazy-value-listing-force",
+          "wire_id": "lazy-value-listing-force",
+          "directory": "005-lazy-value-listing-force",
+          "expression": "r.renderValue(new Listing { trace(1); throw(\"element\") })",
+          "status": "error",
+          "logs": 1
+        },
+        {
+          "id": "lazy-nested-listing-force",
+          "wire_id": "lazy-nested-listing-force",
+          "directory": "006-lazy-nested-listing-force",
+          "expression": "r.renderDocument(new Dynamic { x = new Listing { trace(1); throw(\"element\") } })",
+          "status": "error",
+          "logs": 1
+        },
+        {
+          "id": "lazy-value-dynamic-lazy",
+          "wire_id": "lazy-value-dynamic-lazy",
+          "directory": "007-lazy-value-dynamic-lazy",
+          "expression": "r.renderValue(new Dynamic { x = throw(\"not forced\") })",
+          "status": "error",
+          "logs": 0
+        },
+        {
+          "id": "lazy-root-elements-conversion",
+          "wire_id": "lazy-root-elements-conversion",
+          "directory": "008-lazy-root-elements-conversion",
+          "expression": "new PropertiesRenderer { converters { [Int] = (v) -> trace(v) } }.renderDocument(new Dynamic { 1; 2 })",
+          "status": "success",
+          "logs": 2
+        },
+        {
+          "id": "lazy-mixed-force-before-kind",
+          "wire_id": "lazy-mixed-force-before-kind",
+          "directory": "009-lazy-mixed-force-before-kind",
+          "expression": "r.renderDocument(new Dynamic { 1; x = throw(\"member before mixed kind\") })",
+          "status": "error",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage91-properties-oracle-01/programs/lazy"
+    },
+    {
+      "cohort": "reach6",
+      "id": "properties-reach",
+      "uri": "file:///stage91-properties-reach/controls.pkl",
+      "rows": [
+        {
+          "id": "class-specific-child",
+          "wire_id": "class-specific-child",
+          "directory": "000-class-specific-child",
+          "expression": "classRenderer.renderValue(new Child {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "class-specific-parent",
+          "wire_id": "class-specific-parent",
+          "directory": "001-class-specific-parent",
+          "expression": "classRenderer.renderValue(new Parent {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotation-transformer",
+          "wire_id": "annotation-transformer",
+          "directory": "002-annotation-transformer",
+          "expression": "transformedRenderer.renderDocument(new Holder {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotation-dynamic-view",
+          "wire_id": "annotation-dynamic-view",
+          "directory": "003-annotation-dynamic-view",
+          "expression": "new PropertiesRenderer {}.renderDocument((new Holder {}).toDynamic())",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotation-typed-inheritance",
+          "wire_id": "annotation-typed-inheritance",
+          "directory": "004-annotation-typed-inheritance",
+          "expression": "new PropertiesRenderer {}.renderDocument(new TypedChild {})",
+          "status": "success",
+          "logs": 0
+        },
+        {
+          "id": "annotation-two-in-order",
+          "wire_id": "annotation-two-in-order",
+          "directory": "005-annotation-two-in-order",
+          "expression": "new PropertiesRenderer {}.renderDocument(new DoubleHolder {})",
+          "status": "success",
+          "logs": 0
+        }
+      ],
+      "raw_source": "target/m2/stage91-properties-reach-oracle-02/programs/properties-reach"
+    }
+  ],
+  "query_count": 129,
+  "rust_expected_origin": "Only unchanged actual Java raw bytes; no Rust-derived expected values.",
+  "comparison_fields": [
+    "status",
+    "stdout UTF8",
+    "stdout UTF16BE",
+    "stderr UTF8",
+    "stderr UTF16BE",
+    "ordered Logger level/message/module-uri/member/position UTF8 and UTF16BE"
+  ],
+  "profile": {
+    "power_assertions": false,
+    "host_logger": true,
+    "color": false,
+    "external_properties": {},
+    "environment_variables": {}
+  },
+  "scope": "123 original queries, including original lexical failures, plus 6 separate reached controls; no originals replacement."
+}
